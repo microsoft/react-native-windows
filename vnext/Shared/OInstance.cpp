@@ -13,7 +13,7 @@
 #include <folly/Bits.h>
 #include <folly/json.h>
 #include <jsi/jsi.h>
-#include <jsiexecutor/jsireact/JSIExecutor.h>
+#include <jsireact/JSIExecutor.h>
 #include <filesystem>
 #include "OInstance.h"
 #include "Unicode.h"

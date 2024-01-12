@@ -120,6 +120,9 @@
     <ClCompile Include="$(YogaDir)\yoga\Utils.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
+    <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp">
+      <Filter>yoga</Filter>
+    </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
@@ -129,7 +132,16 @@
     <ClCompile Include="$(YogaDir)\yoga\YGNode.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
+    <ClCompile Include="$(YogaDir)\yoga\YGNodeLayout.cpp">
+      <Filter>yoga</Filter>
+    </ClCompile>
+    <ClCompile Include="$(YogaDir)\yoga\YGNodeStyle.cpp">
+      <Filter>yoga</Filter>
+    </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp">
+      <Filter>yoga</Filter>
+    </ClCompile>
+    <ClCompile Include="$(YogaDir)\yoga\YGPixelGrid.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsi\jsi\jsi.cpp">
@@ -175,7 +187,6 @@
       <Filter>react\renderer\debug</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp" />
-    <ClCompile Include="Yoga.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp">
       <Filter>logger</Filter>
     </ClCompile>

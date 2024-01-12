@@ -40,7 +40,7 @@ public:
 protected:
   NativeActionSheetManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeActionSheetManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeActionSheetManagerCxxSpecJSI {
@@ -231,7 +231,7 @@ public:
 protected:
   NativeAlertManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAlertManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAlertManagerCxxSpecJSI {
@@ -390,7 +390,7 @@ public:
 protected:
   NativeDialogManagerWindowsCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDialogManagerWindowsCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDialogManagerWindowsCxxSpecJSI {
@@ -560,7 +560,7 @@ public:
 protected:
   NativeAnimatedModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAnimatedModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAnimatedModuleCxxSpecJSI {
@@ -906,7 +906,7 @@ public:
 protected:
   NativeAnimatedTurboModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAnimatedTurboModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAnimatedTurboModuleCxxSpecJSI {
@@ -1216,7 +1216,7 @@ public:
 protected:
   NativeAppStateCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAppStateCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAppStateCxxSpecJSI {
@@ -1419,7 +1419,7 @@ public:
 protected:
   NativeAppThemeCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAppThemeCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAppThemeCxxSpecJSI {
@@ -1471,7 +1471,7 @@ public:
 protected:
   NativeBlobModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeBlobModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeBlobModuleCxxSpecJSI {
@@ -1566,7 +1566,7 @@ public:
 protected:
   NativeFileReaderModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeFileReaderModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeFileReaderModuleCxxSpecJSI {
@@ -1622,7 +1622,7 @@ public:
 protected:
   NativeBugReportingCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeBugReportingCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeBugReportingCxxSpecJSI {
@@ -1846,7 +1846,7 @@ public:
 protected:
   NativeExceptionsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeExceptionsManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeExceptionsManagerCxxSpecJSI {
@@ -1927,7 +1927,7 @@ public:
 protected:
   NativeDevToolsSettingsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDevToolsSettingsManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDevToolsSettingsManagerCxxSpecJSI {
@@ -1997,7 +1997,7 @@ public:
 protected:
   NativeJSCHeapCaptureCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeJSCHeapCaptureCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeJSCHeapCaptureCxxSpecJSI {
@@ -2116,7 +2116,7 @@ public:
 protected:
   NativeImageEditorCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeImageEditorCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeImageEditorCxxSpecJSI {
@@ -2175,7 +2175,7 @@ public:
 protected:
   NativeImageLoaderAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeImageLoaderAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeImageLoaderAndroidCxxSpecJSI {
@@ -2266,7 +2266,7 @@ public:
 protected:
   NativeImageLoaderIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeImageLoaderIOSCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeImageLoaderIOSCxxSpecJSI {
@@ -2353,7 +2353,7 @@ public:
 protected:
   NativeImageStoreAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeImageStoreAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeImageStoreAndroidCxxSpecJSI {
@@ -2411,7 +2411,7 @@ public:
 protected:
   NativeImageStoreIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeImageStoreIOSCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeImageStoreIOSCxxSpecJSI {
@@ -2492,7 +2492,7 @@ public:
 protected:
   NativeFrameRateLoggerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeFrameRateLoggerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeFrameRateLoggerCxxSpecJSI {
@@ -2699,7 +2699,7 @@ public:
 protected:
   NativeIntersectionObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeIntersectionObserverCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeIntersectionObserverCxxSpecJSI {
@@ -2781,7 +2781,7 @@ public:
 protected:
   NativeIntentAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeIntentAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeIntentAndroidCxxSpecJSI {
@@ -2864,7 +2864,7 @@ public:
 protected:
   NativeLinkingManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeLinkingManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeLinkingManagerCxxSpecJSI {
@@ -2951,7 +2951,7 @@ public:
 protected:
   NativeModalManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeModalManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeModalManagerCxxSpecJSI {
@@ -3121,7 +3121,7 @@ public:
 protected:
   NativeMutationObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeMutationObserverCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeMutationObserverCxxSpecJSI {
@@ -3203,7 +3203,7 @@ public:
 protected:
   NativeNetworkingAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeNetworkingAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeNetworkingAndroidCxxSpecJSI {
@@ -3285,7 +3285,7 @@ public:
 protected:
   NativeNetworkingIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeNetworkingIOSCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeNetworkingIOSCxxSpecJSI {
@@ -3363,7 +3363,7 @@ public:
 protected:
   NativeJSCSamplingProfilerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeJSCSamplingProfilerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeJSCSamplingProfilerCxxSpecJSI {
@@ -3412,7 +3412,7 @@ public:
 protected:
   NativePermissionsAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativePermissionsAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativePermissionsAndroidCxxSpecJSI {
@@ -3683,7 +3683,7 @@ public:
 protected:
   NativePushNotificationManagerIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativePushNotificationManagerIOSCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativePushNotificationManagerIOSCxxSpecJSI {
@@ -3874,7 +3874,7 @@ public:
 protected:
   NativeHeadlessJsTaskSupportCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeHeadlessJsTaskSupportCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeHeadlessJsTaskSupportCxxSpecJSI {
@@ -3985,7 +3985,7 @@ public:
 protected:
   NativeI18nManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeI18nManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeI18nManagerCxxSpecJSI {
@@ -4080,7 +4080,7 @@ public:
 protected:
   NativeUIManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeUIManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeUIManagerCxxSpecJSI {
@@ -4328,7 +4328,7 @@ public:
 protected:
   NativeSettingsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeSettingsManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeSettingsManagerCxxSpecJSI {
@@ -4391,7 +4391,7 @@ public:
 protected:
   NativeShareModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeShareModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeShareModuleCxxSpecJSI {
@@ -4448,7 +4448,7 @@ public:
 protected:
   NativeAppearanceCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAppearanceCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAppearanceCxxSpecJSI {
@@ -4760,7 +4760,7 @@ public:
 protected:
   NativeDeviceInfoCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDeviceInfoCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDeviceInfoCxxSpecJSI {
@@ -4807,7 +4807,7 @@ public:
 protected:
   NativeDevLoadingViewCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDevLoadingViewCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDevLoadingViewCxxSpecJSI {
@@ -5041,7 +5041,7 @@ public:
 protected:
   NativePlatformConstantsAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativePlatformConstantsAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativePlatformConstantsAndroidCxxSpecJSI {
@@ -5186,7 +5186,7 @@ public:
 protected:
   NativePlatformConstantsIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativePlatformConstantsIOSCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativePlatformConstantsIOSCxxSpecJSI {
@@ -5293,7 +5293,7 @@ public:
 protected:
   NativePlatformConstantsWinCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativePlatformConstantsWinCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativePlatformConstantsWinCxxSpecJSI {
@@ -5342,7 +5342,7 @@ public:
 protected:
   NativeVibrationCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeVibrationCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeVibrationCxxSpecJSI {
@@ -5415,7 +5415,7 @@ public:
 protected:
   NativePerformanceCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativePerformanceCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativePerformanceCxxSpecJSI {
@@ -5627,7 +5627,7 @@ public:
 protected:
   NativePerformanceObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativePerformanceObserverCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativePerformanceObserverCxxSpecJSI {
@@ -5759,7 +5759,7 @@ public:
 protected:
   NativeWebSocketModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeWebSocketModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeWebSocketModuleCxxSpecJSI {
@@ -5858,7 +5858,7 @@ public:
 protected:
   NativeAccessibilityInfoCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAccessibilityInfoCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAccessibilityInfoCxxSpecJSI {
@@ -5954,7 +5954,7 @@ public:
 protected:
   NativeAccessibilityManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAccessibilityManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAccessibilityManagerCxxSpecJSI {
@@ -6082,7 +6082,7 @@ public:
 protected:
   NativeClipboardCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeClipboardCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeClipboardCxxSpecJSI {
@@ -6145,7 +6145,7 @@ public:
 protected:
   NativeKeyboardObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeKeyboardObserverCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeKeyboardObserverCxxSpecJSI {
@@ -6199,7 +6199,7 @@ public:
 protected:
   NativeSoundManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeSoundManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeSoundManagerCxxSpecJSI {
@@ -6249,7 +6249,7 @@ public:
 protected:
   NativeStatusBarManagerAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeStatusBarManagerAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeStatusBarManagerAndroidCxxSpecJSI {
@@ -6333,7 +6333,7 @@ public:
 protected:
   NativeStatusBarManagerIOSCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeStatusBarManagerIOSCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeStatusBarManagerIOSCxxSpecJSI {
@@ -6430,7 +6430,7 @@ public:
 protected:
   NativeToastAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeToastAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeToastAndroidCxxSpecJSI {
@@ -6501,7 +6501,7 @@ public:
 protected:
   NativeSegmentFetcherCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeSegmentFetcherCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeSegmentFetcherCxxSpecJSI {
@@ -6557,7 +6557,7 @@ public:
 protected:
   NativeTimingCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeTimingCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeTimingCxxSpecJSI {
@@ -6620,7 +6620,7 @@ public:
 protected:
   NativeAnimationsDebugModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeAnimationsDebugModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeAnimationsDebugModuleCxxSpecJSI {
@@ -6674,7 +6674,7 @@ public:
 protected:
   NativeDeviceEventManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDeviceEventManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDeviceEventManagerCxxSpecJSI {
@@ -6724,7 +6724,7 @@ public:
 protected:
   NativeDevMenuCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDevMenuCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDevMenuCxxSpecJSI {
@@ -6812,7 +6812,7 @@ public:
 protected:
   NativeDevSettingsCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDevSettingsCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDevSettingsCxxSpecJSI {
@@ -7033,7 +7033,7 @@ public:
 protected:
   NativeDialogManagerAndroidCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeDialogManagerAndroidCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeDialogManagerAndroidCxxSpecJSI {
@@ -7088,7 +7088,7 @@ public:
 protected:
   NativeLogBoxCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeLogBoxCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeLogBoxCxxSpecJSI {
@@ -7143,7 +7143,7 @@ public:
 protected:
   NativeRedBoxCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeRedBoxCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeRedBoxCxxSpecJSI {
@@ -7235,7 +7235,7 @@ public:
 protected:
   NativeSourceCodeCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeSourceCodeCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeSourceCodeCxxSpecJSI {
@@ -7326,7 +7326,7 @@ public:
 protected:
   NativeSampleTurboModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeSampleTurboModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeSampleTurboModuleCxxSpecJSI {

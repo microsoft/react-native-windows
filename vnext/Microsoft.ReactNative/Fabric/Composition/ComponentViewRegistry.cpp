@@ -45,37 +45,47 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext) noexcept {
   // TODO implement recycled components like core does
 
-  std::shared_ptr<CompositionBaseComponentView> view;
+  winrt::Microsoft::ReactNative::ComponentView view{nullptr};
 
   if (componentHandle == facebook::react::ViewShadowNode::Handle()) {
-    view = CompositionViewComponentView::Create(compContext, tag, m_context);
+    view = winrt::Microsoft::ReactNative::Composition::implementation::CompositionViewComponentView::Create(
+        compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ParagraphShadowNode::Handle()) {
-    view = ParagraphComponentView::Create(compContext, tag, m_context);
+    view = winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView::Create(
+        compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ScrollViewShadowNode::Handle()) {
-    view = ScrollViewComponentView::Create(compContext, tag, m_context);
+    view = winrt::Microsoft::ReactNative::Composition::implementation::ScrollViewComponentView::Create(
+        compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ImageShadowNode::Handle()) {
-    view = ImageComponentView::Create(compContext, tag, m_context);
+    view = winrt::Microsoft::ReactNative::Composition::implementation::ImageComponentView::Create(
+        compContext, tag, m_context);
   } else if (componentHandle == facebook::react::WindowsModalHostViewShadowNode::Handle()) {
     view = WindowsModalHostComponentView::Create(compContext, tag, m_context);
   } else if (componentHandle == facebook::react::WindowsTextInputShadowNode::Handle()) {
-    view = WindowsTextInputComponentView::Create(compContext, tag, m_context);
+    view = winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView::Create(
+        compContext, tag, m_context);
   } else if (componentHandle == facebook::react::SwitchShadowNode::Handle()) {
-    view = SwitchComponentView::Create(compContext, tag, m_context);
+    view = winrt::Microsoft::ReactNative::Composition::implementation::SwitchComponentView::Create(
+        compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ActivityIndicatorViewShadowNode::Handle()) {
-    view = ActivityIndicatorComponentView::Create(compContext, tag, m_context);
+    view = winrt::Microsoft::ReactNative::Composition::implementation::ActivityIndicatorComponentView::Create(
+        compContext, tag, m_context);
   } else if (componentHandle == facebook::react::RootShadowNode::Handle()) {
-    view = RootComponentView::Create(compContext, tag, m_context);
+    view = winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView::Create(
+        compContext, tag, m_context);
   } else if (
       componentHandle == facebook::react::RawTextShadowNode::Handle() ||
       componentHandle == facebook::react::TextShadowNode::Handle()) {
     // Review - Why do we get asked for ComponentViews for Text/RawText... do these get used?
-    view = CompositionViewComponentView::Create(compContext, tag, m_context);
+    view = winrt::Microsoft::ReactNative::Composition::implementation::CompositionViewComponentView::Create(
+        compContext, tag, m_context);
   } else if (componentHandle == facebook::react::UnimplementedNativeViewShadowNode::Handle()) {
-    view = UnimplementedNativeViewComponentView::Create(compContext, tag, m_context);
+    view = winrt::Microsoft::ReactNative::Composition::implementation::UnimplementedNativeViewComponentView::Create(
+        compContext, tag, m_context);
   } else {
     auto descriptor =
         WindowsComponentDescriptorRegistry::FromProperties(m_context.Properties())->GetDescriptor(componentHandle);
-    view = AbiCompositionViewComponentView::Create(
+    view = winrt::Microsoft::ReactNative::Composition::implementation::AbiCompositionViewComponentView::Create(
         m_context.Handle(),
         compContext,
         tag,
@@ -93,7 +103,7 @@ ComponentViewDescriptor const &ComponentViewRegistry::componentViewDescriptorWit
   return iterator->second;
 }
 
-std::shared_ptr<IComponentView> ComponentViewRegistry::findComponentViewWithTag(
+winrt::Microsoft::ReactNative::ComponentView ComponentViewRegistry::findComponentViewWithTag(
     facebook::react::Tag tag) const noexcept {
   auto iterator = m_registry.find(tag);
   if (iterator == m_registry.end()) {

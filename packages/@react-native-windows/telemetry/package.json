@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/telemetry",
-  "version": "0.0.0-canary.80",
+  "version": "0.0.0-canary.81",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "typings": "lib-commonjs/index.d.ts",
@@ -20,7 +20,7 @@
   "dependencies": {
     "@react-native-windows/fs": "^0.0.0-canary.30",
     "@xmldom/xmldom": "^0.7.7",
-    "applicationinsights": "^2.3.1",
+    "applicationinsights": "2.9.1",
     "ci-info": "^3.2.0",
     "envinfo": "^7.8.1",
     "lodash": "^4.17.21",

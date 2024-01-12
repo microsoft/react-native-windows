@@ -51,7 +51,7 @@ MSO_CLASS_GUID(ITextHost, "13E670F4-1A5A-11cf-ABEB-00AA00B65EA1") // IID_ITextHo
 MSO_CLASS_GUID(ITextServices, "8D33F740-CF58-11CE-A89D-00AA006CADC5") // IID_ITextServices
 MSO_CLASS_GUID(ITextServices2, "8D33F741-CF58-11CE-A89D-00AA006CADC5") // IID_ITextServices2
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 // RichEdit doesn't handle us calling Draw during the middle of a TxTranslateMessage call.
 WindowsTextInputComponentView::DrawBlock::DrawBlock(WindowsTextInputComponentView &view) : m_view(view) {
@@ -218,7 +218,10 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Set the focus to the text window
   void TxSetFocus() override {
-    m_outer->rootComponentView()->SetFocusedComponent(m_outer);
+    winrt::Microsoft::ReactNative::ComponentView view{nullptr};
+    winrt::check_hresult(
+        m_outer->QueryInterface(winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
+    m_outer->rootComponentView()->SetFocusedComponent(view);
     // assert(false);
     // TODO focus
   }
@@ -828,14 +831,14 @@ void WindowsTextInputComponentView::onCharacterReceived(
 }
 
 void WindowsTextInputComponentView::mountChildComponentView(
-    IComponentView &childComponentView,
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
   // m_element.Children().InsertAt(index, v.Element());
 }
 
 void WindowsTextInputComponentView::unmountChildComponentView(
-    IComponentView &childComponentView,
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
   // m_element.Children().RemoveAt(index);
@@ -1157,7 +1160,8 @@ std::string WindowsTextInputComponentView::GetTextFromRichEdit() const noexcept 
   return str;
 }
 
-void WindowsTextInputComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+void WindowsTextInputComponentView::finalizeUpdates(
+    winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask updateMask) noexcept {
   Super::finalizeUpdates(updateMask);
   ensureDrawingSurface();
   if (m_needsRedraw) {
@@ -1428,7 +1432,7 @@ facebook::react::Tag WindowsTextInputComponentView::hitTest(
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
-    return tag();
+    return Tag();
   }
 
   return -1;
@@ -1439,7 +1443,7 @@ void WindowsTextInputComponentView::ensureVisual() noexcept {
     HrEnsureRichEd20Loaded();
     m_visual = m_compContext.CreateSpriteVisual();
     m_textHost = winrt::make<CompTextHost>(this);
-    winrt::com_ptr<IUnknown> spUnk;
+    winrt::com_ptr<::IUnknown> spUnk;
     winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
     spUnk.as(m_textServices);
     OuterVisual().InsertAt(m_visual, 0);
@@ -1456,19 +1460,18 @@ void WindowsTextInputComponentView::onThemeChanged() noexcept {
   auto props = std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(m_props);
   updateCursorColor(props->cursorColor, props->textAttributes.foregroundColor);
   DrawText();
-  Super::onThemeChanged();
+  base_type::onThemeChanged();
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual WindowsTextInputComponentView::Visual() const noexcept {
   return m_visual;
 }
 
-std::shared_ptr<WindowsTextInputComponentView> WindowsTextInputComponentView::Create(
+winrt::Microsoft::ReactNative::ComponentView WindowsTextInputComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return std::shared_ptr<WindowsTextInputComponentView>(
-      new WindowsTextInputComponentView(compContext, tag, reactContext));
+  return winrt::make<WindowsTextInputComponentView>(compContext, tag, reactContext);
 }
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

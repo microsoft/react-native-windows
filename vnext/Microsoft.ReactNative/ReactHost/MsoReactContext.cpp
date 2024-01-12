@@ -3,7 +3,7 @@
 
 #include "MsoReactContext.h"
 #include <winrt/Microsoft.ReactNative.h>
-#include "Microsoft.ReactNative/IReactNotificationService.h"
+#include "IReactNotificationService.h"
 #include "MsoUtils.h"
 #include "ReactInstanceWin.h"
 

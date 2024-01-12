@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "Composition.WindowsTextInputComponentView.g.h"
 #include <ReactContext.h>
 #include <Windows.Graphics.DirectX.Direct3D11.interop.h>
 #include <richedit.h>
@@ -16,21 +17,25 @@
 #include "WindowsTextInputProps.h"
 #include "WindowsTextInputShadowNode.h"
 
-namespace Microsoft::ReactNative {
-
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 struct CompTextHost;
 
-struct WindowsTextInputComponentView : CompositionBaseComponentView {
+struct WindowsTextInputComponentView
+    : WindowsTextInputComponentViewT<WindowsTextInputComponentView, CompositionBaseComponentView> {
   friend CompTextHost;
 
-  using Super = CompositionBaseComponentView;
-  [[nodiscard]] static std::shared_ptr<WindowsTextInputComponentView> Create(
+  using Super = WindowsTextInputComponentViewT<WindowsTextInputComponentView, CompositionBaseComponentView>;
+  [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
-  void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
-  void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
+  void mountChildComponentView(
+      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      uint32_t index) noexcept override;
+  void unmountChildComponentView(
+      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept
@@ -38,7 +43,8 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
-  void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
+  void finalizeUpdates(
+      winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::SharedViewProps viewProps() noexcept override;
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
@@ -77,12 +83,12 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   void setAcccessiblityValue(std::string &&value) noexcept override;
   bool getAcccessiblityIsReadOnly() noexcept override;
 
- private:
   WindowsTextInputComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
+ private:
   struct DrawBlock {
     DrawBlock(WindowsTextInputComponentView &view);
     ~DrawBlock();
@@ -129,4 +135,4 @@ struct WindowsTextInputComponentView : CompositionBaseComponentView {
   bool m_drawing{false};
 };
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

@@ -1,0 +1,15 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative
+{
+
+  [experimental]
+  [webhosthidden]
+  unsealed runtimeclass ComponentView {
+    Int32 Tag { get; };
+  };
+
+} // namespace Microsoft.ReactNative

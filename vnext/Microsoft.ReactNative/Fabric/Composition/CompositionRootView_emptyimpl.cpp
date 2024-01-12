@@ -118,7 +118,8 @@ Windows::Foundation::Size CompositionRootView::Arrange(Windows::Foundation::Size
   return {};
 }
 
-::Microsoft::ReactNative::RootComponentView *CompositionRootView::GetComponentView() noexcept {
+winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
+CompositionRootView::GetComponentView() noexcept {
   return nullptr;
 }
 

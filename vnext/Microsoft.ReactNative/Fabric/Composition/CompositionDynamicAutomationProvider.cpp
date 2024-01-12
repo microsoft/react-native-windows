@@ -8,8 +8,8 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
-    const std::shared_ptr<::Microsoft::ReactNative::CompositionBaseComponentView> &componentView) noexcept
-    : m_view{std::static_pointer_cast<::Microsoft::ReactNative::IComponentView>(componentView)} {}
+    const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept
+    : m_view{componentView} {}
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
     NavigateDirection direction,
@@ -17,7 +17,10 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
   if (pRetVal == nullptr)
     return E_POINTER;
 
-  return UiaNavigateHelper(m_view.view().get(), direction, *pRetVal);
+  return UiaNavigateHelper(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_view.view()),
+      direction,
+      *pRetVal);
 }
 
 // Implementations should return NULL for a top-level element that is hosted in a window. Other elements should return
@@ -41,7 +44,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetRuntimeId(SAFEARRAY *
   if (*pRetVal == nullptr)
     return E_OUTOFMEMORY;
 
-  int runtimeId[] = {UiaAppendRuntimeId, strongView->tag()};
+  int runtimeId[] = {UiaAppendRuntimeId, strongView.Tag()};
   for (long i = 0; i < 2; i++) {
     SafeArrayPutElement(*pRetVal, &i, static_cast<void *>(&runtimeId[i]));
   }
@@ -109,7 +112,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_FragmentRoot(IRawEle
     return UIA_E_ELEMENTNOTAVAILABLE;
   }
 
-  if (auto root = strongView->rootComponentView()) {
+  if (auto root = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
+                      ->rootComponentView()) {
     return root->GetFragmentRoot(pRetVal);
   }
 
@@ -134,7 +138,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (strongView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(strongView->props());
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
   auto accessibilityRole = props->accessibilityRole;
@@ -232,12 +237,17 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   if (strongView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(strongView->props());
+  auto baseView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView);
+  if (baseView == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(baseView->props());
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  auto baseView = std::static_pointer_cast<::Microsoft::ReactNative::CompositionBaseComponentView>(strongView);
-  if (baseView == nullptr)
+  auto compositionView =
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>();
+  if (compositionView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   auto hr = S_OK;
@@ -245,7 +255,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   switch (propertyId) {
     case UIA_ControlTypePropertyId: {
       pRetVal->vt = VT_I4;
-      auto role = props->accessibilityRole.empty() ? baseView->DefaultControlType() : props->accessibilityRole;
+      auto role = props->accessibilityRole.empty() ? compositionView->DefaultControlType() : props->accessibilityRole;
       pRetVal->lVal = GetControlType(role);
       break;
     }
@@ -259,7 +269,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     case UIA_NamePropertyId: {
       pRetVal->vt = VT_BSTR;
       auto wideName = ::Microsoft::Common::Unicode::Utf8ToUtf16(
-          props->accessibilityLabel.empty() ? baseView->DefaultAccessibleName() : props->accessibilityLabel);
+          props->accessibilityLabel.empty() ? compositionView->DefaultAccessibleName() : props->accessibilityLabel);
       pRetVal->bstrVal = SysAllocString(wideName.c_str());
       hr = pRetVal->bstrVal != nullptr ? S_OK : E_OUTOFMEMORY;
       break;
@@ -270,12 +280,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       break;
     }
     case UIA_HasKeyboardFocusPropertyId: {
-      auto rootCV = strongView->rootComponentView();
+      auto rootCV = baseView->rootComponentView();
       if (rootCV == nullptr)
         return UIA_E_ELEMENTNOTAVAILABLE;
 
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal = rootCV->GetFocusedComponent() == strongView.get() ? VARIANT_TRUE : VARIANT_FALSE;
+      pRetVal->boolVal = rootCV->GetFocusedComponent() == strongView ? VARIANT_TRUE : VARIANT_FALSE;
       break;
     }
     case UIA_IsEnabledPropertyId: {
@@ -295,14 +305,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_IsOffscreenPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal = (strongView->getClipState() == ::Microsoft::ReactNative::ClipState::FullyClipped)
-          ? VARIANT_TRUE
-          : VARIANT_FALSE;
+      pRetVal->boolVal = (baseView->getClipState() == ClipState::FullyClipped) ? VARIANT_TRUE : VARIANT_FALSE;
     }
     case UIA_HelpTextPropertyId: {
       pRetVal->vt = VT_BSTR;
       auto helpText = props->accessibilityHint.empty()
-          ? ::Microsoft::Common::Unicode::Utf8ToUtf16(baseView->DefaultHelpText())
+          ? ::Microsoft::Common::Unicode::Utf8ToUtf16(compositionView->DefaultHelpText())
           : ::Microsoft::Common::Unicode::Utf8ToUtf16(props->accessibilityHint);
       pRetVal->bstrVal = SysAllocString(helpText.c_str());
       hr = pRetVal->bstrVal != nullptr ? S_OK : E_OUTOFMEMORY;
@@ -329,12 +337,14 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Invoke() {
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  auto baseView = std::static_pointer_cast<::Microsoft::ReactNative::CompositionBaseComponentView>(strongView);
+  auto baseView =
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>();
   if (baseView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  baseView.get()->GetEventEmitter().get()->onAccessibilityTap();
-  auto uiaProvider = baseView->EnsureUiaProvider();
+  baseView->GetEventEmitter().get()->onAccessibilityTap();
+  auto uiaProvider =
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->EnsureUiaProvider();
   auto spProviderSimple = uiaProvider.try_as<IRawElementProviderSimple>();
   if (spProviderSimple != nullptr) {
     UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_Invoke_InvokedEventId);
@@ -349,8 +359,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::ScrollIntoView() {
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  ::Microsoft::ReactNative::BringIntoViewOptions scrollOptions;
-  strongView->StartBringIntoView(std::move(scrollOptions));
+  winrt::Microsoft::ReactNative::implementation::BringIntoViewOptions scrollOptions;
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
+      ->StartBringIntoView(std::move(scrollOptions));
 
   return S_OK;
 }
@@ -377,7 +388,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(LPCWSTR val) {
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  strongView->setAcccessiblityValue(winrt::to_string(val));
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
+      ->setAcccessiblityValue(winrt::to_string(val));
   return S_OK;
 }
 
@@ -389,7 +401,9 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_Value(BSTR *pRetVal)
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  *pRetVal = StringToBSTR(strongView->getAcccessiblityValue().value_or(""));
+  *pRetVal = StringToBSTR(winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
+                              ->getAcccessiblityValue()
+                              .value_or(""));
   return S_OK;
 }
 
@@ -401,7 +415,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRe
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  *pRetVal = strongView->getAcccessiblityIsReadOnly();
+  *pRetVal = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
+                 ->getAcccessiblityIsReadOnly();
   return S_OK;
 }
 

@@ -1,8 +1,34 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 20 Dec 2023 06:14:13 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Jan 2024 06:14:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.751
+
+Thu, 11 Jan 2024 06:14:31 GMT
+
+### Changes
+
+- Move to using winrt objects for ComponentViews (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.750
+
+Wed, 10 Jan 2024 06:13:20 GMT
+
+### Changes
+
+- Normalizes headers for clang builds (ericroz@meta.com)
+- Switch ImageUtils.cpp to use co_return (ericroz@meta.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.195
+
+## 0.0.0-canary.749
+
+Thu, 04 Jan 2024 06:15:54 GMT
+
+### Changes
+
+- integrate 11/14 (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.748
 

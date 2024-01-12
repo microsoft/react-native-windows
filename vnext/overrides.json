@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231031-572dd76ba",
+  "baseVersion": "0.74.0-nightly-20231116-fa89dd68b",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "55a2906a48f5d54bd1daf47d2b127ce2848199e9"
+      "baseHash": "397a9d59e4415e8758adc635d5e016070e6d85d7"
     },
     {
       "type": "derived",
@@ -88,35 +88,21 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/RawPropsParser.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/RawPropsParser.cpp",
-      "baseHash": "be5d1851ae27bb3a55620e7a33ecf082ebaa9aa6",
+      "baseHash": "79fc21a9ad5ba440186d970c44021e25928b6f79",
       "issue": 12300
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/ShadowNode.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/ShadowNode.cpp",
-      "baseHash": "e4feb272298f6625461f5bdca2fca4d64e1a5894",
-      "issue": 12300
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/Color.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/Color.h",
-      "baseHash": "dfdf5eea363605ee93f0675e30689df2cd8dc004",
-      "issue": 7821
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mounting/ShadowTree.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/ShadowTree.cpp",
-      "baseHash": "7e52068b21ba500a397e344c943a4f732f07e848",
+      "baseHash": "430fa0d97835b073c9d3266d7d8d21096bae081b",
       "issue": 12195
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManagerBinding.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/uimanager/UIManagerBinding.cpp",
-      "baseHash": "f830b73ce7e480a1d3c49623bc0e44d4c8834a01",
+      "baseHash": "5f60fee5a468fb960ab0e5c12c3a54837d2c8b92",
       "issue": 12195
     },
     {
@@ -137,28 +123,28 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/Node.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/Node.h",
-      "baseHash": "7f73689c88005d9f165e629dcc2026a68c57975a",
+      "baseHash": "79aa34fdec0dfed4591cb059e9b72ba9f0ef0155",
       "issue": 12195
     },
     {
       "type": "patch",
-      "file": "ReactCommon/Yoga.cpp",
-      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/Yoga.cpp",
-      "baseHash": "2b44a95b03209a09825fa5d3476beb9e853b80bc",
-      "issue": 3994
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/numeric/Comparison.h",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/numeric/Comparison.h",
+      "baseHash": "c4150273aa8ab23568f31365cd678b9967521362",
+      "issue": 12195
     },
     {
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "packages/rn-tester/IntegrationTests",
-      "baseHash": "8394f4326b8a190b899914d21210da6accd2dc0e",
+      "baseHash": "24d0b505f06d414b62210267a1cb92da7d9b1b86",
       "issue": 4054
     },
     {
       "type": "derived",
       "file": "src/index.windows.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "287445ef805383901c37da6026f8cf423ab0f078"
+      "baseHash": "b658f287732c27fdd28722a8765c3b1b0c1316fa"
     },
     {
       "type": "platform",
@@ -386,7 +372,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "8a7908f1ebfde292f2d70f6672c96c05eb7397c8"
+      "baseHash": "7ab8da32f3f0390cd415db0c2c4127d8b7b930f8"
     },
     {
       "type": "patch",
