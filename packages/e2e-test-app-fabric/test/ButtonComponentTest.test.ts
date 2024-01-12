@@ -19,47 +19,118 @@ beforeAll(async () => {
 
 afterEach(async () => {
   await verifyNoErrorLogs();
+  await searchBox('');
+});
+
+const searchBox = (async (input: string) => {
+  const searchBox = await app.findElementByTestID('example_search');
+  await app.waitUntil(
+    async () => {
+      await searchBox.setValue(input);
+      return (await searchBox.getText()) === input;
+    },
+    {
+      interval: 1500,
+      timeout: 5000,
+      timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+    },
+  );
 });
 
 describe('Button Tests', () => {
   test('Buttons have default styling', async () => {
+    await searchBox('default');
     const component = await app.findElementByTestID('button_default_styling');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('button_default_styling');
     expect(dump).toMatchSnapshot();
+    await component.click();
+    const alert = await app.findElementByTestID('Popup Window');
+    await alert.isDisplayed();
+    const alertButton = await app.findElementByTestID('Button0');
+    await alertButton.click();
   });
   test('Buttons can have custom colors', async () => {
+    await searchBox('color');
     const component = await app.findElementByTestID('cancel_button');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('cancel_button');
     expect(dump).toMatchSnapshot();
+    await component.click();
+    const alert = await app.findElementByTestID('Popup Window');
+    await alert.isDisplayed();
+    const alertButton = await app.findElementByTestID('Button0');
+    await alertButton.click();
+    
+  });
+  test('Buttons can have flexbox styling', async () => {
+    const component = await app.findElementByTestID('two_button_container');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('two_button_container');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Buttons can have flexbox styling with three buttons', async () => {
+    const component = await app.findElementByTestID('three_button_container');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('three_button_container');
+    expect(dump).toMatchSnapshot();
   });
   test('Buttons can be disabled', async () => {
+    await searchBox('dis');
     const component = await app.findElementByTestID('disabled_button');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('disabled_button');
     expect(dump).toMatchSnapshot();
+    const alert = await app.findElementByTestID('Popup Window');
+    expect(await alert.isDisplayed()).toBe(false);
   });
   test('Buttons can have accessibility labels', async () => {
+    await searchBox('label');
     const component = await app.findElementByTestID(
       'accessibilityLabel_button',
     );
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('accessibilityLabel_button');
     expect(dump).toMatchSnapshot();
+    await component.click();
+    const alert = await app.findElementByTestID('Popup Window');
+    await alert.isDisplayed();
+    const alertButton = await app.findElementByTestID('Button0');
+    await alertButton.click();
   });
   test('Buttons can have accessibility states', async () => {
+    await searchBox('state');
     const component = await app.findElementByTestID(
       'accessibilityState_button',
     );
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('accessibilityState_button');
     expect(dump).toMatchSnapshot();
+    const alert = await app.findElementByTestID('Popup Window');
+    expect(await alert.isDisplayed()).toBe(false);
   });
   test('Buttons can have accessibility props', async () => {
+    await searchBox('props');
     const component = await app.findElementByTestID('accessibility_props');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('accessibility_props');
     expect(dump).toMatchSnapshot();
+    await component.click();
+    const alert = await app.findElementByTestID('Popup Window');
+    await alert.isDisplayed();
+    const alertButton = await app.findElementByTestID('Button0');
+    await alertButton.click();
+  });
+  test('Buttons can have custom focusable and accessible props', async () => {
+    await searchBox('prop');
+    const componentNotAccessible = await app.findElementByTestID('accessible_false_button');
+    const dump = await dumpVisualTree('accessible_false_button');
+    expect(dump).toMatchSnapshot();
+    const componentNotFocusable = await app.findElementByTestID('focusable_false_button');
+    const dump2 = await dumpVisualTree('focusable_false_button');
+    expect(dump2).toMatchSnapshot();
+    const componentNotAccessibleFocusable = await app.findElementByTestID('accessible_focusable_false_button');
+    const dump3 = await dumpVisualTree('accessible_focusable_false_button');
+    expect(dump3).toMatchSnapshot();
   });
 });
