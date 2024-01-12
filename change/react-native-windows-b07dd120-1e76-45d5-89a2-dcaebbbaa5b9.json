@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adds license header to WindowTextInputNativeComponent.js",
+  "packageName": "react-native-windows",
+  "email": "ericroz@meta.com",
+  "dependentChangeType": "patch"
+}
