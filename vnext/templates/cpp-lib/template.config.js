@@ -16,15 +16,24 @@ const glob = util.promisify(require('glob'));
 
 const templateUtils = require('../templateUtils');
 
-function getExampleInfo(config = {}, options = {}) {
-  const projectPath = config?.root ?? process.cwd();
-  const exampleProjectPath = path.join(projectPath, 'example');
+function resolveArgs(config = {}, options = {}) {
+  const projectRoot = config?.root ?? process.cwd();
 
-  const exists = existsSync(exampleProjectPath);
-  const exProjectConfig = exists
+  const libConfig = {...config};
+  const libOptions = {...options};
+
+  if (libConfig.project?.windows?.project?.projectFile?.startsWith('Error:')) {
+    libConfig.project.windows =
+      templateUtils.getWindowsDependencyConfig(projectRoot);
+  }
+
+  const exampleProjectPath = path.join(projectRoot, 'example');
+
+  const exExists = existsSync(exampleProjectPath);
+  const exProjectConfig = exExists
     ? templateUtils.getWindowsProjectConfig(exampleProjectPath)
     : null;
-  const exOptions = exists
+  const exOptions = exExists
     ? {
         ...options,
         template: 'cpp-app',
@@ -34,42 +43,48 @@ function getExampleInfo(config = {}, options = {}) {
     : null;
 
   return {
-    exists,
-    config: {
+    libConfig,
+    libOptions,
+    exExists,
+    exConfig: {
       root: exampleProjectPath,
       project: {
         windows: exProjectConfig,
       },
     },
-    options: exOptions,
+    exOptions,
   };
 }
 
 const exampleTemplateConfig = require('../cpp-app/template.config');
 
 async function preInstall(config = {}, options = {}) {
-  const exampleInfo = getExampleInfo(config, options);
+  const {exExists, exConfig, exOptions} = resolveArgs(config, options);
 
-  if (exampleInfo.exists) {
-    if (options?.logging) {
+  if (exExists) {
+    if (exOptions?.logging) {
       console.log('Running cpp-app template preInstall() for example...');
     }
-    await exampleTemplateConfig.preInstall(
-      exampleInfo.config,
-      exampleInfo.options,
-    );
+    await exampleTemplateConfig.preInstall(exConfig, exOptions);
   }
 }
 
 async function getFileMappings(config = {}, options = {}) {
-  const {rnwVersion, devMode} = templateUtils.getRnwInfo(config, options);
+  const {libConfig, libOptions, exExists, exConfig, exOptions} = resolveArgs(
+    config,
+    options,
+  );
+
+  const {rnwVersion, devMode} = templateUtils.getRnwInfo(libConfig, libOptions);
 
   const projectName =
-    config?.project?.windows?.project?.projectName ?? options?.name ?? 'MyLib';
-  const namespace = options?.namespace ?? projectName;
+    libConfig?.project?.windows?.projects[0]?.projectName ??
+    libOptions?.name ??
+    'MyLib';
+  const namespace = libOptions?.namespace ?? projectName;
   const namespaceCpp = namespace.replace(/\./g, '::');
   const projectGuid =
-    config?.project?.windows?.project?.projectGuid
+    libConfig?.project?.windows?.projects[0]?.projectGuid
       ?.replace('{', '')
       .replace('}', '') ?? uuid.v4();
   const currentUser = username.sync(); // Gets the current username depending on the platform.
@@ -93,7 +108,7 @@ async function getFileMappings(config = {}, options = {}) {
     projectGuidLower: `{${projectGuid.toLowerCase()}}`,
     projectGuidUpper: `{${projectGuid.toUpperCase()}}`,
 
-    currentUser: currentUser,
+    currentUser,
 
     devMode,
 
@@ -108,8 +123,6 @@ async function getFileMappings(config = {}, options = {}) {
     nodir: true,
   });
 
-  const exampleInfo = getExampleInfo(config, options);
-
   for (const file of templateFiles) {
     const fileMapping = {
       from: path.resolve(__dirname, path.normalize(file)),
@@ -118,7 +131,7 @@ async function getFileMappings(config = {}, options = {}) {
     };
 
     // Don't copy example files if there is no example in the destination
-    if (!exampleInfo.exists && fileMapping.to.startsWith('example')) {
+    if (!exExists && fileMapping.to.startsWith('example')) {
       continue;
     }
 
@@ -143,10 +156,10 @@ async function getFileMappings(config = {}, options = {}) {
   }
 
   // Add the file mappings from the cpp-app template for the example app
-  if (exampleInfo.exists) {
+  if (exExists) {
     const exampleFileMappings = await exampleTemplateConfig.getFileMappings(
-      exampleInfo.config,
-      exampleInfo.options,
+      exConfig,
+      exOptions,
     );
 
     for (const exFileMap of exampleFileMappings) {
@@ -163,13 +176,20 @@ async function getFileMappings(config = {}, options = {}) {
 }
 
 async function postInstall(config = {}, options = {}) {
+  const {libConfig, libOptions, exExists, exConfig, exOptions} = resolveArgs(
+    config,
+    options,
+  );
+
   const projectName =
-    config?.project?.windows?.project?.projectName ?? options?.name ?? 'MyLib';
-  const namespace = options?.namespace ?? projectName;
+    libConfig?.project?.windows?.projects[0]?.projectName ??
+    libOptions?.name ??
+    'MyLib';
+  const namespace = libOptions?.namespace ?? projectName;
   const namespaceCpp = namespace.replace(/\./g, '::');
 
   // Update package.json codegen
-  await templateUtils.updateProjectPackageJson(config, options, {
+  await templateUtils.updateProjectPackageJson(libConfig, libOptions, {
     codegenConfig: {
       windows: {
         namespace: namespaceCpp + 'Codegen',
@@ -179,56 +199,27 @@ async function postInstall(config = {}, options = {}) {
     },
   });
 
-  // Fix babel config's out of date preset
-  await templateUtils.replaceInFile(
-    config,
-    options,
-    'babel.config.js',
-    'module:metro-react-native-babel-preset',
-    'module:@react-native/babel-preset',
-  );
-
-  const exampleInfo = getExampleInfo(config, options);
-
-  if (exampleInfo.exists) {
-    const {rnwVersion} = templateUtils.getRnwInfo(
-      exampleInfo.config,
-      exampleInfo.options,
-    );
+  if (exExists) {
+    const {rnwVersion} = templateUtils.getRnwInfo(exConfig, exOptions);
 
     // Update example package.json with new scripts and dependencies
-    await templateUtils.updateProjectPackageJson(
-      exampleInfo.config,
-      exampleInfo.options,
-      {
-        scripts: {
-          windows: 'react-native run-windows',
-          'test:windows': 'jest --config jest.config.windows.js',
-        },
-        dependencies: {
-          'react-native-windows': rnwVersion,
-        },
-        devDependencies: {
-          '@rnx-kit/jest-preset': '^0.1.16',
-        },
+    await templateUtils.updateProjectPackageJson(exConfig, exOptions, {
+      scripts: {
+        windows: 'react-native run-windows',
+        'test:windows': 'jest --config jest.config.windows.js',
       },
-    );
+      dependencies: {
+        'react-native-windows': rnwVersion,
+      },
+      devDependencies: {
+        '@rnx-kit/jest-preset': '^0.1.16',
+      },
+    });
 
-    // Fix babel config's out of date preset
-    await templateUtils.replaceInFile(
-      exampleInfo.config,
-      exampleInfo.options,
-      'babel.config.js',
-      'module:metro-react-native-babel-preset',
-      'module:@react-native/babel-preset',
-    );
+    // Install recently added dependencies
+    await templateUtils.runNpmInstall(libConfig, libOptions);
 
-    // Install recently added dependencies (doesn't work, uses wrong yarn)
-    //await templateUtils.runNpmInstall(exampleInfo.config, exampleInfo.options);
-
-    console.log(
-      'Run yarn to install new dependencies for the example project.',
-    );
+    console.log("\n  Run 'yarn example windows' start the example project.\n");
   }
 }
 

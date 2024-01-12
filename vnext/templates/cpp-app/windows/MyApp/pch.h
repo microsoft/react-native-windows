@@ -19,7 +19,13 @@
 // WinRT Header Files
 #include <winrt/base.h>
 #include <CppWinRTIncludes.h>
+#include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.ReactNative.h>
+#include <winrt/Microsoft.UI.Composition.h>
+#include <winrt/Microsoft.UI.Content.h>
+#include <winrt/Microsoft.UI.Dispatching.h>
+#include <winrt/Microsoft.UI.Windowing.h>
+#include <winrt/Microsoft.UI.interop.h>
 
 // C RunTime Header Files
 #include <malloc.h>

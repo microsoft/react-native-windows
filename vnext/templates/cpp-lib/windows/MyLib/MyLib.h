@@ -13,8 +13,8 @@
 namespace winrt::{{ namespaceCpp }}
 {
 
-REACT_MODULE({{ name }})
-struct {{ name }}
+REACT_MODULE({{ pascalName }})
+struct {{ pascalName }}
 {
   using ModuleSpec = {{ namespaceCpp }}Codegen::{{ pascalName }}Spec;
 

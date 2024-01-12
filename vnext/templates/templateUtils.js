@@ -17,12 +17,13 @@ const _ = require('lodash');
 const pkgUtils = require('@react-native-windows/package-utils');
 
 const projectConfig = require('@react-native-windows/cli').projectConfig;
+const dependencyConfig = require('@react-native-windows/cli').dependencyConfig;
 
 function getRnwInfo(config = {}, options = {}) {
-  const projectPath = config?.root ?? process.cwd();
+  const projectRoot = config?.root ?? process.cwd();
 
   const rnwPath = path.dirname(
-    require.resolve('react-native-windows', [projectPath]),
+    require.resolve('react-native-windows', [projectRoot]),
   );
 
   const rnwVersion = require(path.join(rnwPath, 'package.json')).version;
@@ -52,6 +53,18 @@ function getWindowsProjectConfig(root) {
   return projectConfig(root, userConfig);
 }
 
+function getWindowsDependencyConfig(root) {
+  if (!existsSync(root)) {
+    return {};
+  }
+
+  const userConfigPath = path.join(root, 'react-native.config.js');
+
+  const userConfig = existsSync(userConfigPath) ? require(userConfigPath) : {};
+
+  return dependencyConfig(root, userConfig);
+}
+
 function pascalCase(str) {
   const camelCase = _.camelCase(str);
   return camelCase[0].toUpperCase() + camelCase.substr(1);
@@ -78,12 +91,12 @@ async function replaceInFile(
 }
 
 async function runNpmInstall(config = {}, options = {}) {
-  const projectPath = config?.root ?? process.cwd();
+  const projectRoot = config?.root ?? process.cwd();
 
   if (options?.logging) {
-    console.log(`Installing dependencies for ${projectPath}...`);
+    console.log(`Installing dependencies for ${projectRoot}...`);
   }
-  const isYarn = existsSync(path.join(projectPath, 'yarn.lock'));
+  const isYarn = existsSync(path.join(projectRoot, 'yarn.lock'));
   await exec(
     isYarn ? 'yarn' : 'npm i',
     options?.logging ? {stdio: 'inherit'} : {},
@@ -91,19 +104,19 @@ async function runNpmInstall(config = {}, options = {}) {
 }
 
 async function updateProjectPackageJson(config = {}, options = {}, props = {}) {
-  const projectPath = config?.root ?? process.cwd();
+  const projectRoot = config?.root ?? process.cwd();
   const projectPackage = await pkgUtils.WritableNpmPackage.fromPath(
-    projectPath,
+    projectRoot,
   );
 
   if (!projectPackage) {
     throw new Error(
-      `The directory '${projectPath}' is not the root of an npm package`,
+      `The directory '${projectRoot}' is not the root of an npm package`,
     );
   }
 
   if (options?.logging) {
-    console.log(`Modifying ${path.join(projectPath, 'package.json')}...`);
+    console.log(`Modifying ${path.join(projectRoot, 'package.json')}...`);
   }
   await projectPackage.mergeProps(props);
 }
@@ -111,6 +124,7 @@ async function updateProjectPackageJson(config = {}, options = {}, props = {}) {
 module.exports = {
   getRnwInfo,
   getWindowsProjectConfig,
+  getWindowsDependencyConfig,
   pascalCase,
   replaceInFile,
   runNpmInstall,

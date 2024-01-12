@@ -3,7 +3,7 @@
 
   <PropertyGroup Label="Microsoft.ReactNative Experimental Features">
     <UseFabric>true</UseFabric>
-    <UseWinUI3>false</UseWinUI3>
+    <UseWinUI3>true</UseWinUI3>
 
     <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
   </PropertyGroup>

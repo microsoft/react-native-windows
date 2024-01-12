@@ -33,6 +33,10 @@ async function getFileMappings(config = {}, options = {}) {
   const packageGuid = uuid.v4();
   const currentUser = username.sync(); // Gets the current username depending on the platform.
 
+  const appJsonPath = path.join(config?.root ?? process.cwd(), 'app.json');
+  const mainComponentName =
+    (existsSync(appJsonPath) ? require(appJsonPath).name : null) ?? projectName;
+
   const cppNugetPackages = [];
 
   const replacements = {
@@ -45,7 +49,7 @@ async function getFileMappings(config = {}, options = {}) {
 
     rnwVersion: rnwVersion,
 
-    mainComponentName: projectName, // TODO: replace with app.json name
+    mainComponentName,
 
     // Visual Studio is very picky about the casing of the guids for projects, project references and the solution
     // https://www.bing.com/search?q=visual+studio+project+guid+casing&cvid=311a5ad7f9fc41089507b24600d23ee7&FORM=ANAB01&PC=U531
@@ -56,7 +60,7 @@ async function getFileMappings(config = {}, options = {}) {
     // packaging and signing variables:
     packageGuidLower: `{${packageGuid.toLowerCase()}}`,
     packageGuidUpper: `{${packageGuid.toUpperCase()}}`,
-    currentUser: currentUser,
+    currentUser,
 
     devMode,
 
