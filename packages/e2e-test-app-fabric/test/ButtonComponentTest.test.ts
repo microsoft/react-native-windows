@@ -131,7 +131,7 @@ describe('Button Tests', () => {
     const componentNotFocusable = await app.findElementByTestID(
       'focusable_false_button',
     );
-    
+
     await componentNotFocusable.waitForDisplayed({timeout: 5000});
     const dump2 = await dumpVisualTree('focusable_false_button');
     expect(dump2).toMatchSnapshot();
