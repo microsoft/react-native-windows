@@ -125,16 +125,20 @@ describe('Button Tests', () => {
     const componentNotAccessible = await app.findElementByTestID(
       'accessible_false_button',
     );
+    await componentNotAccessible.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('accessible_false_button');
     expect(dump).toMatchSnapshot();
     const componentNotFocusable = await app.findElementByTestID(
       'focusable_false_button',
     );
+    
+    await componentNotFocusable.waitForDisplayed({timeout: 5000});
     const dump2 = await dumpVisualTree('focusable_false_button');
     expect(dump2).toMatchSnapshot();
     const componentNotAccessibleFocusable = await app.findElementByTestID(
       'accessible_focusable_false_button',
     );
+    await componentNotAccessibleFocusable.waitForDisplayed({timeout: 5000});
     const dump3 = await dumpVisualTree('accessible_focusable_false_button');
     expect(dump3).toMatchSnapshot();
   });
