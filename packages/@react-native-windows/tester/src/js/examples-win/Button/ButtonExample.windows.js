@@ -72,7 +72,10 @@ exports.examples = [
         <RNTesterThemeContext.Consumer>
           {theme => {
             return (
-              <View style={styles.container} testID="two_button_container" accessible>
+              <View
+                style={styles.container}
+                testID="two_button_container"
+                accessible>
                 <Button
                   onPress={() => onButtonPress('cancelled')}
                   testID="two_cancel_button"
@@ -101,7 +104,10 @@ exports.examples = [
         <RNTesterThemeContext.Consumer>
           {theme => {
             return (
-              <View style={styles.container} testID="three_button_container" accessible>
+              <View
+                style={styles.container}
+                testID="three_button_container"
+                accessible>
                 <Button
                   onPress={() => onButtonPress('cancelled')}
                   testID="three_cancel_button"
