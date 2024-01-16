@@ -49,6 +49,12 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   [webhosthidden]
   [default_interface]
+  unsealed runtimeclass WindowsModalHostComponentView : ComponentView {
+  };
+
+  [experimental]
+  [webhosthidden]
+  [default_interface]
   unsealed runtimeclass ImageComponentView : ComponentView {
   };
 

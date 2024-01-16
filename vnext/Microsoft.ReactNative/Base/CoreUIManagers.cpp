@@ -22,6 +22,7 @@
 #include <Views/SwitchViewManager.h>
 #include <Views/TextInputViewManager.h>
 #include <Views/TextViewManager.h>
+#include <Views/UnimplementedViewManager.h>
 #include <Views/ViewViewManager.h>
 #include <Views/VirtualTextViewManager.h>
 
@@ -33,6 +34,7 @@ void AddStandardViewManagers(
   viewManagers.push_back(std::make_unique<ActivityIndicatorViewManager>(context));
   viewManagers.push_back(std::make_unique<FlyoutViewManager>(context));
   viewManagers.push_back(std::make_unique<ImageViewManager>(context));
+  viewManagers.push_back(std::make_unique<UnimplementedViewManager>(context, L"RCTModalHostView"));
   viewManagers.push_back(std::make_unique<PopupViewManager>(context));
   viewManagers.push_back(std::make_unique<RawTextViewManager>(context));
   viewManagers.push_back(std::make_unique<RootViewManager>(context));
