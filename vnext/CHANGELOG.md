@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 11 Jan 2024 06:14:31 GMT and should not be manually modified.
+This log was last generated on Fri, 12 Jan 2024 06:14:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.752
+
+Fri, 12 Jan 2024 06:14:41 GMT
+
+### Changes
+
+- [Fabric] ScrollViewComponentView should report ContentOffset to its shadownode state (30809111+acoates-ms@users.noreply.github.com)
+- Unfork Yoga (email not defined)
 
 ## 0.0.0-canary.751
 
