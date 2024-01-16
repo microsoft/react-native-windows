@@ -97,10 +97,15 @@ async function runNpmInstall(config = {}, options = {}) {
     console.log(`Installing dependencies for ${projectRoot}...`);
   }
   const isYarn = existsSync(path.join(projectRoot, 'yarn.lock'));
-  await exec(
-    isYarn ? 'yarn' : 'npm i',
-    options?.logging ? {stdio: 'inherit'} : {},
-  );
+  const cmd = isYarn ? 'yarn' : 'npm i';
+
+  try {
+    await exec(cmd, options?.logging ? {stdio: 'inherit'} : {});
+  } catch (ex) {
+    console.log(
+      `Failed to install dependencies for ${projectRoot}. Please run '${cmd}' manually to update the dependencies.`,
+    );
+  }
 }
 
 async function updateProjectPackageJson(config = {}, options = {}, props = {}) {
