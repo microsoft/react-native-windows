@@ -55,8 +55,8 @@ struct BringIntoViewOptions {
 struct ComponentView : public ComponentViewT<ComponentView> {
   virtual std::vector<facebook::react::ComponentDescriptorProvider>
   supplementalComponentDescriptorProviders() noexcept = 0;
-  virtual void mountChildComponentView(ComponentView &childComponentView, uint32_t index) noexcept = 0;
-  virtual void unmountChildComponentView(ComponentView &childComponentView, uint32_t index) noexcept = 0;
+  virtual void mountChildComponentView(const winrt::Microsoft::ReactNative::ComponentView &childComponentView, uint32_t index) noexcept = 0;
+  virtual void unmountChildComponentView(const winrt::Microsoft::ReactNative::ComponentView &childComponentView, uint32_t index) noexcept = 0;
   virtual void updateProps(
       facebook::react::Props::Shared const &props,
       facebook::react::Props::Shared const &oldProps) noexcept = 0;
@@ -73,12 +73,13 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   virtual void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept = 0;
   virtual winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
   rootComponentView() noexcept = 0;
-  virtual void parent(ComponentView *parent) noexcept = 0;
+  virtual void parent(const winrt::Microsoft::ReactNative::ComponentView &parent) noexcept = 0;
   virtual ComponentView *parent() const noexcept = 0;
+  virtual winrt::Microsoft::ReactNative::ComponentView Parent() const noexcept = 0;
+  virtual winrt::IVectorView<winrt::Microsoft::ReactNative::ComponentView> Children() const noexcept = 0;
   virtual void theme(winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme) noexcept = 0;
   virtual winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme() const noexcept = 0;
   virtual void onThemeChanged() noexcept = 0;
-  virtual const std::vector<ComponentView *> &children() const noexcept = 0;
   // Run fn on all children of this node until fn returns true
   // returns true if the fn ever returned true
   virtual bool runOnChildren(bool forward, Mso::Functor<bool(ComponentView &)> &fn) noexcept = 0;

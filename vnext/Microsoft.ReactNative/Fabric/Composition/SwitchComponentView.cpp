@@ -28,13 +28,13 @@ winrt::Microsoft::ReactNative::ComponentView SwitchComponentView::Create(
 }
 
 void SwitchComponentView::mountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
 }
 
 void SwitchComponentView::unmountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
 }

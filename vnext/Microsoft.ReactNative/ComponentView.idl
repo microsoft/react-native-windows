@@ -10,6 +10,8 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   unsealed runtimeclass ComponentView {
     Int32 Tag { get; };
+    ComponentView Parent { get; };
+    IVectorView<ComponentView> Children { get; };
   };
 
 } // namespace Microsoft.ReactNative

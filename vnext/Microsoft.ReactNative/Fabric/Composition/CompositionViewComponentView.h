@@ -47,9 +47,10 @@ struct CompositionBaseComponentView : public ComponentViewT<
   const facebook::react::SharedViewEventEmitter &GetEventEmitter() const noexcept;
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
   RootComponentView *rootComponentView() noexcept override;
-  const std::vector<winrt::Microsoft::ReactNative::implementation::ComponentView *> &children() const noexcept override;
-  void parent(winrt::Microsoft::ReactNative::implementation::ComponentView *parent) noexcept override;
+  void parent(const winrt::Microsoft::ReactNative::ComponentView &parent) noexcept override;
   winrt::Microsoft::ReactNative::implementation::ComponentView *parent() const noexcept override;
+  winrt::Microsoft::ReactNative::ComponentView Parent() const noexcept override;
+  winrt::IVectorView<winrt::Microsoft::ReactNative::ComponentView> Children() const noexcept override;
   facebook::react::Props::Shared props() noexcept override;
   virtual facebook::react::SharedViewProps viewProps() noexcept = 0;
   void theme(winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme) noexcept override;
@@ -134,13 +135,15 @@ struct CompositionBaseComponentView : public ComponentViewT<
   virtual std::string DefaultHelpText() const noexcept;
 
  protected:
+  bool anyHitTestHelper(facebook::react::Tag& targetTag, facebook::react::Point& ptContent, facebook::react::Point& localPt) const noexcept;
+
   winrt::IInspectable m_uiaProvider{nullptr};
   winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
   comp::CompositionPropertySet m_centerPropSet{nullptr};
   const facebook::react::Tag m_tag;
   facebook::react::SharedViewEventEmitter m_eventEmitter;
-  std::vector<winrt::Microsoft::ReactNative::implementation::ComponentView *> m_children;
-  winrt::Microsoft::ReactNative::implementation::ComponentView *m_parent{nullptr};
+  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::ComponentView> m_children{ winrt::single_threaded_vector<winrt::Microsoft::ReactNative::ComponentView>() };
+  winrt::Microsoft::ReactNative::ComponentView m_parent{nullptr};
   RootComponentView *m_rootView{nullptr};
   facebook::react::LayoutMetrics m_layoutMetrics;
   bool m_needsBorderUpdate{false};
@@ -185,10 +188,10 @@ struct CompositionViewComponentView
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void mountChildComponentView(
-      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
   void unmountChildComponentView(
-      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;

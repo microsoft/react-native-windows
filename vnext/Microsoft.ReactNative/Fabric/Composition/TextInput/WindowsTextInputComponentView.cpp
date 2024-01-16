@@ -831,17 +831,15 @@ void WindowsTextInputComponentView::onCharacterReceived(
 }
 
 void WindowsTextInputComponentView::mountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
-    uint32_t index) noexcept {
+    const winrt::Microsoft::ReactNative::ComponentView &/*childComponentView*/,
+    uint32_t /*index*/) noexcept {
   assert(false);
-  // m_element.Children().InsertAt(index, v.Element());
 }
 
 void WindowsTextInputComponentView::unmountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
-    uint32_t index) noexcept {
+    const winrt::Microsoft::ReactNative::ComponentView &/*childComponentView*/,
+    uint32_t /*index*/) noexcept {
   assert(false);
-  // m_element.Children().RemoveAt(index);
 }
 
 void WindowsTextInputComponentView::onFocusLost() noexcept {
