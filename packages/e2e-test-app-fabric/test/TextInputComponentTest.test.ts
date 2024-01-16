@@ -644,7 +644,35 @@ describe('TextInput Tests', () => {
   test('TextInputs can have caretHidden', async () => {
     const component = await app.findElementByTestID('textinput-carethidden');
     await component.waitForDisplayed({timeout: 5000});
+    await app.waitUntil(
+      async () => {
+        await component.setValue('Hello World');
+        return (await component.getText()) === 'Hello World';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
     const dump = await dumpVisualTree('textinput-carethidden');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Text have cursorColor', async () => {
+    const component = await app.findElementByTestID('textinput-cursorColor');
+    await component.waitForDisplayed({timeout: 5000});
+    await app.waitUntil(
+      async () => {
+        await component.setValue('Hello World');
+        return (await component.getText()) === 'Hello World';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
+    const dump = await dumpVisualTree('textinput-cursorColor');
     expect(dump).toMatchSnapshot();
   });
 });
