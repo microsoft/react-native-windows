@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix license header in file overrides",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
