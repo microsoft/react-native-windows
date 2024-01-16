@@ -219,7 +219,9 @@ async function postInstall(config = {}, options = {}) {
     // Install recently added dependencies
     await templateUtils.runNpmInstall(libConfig, libOptions);
 
-    console.log("\n  Run 'yarn example windows' start the example project.\n");
+    console.log(
+      '\nRun the example app on Windows:\n\n  > yarn example windows\n',
+    );
   }
 }
 
