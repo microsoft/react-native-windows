@@ -26,10 +26,10 @@ struct UnimplementedNativeViewComponentView
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void mountChildComponentView(
-      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
   void unmountChildComponentView(
-      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
 
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept

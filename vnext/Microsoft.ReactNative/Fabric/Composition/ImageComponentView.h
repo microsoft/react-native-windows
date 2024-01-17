@@ -37,10 +37,10 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, CompositionB
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void mountChildComponentView(
-      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
   void unmountChildComponentView(
-      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;

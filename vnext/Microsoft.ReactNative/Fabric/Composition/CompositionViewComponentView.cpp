@@ -43,22 +43,16 @@ RootComponentView *CompositionBaseComponentView::rootComponentView() noexcept {
     return m_rootView;
 
   if (m_parent)
-    return m_parent->rootComponentView();
+    return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->rootComponentView();
 
   return nullptr;
-}
-
-const std::vector<winrt::Microsoft::ReactNative::implementation::ComponentView *>
-    &CompositionBaseComponentView::children() const noexcept {
-  return m_children;
 }
 
 facebook::react::Props::Shared CompositionBaseComponentView::props() noexcept {
   return viewProps();
 }
 
-void CompositionBaseComponentView::parent(
-    winrt::Microsoft::ReactNative::implementation::ComponentView *parent) noexcept {
+void CompositionBaseComponentView::parent(const winrt::Microsoft::ReactNative::ComponentView &parent) noexcept {
   if (!parent) {
     auto root = rootComponentView();
     winrt::Microsoft::ReactNative::ComponentView view{nullptr};
@@ -73,20 +67,25 @@ void CompositionBaseComponentView::parent(
     m_rootView = nullptr;
     m_parent = parent;
     if (parent) {
-      theme(parent->theme());
+      theme(winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parent)->theme());
     }
   }
 }
 
-winrt::Microsoft::ReactNative::implementation::ComponentView *CompositionBaseComponentView::parent() const noexcept {
+winrt::Microsoft::ReactNative::ComponentView CompositionBaseComponentView::Parent() const noexcept {
   return m_parent;
+}
+
+winrt::IVectorView<winrt::Microsoft::ReactNative::ComponentView> CompositionBaseComponentView::Children()
+    const noexcept {
+  return m_children.GetView();
 }
 
 void CompositionBaseComponentView::theme(
     winrt::Microsoft::ReactNative::Composition::implementation::Theme *value) noexcept {
   if (m_theme != value) {
     for (auto it = m_children.begin(); it != m_children.end(); ++it) {
-      (*it)->theme(value);
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)->theme(value);
     }
 
     m_theme = value;
@@ -125,12 +124,13 @@ bool CompositionBaseComponentView::runOnChildren(
     Mso::Functor<bool(winrt::Microsoft::ReactNative::implementation::ComponentView &)> &fn) noexcept {
   if (forward) {
     for (auto it = m_children.begin(); it != m_children.end(); ++it) {
-      if (fn(**it))
+      if (fn(*winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)))
         return true;
     }
   } else {
-    for (auto it = m_children.rbegin(); it != m_children.rend(); ++it) {
-      if (fn(**it))
+    // TODO is this conversion from rend correct?
+    for (auto it = m_children.end(); it != m_children.begin(); --it) {
+      if (fn(*winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)))
         return true;
     }
   }
@@ -208,7 +208,8 @@ void CompositionBaseComponentView::StartBringIntoView(
   if (m_parent) {
     options.TargetRect->origin.y += m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor;
     options.TargetRect->origin.x += m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor;
-    m_parent->StartBringIntoView(std::move(options));
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->StartBringIntoView(
+        std::move(options));
   }
 }
 
@@ -237,7 +238,7 @@ void CompositionBaseComponentView::onKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (m_parent && !args.Handled()) {
-    m_parent->onKeyDown(source, args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onKeyDown(source, args);
   }
 }
 
@@ -245,7 +246,7 @@ void CompositionBaseComponentView::onKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (m_parent && !args.Handled()) {
-    m_parent->onKeyUp(source, args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onKeyUp(source, args);
   }
 }
 
@@ -253,49 +254,51 @@ void CompositionBaseComponentView::onCharacterReceived(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
   if (m_parent && !args.Handled()) {
-    m_parent->onCharacterReceived(source, args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onCharacterReceived(
+        source, args);
   }
 }
 
 void CompositionBaseComponentView::onPointerEntered(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   if (m_parent && !args.Handled()) {
-    m_parent->onPointerEntered(args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onPointerEntered(args);
   }
 }
 
 void CompositionBaseComponentView::onPointerExited(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   if (m_parent && !args.Handled()) {
-    m_parent->onPointerExited(args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onPointerExited(args);
   }
 }
 
 void CompositionBaseComponentView::onPointerPressed(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   if (m_parent && !args.Handled()) {
-    m_parent->onPointerPressed(args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onPointerPressed(args);
   }
 }
 
 void CompositionBaseComponentView::onPointerReleased(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   if (m_parent && !args.Handled()) {
-    m_parent->onPointerReleased(args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onPointerReleased(args);
   }
 }
 
 void CompositionBaseComponentView::onPointerMoved(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   if (m_parent && !args.Handled()) {
-    m_parent->onPointerMoved(args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onPointerMoved(args);
   }
 }
 
 void CompositionBaseComponentView::onPointerWheelChanged(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   if (m_parent && !args.Handled()) {
-    m_parent->onPointerWheelChanged(args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onPointerWheelChanged(
+        args);
   }
 }
 
@@ -303,7 +306,8 @@ RECT CompositionBaseComponentView::getClientRect() const noexcept {
   RECT rc{0};
   facebook::react::Point parentOffset{0};
   if (m_parent) {
-    parentOffset = m_parent->getClientOffset();
+    parentOffset =
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->getClientOffset();
   }
 
   rc.left = static_cast<LONG>((m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor) + parentOffset.x);
@@ -316,7 +320,8 @@ RECT CompositionBaseComponentView::getClientRect() const noexcept {
 facebook::react::Point CompositionBaseComponentView::getClientOffset() const noexcept {
   facebook::react::Point parentOffset{0};
   if (m_parent) {
-    parentOffset = m_parent->getClientOffset();
+    parentOffset =
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->getClientOffset();
   }
 
   return {
@@ -1462,6 +1467,24 @@ bool CompositionBaseComponentView::focusable() const noexcept {
   return false;
 }
 
+bool CompositionBaseComponentView::anyHitTestHelper(
+    facebook::react::Tag &targetTag,
+    facebook::react::Point &ptContent,
+    facebook::react::Point &localPt) const noexcept {
+  if (auto index = m_children.Size()) {
+    do {
+      index--;
+      targetTag = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_children.GetAt(index))
+                      ->hitTest(ptContent, localPt);
+      if (targetTag != -1) {
+        return true;
+      }
+    } while (index != 0);
+  }
+
+  return false;
+}
+
 std::string CompositionBaseComponentView::DefaultControlType() const noexcept {
   return "group";
 }
@@ -1493,26 +1516,26 @@ winrt::Microsoft::ReactNative::ComponentView CompositionViewComponentView::Creat
 }
 
 void CompositionViewComponentView::mountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  m_children.insert(std::next(m_children.begin(), index), &childComponentView);
+  m_children.InsertAt(index, childComponentView);
 
   indexOffsetForBorder(index);
 
-  childComponentView.parent(this);
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(*this);
 
-  m_visual.InsertAt(static_cast<CompositionBaseComponentView &>(childComponentView).OuterVisual(), index);
+  m_visual.InsertAt(childComponentView.as<CompositionBaseComponentView>()->OuterVisual(), index);
 }
 
 void CompositionViewComponentView::unmountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  m_children.erase(std::next(m_children.begin(), index));
+  m_children.RemoveAt(index);
 
   indexOffsetForBorder(index);
 
-  childComponentView.parent(nullptr);
-  m_visual.Remove(static_cast<CompositionBaseComponentView &>(childComponentView).OuterVisual());
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(nullptr);
+  m_visual.Remove(childComponentView.as<CompositionBaseComponentView>()->OuterVisual());
 }
 
 void CompositionViewComponentView::updateProps(
@@ -1564,10 +1587,7 @@ facebook::react::Tag CompositionViewComponentView::hitTest(
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
-      std::any_of(m_children.rbegin(), m_children.rend(), [&targetTag, &ptLocal, &localPt](auto child) {
-        targetTag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptLocal, localPt);
-        return targetTag != -1;
-      }))
+      anyHitTestHelper(targetTag, ptLocal, localPt))
     return targetTag;
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
@@ -1731,20 +1751,22 @@ winrt::Microsoft::ReactNative::implementation::ClipState CompositionBaseComponen
   }
 
   RECT intersection;
-  const auto parentRect = m_parent->getClientRect();
+  const auto parentRect =
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->getClientRect();
   const auto clientRect = getClientRect();
 
   IntersectRect(&intersection, parentRect, clientRect);
 
   if (intersection == clientRect) {
-    return m_parent->getClipState();
+    return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->getClipState();
   }
 
   if (((intersection.right - intersection.left) == 0) && ((intersection.bottom - intersection.top) == 0)) {
     return winrt::Microsoft::ReactNative::implementation::ClipState::FullyClipped;
   }
 
-  if (m_parent->getClipState() == winrt::Microsoft::ReactNative::implementation::ClipState::FullyClipped) {
+  if (winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->getClipState() ==
+      winrt::Microsoft::ReactNative::implementation::ClipState::FullyClipped) {
     return winrt::Microsoft::ReactNative::implementation::ClipState::FullyClipped;
   }
 
@@ -1755,75 +1777,66 @@ winrt::Microsoft::ReactNative::implementation::ClipState CompositionBaseComponen
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-winrt::Microsoft::ReactNative::implementation::ComponentView *lastDeepChild(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &view) noexcept {
-  auto current = &view;
+winrt::Microsoft::ReactNative::ComponentView lastDeepChild(
+    const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+  auto current = view;
   while (current) {
-    auto children = current->children();
-    auto itLastChild = children.rbegin();
-    if (itLastChild == children.rend()) {
+    auto children = current.Children();
+    if (children.Size() == 0)
       break;
-    }
-    current = *itLastChild;
+    current = children.GetAt(children.Size() - 1);
   }
   return current;
 }
 
 bool walkTree(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &view,
+    const winrt::Microsoft::ReactNative::ComponentView &view,
     bool forward,
     Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> &fn) noexcept {
-  winrt::Microsoft::ReactNative::ComponentView v{nullptr};
   if (forward) {
-    winrt::check_hresult(
-        view.QueryInterface(winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(v)));
-    if (fn(v)) {
+    if (fn(view)) {
       return true;
     }
 
-    for (auto it = view.children().begin(); it != view.children().end(); ++it) {
-      return walkTree(**it, forward, fn);
+    for (auto it = view.Children().begin(); it != view.Children().end(); ++it) {
+      return walkTree(*it, forward, fn);
     }
 
-    auto current = &view;
-    auto parent = current->parent();
+    auto current = view;
+    auto parent = current.Parent();
     while (parent) {
-      auto &parentsChildren = parent->children();
+      auto parentsChildren = parent.Children();
       auto itNextView = std::find(parentsChildren.begin(), parentsChildren.end(), current);
       assert(itNextView != parentsChildren.end());
       ++itNextView;
       if (itNextView != parentsChildren.end()) {
-        return walkTree(**itNextView, true, fn);
+        return walkTree(*itNextView, true, fn);
       }
       current = parent;
-      parent = current->parent();
+      parent = current.Parent();
     }
 
   } else {
-    auto current = &view;
-    auto parent = current->parent();
+    auto current = view;
+    auto parent = current.Parent();
     while (parent) {
-      auto &parentsChildren = parent->children();
-      auto itNextView = std::find(parentsChildren.rbegin(), parentsChildren.rend(), current);
-      assert(itNextView != parentsChildren.rend());
-      auto index = std::distance(parentsChildren.rbegin(), itNextView);
-      ++itNextView;
-      if (itNextView != parentsChildren.rend()) {
-        auto lastChild = lastDeepChild(**itNextView);
-        winrt::check_hresult(lastChild->QueryInterface(
-            winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(v)));
-        if (fn(v))
+      auto parentsChildren = parent.Children();
+      uint32_t index;
+      bool success = parent.Children().IndexOf(current, index);
+      assert(success);
+      --index;
+      if (index >= 0) {
+        auto lastChild = lastDeepChild(parent.Children().GetAt(index));
+        if (fn(lastChild))
           return true;
-        return walkTree(*lastChild, false, fn);
+        return walkTree(lastChild, false, fn);
       }
 
-      winrt::check_hresult(
-          parent->QueryInterface(winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(v)));
-      if (fn(v)) {
+      if (fn(parent)) {
         return true;
       }
       current = parent;
-      parent = current->parent();
+      parent = current.Parent();
     }
   }
   return false;
