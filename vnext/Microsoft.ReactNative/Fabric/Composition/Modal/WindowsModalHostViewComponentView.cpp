@@ -29,14 +29,14 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
 }
 
 void WindowsModalHostComponentView::mountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
-    uint32_t index) noexcept {
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {
   // assert(false);
 }
 
 void WindowsModalHostComponentView::unmountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
-    uint32_t index) noexcept {
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {
   // assert(false);
 }
 
