@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 17 Jan 2024 06:16:31 GMT",
+      "version": "0.0.0-canary.753",
+      "tag": "react-native-windows_v0.0.0-canary.753",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "b5979b92e88b5f82450f6c1d7dd8df0f4232ed7d",
+            "comment": "Fix license header in file overrides"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "37aa1b8b13b2bcc2cdcce7ac16b5bf90f9b77e57",
+            "comment": "add inital files for Fabric's Modal"
+          },
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "6e76b0198a0d7058584b2ac3637bb40a4a65e63c",
+            "comment": "Modules in react-native use relative imports"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Jan 2024 06:14:41 GMT",
       "version": "0.0.0-canary.752",
       "tag": "react-native-windows_v0.0.0-canary.752",

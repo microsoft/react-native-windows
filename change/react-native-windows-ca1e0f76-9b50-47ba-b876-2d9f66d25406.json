@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Modules in react-native use relative imports",
-  "packageName": "react-native-windows",
-  "email": "ericroz@meta.com",
-  "dependentChangeType": "patch"
-}

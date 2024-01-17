@@ -2,6 +2,21 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Wed, 17 Jan 2024 06:16:32 GMT",
+      "version": "0.1.194",
+      "tag": "@react-native-windows/automation-commands_v0.1.194",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.92",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Jan 2024 06:14:41 GMT",
       "version": "0.1.193",
       "tag": "@react-native-windows/automation-commands_v0.1.193",

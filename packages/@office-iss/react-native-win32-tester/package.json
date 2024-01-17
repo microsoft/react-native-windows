@@ -17,12 +17,12 @@
     "flow-enums-runtime": "^0.0.5"
   },
   "peerDependencies": {
-    "@office-iss/react-native-win32": "^0.0.0-canary.225",
+    "@office-iss/react-native-win32": "^0.0.0-canary.226",
     "react": "18.0.0",
     "react-native": "0.74.0-nightly-20231116-fa89dd68b"
   },
   "devDependencies": {
-    "@office-iss/react-native-win32": "^0.0.0-canary.225",
+    "@office-iss/react-native-win32": "^0.0.0-canary.226",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.4",
     "@rnw-scripts/just-task": "2.3.18",
