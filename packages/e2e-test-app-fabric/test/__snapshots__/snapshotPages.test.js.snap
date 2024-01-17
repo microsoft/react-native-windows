@@ -6993,12 +6993,14 @@ exports[`snapshotAllPages Button 2`] = `
 
 exports[`snapshotAllPages Button 3`] = `
 <View
+  accessible={true}
   style={
     {
       "flexDirection": "row",
       "justifyContent": "space-between",
     }
   }
+  testID="two_button_container"
 >
   <View
     accessibilityLabel="Press to cancel your application!"
@@ -7187,12 +7189,14 @@ exports[`snapshotAllPages Button 3`] = `
 
 exports[`snapshotAllPages Button 4`] = `
 <View
+  accessible={true}
   style={
     {
       "flexDirection": "row",
       "justifyContent": "space-between",
     }
   }
+  testID="three_button_container"
 >
   <View
     accessibilityLabel="Press to cancel your application!"
@@ -7940,7 +7944,7 @@ exports[`snapshotAllPages Button 9`] = `
         },
       ]
     }
-    testID="accessibility_props"
+    testID="default_button"
   >
     <View
       style={{}}
@@ -8024,7 +8028,7 @@ exports[`snapshotAllPages Button 9`] = `
         },
       ]
     }
-    testID="accessibility_props"
+    testID="accessible_false_button"
   >
     <View
       style={{}}
@@ -8108,7 +8112,7 @@ exports[`snapshotAllPages Button 9`] = `
         },
       ]
     }
-    testID="accessibility_props"
+    testID="focusable_false_button"
   >
     <View
       style={{}}
@@ -8192,7 +8196,7 @@ exports[`snapshotAllPages Button 9`] = `
         },
       ]
     }
-    testID="accessibility_props"
+    testID="accessible_focusable_false_button"
   >
     <View
       style={{}}
