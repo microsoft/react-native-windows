@@ -153,6 +153,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)DevSupportManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutorFactory.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Hasher.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.cpp" />

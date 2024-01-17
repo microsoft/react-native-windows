@@ -264,6 +264,7 @@
       <Filter>Hermes</Filter>
     </ClCompile>
     <ClCompile Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Hasher.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp" />
