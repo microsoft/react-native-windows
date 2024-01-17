@@ -72,10 +72,6 @@ void CompositionBaseComponentView::parent(const winrt::Microsoft::ReactNative::C
   }
 }
 
-winrt::Microsoft::ReactNative::implementation::ComponentView *CompositionBaseComponentView::parent() const noexcept {
-  return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent);
-}
-
 winrt::Microsoft::ReactNative::ComponentView CompositionBaseComponentView::Parent() const noexcept {
   return m_parent;
 }
@@ -1475,12 +1471,15 @@ bool CompositionBaseComponentView::anyHitTestHelper(
     facebook::react::Tag &targetTag,
     facebook::react::Point &ptContent,
     facebook::react::Point &localPt) const noexcept {
-  for (auto it = m_children.end(); it != m_children.begin(); --it) {
-    targetTag =
-        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)->hitTest(ptContent, localPt);
-    if (targetTag != -1) {
-      return true;
-    }
+  if (auto index = m_children.Size()) {
+    do {
+      index--;
+      targetTag = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_children.GetAt(index))
+                      ->hitTest(ptContent, localPt);
+      if (targetTag != -1) {
+        return true;
+      }
+    } while (index != 0);
   }
 
   return false;

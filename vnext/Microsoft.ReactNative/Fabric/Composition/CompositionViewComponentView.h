@@ -48,7 +48,6 @@ struct CompositionBaseComponentView : public ComponentViewT<
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
   RootComponentView *rootComponentView() noexcept override;
   void parent(const winrt::Microsoft::ReactNative::ComponentView &parent) noexcept override;
-  winrt::Microsoft::ReactNative::implementation::ComponentView *parent() const noexcept override;
   winrt::Microsoft::ReactNative::ComponentView Parent() const noexcept override;
   winrt::IVectorView<winrt::Microsoft::ReactNative::ComponentView> Children() const noexcept override;
   facebook::react::Props::Shared props() noexcept override;

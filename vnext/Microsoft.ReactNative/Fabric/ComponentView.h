@@ -78,7 +78,6 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   virtual winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
   rootComponentView() noexcept = 0;
   virtual void parent(const winrt::Microsoft::ReactNative::ComponentView &parent) noexcept = 0;
-  virtual ComponentView *parent() const noexcept = 0;
   virtual winrt::Microsoft::ReactNative::ComponentView Parent() const noexcept = 0;
   virtual winrt::IVectorView<winrt::Microsoft::ReactNative::ComponentView> Children() const noexcept = 0;
   virtual void theme(winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme) noexcept = 0;
