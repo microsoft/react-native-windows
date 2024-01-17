@@ -74844,6 +74844,24 @@ exports[`snapshotAllPages TextInput 37`] = `
 </View>
 `;
 
+exports[`snapshotAllPages TextInput 38`] = `
+<View>
+  <Text>
+    Cursorcolor
+  </Text>
+  <TextInput
+    cursorColor="green"
+    placeholder="cursorColor={"green"}"
+    style={
+      {
+        "fontSize": 16,
+      }
+    }
+    testID="textinput-cursorColor"
+  />
+</View>
+`;
+
 exports[`snapshotAllPages TextInputs with key prop 1`] = `
 <View>
   <TextInput
