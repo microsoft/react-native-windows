@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Add checksum to ScriptStore cache",
+  "packageName": "react-native-windows",
+  "email": "tudor.mihai@microsoft.com",
+  "dependentChangeType": "patch"
+}
