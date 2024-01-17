@@ -13,8 +13,15 @@
 
 #include <Fabric/Composition/Theme.h>
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
+#include <winrt/Microsoft.ReactNative.h>
 
-namespace Microsoft::ReactNative {
+#include "ComponentView.g.h"
+
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
+struct RootComponentView;
+}
+
+namespace winrt::Microsoft::ReactNative::implementation {
 
 enum class RNComponentViewUpdateMask : std::uint_fast8_t {
   None = 0,
@@ -34,8 +41,6 @@ enum class ClipState : std::uint_fast8_t {
 
 DEFINE_ENUM_FLAG_OPERATORS(RNComponentViewUpdateMask);
 
-struct RootComponentView;
-
 struct BringIntoViewOptions {
   bool AnimationDesired{false};
   // NaN will bring the element fully into view aligned to the nearest edge of the viewport
@@ -47,11 +52,11 @@ struct BringIntoViewOptions {
   float VerticalOffset{0};
 };
 
-struct IComponentView {
+struct ComponentView : public ComponentViewT<ComponentView> {
   virtual std::vector<facebook::react::ComponentDescriptorProvider>
   supplementalComponentDescriptorProviders() noexcept = 0;
-  virtual void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept = 0;
-  virtual void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept = 0;
+  virtual void mountChildComponentView(ComponentView &childComponentView, uint32_t index) noexcept = 0;
+  virtual void unmountChildComponentView(ComponentView &childComponentView, uint32_t index) noexcept = 0;
   virtual void updateProps(
       facebook::react::Props::Shared const &props,
       facebook::react::Props::Shared const &oldProps) noexcept = 0;
@@ -66,16 +71,17 @@ struct IComponentView {
   virtual void prepareForRecycle() noexcept = 0;
   virtual facebook::react::Props::Shared props() noexcept = 0;
   virtual void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept = 0;
-  virtual RootComponentView *rootComponentView() noexcept = 0;
-  virtual void parent(IComponentView *parent) noexcept = 0;
-  virtual IComponentView *parent() const noexcept = 0;
+  virtual winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
+  rootComponentView() noexcept = 0;
+  virtual void parent(ComponentView *parent) noexcept = 0;
+  virtual ComponentView *parent() const noexcept = 0;
   virtual void theme(winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme) noexcept = 0;
   virtual winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme() const noexcept = 0;
   virtual void onThemeChanged() noexcept = 0;
-  virtual const std::vector<IComponentView *> &children() const noexcept = 0;
+  virtual const std::vector<ComponentView *> &children() const noexcept = 0;
   // Run fn on all children of this node until fn returns true
   // returns true if the fn ever returned true
-  virtual bool runOnChildren(bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept = 0;
+  virtual bool runOnChildren(bool forward, Mso::Functor<bool(ComponentView &)> &fn) noexcept = 0;
   virtual RECT getClientRect() const noexcept = 0;
   // The offset from this elements parent to its children (accounts for things like scroll position)
   virtual facebook::react::Point getClientOffset() const noexcept = 0;
@@ -105,7 +111,7 @@ struct IComponentView {
   virtual bool focusable() const noexcept = 0;
   virtual facebook::react::SharedViewEventEmitter eventEmitterAtPoint(facebook::react::Point pt) noexcept = 0;
   virtual facebook::react::SharedViewEventEmitter eventEmitter() noexcept = 0;
-  virtual facebook::react::Tag tag() const noexcept = 0;
+  virtual facebook::react::Tag Tag() const noexcept = 0;
   // By default, hitTests according the pointerEvents prop on the Component.
   // If ignorePointerEvents = true, all Components are treated as valid targets
   virtual facebook::react::Tag hitTest(
@@ -124,6 +130,9 @@ struct IComponentView {
 
 // Run fn on all nodes of the component view tree starting from this one until fn returns true
 // returns true if the fn ever returned true
-bool walkTree(IComponentView &view, bool forward, Mso::Functor<bool(IComponentView &)> &fn) noexcept;
+bool walkTree(
+    ComponentView &view,
+    bool forward,
+    Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> &fn) noexcept;
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::implementation

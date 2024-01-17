@@ -15,20 +15,25 @@ namespace Microsoft::ReactNative {
  * changed from the one provided at initialization time (i.e. recycled).
  */
 struct ReactTaggedView {
-  ReactTaggedView(const std::shared_ptr<IComponentView> &componentView)
-      : m_view(componentView), m_tag(componentView->tag()) {}
+  ReactTaggedView(const winrt::Microsoft::ReactNative::ComponentView &componentView)
+      : m_view(componentView), m_tag(componentView.Tag()) {}
 
-  std::shared_ptr<IComponentView> view() noexcept {
-    auto strongView = m_view.lock();
-    if (!m_view.expired() && strongView->tag() != m_tag) {
-      m_view.reset();
+  winrt::Microsoft::ReactNative::ComponentView view() noexcept {
+    if (!m_view) {
+      return nullptr;
     }
+
+    auto strongView = m_view.get();
+    if (!strongView || strongView.Tag() != m_tag) {
+      m_view = nullptr;
+    }
+
     return strongView;
   }
 
  private:
   facebook::react::Tag m_tag;
-  std::weak_ptr<IComponentView> m_view;
+  winrt::weak_ref<winrt::Microsoft::ReactNative::ComponentView> m_view;
 };
 
 } // namespace Microsoft::ReactNative

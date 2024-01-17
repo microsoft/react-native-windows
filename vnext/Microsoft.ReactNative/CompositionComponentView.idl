@@ -1,0 +1,85 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "ComponentView.idl";
+import "Theme.idl";
+import "ViewProps.idl";
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative.Composition
+{
+
+  [experimental]
+  [webhosthidden]
+  unsealed runtimeclass ComponentView : Microsoft.ReactNative.ComponentView {
+    Theme Theme;
+  };
+
+  [experimental]
+  [webhosthidden]
+  unsealed runtimeclass ViewComponentView : ComponentView {
+    Microsoft.ReactNative.ViewProps ViewProps { get; };
+  };
+
+  [experimental]
+  [webhosthidden]
+  [default_interface]
+  unsealed runtimeclass SwitchComponentView : ComponentView {
+  };
+
+  [experimental]
+  [webhosthidden]
+  [default_interface]
+  unsealed runtimeclass RootComponentView : ViewComponentView {
+  };
+
+  [experimental]
+  [webhosthidden]
+  [default_interface]
+  unsealed runtimeclass AbiCompositionViewComponentView : ComponentView {
+  };
+
+  [experimental]
+  [webhosthidden]
+  [default_interface]
+  unsealed runtimeclass ActivityIndicatorComponentView : ComponentView {
+  };
+
+  [experimental]
+  [webhosthidden]
+  [default_interface]
+  unsealed runtimeclass WindowsModalHostComponentView : ComponentView {
+  };
+
+  [experimental]
+  [webhosthidden]
+  [default_interface]
+  unsealed runtimeclass ImageComponentView : ComponentView {
+  };
+
+  [experimental]
+  [webhosthidden]
+  [default_interface]
+  unsealed runtimeclass ParagraphComponentView : ComponentView {
+  };
+
+  [experimental]
+  [webhosthidden]
+  [default_interface]
+  unsealed runtimeclass ScrollViewComponentView : ComponentView {
+  };
+
+  [experimental]
+  [webhosthidden]
+  [default_interface]
+  unsealed runtimeclass UnimplementedNativeViewComponentView : ComponentView {
+  };
+
+  [experimental]
+  [webhosthidden]
+  [default_interface]
+  unsealed runtimeclass WindowsTextInputComponentView : ComponentView {
+  };
+  
+} // namespace Microsoft.ReactNative

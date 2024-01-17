@@ -6,24 +6,27 @@
 
 #include <Fabric/ComponentView.h>
 
+#include "Composition.SwitchComponentView.g.h"
 #include "CompositionViewComponentView.h"
 
 #include <react/components/rnwcore/ShadowNodes.h>
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-struct SwitchComponentView;
+struct SwitchComponentView : SwitchComponentViewT<SwitchComponentView, CompositionBaseComponentView> {
+  using Super = SwitchComponentViewT<SwitchComponentView, CompositionBaseComponentView>;
 
-struct SwitchComponentView : CompositionBaseComponentView {
-  using Super = CompositionBaseComponentView;
-
-  [[nodiscard]] static std::shared_ptr<SwitchComponentView> Create(
+  [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
-  void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
-  void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
+  void mountChildComponentView(
+      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      uint32_t index) noexcept override;
+  void unmountChildComponentView(
+      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      uint32_t index) noexcept override;
   void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
@@ -32,7 +35,8 @@ struct SwitchComponentView : CompositionBaseComponentView {
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
-  void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
+  void finalizeUpdates(
+      winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::SharedViewProps viewProps() noexcept override;
   bool focusable() const noexcept override;
@@ -54,12 +58,12 @@ struct SwitchComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   std::string DefaultControlType() const noexcept override;
 
- private:
   SwitchComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
+ private:
   void ensureVisual() noexcept;
   void Draw() noexcept;
   void ensureDrawingSurface() noexcept;
@@ -74,4 +78,4 @@ struct SwitchComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual m_thumbVisual;
 };
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

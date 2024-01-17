@@ -19,8 +19,7 @@
         "packages/@react-native-windows/tester",
         "packages/react-native-platform-override/src/e2etest/collateral",
         "vnext/Folly/TEMP_UntilFollyUpdate",
-        "vnext/ReactCommon/TEMP_UntilReactCommonUpdate",
-        "vnext/ReactCommon/Yoga.cpp"
+        "vnext/ReactCommon/TEMP_UntilReactCommonUpdate"
     ],
     "useGitignore": true,
     "ignoreRegExpList": [

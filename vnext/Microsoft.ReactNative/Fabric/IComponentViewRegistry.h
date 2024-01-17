@@ -12,7 +12,7 @@
 namespace Microsoft::ReactNative {
 
 struct ComponentViewDescriptor final {
-  std::shared_ptr<IComponentView> view{nullptr};
+  winrt::Microsoft::ReactNative::ComponentView view{nullptr};
 };
 
 struct IComponentViewRegistry {
@@ -24,7 +24,8 @@ struct IComponentViewRegistry {
       facebook::react::Tag tag,
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext) noexcept = 0;
   virtual ComponentViewDescriptor const &componentViewDescriptorWithTag(facebook::react::Tag tag) const noexcept = 0;
-  virtual std::shared_ptr<IComponentView> findComponentViewWithTag(facebook::react::Tag tag) const noexcept = 0;
+  virtual winrt::Microsoft::ReactNative::ComponentView findComponentViewWithTag(
+      facebook::react::Tag tag) const noexcept = 0;
   virtual void enqueueComponentViewWithComponentHandle(
       facebook::react::ComponentHandle componentHandle,
       facebook::react::Tag tag,

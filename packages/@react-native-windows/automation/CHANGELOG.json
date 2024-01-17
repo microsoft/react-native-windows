@@ -2,6 +2,66 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Wed, 17 Jan 2024 06:16:32 GMT",
+      "version": "0.3.174",
+      "tag": "@react-native-windows/automation_v0.3.174",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.92",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 Jan 2024 06:14:41 GMT",
+      "version": "0.3.173",
+      "tag": "@react-native-windows/automation_v0.3.173",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.91",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 11 Jan 2024 06:14:31 GMT",
+      "version": "0.3.172",
+      "tag": "@react-native-windows/automation_v0.3.172",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.90",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Jan 2024 06:13:20 GMT",
+      "version": "0.3.171",
+      "tag": "@react-native-windows/automation_v0.3.171",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.89",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Jan 2024 06:15:55 GMT",
       "version": "0.3.170",
       "tag": "@react-native-windows/automation_v0.3.170",

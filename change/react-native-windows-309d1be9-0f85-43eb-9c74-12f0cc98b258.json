@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Normalizes headers for clang builds",
-  "packageName": "react-native-windows",
-  "email": "ericroz@meta.com",
-  "dependentChangeType": "patch"
-}

@@ -11,14 +11,14 @@
 #pragma warning(push)
 #pragma warning(disable : 4305)
 #include <react/renderer/components/scrollview/ScrollViewProps.h>
+#include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
 #pragma warning(pop)
+#include "Composition.ScrollViewComponentView.g.h"
 #include <winrt/Windows.UI.Composition.interactions.h>
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-struct ScrollViewComponentView;
-
-struct ScrollViewComponentView : CompositionBaseComponentView {
+struct ScrollViewComponentView : ScrollViewComponentViewT<ScrollViewComponentView, CompositionBaseComponentView> {
   /*
 struct ScrollInteractionTrackerOwner : public winrt::implements<
                                            ScrollInteractionTrackerOwner,
@@ -49,16 +49,19 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
 };
 
 */
+  using Super = ScrollViewComponentViewT<ScrollViewComponentView, CompositionBaseComponentView>;
 
-  using Super = CompositionBaseComponentView;
-
-  [[nodiscard]] static std::shared_ptr<ScrollViewComponentView> Create(
+  [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
-  void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
-  void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
+  void mountChildComponentView(
+      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      uint32_t index) noexcept override;
+  void unmountChildComponentView(
+      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept
@@ -82,15 +85,15 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   void onPointerWheelChanged(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
 
-  void StartBringIntoView(BringIntoViewOptions &&args) noexcept override;
+  void StartBringIntoView(winrt::Microsoft::ReactNative::implementation::BringIntoViewOptions &&args) noexcept override;
   virtual std::string DefaultControlType() const noexcept;
 
- private:
   ScrollViewComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
+ private:
   void ensureVisual() noexcept;
   void updateContentVisualSize() noexcept;
   bool scrollToEnd(bool animate) noexcept;
@@ -106,6 +109,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool scrollLeft(float delta, bool aniamte) noexcept;
   bool scrollRight(float delta, bool animate) noexcept;
   void updateBackgroundColor(const facebook::react::SharedColor &color) noexcept;
+  void updateStateWithContentOffset() noexcept;
 
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
@@ -120,9 +124,10 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool m_isHorizontal = false;
   bool m_changeViewAfterLoaded = false;
   bool m_dismissKeyboardOnDrag = false;
+  std::shared_ptr<facebook::react::ScrollViewShadowNode::ConcreteState const> m_state;
 
  private:
   bool shouldBeControl() const noexcept;
 };
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

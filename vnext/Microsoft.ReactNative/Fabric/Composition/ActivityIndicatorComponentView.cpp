@@ -11,14 +11,13 @@
 #include "CompositionContextHelper.h"
 #include "RootComponentView.h"
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-std::shared_ptr<ActivityIndicatorComponentView> ActivityIndicatorComponentView::Create(
+winrt::Microsoft::ReactNative::ComponentView ActivityIndicatorComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return std::shared_ptr<ActivityIndicatorComponentView>(
-      new ActivityIndicatorComponentView(compContext, tag, reactContext));
+  return winrt::make<ActivityIndicatorComponentView>(compContext, tag, reactContext);
 }
 
 ActivityIndicatorComponentView::ActivityIndicatorComponentView(
@@ -30,13 +29,13 @@ ActivityIndicatorComponentView::ActivityIndicatorComponentView(
 }
 
 void ActivityIndicatorComponentView::mountChildComponentView(
-    IComponentView &childComponentView,
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
 }
 
 void ActivityIndicatorComponentView::unmountChildComponentView(
-    IComponentView &childComponentView,
+    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
 }
@@ -122,7 +121,7 @@ facebook::react::Tag ActivityIndicatorComponentView::hitTest(
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
-    return tag();
+    return Tag();
   }
   return -1;
 }
@@ -144,4 +143,4 @@ std::string ActivityIndicatorComponentView::DefaultControlType() const noexcept 
   return "progressbar";
 }
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation
