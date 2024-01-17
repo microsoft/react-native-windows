@@ -55,8 +55,12 @@ struct BringIntoViewOptions {
 struct ComponentView : public ComponentViewT<ComponentView> {
   virtual std::vector<facebook::react::ComponentDescriptorProvider>
   supplementalComponentDescriptorProviders() noexcept = 0;
-  virtual void mountChildComponentView(const winrt::Microsoft::ReactNative::ComponentView &childComponentView, uint32_t index) noexcept = 0;
-  virtual void unmountChildComponentView(const winrt::Microsoft::ReactNative::ComponentView &childComponentView, uint32_t index) noexcept = 0;
+  virtual void mountChildComponentView(
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+      uint32_t index) noexcept = 0;
+  virtual void unmountChildComponentView(
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+      uint32_t index) noexcept = 0;
   virtual void updateProps(
       facebook::react::Props::Shared const &props,
       facebook::react::Props::Shared const &oldProps) noexcept = 0;
@@ -132,7 +136,7 @@ struct ComponentView : public ComponentViewT<ComponentView> {
 // Run fn on all nodes of the component view tree starting from this one until fn returns true
 // returns true if the fn ever returned true
 bool walkTree(
-    ComponentView &view,
+    const winrt::Microsoft::ReactNative::ComponentView &view,
     bool forward,
     Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> &fn) noexcept;
 

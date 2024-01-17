@@ -42,13 +42,13 @@ AbiCompositionViewComponentView::Builder() noexcept {
 }
 
 void AbiCompositionViewComponentView::mountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView &/*childComponentView*/,
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
     uint32_t /*index*/) noexcept {
   assert(false);
 }
 
 void AbiCompositionViewComponentView::unmountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView &/*childComponentView*/,
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
     uint32_t /*index*/) noexcept {
   assert(false);
 }

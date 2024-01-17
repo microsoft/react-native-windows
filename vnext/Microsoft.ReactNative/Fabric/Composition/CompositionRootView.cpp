@@ -198,7 +198,11 @@ void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition
                 winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->onThemeChanged();
                 return false;
               };
-          walkTree(*rootView, true, fn);
+
+          winrt::Microsoft::ReactNative::ComponentView view{nullptr};
+          winrt::check_hresult(rootView->QueryInterface(
+              winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
+          walkTree(view, true, fn);
         }
       });
 

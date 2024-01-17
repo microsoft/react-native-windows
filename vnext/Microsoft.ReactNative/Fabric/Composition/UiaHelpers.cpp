@@ -9,7 +9,7 @@
 namespace winrt::Microsoft::ReactNative::implementation {
 
 HRESULT UiaNavigateHelper(
-    winrt::Microsoft::ReactNative::implementation::ComponentView *view,
+    const winrt::Microsoft::ReactNative::ComponentView &view,
     NavigateDirection direction,
     IRawElementProviderFragment *&retVal) noexcept {
   retVal = nullptr;
@@ -21,13 +21,13 @@ HRESULT UiaNavigateHelper(
 
   switch (direction) {
     case NavigateDirection_Parent: {
-      auto pParentCV =
-          static_cast<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView *>(
-              view->parent());
-      if (pParentCV != nullptr) {
-        uiaProvider = pParentCV->EnsureUiaProvider();
+      auto parentCV =
+          view.Parent().as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>();
+      if (parentCV != nullptr) {
+        uiaProvider = parentCV->EnsureUiaProvider();
       } else {
-        if (auto root = view->rootComponentView()) {
+        if (auto root = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)
+                            ->rootComponentView()) {
           winrt::com_ptr<IRawElementProviderFragmentRoot> spFragmentRoot;
           auto hr = root->GetFragmentRoot(spFragmentRoot.put());
           if (FAILED(hr)) {
@@ -47,43 +47,42 @@ HRESULT UiaNavigateHelper(
       __fallthrough;
 
     case NavigateDirection_FirstChild: {
-      auto children = view->Children();
+      auto children = view.Children();
       auto index = direction == NavigateDirection_FirstChild ? 0 : children.Size() - 1;
       if (!children.Size() == 0) {
         uiaProvider =
-                children.GetAt(index).as< winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>()
+            children.GetAt(index)
+                .as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>()
                 ->EnsureUiaProvider();
       }
     } break;
 
     case NavigateDirection_NextSibling: {
-      auto pParentCV =
-          static_cast<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView *>(
-              view->parent());
-      if (pParentCV != nullptr) {
-        auto children = pParentCV->Children();
+      auto parentCV =
+          view.Parent().as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>();
+      if (parentCV != nullptr) {
+        auto children = parentCV->Children();
         auto it = std::find(children.begin(), children.end(), view);
         if (++it != children.end()) {
           uiaProvider =
-                  (*it).as< winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>()
+              (*it)
+                  .as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>()
                   ->EnsureUiaProvider();
         }
       }
     } break;
 
     case NavigateDirection_PreviousSibling: {
-      auto pParentCV =
-          static_cast<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView *>(
-              view->parent());
-      if (pParentCV != nullptr) {
-        auto children = pParentCV->Children();
-        for (auto it = children.end(); it != children.begin(); --it)
-        {
-          if (winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it) == view)
-          {
+      auto parentCV =
+          view.Parent().as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>();
+      if (parentCV != nullptr) {
+        auto children = parentCV->Children();
+        for (auto it = children.end(); it != children.begin(); --it) {
+          if (*it == view) {
             uiaProvider =
-                (*it).as< winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>()
-              ->EnsureUiaProvider();
+                (*it)
+                    .as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>()
+                    ->EnsureUiaProvider();
             break;
           }
         }

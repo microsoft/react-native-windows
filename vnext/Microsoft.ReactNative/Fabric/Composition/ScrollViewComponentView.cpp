@@ -136,7 +136,10 @@ void ScrollViewComponentView::mountChildComponentView(
   m_children.InsertAt(index, childComponentView);
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(*this);
 
-  m_scrollVisual.InsertAt(childComponentView.as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>()->OuterVisual(), index);
+  m_scrollVisual.InsertAt(
+      childComponentView.as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>()
+          ->OuterVisual(),
+      index);
 }
 
 void ScrollViewComponentView::unmountChildComponentView(
@@ -527,7 +530,8 @@ void ScrollViewComponentView::StartBringIntoView(
 
     options.TargetRect = facebook::react::Rect::intersect(viewerRect, options.TargetRect.value());
 
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->StartBringIntoView(std::move(options));
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->StartBringIntoView(
+        std::move(options));
   }
 }
 
@@ -578,7 +582,7 @@ facebook::react::Tag ScrollViewComponentView::hitTest(
       ptViewport.y <= m_layoutMetrics.frame.size.height) {
     if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
          m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
-         anyHitTestHelper(targetTag, ptContent, localPt))
+        anyHitTestHelper(targetTag, ptContent, localPt))
       return targetTag;
 
     if (ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||

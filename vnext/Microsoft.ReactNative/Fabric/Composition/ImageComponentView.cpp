@@ -58,13 +58,13 @@ ImageComponentView::ImageComponentView(
 }
 
 void ImageComponentView::mountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
 }
 
 void ImageComponentView::unmountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
 }
@@ -388,10 +388,7 @@ facebook::react::Tag ImageComponentView::hitTest(
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
-      std::any_of(m_children.rbegin(), m_children.rend(), [&targetTag, &ptLocal, &localPt](auto child) {
-        targetTag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptLocal, localPt);
-        return targetTag != -1;
-      }))
+      anyHitTestHelper(targetTag, ptLocal, localPt))
     return targetTag;
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||

@@ -831,13 +831,13 @@ void WindowsTextInputComponentView::onCharacterReceived(
 }
 
 void WindowsTextInputComponentView::mountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView &/*childComponentView*/,
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
     uint32_t /*index*/) noexcept {
   assert(false);
 }
 
 void WindowsTextInputComponentView::unmountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView &/*childComponentView*/,
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
     uint32_t /*index*/) noexcept {
   assert(false);
 }

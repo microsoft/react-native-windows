@@ -13,7 +13,7 @@ namespace winrt::Microsoft::ReactNative::implementation {
 // Returns an AddRef'd neighbor of the provided ComponentView in the direction given
 HRESULT
 UiaNavigateHelper(
-    winrt::Microsoft::ReactNative::implementation::ComponentView *view,
+    const winrt::Microsoft::ReactNative::ComponentView &view,
     NavigateDirection direction,
     IRawElementProviderFragment *&retVal) noexcept;
 

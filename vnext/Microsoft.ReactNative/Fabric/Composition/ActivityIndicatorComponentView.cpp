@@ -29,13 +29,13 @@ ActivityIndicatorComponentView::ActivityIndicatorComponentView(
 }
 
 void ActivityIndicatorComponentView::mountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView &/*childComponentView*/,
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
     uint32_t /*index*/) noexcept {
   assert(false);
 }
 
 void ActivityIndicatorComponentView::unmountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView &/*childComponentView*/,
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
     uint32_t /*index*/) noexcept {
   assert(false);
 }

@@ -135,14 +135,18 @@ struct CompositionBaseComponentView : public ComponentViewT<
   virtual std::string DefaultHelpText() const noexcept;
 
  protected:
-  bool anyHitTestHelper(facebook::react::Tag& targetTag, facebook::react::Point& ptContent, facebook::react::Point& localPt) const noexcept;
+  bool anyHitTestHelper(
+      facebook::react::Tag &targetTag,
+      facebook::react::Point &ptContent,
+      facebook::react::Point &localPt) const noexcept;
 
   winrt::IInspectable m_uiaProvider{nullptr};
   winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
   comp::CompositionPropertySet m_centerPropSet{nullptr};
   const facebook::react::Tag m_tag;
   facebook::react::SharedViewEventEmitter m_eventEmitter;
-  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::ComponentView> m_children{ winrt::single_threaded_vector<winrt::Microsoft::ReactNative::ComponentView>() };
+  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::ComponentView> m_children{
+      winrt::single_threaded_vector<winrt::Microsoft::ReactNative::ComponentView>()};
   winrt::Microsoft::ReactNative::ComponentView m_parent{nullptr};
   RootComponentView *m_rootView{nullptr};
   facebook::react::LayoutMetrics m_layoutMetrics;

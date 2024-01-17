@@ -27,7 +27,7 @@ ParagraphComponentView::ParagraphComponentView(
 }
 
 void ParagraphComponentView::mountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView &/*childComponentView*/,
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
     uint32_t /*index*/) noexcept {
   // auto v = static_cast<ParagraphComponentView &>(childComponentView);
   assert(false);
@@ -35,7 +35,7 @@ void ParagraphComponentView::mountChildComponentView(
 }
 
 void ParagraphComponentView::unmountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView &/*childComponentView*/,
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
     uint32_t /*index*/) noexcept {
   assert(false);
   // m_element.Children().RemoveAt(index);

@@ -35,12 +35,12 @@ winrt::Microsoft::ReactNative::ComponentView UnimplementedNativeViewComponentVie
 }
 
 void UnimplementedNativeViewComponentView::mountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView &/*childComponentView*/,
-    uint32_t /*index*/) noexcept { }
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {}
 
 void UnimplementedNativeViewComponentView::unmountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView &/*childComponentView*/,
-    uint32_t /*index*/) noexcept { }
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {}
 
 void UnimplementedNativeViewComponentView::updateProps(
     facebook::react::Props::Shared const &props,
