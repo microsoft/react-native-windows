@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Ensure ExperimentalFeatures.props is loaded in all projects",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
