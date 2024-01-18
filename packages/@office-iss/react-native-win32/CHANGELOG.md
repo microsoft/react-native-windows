@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 04 Jan 2024 06:15:55 GMT and should not be manually modified.
+This log was last generated on Wed, 17 Jan 2024 06:16:31 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.226
+
+Wed, 17 Jan 2024 06:16:31 GMT
+
+### Changes
+
+- Fix license header in file overrides (erozell@outlook.com)
 
 ## 0.0.0-canary.225
 

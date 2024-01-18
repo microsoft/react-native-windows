@@ -24,12 +24,18 @@
     <ClInclude Include="{{ name }}.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="AutolinkedNativeModules.g.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="{{ name }}.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="AutolinkedNativeModules.g.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pch.cpp">

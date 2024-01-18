@@ -76,7 +76,7 @@ class CompositionEventHandler {
       winrt::Windows::System::VirtualKeyModifiers keyModifiers);
   void HandleIncomingPointerEvent(
       facebook::react::PointerEvent &pe,
-      winrt::Microsoft::ReactNative::implementation::ComponentView *targetView,
+      const winrt::Microsoft::ReactNative::ComponentView &targetView,
       const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
       winrt::Windows::System::VirtualKeyModifiers keyModifiers,
       std::function<void(std::vector<winrt::Microsoft::ReactNative::ComponentView> &)> handler);

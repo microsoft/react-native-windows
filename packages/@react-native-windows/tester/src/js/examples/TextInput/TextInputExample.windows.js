@@ -748,6 +748,22 @@ const examples: Array<RNTesterModuleExample> = [
       );
     },
   },
+  {
+    title: 'Cursorcolor set to Green',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Cursorcolor</Text>
+          <TextInput
+            style={styles.singleLine}
+            cursorColor={'green'}
+            placeholder='cursorColor={"green"}'
+            testID="textinput-cursorColor"
+          />
+        </View>
+      );
+    },
+  },
   // Windows]
 ];
 

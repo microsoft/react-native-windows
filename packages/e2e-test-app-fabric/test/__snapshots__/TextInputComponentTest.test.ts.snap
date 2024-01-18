@@ -604,6 +604,53 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection 1`] = 
 }
 `;
 
+exports[`TextInput Tests Text have cursorColor 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-cursorColor",
+    "ControlType": 50004,
+    "HelpText": "cursorColor={"green"}",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "cursorColor={"green"}",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 128, 0, 255)",
+        },
+        "Offset": [
+          78,
+          0,
+          0,
+        ],
+        "Opacity": 0,
+        "Size": [
+          1,
+          19,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "textinput-cursorColor",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      22,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
 exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Characters 1`] = `
 {
   "Automation Tree": {
@@ -3660,14 +3707,14 @@ exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
           "Color": "rgba(0, 0, 0, 228)",
         },
         "Offset": [
-          0,
-          0,
+          78,
+          128,
           0,
         ],
         "Opacity": 0,
         "Size": [
-          0,
-          0,
+          1,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },

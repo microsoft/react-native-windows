@@ -631,7 +631,7 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
   "children": [
     {
       "AccessibilityRole": "Button",
-      "AutomationId": "accessibility_props",
+      "AutomationId": "default_button",
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -749,7 +749,7 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
     },
     {
       "AccessibilityRole": "Button",
-      "AutomationId": "accessibility_props",
+      "AutomationId": "accessible_false_button",
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -867,7 +867,7 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
     },
     {
       "AccessibilityRole": "Button",
-      "AutomationId": "accessibility_props",
+      "AutomationId": "focusable_false_button",
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",
@@ -985,7 +985,7 @@ exports[`ButtonTests Buttons can have their accessibility and keyboard focus dis
     },
     {
       "AccessibilityRole": "Button",
-      "AutomationId": "accessibility_props",
+      "AutomationId": "accessible_focusable_false_button",
       "Background": null,
       "BorderBrush": null,
       "BorderThickness": "0,0,0,0",

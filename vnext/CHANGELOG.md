@@ -1,8 +1,27 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 12 Jan 2024 06:14:41 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Jan 2024 06:14:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.754
+
+Thu, 18 Jan 2024 06:14:22 GMT
+
+### Changes
+
+- Expose public APIs to navigate native UI tree (30809111+acoates-ms@users.noreply.github.com)
+- Create new arch module template: cpp-lib (jthysell@microsoft.com)
+
+## 0.0.0-canary.753
+
+Wed, 17 Jan 2024 06:16:31 GMT
+
+### Changes
+
+- Fix license header in file overrides (erozell@outlook.com)
+- add inital files for Fabric's Modal (tatianakapos@microsoft.com)
+- Modules in react-native use relative imports (ericroz@meta.com)
 
 ## 0.0.0-canary.752
 
