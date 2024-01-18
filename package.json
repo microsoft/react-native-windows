@@ -51,6 +51,7 @@
     "node-notifier": "^9.0.0",
     "set-value": "^4.0.1",
     "strip-ansi": "^6.0.1",
+    "**/@babel/core": "7.23.2",
     "**/parse-url/normalize-url": "^4.5.1",
     "**/@react-native/monorepo/jest-junit": "^13.0.0",
     "**/@react-native/monorepo/ws": "^6.2.2",
