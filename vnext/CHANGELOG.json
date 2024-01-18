@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 18 Jan 2024 06:14:22 GMT",
+      "version": "0.0.0-canary.754",
+      "tag": "react-native-windows_v0.0.0-canary.754",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e2ee4560750cf959acdf1f24c22bd67e81a29243",
+            "comment": "Expose public APIs to navigate native UI tree"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6164875acbe0a7490ab1b3e84e49cad798d841b5",
+            "comment": "Create new arch module template: cpp-lib"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Jan 2024 06:16:31 GMT",
       "version": "0.0.0-canary.753",
       "tag": "react-native-windows_v0.0.0-canary.753",

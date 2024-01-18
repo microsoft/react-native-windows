@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Create new arch module template: cpp-lib",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
