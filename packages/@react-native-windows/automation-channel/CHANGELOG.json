@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Fri, 19 Jan 2024 06:16:14 GMT",
+      "version": "0.12.94",
+      "tag": "@react-native-windows/automation-channel_v0.12.94",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "6d0f9f755d48068e742d1c80bd8240cf6221cec6",
+            "comment": "Ensure ExperimentalFeatures.props is loaded in all projects"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.755",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 18 Jan 2024 06:14:23 GMT",
       "version": "0.12.93",
       "tag": "@react-native-windows/automation-channel_v0.12.93",

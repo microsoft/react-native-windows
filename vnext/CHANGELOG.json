@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 19 Jan 2024 06:16:14 GMT",
+      "version": "0.0.0-canary.755",
+      "tag": "react-native-windows_v0.0.0-canary.755",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6d0f9f755d48068e742d1c80bd8240cf6221cec6",
+            "comment": "Ensure ExperimentalFeatures.props is loaded in all projects"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 18 Jan 2024 06:14:22 GMT",
       "version": "0.0.0-canary.754",
       "tag": "react-native-windows_v0.0.0-canary.754",

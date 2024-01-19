@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 18 Jan 2024 06:14:22 GMT and should not be manually modified.
+This log was last generated on Fri, 19 Jan 2024 06:16:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.755
+
+Fri, 19 Jan 2024 06:16:14 GMT
+
+### Changes
+
+- Ensure ExperimentalFeatures.props is loaded in all projects (jthysell@microsoft.com)
 
 ## 0.0.0-canary.754
 
