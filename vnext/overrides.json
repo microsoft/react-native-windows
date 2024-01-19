@@ -78,20 +78,6 @@
       "issue": 7821
     },
     {
-      "type": "copy",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/JSIDynamic.cpp",
-      "baseFile": "packages/react-native/ReactCommon/jsi/jsi/JSIDynamic.cpp",
-      "baseHash": "989722b8812d05adfc0f5e4c8dcbf42ab6026a7f",
-      "issue": 12581
-    },
-    {
-      "type": "copy",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/JSIDynamic.h",
-      "baseFile": "packages/react-native/ReactCommon/jsi/jsi/JSIDynamic.h",
-      "baseHash": "b3df8b8ce255b2d11184ba705407cb399c121a87",
-      "issue": 12581
-    },
-    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
