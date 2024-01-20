@@ -1327,8 +1327,8 @@ void CompositionBaseComponentView::updateAccessibilityProps(
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       m_uiaProvider,
       UIA_IsEnabledPropertyId,
-      !oldViewProps.accessibilityState->disabled,
-      !newViewProps.accessibilityState->disabled);
+      !(oldViewProps.accessibilityState && oldViewProps.accessibilityState->disabled),
+      !(newViewProps.accessibilityState && newViewProps.accessibilityState->disabled));
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       m_uiaProvider, UIA_ControlTypePropertyId, oldViewProps.accessibilityRole, newViewProps.accessibilityRole);
@@ -1798,7 +1798,8 @@ bool walkTree(
       return true;
     }
 
-    for (auto it = view.Children().begin(); it != view.Children().end(); ++it) {
+    auto children = view.Children();
+    for (auto it = children.begin(); it != children.end(); ++it) {
       return walkTree(*it, forward, fn);
     }
 

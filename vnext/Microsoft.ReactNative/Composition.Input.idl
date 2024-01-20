@@ -96,8 +96,8 @@ namespace Microsoft.ReactNative.Composition.Input
     Windows.Foundation.Point Position { get; };
     PointerPointProperties Properties{ get; };
     UInt64 Timestamp { get; };
-    PointerPoint GetTransformedPoint(
-        IPointerPointTransform transform);
+    PointerPoint GetOffsetPoint(
+        Windows.Foundation.Point offset);
   };
 
   runtimeclass PointerRoutedEventArgs : RoutedEventArgs

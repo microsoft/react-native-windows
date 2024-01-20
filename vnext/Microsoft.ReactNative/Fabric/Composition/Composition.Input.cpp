@@ -3,6 +3,7 @@
 
 #pragma once
 #include "Composition.Input.h"
+#include <Fabric/FabricUIManagerModule.h>
 #include <windowsx.h>
 #include <winrt/Windows.Devices.Input.h>
 #include <winrt/Windows.UI.Input.h>
@@ -359,21 +360,33 @@ float PointerPointProperties::YTilt() noexcept {
 }
 
 #ifdef USE_WINUI3
-PointerPoint::PointerPoint(const winrt::Microsoft::UI::Input::PointerPoint &pp) : m_sysPointerPoint(pp) {}
+PointerPoint::PointerPoint(const winrt::Microsoft::UI::Input::PointerPoint &pp, float scaleFactor)
+    : m_sysPointerPoint(pp), m_scaleFactor(scaleFactor), m_offset({0, 0}) {}
+
+PointerPoint::PointerPoint(
+    const winrt::Microsoft::UI::Input::PointerPoint &pp,
+    float scaleFactor,
+    const winrt::Windows::Foundation::Point &offset)
+    : m_sysPointerPoint(pp), m_scaleFactor(scaleFactor), m_offset(offset) {}
 #endif
 
-PointerPoint::PointerPoint(HWND hwnd, uint32_t msg, uint64_t wParam, int64_t lParam, float scaleFactor) {
-  m_hwnd = hwnd;
-  m_msg = msg;
-  m_wParam = wParam;
-  m_lParam = lParam;
-  m_scaleFactor = scaleFactor;
+PointerPoint::PointerPoint(
+    HWND hwnd,
+    uint32_t msg,
+    uint64_t wParam,
+    int64_t lParam,
+    float scaleFactor,
+    const winrt::Windows::Foundation::Point &offset)
+    : m_offset(offset), m_hwnd(hwnd), m_msg(msg), m_wParam(wParam), m_lParam(lParam), m_scaleFactor(scaleFactor) {
   if (IsPointerMessage(msg)) {
     const unsigned int pointerId = GET_POINTERID_WPARAM(wParam);
     bool result = ::GetPointerInfo(pointerId, &m_pi);
     assert(result);
   }
 }
+
+PointerPoint::PointerPoint(HWND hwnd, uint32_t msg, uint64_t wParam, int64_t lParam, float scaleFactor)
+    : PointerPoint(hwnd, msg, wParam, lParam, scaleFactor, {0, 0}) {}
 
 uint32_t PointerPoint::FrameId() noexcept {
 #ifdef USE_WINUI3
@@ -431,7 +444,8 @@ uint32_t PointerPoint::PointerId() noexcept {
 winrt::Windows::Foundation::Point PointerPoint::Position() noexcept {
 #ifdef USE_WINUI3
   if (m_sysPointerPoint) {
-    return m_sysPointerPoint.Position();
+    auto pos = m_sysPointerPoint.Position();
+    return {pos.X - m_offset.X, pos.Y - (m_offset.Y / m_scaleFactor)};
   }
 #endif
 
@@ -441,7 +455,8 @@ winrt::Windows::Foundation::Point PointerPoint::Position() noexcept {
       m_pi.pointerId ? m_pi.ptPixelLocation.y : GET_Y_LPARAM(m_lParam)};
   ScreenToClient(m_hwnd, &clientPoint);
   return winrt::Windows::Foundation::Point{
-      static_cast<float>(clientPoint.x / m_scaleFactor), static_cast<float>(clientPoint.y / m_scaleFactor)};
+      static_cast<float>(clientPoint.x / m_scaleFactor) - (m_offset.X / m_scaleFactor),
+      static_cast<float>(clientPoint.y / m_scaleFactor) - (m_offset.Y / m_scaleFactor)};
 }
 
 winrt::Microsoft::ReactNative::Composition::Input::PointerPointProperties PointerPoint::Properties() noexcept {
@@ -575,14 +590,14 @@ uint64_t PointerPoint::Timestamp() noexcept {
   return m_pi.dwTime;
 }
 
-winrt::Microsoft::ReactNative::Composition::Input::PointerPoint PointerPoint::GetTransformedPoint(
-    const IPointerPointTransform &transform) noexcept {
+winrt::Microsoft::ReactNative::Composition::Input::PointerPoint PointerPoint::GetOffsetPoint(
+    const winrt::Windows::Foundation::Point &offset) noexcept {
 #ifdef USE_WINUI3
   if (m_sysPointerPoint) {
-    return winrt::make<PointerPoint>(m_sysPointerPoint);
+    return winrt::make<PointerPoint>(m_sysPointerPoint, m_scaleFactor, offset);
   }
 #endif
-  return winrt::make<PointerPoint>(m_hwnd, m_msg, m_wParam, m_lParam, m_scaleFactor);
+  return winrt::make<PointerPoint>(m_hwnd, m_msg, m_wParam, m_lParam, m_scaleFactor, offset);
 }
 
 bool PointerPoint::IsPointerMessage(uint32_t message) noexcept {
@@ -592,10 +607,11 @@ bool PointerPoint::IsPointerMessage(uint32_t message) noexcept {
 }
 
 PointerRoutedEventArgs::PointerRoutedEventArgs(
+    const winrt::Microsoft::ReactNative::ReactContext &context,
     facebook::react::Tag tag,
     const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pp,
     const winrt::Windows::System::VirtualKeyModifiers &virtualKeyModifiers)
-    : m_tag(tag), m_virtualKeyModifiers(virtualKeyModifiers) {
+    : m_context(context), m_tag(tag), m_virtualKeyModifiers(virtualKeyModifiers) {
   m_pointerPoint = pp;
 }
 
@@ -605,8 +621,20 @@ int32_t PointerRoutedEventArgs::OriginalSource() noexcept {
 
 winrt::Microsoft::ReactNative::Composition::Input::PointerPoint PointerRoutedEventArgs::GetCurrentPoint(
     int32_t tag) noexcept {
-  assert(tag == -1); // TODO: Non-null tags need to apply a transform
-  return m_pointerPoint;
+  if (tag == -1) {
+    return m_pointerPoint;
+  }
+
+  auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
+
+  const auto &viewRegistry = fabricuiManager->GetViewRegistry();
+  auto targetComponentViewDescriptor = viewRegistry.componentViewDescriptorWithTag(tag);
+
+  auto clientRect = 
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentViewDescriptor.view)
+          ->getClientRect();
+
+  return m_pointerPoint.GetOffsetPoint({static_cast<float>(clientRect.left), static_cast<float>(clientRect.top)});
 }
 
 bool PointerRoutedEventArgs::Handled() noexcept {

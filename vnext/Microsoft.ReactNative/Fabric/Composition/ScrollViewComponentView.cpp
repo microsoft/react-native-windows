@@ -24,6 +24,425 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 constexpr float c_scrollerLineDelta = 16.0f;
 
+enum class ScrollbarHitRegion : int {
+  Unknown = -1,
+  ArrowFirst = 0,
+  PageUp = 1,
+  Thumb = 2,
+  PageDown = 3,
+  ArrowLast = 4,
+};
+
+struct ScrollBarComponent {
+  ScrollBarComponent(
+      const winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView &outer,
+      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext, bool vertical)
+      : m_outer(outer), m_compContext(compContext), m_reactContext(reactContext), m_vertical(vertical) {
+    m_rootVisual = m_compContext.CreateSpriteVisual();
+    m_trackVisual = m_compContext.CreateRoundedRectangleVisual();
+    m_thumbVisual = m_compContext.CreateRoundedRectangleVisual();
+    m_arrowVisualFirst = m_compContext.CreateSpriteVisual();
+    m_arrowVisualLast = m_compContext.CreateSpriteVisual();
+
+    m_rootVisual.InsertAt(m_trackVisual, 0);
+    m_rootVisual.InsertAt(m_arrowVisualFirst, 1);
+    m_rootVisual.InsertAt(m_arrowVisualLast, 2);
+    m_rootVisual.InsertAt(m_thumbVisual, 3);
+
+    onScaleChanged();
+    OnThemeChanged();
+  }
+
+  void OnThemeChanged() noexcept {
+    updateHighlight(ScrollbarHitRegion::ArrowFirst);
+    updateHighlight(ScrollbarHitRegion::ArrowLast);
+    updateHighlight(ScrollbarHitRegion::Thumb);
+    m_trackVisual.Brush(m_outer.Theme().PlatformBrush(L"ScrollBarTrackFill"));
+  }
+
+  void ContentSize(winrt::Windows::Foundation::Size contentSize) noexcept {
+    m_contentSize = contentSize;
+    updateThumb();
+    updateVisibility();
+  }
+
+  void updateTrack() noexcept
+  {
+    if (m_vertical)
+    {
+      m_trackVisual.Size({ m_arrowSize, m_size.Height});
+      m_trackVisual.Offset({ -m_arrowSize, 0.0f, 0.0f }, { 1.0f, 0.0f, 0.0f });
+    }
+    else
+    {
+      m_trackVisual.Size({ m_size.Width, m_arrowSize });
+      m_trackVisual.Offset({ 0.0f, -m_arrowSize, 0.0f }, { 0.0f, 1.0f, 0.0f });
+    }
+
+  }
+
+  void updateLayoutMetrics(facebook::react::LayoutMetrics const &layoutMetrics) noexcept {
+    m_size = {
+        layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
+        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor};
+
+    if (m_scaleFactor != layoutMetrics.pointScaleFactor) {
+      m_scaleFactor = layoutMetrics.pointScaleFactor;
+      onScaleChanged();
+    }
+
+    updateTrack();
+    updateThumb();
+    updateVisibility();
+  }
+
+  void updateVisibility() noexcept
+  {
+    bool newVisibility = false;
+    if (m_vertical)
+    {
+      newVisibility = (m_contentSize.Height > m_size.Height);
+    }
+    else
+    {
+      newVisibility = (m_contentSize.Width > m_size.Width);
+    }
+
+    if (newVisibility != m_visible)
+    {
+      m_visible = newVisibility;
+      m_rootVisual.IsVisible(m_visible);
+    }
+  }
+
+  void updateRootAndArrowVisualOffsets() noexcept
+  {
+    if (m_vertical)
+    {
+      m_rootVisual.RelativeSizeWithOffset({ m_arrowSize, 0.0f }, { 0.0f, 1.0f });
+      m_rootVisual.Offset({ -m_arrowSize, 0.0f, 0.0f }, { 1.0f, 0.0f, 0.0f });
+      m_arrowVisualFirst.Offset({ -m_arrowSize, 0.0f, 0.0f }, { 1.0f, 0.0f, 0.0f });
+      m_arrowVisualLast.Offset({ -m_arrowSize, -m_arrowSize, 0.0f }, { 1.0f, 1.0f, 0.0f });
+    }
+    else
+    {
+      m_rootVisual.RelativeSizeWithOffset({ 0.0f, m_arrowSize }, { 1.0f, 0.0f });
+      m_rootVisual.Offset({ 0.0f, -m_arrowSize, 0.0f }, { 0.0f, 1.0f, 0.0f });
+      m_arrowVisualFirst.Offset({ 0.0f, -m_arrowSize, 0.0f }, { 0.0f, 1.0f, 0.0f });
+      m_arrowVisualLast.Offset({ -m_arrowSize, -m_arrowSize, 0.0f }, { 1.0f, 1.0f, 0.0f });
+    }
+  }
+
+  void onScaleChanged() noexcept {
+    m_arrowSize = 12 * m_scaleFactor; // From Xaml resource: ScrollBarSize
+    m_thumbWidth =
+        6 * m_scaleFactor; // From Xaml resource: ScrollBarThumbStrokeThickness
+    m_minThumbSize = static_cast<int>(
+        30 * m_scaleFactor); // From Xaml resource: ScrollBarVerticalThumbMinHeight / ScrollBarHorizontalThumbMinWidth
+
+    m_trackVisual.CornerRadius({m_arrowSize / 2.0f, m_arrowSize / 2.0f});
+
+    m_arrowVisualFirst.Size({m_arrowSize, m_arrowSize});
+    m_arrowVisualLast.Size({m_arrowSize, m_arrowSize});
+    updateRootAndArrowVisualOffsets();
+  }
+
+  void ContentOffset(const winrt::Windows::Foundation::Numerics::float3 &offset) noexcept {
+    m_offset = offset;
+    updateThumb();
+  }
+
+  ScrollbarHitRegion HitTest(winrt::Windows::Foundation::Point pt) noexcept {
+    pt = {pt.X * m_scaleFactor, pt.Y * m_scaleFactor};
+    if (m_vertical) {
+      if (pt.X < m_size.Width - m_arrowSize) {
+        return ScrollbarHitRegion::Unknown;
+      }
+
+      if (pt.Y < m_arrowSize) {
+        return ScrollbarHitRegion::ArrowFirst;
+      }
+
+      if (pt.Y < m_arrowSize + m_thumbPos) {
+        return ScrollbarHitRegion::PageUp;
+      }
+
+      if (pt.Y < m_arrowSize + m_thumbPos + m_thumbSize) {
+        return ScrollbarHitRegion::Thumb;
+      }
+
+      if (pt.Y < m_size.Height - m_arrowSize) {
+        return ScrollbarHitRegion::PageDown;
+      }
+
+      return ScrollbarHitRegion::ArrowLast;
+    } else {
+      if (pt.Y < m_size.Height - m_arrowSize) {
+        return ScrollbarHitRegion::Unknown;
+      }
+
+      if (pt.X < m_arrowSize) {
+        return ScrollbarHitRegion::ArrowFirst;
+      }
+
+      if (pt.X < m_arrowSize + m_thumbPos) {
+        return ScrollbarHitRegion::PageUp;
+      }
+
+      if (pt.X < m_arrowSize + m_thumbPos + m_thumbSize) {
+        return ScrollbarHitRegion::Thumb;
+      }
+
+      if (pt.X < m_size.Width - m_arrowSize) {
+        return ScrollbarHitRegion::PageDown;
+      }
+
+      return ScrollbarHitRegion::ArrowLast;
+    }
+
+    return ScrollbarHitRegion::Unknown;
+  }
+
+  int getViewportSize() const noexcept {
+    return static_cast<int>(m_vertical ? m_size.Height : m_size.Width);
+  }
+
+  int calulateMaxThumbLength() const noexcept {
+    return std::max(static_cast<int>(getViewportSize() - (2 * m_arrowSize)), 0);
+  }
+
+  int getScrollRange() const noexcept {
+    return static_cast<int>(m_vertical ? m_contentSize.Height : m_contentSize.Width);
+  }
+
+  int trackPosFromPoint(int pt, int trackMouseOffset) const noexcept {
+    // compute logical scroll pos from a mouse coordinate in the scrollbar rect
+    int pageAndThumbSize = calulateMaxThumbLength();
+
+    const int range = std::max(0, getScrollRange());
+    const int page = std::min(range, getViewportSize());
+
+    int pixelPos = (pt)-trackMouseOffset - static_cast<int>(m_arrowSize);
+    pixelPos = std::clamp(pixelPos, 0, pageAndThumbSize);
+
+    int trackPos = 0 < pageAndThumbSize ? ::MulDiv(pixelPos, range, pageAndThumbSize) : 0;
+    trackPos = std::clamp(trackPos, 0, range - page);
+    return trackPos;
+  }
+
+  int getComputedPixelThumbSize() const noexcept {
+    auto maxThumbLength = calulateMaxThumbLength();
+    auto scrollRange = getScrollRange();
+    auto viewportSize = getViewportSize();
+    return ::MulDiv(std::min(scrollRange, viewportSize), maxThumbLength, scrollRange);
+  }
+
+  float scrollOffsetFromThumbPos(int thumbPos) const noexcept {
+    auto maxThumbLength = calulateMaxThumbLength();
+    auto scrollRange = getScrollRange();
+
+    const int computedPixelThumbSize = getComputedPixelThumbSize();
+
+    int thumbCorrection = 0;
+    if (!(m_minThumbSize <= computedPixelThumbSize || maxThumbLength < 2 * m_minThumbSize)) {
+      thumbCorrection = m_minThumbSize - computedPixelThumbSize;
+    }
+    return std::clamp(
+        static_cast<float>(::MulDiv(thumbPos, scrollRange, (maxThumbLength - thumbCorrection))),
+        0.0f,
+        static_cast<float>(scrollRange));
+  }
+
+  void updateThumb() noexcept {
+    auto maxThumbLength = calulateMaxThumbLength();
+    auto scrollRange = getScrollRange();
+    auto scrollOffset = static_cast<int>(m_vertical ? m_offset.y : m_offset.x);
+
+    const int computedPixelThumbSize = getComputedPixelThumbSize();
+
+    m_thumbSize = 0;
+    int thumbCorrection = 0;
+
+    if (m_minThumbSize <= computedPixelThumbSize || maxThumbLength < 2 * m_minThumbSize)
+      m_thumbSize = computedPixelThumbSize;
+    else {
+      thumbCorrection = m_minThumbSize - computedPixelThumbSize;
+      m_thumbSize = m_minThumbSize;
+    }
+
+    // Position is relative to available area for thumb
+    m_thumbPos = (scrollRange > 0 ? ::MulDiv(scrollOffset, maxThumbLength - thumbCorrection, scrollRange) : 0);
+    assert(0 <= m_thumbPos && m_thumbPos <= maxThumbLength - m_thumbSize);
+    m_thumbVisual.CornerRadius({m_thumbWidth / 2.0f, m_thumbWidth / 2.0f});
+
+    auto thumbOffset = (m_arrowSize - m_thumbWidth) / 2.0f;
+
+    if (m_vertical) {
+      m_thumbVisual.Size({m_thumbWidth, static_cast<float>(m_thumbSize)});
+      m_thumbVisual.Offset(
+          {-m_arrowSize + thumbOffset, m_arrowSize + static_cast<float>(m_thumbPos), 0.0f}, {1.0f, 0.0f, 0.0f});
+    } else {
+      m_thumbVisual.Size({static_cast<float>(m_thumbSize), m_thumbWidth});
+      m_thumbVisual.Offset(
+          {m_arrowSize + static_cast<float>(m_thumbPos), -m_arrowSize + thumbOffset, 0.0f}, {0.0f, 1.0f, 0.0f});
+    }
+  }
+
+  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept {
+    return m_rootVisual;
+  }
+
+  void OnPointerReleased(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
+    if (!m_visible) return;
+    auto pt = args.GetCurrentPoint(-1);
+    if (m_nTrackInputOffset != -1 &&
+        pt.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse &&
+        pt.Properties().PointerUpdateKind() ==
+            winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::LeftButtonReleased) {
+      handleMoveThumb(args);
+      m_nTrackInputOffset = -1;
+      // Stop tracking
+    }
+  }
+
+  void handleMoveThumb(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
+    auto pt = args.GetCurrentPoint(m_outer.Tag());
+    auto pos = pt.Position();
+
+    auto newTrackingPosition = static_cast<int>((m_vertical ? pos.Y : pos.X) * m_scaleFactor) - m_nTrackInputOffset;
+    winrt::get_self<ScrollViewComponentView>(m_outer)->scrollTo(
+        m_vertical ? winrt::Windows::Foundation::Numerics::
+                         float3{m_offset.x, scrollOffsetFromThumbPos(newTrackingPosition), m_offset.z}
+                   : winrt::Windows::Foundation::Numerics::
+                         float3{scrollOffsetFromThumbPos(newTrackingPosition), m_offset.y, m_offset.z},
+        false);
+  }
+
+  void OnPointerPressed(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
+    if (!m_visible) return;
+    auto pt = args.GetCurrentPoint(m_outer.Tag());
+    if (pt.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
+      auto pos = pt.Position();
+      auto reg = HitTest(pos);
+
+      switch (reg) {
+        case ScrollbarHitRegion::ArrowFirst:
+          if (m_vertical) {
+            winrt::get_self<ScrollViewComponentView>(m_outer)->lineUp(false);
+          } else {
+            winrt::get_self<ScrollViewComponentView>(m_outer)->lineLeft(false);
+          }
+          break;
+        case ScrollbarHitRegion::ArrowLast:
+          if (m_vertical) {
+            winrt::get_self<ScrollViewComponentView>(m_outer)->lineDown(false);
+          } else {
+            winrt::get_self<ScrollViewComponentView>(m_outer)->lineRight(false);
+          }
+          break;
+        case ScrollbarHitRegion::PageUp:
+          if (m_vertical) {
+            winrt::get_self<ScrollViewComponentView>(m_outer)->pageUp(false);
+          }
+          break;
+        case ScrollbarHitRegion::PageDown:
+          if (m_vertical) {
+            winrt::get_self<ScrollViewComponentView>(m_outer)->pageDown(false);
+          }
+          break;
+        case ScrollbarHitRegion::Thumb: {
+          // TODO capture input
+          m_nTrackInputOffset = static_cast<int>((m_vertical ? pos.Y : pos.X) * m_scaleFactor) - m_thumbPos;
+          handleMoveThumb(args);
+        }
+      }
+    }
+  }
+
+  void OnPointerMoved(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
+    if (!m_visible) return;
+    auto pt = args.GetCurrentPoint(m_outer.Tag());
+    if (pt.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
+      auto pos = pt.Position();
+      auto reg = HitTest(pos);
+      setHighlightedRegion(reg);
+
+      if (m_nTrackInputOffset != -1) {
+        handleMoveThumb(args);
+      }
+    }
+  }
+
+  void setHighlightedRegion(ScrollbarHitRegion region) noexcept {
+    if (m_highlightedRegion == region)
+      return;
+
+    auto oldRegion = m_highlightedRegion;
+    m_highlightedRegion = region;
+    updateHighlight(oldRegion);
+    updateHighlight(m_highlightedRegion);
+  }
+
+  void updateHighlight(ScrollbarHitRegion region) noexcept {
+    switch (region) {
+      case ScrollbarHitRegion::ArrowFirst:
+      case ScrollbarHitRegion::ArrowLast: {
+        auto visual = (region == ScrollbarHitRegion::ArrowFirst) ? m_arrowVisualFirst : m_arrowVisualLast;
+        if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(
+                 winrt::get_self<ScrollViewComponentView>(m_outer)->viewProps())
+                 ->scrollEnabled) {
+          visual.Brush(m_outer.Theme().PlatformBrush(L"ScrollBarButtonArrowForegroundDisabled"));
+        } else if (m_highlightedRegion == region) {
+          visual.Brush(m_outer.Theme().PlatformBrush(L"ScrollBarButtonArrowForegroundPointerOver"));
+        } else {
+          visual.Brush(m_outer.Theme().PlatformBrush(L"ScrollBarButtonArrowForeground"));
+        }
+      }
+      case ScrollbarHitRegion::Thumb: {
+        if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(
+                 winrt::get_self<ScrollViewComponentView>(m_outer)->viewProps())
+                 ->scrollEnabled) {
+          m_thumbVisual.Brush(m_outer.Theme().PlatformBrush(L"ScrollBarThumbFillDisabled"));
+        } else if (m_highlightedRegion == region) {
+          m_thumbVisual.Brush(m_outer.Theme().PlatformBrush(L"ScrollBarThumbFillPointerOver"));
+        } else {
+          m_thumbVisual.Brush(m_outer.Theme().PlatformBrush(L"ScrollBarThumbFill"));
+        }
+
+        // TODO start drag scroll
+      }
+    }
+  }
+
+  void OnPointerExited(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
+    if (!m_visible) return;
+  }
+
+ private:
+  winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView m_outer;
+  winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
+  winrt::Microsoft::ReactNative::ReactContext m_reactContext;
+  const bool m_vertical;
+  bool m_visible { false };
+  int m_thumbSize{0};
+  float m_arrowSize{0};
+  float m_thumbWidth{0};
+  int m_minThumbSize{0};
+  float m_scaleFactor{1};
+  int m_thumbPos{0};
+  int m_nTrackInputOffset{-1};
+  ScrollbarHitRegion m_highlightedRegion{ScrollbarHitRegion::Unknown};
+  winrt::Windows::Foundation::Numerics::float3 m_offset{0};
+  winrt::Windows::Foundation::Size m_contentSize{0, 0};
+  winrt::Windows::Foundation::Size m_size{0, 0};
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_rootVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IRoundedRectangleVisual m_thumbVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_arrowVisualFirst{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_arrowVisualLast{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IRoundedRectangleVisual m_trackVisual{nullptr};
+};
+
 winrt::Microsoft::ReactNative::ComponentView ScrollViewComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
@@ -194,10 +613,13 @@ void ScrollViewComponentView::updateStateWithContentOffset() noexcept {
     return;
   }
 
-  m_state->updateState([contentOffset = m_scrollVisual.ScrollPosition()](
-                           const facebook::react::ScrollViewShadowNode::ConcreteState::Data &data) {
+  auto scrollPosition = m_scrollVisual.ScrollPosition();
+  m_verticalScrollbarComponent->ContentOffset(scrollPosition);
+  m_horizontalScrollbarComponent->ContentOffset(scrollPosition);
+
+  m_state->updateState([scrollPosition](const facebook::react::ScrollViewShadowNode::ConcreteState::Data &data) {
     auto newData = data;
-    newData.contentOffset = {contentOffset.x, contentOffset.y};
+    newData.contentOffset = {scrollPosition.x, scrollPosition.y};
     return std::make_shared<facebook::react::ScrollViewShadowNode::ConcreteState::Data const>(newData);
   });
 }
@@ -212,6 +634,8 @@ void ScrollViewComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
+  m_verticalScrollbarComponent->updateLayoutMetrics(layoutMetrics);
+  m_horizontalScrollbarComponent->updateLayoutMetrics(layoutMetrics);
   Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
@@ -223,9 +647,12 @@ void ScrollViewComponentView::updateLayoutMetrics(
 }
 
 void ScrollViewComponentView::updateContentVisualSize() noexcept {
-  m_scrollVisual.ContentSize(
-      {std::max(m_contentSize.width, m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor,
-       std::max(m_contentSize.height, m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor});
+  winrt::Windows::Foundation::Size contentSize = {
+      std::max(m_contentSize.width, m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor,
+      std::max(m_contentSize.height, m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor};
+  m_verticalScrollbarComponent->ContentSize(contentSize);
+  m_horizontalScrollbarComponent->ContentSize(contentSize);
+  m_scrollVisual.ContentSize(contentSize);
 }
 
 void ScrollViewComponentView::prepareForRecycle() noexcept {}
@@ -281,6 +708,8 @@ void ScrollViewComponentView::OnPointerDown(const winrt::Windows::UI::Input::Poi
 
 void ScrollViewComponentView::onThemeChanged() noexcept {
   updateBackgroundColor(std::static_pointer_cast<const facebook::react::ScrollViewProps>(m_props)->backgroundColor);
+  m_verticalScrollbarComponent->OnThemeChanged();
+  m_horizontalScrollbarComponent->OnThemeChanged();
   Super::onThemeChanged();
 }
 
@@ -309,6 +738,27 @@ void ScrollViewComponentView::onPointerWheelChanged(
       }
     }
   }
+}
+
+void ScrollViewComponentView::onPointerPressed(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  m_verticalScrollbarComponent->OnPointerPressed(args);
+  m_horizontalScrollbarComponent->OnPointerPressed(args);
+  Super::onPointerPressed(args);
+}
+
+void ScrollViewComponentView::onPointerReleased(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  m_verticalScrollbarComponent->OnPointerReleased(args);
+  m_horizontalScrollbarComponent->OnPointerReleased(args);
+  Super::onPointerReleased(args);
+}
+
+void ScrollViewComponentView::onPointerMoved(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  m_verticalScrollbarComponent->OnPointerMoved(args);
+  m_horizontalScrollbarComponent->OnPointerMoved(args);
+  Super::onPointerMoved(args);
 }
 
 void ScrollViewComponentView::onKeyDown(
@@ -428,7 +878,7 @@ void ScrollViewComponentView::handleCommand(std::string const &commandName, foll
     auto x = arg[0].asDouble() * m_layoutMetrics.pointScaleFactor;
     auto y = arg[1].asDouble() * m_layoutMetrics.pointScaleFactor;
     auto animate = arg[2].asBool();
-    m_scrollVisual.TryUpdatePosition({static_cast<float>(x), static_cast<float>(y), 0.0f}, animate);
+    scrollTo({static_cast<float>(x), static_cast<float>(y), 0.0f}, animate);
   } else if (commandName == "flashScrollIndicators") {
     // No-op for now
   } else if (commandName == "scrollToEnd") {
@@ -439,6 +889,10 @@ void ScrollViewComponentView::handleCommand(std::string const &commandName, foll
   } else {
     Super::handleCommand(commandName, arg);
   }
+}
+
+void ScrollViewComponentView::scrollTo(winrt::Windows::Foundation::Numerics::float3 offset, bool animate) noexcept {
+  m_scrollVisual.TryUpdatePosition(offset, animate);
 }
 
 void ScrollViewComponentView::StartBringIntoView(
@@ -539,7 +993,11 @@ void ScrollViewComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
     m_scrollVisual = m_compContext.CreateScrollerVisual();
+    m_verticalScrollbarComponent = std::make_shared<ScrollBarComponent>(*this, m_compContext, m_context, true);
+    m_horizontalScrollbarComponent = std::make_shared<ScrollBarComponent>(*this, m_compContext, m_context, false);
     m_visual.InsertAt(m_scrollVisual, 0);
+    m_visual.InsertAt(m_verticalScrollbarComponent->Visual(), 1);
+    m_visual.InsertAt(m_horizontalScrollbarComponent->Visual(), 2);
     m_scrollPositionChangedRevoker = m_scrollVisual.ScrollPositionChanged(
         winrt::auto_revoke,
         [this](
@@ -595,9 +1053,17 @@ facebook::react::Tag ScrollViewComponentView::hitTest(
 }
 
 facebook::react::Point ScrollViewComponentView::getClientOffset() const noexcept {
+  facebook::react::Point parentOffset{0};
+  if (m_parent) {
+    parentOffset =
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->getClientOffset();
+  }
+
   return {
-      m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor - m_scrollVisual.ScrollPosition().x,
-      m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor - m_scrollVisual.ScrollPosition().y};
+      m_layoutMetrics.frame.origin.x * m_layoutMetrics.pointScaleFactor - m_scrollVisual.ScrollPosition().x +
+          parentOffset.x,
+      m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor - m_scrollVisual.ScrollPosition().y +
+          parentOffset.y};
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual ScrollViewComponentView::Visual() const noexcept {

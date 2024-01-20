@@ -39,6 +39,7 @@ struct CompositionTypeTraits<WindowsTypeTag> {
   using CompositionBrush = winrt::Windows::UI::Composition::CompositionBrush;
   using CompositionDrawingSurface = winrt::Windows::UI::Composition::CompositionDrawingSurface;
   using CompositionEllipseGeometry = winrt::Windows::UI::Composition::CompositionEllipseGeometry;
+  using CompositionRoundedRectangleGeometry = winrt::Windows::UI::Composition::CompositionRoundedRectangleGeometry;
   using CompositionNineGridBrush = winrt::Windows::UI::Composition::CompositionNineGridBrush;
   using CompositionPath = winrt::Windows::UI::Composition::CompositionPath;
   using CompositionSpriteShape = winrt::Windows::UI::Composition::CompositionSpriteShape;
@@ -96,6 +97,7 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
   using CompositionBrush = winrt::Microsoft::UI::Composition::CompositionBrush;
   using CompositionDrawingSurface = winrt::Microsoft::UI::Composition::CompositionDrawingSurface;
   using CompositionEllipseGeometry = winrt::Microsoft::UI::Composition::CompositionEllipseGeometry;
+  using CompositionRoundedRectangleGeometry = winrt::Microsoft::UI::Composition::CompositionRoundedRectangleGeometry;
   using CompositionNineGridBrush = winrt::Microsoft::UI::Composition::CompositionNineGridBrush;
   using CompositionPath = winrt::Microsoft::UI::Composition::CompositionPath;
   using CompositionSpriteShape = winrt::Microsoft::UI::Composition::CompositionSpriteShape;
@@ -533,6 +535,143 @@ struct CompSpriteVisual : winrt::implements<
 using WindowsCompSpriteVisual = CompSpriteVisual<WindowsTypeRedirects>;
 #ifdef USE_WINUI3
 using MicrosoftCompSpriteVisual = CompSpriteVisual<MicrosoftTypeRedirects>;
+#endif
+
+template <typename TTypeRedirects>
+struct CompRoundedRectangleVisual : winrt::implements<
+                                        CompRoundedRectangleVisual<TTypeRedirects>,
+                                        winrt::Microsoft::ReactNative::Composition::IRoundedRectangleVisual,
+                                        winrt::Microsoft::ReactNative::Composition::IVisual,
+                                        typename TTypeRedirects::IInnerCompositionVisual,
+                                        IVisualInterop> {
+  CompRoundedRectangleVisual(typename TTypeRedirects::ShapeVisual const &visual) : m_visual(visual) {
+    auto compositor = visual.Compositor();
+    m_geometry = compositor.CreateRoundedRectangleGeometry();
+    m_spiritShape = compositor.CreateSpriteShape();
+    m_spiritShape.Geometry(m_geometry);
+    visual.Shapes().Append(m_spiritShape);
+  }
+
+  typename TTypeRedirects::Visual InnerVisual() const noexcept override {
+    return m_visual;
+  }
+
+  void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
+    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
+    auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
+    if (index == 0 || containerChildren.Count() == 0) {
+      containerChildren.InsertAtTop(compVisual);
+      return;
+    }
+    auto insertAfter = containerChildren.First();
+    for (uint32_t i = 1; i < index; i++)
+      insertAfter.MoveNext();
+    containerChildren.InsertAbove(compVisual, insertAfter.Current());
+  }
+
+  void Remove(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
+    auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
+    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
+    containerChildren.Remove(compVisual);
+  }
+
+  winrt::Microsoft::ReactNative::Composition::IVisual GetAt(uint32_t index) noexcept {
+    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
+    auto it = containerChildren.First();
+    for (uint32_t i = 0; i < index; i++)
+      it.MoveNext();
+    return TTypeRedirects::CompositionContextHelper::CreateVisual(it.Current());
+  }
+
+  void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
+    if (!clippingPath) {
+      m_visual.Clip(nullptr);
+      return;
+    }
+    auto geometry = winrt::make<GeometrySource>(clippingPath);
+    auto path = typename TTypeRedirects::CompositionPath(geometry);
+    auto pathgeo = m_visual.Compositor().CreatePathGeometry(path);
+    auto clip = m_visual.Compositor().CreateGeometricClip(pathgeo);
+    m_visual.Clip(clip);
+  }
+
+  void Opacity(float opacity) noexcept {
+    m_visual.Opacity(opacity);
+  }
+
+  void Scale(winrt::Windows::Foundation::Numerics::float3 const &scale) noexcept {
+    m_visual.Scale(scale);
+  }
+
+  void TransformMatrix(winrt::Windows::Foundation::Numerics::float4x4 const &transform) noexcept {
+    m_visual.TransformMatrix(transform);
+  }
+
+  void RotationAngle(float rotation) noexcept {
+    m_visual.RotationAngle(rotation);
+  }
+
+  void IsVisible(bool isVisible) noexcept {
+    m_visual.IsVisible(isVisible);
+  }
+
+  void Size(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
+    m_visual.Size(size);
+    m_geometry.Size(size);
+    m_visual.CenterPoint({size.x / 2.0f, size.y / 2.0f, 0.0f});
+  }
+
+  void Offset(winrt::Windows::Foundation::Numerics::float3 const &offset) noexcept {
+    m_visual.Offset(offset);
+  }
+
+  void Offset(
+      winrt::Windows::Foundation::Numerics::float3 offset,
+      winrt::Windows::Foundation::Numerics::float3 relativeAdjustment) noexcept {
+    m_visual.Offset(offset);
+    m_visual.RelativeOffsetAdjustment(relativeAdjustment);
+  }
+
+  void RelativeSizeWithOffset(
+      winrt::Windows::Foundation::Numerics::float2 size,
+      winrt::Windows::Foundation::Numerics::float2 relativeSizeAdjustment) noexcept {
+    m_visual.Size(size);
+    m_geometry.Size(size);
+    m_visual.RelativeSizeAdjustment(relativeSizeAdjustment);
+  }
+
+  winrt::Microsoft::ReactNative::Composition::BackfaceVisibility BackfaceVisibility() {
+    return static_cast<winrt::Microsoft::ReactNative::Composition::BackfaceVisibility>(m_visual.BackfaceVisibility());
+  }
+
+  void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
+    m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
+  }
+
+  winrt::hstring Comment() noexcept {
+    return m_visual.Comment();
+  }
+
+  void Comment(winrt::hstring value) {
+    m_visual.Comment(value);
+  }
+
+  void Brush(const winrt::Microsoft::ReactNative::Composition::IBrush &brush) noexcept {
+    m_spiritShape.FillBrush(TTypeRedirects::CompositionContextHelper::InnerBrush(brush));
+  }
+
+  void CornerRadius(winrt::Windows::Foundation::Numerics::float2 value) noexcept {
+    m_geometry.CornerRadius(value);
+  }
+
+ private:
+  typename TTypeRedirects::Visual m_visual;
+  typename TTypeRedirects::CompositionSpriteShape m_spiritShape{nullptr};
+  typename TTypeRedirects::CompositionRoundedRectangleGeometry m_geometry{nullptr};
+};
+using WindowsCompRoundedRectangleVisual = CompRoundedRectangleVisual<WindowsTypeRedirects>;
+#ifdef USE_WINUI3
+using MicrosoftCompRoundedRectangleVisual = CompRoundedRectangleVisual<MicrosoftTypeRedirects>;
 #endif
 
 struct CompScrollPositionChangedArgs : winrt::implements<
@@ -1366,6 +1505,8 @@ struct CompContext : winrt::implements<
 
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual CreateSpriteVisual() noexcept;
 
+  winrt::Microsoft::ReactNative::Composition::IRoundedRectangleVisual CreateRoundedRectangleVisual() noexcept;
+
   winrt::Microsoft::ReactNative::Composition::IScrollVisual CreateScrollerVisual() noexcept;
 
   winrt::Microsoft::ReactNative::Composition::IActivityVisual CreateActivityVisual() noexcept;
@@ -1408,6 +1549,11 @@ CompContext<WindowsTypeRedirects>::CreateSpriteVisual() noexcept {
 winrt::Microsoft::ReactNative::Composition::IScrollVisual
 CompContext<WindowsTypeRedirects>::CreateScrollerVisual() noexcept {
   return winrt::make<Composition::WindowsCompScrollerVisual>(m_compositor.CreateSpriteVisual());
+}
+
+winrt::Microsoft::ReactNative::Composition::IRoundedRectangleVisual
+CompContext<WindowsTypeRedirects>::CreateRoundedRectangleVisual() noexcept {
+  return winrt::make<Composition::WindowsCompRoundedRectangleVisual>(m_compositor.CreateShapeVisual());
 }
 
 winrt::Microsoft::ReactNative::Composition::IActivityVisual
@@ -1478,6 +1624,11 @@ CompContext<MicrosoftTypeRedirects>::CreateSpriteVisual() noexcept {
 winrt::Microsoft::ReactNative::Composition::IScrollVisual
 CompContext<MicrosoftTypeRedirects>::CreateScrollerVisual() noexcept {
   return winrt::make<Composition::MicrosoftCompScrollerVisual>(m_compositor.CreateSpriteVisual());
+}
+
+winrt::Microsoft::ReactNative::Composition::IRoundedRectangleVisual
+CompContext<MicrosoftTypeRedirects>::CreateRoundedRectangleVisual() noexcept {
+  return winrt::make<Composition::MicrosoftCompRoundedRectangleVisual>(m_compositor.CreateShapeVisual());
 }
 
 winrt::Microsoft::ReactNative::Composition::IActivityVisual
