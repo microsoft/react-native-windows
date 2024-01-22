@@ -294,7 +294,8 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
           {"ScrollBarThumbFillPointerOver", "ControlStrongFillColorDefault"},
           {"ScrollBarThumbFillPressed", "ControlStrongFillColorDefault"},
           {"ScrollBarThumbFillDisabled", "ControlStrongFillColorDisabled"},
-          {"ScrollBarTrackFill", "AcrylicInAppFillColorDefault"}, // TODO make AcrylicInAppFillColorDefault a real acrylic brush
+          {"ScrollBarTrackFill",
+           "AcrylicInAppFillColorDefault"}, // TODO make AcrylicInAppFillColorDefault a real acrylic brush
       };
 
   static std::unordered_map<std::string, winrt::Windows::UI::Color, std::hash<std::string_view>, std::equal_to<>>

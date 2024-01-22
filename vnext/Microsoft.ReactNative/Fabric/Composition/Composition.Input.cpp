@@ -630,7 +630,7 @@ winrt::Microsoft::ReactNative::Composition::Input::PointerPoint PointerRoutedEve
   const auto &viewRegistry = fabricuiManager->GetViewRegistry();
   auto targetComponentViewDescriptor = viewRegistry.componentViewDescriptorWithTag(tag);
 
-  auto clientRect = 
+  auto clientRect =
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentViewDescriptor.view)
           ->getClientRect();
 

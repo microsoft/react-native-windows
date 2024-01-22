@@ -16,7 +16,9 @@
 
 #include <windows.ui.composition.interop.h>
 
+#include <Fabric/DWriteHelpers.h>
 #include <unicode.h>
+#include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include "RootComponentView.h"
 
@@ -37,7 +39,8 @@ struct ScrollBarComponent {
   ScrollBarComponent(
       const winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView &outer,
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-      winrt::Microsoft::ReactNative::ReactContext const &reactContext, bool vertical)
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+      bool vertical)
       : m_outer(outer), m_compContext(compContext), m_reactContext(reactContext), m_vertical(vertical) {
     m_rootVisual = m_compContext.CreateSpriteVisual();
     m_trackVisual = m_compContext.CreateRoundedRectangleVisual();
@@ -67,19 +70,14 @@ struct ScrollBarComponent {
     updateVisibility();
   }
 
-  void updateTrack() noexcept
-  {
-    if (m_vertical)
-    {
-      m_trackVisual.Size({ m_arrowSize, m_size.Height});
-      m_trackVisual.Offset({ -m_arrowSize, 0.0f, 0.0f }, { 1.0f, 0.0f, 0.0f });
+  void updateTrack() noexcept {
+    if (m_vertical) {
+      m_trackVisual.Size({m_arrowSize, m_size.Height - (m_trackMargin * 2)});
+      m_trackVisual.Offset({-m_arrowSize, m_trackMargin, 0.0f}, {1.0f, 0.0f, 0.0f});
+    } else {
+      m_trackVisual.Size({m_size.Width - (m_trackMargin * 2), m_arrowSize});
+      m_trackVisual.Offset({m_trackMargin, -m_arrowSize, 0.0f}, {0.0f, 1.0f, 0.0f});
     }
-    else
-    {
-      m_trackVisual.Size({ m_size.Width, m_arrowSize });
-      m_trackVisual.Offset({ 0.0f, -m_arrowSize, 0.0f }, { 0.0f, 1.0f, 0.0f });
-    }
-
   }
 
   void updateLayoutMetrics(facebook::react::LayoutMetrics const &layoutMetrics) noexcept {
@@ -97,54 +95,49 @@ struct ScrollBarComponent {
     updateVisibility();
   }
 
-  void updateVisibility() noexcept
-  {
+  void updateVisibility() noexcept {
     bool newVisibility = false;
-    if (m_vertical)
-    {
+    if (m_vertical) {
       newVisibility = (m_contentSize.Height > m_size.Height);
-    }
-    else
-    {
+    } else {
       newVisibility = (m_contentSize.Width > m_size.Width);
     }
 
-    if (newVisibility != m_visible)
-    {
+    if (newVisibility != m_visible) {
       m_visible = newVisibility;
       m_rootVisual.IsVisible(m_visible);
     }
   }
 
-  void updateRootAndArrowVisualOffsets() noexcept
-  {
-    if (m_vertical)
-    {
-      m_rootVisual.RelativeSizeWithOffset({ m_arrowSize, 0.0f }, { 0.0f, 1.0f });
-      m_rootVisual.Offset({ -m_arrowSize, 0.0f, 0.0f }, { 1.0f, 0.0f, 0.0f });
-      m_arrowVisualFirst.Offset({ -m_arrowSize, 0.0f, 0.0f }, { 1.0f, 0.0f, 0.0f });
-      m_arrowVisualLast.Offset({ -m_arrowSize, -m_arrowSize, 0.0f }, { 1.0f, 1.0f, 0.0f });
-    }
-    else
-    {
-      m_rootVisual.RelativeSizeWithOffset({ 0.0f, m_arrowSize }, { 1.0f, 0.0f });
-      m_rootVisual.Offset({ 0.0f, -m_arrowSize, 0.0f }, { 0.0f, 1.0f, 0.0f });
-      m_arrowVisualFirst.Offset({ 0.0f, -m_arrowSize, 0.0f }, { 0.0f, 1.0f, 0.0f });
-      m_arrowVisualLast.Offset({ -m_arrowSize, -m_arrowSize, 0.0f }, { 1.0f, 1.0f, 0.0f });
+  void updateRootAndArrowVisualOffsets() noexcept {
+    if (m_vertical) {
+      m_rootVisual.RelativeSizeWithOffset({m_arrowSize, 0.0f}, {0.0f, 1.0f});
+      m_rootVisual.Offset({-m_arrowSize, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f});
+      m_arrowVisualFirst.Offset({-m_arrowSize, m_arrowMargin, 0.0f}, {1.0f, 0.0f, 0.0f});
+      m_arrowVisualLast.Offset({-m_arrowSize, -(m_arrowSize + m_arrowMargin), 0.0f}, {1.0f, 1.0f, 0.0f});
+    } else {
+      m_rootVisual.RelativeSizeWithOffset({0.0f, m_arrowSize}, {1.0f, 0.0f});
+      m_rootVisual.Offset({0.0f, -m_arrowSize, 0.0f}, {0.0f, 1.0f, 0.0f});
+      m_arrowVisualFirst.Offset({m_arrowMargin, -m_arrowSize, 0.0f}, {0.0f, 1.0f, 0.0f});
+      m_arrowVisualLast.Offset({-m_arrowSize, -(m_arrowSize + m_arrowMargin), 0.0f}, {1.0f, 1.0f, 0.0f});
     }
   }
 
   void onScaleChanged() noexcept {
     m_arrowSize = 12 * m_scaleFactor; // From Xaml resource: ScrollBarSize
-    m_thumbWidth =
-        6 * m_scaleFactor; // From Xaml resource: ScrollBarThumbStrokeThickness
+    m_thumbWidth = 6 * m_scaleFactor; // From Xaml resource: ScrollBarThumbStrokeThickness
+    m_arrowMargin = 4 * m_scaleFactor; // From Xaml resource: ScrollBar(Vertical|Horizontal)(Increase|Decrease)Margin
+    m_trackMargin = 2 * m_scaleFactor;
     m_minThumbSize = static_cast<int>(
         30 * m_scaleFactor); // From Xaml resource: ScrollBarVerticalThumbMinHeight / ScrollBarHorizontalThumbMinWidth
 
+    m_thumbVisual.CornerRadius({m_thumbWidth / 2.0f, m_thumbWidth / 2.0f});
     m_trackVisual.CornerRadius({m_arrowSize / 2.0f, m_arrowSize / 2.0f});
 
     m_arrowVisualFirst.Size({m_arrowSize, m_arrowSize});
     m_arrowVisualLast.Size({m_arrowSize, m_arrowSize});
+    m_arrowFirstDrawingSurface = nullptr; // Reset arrow textures when scale changes
+    m_arrowLastDrawingSurface = nullptr;
     updateRootAndArrowVisualOffsets();
   }
 
@@ -160,41 +153,41 @@ struct ScrollBarComponent {
         return ScrollbarHitRegion::Unknown;
       }
 
-      if (pt.Y < m_arrowSize) {
+      if (pt.Y < (m_arrowSize + m_arrowMargin)) {
         return ScrollbarHitRegion::ArrowFirst;
       }
 
-      if (pt.Y < m_arrowSize + m_thumbPos) {
+      if (pt.Y < (m_arrowSize + m_arrowMargin) + m_thumbPos) {
         return ScrollbarHitRegion::PageUp;
       }
 
-      if (pt.Y < m_arrowSize + m_thumbPos + m_thumbSize) {
+      if (pt.Y < (m_arrowSize + m_arrowMargin) + m_thumbPos + m_thumbSize) {
         return ScrollbarHitRegion::Thumb;
       }
 
-      if (pt.Y < m_size.Height - m_arrowSize) {
+      if (pt.Y < m_size.Height - (m_arrowSize + m_arrowMargin)) {
         return ScrollbarHitRegion::PageDown;
       }
 
       return ScrollbarHitRegion::ArrowLast;
     } else {
-      if (pt.Y < m_size.Height - m_arrowSize) {
+      if (pt.Y < m_size.Height - (m_arrowSize + m_arrowMargin)) {
         return ScrollbarHitRegion::Unknown;
       }
 
-      if (pt.X < m_arrowSize) {
+      if (pt.X < (m_arrowSize + m_arrowMargin)) {
         return ScrollbarHitRegion::ArrowFirst;
       }
 
-      if (pt.X < m_arrowSize + m_thumbPos) {
+      if (pt.X < (m_arrowSize + m_arrowMargin) + m_thumbPos) {
         return ScrollbarHitRegion::PageUp;
       }
 
-      if (pt.X < m_arrowSize + m_thumbPos + m_thumbSize) {
+      if (pt.X < (m_arrowSize + m_arrowMargin) + m_thumbPos + m_thumbSize) {
         return ScrollbarHitRegion::Thumb;
       }
 
-      if (pt.X < m_size.Width - m_arrowSize) {
+      if (pt.X < m_size.Width - (m_arrowSize + m_arrowMargin)) {
         return ScrollbarHitRegion::PageDown;
       }
 
@@ -209,26 +202,11 @@ struct ScrollBarComponent {
   }
 
   int calulateMaxThumbLength() const noexcept {
-    return std::max(static_cast<int>(getViewportSize() - (2 * m_arrowSize)), 0);
+    return std::max(static_cast<int>(getViewportSize() - (2 * (m_arrowSize + m_arrowMargin))), 0);
   }
 
   int getScrollRange() const noexcept {
     return static_cast<int>(m_vertical ? m_contentSize.Height : m_contentSize.Width);
-  }
-
-  int trackPosFromPoint(int pt, int trackMouseOffset) const noexcept {
-    // compute logical scroll pos from a mouse coordinate in the scrollbar rect
-    int pageAndThumbSize = calulateMaxThumbLength();
-
-    const int range = std::max(0, getScrollRange());
-    const int page = std::min(range, getViewportSize());
-
-    int pixelPos = (pt)-trackMouseOffset - static_cast<int>(m_arrowSize);
-    pixelPos = std::clamp(pixelPos, 0, pageAndThumbSize);
-
-    int trackPos = 0 < pageAndThumbSize ? ::MulDiv(pixelPos, range, pageAndThumbSize) : 0;
-    trackPos = std::clamp(trackPos, 0, range - page);
-    return trackPos;
   }
 
   int getComputedPixelThumbSize() const noexcept {
@@ -273,19 +251,19 @@ struct ScrollBarComponent {
 
     // Position is relative to available area for thumb
     m_thumbPos = (scrollRange > 0 ? ::MulDiv(scrollOffset, maxThumbLength - thumbCorrection, scrollRange) : 0);
-    assert(0 <= m_thumbPos && m_thumbPos <= maxThumbLength - m_thumbSize);
-    m_thumbVisual.CornerRadius({m_thumbWidth / 2.0f, m_thumbWidth / 2.0f});
 
     auto thumbOffset = (m_arrowSize - m_thumbWidth) / 2.0f;
 
     if (m_vertical) {
       m_thumbVisual.Size({m_thumbWidth, static_cast<float>(m_thumbSize)});
       m_thumbVisual.Offset(
-          {-m_arrowSize + thumbOffset, m_arrowSize + static_cast<float>(m_thumbPos), 0.0f}, {1.0f, 0.0f, 0.0f});
+          {-m_arrowSize + thumbOffset, m_arrowSize + m_arrowMargin + static_cast<float>(m_thumbPos), 0.0f},
+          {1.0f, 0.0f, 0.0f});
     } else {
       m_thumbVisual.Size({static_cast<float>(m_thumbSize), m_thumbWidth});
       m_thumbVisual.Offset(
-          {m_arrowSize + static_cast<float>(m_thumbPos), -m_arrowSize + thumbOffset, 0.0f}, {0.0f, 1.0f, 0.0f});
+          {m_arrowSize + static_cast<float>(m_thumbPos), -(m_arrowSize + m_arrowMargin) + thumbOffset, 0.0f},
+          {0.0f, 1.0f, 0.0f});
     }
   }
 
@@ -294,7 +272,8 @@ struct ScrollBarComponent {
   }
 
   void OnPointerReleased(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
-    if (!m_visible) return;
+    if (!m_visible)
+      return;
     auto pt = args.GetCurrentPoint(-1);
     if (m_nTrackInputOffset != -1 &&
         pt.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse &&
@@ -320,7 +299,8 @@ struct ScrollBarComponent {
   }
 
   void OnPointerPressed(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
-    if (!m_visible) return;
+    if (!m_visible)
+      return;
     auto pt = args.GetCurrentPoint(m_outer.Tag());
     if (pt.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
       auto pos = pt.Position();
@@ -361,7 +341,8 @@ struct ScrollBarComponent {
   }
 
   void OnPointerMoved(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
-    if (!m_visible) return;
+    if (!m_visible)
+      return;
     auto pt = args.GetCurrentPoint(m_outer.Tag());
     if (pt.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
       auto pos = pt.Position();
@@ -384,20 +365,118 @@ struct ScrollBarComponent {
     updateHighlight(m_highlightedRegion);
   }
 
+  // Renders the text into our composition surface
+  void drawArrow(ScrollbarHitRegion region, bool disabled, bool hovered) noexcept {
+    auto &drawingSurface =
+        (region == ScrollbarHitRegion::ArrowFirst) ? m_arrowFirstDrawingSurface : m_arrowLastDrawingSurface;
+    if (!drawingSurface) {
+      drawingSurface = m_compContext.CreateDrawingSurfaceBrush(
+          {m_arrowSize, m_arrowSize},
+          winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
+          winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+    }
+
+    if (winrt::get_self<ScrollViewComponentView>(m_outer)->theme()->IsEmpty()) {
+      return;
+    }
+
+    winrt::com_ptr<IDWriteTextFormat> spTextFormat;
+    winrt::check_hresult(::Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
+        L"Segoe Fluent Icons",
+        nullptr, // Font collection (nullptr sets it to use the system font collection).
+        DWRITE_FONT_WEIGHT_REGULAR,
+        DWRITE_FONT_STYLE_NORMAL,
+        DWRITE_FONT_STRETCH_NORMAL,
+        8, //  Xaml resource: ScrollBarButtonArrowIconFontSize
+        L"",
+        spTextFormat.put()));
+
+    winrt::check_hresult(spTextFormat->SetTextAlignment(DWRITE_TEXT_ALIGNMENT_CENTER));
+
+    winrt::com_ptr<IDWriteTextLayout> spTextLayout;
+    winrt::check_hresult(::Microsoft::ReactNative::DWriteFactory()->CreateTextLayout(
+        m_vertical
+            ? ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDDB" : L"\uEDDC")
+            : ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDD9"
+                                                          : L"\uEDDA"), // The string to be laid out and formatted.
+        1, // The length of the string.
+        spTextFormat.get(), // The text format to apply to the string (contains font information, etc).
+        m_arrowSize, // The width of the layout box.
+        m_arrowSize, // The height of the layout box.
+        spTextLayout.put() // The IDWriteTextLayout interface pointer.
+        ));
+
+    POINT offset;
+    {
+      ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, &offset);
+      if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
+        d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
+        assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
+        const auto dpi = m_scaleFactor * 96.0f;
+        float oldDpiX, oldDpiY;
+        d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
+        d2dDeviceContext->SetDpi(dpi, dpi);
+
+        float offsetX = static_cast<float>(offset.x / m_scaleFactor);
+        float offsetY = static_cast<float>(offset.y / m_scaleFactor);
+
+        // Create a solid color brush for the text. A more sophisticated application might want
+        // to cache and reuse a brush across all text elements instead, taking care to recreate
+        // it in the event of device removed.
+        winrt::com_ptr<ID2D1SolidColorBrush> brush;
+
+        D2D1::ColorF color{0};
+        if (disabled) {
+          color = winrt::get_self<ScrollViewComponentView>(m_outer)->theme()->D2DPlatformColor(
+              "ScrollBarButtonArrowForegroundDisabled");
+        } else if (hovered) {
+          color = winrt::get_self<ScrollViewComponentView>(m_outer)->theme()->D2DPlatformColor(
+              "ScrollBarButtonArrowForegroundPointerOver");
+        } else {
+          color = winrt::get_self<ScrollViewComponentView>(m_outer)->theme()->D2DPlatformColor(
+              "ScrollBarButtonArrowForeground");
+        }
+        winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
+
+        // if (!m_vertical)
+        {
+          DWRITE_TEXT_METRICS dtm{};
+          winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
+          offset.y += static_cast<int>((m_arrowSize - dtm.height) / 2.0f);
+        }
+
+        // Draw the line of text at the specified offset, which corresponds to the top-left
+        // corner of our drawing surface. Notice we don't call BeginDraw on the D2D device
+        // context; this has already been done for us by the composition API.
+        d2dDeviceContext->DrawTextLayout(
+            D2D1::Point2F(
+                static_cast<FLOAT>((offset.x) / m_scaleFactor), static_cast<FLOAT>((offset.y) / m_scaleFactor)),
+            spTextLayout.get(),
+            brush.get(),
+            D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
+
+        // restore dpi to old state
+        d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
+      }
+    }
+    if (drawingSurface) {
+      drawingSurface.HorizontalAlignmentRatio(0.0f);
+      drawingSurface.VerticalAlignmentRatio(0.0f);
+      drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
+    }
+
+    auto &arrowVisual = (region == ScrollbarHitRegion::ArrowFirst) ? m_arrowVisualFirst : m_arrowVisualLast;
+    arrowVisual.Brush(drawingSurface);
+  }
+
   void updateHighlight(ScrollbarHitRegion region) noexcept {
     switch (region) {
       case ScrollbarHitRegion::ArrowFirst:
       case ScrollbarHitRegion::ArrowLast: {
-        auto visual = (region == ScrollbarHitRegion::ArrowFirst) ? m_arrowVisualFirst : m_arrowVisualLast;
-        if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(
-                 winrt::get_self<ScrollViewComponentView>(m_outer)->viewProps())
-                 ->scrollEnabled) {
-          visual.Brush(m_outer.Theme().PlatformBrush(L"ScrollBarButtonArrowForegroundDisabled"));
-        } else if (m_highlightedRegion == region) {
-          visual.Brush(m_outer.Theme().PlatformBrush(L"ScrollBarButtonArrowForegroundPointerOver"));
-        } else {
-          visual.Brush(m_outer.Theme().PlatformBrush(L"ScrollBarButtonArrowForeground"));
-        }
+        auto disabled = !std::static_pointer_cast<const facebook::react::ScrollViewProps>(
+                             winrt::get_self<ScrollViewComponentView>(m_outer)->viewProps())
+                             ->scrollEnabled;
+        drawArrow(region, disabled, m_highlightedRegion == region);
       }
       case ScrollbarHitRegion::Thumb: {
         if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(
@@ -409,14 +488,13 @@ struct ScrollBarComponent {
         } else {
           m_thumbVisual.Brush(m_outer.Theme().PlatformBrush(L"ScrollBarThumbFill"));
         }
-
-        // TODO start drag scroll
       }
     }
   }
 
   void OnPointerExited(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
-    if (!m_visible) return;
+    if (!m_visible)
+      return;
   }
 
  private:
@@ -424,9 +502,11 @@ struct ScrollBarComponent {
   winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   const bool m_vertical;
-  bool m_visible { false };
+  bool m_visible{false};
   int m_thumbSize{0};
   float m_arrowSize{0};
+  float m_arrowMargin{0}; // margin on outside end of arrow buttons
+  float m_trackMargin{0}; // margin of track background
   float m_thumbWidth{0};
   int m_minThumbSize{0};
   float m_scaleFactor{1};
@@ -440,6 +520,8 @@ struct ScrollBarComponent {
   winrt::Microsoft::ReactNative::Composition::IRoundedRectangleVisual m_thumbVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_arrowVisualFirst{nullptr};
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_arrowVisualLast{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_arrowFirstDrawingSurface{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_arrowLastDrawingSurface{nullptr};
   winrt::Microsoft::ReactNative::Composition::IRoundedRectangleVisual m_trackVisual{nullptr};
 };
 
