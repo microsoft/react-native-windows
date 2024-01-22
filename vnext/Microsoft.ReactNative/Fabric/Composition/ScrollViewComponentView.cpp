@@ -112,14 +112,14 @@ struct ScrollBarComponent {
   void updateRootAndArrowVisualOffsets() noexcept {
     if (m_vertical) {
       m_rootVisual.RelativeSizeWithOffset({m_arrowSize, 0.0f}, {0.0f, 1.0f});
-      m_rootVisual.Offset({-m_arrowSize, 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f});
+      m_rootVisual.Offset({-(m_arrowSize + m_trackEdgeMargin), 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f});
       m_arrowVisualFirst.Offset({-m_arrowSize, m_arrowMargin, 0.0f}, {1.0f, 0.0f, 0.0f});
       m_arrowVisualLast.Offset({-m_arrowSize, -(m_arrowSize + m_arrowMargin), 0.0f}, {1.0f, 1.0f, 0.0f});
     } else {
       m_rootVisual.RelativeSizeWithOffset({0.0f, m_arrowSize}, {1.0f, 0.0f});
-      m_rootVisual.Offset({0.0f, -m_arrowSize, 0.0f}, {0.0f, 1.0f, 0.0f});
+      m_rootVisual.Offset({0.0f, -(m_arrowSize + m_trackEdgeMargin), 0.0f}, {0.0f, 1.0f, 0.0f});
       m_arrowVisualFirst.Offset({m_arrowMargin, -m_arrowSize, 0.0f}, {0.0f, 1.0f, 0.0f});
-      m_arrowVisualLast.Offset({-m_arrowSize, -(m_arrowSize + m_arrowMargin), 0.0f}, {1.0f, 1.0f, 0.0f});
+      m_arrowVisualLast.Offset({-(m_arrowSize + m_arrowMargin), -m_arrowSize, 0.0f}, {1.0f, 1.0f, 0.0f});
     }
   }
 
@@ -127,7 +127,9 @@ struct ScrollBarComponent {
     m_arrowSize = 12 * m_scaleFactor; // From Xaml resource: ScrollBarSize
     m_thumbWidth = 6 * m_scaleFactor; // From Xaml resource: ScrollBarThumbStrokeThickness
     m_arrowMargin = 4 * m_scaleFactor; // From Xaml resource: ScrollBar(Vertical|Horizontal)(Increase|Decrease)Margin
-    m_trackMargin = 2 * m_scaleFactor;
+    m_trackEdgeMargin = 1 * m_scaleFactor; // From Xaml resource: ScrollViewerScrollBarMargin
+    m_trackMargin =
+        (2 + 1) * m_scaleFactor; // From Xaml template VerticalPanningThumb.Margin + ScrollViewerScrollBarMargin
     m_minThumbSize = static_cast<int>(
         30 * m_scaleFactor); // From Xaml resource: ScrollBarVerticalThumbMinHeight / ScrollBarHorizontalThumbMinWidth
 
@@ -149,7 +151,7 @@ struct ScrollBarComponent {
   ScrollbarHitRegion HitTest(winrt::Windows::Foundation::Point pt) noexcept {
     pt = {pt.X * m_scaleFactor, pt.Y * m_scaleFactor};
     if (m_vertical) {
-      if (pt.X < m_size.Width - m_arrowSize) {
+      if (pt.X < m_size.Width - (m_arrowSize + m_trackEdgeMargin)) {
         return ScrollbarHitRegion::Unknown;
       }
 
@@ -171,7 +173,7 @@ struct ScrollBarComponent {
 
       return ScrollbarHitRegion::ArrowLast;
     } else {
-      if (pt.Y < m_size.Height - (m_arrowSize + m_arrowMargin)) {
+      if (pt.Y < m_size.Height - (m_arrowSize + m_trackEdgeMargin)) {
         return ScrollbarHitRegion::Unknown;
       }
 
@@ -262,7 +264,7 @@ struct ScrollBarComponent {
     } else {
       m_thumbVisual.Size({static_cast<float>(m_thumbSize), m_thumbWidth});
       m_thumbVisual.Offset(
-          {m_arrowSize + static_cast<float>(m_thumbPos), -(m_arrowSize + m_arrowMargin) + thumbOffset, 0.0f},
+          {m_arrowSize + m_arrowMargin + static_cast<float>(m_thumbPos), -m_arrowSize + thumbOffset, 0.0f},
           {0.0f, 1.0f, 0.0f});
     }
   }
@@ -506,7 +508,8 @@ struct ScrollBarComponent {
   int m_thumbSize{0};
   float m_arrowSize{0};
   float m_arrowMargin{0}; // margin on outside end of arrow buttons
-  float m_trackMargin{0}; // margin of track background
+  float m_trackEdgeMargin{0}; // margin between track and edge of component
+  float m_trackMargin{0}; // margin of track background to ends of scrollbar
   float m_thumbWidth{0};
   int m_minThumbSize{0};
   float m_scaleFactor{1};
