@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 10 Jan 2024 23:56:36 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Jan 2024 16:13:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.25
+
+Mon, 22 Jan 2024 16:13:55 GMT
+
+### Patches
+
+- Add checksum to ScriptStore cache (tudor.mihai@microsoft.com)
 
 ## 0.72.24
 

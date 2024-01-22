@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 22 Jan 2024 16:13:55 GMT",
+      "tag": "react-native-windows_v0.72.25",
+      "version": "0.72.25",
+      "comments": {
+        "patch": [
+          {
+            "author": "tudor.mihai@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0ac84c130f017b056658d3ea7b9cb4dbbe25ba41",
+            "comment": "Add checksum to ScriptStore cache"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jan 2024 23:56:36 GMT",
       "tag": "react-native-windows_v0.72.24",
       "version": "0.72.24",
