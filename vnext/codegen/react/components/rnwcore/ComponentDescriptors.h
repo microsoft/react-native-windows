@@ -16,13 +16,13 @@
 namespace facebook {
 namespace react {
 
+using DebuggingOverlayComponentDescriptor = ConcreteComponentDescriptor<DebuggingOverlayShadowNode>;
 using ActivityIndicatorViewComponentDescriptor = ConcreteComponentDescriptor<ActivityIndicatorViewShadowNode>;
 using AndroidDrawerLayoutComponentDescriptor = ConcreteComponentDescriptor<AndroidDrawerLayoutShadowNode>;
 using AndroidSwipeRefreshLayoutComponentDescriptor = ConcreteComponentDescriptor<AndroidSwipeRefreshLayoutShadowNode>;
 using PullToRefreshViewComponentDescriptor = ConcreteComponentDescriptor<PullToRefreshViewShadowNode>;
 using AndroidHorizontalScrollContentViewComponentDescriptor = ConcreteComponentDescriptor<AndroidHorizontalScrollContentViewShadowNode>;
 using SwitchComponentDescriptor = ConcreteComponentDescriptor<SwitchShadowNode>;
-using TraceUpdateOverlayComponentDescriptor = ConcreteComponentDescriptor<TraceUpdateOverlayShadowNode>;
 using UnimplementedNativeViewComponentDescriptor = ConcreteComponentDescriptor<UnimplementedNativeViewShadowNode>;
 
 } // namespace react

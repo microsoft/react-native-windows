@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231116-fa89dd68b",
+  "baseVersion": "0.74.0-nightly-20231201-c30f2b620",
   "overrides": [
     {
       "type": "derived",
@@ -38,7 +38,7 @@
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "528b850e74260e8059797a7fbf771ce8a07f27dd",
+      "baseHash": "0feb796c56462855789816350f23943b5a212b2e",
       "issue": 5688
     },
     {
