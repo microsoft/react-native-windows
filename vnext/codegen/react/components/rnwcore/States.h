@@ -17,6 +17,21 @@
 namespace facebook {
 namespace react {
 
+class DebuggingOverlayState {
+public:
+  DebuggingOverlayState() = default;
+
+#ifdef ANDROID
+  DebuggingOverlayState(DebuggingOverlayState const &previousState, folly::dynamic data){};
+  folly::dynamic getDynamic() const {
+    return {};
+  };
+  MapBuffer getMapBuffer() const {
+    return MapBufferBuilder::EMPTY();
+  };
+#endif
+};
+
 class ActivityIndicatorViewState {
 public:
   ActivityIndicatorViewState() = default;
@@ -98,21 +113,6 @@ public:
 
 #ifdef ANDROID
   SwitchState(SwitchState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
-  };
-#endif
-};
-
-class TraceUpdateOverlayState {
-public:
-  TraceUpdateOverlayState() = default;
-
-#ifdef ANDROID
-  TraceUpdateOverlayState(TraceUpdateOverlayState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
   };

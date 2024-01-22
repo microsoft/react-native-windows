@@ -15,6 +15,13 @@
 namespace facebook {
 namespace react {
 
+DebuggingOverlayProps::DebuggingOverlayProps(
+    const PropsParserContext &context,
+    const DebuggingOverlayProps &sourceProps,
+    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps)
+
+    
+      {}
 ModalHostViewProps::ModalHostViewProps(
     const PropsParserContext &context,
     const ModalHostViewProps &sourceProps,
@@ -35,8 +42,8 @@ ActivityIndicatorViewProps::ActivityIndicatorViewProps(
     const ActivityIndicatorViewProps &sourceProps,
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
 
-    hidesWhenStopped(convertRawProp(context, rawProps, "hidesWhenStopped", sourceProps.hidesWhenStopped, {false})),
-    animating(convertRawProp(context, rawProps, "animating", sourceProps.animating, {false})),
+    hidesWhenStopped(convertRawProp(context, rawProps, "hidesWhenStopped", sourceProps.hidesWhenStopped, {true})),
+    animating(convertRawProp(context, rawProps, "animating", sourceProps.animating, {true})),
     color(convertRawProp(context, rawProps, "color", sourceProps.color, {})),
     size(convertRawProp(context, rawProps, "size", sourceProps.size, {ActivityIndicatorViewSize::Small}))
       {}
@@ -177,13 +184,6 @@ InputAccessoryProps::InputAccessoryProps(
     const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
 
     backgroundColor(convertRawProp(context, rawProps, "backgroundColor", sourceProps.backgroundColor, {}))
-      {}
-TraceUpdateOverlayProps::TraceUpdateOverlayProps(
-    const PropsParserContext &context,
-    const TraceUpdateOverlayProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps)
-
-    
       {}
 UnimplementedNativeViewProps::UnimplementedNativeViewProps(
     const PropsParserContext &context,

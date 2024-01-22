@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231116-fa89dd68b",
+  "baseVersion": "0.74.0-nightly-20231201-c30f2b620",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "397a9d59e4415e8758adc635d5e016070e6d85d7"
+      "baseHash": "172a4663d9243a77e3b35a2d8a5e403fd62062cf"
     },
     {
       "type": "derived",
       "file": "src/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "b658f287732c27fdd28722a8765c3b1b0c1316fa"
+      "baseHash": "6c91f268c2189f9db74bead7fef1ed262c77586e"
     },
     {
       "type": "platform",
@@ -112,7 +112,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/ScrollView/ScrollView.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "6e3e4933173d1f910232f3f46602e2f525127eb5"
+      "baseHash": "6367cf4ba4637cd8292b68c629cb9d59df99ade1"
     },
     {
       "type": "platform",
@@ -130,7 +130,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "d12fe54e9da3be0b1003a5bc18fa3c6d09728564"
+      "baseHash": "f6742637eda13080bd175a45eb0edbc83fa260c5"
     },
     {
       "type": "patch",
@@ -252,7 +252,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/Image.win32.js",
       "baseFile": "packages/react-native/Libraries/Image/Image.ios.js",
-      "baseHash": "bccd20ad47baa18b187bd8eb92b7627135be29fd",
+      "baseHash": "ba2c259fd454ed0c0f73b82f6390fef8045320ab",
       "issue": 4320
     },
     {
@@ -306,7 +306,7 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "packages/react-native/Libraries/Inspector/Inspector.js",
-      "baseHash": "03565787cbe09078824ee3fcfc12401085995454"
+      "baseHash": "db79965ed999c40d6bebaf1860a0921749d54b4f"
     },
     {
       "type": "patch",
@@ -511,7 +511,7 @@
       "type": "copy",
       "file": "src/Libraries/Utilities/useMergeRefs.js",
       "baseFile": "packages/react-native/Libraries/Utilities/useMergeRefs.js",
-      "baseHash": "d21cc9b2de5af9f398429e7a03c5f13ea7dc7227"
+      "baseHash": "1f1ca637132e6e0fe1549ba520d98508269ca2bd"
     }
   ]
 }

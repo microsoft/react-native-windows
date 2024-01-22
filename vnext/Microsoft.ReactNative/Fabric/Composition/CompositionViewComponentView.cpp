@@ -1214,7 +1214,8 @@ void CompositionBaseComponentView::updateBorderProps(
     const facebook::react::ViewProps &oldViewProps,
     const facebook::react::ViewProps &newViewProps) noexcept {
   if (oldViewProps.borderColors != newViewProps.borderColors || oldViewProps.borderRadii != newViewProps.borderRadii ||
-      !(oldViewProps.yogaStyle.border() == newViewProps.yogaStyle.border()) ||
+      !(oldViewProps.yogaStyle.border(facebook::yoga::Edge::All) ==
+        newViewProps.yogaStyle.border(facebook::yoga::Edge::All)) ||
       oldViewProps.borderStyles != newViewProps.borderStyles) {
     m_needsBorderUpdate = true;
   }
