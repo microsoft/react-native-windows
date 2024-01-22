@@ -754,6 +754,21 @@ const examples: Array<RNTesterModuleExample> = [
       );
     },
   },
+  {
+    title: 'Shadow set to Purple',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Shadow</Text>
+          <TextInput
+            placeholder='shadowColor: purple'
+            testID="textinput-shadow"
+            style={{fontSize: 16, shadowColor: 'purple', shadowOpacity: 99, shadowOffset: 10, shadowRadius: 20}}
+          />
+        </View>
+      );
+    },
+  },
   // Windows]
 ];
 

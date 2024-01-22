@@ -1178,6 +1178,24 @@ export default ({
       },
     },
     {
+      title: 'Shadow',
+      render(): React.Node {
+        return (
+          <View
+            style={{
+              height: 50,
+              width: 50,
+              shadowColor: 'pink',
+              shadowOpacity: 80,
+              shadowOffset: 10,
+              shadowRadius: 10,
+            }}
+            testID="shadow"
+          />
+        );
+      },
+    },
+    {
       title: 'HitSlop',
       render(): React.Node {
         return <HitSlopExample />;

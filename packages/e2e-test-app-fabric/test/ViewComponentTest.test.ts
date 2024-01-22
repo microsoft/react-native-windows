@@ -25,6 +25,12 @@ describe('View Tests', () => {
   test('Control', () => {
     expect(true).toBe(true);
   });
+  test('Views can have shadows', () => {
+    const component = await app.findElementByTestID('shadow');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('shadow');
+    expect(dump).toMatchSnapshot();
+  });
   // Disable until tests pass in CI.
   /*test('Views can have border styles', async () => {
     const searchBox = await app.findElementByTestID('example_search');
