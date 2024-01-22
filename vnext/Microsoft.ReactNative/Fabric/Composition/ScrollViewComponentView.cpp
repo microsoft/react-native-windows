@@ -72,10 +72,10 @@ struct ScrollBarComponent {
 
   void updateTrack() noexcept {
     if (m_vertical) {
-      m_trackVisual.Size({m_arrowSize, m_size.Height - (m_trackMargin * 2)});
+      m_trackVisual.Size({m_arrowSize, std::max(m_size.Height - (m_trackMargin * 2), 0.0f)});
       m_trackVisual.Offset({-m_arrowSize, m_trackMargin, 0.0f}, {1.0f, 0.0f, 0.0f});
     } else {
-      m_trackVisual.Size({m_size.Width - (m_trackMargin * 2), m_arrowSize});
+      m_trackVisual.Size({std::max(m_size.Width - (m_trackMargin * 2), 0.0f), m_arrowSize});
       m_trackVisual.Offset({m_trackMargin, -m_arrowSize, 0.0f}, {0.0f, 1.0f, 0.0f});
     }
   }
