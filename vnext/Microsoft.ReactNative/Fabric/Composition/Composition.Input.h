@@ -5,6 +5,7 @@
 #include "Composition.Input.PointerPoint.g.h"
 #include "Composition.Input.PointerPointProperties.g.h"
 #include "Composition.Input.PointerRoutedEventArgs.g.h"
+#include <ReactContext.h>
 #include <react/renderer/core/ReactPrimitives.h>
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
 #include <winrt/Windows.System.h>
@@ -143,9 +144,20 @@ struct PointerPointProperties : PointerPointPropertiesT<PointerPointProperties> 
 
 struct PointerPoint : PointerPointT<PointerPoint> {
 #ifdef USE_WINUI3
-  PointerPoint(const winrt::Microsoft::UI::Input::PointerPoint &pp);
+  PointerPoint(const winrt::Microsoft::UI::Input::PointerPoint &pp, float scaleFactor);
+  PointerPoint(
+      const winrt::Microsoft::UI::Input::PointerPoint &pp,
+      float scaleFactor,
+      const winrt::Windows::Foundation::Point &offset);
 #endif
   PointerPoint(HWND hwnd, uint32_t msg, uint64_t wParam, int64_t lParam, float scaleFactor);
+  PointerPoint(
+      HWND hwnd,
+      uint32_t msg,
+      uint64_t wParam,
+      int64_t lParam,
+      float scaleFactor,
+      const winrt::Windows::Foundation::Point &offset);
 
   uint32_t FrameId() noexcept;
   bool IsInContact() noexcept;
@@ -154,8 +166,8 @@ struct PointerPoint : PointerPointT<PointerPoint> {
   winrt::Windows::Foundation::Point Position() noexcept;
   winrt::Microsoft::ReactNative::Composition::Input::PointerPointProperties Properties() noexcept;
   uint64_t Timestamp() noexcept;
-  winrt::Microsoft::ReactNative::Composition::Input::PointerPoint GetTransformedPoint(
-      const IPointerPointTransform &transform) noexcept;
+  winrt::Microsoft::ReactNative::Composition::Input::PointerPoint GetOffsetPoint(
+      const winrt::Windows::Foundation::Point &offset) noexcept;
 
  private:
   bool IsPointerMessage(uint32_t message) noexcept;
@@ -173,10 +185,13 @@ struct PointerPoint : PointerPointT<PointerPoint> {
   uint64_t m_wParam;
   int64_t m_lParam;
   float m_scaleFactor;
+
+  winrt::Windows::Foundation::Point m_offset;
 };
 
 struct PointerRoutedEventArgs : PointerRoutedEventArgsT<PointerRoutedEventArgs> {
   PointerRoutedEventArgs(
+      const winrt::Microsoft::ReactNative::ReactContext &context,
       facebook::react::Tag tag,
       const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pp,
       const winrt::Windows::System::VirtualKeyModifiers &virtualKeyModifiers);
@@ -188,6 +203,7 @@ struct PointerRoutedEventArgs : PointerRoutedEventArgsT<PointerRoutedEventArgs> 
   winrt::Windows::System::VirtualKeyModifiers KeyModifiers() noexcept;
 
  private:
+  winrt::Microsoft::ReactNative::ReactContext m_context;
   facebook::react::Tag m_tag{-1};
   bool m_handled{false};
   winrt::Microsoft::ReactNative::Composition::Input::PointerPoint m_pointerPoint{nullptr};
