@@ -534,7 +534,7 @@ function EnsureWinGetForInstall {
 function WinGetInstall {
     param(
         [string]$wingetPackage,
-        [string]$packageVersion = "",
+        [string]$packageVersion = ""
     )
 
     EnsureWinGetForInstall;
