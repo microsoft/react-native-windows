@@ -19,8 +19,8 @@ class REACTWINDOWS_EXPORT DebuggingOverlayViewManager : public FrameworkElementV
   void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
   void GetCommands(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
   XamlView DebuggingOverlayViewManager::CreateViewCore(
-    int64_t /*tag*/,
-    const winrt::Microsoft::ReactNative::JSValueObject &) override;
+      int64_t /*tag*/,
+      const winrt::Microsoft::ReactNative::JSValueObject &) override;
   void DispatchCommand(
       const XamlView &viewToUpdate,
       const std::string &commandId,

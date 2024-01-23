@@ -10,8 +10,8 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-struct DebuggingOverlayComponentView : DebuggingOverlayComponentViewT<DebuggingOverlayComponentView, CompositionViewComponentView> {
-
+struct DebuggingOverlayComponentView
+    : DebuggingOverlayComponentViewT<DebuggingOverlayComponentView, CompositionViewComponentView> {
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,

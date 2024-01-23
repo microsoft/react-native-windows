@@ -39,17 +39,16 @@ XamlView DebuggingOverlayViewManager::CreateViewCore(
 }
 
 void DebuggingOverlayViewManager::DispatchCommand(
-      const XamlView &viewToUpdate,
-      const std::string &commandId,
-      winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
-if (commandId == DebuggingOverlayCommands::Draw) {
-  // The current spec has a Draw command -- but this will be replaced with some different commands in 
-  // https://github.com/facebook/react-native/pull/42119
-  // There is little point in attempting to implement these commands until then.
-  return;
-}
+    const XamlView &viewToUpdate,
+    const std::string &commandId,
+    winrt::Microsoft::ReactNative::JSValueArray &&commandArgs) {
+  if (commandId == DebuggingOverlayCommands::Draw) {
+    // The current spec has a Draw command -- but this will be replaced with some different commands in
+    // https://github.com/facebook/react-native/pull/42119
+    // There is little point in attempting to implement these commands until then.
+    return;
+  }
   Super::DispatchCommand(viewToUpdate, commandId, std::move(commandArgs));
 }
-
 
 } // namespace Microsoft::ReactNative
