@@ -16,7 +16,6 @@ import type {
 } from '../Renderer/shims/ReactNativeTypes';
 import type {ViewStyleProp} from '../StyleSheet/StyleSheet';
 import type {ReactDevToolsAgent} from '../Types/ReactDevToolsTypes';
-import type {HostRef} from './getInspectorDataForViewAtPoint';
 
 const PressabilityDebug = require('../Pressability/PressabilityDebug');
 const ReactNative = require('../Renderer/shims/ReactNative');
@@ -47,7 +46,7 @@ export type InspectedElement = $ReadOnly<{
 export type ElementsHierarchy = InspectorData['hierarchy'];
 
 type Props = {
-  inspectedView: ?HostRef,
+  inspectedViewRef: React.RefObject<React.ElementRef<typeof View> | null>,
   onRequestRerenderApp: () => void,
   reactDevToolsAgent?: ReactDevToolsAgent,
 };
@@ -55,7 +54,7 @@ type Props = {
 const UIManager = require('../ReactNative/UIManager'); // [Win32]
 
 function Inspector({
-  inspectedView,
+  inspectedViewRef,
   onRequestRerenderApp,
   reactDevToolsAgent,
 }: Props): React.Node {
@@ -115,7 +114,7 @@ function Inspector({
       }
 
       // [Win32 Avoid Dimensions call
-      const node = ReactNative.findNodeHandle(inspectedView);
+      const node = ReactNative.findNodeHandle(inspectedViewRef);
       // $FlowFixMe[incompatible-call]
       UIManager.measure(node, (x, y, width, height, left, top) => {
         setPanelPosition(pointerY > height / 2 ? 'top' : 'bottom');
@@ -132,7 +131,7 @@ function Inspector({
 
     // ]Win32
     getInspectorDataForViewAtPoint(
-      inspectedView,
+      inspectedViewRef.current,
       locationX,
       locationY,
       viewData => {

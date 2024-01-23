@@ -4,7 +4,7 @@
  * @format
  */
 import React from 'react';
-import {AppRegistry, View} from 'react-native';
+import {AppRegistry, Text, View} from 'react-native';
 import type {ViewProps} from 'react-native';
 
 import {
@@ -49,7 +49,8 @@ const Bootstrap = () => {
         gap: 5,
         height: 500,
       }}>
-      <MyCustomComponent label="test" style={{flex: 1}} />
+      <Text>This is RN Texsst - </Text>
+      <MyCustomComponent label="test" />
     </View>
   );
 };

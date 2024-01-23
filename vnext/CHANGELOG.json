@@ -2,6 +2,75 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 23 Jan 2024 06:15:25 GMT",
+      "version": "0.0.0-canary.756",
+      "tag": "react-native-windows_v0.0.0-canary.756",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1e8b8a0d0f221aa678cdb41cbd70988e49a77803",
+            "comment": "Update WinUI3Version"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2773eb9175dadd3e109396fc3d26c71cfcbdcb48",
+            "comment": "integrate 12/1"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c0538df1b90c5b767e32ead532630be1cf223730",
+            "comment": "[Fabric] Initial scrollbar implementation"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1b06c4a6acbaa689c5b85f7dbbff948e8486dbfe",
+            "comment": "Update RNW Dependency Script Node.js and Windows SDK versions"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 19 Jan 2024 06:16:14 GMT",
+      "version": "0.0.0-canary.755",
+      "tag": "react-native-windows_v0.0.0-canary.755",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6d0f9f755d48068e742d1c80bd8240cf6221cec6",
+            "comment": "Ensure ExperimentalFeatures.props is loaded in all projects"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 18 Jan 2024 06:14:22 GMT",
+      "version": "0.0.0-canary.754",
+      "tag": "react-native-windows_v0.0.0-canary.754",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e2ee4560750cf959acdf1f24c22bd67e81a29243",
+            "comment": "Expose public APIs to navigate native UI tree"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6164875acbe0a7490ab1b3e84e49cad798d841b5",
+            "comment": "Create new arch module template: cpp-lib"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Jan 2024 06:16:31 GMT",
       "version": "0.0.0-canary.753",
       "tag": "react-native-windows_v0.0.0-canary.753",

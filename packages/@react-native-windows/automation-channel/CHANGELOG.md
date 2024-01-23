@@ -1,8 +1,34 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Wed, 17 Jan 2024 06:16:32 GMT and should not be manually modified.
+This log was last generated on Tue, 23 Jan 2024 06:15:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.95
+
+Tue, 23 Jan 2024 06:15:26 GMT
+
+### Patches
+
+- integrate c464b215e (tatianakapos@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.756
+
+## 0.12.94
+
+Fri, 19 Jan 2024 06:16:14 GMT
+
+### Patches
+
+- Ensure ExperimentalFeatures.props is loaded in all projects (jthysell@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.755
+
+## 0.12.93
+
+Thu, 18 Jan 2024 06:14:23 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.754
 
 ## 0.12.92
 

@@ -40,49 +40,70 @@ steps:
   - ${{ if endsWith(parameters.template, '-app') }}:
     - script: |
         npx --yes react-native@$(reactNativeDevDependency) init testcli --template react-native@$(reactNativeDevDependency)
-      displayName: Init new app project
+      displayName: Init new app project with react-native init
       workingDirectory: $(Agent.BuildDirectory)
 
   - ${{ if endsWith(parameters.template, '-lib') }}:
     - script: |
-        npx --yes create-react-native-module@0.20.2 --package-name "testcli" testcli
-      displayName: Init new lib project
+        npx --yes create-react-native-library@latest --slug testcli --description testcli --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages java-objc --type module-new --react-native-version $(reactNativeDevDependency) testcli
+      displayName: Init new lib project with create-react-native-library
       workingDirectory: $(Agent.BuildDirectory)
-
-    - script: |
-        rmdir /s /q android
-      displayName: Remove broken android folder # See issue https://github.com/microsoft/react-native-windows/issues/12209
-      workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - script: |
       call yarn install
-      call yarn upgrade react@$(reactDevDependency) --dev
-      call yarn upgrade react-native@$(reactNativeDevDependency) --dev
-    displayName: Update project react and react-native dev versions
-    workingDirectory: $(Agent.BuildDirectory)\testcli
-
-  - script: |
-      call yarn add react-native-windows@$(npmVersion)
-    displayName: yarn add react-native-windows@$(npmVersion)
+    displayName: yarn install
     workingDirectory: $(Agent.BuildDirectory)\testcli
     env:
-      npm_config_registry: http://localhost:4873
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
+  
+  - ${{ if endsWith(parameters.template, '-app') }}:
+    - script: |
+        call yarn upgrade react@$(reactDevDependency) --dev
+        call yarn upgrade react-native@$(reactNativeDevDependency) --dev
+      displayName: Update project react and react-native dev versions
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+
+    - script: |
+        call yarn add react-native-windows@$(npmVersion)
+      displayName: yarn add react-native-windows@$(npmVersion)
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+      env:
+        npm_config_registry: http://localhost:4873
+
+  - ${{ if endsWith(parameters.template, '-lib') }}:
+    - script: |
+        call yarn config set npmRegistryServer http://localhost:4873
+        call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
+        call yarn add react-native-windows@$(npmVersion) --dev
+        call yarn add react-native-windows@* --peer
+      displayName: yarn add react-native-windows@$(npmVersion)
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+      env:
+        YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
   - script: |
       call yarn react-native init-windows --template ${{ parameters.template }} --overwrite --logging ${{ parameters.additionalInitArguments }}
     displayName: Call react-native init-windows
     workingDirectory: $(Agent.BuildDirectory)\testcli
-    env:
-      npm_config_registry: http://localhost:4873
   
-  - ${{ if endsWith(parameters.template, '-app') }}:
-    - powershell: |
-        $path = (Get-ChildItem -Filter "Package.appxmanifest" -File -Recurse).FullName;
-        [xml] $manifest = Get-Content $path
-        $manifest.Package.Identity.Name = 'ReactNative.InitTest'
-        $manifest.Save("$path")
-      displayName: Set AppX package name to "ReactNative.InitTest"
+  - ${{ if endsWith(parameters.template, '-lib') }}:
+    - script: |
+        call yarn install
+      displayName: yarn install again
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+      env:
+        YARN_ENABLE_IMMUTABLE_INSTALLS: false
+  
+  - powershell: |
+      $path = (Get-ChildItem -Filter "Package.appxmanifest" -File -Recurse).FullName;
+      [xml] $manifest = Get-Content $path
+      $manifest.Package.Identity.Name = 'ReactNative.InitTest'
+      $manifest.Save("$path")
+    displayName: Set AppX package name to "ReactNative.InitTest"
+    ${{ if endsWith(parameters.template, '-app') }}:
       workingDirectory: $(Agent.BuildDirectory)\testcli\windows
+    ${{ if endsWith(parameters.template, '-lib') }}:
+      workingDirectory: $(Agent.BuildDirectory)\testcli\example\windows
 
   # End npm test server
   - template: verdaccio-stop.yml
@@ -95,7 +116,10 @@ steps:
 
   - template: react-native-debug-info.yml
     parameters:
-      workingDirectory: $(Agent.BuildDirectory)\testcli
+      ${{ if endsWith(parameters.template, '-app') }}:
+        workingDirectory: $(Agent.BuildDirectory)\testcli
+      ${{ if endsWith(parameters.template, '-lib') }}:
+        workingDirectory: $(Agent.BuildDirectory)\testcli\example
 
   - template: ../templates/run-windows-with-certificates.yml
     parameters:
@@ -105,7 +129,10 @@ steps:
       buildPlatform: ${{ parameters.platform }}
       deployOption: ${{ parameters.additionalRunArguments }}
       buildLogDirectory: $(Build.BinariesDirectory)\${{ parameters.platform }}\${{ parameters.configuration }}\BuildLogs
-      workingDirectory: $(Agent.BuildDirectory)\testcli
+      ${{ if endsWith(parameters.template, '-app') }}:
+        workingDirectory: $(Agent.BuildDirectory)\testcli
+      ${{ if endsWith(parameters.template, '-lib') }}:
+        workingDirectory: $(Agent.BuildDirectory)\testcli\example
       restoreLockedMode: false # Allow new lockfile to be created
 
   - template: upload-build-logs.yml

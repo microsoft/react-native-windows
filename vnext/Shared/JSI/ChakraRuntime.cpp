@@ -678,6 +678,10 @@ bool ChakraRuntime::instanceOf(const facebook::jsi::Object &obj, const facebook:
   return InstanceOf(GetJsRef(obj), GetJsRef(func));
 }
 
+void ChakraRuntime::setExternalMemoryPressure(const facebook::jsi::Object & /*obj*/, size_t /*amount*/) {
+  // TODO: implement
+}
+
 #pragma endregion Functions_inherited_from_Runtime
 
 // Sets variable in the constructor and then restores its value in the destructor.

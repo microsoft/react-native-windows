@@ -1,8 +1,36 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 17 Jan 2024 06:16:31 GMT and should not be manually modified.
+This log was last generated on Tue, 23 Jan 2024 06:15:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.756
+
+Tue, 23 Jan 2024 06:15:25 GMT
+
+### Changes
+
+- Update WinUI3Version (30809111+acoates-ms@users.noreply.github.com)
+- integrate 12/1 (tatianakapos@microsoft.com)
+- [Fabric] Initial scrollbar implementation (30809111+acoates-ms@users.noreply.github.com)
+- Update RNW Dependency Script Node.js and Windows SDK versions (jthysell@microsoft.com)
+
+## 0.0.0-canary.755
+
+Fri, 19 Jan 2024 06:16:14 GMT
+
+### Changes
+
+- Ensure ExperimentalFeatures.props is loaded in all projects (jthysell@microsoft.com)
+
+## 0.0.0-canary.754
+
+Thu, 18 Jan 2024 06:14:22 GMT
+
+### Changes
+
+- Expose public APIs to navigate native UI tree (30809111+acoates-ms@users.noreply.github.com)
+- Create new arch module template: cpp-lib (jthysell@microsoft.com)
 
 ## 0.0.0-canary.753
 

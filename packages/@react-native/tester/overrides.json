@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.74.0-nightly-20231116-fa89dd68b",
+  "baseVersion": "0.74.0-nightly-20231201-c30f2b620",
   "overrides": [
     {
       "type": "copy",
@@ -383,7 +383,7 @@
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "76225825a3f4a981e5b804c14edc68081257967f",
+      "baseHash": "945fcdd1e5cb8a229d62b43a367a0a49ca754670",
       "issue": 4054
     },
     {
@@ -425,7 +425,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "b5578c95183bfbf584844d1c77d7c198ada306e1",
+      "baseHash": "2f833999772c0489207afe4d58ae7e001d6da4fe",
       "issue": 4054
     },
     {
@@ -474,7 +474,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "47dbdd4392c77270221b14051bb898ccb0ef610c",
+      "baseHash": "0323b0f1a26dba9a0f053e098024604c582052db",
       "issue": 4054
     },
     {
@@ -488,7 +488,7 @@
       "type": "copy",
       "directory": "js/utils",
       "baseDirectory": "packages/rn-tester/js/utils",
-      "baseHash": "97abb83b21178ac0ca73d2b90f2d5572cd2a25ff",
+      "baseHash": "fda3b531c884cf078815fac9c040a3e9cd55df97",
       "issue": 4054
     },
     {

@@ -14,6 +14,13 @@
 
 namespace facebook {
 namespace react {
+class DebuggingOverlayEventEmitter : public ViewEventEmitter {
+ public:
+  using ViewEventEmitter::ViewEventEmitter;
+
+  
+  
+};
 class ModalHostViewEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
@@ -172,13 +179,6 @@ class SwitchEventEmitter : public ViewEventEmitter {
   void onChange(OnChange value) const;
 };
 class InputAccessoryEventEmitter : public ViewEventEmitter {
- public:
-  using ViewEventEmitter::ViewEventEmitter;
-
-  
-  
-};
-class TraceUpdateOverlayEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
 

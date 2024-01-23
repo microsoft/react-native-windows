@@ -116,8 +116,7 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
             ->TrySetFocusedComponent(view);
       };
 
-  return walkTree(
-      *winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_focusedComponent), next, fn);
+  return winrt::Microsoft::ReactNative::implementation::walkTree(m_focusedComponent, next, fn);
 }
 
 HRESULT RootComponentView::GetFragmentRoot(IRawElementProviderFragmentRoot **pRetVal) noexcept {

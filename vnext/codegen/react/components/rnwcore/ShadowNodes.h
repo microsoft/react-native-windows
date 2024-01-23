@@ -19,6 +19,17 @@
 namespace facebook {
 namespace react {
 
+JSI_EXPORT extern const char DebuggingOverlayComponentName[];
+
+/*
+ * `ShadowNode` for <DebuggingOverlay> component.
+ */
+using DebuggingOverlayShadowNode = ConcreteViewShadowNode<
+    DebuggingOverlayComponentName,
+    DebuggingOverlayProps,
+    DebuggingOverlayEventEmitter,
+    DebuggingOverlayState>;
+
 JSI_EXPORT extern const char ActivityIndicatorViewComponentName[];
 
 /*
@@ -84,17 +95,6 @@ using SwitchShadowNode = ConcreteViewShadowNode<
     SwitchProps,
     SwitchEventEmitter,
     SwitchState>;
-
-JSI_EXPORT extern const char TraceUpdateOverlayComponentName[];
-
-/*
- * `ShadowNode` for <TraceUpdateOverlay> component.
- */
-using TraceUpdateOverlayShadowNode = ConcreteViewShadowNode<
-    TraceUpdateOverlayComponentName,
-    TraceUpdateOverlayProps,
-    TraceUpdateOverlayEventEmitter,
-    TraceUpdateOverlayState>;
 
 JSI_EXPORT extern const char UnimplementedNativeViewComponentName[];
 

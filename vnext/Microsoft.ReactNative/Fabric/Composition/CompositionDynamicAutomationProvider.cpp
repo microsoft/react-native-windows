@@ -17,10 +17,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
   if (pRetVal == nullptr)
     return E_POINTER;
 
-  return UiaNavigateHelper(
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_view.view()),
-      direction,
-      *pRetVal);
+  return UiaNavigateHelper(m_view.view(), direction, *pRetVal);
 }
 
 // Implementations should return NULL for a top-level element that is hosted in a window. Other elements should return
@@ -290,7 +287,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_IsEnabledPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal = !props->accessibilityState->disabled ? VARIANT_TRUE : VARIANT_FALSE;
+      pRetVal->boolVal =
+          !(props->accessibilityState && props->accessibilityState->disabled) ? VARIANT_TRUE : VARIANT_FALSE;
       break;
     }
     case UIA_IsContentElementPropertyId: {
