@@ -445,7 +445,7 @@ winrt::Windows::Foundation::Point PointerPoint::Position() noexcept {
 #ifdef USE_WINUI3
   if (m_sysPointerPoint) {
     auto pos = m_sysPointerPoint.Position();
-    return {pos.X - m_offset.X, pos.Y - (m_offset.Y / m_scaleFactor)};
+    return {pos.X - (m_offset.X / m_scaleFactor), pos.Y - (m_offset.Y / m_scaleFactor)};
   }
 #endif
 
