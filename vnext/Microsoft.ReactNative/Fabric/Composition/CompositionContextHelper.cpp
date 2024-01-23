@@ -295,6 +295,74 @@ using MicrosoftCompDrawingSurfaceBrush = CompDrawingSurfaceBrush<MicrosoftTypeRe
 #endif
 
 template <typename TTypeRedirects>
+void SetAnimationClass(
+    winrt::Microsoft::ReactNative::Composition::AnimationClass value,
+    typename const TTypeRedirects::Visual &visual) {
+  constexpr int64_t ScrollBarExpandBeginTime = 400; // ms
+  constexpr int64_t ScrollBarExpandDuration = 167; // ms
+
+  switch (value) {
+    case winrt::Microsoft::ReactNative::Composition::AnimationClass::None: {
+      visual.ImplicitAnimations(nullptr);
+      break;
+    }
+
+    case winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBar: {
+      auto compositor = visual.Compositor();
+
+      auto opacityAnimation = compositor.CreateScalarKeyFrameAnimation();
+      opacityAnimation.InsertExpressionKeyFrame(0.0f, L"this.StartingValue");
+      opacityAnimation.InsertExpressionKeyFrame(1.0f, L"this.FinalValue");
+      opacityAnimation.Target(L"Opacity");
+      opacityAnimation.DelayTime(std::chrono::milliseconds(ScrollBarExpandBeginTime));
+      opacityAnimation.Duration(std::chrono::milliseconds(ScrollBarExpandDuration));
+
+      auto implicitAnimations = compositor.CreateImplicitAnimationCollection();
+      implicitAnimations.Insert(L"Opacity", opacityAnimation);
+      visual.ImplicitAnimations(implicitAnimations);
+      break;
+    }
+
+    case winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbVertical:
+    case winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbHorizontal: {
+      auto compositor = visual.Compositor();
+      auto offsetAnimation = compositor.CreateVector3KeyFrameAnimation();
+      // We cannot just use a DelayTime, since we want changes to the offset in the scrolling dirction to happen
+      // immediately, and only delay the offset changes used when hiding/showing the scrollbar
+      float delayStartFrameOffset =
+          static_cast<float>(ScrollBarExpandBeginTime) / (ScrollBarExpandBeginTime + ScrollBarExpandDuration);
+      if (value == winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbVertical) {
+        offsetAnimation.InsertExpressionKeyFrame(
+            0.0f, L"vector3(this.CurrentValue.X, this.FinalValue.Y, this.FinalValue.Z)");
+        offsetAnimation.InsertExpressionKeyFrame(
+            delayStartFrameOffset, L"vector3(this.CurrentValue.X, this.FinalValue.Y, this.FinalValue.Z)");
+      } else {
+        offsetAnimation.InsertExpressionKeyFrame(
+            0.0f, L"vector3(this.FinalValue.X, this.CurrentValue.Y, this.FinalValue.Z)");
+        offsetAnimation.InsertExpressionKeyFrame(
+            delayStartFrameOffset, L"vector3(this.FinalValue.X, this.CurrentValue.Y, this.FinalValue.Z)");
+      }
+      offsetAnimation.InsertExpressionKeyFrame(1.0f, L"this.FinalValue");
+      offsetAnimation.Target(L"Offset");
+      offsetAnimation.Duration(std::chrono::milliseconds(ScrollBarExpandBeginTime + ScrollBarExpandDuration));
+
+      auto scaleAnimation = compositor.CreateVector3KeyFrameAnimation();
+      scaleAnimation.InsertExpressionKeyFrame(0.0f, L"this.StartingValue");
+      scaleAnimation.InsertExpressionKeyFrame(1.0f, L"this.FinalValue");
+      scaleAnimation.Target(L"Scale");
+      scaleAnimation.DelayTime(std::chrono::milliseconds(ScrollBarExpandBeginTime));
+      scaleAnimation.Duration(std::chrono::milliseconds(ScrollBarExpandDuration));
+
+      auto implicitAnimations = compositor.CreateImplicitAnimationCollection();
+      implicitAnimations.Insert(L"Offset", offsetAnimation);
+      implicitAnimations.Insert(L"Scale", scaleAnimation);
+
+      visual.ImplicitAnimations(implicitAnimations);
+    }
+  }
+}
+
+template <typename TTypeRedirects>
 struct CompVisual : public winrt::implements<
                         CompVisual<TTypeRedirects>,
                         winrt::Microsoft::ReactNative::Composition::IVisual,
@@ -399,8 +467,12 @@ struct CompVisual : public winrt::implements<
     return m_visual.Comment();
   }
 
-  void Comment(winrt::hstring value) {
+  void Comment(winrt::hstring value) noexcept {
     m_visual.Comment(value);
+  }
+
+  void AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass value) noexcept {
+    SetAnimationClass<TTypeRedirects>(value, m_visual);
   }
 
  private:
@@ -509,7 +581,7 @@ struct CompSpriteVisual : winrt::implements<
     return m_visual.Comment();
   }
 
-  void Comment(winrt::hstring value) {
+  void Comment(winrt::hstring value) noexcept {
     m_visual.Comment(value);
   }
 
@@ -527,6 +599,10 @@ struct CompSpriteVisual : winrt::implements<
 
   void Shadow(const winrt::Microsoft::ReactNative::Composition::IDropShadow &shadow) noexcept {
     m_visual.Shadow(TTypeRedirects::CompositionContextHelper::InnerDropShadow(shadow));
+  }
+
+  void AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass value) noexcept {
+    SetAnimationClass<TTypeRedirects>(value, m_visual);
   }
 
  private:
@@ -648,11 +724,11 @@ struct CompRoundedRectangleVisual : winrt::implements<
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
   }
 
-  winrt::hstring Comment() noexcept {
+  winrt::hstring Comment() const noexcept {
     return m_visual.Comment();
   }
 
-  void Comment(winrt::hstring value) {
+  void Comment(winrt::hstring value) noexcept {
     m_visual.Comment(value);
   }
 
@@ -662,6 +738,10 @@ struct CompRoundedRectangleVisual : winrt::implements<
 
   void CornerRadius(winrt::Windows::Foundation::Numerics::float2 value) noexcept {
     m_geometry.CornerRadius(value);
+  }
+
+  void AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass value) noexcept {
+    SetAnimationClass<TTypeRedirects>(value, m_visual);
   }
 
  private:
@@ -679,7 +759,7 @@ struct CompScrollPositionChangedArgs : winrt::implements<
                                            winrt::Microsoft::ReactNative::Composition::IScrollPositionChangedArgs> {
   CompScrollPositionChangedArgs(winrt::Windows::Foundation::Numerics::float2 position) : m_position(position) {}
 
-  winrt::Windows::Foundation::Numerics::float2 Position() {
+  winrt::Windows::Foundation::Numerics::float2 Position() const noexcept {
     return m_position;
   }
 
@@ -853,11 +933,11 @@ struct CompScrollerVisual : winrt::implements<
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
   }
 
-  winrt::hstring Comment() noexcept {
+  winrt::hstring Comment() const noexcept {
     return m_visual.Comment();
   }
 
-  void Comment(winrt::hstring value) {
+  void Comment(winrt::hstring value) noexcept {
     m_visual.Comment(value);
   }
 
@@ -879,7 +959,7 @@ struct CompScrollerVisual : winrt::implements<
 
   winrt::event_token ScrollPositionChanged(
       winrt::Windows::Foundation::EventHandler<
-          winrt::Microsoft::ReactNative::Composition::IScrollPositionChangedArgs> const &handler) {
+          winrt::Microsoft::ReactNative::Composition::IScrollPositionChangedArgs> const &handler) noexcept {
     return m_scrollPositionChangedEvent.add(handler);
   }
 
@@ -893,7 +973,7 @@ struct CompScrollerVisual : winrt::implements<
     UpdateMaxPosition();
   }
 
-  winrt::Windows::Foundation::Numerics::float3 ScrollPosition() noexcept {
+  winrt::Windows::Foundation::Numerics::float3 ScrollPosition() const noexcept {
     return m_interactionTracker.Position();
   }
 
@@ -902,7 +982,7 @@ struct CompScrollerVisual : winrt::implements<
   static constexpr int64_t s_offsetsChangeMinMs{50};
   static constexpr int64_t s_offsetsChangeMaxMs{1000};
 
-  typename TTypeRedirects::CompositionAnimation GetPositionAnimation(float x, float y) {
+  typename TTypeRedirects::CompositionAnimation GetPositionAnimation(float x, float y) noexcept {
     const int64_t distance =
         static_cast<int64_t>(std::sqrt(std::pow(x - m_currentPosition.x, 2.0f) + pow(y - m_currentPosition.y, 2.0f)));
     auto compositor = m_visual.Compositor();
@@ -948,12 +1028,16 @@ struct CompScrollerVisual : winrt::implements<
     }
   }
 
+  void AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass value) noexcept {
+    SetAnimationClass<TTypeRedirects>(value, m_visual);
+  }
+
  private:
-  void FireScrollPositionChanged(winrt::Windows::Foundation::Numerics::float2 position) {
+  void FireScrollPositionChanged(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
     m_scrollPositionChangedEvent(*this, winrt::make<CompScrollPositionChangedArgs>(position));
   }
 
-  void UpdateMaxPosition() {
+  void UpdateMaxPosition() noexcept {
     m_interactionTracker.MaxPosition(
         {std::max<float>(m_contentSize.x - m_visualSize.x, 0),
          std::max<float>(m_contentSize.y - m_visualSize.y, 0),
@@ -1005,7 +1089,9 @@ struct CompActivityVisual : winrt::implements<
     }
   }
 
-  typename TTypeRedirects::ShapeVisual createLoadingCircle(typename TTypeRedirects::Compositor compositor, int delay) {
+  typename TTypeRedirects::ShapeVisual createLoadingCircle(
+      typename TTypeRedirects::Compositor compositor,
+      int delay) noexcept {
     // Create circle
     auto ellipse = compositor.CreateEllipseGeometry();
     ellipse.Radius({m_ringWidth, m_ringWidth});
@@ -1129,19 +1215,19 @@ struct CompActivityVisual : winrt::implements<
     m_visual.RelativeSizeAdjustment(relativeSizeAdjustment);
   }
 
-  winrt::Microsoft::ReactNative::Composition::BackfaceVisibility BackfaceVisibility() {
+  winrt::Microsoft::ReactNative::Composition::BackfaceVisibility BackfaceVisibility() const noexcept {
     return static_cast<winrt::Microsoft::ReactNative::Composition::BackfaceVisibility>(m_visual.BackfaceVisibility());
   }
 
-  void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
+  void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) noexcept {
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
   }
 
-  winrt::hstring Comment() noexcept {
+  winrt::hstring Comment() const noexcept {
     return m_visual.Comment();
   }
 
-  void Comment(winrt::hstring value) {
+  void Comment(winrt::hstring value) noexcept {
     m_visual.Comment(value);
   }
 
@@ -1155,6 +1241,10 @@ struct CompActivityVisual : winrt::implements<
     auto pathgeo = m_visual.Compositor().CreatePathGeometry(path);
     auto clip = m_visual.Compositor().CreateGeometricClip(pathgeo);
     m_visual.Clip(clip);
+  }
+
+  void AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass value) noexcept {
+    SetAnimationClass<TTypeRedirects>(value, m_visual);
   }
 
  private:
@@ -1237,6 +1327,10 @@ struct CompCaretVisual
     }
   }
 
+  void AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass value) noexcept {
+    SetAnimationClass(value, m_compVisual);
+  }
+
  private:
   bool m_isVisible{true};
   typename TTypeRedirects::SpriteVisual m_compVisual;
@@ -1301,7 +1395,7 @@ struct CompSwitchThumbVisual : winrt::implements<
     m_compVisual.Size(m_size);
   }
 
-  winrt::Windows::Foundation::Numerics::float2 Size() noexcept {
+  winrt::Windows::Foundation::Numerics::float2 Size() const noexcept {
     return m_size;
   }
 
@@ -1310,7 +1404,7 @@ struct CompSwitchThumbVisual : winrt::implements<
     m_compVisual.Offset({position.x, position.y, 0.0f});
   }
 
-  winrt::Windows::Foundation::Numerics::float2 Position() noexcept {
+  winrt::Windows::Foundation::Numerics::float2 Position() const noexcept {
     return m_pos;
   }
 
@@ -1335,6 +1429,10 @@ struct CompSwitchThumbVisual : winrt::implements<
   }
 
   void IsVisible(bool value) noexcept {}
+
+  void AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass value) noexcept {
+    SetAnimationClass(value, m_compVisual);
+  }
 
  private:
   bool m_isVisible{true};
@@ -1405,6 +1503,10 @@ struct CompFocusVisual
     m_scaleFactor = scaleFactor;
     auto inset = 2 * scaleFactor;
     m_brush.SetInsets(inset, inset, inset, inset);
+  }
+
+  void AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass value) noexcept {
+    SetAnimationClass(value, m_compVisual);
   }
 
  private:

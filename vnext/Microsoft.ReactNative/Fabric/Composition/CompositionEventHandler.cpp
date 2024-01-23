@@ -572,9 +572,14 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
          IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerEnter) ||
          IsViewListeningToEvent(componentView, facebook::react::WindowsViewEvents::Offset::MouseEnter));
 
-    if ((shouldEmitEvent || !emittedNativeEnteredEvent) &&
-        std::find(currentlyHoveredViews.begin(), currentlyHoveredViews.end(), componentView) ==
-            currentlyHoveredViews.end()) {
+    if (std::find(currentlyHoveredViews.begin(), currentlyHoveredViews.end(), componentView) ==
+        currentlyHoveredViews.end()) {
+      auto args =
+          winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
+              m_context, componentView.Tag(), pointerPoint, keyModifiers);
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentView)
+          ->onPointerEntered(args);
+
       if (shouldEmitEvent) {
         const auto eventEmitter =
             winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentView)
@@ -585,14 +590,6 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
             eventEmitter->onMouseEnter(event);
           }
         }
-      }
-      if (!emittedNativeEnteredEvent) {
-        emittedNativeEnteredEvent = true;
-        auto args =
-            winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
-                m_context, componentView.Tag(), pointerPoint, keyModifiers);
-        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentView)
-            ->onPointerEntered(args);
       }
     }
 
@@ -622,8 +619,10 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   // so we first iterate from the root to the target, collecting the views which need events fired for, of which
   // we reverse iterate (now from target to root), actually emitting the events.
   std::vector<winrt::Microsoft::ReactNative::ComponentView>
-      viewsToEmitLeaveEventsTo; // NSMutableOrderedSet<UIView *> *viewsToEmitLeaveEventsTo =
-                                // [NSMutableOrderedSet orderedSet];
+      viewsToEmitJSLeaveEventsTo; // NSMutableOrderedSet<UIView *> *viewsToEmitLeaveEventsTo =
+                                  // [NSMutableOrderedSet orderedSet];
+
+  std::vector<winrt::Microsoft::ReactNative::ComponentView> viewsToEmitLeaveEventsTo;
 
   winrt::Microsoft::ReactNative::ComponentView viewToEmitNativeExitedEvent{nullptr};
 
@@ -634,35 +633,34 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
                             //  {
     auto componentView = *itComponentView;
 
-    bool shouldEmitEvent = componentView != nullptr &&
+    bool shouldEmitJSEvent = componentView != nullptr &&
         (hasParentLeaveListener ||
          IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerLeave) ||
          IsViewListeningToEvent(componentView, facebook::react::WindowsViewEvents::Offset::MouseLeave));
 
-    if ((shouldEmitEvent || !viewToEmitNativeExitedEvent) &&
-        std::find(eventPathViews.begin(), eventPathViews.end(), componentView) == eventPathViews.end()) {
-      if (shouldEmitEvent) {
-        viewsToEmitLeaveEventsTo.push_back(componentView);
+    if (std::find(eventPathViews.begin(), eventPathViews.end(), componentView) == eventPathViews.end()) {
+      if (shouldEmitJSEvent) {
+        viewsToEmitJSLeaveEventsTo.push_back(componentView);
       }
-      if (!viewToEmitNativeExitedEvent) {
-        viewToEmitNativeExitedEvent = componentView;
-      }
+      viewsToEmitLeaveEventsTo.push_back(componentView);
     }
 
-    if (shouldEmitEvent && !hasParentLeaveListener) {
+    if (shouldEmitJSEvent && !hasParentLeaveListener) {
       hasParentLeaveListener = true;
     }
   }
 
-  if (viewToEmitNativeExitedEvent) {
+  for (auto itComponentView = viewsToEmitLeaveEventsTo.rbegin(); itComponentView != viewsToEmitLeaveEventsTo.rend();
+       itComponentView++) {
+    auto componentView = *itComponentView;
+
     auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
-        m_context, viewToEmitNativeExitedEvent.Tag(), pointerPoint, keyModifiers);
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(viewToEmitNativeExitedEvent)
-        ->onPointerExited(args);
+        m_context, componentView.Tag(), pointerPoint, keyModifiers);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentView)->onPointerExited(args);
   }
 
-  for (auto itComponentView = viewsToEmitLeaveEventsTo.rbegin(); itComponentView != viewsToEmitLeaveEventsTo.rend();
-       itComponentView++) { //  for (UIView *componentView in [viewsToEmitLeaveEventsTo reverseObjectEnumerator]) {
+  for (auto itComponentView = viewsToEmitJSLeaveEventsTo.rbegin(); itComponentView != viewsToEmitJSLeaveEventsTo.rend();
+       itComponentView++) { //  for (UIView *componentView in [viewsToEmitJSLeaveEventsTo reverseObjectEnumerator]) {
     auto componentView = *itComponentView;
 
     const auto eventEmitter =
