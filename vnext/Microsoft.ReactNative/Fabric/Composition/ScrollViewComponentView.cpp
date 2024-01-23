@@ -113,13 +113,13 @@ struct ScrollBarComponent {
     if (m_vertical) {
       m_rootVisual.RelativeSizeWithOffset({m_arrowSize, 0.0f}, {0.0f, 1.0f});
       m_rootVisual.Offset({-(m_arrowSize + m_trackEdgeMargin), 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f});
-      m_arrowVisualFirst.Offset({-m_arrowSize, m_arrowMargin, 0.0f}, {1.0f, 0.0f, 0.0f});
-      m_arrowVisualLast.Offset({-m_arrowSize, -(m_arrowSize + m_arrowMargin), 0.0f}, {1.0f, 1.0f, 0.0f});
+      m_arrowVisualFirst.Offset({0.0f, m_arrowMargin, 0.0f});
+      m_arrowVisualLast.Offset({0.0f, -(m_arrowSize + m_arrowMargin), 0.0f}, {0.0f, 1.0f, 0.0f});
     } else {
       m_rootVisual.RelativeSizeWithOffset({0.0f, m_arrowSize}, {1.0f, 0.0f});
       m_rootVisual.Offset({0.0f, -(m_arrowSize + m_trackEdgeMargin), 0.0f}, {0.0f, 1.0f, 0.0f});
-      m_arrowVisualFirst.Offset({m_arrowMargin, -m_arrowSize, 0.0f}, {0.0f, 1.0f, 0.0f});
-      m_arrowVisualLast.Offset({-(m_arrowSize + m_arrowMargin), -m_arrowSize, 0.0f}, {1.0f, 1.0f, 0.0f});
+      m_arrowVisualFirst.Offset({m_arrowMargin, 0.0f, 0.0f});
+      m_arrowVisualLast.Offset({-(m_arrowSize + m_arrowMargin), 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f});
     }
   }
 
@@ -400,11 +400,11 @@ struct ScrollBarComponent {
         m_vertical
             ? ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDDB" : L"\uEDDC")
             : ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDD9"
-                                                          : L"\uEDDA"), // The string to be laid out and formatted.
+                                                          : L"\uEDDA"),
         1, // The length of the string.
         spTextFormat.get(), // The text format to apply to the string (contains font information, etc).
-        m_arrowSize, // The width of the layout box.
-        m_arrowSize, // The height of the layout box.
+        (m_arrowSize / m_scaleFactor), // The width of the layout box.
+        (m_arrowSize / m_scaleFactor), // The height of the layout box.
         spTextLayout.put() // The IDWriteTextLayout interface pointer.
         ));
 
@@ -418,9 +418,6 @@ struct ScrollBarComponent {
         float oldDpiX, oldDpiY;
         d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
         d2dDeviceContext->SetDpi(dpi, dpi);
-
-        float offsetX = static_cast<float>(offset.x / m_scaleFactor);
-        float offsetY = static_cast<float>(offset.y / m_scaleFactor);
 
         // Create a solid color brush for the text. A more sophisticated application might want
         // to cache and reuse a brush across all text elements instead, taking care to recreate
@@ -440,7 +437,6 @@ struct ScrollBarComponent {
         }
         winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
 
-        // if (!m_vertical)
         {
           DWRITE_TEXT_METRICS dtm{};
           winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
