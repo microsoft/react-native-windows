@@ -53,6 +53,14 @@ struct ScrollBarComponent {
     m_rootVisual.InsertAt(m_arrowVisualLast, 2);
     m_rootVisual.InsertAt(m_thumbVisual, 3);
 
+    m_trackVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBar);
+    m_arrowVisualFirst.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBar);
+    m_arrowVisualLast.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBar);
+    m_thumbVisual.AnimationClass(
+        vertical ? winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbVertical
+                 : winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbHorizontal);
+
+    updateShy(true);
     onScaleChanged();
     OnThemeChanged();
   }
@@ -113,19 +121,20 @@ struct ScrollBarComponent {
     if (m_vertical) {
       m_rootVisual.RelativeSizeWithOffset({m_arrowSize, 0.0f}, {0.0f, 1.0f});
       m_rootVisual.Offset({-(m_arrowSize + m_trackEdgeMargin), 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f});
-      m_arrowVisualFirst.Offset({-m_arrowSize, m_arrowMargin, 0.0f}, {1.0f, 0.0f, 0.0f});
-      m_arrowVisualLast.Offset({-m_arrowSize, -(m_arrowSize + m_arrowMargin), 0.0f}, {1.0f, 1.0f, 0.0f});
+      m_arrowVisualFirst.Offset({0.0f, m_arrowMargin, 0.0f});
+      m_arrowVisualLast.Offset({0.0f, -(m_arrowSize + m_arrowMargin), 0.0f}, {0.0f, 1.0f, 0.0f});
     } else {
       m_rootVisual.RelativeSizeWithOffset({0.0f, m_arrowSize}, {1.0f, 0.0f});
       m_rootVisual.Offset({0.0f, -(m_arrowSize + m_trackEdgeMargin), 0.0f}, {0.0f, 1.0f, 0.0f});
-      m_arrowVisualFirst.Offset({m_arrowMargin, -m_arrowSize, 0.0f}, {0.0f, 1.0f, 0.0f});
-      m_arrowVisualLast.Offset({-(m_arrowSize + m_arrowMargin), -m_arrowSize, 0.0f}, {1.0f, 1.0f, 0.0f});
+      m_arrowVisualFirst.Offset({m_arrowMargin, 0.0f, 0.0f});
+      m_arrowVisualLast.Offset({-(m_arrowSize + m_arrowMargin), 0.0f, 0.0f}, {1.0f, 0.0f, 0.0f});
     }
   }
 
   void onScaleChanged() noexcept {
     m_arrowSize = 12 * m_scaleFactor; // From Xaml resource: ScrollBarSize
     m_thumbWidth = 6 * m_scaleFactor; // From Xaml resource: ScrollBarThumbStrokeThickness
+    m_thumbShyWidth = 2 * m_scaleFactor;
     m_arrowMargin = 4 * m_scaleFactor; // From Xaml resource: ScrollBar(Vertical|Horizontal)(Increase|Decrease)Margin
     m_trackEdgeMargin = 1 * m_scaleFactor; // From Xaml resource: ScrollViewerScrollBarMargin
     m_trackMargin =
@@ -255,17 +264,21 @@ struct ScrollBarComponent {
     m_thumbPos = (scrollRange > 0 ? ::MulDiv(scrollOffset, maxThumbLength - thumbCorrection, scrollRange) : 0);
 
     auto thumbOffset = (m_arrowSize - m_thumbWidth) / 2.0f;
+    auto shyOffset = m_shy ? (m_thumbWidth - m_thumbShyWidth) : 0.0f;
+    auto thumbScale = m_shy ? (m_thumbShyWidth / m_thumbWidth) : 1.0f;
 
     if (m_vertical) {
       m_thumbVisual.Size({m_thumbWidth, static_cast<float>(m_thumbSize)});
       m_thumbVisual.Offset(
-          {-m_arrowSize + thumbOffset, m_arrowSize + m_arrowMargin + static_cast<float>(m_thumbPos), 0.0f},
+          {-m_arrowSize + thumbOffset + shyOffset, m_arrowSize + m_arrowMargin + static_cast<float>(m_thumbPos), 0.0f},
           {1.0f, 0.0f, 0.0f});
+      m_thumbVisual.Scale({thumbScale, 1.0f, 1.0f});
     } else {
       m_thumbVisual.Size({static_cast<float>(m_thumbSize), m_thumbWidth});
       m_thumbVisual.Offset(
-          {m_arrowSize + m_arrowMargin + static_cast<float>(m_thumbPos), -m_arrowSize + thumbOffset, 0.0f},
+          {m_arrowSize + m_arrowMargin + static_cast<float>(m_thumbPos), -m_arrowSize + thumbOffset + shyOffset, 0.0f},
           {0.0f, 1.0f, 0.0f});
+      m_thumbVisual.Scale({1.0f, thumbScale, 1.0f});
     }
   }
 
@@ -276,7 +289,7 @@ struct ScrollBarComponent {
   void OnPointerReleased(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
     if (!m_visible)
       return;
-    auto pt = args.GetCurrentPoint(-1);
+    auto pt = args.GetCurrentPoint(m_outer.Tag());
     if (m_nTrackInputOffset != -1 &&
         pt.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse &&
         pt.Properties().PointerUpdateKind() ==
@@ -284,6 +297,9 @@ struct ScrollBarComponent {
       handleMoveThumb(args);
       m_nTrackInputOffset = -1;
       // Stop tracking
+
+      auto reg = HitTest(pt.Position());
+      updateShy(reg == ScrollbarHitRegion::Unknown);
     }
   }
 
@@ -349,12 +365,36 @@ struct ScrollBarComponent {
     if (pt.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
       auto pos = pt.Position();
       auto reg = HitTest(pos);
+      updateShy(reg == ScrollbarHitRegion::Unknown && m_nTrackInputOffset == -1);
       setHighlightedRegion(reg);
 
       if (m_nTrackInputOffset != -1) {
         handleMoveThumb(args);
       }
     }
+  }
+
+  void OnPointerExited(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
+    if (!m_visible)
+      return;
+
+    // TODO once we start capturing pointer, we would't need to stop tracking here
+    m_nTrackInputOffset = -1;
+
+    updateShy(m_nTrackInputOffset == -1);
+  }
+
+  void updateShy(bool shy) {
+    if (shy == m_shy)
+      return;
+
+    m_shy = shy;
+
+    m_trackVisual.Opacity(m_shy ? 0.0f : 1.0f);
+    m_arrowVisualFirst.Opacity(m_shy ? 0.0f : 1.0f);
+    m_arrowVisualLast.Opacity(m_shy ? 0.0f : 1.0f);
+
+    updateThumb();
   }
 
   void setHighlightedRegion(ScrollbarHitRegion region) noexcept {
@@ -397,14 +437,12 @@ struct ScrollBarComponent {
 
     winrt::com_ptr<IDWriteTextLayout> spTextLayout;
     winrt::check_hresult(::Microsoft::ReactNative::DWriteFactory()->CreateTextLayout(
-        m_vertical
-            ? ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDDB" : L"\uEDDC")
-            : ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDD9"
-                                                          : L"\uEDDA"), // The string to be laid out and formatted.
+        m_vertical ? ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDDB" : L"\uEDDC")
+                   : ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDD9" : L"\uEDDA"),
         1, // The length of the string.
         spTextFormat.get(), // The text format to apply to the string (contains font information, etc).
-        m_arrowSize, // The width of the layout box.
-        m_arrowSize, // The height of the layout box.
+        (m_arrowSize / m_scaleFactor), // The width of the layout box.
+        (m_arrowSize / m_scaleFactor), // The height of the layout box.
         spTextLayout.put() // The IDWriteTextLayout interface pointer.
         ));
 
@@ -418,9 +456,6 @@ struct ScrollBarComponent {
         float oldDpiX, oldDpiY;
         d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
         d2dDeviceContext->SetDpi(dpi, dpi);
-
-        float offsetX = static_cast<float>(offset.x / m_scaleFactor);
-        float offsetY = static_cast<float>(offset.y / m_scaleFactor);
 
         // Create a solid color brush for the text. A more sophisticated application might want
         // to cache and reuse a brush across all text elements instead, taking care to recreate
@@ -440,7 +475,6 @@ struct ScrollBarComponent {
         }
         winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
 
-        // if (!m_vertical)
         {
           DWRITE_TEXT_METRICS dtm{};
           winrt::check_hresult(spTextLayout->GetMetrics(&dtm));
@@ -494,23 +528,20 @@ struct ScrollBarComponent {
     }
   }
 
-  void OnPointerExited(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
-    if (!m_visible)
-      return;
-  }
-
  private:
   winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView m_outer;
   winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   const bool m_vertical;
   bool m_visible{false};
+  bool m_shy{false};
   int m_thumbSize{0};
   float m_arrowSize{0};
   float m_arrowMargin{0}; // margin on outside end of arrow buttons
   float m_trackEdgeMargin{0}; // margin between track and edge of component
   float m_trackMargin{0}; // margin of track background to ends of scrollbar
   float m_thumbWidth{0};
+  float m_thumbShyWidth{0};
   int m_minThumbSize{0};
   float m_scaleFactor{1};
   int m_thumbPos{0};
@@ -844,6 +875,13 @@ void ScrollViewComponentView::onPointerMoved(
   m_verticalScrollbarComponent->OnPointerMoved(args);
   m_horizontalScrollbarComponent->OnPointerMoved(args);
   Super::onPointerMoved(args);
+}
+
+void ScrollViewComponentView::onPointerExited(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  m_verticalScrollbarComponent->OnPointerExited(args);
+  m_horizontalScrollbarComponent->OnPointerExited(args);
+  Super::onPointerExited(args);
 }
 
 void ScrollViewComponentView::onKeyDown(

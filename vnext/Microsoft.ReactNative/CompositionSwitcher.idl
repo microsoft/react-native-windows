@@ -20,6 +20,14 @@ namespace Microsoft.ReactNative.Composition
     Visible,
     Hidden
   };
+  
+  enum AnimationClass
+  {
+    None = 0,
+    ScrollBar,
+    ScrollBarThumbHorizontal,
+    ScrollBarThumbVertical,
+  };
 
   [webhosthidden]
   [uuid("172def51-9e1a-4e3c-841a-e5a470065acc")] // uuid needed for empty interfaces
@@ -64,6 +72,7 @@ namespace Microsoft.ReactNative.Composition
     void RelativeSizeWithOffset(Windows.Foundation.Numerics.Vector2 size, Windows.Foundation.Numerics.Vector2 relativeSizeAdjustment);
     BackfaceVisibility BackfaceVisibility{ get; set; };
     String Comment { get; set; };
+    void AnimationClass(AnimationClass value);
   }
 
   [webhosthidden]

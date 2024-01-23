@@ -260,18 +260,10 @@ void CompositionBaseComponentView::onCharacterReceived(
 }
 
 void CompositionBaseComponentView::onPointerEntered(
-    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
-  if (m_parent && !args.Handled()) {
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onPointerEntered(args);
-  }
-}
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs & /*args*/) noexcept {}
 
 void CompositionBaseComponentView::onPointerExited(
-    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
-  if (m_parent && !args.Handled()) {
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onPointerExited(args);
-  }
-}
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs & /*args*/) noexcept {}
 
 void CompositionBaseComponentView::onPointerPressed(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
