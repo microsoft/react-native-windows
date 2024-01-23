@@ -74128,7 +74128,7 @@ exports[`snapshotAllPages TextInput 19`] = `
     </Text>
   </TextInput>
   <TextInput
-    defaultValue="Highlight Color is red"
+    defaultValue="Selection Color is red"
     selectionColor="red"
     style={
       {
@@ -74136,6 +74136,24 @@ exports[`snapshotAllPages TextInput 19`] = `
       }
     }
     testID="textinput-custom-highlight-color"
+  />
+  <TextInput
+    defaultValue="Selection handles are red"
+    selectionHandleColor="red"
+    style={
+      {
+        "fontSize": 16,
+      }
+    }
+  />
+  <TextInput
+    cursorColor="red"
+    defaultValue="Cursor Color is red"
+    style={
+      {
+        "fontSize": 16,
+      }
+    }
   />
 </View>
 `;

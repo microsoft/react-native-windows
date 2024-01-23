@@ -739,6 +739,10 @@ bool JsiAbiRuntime::instanceOf(const Object &o, const Function &f) try {
   throw;
 }
 
+void JsiAbiRuntime::setExternalMemoryPressure(const facebook::jsi::Object & /*obj*/, size_t /*amount*/) {
+  // TODO: implement
+}
+
 template <typename T>
 struct AutoRestore {
   AutoRestore(T *var, T value) : m_var{var}, m_value{std::exchange(*var, value)} {}

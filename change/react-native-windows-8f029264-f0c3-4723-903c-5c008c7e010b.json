@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Expose public APIs to navigate native UI tree",
+  "comment": "[Fabric] Initial scrollbar implementation",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

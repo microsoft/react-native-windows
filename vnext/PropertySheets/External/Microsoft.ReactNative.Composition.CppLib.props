@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) Microsoft Corporation.
+  Licensed under the MIT License.
+
+  This file will be consumed by ALL C++ Win32 module projects (both inside
+  and outside of this repo) that build on top of Microsoft.ReactNative.
+  Do not make any changes here unless it applies to ALL such projects.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <!--
+      Define SkipAddPriPayloadFilesToCopyToOutputDirectoryItems=true and GenerateLibraryLayout=false to avoid
+      conflicts with copying Microsoft.ReactNative XBF files by the native module DLLs and by Microsoft.ReactNative.
+    -->
+    <SkipAddPriPayloadFilesToCopyToOutputDirectoryItems>true</SkipAddPriPayloadFilesToCopyToOutputDirectoryItems>
+    <GenerateLibraryLayout>false</GenerateLibraryLayout>
+  </PropertyGroup>
+  <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Composition.Common.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Codegen.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.Cpp.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\PackageVersionDefinitions.props" />
+</Project>

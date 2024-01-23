@@ -14,6 +14,7 @@
 namespace facebook {
 namespace react {
 
+
 void ModalHostViewEventEmitter::onRequestClose(OnRequestClose $event) const {
   dispatchEvent("requestClose", [](jsi::Runtime &runtime) {
     auto $payload = jsi::Object(runtime);
@@ -145,7 +146,6 @@ $payload.setProperty(runtime, "target", $event.target);
     return $payload;
   });
 }
-
 
 
 
