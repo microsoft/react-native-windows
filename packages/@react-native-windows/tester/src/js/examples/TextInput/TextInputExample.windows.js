@@ -761,9 +761,15 @@ const examples: Array<RNTesterModuleExample> = [
         <View>
           <Text>Shadow</Text>
           <TextInput
-            placeholder='shadowColor: purple'
+            placeholder="shadowColor: purple"
             testID="textinput-shadow"
-            style={{fontSize: 16, shadowColor: 'purple', shadowOpacity: 99, shadowOffset: 10, shadowRadius: 20}}
+            style={{
+              fontSize: 16,
+              shadowColor: 'purple',
+              shadowOpacity: 99,
+              shadowOffset: 10,
+              shadowRadius: 20,
+            }}
           />
         </View>
       );

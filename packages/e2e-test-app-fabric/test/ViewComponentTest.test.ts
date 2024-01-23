@@ -5,7 +5,7 @@
  * @format
  */
 
-//import {dumpVisualTree} from '@react-native-windows/automation-commands';
+import {dumpVisualTree} from '@react-native-windows/automation-commands';
 import {goToComponentExample} from './RNTesterNavigation';
 import {app} from '@react-native-windows/automation';
 import {verifyNoErrorLogs} from './Helpers';
@@ -25,7 +25,7 @@ describe('View Tests', () => {
   test('Control', () => {
     expect(true).toBe(true);
   });
-  test('Views can have shadows', () => {
+  test('Views can have shadows', async () => {
     const component = await app.findElementByTestID('shadow');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('shadow');
