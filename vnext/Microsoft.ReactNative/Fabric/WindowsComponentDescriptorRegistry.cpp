@@ -35,6 +35,8 @@ WindowsComponentDescriptorRegistry::WindowsComponentDescriptorRegistry()
   m_componentDescriptorRegistry->add(facebook::react::concreteComponentDescriptorProvider<
                                      facebook::react::ActivityIndicatorViewComponentDescriptor>());
   m_componentDescriptorRegistry->add(
+      facebook::react::concreteComponentDescriptorProvider<facebook::react::DebuggingOverlayComponentDescriptor>());
+  m_componentDescriptorRegistry->add(
       facebook::react::concreteComponentDescriptorProvider<facebook::react::ImageComponentDescriptor>());
   m_componentDescriptorRegistry->add(
       facebook::react::concreteComponentDescriptorProvider<facebook::react::WindowsModalHostViewComponentDescriptor>());

@@ -33,6 +33,12 @@ namespace Microsoft.ReactNative.Composition
   [default_interface]
   unsealed runtimeclass RootComponentView : ViewComponentView {
   };
+  
+  [experimental]
+  [webhosthidden]
+  [default_interface]
+  unsealed runtimeclass DebuggingOverlayComponentView : ViewComponentView {
+  };
 
   [experimental]
   [webhosthidden]
