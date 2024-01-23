@@ -397,10 +397,8 @@ struct ScrollBarComponent {
 
     winrt::com_ptr<IDWriteTextLayout> spTextLayout;
     winrt::check_hresult(::Microsoft::ReactNative::DWriteFactory()->CreateTextLayout(
-        m_vertical
-            ? ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDDB" : L"\uEDDC")
-            : ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDD9"
-                                                          : L"\uEDDA"),
+        m_vertical ? ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDDB" : L"\uEDDC")
+                   : ((region == ScrollbarHitRegion::ArrowFirst) ? L"\uEDD9" : L"\uEDDA"),
         1, // The length of the string.
         spTextFormat.get(), // The text format to apply to the string (contains font information, etc).
         (m_arrowSize / m_scaleFactor), // The width of the layout box.
