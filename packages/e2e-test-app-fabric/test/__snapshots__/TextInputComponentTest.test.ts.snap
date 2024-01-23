@@ -4867,7 +4867,6 @@ exports[`TextInput Tests TextInputs can have inline images, drawableLeft and dra
     "Size": [
       916,
       22,
-<<<<<<< HEAD
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -4915,8 +4914,6 @@ exports[`TextInput Tests TextInputs can have shadows 1`] = `
     "Size": [
       916,
       23,
-=======
->>>>>>> 74c9c8e3e9c96188b2c62615c2eeb77c11a152b9
     ],
     "Visual Type": "SpriteVisual",
   },
