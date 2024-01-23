@@ -9322,6 +9322,253 @@ exports[`snapshotAllPages Display:none Style 1`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Fabric Native Component 1`] = `
+<View
+  style={
+    {
+      "borderRadius": 0,
+      "borderWidth": 2,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "gap": 5,
+      "margin": 10,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "gray",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <Text
+    style={
+      {
+        "color": "gray",
+      }
+    }
+  >
+    This is RN Text
+  </Text>
+  <MyCustomComponent
+    label="test"
+    style={
+      {
+        "flexShrink": 1,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "gray",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages Fabric Native Component Yoga 1`] = `
+<View
+  style={
+    {
+      "borderRadius": 0,
+      "borderWidth": 2,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "gap": 5,
+      "margin": 10,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "gray",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <Text
+    style={
+      {
+        "color": "gray",
+      }
+    }
+  >
+    This is RN Text
+  </Text>
+  <MyCustomComponentYoga
+    label="test"
+    style={
+      {
+        "flex": 1,
+        "minWidth": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "gray",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+</View>
+`;
+
 exports[`snapshotAllPages Fast Path Texts 1`] = `
 <View>
   <Text>

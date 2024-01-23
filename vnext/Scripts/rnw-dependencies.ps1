@@ -72,6 +72,11 @@ if (!($tagsToInclude.Contains('buildLab'))) {
     $vsComponents += 'Microsoft.VisualStudio.ComponentGroup.UWP.VC';
 }
 
+# Windows11SDK is only needed for the more experimental composition projects using newer WinAppSDK versions
+if ($tagsToInclude.Contains('rnwDev')) {
+    $vsComponents += 'Microsoft.VisualStudio.Component.Windows11SDK.22000';
+}
+
 $vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',
     'Microsoft.VisualStudio.Workload.NativeDesktop',
     'Microsoft.VisualStudio.Workload.Universal');
@@ -435,7 +440,7 @@ $requirements = @(
         Name = 'Node.js (LTS, >= 18.0)';
         Tags = @('appDev');
         Valid = { CheckNode; }
-        Install = { WinGetInstall OpenJS.NodeJS.LTS };
+        Install = { WinGetInstall OpenJS.NodeJS.LTS "18.16.1" };
         HasVerboseOutput = $true;
     },
     @{
@@ -528,12 +533,18 @@ function EnsureWinGetForInstall {
 
 function WinGetInstall {
     param(
-        [string]$wingetPackage
+        [string]$wingetPackage,
+        [string]$packageVersion = ""
     )
 
     EnsureWinGetForInstall;
-    Write-Verbose "Executing `winget install `"$wingetPackage`"";
-    & winget install "$wingetPackage" --accept-source-agreements --accept-package-agreements
+    if ($packageVersion -ne "") {
+        Write-Verbose "Executing `winget install `"$wingetPackage`" --version `"$packageVersion`"";
+        & winget install "$wingetPackage" --version "$packageVersion" --accept-source-agreements --accept-package-agreements
+    } else {
+        Write-Verbose "Executing `winget install `"$wingetPackage`"";
+        & winget install "$wingetPackage" --accept-source-agreements --accept-package-agreements
+    }
  }
  
 function IsElevated {

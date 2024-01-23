@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update RNW Dependency Script Node.js and Windows SDK versions",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
