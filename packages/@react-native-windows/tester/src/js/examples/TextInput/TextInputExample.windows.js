@@ -767,7 +767,7 @@ const examples: Array<RNTesterModuleExample> = [
               fontSize: 16,
               shadowColor: 'purple',
               shadowOpacity: 99,
-              shadowOffset: 10,
+              shadowOffset: {width: 10, height: 10},
               shadowRadius: 20,
             }}
           />

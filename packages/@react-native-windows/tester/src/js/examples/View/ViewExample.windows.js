@@ -1187,7 +1187,7 @@ export default ({
               width: 50,
               shadowColor: 'pink',
               shadowOpacity: 80,
-              shadowOffset: 10,
+              shadowOffset: {width: 10, height: 10},
               shadowRadius: 10,
             }}
             testID="shadow"
