@@ -5,7 +5,7 @@
  * @format
  */
 
-import {dumpVisualTree} from '@react-native-windows/automation-commands';
+//import {dumpVisualTree} from '@react-native-windows/automation-commands';
 import {goToComponentExample} from './RNTesterNavigation';
 import {app} from '@react-native-windows/automation';
 import {verifyNoErrorLogs} from './Helpers';
