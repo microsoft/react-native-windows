@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 23 Jan 2024 06:15:25 GMT",
+      "version": "0.0.0-canary.756",
+      "tag": "react-native-windows_v0.0.0-canary.756",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1e8b8a0d0f221aa678cdb41cbd70988e49a77803",
+            "comment": "Update WinUI3Version"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2773eb9175dadd3e109396fc3d26c71cfcbdcb48",
+            "comment": "integrate 12/1"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c0538df1b90c5b767e32ead532630be1cf223730",
+            "comment": "[Fabric] Initial scrollbar implementation"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1b06c4a6acbaa689c5b85f7dbbff948e8486dbfe",
+            "comment": "Update RNW Dependency Script Node.js and Windows SDK versions"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 19 Jan 2024 06:16:14 GMT",
       "version": "0.0.0-canary.755",
       "tag": "react-native-windows_v0.0.0-canary.755",

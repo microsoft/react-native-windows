@@ -76,6 +76,14 @@ namespace Microsoft.ReactNative.Composition
 
   [webhosthidden]
   [experimental]
+  interface IRoundedRectangleVisual requires IVisual
+  {
+    void Brush(IBrush brush);
+    void CornerRadius(Windows.Foundation.Numerics.Vector2 value);
+  }
+
+  [webhosthidden]
+  [experimental]
   interface IScrollPositionChangedArgs
   {
     Windows.Foundation.Numerics.Vector2 Position { get; };
@@ -138,6 +146,7 @@ namespace Microsoft.ReactNative.Composition
   {
     ISpriteVisual CreateSpriteVisual();
     IScrollVisual CreateScrollerVisual();
+    IRoundedRectangleVisual CreateRoundedRectangleVisual();
     IActivityVisual CreateActivityVisual();
     ICaretVisual CreateCaretVisual();
     ISwitchThumbVisual CreateSwitchThumbVisual();

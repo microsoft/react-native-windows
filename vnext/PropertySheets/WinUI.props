@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="WinUI3 versioning">
+
+    <!-- 
+      Internal versions are located at: https://microsoft.visualstudio.com/DefaultCollection/ProjectReunion/_artifacts/feed/Project.Reunion.nuget.internal/NuGet/Microsoft.WindowsAppSDK/versions
+      For local testing of internal versions, modify the WinUI3Version, and comment out the addition nuget source in NuGet.Config
+    -->
     <!-- This value is also used by the CLI, see /packages/@react-native-windows/generate-windows -->
-    <WinUI3Version Condition="'$(WinUI3Version)'==''">1.4.230913002</WinUI3Version>
+    <WinUI3Version Condition="'$(WinUI3Version)'==''">1.5.231202003-experimental1</WinUI3Version>
   </PropertyGroup>
 
   <PropertyGroup Label="WinUI2x versioning">
