@@ -1399,7 +1399,7 @@ exports[`TextInput Tests TextInputs can autocomplete, address country 1`] = `
     "Opacity": 1,
     "Size": [
       916,
-      28,
+      29,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -1550,7 +1550,7 @@ exports[`TextInput Tests TextInputs can autocomplete, country 1`] = `
     "Opacity": 1,
     "Size": [
       916,
-      29,
+      28,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -1852,7 +1852,7 @@ exports[`TextInput Tests TextInputs can autocomplete, sms-otp 1`] = `
     "Opacity": 1,
     "Size": [
       916,
-      29,
+      28,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -2050,7 +2050,7 @@ exports[`TextInput Tests TextInputs can be editable 1`] = `
     "Opacity": 1,
     "Size": [
       916,
-      28,
+      29,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -2577,7 +2577,7 @@ exports[`TextInput Tests TextInputs can customize its padding 1`] = `
     "Opacity": 1,
     "Size": [
       916,
-      19,
+      20,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -3728,7 +3728,7 @@ exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
     "Opacity": 1,
     "Size": [
       916,
-      23,
+      22,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -3775,7 +3775,7 @@ exports[`TextInput Tests TextInputs can have custom return key label, Compile 1`
     "Opacity": 1,
     "Size": [
       916,
-      23,
+      22,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -3822,7 +3822,7 @@ exports[`TextInput Tests TextInputs can have custom return key label, React Nati
     "Opacity": 1,
     "Size": [
       916,
-      22,
+      23,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -3916,7 +3916,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, go 1`] = `
     "Opacity": 1,
     "Size": [
       916,
-      22,
+      23,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -4010,7 +4010,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, none 1`] = 
     "Opacity": 1,
     "Size": [
       916,
-      23,
+      22,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -4057,7 +4057,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, previous 1`
     "Opacity": 1,
     "Size": [
       916,
-      22,
+      23,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -4151,7 +4151,7 @@ exports[`TextInput Tests TextInputs can have custom return key type, send 1`] = 
     "Opacity": 1,
     "Size": [
       916,
-      23,
+      22,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -4198,7 +4198,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=-1
     "Opacity": 1,
     "Size": [
       916,
-      22,
+      23,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -4292,7 +4292,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=2 
     "Opacity": 1,
     "Size": [
       916,
-      23,
+      22,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -4858,6 +4858,53 @@ exports[`TextInput Tests TextInputs can have inline images, drawableLeft and dra
       },
     ],
     "Comment": "textinput-inline-images-2",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      22,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`TextInput Tests TextInputs can have shadows 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-shadow",
+    "ControlType": 50004,
+    "HelpText": "shadowColor: purple",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "shadowColor: purple",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 228)",
+        },
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "textinput-shadow",
     "Offset": [
       0,
       0,
@@ -5866,7 +5913,7 @@ exports[`TextInput Tests TextInputs can set their readOnly prop to false 1`] = `
     "Opacity": 1,
     "Size": [
       916,
-      29,
+      28,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -6534,7 +6581,7 @@ exports[`TextInput Tests TextInputs support secure entry, with placeholder text 
     "Opacity": 1,
     "Size": [
       916,
-      23,
+      22,
     ],
     "Visual Type": "SpriteVisual",
   },

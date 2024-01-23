@@ -9322,6 +9322,253 @@ exports[`snapshotAllPages Display:none Style 1`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Fabric Native Component 1`] = `
+<View
+  style={
+    {
+      "borderRadius": 0,
+      "borderWidth": 2,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "gap": 5,
+      "margin": 10,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "gray",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <Text
+    style={
+      {
+        "color": "gray",
+      }
+    }
+  >
+    This is RN Text
+  </Text>
+  <MyCustomComponent
+    label="test"
+    style={
+      {
+        "flexShrink": 1,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "gray",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages Fabric Native Component Yoga 1`] = `
+<View
+  style={
+    {
+      "borderRadius": 0,
+      "borderWidth": 2,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "gap": 5,
+      "margin": 10,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "gray",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <Text
+    style={
+      {
+        "color": "gray",
+      }
+    }
+  >
+    This is RN Text
+  </Text>
+  <MyCustomComponentYoga
+    label="test"
+    style={
+      {
+        "flex": 1,
+        "minWidth": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "gray",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+</View>
+`;
+
 exports[`snapshotAllPages Fast Path Texts 1`] = `
 <View>
   <Text>
@@ -73881,7 +74128,7 @@ exports[`snapshotAllPages TextInput 19`] = `
     </Text>
   </TextInput>
   <TextInput
-    defaultValue="Highlight Color is red"
+    defaultValue="Selection Color is red"
     selectionColor="red"
     style={
       {
@@ -73889,6 +74136,24 @@ exports[`snapshotAllPages TextInput 19`] = `
       }
     }
     testID="textinput-custom-highlight-color"
+  />
+  <TextInput
+    defaultValue="Selection handles are red"
+    selectionHandleColor="red"
+    style={
+      {
+        "fontSize": 16,
+      }
+    }
+  />
+  <TextInput
+    cursorColor="red"
+    defaultValue="Cursor Color is red"
+    style={
+      {
+        "fontSize": 16,
+      }
+    }
   />
 </View>
 `;
@@ -74862,6 +75127,30 @@ exports[`snapshotAllPages TextInput 38`] = `
       }
     }
     testID="textinput-cursorColor"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 39`] = `
+<View>
+  <Text>
+    Shadow
+  </Text>
+  <TextInput
+    placeholder="shadowColor: purple"
+    style={
+      {
+        "fontSize": 16,
+        "shadowColor": "purple",
+        "shadowOffset": {
+          "height": 10,
+          "width": 10,
+        },
+        "shadowOpacity": 99,
+        "shadowRadius": 20,
+      }
+    }
+    testID="textinput-shadow"
   />
 </View>
 `;
@@ -80104,6 +80393,25 @@ exports[`snapshotAllPages View 24`] = `
 
 exports[`snapshotAllPages View 25`] = `
 <View
+  style={
+    {
+      "height": 50,
+      "shadowColor": "pink",
+      "shadowOffset": {
+        "height": 10,
+        "width": 10,
+      },
+      "shadowOpacity": 80,
+      "shadowRadius": 10,
+      "width": 50,
+    }
+  }
+  testID="shadow"
+/>
+`;
+
+exports[`snapshotAllPages View 26`] = `
+<View
   hitSlop={
     {
       "bottom": 100,
@@ -80125,7 +80433,7 @@ exports[`snapshotAllPages View 25`] = `
 />
 `;
 
-exports[`snapshotAllPages View 26`] = `
+exports[`snapshotAllPages View 27`] = `
 <View
   style={
     {
@@ -80169,7 +80477,7 @@ exports[`snapshotAllPages View 26`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 27`] = `
+exports[`snapshotAllPages View 28`] = `
 <View
   style={
     {
@@ -80256,7 +80564,7 @@ exports[`snapshotAllPages View 27`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 28`] = `
+exports[`snapshotAllPages View 29`] = `
 <View
   style={
     {
@@ -80374,7 +80682,7 @@ exports[`snapshotAllPages View 28`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 29`] = `
+exports[`snapshotAllPages View 30`] = `
 <View
   nativeID="native-id-view"
   testID="nativeid"

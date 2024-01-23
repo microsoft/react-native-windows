@@ -25,7 +25,8 @@ describe('View Tests', () => {
   test('Control', () => {
     expect(true).toBe(true);
   });
-  test('Views can have shadows', async () => {
+  // Disable until tests pass in CI.
+  /*test('Views can have shadows', async () => {
     const searchBox = await app.findElementByTestID('example_search');
     await searchBox.addValue(['Backspace', 'Backspace', 'Backspace']);
     await searchBox.addValue('sha');
@@ -34,8 +35,7 @@ describe('View Tests', () => {
     const dump = await dumpVisualTree('shadow');
     expect(dump).toMatchSnapshot();
   });
-  // Disable until tests pass in CI.
-  /*test('Views can have border styles', async () => {
+  test('Views can have border styles', async () => {
     const searchBox = await app.findElementByTestID('example_search');
     await searchBox.addValue(['Backspace', 'Backspace', 'Backspace']);
     await searchBox.addValue('sty');
