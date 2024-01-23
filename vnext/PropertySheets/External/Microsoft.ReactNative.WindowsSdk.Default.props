@@ -5,10 +5,6 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
-  <ImportGroup Condition="'$(ReactExperimentalFeaturesSet)' != 'true'">
-    <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
-  </ImportGroup>
-
   <!--
     This defines the default Windows SDK used to build both the app and 0.66+
     template community modules.
