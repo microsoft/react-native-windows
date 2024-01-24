@@ -65,17 +65,19 @@ struct SwitchComponentView : SwitchComponentViewT<SwitchComponentView, Compositi
 
  private:
   void ensureVisual() noexcept;
-  void Draw() noexcept;
-  void ensureDrawingSurface() noexcept;
   bool toggle() noexcept;
+  void handleScaleChange() noexcept;
+  void updateVisuals() noexcept;
 
   bool m_hovered{false};
   bool m_pressed{false};
+  bool m_supressAnimationForNextFrame{false};
+  bool m_visualUpdateRequired{true};
   facebook::react::Size m_contentSize;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IRoundedRectangleVisual m_trackVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IRoundedRectangleVisual m_thumbVisual{nullptr};
   facebook::react::SharedViewProps m_props;
-  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface;
-  winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual m_thumbVisual;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

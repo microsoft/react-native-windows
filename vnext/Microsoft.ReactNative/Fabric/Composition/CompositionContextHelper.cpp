@@ -300,10 +300,27 @@ void SetAnimationClass(
     typename const TTypeRedirects::Visual &visual) {
   constexpr int64_t ScrollBarExpandBeginTime = 400; // ms
   constexpr int64_t ScrollBarExpandDuration = 167; // ms
+  constexpr int64_t SwitchDuration = 167; // ms
 
   switch (value) {
     case winrt::Microsoft::ReactNative::Composition::AnimationClass::None: {
       visual.ImplicitAnimations(nullptr);
+      break;
+    }
+
+    case winrt::Microsoft::ReactNative::Composition::AnimationClass::SwitchThumb: {
+      auto compositor = visual.Compositor();
+      auto offsetAnimation = compositor.CreateVector3KeyFrameAnimation();
+      offsetAnimation.InsertExpressionKeyFrame(
+          0.0f, L"vector3(this.CurrentValue.X, this.FinalValue.Y, this.FinalValue.Z)");
+      offsetAnimation.InsertExpressionKeyFrame(1.0f, L"this.FinalValue");
+      offsetAnimation.Target(L"Offset");
+      offsetAnimation.Duration(std::chrono::milliseconds(SwitchDuration));
+
+      auto implicitAnimations = compositor.CreateImplicitAnimationCollection();
+      implicitAnimations.Insert(L"Offset", offsetAnimation);
+
+      visual.ImplicitAnimations(implicitAnimations);
       break;
     }
 
@@ -362,20 +379,16 @@ void SetAnimationClass(
   }
 }
 
-template <typename TTypeRedirects>
-struct CompVisual : public winrt::implements<
-                        CompVisual<TTypeRedirects>,
-                        winrt::Microsoft::ReactNative::Composition::IVisual,
-                        typename TTypeRedirects::IInnerCompositionVisual,
-                        IVisualInterop> {
-  CompVisual(typename TTypeRedirects::Visual const &visual) : m_visual(visual) {}
+template <typename TTypeRedirects, typename TVisual = typename TTypeRedirects::Visual>
+struct CompVisualImpl {
+  CompVisualImpl(typename TVisual const &visual) : m_visual(visual) {}
 
-  typename TTypeRedirects::Visual InnerVisual() const noexcept override {
+  typename TTypeRedirects::Visual InnerVisual() const noexcept {
     return m_visual;
   }
 
   void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
-    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
+    auto containerChildren = InnerVisual().as<typename TTypeRedirects::ContainerVisual>().Children();
     auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
     if (index == 0 || containerChildren.Count() == 0) {
       containerChildren.InsertAtTop(compVisual);
@@ -389,7 +402,7 @@ struct CompVisual : public winrt::implements<
 
   void Remove(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
     auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
-    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
+    auto containerChildren = InnerVisual().as<typename TTypeRedirects::ContainerVisual>().Children();
     containerChildren.Remove(compVisual);
   }
 
@@ -455,15 +468,15 @@ struct CompVisual : public winrt::implements<
     m_visual.RelativeSizeAdjustment(relativeSizeAdjustment);
   }
 
-  winrt::Microsoft::ReactNative::Composition::BackfaceVisibility BackfaceVisibility() {
+  winrt::Microsoft::ReactNative::Composition::BackfaceVisibility BackfaceVisibility() const noexcept {
     return static_cast<winrt::Microsoft::ReactNative::Composition::BackfaceVisibility>(m_visual.BackfaceVisibility());
   }
 
-  void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
+  void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) noexcept {
     m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
   }
 
-  winrt::hstring Comment() noexcept {
+  winrt::hstring Comment() const noexcept {
     return m_visual.Comment();
   }
 
@@ -475,8 +488,29 @@ struct CompVisual : public winrt::implements<
     SetAnimationClass<TTypeRedirects>(value, m_visual);
   }
 
- private:
-  typename TTypeRedirects::Visual m_visual;
+ protected:
+  TVisual m_visual;
+};
+
+template <typename TTypeRedirects>
+struct CompVisual : public winrt::implements<
+                        CompVisual<TTypeRedirects>,
+                        winrt::Microsoft::ReactNative::Composition::IVisual,
+                        typename TTypeRedirects::IInnerCompositionVisual,
+                        IVisualInterop>,
+                    CompVisualImpl<TTypeRedirects> {
+  using Super = CompVisualImpl<TTypeRedirects>;
+  CompVisual(typename TTypeRedirects::Visual const &visual) : CompVisualImpl<TTypeRedirects>(visual) {}
+
+  // IInnerCompositionVisual
+  typename TTypeRedirects::Visual InnerVisual() const noexcept override {
+    return Super::m_visual;
+  }
+
+  // IVisualInterop
+  void SetClippingPath(ID2D1Geometry *clippingPath) noexcept override {
+    Super::SetClippingPath(clippingPath);
+  }
 };
 using WindowsCompVisual = CompVisual<WindowsTypeRedirects>;
 #ifdef USE_WINUI3
@@ -489,124 +523,28 @@ struct CompSpriteVisual : winrt::implements<
                               winrt::Microsoft::ReactNative::Composition::ISpriteVisual,
                               winrt::Microsoft::ReactNative::Composition::IVisual,
                               typename TTypeRedirects::IInnerCompositionVisual,
-                              IVisualInterop> {
-  CompSpriteVisual(typename TTypeRedirects::SpriteVisual const &visual) : m_visual(visual) {}
+                              IVisualInterop>,
+                          CompVisualImpl<TTypeRedirects, typename TTypeRedirects::SpriteVisual> {
+  using Super = CompVisualImpl<TTypeRedirects, typename TTypeRedirects::SpriteVisual>;
+  CompSpriteVisual(typename TTypeRedirects::SpriteVisual const &visual) : Super(visual) {}
 
+  // IInnerCompositionVisual
   typename TTypeRedirects::Visual InnerVisual() const noexcept override {
-    return m_visual;
+    return Super::m_visual;
   }
 
-  void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
-    auto containerChildren = m_visual.Children();
-    auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
-    if (index == 0) {
-      containerChildren.InsertAtBottom(compVisual);
-      return;
-    }
-    auto insertAfter = containerChildren.First();
-    for (uint32_t i = 1; i < index; i++)
-      insertAfter.MoveNext();
-    containerChildren.InsertAbove(compVisual, insertAfter.Current());
-  }
-
-  void Remove(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
-    auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
-    auto containerChildren = m_visual.Children();
-    containerChildren.Remove(compVisual);
-  }
-
-  winrt::Microsoft::ReactNative::Composition::IVisual GetAt(uint32_t index) noexcept {
-    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
-    auto it = containerChildren.First();
-    for (uint32_t i = 0; i < index; i++)
-      it.MoveNext();
-    return TTypeRedirects::CompositionContextHelper::CreateVisual(it.Current());
+  // IVisualInterop
+  void SetClippingPath(ID2D1Geometry *clippingPath) noexcept override {
+    Super::SetClippingPath(clippingPath);
   }
 
   void Brush(const winrt::Microsoft::ReactNative::Composition::IBrush &brush) noexcept {
-    m_visual.Brush(TTypeRedirects::CompositionContextHelper::InnerBrush(brush));
-  }
-
-  void Opacity(float opacity) noexcept {
-    m_visual.Opacity(opacity);
-  }
-
-  void Scale(winrt::Windows::Foundation::Numerics::float3 const &scale) noexcept {
-    m_visual.Scale(scale);
-  }
-
-  void TransformMatrix(winrt::Windows::Foundation::Numerics::float4x4 const &transform) noexcept {
-    m_visual.TransformMatrix(transform);
-  }
-
-  void RotationAngle(float rotation) noexcept {
-    m_visual.RotationAngle(rotation);
-  }
-
-  void IsVisible(bool isVisible) noexcept {
-    m_visual.IsVisible(isVisible);
-  }
-
-  void Size(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
-    m_visual.Size(size);
-  }
-
-  void Offset(winrt::Windows::Foundation::Numerics::float3 const &offset) noexcept {
-    m_visual.Offset(offset);
-  }
-
-  void Offset(
-      winrt::Windows::Foundation::Numerics::float3 offset,
-      winrt::Windows::Foundation::Numerics::float3 relativeAdjustment) noexcept {
-    m_visual.Offset(offset);
-    m_visual.RelativeOffsetAdjustment(relativeAdjustment);
-  }
-
-  void RelativeSizeWithOffset(
-      winrt::Windows::Foundation::Numerics::float2 size,
-      winrt::Windows::Foundation::Numerics::float2 relativeSizeAdjustment) noexcept {
-    m_visual.Size(size);
-    m_visual.RelativeSizeAdjustment(relativeSizeAdjustment);
-  }
-
-  winrt::Microsoft::ReactNative::Composition::BackfaceVisibility BackfaceVisibility() {
-    return static_cast<winrt::Microsoft::ReactNative::Composition::BackfaceVisibility>(m_visual.BackfaceVisibility());
-  }
-
-  void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
-    m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
-  }
-
-  winrt::hstring Comment() noexcept {
-    return m_visual.Comment();
-  }
-
-  void Comment(winrt::hstring value) noexcept {
-    m_visual.Comment(value);
-  }
-
-  void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
-    if (!clippingPath) {
-      m_visual.Clip(nullptr);
-      return;
-    }
-    auto geometry = winrt::make<GeometrySource>(clippingPath);
-    auto path = TTypeRedirects::CompositionPath(geometry);
-    auto pathgeo = m_visual.Compositor().CreatePathGeometry(path);
-    auto clip = m_visual.Compositor().CreateGeometricClip(pathgeo);
-    m_visual.Clip(clip);
+    Super::m_visual.Brush(TTypeRedirects::CompositionContextHelper::InnerBrush(brush));
   }
 
   void Shadow(const winrt::Microsoft::ReactNative::Composition::IDropShadow &shadow) noexcept {
-    m_visual.Shadow(TTypeRedirects::CompositionContextHelper::InnerDropShadow(shadow));
+    Super::m_visual.Shadow(TTypeRedirects::CompositionContextHelper::InnerDropShadow(shadow));
   }
-
-  void AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass value) noexcept {
-    SetAnimationClass<TTypeRedirects>(value, m_visual);
-  }
-
- private:
-  typename TTypeRedirects::SpriteVisual m_visual;
 };
 using WindowsCompSpriteVisual = CompSpriteVisual<WindowsTypeRedirects>;
 #ifdef USE_WINUI3
@@ -619,134 +557,76 @@ struct CompRoundedRectangleVisual : winrt::implements<
                                         winrt::Microsoft::ReactNative::Composition::IRoundedRectangleVisual,
                                         winrt::Microsoft::ReactNative::Composition::IVisual,
                                         typename TTypeRedirects::IInnerCompositionVisual,
-                                        IVisualInterop> {
-  CompRoundedRectangleVisual(typename TTypeRedirects::ShapeVisual const &visual) : m_visual(visual) {
+                                        IVisualInterop>,
+                                    CompVisualImpl<TTypeRedirects> {
+  using Super = CompVisualImpl<TTypeRedirects>;
+  CompRoundedRectangleVisual(typename TTypeRedirects::ShapeVisual const &visual) : Super(visual) {
     auto compositor = visual.Compositor();
     m_geometry = compositor.CreateRoundedRectangleGeometry();
-    m_spiritShape = compositor.CreateSpriteShape();
-    m_spiritShape.Geometry(m_geometry);
-    visual.Shapes().Append(m_spiritShape);
+    m_spriteShape = compositor.CreateSpriteShape();
+    m_spriteShape.Geometry(m_geometry);
+    visual.Shapes().Append(m_spriteShape);
   }
 
+  // IInnerCompositionVisual
   typename TTypeRedirects::Visual InnerVisual() const noexcept override {
-    return m_visual;
+    return Super::m_visual;
   }
 
-  void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
-    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
-    auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
-    if (index == 0 || containerChildren.Count() == 0) {
-      containerChildren.InsertAtTop(compVisual);
-      return;
-    }
-    auto insertAfter = containerChildren.First();
-    for (uint32_t i = 1; i < index; i++)
-      insertAfter.MoveNext();
-    containerChildren.InsertAbove(compVisual, insertAfter.Current());
-  }
-
-  void Remove(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
-    auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
-    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
-    containerChildren.Remove(compVisual);
-  }
-
-  winrt::Microsoft::ReactNative::Composition::IVisual GetAt(uint32_t index) noexcept {
-    auto containerChildren = m_visual.as<typename TTypeRedirects::ContainerVisual>().Children();
-    auto it = containerChildren.First();
-    for (uint32_t i = 0; i < index; i++)
-      it.MoveNext();
-    return TTypeRedirects::CompositionContextHelper::CreateVisual(it.Current());
-  }
-
-  void SetClippingPath(ID2D1Geometry *clippingPath) noexcept {
-    if (!clippingPath) {
-      m_visual.Clip(nullptr);
-      return;
-    }
-    auto geometry = winrt::make<GeometrySource>(clippingPath);
-    auto path = typename TTypeRedirects::CompositionPath(geometry);
-    auto pathgeo = m_visual.Compositor().CreatePathGeometry(path);
-    auto clip = m_visual.Compositor().CreateGeometricClip(pathgeo);
-    m_visual.Clip(clip);
-  }
-
-  void Opacity(float opacity) noexcept {
-    m_visual.Opacity(opacity);
-  }
-
-  void Scale(winrt::Windows::Foundation::Numerics::float3 const &scale) noexcept {
-    m_visual.Scale(scale);
-  }
-
-  void TransformMatrix(winrt::Windows::Foundation::Numerics::float4x4 const &transform) noexcept {
-    m_visual.TransformMatrix(transform);
-  }
-
-  void RotationAngle(float rotation) noexcept {
-    m_visual.RotationAngle(rotation);
-  }
-
-  void IsVisible(bool isVisible) noexcept {
-    m_visual.IsVisible(isVisible);
+  // IVisualInterop
+  void SetClippingPath(ID2D1Geometry *clippingPath) noexcept override {
+    Super::SetClippingPath(clippingPath);
   }
 
   void Size(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
-    m_visual.Size(size);
-    m_geometry.Size(size);
-    m_visual.CenterPoint({size.x / 2.0f, size.y / 2.0f, 0.0f});
+    m_size = size;
+    Super::m_visual.Size(size);
+    Super::m_visual.CenterPoint({m_size.x / 2.0f, m_size.y / 2.0f, 0.0f});
+    updateGeometry();
   }
 
-  void Offset(winrt::Windows::Foundation::Numerics::float3 const &offset) noexcept {
-    m_visual.Offset(offset);
-  }
-
-  void Offset(
-      winrt::Windows::Foundation::Numerics::float3 offset,
-      winrt::Windows::Foundation::Numerics::float3 relativeAdjustment) noexcept {
-    m_visual.Offset(offset);
-    m_visual.RelativeOffsetAdjustment(relativeAdjustment);
+  void updateGeometry() {
+    m_geometry.Size({m_size.x - (m_strokeThickness * 2), m_size.y - (m_strokeThickness * 2)});
+    m_geometry.CornerRadius({m_cornerRadius.x - m_strokeThickness, m_cornerRadius.y - m_strokeThickness});
+    m_geometry.Offset({m_strokeThickness, m_strokeThickness});
   }
 
   void RelativeSizeWithOffset(
       winrt::Windows::Foundation::Numerics::float2 size,
       winrt::Windows::Foundation::Numerics::float2 relativeSizeAdjustment) noexcept {
-    m_visual.Size(size);
-    m_geometry.Size(size);
-    m_visual.RelativeSizeAdjustment(relativeSizeAdjustment);
-  }
+    assert(false); // Does not correctly handle relativeSizeAdjustment - since the geometry doesn't handle it
+    m_size = size;
+    Super::m_visual.Size(size);
+    Super::m_visual.CenterPoint({m_size.x / 2.0f, m_size.y / 2.0f, 0.0f});
+    updateGeometry();
 
-  winrt::Microsoft::ReactNative::Composition::BackfaceVisibility BackfaceVisibility() {
-    return static_cast<winrt::Microsoft::ReactNative::Composition::BackfaceVisibility>(m_visual.BackfaceVisibility());
-  }
-
-  void BackfaceVisibility(winrt::Microsoft::ReactNative::Composition::BackfaceVisibility value) {
-    m_visual.BackfaceVisibility(static_cast<typename TTypeRedirects::CompositionBackfaceVisibility>(value));
-  }
-
-  winrt::hstring Comment() const noexcept {
-    return m_visual.Comment();
-  }
-
-  void Comment(winrt::hstring value) noexcept {
-    m_visual.Comment(value);
+    Super::m_visual.RelativeSizeAdjustment(relativeSizeAdjustment);
   }
 
   void Brush(const winrt::Microsoft::ReactNative::Composition::IBrush &brush) noexcept {
-    m_spiritShape.FillBrush(TTypeRedirects::CompositionContextHelper::InnerBrush(brush));
+    m_spriteShape.FillBrush(TTypeRedirects::CompositionContextHelper::InnerBrush(brush));
   }
 
   void CornerRadius(winrt::Windows::Foundation::Numerics::float2 value) noexcept {
-    m_geometry.CornerRadius(value);
+    m_cornerRadius = value;
+    updateGeometry();
   }
 
-  void AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass value) noexcept {
-    SetAnimationClass<TTypeRedirects>(value, m_visual);
+  void StrokeBrush(const winrt::Microsoft::ReactNative::Composition::IBrush &brush) noexcept {
+    m_spriteShape.StrokeBrush(TTypeRedirects::CompositionContextHelper::InnerBrush(brush));
+  }
+
+  void StrokeThickness(float value) noexcept {
+    m_strokeThickness = value;
+    m_spriteShape.StrokeThickness(value);
+    updateGeometry();
   }
 
  private:
-  typename TTypeRedirects::Visual m_visual;
-  typename TTypeRedirects::CompositionSpriteShape m_spiritShape{nullptr};
+  float m_strokeThickness{0.0f};
+  winrt::Windows::Foundation::Numerics::float2 m_cornerRadius{0};
+  winrt::Windows::Foundation::Numerics::float2 m_size{0};
+  typename TTypeRedirects::CompositionSpriteShape m_spriteShape{nullptr};
   typename TTypeRedirects::CompositionRoundedRectangleGeometry m_geometry{nullptr};
 };
 using WindowsCompRoundedRectangleVisual = CompRoundedRectangleVisual<WindowsTypeRedirects>;
@@ -1353,113 +1233,6 @@ winrt::Microsoft::ReactNative::Composition::IVisual CompCaretVisual<MicrosoftTyp
 using MicrosoftCompCaretVisual = CompCaretVisual<MicrosoftTypeRedirects>;
 #endif
 
-// Switch Thumb animations
-template <typename TTypeRedirects>
-struct CompSwitchThumbVisual : winrt::implements<
-                                   CompSwitchThumbVisual<TTypeRedirects>,
-                                   winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual> {
-  CompSwitchThumbVisual(typename TTypeRedirects::Compositor const &compositor)
-      : m_compositor(compositor), m_compVisual(compositor.CreateSpriteVisual()) {
-    m_visual = CreateVisual();
-
-    // Create Thumb
-    m_geometry = m_compositor.CreateEllipseGeometry();
-    m_spiritShape = m_compositor.CreateSpriteShape();
-    m_spiritShape.Geometry(m_geometry);
-    auto circleShape = m_compositor.CreateShapeVisual();
-    circleShape.Shapes().Append(m_spiritShape);
-    circleShape.Size({150.0f, 150.0f});
-
-    m_compVisual.Children().InsertAtTop(circleShape);
-  }
-
-  winrt::Microsoft::ReactNative::Composition::IVisual CreateVisual() const noexcept;
-
-  winrt::Microsoft::ReactNative::Composition::IVisual InnerVisual() const noexcept {
-    return m_visual;
-  }
-
-  void Brush(winrt::Microsoft::ReactNative::Composition::IBrush brush) noexcept {
-    m_spiritShape.FillBrush(TTypeRedirects::CompositionContextHelper::InnerBrush(brush));
-  }
-
-  void Size(winrt::Windows::Foundation::Numerics::float2 size) noexcept {
-    assert(m_size.x == m_size.y);
-    // if the size has changed, update the position to the new center
-    if (m_size.x != 0.0f && m_size.x != size.x) {
-      Position({m_pos.x + (m_size.x - size.x), m_pos.y + (m_size.x - size.x)});
-    }
-    m_size = size;
-    m_geometry.Radius(m_size);
-    m_spiritShape.Offset(m_size);
-    m_compVisual.Size(m_size);
-  }
-
-  winrt::Windows::Foundation::Numerics::float2 Size() const noexcept {
-    return m_size;
-  }
-
-  void Position(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
-    m_pos = position;
-    m_compVisual.Offset({position.x, position.y, 0.0f});
-  }
-
-  winrt::Windows::Foundation::Numerics::float2 Position() const noexcept {
-    return m_pos;
-  }
-
-  void AnimatePosition(winrt::Windows::Foundation::Numerics::float2 position) noexcept {
-    if (!isDrawn) {
-      // we don't want to animate if this is the first time the switch is drawn on screen
-      isDrawn = true;
-      m_compVisual.Offset({position.x, position.y, 0.0f});
-    } else {
-      auto animation = m_compositor.CreateVector3KeyFrameAnimation();
-      animation.Duration(std::chrono::milliseconds(250));
-      animation.Direction(TTypeRedirects::AnimationDirection::Normal);
-      animation.InsertKeyFrame(1.0f, {position.x, position.y, 0.0f});
-
-      m_compVisual.StartAnimation(L"Offset", animation);
-    }
-    m_pos = position;
-  }
-
-  bool IsVisible() const noexcept {
-    return m_isVisible;
-  }
-
-  void IsVisible(bool value) noexcept {}
-
-  void AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass value) noexcept {
-    SetAnimationClass(value, m_compVisual);
-  }
-
- private:
-  bool m_isVisible{true};
-  bool isDrawn{false};
-  typename TTypeRedirects::SpriteVisual m_compVisual;
-  winrt::Microsoft::ReactNative::Composition::IVisual m_visual;
-  winrt::Windows::Foundation::Numerics::float2 m_size{0.0f, 0.0f};
-  winrt::Windows::Foundation::Numerics::float2 m_pos;
-  typename TTypeRedirects::Compositor m_compositor{nullptr};
-  typename TTypeRedirects::CompositionSpriteShape m_spiritShape{nullptr};
-  typename TTypeRedirects::CompositionEllipseGeometry m_geometry{nullptr};
-};
-
-winrt::Microsoft::ReactNative::Composition::IVisual CompSwitchThumbVisual<WindowsTypeRedirects>::CreateVisual()
-    const noexcept {
-  return winrt::make<Composition::WindowsCompSpriteVisual>(m_compVisual);
-}
-using WindowsCompSwitchThumbVisual = CompSwitchThumbVisual<WindowsTypeRedirects>;
-
-#ifdef USE_WINUI3
-winrt::Microsoft::ReactNative::Composition::IVisual CompSwitchThumbVisual<MicrosoftTypeRedirects>::CreateVisual()
-    const noexcept {
-  return winrt::make<Composition::MicrosoftCompSpriteVisual>(m_compVisual);
-}
-using MicrosoftCompSwitchThumbVisual = CompSwitchThumbVisual<MicrosoftTypeRedirects>;
-#endif
-
 template <typename TTypeRedirects>
 struct CompFocusVisual
     : winrt::implements<CompFocusVisual<TTypeRedirects>, winrt::Microsoft::ReactNative::Composition::IFocusVisual> {
@@ -1624,8 +1397,6 @@ struct CompContext : winrt::implements<
 
   winrt::Microsoft::ReactNative::Composition::ICaretVisual CreateCaretVisual() noexcept;
 
-  winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual CreateSwitchThumbVisual() noexcept;
-
   winrt::Microsoft::ReactNative::Composition::IFocusVisual CreateFocusVisual() noexcept;
 
   typename TTypeRedirects::CompositionGraphicsDevice CompositionGraphicsDevice() noexcept;
@@ -1684,11 +1455,6 @@ CompContext<WindowsTypeRedirects>::CreateDrawingSurfaceBrush(
 winrt::Microsoft::ReactNative::Composition::ICaretVisual
 CompContext<WindowsTypeRedirects>::CreateCaretVisual() noexcept {
   return winrt::make<Composition::WindowsCompCaretVisual>(m_compositor);
-}
-
-winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual
-CompContext<WindowsTypeRedirects>::CreateSwitchThumbVisual() noexcept {
-  return winrt::make<Composition::WindowsCompSwitchThumbVisual>(m_compositor);
 }
 
 winrt::Microsoft::ReactNative::Composition::IFocusVisual
@@ -1764,11 +1530,6 @@ CompContext<MicrosoftTypeRedirects>::CreateDrawingSurfaceBrush(
 winrt::Microsoft::ReactNative::Composition::ICaretVisual
 CompContext<MicrosoftTypeRedirects>::CreateCaretVisual() noexcept {
   return winrt::make<Composition::MicrosoftCompCaretVisual>(m_compositor);
-}
-
-winrt::Microsoft::ReactNative::Composition::ISwitchThumbVisual
-CompContext<MicrosoftTypeRedirects>::CreateSwitchThumbVisual() noexcept {
-  return winrt::make<Composition::MicrosoftCompSwitchThumbVisual>(m_compositor);
 }
 
 winrt::Microsoft::ReactNative::Composition::IFocusVisual
