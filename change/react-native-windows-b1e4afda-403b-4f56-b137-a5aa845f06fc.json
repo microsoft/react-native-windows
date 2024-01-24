@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Stub impl of DebuggingOverlay to remove errors when running react-devtools",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

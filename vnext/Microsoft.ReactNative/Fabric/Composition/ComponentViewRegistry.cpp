@@ -14,6 +14,7 @@
 #include <Fabric/Composition/ActivityIndicatorComponentView.h>
 #include <Fabric/Composition/CompositionHelpers.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
+#include <Fabric/Composition/DebuggingOverlayComponentView.h>
 #include <Fabric/Composition/ImageComponentView.h>
 #include <Fabric/Composition/Modal/WindowsModalHostViewComponentView.h>
 #include <Fabric/Composition/Modal/WindowsModalHostViewShadowNode.h>
@@ -82,6 +83,9 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
         compContext, tag, m_context);
   } else if (componentHandle == facebook::react::UnimplementedNativeViewShadowNode::Handle()) {
     view = winrt::Microsoft::ReactNative::Composition::implementation::UnimplementedNativeViewComponentView::Create(
+        compContext, tag, m_context);
+  } else if (componentHandle == facebook::react::DebuggingOverlayShadowNode::Handle()) {
+    view = winrt::Microsoft::ReactNative::Composition::implementation::DebuggingOverlayComponentView::Create(
         compContext, tag, m_context);
   } else {
     auto descriptor =
