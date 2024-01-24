@@ -4873,6 +4873,53 @@ exports[`TextInput Tests TextInputs can have inline images, drawableLeft and dra
 }
 `;
 
+exports[`TextInput Tests TextInputs can have shadows 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-shadow",
+    "ControlType": 50004,
+    "HelpText": "shadowColor: purple",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "shadowColor: purple",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 228)",
+        },
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 0,
+        "Size": [
+          0,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "textinput-shadow",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      23,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
 exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
 {
   "Automation Tree": {

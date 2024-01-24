@@ -75131,6 +75131,30 @@ exports[`snapshotAllPages TextInput 38`] = `
 </View>
 `;
 
+exports[`snapshotAllPages TextInput 39`] = `
+<View>
+  <Text>
+    Shadow
+  </Text>
+  <TextInput
+    placeholder="shadowColor: purple"
+    style={
+      {
+        "fontSize": 16,
+        "shadowColor": "purple",
+        "shadowOffset": {
+          "height": 10,
+          "width": 10,
+        },
+        "shadowOpacity": 99,
+        "shadowRadius": 20,
+      }
+    }
+    testID="textinput-shadow"
+  />
+</View>
+`;
+
 exports[`snapshotAllPages TextInputs with key prop 1`] = `
 <View>
   <TextInput
@@ -80369,6 +80393,25 @@ exports[`snapshotAllPages View 24`] = `
 
 exports[`snapshotAllPages View 25`] = `
 <View
+  style={
+    {
+      "height": 50,
+      "shadowColor": "pink",
+      "shadowOffset": {
+        "height": 10,
+        "width": 10,
+      },
+      "shadowOpacity": 80,
+      "shadowRadius": 10,
+      "width": 50,
+    }
+  }
+  testID="shadow"
+/>
+`;
+
+exports[`snapshotAllPages View 26`] = `
+<View
   hitSlop={
     {
       "bottom": 100,
@@ -80390,7 +80433,7 @@ exports[`snapshotAllPages View 25`] = `
 />
 `;
 
-exports[`snapshotAllPages View 26`] = `
+exports[`snapshotAllPages View 27`] = `
 <View
   style={
     {
@@ -80434,7 +80477,7 @@ exports[`snapshotAllPages View 26`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 27`] = `
+exports[`snapshotAllPages View 28`] = `
 <View
   style={
     {
@@ -80521,7 +80564,7 @@ exports[`snapshotAllPages View 27`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 28`] = `
+exports[`snapshotAllPages View 29`] = `
 <View
   style={
     {
@@ -80639,7 +80682,7 @@ exports[`snapshotAllPages View 28`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 29`] = `
+exports[`snapshotAllPages View 30`] = `
 <View
   nativeID="native-id-view"
   testID="nativeid"

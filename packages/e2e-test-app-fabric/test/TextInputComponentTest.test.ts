@@ -641,6 +641,12 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('textinput-padding');
     expect(dump).toMatchSnapshot();
   });
+  test('TextInputs can have shadows', async () => {
+    const component = await app.findElementByTestID('textinput-shadow');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-shadow');
+    expect(dump).toMatchSnapshot();
+  });
   test('TextInputs can have caretHidden', async () => {
     const component = await app.findElementByTestID('textinput-carethidden');
     await component.waitForDisplayed({timeout: 5000});

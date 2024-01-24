@@ -24,7 +24,7 @@ enum class CompositionComponentViewFeatures : std::uint_fast8_t {
   NativeBorder = 1 << 0, // Standard border handling
   ShadowProps = 1 << 1, // Apply shadow to visual
 
-  Default = NativeBorder
+  Default = ShadowProps | NativeBorder
 };
 
 DEFINE_ENUM_FLAG_OPERATORS(CompositionComponentViewFeatures);
