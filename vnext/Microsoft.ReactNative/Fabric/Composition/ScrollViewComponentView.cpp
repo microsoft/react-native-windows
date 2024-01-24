@@ -250,6 +250,11 @@ struct ScrollBarComponent {
 
     const int computedPixelThumbSize = getComputedPixelThumbSize();
 
+    // check if app is minimized
+    if (computedPixelThumbSize < 0) {
+      return;
+    }
+
     m_thumbSize = 0;
     int thumbCorrection = 0;
 
