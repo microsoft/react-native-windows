@@ -390,8 +390,8 @@ struct CompVisualImpl {
   void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
     auto containerChildren = InnerVisual().as<typename TTypeRedirects::ContainerVisual>().Children();
     auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
-    if (index == 0 || containerChildren.Count() == 0) {
-      containerChildren.InsertAtTop(compVisual);
+    if (index == 0) {
+      containerChildren.InsertAtBottom(compVisual);
       return;
     }
     auto insertAfter = containerChildren.First();
@@ -581,7 +581,6 @@ struct CompRoundedRectangleVisual : winrt::implements<
   void Size(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
     m_size = size;
     Super::m_visual.Size(size);
-    Super::m_visual.CenterPoint({m_size.x / 2.0f, m_size.y / 2.0f, 0.0f});
     updateGeometry();
   }
 
@@ -594,10 +593,10 @@ struct CompRoundedRectangleVisual : winrt::implements<
   void RelativeSizeWithOffset(
       winrt::Windows::Foundation::Numerics::float2 size,
       winrt::Windows::Foundation::Numerics::float2 relativeSizeAdjustment) noexcept {
-    assert(false); // Does not correctly handle relativeSizeAdjustment - since the geometry doesn't handle it
+    assert(false); // Does not correctly handle relativeSizeAdjustment - since geometry does not support
+                   // RelativeSizeAdjustment
     m_size = size;
     Super::m_visual.Size(size);
-    Super::m_visual.CenterPoint({m_size.x / 2.0f, m_size.y / 2.0f, 0.0f});
     updateGeometry();
 
     Super::m_visual.RelativeSizeAdjustment(relativeSizeAdjustment);
@@ -733,8 +732,8 @@ struct CompScrollerVisual : winrt::implements<
   void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
     auto containerChildren = m_contentVisual.Children();
     auto compVisual = TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
-    if (index == 0 || containerChildren.Count() == 0) {
-      containerChildren.InsertAtTop(compVisual);
+    if (index == 0) {
+      containerChildren.InsertAtBottom(compVisual);
       return;
     }
     auto insertAfter = containerChildren.First();
@@ -1028,8 +1027,8 @@ struct CompActivityVisual : winrt::implements<
   void InsertAt(const winrt::Microsoft::ReactNative::Composition::IVisual &visual, uint32_t index) noexcept {
     auto containerChildren = m_contentVisual.Children();
     auto compVisual = typename TTypeRedirects::CompositionContextHelper::InnerVisual(visual);
-    if (index == 0 || containerChildren.Count() == 0) {
-      containerChildren.InsertAtTop(compVisual);
+    if (index == 0) {
+      containerChildren.InsertAtBottom(compVisual);
       return;
     }
     auto insertAfter = containerChildren.First();

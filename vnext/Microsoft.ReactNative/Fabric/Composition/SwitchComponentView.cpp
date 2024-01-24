@@ -13,7 +13,7 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 namespace SwitchConstants {
-// https://github.com/microsoft/microsoft-ui-xaml/blob/winui2/main/dev/CommonStyles/ToggleSwitch_themeresources.xaml
+// https://github.com/microsoft/microsoft-ui-xaml/blob/winui3/release/1.5-experimental1/controls/dev/CommonStyles/ToggleSwitch_themeresources.xaml
 constexpr float thumbMargin = 4.0f;
 constexpr float thumbWidth = 12.0f;
 constexpr float thumbWidthHover = 14.0f;
@@ -105,6 +105,12 @@ void SwitchComponentView::updateLayoutMetrics(
   if (oldLayoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor) {
     handleScaleChange();
   }
+
+  auto frame{m_layoutMetrics.frame.size};
+  m_trackVisual.Offset(
+      {(frame.width - SwitchConstants::trackWidth) * m_layoutMetrics.pointScaleFactor / 2.0f,
+       (frame.height - SwitchConstants::trackHeight) * m_layoutMetrics.pointScaleFactor / 2.0f,
+       0.0f});
 }
 
 void SwitchComponentView::handleScaleChange() noexcept {
@@ -112,11 +118,6 @@ void SwitchComponentView::handleScaleChange() noexcept {
       {SwitchConstants::trackWidth * m_layoutMetrics.pointScaleFactor,
        SwitchConstants::trackHeight * m_layoutMetrics.pointScaleFactor});
 
-  auto frame{m_layoutMetrics.frame.size};
-  m_trackVisual.Offset(
-      {(frame.width - SwitchConstants::trackWidth) * m_layoutMetrics.pointScaleFactor / 2.0f,
-       (frame.height - SwitchConstants::trackHeight) * m_layoutMetrics.pointScaleFactor / 2.0f,
-       0.0f});
   m_trackVisual.CornerRadius(
       {SwitchConstants::trackCornerRadius * m_layoutMetrics.pointScaleFactor,
        SwitchConstants::trackCornerRadius * m_layoutMetrics.pointScaleFactor});
@@ -256,7 +257,7 @@ void SwitchComponentView::ensureVisual() noexcept {
 
     m_thumbVisual = m_compContext.CreateRoundedRectangleVisual();
     m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::SwitchThumb);
-    m_trackVisual.InsertAt(m_thumbVisual, 1);
+    m_trackVisual.InsertAt(m_thumbVisual, 0);
 
     handleScaleChange();
   }
