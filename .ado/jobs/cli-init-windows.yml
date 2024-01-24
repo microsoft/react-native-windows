@@ -22,6 +22,11 @@ parameters:
             configuration: Debug
             platform: x86
             additionalRunArguments: --no-autolink
+          - Name: FabricArm64Release
+            template: cpp-app
+            configuration: Release
+            platform: ARM64
+            additionalRunArguments: --no-autolink
           - Name: FabricLibX64Release
             template: cpp-lib
             configuration: Release
@@ -31,6 +36,11 @@ parameters:
             template: cpp-lib
             configuration: Debug
             platform: x86
+            additionalRunArguments:
+          - Name: FabricLibArm64Release
+            template: cpp-lib
+            configuration: Release
+            platform: ARM64
             additionalRunArguments:
       - BuildEnvironment: Continuous
         Matrix:
@@ -53,6 +63,15 @@ parameters:
             template: cpp-app
             configuration: Release
             platform: x86
+          - Name: FabricArm64Debug
+            template: cpp-app
+            configuration: Debug
+            platform: ARM64
+            additionalRunArguments: --no-autolink
+          - Name: FabricArm64Release
+            template: cpp-app
+            configuration: Release
+            platform: ARM64
             additionalRunArguments: --no-autolink
           - Name: FabricLibX64Debug
             template: cpp-lib
@@ -73,6 +92,16 @@ parameters:
             template: cpp-lib
             configuration: Release
             platform: x86
+            additionalRunArguments:
+          - Name: FabricLibArm64Debug
+            template: cpp-lib
+            configuration: Debug
+            platform: ARM64
+            additionalRunArguments:
+          - Name: FabricLibArm64Release
+            template: cpp-lib
+            configuration: Release
+            platform: ARM64
             additionalRunArguments:
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
