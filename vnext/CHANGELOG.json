@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 24 Jan 2024 06:14:14 GMT",
+      "version": "0.0.0-canary.757",
+      "tag": "react-native-windows_v0.0.0-canary.757",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "08f0eb0cc92ec653ccbdcda0b9ea3740f78b5f81",
+            "comment": "Remove Playground/RNTester references in templates"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "554edbae913b263010ad47a89c815df9daef1a16",
+            "comment": "[Fabric] Fix minor high dpi issue with scrollbar"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Jan 2024 06:15:25 GMT",
       "version": "0.0.0-canary.756",
       "tag": "react-native-windows_v0.0.0-canary.756",

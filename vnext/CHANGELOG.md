@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 23 Jan 2024 06:15:25 GMT and should not be manually modified.
+This log was last generated on Wed, 24 Jan 2024 06:14:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.757
+
+Wed, 24 Jan 2024 06:14:14 GMT
+
+### Changes
+
+- Remove Playground/RNTester references in templates (jthysell@microsoft.com)
+- [Fabric] Fix minor high dpi issue with scrollbar (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.756
 
