@@ -81,9 +81,12 @@ void CompositionHwndHost::UpdateSize() noexcept {
       m_width = rc.right - rc.left;
       winrt::Windows::Foundation::Size size{
           static_cast<float>(m_width / ScaleFactor()), static_cast<float>(m_height / ScaleFactor())};
-      m_compRootView.Size(size);
-      m_compRootView.Measure(size);
-      m_compRootView.Arrange(size);
+      // Do not relayout when minimized
+      if (!IsIconic(m_hwnd)) {
+        m_compRootView.Size(size);
+        m_compRootView.Measure(size);
+        m_compRootView.Arrange(size);
+      }
     }
   }
 }
