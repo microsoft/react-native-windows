@@ -453,7 +453,9 @@ winrt::Windows::Foundation::Point PointerPoint::Position() noexcept {
   POINT clientPoint{
       m_pi.pointerId ? m_pi.ptPixelLocation.x : GET_X_LPARAM(m_lParam),
       m_pi.pointerId ? m_pi.ptPixelLocation.y : GET_Y_LPARAM(m_lParam)};
-  ScreenToClient(m_hwnd, &clientPoint);
+  if (m_pi.pointerId) {
+    ScreenToClient(m_hwnd, &clientPoint);
+  }
   return winrt::Windows::Foundation::Point{
       static_cast<float>(clientPoint.x / m_scaleFactor) - (m_offset.X / m_scaleFactor),
       static_cast<float>(clientPoint.y / m_scaleFactor) - (m_offset.Y / m_scaleFactor)};
