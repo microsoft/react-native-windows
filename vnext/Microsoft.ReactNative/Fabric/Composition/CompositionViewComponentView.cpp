@@ -7,6 +7,8 @@
 #include "CompositionViewComponentView.h"
 
 #include <Fabric/AbiViewProps.h>
+#include <Fabric/Composition/CompositionRootView.h>
+#include <Fabric/FabricUIManagerModule.h>
 #include <UI.Xaml.Controls.h>
 #include <Utils/KeyboardUtils.h>
 #include <Utils/ValueUtils.h>
@@ -292,6 +294,46 @@ void CompositionBaseComponentView::onPointerWheelChanged(
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onPointerWheelChanged(
         args);
   }
+}
+
+void CompositionBaseComponentView::onPointerCaptureLost() noexcept {}
+
+bool CompositionBaseComponentView::CapturePointer(
+    const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer) noexcept {
+  auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
+  if (uiManager == nullptr)
+    return false;
+
+  auto root = rootComponentView();
+  if (!root)
+    return false;
+
+  auto rootView = uiManager->GetCompositionRootView(root->Tag());
+  if (!rootView) {
+    return false;
+  }
+
+  return winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)->CapturePointer(
+      pointer, static_cast<facebook::react::Tag>(Tag()));
+}
+
+void CompositionBaseComponentView::ReleasePointerCapture(
+    const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer) noexcept {
+  auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
+  if (uiManager == nullptr)
+    return;
+
+  auto root = rootComponentView();
+  if (!root)
+    return;
+
+  auto rootView = uiManager->GetCompositionRootView(root->Tag());
+  if (!rootView) {
+    return;
+  }
+
+  return winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)
+      ->ReleasePointerCapture(pointer, static_cast<facebook::react::Tag>(Tag()));
 }
 
 RECT CompositionBaseComponentView::getClientRect() const noexcept {

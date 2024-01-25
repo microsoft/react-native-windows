@@ -296,7 +296,7 @@ struct ScrollBarComponent {
             winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::LeftButtonReleased) {
       handleMoveThumb(args);
       m_nTrackInputOffset = -1;
-      // Stop tracking
+      m_outer.ReleasePointerCapture(args.Pointer());
 
       auto reg = HitTest(pt.Position());
       updateShy(reg == ScrollbarHitRegion::Unknown);
@@ -314,6 +314,7 @@ struct ScrollBarComponent {
                    : winrt::Windows::Foundation::Numerics::
                          float3{scrollOffsetFromThumbPos(newTrackingPosition), m_offset.y, m_offset.z},
         false);
+    args.Handled(true);
   }
 
   void OnPointerPressed(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
@@ -331,6 +332,7 @@ struct ScrollBarComponent {
           } else {
             winrt::get_self<ScrollViewComponentView>(m_outer)->lineLeft(false);
           }
+          args.Handled(true);
           break;
         case ScrollbarHitRegion::ArrowLast:
           if (m_vertical) {
@@ -338,19 +340,22 @@ struct ScrollBarComponent {
           } else {
             winrt::get_self<ScrollViewComponentView>(m_outer)->lineRight(false);
           }
+          args.Handled(true);
           break;
         case ScrollbarHitRegion::PageUp:
           if (m_vertical) {
             winrt::get_self<ScrollViewComponentView>(m_outer)->pageUp(false);
           }
+          args.Handled(true);
           break;
         case ScrollbarHitRegion::PageDown:
           if (m_vertical) {
             winrt::get_self<ScrollViewComponentView>(m_outer)->pageDown(false);
           }
+          args.Handled(true);
           break;
         case ScrollbarHitRegion::Thumb: {
-          // TODO capture input
+          m_outer.CapturePointer(args.Pointer());
           m_nTrackInputOffset = static_cast<int>((m_vertical ? pos.Y : pos.X) * m_scaleFactor) - m_thumbPos;
           handleMoveThumb(args);
         }
@@ -363,25 +368,23 @@ struct ScrollBarComponent {
       return;
     auto pt = args.GetCurrentPoint(m_outer.Tag());
     if (pt.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
-      auto pos = pt.Position();
-      auto reg = HitTest(pos);
-      updateShy(reg == ScrollbarHitRegion::Unknown && m_nTrackInputOffset == -1);
-      setHighlightedRegion(reg);
-
       if (m_nTrackInputOffset != -1) {
         handleMoveThumb(args);
+      } else {
+        auto pos = pt.Position();
+        auto reg = HitTest(pos);
+        updateShy(reg == ScrollbarHitRegion::Unknown);
+        setHighlightedRegion(reg);
       }
     }
   }
 
-  void OnPointerExited(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
+  void OnPointerCaptureLost() {
     if (!m_visible)
       return;
 
-    // TODO once we start capturing pointer, we would't need to stop tracking here
     m_nTrackInputOffset = -1;
-
-    updateShy(m_nTrackInputOffset == -1);
+    updateShy(true);
   }
 
   void updateShy(bool shy) {
@@ -877,11 +880,10 @@ void ScrollViewComponentView::onPointerMoved(
   Super::onPointerMoved(args);
 }
 
-void ScrollViewComponentView::onPointerExited(
-    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
-  m_verticalScrollbarComponent->OnPointerExited(args);
-  m_horizontalScrollbarComponent->OnPointerExited(args);
-  Super::onPointerExited(args);
+void ScrollViewComponentView::onPointerCaptureLost() noexcept {
+  m_verticalScrollbarComponent->OnPointerCaptureLost();
+  m_horizontalScrollbarComponent->OnPointerCaptureLost();
+  Super::onPointerCaptureLost();
 }
 
 void ScrollViewComponentView::onKeyDown(
