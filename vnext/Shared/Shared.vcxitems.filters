@@ -173,6 +173,12 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ImageComponentView.cpp">
       <Filter>Source Files\Fabric\Composition</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewComponentView.cpp">
+      <Filter>Source Files\Fabric\Composition</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewShadowNode.cpp">
+      <Filter>Source Files\Fabric\Composition</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ParagraphComponentView.cpp">
       <Filter>Source Files\Fabric\Composition</Filter>
     </ClCompile>
@@ -227,9 +233,6 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService.cpp">
       <Filter>Source Files\Fabric</Filter>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\Color.cpp">
-      <Filter>Source Files\Fabric\platform\react\renderer\graphics</Filter>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\textlayoutmanager\TextLayoutManager.cpp">
       <Filter>Source Files\Fabric\platform\react\renderer\textlayoutmanager</Filter>
     </ClCompile>
@@ -270,11 +273,29 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Hasher.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.cpp">
       <Filter>Source Files\Networking</Filter>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\components\view\HostPlatformViewProps.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\components\view\HostPlatformViewEventEmitter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Theme.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Modules\BlobCollector.cpp">
+      <Filter>Source Files\Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\AsynchronousEventBeat.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\SynchronousEventBeat.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Legacy.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Modern.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerBinding.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerCallInvoker.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\Task.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\CoreFeatures.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\PlatformColorUtils.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewShadowNode.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiState.cpp" />
+    <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ThemeUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -327,6 +348,9 @@
     </Filter>
     <Filter Include="Source Files\Networking">
       <UniqueIdentifier>{71196e04-aca0-48d6-99e4-f418c957b50f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Hermes">
+      <UniqueIdentifier>{b32590e6-ae3d-4388-ab98-767345ce38c9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Fabric">
       <UniqueIdentifier>{e045612e-bca3-4844-bce8-e75f83e89e05}</UniqueIdentifier>
@@ -664,6 +688,12 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ImageComponentView.h">
       <Filter>Header Files\Fabric\Composition</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewComponentView.h">
+      <Filter>Header Files\Fabric\Composition</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewShadowNode.h">
+      <Filter>Header Files\Fabric\Composition</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\ParagraphComponentView.h">
       <Filter>Header Files\Fabric\Composition</Filter>
     </ClInclude>
@@ -725,17 +755,6 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\core\graphicsConversions.h">
       <Filter>Header Files\Fabric\platform\react\renderer\core</Filter>
     </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h">
-      <Filter>Hermes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.h">
-      <Filter>Hermes</Filter>
-    </ClInclude>
-    <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.h" />
-    <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.inc" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\JsiApi.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Modules\WebSocketTurboModule.h">
       <Filter>Header Files\Modules</Filter>
     </ClInclude>
@@ -750,6 +769,22 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\components\view\HostPlatformTouch.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\components\view\HostPlatformViewEventEmitter.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Modules\BlobCollector.h">
+      <Filter>Header Files\Modules</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h">
+      <Filter>Hermes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.h">
+      <Filter>Hermes</Filter>
+    </ClInclude>
+    <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.h" />
+    <ClInclude Include="$(NodeApiJsiDir)src\ApiLoaders\HermesApi.inc" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\JsiApi.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)JSI\V8RuntimeHolder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)SafeLoadLibrary.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewSate.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">
@@ -757,21 +792,21 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueReader.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IJSValueWriter.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactContext.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactDispatcher.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactModuleBuilder.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactNonAbiValue.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactNotificationService.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPackageBuilder.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPackageProvider.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPropertyBag.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\JsiApi.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\QuirkSettings.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactCoreInjection.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactInstanceSettings.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeHost.idl" />
-    <Midl Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\RedBoxHandler.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueReader.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueWriter.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactContext.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactDispatcher.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactModuleBuilder.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactNonAbiValue.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactNotificationService.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactPackageBuilder.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactPackageProvider.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactPropertyBag.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\JsiApi.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\QuirkSettings.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactCoreInjection.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactInstanceSettings.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeHost.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\RedBoxHandler.idl" />
   </ItemGroup>
 </Project>

@@ -48,4 +48,27 @@ facebook::react::RuntimeExecutor &GetRuntimeExecutor(
   return properties.Get(RuntimeExecutorProperty()).Value();
 }
 
+winrt::Microsoft::ReactNative::ReactPropertyId<
+    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<facebook::react::RuntimeScheduler>>>
+RuntimeSchedulerProperty() noexcept {
+  winrt::Microsoft::ReactNative::ReactPropertyId<
+      winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<facebook::react::RuntimeScheduler>>>
+      propId{L"ReactNative", L"RuntimeScheduler"};
+  return propId;
+}
+
+void SetRuntimeScheduler(
+    winrt::Microsoft::ReactNative::ReactPropertyBag properties,
+    const std::shared_ptr<facebook::react::RuntimeScheduler> &runtimeScheduler) noexcept {
+  properties.Set(RuntimeSchedulerProperty(), runtimeScheduler);
+}
+
+std::shared_ptr<facebook::react::RuntimeScheduler> RuntimeSchedulerFromProperties(
+    winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept {
+  auto runtimeScheduler = properties.Get(RuntimeSchedulerProperty());
+  if (!runtimeScheduler)
+    return nullptr;
+  return runtimeScheduler.Value();
+}
+
 } // namespace Microsoft::ReactNative::SchedulerSettings

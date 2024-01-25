@@ -23,6 +23,28 @@ IComponentProps ReactCompositionViewComponentBuilder::CreateProps(ViewProps prop
   return m_propsFactory(props);
 }
 
+void ReactCompositionViewComponentBuilder::CreateShadowNode(ShadowNode shadowNode) noexcept {
+  if (m_shadowNodeFactory) {
+    return m_shadowNodeFactory(shadowNode);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::CloneShadowNode(
+    ShadowNode shadowNode,
+    ShadowNode sourceShadowNode) noexcept {
+  if (m_shadowNodeCloner) {
+    m_shadowNodeCloner(shadowNode, sourceShadowNode);
+  }
+}
+
+MeasureContentHandler ReactCompositionViewComponentBuilder::MeasureContentHandler() const noexcept {
+  return m_measureContent;
+}
+
+LayoutHandler ReactCompositionViewComponentBuilder::LayoutHandler() const noexcept {
+  return m_layoutHandler;
+}
+
 void ReactCompositionViewComponentBuilder::SetCreateView(CompositionComponentFactory impl) noexcept {
   m_createView = impl;
 }
@@ -34,6 +56,43 @@ void ReactCompositionViewComponentBuilder::SetCommandHandler(Composition::Comman
 void ReactCompositionViewComponentBuilder::SetPropsUpdater(PropsUpdater impl) noexcept {
   m_propsUpdater = impl;
 }
+// (Object handle, Microsoft.ReactNative.IComponentState state) => void
+void ReactCompositionViewComponentBuilder::SetStateUpdater(StateUpdater impl) noexcept {
+  m_stateUpdater = impl;
+}
+// () => Object
+void ReactCompositionViewComponentBuilder::SetCreateShadowNode(ViewShadowNodeFactory impl) noexcept {
+  m_shadowNodeFactory = impl;
+}
+// (Object handle) => Object
+void ReactCompositionViewComponentBuilder::SetShadowNodeCloner(ViewShadowNodeCloner impl) noexcept {
+  m_shadowNodeCloner = impl;
+}
+// (ShadowNode shadowNode, LayoutContext layoutContext, LayoutConstraints layoutConstraints) -> Size
+void ReactCompositionViewComponentBuilder::SetMeasureContentHandler(
+    winrt::Microsoft::ReactNative::MeasureContentHandler impl) noexcept {
+  m_measureContent = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetInitialStateDataFactory(InitialStateDataFactory impl) noexcept {
+  m_initialStateDataFactory = impl;
+}
+
+winrt::Windows::Foundation::IInspectable ReactCompositionViewComponentBuilder::InitialStateData(
+    winrt::Microsoft::ReactNative::IComponentProps props) noexcept {
+  if (m_initialStateDataFactory) {
+    return m_initialStateDataFactory(props);
+  }
+
+  return nullptr;
+}
+
+// (ShadowNode shadowNode, LayoutContext layoutContext) => void
+void ReactCompositionViewComponentBuilder::SetLayoutHandler(
+    winrt::Microsoft::ReactNative::LayoutHandler impl) noexcept {
+  m_layoutHandler = impl;
+}
+
 // (Object handle, LayoutMetrics metrics) => void
 void ReactCompositionViewComponentBuilder::SetLayoutMetricsUpdater(LayoutMetricsUpdater impl) noexcept {
   m_layoutMetricsUpdater = impl;
@@ -46,10 +105,6 @@ void ReactCompositionViewComponentBuilder::SetUpdateFinalizer(UpdateFinalizer im
 void ReactCompositionViewComponentBuilder::SetVisualCreator(Composition::VisualCreator impl) noexcept {
   m_visualCreator = impl;
 }
-// (Object handle, UInt32 Msg, UInt64 WParam, Int64 LParam) => Int64
-void ReactCompositionViewComponentBuilder::SetMessageHandler(MessageHandler impl) noexcept {
-  m_messageHandler = impl;
-}
 
 void ReactCompositionViewComponentBuilder::SetKeyDownHandler(KeyHandler impl) noexcept {
   m_keyDown = impl;
@@ -57,6 +112,34 @@ void ReactCompositionViewComponentBuilder::SetKeyDownHandler(KeyHandler impl) no
 
 void ReactCompositionViewComponentBuilder::SetKeyUpHandler(KeyHandler impl) noexcept {
   m_keyUp = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetCharacterReceivedHandler(CharacterReceivedHandler impl) noexcept {
+  m_characterReceived = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetPointerEnteredHandler(PointerHandler impl) noexcept {
+  m_pointerEntered = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetPointerExitedHandler(PointerHandler impl) noexcept {
+  m_pointerExited = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetPointerReleasedHandler(PointerHandler impl) noexcept {
+  m_pointerReleased = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetPointerPressedHandler(PointerHandler impl) noexcept {
+  m_pointerPressed = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetPointerMovedHandler(PointerHandler impl) noexcept {
+  m_pointerMoved = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetPointerWheelChangedHandler(PointerHandler impl) noexcept {
+  m_pointerWheelChanged = impl;
 }
 
 winrt::Windows::Foundation::IInspectable ReactCompositionViewComponentBuilder::CreateView(
@@ -83,6 +166,14 @@ void ReactCompositionViewComponentBuilder::UpdateProps(
   }
 }
 
+void ReactCompositionViewComponentBuilder::UpdateState(
+    winrt::Windows::Foundation::IInspectable handle,
+    IComponentState state) noexcept {
+  if (m_stateUpdater) {
+    m_stateUpdater(handle, state);
+  }
+}
+
 void ReactCompositionViewComponentBuilder::UpdateLayoutMetrics(
     winrt::Windows::Foundation::IInspectable handle,
     Composition::LayoutMetrics metrics) noexcept {
@@ -101,30 +192,78 @@ IVisual ReactCompositionViewComponentBuilder::CreateVisual(winrt::Windows::Found
   return m_visualCreator(handle);
 }
 
-int64_t ReactCompositionViewComponentBuilder::SendMessage(
-    winrt::Windows::Foundation::IInspectable handle,
-    uint32_t msg,
-    uint64_t wparam,
-    int64_t lparam) noexcept {
-  if (!m_messageHandler) {
-    return 0;
-  }
-  return m_messageHandler(handle, msg, wparam, lparam);
-}
-
 void ReactCompositionViewComponentBuilder::OnKeyDown(
+    winrt::Windows::Foundation::IInspectable handle,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (m_keyDown) {
-    m_keyDown(source, args);
+    m_keyDown(handle, source, args);
   }
 }
 
 void ReactCompositionViewComponentBuilder::OnKeyUp(
+    winrt::Windows::Foundation::IInspectable handle,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (m_keyUp) {
-    m_keyUp(source, args);
+    m_keyUp(handle, source, args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnCharacterReceived(
+    winrt::Windows::Foundation::IInspectable handle,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
+  if (m_characterReceived) {
+    m_characterReceived(handle, source, args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnPointerEntered(
+    winrt::Windows::Foundation::IInspectable handle,
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_pointerEntered) {
+    m_pointerEntered(handle, args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnPointerExited(
+    winrt::Windows::Foundation::IInspectable handle,
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_pointerExited) {
+    m_pointerExited(handle, args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnPointerPressed(
+    winrt::Windows::Foundation::IInspectable handle,
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_pointerPressed) {
+    m_pointerPressed(handle, args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnPointerReleased(
+    winrt::Windows::Foundation::IInspectable handle,
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_pointerReleased) {
+    m_pointerReleased(handle, args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnPointerMoved(
+    winrt::Windows::Foundation::IInspectable handle,
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_pointerMoved) {
+    m_pointerMoved(handle, args);
+  }
+}
+
+void ReactCompositionViewComponentBuilder::OnPointerWheelChanged(
+    winrt::Windows::Foundation::IInspectable handle,
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (m_pointerWheelChanged) {
+    m_pointerWheelChanged(handle, args);
   }
 }
 

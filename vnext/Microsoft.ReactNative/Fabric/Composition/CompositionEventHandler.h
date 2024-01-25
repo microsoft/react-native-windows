@@ -23,38 +23,45 @@ using namespace Windows::Foundation;
 
 namespace Microsoft::ReactNative {
 
-struct IComponentView;
+struct winrt::Microsoft::ReactNative::implementation::ComponentView;
 typedef int PointerId;
 
 class CompositionEventHandler {
  public:
-  CompositionEventHandler(const winrt::Microsoft::ReactNative::ReactContext &context);
   CompositionEventHandler(
       const winrt::Microsoft::ReactNative::ReactContext &context,
       const winrt::Microsoft::ReactNative::CompositionRootView &CompositionRootView);
   virtual ~CompositionEventHandler();
 
-  int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
-  void ScrollWheel(facebook::react::Point pt, uint32_t delta);
+  int64_t SendMessage(HWND hwnd, uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   void RemoveTouchHandlers();
   winrt::Windows::UI::Core::CoreVirtualKeyStates GetKeyState(winrt::Windows::System::VirtualKey key) noexcept;
 
  private:
-  void ButtonDown(uint32_t msg, uint64_t wParam, int64_t lParam);
-  void PointerPressed(uint32_t msg, uint64_t wParam, int64_t lParam);
-  void ButtonUp(uint32_t msg, uint64_t wParam, int64_t lParam);
-  void PointerUp(uint32_t msg, uint64_t wParam, int64_t lParam);
-  void MouseMove(uint32_t msg, uint64_t wParam, int64_t lParam);
-
+  void onPointerPressed(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
+  void onPointerReleased(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
+  void onPointerMoved(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
+  void onPointerWheelChanged(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
   void onKeyDown(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
   void onKeyUp(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
+  void onCharacterReceived(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
 
   facebook::react::SurfaceId SurfaceId() noexcept;
-  RootComponentView &RootComponentView() noexcept;
+  winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView &RootComponentView() noexcept;
 
   enum class UITouchType {
     Mouse,
@@ -62,11 +69,17 @@ class CompositionEventHandler {
     Touch,
   };
   enum class TouchEventType { Start = 0, End, Move, Cancel, CaptureLost, PointerEntered, PointerExited, PointerMove };
-  void DispatchTouchEvent(TouchEventType eventType, PointerId pointerId);
+  void DispatchTouchEvent(
+      TouchEventType eventType,
+      PointerId pointerId,
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers);
   void HandleIncomingPointerEvent(
       facebook::react::PointerEvent &pe,
-      IComponentView *targetView,
-      std::function<void(std::vector<IComponentView *> &)> handler);
+      const winrt::Microsoft::ReactNative::ComponentView &targetView,
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers,
+      std::function<void(std::vector<winrt::Microsoft::ReactNative::ComponentView> &)> handler);
 
   struct ActiveTouch {
     facebook::react::Touch touch;
@@ -123,6 +136,16 @@ class CompositionEventHandler {
   std::map<PointerId, std::vector<ReactTaggedView>> m_currentlyHoveredViewsPerPointer;
   winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
+
+#ifdef USE_WINUI3
+  winrt::event_token m_pointerPressedToken;
+  winrt::event_token m_pointerReleasedToken;
+  winrt::event_token m_pointerMovedToken;
+  winrt::event_token m_pointerWheelChangedToken;
+  winrt::event_token m_keyDownToken;
+  winrt::event_token m_keyUpToken;
+  winrt::event_token m_characterReceivedToken;
+#endif
 };
 
 } // namespace Microsoft::ReactNative

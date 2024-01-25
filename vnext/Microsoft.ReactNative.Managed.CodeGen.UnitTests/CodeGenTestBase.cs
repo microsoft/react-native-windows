@@ -52,11 +52,11 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests
                 }
 
                 var lkgContents = File.ReadAllText(lkgFile);
-                if (!String.Equals(lkgContents, codeToCompare, StringComparison.Ordinal))
+                if (!String.Equals(lkgContents.ReplaceLineEndings(), codeToCompare.ReplaceLineEndings(), StringComparison.Ordinal))
                 {
                     TraceEncountered(lkgContents, "Expected");
                     TraceEncountered(codeToCompare, "Encountered");
-                    Assert.AreEqual(lkgContents, codeToCompare, $"Lkg file '{lkgFile}' does not match expected content. {generateMessage}");
+                    Assert.AreEqual(lkgContents.ReplaceLineEndings(), codeToCompare.ReplaceLineEndings(), $"Lkg file '{lkgFile}' does not match expected content. {generateMessage}");
                 }
 #pragma warning restore CS0162
             }

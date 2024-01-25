@@ -202,29 +202,27 @@ IAsyncOperation<HttpRequestMessage> WinRTHttpResource::CreateRequest(
       content = HttpStreamContent{std::move(stream)};
     } else if (data.find("formData") != data.cend()) {
       winrt::Windows::Web::Http::HttpMultipartFormDataContent multiPartContent;
-      auto &formData = data["formData"].AsObject();
+      auto &formData = data["formData"].AsArray();
 
       // #6046 -  Overwriting WinRT's HttpMultipartFormDataContent implicit Content-Type clears the generated boundary
       contentType = nullptr;
 
       for (auto &formDataPart : formData) {
         IHttpContent formContent{nullptr};
-        auto &itr = formDataPart.second["string"];
-        if (!formDataPart.second["string"].IsNull()) {
-          formContent = HttpStringContent{to_hstring(formDataPart.second["string"].AsString())};
-        } else if (!formDataPart.second["uri"].IsNull()) {
-          auto filePath = to_hstring(formDataPart.second["uri"].AsString());
+        auto &formDataPartObj = formDataPart.AsObject();
+        if (!formDataPartObj["string"].IsNull()) {
+          formContent = HttpStringContent{to_hstring(formDataPartObj["string"].AsString())};
+        } else if (!formDataPartObj["uri"].IsNull()) {
+          auto filePath = to_hstring(formDataPartObj["uri"].AsString());
           auto file = co_await StorageFile::GetFileFromPathAsync(filePath);
           auto stream = co_await file.OpenReadAsync();
           formContent = HttpStreamContent{stream};
         }
-
         if (formContent) {
-          AttachMultipartHeaders(formContent, formDataPart.second["headers"].AsObject());
-          multiPartContent.Add(formContent, to_hstring(formDataPart.second["fieldName"].AsString()));
+          AttachMultipartHeaders(formContent, formDataPartObj["headers"].AsObject());
+          multiPartContent.Add(formContent, to_hstring(formDataPartObj["fieldName"].AsString()));
         }
       } // foreach form data part
-
       content = multiPartContent;
     }
   }
@@ -545,7 +543,7 @@ WinRTHttpResource::PerformSendRequest(HttpMethod &&method, Uri &&rtUri, IInspect
           if (self->m_onComplete) {
             self->m_onComplete(reqArgs->RequestId);
           }
-          co_return;
+          co_return self->UntrackResponse(reqArgs->RequestId);
         }
       }
 

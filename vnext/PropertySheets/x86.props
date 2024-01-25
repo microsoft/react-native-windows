@@ -11,6 +11,9 @@
     <ClCompile>
       <CallingConvention>StdCall</CallingConvention>
     </ClCompile>
+    <Link>
+      <CETCompat>true</CETCompat>
+    </Link>
   </ItemDefinitionGroup>
 
 </Project>

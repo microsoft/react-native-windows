@@ -16,9 +16,9 @@
       },
       "ReactNative.V8Jsi.Windows": {
         "type": "Direct",
-        "requested": "[0.71.5, )",
-        "resolved": "0.71.5",
-        "contentHash": "Vw7I+m3fsJiNq6pVlM65uqV2Rld1zwXeP8pZ8bprdMdAThuAmMzo2NFzMyaeEH6Gw1FcsMKnGItH8gRH0JS6Rg=="
+        "requested": "[0.71.8, )",
+        "resolved": "0.71.8",
+        "contentHash": "ksHjshj05AMAQ/v7Wet5Dwcwn9Up2BTOIrTv1yEW7+D23FQX0yILW5Zw0bmlWtV8MEtdY611z+06U3Xvu2ygSA=="
       },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
@@ -27,8 +27,8 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Transitive",
-        "resolved": "0.1.15",
-        "contentHash": "My/u5RvxoymtwWokoweU6iVpuP79w271UjadcmSNqnQ9ESIv00tlVP4sHnIiN3t2lJNDeciyE1EVF4swGPECKQ=="
+        "resolved": "0.1.18",
+        "contentHash": "5K8rRihGwIs2XNOTP2Jsw3T6cegxCBQXcpPS4optONU/AmFElGAfnA6XBQJ4UqlCFCl9Nf9zQrgvCUPBWYHiag=="
       },
       "Microsoft.SourceLink.Common": {
         "type": "Transitive",
@@ -58,8 +58,8 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.76.0, )",
-          "fmt": "[1.0.0, )"
+          "Fmt": "[1.0.0, )",
+          "boost": "[1.76.0, )"
         }
       },
       "follywin32": {
@@ -74,10 +74,10 @@
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
           "FollyWin32": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.1.15, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.18, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "ReactCommon": "[1.0.0, )",
-          "ReactNative.V8Jsi.Windows": "[0.71.5, )",
+          "ReactNative.V8Jsi.Windows": "[0.71.8, )",
           "ReactWindows.OpenSSL.StdCall.Static": "[1.0.2-p.5, )",
           "boost": "[1.76.0, )"
         }

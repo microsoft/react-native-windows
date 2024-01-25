@@ -10,14 +10,15 @@
 
 'use strict';
 
-import {RNTesterModule} from '../../types/RNTesterTypes';
+import type {RNTesterModule} from '../../types/RNTesterTypes';
+
 import * as React from 'react';
 import {
+  Platform,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
   View,
-  Platform,
   Alert,
 } from 'react-native';
 
@@ -400,7 +401,7 @@ class AccessibilityExample extends React.Component<
       <View
         accessibilityLabel="A View with accessibility values"
         accessibilityHint="Accessibility Hint"
-        accessibilityRole="View"
+        accessibilityRole="none"
         accessibilityValue={0}
         accessibilityActions={[
           {name: 'cut', label: 'cut'},
@@ -1172,6 +1173,24 @@ export default ({
               borderBottomStartRadius: 4,
             }}
             testID="advanced-border"
+          />
+        );
+      },
+    },
+    {
+      title: 'Shadow',
+      render(): React.Node {
+        return (
+          <View
+            style={{
+              height: 50,
+              width: 50,
+              shadowColor: 'pink',
+              shadowOpacity: 80,
+              shadowOffset: {width: 10, height: 10},
+              shadowRadius: 10,
+            }}
+            testID="shadow"
           />
         );
       },

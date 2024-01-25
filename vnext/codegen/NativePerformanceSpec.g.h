@@ -13,30 +13,13 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct PerformanceSpec_ReactNativeStartupTiming {
-    double startTime;
-    double endTime;
-    double executeJavaScriptBundleEntryPointStart;
-    double executeJavaScriptBundleEntryPointEnd;
-};
-
-
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PerformanceSpec_ReactNativeStartupTiming*) noexcept {
-    winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"startTime", &PerformanceSpec_ReactNativeStartupTiming::startTime},
-        {L"endTime", &PerformanceSpec_ReactNativeStartupTiming::endTime},
-        {L"executeJavaScriptBundleEntryPointStart", &PerformanceSpec_ReactNativeStartupTiming::executeJavaScriptBundleEntryPointStart},
-        {L"executeJavaScriptBundleEntryPointEnd", &PerformanceSpec_ReactNativeStartupTiming::executeJavaScriptBundleEntryPointEnd},
-    };
-    return fieldMap;
-}
 
 struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(std::string, double) noexcept>{0, L"mark"},
       Method<void(std::string, double, double, double, std::string, std::string) noexcept>{1, L"measure"},
       SyncMethod<::React::JSValue() noexcept>{2, L"getSimpleMemoryInfo"},
-      SyncMethod<PerformanceSpec_ReactNativeStartupTiming() noexcept>{3, L"getReactNativeStartupTiming"},
+      SyncMethod<::React::JSValue() noexcept>{3, L"getReactNativeStartupTiming"},
   };
 
   template <class TModule>
@@ -61,8 +44,8 @@ struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "getReactNativeStartupTiming",
-          "    REACT_SYNC_METHOD(getReactNativeStartupTiming) PerformanceSpec_ReactNativeStartupTiming getReactNativeStartupTiming() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(getReactNativeStartupTiming) static PerformanceSpec_ReactNativeStartupTiming getReactNativeStartupTiming() noexcept { /* implementation */ }\n");
+          "    REACT_SYNC_METHOD(getReactNativeStartupTiming) ::React::JSValue getReactNativeStartupTiming() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(getReactNativeStartupTiming) static ::React::JSValue getReactNativeStartupTiming() noexcept { /* implementation */ }\n");
   }
 };
 

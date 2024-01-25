@@ -39,10 +39,12 @@ class CompositionRootAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall AdviseEventAdded(EVENTID idEvent, SAFEARRAY *psaProperties) override;
   virtual HRESULT __stdcall AdviseEventRemoved(EVENTID idEvent, SAFEARRAY *psaProperties) override;
 
-  CompositionRootAutomationProvider(
-      const std::shared_ptr<::Microsoft::ReactNative::RootComponentView> &componentView) noexcept;
+  CompositionRootAutomationProvider(const winrt::Microsoft::ReactNative::CompositionRootView &rootView) noexcept;
 
   void SetHwnd(HWND hwnd) noexcept;
+#ifdef USE_WINUI3
+  void SetIsland(winrt::Microsoft::UI::Content::ContentIsland &island) noexcept;
+#endif
   bool WasPropertyAdvised(PROPERTYID prop) noexcept;
   bool WasEventAdvised(EVENTID event) noexcept;
 
@@ -61,6 +63,8 @@ class CompositionRootAutomationProvider : public winrt::implements<
   };
 
  private:
+  winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *rootComponentView() noexcept;
+
   HRESULT AdvisePropertiesAdded(SAFEARRAY *psaProperties) noexcept;
   HRESULT AdvisePropertiesRemoved(SAFEARRAY *psaProperties) noexcept;
 
@@ -68,8 +72,11 @@ class CompositionRootAutomationProvider : public winrt::implements<
   // practice ATs tend to only listen to a dozen or so props and events, so std::vector is likely better than maps.
   std::vector<AdvisedEvent> m_advisedEvents{};
   std::vector<AdvisedEvent> m_advisedProperties{};
-  ::Microsoft::ReactNative::ReactTaggedView m_view;
+  winrt::weak_ref<winrt::Microsoft::ReactNative::CompositionRootView> m_wkRootView;
   HWND m_hwnd{nullptr};
+#ifdef USE_WINUI3
+  winrt::Microsoft::UI::Content::ContentIsland m_island{nullptr};
+#endif
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

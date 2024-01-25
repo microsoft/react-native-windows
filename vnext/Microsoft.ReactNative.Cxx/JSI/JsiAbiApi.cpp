@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "JsiAbiApi.h"
 #include <utility>
+#include "ReactNonAbiValue.h"
 #include "winrt/Windows.Foundation.Collections.h"
 
 using namespace facebook::jsi;
@@ -361,27 +362,31 @@ String JsiAbiRuntime::bigintToString(const BigInt &bigint, int radix) try {
   throw;
 }
 bool JsiAbiRuntime::hasNativeState(const Object &obj) try {
-  // TODO: implement
-  UNREFERENCED_PARAMETER(obj);
-  VerifyElseCrash(false);
+  JsiObjectRef ref = AsJsiObjectRef(obj);
+  return m_runtime.HasNativeState(ref);
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 std::shared_ptr<NativeState> JsiAbiRuntime::getNativeState(const Object &obj) try {
-  // TODO: implement
-  UNREFERENCED_PARAMETER(obj);
-  VerifyElseCrash(false);
+  JsiObjectRef ref = AsJsiObjectRef(obj);
+  IReactNonAbiValue value = m_runtime.GetNativeState(ref);
+  if (!value) {
+    return nullptr;
+  }
+  ReactNonAbiValue<std::shared_ptr<NativeState>> *accessor =
+      reinterpret_cast<ReactNonAbiValue<std::shared_ptr<NativeState>> *>(&value);
+  return *accessor->GetPtr();
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
 }
 
 void JsiAbiRuntime::setNativeState(const Object &obj, std::shared_ptr<NativeState> state) try {
-  // TODO: implement
-  UNREFERENCED_PARAMETER(obj);
-  UNREFERENCED_PARAMETER(state);
-  VerifyElseCrash(false);
+  JsiObjectRef ref = AsJsiObjectRef(obj);
+  IReactNonAbiValue value =
+      winrt::make<implementation::ReactNonAbiValue<std::shared_ptr<NativeState>>>(std::move(state));
+  m_runtime.SetNativeState(ref, value);
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
@@ -732,6 +737,10 @@ bool JsiAbiRuntime::instanceOf(const Object &o, const Function &f) try {
 } catch (hresult_error const &) {
   RethrowJsiError();
   throw;
+}
+
+void JsiAbiRuntime::setExternalMemoryPressure(const facebook::jsi::Object & /*obj*/, size_t /*amount*/) {
+  // TODO: implement
 }
 
 template <typename T>

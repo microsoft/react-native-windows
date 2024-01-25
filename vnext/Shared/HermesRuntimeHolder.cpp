@@ -10,7 +10,7 @@
 #include <NodeApiJsiRuntime.h>
 #include <crash/verifyElseCrash.h>
 #include <cxxreact/SystraceSection.h>
-#include <jsinspector/InspectorInterfaces.h>
+#include <jsinspector-modern/InspectorInterfaces.h>
 #include <mutex>
 #include "SafeLoadLibrary.h"
 
@@ -38,7 +38,7 @@ void NAPI_CDECL removeInspectorPage(int32_t pageId) noexcept;
 
 class HermesFuncResolver : public IFuncResolver {
  public:
-  HermesFuncResolver() : libHandle_(SafeLoadLibrary(L"hermes.dll")) {}
+  HermesFuncResolver() : libHandle_(LoadLibraryAsPeerFirst(L"hermes.dll")) {}
 
   FuncPtr getFuncPtr(const char *funcName) override {
     return reinterpret_cast<FuncPtr>(GetProcAddress(libHandle_, funcName));
@@ -230,10 +230,10 @@ class HermesScriptCache {
   std::shared_ptr<facebook::jsi::PreparedScriptStore> scriptStore_;
 };
 
-class HermesLocalConnection : public facebook::react::ILocalConnection {
+class HermesLocalConnection : public facebook::react::jsinspector_modern::ILocalConnection {
  public:
   HermesLocalConnection(
-      std::unique_ptr<facebook::react::IRemoteConnection> remoteConnection,
+      std::unique_ptr<facebook::react::jsinspector_modern::IRemoteConnection> remoteConnection,
       void *connectFunc) noexcept {
     CRASH_ON_ERROR(getHermesApi().hermes_create_local_connection(
         connectFunc,
@@ -259,15 +259,15 @@ class HermesLocalConnection : public facebook::react::ILocalConnection {
 
  private:
   static void NAPI_CDECL OnRemoteConnectionSendMessage(hermes_remote_connection remoteConnection, const char *message) {
-    reinterpret_cast<facebook::react::IRemoteConnection *>(remoteConnection)->onMessage(message);
+    reinterpret_cast<facebook::react::jsinspector_modern::IRemoteConnection *>(remoteConnection)->onMessage(message);
   }
 
   static void NAPI_CDECL OnRemoteConnectionDisconnect(hermes_remote_connection remoteConnection) {
-    reinterpret_cast<facebook::react::IRemoteConnection *>(remoteConnection)->onDisconnect();
+    reinterpret_cast<facebook::react::jsinspector_modern::IRemoteConnection *>(remoteConnection)->onDisconnect();
   }
 
   static void NAPI_CDECL OnRemoteConnectionDelete(void *remoteConnection, void * /*deleterData*/) {
-    delete reinterpret_cast<facebook::react::IRemoteConnection *>(remoteConnection);
+    delete reinterpret_cast<facebook::react::jsinspector_modern::IRemoteConnection *>(remoteConnection);
   }
 
  private:
@@ -275,18 +275,18 @@ class HermesLocalConnection : public facebook::react::ILocalConnection {
 };
 
 int32_t NAPI_CDECL addInspectorPage(const char *title, const char *vm, void *connectFunc) noexcept {
-  return facebook::react::getInspectorInstance().addPage(
+  return facebook::react::jsinspector_modern::getInspectorInstance().addPage(
       title,
       vm,
-      [connectFunc,
-       hermesApi = HermesApi::current()](std::unique_ptr<facebook::react::IRemoteConnection> remoteConnection) {
+      [connectFunc, hermesApi = HermesApi::current()](
+          std::unique_ptr<facebook::react::jsinspector_modern::IRemoteConnection> remoteConnection) {
         HermesApi::Scope apiScope(hermesApi);
         return std::make_unique<HermesLocalConnection>(std::move(remoteConnection), connectFunc);
       });
 }
 
 void NAPI_CDECL removeInspectorPage(int32_t pageId) noexcept {
-  facebook::react::getInspectorInstance().removePage(pageId);
+  facebook::react::jsinspector_modern::getInspectorInstance().removePage(pageId);
 }
 
 } // namespace

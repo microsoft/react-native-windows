@@ -46,7 +46,7 @@ float GetConstrainedResult(float constrainTo, float measuredSize, YGMeasureMode 
 }
 
 YGSize DefaultYogaSelfMeasureFunc(
-    YGNodeRef node,
+    YGNodeConstRef node,
     float width,
     YGMeasureMode widthMode,
     float height,
@@ -103,6 +103,44 @@ void ViewManagerBase::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVal
   React::WriteProperty(writer, L"keyUpEvents", L"array");
   React::WriteProperty(writer, L"onMouseEnter", L"function");
   React::WriteProperty(writer, L"onMouseLeave", L"function");
+
+  // The events below define the properties that are not used by native directly,
+  // but required in the view config for new renderer to function.
+  // They can be deleted after Static View Configs are rolled out.
+
+  // PanResponder callbacks
+  React::WriteProperty(writer, L"onMoveShouldSetResponder", "function");
+  React::WriteProperty(writer, L"onMoveShouldSetResponderCapture", "function");
+  React::WriteProperty(writer, L"onStartShouldSetResponder", "function");
+  React::WriteProperty(writer, L"onStartShouldSetResponderCapture", "function");
+  React::WriteProperty(writer, L"onResponderGrant", "function");
+  React::WriteProperty(writer, L"onResponderReject", "function");
+  React::WriteProperty(writer, L"onResponderStart", "function");
+  React::WriteProperty(writer, L"onResponderEnd", "function");
+  React::WriteProperty(writer, L"onResponderRelease", "function");
+  React::WriteProperty(writer, L"onResponderMove", "function");
+  React::WriteProperty(writer, L"onResponderTerminate", "function");
+  React::WriteProperty(writer, L"onResponderTerminationRequest", "function");
+  React::WriteProperty(writer, "onShouldBlockNativeResponder", "function");
+
+  // Touch events
+  React::WriteProperty(writer, L"onTouchCancel", "function");
+  React::WriteProperty(writer, L"onTouchEnd", "function");
+  React::WriteProperty(writer, L"onTouchMove", "function");
+  React::WriteProperty(writer, L"onTouchStart", "function");
+
+  // W3C Pointer Events
+  React::WriteProperty(writer, L"onPointerDown", L"function");
+  React::WriteProperty(writer, L"onPointerMove", L"function");
+  React::WriteProperty(writer, L"onPointerUp", L"function");
+  React::WriteProperty(writer, L"onPointerCancel", L"function");
+  React::WriteProperty(writer, L"onPointerEnter", L"function");
+  React::WriteProperty(writer, L"onPointerLeave", L"function");
+  React::WriteProperty(writer, L"onPointerOver", L"function");
+  React::WriteProperty(writer, L"onPointerOut", L"function");
+  React::WriteProperty(writer, L"onGotPointerCapture", L"function");
+  React::WriteProperty(writer, L"onLostPointerCapture", L"function");
+  React::WriteProperty(writer, L"onClick", L"function");
 }
 
 void ViewManagerBase::GetConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {

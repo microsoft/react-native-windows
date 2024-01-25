@@ -18,9 +18,7 @@ namespace folly {
 struct dynamic;
 }
 
-namespace facebook {
-
-namespace react {
+namespace facebook::react {
 
 class Instance;
 struct InstanceCallback;
@@ -28,6 +26,7 @@ class MessageQueueThread;
 class ModuleRegistry;
 class IUIManager;
 class TurboModuleRegistry;
+class RuntimeScheduler;
 
 struct InstanceWrapper {
   virtual const std::shared_ptr<Instance> &GetInstance() const noexcept = 0;
@@ -54,19 +53,6 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
 
 std::shared_ptr<InstanceWrapper> CreateReactInstance(
     std::shared_ptr<Instance> &&instance,
-    std::string &&jsBundleRelativePath,
-    std::vector<
-        std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
-        &&cxxModules,
-    std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
-    std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
-    std::unique_ptr<InstanceCallback> &&callback,
-    std::shared_ptr<MessageQueueThread> jsQueue,
-    std::shared_ptr<MessageQueueThread> nativeQueue,
-    std::shared_ptr<DevSettings> devSettings) noexcept;
-
-std::shared_ptr<InstanceWrapper> CreateReactInstance(
-    std::shared_ptr<Instance> &&instance,
     std::string &&jsBundleBasePath,
     std::string &&jsBundleRelativePath,
     std::vector<
@@ -78,5 +64,4 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings) noexcept;
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

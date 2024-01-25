@@ -11,31 +11,36 @@
 #include "CompositionDynamicAutomationProvider.h"
 #include "Unicode.h"
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 UnimplementedNativeViewComponentView::UnimplementedNativeViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    facebook::react::Tag tag)
-    : Super(compContext, tag) {
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    : base_type(
+          compContext,
+          tag,
+          reactContext,
+          (CompositionComponentViewFeatures::Default & ~CompositionComponentViewFeatures::NativeBorder)) {
   static auto const defaultProps = std::make_shared<facebook::react::UnimplementedNativeViewProps const>();
   m_props = defaultProps;
   m_visual = compContext.CreateSpriteVisual();
 }
 
-std::shared_ptr<UnimplementedNativeViewComponentView> UnimplementedNativeViewComponentView::Create(
+winrt::Microsoft::ReactNative::ComponentView UnimplementedNativeViewComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    facebook::react::Tag tag) noexcept {
-  return std::shared_ptr<UnimplementedNativeViewComponentView>(
-      new UnimplementedNativeViewComponentView(compContext, tag));
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
+  return winrt::make<UnimplementedNativeViewComponentView>(compContext, tag, reactContext);
 }
 
 void UnimplementedNativeViewComponentView::mountChildComponentView(
-    IComponentView &childComponentView,
-    uint32_t index) noexcept {}
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {}
 
 void UnimplementedNativeViewComponentView::unmountChildComponentView(
-    IComponentView &childComponentView,
-    uint32_t index) noexcept {}
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {}
 
 void UnimplementedNativeViewComponentView::updateProps(
     facebook::react::Props::Shared const &props,
@@ -90,7 +95,7 @@ void UnimplementedNativeViewComponentView::updateLayoutMetrics(
         float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
 
         winrt::com_ptr<IDWriteTextFormat> spTextFormat;
-        winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
+        winrt::check_hresult(::Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
             L"Segoe UI",
             nullptr, // Font collection (nullptr sets it to use the system font collection).
             DWRITE_FONT_WEIGHT_REGULAR,
@@ -108,7 +113,8 @@ void UnimplementedNativeViewComponentView::updateLayoutMetrics(
             static_cast<float>(offset.x), static_cast<float>(offset.y), width + offset.x, height + offset.y};
         // const D2D1_RECT_F rect = {0.f, 0.f, width, height};
 
-        auto label = Microsoft::Common::Unicode::Utf8ToUtf16(std::string("Unimplemented component: ") + m_props->name);
+        auto label =
+            ::Microsoft::Common::Unicode::Utf8ToUtf16(std::string("Unimplemented component: ") + m_props->name);
         d2dDeviceContext->DrawText(
             label.c_str(),
             static_cast<UINT32>(label.length()),
@@ -120,17 +126,17 @@ void UnimplementedNativeViewComponentView::updateLayoutMetrics(
       }
     }
   }
-  m_layoutMetrics = layoutMetrics;
+
+  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 }
 
 void UnimplementedNativeViewComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {}
 
-void UnimplementedNativeViewComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
-
 void UnimplementedNativeViewComponentView::prepareForRecycle() noexcept {}
-facebook::react::Props::Shared UnimplementedNativeViewComponentView::props() noexcept {
+
+facebook::react::SharedViewProps UnimplementedNativeViewComponentView::viewProps() noexcept {
   return m_props;
 }
 
@@ -153,10 +159,10 @@ facebook::react::Tag UnimplementedNativeViewComponentView::hitTest(
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
-    return tag();
+    return Tag();
   }
 
   return -1;
 }
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

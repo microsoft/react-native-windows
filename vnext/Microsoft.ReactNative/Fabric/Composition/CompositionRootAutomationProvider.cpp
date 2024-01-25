@@ -3,11 +3,18 @@
 #include <algorithm>
 #include "UiaHelpers.h"
 
+#ifdef USE_WINUI3
+#include <winrt/Microsoft.UI.Content.h>
+#include <winrt/Microsoft.UI.Input.h>
+#endif
+
+#include <Fabric/Composition/CompositionRootView.h>
+
 namespace winrt::Microsoft::ReactNative::implementation {
 
 CompositionRootAutomationProvider::CompositionRootAutomationProvider(
-    const std::shared_ptr<::Microsoft::ReactNative::RootComponentView> &componentView) noexcept
-    : m_view{componentView} {}
+    const winrt::Microsoft::ReactNative::CompositionRootView &rootView) noexcept
+    : m_wkRootView{rootView} {}
 
 // Implementations should return NULL for a top-level element that is hosted in a window. Other elements should return
 // an array that contains UiaAppendRuntimeId (defined in Uiautomationcoreapi.h), followed by a value that is unique
@@ -33,7 +40,24 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetEmbeddedFragmentRoots(SA
 }
 
 HRESULT __stdcall CompositionRootAutomationProvider::SetFocus(void) {
-  return UiaSetFocusHelper(m_view);
+#ifdef USE_WINUI3
+  if (m_island) {
+    auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
+
+    if (focusController) {
+      if (focusController.TrySetFocus()) {
+        return S_OK;
+      }
+    }
+  }
+#endif
+
+  if (m_hwnd) {
+    ::SetFocus(m_hwnd);
+    return S_OK;
+  }
+
+  return S_FALSE;
 }
 
 HRESULT __stdcall CompositionRootAutomationProvider::GetPatternProvider(PATTERNID patternId, IUnknown **pRetVal) {
@@ -49,6 +73,14 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetPropertyValue(PROPERTYID
   if (pRetVal == nullptr)
     return E_POINTER;
 
+  switch (propertyId) {
+    case UIA_ControlTypePropertyId: {
+      pRetVal->vt = VT_I4;
+      pRetVal->lVal = UIA_GroupControlTypeId;
+      break;
+    }
+  }
+
   return S_OK;
 }
 
@@ -56,9 +88,19 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_HostRawElementProvider(
   if (pRetVal == nullptr)
     return E_POINTER;
 
+#ifdef USE_WINUI3
+  if (m_island) {
+    winrt::Windows::Foundation::IInspectable host = m_island.GetAutomationHostProvider();
+    *pRetVal = host.as<IRawElementProviderSimple>().detach();
+    return S_OK;
+  }
+#endif
+
   // TODO: assumes windowed
-  if (!IsWindow(m_hwnd))
+  if (!IsWindow(m_hwnd)) {
+    assert(false);
     return UIA_E_ELEMENTNOTAVAILABLE;
+  }
 
   auto hr = UiaHostProviderFromHwnd(m_hwnd, pRetVal);
 
@@ -69,10 +111,27 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_BoundingRectangle(UiaRe
   if (pRetVal == nullptr)
     return E_POINTER;
 
+#ifdef USE_WINUI3
+  if (m_island) {
+    auto cc = m_island.CoordinateConverter();
+    auto origin = cc.ConvertLocalToScreen(winrt::Windows::Foundation::Point{0, 0});
+    pRetVal->left = origin.X;
+    pRetVal->top = origin.Y;
+
+    auto size = m_island.ActualSize();
+    pRetVal->width = size.x;
+    pRetVal->height = size.y;
+
+    return S_OK;
+  }
+#endif
+
   // TODO: Need host site offsets
   // Assume we're hosted in some other visual-based hosting site
   if (m_hwnd == nullptr || !IsWindow(m_hwnd)) {
-    return UiaGetBoundingRectangleHelper(m_view, *pRetVal);
+    assert(false);
+    pRetVal->left = pRetVal->top = pRetVal->width = pRetVal->height = 0;
+    return E_FAIL;
   }
 
   POINT point{0, 0};
@@ -108,6 +167,18 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_ProviderOptions(Provide
   return S_OK;
 }
 
+winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
+CompositionRootAutomationProvider::rootComponentView() noexcept {
+  if (auto rootView = m_wkRootView.get()) {
+    auto innerRootView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView);
+    if (auto view = innerRootView->GetComponentView()) {
+      return view;
+    }
+  }
+
+  return nullptr;
+}
+
 HRESULT __stdcall CompositionRootAutomationProvider::ElementProviderFromPoint(
     double x,
     double y,
@@ -117,28 +188,45 @@ HRESULT __stdcall CompositionRootAutomationProvider::ElementProviderFromPoint(
 
   *pRetVal = nullptr;
 
-  auto strongView = m_view.view();
+  if (auto rootView = rootComponentView()) {
+#ifdef USE_WINUI3
+    if (m_island) {
+      auto cc = m_island.CoordinateConverter();
+      auto local = cc.ConvertScreenToLocal(
+          winrt::Windows::Graphics::PointInt32{static_cast<int32_t>(x), static_cast<int32_t>(y)});
+      auto provider = rootView->UiaProviderFromPoint(
+          {static_cast<LONG>(local.X * m_island.RasterizationScale()),
+           static_cast<LONG>(local.Y * m_island.RasterizationScale())});
+      auto spFragment = provider.try_as<IRawElementProviderFragment>();
+      if (spFragment) {
+        *pRetVal = spFragment.detach();
+      }
 
-  if (strongView == nullptr) {
-    return UIA_E_ELEMENTNOTAVAILABLE;
+      return S_OK;
+    }
+#endif
+
+    if (m_hwnd) {
+      if (!IsWindow(m_hwnd)) {
+        // TODO: Add support for non-HWND based hosting
+        assert(false);
+        return E_FAIL;
+      }
+
+      POINT clientPoint{static_cast<LONG>(x), static_cast<LONG>(y)};
+      ScreenToClient(m_hwnd, &clientPoint);
+
+      auto provider = rootView->UiaProviderFromPoint(clientPoint);
+      auto spFragment = provider.try_as<IRawElementProviderFragment>();
+      if (spFragment) {
+        *pRetVal = spFragment.detach();
+        return S_OK;
+      }
+    }
   }
 
-  auto spRootView = std::static_pointer_cast<::Microsoft::ReactNative::RootComponentView>(strongView);
-
-  if (m_hwnd == nullptr || !IsWindow(m_hwnd)) {
-    // TODO: Add support for non-HWND based hosting
-    return E_FAIL;
-  }
-
-  POINT clientPoint{static_cast<LONG>(x), static_cast<LONG>(y)};
-  ScreenToClient(m_hwnd, &clientPoint);
-
-  auto provider = spRootView->UiaProviderFromPoint(clientPoint);
-  auto spFragment = provider.try_as<IRawElementProviderFragment>();
-  if (spFragment) {
-    *pRetVal = spFragment.detach();
-  }
-
+  AddRef();
+  *pRetVal = this;
   return S_OK;
 }
 
@@ -148,17 +236,18 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetFocus(IRawElementProvide
 
   *pRetVal = nullptr;
 
-  auto strongView = m_view.view();
+  auto rootView = rootComponentView();
 
-  if (strongView == nullptr) {
+  if (rootView == nullptr) {
     return UIA_E_ELEMENTNOTAVAILABLE;
   }
 
-  auto rootCV = std::static_pointer_cast<::Microsoft::ReactNative::RootComponentView>(strongView);
-  auto focusedComponent = rootCV->GetFocusedComponent();
+  const auto &focusedComponent = rootView->GetFocusedComponent();
 
   if (focusedComponent) {
-    auto focusedUiaProvider = focusedComponent->EnsureUiaProvider();
+    auto focusedUiaProvider =
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)
+            ->EnsureUiaProvider();
     auto spFragment = focusedUiaProvider.try_as<IRawElementProviderFragment>();
     if (spFragment) {
       *pRetVal = spFragment.detach();
@@ -172,6 +261,12 @@ void CompositionRootAutomationProvider::SetHwnd(HWND hwnd) noexcept {
   m_hwnd = hwnd;
 }
 
+#ifdef USE_WINUI3
+void CompositionRootAutomationProvider::SetIsland(winrt::Microsoft::UI::Content::ContentIsland &island) noexcept {
+  m_island = island;
+}
+#endif
+
 HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
     NavigateDirection direction,
     IRawElementProviderFragment **pRetVal) {
@@ -181,7 +276,14 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
   // Fragment roots do not enable navigation to a parent or siblings; navigation among fragment roots is handled by the
   // default window providers. Elements in fragments must navigate only to other elements within that fragment.
   if (direction == NavigateDirection_FirstChild || direction == NavigateDirection_LastChild) {
-    return UiaNavigateHelper(m_view, direction, *pRetVal);
+    if (auto rootView = rootComponentView()) {
+      auto uiaProvider = rootView->EnsureUiaProvider();
+      auto spFragment = uiaProvider.try_as<IRawElementProviderFragment>();
+      if (spFragment) {
+        *pRetVal = spFragment.detach();
+        return S_OK;
+      }
+    }
   }
   *pRetVal = nullptr;
   return S_OK;

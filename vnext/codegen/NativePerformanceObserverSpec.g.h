@@ -62,6 +62,7 @@ struct PerformanceObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
       Method<void(double, double) noexcept>{7, L"setDurationThreshold"},
       Method<void(double, std::string) noexcept>{8, L"clearEntries"},
       SyncMethod<std::vector<PerformanceObserverSpec_RawPerformanceEntry>(double, std::string) noexcept>{9, L"getEntries"},
+      SyncMethod<std::vector<double>() noexcept>{10, L"getSupportedPerformanceEntryTypes"},
   };
 
   template <class TModule>
@@ -118,6 +119,11 @@ struct PerformanceObserverSpec : winrt::Microsoft::ReactNative::TurboModuleSpec 
           "getEntries",
           "    REACT_SYNC_METHOD(getEntries) std::vector<PerformanceObserverSpec_RawPerformanceEntry> getEntries(double entryType, std::string entryName) noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(getEntries) static std::vector<PerformanceObserverSpec_RawPerformanceEntry> getEntries(double entryType, std::string entryName) noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          10,
+          "getSupportedPerformanceEntryTypes",
+          "    REACT_SYNC_METHOD(getSupportedPerformanceEntryTypes) std::vector<double> getSupportedPerformanceEntryTypes() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(getSupportedPerformanceEntryTypes) static std::vector<double> getSupportedPerformanceEntryTypes() noexcept { /* implementation */ }\n");
   }
 };
 

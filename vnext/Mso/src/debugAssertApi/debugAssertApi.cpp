@@ -31,7 +31,7 @@ struct Data {
     // to call malloc.
     std::allocator<Data> alloc;
     auto p = alloc.allocate(1);
-    alloc.construct(p);
+    new (p) Data();
     return p;
   }
 };

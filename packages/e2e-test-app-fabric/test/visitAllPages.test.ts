@@ -6,6 +6,13 @@
  */
 import {goToComponentExample} from './RNTesterNavigation';
 import {verifyNoErrorLogs} from './Helpers';
+import {app} from '@react-native-windows/automation';
+
+beforeAll(async () => {
+  // If window is partially offscreen, tests will fail to click on certain elements
+  await app.setWindowPosition(0, 0);
+  await app.setWindowSize(1000, 1250);
+});
 
 afterEach(async () => {
   await verifyNoErrorLogs();
@@ -37,7 +44,11 @@ describe('visitAllPages', () => {
   });
 
   for (const component of componentExamples) {
-    if (component === 'Flyout' || component === 'XAML') {
+    if (
+      component === 'Flyout' ||
+      component === 'XAML' ||
+      component === 'SwipeableCard'
+    ) {
       continue;
     }
 

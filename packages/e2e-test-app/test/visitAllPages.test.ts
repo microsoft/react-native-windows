@@ -34,6 +34,13 @@ const componentExamples = testerList.Components.map(e => e.module.title);
 
 describe('visitAllPages', () => {
   for (const component of componentExamples) {
+    if (
+      component === 'Fabric Native Component' ||
+      component === 'Fabric Native Component Yoga'
+    ) {
+      continue; // disable fabric specific tests
+    }
+
     test(component, async () => await goToComponentExample(component));
   }
 

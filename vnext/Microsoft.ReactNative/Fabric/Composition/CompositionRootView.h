@@ -43,6 +43,11 @@ struct FocusNavigationResult : FocusNavigationResultT<FocusNavigationResult> {
 struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Microsoft::ReactNative::ICompositionRootView {
   CompositionRootView() noexcept;
 
+#ifdef USE_WINUI3
+  CompositionRootView(winrt::Microsoft::UI::Composition::Compositor compositor) noexcept;
+  winrt::Microsoft::UI::Content::ContentIsland Island() noexcept;
+#endif
+
   // property ReactViewHost
   ReactNative::IReactViewHost ReactViewHost() noexcept;
   void ReactViewHost(ReactNative::IReactViewHost const &value) noexcept;
@@ -56,8 +61,11 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   void Size(winrt::Windows::Foundation::Size value) noexcept;
 
   // ScaleFactor (DPI)
-  double ScaleFactor() noexcept;
-  void ScaleFactor(double value) noexcept;
+  float ScaleFactor() noexcept;
+  void ScaleFactor(float value) noexcept;
+
+  winrt::Microsoft::ReactNative::Composition::Theme Theme() noexcept;
+  void Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept;
 
   winrt::Windows::Foundation::Size Measure(winrt::Windows::Foundation::Size const &availableSize) const;
   winrt::Windows::Foundation::Size Arrange(winrt::Windows::Foundation::Size finalSize) const;
@@ -65,12 +73,13 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   winrt::Microsoft::ReactNative::FocusNavigationResult NavigateFocus(
       const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept;
 
-  ::Microsoft::ReactNative::RootComponentView *GetComponentView() noexcept;
+  winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *GetComponentView() noexcept;
 
   IInspectable GetUiaProvider() noexcept;
 
+  // When driving the rootview without an island
+  void SetWindow(uint64_t hwnd) noexcept;
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
-  void OnScrollWheel(winrt::Windows::Foundation::Point point, int32_t delta) noexcept;
 
  public: // ICompositionRootView
   winrt::Microsoft::ReactNative::Composition::IVisual GetVisual() const noexcept override;
@@ -90,17 +99,28 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   void UninitRootView() noexcept;
 
  private:
+#ifdef USE_WINUI3
+  winrt::Microsoft::UI::Composition::Compositor m_compositor{nullptr};
+  winrt::Microsoft::UI::Content::ContentIsland m_island{nullptr};
+#endif
+
+  HWND m_hwnd{0};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
   IReactDispatcher m_uiDispatcher{nullptr};
+  winrt::IInspectable m_uiaProvider{nullptr};
   int64_t m_rootTag{-1};
-  double m_scaleFactor{1.0};
+  float m_scaleFactor{1.0};
   winrt::Windows::Foundation::Size m_size;
   winrt::Microsoft::ReactNative::ReactContext m_context;
   winrt::Microsoft::ReactNative::IReactViewHost m_reactViewHost;
   winrt::Microsoft::ReactNative::ReactViewOptions m_reactViewOptions;
   std::shared_ptr<::Microsoft::ReactNative::CompositionEventHandler> m_CompositionEventHandler;
   winrt::Microsoft::ReactNative::Composition::IVisual m_rootVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Theme m_theme{nullptr};
+  winrt::Microsoft::ReactNative::ReactNotificationSubscription m_themeChangedSubscription{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Theme::ThemeChanged_revoker m_themeChangedRevoker;
+
   void UpdateRootViewInternal() noexcept;
   void ClearLoadingUI() noexcept;
   void EnsureLoadingUI() noexcept;

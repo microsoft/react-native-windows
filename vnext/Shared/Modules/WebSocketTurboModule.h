@@ -3,12 +3,26 @@
 
 #pragma once
 
-#include <NativeWebSocketModuleSpec.g.h>
+#include <codegen/NativeWebSocketModuleSpec.g.h>
 #include <Modules/IWebSocketModuleProxy.h>
 #include <NativeModules.h>
 #include <Networking/IWebSocketResource.h>
 
 namespace Microsoft::React {
+
+class WebSocketTurboModuleProxy final : public IWebSocketModuleProxy {
+  std::unordered_map<double, std::shared_ptr<Networking::IWebSocketResource>> &m_resourceMap;
+
+ public:
+  WebSocketTurboModuleProxy(
+      std::unordered_map<double, std::shared_ptr<Networking::IWebSocketResource>> &resourceMap) noexcept;
+
+#pragma region IWebSocketModuleProxy
+
+  void SendBinary(std::string &&base64String, int64_t id) noexcept override;
+
+#pragma endregion
+};
 
 REACT_MODULE(WebSocketTurboModule, L"WebSocketModule")
 struct WebSocketTurboModule {
@@ -47,6 +61,11 @@ struct WebSocketTurboModule {
 
   winrt::Microsoft::ReactNative::ReactContext m_context;
   std::unordered_map<double, std::shared_ptr<Networking::IWebSocketResource>> m_resourceMap;
+
+  /// <summary>
+  /// Exposes a subset of the module's methods.
+  /// </summary>
+  std::shared_ptr<IWebSocketModuleProxy> m_proxy;
 };
 
 } // namespace Microsoft::React

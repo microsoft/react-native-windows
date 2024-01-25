@@ -1,0 +1,3609 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button Tests Buttons can be disabled 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "disabled_button",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": false,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Submit Application",
+      },
+    ],
+    "ControlType": 50000,
+    "HelpText": "",
+    "IsEnabled": false,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "Name": "Press to submit your application!",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  4,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  908,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  -4,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  -1,
+                  4,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  28,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  -4,
+                  -5,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  5,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  4,
+                  -2,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  908,
+                  2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  -5,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  5,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  4,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  28,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              916,
+              37,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          916,
+          37,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              898,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          9,
+          9,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          898,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "disabled_button",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      37,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Button Tests Buttons can have accessibility labels 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "accessibilityLabel_button",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Submit Application",
+      },
+    ],
+    "ControlType": 50000,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "Name": "Press to submit your application!",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 122, 255, 255)",
+            },
+            "Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  4,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  908,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  -4,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  -1,
+                  4,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  28,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  -4,
+                  -5,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  5,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  4,
+                  -2,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  908,
+                  2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  -5,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  5,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  4,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  28,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              916,
+              37,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          916,
+          37,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              898,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          9,
+          9,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          898,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "accessibilityLabel_button",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      37,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Button Tests Buttons can have accessibility props 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "accessibility_props",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Submit Application",
+      },
+    ],
+    "ControlType": 50000,
+    "HelpText": "Submit Button",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "Name": "Press to submit your application!",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          4,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          4,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          908,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          -4,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          4,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          -1,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          28,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          -4,
+          -5,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          4,
+          -2,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          908,
+          2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          -5,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          28,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              898,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          9,
+          9,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          898,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "accessibility_props",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      37,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Button Tests Buttons can have accessibility states 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "accessibilityState_button",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": false,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Submit Application",
+      },
+    ],
+    "ControlType": 50000,
+    "HelpText": "",
+    "IsEnabled": false,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "Name": "Press to submit your application!",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  4,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  908,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  -4,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  -1,
+                  4,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  28,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  -4,
+                  -5,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  5,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  4,
+                  -2,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  908,
+                  2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  -5,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  5,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  4,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  28,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              916,
+              37,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          916,
+          37,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              898,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          9,
+          9,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          898,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "accessibilityState_button",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      37,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Button Tests Buttons can have custom colors 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "cancel_button",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Cancel Application",
+      },
+    ],
+    "ControlType": 50000,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "Name": "Press to cancel your application!",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(255, 59, 48, 255)",
+            },
+            "Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  4,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  908,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  -4,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  -1,
+                  4,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  28,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  -4,
+                  -5,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  5,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  4,
+                  -2,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  908,
+                  2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  -5,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  5,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  4,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  28,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              916,
+              37,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          916,
+          37,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              898,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          9,
+          9,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          898,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "cancel_button",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      37,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Button Tests Buttons can have custom focusable and accessible props 1`] = `
+{
+  "Automation Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          4,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          4,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          908,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          -4,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          4,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          -1,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          28,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          -4,
+          -5,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          4,
+          -2,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          908,
+          2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          -5,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          28,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              898,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          9,
+          9,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          898,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "accessible_false_button",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      37,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Button Tests Buttons can have custom focusable and accessible props 2`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "focusable_false_button",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Button with focusable=false",
+      },
+    ],
+    "ControlType": 50000,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "Name": "Press to submit your application!",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          4,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          4,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          908,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          -4,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          4,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          -1,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          28,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          -4,
+          -5,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          4,
+          -2,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          908,
+          2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          -5,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          28,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              898,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          9,
+          9,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          898,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "focusable_false_button",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      37,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Button Tests Buttons can have custom focusable and accessible props 3`] = `
+{
+  "Automation Tree": {},
+  "Visual Tree": {
+    "Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          4,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          4,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          908,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          -4,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          4,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          -1,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          28,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          -4,
+          -5,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          4,
+          -2,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          908,
+          2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          -5,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          28,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              898,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          9,
+          9,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          898,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "accessible_focusable_false_button",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      37,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Button Tests Buttons can have flexbox styling 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "two_button_container",
+    "Children": [
+      {
+        "AutomationId": "two_cancel_button",
+        "Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "HelpText": "",
+            "IsEnabled": true,
+            "IsKeyboardFocusable": false,
+            "LocalizedControlType": "text",
+            "Name": "Cancel",
+          },
+        ],
+        "ControlType": 50000,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "button",
+        "Name": "Press to cancel your application!",
+      },
+      {
+        "AutomationId": "two_submit_button",
+        "Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "HelpText": "",
+            "IsEnabled": true,
+            "IsKeyboardFocusable": false,
+            "LocalizedControlType": "text",
+            "Name": "Submit",
+          },
+        ],
+        "ControlType": 50000,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "button",
+        "Name": "Press to submit your application!",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Children": [
+                  {
+                    "Brush": {
+                      "Brush Type": "ColorBrush",
+                      "Color": "rgba(255, 59, 48, 255)",
+                    },
+                    "Children": [
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          0,
+                          0,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          4,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          4,
+                          0,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          51,
+                          1,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          -4,
+                          0,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          4,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          -1,
+                          4,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          1,
+                          28,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          -4,
+                          -5,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          5,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          4,
+                          -2,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          51,
+                          2,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          0,
+                          -5,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          5,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          0,
+                          4,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          1,
+                          28,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                    ],
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      59,
+                      37,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  59,
+                  37,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Children": [
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      41,
+                      20,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  9,
+                  9,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  41,
+                  20,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Comment": "two_cancel_button",
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              59,
+              37,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          59,
+          37,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Children": [
+                  {
+                    "Brush": {
+                      "Brush Type": "ColorBrush",
+                      "Color": "rgba(52, 199, 89, 255)",
+                    },
+                    "Children": [
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          0,
+                          0,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          4,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          4,
+                          0,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          54,
+                          1,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          -4,
+                          0,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          4,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          -1,
+                          4,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          1,
+                          28,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          -4,
+                          -5,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          5,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          4,
+                          -2,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          54,
+                          2,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          0,
+                          -5,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          5,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          0,
+                          4,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          1,
+                          28,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                    ],
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      62,
+                      37,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  62,
+                  37,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Children": [
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      44,
+                      20,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  9,
+                  9,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  44,
+                  20,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Comment": "two_submit_button",
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              62,
+              37,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          854,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          62,
+          37,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "two_button_container",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      37,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "three_button_container",
+    "Children": [
+      {
+        "AutomationId": "three_cancel_button",
+        "Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "HelpText": "",
+            "IsEnabled": true,
+            "IsKeyboardFocusable": false,
+            "LocalizedControlType": "text",
+            "Name": "Cancel",
+          },
+        ],
+        "ControlType": 50000,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "button",
+        "Name": "Press to cancel your application!",
+      },
+      {
+        "AutomationId": "three_save_button",
+        "Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "HelpText": "",
+            "IsEnabled": true,
+            "IsKeyboardFocusable": false,
+            "LocalizedControlType": "text",
+            "Name": "Save For Later",
+          },
+        ],
+        "ControlType": 50000,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "button",
+        "Name": "Press to save your application!",
+      },
+      {
+        "AutomationId": "three_submit_button",
+        "Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "HelpText": "",
+            "IsEnabled": true,
+            "IsKeyboardFocusable": false,
+            "LocalizedControlType": "text",
+            "Name": "Submit",
+          },
+        ],
+        "ControlType": 50000,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "button",
+        "Name": "Press to submit your application!",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Children": [
+                  {
+                    "Brush": {
+                      "Brush Type": "ColorBrush",
+                      "Color": "rgba(255, 59, 48, 255)",
+                    },
+                    "Children": [
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          0,
+                          0,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          4,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          4,
+                          0,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          51,
+                          1,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          -4,
+                          0,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          4,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          -1,
+                          4,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          1,
+                          28,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          -4,
+                          -5,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          5,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          4,
+                          -2,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          51,
+                          2,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          0,
+                          -5,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          5,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          0,
+                          4,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          1,
+                          28,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                    ],
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      59,
+                      37,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  59,
+                  37,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Children": [
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      41,
+                      20,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  9,
+                  9,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  41,
+                  20,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Comment": "three_cancel_button",
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              59,
+              37,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          59,
+          37,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Children": [
+                  {
+                    "Brush": {
+                      "Brush Type": "ColorBrush",
+                      "Color": "rgba(0, 122, 255, 255)",
+                    },
+                    "Children": [
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          0,
+                          0,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          4,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          4,
+                          0,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          97,
+                          1,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          -4,
+                          0,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          4,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          -1,
+                          4,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          1,
+                          28,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          -4,
+                          -5,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          5,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          4,
+                          -2,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          97,
+                          2,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          0,
+                          -5,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          5,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          0,
+                          4,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          1,
+                          28,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                    ],
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      105,
+                      37,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  105,
+                  37,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Children": [
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      87,
+                      20,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  9,
+                  9,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  87,
+                  20,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Comment": "three_save_button",
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              105,
+              37,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          404,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          105,
+          37,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Children": [
+                  {
+                    "Brush": {
+                      "Brush Type": "ColorBrush",
+                      "Color": "rgba(52, 199, 89, 255)",
+                    },
+                    "Children": [
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          0,
+                          0,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          4,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          4,
+                          0,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          54,
+                          1,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          -4,
+                          0,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          4,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          -1,
+                          4,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          1,
+                          28,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          -4,
+                          -5,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          5,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          4,
+                          -2,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          54,
+                          2,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          0,
+                          -5,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          4,
+                          5,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Brush": {
+                          "Brush Type": "ColorBrush",
+                          "Color": "rgba(0, 0, 0, 255)",
+                        },
+                        "Offset": [
+                          0,
+                          4,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          1,
+                          28,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                    ],
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      62,
+                      37,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  62,
+                  37,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Children": [
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      44,
+                      20,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+                "Offset": [
+                  9,
+                  9,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  44,
+                  20,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Comment": "three_submit_button",
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              62,
+              37,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          854,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          62,
+          37,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "three_button_container",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      37,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Button Tests Buttons have default styling 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "button_default_styling",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Submit Application",
+      },
+    ],
+    "ControlType": 50000,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "Name": "Press to submit your application!",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          4,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          4,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          908,
+          1,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          -4,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          4,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          -1,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          28,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          -4,
+          -5,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          4,
+          -2,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          908,
+          2,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          -5,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          4,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": [
+          0,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          1,
+          28,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              898,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          9,
+          9,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          898,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "button_default_styling",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      37,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;

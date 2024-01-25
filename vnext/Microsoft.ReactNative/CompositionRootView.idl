@@ -5,6 +5,7 @@ import "CompositionContext.idl";
 import "IJSValueWriter.idl";
 import "ReactCoreInjection.idl";
 import "ReactNativeHost.idl";
+import "Theme.idl";
 #include "NamespaceRedirect.h"
 #include "DocString.h"
 
@@ -49,6 +50,10 @@ namespace Microsoft.ReactNative
     DOC_STRING("Creates a new instance of @CompositionRootView.")
     CompositionRootView();
 
+#ifdef USE_WINUI3
+    CompositionRootView(Microsoft.UI.Composition.Compositor compositor);
+#endif
+
     DOC_STRING(
       "A ReactViewHost specifies the root UI component and initial properties to render in this RootView"
       "It must be set to show any React UI elements.")
@@ -60,7 +65,7 @@ namespace Microsoft.ReactNative
     Windows.Foundation.Size Size {get; set; };
 
     DOC_STRING("ScaleFactor for this windows (DPI/96)")
-    Double ScaleFactor {get; set;};
+    Single ScaleFactor {get; set;};
 
     DOC_STRING("Move focus to this @CompositionRootView")
     FocusNavigationResult NavigateFocus(FocusNavigationRequest request);
@@ -68,13 +73,20 @@ namespace Microsoft.ReactNative
     Windows.Foundation.Size Measure(Windows.Foundation.Size availableSize);
     Windows.Foundation.Size Arrange(Windows.Foundation.Size availableSize);
 
+    DOC_STRING("Hosting Window that input is coming from. Only required when not using ContentIslands")
+    void SetWindow(UInt64 hwnd);
+
+    DOC_STRING("Forward input to the RootView. Only required when not using ContentIslands")
     Int64 SendMessage(UInt32 Msg, UInt64 WParam, Int64 LParam);
 
     Object GetUiaProvider();
 
-    //void OnPointerPressed(PointerPressedArgs args);
-    //void OnMouseUp(Windows.Foundation.Point point);
-    void OnScrollWheel(Windows.Foundation.Point point, Int32 delta);
+    DOC_STRING("Theme used for Platform colors within this RootView")
+    Microsoft.ReactNative.Composition.Theme Theme;
+
+#ifdef USE_WINUI3
+    Microsoft.UI.Content.ContentIsland Island { get; };
+#endif
   }
 
 } // namespace Microsoft.ReactNative

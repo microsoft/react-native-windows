@@ -42,8 +42,8 @@ static inline bool YogaFloatEquals(float x, float y) {
 
 #if defined(_DEBUG)
 static int YogaLog(
-    const YGConfigRef /*config*/,
-    const YGNodeRef /*node*/,
+    const YGConfigConstRef /*config*/,
+    const YGNodeConstRef /*node*/,
     YGLogLevel /*level*/,
     const char *format,
     va_list args) {
@@ -163,7 +163,7 @@ NativeUIManager::NativeUIManager(winrt::Microsoft::ReactNative::ReactContext con
   // To Debug Yoga layout, uncomment the following line.
   // YGConfigSetPrintTreeFlag(m_yogaConfig, true);
 
-  // Additional logging can be enabled editing yoga.cpp (e.g. gPrintChanges,
+  // Additional logging can be enabled editing CalculateLayout.cpp (e.g. gPrintChanges,
   // gPrintSkips)
 #endif
 }
@@ -835,8 +835,8 @@ void NativeUIManager::RemoveView(ShadowNode &shadowNode, bool removeChildren /*=
 
     YGNodeRef yogaNode = pViewManager->RequiresYogaNode() ? GetYogaNode(node.m_tag) : nullptr;
     if (yogaNode != nullptr && !pViewManager->IsNativeControlWithSelfLayout()) {
-      uint32_t childCount = YGNodeGetChildCount(yogaNode);
-      for (uint32_t i = childCount; i > 0; --i) {
+      auto childCount = YGNodeGetChildCount(yogaNode);
+      for (auto i = childCount; i > 0; --i) {
         YGNodeRef yogaNodeToRemove = YGNodeGetChild(yogaNode, i - 1);
         YGNodeRemoveChild(yogaNode, yogaNodeToRemove);
       }
@@ -999,34 +999,11 @@ void NativeUIManager::measure(
     return;
   }
 
-  // Traverse up the react node tree to find any windowed popups.
-  // If there are none, then we use the top-level root provided by our caller.
-  xaml::FrameworkElement feRootView = nullptr;
-  int64_t rootTag = shadowNode.m_tag;
-  int64_t childTag = rootTag;
-  while (true) {
-    auto &currNode = m_host->GetShadowNodeForTag(rootTag);
-    if (currNode.m_parent == InvalidTag)
-      break;
-    ShadowNodeBase &rootNode = static_cast<ShadowNodeBase &>(currNode);
-    if (rootNode.IsWindowed()) {
-      ShadowNodeBase &childNode = static_cast<ShadowNodeBase &>(m_host->GetShadowNodeForTag(childTag));
-      feRootView = childNode.GetView().try_as<xaml::FrameworkElement>();
-      break;
-    }
-    childTag = currNode.m_tag;
-    rootTag = currNode.m_parent;
-  }
-
+  // Retrieve the XAML element for the root view containing this view
+  auto feRootView = static_cast<ShadowNodeBase &>(shadowRoot).GetView().try_as<xaml::FrameworkElement>();
   if (feRootView == nullptr) {
-    // Retrieve the XAML element for the root view containing this view
-    if (auto xamlRootView = static_cast<ShadowNodeBase &>(shadowRoot).GetView()) {
-      feRootView = xamlRootView.as<xaml::FrameworkElement>();
-    }
-    if (feRootView == nullptr) {
-      m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0, 0); });
-      return;
-    }
+    m_context.JSDispatcher().Post([callback = std::move(callback)]() { callback(0, 0, 0, 0, 0, 0); });
+    return;
   }
 
   winrt::Rect rectInParentCoords = GetRectOfElementInParentCoords(feView, feRootView);

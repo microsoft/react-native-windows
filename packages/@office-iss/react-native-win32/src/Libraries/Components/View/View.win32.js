@@ -121,13 +121,17 @@ const View: React.AbstractComponent<
     // $FlowFixMe[underconstrained-implicit-instantiation]
     let style = flattenStyle(otherProps.style);
 
+    // $FlowFixMe[sketchy-null-mixed]
     const newPointerEvents = style?.pointerEvents || pointerEvents;
 
     const _keyDown = (event: KeyEvent) => {
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
-          if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
+          if (
+            event.nativeEvent.code === el.code &&
+            el.handledEventPhase === 3
+          ) {
             event.stopPropagation();
           }
         }
@@ -139,7 +143,10 @@ const View: React.AbstractComponent<
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
-          if (event.nativeEvent.code == el.code && el.handledEventPhase == 3) {
+          if (
+            event.nativeEvent.code === el.code &&
+            el.handledEventPhase === 3
+          ) {
             event.stopPropagation();
           }
         }
@@ -151,7 +158,10 @@ const View: React.AbstractComponent<
       if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyDownEvents) {
-          if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+          if (
+            event.nativeEvent.code === el.code &&
+            el.handledEventPhase === 1
+          ) {
             event.stopPropagation();
           }
         }
@@ -163,7 +173,10 @@ const View: React.AbstractComponent<
       if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
         // $FlowFixMe - keyDownEvents was already checked to not be undefined
         for (const el of otherProps.keyUpEvents) {
-          if (event.nativeEvent.code == el.code && el.handledEventPhase == 1) {
+          if (
+            event.nativeEvent.code === el.code &&
+            el.handledEventPhase === 1
+          ) {
             event.stopPropagation();
           }
         }
@@ -241,6 +254,7 @@ const View: React.AbstractComponent<
               }
               nativeID={id ?? nativeID}
               style={style}
+              // $FlowFixMe[incompatible-type]
               pointerEvents={newPointerEvents}
               ref={forwardedRef}
               onKeyDown={_keyDown}

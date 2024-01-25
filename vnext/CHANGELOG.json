@@ -2,6 +2,1221 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 25 Jan 2024 06:14:16 GMT",
+      "version": "0.0.0-canary.758",
+      "tag": "react-native-windows_v0.0.0-canary.758",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4aa4d0366368d94d7650e3b246ae7e7cf50d3cab",
+            "comment": "[Fabric] Do not run a 0,0 layout when minimizing the window"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "33f6db7c0d4ca13d5defee15591c057415bd66d4",
+            "comment": "reenable shadowprops and tests"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "59711c84fe6be503f0baca64ee80df3623a179ed",
+            "comment": "Stub impl of DebuggingOverlay to remove errors when running react-devtools"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e34cf2ed8380bddea1e9ea8cd1aa15b18b519369",
+            "comment": "[Fabric] Update switch visuals to newer fluent visuals"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 24 Jan 2024 06:14:14 GMT",
+      "version": "0.0.0-canary.757",
+      "tag": "react-native-windows_v0.0.0-canary.757",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "08f0eb0cc92ec653ccbdcda0b9ea3740f78b5f81",
+            "comment": "Remove Playground/RNTester references in templates"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "554edbae913b263010ad47a89c815df9daef1a16",
+            "comment": "[Fabric] Fix minor high dpi issue with scrollbar"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 23 Jan 2024 06:15:25 GMT",
+      "version": "0.0.0-canary.756",
+      "tag": "react-native-windows_v0.0.0-canary.756",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1e8b8a0d0f221aa678cdb41cbd70988e49a77803",
+            "comment": "Update WinUI3Version"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2773eb9175dadd3e109396fc3d26c71cfcbdcb48",
+            "comment": "integrate 12/1"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c0538df1b90c5b767e32ead532630be1cf223730",
+            "comment": "[Fabric] Initial scrollbar implementation"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1b06c4a6acbaa689c5b85f7dbbff948e8486dbfe",
+            "comment": "Update RNW Dependency Script Node.js and Windows SDK versions"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 19 Jan 2024 06:16:14 GMT",
+      "version": "0.0.0-canary.755",
+      "tag": "react-native-windows_v0.0.0-canary.755",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6d0f9f755d48068e742d1c80bd8240cf6221cec6",
+            "comment": "Ensure ExperimentalFeatures.props is loaded in all projects"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 18 Jan 2024 06:14:22 GMT",
+      "version": "0.0.0-canary.754",
+      "tag": "react-native-windows_v0.0.0-canary.754",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e2ee4560750cf959acdf1f24c22bd67e81a29243",
+            "comment": "Expose public APIs to navigate native UI tree"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6164875acbe0a7490ab1b3e84e49cad798d841b5",
+            "comment": "Create new arch module template: cpp-lib"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 17 Jan 2024 06:16:31 GMT",
+      "version": "0.0.0-canary.753",
+      "tag": "react-native-windows_v0.0.0-canary.753",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "b5979b92e88b5f82450f6c1d7dd8df0f4232ed7d",
+            "comment": "Fix license header in file overrides"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "37aa1b8b13b2bcc2cdcce7ac16b5bf90f9b77e57",
+            "comment": "add inital files for Fabric's Modal"
+          },
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "6e76b0198a0d7058584b2ac3637bb40a4a65e63c",
+            "comment": "Modules in react-native use relative imports"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 Jan 2024 06:14:41 GMT",
+      "version": "0.0.0-canary.752",
+      "tag": "react-native-windows_v0.0.0-canary.752",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1fbc5357822961c7f60685549bd694436992f4eb",
+            "comment": "[Fabric] ScrollViewComponentView should report ContentOffset to its shadownode state"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "a948daf08007d75f618daa3747b28f096a15437b",
+            "comment": "Unfork Yoga"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 11 Jan 2024 06:14:31 GMT",
+      "version": "0.0.0-canary.751",
+      "tag": "react-native-windows_v0.0.0-canary.751",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "be45aa5a4f6e6d4355924380e83298b25ad9518d",
+            "comment": "Move to using winrt objects for ComponentViews"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Jan 2024 06:13:20 GMT",
+      "version": "0.0.0-canary.750",
+      "tag": "react-native-windows_v0.0.0-canary.750",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "6b765a775749814454bccdb07491268988d268c7",
+            "comment": "Normalizes headers for clang builds"
+          },
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "f358dc29db10f9f81db0f523b92939d35b8ab2e6",
+            "comment": "Switch ImageUtils.cpp to use co_return"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.195",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 04 Jan 2024 06:15:54 GMT",
+      "version": "0.0.0-canary.749",
+      "tag": "react-native-windows_v0.0.0-canary.749",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "828085aa1b432f71580eb6b2295fbd5059ca5d6c",
+            "comment": "integrate 11/14"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 20 Dec 2023 06:14:13 GMT",
+      "version": "0.0.0-canary.748",
+      "tag": "react-native-windows_v0.0.0-canary.748",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8df470c1a01a2babc53af55b13e54725cede92d9",
+            "comment": "integrate 10/31"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 16 Dec 2023 06:14:45 GMT",
+      "version": "0.0.0-canary.747",
+      "tag": "react-native-windows_v0.0.0-canary.747",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "6efa6bff7d437d5f75d98ddbbb7ed09c42c511cb",
+            "comment": "testing integration"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 09 Dec 2023 06:15:28 GMT",
+      "version": "0.0.0-canary.746",
+      "tag": "react-native-windows_v0.0.0-canary.746",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "34ae4174bbdd4991ba0432ed324da836922a7239",
+            "comment": "Fix FileReader Base64 padding"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 Dec 2023 06:14:10 GMT",
+      "version": "0.0.0-canary.745",
+      "tag": "react-native-windows_v0.0.0-canary.745",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f0bb18d19cd65c7ac8802f7a2b0d714e391cfaed",
+            "comment": "Use form data as JSArray"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "830cf8a85ddd00c0055ba07a68362031f7ef20d3",
+            "comment": "[Fabric] Remove DeviceInfo stub from template and test app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 Dec 2023 06:14:10 GMT",
+      "version": "0.0.0-canary.744",
+      "tag": "react-native-windows_v0.0.0-canary.744",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "e0bf4cb412cd0a8e15591e7f844f8f0047333089",
+            "comment": "updated path to match upstream fork"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Dec 2023 03:54:49 GMT",
+      "version": "0.0.0-canary.743",
+      "tag": "react-native-windows_v0.0.0-canary.743",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3bb7adb786eba1600e330fed4fe75f0cd09812dd",
+            "comment": "Enable `/PROFILE` linker flag for vulcan compatibility"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "04329dceb5554057ed7a24ac24deff2a03d5f11f",
+            "comment": "[Fabric] Add DeviceInfoModule"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f24821d5c06452b4311b1db08f462b369aa2edde",
+            "comment": "[Fabric] Add support for custom theme's, and support runtime theme change"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3ac229a323e0acfd34e5667912a9531c2026b3b8",
+            "comment": "add caretHidden to Fabric's TextInput"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 Nov 2023 06:16:34 GMT",
+      "version": "0.0.0-canary.742",
+      "tag": "react-native-windows_v0.0.0-canary.742",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "46c26bbb890b3a9344ba70d528606f2775b16a1b",
+            "comment": "Update @react-native/react-native-picker"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5fe8721f0c9898904319f9a27b9b7cf924d3cdc9",
+            "comment": "[Fabric] Add support for custom native component to have c++ state and custom measure"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 22 Nov 2023 06:16:28 GMT",
+      "version": "0.0.0-canary.741",
+      "tag": "react-native-windows_v0.0.0-canary.741",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "52a81d1f06829cb1a01ae9739bfbcd495c70272f",
+            "comment": "fix depcheck errors"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 18 Nov 2023 06:14:50 GMT",
+      "version": "0.0.0-canary.740",
+      "tag": "react-native-windows_v0.0.0-canary.740",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f58718e589b02d79c42f4810d4971410755644be",
+            "comment": "Fabric: Enable react-test-renderer tests in the new cpp-app template"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c7cc92b86285a915097b34ad13b7403b42ef20c8",
+            "comment": "Release long lived JSI objects ASAP"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b84ca2d75a1983c68e8896969edbf806d91bd454",
+            "comment": "Check HTTP handler property and value exist"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 17 Nov 2023 06:15:10 GMT",
+      "version": "0.0.0-canary.739",
+      "tag": "react-native-windows_v0.0.0-canary.739",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "8090ee31063e18b49874a754fc27c67bbe8c30ee",
+            "comment": "Include RuntimeExecutor.h consistently"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "922e3bfb3442f030bf64eb90f36fc17abc42d373",
+            "comment": "Change Hermes package version to 0.1.18"
+          },
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "3bd050b27169bcb272db42f06ac66108e14f1bf5",
+            "comment": "Minor cleanup of recent RuntimeScheduler integration"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b3802eb84bd18e6bfd91c117c2bf1fd1f35365d0",
+            "comment": "Fixes for running without lifted composition"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "63f11aa7459940990270ad34becae6313df31f3d",
+            "comment": "update fmt to 10.1.0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 16 Nov 2023 06:13:44 GMT",
+      "version": "0.0.0-canary.738",
+      "tag": "react-native-windows_v0.0.0-canary.738",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "75c8107169059b9b073400fab5fc8c4c749179fb",
+            "comment": "Temporarily silence warning 4996 to unblock CI"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 Nov 2023 06:14:14 GMT",
+      "version": "0.0.0-canary.737",
+      "tag": "react-native-windows_v0.0.0-canary.737",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "22077c37bbba30b8d16d93a18c981412d735c49f",
+            "comment": "Save State: Working Visual Tree Dump Tests"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 Nov 2023 06:16:22 GMT",
+      "version": "0.0.0-canary.736",
+      "tag": "react-native-windows_v0.0.0-canary.736",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ea58fe084c5d8a9116c69807ca9473aaa9e54221",
+            "comment": "Untrack HTTP responses when processed by IResponseHandler"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "17b7d16f97e2bc5ff5172d92cc47bea53380fbab",
+            "comment": "[Fabric] Enable concurrentRoot"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "60b7883c0cb429c66d64aa78c316c177548124c9",
+            "comment": "Fabric: Add `windows` script to new cpp-app template"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 11 Nov 2023 06:17:20 GMT",
+      "version": "0.0.0-canary.735",
+      "tag": "react-native-windows_v0.0.0-canary.735",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "7824b5a10d5e7afa6319bb20f0da59d6977bcafe",
+            "comment": "Fix native view config to include Fabric events"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 10 Nov 2023 06:16:22 GMT",
+      "version": "0.0.0-canary.734",
+      "tag": "react-native-windows_v0.0.0-canary.734",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "fd68f0511908712389aee56b1942a43746806337",
+            "comment": "Make Hermes the default JS engine"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.194",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 Nov 2023 06:16:38 GMT",
+      "version": "0.0.0-canary.733",
+      "tag": "react-native-windows_v0.0.0-canary.733",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "0f6bdf3ab5085bccfabf3a8d65733287cb565855",
+            "comment": "applying package updates ***NO_CI***"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "46d5f9d008e013257989f0c60a2919d7ed903ebd",
+            "comment": "Switch from using choco to winget in rnw-dep script"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b87abc8e295048e6a0fb649d77ef5ae8f2a0c63e",
+            "comment": "Keep propertyBag alive for duration of InstanceDestroyed event"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "1ca54b74e0c219f5eea8ec86f6309d5f7826af14",
+            "comment": "Refactor react/renderer/graphics/Color handling"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 08 Nov 2023 06:17:34 GMT",
+      "version": "0.0.0-canary.732",
+      "tag": "react-native-windows_v0.0.0-canary.732",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ac1f93b96173ca93430a070dce3f63a891693896",
+            "comment": "Cherry pick PRs #12143 #12211"
+          },
+          {
+            "author": "ngerlem@fb.com",
+            "package": "react-native-windows",
+            "commit": "9b93d7b5bc5204644373be3e3a05c4be61b1685f",
+            "comment": "C++ 20: Use UTF-16 Paths and URLs"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 02 Nov 2023 05:16:14 GMT",
+      "version": "0.0.0-canary.731",
+      "tag": "react-native-windows_v0.0.0-canary.731",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ngerlem@fb.com",
+            "package": "react-native-windows",
+            "commit": "72260ff2c7792dd137587f6eb7ba0d38388bddca",
+            "comment": "C++ 20: Treat `char8_t` as `char` for unicode literals in source"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2d2f3c45eb838228e85468f8e66d7d118ed83e27",
+            "comment": "Add RuntimeScheduler"
+          },
+          {
+            "author": "ngerlem@fb.com",
+            "package": "react-native-windows",
+            "commit": "b6b8b77288b7ce59bf465c3f5c8791f4581da2c3",
+            "comment": "C++ 20: Fix \"Explicit template specialization cannot have a storage class\""
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "325195cccea732f0d7389544193f3312328552f5",
+            "comment": "ReactContext should have a weak ref on the PropertyBag"
+          },
+          {
+            "author": "ngerlem@fb.com",
+            "package": "react-native-windows",
+            "commit": "ddbb53fecfecb97b3ebee8f0dd86e08bedec97ff",
+            "comment": "C++ 20: Bump Folly from 2023.03.06 to 2023.10.16.00"
+          },
+          {
+            "author": "ngerlem@fb.com",
+            "package": "react-native-windows",
+            "commit": "f6947a0b5bf7ac6d023766309b24ac293e96f28a",
+            "comment": "C++ 20: Replace Usage of std::allocator::construct()"
+          },
+          {
+            "author": "ngerlem@fb.com",
+            "package": "react-native-windows",
+            "commit": "1c34a86dd0703cdbe21af27b302cdcf56b76eb83",
+            "comment": "C++ 20: Preprocessor definitions"
+          },
+          {
+            "author": "ngerlem@fb.com",
+            "package": "react-native-windows",
+            "commit": "1f5c70b0fb1b99865347af97f9aedc900a3f692a",
+            "comment": "Build using C++ 20"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 01 Nov 2023 05:15:56 GMT",
+      "version": "0.0.0-canary.730",
+      "tag": "react-native-windows_v0.0.0-canary.730",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "844d6bccdfbbe43ea8ef90730ec3a5127444e10b",
+            "comment": "Remove unnecessary JS overrides"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 31 Oct 2023 05:16:23 GMT",
+      "version": "0.0.0-canary.729",
+      "tag": "react-native-windows_v0.0.0-canary.729",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "81ebf89edc311e537cc8d5ddd2127c37d7d831c8",
+            "comment": "Adds fabric switch thumb animation"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 28 Oct 2023 05:18:12 GMT",
+      "version": "0.0.0-canary.728",
+      "tag": "react-native-windows_v0.0.0-canary.728",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "1f4a5d3d560f45e1aa5051c9a9eb03b289391d3c",
+            "comment": "Remove generated signature from file"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 27 Oct 2023 05:18:26 GMT",
+      "version": "0.0.0-canary.727",
+      "tag": "react-native-windows_v0.0.0-canary.727",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e447866d115a2f5a1113c503425294029818691b",
+            "comment": "Move CompositionRootAutomationProvider to CompositionRootView, so it can be loaded before the instance"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d829541bde8939a9d3fa8d1d2b780e134982d523",
+            "comment": "[Fabric] Fix BinSkim errors in preparation for 1ES Template migration"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 26 Oct 2023 16:46:11 GMT",
+      "version": "0.0.0-canary.726",
+      "tag": "react-native-windows_v0.0.0-canary.726",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "d60370603779588201c2407dd729945da0cf7339",
+            "comment": "Simplify Flyout and Popup coordinate spaces"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "869f2c4025969e33335acd69f832417999f4664e",
+            "comment": "[Fabric] Native Theming"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Oct 2023 18:00:31 GMT",
+      "version": "0.0.0-canary.725",
+      "tag": "react-native-windows_v0.0.0-canary.725",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8f6644185f31abca53d32e71d4697d4d070792e9",
+            "comment": "Minor codereview feedback cleanup"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 24 Oct 2023 05:15:58 GMT",
+      "version": "0.0.0-canary.724",
+      "tag": "react-native-windows_v0.0.0-canary.724",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "1367b74599cc888082d280d728b1ac02917cea96",
+            "comment": "Fix event dispatch names for momentum scroll"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "720defa169818011dc6b2d0a9e5ad05c537350c7",
+            "comment": "Expose DisableXamlGuard property to allow mixing of WinUI 2/3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 21 Oct 2023 05:16:08 GMT",
+      "version": "0.0.0-canary.723",
+      "tag": "react-native-windows_v0.0.0-canary.723",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "3ee9735fc44d8b365ad9f9699fa70a4218da8076",
+            "comment": "Remove ScrollView.windows.js override"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0b318125b0b73e6235eeecbbaed3866e8bc329d0",
+            "comment": "Implement BlobCollector"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ad1714331368a9ce3cc47445766d9d5653eae9ed",
+            "comment": "Add support for loading images from local files"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "eadf40e36b71b80e0157d8a9c6348ced00c8a5d3",
+            "comment": "Adds `eqeqeq` to eslint configuration and a few other lint fixes"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "68094c0c5ffaa5dc74600ae7064e49d2a3c430cb",
+            "comment": "Update app template's metro config with latest upstream changes"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.193",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.72",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.4",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.7",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.18",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.17",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 19 Oct 2023 05:13:42 GMT",
+      "version": "0.0.0-canary.722",
+      "tag": "react-native-windows_v0.0.0-canary.722",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0928d3560b3ade0211beef70df7e868a2db87573",
+            "comment": "Save State: UIA Dump Tests"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d9089507397e14c9767085e31c8cb99ef06c84c9",
+            "comment": "[Fabric] Add CharacterRecieved event"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "66dc9771faaadc2ad3c1377c3d3f632c6737c1be",
+            "comment": "Move winrt/Windows.Storage.h include out of USE_V8 conditional"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Oct 2023 05:14:55 GMT",
+      "version": "0.0.0-canary.721",
+      "tag": "react-native-windows_v0.0.0-canary.721",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a562e559216c3bc037495fe6d0412ff3d3742110",
+            "comment": "add fabric switch path animation"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 17 Oct 2023 05:13:04 GMT",
+      "version": "0.0.0-canary.720",
+      "tag": "react-native-windows_v0.0.0-canary.720",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "8e36a6a7541ff63f9486d5e5d0c9fcdddaa0ae21",
+            "comment": "Integrate 10/02"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 14 Oct 2023 05:13:11 GMT",
+      "version": "0.0.0-canary.719",
+      "tag": "react-native-windows_v0.0.0-canary.719",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "e3c7f0238d493b2daa61b40d6b279c9f42924138",
+            "comment": "[PR] Fixes issues with packaged asset resolution (#10621)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 13 Oct 2023 05:15:18 GMT",
+      "version": "0.0.0-canary.718",
+      "tag": "react-native-windows_v0.0.0-canary.718",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3836f7e1625b935afda4b1e88afb651e7a72788e",
+            "comment": "[Fabric] Support hosting in ContentIsland"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a0946739c12f78f5151c1168ec73b57f0af9cbe9",
+            "comment": "[Fabric] Fix offset for automation provider when running in islands"
+          },
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "e62dd1a966d0c4b7e49a891537ab963cc1b9353b",
+            "comment": "reverted package.lock changes"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 12 Oct 2023 05:15:53 GMT",
+      "version": "0.0.0-canary.717",
+      "tag": "react-native-windows_v0.0.0-canary.717",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c23fe1ab789c1d401b8a15edcb645d8a642ab7b3",
+            "comment": "[Fabric] Add native PointerEntered+PointerExited events"
+          },
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "1c6a83c8bc10e5369791ac8f8b52dc04f8e1474a",
+            "comment": "Integrate 9/25"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "042b25fd38a02d24e433349efceaad92338a3f96",
+            "comment": "Add `@microsoft/eslint-plugin-sdl` to `@rnw-scripts/eslint-config`"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f4fba46834f5b8a71333a51ce393a9c3a3900fd0",
+            "comment": "Implement WebSocketTurboModuleProxy"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.192",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.71",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.6",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.17",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.16",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Oct 2023 05:13:16 GMT",
+      "version": "0.0.0-canary.716",
+      "tag": "react-native-windows_v0.0.0-canary.716",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a562e559216c3bc037495fe6d0412ff3d3742110",
+            "comment": "add fabric switch path animation"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3875e1f800bc03b7066430aae08def1dbf8dedfe",
+            "comment": "Conditionally register WebSocket Cxx module"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Oct 2023 05:13:38 GMT",
+      "version": "0.0.0-canary.715",
+      "tag": "react-native-windows_v0.0.0-canary.715",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "74dd65ce56d746e2e692afe474c2d2ea82645420",
+            "comment": "[Fabric] Add pointer pressed, released, moved and wheelch changed events"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Oct 2023 05:13:51 GMT",
+      "version": "0.0.0-canary.714",
+      "tag": "react-native-windows_v0.0.0-canary.714",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4af86020f103c1fc4d9a7f9d1d33163e2c210c00",
+            "comment": "Integrate 9/20"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.191",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 04 Oct 2023 05:12:45 GMT",
+      "version": "0.0.0-canary.713",
+      "tag": "react-native-windows_v0.0.0-canary.713",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "377e2d0ee3f6cc957a4c3820f7048cd80fd37a72",
+            "comment": "Allow usage of WinAppSDK in fabric"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c8ef8e39cb5072a89e2fc0145bf1158bce18d975",
+            "comment": "[Fabric] Add keyboard handlers to ScrollView"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 03 Oct 2023 05:13:16 GMT",
+      "version": "0.0.0-canary.712",
+      "tag": "react-native-windows_v0.0.0-canary.712",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d64dc2a331ecda6f1df921285a0087f417950e15",
+            "comment": "Have RCTNetworking.win32 fork RCTNetworking.ios"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 28 Sep 2023 05:13:18 GMT",
+      "version": "0.0.0-canary.711",
+      "tag": "react-native-windows_v0.0.0-canary.711",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "407dcc0a589aaf5146df7fd5ac5f9ecd78f3e26e",
+            "comment": "Use glob to look through folders recursively"
+          },
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "941ecd88eadc5fa0933120ad40b39ea160011fe1",
+            "comment": "Set UIA Name and HelpText properties on TextInput to match placeholder prop value"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.190",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 27 Sep 2023 06:10:53 GMT",
+      "version": "0.0.0-canary.710",
+      "tag": "react-native-windows_v0.0.0-canary.710",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "97b160fb3dee36d012e652c67effdba067ba0288",
+            "comment": "fix fabric textinput's caret on focus lost"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 26 Sep 2023 05:13:15 GMT",
+      "version": "0.0.0-canary.709",
+      "tag": "react-native-windows_v0.0.0-canary.709",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "59bb63ce1903fa4fda4a19db9967202fd49dcb24",
+            "comment": "Enable fabric usage against lifted comp, or system comp"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c7282e51f9afec33ecc18ad836b02d84bcc17379",
+            "comment": "Add new architecture `cpp-app` template for `init-windows`"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.189",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 22 Sep 2023 05:13:32 GMT",
+      "version": "0.0.0-canary.708",
+      "tag": "react-native-windows_v0.0.0-canary.708",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ff73a5669674b6fee011f0515958f5d5b3e57036",
+            "comment": "[Fabric] Add support for native key event handling"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7c9768c23f26fdf0b6ef39e6d11871949fbeab72",
+            "comment": "add fabric textinput's cursorColor"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "de07af904a160d260136645727de394e44662acc",
+            "comment": "Create new CLI init-windows command"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.188",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.70",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Sep 2023 05:13:49 GMT",
       "version": "0.0.0-canary.707",
       "tag": "react-native-windows_v0.0.0-canary.707",

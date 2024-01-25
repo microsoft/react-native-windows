@@ -11,11 +11,12 @@
 
 'use strict';
 
+import type {ScrollEvent} from 'react-native/Libraries/Types/CoreEventTypes';
+
+import {LIST_100_ITEMS} from '../components/itemData';
+import ItemList from '../components/ItemList';
 import * as React from 'react';
 import {Text} from 'react-native';
-import ItemList from '../components/ItemList';
-import {LIST_100_ITEMS} from '../components/itemData';
-import type {ScrollEvent} from 'react-native/Libraries/Types/CoreEventTypes';
 
 const {useCallback, useState} = React;
 const ItemListMemo = React.memo(ItemList);
@@ -57,7 +58,7 @@ function ReRenderWithNonPureChildGoodExample(): React.Node {
 export default {
   title: 'List re-render due to not pure or memoized',
   description:
-    'The List component is not pure in the bad example. Even though all props are not changed, it will still re-render when parent re-renders.',
+    'Get horizontal scroll offset.\nThe List component is not pure in the bad example. Even though all props are not changed, it will still re-render when parent re-renders.',
   Bad: ReRenderWithNonPureChildBadExample,
   Good: ReRenderWithNonPureChildGoodExample,
 };

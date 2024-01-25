@@ -13,8 +13,6 @@
     <AppContainerApplication>true</AppContainerApplication>
     <ApplicationType>Windows Store</ApplicationType>
     <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <!-- Overriding for WinUI3 compatibility. See property UseWinUI3. -->
-    <WindowsTargetPlatformMinVersion>10.0.17763.0</WindowsTargetPlatformMinVersion>
     <CppWinRTNamespaceMergeDepth>
     </CppWinRTNamespaceMergeDepth>
     <CppWinRTLibs>true</CppWinRTLibs>
@@ -92,7 +90,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <RuntimeTypeInfo Condition="'$(UseFabric)' == 'true' AND '$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
@@ -112,12 +110,11 @@
         $(ReactNativeWindowsDir)Shared;
         $(ReactNativeWindowsDir)Shared\tracing;
         $(ReactNativeWindowsDir)include\Shared;
-        $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
         $(YogaDir);
         $(GeneratedFilesDir);
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>DISABLE_XAML_GENERATED_MAIN;FOLLY_NO_CONFIG;NOMINMAX;_HAS_AUTO_PTR_ETC;_USE_MATH_DEFINES;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>DISABLE_XAML_GENERATED_MAIN;FOLLY_CFG_NO_COROUTINES;FOLLY_NO_CONFIG;NOMINMAX;_HAS_AUTO_PTR_ETC;_USE_MATH_DEFINES;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
         OLD_CPPWINRT is a workaround to make target version to 19H1
@@ -126,12 +123,15 @@
         REACTWINDOWS_BUILD;
         RN_PLATFORM=windows;
         NOMINMAX;
+        FOLLY_CFG_NO_COROUTINES;
         FOLLY_NO_CONFIG;
         RN_EXPORT=;
         JSI_EXPORT=;
         WIN32=0;
         WINRT=1;
         _HAS_AUTO_PTR_ETC;
+        <!-- See https://cplusplus.github.io/LWG/issue3840 -->
+        _SILENCE_CXX20_U8PATH_DEPRECATION_WARNING;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
@@ -344,6 +344,7 @@
     <ClInclude Include="Views\Image\ReactImageBrush.h" />
     <ClInclude Include="Views\Impl\ScrollViewUWPImplementation.h" />
     <ClInclude Include="Views\Impl\SnapPointManagingContentControl.h" />
+    <ClInclude Include="Views\UnimplementedViewManager.h" />
     <ClInclude Include="Views\IXamlRootView.h" />
     <ClInclude Include="Views\KeyboardEventHandler.h" />
     <ClInclude Include="Views\PaperShadowNode.h" />
@@ -492,6 +493,7 @@
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
     <ClCompile Include="Views\ConfigureBundlerDlg.cpp" />
     <ClCompile Include="Views\ControlViewManager.cpp" />
+    <ClCompile Include="Views\DebuggingOverlayViewManager.cpp" />
     <ClCompile Include="Views\DynamicAutomationPeer.cpp" />
     <ClCompile Include="Views\DynamicAutomationProperties.cpp" />
     <ClCompile Include="Views\DynamicValueProvider.cpp" />
@@ -505,6 +507,7 @@
     <ClCompile Include="Views\Impl\ScrollViewUWPImplementation.cpp" />
     <ClCompile Include="Views\Impl\SnapPointManagingContentControl.cpp" />
     <ClCompile Include="Views\KeyboardEventHandler.cpp" />
+    <ClCompile Include="Views\UnimplementedViewManager.cpp" />
     <ClCompile Include="Views\PaperShadowNode.cpp" />
     <ClCompile Include="Views\PopupViewManager.cpp" />
     <ClCompile Include="Views\RawTextViewManager.cpp" />

@@ -3,9 +3,11 @@
 
 #pragma once
 
+#include <folly/dynamic.h>
 #include <react/renderer/attributedstring/AttributedString.h>
 #include <react/renderer/attributedstring/ParagraphAttributes.h>
 #include <react/renderer/mapbuffer/MapBuffer.h>
+#include <react/renderer/mapbuffer/MapBufferBuilder.h>
 #include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 
 namespace facebook::react {
@@ -15,7 +17,7 @@ namespace facebook::react {
  */
 class WindowsTextInputState final {
  public:
-  int mostRecentEventCount{0};
+  int64_t mostRecentEventCount{0};
 
   /**
    * Stores an opaque cache ID used on the Java side to refer to a specific
@@ -48,23 +50,23 @@ class WindowsTextInputState final {
    * Communicates Android theme padding back to the ShadowNode / Component
    * Descriptor for layout.
    */
-  float defaultThemePaddingStart{NAN};
-  float defaultThemePaddingEnd{NAN};
-  float defaultThemePaddingTop{NAN};
-  float defaultThemePaddingBottom{NAN};
+  double defaultThemePaddingStart{NAN};
+  double defaultThemePaddingEnd{NAN};
+  double defaultThemePaddingTop{NAN};
+  double defaultThemePaddingBottom{NAN};
 
   WindowsTextInputState(
       int64_t mostRecentEventCount,
       AttributedString attributedString,
       AttributedString reactTreeAttributedString,
       ParagraphAttributes paragraphAttributes,
-      float defaultThemePaddingStart,
-      float defaultThemePaddingEnd,
-      float defaultThemePaddingTop,
-      float defaultThemePaddingBottom);
+      double defaultThemePaddingStart,
+      double defaultThemePaddingEnd,
+      double defaultThemePaddingTop,
+      double defaultThemePaddingBottom);
 
   WindowsTextInputState() = default;
-  WindowsTextInputState(WindowsTextInputState const &previousState, folly::dynamic const &data);
+  WindowsTextInputState(const WindowsTextInputState &previousState, const folly::dynamic &data);
   folly::dynamic getDynamic() const;
   MapBuffer getMapBuffer() const;
 };

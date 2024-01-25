@@ -24,6 +24,9 @@ parameters:
   - name: additionalRunArguments
     type: string
     default: ''
+  - name: useChakra
+    type: boolean
+    default: false
   - name: useNuGet
     type: boolean
     default: false
@@ -41,19 +44,8 @@ parameters:
      - Continuous
 
 steps:
-  - powershell: start-process verdaccio.cmd -ArgumentList @('--config', './.ado/verdaccio/config.yaml')
-    displayName: Launch test npm server (verdaccio)
-
-  - script: node .ado/scripts/waitForVerdaccio.js
-    displayName: Wait for verdaccio server to boot
-
-  - script: node .ado/scripts/npmAddUser.js user pass mail@nomail.com http://localhost:4873
-    displayName: Add npm user to verdaccio
-
-  - template: compute-beachball-branch-name.yml
-
-  - script: npx beachball publish --branch origin/$(BeachBallBranchName) --no-push --registry http://localhost:4873 --yes --verbose --access public --changehint "Run `yarn change` from root of repo to generate a change file."
-    displayName: Publish packages to verdaccio
+  # Start npm test server
+  - template: verdaccio-start.yml
 
   - template: set-version-vars.yml
     parameters:
@@ -87,14 +79,16 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)
 
     - script: |
+        rmdir /s /q android
+      displayName: Remove broken android folder # See issue https://github.com/microsoft/react-native-windows/issues/12209
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+
+    - script: |
         call yarn install
         call yarn upgrade react@$(reactDevDependency) --dev
         call yarn upgrade react-native@$(reactNativeDevDependency) --dev
       displayName: Update lib project react and react-native dev versions
       workingDirectory: $(Agent.BuildDirectory)\testcli
-
-  - script: yarn config set registry http://localhost:4873
-    displayName: Modify yarn config to point to local verdaccio server
 
   - ${{ if eq(parameters.useNuget, true) }}:
     - script: |
@@ -111,6 +105,12 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)\testcli
       env:
         npm_config_registry: http://localhost:4873
+  
+  - template:  set-experimental-feature.yml
+    parameters:
+      package: ..\testcli
+      feature: UseHermes
+      value: ${{ not(parameters.UseChakra) }}
 
   - ${{ if eq(parameters.projectType, 'app') }}:
     - powershell: |
@@ -120,10 +120,8 @@ steps:
       displayName: Set AppX package name to "ReactNative.InitTest"
       workingDirectory: $(Agent.BuildDirectory)\testcli\windows\testcli
 
-  # Reclaim memory used by Verdaccio to reduce the chance of build OOM issues
-  - script: tskill node
-    displayName: Kill Verdaccio
-    condition: succeededOrFailed()
+  # End npm test server
+  - template: verdaccio-stop.yml
 
   - task: PowerShell@2
     displayName: Start tracing
@@ -131,15 +129,9 @@ steps:
       targetType: filePath # filePath | inline
       filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tracing\Start-Tracing.ps1
 
-  # Useful info to have in the log, but also a necessary workaround to make sure the cli is cached by npx
-  - script: npx react-native info
-    displayName: React Native Info
-    workingDirectory: $(Agent.BuildDirectory)\testcli
-
-  # Verify react-native doctor command works
-  - script: npx react-native doctor
-    displayName: React Native Doctor
-    workingDirectory: $(Agent.BuildDirectory)\testcli
+  - template: react-native-debug-info.yml
+    parameters:
+      workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - template: ../templates/run-windows-with-certificates.yml
     parameters:
@@ -167,15 +159,6 @@ steps:
       parameters:
         packageName: ReactNative.InitTest
         reportArtifact: 'Template App WACK Report ${{ parameters.platform }} ${{ parameters.configuration }} ($(System.JobAttempt))'
-
-  # We are experiencing random package restore failures.
-  # We want to uploading the vedaccio logs to aid in diagnosing if it is verdaccio or npmjs.org
-  - task: PublishPipelineArtifact@1
-    displayName: Upload Verdaccio.log (on failure)
-    inputs:
-      targetPath: 'verdaccio.log'
-      artifact: '$(Agent.JobName).Verdaccio.log-$(System.JobAttempt)'
-    condition: failed()
 
   - task: PowerShell@2
     displayName: Stop tracing

@@ -13,10 +13,12 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
                                                  IInspectable,
                                                  IRawElementProviderFragment,
                                                  IRawElementProviderSimple,
-                                                 IInvokeProvider> {
+                                                 IInvokeProvider,
+                                                 IScrollItemProvider,
+                                                 IValueProvider> {
  public:
   CompositionDynamicAutomationProvider(
-      const std::shared_ptr<::Microsoft::ReactNative::CompositionBaseComponentView> &componentView) noexcept;
+      const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept;
 
   // inherited via IRawElementProviderFragment
   virtual HRESULT __stdcall Navigate(NavigateDirection direction, IRawElementProviderFragment **pRetVal) override;
@@ -35,6 +37,14 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
 
   // inherited via IInvokeProvider
   virtual HRESULT __stdcall Invoke() override;
+
+  // inherited via IScrollItemProvider
+  HRESULT __stdcall ScrollIntoView() override;
+
+  // inherited via IValueProvider
+  virtual HRESULT __stdcall SetValue(LPCWSTR val) override;
+  virtual HRESULT __stdcall get_Value(BSTR *pRetVal) override;
+  virtual HRESULT __stdcall get_IsReadOnly(BOOL *pRetVal) override;
 
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;

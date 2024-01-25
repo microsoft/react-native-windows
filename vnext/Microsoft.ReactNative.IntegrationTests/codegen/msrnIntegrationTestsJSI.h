@@ -47,7 +47,7 @@ public:
 protected:
   NativeMySimpleTurboModuleCxxCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeMySimpleTurboModuleCxxCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeMySimpleTurboModuleCxxCxxSpecJSI {
@@ -173,7 +173,7 @@ public:
 protected:
   NativeMyTrivialTurboModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
     : TurboModule(std::string{NativeMyTrivialTurboModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(static_cast<T*>(this), jsInvoker) {}
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
   class Delegate : public NativeMyTrivialTurboModuleCxxSpecJSI {

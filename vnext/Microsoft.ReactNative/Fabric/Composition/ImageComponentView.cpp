@@ -23,14 +23,14 @@
 #include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
+#include "RootComponentView.h"
 
 extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICImagingFactory **ppIWICImagingFactory);
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-ImageComponentView::WindowsImageResponseObserver::WindowsImageResponseObserver(
-    std::shared_ptr<ImageComponentView> image) {
-  m_image = image;
+ImageComponentView::WindowsImageResponseObserver::WindowsImageResponseObserver(ImageComponentView &image) {
+  m_image.copy_from(&image);
 }
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveProgress(float progress) const {
@@ -52,16 +52,20 @@ ImageComponentView::ImageComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag), m_context(reactContext) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
   static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
   m_props = defaultProps;
 }
 
-void ImageComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+void ImageComponentView::mountChildComponentView(
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
 }
 
-void ImageComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+void ImageComponentView::unmountChildComponentView(
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
 }
 
@@ -109,9 +113,8 @@ void ImageComponentView::updateProps(
   ensureVisual();
 
   // update BaseComponentView props
-  updateShadowProps(oldImageProps, newImageProps, m_visual);
   updateTransformProps(oldImageProps, newImageProps, m_visual);
-  updateBorderProps(oldImageProps, newImageProps);
+  Super::updateProps(props, oldProps);
 
   if (oldImageProps.backgroundColor != newImageProps.backgroundColor ||
       oldImageProps.blurRadius != newImageProps.blurRadius || oldImageProps.tintColor != newImageProps.tintColor ||
@@ -121,6 +124,9 @@ void ImageComponentView::updateProps(
 
   if (oldImageProps.opacity != newImageProps.opacity) {
     m_visual.Opacity(newImageProps.opacity);
+  }
+  if (oldImageProps.testId != newImageProps.testId) {
+    m_visual.Comment(winrt::to_hstring(newImageProps.testId));
   }
 
   m_props = std::static_pointer_cast<facebook::react::ImageProps const>(props);
@@ -134,12 +140,13 @@ void ImageComponentView::updateState(
 
   if (!m_imageResponseObserver) {
     // Should ViewComponents enable_shared_from_this? then we don't need this dance to get a shared_ptr
-    std::shared_ptr<FabricUIManager> fabricuiManager =
+    std::shared_ptr<::Microsoft::ReactNative::FabricUIManager> fabricuiManager =
         ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
     auto componentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_tag);
 
     m_imageResponseObserver = std::make_shared<WindowsImageResponseObserver>(
-        std::static_pointer_cast<ImageComponentView>(componentViewDescriptor.view));
+        *componentViewDescriptor.view
+             .as<winrt::Microsoft::ReactNative::Composition::implementation::ImageComponentView>());
   }
 
   setStateAndResubscribeImageResponseObserver(newImageState);
@@ -177,26 +184,25 @@ void ImageComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  updateBorderLayoutMetrics(layoutMetrics, *m_props);
-
-  m_layoutMetrics = layoutMetrics;
-
-  UpdateCenterPropertySet();
+  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
 
-void ImageComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
-  if (m_needsBorderUpdate) {
-    m_needsBorderUpdate = false;
-    UpdateSpecialBorderLayers(m_layoutMetrics, *m_props);
-  }
+void ImageComponentView::OnRenderingDeviceLost() noexcept {
+  DrawImage();
 }
 
-void ImageComponentView::OnRenderingDeviceLost() noexcept {
-  // Draw the text again
-  DrawImage();
+bool ImageComponentView::themeEffectsImage() const noexcept {
+  return m_props->backgroundColor || isColorMeaningful(m_props->tintColor);
+}
+
+void ImageComponentView::onThemeChanged() noexcept {
+  if (themeEffectsImage()) {
+    DrawImage();
+  }
+  Super::onThemeChanged();
 }
 
 void ImageComponentView::ensureDrawingSurface() noexcept {
@@ -267,6 +273,14 @@ void ImageComponentView::DrawImage() noexcept {
   // any time we make an update we touch the entire surface, so we always pass nullptr).
   POINT offset;
 
+  if (themeEffectsImage() && theme()->IsEmpty()) {
+    return;
+  }
+
+  if (!m_wicbmp) {
+    return;
+  }
+
   assert(m_context.UIDispatcher().HasThreadAccess());
 
   ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, &offset);
@@ -276,7 +290,7 @@ void ImageComponentView::DrawImage() noexcept {
 
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
     if (m_props->backgroundColor) {
-      d2dDeviceContext->Clear(m_props->backgroundColor.AsD2DColor());
+      d2dDeviceContext->Clear(theme()->D2DColor(*m_props->backgroundColor));
     }
 
     const auto imageProps = std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
@@ -305,7 +319,8 @@ void ImageComponentView::DrawImage() noexcept {
       if (isColorMeaningful(imageProps->tintColor)) {
         winrt::com_ptr<ID2D1Effect> tintColorEffect;
         winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1Flood, tintColorEffect.put()));
-        winrt::check_hresult(tintColorEffect->SetValue(D2D1_FLOOD_PROP_COLOR, imageProps->tintColor.AsD2DColor()));
+        winrt::check_hresult(
+            tintColorEffect->SetValue(D2D1_FLOOD_PROP_COLOR, theme()->D2DColor(*imageProps->tintColor)));
 
         winrt::com_ptr<ID2D1Effect> compositeEffect;
         winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1Composite, compositeEffect.put()));
@@ -358,7 +373,8 @@ void ImageComponentView::DrawImage() noexcept {
 }
 
 void ImageComponentView::prepareForRecycle() noexcept {}
-facebook::react::Props::Shared ImageComponentView::props() noexcept {
+
+facebook::react::SharedViewProps ImageComponentView::viewProps() noexcept {
   return m_props;
 }
 
@@ -372,10 +388,7 @@ facebook::react::Tag ImageComponentView::hitTest(
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
-      std::any_of(m_children.rbegin(), m_children.rend(), [&targetTag, &ptLocal, &localPt](auto child) {
-        targetTag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptLocal, localPt);
-        return targetTag != -1;
-      }))
+      anyHitTestHelper(targetTag, ptLocal, localPt))
     return targetTag;
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
@@ -383,7 +396,7 @@ facebook::react::Tag ImageComponentView::hitTest(
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
-    return tag();
+    return Tag();
   }
 
   return -1;
@@ -408,11 +421,11 @@ std::string ImageComponentView::DefaultControlType() const noexcept {
   return "image";
 }
 
-std::shared_ptr<ImageComponentView> ImageComponentView::Create(
+winrt::Microsoft::ReactNative::ComponentView ImageComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return std::shared_ptr<ImageComponentView>(new ImageComponentView(compContext, tag, reactContext));
+  return winrt::make<ImageComponentView>(compContext, tag, reactContext);
 }
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

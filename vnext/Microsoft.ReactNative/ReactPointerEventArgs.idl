@@ -63,5 +63,17 @@ namespace Microsoft.ReactNative {
       get;
       set;
     };
+    DOC_STRING(
+      "Gets or sets a flag that allows the ReactRootView to handle pointer "
+      "events even when it does not capture the pointer. This is particularly "
+      "useful for view managers that seek to capture the pointer to handle "
+      "move events for a gesture (e.g., dragging), but conditionally may "
+      "allow the ReactRootView to emit events (e.g., if the "
+      "@PointerEventKind.End event is received before a drag threshold is hit."
+    )
+    Boolean AllowUncaptured {
+      get;
+      set;
+    };
   }
 } // namespace Microsoft.ReactNative

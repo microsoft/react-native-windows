@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <NativeNetworkingIOSSpec.g.h>
+#include <codegen/NativeNetworkingIOSSpec.g.h>
 #include <NativeModules.h>
 #include <Networking/IHttpResource.h>
 

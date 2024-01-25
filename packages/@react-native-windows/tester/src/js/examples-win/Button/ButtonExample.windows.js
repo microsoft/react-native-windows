@@ -10,10 +10,9 @@
 
 'use strict';
 
-const React = require('react');
-
-const {Alert, Button, View, StyleSheet} = require('react-native');
 const {RNTesterThemeContext} = require('../../components/RNTesterTheme');
+const React = require('react');
+const {Alert, Button, StyleSheet, View} = require('react-native');
 
 function onButtonPress(buttonName: string) {
   Alert.alert(`Your application has been ${buttonName}!`);
@@ -73,7 +72,10 @@ exports.examples = [
         <RNTesterThemeContext.Consumer>
           {theme => {
             return (
-              <View style={styles.container}>
+              <View
+                style={styles.container}
+                testID="two_button_container"
+                accessible>
                 <Button
                   onPress={() => onButtonPress('cancelled')}
                   testID="two_cancel_button"
@@ -102,7 +104,10 @@ exports.examples = [
         <RNTesterThemeContext.Consumer>
           {theme => {
             return (
-              <View style={styles.container}>
+              <View
+                style={styles.container}
+                testID="three_button_container"
+                accessible>
                 <Button
                   onPress={() => onButtonPress('cancelled')}
                   testID="three_cancel_button"
@@ -231,27 +236,27 @@ exports.examples = [
               <View testID="accessible_focusable_button">
                 <Button
                   onPress={() => onButtonPress('submitted')}
-                  testID="accessibility_props"
+                  testID="default_button"
                   title="Default Button"
                   accessibilityLabel="Press to submit your application!"
                 />
                 <Button
                   onPress={() => onButtonPress('submitted')}
-                  testID="accessibility_props"
+                  testID="accessible_false_button"
                   title="Button with accessible=false"
                   accessibilityLabel="Press to submit your application!"
                   accessible={false}
                 />
                 <Button
                   onPress={() => onButtonPress('submitted')}
-                  testID="accessibility_props"
+                  testID="focusable_false_button"
                   title="Button with focusable=false"
                   accessibilityLabel="Press to submit your application!"
                   focusable={false}
                 />
                 <Button
                   onPress={() => onButtonPress('submitted')}
-                  testID="accessibility_props"
+                  testID="accessible_focusable_false_button"
                   title="Button with accessible=false and focusable=false"
                   accessibilityLabel="Press to submit your application!"
                   accessible={false}

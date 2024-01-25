@@ -9,39 +9,47 @@
 #include <Windows.UI.Composition.h>
 #include <Windows.h>
 #include "CompositionContextHelper.h"
+#include "RootComponentView.h"
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-std::shared_ptr<ActivityIndicatorComponentView> ActivityIndicatorComponentView::Create(
+winrt::Microsoft::ReactNative::ComponentView ActivityIndicatorComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return std::shared_ptr<ActivityIndicatorComponentView>(
-      new ActivityIndicatorComponentView(compContext, tag, reactContext));
+  return winrt::make<ActivityIndicatorComponentView>(compContext, tag, reactContext);
 }
 
 ActivityIndicatorComponentView::ActivityIndicatorComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag), m_context(reactContext) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
   m_props = std::make_shared<facebook::react::ActivityIndicatorViewProps const>();
 }
 
 void ActivityIndicatorComponentView::mountChildComponentView(
-    IComponentView &childComponentView,
-    uint32_t index) noexcept {
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {
   assert(false);
 }
 
 void ActivityIndicatorComponentView::unmountChildComponentView(
-    IComponentView &childComponentView,
-    uint32_t index) noexcept {
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {
   assert(false);
 }
 
 void ActivityIndicatorComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
   Super::handleCommand(commandName, arg);
+}
+
+void ActivityIndicatorComponentView::updateProgressColor(const facebook::react::SharedColor &color) noexcept {
+  if (color) {
+    m_ActivityIndicatorVisual.Brush(theme()->Brush(*color));
+  } else {
+    m_ActivityIndicatorVisual.Brush(theme()->PlatformBrush("ProgressRingForegroundTheme"));
+  }
 }
 
 void ActivityIndicatorComponentView::updateProps(
@@ -55,22 +63,23 @@ void ActivityIndicatorComponentView::updateProps(
   // update size if needed
   if (newViewProps->size != oldViewProps->size) {
     if (newViewProps->size == facebook::react::ActivityIndicatorViewSize::Small) {
-      m_ActivityIndicatorVisual.updateSize(8.0f);
+      m_ActivityIndicatorVisual.Size(m_radiusSmall);
     } else {
-      m_ActivityIndicatorVisual.updateSize(16.0f);
+      m_ActivityIndicatorVisual.Size(m_radiusLarge);
     }
   }
 
   // update color if needed
-  if (newViewProps->color && (!oldProps || newViewProps->color != oldViewProps->color)) {
-    m_ActivityIndicatorVisual.Color(newViewProps->color.AsWindowsColor());
+  if (!oldProps || newViewProps->color != oldViewProps->color) {
+    updateProgressColor(newViewProps->color);
   }
 
   if (newViewProps->animating != oldViewProps->animating) {
     m_ActivityIndicatorVisual.IsVisible(newViewProps->animating);
   }
 
-  updateBorderProps(*oldViewProps, *newViewProps);
+  Super::updateProps(props, oldProps);
+
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
@@ -88,20 +97,15 @@ void ActivityIndicatorComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  updateBorderLayoutMetrics(layoutMetrics, *m_props);
-  m_layoutMetrics = layoutMetrics;
-
-  UpdateCenterPropertySet();
+  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
 
-void ActivityIndicatorComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {}
-
 void ActivityIndicatorComponentView::prepareForRecycle() noexcept {}
 
-facebook::react::Props::Shared ActivityIndicatorComponentView::props() noexcept {
+facebook::react::SharedViewProps ActivityIndicatorComponentView::viewProps() noexcept {
   return m_props;
 }
 
@@ -126,13 +130,18 @@ facebook::react::Tag ActivityIndicatorComponentView::hitTest(
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
-    return tag();
+    return Tag();
   }
   return -1;
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual ActivityIndicatorComponentView::Visual() const noexcept {
   return m_visual;
+}
+
+void ActivityIndicatorComponentView::onThemeChanged() noexcept {
+  updateProgressColor(std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props)->color);
+  Super::onThemeChanged();
 }
 
 bool ActivityIndicatorComponentView::focusable() const noexcept {
@@ -143,4 +152,4 @@ std::string ActivityIndicatorComponentView::DefaultControlType() const noexcept 
   return "progressbar";
 }
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

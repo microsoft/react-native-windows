@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
+  <Target Name="EnsureReactExperimentalFeaturesSetTarget" BeforeTargets="PrepareForBuild" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props') And '$(ReactExperimentalFeaturesSet)' != 'true'">
+    <Warning Text="Property 'ReactExperimentalFeaturesSet' not set. Please specify &lt;ReactExperimentalFeaturesSet&gt;true&lt;/ReactExperimentalFeaturesSet>&gt; in '$(SolutionDir)\ExperimentalFeatures.props' to prevent the MSB4011 warnings." />
+  </Target>
+
+  <ImportGroup Condition="'$(ReactExperimentalFeaturesSet)' != 'true'">
+    <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
+  </ImportGroup>
+
   <ImportGroup Label="Globals">
     <Import Project="$(MSBuildThisFileDirectory)External\Microsoft.ReactNative.WindowsSdk.Default.props" />
   </ImportGroup>
@@ -56,6 +64,7 @@
       <PreprocessorDefinitions Condition="'$(EnableDevServerHBCBundles)'=='true'">ENABLE_DEVSERVER_HBCBUNDLES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseV8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseFabric)'=='true'">USE_FABRIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>JSI_VERSION=11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
 
@@ -116,6 +125,8 @@
       <RuntimeTypeInfo>false</RuntimeTypeInfo>
       <ShowIncludes Condition="'$(ShowIncludes)'=='true'">true</ShowIncludes>
       <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <ControlFlowGuard>Guard</ControlFlowGuard>
+      <SpectreMitigation>Spectre</SpectreMitigation>
 
       <!-- Add include directories expected by React Native C++ code and headers -->
       <AdditionalIncludeDirectories>

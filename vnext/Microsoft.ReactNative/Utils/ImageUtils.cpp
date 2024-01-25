@@ -23,13 +23,49 @@ winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageStreamAsync(ReactImag
   try {
     co_await winrt::resume_background();
 
-    auto httpMethod{
-        source.method.empty() ? winrt::HttpMethod::Get() : winrt::HttpMethod{winrt::to_hstring(source.method)}};
-
     winrt::Uri uri = UriTryCreate(winrt::to_hstring(source.uri));
     if (!uri) {
       co_return nullptr;
     }
+
+    bool isFile = (uri.SchemeName() == L"file");
+    bool isAppx = (uri.SchemeName() == L"ms-appx");
+
+    if (isFile || isAppx) {
+      winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::StorageFile> getFileSync{nullptr};
+
+      if (isFile) {
+        auto path = winrt::to_string(uri.Path());
+        std::replace(path.begin(), path.end(), '/', '\\');
+        getFileSync = winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(winrt::to_hstring(path));
+      } else {
+        getFileSync = winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
+      }
+
+      co_await lessthrow_await_adapter<
+          winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::StorageFile>>{getFileSync};
+
+      if (FAILED(getFileSync.ErrorCode())) {
+        co_return nullptr;
+      }
+
+      winrt::Windows::Storage::StorageFile file{getFileSync.GetResults()};
+
+      auto openReadAsync = file.OpenReadAsync();
+      co_await lessthrow_await_adapter<winrt::Windows::Foundation::IAsyncOperation<
+          winrt::Windows::Storage::Streams::IRandomAccessStreamWithContentType>>{openReadAsync};
+
+      if (FAILED(openReadAsync.ErrorCode())) {
+        co_return nullptr;
+      }
+
+      winrt::Windows::Storage::Streams::IRandomAccessStreamWithContentType stream{openReadAsync.GetResults()};
+      co_return stream;
+    }
+
+    auto httpMethod{
+        source.method.empty() ? winrt::HttpMethod::Get() : winrt::HttpMethod{winrt::to_hstring(source.method)}};
+
     winrt::HttpRequestMessage request{httpMethod, uri};
 
     if (!source.headers.empty()) {
