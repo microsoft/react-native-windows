@@ -352,8 +352,13 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
 
   m_readyState = ReadyState::Connecting;
 
+  bool hasOriginHeader = false;
   for (const auto &header : options) {
     m_socket.SetRequestHeader(header.first, winrt::to_hstring(header.second));
+    if (header.first == L"Origin") // TODO: make case-insensitive compariseon
+    {
+      hasOriginHeader = true;
+    }
   }
 
   winrt::Windows::Foundation::Collections::IVector<winrt::hstring> supportedProtocols =
@@ -361,8 +366,6 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
   for (const auto &protocol : protocols) {
     supportedProtocols.Append(winrt::to_hstring(protocol));
   }
-
-  m_connectRequested = true;
 
   Uri uri{nullptr};
   try {
@@ -379,6 +382,24 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
 
     return;
   }
+
+  // #12626 - If Origin header is not provided, set to connect endpoint.
+  if (!hasOriginHeader) {
+    auto scheme = uri.SchemeName();
+    auto host = uri.Host();
+    auto port = uri.Port();
+
+    if (scheme == L"ws") {
+      scheme = L"http";
+    } else if (scheme == L"wss") {
+      scheme = L"wss";
+    }
+
+    auto origin = winrt::hstring{scheme + L"://" + host + L":" + winrt::to_hstring(port)};
+    m_socket.SetRequestHeader(L"Origin", std::move(origin));
+  }
+
+  m_connectRequested = true;
 
   PerformConnect(std::move(uri));
 }
