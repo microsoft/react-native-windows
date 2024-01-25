@@ -224,7 +224,7 @@ struct ScrollBarComponent {
     auto maxThumbLength = calulateMaxThumbLength();
     auto scrollRange = getScrollRange();
     auto viewportSize = getViewportSize();
-    return ::MulDiv(std::min(scrollRange, viewportSize), maxThumbLength, scrollRange);
+    return std::max(::MulDiv(std::min(scrollRange, viewportSize), maxThumbLength, scrollRange), 0);
   }
 
   float scrollOffsetFromThumbPos(int thumbPos) const noexcept {

@@ -27,6 +27,7 @@ namespace Microsoft.ReactNative.Composition
     ScrollBar,
     ScrollBarThumbHorizontal,
     ScrollBarThumbVertical,
+    SwitchThumb,
   };
 
   [webhosthidden]
@@ -89,6 +90,8 @@ namespace Microsoft.ReactNative.Composition
   {
     void Brush(IBrush brush);
     void CornerRadius(Windows.Foundation.Numerics.Vector2 value);
+    void StrokeBrush(IBrush brush);
+    void StrokeThickness(Single value);
   }
 
   [webhosthidden]
@@ -130,18 +133,6 @@ namespace Microsoft.ReactNative.Composition
 
   [webhosthidden]
   [experimental]
-  interface ISwitchThumbVisual
-  {
-    IVisual InnerVisual { get; };
-    Windows.Foundation.Numerics.Vector2 Size{ get; set; };
-    Windows.Foundation.Numerics.Vector2 Position{ get; set; };
-    void AnimatePosition(Windows.Foundation.Numerics.Vector2 position);
-    Boolean IsVisible { get; set; };
-    void Brush(IBrush brush);
-  }
-
-  [webhosthidden]
-  [experimental]
   interface IFocusVisual
   {
     IVisual InnerVisual { get; };
@@ -158,7 +149,6 @@ namespace Microsoft.ReactNative.Composition
     IRoundedRectangleVisual CreateRoundedRectangleVisual();
     IActivityVisual CreateActivityVisual();
     ICaretVisual CreateCaretVisual();
-    ISwitchThumbVisual CreateSwitchThumbVisual();
     IFocusVisual CreateFocusVisual();
     IDropShadow CreateDropShadow();
     IBrush CreateColorBrush(Windows.UI.Color color);

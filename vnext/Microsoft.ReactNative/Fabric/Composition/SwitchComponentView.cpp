@@ -12,6 +12,18 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
+namespace SwitchConstants {
+// https://github.com/microsoft/microsoft-ui-xaml/blob/winui3/release/1.5-experimental1/controls/dev/CommonStyles/ToggleSwitch_themeresources.xaml
+constexpr float thumbMargin = 4.0f;
+constexpr float thumbWidth = 12.0f;
+constexpr float thumbWidthHover = 14.0f;
+constexpr float thumbWidthPressed = 17.0f;
+constexpr float trackWidth = 40.0f;
+constexpr float trackHeight = 20.0f;
+constexpr float trackCornerRadius = 10.0f;
+constexpr float trackStrokeThickness = 1.0f;
+} // namespace SwitchConstants
+
 SwitchComponentView::SwitchComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
@@ -59,7 +71,7 @@ void SwitchComponentView::updateProps(
   if (oldViewProps.backgroundColor != newViewProps.backgroundColor ||
       oldViewProps.thumbTintColor != newViewProps.thumbTintColor || oldViewProps.value != newViewProps.value ||
       oldViewProps.disabled != newViewProps.disabled) {
-    m_drawingSurface = nullptr;
+    m_visualUpdateRequired = true;
   }
   if (oldViewProps.testId != newViewProps.testId) {
     m_visual.Comment(winrt::to_hstring(newViewProps.testId));
@@ -89,150 +101,144 @@ void SwitchComponentView::updateLayoutMetrics(
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+
+  if (oldLayoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor) {
+    handleScaleChange();
+  }
+
+  auto frame{m_layoutMetrics.frame.size};
+  m_trackVisual.Offset(
+      {(frame.width - SwitchConstants::trackWidth) * m_layoutMetrics.pointScaleFactor / 2.0f,
+       (frame.height - SwitchConstants::trackHeight) * m_layoutMetrics.pointScaleFactor / 2.0f,
+       0.0f});
+}
+
+void SwitchComponentView::handleScaleChange() noexcept {
+  m_trackVisual.Size(
+      {SwitchConstants::trackWidth * m_layoutMetrics.pointScaleFactor,
+       SwitchConstants::trackHeight * m_layoutMetrics.pointScaleFactor});
+
+  m_trackVisual.CornerRadius(
+      {SwitchConstants::trackCornerRadius * m_layoutMetrics.pointScaleFactor,
+       SwitchConstants::trackCornerRadius * m_layoutMetrics.pointScaleFactor});
+
+  m_visualUpdateRequired = true;
+}
+
+void SwitchComponentView::updateVisuals() noexcept {
+  const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
+  auto &theme = *this->theme();
+  winrt::Microsoft::ReactNative::Composition::IBrush defaultColor;
+  winrt::Microsoft::ReactNative::Composition::IBrush fillColor;
+  winrt::Microsoft::ReactNative::Composition::IBrush thumbFill;
+
+  auto thumbWidth = SwitchConstants::thumbWidth;
+  auto thumbHeight = SwitchConstants::thumbWidth;
+
+  if (switchProps->value) {
+    if (switchProps->disabled) {
+      defaultColor = theme.PlatformBrush("ToggleSwitchStrokeOnDisabled");
+      fillColor = theme.PlatformBrush("ToggleSwitchFillOnDisabled");
+      thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOnDisabled");
+    } else if (m_pressed) {
+      defaultColor = theme.PlatformBrush("ToggleSwitchStrokeOnPressed");
+      fillColor = theme.PlatformBrush("ToggleSwitchFillOnPressed");
+      thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOnPressed");
+    } else if (m_hovered) {
+      defaultColor = theme.PlatformBrush("ToggleSwitchStrokeOnPointerOver");
+      fillColor = theme.PlatformBrush("ToggleSwitchFillOnPointerOver");
+      thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOnPointerOver");
+    } else {
+      defaultColor = theme.PlatformBrush("ToggleSwitchStrokeOn");
+      fillColor = theme.PlatformBrush("ToggleSwitchFillOn");
+      thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOn");
+    }
+  } else {
+    if (switchProps->disabled) {
+      defaultColor = theme.PlatformBrush("ToggleSwitchStrokeOffDisabled");
+      fillColor = theme.PlatformBrush("ToggleSwitchFillOffDisabled");
+      thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOffDisabled");
+    } else if (m_pressed) {
+      defaultColor = theme.PlatformBrush("ToggleSwitchStrokeOffPressed");
+      fillColor = theme.PlatformBrush("ToggleSwitchFillOffPressed");
+      thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOffPressed");
+    } else if (m_hovered) {
+      defaultColor = theme.PlatformBrush("ToggleSwitchStrokeOffPointerOver");
+      fillColor = theme.PlatformBrush("ToggleSwitchFillOffPointerOver");
+      thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOffPointerOver");
+    } else {
+      defaultColor = theme.PlatformBrush("ToggleSwitchStrokeOff");
+      fillColor = theme.PlatformBrush("ToggleSwitchFillOff");
+      thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOff");
+    }
+  }
+
+  if (switchProps->disabled) {
+    thumbWidth = SwitchConstants::thumbWidth;
+  } else if (m_pressed) {
+    thumbWidth = SwitchConstants::thumbWidthPressed;
+    thumbHeight = SwitchConstants::thumbWidthHover;
+  } else if (m_hovered) {
+    thumbWidth = SwitchConstants::thumbWidthHover;
+    thumbHeight = SwitchConstants::thumbWidthHover;
+  } else {
+    thumbWidth = SwitchConstants::thumbWidth;
+  }
+
+  if (!switchProps->disabled && switchProps->thumbTintColor) {
+    thumbFill = theme.Brush(*switchProps->thumbTintColor);
+  }
+
+  if (!switchProps->disabled && switchProps->onTintColor && switchProps->value) {
+    fillColor = theme.Brush(*switchProps->onTintColor);
+  } else if (!switchProps->disabled && switchProps->tintColor && !switchProps->value) {
+    fillColor = theme.Brush(*switchProps->tintColor);
+  }
+
+  // switch track - outline
+  if ((!switchProps->onTintColor && switchProps->value) || (!switchProps->tintColor && !switchProps->value)) {
+    m_trackVisual.StrokeThickness(std::round(SwitchConstants::trackStrokeThickness * m_layoutMetrics.pointScaleFactor));
+    m_trackVisual.StrokeBrush(defaultColor);
+  } else {
+    m_trackVisual.StrokeThickness(0.0f);
+  }
+
+  m_trackVisual.Brush(fillColor);
+
+  float offsetY = ((SwitchConstants::trackHeight - thumbHeight) * m_layoutMetrics.pointScaleFactor) / 2.0f;
+
+  if (m_supressAnimationForNextFrame) {
+    m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::None);
+  }
+
+  if (switchProps->value) {
+    m_thumbVisual.Offset(
+        {(SwitchConstants::trackWidth - (SwitchConstants::thumbMargin + thumbWidth)) * m_layoutMetrics.pointScaleFactor,
+         offsetY,
+         0.0f});
+  } else {
+    m_thumbVisual.Offset({SwitchConstants::thumbMargin * m_layoutMetrics.pointScaleFactor, offsetY, 0.0f});
+  }
+  m_thumbVisual.Size({thumbWidth * m_layoutMetrics.pointScaleFactor, thumbHeight * m_layoutMetrics.pointScaleFactor});
+  m_thumbVisual.CornerRadius(
+      {(thumbHeight * m_layoutMetrics.pointScaleFactor) / 2.0f,
+       (thumbHeight * m_layoutMetrics.pointScaleFactor) / 2.0f});
+  m_thumbVisual.Brush(thumbFill);
+
+  if (m_supressAnimationForNextFrame) {
+    m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::SwitchThumb);
+    m_supressAnimationForNextFrame = false;
+  }
 }
 
 void SwitchComponentView::finalizeUpdates(
     winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask updateMask) noexcept {
-  ensureDrawingSurface();
+  if (m_visualUpdateRequired) {
+    m_visualUpdateRequired = false;
+    updateVisuals();
+  }
+
   Super::finalizeUpdates(updateMask);
-}
-
-void SwitchComponentView::Draw() noexcept {
-  POINT offset;
-
-  if (theme()->IsEmpty()) {
-    return;
-  }
-
-  ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, &offset);
-  if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
-    const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
-    auto &theme = *this->theme();
-
-    if (m_props->backgroundColor) {
-      d2dDeviceContext->Clear(theme.D2DColor(*m_props->backgroundColor));
-    } else {
-      d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
-    }
-
-    float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
-    float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
-
-    // https://github.com/microsoft/microsoft-ui-xaml/blob/winui2/main/dev/CommonStyles/ToggleSwitch_themeresources.xaml
-    constexpr float thumbMargin = 3.0f;
-    constexpr float thumbRadius = 7.0f;
-    constexpr float trackWidth = 40.0f;
-    constexpr float trackHeight = 20.0f;
-    constexpr float trackCornerRadius = 10.0f;
-
-    auto frame{m_layoutMetrics.frame.size};
-    float trackMarginX = (frame.width - trackWidth) / 2;
-    float trackMarginY = (frame.height - trackHeight) / 2;
-
-    D2D1_RECT_F trackRect = D2D1::RectF(
-        offsetX + trackMarginX,
-        offsetY + trackMarginY,
-        offsetX + trackMarginX + trackWidth,
-        offsetY + trackMarginY + trackHeight);
-
-    winrt::com_ptr<ID2D1SolidColorBrush> defaultBrush;
-
-    D2D1_COLOR_F defaultColor;
-    D2D1_COLOR_F fillColor;
-    winrt::Microsoft::ReactNative::Composition::IBrush thumbFill;
-
-    if (switchProps->value) {
-      if (switchProps->disabled) {
-        defaultColor = theme.D2DPlatformColor("ToggleSwitchStrokeOnDisabled");
-        fillColor = theme.D2DPlatformColor("ToggleSwitchFillOnDisabled");
-        thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOnDisabled");
-      } else if (m_pressed) {
-        defaultColor = theme.D2DPlatformColor("ToggleSwitchStrokeOnPressed");
-        fillColor = theme.D2DPlatformColor("ToggleSwitchFillOnPressed");
-        thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOnPressed");
-      } else if (m_hovered) {
-        defaultColor = theme.D2DPlatformColor("ToggleSwitchStrokeOnPointerOver");
-        fillColor = theme.D2DPlatformColor("ToggleSwitchFillOnPointerOver");
-        thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOnPointerOver");
-      } else {
-        defaultColor = theme.D2DPlatformColor("ToggleSwitchStrokeOn");
-        fillColor = theme.D2DPlatformColor("ToggleSwitchFillOn");
-        thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOn");
-      }
-    } else {
-      if (switchProps->disabled) {
-        defaultColor = theme.D2DPlatformColor("ToggleSwitchStrokeOffDisabled");
-        fillColor = theme.D2DPlatformColor("ToggleSwitchFillOffDisabled");
-        thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOffDisabled");
-      } else if (m_pressed) {
-        defaultColor = theme.D2DPlatformColor("ToggleSwitchStrokeOffPressed");
-        fillColor = theme.D2DPlatformColor("ToggleSwitchFillOffPressed");
-        thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOffPressed");
-      } else if (m_hovered) {
-        defaultColor = theme.D2DPlatformColor("ToggleSwitchStrokeOffPointerOver");
-        fillColor = theme.D2DPlatformColor("ToggleSwitchFillOffPointerOver");
-        thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOffPointerOver");
-      } else {
-        defaultColor = theme.D2DPlatformColor("ToggleSwitchStrokeOff");
-        fillColor = theme.D2DPlatformColor("ToggleSwitchFillOff");
-        thumbFill = theme.PlatformBrush("ToggleSwitchKnobFillOff");
-      }
-    }
-
-    winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(defaultColor, defaultBrush.put()));
-
-    if (!switchProps->disabled && switchProps->thumbTintColor) {
-      thumbFill = theme.Brush(*switchProps->thumbTintColor);
-    }
-
-    if (!switchProps->disabled && switchProps->onTintColor && switchProps->value) {
-      fillColor = theme.D2DColor(*switchProps->onTintColor);
-    } else if (!switchProps->disabled && switchProps->tintColor && !switchProps->value) {
-      fillColor = theme.D2DColor(*switchProps->tintColor);
-    }
-
-    const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-    float oldDpiX, oldDpiY;
-    d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-    d2dDeviceContext->SetDpi(dpi, dpi);
-
-    // switch track - outline
-    D2D1_ROUNDED_RECT track = D2D1::RoundedRect(trackRect, trackCornerRadius, trackCornerRadius);
-    if ((!switchProps->onTintColor && switchProps->value) || (!switchProps->tintColor && !switchProps->value)) {
-      d2dDeviceContext->DrawRoundedRectangle(track, defaultBrush.get());
-    }
-
-    // switch track - fill
-    winrt::com_ptr<ID2D1SolidColorBrush> trackBrush;
-    winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(fillColor, trackBrush.put()));
-    d2dDeviceContext->FillRoundedRectangle(track, trackBrush.get());
-
-    // switch thumb - made with composition
-    float thumbX = (trackMarginX + thumbMargin) * m_layoutMetrics.pointScaleFactor;
-    float thumbY = (trackMarginY + thumbMargin) * m_layoutMetrics.pointScaleFactor;
-
-    if (switchProps->value) {
-      thumbX = (trackMarginX + trackWidth - thumbRadius - thumbRadius - thumbMargin) * m_layoutMetrics.pointScaleFactor;
-    }
-
-    // handles various mouse events
-    if (m_pressed && !switchProps->disabled) {
-      m_thumbVisual.AnimatePosition({thumbX - 0.8f, thumbY - 0.8f});
-    } else if (m_hovered && !switchProps->disabled) {
-      m_thumbVisual.Size(
-          {thumbRadius * m_layoutMetrics.pointScaleFactor + 0.8f,
-           thumbRadius * m_layoutMetrics.pointScaleFactor + 0.8f});
-    } else {
-      m_thumbVisual.Size(
-          {thumbRadius * m_layoutMetrics.pointScaleFactor, thumbRadius * m_layoutMetrics.pointScaleFactor});
-      m_thumbVisual.AnimatePosition({thumbX, thumbY});
-    }
-
-    m_thumbVisual.Brush(thumbFill);
-
-    // Restore old dpi setting
-    d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
-  }
 }
 
 void SwitchComponentView::prepareForRecycle() noexcept {}
@@ -245,27 +251,15 @@ void SwitchComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
     OuterVisual().InsertAt(m_visual, 0);
-  }
 
-  if (!m_thumbVisual) {
-    m_thumbVisual = m_compContext.CreateSwitchThumbVisual();
-    m_visual.InsertAt(m_thumbVisual.InnerVisual(), 0);
-  }
-}
+    m_trackVisual = m_compContext.CreateRoundedRectangleVisual();
+    m_visual.InsertAt(m_trackVisual, 0);
 
-void SwitchComponentView::ensureDrawingSurface() noexcept {
-  if (!m_drawingSurface) {
-    winrt::Windows::Foundation::Size surfaceSize = {
-        m_layoutMetrics.frame.size.width * m_layoutMetrics.pointScaleFactor,
-        m_layoutMetrics.frame.size.height * m_layoutMetrics.pointScaleFactor};
-    m_drawingSurface = m_compContext.CreateDrawingSurfaceBrush(
-        surfaceSize,
-        winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-        winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+    m_thumbVisual = m_compContext.CreateRoundedRectangleVisual();
+    m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::SwitchThumb);
+    m_trackVisual.InsertAt(m_thumbVisual, 0);
 
-    Draw();
-
-    m_visual.Brush(m_drawingSurface);
+    handleScaleChange();
   }
 }
 
@@ -291,7 +285,7 @@ winrt::Microsoft::ReactNative::Composition::IVisual SwitchComponentView::Visual(
 }
 
 void SwitchComponentView::onThemeChanged() noexcept {
-  Draw();
+  updateVisuals();
   Super::onThemeChanged();
 }
 
@@ -306,15 +300,13 @@ void SwitchComponentView::onPointerPressed(
 
   if (!switchProps->disabled) {
     m_pressed = true;
+    m_supressAnimationForNextFrame = true;
 
     if (auto root = rootComponentView()) {
       root->TrySetFocusedComponent(*get_strong());
     }
-    if (toggle()) {
-      args.Handled(true);
-    }
 
-    Draw();
+    updateVisuals();
   }
 }
 
@@ -324,19 +316,28 @@ void SwitchComponentView::onPointerReleased(
   if (!args.GetCurrentPoint(-1).Properties().IsPrimary()) {
     return;
   }
+
+  if (toggle()) {
+    args.Handled(true);
+  } else {
+    m_supressAnimationForNextFrame = true;
+  }
+
   m_pressed = false;
 }
 
 void SwitchComponentView::onPointerEntered(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   m_hovered = true;
-  Draw();
+  m_supressAnimationForNextFrame = true;
+  updateVisuals();
 }
 
 void SwitchComponentView::onPointerExited(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   m_hovered = false;
-  Draw();
+  m_supressAnimationForNextFrame = true;
+  updateVisuals();
 }
 
 void SwitchComponentView::onKeyUp(

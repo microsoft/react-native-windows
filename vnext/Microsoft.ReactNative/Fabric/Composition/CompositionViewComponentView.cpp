@@ -1818,9 +1818,8 @@ bool walkTree(
       uint32_t index;
       bool success = parent.Children().IndexOf(current, index);
       assert(success);
-      --index;
-      if (index >= 0) {
-        auto lastChild = lastDeepChild(parent.Children().GetAt(index));
+      if (index > 0) {
+        auto lastChild = lastDeepChild(parent.Children().GetAt(index - 1));
         if (fn(lastChild))
           return true;
         return walkTree(lastChild, false, fn);
