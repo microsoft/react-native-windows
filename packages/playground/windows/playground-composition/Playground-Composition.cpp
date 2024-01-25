@@ -285,8 +285,10 @@ struct WindowData {
 
         if (m_compRootView) {
           winrt::Windows::Foundation::Size size{m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
-          m_compRootView.Arrange(size);
-          m_compRootView.Size(size);
+          if (!IsIconic(hwnd)) {
+            m_compRootView.Arrange(size);
+            m_compRootView.Size(size);
+          }
         }
       }
     }
