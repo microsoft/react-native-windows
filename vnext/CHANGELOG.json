@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 25 Jan 2024 06:14:16 GMT",
+      "version": "0.0.0-canary.758",
+      "tag": "react-native-windows_v0.0.0-canary.758",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4aa4d0366368d94d7650e3b246ae7e7cf50d3cab",
+            "comment": "[Fabric] Do not run a 0,0 layout when minimizing the window"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "33f6db7c0d4ca13d5defee15591c057415bd66d4",
+            "comment": "reenable shadowprops and tests"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "59711c84fe6be503f0baca64ee80df3623a179ed",
+            "comment": "Stub impl of DebuggingOverlay to remove errors when running react-devtools"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e34cf2ed8380bddea1e9ea8cd1aa15b18b519369",
+            "comment": "[Fabric] Update switch visuals to newer fluent visuals"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 24 Jan 2024 06:14:14 GMT",
       "version": "0.0.0-canary.757",
       "tag": "react-native-windows_v0.0.0-canary.757",
