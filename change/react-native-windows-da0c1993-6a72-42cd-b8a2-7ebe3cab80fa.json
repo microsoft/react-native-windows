@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Stub impl of DebuggingOverlay to remove errors when running react-devtools",
+  "comment": "[Fabric] Fix issue causing PointerMove events to have incorrect position when using WM_msg input",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

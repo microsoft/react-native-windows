@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "reenable shadowprops and tests",
+  "comment": "Add ARM64 to new arch templates",
   "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
+  "email": "jthysell@microsoft.com",
   "dependentChangeType": "patch"
 }

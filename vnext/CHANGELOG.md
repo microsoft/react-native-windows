@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 24 Jan 2024 06:14:14 GMT and should not be manually modified.
+This log was last generated on Thu, 25 Jan 2024 06:14:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.758
+
+Thu, 25 Jan 2024 06:14:16 GMT
+
+### Changes
+
+- [Fabric] Do not run a 0,0 layout when minimizing the window (30809111+acoates-ms@users.noreply.github.com)
+- reenable shadowprops and tests (tatianakapos@microsoft.com)
+- Stub impl of DebuggingOverlay to remove errors when running react-devtools (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Update switch visuals to newer fluent visuals (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.757
 
