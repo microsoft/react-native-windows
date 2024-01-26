@@ -79,7 +79,7 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   [webhosthidden]
   [default_interface]
-  unsealed runtimeclass UnimplementedNativeViewComponentView : ComponentView {
+  unsealed runtimeclass UnimplementedNativeViewComponentView : ViewComponentView {
   };
 
   [experimental]
