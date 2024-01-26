@@ -7,6 +7,9 @@
 #include <Utils/CppWinrtLessExceptions.h>
 #include <Utils/WinRTConversions.h>
 
+// Boost Libraries
+#include <boost/algorithm/string.hpp>
+
 // MSO
 #include <dispatchQueue/dispatchQueue.h>
 
@@ -355,8 +358,7 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
   bool hasOriginHeader = false;
   for (const auto &header : options) {
     m_socket.SetRequestHeader(header.first, winrt::to_hstring(header.second));
-    if (header.first == L"Origin") // TODO: make case-insensitive compariseon
-    {
+    if (boost::iequals(header.first, L"Origin")) {
       hasOriginHeader = true;
     }
   }
@@ -392,7 +394,7 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
     if (scheme == L"ws") {
       scheme = L"http";
     } else if (scheme == L"wss") {
-      scheme = L"wss";
+      scheme = L"https";
     }
 
     auto origin = winrt::hstring{scheme + L"://" + host + L":" + winrt::to_hstring(port)};
