@@ -23,6 +23,7 @@ void ActivityIndicatorViewManager::GetNativeProps(const winrt::Microsoft::ReactN
 
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"animating", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"color", L"Color");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"size", L"string");
 }
 
 ShadowNode *Microsoft::ReactNative::ActivityIndicatorViewManager::createShadow() const {

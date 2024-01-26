@@ -60,6 +60,19 @@ void ActivityIndicatorComponentView::updateProps(
 
   ensureVisual();
 
+  if (newViewProps->testId != oldViewProps->testId) {
+    m_visual.Comment(winrt::to_hstring(newViewProps->testId));
+  }
+
+  // update size if needed
+  if (newViewProps->size != oldViewProps->size) {
+    if (newViewProps->size == facebook::react::ActivityIndicatorViewSize::Small) {
+      m_ActivityIndicatorVisual.Size(m_radiusSmall);
+    } else {
+      m_ActivityIndicatorVisual.Size(m_radiusLarge);
+    }
+  }
+
   // update color if needed
   if (!oldProps || newViewProps->color != oldViewProps->color) {
     updateProgressColor(newViewProps->color);
