@@ -726,7 +726,8 @@ void ChakraRuntime::RewriteErrorMessage(JsValueRef jsError) {
     JsGetAndClearException(&ignoreJSError);
   } else if (GetValueType(message) == JsValueType::JsString) {
     // JSI unit tests expect V8 or JSC like message for stack overflow.
-    if (StringToPointer(message) == L"Out of stack space") {
+    std::wstring_view errorMessage = StringToPointer(message);
+    if (errorMessage == L"Out of stack space") {
       SetProperty(jsError, m_propertyId.message, PointerToString(L"RangeError : Maximum call stack size exceeded"));
     } else if (errorMessage == L"Syntax error") {
       JsValueRef result;
