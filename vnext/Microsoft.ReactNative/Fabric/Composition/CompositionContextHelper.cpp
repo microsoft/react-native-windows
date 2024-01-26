@@ -980,7 +980,8 @@ struct CompActivityVisual : winrt::implements<
     }
   }
 
-  typename TTypeRedirects::ShapeVisual createLoadingCircle(typename TTypeRedirects::Compositor compositor, int delay, float radius) noexcept {
+  typename TTypeRedirects::ShapeVisual
+  createLoadingCircle(typename TTypeRedirects::Compositor compositor, int delay, float radius) noexcept {
     // center
     float ringWidth = radius / 4.5f;
     float centerX = radius + ringWidth;

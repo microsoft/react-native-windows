@@ -60,6 +60,10 @@ void ActivityIndicatorComponentView::updateProps(
 
   ensureVisual();
 
+  if (newViewProps->testId != oldViewProps->testId) {
+    m_visual.Comment(winrt::to_hstring(newViewProps->testId));
+  }
+
   // update size if needed
   if (newViewProps->size != oldViewProps->size) {
     if (newViewProps->size == facebook::react::ActivityIndicatorViewSize::Small) {
