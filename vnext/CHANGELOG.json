@@ -2,6 +2,35 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 Jan 2024 06:13:32 GMT",
+      "version": "0.0.0-canary.759",
+      "tag": "react-native-windows_v0.0.0-canary.759",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "404db90effa8b7d39d6a1d7a6e683e9b13966306",
+            "comment": "Add ARM64 to new arch templates"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5217a033adb4f0703436a6763551c04541555391",
+            "comment": "[Fabric] Fix issue causing PointerMove events to have incorrect position when using WM_msg input"
+          }
+        ],
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e447f2d2a2991dc49df4e2b759566a7b65d6dc64",
+            "comment": "Out of date generated files"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Jan 2024 06:14:16 GMT",
       "version": "0.0.0-canary.758",
       "tag": "react-native-windows_v0.0.0-canary.758",

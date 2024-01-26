@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 25 Jan 2024 06:14:16 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Jan 2024 06:13:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.759
+
+Fri, 26 Jan 2024 06:13:32 GMT
+
+### Changes
+
+- Add ARM64 to new arch templates (jthysell@microsoft.com)
+- [Fabric] Fix issue causing PointerMove events to have incorrect position when using WM_msg input (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.758
 
