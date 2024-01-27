@@ -58,6 +58,8 @@ struct ActivityIndicatorComponentView
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::Composition::IActivityVisual m_ActivityIndicatorVisual{nullptr};
   facebook::react::SharedViewProps m_props;
+  float m_radiusSmall = 8.0f;
+  float m_radiusLarge = 16.0f;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

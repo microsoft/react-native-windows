@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Add ARM64 to new arch templates",
+  "comment": "add size to Fabric ActivityIndicator",
   "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
+  "email": "tatianakapos@microsoft.com",
   "dependentChangeType": "patch"
 }

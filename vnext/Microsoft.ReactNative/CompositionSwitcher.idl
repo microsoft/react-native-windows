@@ -117,6 +117,7 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   interface IActivityVisual requires IVisual
   {
+    void Size(Single value);
     void Brush(IBrush brush);
   }
 
