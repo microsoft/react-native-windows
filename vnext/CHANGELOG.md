@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 26 Jan 2024 06:13:32 GMT and should not be manually modified.
+This log was last generated on Sat, 27 Jan 2024 06:13:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.760
+
+Sat, 27 Jan 2024 06:13:39 GMT
+
+### Changes
+
+- add size to Fabric ActivityIndicator (tatianakapos@microsoft.com)
+- Include line/column numbers on syntax error (4123478+tido64@users.noreply.github.com)
 
 ## 0.0.0-canary.759
 

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Include line/column numbers on syntax error",
-  "packageName": "react-native-windows",
-  "email": "4123478+tido64@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
