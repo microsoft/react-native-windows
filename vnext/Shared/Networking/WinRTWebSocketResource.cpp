@@ -372,6 +372,23 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
   Uri uri{nullptr};
   try {
     uri = Uri{winrt::to_hstring(url)};
+
+    // #12626 - If Origin header is not provided, set to connect endpoint.
+    if (!hasOriginHeader) {
+      auto scheme = uri.SchemeName();
+      auto host = uri.Host();
+      auto port = uri.Port();
+
+      if (scheme == L"ws") {
+        scheme = L"http";
+      } else if (scheme == L"wss") {
+        scheme = L"https";
+      }
+
+      auto origin = winrt::hstring{scheme + L"://" + host + L":" + winrt::to_hstring(port)};
+      m_socket.SetRequestHeader(L"Origin", std::move(origin));
+    }
+
   } catch (hresult_error const &e) {
     if (m_errorHandler) {
       m_errorHandler({Utilities::HResultToString(e), ErrorType::Connection});
@@ -383,22 +400,6 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
     m_connectRequested = false;
 
     return;
-  }
-
-  // #12626 - If Origin header is not provided, set to connect endpoint.
-  if (!hasOriginHeader) {
-    auto scheme = uri.SchemeName();
-    auto host = uri.Host();
-    auto port = uri.Port();
-
-    if (scheme == L"ws") {
-      scheme = L"http";
-    } else if (scheme == L"wss") {
-      scheme = L"https";
-    }
-
-    auto origin = winrt::hstring{scheme + L"://" + host + L":" + winrt::to_hstring(port)};
-    m_socket.SetRequestHeader(L"Origin", std::move(origin));
   }
 
   m_connectRequested = true;
