@@ -25,6 +25,8 @@ struct UnimplementedNativeViewComponentView
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
 
+  void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
+
   UnimplementedNativeViewComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,

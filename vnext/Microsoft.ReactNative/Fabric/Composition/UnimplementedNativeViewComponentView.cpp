@@ -29,6 +29,10 @@ winrt::Microsoft::ReactNative::ComponentView UnimplementedNativeViewComponentVie
   return winrt::make<UnimplementedNativeViewComponentView>(compContext, tag, reactContext);
 }
 
+void UnimplementedNativeViewComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
+  // Do not call base to avoid unknown command asserts
+}
+
 void UnimplementedNativeViewComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
