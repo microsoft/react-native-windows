@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 29 Jan 2024 16:14:52 GMT",
+      "tag": "react-native-windows_v0.72.26",
+      "version": "0.72.26",
+      "comments": {
+        "patch": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "cdd8a1b06b10e48fdc6ca5a27699c802c12f031b",
+            "comment": "backport change"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Jan 2024 16:13:55 GMT",
       "tag": "react-native-windows_v0.72.25",
       "version": "0.72.25",
