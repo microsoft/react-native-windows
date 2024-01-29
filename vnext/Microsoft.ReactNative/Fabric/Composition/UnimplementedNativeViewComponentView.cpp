@@ -29,7 +29,9 @@ winrt::Microsoft::ReactNative::ComponentView UnimplementedNativeViewComponentVie
   return winrt::make<UnimplementedNativeViewComponentView>(compContext, tag, reactContext);
 }
 
-void UnimplementedNativeViewComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
+void UnimplementedNativeViewComponentView::handleCommand(
+    std::string const &commandName,
+    folly::dynamic const &arg) noexcept {
   // Do not call base to avoid unknown command asserts
 }
 
