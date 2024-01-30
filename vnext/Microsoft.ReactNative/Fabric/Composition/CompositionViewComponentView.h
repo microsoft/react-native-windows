@@ -72,8 +72,11 @@ struct CompositionBaseComponentView : public ComponentViewT<
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
   void onPointerMoved(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  void onPointerCaptureLost() noexcept override;
   void onPointerWheelChanged(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
+  bool CapturePointer(const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer) noexcept;
+  void ReleasePointerCapture(const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer) noexcept;
 
   void onKeyDown(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,

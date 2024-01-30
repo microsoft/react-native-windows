@@ -129,8 +129,12 @@ HRESULT RootComponentView::GetFragmentRoot(IRawElementProviderFragmentRoot **pRe
   if (uiManager == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  auto uiaProvider = uiManager->GetUiaFragmentProvider(Tag());
-  auto spFragmentRoot = uiaProvider.as<IRawElementProviderFragmentRoot>();
+  auto rootView = uiManager->GetCompositionRootView(Tag());
+  if (!rootView) {
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  }
+
+  auto spFragmentRoot = rootView.GetUiaProvider().as<IRawElementProviderFragmentRoot>();
   if (spFragmentRoot) {
     *pRetVal = spFragmentRoot.detach();
   }

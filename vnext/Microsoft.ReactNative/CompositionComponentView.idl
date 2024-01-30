@@ -4,6 +4,7 @@
 import "ComponentView.idl";
 import "Theme.idl";
 import "ViewProps.idl";
+import "Composition.Input.idl";
 
 #include "DocString.h"
 
@@ -14,6 +15,8 @@ namespace Microsoft.ReactNative.Composition
   [webhosthidden]
   unsealed runtimeclass ComponentView : Microsoft.ReactNative.ComponentView {
     Theme Theme;
+    Boolean CapturePointer(Microsoft.ReactNative.Composition.Input.Pointer pointer);
+    void ReleasePointerCapture(Microsoft.ReactNative.Composition.Input.Pointer pointer);
   };
 
   [experimental]
