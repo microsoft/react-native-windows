@@ -105,7 +105,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Cxx",
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactCommon.UnitTests", "ReactCommon.UnitTests\ReactCommon.UnitTests.vcxproj", "{B0941079-7441-4A69-868C-FE5EC62C2E9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestServices", "TestServices\TestServices.csproj", "{C5B2EB41-849E-41F7-BC70-DEFF26F09E5E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Microsoft.ReactNative.Test.Services", "TestServices\Microsoft.ReactNative.Test.Services.csproj", "{C5B2EB41-849E-41F7-BC70-DEFF26F09E5E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
