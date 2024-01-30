@@ -179,11 +179,9 @@ void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept
   m_surfaceManager->stopSurface(surfaceId);
 }
 
-winrt::IInspectable FabricUIManager::GetUiaFragmentProvider(facebook::react::SurfaceId surfaceId) const noexcept {
-  if (auto strong = m_surfaceRegistry.at(surfaceId).wkRootView.get()) {
-    return strong.GetUiaProvider();
-  }
-  return nullptr;
+winrt::Microsoft::ReactNative::CompositionRootView FabricUIManager::GetCompositionRootView(
+    facebook::react::SurfaceId surfaceId) const noexcept {
+  return m_surfaceRegistry.at(surfaceId).wkRootView.get();
 }
 
 facebook::react::Size FabricUIManager::measureSurface(

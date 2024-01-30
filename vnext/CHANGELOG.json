@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 27 Jan 2024 06:13:39 GMT",
+      "version": "0.0.0-canary.760",
+      "tag": "react-native-windows_v0.0.0-canary.760",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0fdda233f44ad3e8d34b601fe26c808fd7d04ab8",
+            "comment": "add size to Fabric ActivityIndicator"
+          },
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2808bfb73a95d0d95cfcc10d1bcba91c93b41317",
+            "comment": "Include line/column numbers on syntax error"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Jan 2024 06:13:32 GMT",
       "version": "0.0.0-canary.759",
       "tag": "react-native-windows_v0.0.0-canary.759",

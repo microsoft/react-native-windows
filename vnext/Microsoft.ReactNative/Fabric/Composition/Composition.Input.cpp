@@ -122,6 +122,17 @@ winrt::Windows::UI::Core::CorePhysicalKeyStatus CharacterReceivedRoutedEventArgs
   return m_keyStatus;
 }
 
+Pointer::Pointer(winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType type, uint32_t id)
+    : m_type(type), m_id(id) {}
+
+winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType Pointer::PointerDeviceType() const noexcept {
+  return m_type;
+}
+
+uint32_t Pointer::PointerId() const noexcept {
+  return m_id;
+}
+
 #ifdef USE_WINUI3
 PointerPointProperties::PointerPointProperties(const winrt::Microsoft::UI::Input::PointerPointProperties &ppp)
     : m_sysPointerPointProps(ppp) {}
@@ -388,7 +399,7 @@ PointerPoint::PointerPoint(
 PointerPoint::PointerPoint(HWND hwnd, uint32_t msg, uint64_t wParam, int64_t lParam, float scaleFactor)
     : PointerPoint(hwnd, msg, wParam, lParam, scaleFactor, {0, 0}) {}
 
-uint32_t PointerPoint::FrameId() noexcept {
+uint32_t PointerPoint::FrameId() const noexcept {
 #ifdef USE_WINUI3
   if (m_sysPointerPoint) {
     return m_sysPointerPoint.FrameId();
@@ -397,7 +408,7 @@ uint32_t PointerPoint::FrameId() noexcept {
   return m_pi.frameId;
 }
 
-bool PointerPoint::IsInContact() noexcept {
+bool PointerPoint::IsInContact() const noexcept {
 #ifdef USE_WINUI3
   if (m_sysPointerPoint) {
     return m_sysPointerPoint.IsInContact();
@@ -406,7 +417,7 @@ bool PointerPoint::IsInContact() noexcept {
   return ((m_pi.pointerFlags & POINTER_FLAG_INCONTACT) == POINTER_FLAG_INCONTACT);
 }
 
-winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType PointerPoint::PointerDeviceType() noexcept {
+winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType PointerPoint::PointerDeviceType() const noexcept {
 #ifdef USE_WINUI3
   if (m_sysPointerPoint) {
     return static_cast<winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType>(
@@ -432,7 +443,7 @@ winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType PointerPoin
   return winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse;
 }
 
-uint32_t PointerPoint::PointerId() noexcept {
+uint32_t PointerPoint::PointerId() const noexcept {
 #ifdef USE_WINUI3
   if (m_sysPointerPoint) {
     return m_sysPointerPoint.PointerId();
@@ -441,7 +452,7 @@ uint32_t PointerPoint::PointerId() noexcept {
   return (m_pi.pointerId ? m_pi.pointerId : 1 /* MOUSE */);
 }
 
-winrt::Windows::Foundation::Point PointerPoint::Position() noexcept {
+winrt::Windows::Foundation::Point PointerPoint::Position() const noexcept {
 #ifdef USE_WINUI3
   if (m_sysPointerPoint) {
     auto pos = m_sysPointerPoint.Position();
@@ -461,7 +472,7 @@ winrt::Windows::Foundation::Point PointerPoint::Position() noexcept {
       static_cast<float>(clientPoint.y / m_scaleFactor) - (m_offset.Y / m_scaleFactor)};
 }
 
-winrt::Microsoft::ReactNative::Composition::Input::PointerPointProperties PointerPoint::Properties() noexcept {
+winrt::Microsoft::ReactNative::Composition::Input::PointerPointProperties PointerPoint::Properties() const noexcept {
 #ifdef USE_WINUI3
   if (m_sysPointerPoint) {
     return winrt::make<PointerPointProperties>(m_sysPointerPoint.Properties());
@@ -583,7 +594,7 @@ winrt::Microsoft::ReactNative::Composition::Input::PointerPointProperties Pointe
   );
 }
 
-uint64_t PointerPoint::Timestamp() noexcept {
+uint64_t PointerPoint::Timestamp() const noexcept {
 #ifdef USE_WINUI3
   if (m_sysPointerPoint) {
     return m_sysPointerPoint.Timestamp();
@@ -593,7 +604,7 @@ uint64_t PointerPoint::Timestamp() noexcept {
 }
 
 winrt::Microsoft::ReactNative::Composition::Input::PointerPoint PointerPoint::GetOffsetPoint(
-    const winrt::Windows::Foundation::Point &offset) noexcept {
+    const winrt::Windows::Foundation::Point &offset) const noexcept {
 #ifdef USE_WINUI3
   if (m_sysPointerPoint) {
     return winrt::make<PointerPoint>(m_sysPointerPoint, m_scaleFactor, offset);
@@ -602,7 +613,7 @@ winrt::Microsoft::ReactNative::Composition::Input::PointerPoint PointerPoint::Ge
   return winrt::make<PointerPoint>(m_hwnd, m_msg, m_wParam, m_lParam, m_scaleFactor, offset);
 }
 
-bool PointerPoint::IsPointerMessage(uint32_t message) noexcept {
+bool PointerPoint::IsPointerMessage(uint32_t message) const noexcept {
   constexpr uint32_t WM_POINTERFIRST = 0x0245;
   constexpr uint32_t WM_POINTERLAST = 0x0257;
   return (message >= WM_POINTERFIRST && message <= WM_POINTERLAST);
@@ -637,6 +648,11 @@ winrt::Microsoft::ReactNative::Composition::Input::PointerPoint PointerRoutedEve
           ->getClientRect();
 
   return m_pointerPoint.GetOffsetPoint({static_cast<float>(clientRect.left), static_cast<float>(clientRect.top)});
+}
+
+winrt::Microsoft::ReactNative::Composition::Input::Pointer PointerRoutedEventArgs::Pointer() const noexcept {
+  return winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::Pointer>(
+      m_pointerPoint.PointerDeviceType(), m_pointerPoint.PointerId());
 }
 
 bool PointerRoutedEventArgs::Handled() noexcept {

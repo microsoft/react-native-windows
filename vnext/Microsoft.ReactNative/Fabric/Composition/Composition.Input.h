@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
+#include "Composition.Input.Pointer.g.h"
 #include "Composition.Input.PointerPoint.g.h"
 #include "Composition.Input.PointerPointProperties.g.h"
 #include "Composition.Input.PointerRoutedEventArgs.g.h"
@@ -63,6 +64,17 @@ struct CharacterReceivedRoutedEventArgs
   bool m_handled{false};
   int32_t m_keycode;
   winrt::Windows::UI::Core::CorePhysicalKeyStatus m_keyStatus;
+};
+
+struct Pointer : PointerT<Pointer> {
+  Pointer(winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType type, uint32_t id);
+
+  winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType PointerDeviceType() const noexcept;
+  uint32_t PointerId() const noexcept;
+
+ private:
+  winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType m_type;
+  uint32_t m_id;
 };
 
 struct PointerPointProperties : PointerPointPropertiesT<PointerPointProperties> {
@@ -159,18 +171,18 @@ struct PointerPoint : PointerPointT<PointerPoint> {
       float scaleFactor,
       const winrt::Windows::Foundation::Point &offset);
 
-  uint32_t FrameId() noexcept;
-  bool IsInContact() noexcept;
-  PointerDeviceType PointerDeviceType() noexcept;
-  uint32_t PointerId() noexcept;
-  winrt::Windows::Foundation::Point Position() noexcept;
-  winrt::Microsoft::ReactNative::Composition::Input::PointerPointProperties Properties() noexcept;
-  uint64_t Timestamp() noexcept;
+  uint32_t FrameId() const noexcept;
+  bool IsInContact() const noexcept;
+  PointerDeviceType PointerDeviceType() const noexcept;
+  uint32_t PointerId() const noexcept;
+  winrt::Windows::Foundation::Point Position() const noexcept;
+  winrt::Microsoft::ReactNative::Composition::Input::PointerPointProperties Properties() const noexcept;
+  uint64_t Timestamp() const noexcept;
   winrt::Microsoft::ReactNative::Composition::Input::PointerPoint GetOffsetPoint(
-      const winrt::Windows::Foundation::Point &offset) noexcept;
+      const winrt::Windows::Foundation::Point &offset) const noexcept;
 
  private:
-  bool IsPointerMessage(uint32_t message) noexcept;
+  bool IsPointerMessage(uint32_t message) const noexcept;
 
   // Windows::Input
 #ifdef USE_WINUI3
@@ -198,6 +210,7 @@ struct PointerRoutedEventArgs : PointerRoutedEventArgsT<PointerRoutedEventArgs> 
 
   int32_t OriginalSource() noexcept;
   winrt::Microsoft::ReactNative::Composition::Input::PointerPoint GetCurrentPoint(int32_t tag) noexcept;
+  winrt::Microsoft::ReactNative::Composition::Input::Pointer Pointer() const noexcept;
   bool Handled() noexcept;
   void Handled(bool value) noexcept;
   winrt::Windows::System::VirtualKeyModifiers KeyModifiers() noexcept;
