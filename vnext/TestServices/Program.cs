@@ -20,6 +20,12 @@ app.Map("/h0", () => "HTTP Response #0");
 //TODO: route ws://localhost:5555/ here
 app.Map("/ws", async context =>
 {
+  if (context.WebSockets.IsWebSocketRequest)
+  {
+    context.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
+    return;
+  }
+
   //TODO: Print?
   //TODO: Rename. Not a message.
   var startupMessage = @"
@@ -43,10 +49,19 @@ An incoming message of 'exit' will shut down the server.
   {
     if (ws.State == WebSocketState.Open)
     {
-      // Read incoming message
-      var inputBytes = new byte[1024];
-      await ws.ReceiveAsync(new ArraySegment<byte>(inputBytes), CancellationToken.None);
-      var inputMessage = Encoding.UTF8.GetString(inputBytes, 0, inputBytes.Length);
+      async Task<string> receiveMessage(WebSocket socket)
+      {
+        // Read incoming message
+        var inputBytes = new byte[1024];
+        WebSocketReceiveResult result;
+        do
+        {
+          result = await socket.ReceiveAsync(new ArraySegment<byte>(inputBytes), CancellationToken.None);
+        } while (result != null && result.Count > 0 && result.MessageType != WebSocketMessageType.Close);
+
+        return Encoding.UTF8.GetString(inputBytes, 0, inputBytes.Length);
+      };
+      var inputMessage = await receiveMessage(ws);
       await Console.Out.WriteLineAsync($"Received message: {inputMessage}");
 
       if (inputMessage == "exit")
