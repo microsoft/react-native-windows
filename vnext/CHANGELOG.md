@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 27 Jan 2024 06:13:39 GMT and should not be manually modified.
+This log was last generated on Tue, 30 Jan 2024 06:14:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.761
+
+Tue, 30 Jan 2024 06:14:07 GMT
+
+### Changes
+
+- [Fabric] Capture pointer input during scroll thumb drag (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Allow unimplemented native views to have children (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.760
 
