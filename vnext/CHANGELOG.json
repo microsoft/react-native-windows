@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 30 Jan 2024 06:14:07 GMT",
+      "version": "0.0.0-canary.761",
+      "tag": "react-native-windows_v0.0.0-canary.761",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5d330cde7cad00444b80c0981ec42702f0641988",
+            "comment": "[Fabric] Capture pointer input during scroll thumb drag"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "dda217f8dbe1d41587f9b69ac415154923799aa8",
+            "comment": "[Fabric] Allow unimplemented native views to have children"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 27 Jan 2024 06:13:39 GMT",
       "version": "0.0.0-canary.760",
       "tag": "react-native-windows_v0.0.0-canary.760",
