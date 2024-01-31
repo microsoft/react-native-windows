@@ -6,6 +6,7 @@ var webHost = builder.WebHost;
 webHost.UseUrls(
   "http://localhost:5555",
   "http://localhost:7777",
+  "http://localhost:5193",
   "https://localhost:44355"
   );
 
@@ -20,7 +21,7 @@ app.Map("/h0", () => "HTTP Response #0");
 //TODO: route ws://localhost:5555/ here
 app.Map("/ws", async context =>
 {
-  if (context.WebSockets.IsWebSocketRequest)
+  if (!context.WebSockets.IsWebSocketRequest)
   {
     context.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
     return;
