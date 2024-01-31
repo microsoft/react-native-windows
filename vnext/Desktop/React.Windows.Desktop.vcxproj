@@ -116,7 +116,7 @@
         $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
+      <AdditionalOptions>/await %(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
