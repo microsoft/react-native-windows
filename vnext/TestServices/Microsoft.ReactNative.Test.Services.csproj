@@ -4,6 +4,8 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <IntDir>$(IntDir)$(TargetFramework)\</IntDir>
+    <OutDir>$(OutDir)$(TargetFramework)\</OutDir>
   </PropertyGroup>
 
 </Project>
