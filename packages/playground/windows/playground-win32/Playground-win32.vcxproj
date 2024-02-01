@@ -94,6 +94,11 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(UseHermes)'=='true'">
+    <ClCompile>
+      <PreprocessorDefinitions>USE_HERMES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="AutolinkedNativeModules.g.h" />
     <ClInclude Include="pch.h" />
