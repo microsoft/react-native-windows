@@ -71,7 +71,7 @@ void WindowsModalHostComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  CreateDialogA();
+  //CreateDialogA();
   // TODO: RedBox placeholder for Modal (taken from unimplementedNativeViewComponent)
   // if (m_layoutMetrics.frame.size != layoutMetrics.frame.size || m_layoutMetrics.pointScaleFactor !=
   // layoutMetrics.pointScaleFactor) { // layout is never set?
