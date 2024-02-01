@@ -9,9 +9,7 @@ param (
 
 	[switch] $Preload,
 
-	[int] $SleepSeconds = 10,
-
-	[switch] $UseNodeWsServer
+	[int] $SleepSeconds = 10
 )
 
 Write-Host "Starting packager"
@@ -25,17 +23,6 @@ Start-Process npm	-PassThru `
 				-OutVariable packagerProc
 
 Write-Host 'Started packager'
-
-if ($UseNodeWsServer.IsPresent) {
-	Write-Host 'Starting WebSocket server'
-
-	Start-Process	-PassThru `
-					-FilePath (Get-Command node.exe).Definition `
-					-ArgumentList "${SourcesDirectory}\IntegrationTests\websocket_integration_test_server.js" `
-					-OutVariable wsProc
-	
-	Write-Host 'Started WebSocket server'
-}
 
 if ($Preload) {
 	Write-Host 'Preloading bundles'
