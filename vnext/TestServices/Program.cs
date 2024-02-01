@@ -25,7 +25,6 @@ app.Map("/", async context =>
     return;
   }
 
-  //TODO: Rename. Not a message.
   var announcement = @"
 WebSocket integration test server
 
