@@ -5,9 +5,10 @@ Playground is a sample standalone application that allows testing of various JS 
 # Launching and Editing
 ## Launching the app
 
-1. Clone [this (react-native-windows)](https://github.com/microsoft/react-native-windows) repository 
+1. Clone [this (react-native-windows)](https://github.com/microsoft/react-native-windows) repository (or your own fork of it, if you intend on submitting PRs)
 
-1. Make sure your development machine has been set up with all the system requirements and dependencies.  These can be verified/installed by running `.\vnext\Scripts\rnw-dependencies.ps1 -Tags rnwDev` from an elevated powershell prompt.
+1. Make sure your development machine has been set up with all the system requirements and dependencies.  These can be verified/installed by running `.\vnext\Scripts\rnw-dependencies.ps1 -Tags 'rnwDev'` from an elevated powershell prompt.
+    > **Note:** The script defaults to Visual Studio Community Edition. If you're using (or want to use) Visual Studio Enterprise Edition, run `.\vnext\Scripts\rnw-dependencies.ps1 -Tags 'rnwDev' -Enterprise`.
 
 1. Install JavaScript dependencies within the repo by running `yarn` at the root of the repo.
 
