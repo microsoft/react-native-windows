@@ -15,8 +15,10 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 struct WindowsModalHostComponentView
-    : WindowsModalHostComponentViewT<WindowsModalHostComponentView, CompositionBaseComponentView> {
-  using Super = WindowsModalHostComponentViewT<WindowsModalHostComponentView, CompositionBaseComponentView>;
+    : public winrt::Microsoft::ReactNative::Composition::implementation::
+          WindowsModalHostComponentViewT<WindowsModalHostComponentView, CompositionBaseComponentView> {
+  using Super = winrt::Microsoft::ReactNative::Composition::implementation::
+      WindowsModalHostComponentViewT<WindowsModalHostComponentView, CompositionBaseComponentView>;
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
@@ -52,8 +54,8 @@ struct WindowsModalHostComponentView
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
  private:
+  std::shared_ptr<facebook::react::ModalHostViewProps const> m_props;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
-  facebook::react::SharedViewProps m_props;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
