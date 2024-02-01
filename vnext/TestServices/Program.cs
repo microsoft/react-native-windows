@@ -5,9 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 var webHost = builder.WebHost;
 webHost.UseUrls(
   "http://localhost:5555",
-  "http://localhost:7777",
-  "http://localhost:5193",
-  "https://localhost:44355"
+  "https://localhost:5543"
   );
 
 var app = builder.Build();
@@ -19,7 +17,7 @@ app.Map("/h0", () => "HTTP Response #0");
 // See react-native/IntegrationTests/websocket_integration_test_server.js
 // Note, the referred code has been removed in React Native 0.73
 //TODO: route ws://localhost:5555/ here
-app.Map("/ws", async context =>
+app.Map("/", async context =>
 {
   if (!context.WebSockets.IsWebSocketRequest)
   {
@@ -35,6 +33,8 @@ WebSocket integration test server
 This will send each incoming message back, with the string '_response' appended.
 An incoming message of 'exit' will shut down the server.
 ";
+  await Console.Out.WriteLineAsync(startupMessage);
+
   using var ws = await context.WebSockets.AcceptWebSocketAsync();
 
   if (ws.State == WebSocketState.Open)
@@ -55,12 +55,14 @@ An incoming message of 'exit' will shut down the server.
         // Read incoming message
         var inputBytes = new byte[1024];
         WebSocketReceiveResult result;
+        int total = 0;
         do
         {
           result = await socket.ReceiveAsync(new ArraySegment<byte>(inputBytes), CancellationToken.None);
-        } while (result != null && result.Count > 0 && result.MessageType != WebSocketMessageType.Close);
+          total += result.Count;
+        } while (result != null && !result.EndOfMessage);
 
-        return Encoding.UTF8.GetString(inputBytes, 0, inputBytes.Length);
+        return Encoding.UTF8.GetString(inputBytes, 0, total);
       };
       var inputMessage = await receiveMessage(ws);
       await Console.Out.WriteLineAsync($"Received message: {inputMessage}");
