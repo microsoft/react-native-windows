@@ -5,7 +5,7 @@
  * @format
  */
 
-//import {dumpVisualTree} from '@react-native-windows/automation-commands';
+import {dumpVisualTree} from '@react-native-windows/automation-commands';
 import {goToComponentExample} from './RNTesterNavigation';
 import {app} from '@react-native-windows/automation';
 import {verifyNoErrorLogs} from './Helpers';
@@ -21,55 +21,57 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
+const searchBox = async (input: string) => {
+  const searchBox = await app.findElementByTestID('example_search');
+  await app.waitUntil(
+    async () => {
+      await searchBox.setValue(input);
+      return (await searchBox.getText()) === input;
+    },
+    {
+      interval: 1500,
+      timeout: 5000,
+      timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+    },
+  );
+};
+
 describe('View Tests', () => {
-  test('Control', () => {
-    expect(true).toBe(true);
-  });
-  // Disable until tests pass in CI.
-  /*test('Views can have shadows', async () => {
-    const searchBox = await app.findElementByTestID('example_search');
-    await searchBox.addValue(['Backspace', 'Backspace', 'Backspace']);
-    await searchBox.addValue('sha');
+  test('Views can have shadows', async () => {
+    await searchBox('sha');
     const component = await app.findElementByTestID('shadow');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('shadow');
     expect(dump).toMatchSnapshot();
   });
   test('Views can have border styles', async () => {
-    const searchBox = await app.findElementByTestID('example_search');
-    await searchBox.addValue(['Backspace', 'Backspace', 'Backspace']);
-    await searchBox.addValue('sty');
+    await searchBox('sty');
     const componentsTab = await app.findElementByTestID('border-style-button');
     await componentsTab.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('border-style-button');
     expect(dump).toMatchSnapshot();
   });
   test('Views can have offscreen alpha compositing', async () => {
-    const searchBox = await app.findElementByTestID('example_search');
-    await searchBox.addValue(['Backspace', 'Backspace', 'Backspace']);
-    await searchBox.addValue('off');
-    const componentsTab = await app.findElementByTestID('offscreen-alpha-compositing-button');
+    await searchBox('off');
+    const componentsTab = await app.findElementByTestID(
+      'offscreen-alpha-compositing-button',
+    );
     await componentsTab.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('offscreen-alpha-compositing-button');
     expect(dump).toMatchSnapshot();
   });
   test('Views can have a z-index', async () => {
-    const searchBox = await app.findElementByTestID('example_search');
-    await searchBox.addValue(['Backspace', 'Backspace', 'Backspace']);
-    await searchBox.addValue('z');
+    await searchBox('z');
     const componentsTab = await app.findElementByTestID('z-index-button');
     await componentsTab.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('z-index-button');
     expect(dump).toMatchSnapshot();
   });
   test('Views can have display: none', async () => {
-    const searchBox = await app.findElementByTestID('example_search');
-    await searchBox.addValue(['Backspace', 'Backspace', 'Backspace']);
-    await searchBox.addValue('dis');
+    await searchBox('dis');
     const componentsTab = await app.findElementByTestID('display-none-button');
     await componentsTab.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('display-none-button');
     expect(dump).toMatchSnapshot();
   });
-  */
 });
