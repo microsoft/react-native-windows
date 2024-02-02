@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 30 Jan 2024 06:14:07 GMT and should not be manually modified.
+This log was last generated on Fri, 02 Feb 2024 06:14:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.762
+
+Fri, 02 Feb 2024 06:14:27 GMT
+
+### Changes
+
+- Update to C++20 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.761
 
