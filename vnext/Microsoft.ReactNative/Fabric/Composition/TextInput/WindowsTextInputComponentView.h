@@ -20,11 +20,10 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 struct CompTextHost;
 
-struct WindowsTextInputComponentView
-    : WindowsTextInputComponentViewT<WindowsTextInputComponentView, CompositionBaseComponentView> {
+struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTextInputComponentView, ComponentView> {
   friend CompTextHost;
 
-  using Super = WindowsTextInputComponentViewT<WindowsTextInputComponentView, CompositionBaseComponentView>;
+  using Super = WindowsTextInputComponentViewT<WindowsTextInputComponentView, ComponentView>;
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
@@ -43,11 +42,11 @@ struct WindowsTextInputComponentView
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
-  void finalizeUpdates(
-      winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask updateMask) noexcept override;
+  void FinalizeUpdates(
+      winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::SharedViewProps viewProps() noexcept override;
-  void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
+  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept override;
   facebook::react::Tag hitTest(
       facebook::react::Point pt,
       facebook::react::Point &localPt,
@@ -61,20 +60,20 @@ struct WindowsTextInputComponentView
   std::string DefaultAccessibleName() const noexcept override;
   std::string DefaultHelpText() const noexcept override;
   void onThemeChanged() noexcept override;
-  void onPointerPressed(
+  void OnPointerPressed(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
-  void onPointerReleased(
+  void OnPointerReleased(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
-  void onPointerMoved(
+  void OnPointerMoved(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
 
-  void onKeyDown(
+  void OnKeyDown(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
-  void onKeyUp(
+  void OnKeyUp(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
-  void onCharacterReceived(
+  void OnCharacterReceived(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept
       override;

@@ -12,7 +12,7 @@
 
 import React from 'react';
 import {Text, View} from 'react-native';
-import {MyCustomComponent} from './MyCustomComponentNativeComponent';
+import {CustomXamlComponentWithNativeLayout} from './CustomXamlComponentWithNativeLayoutNativeComponent';
 
 exports.displayName = 'NativeFabricComponent';
 exports.framework = 'React';
@@ -42,7 +42,7 @@ exports.examples = [
           <View style={{width: 100, height: 100, backgroundColor: 'pink'}} />
           <View style={{width: 100, height: 100, backgroundColor: 'gray'}} />
           <Text style={{color: 'gray'}}>This is RN Text</Text>
-          <MyCustomComponent label="test" style={{flexShrink: 1}} />
+          <CustomXamlComponentWithNativeLayout label="This is a Xaml Button set to ellipisify on truncation" style={{flexShrink: 1}} />
           <View style={{width: 100, height: 100, backgroundColor: 'green'}} />
           <View style={{width: 100, height: 100, backgroundColor: 'red'}} />
           <View style={{width: 100, height: 100, backgroundColor: 'blue'}} />

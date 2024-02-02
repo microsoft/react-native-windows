@@ -13,11 +13,11 @@ import {
   // @ts-ignore - NativeComponentRegistry is internal and has no types.  Need it for now since we have no viewmanager for this component
 } from 'react-native/Libraries/NativeComponent/NativeComponentRegistry';
 
-// Since MyCustomComponent does not have a ViewManager, we need to override the config provider
-// to say that MyCustomComponent should get its config from JS, not native
+// Since CustomXamlComponentWithNativeLayout does not have a ViewManager, we need to override the config provider
+// to say that CustomXamlComponentWithNativeLayout should get its config from JS, not native
 setRuntimeConfigProvider((name: string) => {
   return {
-    native: name !== 'MyCustomComponent',
+    native: name !== 'CustomXamlComponentWithNativeLayout',
     strict: false,
     verify: false,
   };
@@ -28,9 +28,9 @@ interface NativeProps extends ViewProps {
 }
 
 // Cannot just use codegenNativeComponent, or registerNativeComponent, since we need to provide a custom config
-const MyCustomComponent = get<NativeProps>('MyCustomComponent', () => {
+const CustomXamlComponentWithNativeLayout = get<NativeProps>('CustomXamlComponentWithNativeLayout', () => {
   return {
-    uiViewClassName: 'MyCustomComponent',
+    uiViewClassName: 'CustomXamlComponentWithNativeLayout',
     bubblingEventTypes: {},
     directEventTypes: {},
     validAttributes: {
@@ -50,7 +50,7 @@ const Bootstrap = () => {
         height: 500,
       }}>
       <Text>This is RN Texsst - </Text>
-      <MyCustomComponent label="test" />
+      <CustomXamlComponentWithNativeLayout label="test" />
     </View>
   );
 };

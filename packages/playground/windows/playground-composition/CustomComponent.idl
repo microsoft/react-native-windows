@@ -1,0 +1,11 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+namespace PlaygroundApp
+{
+  [default_interface]
+  [webhosthidden]
+  runtimeclass CustomComponent : Microsoft.ReactNative.Composition.ViewComponentView
+  {
+  }
+}

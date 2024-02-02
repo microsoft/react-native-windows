@@ -23,7 +23,7 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
   m_props = std::make_shared<facebook::react::ModalHostViewProps const>();
   m_visual = compContext.CreateSpriteVisual();
 }
@@ -40,8 +40,8 @@ void WindowsModalHostComponentView::unmountChildComponentView(
   // assert(false);
 }
 
-void WindowsModalHostComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
-  Super::handleCommand(commandName, arg);
+void WindowsModalHostComponentView::HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+  Super::HandleCommand(commandName, args);
 }
 
 void WindowsModalHostComponentView::updateProps(

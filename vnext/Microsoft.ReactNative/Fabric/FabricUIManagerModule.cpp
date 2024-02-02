@@ -19,6 +19,7 @@
 #include <ReactCommon/RuntimeExecutor.h>
 #include <SchedulerSettings.h>
 #include <SynchronousEventBeat.h>
+#include "DynamicReader.h"
 #include <UI.Xaml.Controls.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
@@ -237,8 +238,7 @@ void FabricUIManager::RCTPerformMountInstructions(
         newChildComponentView->updateEventEmitter(newChildShadowView.eventEmitter);
         newChildComponentView->updateState(newChildShadowView.state, oldChildShadowView.state);
         newChildComponentView->updateLayoutMetrics(newChildShadowView.layoutMetrics, oldChildShadowView.layoutMetrics);
-        newChildComponentView->finalizeUpdates(
-            winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask::All);
+        newChildViewDescriptor.view.FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask::All);
 
         winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
             ->mountChildComponentView(*newChildComponentView, mutation.index);
@@ -264,32 +264,31 @@ void FabricUIManager::RCTPerformMountInstructions(
         auto &newChildViewDescriptor = m_registry.componentViewDescriptorWithTag(newChildShadowView.tag);
         auto newChildComponentView =
             winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(newChildViewDescriptor.view);
-
-        auto mask = winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask{};
+        auto mask = winrt::Microsoft::ReactNative::ComponentViewUpdateMask::None;
 
         if (oldChildShadowView.props != newChildShadowView.props) {
           newChildComponentView->updateProps(newChildShadowView.props, oldChildShadowView.props);
-          mask |= winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask::Props;
+          mask |= winrt::Microsoft::ReactNative::ComponentViewUpdateMask::Props;
         }
 
         if (oldChildShadowView.eventEmitter != newChildShadowView.eventEmitter) {
           newChildComponentView->updateEventEmitter(newChildShadowView.eventEmitter);
-          mask |= winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask::EventEmitter;
+          mask |= winrt::Microsoft::ReactNative::ComponentViewUpdateMask::EventEmitter;
         }
 
         if (oldChildShadowView.state != newChildShadowView.state) {
           newChildComponentView->updateState(newChildShadowView.state, oldChildShadowView.state);
-          mask |= winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask::State;
+          mask |= winrt::Microsoft::ReactNative::ComponentViewUpdateMask::State;
         }
 
         if (oldChildShadowView.layoutMetrics != newChildShadowView.layoutMetrics) {
           newChildComponentView->updateLayoutMetrics(
               newChildShadowView.layoutMetrics, oldChildShadowView.layoutMetrics);
-          mask |= winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask::LayoutMetrics;
+          mask |= winrt::Microsoft::ReactNative::ComponentViewUpdateMask::LayoutMetrics;
         }
 
-        if (mask != winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask::None) {
-          newChildComponentView->finalizeUpdates(mask);
+        if (mask != winrt::Microsoft::ReactNative::ComponentViewUpdateMask::None) {
+          newChildViewDescriptor.view.FinalizeUpdates(mask);
         }
 
         break;
@@ -371,16 +370,14 @@ void FabricUIManager::schedulerDidDispatchCommand(
     folly::dynamic const &arg) {
   if (m_context.UIDispatcher().HasThreadAccess()) {
     auto descriptor = m_registry.componentViewDescriptorWithTag(shadowView.tag);
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(descriptor.view)
-        ->handleCommand(commandName, arg);
+    descriptor.view.HandleCommand(winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(arg));
   } else {
     m_context.UIDispatcher().Post(
         [wkThis = weak_from_this(), commandName, tag = shadowView.tag, args = folly::dynamic(arg)]() {
           if (auto pThis = wkThis.lock()) {
             auto view = pThis->m_registry.findComponentViewWithTag(tag);
             if (view) {
-              winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->handleCommand(
-                  commandName, args);
+              view.HandleCommand(winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(args));
             }
           }
         });

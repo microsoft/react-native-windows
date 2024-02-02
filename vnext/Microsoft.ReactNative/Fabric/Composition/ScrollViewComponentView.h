@@ -20,7 +20,7 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 struct ScrollBarComponent;
 
-struct ScrollViewComponentView : ScrollViewComponentViewT<ScrollViewComponentView, CompositionBaseComponentView> {
+struct ScrollViewComponentView : ScrollViewComponentViewT<ScrollViewComponentView, ComponentView> {
   /*
 struct ScrollInteractionTrackerOwner : public winrt::implements<
                                            ScrollInteractionTrackerOwner,
@@ -51,7 +51,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
 };
 
 */
-  using Super = ScrollViewComponentViewT<ScrollViewComponentView, CompositionBaseComponentView>;
+  using Super = ScrollViewComponentViewT<ScrollViewComponentView, ComponentView>;
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
@@ -73,26 +73,26 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::SharedViewProps viewProps() noexcept override;
-  void onKeyDown(
+  void OnKeyDown(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
 
-  void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
+  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
   facebook::react::Point getClientOffset() const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
   void onThemeChanged() noexcept override;
-  void onPointerReleased(
+  void OnPointerReleased(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
-  void onPointerPressed(
+  void OnPointerPressed(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
-  void onPointerMoved(
+  void OnPointerMoved(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
-  void onPointerWheelChanged(
+  void OnPointerWheelChanged(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
-  void onPointerCaptureLost() noexcept override;
+  void OnPointerCaptureLost() noexcept override;
 
   void StartBringIntoView(winrt::Microsoft::ReactNative::implementation::BringIntoViewOptions &&args) noexcept override;
   virtual std::string DefaultControlType() const noexcept;
@@ -139,9 +139,6 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool m_changeViewAfterLoaded = false;
   bool m_dismissKeyboardOnDrag = false;
   std::shared_ptr<facebook::react::ScrollViewShadowNode::ConcreteState const> m_state;
-
- private:
-  bool shouldBeControl() const noexcept;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
