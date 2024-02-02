@@ -28,16 +28,19 @@ interface NativeProps extends ViewProps {
 }
 
 // Cannot just use codegenNativeComponent, or registerNativeComponent, since we need to provide a custom config
-const CustomXamlComponentWithNativeLayout = get<NativeProps>('CustomXamlComponentWithNativeLayout', () => {
-  return {
-    uiViewClassName: 'CustomXamlComponentWithNativeLayout',
-    bubblingEventTypes: {},
-    directEventTypes: {},
-    validAttributes: {
-      label: true,
-    },
-  };
-}) as React.ComponentType<NativeProps>;
+const CustomXamlComponentWithNativeLayout = get<NativeProps>(
+  'CustomXamlComponentWithNativeLayout',
+  () => {
+    return {
+      uiViewClassName: 'CustomXamlComponentWithNativeLayout',
+      bubblingEventTypes: {},
+      directEventTypes: {},
+      validAttributes: {
+        label: true,
+      },
+    };
+  },
+) as React.ComponentType<NativeProps>;
 
 const Bootstrap = () => {
   return (
