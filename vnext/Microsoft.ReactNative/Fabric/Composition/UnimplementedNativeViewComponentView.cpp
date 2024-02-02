@@ -17,7 +17,7 @@ UnimplementedNativeViewComponentView::UnimplementedNativeViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : base_type(compContext, tag, reactContext) {
+    : base_type(compContext, tag, reactContext, false) {
   m_labelVisual = compContext.CreateSpriteVisual();
   OuterVisual().InsertAt(m_labelVisual, 1);
 }
@@ -29,9 +29,9 @@ winrt::Microsoft::ReactNative::ComponentView UnimplementedNativeViewComponentVie
   return winrt::make<UnimplementedNativeViewComponentView>(compContext, tag, reactContext);
 }
 
-void UnimplementedNativeViewComponentView::handleCommand(
-    std::string const &commandName,
-    folly::dynamic const &arg) noexcept {
+void UnimplementedNativeViewComponentView::HandleCommand(
+    winrt::hstring commandName,
+    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
   // Do not call base to avoid unknown command asserts
 }
 

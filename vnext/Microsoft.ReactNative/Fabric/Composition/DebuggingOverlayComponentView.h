@@ -11,7 +11,7 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 struct DebuggingOverlayComponentView
-    : DebuggingOverlayComponentViewT<DebuggingOverlayComponentView, CompositionViewComponentView> {
+    : DebuggingOverlayComponentViewT<DebuggingOverlayComponentView, ViewComponentView> {
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
@@ -29,7 +29,8 @@ struct DebuggingOverlayComponentView
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
-  void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
+  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
+      override;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

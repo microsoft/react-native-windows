@@ -23,6 +23,7 @@ class AbiViewProps final : public facebook::react::ViewProps {
       winrt::Microsoft::ReactNative::IComponentProps componentProps,
       winrt::Microsoft::ReactNative::ViewProps userProps) noexcept;
   winrt::Microsoft::ReactNative::IComponentProps UserProps() const noexcept;
+  winrt::Microsoft::ReactNative::ViewProps ViewProps() const noexcept;
 
  private:
   winrt::Microsoft::ReactNative::IComponentProps m_componentProps{nullptr};

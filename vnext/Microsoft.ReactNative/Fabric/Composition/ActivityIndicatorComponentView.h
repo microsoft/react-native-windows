@@ -13,9 +13,8 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-struct ActivityIndicatorComponentView
-    : ActivityIndicatorComponentViewT<ActivityIndicatorComponentView, CompositionBaseComponentView> {
-  using Super = ActivityIndicatorComponentViewT<ActivityIndicatorComponentView, CompositionBaseComponentView>;
+struct ActivityIndicatorComponentView : ActivityIndicatorComponentViewT<ActivityIndicatorComponentView, ComponentView> {
+  using Super = ActivityIndicatorComponentViewT<ActivityIndicatorComponentView, ComponentView>;
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
@@ -28,7 +27,6 @@ struct ActivityIndicatorComponentView
   void unmountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
-  void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept
