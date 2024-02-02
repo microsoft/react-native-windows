@@ -51,7 +51,9 @@ void SwitchComponentView::unmountChildComponentView(
   assert(false);
 }
 
-void SwitchComponentView::HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+void SwitchComponentView::HandleCommand(
+    winrt::hstring commandName,
+    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
   if (commandName == L"setValue") {
     // TODO - Current implementation always aligns with JS value
     // This will be needed when we move to using WinUI controls

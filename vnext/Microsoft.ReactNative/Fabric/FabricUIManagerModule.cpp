@@ -19,7 +19,6 @@
 #include <ReactCommon/RuntimeExecutor.h>
 #include <SchedulerSettings.h>
 #include <SynchronousEventBeat.h>
-#include "DynamicReader.h"
 #include <UI.Xaml.Controls.h>
 #include <react/components/rnwcore/ComponentDescriptors.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
@@ -32,6 +31,7 @@
 #include <react/utils/CoreFeatures.h>
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
+#include "DynamicReader.h"
 #include "Unicode.h"
 
 namespace Microsoft::ReactNative {
@@ -370,14 +370,16 @@ void FabricUIManager::schedulerDidDispatchCommand(
     folly::dynamic const &arg) {
   if (m_context.UIDispatcher().HasThreadAccess()) {
     auto descriptor = m_registry.componentViewDescriptorWithTag(shadowView.tag);
-    descriptor.view.HandleCommand(winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(arg));
+    descriptor.view.HandleCommand(
+        winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(arg));
   } else {
     m_context.UIDispatcher().Post(
         [wkThis = weak_from_this(), commandName, tag = shadowView.tag, args = folly::dynamic(arg)]() {
           if (auto pThis = wkThis.lock()) {
             auto view = pThis->m_registry.findComponentViewWithTag(tag);
             if (view) {
-              view.HandleCommand(winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(args));
+              view.HandleCommand(
+                  winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(args));
             }
           }
         });

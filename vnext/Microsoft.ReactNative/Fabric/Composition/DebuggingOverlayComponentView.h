@@ -29,7 +29,8 @@ struct DebuggingOverlayComponentView
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
-  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept override;
+  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
+      override;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

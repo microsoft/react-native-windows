@@ -40,7 +40,9 @@ void WindowsModalHostComponentView::unmountChildComponentView(
   // assert(false);
 }
 
-void WindowsModalHostComponentView::HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+void WindowsModalHostComponentView::HandleCommand(
+    winrt::hstring commandName,
+    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
   Super::HandleCommand(commandName, args);
 }
 

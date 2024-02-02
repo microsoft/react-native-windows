@@ -20,8 +20,8 @@
 #include <unicode.h>
 #include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
-#include "RootComponentView.h"
 #include "JSValueReader.h"
+#include "RootComponentView.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
@@ -998,12 +998,18 @@ bool ScrollViewComponentView::scrollRight(float delta, bool animate) noexcept {
   return true;
 }
 
-void ScrollViewComponentView::HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+void ScrollViewComponentView::HandleCommand(
+    winrt::hstring commandName,
+    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
   if (commandName == L"scrollTo") {
-    double x,y;
+    double x, y;
     bool animate;
     winrt::Microsoft::ReactNative::ReadArgs(args, x, y, animate);
-    scrollTo({static_cast<float>(x) * m_layoutMetrics.pointScaleFactor, static_cast<float>(y) * m_layoutMetrics.pointScaleFactor, 0.0f}, animate);
+    scrollTo(
+        {static_cast<float>(x) * m_layoutMetrics.pointScaleFactor,
+         static_cast<float>(y) * m_layoutMetrics.pointScaleFactor,
+         0.0f},
+        animate);
   } else if (commandName == L"flashScrollIndicators") {
     // No-op for now
   } else if (commandName == L"scrollToEnd") {

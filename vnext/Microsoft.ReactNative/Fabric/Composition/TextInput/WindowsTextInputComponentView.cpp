@@ -15,10 +15,10 @@
 #include "../CompositionHelpers.h"
 #include "../RootComponentView.h"
 #include "Composition/AutoDraw.h"
+#include "JSValueReader.h"
 #include "WindowsTextInputShadowNode.h"
 #include "WindowsTextInputState.h"
 #include "guid/msoGuid.h"
-#include "JSValueReader.h"
 
 // convert a BSTR to a std::string.
 std::string &BstrToStdString(const BSTR bstr, std::string &dst, int cp = CP_UTF8) {
@@ -516,7 +516,9 @@ WindowsTextInputComponentView::WindowsTextInputComponentView(
   */
 }
 
-void WindowsTextInputComponentView::HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+void WindowsTextInputComponentView::HandleCommand(
+    winrt::hstring commandName,
+    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
   if (commandName == L"setTextAndSelection") {
     int eventCount, begin, end;
     winrt::hstring text;

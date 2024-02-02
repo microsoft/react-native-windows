@@ -31,7 +31,9 @@ winrt::Microsoft::ReactNative::ComponentView DebuggingOverlayComponentView::Crea
   return winrt::make<DebuggingOverlayComponentView>(compContext, tag, reactContext);
 }
 
-void DebuggingOverlayComponentView::HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+void DebuggingOverlayComponentView::HandleCommand(
+    winrt::hstring commandName,
+    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
   if (commandName == L"draw") {
     // The current spec has a Draw command -- but this will be replaced with some different commands in
     // https://github.com/facebook/react-native/pull/42119

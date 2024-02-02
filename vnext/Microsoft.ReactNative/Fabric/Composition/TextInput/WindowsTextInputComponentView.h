@@ -42,11 +42,11 @@ struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTex
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
-  void FinalizeUpdates(
-      winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept override;
+  void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::SharedViewProps viewProps() noexcept override;
-  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept override;
+  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
+      override;
   facebook::react::Tag hitTest(
       facebook::react::Point pt,
       facebook::react::Point &localPt,

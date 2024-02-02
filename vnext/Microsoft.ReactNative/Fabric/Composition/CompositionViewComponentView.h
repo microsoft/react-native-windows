@@ -64,7 +64,8 @@ struct ComponentView
   virtual winrt::Microsoft::ReactNative::Composition::IVisual OuterVisual() const noexcept;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
   const facebook::react::SharedViewEventEmitter &GetEventEmitter() const noexcept;
-  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept override;
+  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
+      override;
   RootComponentView *rootComponentView() noexcept override;
   void parent(const winrt::Microsoft::ReactNative::ComponentView &parent) noexcept override;
   facebook::react::Props::Shared props() noexcept override;
@@ -210,7 +211,8 @@ struct ViewComponentView : public ViewComponentViewT<ViewComponentView, Componen
       facebook::react::Point pt,
       facebook::react::Point &localPt,
       bool ignorePointerEvents = false) const noexcept override;
-  const winrt::Microsoft::ReactNative::IComponentProps userProps(facebook::react::Props::Shared const& props) noexcept override;
+  const winrt::Microsoft::ReactNative::IComponentProps userProps(
+      facebook::react::Props::Shared const &props) noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
   void ensureVisual() noexcept;
 

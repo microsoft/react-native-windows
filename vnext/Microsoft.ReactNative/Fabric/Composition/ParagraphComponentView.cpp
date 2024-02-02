@@ -99,7 +99,8 @@ void ParagraphComponentView::updateLayoutMetrics(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
-void ParagraphComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
+void ParagraphComponentView::FinalizeUpdates(
+    winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
   ensureVisual();
   updateVisualBrush();
   Super::FinalizeUpdates(updateMask);

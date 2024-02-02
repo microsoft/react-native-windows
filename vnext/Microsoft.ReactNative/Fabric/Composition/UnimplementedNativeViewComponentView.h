@@ -25,7 +25,8 @@ struct UnimplementedNativeViewComponentView
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
 
-  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader& args) noexcept override;
+  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
+      override;
 
   UnimplementedNativeViewComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,

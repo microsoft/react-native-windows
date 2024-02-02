@@ -30,7 +30,6 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   // (ICompositionContext) => ComponentView
   void SetCreateComponentView(CompositionComponentFactory impl) noexcept;
 
-
  public:
   IComponentProps CreateProps(ViewProps props) noexcept;
   void CreateShadowNode(ShadowNode shadowNode) noexcept;

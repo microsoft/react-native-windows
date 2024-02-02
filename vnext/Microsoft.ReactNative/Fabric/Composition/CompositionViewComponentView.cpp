@@ -6,6 +6,7 @@
 
 #include "CompositionViewComponentView.h"
 
+#include <Fabric/AbiState.h>
 #include <Fabric/AbiViewProps.h>
 #include <Fabric/Composition/CompositionRootView.h>
 #include <Fabric/FabricUIManagerModule.h>
@@ -21,7 +22,6 @@
 #include "Theme.h"
 #include "UiaHelpers.h"
 #include "d2d1helper.h"
-#include <Fabric/AbiState.h>
 
 #include "Composition.ComponentView.g.cpp"
 #include "Composition.ViewComponentView.g.cpp"
@@ -44,13 +44,15 @@ ComponentView::ComponentView(const winrt::Microsoft::ReactNative::Composition::C
           args.CompositionContext(),
           args.Tag(),
           args.ReactContext(),
-          CompositionComponentViewFeatures::Default, true) {}
+          CompositionComponentViewFeatures::Default,
+          true) {}
 
 ComponentView::ComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,
-    CompositionComponentViewFeatures flags, bool customControl)
+    CompositionComponentViewFeatures flags,
+    bool customControl)
     : base_type(tag, reactContext, customControl), m_compContext(compContext), m_flags(flags) {
   m_outerVisual = compContext.CreateSpriteVisual(); // TODO could be a raw ContainerVisual if we had a
                                                     // CreateContainerVisual in ICompositionContext
@@ -225,7 +227,9 @@ void ComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared con
   m_eventEmitter = std::static_pointer_cast<facebook::react::ViewEventEmitter const>(eventEmitter);
 }
 
-void ComponentView::HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+void ComponentView::HandleCommand(
+    winrt::hstring commandName,
+    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
   if (commandName == L"focus") {
     if (auto root = rootComponentView()) {
       root->SetFocusedComponent(*get_strong());
@@ -1468,14 +1472,13 @@ std::string ComponentView::DefaultHelpText() const noexcept {
 
 ViewComponentView::ViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs &args)
-    : ViewComponentView(args.CompositionContext(), args.Tag(), args.ReactContext(), true) {
-}
+    : ViewComponentView(args.CompositionContext(), args.Tag(), args.ReactContext(), true) {}
 
 ViewComponentView::ViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,
-  bool customComponent)
+    bool customComponent)
     : base_type(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, customComponent) {
   static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
   m_props = defaultProps;
@@ -1559,7 +1562,8 @@ void ViewComponentView::updateProps(
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
-const winrt::Microsoft::ReactNative::IComponentProps ViewComponentView::userProps(facebook::react::Props::Shared const &props) noexcept {
+const winrt::Microsoft::ReactNative::IComponentProps ViewComponentView::userProps(
+    facebook::react::Props::Shared const &props) noexcept {
   const auto &abiViewProps = *std::static_pointer_cast<const ::Microsoft::ReactNative::AbiViewProps>(props);
   return abiViewProps.UserProps();
 }
@@ -1689,9 +1693,7 @@ void ViewComponentView::updateLayoutMetrics(
 }
 
 void ViewComponentView::UpdateLayoutMetrics(LayoutMetrics metrics) noexcept {
-    m_visual.Size(
-      { metrics.Frame.Width * metrics.PointScaleFactor,
-       metrics.Frame.Height * metrics.PointScaleFactor });
+  m_visual.Size({metrics.Frame.Width * metrics.PointScaleFactor, metrics.Frame.Height * metrics.PointScaleFactor});
 }
 
 void ViewComponentView::prepareForRecycle() noexcept {}
@@ -1701,11 +1703,10 @@ facebook::react::SharedViewProps ViewComponentView::viewProps() noexcept {
 }
 
 winrt::Microsoft::ReactNative::ViewProps ViewComponentView::ViewProps() noexcept {
-
   // If we have AbiViewProps, then we dont need to new up a props wrapper
   if (m_customComponent) {
-      const auto &abiViewProps = *std::static_pointer_cast<const ::Microsoft::ReactNative::AbiViewProps>(m_props);
-      return abiViewProps.ViewProps();
+    const auto &abiViewProps = *std::static_pointer_cast<const ::Microsoft::ReactNative::AbiViewProps>(m_props);
+    return abiViewProps.ViewProps();
   }
 
   return winrt::make<winrt::Microsoft::ReactNative::implementation::ViewProps>(m_props);
