@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 03 Feb 2024 06:13:43 GMT",
+      "version": "0.0.0-canary.763",
+      "tag": "react-native-windows_v0.0.0-canary.763",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "01e32fe2059c29acb6c36629ea9d844e917b6330",
+            "comment": "[Fabric] Remove AbiCompositionViewComponent and move to inheritence overrides for custom components"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "05bfd0c9818462b81a64bf8d90bd27c5a10e7169",
+            "comment": "Ensure origin in WebSocket headers"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 02 Feb 2024 06:14:27 GMT",
       "version": "0.0.0-canary.762",
       "tag": "react-native-windows_v0.0.0-canary.762",

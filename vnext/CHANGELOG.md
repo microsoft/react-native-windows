@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 02 Feb 2024 06:14:27 GMT and should not be manually modified.
+This log was last generated on Sat, 03 Feb 2024 06:13:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.763
+
+Sat, 03 Feb 2024 06:13:43 GMT
+
+### Changes
+
+- [Fabric] Remove AbiCompositionViewComponent and move to inheritence overrides for custom components (30809111+acoates-ms@users.noreply.github.com)
+- Ensure origin in WebSocket headers (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.762
 

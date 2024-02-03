@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[Fabric] Remove AbiCompositionViewComponent and move to inheritence overrides for custom components",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
