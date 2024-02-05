@@ -5,6 +5,7 @@ namespace PlaygroundApp
 {
   [default_interface]
   [webhosthidden]
+  [experimental]
   runtimeclass CustomComponent : Microsoft.ReactNative.Composition.ViewComponentView
   {
   }
