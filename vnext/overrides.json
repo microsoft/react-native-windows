@@ -135,6 +135,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBufferBuilder.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/mapbuffer/MapBufferBuilder.cpp",
+      "baseHash": "a2fa7db6a41b3bbd170dc24f153185dfb131d121",
+      "issue": 7821
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManagerBinding.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/uimanager/UIManagerBinding.cpp",
       "baseHash": "9210ab2289dbe492ead3e3506f080290cd9fa26b",
