@@ -58,10 +58,12 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
       : base_type(args), m_nativeLayout(nativeLayout) {}
 
   ~CustomComponent() {
+#ifdef USE_EXPERIMENTAL_WINUI3
     m_xamlIsland.Close();
     m_siteBridge.Close();
     // Hit a crash when calling m_contentIsland.Close?
     // m_contentIsland.Close();
+#endif
   }
 
   void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) {
@@ -82,6 +84,7 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
     m_visual.Size(
         {layoutMetrics.Frame.Width * layoutMetrics.PointScaleFactor,
          layoutMetrics.Frame.Height * layoutMetrics.PointScaleFactor});
+#ifdef USE_EXPERIMENTAL_WINUI3
     auto site = m_siteBridge.Site();
     auto siteWindow = site.Environment();
     auto displayScale = siteWindow.DisplayScale();
@@ -91,6 +94,7 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
     site.ClientSize(winrt::Windows::Graphics::SizeInt32{
         static_cast<int32_t>(layoutMetrics.Frame.Width * layoutMetrics.PointScaleFactor),
         static_cast<int32_t>(layoutMetrics.Frame.Height * layoutMetrics.PointScaleFactor)});
+#endif
   }
 
   void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) {
@@ -98,13 +102,18 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
   }
 
   winrt::Microsoft::ReactNative::Composition::IVisual CreateVisual() noexcept {
+#ifdef USE_EXPERIMENTAL_WINUI3
+
     m_xamlIsland = winrt::Microsoft::UI::Xaml::XamlIsland{};
     m_xamlIsland.Content(CreateXamlButtonContent());
 
     m_contentIsland = m_xamlIsland.ContentIsland();
+#endif
 
     m_visual = CompositionContext().CreateSpriteVisual();
     // m_visual.Brush(CompositionContext().CreateColorBrush({255, 255, 0, 255}));
+#ifdef USE_EXPERIMENTAL_WINUI3
+
     auto parentSystemVisual =
         winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::InnerVisual(m_visual)
             .as<winrt::Windows::UI::Composition::ContainerVisual>();
@@ -117,6 +126,7 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
     m_siteBridge.Connect(m_contentIsland);
 
     auto rootXamlVisualSize = m_contentIsland.Root().Size();
+#endif
 
     return m_visual;
   }
@@ -163,9 +173,11 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
   winrt::Microsoft::UI::Xaml::Controls::TextBlock m_buttonLabelTextBlock{nullptr};
   winrt::Microsoft::ReactNative::IComponentState m_state;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
+#ifdef USE_EXPERIMENTAL_WINUI3
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
   winrt::Microsoft::UI::Content::ContentIsland m_contentIsland{nullptr};
   winrt::Microsoft::UI::Content::SystemVisualSiteBridge m_siteBridge{nullptr};
+#endif
 };
 
 static void RegisterViewComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) {
