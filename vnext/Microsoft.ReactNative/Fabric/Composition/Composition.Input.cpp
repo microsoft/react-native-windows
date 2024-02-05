@@ -464,7 +464,7 @@ winrt::Windows::Foundation::Point PointerPoint::Position() const noexcept {
   POINT clientPoint{
       m_pi.pointerId ? m_pi.ptPixelLocation.x : GET_X_LPARAM(m_lParam),
       m_pi.pointerId ? m_pi.ptPixelLocation.y : GET_Y_LPARAM(m_lParam)};
-  if (m_pi.pointerId) {
+  if (m_pi.pointerId || m_msg == WM_MOUSEWHEEL || m_msg == WM_MOUSEHWHEEL) {
     ScreenToClient(m_hwnd, &clientPoint);
   }
   return winrt::Windows::Foundation::Point{
