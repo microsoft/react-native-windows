@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include "Composition.ParagraphComponentView.g.h"
 #include <Fabric/ComponentView.h>
 #include <d2d1_1.h>
 #include <dwrite.h>
@@ -14,18 +15,22 @@
 #include "CompositionHelpers.h"
 #include "CompositionViewComponentView.h"
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-struct ParagraphComponentView : CompositionBaseComponentView {
-  using Super = CompositionBaseComponentView;
+struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, ComponentView> {
+  using Super = ParagraphComponentViewT<ParagraphComponentView, ComponentView>;
 
-  [[nodiscard]] static std::shared_ptr<ParagraphComponentView> Create(
+  [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
-  void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
-  void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
+  void mountChildComponentView(
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+      uint32_t index) noexcept override;
+  void unmountChildComponentView(
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+      uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
@@ -34,7 +39,7 @@ struct ParagraphComponentView : CompositionBaseComponentView {
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
-  void finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept override;
+  void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::SharedViewProps viewProps() noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
@@ -47,12 +52,12 @@ struct ParagraphComponentView : CompositionBaseComponentView {
   virtual std::string DefaultControlType() const noexcept override;
   virtual std::string DefaultAccessibleName() const noexcept override;
 
- private:
   ParagraphComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
+ private:
   void ensureVisual() noexcept;
   void updateVisualBrush() noexcept;
   void DrawText() noexcept;
@@ -68,4 +73,4 @@ struct ParagraphComponentView : CompositionBaseComponentView {
   winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface;
 };
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

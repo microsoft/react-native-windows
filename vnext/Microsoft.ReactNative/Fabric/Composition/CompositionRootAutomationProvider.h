@@ -63,7 +63,7 @@ class CompositionRootAutomationProvider : public winrt::implements<
   };
 
  private:
-  ::Microsoft::ReactNative::RootComponentView *rootComponentView() noexcept;
+  winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *rootComponentView() noexcept;
 
   HRESULT AdvisePropertiesAdded(SAFEARRAY *psaProperties) noexcept;
   HRESULT AdvisePropertiesRemoved(SAFEARRAY *psaProperties) noexcept;

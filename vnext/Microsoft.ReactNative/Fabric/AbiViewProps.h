@@ -23,6 +23,7 @@ class AbiViewProps final : public facebook::react::ViewProps {
       winrt::Microsoft::ReactNative::IComponentProps componentProps,
       winrt::Microsoft::ReactNative::ViewProps userProps) noexcept;
   winrt::Microsoft::ReactNative::IComponentProps UserProps() const noexcept;
+  winrt::Microsoft::ReactNative::ViewProps ViewProps() const noexcept;
 
  private:
   winrt::Microsoft::ReactNative::IComponentProps m_componentProps{nullptr};
@@ -43,6 +44,15 @@ struct UserViewProps : ViewPropsT<UserViewProps> {
  private:
   // Use a raw pointer here to avoid a ref cycle with AbiViewProps.  ~AbiViewProps will clear this pointer
   ::Microsoft::ReactNative::AbiViewProps const *m_viewProps{nullptr};
+};
+
+struct ViewProps : ViewPropsT<ViewProps> {
+  ViewProps(facebook::react::SharedViewProps props) noexcept;
+
+  float Opacity() noexcept;
+
+ private:
+  facebook::react::SharedViewProps m_props;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

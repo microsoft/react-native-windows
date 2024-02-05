@@ -15,24 +15,28 @@
 #include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 ParagraphComponentView::ParagraphComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
   static auto const defaultProps = std::make_shared<facebook::react::ParagraphProps const>();
   m_props = defaultProps;
 }
 
-void ParagraphComponentView::mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+void ParagraphComponentView::mountChildComponentView(
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {
   // auto v = static_cast<ParagraphComponentView &>(childComponentView);
   assert(false);
   // m_element.Children().InsertAt(index, v.Element());
 }
 
-void ParagraphComponentView::unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept {
+void ParagraphComponentView::unmountChildComponentView(
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {
   assert(false);
   // m_element.Children().RemoveAt(index);
 }
@@ -95,10 +99,11 @@ void ParagraphComponentView::updateLayoutMetrics(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
-void ParagraphComponentView::finalizeUpdates(RNComponentViewUpdateMask updateMask) noexcept {
+void ParagraphComponentView::FinalizeUpdates(
+    winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
   ensureVisual();
   updateVisualBrush();
-  Super::finalizeUpdates(updateMask);
+  Super::FinalizeUpdates(updateMask);
 }
 void ParagraphComponentView::prepareForRecycle() noexcept {}
 
@@ -118,7 +123,7 @@ facebook::react::Tag ParagraphComponentView::hitTest(
     if ((m_props.pointerEvents == facebook::react::PointerEventsMode::Auto ||
         m_props.pointerEvents == facebook::react::PointerEventsMode::BoxNone) && std::any_of(m_children.rbegin(),
     m_children.rend(), [&targetTag, &ptLocal, &localPt](auto child) { targetTag = static_cast<const
-    CompositionBaseComponentView
+    ComponentView
     *>(child)->hitTest(ptLocal, localPt); return targetTag != -1;
         }))
       return targetTag;
@@ -129,7 +134,7 @@ facebook::react::Tag ParagraphComponentView::hitTest(
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;
-    return tag();
+    return Tag();
   }
 
   return -1;
@@ -492,11 +497,11 @@ winrt::Microsoft::ReactNative::Composition::IVisual ParagraphComponentView::Visu
   return m_visual;
 }
 
-std::shared_ptr<ParagraphComponentView> ParagraphComponentView::Create(
+winrt::Microsoft::ReactNative::ComponentView ParagraphComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return std::shared_ptr<ParagraphComponentView>(new ParagraphComponentView(compContext, tag, reactContext));
+  return winrt::make<ParagraphComponentView>(compContext, tag, reactContext);
 }
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

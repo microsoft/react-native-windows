@@ -1,8 +1,122 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Thu, 04 Jan 2024 06:15:54 GMT and should not be manually modified.
+This log was last generated on Sat, 03 Feb 2024 06:13:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.102
+
+Sat, 03 Feb 2024 06:13:43 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.763
+
+## 0.12.101
+
+Fri, 02 Feb 2024 06:14:27 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.762
+
+## 0.12.100
+
+Tue, 30 Jan 2024 06:14:07 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.761
+
+## 0.12.99
+
+Sat, 27 Jan 2024 06:13:39 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.760
+
+## 0.12.98
+
+Fri, 26 Jan 2024 06:13:32 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.759
+
+## 0.12.97
+
+Thu, 25 Jan 2024 06:14:17 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.758
+
+## 0.12.96
+
+Wed, 24 Jan 2024 06:14:15 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.757
+
+## 0.12.95
+
+Tue, 23 Jan 2024 06:15:26 GMT
+
+### Patches
+
+- integrate c464b215e (tatianakapos@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.756
+
+## 0.12.94
+
+Fri, 19 Jan 2024 06:16:14 GMT
+
+### Patches
+
+- Ensure ExperimentalFeatures.props is loaded in all projects (jthysell@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.755
+
+## 0.12.93
+
+Thu, 18 Jan 2024 06:14:23 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.754
+
+## 0.12.92
+
+Wed, 17 Jan 2024 06:16:32 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.753
+
+## 0.12.91
+
+Fri, 12 Jan 2024 06:14:41 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.752
+
+## 0.12.90
+
+Thu, 11 Jan 2024 06:14:31 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.751
+
+## 0.12.89
+
+Wed, 10 Jan 2024 06:13:20 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.750
 
 ## 0.12.88
 

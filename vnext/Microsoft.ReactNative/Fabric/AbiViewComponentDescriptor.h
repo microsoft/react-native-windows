@@ -42,7 +42,7 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
   virtual facebook::react::Props::Shared cloneProps(
       const facebook::react::PropsParserContext &context,
       const facebook::react::Props::Shared &props,
-      const facebook::react::RawProps &rawProps) const override;
+      facebook::react::RawProps rawProps) const override;
   virtual facebook::react::State::Shared createInitialState(
       facebook::react::Props::Shared const &props,
       facebook::react::ShadowNodeFamily::Shared const &family) const override;
@@ -52,9 +52,6 @@ class AbiViewComponentDescriptor : public facebook::react::ComponentDescriptor {
 
   facebook::react::ShadowNodeFamily::Shared createFamily(
       facebook::react::ShadowNodeFamilyFragment const &fragment) const override;
-
-  facebook::react::SharedEventEmitter createEventEmitter(
-      facebook::react::InstanceHandle::Shared const &instanceHandle) const override;
 
  protected:
   /*

@@ -73,13 +73,20 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   winrt::Microsoft::ReactNative::FocusNavigationResult NavigateFocus(
       const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept;
 
-  ::Microsoft::ReactNative::RootComponentView *GetComponentView() noexcept;
+  winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *GetComponentView() noexcept;
 
   IInspectable GetUiaProvider() noexcept;
 
   // When driving the rootview without an island
   void SetWindow(uint64_t hwnd) noexcept;
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
+
+  bool CapturePointer(
+      const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
+      facebook::react::Tag tag) noexcept;
+  void ReleasePointerCapture(
+      const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
+      facebook::react::Tag tag) noexcept;
 
  public: // ICompositionRootView
   winrt::Microsoft::ReactNative::Composition::IVisual GetVisual() const noexcept override;

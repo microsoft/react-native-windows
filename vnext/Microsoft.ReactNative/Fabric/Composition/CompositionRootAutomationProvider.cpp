@@ -167,11 +167,12 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_ProviderOptions(Provide
   return S_OK;
 }
 
-::Microsoft::ReactNative::RootComponentView *CompositionRootAutomationProvider::rootComponentView() noexcept {
+winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
+CompositionRootAutomationProvider::rootComponentView() noexcept {
   if (auto rootView = m_wkRootView.get()) {
     auto innerRootView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView);
     if (auto view = innerRootView->GetComponentView()) {
-      return static_cast<::Microsoft::ReactNative::RootComponentView *>(view);
+      return view;
     }
   }
 
@@ -241,10 +242,12 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetFocus(IRawElementProvide
     return UIA_E_ELEMENTNOTAVAILABLE;
   }
 
-  auto focusedComponent = rootView->GetFocusedComponent();
+  const auto &focusedComponent = rootView->GetFocusedComponent();
 
   if (focusedComponent) {
-    auto focusedUiaProvider = focusedComponent->EnsureUiaProvider();
+    auto focusedUiaProvider =
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)
+            ->EnsureUiaProvider();
     auto spFragment = focusedUiaProvider.try_as<IRawElementProviderFragment>();
     if (spFragment) {
       *pRetVal = spFragment.detach();

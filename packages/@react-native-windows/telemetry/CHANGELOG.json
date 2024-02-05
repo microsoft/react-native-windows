@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Wed, 10 Jan 2024 06:13:20 GMT",
+      "version": "0.0.0-canary.81",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.81",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "c078d78d358058bb1f5a25c2d1f6d2d744126821",
+            "comment": "Revert back to applicationinsights@2.9.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 21 Oct 2023 05:16:09 GMT",
       "version": "0.0.0-canary.80",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.80",

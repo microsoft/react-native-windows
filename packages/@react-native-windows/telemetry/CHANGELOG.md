@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Sat, 21 Oct 2023 05:16:09 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Jan 2024 06:13:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.81
+
+Wed, 10 Jan 2024 06:13:20 GMT
+
+### Changes
+
+- Revert back to applicationinsights@2.9.1 (jthysell@microsoft.com)
 
 ## 0.0.0-canary.80
 

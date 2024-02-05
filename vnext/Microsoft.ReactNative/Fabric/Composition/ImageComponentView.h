@@ -19,24 +19,29 @@
 #pragma warning(disable : 4244 4305)
 #include <react/renderer/components/view/ViewProps.h>
 #pragma warning(pop)
+#include "Composition.ImageComponentView.g.h"
 #include <Windows.Graphics.DirectX.Direct3D11.interop.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.Storage.Streams.h>
 
-namespace Microsoft::ReactNative {
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 struct WindowsImageResponseObserver;
 
-struct ImageComponentView : CompositionBaseComponentView {
-  using Super = CompositionBaseComponentView;
+struct ImageComponentView : ImageComponentViewT<ImageComponentView, ComponentView> {
+  using Super = ImageComponentViewT<ImageComponentView, ComponentView>;
 
-  [[nodiscard]] static std::shared_ptr<ImageComponentView> Create(
+  [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
-  void mountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
-  void unmountChildComponentView(IComponentView &childComponentView, uint32_t index) noexcept override;
+  void mountChildComponentView(
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+      uint32_t index) noexcept override;
+  void unmountChildComponentView(
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+      uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept
@@ -55,21 +60,21 @@ struct ImageComponentView : CompositionBaseComponentView {
   bool focusable() const noexcept override;
   virtual std::string DefaultControlType() const noexcept;
 
- private:
   ImageComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
+ private:
   struct WindowsImageResponseObserver : facebook::react::ImageResponseObserver {
    public:
-    WindowsImageResponseObserver(std::shared_ptr<ImageComponentView> image);
+    WindowsImageResponseObserver(ImageComponentView &image);
     void didReceiveProgress(float progress) const override;
     void didReceiveImage(facebook::react::ImageResponse const &imageResponse) const override;
     void didReceiveFailure() const override;
 
    private:
-    std::shared_ptr<ImageComponentView> m_image;
+    winrt::com_ptr<ImageComponentView> m_image;
   };
 
   void ensureVisual() noexcept;
@@ -93,4 +98,4 @@ struct ImageComponentView : CompositionBaseComponentView {
   facebook::react::ImageShadowNode::ConcreteState::Shared m_state;
 };
 
-} // namespace Microsoft::ReactNative
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation

@@ -1,8 +1,120 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Thu, 04 Jan 2024 06:15:55 GMT and should not be manually modified.
+This log was last generated on Sat, 03 Feb 2024 06:13:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.204
+
+Sat, 03 Feb 2024 06:13:43 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.102
+
+## 0.1.203
+
+Fri, 02 Feb 2024 06:14:27 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.101
+
+## 0.1.202
+
+Tue, 30 Jan 2024 06:14:07 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.100
+
+## 0.1.201
+
+Sat, 27 Jan 2024 06:13:39 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.99
+
+## 0.1.200
+
+Fri, 26 Jan 2024 06:13:33 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.98
+
+## 0.1.199
+
+Thu, 25 Jan 2024 06:14:17 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.97
+
+## 0.1.198
+
+Wed, 24 Jan 2024 06:14:15 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.96
+
+## 0.1.197
+
+Tue, 23 Jan 2024 06:15:27 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.95
+
+## 0.1.196
+
+Fri, 19 Jan 2024 06:16:14 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.94
+
+## 0.1.195
+
+Thu, 18 Jan 2024 06:14:23 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.93
+
+## 0.1.194
+
+Wed, 17 Jan 2024 06:16:32 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.92
+
+## 0.1.193
+
+Fri, 12 Jan 2024 06:14:41 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.91
+
+## 0.1.192
+
+Thu, 11 Jan 2024 06:14:31 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.90
+
+## 0.1.191
+
+Wed, 10 Jan 2024 06:13:20 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.89
 
 ## 0.1.190
 

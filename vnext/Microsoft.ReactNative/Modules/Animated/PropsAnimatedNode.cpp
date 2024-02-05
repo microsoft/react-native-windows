@@ -182,7 +182,8 @@ void PropsAnimatedNode::StartAnimations() {
 #ifdef USE_FABRIC
           } else {
             auto visual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(
-                view.m_componentView->Visual());
+                view.m_componentView.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()
+                    ->Visual());
             visual.RotationAxis(m_rotationAxis);
 #endif
           }
@@ -360,7 +361,7 @@ PropsAnimatedNode::AnimationView PropsAnimatedNode::GetAnimationView() {
     auto componentView = fabricuiManager->GetViewRegistry().findComponentViewWithTag(
         static_cast<facebook::react::Tag>(m_connectedViewTag));
     if (componentView) {
-      return {nullptr, std::static_pointer_cast<CompositionBaseComponentView>(componentView)};
+      return {nullptr, componentView};
     }
   }
 #endif // USE_FABRIC
@@ -392,18 +393,20 @@ void PropsAnimatedNode::StartAnimation(
     view.m_element.StartAnimation(animation);
 #ifdef USE_FABRIC
   } else if (view.m_componentView) {
-    auto visual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(
-        view.m_componentView->Visual());
+    auto baseComponentView =
+        view.m_componentView.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+    auto visual =
+        winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(baseComponentView->Visual());
     if (visual) {
       auto targetProp = animation.Target();
       if (targetProp == L"Rotation") {
         targetProp = L"RotationAngleInDegrees";
       } else if (targetProp == L"Transform") {
-        view.m_componentView->EnsureCenterPointPropertySet().StartAnimation(L"transform", animation);
+        baseComponentView->EnsureCenterPointPropertySet().StartAnimation(L"transform", animation);
         return;
       } else if (targetProp == L"Translation") {
-        view.m_componentView->EnsureTransformMatrixFacade();
-        view.m_componentView->EnsureCenterPointPropertySet().StartAnimation(L"translation", animation);
+        baseComponentView->EnsureTransformMatrixFacade();
+        baseComponentView->EnsureCenterPointPropertySet().StartAnimation(L"translation", animation);
 
         return;
       }
@@ -421,7 +424,8 @@ comp::CompositionPropertySet PropsAnimatedNode::EnsureCenterPointPropertySet(con
 #endif
 #ifdef USE_FABRIC
   if (view.m_componentView) {
-    return view.m_componentView->EnsureCenterPointPropertySet();
+    return view.m_componentView.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()
+        ->EnsureCenterPointPropertySet();
   }
 #endif
   return nullptr;

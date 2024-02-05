@@ -4,7 +4,6 @@
 #pragma once
 
 #include "codegen/NativeImageLoaderIOSSpec.g.h"
-#include <NativeImageLoaderIOSSpec.g.h>
 #include <NativeModules.h>
 #include <winrt/Windows.ApplicationModel.h>
 #include <winrt/Windows.Foundation.h>

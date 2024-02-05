@@ -31,6 +31,7 @@
 #include <react/utils/CoreFeatures.h>
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
+#include "DynamicReader.h"
 #include "Unicode.h"
 
 namespace Microsoft::ReactNative {
@@ -149,11 +150,11 @@ void FabricUIManager::startSurface(
     auto &rootComponentViewDescriptor = self->m_registry.dequeueComponentViewWithComponentHandle(
         facebook::react::RootShadowNode::Handle(), surfaceId, self->m_compContext);
 
-    static_cast<RootComponentView &>(*rootComponentViewDescriptor.view)
-        .theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(rootView.Theme()));
+    auto root = rootComponentViewDescriptor.view
+                    .as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
+    root->theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(rootView.Theme()));
 
-    self->m_surfaceRegistry.at(surfaceId).rootVisual.InsertAt(
-        static_cast<const CompositionBaseComponentView &>(*rootComponentViewDescriptor.view).OuterVisual(), 0);
+    self->m_surfaceRegistry.at(surfaceId).rootVisual.InsertAt(root->OuterVisual(), 0);
   });
 
   facebook::react::LayoutContext context;
@@ -179,11 +180,9 @@ void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept
   m_surfaceManager->stopSurface(surfaceId);
 }
 
-winrt::IInspectable FabricUIManager::GetUiaFragmentProvider(facebook::react::SurfaceId surfaceId) const noexcept {
-  if (auto strong = m_surfaceRegistry.at(surfaceId).wkRootView.get()) {
-    return strong.GetUiaProvider();
-  }
-  return nullptr;
+winrt::Microsoft::ReactNative::CompositionRootView FabricUIManager::GetCompositionRootView(
+    facebook::react::SurfaceId surfaceId) const noexcept {
+  return m_surfaceRegistry.at(surfaceId).wkRootView.get();
 }
 
 facebook::react::Size FabricUIManager::measureSurface(
@@ -231,17 +230,18 @@ void FabricUIManager::RCTPerformMountInstructions(
         auto &newChildShadowView = mutation.newChildShadowView;
         auto &parentShadowView = mutation.parentShadowView;
         auto &newChildViewDescriptor = m_registry.componentViewDescriptorWithTag(newChildShadowView.tag);
-        auto &parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentShadowView.tag);
-
-        auto &newChildComponentView = newChildViewDescriptor.view;
+        auto parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentShadowView.tag);
+        auto newChildComponentView =
+            winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(newChildViewDescriptor.view);
 
         newChildComponentView->updateProps(newChildShadowView.props, oldChildShadowView.props);
         newChildComponentView->updateEventEmitter(newChildShadowView.eventEmitter);
         newChildComponentView->updateState(newChildShadowView.state, oldChildShadowView.state);
         newChildComponentView->updateLayoutMetrics(newChildShadowView.layoutMetrics, oldChildShadowView.layoutMetrics);
-        newChildComponentView->finalizeUpdates(RNComponentViewUpdateMask::All);
+        newChildViewDescriptor.view.FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask::All);
 
-        parentViewDescriptor.view->mountChildComponentView(*newChildComponentView, mutation.index);
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
+            ->mountChildComponentView(*newChildComponentView, mutation.index);
         break;
       }
 
@@ -250,7 +250,11 @@ void FabricUIManager::RCTPerformMountInstructions(
         auto &parentShadowView = mutation.parentShadowView;
         auto &oldChildViewDescriptor = m_registry.componentViewDescriptorWithTag(oldChildShadowView.tag);
         auto &parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentShadowView.tag);
-        parentViewDescriptor.view->unmountChildComponentView(*oldChildViewDescriptor.view, mutation.index);
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
+            ->unmountChildComponentView(
+                *winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(
+                    oldChildViewDescriptor.view),
+                mutation.index);
         break;
       }
 
@@ -258,33 +262,33 @@ void FabricUIManager::RCTPerformMountInstructions(
         auto &oldChildShadowView = mutation.oldChildShadowView;
         auto &newChildShadowView = mutation.newChildShadowView;
         auto &newChildViewDescriptor = m_registry.componentViewDescriptorWithTag(newChildShadowView.tag);
-        auto &newChildComponentView = newChildViewDescriptor.view;
-
-        auto mask = RNComponentViewUpdateMask{};
+        auto newChildComponentView =
+            winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(newChildViewDescriptor.view);
+        auto mask = winrt::Microsoft::ReactNative::ComponentViewUpdateMask::None;
 
         if (oldChildShadowView.props != newChildShadowView.props) {
           newChildComponentView->updateProps(newChildShadowView.props, oldChildShadowView.props);
-          mask |= RNComponentViewUpdateMask::Props;
+          mask |= winrt::Microsoft::ReactNative::ComponentViewUpdateMask::Props;
         }
 
         if (oldChildShadowView.eventEmitter != newChildShadowView.eventEmitter) {
           newChildComponentView->updateEventEmitter(newChildShadowView.eventEmitter);
-          mask |= RNComponentViewUpdateMask::EventEmitter;
+          mask |= winrt::Microsoft::ReactNative::ComponentViewUpdateMask::EventEmitter;
         }
 
         if (oldChildShadowView.state != newChildShadowView.state) {
           newChildComponentView->updateState(newChildShadowView.state, oldChildShadowView.state);
-          mask |= RNComponentViewUpdateMask::State;
+          mask |= winrt::Microsoft::ReactNative::ComponentViewUpdateMask::State;
         }
 
         if (oldChildShadowView.layoutMetrics != newChildShadowView.layoutMetrics) {
           newChildComponentView->updateLayoutMetrics(
               newChildShadowView.layoutMetrics, oldChildShadowView.layoutMetrics);
-          mask |= RNComponentViewUpdateMask::LayoutMetrics;
+          mask |= winrt::Microsoft::ReactNative::ComponentViewUpdateMask::LayoutMetrics;
         }
 
-        if (mask != RNComponentViewUpdateMask::None) {
-          newChildComponentView->finalizeUpdates(mask);
+        if (mask != winrt::Microsoft::ReactNative::ComponentViewUpdateMask::None) {
+          newChildViewDescriptor.view.FinalizeUpdates(mask);
         }
 
         break;
@@ -366,14 +370,16 @@ void FabricUIManager::schedulerDidDispatchCommand(
     folly::dynamic const &arg) {
   if (m_context.UIDispatcher().HasThreadAccess()) {
     auto descriptor = m_registry.componentViewDescriptorWithTag(shadowView.tag);
-    descriptor.view->handleCommand(commandName, arg);
+    descriptor.view.HandleCommand(
+        winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(arg));
   } else {
     m_context.UIDispatcher().Post(
         [wkThis = weak_from_this(), commandName, tag = shadowView.tag, args = folly::dynamic(arg)]() {
           if (auto pThis = wkThis.lock()) {
             auto view = pThis->m_registry.findComponentViewWithTag(tag);
             if (view) {
-              view->handleCommand(commandName, args);
+              view.HandleCommand(
+                  winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(args));
             }
           }
         });

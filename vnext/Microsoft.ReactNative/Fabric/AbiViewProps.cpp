@@ -30,6 +30,10 @@ winrt::Microsoft::ReactNative::IComponentProps AbiViewProps::UserProps() const n
   return m_componentProps;
 }
 
+winrt::Microsoft::ReactNative::ViewProps AbiViewProps::ViewProps() const noexcept {
+  return m_userProps;
+}
+
 } // namespace Microsoft::ReactNative
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -43,6 +47,12 @@ void UserViewProps::Disconnect() noexcept {
 
 float UserViewProps::Opacity() noexcept {
   return m_viewProps ? m_viewProps->opacity : 1.0f;
+}
+
+ViewProps::ViewProps(facebook::react::SharedViewProps props) noexcept : m_props(props) {}
+
+float ViewProps::Opacity() noexcept {
+  return m_props->opacity;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

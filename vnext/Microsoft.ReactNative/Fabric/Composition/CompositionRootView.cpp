@@ -193,12 +193,16 @@ void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition
           const winrt::Windows::Foundation::IInspectable & /*sender*/,
           const winrt::Windows::Foundation::IInspectable & /*args*/) {
         if (auto rootView = GetComponentView()) {
-          Mso::Functor<bool(::Microsoft::ReactNative::IComponentView &)> fn =
-              [](::Microsoft::ReactNative::IComponentView &view) noexcept {
-                view.onThemeChanged();
+          Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> fn =
+              [](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+                winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->onThemeChanged();
                 return false;
               };
-          walkTree(*rootView, true, fn);
+
+          winrt::Microsoft::ReactNative::ComponentView view{nullptr};
+          winrt::check_hresult(rootView->QueryInterface(
+              winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
+          walkTree(view, true, fn);
         }
       });
 
@@ -265,6 +269,27 @@ int64_t CompositionRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t 
   }
 
   return 0;
+}
+
+bool CompositionRootView::CapturePointer(
+    const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
+    facebook::react::Tag tag) noexcept {
+  if (m_hwnd) {
+    SetCapture(m_hwnd);
+  }
+  return m_CompositionEventHandler->CapturePointer(pointer, tag);
+}
+
+void CompositionRootView::ReleasePointerCapture(
+    const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
+    facebook::react::Tag tag) noexcept {
+  if (m_CompositionEventHandler->ReleasePointerCapture(pointer, tag)) {
+    if (m_hwnd) {
+      if (m_hwnd == GetCapture()) {
+        ReleaseCapture();
+      }
+    }
+  }
 }
 
 void CompositionRootView::InitRootView(
@@ -468,7 +493,8 @@ winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() noexc
 }
 #endif
 
-::Microsoft::ReactNative::RootComponentView *CompositionRootView::GetComponentView() noexcept {
+winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
+CompositionRootView::GetComponentView() noexcept {
   if (!m_context || m_context.Handle().LoadingState() != winrt::Microsoft::ReactNative::LoadingState::Loaded ||
       m_rootTag == -1)
     return nullptr;
@@ -477,7 +503,9 @@ winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() noexc
           winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(
         static_cast<facebook::react::SurfaceId>(m_rootTag));
-    return static_cast<::Microsoft::ReactNative::RootComponentView *>(rootComponentViewDescriptor.view.get());
+    return rootComponentViewDescriptor.view
+        .as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>()
+        .get();
   }
   return nullptr;
 }

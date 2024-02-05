@@ -26,7 +26,16 @@ describe('View Tests', () => {
     expect(true).toBe(true);
   });
   // Disable until tests pass in CI.
-  /*test('Views can have border styles', async () => {
+  /*test('Views can have shadows', async () => {
+    const searchBox = await app.findElementByTestID('example_search');
+    await searchBox.addValue(['Backspace', 'Backspace', 'Backspace']);
+    await searchBox.addValue('sha');
+    const component = await app.findElementByTestID('shadow');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('shadow');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Views can have border styles', async () => {
     const searchBox = await app.findElementByTestID('example_search');
     await searchBox.addValue(['Backspace', 'Backspace', 'Backspace']);
     await searchBox.addValue('sty');

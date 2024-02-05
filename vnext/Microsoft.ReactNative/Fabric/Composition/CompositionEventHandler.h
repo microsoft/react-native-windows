@@ -23,7 +23,8 @@ using namespace Windows::Foundation;
 
 namespace Microsoft::ReactNative {
 
-struct IComponentView;
+struct FabricUIManager;
+struct winrt::Microsoft::ReactNative::implementation::ComponentView;
 typedef int PointerId;
 
 class CompositionEventHandler {
@@ -36,6 +37,14 @@ class CompositionEventHandler {
   int64_t SendMessage(HWND hwnd, uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   void RemoveTouchHandlers();
   winrt::Windows::UI::Core::CoreVirtualKeyStates GetKeyState(winrt::Windows::System::VirtualKey key) noexcept;
+
+  bool CapturePointer(
+      const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
+      facebook::react::Tag tag) noexcept;
+  bool ReleasePointerCapture(
+      const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
+      facebook::react::Tag tag) noexcept;
+  facebook::react::Tag PointerCapturingComponent() noexcept;
 
  private:
   void onPointerPressed(
@@ -50,6 +59,9 @@ class CompositionEventHandler {
   void onPointerWheelChanged(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
       winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
+  void onPointerCaptureLost(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
   void onKeyDown(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
@@ -60,8 +72,16 @@ class CompositionEventHandler {
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
 
-  facebook::react::SurfaceId SurfaceId() noexcept;
-  RootComponentView &RootComponentView() noexcept;
+  void getTargetPointerArgs(
+      const std::shared_ptr<FabricUIManager> &fabricuiManager,
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+      facebook::react::Tag &tag,
+      facebook::react::Point &ptScaled,
+      facebook::react::Point &ptLocal) const noexcept;
+  bool releasePointerCapture(PointerId pointerId, facebook::react::Tag tag) noexcept;
+
+  facebook::react::SurfaceId SurfaceId() const noexcept;
+  winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView &RootComponentView() const noexcept;
 
   enum class UITouchType {
     Mouse,
@@ -76,10 +96,10 @@ class CompositionEventHandler {
       winrt::Windows::System::VirtualKeyModifiers keyModifiers);
   void HandleIncomingPointerEvent(
       facebook::react::PointerEvent &pe,
-      IComponentView *targetView,
+      const winrt::Microsoft::ReactNative::ComponentView &targetView,
       const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
       winrt::Windows::System::VirtualKeyModifiers keyModifiers,
-      std::function<void(std::vector<IComponentView *> &)> handler);
+      std::function<void(std::vector<winrt::Microsoft::ReactNative::ComponentView> &)> handler);
 
   struct ActiveTouch {
     facebook::react::Touch touch;
@@ -137,11 +157,15 @@ class CompositionEventHandler {
   winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
 
+  facebook::react::Tag m_pointerCapturingComponentTag{-1}; // Component that has captured input
+  std::vector<PointerId> m_capturedPointers;
+
 #ifdef USE_WINUI3
   winrt::event_token m_pointerPressedToken;
   winrt::event_token m_pointerReleasedToken;
   winrt::event_token m_pointerMovedToken;
   winrt::event_token m_pointerWheelChangedToken;
+  winrt::event_token m_pointerCaptureLostToken;
   winrt::event_token m_keyDownToken;
   winrt::event_token m_keyUpToken;
   winrt::event_token m_characterReceivedToken;

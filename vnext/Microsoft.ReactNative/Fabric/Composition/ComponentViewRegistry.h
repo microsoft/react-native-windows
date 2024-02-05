@@ -7,6 +7,7 @@
 #include <Fabric/IComponentViewRegistry.h>
 
 #include <Fabric/Composition/CompositionHelpers.h>
+#include <winrt/Microsoft.ReactNative.h>
 
 namespace Microsoft::ReactNative {
 
@@ -20,7 +21,8 @@ class ComponentViewRegistry final : public IComponentViewRegistry {
       facebook::react::Tag tag,
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext) noexcept override;
   ComponentViewDescriptor const &componentViewDescriptorWithTag(facebook::react::Tag tag) const noexcept override;
-  std::shared_ptr<IComponentView> findComponentViewWithTag(facebook::react::Tag tag) const noexcept override;
+  winrt::Microsoft::ReactNative::ComponentView findComponentViewWithTag(
+      facebook::react::Tag tag) const noexcept override;
   void enqueueComponentViewWithComponentHandle(
       facebook::react::ComponentHandle componentHandle,
       facebook::react::Tag tag,
