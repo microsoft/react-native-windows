@@ -492,7 +492,8 @@ export default ({
         return (
           <View
             testID="view-test-background-color"
-            style={{backgroundColor: '#527FE4', padding: 5}} accessible>
+            style={{backgroundColor: '#527FE4', padding: 5}}
+            accessible>
             <Text style={{fontSize: 11}}>Blue background</Text>
           </View>
         );
@@ -505,7 +506,8 @@ export default ({
         return (
           <View
             testID="view-test-border"
-            style={{borderColor: '#527FE4', borderWidth: 5, padding: 10}} accessible>
+            style={{borderColor: '#527FE4', borderWidth: 5, padding: 10}}
+            accessible>
             <Text style={{fontSize: 11}}>5px blue border</Text>
           </View>
         );
@@ -525,7 +527,8 @@ export default ({
         return (
           <View
             testID="view-test-padding-margin"
-            style={{borderColor: '#bb0000', borderWidth: 0.5}} accessible>
+            style={{borderColor: '#bb0000', borderWidth: 0.5}}
+            accessible>
             <View style={[styles.box, {padding: 5}]}>
               <Text style={{fontSize: 11}}>5px padding</Text>
             </View>
@@ -589,7 +592,8 @@ export default ({
         return (
           <View
             testID="view-test-rounded-borders"
-            style={{flexDirection: 'row', flexWrap: 'wrap'}} accessible>
+            style={{flexDirection: 'row', flexWrap: 'wrap'}}
+            accessible>
             <View
               style={{
                 width: 50,
@@ -693,7 +697,10 @@ export default ({
         // NOTE: The <View> that sets `overflow` should only have other layout
         // styles so that we can accurately test view flattening optimizations.
         return (
-          <View testID="view-test-overflow" style={{flexDirection: 'row'}} accessible>
+          <View
+            testID="view-test-overflow"
+            style={{flexDirection: 'row'}}
+            accessible>
             <View style={styles.container}>
               <View style={[StyleSheet.absoluteFill]}>
                 <Text style={styles.content}>undefined</Text>
@@ -855,7 +862,7 @@ export default ({
       title: 'FlexGap',
       name: 'flexgap',
       render(): React.Node {
-        return <FlexGapExample testID="view-test-flexgap"/>;
+        return <FlexGapExample testID="view-test-flexgap" />;
       },
     },
     {
@@ -950,7 +957,10 @@ export default ({
       name: 'logical-border-color',
       render(): React.Node {
         return (
-          <View testID="view-test-logical-border-color" style={{rowGap: 10}} accessible>
+          <View
+            testID="view-test-logical-border-color"
+            style={{rowGap: 10}}
+            accessible>
             <View style={{position: 'relative', height: 50, borderWidth: 1}}>
               <View
                 style={{
