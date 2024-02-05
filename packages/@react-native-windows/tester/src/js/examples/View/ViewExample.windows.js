@@ -411,7 +411,7 @@ class AccessibilityExample extends React.Component<
       <View
         accessibilityLabel="A View with accessibility values"
         accessibilityHint="Accessibility Hint"
-        accessibilityRole="none"
+        accessibilityRole="button"
         accessibilityValue={0}
         accessibilityActions={[
           {name: 'cut', label: 'cut'},
@@ -471,6 +471,7 @@ class HitSlopExample extends React.Component<
           this.setState({color: 'grey'});
         }}
         testID="hitslop"
+        accessible
       />
     );
   }
@@ -994,7 +995,7 @@ export default ({
       title: 'NativeID',
       render(): React.Node {
         return (
-          <View nativeID="native-id-view" testID="nativeid">
+          <View nativeID="native-id-view" testID="nativeid" accessible>
             <Text>A View with a nativeID "native-id-view"</Text>
           </View>
         );
@@ -1020,6 +1021,7 @@ export default ({
               shadowRadius: 10,
             }}
             testID="shadow"
+            accessible
           />
         );
       },
@@ -1034,7 +1036,7 @@ export default ({
       title: 'ToolTip',
       render(): React.Node {
         return (
-          <View tooltip="Parent View" testID="tool-tip">
+          <View tooltip="Parent View" testID="tool-tip" accessible>
             <Text style={{fontSize: 11}}>
               This Parent View has tooltip "Parent View"
             </Text>
