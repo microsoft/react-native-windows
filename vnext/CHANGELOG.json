@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 05 Feb 2024 16:14:58 GMT",
+      "tag": "react-native-windows_v0.72.27",
+      "version": "0.72.27",
+      "comments": {
+        "patch": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "45cc04e274ff90c0c73b89b74c538e9f869def5f",
+            "comment": "Include line/column numbers on syntax error"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 29 Jan 2024 16:14:52 GMT",
       "tag": "react-native-windows_v0.72.26",
       "version": "0.72.26",
