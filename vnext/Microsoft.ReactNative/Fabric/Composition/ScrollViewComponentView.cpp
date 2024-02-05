@@ -305,10 +305,10 @@ struct ScrollBarComponent {
   }
 
   void stopTrackingThumb() noexcept {
-      m_nTrackInputOffset = -1;
-      m_thumbVisual.AnimationClass(
+    m_nTrackInputOffset = -1;
+    m_thumbVisual.AnimationClass(
         m_vertical ? winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbVertical
-                 : winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbHorizontal);
+                   : winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbHorizontal);
   }
 
   void handleMoveThumb(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
