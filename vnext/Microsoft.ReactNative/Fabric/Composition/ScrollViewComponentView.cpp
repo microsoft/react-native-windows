@@ -296,12 +296,19 @@ struct ScrollBarComponent {
         pt.Properties().PointerUpdateKind() ==
             winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::LeftButtonReleased) {
       handleMoveThumb(args);
-      m_nTrackInputOffset = -1;
+      stopTrackingThumb();
       m_outer.ReleasePointerCapture(args.Pointer());
 
       auto reg = HitTest(pt.Position());
       updateShy(reg == ScrollbarHitRegion::Unknown);
     }
+  }
+
+  void stopTrackingThumb() noexcept {
+    m_nTrackInputOffset = -1;
+    m_thumbVisual.AnimationClass(
+        m_vertical ? winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbVertical
+                   : winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbHorizontal);
   }
 
   void handleMoveThumb(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
@@ -358,6 +365,7 @@ struct ScrollBarComponent {
         case ScrollbarHitRegion::Thumb: {
           m_outer.CapturePointer(args.Pointer());
           m_nTrackInputOffset = static_cast<int>((m_vertical ? pos.Y : pos.X) * m_scaleFactor) - m_thumbPos;
+          m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::None);
           handleMoveThumb(args);
         }
       }
@@ -384,7 +392,7 @@ struct ScrollBarComponent {
     if (!m_visible)
       return;
 
-    m_nTrackInputOffset = -1;
+    stopTrackingThumb();
     updateShy(true);
   }
 
