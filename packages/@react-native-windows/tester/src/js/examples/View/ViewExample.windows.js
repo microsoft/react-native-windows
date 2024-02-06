@@ -13,18 +13,8 @@
 import type {RNTesterModule} from '../../types/RNTesterTypes';
 
 import * as React from 'react';
-<<<<<<< Upstream
+
 import {Platform, Pressable, StyleSheet, Text, View} from 'react-native';
-=======
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-  Alert,
-} from 'react-native';
->>>>>>> Override
 
 class ViewBorderStyleExample extends React.Component<
   $ReadOnly<{||}>,
@@ -478,20 +468,12 @@ export default ({
   examples: [
     {
       title: 'Background Color',
-<<<<<<< Upstream
       name: 'background-color',
       render(): React.Node {
         return (
           <View
             testID="view-test-background-color"
             style={{backgroundColor: '#527FE4', padding: 5}}>
-=======
-      render(): React.Node {
-        return (
-          <View
-            style={{backgroundColor: '#527FE4', padding: 5}}
-            testID="background-color">
->>>>>>> Override
             <Text style={{fontSize: 11}}>Blue background</Text>
           </View>
         );
@@ -499,20 +481,12 @@ export default ({
     },
     {
       title: 'Border',
-<<<<<<< Upstream
       name: 'border',
       render(): React.Node {
         return (
           <View
             testID="view-test-border"
             style={{borderColor: '#527FE4', borderWidth: 5, padding: 10}}>
-=======
-      render(): React.Node {
-        return (
-          <View
-            style={{borderColor: '#527FE4', borderWidth: 5, padding: 10}}
-            testID="border">
->>>>>>> Override
             <Text style={{fontSize: 11}}>5px blue border</Text>
           </View>
         );
@@ -520,10 +494,7 @@ export default ({
     },
     {
       title: 'Padding/Margin',
-<<<<<<< Upstream
       name: 'padding-margin',
-=======
->>>>>>> Override
       render(): React.Node {
         const styles = StyleSheet.create({
           box: {
@@ -534,13 +505,8 @@ export default ({
         });
         return (
           <View
-<<<<<<< Upstream
             testID="view-test-padding-margin"
             style={{borderColor: '#bb0000', borderWidth: 0.5}}>
-=======
-            style={{borderColor: '#bb0000', borderWidth: 0.5}}
-            testID="padding-margin">
->>>>>>> Override
             <View style={[styles.box, {padding: 5}]}>
               <Text style={{fontSize: 11}}>5px padding</Text>
             </View>
@@ -555,7 +521,6 @@ export default ({
       },
     },
     {
-<<<<<<< Upstream
       title: 'Border Radius',
       name: 'border-radius',
       render(): React.Node {
@@ -582,16 +547,6 @@ export default ({
                 </Text>
               </View>
             )}
-=======
-      title: 'Border',
-      name: 'border',
-      render({testID}): React.Node {
-        return (
-          <View
-            testID={testID}
-            style={{borderColor: '#527FE4', borderWidth: 5, padding: 10}}>
-            <Text style={{fontSize: 11}}>5px blue border</Text>
->>>>>>> Override
           </View>
         );
       },
@@ -604,20 +559,12 @@ export default ({
     },
     {
       title: 'Rounded Borders',
-<<<<<<< Upstream
       name: 'rounded-borders',
       render(): React.Node {
         return (
           <View
             testID="view-test-rounded-borders"
             style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-=======
-      render(): React.Node {
-        return (
-          <View
-            style={{flexDirection: 'row', flexWrap: 'wrap'}}
-            testID="rounded-borders">
->>>>>>> Override
             <View
               style={{
                 width: 50,
