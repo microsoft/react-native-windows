@@ -13,6 +13,6 @@
 #include <cxxreact/JSExecutor.h>
 #include <cxxreact/MessageQueueThread.h>
 #include <fbsystrace.h>
-#include <yoga/yoga.h>
+#include <yoga/Yoga.h>
 
 #include <ReactCommon/TurboModule.h>
