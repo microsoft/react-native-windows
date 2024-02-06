@@ -9389,8 +9389,8 @@ exports[`snapshotAllPages Fabric Native Component 1`] = `
   >
     This is RN Text
   </Text>
-  <MyCustomComponent
-    label="test"
+  <CustomXamlComponentWithNativeLayout
+    label="This is a Xaml Button set to ellipisify on truncation"
     style={
       {
         "flexShrink": 1,
@@ -9512,8 +9512,8 @@ exports[`snapshotAllPages Fabric Native Component Yoga 1`] = `
   >
     This is RN Text
   </Text>
-  <MyCustomComponentYoga
-    label="test"
+  <CustomXamlComponentWithYogaLayout
+    label="This is a Xaml Button set to ellipisify on truncation"
     style={
       {
         "flex": 1,

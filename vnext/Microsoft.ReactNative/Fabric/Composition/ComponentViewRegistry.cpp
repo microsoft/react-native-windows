@@ -10,7 +10,6 @@
 #include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
 #pragma warning(pop)
 
-#include <Fabric/Composition/AbiCompositionViewComponentView.h>
 #include <Fabric/Composition/ActivityIndicatorComponentView.h>
 #include <Fabric/Composition/CompositionHelpers.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
@@ -49,7 +48,7 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
   winrt::Microsoft::ReactNative::ComponentView view{nullptr};
 
   if (componentHandle == facebook::react::ViewShadowNode::Handle()) {
-    view = winrt::Microsoft::ReactNative::Composition::implementation::CompositionViewComponentView::Create(
+    view = winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView::Create(
         compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ParagraphShadowNode::Handle()) {
     view = winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView::Create(
@@ -79,7 +78,7 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
       componentHandle == facebook::react::RawTextShadowNode::Handle() ||
       componentHandle == facebook::react::TextShadowNode::Handle()) {
     // Review - Why do we get asked for ComponentViews for Text/RawText... do these get used?
-    view = winrt::Microsoft::ReactNative::Composition::implementation::CompositionViewComponentView::Create(
+    view = winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView::Create(
         compContext, tag, m_context);
   } else if (componentHandle == facebook::react::UnimplementedNativeViewShadowNode::Handle()) {
     view = winrt::Microsoft::ReactNative::Composition::implementation::UnimplementedNativeViewComponentView::Create(
@@ -90,11 +89,9 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
   } else {
     auto descriptor =
         WindowsComponentDescriptorRegistry::FromProperties(m_context.Properties())->GetDescriptor(componentHandle);
-    view = winrt::Microsoft::ReactNative::Composition::implementation::AbiCompositionViewComponentView::Create(
-        m_context.Handle(),
-        compContext,
-        tag,
-        descriptor.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>());
+    view = winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(
+               descriptor.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>())
+               ->CreateView(m_context.Handle(), tag, compContext);
   }
 
   auto it = m_registry.insert({tag, ComponentViewDescriptor{view}});

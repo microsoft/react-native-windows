@@ -5,7 +5,7 @@
 #include <InstanceManager.h>
 
 #include <DevSettings.h>
-#include <Folly/dynamic.h>
+#include <folly/dynamic.h>
 #include "XamlView.h"
 
 #include <functional>

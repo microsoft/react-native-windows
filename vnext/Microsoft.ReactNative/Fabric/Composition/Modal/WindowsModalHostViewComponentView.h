@@ -14,9 +14,8 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-struct WindowsModalHostComponentView
-    : WindowsModalHostComponentViewT<WindowsModalHostComponentView, CompositionBaseComponentView> {
-  using Super = WindowsModalHostComponentViewT<WindowsModalHostComponentView, CompositionBaseComponentView>;
+struct WindowsModalHostComponentView : WindowsModalHostComponentViewT<WindowsModalHostComponentView, ComponentView> {
+  using Super = WindowsModalHostComponentViewT<WindowsModalHostComponentView, ComponentView>;
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
@@ -29,7 +28,8 @@ struct WindowsModalHostComponentView
   void unmountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
-  void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
+  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
+      override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept

@@ -54,17 +54,17 @@ struct UIManager final {
   void ConstantsViaConstantsProvider(winrt::Microsoft::ReactNative::ReactConstantProvider &constants) noexcept;
 
   REACT_SYNC_METHOD(getConstantsForViewManager)
-  winrt::Microsoft::ReactNative::JSValueObject getConstantsForViewManager(std::string viewManagerName) noexcept;
+  winrt::Microsoft::ReactNative::JSValue getConstantsForViewManager(std::string viewManagerName) noexcept;
 
   // Not part of the spec, but core polyfils this on the JS side.
   REACT_SYNC_METHOD(getViewManagerConfig)
-  winrt::Microsoft::ReactNative::JSValueObject getViewManagerConfig(std::string viewManagerName) noexcept;
+  winrt::Microsoft::ReactNative::JSValue getViewManagerConfig(std::string viewManagerName) noexcept;
 
   REACT_SYNC_METHOD(getDefaultEventTypes)
   winrt::Microsoft::ReactNative::JSValueArray getDefaultEventTypes() noexcept;
 
   REACT_SYNC_METHOD(lazilyLoadView)
-  winrt::Microsoft::ReactNative::JSValueObject lazilyLoadView(std::string name) noexcept;
+  winrt::Microsoft::ReactNative::JSValue lazilyLoadView(std::string name) noexcept;
 
   REACT_METHOD(createView)
   void createView(

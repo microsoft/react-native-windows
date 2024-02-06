@@ -111,8 +111,11 @@ class UIManagerModule : public std::enable_shared_from_this<UIManagerModule>, pu
     m_nativeUIManager->setHost(this);
   }
 
-  React::JSValueObject getConstantsForViewManager(std::string &&viewManagerName) noexcept {
+  React::JSValue getConstantsForViewManager(std::string &&viewManagerName) noexcept {
     const IViewManager *vm = GetViewManager(viewManagerName);
+    if (vm == nullptr) {
+      return {};
+    }
 
     auto writer = winrt::Microsoft::ReactNative::MakeJSValueTreeWriter();
     writer.WriteObjectBegin();
@@ -543,11 +546,11 @@ void UIManager::Initialize(winrt::Microsoft::ReactNative::ReactContext const &re
   m_module->Initialize(reactContext);
 }
 
-React::JSValueObject UIManager::getConstantsForViewManager(std::string viewManagerName) noexcept {
+React::JSValue UIManager::getConstantsForViewManager(std::string viewManagerName) noexcept {
   return m_module->getConstantsForViewManager(std::move(viewManagerName));
 }
 
-React::JSValueObject UIManager::getViewManagerConfig(std::string viewManagerName) noexcept {
+React::JSValue UIManager::getViewManagerConfig(std::string viewManagerName) noexcept {
   return getConstantsForViewManager(std::move(viewManagerName));
 }
 
@@ -562,8 +565,7 @@ React::JSValueArray UIManager::getDefaultEventTypes() noexcept {
   return {};
 }
 
-React::JSValueObject UIManager::lazilyLoadView(std::string name) noexcept {
-  assert(false);
+React::JSValue UIManager::lazilyLoadView(std::string name) noexcept {
   // TODO
   return {};
 }

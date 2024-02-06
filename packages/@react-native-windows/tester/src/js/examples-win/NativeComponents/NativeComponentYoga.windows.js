@@ -12,7 +12,7 @@
 
 import React from 'react';
 import {Text, View} from 'react-native';
-import {MyCustomComponentYoga} from './MyCustomComponentYogaNativeComponent';
+import {CustomXamlComponentWithYogaLayout} from './CustomXamlComponentWithYogaLayoutNativeComponent';
 
 exports.displayName = 'NativeFabricComponentYoga';
 exports.framework = 'React';
@@ -42,8 +42,8 @@ exports.examples = [
           <View style={{width: 100, height: 100, backgroundColor: 'pink'}} />
           <View style={{width: 100, height: 100, backgroundColor: 'gray'}} />
           <Text style={{color: 'gray'}}>This is RN Text</Text>
-          <MyCustomComponentYoga
-            label="test"
+          <CustomXamlComponentWithYogaLayout
+            label="This is a Xaml Button set to ellipisify on truncation"
             style={{flex: 1, minWidth: 100}}
           />
           <View style={{width: 100, height: 100, backgroundColor: 'green'}} />

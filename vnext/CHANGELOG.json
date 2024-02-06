@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 06 Feb 2024 06:13:47 GMT",
+      "version": "0.0.0-canary.764",
+      "tag": "react-native-windows_v0.0.0-canary.764",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "407d84b89825861fab702676d928c2f5ddc4882c",
+            "comment": "[Fabric] fix visual issue when quickly dragging scrollthumb before it finishes animating in"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2b9f7d9cb21adba83228311c97a47ded7853c006",
+            "comment": "[Fabric] Mouse wheel handling when use WM_MSG hosting uses wrong mouse position"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ad5134507f6d3ac483b25cad175a7f886a7b10a7",
+            "comment": "Add experimental feature flag to opt into experimental winui3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 03 Feb 2024 06:13:43 GMT",
+      "version": "0.0.0-canary.763",
+      "tag": "react-native-windows_v0.0.0-canary.763",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "01e32fe2059c29acb6c36629ea9d844e917b6330",
+            "comment": "[Fabric] Remove AbiCompositionViewComponent and move to inheritence overrides for custom components"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "05bfd0c9818462b81a64bf8d90bd27c5a10e7169",
+            "comment": "Ensure origin in WebSocket headers"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 02 Feb 2024 06:14:27 GMT",
+      "version": "0.0.0-canary.762",
+      "tag": "react-native-windows_v0.0.0-canary.762",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "adefdeef79ca8ac4c4b75338884311c688eb11bf",
+            "comment": "Update to C++20"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 30 Jan 2024 06:14:07 GMT",
       "version": "0.0.0-canary.761",
       "tag": "react-native-windows_v0.0.0-canary.761",
