@@ -22,34 +22,30 @@ using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
 namespace Microsoft::React::Utilities {
 
-string DecodeBase64(string_view&& text) noexcept
-{
+string DecodeBase64(string_view &&text) noexcept {
   return {};
 }
 
-string EncodeBase64(string_view&& text) noexcept
-{
+string EncodeBase64(string_view &&text) noexcept {
   typedef array_view<char const> av_t;
   auto bytes = av_t(text.data(), static_cast<av_t::size_type>(text.size()));
 
   using namespace boost::archive::iterators;
-  typedef base64_from_binary<transform_width<const char*, 6, 8>> encode_base64;
+  typedef base64_from_binary<transform_width<const char *, 6, 8>> encode_base64;
   std::ostringstream oss;
   std::copy(encode_base64(bytes.cbegin()), encode_base64(bytes.cend()), ostream_iterator<char>(oss));
 
   // https://unix.stackexchange.com/questions/631501
   auto padLength = (4 - (oss.tellp() % 4)) % 4;
-  for (auto i = 0; i < padLength; ++i)
-  {
+  for (auto i = 0; i < padLength; ++i) {
     oss << '=';
   }
 
   return oss.str();
 }
 
-string EncodeBase64(wstring_view&& text) noexcept
-{
-  //TODO: Confirm encoding
+string EncodeBase64(wstring_view &&text) noexcept {
+  // TODO: Confirm encoding
   auto buffer = CryptographicBuffer::ConvertStringToBinary(std::move(text), BinaryStringEncoding::Utf8);
   auto encoded = CryptographicBuffer::EncodeToBase64String(buffer);
 
