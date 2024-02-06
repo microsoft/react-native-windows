@@ -3,37 +3,63 @@
 
 #include "Utilities.h"
 
+// Boost Library
+#include <boost/archive/iterators/base64_from_binary.hpp>
+#include <boost/archive/iterators/ostream_iterator.hpp>
+#include <boost/archive/iterators/transform_width.hpp>
+
+// Windows API
+#include <winrt/Windows.Security.Cryptography.h>
+
+// Standard Library
 using std::string_view;
 using std::wstring_view;
+using winrt::array_view;
 
-namespace Microsoft::React {
+using winrt::Windows::Security::Cryptography::BinaryStringEncoding;
+using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
-constexpr string_view DecodeBase64(string_view&& text) noexcept
+namespace Microsoft::React::Utilities {
+
+string_view DecodeBase64(string_view&& text) noexcept
 {
   return {};
 }
 
-constexpr string_view DecodeBase64(wstring_view&& text) noexcept
+string_view DecodeBase64(wstring_view&& text) noexcept
+{
+  return {};
+}
+
+string_view EncodeBase64(string_view&& text) noexcept
 {
   /*
-  * From ImageUtils.cpp
-    std::string_view base64String(source.uri.c_str() + start + 1, source.uri.length() - start - 1);
-    auto buffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::DecodeFromBase64String(
-        winrt::to_hstring(base64String));
-
+  // https://unix.stackexchange.com/questions/631501
+  auto padLength = 4 - (oss.tellp() % 4);
+  for (auto i = 0; i < padLength; ++i) {
+    result += '=';
+  }
   */
+  typedef array_view<char const> av_t;
+  auto bytes = av_t(text.data(), static_cast<av_t::size_type>(text.size()));
 
-  return {};
+  using namespace boost::archive::iterators;
+  typedef base64_from_binary<transform_width<const char*, 6, 8>> encode_base64;
+  std::ostringstream oss;
+  std::copy(encode_base64(bytes.cbegin()), encode_base64(bytes.cend()), ostream_iterator<char>(oss));
+
+  return oss.str();
 }
 
-constexpr string_view EncodeBase64(string_view&& text) noexcept
+string_view EncodeBase64(wstring_view&& text) noexcept
 {
-  return {};
+  //TODO: Confirm encoding
+  auto buffer = CryptographicBuffer::ConvertStringToBinary(std::move(text), BinaryStringEncoding::Utf16LE);
+  auto encoded = CryptographicBuffer::EncodeToBase64String(buffer);
+  auto result = winrt::to_string(encoded);
+
+  //TODO: Result in stack!
+  return result;
 }
 
-constexpr string_view EncodeBase64(wstring_view&& text) noexcept
-{
-  return {};
-}
-
-} // namespace Microsoft::React
+} // namespace Microsoft::React::Utilities

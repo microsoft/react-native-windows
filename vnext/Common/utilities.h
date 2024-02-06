@@ -41,13 +41,13 @@ constexpr std::size_t ArraySize(T (&)[N]) noexcept {
 
 } // namespace Microsoft::Common::Utilities
 
-namespace Microsoft::React {
+namespace Microsoft::React::Utilities {
 
 
-constexpr std::string_view DecodeBase64(std::string_view&& text) noexcept;
-constexpr std::string_view DecodeBase64(std::wstring_view&& text) noexcept;
+std::string_view DecodeBase64(std::string_view&& text) noexcept;
+std::string_view DecodeBase64(std::wstring_view&& text) noexcept;
 
-constexpr std::string_view EncodeBase64(std::string_view&& text) noexcept;
-constexpr std::string_view EncodeBase64(std::wstring_view&& text) noexcept;
+std::string_view EncodeBase64(std::string_view&& text) noexcept;
+std::string_view EncodeBase64(std::wstring_view&& text) noexcept;
 
-}// namespace Microsoft::React
+}// namespace Microsoft::React::Utilities
