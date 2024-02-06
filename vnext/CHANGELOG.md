@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 03 Feb 2024 06:13:43 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Feb 2024 06:13:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.764
+
+Tue, 06 Feb 2024 06:13:47 GMT
+
+### Changes
+
+- [Fabric] fix visual issue when quickly dragging scrollthumb before it finishes animating in (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Mouse wheel handling when use WM_MSG hosting uses wrong mouse position (30809111+acoates-ms@users.noreply.github.com)
+- Add experimental feature flag to opt into experimental winui3 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.763
 
