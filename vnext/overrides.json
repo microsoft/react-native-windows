@@ -142,6 +142,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mounting/ShadowTree.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/ShadowTree.cpp",
+      "baseHash": "430fa0d97835b073c9d3266d7d8d21096bae081b",
+      "issue": 12195
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManagerBinding.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/uimanager/UIManagerBinding.cpp",
       "baseHash": "9210ab2289dbe492ead3e3506f080290cd9fa26b",
