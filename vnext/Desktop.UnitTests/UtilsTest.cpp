@@ -15,15 +15,17 @@ namespace Microsoft::React::Test {
 // test macros.
 // clang-format off
 
-TEST_CLASS(UtilsTest) {
+TEST_CLASS(UtilsTest)
+{
 
   void ExpectUrl(
-      string urlString,
-      string protocol,
-      string host,
-      string port = "",
-      string path = "/",
-      string query = "") {
+    string urlString,
+    string protocol,
+    string host,
+    string port = "",
+    string path = "/",
+    string query = "")
+  {
 
     Url url(std::move(urlString));
 
@@ -36,91 +38,122 @@ TEST_CLASS(UtilsTest) {
 
 #pragma region Url Tests
 
-  TEST_METHOD(UtilsTest_ValidProtocols) {
-    string protocols[4]{"http", "https", "ws", "wss"};
-    for (auto protocol : protocols) {
+  TEST_METHOD(UtilsTest_ValidProtocols)
+  {
+    string protocols[4] { "http", "https", "ws", "wss" };
+    for (auto protocol : protocols)
+    {
       ExpectUrl(string(protocol + "://internal"), protocol, "internal");
     }
   }
 
-  TEST_METHOD(UtilsTest_IntraHost) {
+  TEST_METHOD(UtilsTest_IntraHost)
+  {
     ExpectUrl("ws://internal", "ws", "internal");
   }
 
-  TEST_METHOD(UtilsTest_IntraHostTrailing) {
+  TEST_METHOD(UtilsTest_IntraHostTrailing)
+  {
     ExpectUrl("ws://internal/", "ws", "internal");
   }
 
-  TEST_METHOD(UtilsTest_IntraHostQueryLeading) {
+  TEST_METHOD(UtilsTest_IntraHostQueryLeading)
+  {
     ExpectUrl("ws://internal?", "ws", "internal");
   }
 
-  TEST_METHOD(UtilsTest_IntraHostTrailingQueryLeading) {
+  TEST_METHOD(UtilsTest_IntraHostTrailingQueryLeading)
+  {
     ExpectUrl("ws://internal/?", "ws", "internal");
   }
 
-  TEST_METHOD(UtilsTest_NormalHostQueryLeading) {
+  TEST_METHOD(UtilsTest_NormalHostQueryLeading)
+  {
     ExpectUrl("ws://example.com?", "ws", "example.com");
   }
 
-  TEST_METHOD(UtilsTest_IntraPort) {
+  TEST_METHOD(UtilsTest_IntraPort)
+  {
     ExpectUrl("ws://internal:5000", "ws", "internal", "5000");
   }
 
-  TEST_METHOD(UtilsTest_NormalPort) {
+  TEST_METHOD(UtilsTest_NormalPort)
+  {
     ExpectUrl("ws://example.com:443", "ws", "example.com", "443");
   }
 
-  TEST_METHOD(UtilsTest_PortPath) {
+  TEST_METHOD(UtilsTest_PortPath)
+  {
     ExpectUrl("ws://example.com:5000/ws", "ws", "example.com", "5000", "/ws");
   }
 
-  TEST_METHOD(UtilsTest_Query) {
+  TEST_METHOD(UtilsTest_Query)
+  {
     ExpectUrl(
-        "ws://example.com?a=1&b=2", "ws", "example.com", "", "/", "a=1&b=2");
+      "ws://example.com?a=1&b=2", "ws", "example.com", "", "/", "a=1&b=2");
   }
 
-  TEST_METHOD(UtilsTest_TrailingPathQuery) {
+  TEST_METHOD(UtilsTest_TrailingPathQuery)
+  {
     ExpectUrl(
-        "ws://example.com/?a=1&b=2", "ws", "example.com", "", "/", "a=1&b=2");
+      "ws://example.com/?a=1&b=2", "ws", "example.com", "", "/", "a=1&b=2");
   }
 
-  TEST_METHOD(UtilsTest_HyphenHostInternal) {
+  TEST_METHOD(UtilsTest_HyphenHostInternal)
+  {
     ExpectUrl("wss://-my-hyphened-host--", "wss", "-my-hyphened-host--");
   }
 
-  TEST_METHOD(UtilsTest_NestedPathTrailingSlashLeadingQuestionMark) {
+  TEST_METHOD(UtilsTest_NestedPathTrailingSlashLeadingQuestionMark)
+  {
     ExpectUrl(
-        "ws://example.com/the/nested/path/?",
-        "ws",
-        "example.com",
-        "",
-        "/the/nested/path/");
+      "ws://example.com/the/nested/path/?",
+      "ws",
+      "example.com",
+      "",
+      "/the/nested/path/");
   }
 
-  TEST_METHOD(UtilsTest_NestedSubdomain) {
+  TEST_METHOD(UtilsTest_NestedSubdomain)
+  {
     ExpectUrl(
-        "ws://nested.sub.domain.of.example.com",
-        "ws",
-        "nested.sub.domain.of.example.com");
+      "ws://nested.sub.domain.of.example.com",
+      "ws",
+      "nested.sub.domain.of.example.com");
   }
 
 #pragma region Url Negative Tests
 
-  TEST_METHOD(UtilsTest_EmptyStringFails) {
-    Assert::ExpectException<std::exception>([]() { Url(""); });
+  TEST_METHOD(UtilsTest_EmptyStringFails)
+  {
+    Assert::ExpectException<std::exception>([]()
+    {
+      Url("");
+    });
   }
 
-  TEST_METHOD(UtilsTest_WrongProtocol) {
-    Assert::ExpectException<std::exception>([]() { Url("foos://internal"); });
+  TEST_METHOD(UtilsTest_WrongProtocol)
+  {
+    Assert::ExpectException<std::exception>([]()
+    {
+      Url("foos://internal");
+    });
   }
 
-  TEST_METHOD(UtilsTest_BadCharsInPort) {
-    Assert::ExpectException<std::exception>([]() { Url("ws://internal:50O0"); });
+  TEST_METHOD(UtilsTest_BadCharsInPort)
+  {
+    Assert::ExpectException<std::exception>([]()
+    {
+      Url("ws://internal:50O0");
+    });
   }
 
-  TEST_METHOD(UtilsTest_SpacesInProtocol) {
-    Assert::ExpectException<std::exception>([]() { Url(" ws://internal"); });
+  TEST_METHOD(UtilsTest_SpacesInProtocol)
+  {
+    Assert::ExpectException<std::exception>([]()
+    {
+      Url(" ws://internal");
+    });
   }
 
 #pragma endregion
@@ -131,24 +164,90 @@ TEST_CLASS(UtilsTest) {
 
   TEST_METHOD(EncodeStdStringToBase64Succeeds)
   {
-    std::string_view message = "abcde";
-    // Computed using [System.Convert]::ToBase64String('abcd'.ToCharArray())
-    constexpr char expected[] = "YWJjZGU=";
+    string messages[]
+    {
+      "",
+      "a",
+      "ab",
+      "abc",
+      "abcd",
+      "abcde",
+      "abcdef",
+      "abcdefg",
+      "abcdefgh",
+      "abcdefghi",
+      "abcdefghij",
+      "abcdefghijk",
+      "abcdefghijkl"
+    };
 
-    auto actual = Utilities::EncodeBase64(std::move(message));
+    // Computed using [System.Convert]::ToBase64String
+    constexpr const char* expected[] =
+    {
+      "",
+      "YQ==",
+      "YWI=",
+      "YWJj",
+      "YWJjZA==",
+      "YWJjZGU=",
+      "YWJjZGVm",
+      "YWJjZGVmZw==",
+      "YWJjZGVmZ2g=",
+      "YWJjZGVmZ2hp",
+      "YWJjZGVmZ2hpag==",
+      "YWJjZGVmZ2hpams=",
+      "YWJjZGVmZ2hpamts"
+    };
 
-    Assert::AreEqual(expected, actual.data());
+    for (auto i = 0; i < sizeof(messages)/sizeof(string); ++i)
+    {
+      auto actual = Utilities::EncodeBase64(std::string_view(messages[i]));
+      Assert::AreEqual(expected[i], actual.data());
+    }
   }
 
   TEST_METHOD(EncodeHStringToBase64Succeeds)
   {
-    winrt::hstring message = L"abcde";
-    // Computed using [System.Convert]::ToBase64String('abcd'.ToCharArray())
-    constexpr char expected[] = "YWJjZGU=";
+    winrt::hstring messages[]
+    {
+      L"",
+      L"a",
+      L"ab",
+      L"abc",
+      L"abcd",
+      L"abcde",
+      L"abcdef",
+      L"abcdefg",
+      L"abcdefgh",
+      L"abcdefghi",
+      L"abcdefghij",
+      L"abcdefghijk",
+      L"abcdefghijkl"
+    };
 
-    auto actual = Utilities::EncodeBase64(std::move(message));
+    // Computed using [System.Convert]::ToBase64String
+    constexpr const char* expected[] =
+    {
+      "",
+      "YQ==",
+      "YWI=",
+      "YWJj",
+      "YWJjZA==",
+      "YWJjZGU=",
+      "YWJjZGVm",
+      "YWJjZGVmZw==",
+      "YWJjZGVmZ2g=",
+      "YWJjZGVmZ2hp",
+      "YWJjZGVmZ2hpag==",
+      "YWJjZGVmZ2hpams=",
+      "YWJjZGVmZ2hpamts"
+    };
 
-    Assert::AreEqual(expected, actual.data());
+    for (auto i = 0; i < sizeof(messages) / sizeof(winrt::hstring); ++i)
+    {
+      auto actual = Utilities::EncodeBase64(std::wstring_view(messages[i]));
+      Assert::AreEqual(expected[i], actual.data());
+    }
   }
 
 #pragma endregion Base64 Tests
