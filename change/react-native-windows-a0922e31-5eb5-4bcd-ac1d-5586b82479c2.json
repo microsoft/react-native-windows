@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Cleanup const qualifier on constexpr",
+  "packageName": "react-native-windows",
+  "email": "ericroz@meta.com",
+  "dependentChangeType": "patch"
+}
