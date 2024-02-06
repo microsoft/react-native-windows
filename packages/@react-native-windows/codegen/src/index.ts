@@ -336,6 +336,8 @@ export function generate(
         libraryName,
         schema,
         moduleSpecName,
+        false,
+        'react/renderer/components/rnwcore/',
       );
       normalizeFileMap(generated, componentOutputdir, generatedFiles);
     });
