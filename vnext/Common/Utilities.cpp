@@ -22,12 +22,7 @@ using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
 namespace Microsoft::React::Utilities {
 
-string_view DecodeBase64(string_view&& text) noexcept
-{
-  return {};
-}
-
-string_view DecodeBase64(wstring_view&& text) noexcept
+string DecodeBase64(string_view&& text) noexcept
 {
   return {};
 }
