@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0",
+  "baseVersion": "0.73.4",
   "overrides": [
     {
       "type": "derived",
@@ -159,6 +159,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableNativeFeedback.js",
+      "baseVersion": "0.73.0",
       "baseHash": "fa5b3198efddd86eca7965aa90104408ed53fbbf"
     },
     {

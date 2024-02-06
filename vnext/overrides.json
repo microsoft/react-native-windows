@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.0",
+  "baseVersion": "0.73.4",
   "overrides": [
     {
       "type": "derived",
@@ -91,7 +91,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/YogaLayoutableShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/YogaLayoutableShadowNode.cpp",
-      "baseHash": "fdd521a20bbe5d52c7f2d67daa4f6f56396b5c1b",
+      "baseHash": "aa4331a3ea3c15f33b29264d72421e4cad2dacc6",
       "issue": 12194
     },
     {
@@ -376,19 +376,19 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableHighlight.js",
-      "baseHash": "15f8aeb57c64b30ae134c6354df6ca9bd50ff0ec"
+      "baseHash": "cf3126868768ff1456ab8e3c377a9071e8d2a9f4"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "32207d2986dfdf5bae921fec345e4043924fb02c"
+      "baseHash": "0ffd849f81f3fbfc6fa2a04034e8e99dac84244f"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseHash": "67f68a4a8ccb4834a680af7fb2f75ed9360bbc91"
+      "baseHash": "1e89c911237edcc649102c728afef2931e16cead"
     },
     {
       "type": "patch",
