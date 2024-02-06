@@ -12,6 +12,7 @@
 #include <winrt/Windows.Security.Cryptography.h>
 
 // Standard Library
+using std::string;
 using std::string_view;
 using std::wstring_view;
 using winrt::array_view;
@@ -31,7 +32,7 @@ string_view DecodeBase64(wstring_view&& text) noexcept
   return {};
 }
 
-string_view EncodeBase64(string_view&& text) noexcept
+string EncodeBase64(string_view&& text) noexcept
 {
   /*
   // https://unix.stackexchange.com/questions/631501
@@ -51,15 +52,13 @@ string_view EncodeBase64(string_view&& text) noexcept
   return oss.str();
 }
 
-string_view EncodeBase64(wstring_view&& text) noexcept
+string EncodeBase64(wstring_view&& text) noexcept
 {
   //TODO: Confirm encoding
-  auto buffer = CryptographicBuffer::ConvertStringToBinary(std::move(text), BinaryStringEncoding::Utf16LE);
+  auto buffer = CryptographicBuffer::ConvertStringToBinary(std::move(text), BinaryStringEncoding::Utf8);
   auto encoded = CryptographicBuffer::EncodeToBase64String(buffer);
-  auto result = winrt::to_string(encoded);
 
-  //TODO: Result in stack!
-  return result;
+  return winrt::to_string(encoded);
 }
 
 } // namespace Microsoft::React::Utilities

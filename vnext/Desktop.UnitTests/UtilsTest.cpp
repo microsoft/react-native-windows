@@ -3,6 +3,7 @@
 
 #include <CppUnitTest.h>
 #include <Utils.h>
+#include <utilities.h>
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
@@ -125,6 +126,32 @@ TEST_CLASS(UtilsTest) {
 #pragma endregion
 
 #pragma endregion
+
+#pragma region Base64 Tests
+
+  TEST_METHOD(EncodeStdStringToBase64Succeeds)
+  {
+    std::string_view message = "abcde";
+    // Computed using [System.Convert]::ToBase64String('abcd'.ToCharArray())
+    constexpr char expected[] = "YWJjZGU=";
+
+    auto actual = Utilities::EncodeBase64(std::move(message));
+
+    Assert::AreEqual(expected, actual.data());
+  }
+
+  TEST_METHOD(EncodeHStringToBase64Succeeds)
+  {
+    winrt::hstring message = L"abcde";
+    // Computed using [System.Convert]::ToBase64String('abcd'.ToCharArray())
+    constexpr char expected[] = "YWJjZGU=";
+
+    auto actual = Utilities::EncodeBase64(std::move(message));
+
+    Assert::AreEqual(expected, actual.data());
+  }
+
+#pragma endregion Base64 Tests
 };
 
 // clang-format on
