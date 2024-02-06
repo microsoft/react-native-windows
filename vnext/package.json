@@ -27,7 +27,6 @@
     "@react-native-community/cli-platform-android": "12.3.2",
     "@react-native-community/cli-platform-ios": "12.3.2",
     "@react-native-windows/cli": "0.73.1",
-    "@react-native/assets": "1.0.0",
     "@react-native/assets-registry": "0.73.1",
     "@react-native/codegen": "0.73.3",
     "@react-native/community-cli-plugin": "0.73.16",
