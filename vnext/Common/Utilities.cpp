@@ -5,6 +5,7 @@
 
 // Boost Library
 #include <boost/archive/iterators/base64_from_binary.hpp>
+#include <boost/archive/iterators/binary_from_base64.hpp>
 #include <boost/archive/iterators/ostream_iterator.hpp>
 #include <boost/archive/iterators/transform_width.hpp>
 
@@ -22,8 +23,16 @@ using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
 namespace Microsoft::React::Utilities {
 
-string DecodeBase64(string_view &&text) noexcept {
-  return {};
+string DecodeBase64(string_view &&base64) noexcept {
+  typedef array_view<char const> av_t;
+  auto bytes = av_t(base64.data(), static_cast<av_t::size_type>(base64.size()));
+
+  using namespace boost::archive::iterators;
+  typedef transform_width<binary_from_base64<const char *>, 8, 6> decode_base64;
+  std::ostringstream oss;
+  std::copy(decode_base64(bytes.cbegin()), decode_base64(bytes.cend()), ostream_iterator<char>(oss));
+
+  return oss.str();
 }
 
 string EncodeBase64(string_view &&text) noexcept {

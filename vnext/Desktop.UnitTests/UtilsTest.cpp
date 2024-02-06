@@ -206,6 +206,49 @@ TEST_CLASS(UtilsTest)
     }
   }
 
+  TEST_METHOD(DecodeStdStringFromBase64Succeeds)
+  {
+    constexpr const char* messages[] =
+    {
+      "",
+      "YQ==",
+      "YWI=",
+      "YWJj",
+      "YWJjZA==",
+      "YWJjZGU=",
+      "YWJjZGVm",
+      "YWJjZGVmZw==",
+      "YWJjZGVmZ2g=",
+      "YWJjZGVmZ2hp",
+      "YWJjZGVmZ2hpag==",
+      "YWJjZGVmZ2hpams=",
+      "YWJjZGVmZ2hpamts"
+    };
+
+    constexpr const char* expected[]
+    {
+      "",
+      "a",
+      "ab",
+      "abc",
+      "abcd",
+      "abcde",
+      "abcdef",
+      "abcdefg",
+      "abcdefgh",
+      "abcdefghi",
+      "abcdefghij",
+      "abcdefghijk",
+      "abcdefghijkl"
+    };
+
+    for (auto i = 0; i < sizeof(messages) / sizeof(string); ++i)
+    {
+      auto actual = Utilities::DecodeBase64(std::string_view(messages[i]));
+      Assert::AreEqual(expected[i], actual.data());
+    }
+  }
+
   TEST_METHOD(EncodeHStringToBase64Succeeds)
   {
     winrt::hstring messages[]
