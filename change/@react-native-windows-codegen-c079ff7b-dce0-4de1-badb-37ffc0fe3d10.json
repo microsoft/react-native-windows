@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Integration up to 01/02/24",
+  "packageName": "@react-native-windows/codegen",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
