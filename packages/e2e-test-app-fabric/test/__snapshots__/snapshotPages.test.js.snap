@@ -78388,6 +78388,7 @@ exports[`snapshotAllPages TransparentHitTestExample 1`] = `
 
 exports[`snapshotAllPages View 1`] = `
 <View
+  accessibilityLabel="Background Color Example"
   accessible={true}
   style={
     {
@@ -78411,6 +78412,7 @@ exports[`snapshotAllPages View 1`] = `
 
 exports[`snapshotAllPages View 2`] = `
 <View
+  accessibilityLabel="Border Example"
   accessible={true}
   style={
     {
@@ -78435,6 +78437,7 @@ exports[`snapshotAllPages View 2`] = `
 
 exports[`snapshotAllPages View 3`] = `
 <View
+  accessibilityLabel="Padding/Margin Example"
   accessible={true}
   style={
     {
@@ -78532,6 +78535,7 @@ exports[`snapshotAllPages View 3`] = `
 
 exports[`snapshotAllPages View 4`] = `
 <View
+  accessibilityLabel="Border Radius Example"
   accessible={true}
   testID="view-test-border-radius"
 >
@@ -78636,6 +78640,7 @@ exports[`snapshotAllPages View 5`] = `
 
 exports[`snapshotAllPages View 6`] = `
 <View
+  accessibilityLabel="Rounded Borders Example"
   accessible={true}
   style={
     {
@@ -78744,6 +78749,7 @@ exports[`snapshotAllPages View 6`] = `
 
 exports[`snapshotAllPages View 7`] = `
 <View
+  accessibilityLabel="Rounded Borders Example"
   accessible={true}
   style={
     {
@@ -78871,6 +78877,7 @@ exports[`snapshotAllPages View 7`] = `
 
 exports[`snapshotAllPages View 8`] = `
 <View
+  accessibilityLabel="Opacity Example"
   accessible={true}
   testID="view-test-opacity"
 >
@@ -79321,6 +79328,7 @@ exports[`snapshotAllPages View 11`] = `
 
 exports[`snapshotAllPages View 12`] = `
 <View
+  accessibilityLabel="Backface Visibility Example"
   accessible={true}
   testID="view-test-backface-visibility"
 >
@@ -79438,6 +79446,7 @@ exports[`snapshotAllPages View 12`] = `
 
 exports[`snapshotAllPages View 13`] = `
 <View
+  accessibilityLabel="Aria-Label Example"
   accessible={true}
   aria-label="Blue background View with Text"
   style={
@@ -79462,6 +79471,7 @@ exports[`snapshotAllPages View 13`] = `
 
 exports[`snapshotAllPages View 14`] = `
 <View
+  accessibilityLabel="Flex Gap Example"
   accessible={true}
   style={
     {
@@ -79801,6 +79811,7 @@ exports[`snapshotAllPages View 15`] = `
 
 exports[`snapshotAllPages View 16`] = `
 <View
+  accessibilityLabel="Logical Border Color Example"
   accessible={true}
   style={
     {
@@ -79890,6 +79901,7 @@ exports[`snapshotAllPages View 16`] = `
 
 exports[`snapshotAllPages View 17`] = `
 <View
+  accessibilityLabel="Layout Conformance Example"
   accessible={true}
   style={
     {
@@ -80010,6 +80022,7 @@ exports[`snapshotAllPages View 17`] = `
 
 exports[`snapshotAllPages View 18`] = `
 <View
+  accessibilityLabel="NativeID Example"
   accessible={true}
   nativeID="native-id-view"
   testID="nativeid"
@@ -80067,6 +80080,7 @@ exports[`snapshotAllPages View 19`] = `
 
 exports[`snapshotAllPages View 20`] = `
 <View
+  accessibilityLabel="Shadow Example"
   accessible={true}
   style={
     {
@@ -80087,6 +80101,7 @@ exports[`snapshotAllPages View 20`] = `
 
 exports[`snapshotAllPages View 21`] = `
 <View
+  accessibilityLabel="HitSlop Example"
   accessible={true}
   hitSlop={
     {
@@ -80111,6 +80126,7 @@ exports[`snapshotAllPages View 21`] = `
 
 exports[`snapshotAllPages View 22`] = `
 <View
+  accessibilityLabel="Tooltip Example"
   accessible={true}
   testID="tool-tip"
   tooltip="Parent View"

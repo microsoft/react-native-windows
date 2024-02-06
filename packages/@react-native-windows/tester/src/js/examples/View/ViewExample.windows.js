@@ -33,8 +33,7 @@ class ViewBorderStyleExample extends React.Component<
     return (
       <TouchableWithoutFeedback
         testID="border-style-button"
-        onPress={this._handlePress}
-        accessible>
+        onPress={this._handlePress}>
         <View>
           <View
             style={[
@@ -99,8 +98,7 @@ class OffscreenAlphaCompositing extends React.Component<
     return (
       <TouchableWithoutFeedback
         testID="offscreen-alpha-compositing-button"
-        onPress={this._handlePress}
-        accessible>
+        onPress={this._handlePress}>
         <View>
           <Text style={{paddingBottom: 10}}>Blobs</Text>
           <View
@@ -185,8 +183,7 @@ class ZIndexExample extends React.Component<
     return (
       <TouchableWithoutFeedback
         testID="z-index-button"
-        onPress={this._handlePress}
-        accessible>
+        onPress={this._handlePress}>
         <View>
           <Text style={{paddingBottom: 10}}>Tap to flip sorting order</Text>
           <View
@@ -257,8 +254,7 @@ class DisplayNoneStyle extends React.Component<
     return (
       <TouchableWithoutFeedback
         testID="display-none-button"
-        onPress={this._handlePress}
-        accessible>
+        onPress={this._handlePress}>
         <View>
           <Text style={{paddingBottom: 10}}>
             Press to toggle `display: none`
@@ -325,7 +321,8 @@ class FlexGapExample extends React.Component<$ReadOnly<{|testID?: ?string|}>> {
           rowGap: 20,
           columnGap: 30,
         }}
-        accessible>
+        accessible
+        accessibilityLabel="Flex Gap Example">
         <View style={{backgroundColor: 'black', height: 30, width: 30}} />
         <View style={{backgroundColor: 'black', height: 30, width: 30}} />
         <View
@@ -355,7 +352,8 @@ function LayoutConformanceExample({
     <View
       style={{flexDirection: 'row', gap: 10}}
       testID="view-test-layout-conformance"
-      accessible>
+      accessible
+      accessibilityLabel="Layout Conformance Example">
       <View>
         <Text>Unset</Text>
         <LayoutConformanceBox />
@@ -472,6 +470,7 @@ class HitSlopExample extends React.Component<
         }}
         testID="hitslop"
         accessible
+        accessibilityLabel="HitSlop Example"
       />
     );
   }
@@ -493,7 +492,8 @@ export default ({
           <View
             testID="view-test-background-color"
             style={{backgroundColor: '#527FE4', padding: 5}}
-            accessible>
+            accessible
+            accessibilityLabel="Background Color Example">
             <Text style={{fontSize: 11}}>Blue background</Text>
           </View>
         );
@@ -507,7 +507,8 @@ export default ({
           <View
             testID="view-test-border"
             style={{borderColor: '#527FE4', borderWidth: 5, padding: 10}}
-            accessible>
+            accessible
+            accessibilityLabel="Border Example">
             <Text style={{fontSize: 11}}>5px blue border</Text>
           </View>
         );
@@ -528,7 +529,8 @@ export default ({
           <View
             testID="view-test-padding-margin"
             style={{borderColor: '#bb0000', borderWidth: 0.5}}
-            accessible>
+            accessible
+            accessibilityLabel="Padding/Margin Example">
             <View style={[styles.box, {padding: 5}]}>
               <Text style={{fontSize: 11}}>5px padding</Text>
             </View>
@@ -552,7 +554,10 @@ export default ({
       name: 'border-radius',
       render(): React.Node {
         return (
-          <View testID="view-test-border-radius" accessible>
+          <View
+            testID="view-test-border-radius"
+            accessible
+            accessibilityLabel="Border Radius Example">
             <View style={{borderWidth: 0.5, borderRadius: 5, padding: 5}}>
               <Text style={{fontSize: 11}}>
                 Too much use of `borderRadius` (especially large radii) on
@@ -593,7 +598,8 @@ export default ({
           <View
             testID="view-test-rounded-borders"
             style={{flexDirection: 'row', flexWrap: 'wrap'}}
-            accessible>
+            accessible
+            accessibilityLabel="Rounded Borders Example">
             <View
               style={{
                 width: 50,
@@ -700,7 +706,8 @@ export default ({
           <View
             testID="view-test-overflow"
             style={{flexDirection: 'row'}}
-            accessible>
+            accessible
+            accessibilityLabel="Rounded Borders Example">
             <View style={styles.container}>
               <View style={[StyleSheet.absoluteFill]}>
                 <Text style={styles.content}>undefined</Text>
@@ -725,7 +732,10 @@ export default ({
       name: 'opacity',
       render(): React.Node {
         return (
-          <View testID="view-test-opacity" accessible>
+          <View
+            testID="view-test-opacity"
+            accessible
+            accessibilityLabel="Opacity Example">
             <View style={{opacity: 0}}>
               <Text>Opacity 0</Text>
             </View>
@@ -779,7 +789,10 @@ export default ({
       name: 'backface-visibility',
       render(): React.Node {
         return (
-          <View testID="view-test-backface-visibility" accessible>
+          <View
+            testID="view-test-backface-visibility"
+            accessible
+            accessibilityLabel="Backface Visibility Example">
             <Text style={{paddingBottom: 10}}>
               View #1, front is visible, back is hidden.
             </Text>
@@ -852,7 +865,8 @@ export default ({
             testID="view-test-aria-label"
             aria-label="Blue background View with Text"
             style={{backgroundColor: '#527FE4', padding: 5}}
-            accessible>
+            accessible
+            accessibilityLabel="Aria-Label Example">
             <Text style={{fontSize: 11}}>Blue background</Text>
           </View>
         );
@@ -960,7 +974,8 @@ export default ({
           <View
             testID="view-test-logical-border-color"
             style={{rowGap: 10}}
-            accessible>
+            accessible
+            accessibilityLabel="Logical Border Color Example">
             <View style={{position: 'relative', height: 50, borderWidth: 1}}>
               <View
                 style={{
@@ -1005,7 +1020,11 @@ export default ({
       title: 'NativeID',
       render(): React.Node {
         return (
-          <View nativeID="native-id-view" testID="nativeid" accessible>
+          <View
+            nativeID="native-id-view"
+            testID="nativeid"
+            accessible
+            accessibilityLabel="NativeID Example">
             <Text>A View with a nativeID "native-id-view"</Text>
           </View>
         );
@@ -1032,6 +1051,7 @@ export default ({
             }}
             testID="shadow"
             accessible
+            accessibilityLabel="Shadow Example"
           />
         );
       },
@@ -1046,7 +1066,11 @@ export default ({
       title: 'ToolTip',
       render(): React.Node {
         return (
-          <View tooltip="Parent View" testID="tool-tip" accessible>
+          <View
+            tooltip="Parent View"
+            testID="tool-tip"
+            accessible
+            accessibilityLabel="Tooltip Example">
             <Text style={{fontSize: 11}}>
               This Parent View has tooltip "Parent View"
             </Text>

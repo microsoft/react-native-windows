@@ -9,7 +9,7 @@ exports[`View Tests Views can have a hitslop region 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "group",
-    "Name": "",
+    "Name": "HitSlop Example",
   },
   "Visual Tree": {
     "Brush": {
@@ -52,7 +52,7 @@ exports[`View Tests Views can have a nativeid 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "group",
-    "Name": "",
+    "Name": "NativeID Example",
   },
   "Visual Tree": {
     "Children": [
@@ -735,7 +735,7 @@ exports[`View Tests Views can have backface visibility 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "group",
-    "Name": "",
+    "Name": "Backface Visibility Example",
   },
   "Visual Tree": {
     "Children": [
@@ -1204,7 +1204,7 @@ exports[`View Tests Views can have background color 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "group",
-    "Name": "",
+    "Name": "Background Color Example",
   },
   "Visual Tree": {
     "Brush": {
@@ -1716,7 +1716,7 @@ exports[`View Tests Views can have borders 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "group",
-    "Name": "",
+    "Name": "Border Example",
   },
   "Visual Tree": {
     "Children": [
@@ -2129,7 +2129,7 @@ exports[`View Tests Views can have customized opacity 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "group",
-    "Name": "",
+    "Name": "Opacity Example",
   },
   "Visual Tree": {
     "Children": [
@@ -2742,7 +2742,7 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "group",
-    "Name": "",
+    "Name": "Padding/Margin Example",
   },
   "Visual Tree": {
     "Children": [
@@ -3575,7 +3575,7 @@ exports[`View Tests Views can have flexgap 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "group",
-    "Name": "",
+    "Name": "Flex Gap Example",
   },
   "Visual Tree": {
     "Children": [
@@ -5959,7 +5959,7 @@ exports[`View Tests Views can have layout conformance 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "group",
-    "Name": "",
+    "Name": "Layout Conformance Example",
   },
   "Visual Tree": {
     "Children": [
@@ -6411,7 +6411,7 @@ exports[`View Tests Views can have logical border colors 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "group",
-    "Name": "",
+    "Name": "Logical Border Color Example",
   },
   "Visual Tree": {
     "Children": [
@@ -7586,7 +7586,7 @@ exports[`View Tests Views can have overflow 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "group",
-    "Name": "",
+    "Name": "Rounded Borders Example",
   },
   "Visual Tree": {
     "Children": [
@@ -8223,7 +8223,7 @@ exports[`View Tests Views can have rounded borders 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "group",
-    "Name": "",
+    "Name": "Rounded Borders Example",
   },
   "Visual Tree": {
     "Children": [
@@ -9685,7 +9685,7 @@ exports[`View Tests Views can have rounded borders 2`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "group",
-    "Name": "",
+    "Name": "Rounded Borders Example",
   },
   "Visual Tree": {
     "Children": [
@@ -11147,7 +11147,7 @@ exports[`View Tests Views can have shadows 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "group",
-    "Name": "",
+    "Name": "Shadow Example",
   },
   "Visual Tree": {
     "Comment": "shadow",
@@ -11204,7 +11204,7 @@ exports[`View Tests Views can have tooltips 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "group",
-    "Name": "",
+    "Name": "Tooltip Example",
   },
   "Visual Tree": {
     "Children": [
