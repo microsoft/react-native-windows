@@ -9,8 +9,7 @@
 
 #include "rnwcoreJSI.h"
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 static jsi::Value __hostFunction_NativeActionSheetManagerCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeActionSheetManagerCxxSpecJSI *>(&turboModule)->getConstants(
@@ -2885,5 +2884,4 @@ NativeSampleTurboModuleCxxSpecJSI::NativeSampleTurboModuleCxxSpecJSI(std::shared
 }
 
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

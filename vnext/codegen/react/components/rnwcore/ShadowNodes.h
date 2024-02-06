@@ -16,8 +16,7 @@
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <jsi/jsi.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 JSI_EXPORT extern const char DebuggingOverlayComponentName[];
 
@@ -107,5 +106,4 @@ using UnimplementedNativeViewShadowNode = ConcreteViewShadowNode<
     UnimplementedNativeViewEventEmitter,
     UnimplementedNativeViewState>;
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

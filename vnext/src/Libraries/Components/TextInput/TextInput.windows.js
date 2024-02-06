@@ -1601,8 +1601,7 @@ function InternalTextInput(props: Props): React.Node {
     );
   }
 
-  // $FlowFixMe[underconstrained-implicit-instantiation]
-  let style = flattenStyle(props.style);
+  const style = flattenStyle<TextStyleProp>(props.style);
 
   if (Platform.OS === 'ios') {
     const RCTTextInputView =
@@ -1610,7 +1609,12 @@ function InternalTextInput(props: Props): React.Node {
         ? RCTMultilineTextInputView
         : RCTSinglelineTextInputView;
 
-    style = props.multiline === true ? [styles.multilineInput, style] : style;
+    const useMultilineDefaultStyle =
+      props.multiline === true &&
+      (style == null ||
+        (style.padding == null &&
+          style.paddingVertical == null &&
+          style.paddingTop == null));
 
     const useOnChangeSync =
       (props.unstable_onChangeSync || props.unstable_onChangeTextSync) &&
@@ -1641,7 +1645,10 @@ function InternalTextInput(props: Props): React.Node {
         onSelectionChange={_onSelectionChange}
         onSelectionChangeShouldSetResponder={emptyFunctionThatReturnsTrue}
         selection={selection}
-        style={style}
+        style={StyleSheet.compose(
+          useMultilineDefaultStyle ? styles.multilineDefault : null,
+          style,
+        )}
         text={text}
       />
     );
@@ -1941,7 +1948,7 @@ export type TextInputComponentStatics = $ReadOnly<{|
 |}>;
 
 const styles = StyleSheet.create({
-  multilineInput: {
+  multilineDefault: {
     // This default top inset makes RCTMultilineTextInputView seem as close as possible
     // to single-line RCTSinglelineTextInputView defaults, using the system defaults
     // of font size 17 and a height of 31 points.

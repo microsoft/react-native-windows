@@ -12,8 +12,7 @@
 #include <react/renderer/components/view/ViewEventEmitter.h>
 
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 class DebuggingOverlayEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;
@@ -192,5 +191,4 @@ class UnimplementedNativeViewEventEmitter : public ViewEventEmitter {
   
   
 };
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

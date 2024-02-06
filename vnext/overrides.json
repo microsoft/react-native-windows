@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20231201-c30f2b620",
+  "baseVersion": "0.74.0-nightly-20231215-d45a01d6d",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "172a4663d9243a77e3b35a2d8a5e403fd62062cf"
+      "baseHash": "32c4c303307fbdd1f95d3255e8f0c4b87499c2cf"
     },
     {
       "type": "derived",
@@ -149,16 +149,9 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/UIManagerBinding.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/uimanager/UIManagerBinding.cpp",
-      "baseHash": "9210ab2289dbe492ead3e3506f080290cd9fa26b",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/Node.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/Node.h",
-      "baseHash": "aaf16b9303a01ca3dc4955061d97ef9577d8b5e7",
+      "baseHash": "63cbfd4c0970d9dd76de25255702a61c6e3f2ed4",
       "issue": 12195
     },
     {
@@ -334,7 +327,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "f6742637eda13080bd175a45eb0edbc83fa260c5"
+      "baseHash": "04fe96af3141d4db71e352cdbee531e8281e1978"
     },
     {
       "type": "patch",

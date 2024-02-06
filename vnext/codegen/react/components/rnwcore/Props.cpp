@@ -12,8 +12,7 @@
 #include <react/renderer/core/PropsParserContext.h>
 #include <react/renderer/core/propsConversions.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 DebuggingOverlayProps::DebuggingOverlayProps(
     const PropsParserContext &context,
@@ -193,5 +192,4 @@ UnimplementedNativeViewProps::UnimplementedNativeViewProps(
     name(convertRawProp(context, rawProps, "name", sourceProps.name, {""}))
       {}
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

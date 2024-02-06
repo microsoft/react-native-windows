@@ -10,8 +10,7 @@
 
 #include <react/renderer/components/rnwcore/ShadowNodes.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 extern const char DebuggingOverlayComponentName[] = "DebuggingOverlay";
 extern const char ActivityIndicatorViewComponentName[] = "ActivityIndicatorView";
@@ -22,5 +21,4 @@ extern const char AndroidHorizontalScrollContentViewComponentName[] = "AndroidHo
 extern const char SwitchComponentName[] = "Switch";
 extern const char UnimplementedNativeViewComponentName[] = "UnimplementedNativeView";
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

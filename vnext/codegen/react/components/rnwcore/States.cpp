@@ -9,10 +9,8 @@
  */
 #include <react/renderer/components/rnwcore/States.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react
