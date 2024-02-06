@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.74.0-nightly-20231215-d45a01d6d",
+  "baseVersion": "0.74.0-nightly-20240102-05ec058ac",
   "overrides": [
     {
       "type": "copy",
@@ -12,7 +12,7 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "ac2781443b7be4b10bb9db776d7e64b7cf698a6e",
+      "baseHash": "640122faf98f80fe689b4ea2aca83f2968b6a831",
       "issue": 4054
     },
     {
@@ -75,7 +75,7 @@
       "type": "copy",
       "directory": "js/examples/Border",
       "baseDirectory": "packages/rn-tester/js/examples/Border",
-      "baseHash": "9bec6a03aefd7a851263820b8f6e7f2e4a364590",
+      "baseHash": "e6cd0122fd7f19c1ff800467e1a2c6b24f935f94",
       "issue": 4054
     },
     {
@@ -320,7 +320,7 @@
       "type": "copy",
       "directory": "js/examples/ScrollView",
       "baseDirectory": "packages/rn-tester/js/examples/ScrollView",
-      "baseHash": "7af7399a4d9910786c76c1ef164896bc1890d139",
+      "baseHash": "64fdc06a81a909c3f27aa55e52ce98c06b1a90b3",
       "issue": 4054
     },
     {
@@ -439,7 +439,7 @@
       "type": "copy",
       "directory": "js/examples/View",
       "baseDirectory": "packages/rn-tester/js/examples/View",
-      "baseHash": "9eebe78eb2a2c3318921270c469c7486d235e15b",
+      "baseHash": "13d1ccc19c2bac4f92dc26f02e3420a0743235e3",
       "issue": 4054
     },
     {
@@ -474,21 +474,21 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "0323b0f1a26dba9a0f053e098024604c582052db",
+      "baseHash": "e15cbd95c6c07cb7cdfdea1baebd192fe7392438",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/types",
       "baseDirectory": "packages/rn-tester/js/types",
-      "baseHash": "cd7266ee34db945f3f06b52281ac61567c010aa4",
+      "baseHash": "b3759879c62d3813d62e7e59e1c7b6f216240b95",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/utils",
       "baseDirectory": "packages/rn-tester/js/utils",
-      "baseHash": "fda3b531c884cf078815fac9c040a3e9cd55df97",
+      "baseHash": "812d8ae7b6e398e11875ed9013e375f2accfe3ef",
       "issue": 4054
     },
     {

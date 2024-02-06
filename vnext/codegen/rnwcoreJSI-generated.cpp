@@ -637,19 +637,11 @@ static jsi::Value __hostFunction_NativeBugReportingCxxSpecJSI_setExtraData(jsi::
   );
   return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativeBugReportingCxxSpecJSI_setCategoryID(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeBugReportingCxxSpecJSI *>(&turboModule)->setCategoryID(
-    rt,
-    args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
 
 NativeBugReportingCxxSpecJSI::NativeBugReportingCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("BugReporting", jsInvoker) {
   methodMap_["startReportAProblemFlow"] = MethodMetadata {0, __hostFunction_NativeBugReportingCxxSpecJSI_startReportAProblemFlow};
   methodMap_["setExtraData"] = MethodMetadata {2, __hostFunction_NativeBugReportingCxxSpecJSI_setExtraData};
-  methodMap_["setCategoryID"] = MethodMetadata {1, __hostFunction_NativeBugReportingCxxSpecJSI_setCategoryID};
 }
 static jsi::Value __hostFunction_NativeExceptionsManagerCxxSpecJSI_reportFatalException(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeExceptionsManagerCxxSpecJSI *>(&turboModule)->reportFatalException(

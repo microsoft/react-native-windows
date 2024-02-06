@@ -2254,7 +2254,6 @@ protected:
 public:
   virtual void startReportAProblemFlow(jsi::Runtime &rt) = 0;
   virtual void setExtraData(jsi::Runtime &rt, jsi::Object extraData, jsi::Object extraFiles) = 0;
-  virtual void setCategoryID(jsi::Runtime &rt, jsi::String categoryID) = 0;
 
 };
 
@@ -2293,14 +2292,6 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::setExtraData, jsInvoker_, instance_, std::move(extraData), std::move(extraFiles));
-    }
-    void setCategoryID(jsi::Runtime &rt, jsi::String categoryID) override {
-      static_assert(
-          bridging::getParameterCount(&T::setCategoryID) == 2,
-          "Expected setCategoryID(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setCategoryID, jsInvoker_, instance_, std::move(categoryID));
     }
 
   private:

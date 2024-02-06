@@ -380,6 +380,8 @@ module.exports = {
         'LogBox is enabled by default so there is no need to call unstable_enableLogBox() anymore. This is a no op and will be removed in the next version.',
       );
   },
+<<<<<<< Upstream
+=======
   // Deprecated Prop Types
   get ColorPropType(): $FlowFixMe {
     console.error(
@@ -474,6 +476,7 @@ module.exports = {
   get AppTheme(): AppTheme {
     return require('./Libraries/AppTheme/AppTheme');
   },
+>>>>>>> Override
 };
 
 if (__DEV__) {
