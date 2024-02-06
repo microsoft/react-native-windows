@@ -12,6 +12,14 @@
 #include "Unicode.h"
 #include "WinUser.h"
 
+// Testing
+#include <Fabric/Composition/CompositionContextHelper.h>
+#include <Fabric/Composition/CompositionUIService.h>
+#include <winrt/Windows.UI.Composition.h>
+#include "ReactNativeHost.h"
+#include "IReactContext.h"
+#include "ReactHost/ReactInstanceWin.h"
+
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 WindowsModalHostComponentView::WindowsModalHostComponentView(
@@ -25,6 +33,7 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
           (CompositionComponentViewFeatures::Default & ~CompositionComponentViewFeatures::NativeBorder)) {
   static auto const defaultProps = std::make_shared<facebook::react::ModalHostViewProps const>();
   m_props = defaultProps;
+  m_context = reactContext; // save context
   m_visual = compContext.CreateSpriteVisual();
 }
 
@@ -34,6 +43,119 @@ winrt::Microsoft::ReactNative::ComponentView WindowsModalHostComponentView::Crea
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<WindowsModalHostComponentView>(compContext, tag, reactContext);
 }
+
+// Testing - Trying to get a new window to show up, code taken from LogBox
+
+constexpr PCWSTR c_logBoxWindowClassName = L"MS_REACTNATIVE_MODAL";
+constexpr auto CompHostProperty = L"CompHost";
+const int LOGBOX_DEFAULT_WIDTH = 700;
+const int LOGBOX_DEFAULT_HEIGHT = 1000;
+
+void WindowsModalHostComponentView::ShowOnUIThread() noexcept {
+  auto host = React::implementation::ReactNativeHost::GetReactNativeHost(m_context.Properties());
+  if (!host) {return;}
+
+    RegisterWndClass();
+
+    if (!m_hwnd) {
+      auto CompositionHwndHost = React::CompositionHwndHost();
+      winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
+      viewOptions.ComponentName(L"LogBox");
+      CompositionHwndHost.ReactViewHost(
+          winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
+      HINSTANCE hInstance = GetModuleHandle(NULL);
+      winrt::impl::abi<winrt::Microsoft::ReactNative::ICompositionHwndHost>::type *pHost{nullptr};
+      winrt::com_ptr<::IUnknown> spunk;
+      CompositionHwndHost.as(spunk);
+      spunk->AddRef(); // Will be stored in windowData
+
+      m_hwnd = CreateWindow(
+          c_logBoxWindowClassName,
+          L"React-Native Modal",
+          WS_OVERLAPPEDWINDOW,
+          CW_USEDEFAULT,
+          CW_USEDEFAULT,
+          LOGBOX_DEFAULT_WIDTH,
+          LOGBOX_DEFAULT_HEIGHT,
+          nullptr,
+          nullptr,
+          hInstance,
+          spunk.get());
+    }
+
+    ShowWindow(m_hwnd, SW_NORMAL);
+    BringWindowToTop(m_hwnd);
+    SetFocus(m_hwnd);
+}
+
+void WindowsModalHostComponentView::HideOnUIThread() noexcept {
+  if (m_hwnd) {
+    ::ShowWindow(m_hwnd, SW_HIDE);
+  }
+}
+
+LRESULT CALLBACK LogBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
+  auto data = reinterpret_cast<::IUnknown *>(GetProp(hwnd, CompHostProperty)); // gets data handle from the property list of specified window (ie the window we want to make)
+  winrt::com_ptr<winrt::IUnknown> spunk; // What is this??
+  React::CompositionHwndHost host{nullptr}; // This gets set in following if statement
+
+  if (data) { // if we get the data
+    winrt::check_hresult(data->QueryInterface(winrt::guid_of<React::CompositionHwndHost>(), winrt::put_abi(host))); // look into the data for a CompositionHwndHost and store it in host
+    auto result = static_cast<LRESULT>(host.TranslateMessage(message, wparam, lparam)); // is this just checking that we got a CompositionHwndHost?
+    if (result)
+      return result;
+  }
+
+  switch (message) {
+    case WM_NCCREATE: { // sent before WM_CREATE, lparam should be identical to members of CreateWindowEx
+      auto createStruct = reinterpret_cast<CREATESTRUCT *>(lparam); //CreateStruct
+      auto windowData = static_cast<::IUnknown *>(createStruct->lpCreateParams);
+      SetProp(hwnd, CompHostProperty, reinterpret_cast<::IUnknown *>(windowData)); // adds new properties to window
+      break;
+    }
+    case WM_CREATE: { // recieves after window is created but before visible
+      host.Initialize((uint64_t)hwnd);
+      break;
+    }
+    case WM_CLOSE: {
+      // Just hide the window instead of destroying it
+      ::ShowWindow(hwnd, SW_HIDE);
+      return 0;
+    }
+    case WM_DESTROY: {
+      data->Release();
+      SetProp(hwnd, CompHostProperty, nullptr);
+    }
+  }
+
+  return DefWindowProc(hwnd, message, wparam, lparam);
+}
+
+void WindowsModalHostComponentView::RegisterWndClass() noexcept {
+  static bool registered = false;
+  if (registered) // isn't this always going to be false??
+    return;
+
+  HINSTANCE hInstance = GetModuleHandle(NULL);
+
+  WNDCLASSEXW wcex = {};
+  wcex.cbSize = sizeof(WNDCLASSEX);
+  wcex.style = CS_HREDRAW | CS_VREDRAW;
+  wcex.lpfnWndProc = &LogBoxWndProc;
+  wcex.cbClsExtra = DLGWINDOWEXTRA;
+  wcex.cbWndExtra = sizeof(winrt::impl::abi<winrt::Microsoft::ReactNative::ICompositionHwndHost>::type *);
+  wcex.hInstance = hInstance;
+  wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+  wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+  wcex.lpszClassName = c_logBoxWindowClassName;
+  ATOM classId = RegisterClassEx(&wcex);
+  WINRT_VERIFY(classId);
+  winrt::check_win32(!classId);
+
+  registered = true;
+}
+
+// Testing
 
 void WindowsModalHostComponentView::mountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
@@ -53,7 +175,8 @@ void WindowsModalHostComponentView::updateProps(
   const auto &oldModalProps = *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(m_props);
   const auto &newModalProps = *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(props);
 
-  if (oldModalProps.visible != newModalProps.visible) {
+  if (newModalProps.visible == true) {
+    //ShowOnUIThread();
     // todo
   }
 
@@ -71,11 +194,9 @@ void WindowsModalHostComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  //CreateDialogA();
-  // TODO: RedBox placeholder for Modal (taken from unimplementedNativeViewComponent)
-  // if (m_layoutMetrics.frame.size != layoutMetrics.frame.size || m_layoutMetrics.pointScaleFactor !=
-  // layoutMetrics.pointScaleFactor) { // layout is never set?
-  if (true) {
+  // TODO: RedBox placeholder for Modal (taken from unimplementedNativeViewComponent) - Need to Debug why this doesn't work :(
+  if (m_layoutMetrics.frame.size != layoutMetrics.frame.size || m_layoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor) { // layout is never set?
+  //if (true) {
     // Always make visual a min size, so that even if its laid out at zero size, its clear an unimplemented view was
     // rendered
     float width = std::max(m_layoutMetrics.frame.size.width, 200.0f);
