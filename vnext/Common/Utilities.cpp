@@ -34,13 +34,6 @@ string_view DecodeBase64(wstring_view&& text) noexcept
 
 string EncodeBase64(string_view&& text) noexcept
 {
-  /*
-  // https://unix.stackexchange.com/questions/631501
-  auto padLength = 4 - (oss.tellp() % 4);
-  for (auto i = 0; i < padLength; ++i) {
-    result += '=';
-  }
-  */
   typedef array_view<char const> av_t;
   auto bytes = av_t(text.data(), static_cast<av_t::size_type>(text.size()));
 
@@ -49,7 +42,15 @@ string EncodeBase64(string_view&& text) noexcept
   std::ostringstream oss;
   std::copy(encode_base64(bytes.cbegin()), encode_base64(bytes.cend()), ostream_iterator<char>(oss));
 
-  return oss.str();
+  // https://unix.stackexchange.com/questions/631501
+  auto result = oss.str();
+  auto padLength = 4 - (oss.tellp() % 4);
+  for (auto i = 0; i < padLength; ++i)
+  {
+    result += '=';
+  }
+
+  return result;
 }
 
 string EncodeBase64(wstring_view&& text) noexcept
