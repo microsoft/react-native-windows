@@ -155,6 +155,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBuffer.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBufferBuilder.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\PointerHoverTracker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\TransactionTelemetry.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp" />
     <ClCompile Include="pch.cpp">
