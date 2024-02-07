@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <react/renderer/components/rnwcore/EventEmitters.h>
+#include <react/components/rnwcore/EventEmitters.h>
 #include <unordered_map>
 #include "WindowsTextInputEventEmitter.h"
 #include "WindowsTextInputProps.h"
