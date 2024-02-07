@@ -35,6 +35,7 @@ string DecodeBase64(string_view &&base64) noexcept {
   return oss.str();
 }
 
+// https://www.boost.org/doc/libs/1_76_0/libs/serialization/doc/dataflow.html
 string EncodeBase64(string_view &&text) noexcept {
   typedef array_view<char const> av_t;
   auto bytes = av_t(text.data(), static_cast<av_t::size_type>(text.size()));
