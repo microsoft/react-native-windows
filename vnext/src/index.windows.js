@@ -380,6 +380,59 @@ module.exports = {
         'LogBox is enabled by default so there is no need to call unstable_enableLogBox() anymore. This is a no op and will be removed in the next version.',
       );
   },
+
+  // Additional windows exports (Typescript components exported as flow any)
+    get DatePicker(): any {
+    invariant(
+      false,
+      'DatePicker has been extracted and removed from react-native-windows. ' +
+        "It can now be installed and imported as DateTimePicker from '@react-native-community/datetimepicker'. " +
+        'See https://github.com/react-native-datetimepicker/datetimepicker',
+    );
+  },
+  get Flyout(): any {
+    return require('./Libraries/Components/Flyout/Flyout').Flyout;
+  },
+  get Glyph(): any {
+    return require('./Libraries/Components/Glyph/Glyph').Glyph;
+  },
+  get PickerWindows(): any {
+    invariant(
+      false,
+      'PickerWindows has been extracted and removed from react-native-windows. ' +
+        "It can now be installed and imported as Picker from '@react-native-picker/picker'. " +
+        'See https://github.com/react-native-picker/picker',
+    );
+  },
+  get Popup(): any {
+    return require('./Libraries/Components/Popup/Popup').Popup;
+  },
+  get supportKeyboard(): any {
+    return require('./Libraries/Components/Keyboard/KeyboardExt')
+      .supportKeyboard;
+  },
+  get DayOfWeek(): any {
+    invariant(
+      false,
+      'DatePicker has been extracted and removed from react-native-windows. ' +
+        "It can now be installed and imported as DateTimePicker from '@react-native-community/datetimepicker'. " +
+        'See https://github.com/react-native-datetimepicker/datetimepicker',
+    );
+  },
+  get EventPhase(): any {
+    return require('./Libraries/Components/View/ViewPropTypes')
+      .HandledEventPhase;
+  },
+  get HandledEventPhase(): any {
+    return require('./Libraries/Components/View/ViewPropTypes')
+      .HandledEventPhase;
+  },
+  get ViewWindows(): any {
+    return require('./Libraries/Components/View/View');
+  },
+  get AppTheme(): AppTheme {
+    return require('./Libraries/AppTheme/AppTheme');
+  },
 };
 
 if (__DEV__) {
