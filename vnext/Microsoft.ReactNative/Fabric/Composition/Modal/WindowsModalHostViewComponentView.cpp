@@ -1,4 +1,3 @@
-
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
@@ -7,10 +6,9 @@
 #include "WindowsModalHostViewComponentView.h"
 
 #include <Fabric/DWriteHelpers.h>
-#include "../CompositionDynamicAutomationProvider.h"
 #include "Composition/AutoDraw.h"
+#include "../CompositionDynamicAutomationProvider.h"
 #include "Unicode.h"
-#include "WinUser.h"
 
 // Testing
 #include <Fabric/Composition/CompositionContextHelper.h>
@@ -19,6 +17,7 @@
 #include "ReactNativeHost.h"
 #include "IReactContext.h"
 #include "ReactHost/ReactInstanceWin.h"
+// Testing
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
@@ -165,10 +164,6 @@ void WindowsModalHostComponentView::unmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
     uint32_t /*index*/) noexcept {}
 
-void WindowsModalHostComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
-  Super::handleCommand(commandName, arg);
-}
-
 void WindowsModalHostComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
@@ -183,7 +178,6 @@ void WindowsModalHostComponentView::updateProps(
   // update BaseComponentView props
   updateTransformProps(oldModalProps, newModalProps, m_visual);
   Super::updateProps(props, oldProps);
-
   m_props = std::static_pointer_cast<facebook::react::ModalHostViewProps const>(props);
 }
 
@@ -194,9 +188,8 @@ void WindowsModalHostComponentView::updateLayoutMetrics(
     OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
   }
 
-  // TODO: RedBox placeholder for Modal (taken from unimplementedNativeViewComponent) - Need to Debug why this doesn't work :(
-  if (m_layoutMetrics.frame.size != layoutMetrics.frame.size || m_layoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor) { // layout is never set?
-  //if (true) {
+  if (m_layoutMetrics.frame.size != layoutMetrics.frame.size ||
+      m_layoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor) {
     // Always make visual a min size, so that even if its laid out at zero size, its clear an unimplemented view was
     // rendered
     float width = std::max(m_layoutMetrics.frame.size.width, 200.0f);
@@ -232,7 +225,6 @@ void WindowsModalHostComponentView::updateLayoutMetrics(
         d2dDeviceContext->SetDpi(dpi, dpi);
 
         float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
-        offsetX = 2.0f;
         float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
 
         winrt::com_ptr<IDWriteTextFormat> spTextFormat;
@@ -252,8 +244,10 @@ void WindowsModalHostComponentView::updateLayoutMetrics(
 
         const D2D1_RECT_F rect = {
             static_cast<float>(offset.x), static_cast<float>(offset.y), width + offset.x, height + offset.y};
+        // const D2D1_RECT_F rect = {0.f, 0.f, width, height};
 
-        auto label = ::Microsoft::Common::Unicode::Utf8ToUtf16(std::string("Modal"));
+        auto label =
+            ::Microsoft::Common::Unicode::Utf8ToUtf16(std::string("This is a Modal"));
         d2dDeviceContext->DrawText(
             label.c_str(),
             static_cast<UINT32>(label.length()),
@@ -280,6 +274,10 @@ facebook::react::SharedViewProps WindowsModalHostComponentView::viewProps() noex
 }
 
 winrt::Microsoft::ReactNative::Composition::IVisual WindowsModalHostComponentView::Visual() const noexcept {
+  return m_visual;
+}
+
+winrt::Microsoft::ReactNative::Composition::IVisual WindowsModalHostComponentView::OuterVisual() const noexcept {
   return m_visual;
 }
 

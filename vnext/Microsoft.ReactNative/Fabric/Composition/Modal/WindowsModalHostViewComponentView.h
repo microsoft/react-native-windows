@@ -1,4 +1,3 @@
-
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
@@ -31,10 +30,11 @@ struct WindowsModalHostComponentView
   void unmountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
-  void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
-  void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
-      override;
+
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept
+      override;
+
+  void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
@@ -42,10 +42,10 @@ struct WindowsModalHostComponentView
   void prepareForRecycle() noexcept override;
   facebook::react::SharedViewProps viewProps() noexcept override;
   bool focusable() const noexcept override;
-
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
   winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
+  winrt::Microsoft::ReactNative::Composition::IVisual OuterVisual() const noexcept override;
   virtual std::string DefaultControlType() const noexcept;
 
   WindowsModalHostComponentView(
@@ -57,7 +57,6 @@ struct WindowsModalHostComponentView
   void ShowOnUIThread() noexcept;
   void HideOnUIThread() noexcept;
   static void RegisterWndClass() noexcept;
-
   // Testing
 
  private:
