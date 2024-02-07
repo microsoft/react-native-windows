@@ -5,11 +5,6 @@
 
 #include <utilities.h>
 
-// Boost Library
-#include <boost/archive/iterators/base64_from_binary.hpp>
-#include <boost/archive/iterators/ostream_iterator.hpp>
-#include <boost/archive/iterators/transform_width.hpp>
-
 // Windows API
 #include <winrt/base.h>
 
