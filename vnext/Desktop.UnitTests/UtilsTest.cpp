@@ -8,6 +8,7 @@
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using std::string;
+using std::string_view;
 
 namespace Microsoft::React::Test {
 
@@ -201,7 +202,7 @@ TEST_CLASS(UtilsTest)
 
     for (auto i = 0; i < sizeof(messages)/sizeof(string); ++i)
     {
-      auto actual = Utilities::EncodeBase64(std::string_view(messages[i]));
+      auto actual = Utilities::EncodeBase64(string_view(messages[i]));
       Assert::AreEqual(expected[i], actual.data());
     }
   }
@@ -211,9 +212,10 @@ TEST_CLASS(UtilsTest)
     //[System.Convert]::ToBase64String([byte[]](0,1,2,3,4))
     constexpr const char* expected = "AAECAwQ=";
 
-    auto bytes = winrt::array_view<const uint8_t>{0, 1, 2, 3, 4};
+    auto input = std::vector<uint8_t>{ 0, 1, 2, 3, 4 };
+    auto bytes = winrt::array_view<const uint8_t>(input.data(), input.data() + input.size());
     auto chars = reinterpret_cast<const char*>(bytes.data());
-    auto view = std::string_view(chars, bytes.size());
+    auto view = string_view(chars, bytes.size());
 
     auto actual = Utilities::EncodeBase64(view);
     Assert::AreEqual(expected, actual.c_str());
@@ -257,7 +259,7 @@ TEST_CLASS(UtilsTest)
 
     for (auto i = 0; i < sizeof(messages) / sizeof(string); ++i)
     {
-      auto actual = Utilities::DecodeBase64(std::string_view(messages[i]));
+      auto actual = Utilities::DecodeBase64(string_view(messages[i]));
       Assert::AreEqual(expected[i], actual.data());
     }
   }
