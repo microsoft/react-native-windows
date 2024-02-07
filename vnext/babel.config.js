@@ -1,3 +1,3 @@
 module.exports = {
-  extends: "@rnw-scripts/babel-react-native-config",
+  presets: ["@rnw-scripts/babel-react-native-config"],
 };
