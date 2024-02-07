@@ -135,13 +135,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/RawPropsParser.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/RawPropsParser.cpp",
-      "baseHash": "79fc21a9ad5ba440186d970c44021e25928b6f79",
-      "issue": 12300
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBufferBuilder.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/mapbuffer/MapBufferBuilder.cpp",
       "baseHash": "a2fa7db6a41b3bbd170dc24f153185dfb131d121",
@@ -163,44 +156,9 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/config/Config.h",
-      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/config/Config.h",
-      "baseHash": "c01a9fd4408d1df6419197990a4000a09d28bf52",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/enums/YogaEnums.h",
-      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/enums/YogaEnums.h",
-      "baseHash": "25adf2469465bb27ea1b5c41901ff8642b4b4896",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/LayoutResults.h",
-      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/LayoutResults.h",
-      "baseHash": "f0a011a4eb145be9d85a01746d70ca2a6bfe66d1",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/Node.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/Node.h",
       "baseHash": "aaf16b9303a01ca3dc4955061d97ef9577d8b5e7",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/numeric/Comparison.h",
-      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/numeric/Comparison.h",
-      "baseHash": "c4150273aa8ab23568f31365cd678b9967521362",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/style/Style.h",
-      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/style/Style.h",
-      "baseHash": "97d57900ffa9a3ade3f3278811d07f267e48f706",
       "issue": 12195
     },
     {

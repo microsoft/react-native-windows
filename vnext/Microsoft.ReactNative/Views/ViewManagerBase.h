@@ -8,7 +8,7 @@
 #include <Views/ViewManager.h>
 #include <XamlView.h>
 #include <folly/dynamic.h>
-#include <yoga/yoga.h>
+#include <yoga/Yoga.h>
 #include "Utils/BatchingEventEmitter.h"
 
 namespace Microsoft::ReactNative {

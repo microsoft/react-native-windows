@@ -8,7 +8,7 @@
 #include <Views/ViewManagerBase.h>
 
 #include <folly/dynamic.h>
-#include <yoga/yoga.h>
+#include <yoga/Yoga.h>
 
 #include <ReactHost/React.h>
 #include <ReactRootView.h>

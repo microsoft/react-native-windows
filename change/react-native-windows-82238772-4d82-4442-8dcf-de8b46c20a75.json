@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix clang warnings for non-portable Yoga includes",
+  "packageName": "react-native-windows",
+  "email": "ericroz@meta.com",
+  "dependentChangeType": "patch"
+}

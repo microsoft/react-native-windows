@@ -7,7 +7,7 @@
 #include <XamlView.h>
 
 #include <folly/dynamic.h>
-#include <yoga/yoga.h>
+#include <yoga/Yoga.h>
 
 #include <Shared/ReactWindowsAPI.h>
 #include "KeyboardEventHandler.h"
