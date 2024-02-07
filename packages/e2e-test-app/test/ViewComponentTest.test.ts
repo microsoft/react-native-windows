@@ -19,19 +19,19 @@ afterEach(async () => {
 
 describe('ViewTests', () => {
   test('Views can have background colors', async () => {
-    const dump = await dumpVisualTree('background-color');
+    const dump = await dumpVisualTree('view-test-background-color');
     expect(dump).toMatchSnapshot();
   });
   test('Views can have borders', async () => {
-    const dump = await dumpVisualTree('border');
+    const dump = await dumpVisualTree('view-test-border');
     expect(dump).toMatchSnapshot();
   });
   test('Views can have padding and margins', async () => {
-    const dump = await dumpVisualTree('padding-margin');
+    const dump = await dumpVisualTree('view-test-padding-margin');
     expect(dump).toMatchSnapshot();
   });
   test('Views can have rounded borders', async () => {
-    const dump = await dumpVisualTree('rounded-borders');
+    const dump = await dumpVisualTree('view-test-rounded-borders');
     expect(dump).toMatchSnapshot();
   });
   test('Views can have overflow', async () => {
