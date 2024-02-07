@@ -336,7 +336,6 @@ export function generate(
         libraryName,
         schema,
         moduleSpecName,
-        false,
       );
       normalizeFileMap(generated, componentOutputdir, generatedFiles);
     });
