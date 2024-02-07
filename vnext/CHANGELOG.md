@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 06 Feb 2024 06:13:47 GMT and should not be manually modified.
+This log was last generated on Wed, 07 Feb 2024 06:13:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.765
+
+Wed, 07 Feb 2024 06:13:32 GMT
+
+### Changes
+
+- Fixes clang warnings for non-portable folly includes (ericroz@meta.com)
+- Fix clang warnings for non-portable Yoga includes (ericroz@meta.com)
+- Remove some c++20 forks (email not defined)
+- Cleanup const qualifier on constexpr (ericroz@meta.com)
+- Return null for missing view manager constants (ericroz@meta.com)
 
 ## 0.0.0-canary.764
 

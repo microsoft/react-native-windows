@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 07 Feb 2024 06:13:32 GMT",
+      "version": "0.0.0-canary.765",
+      "tag": "react-native-windows_v0.0.0-canary.765",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "6650a6c92d02a349f495982d8a5f5b766a0e65e1",
+            "comment": "Fixes clang warnings for non-portable folly includes"
+          },
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "98d2a8b312ab51580a9159980b8e0a7aa49bf628",
+            "comment": "Fix clang warnings for non-portable Yoga includes"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "5765be9488048f93ef3802c7e4b9a308358fa5a6",
+            "comment": "Remove some c++20 forks"
+          },
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "d1050882b4f0db5ecd2ef1f3915396a29ba36635",
+            "comment": "Cleanup const qualifier on constexpr"
+          },
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "ee68f5f225de5f6844713826e4ce431064bf5f09",
+            "comment": "Return null for missing view manager constants"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 06 Feb 2024 06:13:47 GMT",
       "version": "0.0.0-canary.764",
       "tag": "react-native-windows_v0.0.0-canary.764",
