@@ -215,7 +215,7 @@ TEST_CLASS(UtilsTest)
     auto chars = reinterpret_cast<const char*>(bytes.data());
     auto view = std::string_view(chars, bytes.size());
 
-    auto actual = Utilities::EncodeBase64(std::move(view));
+    auto actual = Utilities::EncodeBase64(view);
     Assert::AreEqual(expected, actual.c_str());
   }
 

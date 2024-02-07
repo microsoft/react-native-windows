@@ -72,7 +72,7 @@ void BaseFileReaderResource::ReadAsDataUrl(
 
   auto chars = reinterpret_cast<const char *>(bytes.data());
   auto view = std::string_view(chars, bytes.size());
-  result += Utilities::EncodeBase64(std::move(view));
+  result += Utilities::EncodeBase64(view);
 
   resolver(std::move(result));
 }

@@ -23,7 +23,7 @@ using winrt::Windows::Security::Cryptography::CryptographicBuffer;
 
 namespace Microsoft::React::Utilities {
 
-string DecodeBase64(string_view &&base64) noexcept {
+string DecodeBase64(string_view base64) noexcept {
   typedef array_view<char const> av_t;
   auto bytes = av_t(base64.data(), static_cast<av_t::size_type>(base64.size()));
 
@@ -36,7 +36,7 @@ string DecodeBase64(string_view &&base64) noexcept {
 }
 
 // https://www.boost.org/doc/libs/1_76_0/libs/serialization/doc/dataflow.html
-string EncodeBase64(string_view &&text) noexcept {
+string EncodeBase64(string_view text) noexcept {
   typedef array_view<char const> av_t;
   auto bytes = av_t(text.data(), static_cast<av_t::size_type>(text.size()));
 

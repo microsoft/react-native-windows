@@ -98,7 +98,7 @@ void DefaultBlobResource::SendOverSocket(string &&blobId, int64_t offset, int64_
 
   auto chars = reinterpret_cast<const char *>(data.data());
   auto view = std::string_view(chars, data.size());
-  wsProxy->SendBinary(Utilities::EncodeBase64(std::move(view)), socketId);
+  wsProxy->SendBinary(Utilities::EncodeBase64(view), socketId);
 }
 
 void DefaultBlobResource::CreateFromParts(msrn::JSValueArray &&parts, string &&blobId) noexcept /*override*/ {
