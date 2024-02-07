@@ -382,7 +382,7 @@ module.exports = {
   },
 
   // Additional windows exports (Typescript components exported as flow any)
-    get DatePicker(): any {
+  get DatePicker(): any {
     invariant(
       false,
       'DatePicker has been extracted and removed from react-native-windows. ' +
