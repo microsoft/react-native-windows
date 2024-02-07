@@ -54,12 +54,4 @@ string EncodeBase64(string_view &&text) noexcept {
   return oss.str();
 }
 
-string EncodeBase64(wstring_view &&text) noexcept {
-  // TODO: Confirm encoding
-  auto buffer = CryptographicBuffer::ConvertStringToBinary(std::move(text), BinaryStringEncoding::Utf8);
-  auto encoded = CryptographicBuffer::EncodeToBase64String(buffer);
-
-  return winrt::to_string(encoded);
-}
-
 } // namespace Microsoft::React::Utilities

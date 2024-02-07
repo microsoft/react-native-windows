@@ -96,7 +96,7 @@ void DefaultBlobResource::SendOverSocket(string &&blobId, int64_t offset, int64_
     return m_callbacks.OnError(e.what());
   }
 
-  auto chars = reinterpret_cast<const char*>(data.data());
+  auto chars = reinterpret_cast<const char *>(data.data());
   auto view = std::string_view(chars, data.size());
   wsProxy->SendBinary(Utilities::EncodeBase64(std::move(view)), socketId);
 }

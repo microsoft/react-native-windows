@@ -46,6 +46,5 @@ namespace Microsoft::React::Utilities {
 std::string DecodeBase64(std::string_view &&text) noexcept;
 
 std::string EncodeBase64(std::string_view &&text) noexcept;
-std::string EncodeBase64(std::wstring_view &&text) noexcept;
 
 } // namespace Microsoft::React::Utilities

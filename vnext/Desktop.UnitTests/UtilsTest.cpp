@@ -249,50 +249,6 @@ TEST_CLASS(UtilsTest)
     }
   }
 
-  TEST_METHOD(EncodeHStringToBase64Succeeds)
-  {
-    winrt::hstring messages[]
-    {
-      L"",
-      L"a",
-      L"ab",
-      L"abc",
-      L"abcd",
-      L"abcde",
-      L"abcdef",
-      L"abcdefg",
-      L"abcdefgh",
-      L"abcdefghi",
-      L"abcdefghij",
-      L"abcdefghijk",
-      L"abcdefghijkl"
-    };
-
-    // Computed using [System.Convert]::ToBase64String
-    constexpr const char* expected[] =
-    {
-      "",
-      "YQ==",
-      "YWI=",
-      "YWJj",
-      "YWJjZA==",
-      "YWJjZGU=",
-      "YWJjZGVm",
-      "YWJjZGVmZw==",
-      "YWJjZGVmZ2g=",
-      "YWJjZGVmZ2hp",
-      "YWJjZGVmZ2hpag==",
-      "YWJjZGVmZ2hpams=",
-      "YWJjZGVmZ2hpamts"
-    };
-
-    for (auto i = 0; i < sizeof(messages) / sizeof(winrt::hstring); ++i)
-    {
-      auto actual = Utilities::EncodeBase64(std::wstring_view(messages[i]));
-      Assert::AreEqual(expected[i], actual.data());
-    }
-  }
-
 #pragma endregion Base64 Tests
 };
 
