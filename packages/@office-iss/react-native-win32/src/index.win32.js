@@ -385,6 +385,34 @@ module.exports = {
         'LogBox is enabled by default so there is no need to call unstable_enableLogBox() anymore. This is a no op and will be removed in the next version.',
       );
   },
+  // Win32 Types (Typescript components exported as flow any)
+  get ColorGradientWin32(): ColorGradientWin32 {
+    return require('./Libraries/StyleSheet/PlatformColorValueTypesWin32')
+      .ColorGradientWin32;
+  },
+  get ViewWin32(): any {
+    return require('./Libraries/Components/View/ViewWin32');
+  },
+  get TextWin32(): any {
+    return require('./Libraries/Components/Text/TextWin32').TextWin32;
+  },
+  get ButtonWin32(): any {
+    return require('./Libraries/Components/Button/ButtonWin32').ButtonWin32;
+  },
+  get TouchableWin32(): any {
+    return require('./Libraries/Components/Touchable/TouchableWin32')
+      .TouchableWin32;
+  },
+  get PersonaCoin(): any {
+    return require('./Libraries/PersonaCoin/PersonaCoin').PersonaCoin;
+  },
+  get PersonaCoinSize(): any {
+    return require('./Libraries/PersonaCoin/PersonaCoinTypes').PersonaCoinSize;
+  },
+  get PersonaCoinPresence(): any {
+    return require('./Libraries/PersonaCoin/PersonaCoinTypes')
+      .PersonaCoinPresence;
+  },
 };
 
 if (__DEV__) {
