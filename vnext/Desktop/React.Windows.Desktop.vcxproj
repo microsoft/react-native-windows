@@ -113,7 +113,7 @@
         "$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost";
         "$(ReactNativeWindowsDir)Microsoft.ReactNative\Views";
         "$(ReactNativeWindowsDir)codegen";
-        $(ReactNativeWindowsDir)codegen\react\components\rnwcore;
+        "$(ReactNativeWindowsDir)codegen\react\components\rnwcore";
         $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
