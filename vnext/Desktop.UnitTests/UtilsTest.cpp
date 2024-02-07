@@ -206,6 +206,19 @@ TEST_CLASS(UtilsTest)
     }
   }
 
+  TEST_METHOD(EncodeArrayViewToBase64Succeeds)
+  {
+    //[System.Convert]::ToBase64String([byte[]](0,1,2,3,4))
+    constexpr const char* expected = "AAECAwQ=";
+
+    auto bytes = winrt::array_view<const uint8_t>{0, 1, 2, 3, 4};
+    auto chars = reinterpret_cast<const char*>(bytes.data());
+    auto view = std::string_view(chars, bytes.size());
+
+    auto actual = Utilities::EncodeBase64(std::move(view));
+    Assert::AreEqual(expected, actual.c_str());
+  }
+
   TEST_METHOD(DecodeStdStringFromBase64Succeeds)
   {
     constexpr const char* messages[] =
