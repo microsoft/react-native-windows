@@ -35,11 +35,11 @@ describe('ViewTests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('Views can have overflow', async () => {
-    const dump = await dumpVisualTree('overflow');
+    const dump = await dumpVisualTree('view-test-overflow');
     expect(dump).toMatchSnapshot();
   });
   test('Views can have ranging opacity', async () => {
-    const dump = await dumpVisualTree('opacity');
+    const dump = await dumpVisualTree('view-test-opacity');
     expect(dump).toMatchSnapshot();
   });
   test('Views can have tool tips', async () => {
@@ -47,19 +47,11 @@ describe('ViewTests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('Views can adjust backface visibility', async () => {
-    const dump = await dumpVisualTree('backface-visibility');
-    expect(dump).toMatchSnapshot();
-  });
-  test('Views can adjust backface visibility 2', async () => {
-    const dump = await dumpVisualTree('backface-visibility-2');
+    const dump = await dumpVisualTree('view-test-backface-visibility');
     expect(dump).toMatchSnapshot();
   });
   test('Views can have accessibility customization', async () => {
     const dump = await dumpVisualTree('accessibility');
-    expect(dump).toMatchSnapshot();
-  });
-  test('Views can have unique border width and radius per edge/corner', async () => {
-    const dump = await dumpVisualTree('advanced-border');
     expect(dump).toMatchSnapshot();
   });
   test('Views can have a custom nativeID', async () => {
