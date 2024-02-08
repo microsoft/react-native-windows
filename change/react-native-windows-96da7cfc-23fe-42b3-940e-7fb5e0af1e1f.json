@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix Base64 encoding padding",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
