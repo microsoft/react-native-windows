@@ -28,7 +28,7 @@ SwitchComponentView::SwitchComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : base_type(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
+    : base_type(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
   m_props = std::make_shared<facebook::react::SwitchProps const>();
 }
 
@@ -51,12 +51,14 @@ void SwitchComponentView::unmountChildComponentView(
   assert(false);
 }
 
-void SwitchComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
-  if (commandName == "setValue") {
+void SwitchComponentView::HandleCommand(
+    winrt::hstring commandName,
+    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+  if (commandName == L"setValue") {
     // TODO - Current implementation always aligns with JS value
     // This will be needed when we move to using WinUI controls
   } else {
-    Super::handleCommand(commandName, arg);
+    Super::HandleCommand(commandName, args);
   }
 }
 
@@ -231,14 +233,13 @@ void SwitchComponentView::updateVisuals() noexcept {
   }
 }
 
-void SwitchComponentView::finalizeUpdates(
-    winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask updateMask) noexcept {
+void SwitchComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
   if (m_visualUpdateRequired) {
     m_visualUpdateRequired = false;
     updateVisuals();
   }
 
-  Super::finalizeUpdates(updateMask);
+  base_type::FinalizeUpdates(updateMask);
 }
 
 void SwitchComponentView::prepareForRecycle() noexcept {}
@@ -289,7 +290,7 @@ void SwitchComponentView::onThemeChanged() noexcept {
   Super::onThemeChanged();
 }
 
-void SwitchComponentView::onPointerPressed(
+void SwitchComponentView::OnPointerPressed(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   // Only care about primary input
   if (!args.GetCurrentPoint(-1).Properties().IsPrimary()) {
@@ -310,7 +311,7 @@ void SwitchComponentView::onPointerPressed(
   }
 }
 
-void SwitchComponentView::onPointerReleased(
+void SwitchComponentView::OnPointerReleased(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   // Only care about primary input
   if (!args.GetCurrentPoint(-1).Properties().IsPrimary()) {
@@ -326,21 +327,21 @@ void SwitchComponentView::onPointerReleased(
   m_pressed = false;
 }
 
-void SwitchComponentView::onPointerEntered(
+void SwitchComponentView::OnPointerEntered(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   m_hovered = true;
   m_supressAnimationForNextFrame = true;
   updateVisuals();
 }
 
-void SwitchComponentView::onPointerExited(
+void SwitchComponentView::OnPointerExited(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   m_hovered = false;
   m_supressAnimationForNextFrame = true;
   updateVisuals();
 }
 
-void SwitchComponentView::onKeyUp(
+void SwitchComponentView::OnKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (args.Key() == winrt::Windows::System::VirtualKey::Space) {
@@ -348,7 +349,7 @@ void SwitchComponentView::onKeyUp(
       args.Handled(true);
     }
   }
-  Super::onKeyUp(source, args);
+  Super::OnKeyUp(source, args);
 }
 
 bool SwitchComponentView::toggle() noexcept {

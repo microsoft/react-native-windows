@@ -20,15 +20,18 @@ type NativeProps = $ReadOnly<{|
 |}>;
 
 // Cannot just use codegenNativeComponent, or registerNativeComponent, since we need to provide a custom config
-const MyCustomComponent = get<NativeProps>('MyCustomComponent', () => {
-  return {
-    uiViewClassName: 'MyCustomComponent',
-    bubblingEventTypes: {},
-    directEventTypes: {},
-    validAttributes: {
-      label: true,
-    },
-  };
-});
+const CustomXamlComponentWithYogaLayout = get<NativeProps>(
+  'CustomXamlComponentWithYogaLayout',
+  () => {
+    return {
+      uiViewClassName: 'CustomXamlComponentWithYogaLayout',
+      bubblingEventTypes: {},
+      directEventTypes: {},
+      validAttributes: {
+        label: true,
+      },
+    };
+  },
+);
 
-exports.MyCustomComponent = MyCustomComponent;
+exports.CustomXamlComponentWithYogaLayout = CustomXamlComponentWithYogaLayout;

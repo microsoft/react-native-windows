@@ -1,8 +1,56 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 27 Jan 2024 06:13:39 GMT and should not be manually modified.
+This log was last generated on Wed, 07 Feb 2024 06:13:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.765
+
+Wed, 07 Feb 2024 06:13:32 GMT
+
+### Changes
+
+- Fixes clang warnings for non-portable folly includes (ericroz@meta.com)
+- Fix clang warnings for non-portable Yoga includes (ericroz@meta.com)
+- Remove some c++20 forks (email not defined)
+- Cleanup const qualifier on constexpr (ericroz@meta.com)
+- Return null for missing view manager constants (ericroz@meta.com)
+
+## 0.0.0-canary.764
+
+Tue, 06 Feb 2024 06:13:47 GMT
+
+### Changes
+
+- [Fabric] fix visual issue when quickly dragging scrollthumb before it finishes animating in (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Mouse wheel handling when use WM_MSG hosting uses wrong mouse position (30809111+acoates-ms@users.noreply.github.com)
+- Add experimental feature flag to opt into experimental winui3 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.763
+
+Sat, 03 Feb 2024 06:13:43 GMT
+
+### Changes
+
+- [Fabric] Remove AbiCompositionViewComponent and move to inheritence overrides for custom components (30809111+acoates-ms@users.noreply.github.com)
+- Ensure origin in WebSocket headers (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.762
+
+Fri, 02 Feb 2024 06:14:27 GMT
+
+### Changes
+
+- Update to C++20 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.761
+
+Tue, 30 Jan 2024 06:14:07 GMT
+
+### Changes
+
+- [Fabric] Capture pointer input during scroll thumb drag (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Allow unimplemented native views to have children (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.760
 

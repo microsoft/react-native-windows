@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "[Fabric] Capture pointer input during scroll thumb drag",
-  "packageName": "react-native-windows",
+  "comment": "[Win32] view.focus sometimes skips setting focus",
+  "packageName": "@office-iss/react-native-win32",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
 }

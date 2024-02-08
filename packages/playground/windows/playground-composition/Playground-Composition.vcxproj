@@ -139,6 +139,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
+    <Midl Include="CustomComponent.idl"/>
     <Midl Include="YogaXamlPanel.idl"/>
   </ItemGroup>
   <ItemGroup>

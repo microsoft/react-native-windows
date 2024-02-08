@@ -15,7 +15,7 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 struct UnimplementedNativeViewComponentView
-    : public UnimplementedNativeViewComponentViewT<UnimplementedNativeViewComponentView, CompositionViewComponentView> {
+    : public UnimplementedNativeViewComponentViewT<UnimplementedNativeViewComponentView, ViewComponentView> {
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
       facebook::react::Tag tag,
@@ -25,7 +25,8 @@ struct UnimplementedNativeViewComponentView
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
 
-  void handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept override;
+  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
+      override;
 
   UnimplementedNativeViewComponentView(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,

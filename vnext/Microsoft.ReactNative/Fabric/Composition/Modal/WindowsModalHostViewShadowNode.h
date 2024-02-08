@@ -9,8 +9,8 @@
 
 #include <react/renderer/components/modal/ModalHostViewState.h>
 // [Windows
-#include <react/renderer/components/rnwcore/EventEmitters.h>
-#include <react/renderer/components/rnwcore/Props.h>
+#include <react/components/rnwcore/EventEmitters.h>
+#include <react/components/rnwcore/Props.h>
 // ]
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 

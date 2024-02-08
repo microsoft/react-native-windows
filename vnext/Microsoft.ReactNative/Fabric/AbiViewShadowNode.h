@@ -6,7 +6,7 @@
 #include "LayoutContext.g.h"
 #include "ShadowNode.g.h"
 #include "YogaLayoutableShadowNode.g.h"
-#include <react/renderer/components/rnwcore/EventEmitters.h>
+#include <react/components/rnwcore/EventEmitters.h>
 #include <unordered_map>
 #include "AbiState.h"
 #include "AbiViewProps.h"

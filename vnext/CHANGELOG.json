@@ -2,6 +2,129 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 07 Feb 2024 06:13:32 GMT",
+      "version": "0.0.0-canary.765",
+      "tag": "react-native-windows_v0.0.0-canary.765",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "6650a6c92d02a349f495982d8a5f5b766a0e65e1",
+            "comment": "Fixes clang warnings for non-portable folly includes"
+          },
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "98d2a8b312ab51580a9159980b8e0a7aa49bf628",
+            "comment": "Fix clang warnings for non-portable Yoga includes"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "5765be9488048f93ef3802c7e4b9a308358fa5a6",
+            "comment": "Remove some c++20 forks"
+          },
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "d1050882b4f0db5ecd2ef1f3915396a29ba36635",
+            "comment": "Cleanup const qualifier on constexpr"
+          },
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "ee68f5f225de5f6844713826e4ce431064bf5f09",
+            "comment": "Return null for missing view manager constants"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 06 Feb 2024 06:13:47 GMT",
+      "version": "0.0.0-canary.764",
+      "tag": "react-native-windows_v0.0.0-canary.764",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "407d84b89825861fab702676d928c2f5ddc4882c",
+            "comment": "[Fabric] fix visual issue when quickly dragging scrollthumb before it finishes animating in"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2b9f7d9cb21adba83228311c97a47ded7853c006",
+            "comment": "[Fabric] Mouse wheel handling when use WM_MSG hosting uses wrong mouse position"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ad5134507f6d3ac483b25cad175a7f886a7b10a7",
+            "comment": "Add experimental feature flag to opt into experimental winui3"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 03 Feb 2024 06:13:43 GMT",
+      "version": "0.0.0-canary.763",
+      "tag": "react-native-windows_v0.0.0-canary.763",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "01e32fe2059c29acb6c36629ea9d844e917b6330",
+            "comment": "[Fabric] Remove AbiCompositionViewComponent and move to inheritence overrides for custom components"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "05bfd0c9818462b81a64bf8d90bd27c5a10e7169",
+            "comment": "Ensure origin in WebSocket headers"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 02 Feb 2024 06:14:27 GMT",
+      "version": "0.0.0-canary.762",
+      "tag": "react-native-windows_v0.0.0-canary.762",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "adefdeef79ca8ac4c4b75338884311c688eb11bf",
+            "comment": "Update to C++20"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 30 Jan 2024 06:14:07 GMT",
+      "version": "0.0.0-canary.761",
+      "tag": "react-native-windows_v0.0.0-canary.761",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5d330cde7cad00444b80c0981ec42702f0641988",
+            "comment": "[Fabric] Capture pointer input during scroll thumb drag"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "dda217f8dbe1d41587f9b69ac415154923799aa8",
+            "comment": "[Fabric] Allow unimplemented native views to have children"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 27 Jan 2024 06:13:39 GMT",
       "version": "0.0.0-canary.760",
       "tag": "react-native-windows_v0.0.0-canary.760",
