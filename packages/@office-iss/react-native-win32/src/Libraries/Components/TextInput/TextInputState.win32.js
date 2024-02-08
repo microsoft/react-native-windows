@@ -21,8 +21,7 @@ import type {
 
 import {Commands as AndroidTextInputCommands} from '../../Components/TextInput/AndroidTextInputNativeComponent';
 import {Commands as iOSTextInputCommands} from '../../Components/TextInput/RCTSingelineTextInputNativeComponent';
-
-import {UIManager} from 'react-native';
+import {Commands as Win32TextInputCommands} from '../../Components/TextInput/Win32TextInputNativeComponent';
 
 const {findNodeHandle} = require('../../ReactNative/RendererProxy');
 const Platform = require('../../Utilities/Platform');
@@ -106,7 +105,16 @@ function focusTextInput(textField: ?ComponentRef) {
     return;
   }
 
-  if (textField != null) {
+  // [Win32
+  if (Platform.OS === 'win32' && textField != null) {
+    // On Windows, we cannot test if the currentlyFocusedInputRef equals the
+    // target ref because the call to focus on the target ref may occur before
+    // an onBlur event for the target ref has been dispatched to JS but after
+    // the target ref has lost native focus.
+    focusInput(textField);
+    Win32TextInputCommands.focus(textField);
+    // Win32]
+  } else if (textField != null) {
     const fieldCanBeFocused =
       currentlyFocusedInputRef !== textField &&
       // $FlowFixMe - `currentProps` is missing in `NativeMethods`
@@ -126,11 +134,6 @@ function focusTextInput(textField: ?ComponentRef) {
     } else if (Platform.OS === 'android') {
       AndroidTextInputCommands.focus(textField);
     }
-    // [Win32
-    else if (Platform.OS === 'win32') {
-      UIManager.focus(findNodeHandle(textField));
-    }
-    // Win32]
   }
 }
 
@@ -164,7 +167,7 @@ function blurTextInput(textField: ?ComponentRef) {
     }
     // [Win32
     else if (Platform.OS === 'win32') {
-      UIManager.blur(findNodeHandle(textField));
+      Win32TextInputCommands.blur(textField);
     }
     // Win32]
   }
