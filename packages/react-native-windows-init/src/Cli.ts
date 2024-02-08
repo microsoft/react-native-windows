@@ -39,10 +39,19 @@ import {
 
 import requireGenerateWindows from './requireGenerateWindows';
 
-const npmConfReg = execSync('npm config get registry').toString().trim();
-const NPM_REGISTRY_URL = validUrl.isUri(npmConfReg)
-  ? npmConfReg
-  : 'http://registry.npmjs.org';
+let NPM_REGISTRY_URL = 'http://registry.npmjs.org';
+try {
+  const npmConfReg = execSync('npm config get registry').toString().trim();
+  if (validUrl.isUri(npmConfReg)) {
+    NPM_REGISTRY_URL = npmConfReg;
+  }
+} catch (error: any) {
+  // Ignore workspace errors as `npm config` does not support it
+  const stderr = error?.stderr?.toString() || '';
+  if (!stderr.includes('ENOWORKSPACES')) {
+    throw error;
+  }
+}
 
 // Causes the type-checker to ensure the options object is a valid yargs options object
 function initOptions<T extends Record<string, yargs.Options>>(options: T): T {
