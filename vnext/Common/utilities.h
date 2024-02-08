@@ -2,6 +2,9 @@
 // Licensed under the MIT License.
 
 #pragma once
+
+// Standard Library
+#include <string>
 #include <type_traits>
 #include <utility>
 
@@ -37,3 +40,11 @@ constexpr std::size_t ArraySize(T (&)[N]) noexcept {
 }
 
 } // namespace Microsoft::Common::Utilities
+
+namespace Microsoft::React::Utilities {
+
+std::string DecodeBase64(std::string_view text) noexcept;
+
+std::string EncodeBase64(std::string_view text) noexcept;
+
+} // namespace Microsoft::React::Utilities

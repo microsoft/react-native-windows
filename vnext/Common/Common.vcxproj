@@ -64,7 +64,7 @@
       string literals. It prevents code like
         wchar_t* str = L"hello";
       from compiling. -->
-      <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /await</AdditionalOptions>
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
@@ -78,12 +78,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Unicode.cpp" />
+    <ClCompile Include="Utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Unicode.h" />
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ItemGroup>
+    <PackageReference Include="boost" Version="1.76.0.0" />
+    <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
+  </ItemGroup>
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
   <Target Name="Deploy" />
