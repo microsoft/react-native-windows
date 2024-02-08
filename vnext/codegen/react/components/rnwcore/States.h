@@ -14,8 +14,22 @@
 #include <react/renderer/mapbuffer/MapBufferBuilder.h>
 #endif
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
+
+class DebuggingOverlayState {
+public:
+  DebuggingOverlayState() = default;
+
+#ifdef ANDROID
+  DebuggingOverlayState(DebuggingOverlayState const &previousState, folly::dynamic data){};
+  folly::dynamic getDynamic() const {
+    return {};
+  };
+  MapBuffer getMapBuffer() const {
+    return MapBufferBuilder::EMPTY();
+  };
+#endif
+};
 
 class ActivityIndicatorViewState {
 public:
@@ -107,21 +121,6 @@ public:
 #endif
 };
 
-class TraceUpdateOverlayState {
-public:
-  TraceUpdateOverlayState() = default;
-
-#ifdef ANDROID
-  TraceUpdateOverlayState(TraceUpdateOverlayState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
-  };
-#endif
-};
-
 class UnimplementedNativeViewState {
 public:
   UnimplementedNativeViewState() = default;
@@ -137,5 +136,4 @@ public:
 #endif
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

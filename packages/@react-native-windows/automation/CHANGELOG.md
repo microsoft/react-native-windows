@@ -1,8 +1,120 @@
 # Change Log - @react-native-windows/automation
 
-This log was last generated on Fri, 12 Jan 2024 06:14:41 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Feb 2024 06:13:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.187
+
+Thu, 08 Feb 2024 06:13:52 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.105
+
+## 0.3.186
+
+Wed, 07 Feb 2024 06:13:33 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.104
+
+## 0.3.185
+
+Tue, 06 Feb 2024 06:13:48 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.103
+
+## 0.3.184
+
+Sat, 03 Feb 2024 06:13:43 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.102
+
+## 0.3.183
+
+Fri, 02 Feb 2024 06:14:27 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.101
+
+## 0.3.182
+
+Tue, 30 Jan 2024 06:14:07 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.100
+
+## 0.3.181
+
+Sat, 27 Jan 2024 06:13:39 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.99
+
+## 0.3.180
+
+Fri, 26 Jan 2024 06:13:33 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.98
+
+## 0.3.179
+
+Thu, 25 Jan 2024 06:14:17 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.97
+
+## 0.3.178
+
+Wed, 24 Jan 2024 06:14:15 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.96
+
+## 0.3.177
+
+Tue, 23 Jan 2024 06:15:27 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.95
+
+## 0.3.176
+
+Fri, 19 Jan 2024 06:16:14 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.94
+
+## 0.3.175
+
+Thu, 18 Jan 2024 06:14:23 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.93
+
+## 0.3.174
+
+Wed, 17 Jan 2024 06:16:32 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.92
 
 ## 0.3.173
 

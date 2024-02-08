@@ -15,8 +15,17 @@
 #include <react/renderer/graphics/Color.h>
 #include <vector>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
+
+class DebuggingOverlayProps final : public ViewProps {
+ public:
+  DebuggingOverlayProps() = default;
+  DebuggingOverlayProps(const PropsParserContext& context, const DebuggingOverlayProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  
+};
 
 enum class ModalHostViewAnimationType { None, Slide, Fade };
 
@@ -175,8 +184,8 @@ class ActivityIndicatorViewProps final : public ViewProps {
 
 #pragma mark - Props
 
-  bool hidesWhenStopped{false};
-  bool animating{false};
+  bool hidesWhenStopped{true};
+  bool animating{true};
   SharedColor color{};
   ActivityIndicatorViewSize size{ActivityIndicatorViewSize::Small};
 };
@@ -419,16 +428,6 @@ class InputAccessoryProps final : public ViewProps {
   SharedColor backgroundColor{};
 };
 
-class TraceUpdateOverlayProps final : public ViewProps {
- public:
-  TraceUpdateOverlayProps() = default;
-  TraceUpdateOverlayProps(const PropsParserContext& context, const TraceUpdateOverlayProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  
-};
-
 class UnimplementedNativeViewProps final : public ViewProps {
  public:
   UnimplementedNativeViewProps() = default;
@@ -439,5 +438,4 @@ class UnimplementedNativeViewProps final : public ViewProps {
   std::string name{""};
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

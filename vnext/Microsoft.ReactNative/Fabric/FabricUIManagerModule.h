@@ -48,7 +48,8 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
 
   const IComponentViewRegistry &GetViewRegistry() const noexcept;
 
-  winrt::IInspectable GetUiaFragmentProvider(facebook::react::SurfaceId surfaceId) const noexcept;
+  winrt::Microsoft::ReactNative::CompositionRootView GetCompositionRootView(
+      facebook::react::SurfaceId surfaceId) const noexcept;
 
  private:
   void installFabricUIManager() noexcept;

@@ -306,10 +306,20 @@ const examples: Array<RNTesterModuleExample> = [
             </Text>
           </TextInput>
           <TextInput
-            defaultValue="Highlight Color is red"
+            defaultValue="Selection Color is red"
             selectionColor={'red'}
             style={styles.singleLine}
             testID="textinput-custom-highlight-color"
+          />
+          <TextInput
+            defaultValue="Selection handles are red"
+            selectionHandleColor={'red'}
+            style={styles.singleLine}
+          />
+          <TextInput
+            defaultValue="Cursor Color is red"
+            cursorColor={'red'}
+            style={styles.singleLine}
           />
         </View>
       );
@@ -602,7 +612,7 @@ const examples: Array<RNTesterModuleExample> = [
         'next',
       ];
       const returnKeyLabels = ['Compile', 'React Native'];
-      const examples = returnKeyTypes.map(type => {
+      const returnKeyExamples = returnKeyTypes.map(type => {
         return (
           <TextInput
             key={type}
@@ -626,7 +636,7 @@ const examples: Array<RNTesterModuleExample> = [
       });
       return (
         <View>
-          {examples}
+          {returnKeyExamples}
           {types}
         </View>
       );
@@ -733,6 +743,43 @@ const examples: Array<RNTesterModuleExample> = [
             caretHidden={true}
             placeholder="caretHidden={true}"
             testID="textinput-carethidden"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Cursorcolor set to Green',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Cursorcolor</Text>
+          <TextInput
+            style={styles.singleLine}
+            cursorColor={'green'}
+            placeholder='cursorColor={"green"}'
+            testID="textinput-cursorColor"
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Shadow set to Purple',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Shadow</Text>
+          <TextInput
+            placeholder="shadowColor: purple"
+            testID="textinput-shadow"
+            style={{
+              fontSize: 16,
+              shadowColor: 'purple',
+              shadowOpacity: 99,
+              shadowOffset: {width: 10, height: 10},
+              shadowRadius: 20,
+            }}
           />
         </View>
       );

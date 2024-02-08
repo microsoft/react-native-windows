@@ -24,24 +24,20 @@ ActivityIndicatorComponentView::ActivityIndicatorComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
   m_props = std::make_shared<facebook::react::ActivityIndicatorViewProps const>();
 }
 
 void ActivityIndicatorComponentView::mountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
-    uint32_t index) noexcept {
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {
   assert(false);
 }
 
 void ActivityIndicatorComponentView::unmountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
-    uint32_t index) noexcept {
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {
   assert(false);
-}
-
-void ActivityIndicatorComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
-  Super::handleCommand(commandName, arg);
 }
 
 void ActivityIndicatorComponentView::updateProgressColor(const facebook::react::SharedColor &color) noexcept {
@@ -59,6 +55,19 @@ void ActivityIndicatorComponentView::updateProps(
   const auto newViewProps = std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(props);
 
   ensureVisual();
+
+  if (newViewProps->testId != oldViewProps->testId) {
+    m_visual.Comment(winrt::to_hstring(newViewProps->testId));
+  }
+
+  // update size if needed
+  if (newViewProps->size != oldViewProps->size) {
+    if (newViewProps->size == facebook::react::ActivityIndicatorViewSize::Small) {
+      m_ActivityIndicatorVisual.Size(m_radiusSmall);
+    } else {
+      m_ActivityIndicatorVisual.Size(m_radiusLarge);
+    }
+  }
 
   // update color if needed
   if (!oldProps || newViewProps->color != oldViewProps->color) {

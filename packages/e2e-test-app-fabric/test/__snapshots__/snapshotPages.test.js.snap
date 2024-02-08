@@ -6378,6 +6378,7 @@ exports[`snapshotAllPages Border 1`] = `
       },
     ]
   }
+  testID="border-test-equal-width-same-color"
 />
 `;
 
@@ -6396,6 +6397,7 @@ exports[`snapshotAllPages Border 2`] = `
       },
     ]
   }
+  testID="border-test-equal-width-same-color-border-radius"
 />
 `;
 
@@ -6416,6 +6418,7 @@ exports[`snapshotAllPages Border 3`] = `
       },
     ]
   }
+  testID="border-test-equal-width-borders"
 />
 `;
 
@@ -6436,6 +6439,7 @@ exports[`snapshotAllPages Border 4`] = `
       },
     ]
   }
+  testID="border-test-same-color-borders"
 />
 `;
 
@@ -6459,6 +6463,7 @@ exports[`snapshotAllPages Border 5`] = `
       },
     ]
   }
+  testID="border-test-custom-borders"
 />
 `;
 
@@ -6483,6 +6488,7 @@ exports[`snapshotAllPages Border 6`] = `
       },
     ]
   }
+  testID="border-test-custom-borders-ios-1"
 />
 `;
 
@@ -6507,6 +6513,7 @@ exports[`snapshotAllPages Border 7`] = `
       },
     ]
   }
+  testID="border-test-custom-borders-ios-2"
 />
 `;
 
@@ -6526,6 +6533,7 @@ exports[`snapshotAllPages Border 8`] = `
       },
     ]
   }
+  testID="border-test-custom-borders-ios-clipping"
 >
   <View
     style={
@@ -6546,6 +6554,7 @@ exports[`snapshotAllPages Border 9`] = `
       "flexDirection": "row",
     }
   }
+  testID="border-test-single-borders"
 >
   <View
     style={
@@ -6648,6 +6657,7 @@ exports[`snapshotAllPages Border 10`] = `
       },
     ]
   }
+  testID="border-test-corner-radii"
 />
 `;
 
@@ -6669,6 +6679,7 @@ exports[`snapshotAllPages Border 11`] = `
       },
     ]
   }
+  testID="border-test-corner-radii-elevation"
 />
 `;
 
@@ -6692,6 +6703,7 @@ exports[`snapshotAllPages Border 12`] = `
       },
     ]
   }
+  testID="border-test-css-trick-triangle"
 />
 `;
 
@@ -6714,6 +6726,7 @@ exports[`snapshotAllPages Border 13`] = `
       },
     ]
   }
+  testID="border-test-curved-border-lrbt-width"
 />
 `;
 
@@ -6740,6 +6753,7 @@ exports[`snapshotAllPages Border 14`] = `
       },
     ]
   }
+  testID="border-test-curved-border-lrbt-color"
 />
 `;
 
@@ -6769,6 +6783,7 @@ exports[`snapshotAllPages Border 15`] = `
       },
     ]
   }
+  testID="border-test-curved-border-tb-lr-radius"
 />
 `;
 
@@ -6790,6 +6805,7 @@ exports[`snapshotAllPages Border 16`] = `
       },
     ]
   }
+  testID="border-test-system-color"
 />
 `;
 
@@ -6807,6 +6823,7 @@ exports[`snapshotAllPages Border 17`] = `
       },
     ]
   }
+  testID="border-test-dynamic-color-ios"
 />
 `;
 
@@ -6993,12 +7010,14 @@ exports[`snapshotAllPages Button 2`] = `
 
 exports[`snapshotAllPages Button 3`] = `
 <View
+  accessible={true}
   style={
     {
       "flexDirection": "row",
       "justifyContent": "space-between",
     }
   }
+  testID="two_button_container"
 >
   <View
     accessibilityLabel="Press to cancel your application!"
@@ -7187,12 +7206,14 @@ exports[`snapshotAllPages Button 3`] = `
 
 exports[`snapshotAllPages Button 4`] = `
 <View
+  accessible={true}
   style={
     {
       "flexDirection": "row",
       "justifyContent": "space-between",
     }
   }
+  testID="three_button_container"
 >
   <View
     accessibilityLabel="Press to cancel your application!"
@@ -7940,7 +7961,7 @@ exports[`snapshotAllPages Button 9`] = `
         },
       ]
     }
-    testID="accessibility_props"
+    testID="default_button"
   >
     <View
       style={{}}
@@ -8024,7 +8045,7 @@ exports[`snapshotAllPages Button 9`] = `
         },
       ]
     }
-    testID="accessibility_props"
+    testID="accessible_false_button"
   >
     <View
       style={{}}
@@ -8108,7 +8129,7 @@ exports[`snapshotAllPages Button 9`] = `
         },
       ]
     }
-    testID="accessibility_props"
+    testID="focusable_false_button"
   >
     <View
       style={{}}
@@ -8192,7 +8213,7 @@ exports[`snapshotAllPages Button 9`] = `
         },
       ]
     }
-    testID="accessibility_props"
+    testID="accessible_focusable_false_button"
   >
     <View
       style={{}}
@@ -9315,6 +9336,253 @@ exports[`snapshotAllPages Display:none Style 1`] = `
       </View>
     </View>
   </RCTScrollView>
+</View>
+`;
+
+exports[`snapshotAllPages Fabric Native Component 1`] = `
+<View
+  style={
+    {
+      "borderRadius": 0,
+      "borderWidth": 2,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "gap": 5,
+      "margin": 10,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "gray",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <Text
+    style={
+      {
+        "color": "gray",
+      }
+    }
+  >
+    This is RN Text
+  </Text>
+  <CustomXamlComponentWithNativeLayout
+    label="This is a Xaml Button set to ellipisify on truncation"
+    style={
+      {
+        "flexShrink": 1,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "gray",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages Fabric Native Component Yoga 1`] = `
+<View
+  style={
+    {
+      "borderRadius": 0,
+      "borderWidth": 2,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "gap": 5,
+      "margin": 10,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "gray",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <Text
+    style={
+      {
+        "color": "gray",
+      }
+    }
+  >
+    This is RN Text
+  </Text>
+  <CustomXamlComponentWithYogaLayout
+    label="This is a Xaml Button set to ellipisify on truncation"
+    style={
+      {
+        "flex": 1,
+        "minWidth": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "gray",
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
 </View>
 `;
 
@@ -73877,7 +74145,7 @@ exports[`snapshotAllPages TextInput 19`] = `
     </Text>
   </TextInput>
   <TextInput
-    defaultValue="Highlight Color is red"
+    defaultValue="Selection Color is red"
     selectionColor="red"
     style={
       {
@@ -73885,6 +74153,24 @@ exports[`snapshotAllPages TextInput 19`] = `
       }
     }
     testID="textinput-custom-highlight-color"
+  />
+  <TextInput
+    defaultValue="Selection handles are red"
+    selectionHandleColor="red"
+    style={
+      {
+        "fontSize": 16,
+      }
+    }
+  />
+  <TextInput
+    cursorColor="red"
+    defaultValue="Cursor Color is red"
+    style={
+      {
+        "fontSize": 16,
+      }
+    }
   />
 </View>
 `;
@@ -74840,6 +75126,48 @@ exports[`snapshotAllPages TextInput 37`] = `
       }
     }
     testID="textinput-carethidden"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 38`] = `
+<View>
+  <Text>
+    Cursorcolor
+  </Text>
+  <TextInput
+    cursorColor="green"
+    placeholder="cursorColor={"green"}"
+    style={
+      {
+        "fontSize": 16,
+      }
+    }
+    testID="textinput-cursorColor"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 39`] = `
+<View>
+  <Text>
+    Shadow
+  </Text>
+  <TextInput
+    placeholder="shadowColor: purple"
+    style={
+      {
+        "fontSize": 16,
+        "shadowColor": "purple",
+        "shadowOffset": {
+          "height": 10,
+          "width": 10,
+        },
+        "shadowOpacity": 99,
+        "shadowRadius": 20,
+      }
+    }
+    testID="textinput-shadow"
   />
 </View>
 `;
@@ -78077,13 +78405,15 @@ exports[`snapshotAllPages TransparentHitTestExample 1`] = `
 
 exports[`snapshotAllPages View 1`] = `
 <View
+  accessibilityLabel="Background Color Example"
+  accessible={true}
   style={
     {
       "backgroundColor": "#527FE4",
       "padding": 5,
     }
   }
-  testID="background-color"
+  testID="view-test-background-color"
 >
   <Text
     style={
@@ -78099,6 +78429,8 @@ exports[`snapshotAllPages View 1`] = `
 
 exports[`snapshotAllPages View 2`] = `
 <View
+  accessibilityLabel="Border Example"
+  accessible={true}
   style={
     {
       "borderColor": "#527FE4",
@@ -78106,7 +78438,7 @@ exports[`snapshotAllPages View 2`] = `
       "padding": 10,
     }
   }
-  testID="border"
+  testID="view-test-border"
 >
   <Text
     style={
@@ -78122,13 +78454,15 @@ exports[`snapshotAllPages View 2`] = `
 
 exports[`snapshotAllPages View 3`] = `
 <View
+  accessibilityLabel="Padding/Margin Example"
+  accessible={true}
   style={
     {
       "borderColor": "#bb0000",
       "borderWidth": 0.5,
     }
   }
-  testID="padding-margin"
+  testID="view-test-padding-margin"
 >
   <View
     style={
@@ -78180,8 +78514,53 @@ exports[`snapshotAllPages View 3`] = `
   </View>
   <View
     style={
+      [
+        {
+          "backgroundColor": "#527FE4",
+          "borderColor": "#000033",
+          "borderWidth": 1,
+        },
+        {
+          "alignSelf": "flex-start",
+          "margin": 5,
+          "padding": 5,
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        {
+          "fontSize": 11,
+        }
+      }
+    >
+      5px margin and padding,
+    </Text>
+    <Text
+      style={
+        {
+          "fontSize": 11,
+        }
+      }
+    >
+      widthAutonomous=true
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 4`] = `
+<View
+  accessibilityLabel="Border Radius Example"
+  accessible={true}
+  testID="view-test-border-radius"
+>
+  <View
+    style={
       {
-        "backgroundColor": "#527FE4",
+        "borderRadius": 5,
+        "borderWidth": 0.5,
         "padding": 5,
       }
     }
@@ -78193,31 +78572,9 @@ exports[`snapshotAllPages View 3`] = `
         }
       }
     >
-      Blue background
+      Too much use of \`borderRadius\` (especially large radii) on anything which is scrolling may result in dropped frames. Use sparingly.
     </Text>
   </View>
-</View>
-`;
-
-exports[`snapshotAllPages View 4`] = `
-<View
-  style={
-    {
-      "borderColor": "#527FE4",
-      "borderWidth": 5,
-      "padding": 10,
-    }
-  }
->
-  <Text
-    style={
-      {
-        "fontSize": 11,
-      }
-    }
-  >
-    5px blue border
-  </Text>
 </View>
 `;
 
@@ -78232,9 +78589,19 @@ exports[`snapshotAllPages View 5`] = `
       "selected": undefined,
     }
   }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   focusable={true}
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
   onKeyDown={[Function]}
   onKeyUp={[Function]}
   onMouseEnter={[Function]}
@@ -78247,66 +78614,70 @@ exports[`snapshotAllPages View 5`] = `
   onStartShouldSetResponder={[Function]}
   testID="border-style-button"
 >
-  <View
-    style={
-      [
-        {
-          "borderWidth": 1,
-          "padding": 5,
-        },
-        {
-          "borderStyle": "dashed",
-        },
-      ]
-    }
-  >
-    <Text
+  <View>
+    <View
       style={
-        {
-          "fontSize": 11,
-        }
+        [
+          {
+            "borderWidth": 1,
+            "padding": 5,
+          },
+          {
+            "borderStyle": "dashed",
+          },
+        ]
       }
     >
-      Dashed border style
-    </Text>
-  </View>
-  <View
-    style={
-      [
-        {
-          "borderRadius": 5,
-          "borderWidth": 1,
-          "marginTop": 5,
-          "padding": 5,
-        },
-        {
-          "borderStyle": "dotted",
-        },
-      ]
-    }
-  >
-    <Text
-      style={
-        {
-          "fontSize": 11,
+      <Text
+        style={
+          {
+            "fontSize": 11,
+          }
         }
+      >
+        Dashed border style
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "marginTop": 5,
+            "padding": 5,
+          },
+          {
+            "borderStyle": "dotted",
+          },
+        ]
       }
     >
-      Dotted border style
-    </Text>
+      <Text
+        style={
+          {
+            "fontSize": 11,
+          }
+        }
+      >
+        Dotted border style
+      </Text>
+    </View>
   </View>
 </View>
 `;
 
 exports[`snapshotAllPages View 6`] = `
 <View
+  accessibilityLabel="Rounded Borders Example"
+  accessible={true}
   style={
     {
       "flexDirection": "row",
       "flexWrap": "wrap",
     }
   }
-  testID="rounded-borders"
+  testID="view-test-rounded-borders"
 >
   <View
     style={
@@ -78407,576 +78778,14 @@ exports[`snapshotAllPages View 6`] = `
 
 exports[`snapshotAllPages View 7`] = `
 <View
+  accessibilityLabel="Rounded Borders Example"
+  accessible={true}
   style={
     {
       "flexDirection": "row",
     }
   }
-  testID="overflow"
->
-  <View
-    style={
-      {
-        "borderWidth": 0.5,
-        "height": 12,
-        "marginBottom": 8,
-        "marginEnd": 16,
-        "width": 95,
-      }
-    }
-  >
-    <View
-      style={
-        [
-          {
-            "bottom": 0,
-            "left": 0,
-            "position": "absolute",
-            "right": 0,
-            "top": 0,
-          },
-        ]
-      }
-    >
-      <Text
-        style={
-          {
-            "height": 20,
-            "width": 200,
-          }
-        }
-      >
-        undefined
-      </Text>
-    </View>
-    <View
-      style={
-        [
-          undefined,
-          {
-            "margin": 5,
-          },
-        ]
-      }
-    >
-      <Text
-        style={
-          {
-            "fontSize": 11,
-          }
-        }
-      >
-        5px margin
-      </Text>
-    </View>
-    <View
-      style={
-        [
-          undefined,
-          {
-            "alignSelf": "flex-start",
-            "margin": 5,
-            "padding": 5,
-          },
-        ]
-      }
-    >
-      <Text
-        style={
-          {
-            "fontSize": 11,
-          }
-        }
-      >
-        5px margin and padding,
-      </Text>
-      <Text
-        style={
-          {
-            "fontSize": 11,
-          }
-        }
-      >
-        widthAutonomous=true
-      </Text>
-    </View>
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages View 8`] = `
-<View
-  testID="opacity"
->
-  <View
-    style={
-      {
-        "opacity": 0,
-      }
-    }
-  >
-    <Text>
-      Opacity 0
-    </Text>
-  </View>
-  <View
-    style={
-      {
-        "opacity": 0.1,
-      }
-    }
-  >
-    <Text>
-      Opacity 0.1
-    </Text>
-  </View>
-  <View
-    style={
-      {
-        "opacity": 0.3,
-      }
-    }
-  >
-    <Text>
-      Opacity 0.3
-    </Text>
-  </View>
-  <View
-    style={
-      {
-        "opacity": 0.5,
-      }
-    }
-  >
-    <Text>
-      Opacity 0.5
-    </Text>
-  </View>
-  <View
-    style={
-      {
-        "opacity": 0.7,
-      }
-    }
-  >
-    <Text>
-      Opacity 0.7
-    </Text>
-  </View>
-  <View
-    style={
-      {
-        "opacity": 0.9,
-      }
-    }
-  >
-    <Text>
-      Opacity 0.9
-    </Text>
-  </View>
-  <View
-    style={
-      {
-        "opacity": 1,
-      }
-    }
-  >
-    <Text>
-      Opacity 1
-    </Text>
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages View 9`] = `
-<View>
-  <View
-    style={
-      {
-        "borderRadius": 5,
-        "borderWidth": 0.5,
-        "padding": 5,
-      }
-    }
-  >
-    <Text
-      style={
-        {
-          "fontSize": 11,
-        }
-      }
-    >
-      Too much use of \`borderRadius\` (especially large radii) on anything which is scrolling may result in dropped frames. Use sparingly.
-    </Text>
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages View 10`] = `
-<View
-  accessibilityState={
-    {
-      "busy": undefined,
-      "checked": undefined,
-      "disabled": undefined,
-      "expanded": undefined,
-      "selected": undefined,
-    }
-  }
-  accessible={true}
-  focusable={true}
-  onClick={[Function]}
-  onKeyDown={[Function]}
-  onKeyUp={[Function]}
-  onMouseEnter={[Function]}
-  onMouseLeave={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  testID="border-style-button"
->
-  <View
-    style={
-      [
-        {
-          "borderWidth": 1,
-          "padding": 5,
-        },
-        {
-          "borderStyle": "dashed",
-        },
-      ]
-    }
-  >
-    <Text
-      style={
-        {
-          "fontSize": 11,
-        }
-      }
-    >
-      Dashed border style
-    </Text>
-  </View>
-  <View
-    style={
-      [
-        {
-          "borderRadius": 5,
-          "borderWidth": 1,
-          "marginTop": 5,
-          "padding": 5,
-        },
-        {
-          "borderStyle": "dotted",
-        },
-      ]
-    }
-  >
-    <Text
-      style={
-        {
-          "fontSize": 11,
-        }
-      }
-    >
-      Dotted border style
-    </Text>
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages View 11`] = `
-<View
-  accessibilityState={
-    {
-      "busy": undefined,
-      "checked": undefined,
-      "disabled": undefined,
-      "expanded": undefined,
-      "selected": undefined,
-    }
-  }
-  accessible={true}
-  focusable={true}
-  onClick={[Function]}
-  onKeyDown={[Function]}
-  onKeyUp={[Function]}
-  onMouseEnter={[Function]}
-  onMouseLeave={[Function]}
-  onResponderGrant={[Function]}
-  onResponderMove={[Function]}
-  onResponderRelease={[Function]}
-  onResponderTerminate={[Function]}
-  onResponderTerminationRequest={[Function]}
-  onStartShouldSetResponder={[Function]}
-  testID="display-none-button"
->
-  <Text
-    style={
-      {
-        "paddingBottom": 10,
-      }
-    }
-  >
-    Press to toggle \`display: none\`
-  </Text>
-  <View
-    style={
-      {
-        "backgroundColor": "red",
-        "display": "none",
-        "height": 50,
-        "width": 50,
-      }
-    }
-  />
-  <View
-    style={
-      {
-        "backgroundColor": "blue",
-        "display": "none",
-        "height": 50,
-        "width": 50,
-      }
-    }
-  />
-  <View
-    style={
-      {
-        "backgroundColor": "yellow",
-        "display": "none",
-        "height": 50,
-        "width": 50,
-      }
-    }
-  >
-    <View
-      style={
-        {
-          "backgroundColor": "salmon",
-          "display": "none",
-          "height": 30,
-          "width": 30,
-        }
-      }
-    />
-  </View>
-  <View
-    style={
-      {
-        "backgroundColor": "magenta",
-        "display": "none",
-        "height": 50,
-        "width": 50,
-      }
-    }
-  />
-</View>
-`;
-
-exports[`snapshotAllPages View 12`] = `
-<View
-  testID="tool-tip"
-  tooltip="Parent View"
->
-  <Text
-    style={
-      {
-        "fontSize": 11,
-      }
-    }
-  >
-    This Parent View has tooltip "Parent View"
-  </Text>
-  <View
-    tooltip="Child View 1"
-  >
-    <Text
-      style={
-        {
-          "fontSize": 11,
-        }
-      }
-    >
-      This view has tooltip "Child View 1"
-    </Text>
-  </View>
-  <View
-    tooltip="Child View 2"
-  >
-    <Text
-      style={
-        {
-          "fontSize": 11,
-        }
-      }
-    >
-      This view has tooltip "Child View 2"
-    </Text>
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages View 13`] = `
-<View>
-  <Text
-    style={
-      {
-        "paddingBottom": 10,
-      }
-    }
-  >
-    View #1, front is visible, back is hidden.
-  </Text>
-  <View
-    style={
-      {
-        "alignItems": "center",
-        "justifyContent": "center",
-      }
-    }
-    testID="backface-visibility"
-  >
-    <View
-      style={
-        {
-          "borderRadius": 25,
-          "borderWidth": 1,
-          "height": 50,
-          "marginRight": 10,
-          "width": 50,
-        }
-      }
-    />
-    <View
-      style={
-        {
-          "alignItems": "center",
-          "backfaceVisibility": "hidden",
-          "backgroundColor": "red",
-          "height": 200,
-          "justifyContent": "center",
-          "position": "absolute",
-          "top": 0,
-          "transform": [
-            {
-              "rotateY": "180deg",
-            },
-          ],
-          "width": 200,
-        }
-      }
-    >
-      <Text>
-        Back (You should not see this)
-      </Text>
-    </View>
-  </View>
-  <Text
-    style={
-      {
-        "paddingVertical": 10,
-      }
-    }
-  >
-    View #2, front is hidden, back is visible.
-  </Text>
-  <View
-    style={
-      {
-        "alignItems": "center",
-        "justifyContent": "center",
-      }
-    }
-    testID="backface-visibility-2"
-  >
-    <View
-      style={
-        {
-          "borderBottomLeftRadius": 50,
-          "borderBottomRightRadius": 25,
-          "borderTopLeftRadius": 5,
-          "borderTopRightRadius": 10,
-          "borderWidth": 1,
-          "height": 50,
-          "marginRight": 10,
-          "width": 50,
-        }
-      }
-    />
-    <View
-      style={
-        {
-          "borderBottomLeftRadius": 50,
-          "borderBottomRightRadius": 25,
-          "borderTopLeftRadius": 5,
-          "borderTopRightRadius": 10,
-          "borderWidth": 10,
-          "height": 50,
-          "marginRight": 10,
-          "width": 50,
-        }
-      }
-    />
-    <View
-      style={
-        {
-          "borderLeftWidth": 6,
-          "borderTopLeftRadius": 20,
-          "borderTopWidth": 6,
-          "height": 50,
-          "width": 50,
-        }
-      }
-    />
-    <View
-      style={
-        {
-          "borderRightWidth": 6,
-          "borderTopRightRadius": 20,
-          "borderTopWidth": 6,
-          "height": 50,
-          "width": 50,
-        }
-      }
-    />
-    <View
-      style={
-        {
-          "borderBottomLeftRadius": 20,
-          "borderBottomWidth": 6,
-          "borderLeftWidth": 6,
-          "height": 50,
-          "width": 50,
-        }
-      }
-    />
-    <View
-      style={
-        {
-          "borderBottomRightRadius": 20,
-          "borderBottomWidth": 6,
-          "borderRightWidth": 6,
-          "height": 50,
-          "width": 50,
-        }
-      }
-    />
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages View 14`] = `
-<View
-  style={
-    {
-      "flexDirection": "row",
-    }
-  }
+  testID="view-test-overflow"
 >
   <View
     style={
@@ -79095,8 +78904,12 @@ exports[`snapshotAllPages View 14`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 15`] = `
-<View>
+exports[`snapshotAllPages View 8`] = `
+<View
+  accessibilityLabel="Opacity Example"
+  accessible={true}
+  testID="view-test-opacity"
+>
   <View
     style={
       {
@@ -79177,7 +78990,7 @@ exports[`snapshotAllPages View 15`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 16`] = `
+exports[`snapshotAllPages View 9`] = `
 <View
   accessibilityState={
     {
@@ -79188,9 +79001,19 @@ exports[`snapshotAllPages View 16`] = `
       "selected": undefined,
     }
   }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   focusable={true}
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
   onKeyDown={[Function]}
   onKeyUp={[Function]}
   onMouseEnter={[Function]}
@@ -79203,127 +79026,129 @@ exports[`snapshotAllPages View 16`] = `
   onStartShouldSetResponder={[Function]}
   testID="offscreen-alpha-compositing-button"
 >
-  <Text
-    style={
-      {
-        "paddingBottom": 10,
-      }
-    }
-  >
-    Blobs
-  </Text>
-  <View
-    needsOffscreenAlphaCompositing={false}
-    style={
-      {
-        "opacity": 1,
-        "paddingBottom": 30,
-      }
-    }
-  >
-    <View
+  <View>
+    <Text
       style={
-        [
-          {
-            "borderRadius": 100,
-            "height": 50,
-            "justifyContent": "space-around",
-            "width": 100,
-          },
-          {
-            "backgroundColor": "#FF6F59",
-            "marginLeft": 0,
-            "marginTop": 0,
-          },
-        ]
+        {
+          "paddingBottom": 10,
+        }
       }
-    />
+    >
+      Blobs
+    </Text>
     <View
+      needsOffscreenAlphaCompositing={false}
       style={
-        [
-          {
-            "borderRadius": 100,
-            "height": 50,
-            "justifyContent": "space-around",
-            "width": 100,
-          },
-          {
-            "backgroundColor": "#F7CB15",
-            "marginLeft": 50,
-            "marginTop": -50,
-          },
-        ]
+        {
+          "opacity": 1,
+          "paddingBottom": 30,
+        }
       }
-    />
-  </View>
-  <Text
-    style={
-      {
-        "paddingBottom": 10,
+    >
+      <View
+        style={
+          [
+            {
+              "borderRadius": 100,
+              "height": 50,
+              "justifyContent": "space-around",
+              "width": 100,
+            },
+            {
+              "backgroundColor": "#FF6F59",
+              "marginLeft": 0,
+              "marginTop": 0,
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "borderRadius": 100,
+              "height": 50,
+              "justifyContent": "space-around",
+              "width": 100,
+            },
+            {
+              "backgroundColor": "#F7CB15",
+              "marginLeft": 50,
+              "marginTop": -50,
+            },
+          ]
+        }
+      />
+    </View>
+    <Text
+      style={
+        {
+          "paddingBottom": 10,
+        }
       }
-    }
-  >
-    Same blobs, but their shared container have 0.5 opacity
-  </Text>
-  <Text
-    style={
-      {
-        "paddingBottom": 10,
+    >
+      Same blobs, but their shared container have 0.5 opacity
+    </Text>
+    <Text
+      style={
+        {
+          "paddingBottom": 10,
+        }
       }
-    }
-  >
-    Tap to 
-    deactivate
-     
-    needsOffscreenAlphaCompositing
-  </Text>
-  <View
-    needsOffscreenAlphaCompositing={false}
-    style={
-      {
-        "opacity": 0.8,
-      }
-    }
-  >
+    >
+      Tap to 
+      deactivate
+       
+      needsOffscreenAlphaCompositing
+    </Text>
     <View
+      needsOffscreenAlphaCompositing={false}
       style={
-        [
-          {
-            "borderRadius": 100,
-            "height": 50,
-            "justifyContent": "space-around",
-            "width": 100,
-          },
-          {
-            "backgroundColor": "#FF6F59",
-            "marginLeft": 0,
-            "marginTop": 0,
-          },
-        ]
+        {
+          "opacity": 0.8,
+        }
       }
-    />
-    <View
-      style={
-        [
-          {
-            "borderRadius": 100,
-            "height": 50,
-            "justifyContent": "space-around",
-            "width": 100,
-          },
-          {
-            "backgroundColor": "#F7CB15",
-            "marginLeft": 50,
-            "marginTop": -50,
-          },
-        ]
-      }
-    />
+    >
+      <View
+        style={
+          [
+            {
+              "borderRadius": 100,
+              "height": 50,
+              "justifyContent": "space-around",
+              "width": 100,
+            },
+            {
+              "backgroundColor": "#FF6F59",
+              "marginLeft": 0,
+              "marginTop": 0,
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "borderRadius": 100,
+              "height": 50,
+              "justifyContent": "space-around",
+              "width": 100,
+            },
+            {
+              "backgroundColor": "#F7CB15",
+              "marginLeft": 50,
+              "marginTop": -50,
+            },
+          ]
+        }
+      />
+    </View>
   </View>
 </View>
 `;
 
-exports[`snapshotAllPages View 17`] = `
+exports[`snapshotAllPages View 10`] = `
 <View
   accessibilityState={
     {
@@ -79334,9 +79159,19 @@ exports[`snapshotAllPages View 17`] = `
       "selected": undefined,
     }
   }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   focusable={true}
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
   onKeyDown={[Function]}
   onKeyUp={[Function]}
   onMouseEnter={[Function]}
@@ -79349,111 +79184,113 @@ exports[`snapshotAllPages View 17`] = `
   onStartShouldSetResponder={[Function]}
   testID="z-index-button"
 >
-  <Text
-    style={
-      {
-        "paddingBottom": 10,
+  <View>
+    <Text
+      style={
+        {
+          "paddingBottom": 10,
+        }
       }
-    }
-  >
-    Tap to flip sorting order
-  </Text>
-  <View
-    style={
-      [
-        {
-          "height": 50,
-          "justifyContent": "space-around",
-          "marginTop": -10,
-          "position": "relative",
-          "width": 100,
-        },
-        {
-          "backgroundColor": "#E57373",
-          "marginTop": 0,
-          "zIndex": 2,
-        },
-      ]
-    }
-  >
-    <Text>
-      ZIndex 
-      2
+    >
+      Tap to flip sorting order
     </Text>
-  </View>
-  <View
-    style={
-      [
-        {
-          "height": 50,
-          "justifyContent": "space-around",
-          "marginTop": -10,
-          "position": "relative",
-          "width": 100,
-        },
-        {
-          "backgroundColor": "#FFF176",
-          "marginLeft": 50,
-          "zIndex": 1,
-        },
-      ]
-    }
-  >
-    <Text>
-      ZIndex 
-      1
-    </Text>
-  </View>
-  <View
-    style={
-      [
-        {
-          "height": 50,
-          "justifyContent": "space-around",
-          "marginTop": -10,
-          "position": "relative",
-          "width": 100,
-        },
-        {
-          "backgroundColor": "#81C784",
-          "marginLeft": 100,
-          "zIndex": 0,
-        },
-      ]
-    }
-  >
-    <Text>
-      ZIndex 
-      0
-    </Text>
-  </View>
-  <View
-    style={
-      [
-        {
-          "height": 50,
-          "justifyContent": "space-around",
-          "marginTop": -10,
-          "position": "relative",
-          "width": 100,
-        },
-        {
-          "backgroundColor": "#64B5F6",
-          "marginLeft": 150,
-          "zIndex": -1,
-        },
-      ]
-    }
-  >
-    <Text>
-      ZIndex 
-      -1
-    </Text>
+    <View
+      style={
+        [
+          {
+            "height": 50,
+            "justifyContent": "space-around",
+            "marginTop": -10,
+            "position": "relative",
+            "width": 100,
+          },
+          {
+            "backgroundColor": "#E57373",
+            "marginTop": 0,
+            "zIndex": 2,
+          },
+        ]
+      }
+    >
+      <Text>
+        ZIndex 
+        2
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "height": 50,
+            "justifyContent": "space-around",
+            "marginTop": -10,
+            "position": "relative",
+            "width": 100,
+          },
+          {
+            "backgroundColor": "#FFF176",
+            "marginLeft": 50,
+            "zIndex": 1,
+          },
+        ]
+      }
+    >
+      <Text>
+        ZIndex 
+        1
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "height": 50,
+            "justifyContent": "space-around",
+            "marginTop": -10,
+            "position": "relative",
+            "width": 100,
+          },
+          {
+            "backgroundColor": "#81C784",
+            "marginLeft": 100,
+            "zIndex": 0,
+          },
+        ]
+      }
+    >
+      <Text>
+        ZIndex 
+        0
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "height": 50,
+            "justifyContent": "space-around",
+            "marginTop": -10,
+            "position": "relative",
+            "width": 100,
+          },
+          {
+            "backgroundColor": "#64B5F6",
+            "marginLeft": 150,
+            "zIndex": -1,
+          },
+        ]
+      }
+    >
+      <Text>
+        ZIndex 
+        -1
+      </Text>
+    </View>
   </View>
 </View>
 `;
 
-exports[`snapshotAllPages View 18`] = `
+exports[`snapshotAllPages View 11`] = `
 <View
   accessibilityState={
     {
@@ -79464,9 +79301,19 @@ exports[`snapshotAllPages View 18`] = `
       "selected": undefined,
     }
   }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   focusable={true}
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
   onKeyDown={[Function]}
   onKeyUp={[Function]}
   onMouseEnter={[Function]}
@@ -79479,71 +79326,77 @@ exports[`snapshotAllPages View 18`] = `
   onStartShouldSetResponder={[Function]}
   testID="display-none-button"
 >
-  <Text
-    style={
-      {
-        "paddingBottom": 10,
+  <View>
+    <Text
+      style={
+        {
+          "paddingBottom": 10,
+        }
       }
-    }
-  >
-    Press to toggle \`display: none\`
-  </Text>
-  <View
-    style={
-      {
-        "backgroundColor": "red",
-        "display": "none",
-        "height": 50,
-        "width": 50,
-      }
-    }
-  />
-  <View
-    style={
-      {
-        "backgroundColor": "blue",
-        "display": "none",
-        "height": 50,
-        "width": 50,
-      }
-    }
-  />
-  <View
-    style={
-      {
-        "backgroundColor": "yellow",
-        "display": "none",
-        "height": 50,
-        "width": 50,
-      }
-    }
-  >
+    >
+      Press to toggle \`display: none\`
+    </Text>
     <View
       style={
         {
-          "backgroundColor": "salmon",
+          "backgroundColor": "red",
           "display": "none",
-          "height": 30,
-          "width": 30,
+          "height": 50,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "backgroundColor": "blue",
+          "display": "none",
+          "height": 50,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "backgroundColor": "yellow",
+          "display": "none",
+          "height": 50,
+          "width": 50,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "salmon",
+            "display": "none",
+            "height": 30,
+            "width": 30,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        {
+          "backgroundColor": "magenta",
+          "display": "none",
+          "height": 50,
+          "width": 50,
         }
       }
     />
   </View>
-  <View
-    style={
-      {
-        "backgroundColor": "magenta",
-        "display": "none",
-        "height": 50,
-        "width": 50,
-      }
-    }
-  />
 </View>
 `;
 
-exports[`snapshotAllPages View 19`] = `
-<View>
+exports[`snapshotAllPages View 12`] = `
+<View
+  accessibilityLabel="Backface Visibility Example"
+  accessible={true}
+  testID="view-test-backface-visibility"
+>
   <Text
     style={
       {
@@ -79567,9 +79420,9 @@ exports[`snapshotAllPages View 19`] = `
           "alignItems": "center",
           "backfaceVisibility": "hidden",
           "backgroundColor": "blue",
-          "height": 200,
+          "height": 150,
           "justifyContent": "center",
-          "width": 200,
+          "width": 150,
         }
       }
     >
@@ -79583,7 +79436,7 @@ exports[`snapshotAllPages View 19`] = `
           "alignItems": "center",
           "backfaceVisibility": "hidden",
           "backgroundColor": "red",
-          "height": 200,
+          "height": 150,
           "justifyContent": "center",
           "position": "absolute",
           "top": 0,
@@ -79592,7 +79445,7 @@ exports[`snapshotAllPages View 19`] = `
               "rotateY": "180deg",
             },
           ],
-          "width": 200,
+          "width": 150,
         }
       }
     >
@@ -79624,9 +79477,9 @@ exports[`snapshotAllPages View 19`] = `
           "alignItems": "center",
           "backfaceVisibility": "hidden",
           "backgroundColor": "blue",
-          "height": 200,
+          "height": 150,
           "justifyContent": "center",
-          "width": 200,
+          "width": 150,
         }
       }
     >
@@ -79640,11 +79493,11 @@ exports[`snapshotAllPages View 19`] = `
           "alignItems": "center",
           "backfaceVisibility": "hidden",
           "backgroundColor": "red",
-          "height": 200,
+          "height": 150,
           "justifyContent": "center",
           "position": "absolute",
           "top": 0,
-          "width": 200,
+          "width": 150,
         }
       }
     >
@@ -79656,8 +79509,10 @@ exports[`snapshotAllPages View 19`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 20`] = `
+exports[`snapshotAllPages View 13`] = `
 <View
+  accessibilityLabel="Aria-Label Example"
+  accessible={true}
   aria-label="Blue background View with Text"
   style={
     {
@@ -79665,6 +79520,7 @@ exports[`snapshotAllPages View 20`] = `
       "padding": 5,
     }
   }
+  testID="view-test-aria-label"
 >
   <Text
     style={
@@ -79678,8 +79534,10 @@ exports[`snapshotAllPages View 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 21`] = `
+exports[`snapshotAllPages View 14`] = `
 <View
+  accessibilityLabel="Flex Gap Example"
+  accessible={true}
   style={
     {
       "borderWidth": 1,
@@ -79689,6 +79547,7 @@ exports[`snapshotAllPages View 21`] = `
       "rowGap": 20,
     }
   }
+  testID="view-test-flexgap"
 >
   <View
     style={
@@ -79792,13 +79651,15 @@ exports[`snapshotAllPages View 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 22`] = `
+exports[`snapshotAllPages View 15`] = `
 <View
+  accessible={true}
   style={
     {
       "rowGap": 10,
     }
   }
+  testID="view-test-insets"
 >
   <View
     style={
@@ -80013,147 +79874,16 @@ exports[`snapshotAllPages View 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 23`] = `
+exports[`snapshotAllPages View 16`] = `
 <View
-  accessibilityActions={
-    [
-      {
-        "label": "cut",
-        "name": "cut",
-      },
-      {
-        "label": "copy",
-        "name": "copy",
-      },
-      {
-        "label": "paste",
-        "name": "paste",
-      },
-    ]
-  }
-  accessibilityHint="Accessibility Hint"
-  accessibilityLabel="A View with accessibility values"
-  accessibilityRole="none"
-  accessibilityValue={0}
+  accessibilityLabel="Logical Border Color Example"
   accessible={true}
-  focusable={true}
-  onAccessibilityAction={[Function]}
-  onAccessibilityTap={[Function]}
-  testID="accessibility"
->
-  <Text>
-    A View with accessibility values.
-  </Text>
-  <Text>
-    Current Number of Accessibility Taps: 
-    0
-  </Text>
-  <View
-    importantForAccessibility="no-hide-descendants"
-  >
-    <Text>
-      This element should be hidden from accessibility.
-    </Text>
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages View 24`] = `
-<View
-  style={
-    {
-      "backgroundColor": "grey",
-      "borderBottomEndRadius": 1,
-      "borderBottomStartRadius": 4,
-      "borderBottomWidth": 5,
-      "borderColor": "orange",
-      "borderLeftWidth": 10,
-      "borderRightWidth": 15,
-      "borderTopEndRadius": 2,
-      "borderTopStartRadius": 3,
-      "borderTopWidth": 20,
-      "height": 50,
-      "width": 50,
-    }
-  }
-  testID="advanced-border"
-/>
-`;
-
-exports[`snapshotAllPages View 25`] = `
-<View
-  hitSlop={
-    {
-      "bottom": 100,
-      "left": 0,
-      "right": 100,
-      "top": 100,
-    }
-  }
-  onTouchEnd={[Function]}
-  onTouchStart={[Function]}
-  style={
-    {
-      "backgroundColor": "grey",
-      "height": 200,
-      "width": 200,
-    }
-  }
-  testID="hitslop"
-/>
-`;
-
-exports[`snapshotAllPages View 26`] = `
-<View
   style={
     {
       "rowGap": 10,
     }
   }
->
-  <View
-    style={
-      {
-        "borderWidth": 1,
-        "height": 50,
-        "position": "relative",
-      }
-    }
-  >
-    <View
-      style={
-        {
-          "borderBlockColor": "orange",
-          "borderWidth": 5,
-          "bottom": 10,
-          "left": 10,
-          "position": "absolute",
-          "right": 10,
-          "top": 10,
-        }
-      }
-    >
-      <Text
-        style={
-          {
-            "fontSize": 11,
-          }
-        }
-      >
-        borderBlockColor orange
-      </Text>
-    </View>
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages View 27`] = `
-<View
-  style={
-    {
-      "rowGap": 10,
-    }
-  }
+  testID="view-test-logical-border-color"
 >
   <View
     style={
@@ -80234,14 +79964,17 @@ exports[`snapshotAllPages View 27`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 28`] = `
+exports[`snapshotAllPages View 17`] = `
 <View
+  accessibilityLabel="Layout Conformance Example"
+  accessible={true}
   style={
     {
       "flexDirection": "row",
       "gap": 10,
     }
   }
+  testID="view-test-layout-conformance"
 >
   <View>
     <Text>
@@ -80253,8 +79986,8 @@ exports[`snapshotAllPages View 28`] = `
           "alignItems": "center",
           "backgroundColor": "blue",
           "flexDirection": "row",
-          "height": 100,
-          "width": 100,
+          "height": 60,
+          "width": 60,
         }
       }
     >
@@ -80270,7 +80003,7 @@ exports[`snapshotAllPages View 28`] = `
             {
               "backgroundColor": "red",
               "flexGrow": 1,
-              "height": 50,
+              "height": 30,
             }
           }
         />
@@ -80289,8 +80022,8 @@ exports[`snapshotAllPages View 28`] = `
           "alignItems": "center",
           "backgroundColor": "blue",
           "flexDirection": "row",
-          "height": 100,
-          "width": 100,
+          "height": 60,
+          "width": 60,
         }
       }
     >
@@ -80306,7 +80039,7 @@ exports[`snapshotAllPages View 28`] = `
             {
               "backgroundColor": "red",
               "flexGrow": 1,
-              "height": 50,
+              "height": 30,
             }
           }
         />
@@ -80325,8 +80058,8 @@ exports[`snapshotAllPages View 28`] = `
           "alignItems": "center",
           "backgroundColor": "blue",
           "flexDirection": "row",
-          "height": 100,
-          "width": 100,
+          "height": 60,
+          "width": 60,
         }
       }
     >
@@ -80342,7 +80075,7 @@ exports[`snapshotAllPages View 28`] = `
             {
               "backgroundColor": "red",
               "flexGrow": 1,
-              "height": 50,
+              "height": 30,
             }
           }
         />
@@ -80352,14 +80085,152 @@ exports[`snapshotAllPages View 28`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 29`] = `
+exports[`snapshotAllPages View 18`] = `
 <View
+  accessibilityLabel="NativeID Example"
+  accessible={true}
   nativeID="native-id-view"
   testID="nativeid"
 >
   <Text>
     A View with a nativeID "native-id-view"
   </Text>
+</View>
+`;
+
+exports[`snapshotAllPages View 19`] = `
+<View
+  accessibilityActions={
+    [
+      {
+        "label": "cut",
+        "name": "cut",
+      },
+      {
+        "label": "copy",
+        "name": "copy",
+      },
+      {
+        "label": "paste",
+        "name": "paste",
+      },
+    ]
+  }
+  accessibilityHint="Accessibility Hint"
+  accessibilityLabel="A View with accessibility values"
+  accessibilityRole="button"
+  accessibilityValue={0}
+  accessible={true}
+  focusable={true}
+  onAccessibilityAction={[Function]}
+  onAccessibilityTap={[Function]}
+  testID="accessibility"
+>
+  <Text>
+    A View with accessibility values.
+  </Text>
+  <Text>
+    Current Number of Accessibility Taps: 
+    0
+  </Text>
+  <View
+    importantForAccessibility="no-hide-descendants"
+  >
+    <Text>
+      This element should be hidden from accessibility.
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 20`] = `
+<View
+  accessibilityLabel="Shadow Example"
+  accessible={true}
+  style={
+    {
+      "height": 50,
+      "shadowColor": "pink",
+      "shadowOffset": {
+        "height": 10,
+        "width": 10,
+      },
+      "shadowOpacity": 80,
+      "shadowRadius": 10,
+      "width": 50,
+    }
+  }
+  testID="shadow"
+/>
+`;
+
+exports[`snapshotAllPages View 21`] = `
+<View
+  accessibilityLabel="HitSlop Example"
+  accessible={true}
+  hitSlop={
+    {
+      "bottom": 100,
+      "left": 0,
+      "right": 100,
+      "top": 100,
+    }
+  }
+  onTouchEnd={[Function]}
+  onTouchStart={[Function]}
+  style={
+    {
+      "backgroundColor": "grey",
+      "height": 200,
+      "width": 200,
+    }
+  }
+  testID="hitslop"
+/>
+`;
+
+exports[`snapshotAllPages View 22`] = `
+<View
+  accessibilityLabel="Tooltip Example"
+  accessible={true}
+  testID="tool-tip"
+  tooltip="Parent View"
+>
+  <Text
+    style={
+      {
+        "fontSize": 11,
+      }
+    }
+  >
+    This Parent View has tooltip "Parent View"
+  </Text>
+  <View
+    tooltip="Child View 1"
+  >
+    <Text
+      style={
+        {
+          "fontSize": 11,
+        }
+      }
+    >
+      This view has tooltip "Child View 1"
+    </Text>
+  </View>
+  <View
+    tooltip="Child View 2"
+  >
+    <Text
+      style={
+        {
+          "fontSize": 11,
+        }
+      }
+    >
+      This view has tooltip "Child View 2"
+    </Text>
+  </View>
 </View>
 `;
 

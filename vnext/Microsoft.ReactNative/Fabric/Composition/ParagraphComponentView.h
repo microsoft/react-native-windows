@@ -17,8 +17,8 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, CompositionBaseComponentView> {
-  using Super = ParagraphComponentViewT<ParagraphComponentView, CompositionBaseComponentView>;
+struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, ComponentView> {
+  using Super = ParagraphComponentViewT<ParagraphComponentView, ComponentView>;
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
@@ -26,10 +26,10 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void mountChildComponentView(
-      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
   void unmountChildComponentView(
-      winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
@@ -39,8 +39,7 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
-  void finalizeUpdates(
-      winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask updateMask) noexcept override;
+  void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::SharedViewProps viewProps() noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)

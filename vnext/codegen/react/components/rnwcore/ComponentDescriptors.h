@@ -10,20 +10,18 @@
 
 #pragma once
 
-#include <react/renderer/components/rnwcore/ShadowNodes.h>
+#include <ShadowNodes.h>
 #include <react/renderer/core/ConcreteComponentDescriptor.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
+using DebuggingOverlayComponentDescriptor = ConcreteComponentDescriptor<DebuggingOverlayShadowNode>;
 using ActivityIndicatorViewComponentDescriptor = ConcreteComponentDescriptor<ActivityIndicatorViewShadowNode>;
 using AndroidDrawerLayoutComponentDescriptor = ConcreteComponentDescriptor<AndroidDrawerLayoutShadowNode>;
 using AndroidSwipeRefreshLayoutComponentDescriptor = ConcreteComponentDescriptor<AndroidSwipeRefreshLayoutShadowNode>;
 using PullToRefreshViewComponentDescriptor = ConcreteComponentDescriptor<PullToRefreshViewShadowNode>;
 using AndroidHorizontalScrollContentViewComponentDescriptor = ConcreteComponentDescriptor<AndroidHorizontalScrollContentViewShadowNode>;
 using SwitchComponentDescriptor = ConcreteComponentDescriptor<SwitchShadowNode>;
-using TraceUpdateOverlayComponentDescriptor = ConcreteComponentDescriptor<TraceUpdateOverlayShadowNode>;
 using UnimplementedNativeViewComponentDescriptor = ConcreteComponentDescriptor<UnimplementedNativeViewShadowNode>;
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

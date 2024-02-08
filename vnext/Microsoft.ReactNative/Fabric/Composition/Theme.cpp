@@ -282,6 +282,20 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
           {"CircleElevationBorder", "ControlStrokeColorDefault"}, // TODO is actually a linear brush
           {"ProgressRingForegroundTheme", "AccentFillColorDefault"},
           {"TextControlForeground", "TextFillColorPrimary"},
+          {"ScrollBarButtonBackground", "SubtleFillColorTransparent"},
+          {"ScrollBarButtonBackgroundPointerOver", "SubtleFillColorSecondary"},
+          {"ScrollBarButtonBackgroundPressed", "ControlStrongFillColorDefault"},
+          {"ScrollBarButtonBackgroundDisabled", "SubtleFillColorTransparent"},
+          {"ScrollBarButtonArrowForeground", "ControlStrongFillColorDefault"},
+          {"ScrollBarButtonArrowForegroundPointerOver", "TextFillColorSecondary"},
+          {"ScrollBarButtonArrowForegroundPressed", "TextFillColorSecondary"},
+          {"ScrollBarButtonArrowForegroundDisabled", "ControlStrongFillColorDisabled"},
+          {"ScrollBarThumbFill", "ControlStrongFillColorDefault"},
+          {"ScrollBarThumbFillPointerOver", "ControlStrongFillColorDefault"},
+          {"ScrollBarThumbFillPressed", "ControlStrongFillColorDefault"},
+          {"ScrollBarThumbFillDisabled", "ControlStrongFillColorDisabled"},
+          {"ScrollBarTrackFill",
+           "AcrylicInAppFillColorDefault"}, // TODO make AcrylicInAppFillColorDefault a real acrylic brush
       };
 
   static std::unordered_map<std::string, winrt::Windows::UI::Color, std::hash<std::string_view>, std::equal_to<>>
@@ -307,6 +321,11 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
           {"TextOnAccentFillColorPrimary", {0xFF, 0xFF, 0xFF, 0xFF}},
           {"TextOnAccentFillColorDisabled", {0xFF, 0xFF, 0xFF, 0xFF}},
           {"ControlAltFillColorSecondary", {0x06, 0x00, 0x00, 0x00}},
+          {"SubtleFillColorTransparent", {0x00, 0x00, 0x00, 0x00}},
+          {"SubtleFillColorSecondary", {0x09, 0x00, 0x00, 0x00}},
+          {"ControlStrongFillColorDefault", {0x72, 0x00, 0x00, 0x00}},
+          {"ControlStrongFillColorDisabled", {0x51, 0x00, 0x00, 0x00}},
+          {"AcrylicInAppFillColorDefault", {0x9E, 0xFF, 0xFF, 0xFF}},
       };
 
   static std::unordered_map<std::string, winrt::Windows::UI::Color, std::hash<std::string_view>, std::equal_to<>>
@@ -332,6 +351,11 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
           {"TextOnAccentFillColorPrimary", {0xFF, 0x00, 0x00, 0x00}},
           {"TextOnAccentFillColorDisabled", {0x87, 0xFF, 0xFF, 0xFF}},
           {"ControlAltFillColorSecondary", {0x19, 0x00, 0x00, 0x00}},
+          {"SubtleFillColorTransparent", {0x00, 0x00, 0x00, 0x00}},
+          {"SubtleFillColorSecondary", {0x0F, 0xFF, 0xFF, 0xFF}},
+          {"ControlStrongFillColorDefault", {0x8B, 0xFF, 0xFF, 0xFF}},
+          {"ControlStrongFillColorDisabled", {0x3F, 0xFF, 0xFF, 0xFF}},
+          {"AcrylicInAppFillColorDefault", {0x9E, 0x00, 0x00, 0x00}},
       };
 
   static std::unordered_map<
@@ -346,6 +370,8 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
           {"ControlFillColorTertiary", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
           {"ControlFillColorDisabled", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
           {"ControlFillColorTransparent",
+           {(winrt::Windows::UI::ViewManagement::UIElementType)-1, {0x00, 0xFF, 0xFF, 0xFF}}},
+          {"SubtleFillColorTransparent",
            {(winrt::Windows::UI::ViewManagement::UIElementType)-1, {0x00, 0xFF, 0xFF, 0xFF}}},
           {"ControlStrokeColorDefault", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonText, {}}},
           {"ControlStrokeColorSecondary", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonText, {}}},
@@ -362,6 +388,9 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
           {"TextOnAccentFillColorPrimary", {winrt::Windows::UI::ViewManagement::UIElementType::WindowText, {}}},
           {"TextOnAccentFillColorDisabled", {winrt::Windows::UI::ViewManagement::UIElementType::GrayText, {}}},
           {"ControlAltFillColorSecondary", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
+          {"SubtleFillColorSecondary", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
+          {"ControlStrongFillColorDefault", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
+          {"ControlStrongFillColorDisabled", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
       };
 
   auto alias = s_xamlAliasedColors.find(platformColor);

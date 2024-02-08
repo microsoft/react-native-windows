@@ -294,7 +294,7 @@ module.exports = {
       'pushNotificationIOS-moved',
       'PushNotificationIOS has been extracted from react-native core and will be removed in a future release. ' +
         "It can now be installed and imported from '@react-native-community/push-notification-ios' instead of 'react-native'. " +
-        'See https://github.com/react-native-push-notification-ios/push-notification-ios',
+        'See https://github.com/react-native-push-notification/ios',
     );
     return require('./Libraries/PushNotificationIOS/PushNotificationIOS');
   },
@@ -385,47 +385,6 @@ module.exports = {
         'LogBox is enabled by default so there is no need to call unstable_enableLogBox() anymore. This is a no op and will be removed in the next version.',
       );
   },
-  // Deprecated Prop Types
-  get ColorPropType(): $FlowFixMe {
-    console.error(
-      'ColorPropType will be removed from React Native, along with all ' +
-        'other PropTypes. We recommend that you migrate away from PropTypes ' +
-        'and switch to a type system like TypeScript. If you need to ' +
-        'continue using ColorPropType, migrate to the ' +
-        "'deprecated-react-native-prop-types' package.",
-    );
-    return require('deprecated-react-native-prop-types').ColorPropType;
-  },
-  get EdgeInsetsPropType(): $FlowFixMe {
-    console.error(
-      'EdgeInsetsPropType will be removed from React Native, along with all ' +
-        'other PropTypes. We recommend that you migrate away from PropTypes ' +
-        'and switch to a type system like TypeScript. If you need to ' +
-        'continue using EdgeInsetsPropType, migrate to the ' +
-        "'deprecated-react-native-prop-types' package.",
-    );
-    return require('deprecated-react-native-prop-types').EdgeInsetsPropType;
-  },
-  get PointPropType(): $FlowFixMe {
-    console.error(
-      'PointPropType will be removed from React Native, along with all ' +
-        'other PropTypes. We recommend that you migrate away from PropTypes ' +
-        'and switch to a type system like TypeScript. If you need to ' +
-        'continue using PointPropType, migrate to the ' +
-        "'deprecated-react-native-prop-types' package.",
-    );
-    return require('deprecated-react-native-prop-types').PointPropType;
-  },
-  get ViewPropTypes(): $FlowFixMe {
-    console.error(
-      'ViewPropTypes will be removed from React Native, along with all ' +
-        'other PropTypes. We recommend that you migrate away from PropTypes ' +
-        'and switch to a type system like TypeScript. If you need to ' +
-        'continue using ViewPropTypes, migrate to the ' +
-        "'deprecated-react-native-prop-types' package.",
-    );
-    return require('deprecated-react-native-prop-types').ViewPropTypes;
-  },
   // Win32 Types (Typescript components exported as flow any)
   get ColorGradientWin32(): ColorGradientWin32 {
     return require('./Libraries/StyleSheet/PlatformColorValueTypesWin32')
@@ -467,7 +426,8 @@ if (__DEV__) {
       invariant(
         false,
         'ART has been removed from React Native. ' +
-          "It can now be installed and imported from '@react-native-community/art' instead of 'react-native'. " +
+          "Please upgrade to use either 'react-native-svg' or a similar package. " +
+          "If you cannot upgrade to a different library, please install the deprecated '@react-native-community/art' package. " +
           'See https://github.com/react-native-art/art',
       );
     },
@@ -547,7 +507,7 @@ if (__DEV__) {
       invariant(
         false,
         'CameraRoll has been removed from React Native. ' +
-          "It can now be installed and imported from '@react-native-community/cameraroll' instead of 'react-native'. " +
+          "It can now be installed and imported from '@react-native-camera-roll/camera-roll' instead of 'react-native'. " +
           'See https://github.com/react-native-cameraroll/react-native-cameraroll',
       );
     },
@@ -660,7 +620,7 @@ if (__DEV__) {
       invariant(
         false,
         'SegmentedControlIOS has been removed from React Native. ' +
-          "It can now be installed and imported from '@react-native-community/segmented-checkbox' instead of 'react-native'." +
+          "It can now be installed and imported from '@react-native-segmented-control/segmented-control' instead of 'react-native'." +
           'See https://github.com/react-native-segmented-control/segmented-control',
       );
     },
@@ -738,7 +698,7 @@ if (__DEV__) {
       invariant(
         false,
         'MaskedViewIOS has been removed from React Native. ' +
-          "It can now be installed and imported from '@react-native-community/react-native-masked-view' instead of 'react-native'. " +
+          "It can now be installed and imported from '@react-native-masked-view/masked-view' instead of 'react-native'. " +
           'See https://github.com/react-native-masked-view/masked-view',
       );
     },
@@ -768,7 +728,7 @@ if (__DEV__) {
       invariant(
         false,
         'ImagePickerIOS has been removed from React Native. ' +
-          "Please upgrade to use either '@react-native-community/react-native-image-picker' or 'expo-image-picker'. " +
+          "Please upgrade to use either 'react-native-image-picker' or 'expo-image-picker'. " +
           "If you cannot upgrade to a different library, please install the deprecated '@react-native-community/image-picker-ios' package. " +
           'See https://github.com/rnc-archive/react-native-image-picker-ios',
       );

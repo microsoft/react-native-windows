@@ -5306,6 +5306,578 @@ exports[`Home UIA Tree Dump Display:none Style 1`] = `
 }
 `;
 
+exports[`Home UIA Tree Dump Fabric Native Component 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "Fabric Native Component",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Fabric Native Component",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Sample Fabric Native Component that sizes based on max desired size of native XAML contained within",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "UI",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "iOS",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Android",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "Fabric Native Component Sample Fabric Native Component that sizes based on max desired size of native XAML contained within",
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              225,
+              28,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          15,
+          12,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          225,
+          28,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              938,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          15,
+          43,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          938,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              65,
+              19,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          15,
+          69,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          65,
+          19,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              22,
+              19,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          853,
+          69,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          22,
+          19,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              52,
+              19,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          901,
+          69,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          52,
+          19,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "Fabric Native Component",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      968,
+      99,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Home UIA Tree Dump Fabric Native Component Yoga 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "Fabric Native Component Yoga",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Fabric Native Component Yoga",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Sample Fabric Native Component that places native XAML inside a container sized by yoga",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "UI",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "iOS",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Android",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "Fabric Native Component Yoga Sample Fabric Native Component that places native XAML inside a container sized by yoga",
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              273,
+              28,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          15,
+          12,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          273,
+          28,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              938,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          15,
+          43,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          938,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              65,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          15,
+          69,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          65,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              22,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          853,
+          69,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          22,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              52,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          901,
+          69,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          52,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "Fabric Native Component Yoga",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      968,
+      99,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
 exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
 {
   "Automation Tree": {
@@ -7669,7 +8241,7 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
             "Opacity": 1,
             "Size": [
               254,
-              27,
+              28,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -7695,7 +8267,7 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
         "Opacity": 1,
         "Size": [
           254,
-          27,
+          28,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -7751,7 +8323,7 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -7777,7 +8349,7 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -7792,7 +8364,7 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -7818,7 +8390,7 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -7833,7 +8405,7 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -7859,7 +8431,7 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -7873,7 +8445,7 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
     "Opacity": 1,
     "Size": [
       968,
-      100,
+      99,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -8813,7 +9385,7 @@ exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
             "Opacity": 1,
             "Size": [
               203,
-              28,
+              27,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -8839,6 +9411,292 @@ exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
         "Opacity": 1,
         "Size": [
           203,
+          27,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              938,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          15,
+          43,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          938,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              65,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          15,
+          69,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          65,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              22,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          853,
+          69,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          22,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              52,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          901,
+          69,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          52,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "LegacyControlStyleTest",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      968,
+      99,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Home UIA Tree Dump LegacyImageTest 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "LegacyImageTest",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "LegacyImageTest",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Legacy e2e test for Image",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Other",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "iOS",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Android",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "LegacyImageTest Legacy e2e test for Image",
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              150,
+              28,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          15,
+          12,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          150,
           28,
         ],
         "Visual Type": "SpriteVisual",
@@ -9008,292 +9866,6 @@ exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
         "Visual Type": "SpriteVisual",
       },
     ],
-    "Comment": "LegacyControlStyleTest",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      968,
-      99,
-    ],
-    "Visual Type": "SpriteVisual",
-  },
-}
-`;
-
-exports[`Home UIA Tree Dump LegacyImageTest 1`] = `
-{
-  "Automation Tree": {
-    "AutomationId": "LegacyImageTest",
-    "Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
-        "LocalizedControlType": "text",
-        "Name": "LegacyImageTest",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
-        "LocalizedControlType": "text",
-        "Name": "Legacy e2e test for Image",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
-        "LocalizedControlType": "text",
-        "Name": "Other",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
-        "LocalizedControlType": "text",
-        "Name": "iOS",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
-        "LocalizedControlType": "text",
-        "Name": "Android",
-      },
-    ],
-    "ControlType": 50026,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "LegacyImageTest Legacy e2e test for Image",
-  },
-  "Visual Tree": {
-    "Brush": {
-      "Brush Type": "ColorBrush",
-      "Color": "rgba(255, 255, 255, 255)",
-    },
-    "Children": [
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              150,
-              27,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          15,
-          12,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          150,
-          27,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              938,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          15,
-          43,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          938,
-          20,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              65,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          15,
-          69,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          65,
-          20,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              22,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          853,
-          69,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          22,
-          20,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              52,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          901,
-          69,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          52,
-          20,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-    ],
     "Comment": "LegacyImageTest",
     "Offset": [
       0,
@@ -9303,7 +9875,7 @@ exports[`Home UIA Tree Dump LegacyImageTest 1`] = `
     "Opacity": 1,
     "Size": [
       968,
-      100,
+      99,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -9385,7 +9957,7 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
             "Opacity": 1,
             "Size": [
               145,
-              27,
+              28,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -9411,7 +9983,7 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
         "Opacity": 1,
         "Size": [
           145,
-          27,
+          28,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -9467,7 +10039,7 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -9493,7 +10065,7 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -9508,7 +10080,7 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -9534,7 +10106,7 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -9549,7 +10121,7 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -9575,7 +10147,7 @@ exports[`Home UIA Tree Dump LegacyLoginTest 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -9753,7 +10325,7 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -9779,7 +10351,7 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -9794,7 +10366,7 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -9820,7 +10392,7 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -9835,7 +10407,7 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -9861,7 +10433,7 @@ exports[`Home UIA Tree Dump LegacySelectableTextTest 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -9957,7 +10529,7 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
             "Opacity": 1,
             "Size": [
               190,
-              28,
+              27,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -9983,7 +10555,7 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
         "Opacity": 1,
         "Size": [
           190,
-          28,
+          27,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -10039,7 +10611,7 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -10065,7 +10637,7 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -10080,7 +10652,7 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -10106,7 +10678,7 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -10121,7 +10693,7 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -10147,7 +10719,7 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -10243,7 +10815,7 @@ exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
             "Opacity": 1,
             "Size": [
               177,
-              28,
+              27,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -10269,7 +10841,7 @@ exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
         "Opacity": 1,
         "Size": [
           177,
-          28,
+          27,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -10447,7 +11019,7 @@ exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
     "Opacity": 1,
     "Size": [
       968,
-      99,
+      100,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -11673,7 +12245,7 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
             "Opacity": 1,
             "Size": [
               147,
-              28,
+              27,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -11699,7 +12271,7 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
         "Opacity": 1,
         "Size": [
           147,
-          28,
+          27,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -11755,7 +12327,7 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -11781,7 +12353,7 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -11796,7 +12368,7 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -11822,7 +12394,7 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -11837,7 +12409,7 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -11863,7 +12435,7 @@ exports[`Home UIA Tree Dump New App Screen 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -12613,7 +13185,7 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -12639,7 +13211,7 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -12654,7 +13226,7 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -12680,7 +13252,7 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -12695,7 +13267,7 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -12721,7 +13293,7 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -12735,7 +13307,7 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
     "Opacity": 1,
     "Size": [
       968,
-      99,
+      100,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -13389,7 +13961,7 @@ exports[`Home UIA Tree Dump Popup 1`] = `
             "Opacity": 1,
             "Size": [
               58,
-              27,
+              28,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -13415,7 +13987,7 @@ exports[`Home UIA Tree Dump Popup 1`] = `
         "Opacity": 1,
         "Size": [
           58,
-          27,
+          28,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -13471,7 +14043,7 @@ exports[`Home UIA Tree Dump Popup 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -13497,7 +14069,7 @@ exports[`Home UIA Tree Dump Popup 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -13512,7 +14084,7 @@ exports[`Home UIA Tree Dump Popup 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -13538,7 +14110,7 @@ exports[`Home UIA Tree Dump Popup 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -13553,7 +14125,7 @@ exports[`Home UIA Tree Dump Popup 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -13579,7 +14151,7 @@ exports[`Home UIA Tree Dump Popup 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -13675,7 +14247,7 @@ exports[`Home UIA Tree Dump Pressable 1`] = `
             "Opacity": 1,
             "Size": [
               83,
-              28,
+              27,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -13701,7 +14273,7 @@ exports[`Home UIA Tree Dump Pressable 1`] = `
         "Opacity": 1,
         "Size": [
           83,
-          28,
+          27,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -13879,7 +14451,7 @@ exports[`Home UIA Tree Dump Pressable 1`] = `
     "Opacity": 1,
     "Size": [
       968,
-      99,
+      100,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -14329,7 +14901,7 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -14355,7 +14927,7 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -14370,7 +14942,7 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -14396,7 +14968,7 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -14411,7 +14983,7 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -14437,7 +15009,7 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -14615,7 +15187,7 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -14641,7 +15213,7 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -14656,7 +15228,7 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -14682,7 +15254,7 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -14697,7 +15269,7 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -14723,7 +15295,7 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -14737,7 +15309,7 @@ exports[`Home UIA Tree Dump ScrollViewAnimated 1`] = `
     "Opacity": 1,
     "Size": [
       968,
-      99,
+      100,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -14819,7 +15391,7 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
             "Opacity": 1,
             "Size": [
               224,
-              28,
+              27,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -14845,7 +15417,7 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
         "Opacity": 1,
         "Size": [
           224,
-          28,
+          27,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -14901,7 +15473,7 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -14927,7 +15499,7 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -14942,7 +15514,7 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -14968,7 +15540,7 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -14983,7 +15555,7 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -15009,7 +15581,7 @@ exports[`Home UIA Tree Dump ScrollViewSimpleExample 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -15288,7 +15860,7 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
             "Opacity": 1,
             "Size": [
               95,
-              27,
+              28,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -15314,7 +15886,7 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
         "Opacity": 1,
         "Size": [
           95,
-          27,
+          28,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -15370,7 +15942,7 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -15396,7 +15968,7 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -15411,7 +15983,7 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -15437,7 +16009,7 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -15452,7 +16024,7 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -15478,7 +16050,7 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -15942,7 +16514,7 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -15968,7 +16540,7 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -15983,7 +16555,7 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -16009,7 +16581,7 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -16024,7 +16596,7 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -16050,7 +16622,7 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -16064,7 +16636,7 @@ exports[`Home UIA Tree Dump SwipeableCard 1`] = `
     "Opacity": 1,
     "Size": [
       968,
-      100,
+      99,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -16146,7 +16718,7 @@ exports[`Home UIA Tree Dump Switch 1`] = `
             "Opacity": 1,
             "Size": [
               57,
-              28,
+              27,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -16172,7 +16744,7 @@ exports[`Home UIA Tree Dump Switch 1`] = `
         "Opacity": 1,
         "Size": [
           57,
-          28,
+          27,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -16228,7 +16800,7 @@ exports[`Home UIA Tree Dump Switch 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -16254,7 +16826,7 @@ exports[`Home UIA Tree Dump Switch 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -16269,7 +16841,7 @@ exports[`Home UIA Tree Dump Switch 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -16295,7 +16867,7 @@ exports[`Home UIA Tree Dump Switch 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -16310,7 +16882,7 @@ exports[`Home UIA Tree Dump Switch 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -16336,7 +16908,7 @@ exports[`Home UIA Tree Dump Switch 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -16432,7 +17004,7 @@ exports[`Home UIA Tree Dump Text 1`] = `
             "Opacity": 1,
             "Size": [
               35,
-              28,
+              27,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -16458,7 +17030,7 @@ exports[`Home UIA Tree Dump Text 1`] = `
         "Opacity": 1,
         "Size": [
           35,
-          28,
+          27,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -16636,7 +17208,7 @@ exports[`Home UIA Tree Dump Text 1`] = `
     "Opacity": 1,
     "Size": [
       968,
-      99,
+      100,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -16718,7 +17290,7 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
             "Opacity": 1,
             "Size": [
               82,
-              27,
+              28,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -16744,7 +17316,7 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
         "Opacity": 1,
         "Size": [
           82,
-          27,
+          28,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -16800,7 +17372,7 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -16826,7 +17398,7 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -16841,7 +17413,7 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -16867,7 +17439,7 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -16882,7 +17454,7 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -16908,7 +17480,7 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -17004,7 +17576,7 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
             "Opacity": 1,
             "Size": [
               217,
-              27,
+              28,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -17030,7 +17602,7 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
         "Opacity": 1,
         "Size": [
           217,
-          27,
+          28,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -17086,7 +17658,7 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -17112,7 +17684,7 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -17127,7 +17699,7 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -17153,7 +17725,7 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -17168,7 +17740,7 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -17194,7 +17766,7 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -17208,7 +17780,7 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
     "Opacity": 1,
     "Size": [
       968,
-      100,
+      99,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -17658,7 +18230,7 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -17684,7 +18256,7 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -17699,7 +18271,7 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -17725,7 +18297,7 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -17740,7 +18312,7 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -17766,7 +18338,7 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -17862,7 +18434,7 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
             "Opacity": 1,
             "Size": [
               159,
-              28,
+              27,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -17888,7 +18460,7 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
         "Opacity": 1,
         "Size": [
           159,
-          28,
+          27,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -17944,7 +18516,7 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -17970,7 +18542,7 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -17985,7 +18557,7 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -18011,7 +18583,7 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -18026,7 +18598,7 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -18052,7 +18624,7 @@ exports[`Home UIA Tree Dump TransferProperties 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -18516,7 +19088,7 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -18542,7 +19114,7 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -18557,7 +19129,7 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -18583,7 +19155,7 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -18598,7 +19170,7 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -18624,7 +19196,7 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -18638,7 +19210,7 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
     "Opacity": 1,
     "Size": [
       968,
-      99,
+      100,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -19006,7 +19578,7 @@ exports[`Home UIA Tree Dump View 1`] = `
             "Opacity": 1,
             "Size": [
               43,
-              27,
+              28,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -19032,7 +19604,7 @@ exports[`Home UIA Tree Dump View 1`] = `
         "Opacity": 1,
         "Size": [
           43,
-          27,
+          28,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -19088,7 +19660,7 @@ exports[`Home UIA Tree Dump View 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -19114,7 +19686,7 @@ exports[`Home UIA Tree Dump View 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -19129,7 +19701,7 @@ exports[`Home UIA Tree Dump View 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -19155,7 +19727,7 @@ exports[`Home UIA Tree Dump View 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -19170,7 +19742,7 @@ exports[`Home UIA Tree Dump View 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              20,
+              19,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -19196,7 +19768,7 @@ exports[`Home UIA Tree Dump View 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          20,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -19660,7 +20232,7 @@ exports[`Home UIA Tree Dump XAML 1`] = `
             "Opacity": 1,
             "Size": [
               65,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -19686,7 +20258,7 @@ exports[`Home UIA Tree Dump XAML 1`] = `
         "Opacity": 1,
         "Size": [
           65,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -19701,7 +20273,7 @@ exports[`Home UIA Tree Dump XAML 1`] = `
             "Opacity": 1,
             "Size": [
               22,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -19727,7 +20299,7 @@ exports[`Home UIA Tree Dump XAML 1`] = `
         "Opacity": 1,
         "Size": [
           22,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -19742,7 +20314,7 @@ exports[`Home UIA Tree Dump XAML 1`] = `
             "Opacity": 1,
             "Size": [
               52,
-              19,
+              20,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -19768,7 +20340,7 @@ exports[`Home UIA Tree Dump XAML 1`] = `
         "Opacity": 1,
         "Size": [
           52,
-          19,
+          20,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -19782,7 +20354,7 @@ exports[`Home UIA Tree Dump XAML 1`] = `
     "Opacity": 1,
     "Size": [
       968,
-      100,
+      99,
     ],
     "Visual Type": "SpriteVisual",
   },

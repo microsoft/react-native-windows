@@ -21,22 +21,22 @@ ParagraphComponentView::ParagraphComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
   static auto const defaultProps = std::make_shared<facebook::react::ParagraphProps const>();
   m_props = defaultProps;
 }
 
 void ParagraphComponentView::mountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
-    uint32_t index) noexcept {
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {
   // auto v = static_cast<ParagraphComponentView &>(childComponentView);
   assert(false);
   // m_element.Children().InsertAt(index, v.Element());
 }
 
 void ParagraphComponentView::unmountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
-    uint32_t index) noexcept {
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {
   assert(false);
   // m_element.Children().RemoveAt(index);
 }
@@ -99,11 +99,11 @@ void ParagraphComponentView::updateLayoutMetrics(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
-void ParagraphComponentView::finalizeUpdates(
-    winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask updateMask) noexcept {
+void ParagraphComponentView::FinalizeUpdates(
+    winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
   ensureVisual();
   updateVisualBrush();
-  Super::finalizeUpdates(updateMask);
+  Super::FinalizeUpdates(updateMask);
 }
 void ParagraphComponentView::prepareForRecycle() noexcept {}
 
@@ -123,7 +123,7 @@ facebook::react::Tag ParagraphComponentView::hitTest(
     if ((m_props.pointerEvents == facebook::react::PointerEventsMode::Auto ||
         m_props.pointerEvents == facebook::react::PointerEventsMode::BoxNone) && std::any_of(m_children.rbegin(),
     m_children.rend(), [&targetTag, &ptLocal, &localPt](auto child) { targetTag = static_cast<const
-    CompositionBaseComponentView
+    ComponentView
     *>(child)->hitTest(ptLocal, localPt); return targetTag != -1;
         }))
       return targetTag;

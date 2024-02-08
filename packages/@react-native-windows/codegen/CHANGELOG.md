@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Sat, 21 Oct 2023 05:16:09 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Feb 2024 06:13:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.73
+
+Thu, 08 Feb 2024 06:13:52 GMT
+
+### Changes
+
+- Integration up to 01/02/24 (email not defined)
 
 ## 0.0.0-canary.72
 

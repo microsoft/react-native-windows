@@ -198,7 +198,11 @@ void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition
                 winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->onThemeChanged();
                 return false;
               };
-          walkTree(*rootView, true, fn);
+
+          winrt::Microsoft::ReactNative::ComponentView view{nullptr};
+          winrt::check_hresult(rootView->QueryInterface(
+              winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
+          walkTree(view, true, fn);
         }
       });
 
@@ -265,6 +269,27 @@ int64_t CompositionRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t 
   }
 
   return 0;
+}
+
+bool CompositionRootView::CapturePointer(
+    const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
+    facebook::react::Tag tag) noexcept {
+  if (m_hwnd) {
+    SetCapture(m_hwnd);
+  }
+  return m_CompositionEventHandler->CapturePointer(pointer, tag);
+}
+
+void CompositionRootView::ReleasePointerCapture(
+    const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
+    facebook::react::Tag tag) noexcept {
+  if (m_CompositionEventHandler->ReleasePointerCapture(pointer, tag)) {
+    if (m_hwnd) {
+      if (m_hwnd == GetCapture()) {
+        ReleaseCapture();
+      }
+    }
+  }
 }
 
 void CompositionRootView::InitRootView(

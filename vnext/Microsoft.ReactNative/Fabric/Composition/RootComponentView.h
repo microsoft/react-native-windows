@@ -17,8 +17,8 @@ struct IRawElementProviderFragmentRoot;
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-struct RootComponentView : RootComponentViewT<RootComponentView, CompositionViewComponentView> {
-  using Super = RootComponentViewT<RootComponentView, CompositionViewComponentView>;
+struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentView> {
+  using Super = RootComponentViewT<RootComponentView, ViewComponentView>;
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,

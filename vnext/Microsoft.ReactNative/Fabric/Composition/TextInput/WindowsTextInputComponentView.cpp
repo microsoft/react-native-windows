@@ -15,6 +15,7 @@
 #include "../CompositionHelpers.h"
 #include "../RootComponentView.h"
 #include "Composition/AutoDraw.h"
+#include "JSValueReader.h"
 #include "WindowsTextInputShadowNode.h"
 #include "WindowsTextInputState.h"
 #include "guid/msoGuid.h"
@@ -482,7 +483,7 @@ WindowsTextInputComponentView::WindowsTextInputComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
   static auto const defaultProps = std::make_shared<facebook::react::WindowsTextInputProps const>();
   m_props = defaultProps;
 
@@ -515,16 +516,17 @@ WindowsTextInputComponentView::WindowsTextInputComponentView(
   */
 }
 
-void WindowsTextInputComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
-  if (commandName == "setTextAndSelection") {
-    auto eventCount = arg[0].asInt();
+void WindowsTextInputComponentView::HandleCommand(
+    winrt::hstring commandName,
+    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+  if (commandName == L"setTextAndSelection") {
+    int eventCount, begin, end;
+    winrt::hstring text;
 
+    winrt::Microsoft::ReactNative::ReadArgs(args, eventCount, text, begin, end);
     if (eventCount >= m_nativeEventCount) {
-      auto text = arg[1].asString();
-      auto begin = arg[2].asInt();
-      auto end = arg[3].asInt();
       m_comingFromJS = true;
-      UpdateText(text);
+      UpdateText(winrt::to_string(text));
 
       SELCHANGE sc;
       memset(&sc, 0, sizeof(sc));
@@ -543,7 +545,7 @@ void WindowsTextInputComponentView::handleCommand(std::string const &commandName
       m_comingFromJS = false;
     }
   } else {
-    Super::handleCommand(commandName, arg);
+    Super::HandleCommand(commandName, args);
   }
 }
 
@@ -618,7 +620,7 @@ WPARAM PointerRoutedEventArgsToMouseWParam(
   return wParam;
 }
 
-void WindowsTextInputComponentView::onPointerPressed(
+void WindowsTextInputComponentView::OnPointerPressed(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   UINT msg = 0;
   LPARAM lParam = 0;
@@ -663,7 +665,7 @@ void WindowsTextInputComponentView::onPointerPressed(
   }
 }
 
-void WindowsTextInputComponentView::onPointerReleased(
+void WindowsTextInputComponentView::OnPointerReleased(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   UINT msg = 0;
   LPARAM lParam = 0;
@@ -708,7 +710,7 @@ void WindowsTextInputComponentView::onPointerReleased(
   }
 }
 
-void WindowsTextInputComponentView::onPointerMoved(
+void WindowsTextInputComponentView::OnPointerMoved(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   UINT msg = 0;
   LPARAM lParam = 0;
@@ -735,7 +737,7 @@ void WindowsTextInputComponentView::onPointerMoved(
   }
 }
 
-void WindowsTextInputComponentView::onKeyDown(
+void WindowsTextInputComponentView::OnKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
@@ -762,10 +764,10 @@ void WindowsTextInputComponentView::onKeyDown(
     }
   }
 
-  Super::onKeyDown(source, args);
+  Super::OnKeyDown(source, args);
 }
 
-void WindowsTextInputComponentView::onKeyUp(
+void WindowsTextInputComponentView::OnKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
@@ -793,10 +795,10 @@ void WindowsTextInputComponentView::onKeyUp(
     }
   }
 
-  Super::onKeyDown(source, args);
+  Super::OnKeyDown(source, args);
 }
 
-void WindowsTextInputComponentView::onCharacterReceived(
+void WindowsTextInputComponentView::OnCharacterReceived(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
@@ -831,17 +833,15 @@ void WindowsTextInputComponentView::onCharacterReceived(
 }
 
 void WindowsTextInputComponentView::mountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
-    uint32_t index) noexcept {
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {
   assert(false);
-  // m_element.Children().InsertAt(index, v.Element());
 }
 
 void WindowsTextInputComponentView::unmountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
-    uint32_t index) noexcept {
+    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
+    uint32_t /*index*/) noexcept {
   assert(false);
-  // m_element.Children().RemoveAt(index);
 }
 
 void WindowsTextInputComponentView::onFocusLost() noexcept {
@@ -1160,9 +1160,9 @@ std::string WindowsTextInputComponentView::GetTextFromRichEdit() const noexcept 
   return str;
 }
 
-void WindowsTextInputComponentView::finalizeUpdates(
-    winrt::Microsoft::ReactNative::implementation::RNComponentViewUpdateMask updateMask) noexcept {
-  Super::finalizeUpdates(updateMask);
+void WindowsTextInputComponentView::FinalizeUpdates(
+    winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
+  Super::FinalizeUpdates(updateMask);
   ensureDrawingSurface();
   if (m_needsRedraw) {
     DrawText();
@@ -1268,7 +1268,7 @@ void WindowsTextInputComponentView::OnRenderingDeviceLost() noexcept {
 }
 
 void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
-  assert(m_context.UIDispatcher().HasThreadAccess());
+  assert(m_reactContext.UIDispatcher().HasThreadAccess());
 
   if (!m_drawingSurface) {
     m_drawingSurface = m_compContext.CreateDrawingSurfaceBrush(
@@ -1333,7 +1333,7 @@ void WindowsTextInputComponentView::DrawText() noexcept {
 
   POINT offset;
 
-  assert(m_context.UIDispatcher().HasThreadAccess());
+  assert(m_reactContext.UIDispatcher().HasThreadAccess());
 
   m_drawing = true;
   {
@@ -1421,7 +1421,7 @@ facebook::react::Tag WindowsTextInputComponentView::hitTest(
     if ((m_props.pointerEvents == facebook::react::PointerEventsMode::Auto ||
         m_props.pointerEvents == facebook::react::PointerEventsMode::BoxNone) && std::any_of(m_children.rbegin(),
     m_children.rend(), [&targetTag, &ptLocal, &localPt](auto child) { targetTag = static_cast<const
-    CompositionBaseComponentView
+    ComponentView
     *>(child)->hitTest(ptLocal, localPt); return targetTag != -1;
         }))
       return targetTag;

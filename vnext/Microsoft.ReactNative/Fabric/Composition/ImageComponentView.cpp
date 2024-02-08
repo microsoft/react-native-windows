@@ -40,7 +40,7 @@ void ImageComponentView::WindowsImageResponseObserver::didReceiveProgress(float 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveImage(
     facebook::react::ImageResponse const &imageResponse) const {
   auto sharedwicbmp = std::static_pointer_cast<winrt::com_ptr<IWICBitmap>>(imageResponse.getImage());
-  m_image->m_context.UIDispatcher().Post(
+  m_image->m_reactContext.UIDispatcher().Post(
       [wicbmp = *sharedwicbmp, image = m_image]() { image->didReceiveImage(wicbmp); });
 }
 
@@ -52,19 +52,19 @@ ImageComponentView::ImageComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
   static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
   m_props = defaultProps;
 }
 
 void ImageComponentView::mountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
 }
 
 void ImageComponentView::unmountChildComponentView(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &childComponentView,
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
 }
@@ -88,7 +88,7 @@ void ImageComponentView::didReceiveImage(const winrt::com_ptr<IWICBitmap> &wicbm
   // TODO - handle imageProps.capInsets
 
 #ifdef DEBUG
-  auto uiDispatcher = m_context.UIDispatcher();
+  auto uiDispatcher = m_reactContext.UIDispatcher();
   assert(uiDispatcher.HasThreadAccess());
 #endif
 
@@ -141,7 +141,7 @@ void ImageComponentView::updateState(
   if (!m_imageResponseObserver) {
     // Should ViewComponents enable_shared_from_this? then we don't need this dance to get a shared_ptr
     std::shared_ptr<::Microsoft::ReactNative::FabricUIManager> fabricuiManager =
-        ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
+        ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_reactContext.Properties());
     auto componentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_tag);
 
     m_imageResponseObserver = std::make_shared<WindowsImageResponseObserver>(
@@ -206,7 +206,7 @@ void ImageComponentView::onThemeChanged() noexcept {
 }
 
 void ImageComponentView::ensureDrawingSurface() noexcept {
-  assert(m_context.UIDispatcher().HasThreadAccess());
+  assert(m_reactContext.UIDispatcher().HasThreadAccess());
 
   UINT width, height;
   winrt::check_hresult(m_wicbmp->GetSize(&width, &height));
@@ -281,7 +281,7 @@ void ImageComponentView::DrawImage() noexcept {
     return;
   }
 
-  assert(m_context.UIDispatcher().HasThreadAccess());
+  assert(m_reactContext.UIDispatcher().HasThreadAccess());
 
   ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, &offset);
   if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
@@ -388,10 +388,7 @@ facebook::react::Tag ImageComponentView::hitTest(
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
-      std::any_of(m_children.rbegin(), m_children.rend(), [&targetTag, &ptLocal, &localPt](auto child) {
-        targetTag = static_cast<const CompositionBaseComponentView *>(child)->hitTest(ptLocal, localPt);
-        return targetTag != -1;
-      }))
+      anyHitTestHelper(targetTag, ptLocal, localPt))
     return targetTag;
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||

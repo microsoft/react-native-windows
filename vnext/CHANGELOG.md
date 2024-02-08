@@ -1,8 +1,142 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 12 Jan 2024 06:14:41 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Feb 2024 06:13:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.766
+
+Thu, 08 Feb 2024 06:13:52 GMT
+
+### Changes
+
+- Integration 01/02 (email not defined)
+- Bump @react-native-windows/cli to v0.0.0-canary.196
+- Bump @react-native-windows/codegen to v0.0.0-canary.73
+
+## 0.0.0-canary.765
+
+Wed, 07 Feb 2024 06:13:32 GMT
+
+### Changes
+
+- Fixes clang warnings for non-portable folly includes (ericroz@meta.com)
+- Fix clang warnings for non-portable Yoga includes (ericroz@meta.com)
+- Remove some c++20 forks (email not defined)
+- Cleanup const qualifier on constexpr (ericroz@meta.com)
+- Return null for missing view manager constants (ericroz@meta.com)
+
+## 0.0.0-canary.764
+
+Tue, 06 Feb 2024 06:13:47 GMT
+
+### Changes
+
+- [Fabric] fix visual issue when quickly dragging scrollthumb before it finishes animating in (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Mouse wheel handling when use WM_MSG hosting uses wrong mouse position (30809111+acoates-ms@users.noreply.github.com)
+- Add experimental feature flag to opt into experimental winui3 (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.763
+
+Sat, 03 Feb 2024 06:13:43 GMT
+
+### Changes
+
+- [Fabric] Remove AbiCompositionViewComponent and move to inheritence overrides for custom components (30809111+acoates-ms@users.noreply.github.com)
+- Ensure origin in WebSocket headers (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.762
+
+Fri, 02 Feb 2024 06:14:27 GMT
+
+### Changes
+
+- Update to C++20 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.761
+
+Tue, 30 Jan 2024 06:14:07 GMT
+
+### Changes
+
+- [Fabric] Capture pointer input during scroll thumb drag (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Allow unimplemented native views to have children (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.760
+
+Sat, 27 Jan 2024 06:13:39 GMT
+
+### Changes
+
+- add size to Fabric ActivityIndicator (tatianakapos@microsoft.com)
+- Include line/column numbers on syntax error (4123478+tido64@users.noreply.github.com)
+
+## 0.0.0-canary.759
+
+Fri, 26 Jan 2024 06:13:32 GMT
+
+### Changes
+
+- Add ARM64 to new arch templates (jthysell@microsoft.com)
+- [Fabric] Fix issue causing PointerMove events to have incorrect position when using WM_msg input (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.758
+
+Thu, 25 Jan 2024 06:14:16 GMT
+
+### Changes
+
+- [Fabric] Do not run a 0,0 layout when minimizing the window (30809111+acoates-ms@users.noreply.github.com)
+- reenable shadowprops and tests (tatianakapos@microsoft.com)
+- Stub impl of DebuggingOverlay to remove errors when running react-devtools (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Update switch visuals to newer fluent visuals (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.757
+
+Wed, 24 Jan 2024 06:14:14 GMT
+
+### Changes
+
+- Remove Playground/RNTester references in templates (jthysell@microsoft.com)
+- [Fabric] Fix minor high dpi issue with scrollbar (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.756
+
+Tue, 23 Jan 2024 06:15:25 GMT
+
+### Changes
+
+- Update WinUI3Version (30809111+acoates-ms@users.noreply.github.com)
+- integrate 12/1 (tatianakapos@microsoft.com)
+- [Fabric] Initial scrollbar implementation (30809111+acoates-ms@users.noreply.github.com)
+- Update RNW Dependency Script Node.js and Windows SDK versions (jthysell@microsoft.com)
+
+## 0.0.0-canary.755
+
+Fri, 19 Jan 2024 06:16:14 GMT
+
+### Changes
+
+- Ensure ExperimentalFeatures.props is loaded in all projects (jthysell@microsoft.com)
+
+## 0.0.0-canary.754
+
+Thu, 18 Jan 2024 06:14:22 GMT
+
+### Changes
+
+- Expose public APIs to navigate native UI tree (30809111+acoates-ms@users.noreply.github.com)
+- Create new arch module template: cpp-lib (jthysell@microsoft.com)
+
+## 0.0.0-canary.753
+
+Wed, 17 Jan 2024 06:16:31 GMT
+
+### Changes
+
+- Fix license header in file overrides (erozell@outlook.com)
+- add inital files for Fabric's Modal (tatianakapos@microsoft.com)
+- Modules in react-native use relative imports (ericroz@meta.com)
 
 ## 0.0.0-canary.752
 

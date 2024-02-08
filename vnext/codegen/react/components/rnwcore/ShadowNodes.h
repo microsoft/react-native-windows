@@ -10,14 +10,24 @@
 
 #pragma once
 
-#include <react/renderer/components/rnwcore/EventEmitters.h>
-#include <react/renderer/components/rnwcore/Props.h>
-#include <react/renderer/components/rnwcore/States.h>
+#include <EventEmitters.h>
+#include <Props.h>
+#include <States.h>
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <jsi/jsi.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
+
+JSI_EXPORT extern const char DebuggingOverlayComponentName[];
+
+/*
+ * `ShadowNode` for <DebuggingOverlay> component.
+ */
+using DebuggingOverlayShadowNode = ConcreteViewShadowNode<
+    DebuggingOverlayComponentName,
+    DebuggingOverlayProps,
+    DebuggingOverlayEventEmitter,
+    DebuggingOverlayState>;
 
 JSI_EXPORT extern const char ActivityIndicatorViewComponentName[];
 
@@ -85,17 +95,6 @@ using SwitchShadowNode = ConcreteViewShadowNode<
     SwitchEventEmitter,
     SwitchState>;
 
-JSI_EXPORT extern const char TraceUpdateOverlayComponentName[];
-
-/*
- * `ShadowNode` for <TraceUpdateOverlay> component.
- */
-using TraceUpdateOverlayShadowNode = ConcreteViewShadowNode<
-    TraceUpdateOverlayComponentName,
-    TraceUpdateOverlayProps,
-    TraceUpdateOverlayEventEmitter,
-    TraceUpdateOverlayState>;
-
 JSI_EXPORT extern const char UnimplementedNativeViewComponentName[];
 
 /*
@@ -107,5 +106,4 @@ using UnimplementedNativeViewShadowNode = ConcreteViewShadowNode<
     UnimplementedNativeViewEventEmitter,
     UnimplementedNativeViewState>;
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react
