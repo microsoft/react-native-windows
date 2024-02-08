@@ -15,8 +15,7 @@
 #include <react/renderer/graphics/Color.h>
 #include <vector>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 class DebuggingOverlayProps final : public ViewProps {
  public:
@@ -439,5 +438,4 @@ class UnimplementedNativeViewProps final : public ViewProps {
   std::string name{""};
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react
