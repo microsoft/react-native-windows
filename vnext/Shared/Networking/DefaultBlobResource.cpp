@@ -5,6 +5,7 @@
 
 #include <Modules/IHttpModuleProxy.h>
 #include <Modules/IWebSocketModuleProxy.h>
+#include <utilities.h>
 
 // Boost Libraries
 #include <boost/uuid/uuid_io.hpp>
@@ -95,11 +96,9 @@ void DefaultBlobResource::SendOverSocket(string &&blobId, int64_t offset, int64_
     return m_callbacks.OnError(e.what());
   }
 
-  auto buffer = CryptographicBuffer::CreateFromByteArray(data);
-  auto base64Hstring = CryptographicBuffer::EncodeToBase64String(std::move(buffer));
-  auto base64String = winrt::to_string(base64Hstring);
-
-  wsProxy->SendBinary(std::move(base64String), socketId);
+  auto chars = reinterpret_cast<const char *>(data.data());
+  auto view = std::string_view(chars, data.size());
+  wsProxy->SendBinary(Utilities::EncodeBase64(view), socketId);
 }
 
 void DefaultBlobResource::CreateFromParts(msrn::JSValueArray &&parts, string &&blobId) noexcept /*override*/ {

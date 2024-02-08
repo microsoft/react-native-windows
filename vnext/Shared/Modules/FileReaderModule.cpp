@@ -7,11 +7,6 @@
 #include <ReactPropertyBag.h>
 #include <sstream>
 
-// Boost Library
-#include <boost/archive/iterators/base64_from_binary.hpp>
-#include <boost/archive/iterators/ostream_iterator.hpp>
-#include <boost/archive/iterators/transform_width.hpp>
-
 // React Native
 #include <cxxreact/JsArgumentHelpers.h>
 
