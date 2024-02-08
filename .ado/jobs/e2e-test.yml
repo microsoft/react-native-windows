@@ -45,7 +45,7 @@ jobs:
           displayName: E2E Test App ${{ matrix.Name }}
 
           variables: [template: ../variables/windows.yml]
-          pool: ${{ parameters.AgentPool.Medium }}
+          pool: ${{ parameters.AgentPool.MediumNode16 }}
           timeoutInMinutes: 60 # how long to run the job before automatically cancelling
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
@@ -153,7 +153,7 @@ jobs:
           displayName: E2E Test App Fabric ${{ matrix.Name }}
 
           variables: [template: ../variables/windows.yml]
-          pool: ${{ parameters.AgentPool.Medium }}
+          pool: ${{ parameters.AgentPool.MediumNode16 }}
           timeoutInMinutes: 60 # how long to run the job before automatically cancelling
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 

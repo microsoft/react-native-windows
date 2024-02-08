@@ -103,7 +103,7 @@ jobs:
           displayName: Playground ${{ matrix.Name }}
 
           variables: [template: ../variables/windows.yml]
-          pool: ${{ parameters.AgentPool.Medium }}
+          pool: ${{ parameters.AgentPool.MediumNode16 }}
           timeoutInMinutes: 60
           cancelTimeoutInMinutes: 5
 
