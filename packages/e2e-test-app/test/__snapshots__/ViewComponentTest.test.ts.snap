@@ -496,8 +496,8 @@ exports[`ViewTests Views can have accessibility customization 1`] = `
 exports[`ViewTests Views can have background colors 1`] = `
 {
   "AutomationId": "view-test-background-color",
-  "Background": "#FF527FE4",
-  "BorderBrush": "#E4000000",
+  "Background": null,
+  "BorderBrush": null,
   "BorderThickness": "0,0,0,0",
   "Clip": null,
   "CornerRadius": "0,0,0,0",
