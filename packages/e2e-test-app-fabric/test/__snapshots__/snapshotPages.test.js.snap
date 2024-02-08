@@ -6378,6 +6378,7 @@ exports[`snapshotAllPages Border 1`] = `
       },
     ]
   }
+  testID="border-test-equal-width-same-color"
 />
 `;
 
@@ -6396,6 +6397,7 @@ exports[`snapshotAllPages Border 2`] = `
       },
     ]
   }
+  testID="border-test-equal-width-same-color-border-radius"
 />
 `;
 
@@ -6416,6 +6418,7 @@ exports[`snapshotAllPages Border 3`] = `
       },
     ]
   }
+  testID="border-test-equal-width-borders"
 />
 `;
 
@@ -6436,6 +6439,7 @@ exports[`snapshotAllPages Border 4`] = `
       },
     ]
   }
+  testID="border-test-same-color-borders"
 />
 `;
 
@@ -6459,6 +6463,7 @@ exports[`snapshotAllPages Border 5`] = `
       },
     ]
   }
+  testID="border-test-custom-borders"
 />
 `;
 
@@ -6483,6 +6488,7 @@ exports[`snapshotAllPages Border 6`] = `
       },
     ]
   }
+  testID="border-test-custom-borders-ios-1"
 />
 `;
 
@@ -6507,6 +6513,7 @@ exports[`snapshotAllPages Border 7`] = `
       },
     ]
   }
+  testID="border-test-custom-borders-ios-2"
 />
 `;
 
@@ -6526,6 +6533,7 @@ exports[`snapshotAllPages Border 8`] = `
       },
     ]
   }
+  testID="border-test-custom-borders-ios-clipping"
 >
   <View
     style={
@@ -6546,6 +6554,7 @@ exports[`snapshotAllPages Border 9`] = `
       "flexDirection": "row",
     }
   }
+  testID="border-test-single-borders"
 >
   <View
     style={
@@ -6648,6 +6657,7 @@ exports[`snapshotAllPages Border 10`] = `
       },
     ]
   }
+  testID="border-test-corner-radii"
 />
 `;
 
@@ -6669,6 +6679,7 @@ exports[`snapshotAllPages Border 11`] = `
       },
     ]
   }
+  testID="border-test-corner-radii-elevation"
 />
 `;
 
@@ -6692,6 +6703,7 @@ exports[`snapshotAllPages Border 12`] = `
       },
     ]
   }
+  testID="border-test-css-trick-triangle"
 />
 `;
 
@@ -6714,6 +6726,7 @@ exports[`snapshotAllPages Border 13`] = `
       },
     ]
   }
+  testID="border-test-curved-border-lrbt-width"
 />
 `;
 
@@ -6740,6 +6753,7 @@ exports[`snapshotAllPages Border 14`] = `
       },
     ]
   }
+  testID="border-test-curved-border-lrbt-color"
 />
 `;
 
@@ -6769,6 +6783,7 @@ exports[`snapshotAllPages Border 15`] = `
       },
     ]
   }
+  testID="border-test-curved-border-tb-lr-radius"
 />
 `;
 
@@ -6790,6 +6805,7 @@ exports[`snapshotAllPages Border 16`] = `
       },
     ]
   }
+  testID="border-test-system-color"
 />
 `;
 
@@ -6807,6 +6823,7 @@ exports[`snapshotAllPages Border 17`] = `
       },
     ]
   }
+  testID="border-test-dynamic-color-ios"
 />
 `;
 
@@ -78561,6 +78578,32 @@ exports[`snapshotAllPages View 4`] = `
 </View>
 `;
 
+exports[`snapshotAllPages View 4`] = `
+<View
+  testID="view-test-border-radius"
+>
+  <View
+    style={
+      {
+        "borderRadius": 5,
+        "borderWidth": 0.5,
+        "padding": 5,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "fontSize": 11,
+        }
+      }
+    >
+      Too much use of \`borderRadius\` (especially large radii) on anything which is scrolling may result in dropped frames. Use sparingly.
+    </Text>
+  </View>
+</View>
+`;
+
 exports[`snapshotAllPages View 5`] = `
 <View
   accessibilityState={
@@ -78572,9 +78615,19 @@ exports[`snapshotAllPages View 5`] = `
       "selected": undefined,
     }
   }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   focusable={true}
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
   onKeyDown={[Function]}
   onKeyUp={[Function]}
   onMouseEnter={[Function]}
@@ -78587,53 +78640,55 @@ exports[`snapshotAllPages View 5`] = `
   onStartShouldSetResponder={[Function]}
   testID="border-style-button"
 >
-  <View
-    style={
-      [
-        {
-          "borderWidth": 1,
-          "padding": 5,
-        },
-        {
-          "borderStyle": "dashed",
-        },
-      ]
-    }
-  >
-    <Text
+  <View>
+    <View
       style={
-        {
-          "fontSize": 11,
-        }
+        [
+          {
+            "borderWidth": 1,
+            "padding": 5,
+          },
+          {
+            "borderStyle": "dashed",
+          },
+        ]
       }
     >
-      Dashed border style
-    </Text>
-  </View>
-  <View
-    style={
-      [
-        {
-          "borderRadius": 5,
-          "borderWidth": 1,
-          "marginTop": 5,
-          "padding": 5,
-        },
-        {
-          "borderStyle": "dotted",
-        },
-      ]
-    }
-  >
-    <Text
-      style={
-        {
-          "fontSize": 11,
+      <Text
+        style={
+          {
+            "fontSize": 11,
+          }
         }
+      >
+        Dashed border style
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "marginTop": 5,
+            "padding": 5,
+          },
+          {
+            "borderStyle": "dotted",
+          },
+        ]
       }
     >
-      Dotted border style
-    </Text>
+      <Text
+        style={
+          {
+            "fontSize": 11,
+          }
+        }
+      >
+        Dotted border style
+      </Text>
+    </View>
   </View>
 </View>
 `;
@@ -78751,6 +78806,595 @@ exports[`snapshotAllPages View 7`] = `
 <View
   accessibilityLabel="Rounded Borders Example"
   accessible={true}
+  style={
+    {
+      "flexDirection": "row",
+    }
+  }
+  testID="overflow"
+>
+  <View
+    style={
+      {
+        "borderWidth": 0.5,
+        "height": 12,
+        "marginBottom": 8,
+        "marginEnd": 16,
+        "width": 95,
+      }
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "bottom": 0,
+            "left": 0,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          {
+            "height": 20,
+            "width": 200,
+          }
+        }
+      >
+        undefined
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          undefined,
+          {
+            "margin": 5,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          {
+            "fontSize": 11,
+          }
+        }
+      >
+        5px margin
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          undefined,
+          {
+            "alignSelf": "flex-start",
+            "margin": 5,
+            "padding": 5,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          {
+            "fontSize": 11,
+          }
+        }
+      >
+        5px margin and padding,
+      </Text>
+      <Text
+        style={
+          {
+            "fontSize": 11,
+          }
+        }
+      >
+        widthAutonomous=true
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 8`] = `
+<View
+  testID="opacity"
+>
+  <View
+    style={
+      {
+        "opacity": 0,
+      }
+    }
+  >
+    <Text>
+      Opacity 0
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "opacity": 0.1,
+      }
+    }
+  >
+    <Text>
+      Opacity 0.1
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "opacity": 0.3,
+      }
+    }
+  >
+    <Text>
+      Opacity 0.3
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "opacity": 0.5,
+      }
+    }
+  >
+    <Text>
+      Opacity 0.5
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "opacity": 0.7,
+      }
+    }
+  >
+    <Text>
+      Opacity 0.7
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "opacity": 0.9,
+      }
+    }
+  >
+    <Text>
+      Opacity 0.9
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text>
+      Opacity 1
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 9`] = `
+<View>
+  <View
+    style={
+      {
+        "borderRadius": 5,
+        "borderWidth": 0.5,
+        "padding": 5,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "fontSize": 11,
+        }
+      }
+    >
+      Too much use of \`borderRadius\` (especially large radii) on anything which is scrolling may result in dropped frames. Use sparingly.
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 10`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  onKeyUp={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  testID="border-style-button"
+>
+  <View>
+    <View
+      style={
+        [
+          {
+            "borderWidth": 1,
+            "padding": 5,
+          },
+          {
+            "borderStyle": "dashed",
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          {
+            "fontSize": 11,
+          }
+        }
+      >
+        Dashed border style
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "borderRadius": 5,
+            "borderWidth": 1,
+            "marginTop": 5,
+            "padding": 5,
+          },
+          {
+            "borderStyle": "dotted",
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          {
+            "fontSize": 11,
+          }
+        }
+      >
+        Dotted border style
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 11`] = `
+<View
+  accessibilityState={
+    {
+      "busy": undefined,
+      "checked": undefined,
+      "disabled": undefined,
+      "expanded": undefined,
+      "selected": undefined,
+    }
+  }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
+  accessible={true}
+  focusable={true}
+  onBlur={[Function]}
+  onClick={[Function]}
+  onFocus={[Function]}
+  onKeyDown={[Function]}
+  onKeyUp={[Function]}
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  testID="display-none-button"
+>
+  <View>
+    <Text
+      style={
+        {
+          "paddingBottom": 10,
+        }
+      }
+    >
+      Press to toggle \`display: none\`
+    </Text>
+    <View
+      style={
+        {
+          "backgroundColor": "red",
+          "display": "none",
+          "height": 50,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "backgroundColor": "blue",
+          "display": "none",
+          "height": 50,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "backgroundColor": "yellow",
+          "display": "none",
+          "height": 50,
+          "width": 50,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "salmon",
+            "display": "none",
+            "height": 30,
+            "width": 30,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        {
+          "backgroundColor": "magenta",
+          "display": "none",
+          "height": 50,
+          "width": 50,
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 12`] = `
+<View
+  testID="tool-tip"
+  tooltip="Parent View"
+>
+  <Text
+    style={
+      {
+        "fontSize": 11,
+      }
+    }
+  >
+    This Parent View has tooltip "Parent View"
+  </Text>
+  <View
+    tooltip="Child View 1"
+  >
+    <Text
+      style={
+        {
+          "fontSize": 11,
+        }
+      }
+    >
+      This view has tooltip "Child View 1"
+    </Text>
+  </View>
+  <View
+    tooltip="Child View 2"
+  >
+    <Text
+      style={
+        {
+          "fontSize": 11,
+        }
+      }
+    >
+      This view has tooltip "Child View 2"
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 13`] = `
+<View>
+  <Text
+    style={
+      {
+        "paddingBottom": 10,
+      }
+    }
+  >
+    View #1, front is visible, back is hidden.
+  </Text>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "justifyContent": "center",
+      }
+    }
+    testID="backface-visibility"
+  >
+    <View
+      style={
+        {
+          "borderRadius": 25,
+          "borderWidth": 1,
+          "height": 50,
+          "marginRight": 10,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "backfaceVisibility": "hidden",
+          "backgroundColor": "red",
+          "height": 200,
+          "justifyContent": "center",
+          "position": "absolute",
+          "top": 0,
+          "transform": [
+            {
+              "rotateY": "180deg",
+            },
+          ],
+          "width": 200,
+        }
+      }
+    >
+      <Text>
+        Back (You should not see this)
+      </Text>
+    </View>
+  </View>
+  <Text
+    style={
+      {
+        "paddingVertical": 10,
+      }
+    }
+  >
+    View #2, front is hidden, back is visible.
+  </Text>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "justifyContent": "center",
+      }
+    }
+    testID="backface-visibility-2"
+  >
+    <View
+      style={
+        {
+          "borderBottomLeftRadius": 50,
+          "borderBottomRightRadius": 25,
+          "borderTopLeftRadius": 5,
+          "borderTopRightRadius": 10,
+          "borderWidth": 1,
+          "height": 50,
+          "marginRight": 10,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "borderBottomLeftRadius": 50,
+          "borderBottomRightRadius": 25,
+          "borderTopLeftRadius": 5,
+          "borderTopRightRadius": 10,
+          "borderWidth": 10,
+          "height": 50,
+          "marginRight": 10,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "borderLeftWidth": 6,
+          "borderTopLeftRadius": 20,
+          "borderTopWidth": 6,
+          "height": 50,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "borderRightWidth": 6,
+          "borderTopRightRadius": 20,
+          "borderTopWidth": 6,
+          "height": 50,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "borderBottomLeftRadius": 20,
+          "borderBottomWidth": 6,
+          "borderLeftWidth": 6,
+          "height": 50,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "borderBottomRightRadius": 20,
+          "borderBottomWidth": 6,
+          "borderRightWidth": 6,
+          "height": 50,
+          "width": 50,
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 14`] = `
+<View
   style={
     {
       "flexDirection": "row",
@@ -78972,9 +79616,19 @@ exports[`snapshotAllPages View 9`] = `
       "selected": undefined,
     }
   }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   focusable={true}
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
   onKeyDown={[Function]}
   onKeyUp={[Function]}
   onMouseEnter={[Function]}
@@ -78987,122 +79641,124 @@ exports[`snapshotAllPages View 9`] = `
   onStartShouldSetResponder={[Function]}
   testID="offscreen-alpha-compositing-button"
 >
-  <Text
-    style={
-      {
-        "paddingBottom": 10,
-      }
-    }
-  >
-    Blobs
-  </Text>
-  <View
-    needsOffscreenAlphaCompositing={false}
-    style={
-      {
-        "opacity": 1,
-        "paddingBottom": 30,
-      }
-    }
-  >
-    <View
+  <View>
+    <Text
       style={
-        [
-          {
-            "borderRadius": 100,
-            "height": 50,
-            "justifyContent": "space-around",
-            "width": 100,
-          },
-          {
-            "backgroundColor": "#FF6F59",
-            "marginLeft": 0,
-            "marginTop": 0,
-          },
-        ]
+        {
+          "paddingBottom": 10,
+        }
       }
-    />
+    >
+      Blobs
+    </Text>
     <View
+      needsOffscreenAlphaCompositing={false}
       style={
-        [
-          {
-            "borderRadius": 100,
-            "height": 50,
-            "justifyContent": "space-around",
-            "width": 100,
-          },
-          {
-            "backgroundColor": "#F7CB15",
-            "marginLeft": 50,
-            "marginTop": -50,
-          },
-        ]
+        {
+          "opacity": 1,
+          "paddingBottom": 30,
+        }
       }
-    />
-  </View>
-  <Text
-    style={
-      {
-        "paddingBottom": 10,
+    >
+      <View
+        style={
+          [
+            {
+              "borderRadius": 100,
+              "height": 50,
+              "justifyContent": "space-around",
+              "width": 100,
+            },
+            {
+              "backgroundColor": "#FF6F59",
+              "marginLeft": 0,
+              "marginTop": 0,
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "borderRadius": 100,
+              "height": 50,
+              "justifyContent": "space-around",
+              "width": 100,
+            },
+            {
+              "backgroundColor": "#F7CB15",
+              "marginLeft": 50,
+              "marginTop": -50,
+            },
+          ]
+        }
+      />
+    </View>
+    <Text
+      style={
+        {
+          "paddingBottom": 10,
+        }
       }
-    }
-  >
-    Same blobs, but their shared container have 0.5 opacity
-  </Text>
-  <Text
-    style={
-      {
-        "paddingBottom": 10,
+    >
+      Same blobs, but their shared container have 0.5 opacity
+    </Text>
+    <Text
+      style={
+        {
+          "paddingBottom": 10,
+        }
       }
-    }
-  >
-    Tap to 
-    deactivate
-     
-    needsOffscreenAlphaCompositing
-  </Text>
-  <View
-    needsOffscreenAlphaCompositing={false}
-    style={
-      {
-        "opacity": 0.8,
-      }
-    }
-  >
+    >
+      Tap to 
+      deactivate
+       
+      needsOffscreenAlphaCompositing
+    </Text>
     <View
+      needsOffscreenAlphaCompositing={false}
       style={
-        [
-          {
-            "borderRadius": 100,
-            "height": 50,
-            "justifyContent": "space-around",
-            "width": 100,
-          },
-          {
-            "backgroundColor": "#FF6F59",
-            "marginLeft": 0,
-            "marginTop": 0,
-          },
-        ]
+        {
+          "opacity": 0.8,
+        }
       }
-    />
-    <View
-      style={
-        [
-          {
-            "borderRadius": 100,
-            "height": 50,
-            "justifyContent": "space-around",
-            "width": 100,
-          },
-          {
-            "backgroundColor": "#F7CB15",
-            "marginLeft": 50,
-            "marginTop": -50,
-          },
-        ]
-      }
-    />
+    >
+      <View
+        style={
+          [
+            {
+              "borderRadius": 100,
+              "height": 50,
+              "justifyContent": "space-around",
+              "width": 100,
+            },
+            {
+              "backgroundColor": "#FF6F59",
+              "marginLeft": 0,
+              "marginTop": 0,
+            },
+          ]
+        }
+      />
+      <View
+        style={
+          [
+            {
+              "borderRadius": 100,
+              "height": 50,
+              "justifyContent": "space-around",
+              "width": 100,
+            },
+            {
+              "backgroundColor": "#F7CB15",
+              "marginLeft": 50,
+              "marginTop": -50,
+            },
+          ]
+        }
+      />
+    </View>
   </View>
 </View>
 `;
@@ -79118,9 +79774,19 @@ exports[`snapshotAllPages View 10`] = `
       "selected": undefined,
     }
   }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   focusable={true}
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
   onKeyDown={[Function]}
   onKeyUp={[Function]}
   onMouseEnter={[Function]}
@@ -79133,106 +79799,108 @@ exports[`snapshotAllPages View 10`] = `
   onStartShouldSetResponder={[Function]}
   testID="z-index-button"
 >
-  <Text
-    style={
-      {
-        "paddingBottom": 10,
+  <View>
+    <Text
+      style={
+        {
+          "paddingBottom": 10,
+        }
       }
-    }
-  >
-    Tap to flip sorting order
-  </Text>
-  <View
-    style={
-      [
-        {
-          "height": 50,
-          "justifyContent": "space-around",
-          "marginTop": -10,
-          "position": "relative",
-          "width": 100,
-        },
-        {
-          "backgroundColor": "#E57373",
-          "marginTop": 0,
-          "zIndex": 2,
-        },
-      ]
-    }
-  >
-    <Text>
-      ZIndex 
-      2
+    >
+      Tap to flip sorting order
     </Text>
-  </View>
-  <View
-    style={
-      [
-        {
-          "height": 50,
-          "justifyContent": "space-around",
-          "marginTop": -10,
-          "position": "relative",
-          "width": 100,
-        },
-        {
-          "backgroundColor": "#FFF176",
-          "marginLeft": 50,
-          "zIndex": 1,
-        },
-      ]
-    }
-  >
-    <Text>
-      ZIndex 
-      1
-    </Text>
-  </View>
-  <View
-    style={
-      [
-        {
-          "height": 50,
-          "justifyContent": "space-around",
-          "marginTop": -10,
-          "position": "relative",
-          "width": 100,
-        },
-        {
-          "backgroundColor": "#81C784",
-          "marginLeft": 100,
-          "zIndex": 0,
-        },
-      ]
-    }
-  >
-    <Text>
-      ZIndex 
-      0
-    </Text>
-  </View>
-  <View
-    style={
-      [
-        {
-          "height": 50,
-          "justifyContent": "space-around",
-          "marginTop": -10,
-          "position": "relative",
-          "width": 100,
-        },
-        {
-          "backgroundColor": "#64B5F6",
-          "marginLeft": 150,
-          "zIndex": -1,
-        },
-      ]
-    }
-  >
-    <Text>
-      ZIndex 
-      -1
-    </Text>
+    <View
+      style={
+        [
+          {
+            "height": 50,
+            "justifyContent": "space-around",
+            "marginTop": -10,
+            "position": "relative",
+            "width": 100,
+          },
+          {
+            "backgroundColor": "#E57373",
+            "marginTop": 0,
+            "zIndex": 2,
+          },
+        ]
+      }
+    >
+      <Text>
+        ZIndex 
+        2
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "height": 50,
+            "justifyContent": "space-around",
+            "marginTop": -10,
+            "position": "relative",
+            "width": 100,
+          },
+          {
+            "backgroundColor": "#FFF176",
+            "marginLeft": 50,
+            "zIndex": 1,
+          },
+        ]
+      }
+    >
+      <Text>
+        ZIndex 
+        1
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "height": 50,
+            "justifyContent": "space-around",
+            "marginTop": -10,
+            "position": "relative",
+            "width": 100,
+          },
+          {
+            "backgroundColor": "#81C784",
+            "marginLeft": 100,
+            "zIndex": 0,
+          },
+        ]
+      }
+    >
+      <Text>
+        ZIndex 
+        0
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "height": 50,
+            "justifyContent": "space-around",
+            "marginTop": -10,
+            "position": "relative",
+            "width": 100,
+          },
+          {
+            "backgroundColor": "#64B5F6",
+            "marginLeft": 150,
+            "zIndex": -1,
+          },
+        ]
+      }
+    >
+      <Text>
+        ZIndex 
+        -1
+      </Text>
+    </View>
   </View>
 </View>
 `;
@@ -79248,9 +79916,19 @@ exports[`snapshotAllPages View 11`] = `
       "selected": undefined,
     }
   }
+  accessibilityValue={
+    {
+      "max": undefined,
+      "min": undefined,
+      "now": undefined,
+      "text": undefined,
+    }
+  }
   accessible={true}
   focusable={true}
+  onBlur={[Function]}
   onClick={[Function]}
+  onFocus={[Function]}
   onKeyDown={[Function]}
   onKeyUp={[Function]}
   onMouseEnter={[Function]}
@@ -79263,66 +79941,68 @@ exports[`snapshotAllPages View 11`] = `
   onStartShouldSetResponder={[Function]}
   testID="display-none-button"
 >
-  <Text
-    style={
-      {
-        "paddingBottom": 10,
+  <View>
+    <Text
+      style={
+        {
+          "paddingBottom": 10,
+        }
       }
-    }
-  >
-    Press to toggle \`display: none\`
-  </Text>
-  <View
-    style={
-      {
-        "backgroundColor": "red",
-        "display": "none",
-        "height": 50,
-        "width": 50,
-      }
-    }
-  />
-  <View
-    style={
-      {
-        "backgroundColor": "blue",
-        "display": "none",
-        "height": 50,
-        "width": 50,
-      }
-    }
-  />
-  <View
-    style={
-      {
-        "backgroundColor": "yellow",
-        "display": "none",
-        "height": 50,
-        "width": 50,
-      }
-    }
-  >
+    >
+      Press to toggle \`display: none\`
+    </Text>
     <View
       style={
         {
-          "backgroundColor": "salmon",
+          "backgroundColor": "red",
           "display": "none",
-          "height": 30,
-          "width": 30,
+          "height": 50,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "backgroundColor": "blue",
+          "display": "none",
+          "height": 50,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "backgroundColor": "yellow",
+          "display": "none",
+          "height": 50,
+          "width": 50,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "salmon",
+            "display": "none",
+            "height": 30,
+            "width": 30,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        {
+          "backgroundColor": "magenta",
+          "display": "none",
+          "height": 50,
+          "width": 50,
         }
       }
     />
   </View>
-  <View
-    style={
-      {
-        "backgroundColor": "magenta",
-        "display": "none",
-        "height": 50,
-        "width": 50,
-      }
-    }
-  />
 </View>
 `;
 

@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Fixes clang warnings for non-portable folly includes",
+  "comment": "Integration 01/02",
   "packageName": "react-native-windows",
-  "email": "ericroz@meta.com",
+  "email": "email not defined",
   "dependentChangeType": "patch"
 }

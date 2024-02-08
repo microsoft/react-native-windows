@@ -13,13 +13,8 @@
 import type {RNTesterModule} from '../../types/RNTesterTypes';
 
 import * as React from 'react';
-import {
-  Platform,
-  StyleSheet,
-  Text,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+
+import {Platform, Pressable, StyleSheet, Text, View} from 'react-native';
 
 class ViewBorderStyleExample extends React.Component<
   $ReadOnly<{||}>,
@@ -31,9 +26,7 @@ class ViewBorderStyleExample extends React.Component<
 
   render(): React.Node {
     return (
-      <TouchableWithoutFeedback
-        testID="border-style-button"
-        onPress={this._handlePress}>
+      <Pressable testID="border-style-button" onPress={this._handlePress}>
         <View>
           <View
             style={[
@@ -66,7 +59,7 @@ class ViewBorderStyleExample extends React.Component<
             <Text style={{fontSize: 11}}>Dotted border style</Text>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </Pressable>
     );
   }
 
@@ -96,7 +89,7 @@ class OffscreenAlphaCompositing extends React.Component<
 
   render(): React.Node {
     return (
-      <TouchableWithoutFeedback
+      <Pressable
         testID="offscreen-alpha-compositing-button"
         onPress={this._handlePress}>
         <View>
@@ -149,7 +142,7 @@ class OffscreenAlphaCompositing extends React.Component<
             />
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </Pressable>
     );
   }
 
@@ -181,9 +174,7 @@ class ZIndexExample extends React.Component<
   render(): React.Node {
     const indices = this.state.flipped ? [-1, 0, 1, 2] : [2, 1, 0, -1];
     return (
-      <TouchableWithoutFeedback
-        testID="z-index-button"
-        onPress={this._handlePress}>
+      <Pressable testID="z-index-button" onPress={this._handlePress}>
         <View>
           <Text style={{paddingBottom: 10}}>Tap to flip sorting order</Text>
           <View
@@ -231,7 +222,7 @@ class ZIndexExample extends React.Component<
             <Text>ZIndex {indices[3]}</Text>
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </Pressable>
     );
   }
 
@@ -252,9 +243,7 @@ class DisplayNoneStyle extends React.Component<
 
   render(): React.Node {
     return (
-      <TouchableWithoutFeedback
-        testID="display-none-button"
-        onPress={this._handlePress}>
+      <Pressable testID="display-none-button" onPress={this._handlePress}>
         <View>
           <Text style={{paddingBottom: 10}}>
             Press to toggle `display: none`
@@ -300,7 +289,7 @@ class DisplayNoneStyle extends React.Component<
             }}
           />
         </View>
-      </TouchableWithoutFeedback>
+      </Pressable>
     );
   }
 

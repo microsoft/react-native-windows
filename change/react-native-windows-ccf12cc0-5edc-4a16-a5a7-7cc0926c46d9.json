@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Return null for missing view manager constants",
-  "packageName": "react-native-windows",
-  "email": "ericroz@meta.com",
-  "dependentChangeType": "patch"
-}

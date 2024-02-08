@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Remove some c++20 forks",
-  "packageName": "react-native-windows",
+  "comment": "Integration 01/02",
+  "packageName": "@office-iss/react-native-win32",
   "email": "email not defined",
   "dependentChangeType": "patch"
 }
