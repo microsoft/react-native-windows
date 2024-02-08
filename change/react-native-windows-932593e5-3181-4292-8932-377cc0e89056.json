@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix Base64 duplicate padding (#12689)",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
