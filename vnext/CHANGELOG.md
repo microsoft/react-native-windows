@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 05 Feb 2024 16:14:58 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Feb 2024 21:50:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.28
+
+Thu, 08 Feb 2024 21:50:06 GMT
+
+### Patches
+
+- Add SelfContained to MS.RN.Manged.Codegen.csproj (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.72.27
 

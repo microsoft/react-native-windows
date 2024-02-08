@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 08 Dec 2023 00:49:15 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Feb 2024 21:50:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.12
+
+Thu, 08 Feb 2024 21:50:06 GMT
+
+### Patches
+
+- [Win32] view.focus sometimes skips setting focus (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.72.11
 

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 08 Feb 2024 21:50:06 GMT",
+      "tag": "react-native-windows_v0.72.28",
+      "version": "0.72.28",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f86fbc6b24778fe44f26c4b1b6352c76aacdab00",
+            "comment": "Add SelfContained to MS.RN.Manged.Codegen.csproj"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 05 Feb 2024 16:14:58 GMT",
       "tag": "react-native-windows_v0.72.27",
       "version": "0.72.27",
