@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 07 Feb 2024 06:13:32 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Feb 2024 06:13:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.766
+
+Thu, 08 Feb 2024 06:13:52 GMT
+
+### Changes
+
+- Integration 01/02 (email not defined)
+- Bump @react-native-windows/cli to v0.0.0-canary.196
+- Bump @react-native-windows/codegen to v0.0.0-canary.73
 
 ## 0.0.0-canary.765
 
