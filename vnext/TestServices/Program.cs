@@ -1,10 +1,4 @@
 var builder = WebApplication.CreateBuilder(args);
-var webHost = builder.WebHost;
-webHost.UseUrls(
-  "http://localhost:5555",
-  "https://localhost:5543"
-  );
-
 var app = builder.Build();
 app.UseWebSockets();
 
