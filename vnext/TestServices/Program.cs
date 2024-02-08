@@ -9,7 +9,7 @@ var app = builder.Build();
 app.UseWebSockets();
 
 // See https://github.com/dotnet/aspnetcore/blob/v7.0.15/src/Http/Routing/src/RequestDelegateRouteBuilderExtensions.cs
-//app.Map("/", () => "HTTP Response #0");
+// app.Map("/", () => "Sample HTTP Response");
 async Task DefaultRequestDelegate(HttpContext context)
 {
   var response = context.Response;
@@ -36,6 +36,11 @@ app.Map("/", async context =>
     await DefaultRequestDelegate(context);
   }
 });
+
+app.Map(
+  "/Facebook/React/RNTesterIntegrationTests/WebSocketBinaryTest",
+  Facebook.React.Test.RNTesterIntegrationTests.WebSocketBinaryTest
+  );
 
 #endregion Request Mappings
 

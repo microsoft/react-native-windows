@@ -6,7 +6,6 @@ namespace Facebook.React.Test
 {
   public sealed class RNTesterIntegrationTests
   {
-    //private RNTesterIntegrationTests instance = new RNTesterIntegrationTests();
     static List<WebSocket> wsConnections = new List<WebSocket>();
 
     public static async Task WebSocketTest(HttpContext context)
@@ -59,7 +58,6 @@ An incoming message of 'exit' will shut down the server.
 
           var outputMessage = $"{inputMessage}_response";
           var outputBytes = Encoding.UTF8.GetBytes(outputMessage);
-          var outputSegment = new ArraySegment<byte>(outputBytes);
 
           await ws.SendAsync(outputBytes, WebSocketMessageType.Text, true, CancellationToken.None);
         }
@@ -69,6 +67,42 @@ An incoming message of 'exit' will shut down the server.
         }
       }
     }
+
+    public static async Task WebSocketBinaryTest(HttpContext context)
+    {
+      var ws = await context.WebSockets.AcceptWebSocketAsync();
+      wsConnections.Add(ws);
+
+      while (true)
+      {
+        if (ws.State == WebSocketState.Open)
+        {
+          async Task<string> receiveMessage(WebSocket socket)
+          {
+            // Read incoming message
+            var inputBytes = new byte[1024];
+            WebSocketReceiveResult result;
+            int total = 0;
+            do
+            {
+              result = await socket.ReceiveAsync(new ArraySegment<byte>(inputBytes), CancellationToken.None);
+              total += result.Count;
+            } while (result != null && !result.EndOfMessage);
+
+            return Encoding.UTF8.GetString(inputBytes, 0, total);
+          };
+          var incomingMessage = await receiveMessage(ws);
+          await Console.Out.WriteLineAsync($"Message received: {incomingMessage}");
+
+          var outgoingBytes = new byte[] { 4, 5, 6, 7 };
+
+          await ws.SendAsync(outgoingBytes, WebSocketMessageType.Binary, true, CancellationToken.None);
+        }
+        else if(ws.State == WebSocketState.Closed || ws.State == WebSocketState.Aborted)
+        {
+          break;
+        }
+      }
+    }
   }
 }
-
