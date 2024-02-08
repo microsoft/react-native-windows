@@ -1,6 +1,3 @@
-using System.Net.WebSockets;
-using System.Text;
-
 var builder = WebApplication.CreateBuilder(args);
 var webHost = builder.WebHost;
 webHost.UseUrls(
@@ -11,77 +8,35 @@ webHost.UseUrls(
 var app = builder.Build();
 app.UseWebSockets();
 
-app.Map("/h0", () => "HTTP Response #0");
+// See https://github.com/dotnet/aspnetcore/blob/v7.0.15/src/Http/Routing/src/RequestDelegateRouteBuilderExtensions.cs
+//app.Map("/", () => "HTTP Response #0");
+async Task DefaultRequestDelegate(HttpContext context)
+{
+  var response = context.Response;
+  response.StatusCode = 200;
+  response.ContentType = "text/plain";
 
-// ws://localhost:5555
-// See react-native/IntegrationTests/websocket_integration_test_server.js
-// Note, the referred code has been removed in React Native 0.73
-var wsConnections = new List<WebSocket>();
+  var bytes = System.Text.Encoding.UTF8.GetBytes("Sample HTTP Response");
+  await response.Body.WriteAsync(bytes);
+}
+
+#region Request Mappings
+
 app.Map("/", async context =>
 {
-  if (!context.WebSockets.IsWebSocketRequest)
+  if (context.WebSockets.IsWebSocketRequest)
   {
-    context.Response.StatusCode = (int)System.Net.HttpStatusCode.BadRequest;
-    return;
+    // ws://localhost:5555
+    // See react-native/IntegrationTests/websocket_integration_test_server.js
+    // Note, the referred code has been removed in React Native 0.73
+    await Facebook.React.Test.RNTesterIntegrationTests.WebSocketTest(context);
   }
-
-  var announcement = @"
-WebSocket integration test server
-
-This will send each incoming message back, with the string '_response' appended.
-An incoming message of 'exit' will shut down the server.
-";
-  await Console.Out.WriteLineAsync(announcement);
-
-  using var ws = await context.WebSockets.AcceptWebSocketAsync();
-  wsConnections.Add(ws);
-
-  if (ws.State == WebSocketState.Open)
+  else
   {
-    var connectMessage = "hello";
-    var bytes = Encoding.UTF8.GetBytes(connectMessage);
-    var segment = new ArraySegment<byte>(bytes);
-
-    await ws.SendAsync(segment, WebSocketMessageType.Text, true, CancellationToken.None);
-  }
-
-  while (true)
-  {
-    if (ws.State == WebSocketState.Open)
-    {
-      async Task<string> receiveMessage(WebSocket socket)
-      {
-        // Read incoming message
-        var inputBytes = new byte[1024];
-        WebSocketReceiveResult result;
-        int total = 0;
-        do
-        {
-          result = await socket.ReceiveAsync(new ArraySegment<byte>(inputBytes), CancellationToken.None);
-          total += result.Count;
-        } while (result != null && !result.EndOfMessage);
-
-        return Encoding.UTF8.GetString(inputBytes, 0, total);
-      };
-      var inputMessage = await receiveMessage(ws);
-      await Console.Out.WriteLineAsync($"Received message: {inputMessage}");
-
-      if (inputMessage == "exit")
-      {
-        await Console.Out.WriteLineAsync("WebSocket integration test server exit");
-      }
-
-      var outputMessage = $"{inputMessage}_response";
-      var outputBytes = Encoding.UTF8.GetBytes(outputMessage);
-      var outputSegment = new ArraySegment<byte>(outputBytes);
-
-      await ws.SendAsync(outputBytes, WebSocketMessageType.Text, true, CancellationToken.None); 
-    }
-    else if (ws.State == WebSocketState.Closed || ws.State == WebSocketState.Aborted)
-    {
-      break;
-    }
+    await DefaultRequestDelegate(context);
   }
 });
+
+#endregion Request Mappings
 
 await app.RunAsync();

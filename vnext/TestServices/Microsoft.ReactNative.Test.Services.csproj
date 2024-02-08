@@ -10,4 +10,14 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'http' " />
+  <ItemGroup>
+    <None Remove="Facebook\" />
+    <None Remove="Facebook\React\" />
+    <None Remove="Facebook\React\Test\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Facebook\" />
+    <Folder Include="Facebook\React\" />
+    <Folder Include="Facebook\React\Test\" />
+  </ItemGroup>
 </Project>
