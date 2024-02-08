@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <react/renderer/components/rnwcore/Props.h>
+#include <react/components/rnwcore/Props.h>
 #include <react/renderer/components/text/BaseTextProps.h>
 #include <react/renderer/core/propsConversions.h>
 

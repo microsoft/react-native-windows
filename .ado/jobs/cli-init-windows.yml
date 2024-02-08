@@ -80,7 +80,7 @@ parameters:
             additionalRunArguments:
           - Name: FabricLibX64Release
             template: cpp-lib
-            configuration: ReleaseLib
+            configuration: Release
             platform: x64
             additionalRunArguments:
           - Name: FabricLibX86Debug

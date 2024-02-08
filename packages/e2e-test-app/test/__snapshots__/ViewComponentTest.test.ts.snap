@@ -385,7 +385,7 @@ exports[`ViewTests Views can have accessibility customization 1`] = `
 
 exports[`ViewTests Views can have background colors 1`] = `
 {
-  "AutomationId": "background-color",
+  "AutomationId": "view-test-background-color",
   "Background": "#FF527FE4",
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",
@@ -425,7 +425,7 @@ exports[`ViewTests Views can have background colors 1`] = `
 
 exports[`ViewTests Views can have borders 1`] = `
 {
-  "AutomationId": "border",
+  "AutomationId": "view-test-border",
   "Background": null,
   "BorderBrush": "#FF527FE4",
   "BorderThickness": "5,5,5,5",
@@ -633,7 +633,7 @@ exports[`ViewTests Views can have overflow 1`] = `
 
 exports[`ViewTests Views can have padding and margins 1`] = `
 {
-  "AutomationId": "padding-margin",
+  "AutomationId": "view-test-padding-margin",
   "Background": null,
   "BorderBrush": "#FFBB0000",
   "BorderThickness": "0.5,0.5,0.5,0.5",
@@ -1041,7 +1041,7 @@ exports[`ViewTests Views can have ranging opacity 1`] = `
 
 exports[`ViewTests Views can have rounded borders 1`] = `
 {
-  "AutomationId": "rounded-borders",
+  "AutomationId": "view-test-rounded-borders",
   "Background": null,
   "BorderBrush": "#E4000000",
   "BorderThickness": "0,0,0,0",

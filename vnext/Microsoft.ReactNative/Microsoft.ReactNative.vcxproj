@@ -105,6 +105,7 @@
         $(ReactNativeWindowsDir)Microsoft.ReactNative\Views;
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)codegen;
+        $(ReactNativeWindowsDir)codegen\react\components\rnwcore;
         $(ReactNativeWindowsDir)Common;
         $(ReactNativeWindowsDir)include;
         $(ReactNativeWindowsDir)Shared;

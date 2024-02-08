@@ -138,6 +138,7 @@
     <ClCompile Include="$(YogaDir)\yoga\YGNodeStyle.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGPixelGrid.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\algorithm\AbsoluteLayout.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\algorithm\Baseline.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\algorithm\Cache.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\algorithm\CalculateLayout.cpp" />

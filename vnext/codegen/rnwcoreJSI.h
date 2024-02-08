@@ -12,8 +12,7 @@
 #include <ReactCommon/TurboModule.h>
 #include <react/bridging/Bridging.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 
   class JSI_EXPORT NativeActionSheetManagerCxxSpecJSI : public TurboModule {
@@ -2255,7 +2254,6 @@ protected:
 public:
   virtual void startReportAProblemFlow(jsi::Runtime &rt) = 0;
   virtual void setExtraData(jsi::Runtime &rt, jsi::Object extraData, jsi::Object extraFiles) = 0;
-  virtual void setCategoryID(jsi::Runtime &rt, jsi::String categoryID) = 0;
 
 };
 
@@ -2294,14 +2292,6 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::setExtraData, jsInvoker_, instance_, std::move(extraData), std::move(extraFiles));
-    }
-    void setCategoryID(jsi::Runtime &rt, jsi::String categoryID) override {
-      static_assert(
-          bridging::getParameterCount(&T::setCategoryID) == 2,
-          "Expected setCategoryID(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setCategoryID, jsInvoker_, instance_, std::move(categoryID));
     }
 
   private:
@@ -9596,7 +9586,7 @@ private:
 
 #pragma mark - SampleTurboModuleEnumInt
 
-enum SampleTurboModuleEnumInt { A, B };
+enum class SampleTurboModuleEnumInt { A, B };
 
 template <>
 struct Bridging<SampleTurboModuleEnumInt> {
@@ -9629,7 +9619,7 @@ public:
   virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
   virtual void voidFunc(jsi::Runtime &rt) = 0;
   virtual bool getBool(jsi::Runtime &rt, bool arg) = 0;
-  virtual int getEnum(jsi::Runtime &rt, int arg) = 0;
+  virtual jsi::Value getEnum(jsi::Runtime &rt, jsi::Value arg) = 0;
   virtual double getNumber(jsi::Runtime &rt, double arg) = 0;
   virtual jsi::String getString(jsi::Runtime &rt, jsi::String arg) = 0;
   virtual jsi::Array getArray(jsi::Runtime &rt, jsi::Array arg) = 0;
@@ -9692,12 +9682,12 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::getBool, jsInvoker_, instance_, std::move(arg));
     }
-    int getEnum(jsi::Runtime &rt, int arg) override {
+    jsi::Value getEnum(jsi::Runtime &rt, jsi::Value arg) override {
       static_assert(
           bridging::getParameterCount(&T::getEnum) == 2,
           "Expected getEnum(...) to have 2 parameters");
 
-      return bridging::callFromJs<int>(
+      return bridging::callFromJs<jsi::Value>(
           rt, &T::getEnum, jsInvoker_, instance_, std::move(arg));
     }
     double getNumber(jsi::Runtime &rt, double arg) override {
@@ -9828,5 +9818,4 @@ private:
   Delegate delegate_;
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

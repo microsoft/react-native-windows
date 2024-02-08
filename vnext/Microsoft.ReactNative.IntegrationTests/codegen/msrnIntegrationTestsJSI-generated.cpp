@@ -9,8 +9,7 @@
 
 #include "msrnIntegrationTestsJSI.h"
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 static jsi::Value __hostFunction_NativeMySimpleTurboModuleCxxCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeMySimpleTurboModuleCxxCxxSpecJSI *>(&turboModule)->getConstants(
@@ -110,5 +109,4 @@ NativeMyTrivialTurboModuleCxxSpecJSI::NativeMyTrivialTurboModuleCxxSpecJSI(std::
 }
 
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react
