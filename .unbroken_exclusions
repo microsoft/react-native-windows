@@ -22,3 +22,4 @@ File not found edge:/inspect while parsing packages/playground/README_compositio
 !packages/@rnw-scripts/format-files/node_modules
 !packages/@rnw-scripts/promote-release/node_modules
 !.github/ISSUE_TEMPLATE
+!.github/security.md
