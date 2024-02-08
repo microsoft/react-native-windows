@@ -21,3 +21,4 @@ URL not found https://docs.github.com/get-started/quickstart while parsing CONTR
 !packages/@rnw-scripts/format-files/node_modules
 !packages/@rnw-scripts/promote-release/node_modules
 !.github/ISSUE_TEMPLATE
+!.github/security.md
