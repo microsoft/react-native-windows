@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 09 Feb 2024 17:12:46 GMT",
+      "version": "0.73.2",
+      "tag": "@react-native-windows/cli_v0.73.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "8f4160298ca131e01fb8c1bd6900394735a32c58",
+            "comment": "Update to react-native 0.73.4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jan 2024 23:56:55 GMT",
       "version": "0.73.1",
       "tag": "@react-native-windows/cli_v0.73.1",
