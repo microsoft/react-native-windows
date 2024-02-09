@@ -59,7 +59,7 @@
     ]
   },
   "resolutions": {
-    "@azure/core-auth": "1.4.0"
+    "**/@azure/core-auth": "1.4.0"
   },
   "promoteRelease": true,
   "windowsOnly": true,
