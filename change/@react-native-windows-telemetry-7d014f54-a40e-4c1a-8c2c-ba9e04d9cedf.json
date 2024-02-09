@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Ensure react-native-windows-init still works on Node 16",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

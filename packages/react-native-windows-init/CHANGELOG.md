@@ -1,8 +1,19 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Thu, 08 Feb 2024 06:13:52 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Feb 2024 21:11:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.0
+
+Fri, 09 Feb 2024 21:11:18 GMT
+
+### Minor changes
+
+- Ensure react-native-windows-init still works on Node 16 (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.31
+- Bump @react-native-windows/telemetry to v0.0.0-canary.82
+- Bump @react-native-windows/cli to v0.0.0-canary.197
 
 ## 1.3.50
 
