@@ -68,6 +68,10 @@ void WindowsModalHostComponentView::ShowOnUIThread() noexcept {
     CompositionHwndHost.as(spunk);
     spunk->AddRef(); // Will be stored in windowData
 
+    // get the root hwnd
+    auto roothwnd = reinterpret_cast<HWND>(
+        winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(m_context.Properties().Handle()));
+
     m_hwnd = CreateWindow(
         c_modalWindowClassName,
         L"React-Native Modal",
@@ -76,7 +80,7 @@ void WindowsModalHostComponentView::ShowOnUIThread() noexcept {
         CW_USEDEFAULT,
         MODAL_DEFAULT_WIDTH,
         MODAL_DEFAULT_HEIGHT,
-        nullptr,
+        roothwnd, // parent
         nullptr,
         hInstance,
         spunk.get());
@@ -196,7 +200,7 @@ void WindowsModalHostComponentView::updateLayoutMetrics(
   }
 
   if (m_layoutMetrics.frame.size != layoutMetrics.frame.size ||
-      m_layoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor) {
+      m_layoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor || m_layoutMetrics.frame.size.width == 0) {
     // Always make visual a min size, so that even if its laid out at zero size, its clear an unimplemented view was
     // rendered
     float width = std::max(m_layoutMetrics.frame.size.width, 200.0f);
