@@ -14,7 +14,7 @@ export function getAbbreviatedRef(reactNativeVersion: string): string {
   }
 
   if (
-    semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true}) ||
+    semver.lt(reactNativeVersion, '0.0.0', {loose: true}) ||
     reactNativeVersion.includes('nightly')
   ) {
     return extractHashFromNightlyVersion(reactNativeVersion);
@@ -32,7 +32,7 @@ export async function fetchFullRef(
   }
 
   if (
-    semver.lt(reactNativeVersion, '0.0.0', {includePrerelease: true}) ||
+    semver.lt(reactNativeVersion, '0.0.0', {loose: true}) ||
     reactNativeVersion.includes('nightly')
   ) {
     const abbrevHash = extractHashFromNightlyVersion(reactNativeVersion);

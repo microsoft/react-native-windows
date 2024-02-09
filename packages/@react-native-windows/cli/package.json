@@ -40,8 +40,8 @@
     "xpath": "^0.0.27"
   },
   "devDependencies": {
-    "@react-native-community/cli-doctor": "12.0.0-alpha.12",
-    "@react-native-community/cli-types": "12.0.0-alpha.12",
+    "@react-native-community/cli-doctor": "12.3.2",
+    "@react-native-community/cli-types": "12.3.2",
     "@rnw-scripts/eslint-config": "1.2.3",
     "@rnw-scripts/jest-unittest-config": "1.5.6",
     "@rnw-scripts/just-task": "2.3.17",

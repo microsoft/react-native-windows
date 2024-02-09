@@ -18,7 +18,7 @@
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
     "react": "18.2.0",
-    "react-native": "0.73.0",
+    "react-native": "0.73.4",
     "react-native-windows": "0.73.4"
   },
   "devDependencies": {
@@ -29,8 +29,7 @@
     "@babel/runtime": "^7.8.4",
     "@react-native-windows/automation": "^0.3.139",
     "@react-native-windows/automation-commands": "^0.1.159",
-    "@react-native/babel-plugin-codegen": "0.73.0",
-    "@react-native/metro-babel-transformer": "0.73.12",
+    "@react-native/metro-babel-transformer": "0.73.15",
     "@react-native/metro-config": "^0.73.0",
     "@rnw-scripts/babel-node-config": "2.3.1",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
