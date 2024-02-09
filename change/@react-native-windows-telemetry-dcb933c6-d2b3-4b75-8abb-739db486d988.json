@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[0.72] Revert back to node 16 for all images",
+  "packageName": "@react-native-windows/telemetry",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
