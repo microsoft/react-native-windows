@@ -59,8 +59,5 @@
     ]
   },
   "promoteRelease": true,
-  "windowsOnly": true,
-  "engines": {
-    "node": ">= 18"
-  }
+  "windowsOnly": true
 }
