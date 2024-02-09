@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 09 Feb 2024 06:14:32 GMT",
+      "version": "0.0.0-canary.767",
+      "tag": "react-native-windows_v0.0.0-canary.767",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d9bd78f3dde9ae2a5f085f3e5bc11bfac4ee8312",
+            "comment": "Fix Base64 encoding padding"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Feb 2024 06:13:52 GMT",
       "version": "0.0.0-canary.766",
       "tag": "react-native-windows_v0.0.0-canary.766",
