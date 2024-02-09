@@ -53,20 +53,16 @@ struct WindowsModalHostComponentView
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
-  // Testing
+  // Used for creating new window
   void ShowOnUIThread() noexcept;
   void HideOnUIThread() noexcept;
   static void RegisterWndClass() noexcept;
-  // Testing
 
  private:
   std::shared_ptr<facebook::react::ModalHostViewProps const> m_props;
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
-
-  // Testing
   HWND m_hwnd{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
-  // Testing
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
