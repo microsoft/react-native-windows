@@ -43,8 +43,5 @@
       "patch"
     ]
   },
-  "promoteRelease": true,
-  "engines": {
-    "node": ">= 18"
-  }
+  "promoteRelease": true
 }

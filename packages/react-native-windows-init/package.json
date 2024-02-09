@@ -22,8 +22,8 @@
     "react-native-windows-init": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^0.0.0-canary.30",
-    "@react-native-windows/telemetry": "^0.0.0-canary.81",
+    "@react-native-windows/fs": "0.0.0-canary.30",
+    "@react-native-windows/telemetry": "0.0.0-canary.81",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.57.1",
     "chalk": "^4.1.0",
@@ -65,8 +65,5 @@
     "disallowedChangeTypes": [
       "prerelease"
     ]
-  },
-  "engines": {
-    "node": ">= 18"
   }
 }
