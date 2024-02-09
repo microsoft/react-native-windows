@@ -43,7 +43,8 @@ facebook::jsi::ScriptVersion_t UwpScriptStore::getScriptVersion(const std::strin
   return version;
 }
 
-std::future<facebook::jsi::ScriptVersion_t> UwpScriptStore::getScriptVersionAsync(const std::string &bundleUri) {
+winrt::Windows::Foundation::IAsyncOperation<facebook::jsi::ScriptVersion_t> UwpScriptStore::getScriptVersionAsync(
+    const std::string &bundleUri) {
   co_await winrt::resume_background();
 
   const winrt::hstring fileUrl(Microsoft::Common::Unicode::Utf8ToUtf16("ms-appx:///Bundle/" + bundleUri + ".bundle"));

@@ -5,7 +5,7 @@
 
 #include <hermes/hermes_api.h>
 #include <chrono>
-#include <future>
+#include <coroutine>
 
 #include "HermesRuntimeHolder.h"
 #include "HermesSamplingProfiler.h"
@@ -32,10 +32,8 @@ auto resume_in_dispatcher(const IReactDispatcher &dispatcher) noexcept {
 
     void await_resume() const noexcept {}
 
-    void await_suspend(std::experimental::coroutine_handle<> resume) noexcept {
-      callback_ = [context = resume.address()]() noexcept {
-        std::experimental::coroutine_handle<>::from_address(context)();
-      };
+    void await_suspend(std::coroutine_handle<> resume) noexcept {
+      callback_ = [context = resume.address()]() noexcept { std::coroutine_handle<>::from_address(context)(); };
       dispatcher_.Post(std::move(callback_));
     }
 
@@ -54,8 +52,7 @@ IAsyncOperation<winrt::hstring> getTraceFilePath() noexcept {
                  .count();
 
   os << hermesDataPath.c_str() << L"\\cpu_" << now << L".cpuprofile";
-  // TODO: Use C++ 20 `os.view()` to avoid a copy
-  co_return winrt::hstring(os.str());
+  co_return winrt::hstring(os.view());
 }
 
 } // namespace

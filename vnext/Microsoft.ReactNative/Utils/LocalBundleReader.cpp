@@ -53,7 +53,8 @@ std::string GetBundleFromEmbeddedResource(const winrt::Windows::Foundation::Uri 
   return std::string(start, start + size);
 }
 
-std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::wstring bundleUri) {
+winrt::Windows::Foundation::IAsyncOperation<winrt::hstring> LocalBundleReader::LoadBundleAsync(
+    const std::wstring bundleUri) {
   co_await winrt::resume_background();
 
   winrt::Windows::Storage::StorageFile file{nullptr};
@@ -65,7 +66,7 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::wstring b
     file = co_await winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
   } else if (bundleUri._Starts_with(L"resource://")) {
     winrt::Windows::Foundation::Uri uri(bundleUri);
-    co_return GetBundleFromEmbeddedResource(uri);
+    co_return winrt::to_hstring(GetBundleFromEmbeddedResource(uri));
   } else {
     file = co_await winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(bundleUri);
   }
@@ -86,10 +87,10 @@ std::future<std::string> LocalBundleReader::LoadBundleAsync(const std::wstring b
       reinterpret_cast<uint8_t *>(&script[0]), reinterpret_cast<uint8_t *>(&script[script.length()])});
   dataReader.Close();
 
-  co_return script;
+  co_return winrt::to_hstring(script);
 }
 
-std::string LocalBundleReader::LoadBundle(const std::wstring &bundlePath) {
+winrt::hstring LocalBundleReader::LoadBundle(const std::wstring &bundlePath) {
   return LoadBundleAsync(bundlePath).get();
 }
 
@@ -113,7 +114,7 @@ size_t StorageFileBigString::size() const {
 
 void StorageFileBigString::ensure() const {
   if (m_string.empty()) {
-    m_string = m_futureBuffer.get();
+    m_string = winrt::to_string(m_futureBuffer.get());
   }
 }
 
