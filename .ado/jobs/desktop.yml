@@ -118,7 +118,7 @@ jobs:
               parameters:
                 solutionDir: vnext/TestServices
                 solutionName: TestServices.sln
-                buildPlatform: AnyCPU
+                buildPlatform: 'Any CPU'
                 buildConfiguration: Release
 
             # - template: ../templates/msbuild-sln.yml
