@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Sat, 21 Oct 2023 05:16:09 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Feb 2024 21:11:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.31
+
+Fri, 09 Feb 2024 21:11:17 GMT
+
+### Changes
+
+- Ensure react-native-windows-init still works on Node 16 (jthysell@microsoft.com)
 
 ## 0.0.0-canary.30
 

@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.765",
+  "version": "0.0.0-canary.768",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "@react-native-community/cli": "13.0.0",
     "@react-native-community/cli-platform-android": "13.0.0",
     "@react-native-community/cli-platform-ios": "13.0.0",
-    "@react-native-windows/cli": "0.0.0-canary.195",
+    "@react-native-windows/cli": "0.0.0-canary.197",
     "@react-native/assets": "1.0.0",
     "@react-native/assets-registry": "0.74.0-nightly-20240102-05ec058ac",
     "@react-native/codegen": "0.74.0-nightly-20240102-05ec058ac",
@@ -63,7 +63,7 @@
     "yargs": "^17.6.2"
   },
   "devDependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.72",
+    "@react-native-windows/codegen": "0.0.0-canary.74",
     "@react-native/metro-config": "^0.73.0",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.4",
@@ -81,7 +81,7 @@
     "prettier": "^2.4.1",
     "react": "18.2.0",
     "react-native": "0.74.0-nightly-20240102-05ec058ac",
-    "react-native-platform-override": "^1.9.17",
+    "react-native-platform-override": "^1.9.18",
     "react-refresh": "^0.14.0",
     "typescript": "^4.9.5"
   },

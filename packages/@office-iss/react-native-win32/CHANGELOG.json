@@ -2,6 +2,42 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 09 Feb 2024 21:11:18 GMT",
+      "version": "0.0.0-canary.229",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.229",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.9.18",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 Feb 2024 06:13:51 GMT",
+      "version": "0.0.0-canary.228",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.228",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "44ed7f067586b399a2811fc0494006518ced0cd8",
+            "comment": "[Win32] view.focus sometimes skips setting focus"
+          },
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "3dbae13e31881c13fdf9f6ce0e69dec6ee070cfe",
+            "comment": "Integration 01/02"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Jan 2024 06:15:26 GMT",
       "version": "0.0.0-canary.227",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.227",

@@ -1,8 +1,25 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 23 Jan 2024 06:15:26 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Feb 2024 21:11:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.229
+
+Fri, 09 Feb 2024 21:11:18 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.9.18
+
+## 0.0.0-canary.228
+
+Thu, 08 Feb 2024 06:13:51 GMT
+
+### Changes
+
+- [Win32] view.focus sometimes skips setting focus (30809111+acoates-ms@users.noreply.github.com)
+- Integration 01/02 (email not defined)
 
 ## 0.0.0-canary.227
 
