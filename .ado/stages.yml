@@ -10,6 +10,7 @@ parameters:
 
 stages:
   - stage: Setup
+    condition: false
     jobs:
       - template: jobs/setup.yml
         parameters:
