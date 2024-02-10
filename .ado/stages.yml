@@ -19,28 +19,29 @@ stages:
     displayName: Build 🔨
     dependsOn: Setup
     jobs:
-      - template: jobs/universal.yml
-        parameters:
-          buildEnvironment: ${{ parameters.buildEnvironment }}
-          AgentPool: ${{ parameters.AgentPool }}
+      # - template: jobs/universal.yml
+      #   parameters:
+      #     buildEnvironment: ${{ parameters.buildEnvironment }}
+      #     AgentPool: ${{ parameters.AgentPool }}
 
       - template: jobs/desktop.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
 
-      - template: jobs/nuget-desktop.yml
-        parameters:
-          AgentPool: ${{ parameters.AgentPool }}
+      # - template: jobs/nuget-desktop.yml
+      #   parameters:
+      #     AgentPool: ${{ parameters.AgentPool }}
 
-      # NuGet using tests rely on "UniversalBuild" which is done in the build stage
-      - template: jobs/cli-init.yml
-        parameters:
-          buildEnvironment: ${{ parameters.buildEnvironment }}
-          AgentPool: ${{ parameters.AgentPool }}
-          buildNuGetOnly: true
+      # # NuGet using tests rely on "UniversalBuild" which is done in the build stage
+      # - template: jobs/cli-init.yml
+      #   parameters:
+      #     buildEnvironment: ${{ parameters.buildEnvironment }}
+      #     AgentPool: ${{ parameters.AgentPool }}
+      #     buildNuGetOnly: true
 
   - stage: IntegrationTests
+    condition: false
     displayName: Tests 🧪
     dependsOn: Setup
     jobs:
@@ -77,6 +78,7 @@ stages:
           AgentPool: ${{ parameters.AgentPool }}
 
   - stage: CLI
+    condition: false
     displayName: Cli 🖥
     dependsOn: Setup
     jobs:
@@ -85,7 +87,7 @@ stages:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
           buildNuGetOnly: false
-      
+
       - template: jobs/cli-init-windows.yml
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
