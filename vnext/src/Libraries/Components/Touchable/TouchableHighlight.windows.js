@@ -378,6 +378,7 @@ class TouchableHighlight extends React.Component<Props, State> {
 
   componentDidMount(): void {
     this._isMounted = true;
+    this.state.pressability.configure(this._createPressabilityConfig());
   }
 
   componentDidUpdate(prevProps: Props, prevState: State) {

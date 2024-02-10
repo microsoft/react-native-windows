@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 09 Feb 2024 17:12:46 GMT",
+      "version": "0.73.1",
+      "tag": "@office-iss/react-native-win32_v0.73.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "226072f2a745dcfb7823be136f8b04076b7e1b4d",
+            "comment": "[Win32] view.focus sometimes skips setting focus"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "8f4160298ca131e01fb8c1bd6900394735a32c58",
+            "comment": "Update to react-native 0.73.4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 08 Dec 2023 00:26:14 GMT",
       "version": "0.73.0",
       "tag": "@office-iss/react-native-win32_v0.73.0",
