@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 10 Feb 2024 06:14:25 GMT",
+      "version": "0.0.0-canary.769",
+      "tag": "react-native-windows_v0.0.0-canary.769",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "10cf9298509699589016b9f65d48df831def65fe",
+            "comment": "Add missing sstream includes"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 09 Feb 2024 21:11:18 GMT",
       "version": "0.0.0-canary.768",
       "tag": "react-native-windows_v0.0.0-canary.768",
