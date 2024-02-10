@@ -361,17 +361,15 @@ InstanceImpl::InstanceImpl(
           winrt::Microsoft::ReactNative::ReactPropertyBag(propertyBag), m_runtimeScheduler);
     }
 
-    // Using runOnQueueSync because initializeBridge calls createJSExecutor with runOnQueueSync,
-    // so this is an attempt to keep the same semantics for exiting this method with TurboModuleManager
-    // initialized.
-    m_jsThread->runOnQueueSync([propertyBag,
-                                innerInstance = m_innerInstance,
-                                runtimeHolder = m_devSettings->jsiRuntimeHolder,
-                                runtimeScheduler = m_runtimeScheduler,
-                                turboModuleRegistry = m_turboModuleRegistry,
-                                longLivedObjectCollection = m_longLivedObjectCollection]() {
+    // Use RuntimeExecutor so non-ABI JSExecutorFactory instances passed in through DevSettings
+    // can use the same logic
+    runtimeExecutor([propertyBag,
+                     innerInstance = m_innerInstance,
+                     runtimeScheduler = m_runtimeScheduler,
+                     turboModuleRegistry = m_turboModuleRegistry,
+                     longLivedObjectCollection = m_longLivedObjectCollection](jsi::Runtime &runtime) {
       if (runtimeScheduler) {
-        RuntimeSchedulerBinding::createAndInstallIfNeeded(*runtimeHolder->getRuntime(), runtimeScheduler);
+        RuntimeSchedulerBinding::createAndInstallIfNeeded(runtime, runtimeScheduler);
       }
       auto turboModuleManager = std::make_shared<TurboModuleManager>(
           turboModuleRegistry,
@@ -386,10 +384,7 @@ InstanceImpl::InstanceImpl(
       };
 
       TurboModuleBinding::install(
-          *runtimeHolder->getRuntime(),
-          std::function(binding),
-          TurboModuleBindingMode::HostObject,
-          longLivedObjectCollection);
+          runtime, std::function(binding), TurboModuleBindingMode::HostObject, longLivedObjectCollection);
 
       // init TurboModule
       for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
