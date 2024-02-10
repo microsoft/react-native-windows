@@ -19,9 +19,6 @@
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
 
-// Standard Library
-#include <sstream>
-
 using Microsoft::Common::Utilities::CheckedReinterpretCast;
 
 using std::function;
