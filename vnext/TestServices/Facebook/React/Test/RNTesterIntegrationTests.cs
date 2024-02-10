@@ -92,7 +92,7 @@ An incoming message of 'exit' will shut down the server.
             return Encoding.UTF8.GetString(inputBytes, 0, total);
           };
           var incomingMessage = await receiveMessage(ws);
-          await Console.Out.WriteLineAsync($"Message received: {incomingMessage}");
+          await Console.Out.WriteLineAsync($"Message received: [{incomingMessage}]");
 
           var outgoingBytes = new byte[] { 4, 5, 6, 7 };
 

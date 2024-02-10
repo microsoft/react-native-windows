@@ -32,7 +32,7 @@ app.Map("/", async context =>
 });
 
 app.Map(
-  "/Facebook/React/RNTesterIntegrationTests/WebSocketBinaryTest",
+  "/rnw/rntester/websocketbinarytest",
   Facebook.React.Test.RNTesterIntegrationTests.WebSocketBinaryTest
   );
 
