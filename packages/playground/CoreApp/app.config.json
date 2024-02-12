@@ -4,7 +4,6 @@
   // the path to the JS bundle, relative to bundleRootPath. Default value: "index.windows"
   "jsBundleFile": "Samples\\rntester",
   // "bundleRootPath": "ms-appx:///Bundle/",
-  "useWebDebugger": false,
   // "useFastRefresh": true,
   "useDeveloperSupport": true,
   // "useDirectDebugger": false,

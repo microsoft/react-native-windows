@@ -105,11 +105,10 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 #ifndef CORE_ABI
       viewManagersProvider,
 #endif
-      turboModulesProvider,
+      turboModulesProvider
 #ifdef USE_FABRIC
-      componentregistry,
-#endif
-      m_instanceSettings.UseWebDebugger());
+      ,componentregistry
+#endif);
 
   if (auto packageProviders = InstanceSettings().PackageProviders()) {
     for (auto const &packageProvider : packageProviders) {
@@ -124,7 +123,6 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.Notifications = m_instanceSettings.Notifications();
   reactOptions.SetUseDeveloperSupport(m_instanceSettings.UseDeveloperSupport());
   reactOptions.DeveloperSettings.SourceBundleName = to_string(m_instanceSettings.DebugBundlePath());
-  reactOptions.SetUseWebDebugger(m_instanceSettings.UseWebDebugger());
   reactOptions.SetUseDirectDebugger(m_instanceSettings.UseDirectDebugger());
   reactOptions.SetDebuggerBreakOnNextLine(m_instanceSettings.DebuggerBreakOnNextLine());
   reactOptions.SetUseFastRefresh(m_instanceSettings.UseFastRefresh());

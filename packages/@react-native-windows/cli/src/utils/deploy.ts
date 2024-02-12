@@ -380,9 +380,6 @@ export async function deployToDesktop(
   const vsVersion = Version.fromString(buildTools.installationVersion);
 
   const args = [];
-  if (options.remoteDebugging) {
-    args.push('--remote-debugging');
-  }
 
   if (options.directDebugging) {
     args.push('--direct-debugging', options.directDebugging.toString());

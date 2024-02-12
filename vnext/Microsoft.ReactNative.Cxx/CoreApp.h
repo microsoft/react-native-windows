@@ -11,8 +11,6 @@ struct RNCoreApp {
   wchar_t const *componentName;
 
   /// default value: true
-  bool useWebDebugger;
-  /// default value: true
   bool useFastRefresh;
   /// default value: true
   bool useDeveloperSupport;

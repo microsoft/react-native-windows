@@ -42,7 +42,7 @@ namespace hosting = xaml::Hosting;
 
 constexpr auto WindowDataProperty = L"WindowData";
 
-int RunPlayground(int showCmd, bool useWebDebugger);
+int RunPlayground(int showCmd);
 
 HWND GetXamlIslandHwnd(const hosting::DesktopWindowXamlSource &dwxs) {
   auto interop = dwxs.as<IDesktopWindowXamlSourceNative>();
@@ -63,7 +63,6 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
 
-  bool m_useWebDebugger{false};
   bool m_fastRefreshEnabled{true};
   bool m_useDirectDebugger{true};
   bool m_breakOnNextLine{false};
@@ -115,7 +114,6 @@ struct WindowData {
 
           host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
 
-          host.InstanceSettings().UseWebDebugger(m_useWebDebugger);
           host.InstanceSettings().UseDirectDebugger(m_useDirectDebugger);
           host.InstanceSettings().BundleRootPath(
               std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
@@ -156,7 +154,7 @@ struct WindowData {
         std::thread playgroundThread{([]() {
           // For subsequent RN windows do not use the web debugger by default,
           // since one instance can be connected to it at a time.
-          RunPlayground(SW_SHOW, false);
+          RunPlayground(SW_SHOW);
         })};
         playgroundThread.detach();
         break;
@@ -271,7 +269,6 @@ struct WindowData {
       case WM_INITDIALOG: {
         auto boolToCheck = [](bool b) { return b ? BST_CHECKED : BST_UNCHECKED; };
         auto self = reinterpret_cast<WindowData *>(lparam);
-        CheckDlgButton(hwnd, IDC_WEBDEBUGGER, boolToCheck(self->m_useWebDebugger));
         CheckDlgButton(hwnd, IDC_FASTREFRESH, boolToCheck(self->m_fastRefreshEnabled));
         CheckDlgButton(hwnd, IDC_DIRECTDEBUGGER, boolToCheck(self->m_useDirectDebugger));
         CheckDlgButton(hwnd, IDC_BREAKONNEXTLINE, boolToCheck(self->m_breakOnNextLine));
@@ -298,7 +295,6 @@ struct WindowData {
         switch (LOWORD(wparam)) {
           case IDOK: {
             auto self = GetFromWindow(GetParent(hwnd));
-            self->m_useWebDebugger = IsDlgButtonChecked(hwnd, IDC_WEBDEBUGGER) == BST_CHECKED;
             self->m_fastRefreshEnabled = IsDlgButtonChecked(hwnd, IDC_FASTREFRESH) == BST_CHECKED;
             self->m_useDirectDebugger = IsDlgButtonChecked(hwnd, IDC_DIRECTDEBUGGER) == BST_CHECKED;
             self->m_breakOnNextLine = IsDlgButtonChecked(hwnd, IDC_BREAKONNEXTLINE) == BST_CHECKED;
@@ -382,7 +378,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
 
 constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_WIN32";
 
-int RunPlayground(int showCmd, bool useWebDebugger) {
+int RunPlayground(int showCmd) {
 #ifdef USE_WINUI3
   constexpr PCWSTR appName = L"React Native Playground (Win32 WinUI3)";
 #else
@@ -401,7 +397,6 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
 
   hosting::DesktopWindowXamlSource desktopXamlSource;
   auto windowData = std::make_unique<WindowData>(desktopXamlSource);
-  windowData->m_useWebDebugger = useWebDebugger;
 
   // We have to use a XAML string here to access the ThemeResource.
   // XAML Islands requires us to set the background color to handle theme changes.
@@ -474,5 +469,5 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   WINRT_VERIFY(classId);
   winrt::check_win32(!classId);
 
-  return RunPlayground(showCmd, false);
+  return RunPlayground(showCmd);
 }

@@ -15,7 +15,6 @@ namespace react {
 struct DevSettings;
 
 struct IDevSupportManager {
-  virtual JSECreator LoadJavaScriptInProxyMode(const DevSettings &settings, std::function<void()> &&errorCallback) = 0;
   virtual void StartPollingLiveReload(
       const std::string &sourceBundleHost,
       const uint16_t sourceBundlePort,

@@ -27,11 +27,12 @@ struct ReactPackageBuilder : winrt::implements<
 #ifndef CORE_ABI
       std::shared_ptr<ViewManagersProvider> const &viewManagersProvider,
 #endif
-      std::shared_ptr<TurboModulesProvider> const &turboModulesProvider,
+      std::shared_ptr<TurboModulesProvider> const &turboModulesProvider
 #ifdef USE_FABRIC
-      std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> const &componentRegistry,
+      ,
+      std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> const &componentRegistry
 #endif
-      bool isWebDebugging) noexcept;
+      ) noexcept;
 
  public: // IReactPackageBuilder
   void AddModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept;
@@ -55,8 +56,6 @@ struct ReactPackageBuilder : winrt::implements<
 #ifdef USE_FABRIC
   std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> m_componentRegistry;
 #endif
-
-  const bool m_isWebDebugging;
 };
 
 } // namespace winrt::Microsoft::ReactNative

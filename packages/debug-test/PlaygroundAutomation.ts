@@ -246,9 +246,6 @@ export async function loadPackage(
  * Debug settings for the Playground app.
  */
 export type DebugSettings = {
-  // value representing the "Web Debugger" checkbox
-  webDebugger?: boolean;
-
   // value representing the "Direct Debugging" checkbox
   directDebugging?: boolean;
 
@@ -292,9 +289,6 @@ export class PlaygroundDebugSettings {
   }
 
   private async fetchSettings(settings: DebugSettings) {
-    const webDebugger = await $$(this.webDebuggerCheckBoxSelector).then(a =>
-      a[0].isSelected(),
-    );
     const directDebugging = await $$(this.directDebuggingCheckBoxSelector).then(
       a => a[0].isSelected(),
     );
@@ -305,18 +299,12 @@ export class PlaygroundDebugSettings {
       a[0].getText(),
     );
 
-    settings.webDebugger = webDebugger;
     settings.directDebugging = directDebugging;
     settings.debuggerPort = parseInt(debuggerPort, 10);
     settings.jsEngine = jsEngine;
   }
 
   private async adjustSettings(settings: DebugSettings) {
-    // Treating the "Web Debugger" check box special as checking it disables the "Debugger Port"
-    // edit and the "JS Engine" combo.
-    const webDebuggerCheckBox = (await $$(this.webDebuggerCheckBoxSelector))[0];
-    let restoreWebDebugger = false;
-
     if (settings.directDebugging !== undefined) {
       const directDebuggingCheckBox = (
         await $$(this.directDebuggingCheckBoxSelector)
@@ -329,12 +317,6 @@ export class PlaygroundDebugSettings {
       const currentPortText = await debuggerPortEdit.getText();
 
       if (currentPortText !== settings.debuggerPort.toString()) {
-        if (await webDebuggerCheckBox.isSelected()) {
-          // enable port number to be changed
-          await setCheckedState(webDebuggerCheckBox, false);
-          restoreWebDebugger = true; // restore it later (unless it should be off per settings)
-        }
-
         await debuggerPortEdit.setValue(settings.debuggerPort);
       }
     }
@@ -380,22 +362,11 @@ export class PlaygroundDebugSettings {
         `no JS engine specified, leaving at current setting ("${oldJsEngine}")`,
       );
     }
-
-    if (settings.webDebugger !== undefined) {
-      await setCheckedState(webDebuggerCheckBox, settings.webDebugger);
-      restoreWebDebugger = false;
-    }
-
-    if (restoreWebDebugger) {
-      await setCheckedState(webDebuggerCheckBox, true);
-    }
   }
 
   private readonly oldSettings: DebugSettings = {};
   private readonly newSettings: DebugSettings;
 
-  private readonly webDebuggerCheckBoxSelector =
-    './Window/CheckBox[@AutomationId="x_UseWebDebuggerCheckBox"]';
   private readonly directDebuggingCheckBoxSelector =
     './Window/CheckBox[@AutomationId="x_UseDirectDebuggerCheckBox"]';
   private readonly debuggerPortEditSelector =

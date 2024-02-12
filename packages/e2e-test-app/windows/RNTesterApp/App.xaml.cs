@@ -29,12 +29,10 @@ namespace RNTesterApp
         {
 #if BUNDLE
             JavaScriptBundleFile = "index.windows";
-            InstanceSettings.UseWebDebugger = false;
             InstanceSettings.UseDirectDebugger = false;
             InstanceSettings.UseFastRefresh = false;
 #else
             JavaScriptBundleFile = "app/index";
-            InstanceSettings.UseWebDebugger = false;
             InstanceSettings.UseDirectDebugger = true;
             InstanceSettings.UseFastRefresh = true;
 #endif

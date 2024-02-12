@@ -54,7 +54,7 @@ winrt::Windows::UI::Composition::Compositor g_compositor{nullptr};
 
 constexpr auto WindowDataProperty = L"WindowData";
 
-int RunPlayground(int showCmd, bool useWebDebugger);
+int RunPlayground(int showCmd);
 winrt::Microsoft::ReactNative::IReactPackageProvider CreateStubDeviceInfoPackageProvider() noexcept;
 
 struct WindowData {
@@ -250,7 +250,7 @@ struct WindowData {
         std::thread playgroundThread{([]() {
           // For subsequent RN windows do not use the web debugger by default,
           // since one instance can be connected to it at a time.
-          RunPlayground(SW_SHOW, false);
+          RunPlayground(SW_SHOW);
         })};
         playgroundThread.detach();
         break;
@@ -497,7 +497,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
 
 constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_COMPOSITION";
 
-int RunPlayground(int showCmd, bool useWebDebugger) {
+int RunPlayground(int showCmd) {
   constexpr PCWSTR appName = L"React Native Playground (Composition)";
 
   auto windowData = std::make_unique<WindowData>();
@@ -574,5 +574,5 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   auto playgroundApp{winrt::make<winrt::Playground::implementation::App>()};
 #endif
 
-  return RunPlayground(showCmd, false);
+  return RunPlayground(showCmd);
 }

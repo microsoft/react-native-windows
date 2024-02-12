@@ -12,7 +12,6 @@ struct ReactSettingsSnapshot : winrt::implements<ReactSettingsSnapshot, IReactSe
   ReactSettingsSnapshot(Mso::CntPtr<const Mso::React::IReactSettingsSnapshot> &&settings) noexcept;
 
  public: // IReactSettingsSnapshot
-  bool UseWebDebugger() const noexcept;
   bool UseFastRefresh() const noexcept;
   bool UseDirectDebugger() const noexcept;
   bool DebuggerBreakOnNextLine() const noexcept;
