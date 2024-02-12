@@ -143,12 +143,13 @@ jobs:
                 parameters:
                   certificateName: playgroundEncodedKey
 
-            - ${{ if and(eq(matrix.UseExperimentalWinUI3, true), eq(variables['EnableInternalWinAppSDKFeed'], 'true')) }}:
+            - ${{ if eq(matrix.UseExperimentalWinUI3, true) }}:
               - task: PowerShell@2
                 displayName: Enable the internal WinAppSDK Feed
                 inputs:
                   targetType: filePath # filePath | inline
                   filePath: $(Build.SourcesDirectory)\vnext\Scripts\EnableInternalWinAppSDKFeed.ps1
+                condition: $[ eq(variables['EnableInternalWinAppSDKFeed'], true) ]
 
             # NuGet ignores packages.config if it detects <PackageReference>.
             # Use restore packages.config directly to keep compabitility with ReactNativePicker.
