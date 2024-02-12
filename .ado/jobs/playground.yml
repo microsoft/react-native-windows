@@ -143,7 +143,7 @@ jobs:
                 parameters:
                   certificateName: playgroundEncodedKey
 
-            - ${{ if and(eq(matrix.UseExperimentalWinUI3, true), eq(variables['EnableInternalWinAppSDKFeed'], true)) }}:
+            - ${{ if and(eq(matrix.UseExperimentalWinUI3, true), eq(variables['EnableInternalWinAppSDKFeed'], 'true')) }}:
               - task: PowerShell@2
                 displayName: Enable the internal WinAppSDK Feed
                 inputs:
