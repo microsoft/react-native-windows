@@ -149,7 +149,7 @@ jobs:
                 inputs:
                   targetType: filePath # filePath | inline
                   filePath: $(Build.SourcesDirectory)\vnext\Scripts\EnableInternalWinAppSDKFeed.ps1
-                condition: $[ eq(variables['EnableInternalWinAppSDKFeed'], true) ]
+                condition: eq(variables['EnableInternalWinAppSDKFeed'], 'true')
 
             # NuGet ignores packages.config if it detects <PackageReference>.
             # Use restore packages.config directly to keep compabitility with ReactNativePicker.
