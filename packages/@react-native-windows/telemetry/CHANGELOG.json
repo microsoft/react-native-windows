@@ -2,6 +2,27 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Fri, 09 Feb 2024 21:11:17 GMT",
+      "version": "0.0.0-canary.82",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.82",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "36caabe545a82244c0c7299b8ccf47c88f6e7e7a",
+            "comment": "Ensure react-native-windows-init still works on Node 16"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.31",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jan 2024 06:13:20 GMT",
       "version": "0.0.0-canary.81",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.81",

@@ -4,22 +4,38 @@
 import "ComponentView.idl";
 import "Theme.idl";
 import "ViewProps.idl";
+import "Composition.Input.idl";
+import "CompositionSwitcher.idl";
 
 #include "DocString.h"
 
 namespace Microsoft.ReactNative.Composition
 {
+  [experimental]
+  [webhosthidden]
+  runtimeclass CreateCompositionComponentViewArgs : Microsoft.ReactNative.CreateComponentViewArgs {
+    ICompositionContext CompositionContext { get; };
+  };
 
   [experimental]
   [webhosthidden]
   unsealed runtimeclass ComponentView : Microsoft.ReactNative.ComponentView {
+    ComponentView(CreateCompositionComponentViewArgs args);
+
+    ICompositionContext CompositionContext { get; };
     Theme Theme;
+    Boolean CapturePointer(Microsoft.ReactNative.Composition.Input.Pointer pointer);
+    void ReleasePointerCapture(Microsoft.ReactNative.Composition.Input.Pointer pointer);
   };
 
   [experimental]
   [webhosthidden]
   unsealed runtimeclass ViewComponentView : ComponentView {
+    ViewComponentView(CreateCompositionComponentViewArgs args);
+
     Microsoft.ReactNative.ViewProps ViewProps { get; };
+
+    overridable IVisual CreateVisual();
   };
 
   [experimental]
@@ -38,12 +54,6 @@ namespace Microsoft.ReactNative.Composition
   [webhosthidden]
   [default_interface]
   unsealed runtimeclass DebuggingOverlayComponentView : ViewComponentView {
-  };
-
-  [experimental]
-  [webhosthidden]
-  [default_interface]
-  unsealed runtimeclass AbiCompositionViewComponentView : ComponentView {
   };
 
   [experimental]
@@ -79,7 +89,7 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   [webhosthidden]
   [default_interface]
-  unsealed runtimeclass UnimplementedNativeViewComponentView : ComponentView {
+  unsealed runtimeclass UnimplementedNativeViewComponentView : ViewComponentView {
   };
 
   [experimental]

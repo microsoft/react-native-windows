@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/telemetry",
-  "version": "0.0.0-canary.81",
+  "version": "0.0.0-canary.82",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "typings": "lib-commonjs/index.d.ts",
@@ -18,7 +18,8 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^0.0.0-canary.30",
+    "@azure/core-auth": "1.5.0",
+    "@react-native-windows/fs": "0.0.0-canary.31",
     "@xmldom/xmldom": "^0.7.7",
     "applicationinsights": "2.9.1",
     "ci-info": "^3.2.0",
@@ -58,8 +59,5 @@
     ]
   },
   "promoteRelease": true,
-  "windowsOnly": true,
-  "engines": {
-    "node": ">= 18"
-  }
+  "windowsOnly": true
 }

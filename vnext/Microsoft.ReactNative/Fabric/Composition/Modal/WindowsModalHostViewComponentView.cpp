@@ -18,18 +18,12 @@
 #include "ReactNativeHost.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
-
 WindowsModalHostComponentView::WindowsModalHostComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : base_type(
-          compContext,
-          tag,
-          reactContext,
-          (CompositionComponentViewFeatures::Default & ~CompositionComponentViewFeatures::NativeBorder)) {
-  static auto const defaultProps = std::make_shared<facebook::react::ModalHostViewProps const>();
-  m_props = defaultProps;
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
+  m_props = std::make_shared<facebook::react::ModalHostViewProps const>();
   m_context = reactContext; // save context
   m_visual = compContext.CreateSpriteVisual();
 }
@@ -174,6 +168,12 @@ void WindowsModalHostComponentView::mountChildComponentView(
 void WindowsModalHostComponentView::unmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
     uint32_t /*index*/) noexcept {}
+
+void WindowsModalHostComponentView::HandleCommand(
+    winrt::hstring commandName,
+    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+  Super::HandleCommand(commandName, args);
+}
 
 void WindowsModalHostComponentView::updateProps(
     facebook::react::Props::Shared const &props,

@@ -17,7 +17,7 @@ RootComponentView::RootComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : base_type(compContext, tag, reactContext) {}
+    : base_type(compContext, tag, reactContext, false) {}
 
 winrt::Microsoft::ReactNative::ComponentView RootComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
@@ -125,12 +125,16 @@ HRESULT RootComponentView::GetFragmentRoot(IRawElementProviderFragmentRoot **pRe
 
   *pRetVal = nullptr;
 
-  auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
+  auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_reactContext.Properties());
   if (uiManager == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  auto uiaProvider = uiManager->GetUiaFragmentProvider(Tag());
-  auto spFragmentRoot = uiaProvider.as<IRawElementProviderFragmentRoot>();
+  auto rootView = uiManager->GetCompositionRootView(Tag());
+  if (!rootView) {
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  }
+
+  auto spFragmentRoot = rootView.GetUiaProvider().as<IRawElementProviderFragmentRoot>();
   if (spFragmentRoot) {
     *pRetVal = spFragmentRoot.detach();
   }
@@ -146,7 +150,7 @@ winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixel
   facebook::react::Point localPt;
   auto tag = hitTest(ptDips, localPt, true);
 
-  auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties());
+  auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_reactContext.Properties());
   if (uiManager == nullptr)
     return nullptr;
 

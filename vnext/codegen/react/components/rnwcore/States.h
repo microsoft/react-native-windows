@@ -14,8 +14,7 @@
 #include <react/renderer/mapbuffer/MapBufferBuilder.h>
 #endif
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 class DebuggingOverlayState {
 public:
@@ -137,5 +136,4 @@ public:
 #endif
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

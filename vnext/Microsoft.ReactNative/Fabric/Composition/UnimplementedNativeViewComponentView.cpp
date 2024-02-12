@@ -17,14 +17,9 @@ UnimplementedNativeViewComponentView::UnimplementedNativeViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : base_type(
-          compContext,
-          tag,
-          reactContext,
-          (CompositionComponentViewFeatures::Default & ~CompositionComponentViewFeatures::NativeBorder)) {
-  static auto const defaultProps = std::make_shared<facebook::react::UnimplementedNativeViewProps const>();
-  m_props = defaultProps;
-  m_visual = compContext.CreateSpriteVisual();
+    : base_type(compContext, tag, reactContext, false) {
+  m_labelVisual = compContext.CreateSpriteVisual();
+  OuterVisual().InsertAt(m_labelVisual, 1);
 }
 
 winrt::Microsoft::ReactNative::ComponentView UnimplementedNativeViewComponentView::Create(
@@ -34,18 +29,10 @@ winrt::Microsoft::ReactNative::ComponentView UnimplementedNativeViewComponentVie
   return winrt::make<UnimplementedNativeViewComponentView>(compContext, tag, reactContext);
 }
 
-void UnimplementedNativeViewComponentView::mountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
-    uint32_t /*index*/) noexcept {}
-
-void UnimplementedNativeViewComponentView::unmountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
-    uint32_t /*index*/) noexcept {}
-
-void UnimplementedNativeViewComponentView::updateProps(
-    facebook::react::Props::Shared const &props,
-    facebook::react::Props::Shared const &oldProps) noexcept {
-  m_props = std::static_pointer_cast<facebook::react::UnimplementedNativeViewProps const>(props);
+void UnimplementedNativeViewComponentView::HandleCommand(
+    winrt::hstring commandName,
+    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+  // Do not call base to avoid unknown command asserts
 }
 
 void UnimplementedNativeViewComponentView::updateLayoutMetrics(
@@ -72,9 +59,9 @@ void UnimplementedNativeViewComponentView::updateLayoutMetrics(
     drawingSurface.HorizontalAlignmentRatio(0.f);
     drawingSurface.VerticalAlignmentRatio(0.f);
     drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
-    m_visual.Brush(drawingSurface);
-    m_visual.Size(surfaceSize);
-    m_visual.Offset({
+    m_labelVisual.Brush(drawingSurface);
+    m_labelVisual.Size(surfaceSize);
+    m_labelVisual.Offset({
         layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
         layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
         0.0f,
@@ -113,8 +100,8 @@ void UnimplementedNativeViewComponentView::updateLayoutMetrics(
             static_cast<float>(offset.x), static_cast<float>(offset.y), width + offset.x, height + offset.y};
         // const D2D1_RECT_F rect = {0.f, 0.f, width, height};
 
-        auto label =
-            ::Microsoft::Common::Unicode::Utf8ToUtf16(std::string("Unimplemented component: ") + m_props->name);
+        auto props = std::static_pointer_cast<facebook::react::UnimplementedNativeViewProps const>(viewProps());
+        auto label = ::Microsoft::Common::Unicode::Utf8ToUtf16(std::string("Unimplemented component: ") + props->name);
         d2dDeviceContext->DrawText(
             label.c_str(),
             static_cast<UINT32>(label.length()),
@@ -127,42 +114,7 @@ void UnimplementedNativeViewComponentView::updateLayoutMetrics(
     }
   }
 
-  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
-}
-
-void UnimplementedNativeViewComponentView::updateState(
-    facebook::react::State::Shared const &state,
-    facebook::react::State::Shared const &oldState) noexcept {}
-
-void UnimplementedNativeViewComponentView::prepareForRecycle() noexcept {}
-
-facebook::react::SharedViewProps UnimplementedNativeViewComponentView::viewProps() noexcept {
-  return m_props;
-}
-
-winrt::Microsoft::ReactNative::Composition::IVisual UnimplementedNativeViewComponentView::Visual() const noexcept {
-  return m_visual;
-}
-
-winrt::Microsoft::ReactNative::Composition::IVisual UnimplementedNativeViewComponentView::OuterVisual() const noexcept {
-  return m_visual;
-}
-
-facebook::react::Tag UnimplementedNativeViewComponentView::hitTest(
-    facebook::react::Point pt,
-    facebook::react::Point &localPt,
-    bool ignorePointerEvents) const noexcept {
-  facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
-
-  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
-      ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
-      ptLocal.y <= m_layoutMetrics.frame.size.height) {
-    localPt = ptLocal;
-    return Tag();
-  }
-
-  return -1;
+  base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

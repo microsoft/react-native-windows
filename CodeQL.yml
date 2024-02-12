@@ -1,11 +1,12 @@
 # This file is used to configure CodeQL alerts.
-# See https://onees.lgtm.microsoft.com/help/lgtm/lgtm.yml-configuration-file
+# See https://eng.ms/docs/cloud-ai-platform/devdiv/one-engineering-system-1es/1es-docs/codeql/configuring-codeql3000-ado-pipelines#excluding-external-libraries-test-files-generated-files-docs
 
 path_classifiers:
   library:
     - "**/vnext/ReactCommon"
   template:
     - "**/vnext/template"
+    - "**/vnext/templates"
   test:
     # Explicitly include jest test paths
     - "**/__flowtests__"
@@ -16,6 +17,7 @@ path_classifiers:
     - "**/packages/@office-iss/react-native-win32-tester"
     - "**/packages/@react-native/tester"
     - "**/packages/@react-native-windows/tester"
+    - "**/packages/debug-test"
     - "**/packages/e2e-test-app"
     - "**/packages/e2e-test-app-fabric"
     - "**/packages/integration-test-app"
@@ -33,9 +35,9 @@ path_classifiers:
     - "**/vnext/Mso.UnitTests"
     - "**/vnext/ReactCommon.UnitTests"
     - "**/vnext/Test"
-    # Other explicit includes
-    - "**/packages/@react-native-win32/IntegrationTests"
-    - "**/packages/@react-native-win32/src/IntegrationTests"
+    # Other explicit test includes
+    - "**/packages/@office-iss/react-native-win32/IntegrationTests"
+    - "**/packages/@office-iss/react-native-win32/src/IntegrationTests"
     - "**/vnext/IntegrationTests"
     - "**/vnext/ReactCopies/IntegrationTests"
     - "**/vnext/src/IntegrationTests"

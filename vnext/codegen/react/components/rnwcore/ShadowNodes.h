@@ -10,14 +10,13 @@
 
 #pragma once
 
-#include <react/renderer/components/rnwcore/EventEmitters.h>
-#include <react/renderer/components/rnwcore/Props.h>
-#include <react/renderer/components/rnwcore/States.h>
+#include <EventEmitters.h>
+#include <Props.h>
+#include <States.h>
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <jsi/jsi.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 JSI_EXPORT extern const char DebuggingOverlayComponentName[];
 
@@ -107,5 +106,4 @@ using UnimplementedNativeViewShadowNode = ConcreteViewShadowNode<
     UnimplementedNativeViewEventEmitter,
     UnimplementedNativeViewState>;
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

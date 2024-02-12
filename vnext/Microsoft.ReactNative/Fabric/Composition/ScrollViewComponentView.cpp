@@ -20,6 +20,7 @@
 #include <unicode.h>
 #include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
+#include "JSValueReader.h"
 #include "RootComponentView.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
@@ -295,12 +296,19 @@ struct ScrollBarComponent {
         pt.Properties().PointerUpdateKind() ==
             winrt::Microsoft::ReactNative::Composition::Input::PointerUpdateKind::LeftButtonReleased) {
       handleMoveThumb(args);
-      m_nTrackInputOffset = -1;
-      // Stop tracking
+      stopTrackingThumb();
+      m_outer.ReleasePointerCapture(args.Pointer());
 
       auto reg = HitTest(pt.Position());
       updateShy(reg == ScrollbarHitRegion::Unknown);
     }
+  }
+
+  void stopTrackingThumb() noexcept {
+    m_nTrackInputOffset = -1;
+    m_thumbVisual.AnimationClass(
+        m_vertical ? winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbVertical
+                   : winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbHorizontal);
   }
 
   void handleMoveThumb(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
@@ -314,6 +322,7 @@ struct ScrollBarComponent {
                    : winrt::Windows::Foundation::Numerics::
                          float3{scrollOffsetFromThumbPos(newTrackingPosition), m_offset.y, m_offset.z},
         false);
+    args.Handled(true);
   }
 
   void OnPointerPressed(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
@@ -331,6 +340,7 @@ struct ScrollBarComponent {
           } else {
             winrt::get_self<ScrollViewComponentView>(m_outer)->lineLeft(false);
           }
+          args.Handled(true);
           break;
         case ScrollbarHitRegion::ArrowLast:
           if (m_vertical) {
@@ -338,20 +348,24 @@ struct ScrollBarComponent {
           } else {
             winrt::get_self<ScrollViewComponentView>(m_outer)->lineRight(false);
           }
+          args.Handled(true);
           break;
         case ScrollbarHitRegion::PageUp:
           if (m_vertical) {
             winrt::get_self<ScrollViewComponentView>(m_outer)->pageUp(false);
           }
+          args.Handled(true);
           break;
         case ScrollbarHitRegion::PageDown:
           if (m_vertical) {
             winrt::get_self<ScrollViewComponentView>(m_outer)->pageDown(false);
           }
+          args.Handled(true);
           break;
         case ScrollbarHitRegion::Thumb: {
-          // TODO capture input
+          m_outer.CapturePointer(args.Pointer());
           m_nTrackInputOffset = static_cast<int>((m_vertical ? pos.Y : pos.X) * m_scaleFactor) - m_thumbPos;
+          m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::None);
           handleMoveThumb(args);
         }
       }
@@ -363,25 +377,23 @@ struct ScrollBarComponent {
       return;
     auto pt = args.GetCurrentPoint(m_outer.Tag());
     if (pt.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
-      auto pos = pt.Position();
-      auto reg = HitTest(pos);
-      updateShy(reg == ScrollbarHitRegion::Unknown && m_nTrackInputOffset == -1);
-      setHighlightedRegion(reg);
-
       if (m_nTrackInputOffset != -1) {
         handleMoveThumb(args);
+      } else {
+        auto pos = pt.Position();
+        auto reg = HitTest(pos);
+        updateShy(reg == ScrollbarHitRegion::Unknown);
+        setHighlightedRegion(reg);
       }
     }
   }
 
-  void OnPointerExited(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
+  void OnPointerCaptureLost() {
     if (!m_visible)
       return;
 
-    // TODO once we start capturing pointer, we would't need to stop tracking here
-    m_nTrackInputOffset = -1;
-
-    updateShy(m_nTrackInputOffset == -1);
+    stopTrackingThumb();
+    updateShy(true);
   }
 
   void updateShy(bool shy) {
@@ -570,7 +582,7 @@ ScrollViewComponentView::ScrollViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default) {
+    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
   static auto const defaultProps = std::make_shared<facebook::react::ScrollViewProps const>();
   m_props = defaultProps;
 
@@ -672,8 +684,7 @@ void ScrollViewComponentView::mountChildComponentView(
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(*this);
 
   m_scrollVisual.InsertAt(
-      childComponentView.as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>()
-          ->OuterVisual(),
+      childComponentView.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()->OuterVisual(),
       index);
 }
 
@@ -682,7 +693,7 @@ void ScrollViewComponentView::unmountChildComponentView(
     uint32_t index) noexcept {
   m_children.RemoveAt(index);
 
-  m_scrollVisual.Remove(childComponentView.as<CompositionBaseComponentView>()->OuterVisual());
+  m_scrollVisual.Remove(childComponentView.as<ComponentView>()->OuterVisual());
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(nullptr);
 }
 
@@ -829,7 +840,7 @@ void ScrollViewComponentView::onThemeChanged() noexcept {
   Super::onThemeChanged();
 }
 
-void ScrollViewComponentView::onPointerWheelChanged(
+void ScrollViewComponentView::OnPointerWheelChanged(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   auto ppp = args.GetCurrentPoint(-1).Properties();
   auto delta = static_cast<float>(ppp.MouseWheelDelta());
@@ -856,35 +867,34 @@ void ScrollViewComponentView::onPointerWheelChanged(
   }
 }
 
-void ScrollViewComponentView::onPointerPressed(
+void ScrollViewComponentView::OnPointerPressed(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   m_verticalScrollbarComponent->OnPointerPressed(args);
   m_horizontalScrollbarComponent->OnPointerPressed(args);
-  Super::onPointerPressed(args);
+  Super::OnPointerPressed(args);
 }
 
-void ScrollViewComponentView::onPointerReleased(
+void ScrollViewComponentView::OnPointerReleased(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   m_verticalScrollbarComponent->OnPointerReleased(args);
   m_horizontalScrollbarComponent->OnPointerReleased(args);
-  Super::onPointerReleased(args);
+  Super::OnPointerReleased(args);
 }
 
-void ScrollViewComponentView::onPointerMoved(
+void ScrollViewComponentView::OnPointerMoved(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
   m_verticalScrollbarComponent->OnPointerMoved(args);
   m_horizontalScrollbarComponent->OnPointerMoved(args);
-  Super::onPointerMoved(args);
+  Super::OnPointerMoved(args);
 }
 
-void ScrollViewComponentView::onPointerExited(
-    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
-  m_verticalScrollbarComponent->OnPointerExited(args);
-  m_horizontalScrollbarComponent->OnPointerExited(args);
-  Super::onPointerExited(args);
+void ScrollViewComponentView::OnPointerCaptureLost() noexcept {
+  m_verticalScrollbarComponent->OnPointerCaptureLost();
+  m_horizontalScrollbarComponent->OnPointerCaptureLost();
+  Super::OnPointerCaptureLost();
 }
 
-void ScrollViewComponentView::onKeyDown(
+void ScrollViewComponentView::OnKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   switch (args.Key()) {
@@ -996,21 +1006,28 @@ bool ScrollViewComponentView::scrollRight(float delta, bool animate) noexcept {
   return true;
 }
 
-void ScrollViewComponentView::handleCommand(std::string const &commandName, folly::dynamic const &arg) noexcept {
-  if (commandName == "scrollTo") {
-    auto x = arg[0].asDouble() * m_layoutMetrics.pointScaleFactor;
-    auto y = arg[1].asDouble() * m_layoutMetrics.pointScaleFactor;
-    auto animate = arg[2].asBool();
-    scrollTo({static_cast<float>(x), static_cast<float>(y), 0.0f}, animate);
-  } else if (commandName == "flashScrollIndicators") {
+void ScrollViewComponentView::HandleCommand(
+    winrt::hstring commandName,
+    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+  if (commandName == L"scrollTo") {
+    double x, y;
+    bool animate;
+    winrt::Microsoft::ReactNative::ReadArgs(args, x, y, animate);
+    scrollTo(
+        {static_cast<float>(x) * m_layoutMetrics.pointScaleFactor,
+         static_cast<float>(y) * m_layoutMetrics.pointScaleFactor,
+         0.0f},
+        animate);
+  } else if (commandName == L"flashScrollIndicators") {
     // No-op for now
-  } else if (commandName == "scrollToEnd") {
-    auto animate = arg[0].asBool();
+  } else if (commandName == L"scrollToEnd") {
+    bool animate;
+    winrt::Microsoft::ReactNative::ReadArgs(args, animate);
     scrollToEnd(animate);
-  } else if (commandName == "zoomToRect") {
+  } else if (commandName == L"zoomToRect") {
     // No-op for now
   } else {
-    Super::handleCommand(commandName, arg);
+    Super::HandleCommand(commandName, args);
   }
 }
 
@@ -1116,8 +1133,8 @@ void ScrollViewComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
     m_scrollVisual = m_compContext.CreateScrollerVisual();
-    m_verticalScrollbarComponent = std::make_shared<ScrollBarComponent>(*this, m_compContext, m_context, true);
-    m_horizontalScrollbarComponent = std::make_shared<ScrollBarComponent>(*this, m_compContext, m_context, false);
+    m_verticalScrollbarComponent = std::make_shared<ScrollBarComponent>(*this, m_compContext, m_reactContext, true);
+    m_horizontalScrollbarComponent = std::make_shared<ScrollBarComponent>(*this, m_compContext, m_reactContext, false);
     m_visual.InsertAt(m_scrollVisual, 0);
     m_visual.InsertAt(m_verticalScrollbarComponent->Visual(), 1);
     m_visual.InsertAt(m_horizontalScrollbarComponent->Visual(), 2);

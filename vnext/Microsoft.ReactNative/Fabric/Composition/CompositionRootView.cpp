@@ -271,6 +271,27 @@ int64_t CompositionRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t 
   return 0;
 }
 
+bool CompositionRootView::CapturePointer(
+    const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
+    facebook::react::Tag tag) noexcept {
+  if (m_hwnd) {
+    SetCapture(m_hwnd);
+  }
+  return m_CompositionEventHandler->CapturePointer(pointer, tag);
+}
+
+void CompositionRootView::ReleasePointerCapture(
+    const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
+    facebook::react::Tag tag) noexcept {
+  if (m_CompositionEventHandler->ReleasePointerCapture(pointer, tag)) {
+    if (m_hwnd) {
+      if (m_hwnd == GetCapture()) {
+        ReleaseCapture();
+      }
+    }
+  }
+}
+
 void CompositionRootView::InitRootView(
     winrt::Microsoft::ReactNative::IReactContext &&context,
     winrt::Microsoft::ReactNative::ReactViewOptions &&viewOptions) noexcept {

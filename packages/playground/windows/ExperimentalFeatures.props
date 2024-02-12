@@ -20,6 +20,7 @@
 
   <PropertyGroup Label="WinUI3 for fabric" Condition="'$(SolutionName)'=='playground-composition'">
     <UseWinUI3>true</UseWinUI3>
+    <UseExperimentalWinUI3>true</UseExperimentalWinUI3>
   </PropertyGroup>
 
 </Project>

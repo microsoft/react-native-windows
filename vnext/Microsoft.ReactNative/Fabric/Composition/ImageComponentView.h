@@ -28,8 +28,8 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 struct WindowsImageResponseObserver;
 
-struct ImageComponentView : ImageComponentViewT<ImageComponentView, CompositionBaseComponentView> {
-  using Super = ImageComponentViewT<ImageComponentView, CompositionBaseComponentView>;
+struct ImageComponentView : ImageComponentViewT<ImageComponentView, ComponentView> {
+  using Super = ImageComponentViewT<ImageComponentView, ComponentView>;
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
