@@ -30,6 +30,29 @@ parameters:
             BuildConfiguration: Debug
             BuildPlatform: x86
             SolutionFile: Playground-Composition.sln
+          - Name: X64DebugComposition
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            SolutionFile: Playground-Composition.sln
+          - Name: X64ReleaseComposition
+            BuildConfiguration: Release
+            BuildPlatform: x64
+            SolutionFile: Playground-Composition.sln
+          - Name: X86DebugCompositionExperimentalWinUI3
+            BuildConfiguration: Debug
+            BuildPlatform: x86
+            SolutionFile: Playground-Composition.sln
+            UseExperimentalWinUI3: true
+          - Name: X64DebugCompositionExperimentalWinUI3
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            SolutionFile: Playground-Composition.sln
+            UseExperimentalWinUI3: true
+          - Name: X64ReleaseCompositionExperimentalWinUI3
+            BuildConfiguration: Release
+            BuildPlatform: x64
+            SolutionFile: Playground-Composition.sln
+            UseExperimentalWinUI3: true
           - Name: X86DebugWin32
             BuildConfiguration: Debug
             BuildPlatform: x86
@@ -65,6 +88,20 @@ parameters:
             BuildConfiguration: Debug
             BuildPlatform: x86
             SolutionFile: Playground-Composition.sln
+          - Name: X64ReleaseComposition
+            BuildConfiguration: Release
+            BuildPlatform: x64
+            SolutionFile: Playground-Composition.sln
+          - Name: X86DebugCompositionExperimentalWinUI3
+            BuildConfiguration: Debug
+            BuildPlatform: x86
+            SolutionFile: Playground-Composition.sln
+            UseExperimentalWinUI3: true
+          - Name: X64ReleaseCompositionExperimentalWinUI3
+            BuildConfiguration: Release
+            BuildPlatform: x64
+            SolutionFile: Playground-Composition.sln
+            UseExperimentalWinUI3: true
           - Name: X86DebugWin32
             BuildConfiguration: Debug
             BuildPlatform: x86
@@ -105,6 +142,13 @@ jobs:
               - template: ../templates/write-certificate.yml
                 parameters:
                   certificateName: playgroundEncodedKey
+
+            - ${{ if and(eq(matrix.UseExperimentalWinUI3, true), eq(variables['EnableInternalWinAppSDKFeed'], true)) }}:
+              - task: PowerShell@2
+                displayName: Enable the internal WinAppSDK Feed
+                inputs:
+                  targetType: filePath # filePath | inline
+                  filePath: $(Build.SourcesDirectory)\vnext\Scripts\EnableInternalWinAppSDKFeed.ps1
 
             # NuGet ignores packages.config if it detects <PackageReference>.
             # Use restore packages.config directly to keep compabitility with ReactNativePicker.
