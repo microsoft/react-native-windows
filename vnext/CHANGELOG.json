@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 12 Feb 2024 16:16:23 GMT",
+      "tag": "react-native-windows_v0.72.29",
+      "version": "0.72.29",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f1cb8a42adcf03658078696832849317f5c65aa1",
+            "comment": "Fix Base64 duplicate padding (#12689)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Feb 2024 21:50:06 GMT",
       "tag": "react-native-windows_v0.72.28",
       "version": "0.72.28",
