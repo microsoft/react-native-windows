@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 09 Feb 2024 17:12:46 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Feb 2024 16:13:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.6
+
+Mon, 12 Feb 2024 16:13:55 GMT
+
+### Patches
+
+- Fix Base64 duplicate padding (#12689) (julio.rocha@microsoft.com)
 
 ## 0.73.5
 
