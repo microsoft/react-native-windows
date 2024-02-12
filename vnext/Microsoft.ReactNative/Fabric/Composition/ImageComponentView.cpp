@@ -57,16 +57,18 @@ ImageComponentView::ImageComponentView(
   m_props = defaultProps;
 }
 
-void ImageComponentView::mountChildComponentView(
+void ImageComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
+  base_type::MountChildComponentView(childComponentView, index);
 }
 
-void ImageComponentView::unmountChildComponentView(
+void ImageComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
+  base_type::UnmountChildComponentView(childComponentView, index);
 }
 
 void ImageComponentView::ImageLoadStart() noexcept {

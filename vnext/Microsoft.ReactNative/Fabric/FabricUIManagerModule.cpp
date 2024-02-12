@@ -240,8 +240,7 @@ void FabricUIManager::RCTPerformMountInstructions(
         newChildComponentView->updateLayoutMetrics(newChildShadowView.layoutMetrics, oldChildShadowView.layoutMetrics);
         newChildViewDescriptor.view.FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask::All);
 
-        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
-            ->mountChildComponentView(*newChildComponentView, mutation.index);
+        parentViewDescriptor.view.MountChildComponentView(*newChildComponentView, mutation.index);
         break;
       }
 
@@ -250,11 +249,7 @@ void FabricUIManager::RCTPerformMountInstructions(
         auto &parentShadowView = mutation.parentShadowView;
         auto &oldChildViewDescriptor = m_registry.componentViewDescriptorWithTag(oldChildShadowView.tag);
         auto &parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentShadowView.tag);
-        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
-            ->unmountChildComponentView(
-                *winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(
-                    oldChildViewDescriptor.view),
-                mutation.index);
+        parentViewDescriptor.view.UnmountChildComponentView(oldChildViewDescriptor.view, mutation.index);
         break;
       }
 

@@ -26,19 +26,18 @@ ParagraphComponentView::ParagraphComponentView(
   m_props = defaultProps;
 }
 
-void ParagraphComponentView::mountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
-    uint32_t /*index*/) noexcept {
-  // auto v = static_cast<ParagraphComponentView &>(childComponentView);
+void ParagraphComponentView::MountChildComponentView(
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
-  // m_element.Children().InsertAt(index, v.Element());
+  base_type::MountChildComponentView(childComponentView, index);
 }
 
-void ParagraphComponentView::unmountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
-    uint32_t /*index*/) noexcept {
+void ParagraphComponentView::UnmountChildComponentView(
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
-  // m_element.Children().RemoveAt(index);
+  base_type::UnmountChildComponentView(childComponentView, index);
 }
 
 void ParagraphComponentView::updateProps(
