@@ -23,11 +23,9 @@ using namespace Windows::ApplicationModel;
 App::App() noexcept {
 #if BUNDLE
   JavaScriptBundleFile(L"index.windows");
-  InstanceSettings().UseWebDebugger(false);
   InstanceSettings().UseFastRefresh(false);
 #else
   JavaScriptBundleFile(L"index");
-  InstanceSettings().UseWebDebugger(true);
   InstanceSettings().UseFastRefresh(true);
 #endif
 

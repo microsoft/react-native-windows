@@ -19,21 +19,20 @@ ReactPackageBuilder::ReactPackageBuilder(
 #ifndef CORE_ABI
     std::shared_ptr<ViewManagersProvider> const &viewManagersProvider,
 #endif
-    std::shared_ptr<TurboModulesProvider> const &turboModulesProvider,
+    std::shared_ptr<TurboModulesProvider> const &turboModulesProvider
 #ifdef USE_FABRIC
-    std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> const &componentRegistry,
+    ,
+    std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> const &componentRegistry
 #endif
-    bool isWebDebugging) noexcept
+    ) noexcept
     : m_modulesProvider{modulesProvider},
 #ifndef CORE_ABI
       m_viewManagersProvider{viewManagersProvider},
 #endif
-      m_turboModulesProvider{turboModulesProvider},
 #ifdef USE_FABRIC
       m_componentRegistry{componentRegistry},
 #endif
-
-      m_isWebDebugging{isWebDebugging} {
+      m_turboModulesProvider{turboModulesProvider} {
 }
 
 void ReactPackageBuilder::AddModule(hstring const &moduleName, ReactModuleProvider const &moduleProvider) noexcept {
@@ -51,10 +50,7 @@ void ReactPackageBuilder::AddViewManager(
 void ReactPackageBuilder::AddTurboModule(
     hstring const &moduleName,
     ReactModuleProvider const &moduleProvider) noexcept {
-  if (m_isWebDebugging)
-    m_modulesProvider->AddModuleProvider(moduleName, moduleProvider);
-  else
-    m_turboModulesProvider->AddModuleProvider(moduleName, moduleProvider, true);
+  m_turboModulesProvider->AddModuleProvider(moduleName, moduleProvider, true);
 }
 
 #ifdef USE_FABRIC

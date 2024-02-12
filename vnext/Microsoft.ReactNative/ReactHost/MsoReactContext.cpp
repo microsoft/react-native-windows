@@ -16,13 +16,6 @@ namespace Mso::React {
 ReactSettingsSnapshot::ReactSettingsSnapshot(Mso::WeakPtr<ReactInstanceWin> &&reactInstance) noexcept
     : m_reactInstance{std::move(reactInstance)} {}
 
-bool ReactSettingsSnapshot::UseWebDebugger() const noexcept {
-  if (auto instance = m_reactInstance.GetStrongPtr()) {
-    return instance->UseWebDebugger();
-  }
-  return false;
-}
-
 bool ReactSettingsSnapshot::UseFastRefresh() const noexcept {
   if (auto instance = m_reactInstance.GetStrongPtr()) {
     return instance->UseFastRefresh();

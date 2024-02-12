@@ -36,7 +36,6 @@ namespace Microsoft.ReactNative.Managed.IntegrationTests
         Host.InstanceSettings.BundleRootPath = Path.GetFullPath(testBinaryPath + "\\..\\JSBundles");
         Host.InstanceSettings.JavaScriptBundleFile = jsBundle;
         Host.InstanceSettings.UseDeveloperSupport = false;
-        Host.InstanceSettings.UseWebDebugger = false;
         Host.InstanceSettings.UseFastRefresh = false;
         Host.InstanceSettings.UseDeveloperSupport = false;
 

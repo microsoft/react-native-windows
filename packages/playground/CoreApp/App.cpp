@@ -52,7 +52,6 @@ int __stdcall wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ PWSTR /*server*/
         app->componentName = L"RNTesterApp";
         app->jsBundleFile = LR"(Samples\rntester)";
         app->useDeveloperSupport = true;
-        app->useWebDebugger = false;
 
 #ifdef WITH_MODULES
         app->packageProvidersAbiCount = 1;

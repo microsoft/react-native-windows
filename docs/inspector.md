@@ -11,7 +11,6 @@ Hence, we expect most tooling available on other platforms to just work on Windo
 1. Initialize React Native Host,
    - Turn on `DeveloperSupport` 
    - Turn on `FastRefresh`
-   - Turn off `WebDebugger`
    - Turn on `Direct Debugging`
 2. Ensure Dev-Server is running
 3. Start the application

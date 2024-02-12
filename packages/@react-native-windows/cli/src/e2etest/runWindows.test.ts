@@ -25,7 +25,6 @@ function validateOptionName(
     case 'emulator':
     case 'device':
     case 'target':
-    case 'remoteDebugging':
     case 'logging':
     case 'packager':
     case 'bundle':

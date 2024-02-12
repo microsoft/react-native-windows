@@ -19,6 +19,5 @@ struct IXamlRootView;
 
 typedef unsigned int LiveReloadCallbackCookie;
 typedef unsigned int ErrorCallbackCookie;
-typedef unsigned int DebuggerAttachCallbackCookie;
 
 } // namespace Microsoft::ReactNative

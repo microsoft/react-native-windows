@@ -120,13 +120,6 @@
             Orientation="Horizontal"
             BorderThickness="1,0,0,0"
             BorderBrush="{ThemeResource SystemBaseMediumColor}">
-            <CheckBox x:Name="x_UseWebDebuggerCheckBox"
-                Margin="8,4,4,4"
-                VerticalAlignment="Center"
-                IsChecked="false"
-                Checked="x_UseWebDebuggerCheckBox_Checked"
-                Unchecked="x_UseWebDebuggerCheckBox_Unchecked"
-                Content="Web Debugger"/>
             <CheckBox x:Name="x_UseDirectDebuggerCheckBox"
                 Margin="4"
                 VerticalAlignment="Center"

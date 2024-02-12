@@ -311,8 +311,6 @@ namespace Microsoft.ReactNative.Managed.UnitTests
 
     public bool UseFastRefresh => throw new NotImplementedException();
 
-    public bool UseWebDebugger => throw new NotImplementedException();
-
     public string BundleRootPath => throw new NotImplementedException();
 
     public string DebugBundlePath => throw new NotImplementedException();

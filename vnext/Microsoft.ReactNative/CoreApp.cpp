@@ -22,7 +22,6 @@ void RNCoreAppSetDefaults(RNCoreApp *appSettings) {
   appSettings->jsBundleFile = L"index.windows";
   appSettings->bundleRootPath = L"ms-appx:///Bundle/";
   appSettings->componentName = L"";
-  appSettings->useWebDebugger = true;
   appSettings->useFastRefresh = true;
   appSettings->useDeveloperSupport = true;
   appSettings->useDirectDebugger = false;
@@ -84,7 +83,6 @@ NORETURN void RNCoreAppStartInternal(RNCoreApp *appSettings, RNCoreAppCallback l
 
       settings.BundleRootPath(appSettings->bundleRootPath);
 
-      settings.UseWebDebugger(appSettings->useWebDebugger);
       settings.UseFastRefresh(appSettings->useFastRefresh);
       settings.UseDeveloperSupport(appSettings->useDeveloperSupport);
       settings.UseDirectDebugger(appSettings->useDirectDebugger);
@@ -276,7 +274,6 @@ extern "C" NORETURN void __cdecl RNCoreAppStartFromConfigJson(
   SET_FROM_JSON(jsBundleFile);
   SET_FROM_JSON(bundleRootPath);
   SET_FROM_JSON(componentName);
-  SET_FROM_JSON(useWebDebugger);
   SET_FROM_JSON(useFastRefresh);
   SET_FROM_JSON(useDeveloperSupport);
   SET_FROM_JSON(useDirectDebugger);

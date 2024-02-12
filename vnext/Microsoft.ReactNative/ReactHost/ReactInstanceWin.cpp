@@ -144,58 +144,26 @@ struct BridgeUIBatchInstanceCallback final : public facebook::react::InstanceCal
     if (auto instance = m_wkInstance.GetStrongPtr()) {
       auto state = instance->State();
       if (state != ReactInstanceState::HasError && state != ReactInstanceState::Unloaded) {
-        if (instance->UseWebDebugger()) {
-          // While using a CxxModule for UIManager (which we do when running under webdebugger)
-          // We need to post the batch complete to the NativeQueue to ensure that the UIManager
-          // has posted everything from this batch into its queue before we complete the batch.
-          instance->m_jsDispatchQueue.Load().Post([wkInstance = m_wkInstance]() {
-            if (auto instance = wkInstance.GetStrongPtr()) {
-              instance->m_batchingUIThread->runOnQueue([wkInstance]() {
-                if (auto instance = wkInstance.GetStrongPtr()) {
-                  auto propBag = ReactPropertyBag(instance->m_reactContext->Properties());
-                  if (auto callback = propBag.Get(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
-                                                      UIBatchCompleteCallbackProperty())) {
-                    (*callback)(instance->m_reactContext->Properties());
-                  }
-#ifndef CORE_ABI
-                  if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
-                    uiManager->onBatchComplete();
-                  }
-#endif
-                }
-              });
-
-              // For UWP we use a batching message queue to optimize the usage
-              // of the CoreDispatcher.  Win32 already has an optimized queue.
-              facebook::react::BatchingMessageQueueThread *batchingUIThread =
-                  static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
-              if (batchingUIThread != nullptr) {
-                batchingUIThread->onBatchComplete();
-              }
+        instance->m_batchingUIThread->runOnQueue([wkInstance = m_wkInstance]() {
+          if (auto instance = wkInstance.GetStrongPtr()) {
+            auto propBag = ReactPropertyBag(instance->m_reactContext->Properties());
+            if (auto callback = propBag.Get(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
+                                                UIBatchCompleteCallbackProperty())) {
+              (*callback)(instance->m_reactContext->Properties());
             }
-          });
-        } else {
-          instance->m_batchingUIThread->runOnQueue([wkInstance = m_wkInstance]() {
-            if (auto instance = wkInstance.GetStrongPtr()) {
-              auto propBag = ReactPropertyBag(instance->m_reactContext->Properties());
-              if (auto callback = propBag.Get(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::
-                                                  UIBatchCompleteCallbackProperty())) {
-                (*callback)(instance->m_reactContext->Properties());
-              }
 #ifndef CORE_ABI
-              if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
-                uiManager->onBatchComplete();
-              }
-#endif
+            if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*instance->m_reactContext).lock()) {
+              uiManager->onBatchComplete();
             }
-          });
-          // For UWP we use a batching message queue to optimize the usage
-          // of the CoreDispatcher.  Win32 already has an optimized queue.
-          facebook::react::BatchingMessageQueueThread *batchingUIThread =
-              static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
-          if (batchingUIThread != nullptr) {
-            batchingUIThread->onBatchComplete();
+#endif
           }
+        });
+        // For UWP we use a batching message queue to optimize the usage
+        // of the CoreDispatcher.  Win32 already has an optimized queue.
+        facebook::react::BatchingMessageQueueThread *batchingUIThread =
+            static_cast<facebook::react::BatchingMessageQueueThread *>(instance->m_batchingUIThread.get());
+        if (batchingUIThread != nullptr) {
+          batchingUIThread->onBatchComplete();
         }
       }
     }
@@ -228,7 +196,6 @@ ReactInstanceWin::ReactInstanceWin(
       m_isFastReloadEnabled(options.UseFastRefresh()),
       m_isLiveReloadEnabled(options.UseLiveReload()),
       m_updateUI{std::move(updateUI)},
-      m_useWebDebugger(options.UseWebDebugger()),
       m_useDirectDebugger(options.UseDirectDebugger()),
       m_debuggerBreakOnNextLine(options.DebuggerBreakOnNextLine()),
       m_reactContext{Mso::Make<ReactContext>(
@@ -322,98 +289,87 @@ void ReactInstanceWin::InstanceCrashHandler(int fileDescriptor) noexcept {
 void ReactInstanceWin::LoadModules(
     const std::shared_ptr<winrt::Microsoft::ReactNative::NativeModulesProvider> &nativeModulesProvider,
     const std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> &turboModulesProvider) noexcept {
-  auto registerTurboModule = [this, &nativeModulesProvider, &turboModulesProvider](
-                                 const wchar_t *name, const ReactModuleProvider &provider) noexcept {
-    if (m_options.UseWebDebugger()) {
-      nativeModulesProvider->AddModuleProvider(name, provider);
-    } else {
-      turboModulesProvider->AddModuleProvider(name, provider, false);
-    }
-  };
-
 #ifdef USE_FABRIC
-  if (!m_options.UseWebDebugger()) {
-    registerTurboModule(
-        L"FabricUIManagerBinding",
-        winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
-  }
+  turboModulesProvider->AddModuleProvider(
+      L"FabricUIManagerBinding",
+      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>(), false /*overrideExisting*/);
 #endif
 
 #ifndef CORE_ABI
-  registerTurboModule(
+  turboModulesProvider->AddModuleProvider(
       L"UIManager",
       // TODO: Use MakeTurboModuleProvider after it satisfies ReactNativeSpecs::UIManagerSpec
-      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::UIManager>());
+      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::UIManager>(), false /*overrideExisting*/);
 
-  registerTurboModule(
+  turboModulesProvider->AddModuleProvider(
       L"AccessibilityInfo",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AccessibilityInfo>());
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AccessibilityInfo>(), false /*overrideExisting*/);
 
-  registerTurboModule(
-      L"Alert", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Alert>());
+  turboModulesProvider->AddModuleProvider(
+      L"Alert", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Alert>(), false /*overrideExisting*/);
 
-  registerTurboModule(
-      L"Appearance", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Appearance>());
+  turboModulesProvider->AddModuleProvider(
+      L"Appearance", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Appearance>(), false /*overrideExisting*/);
 
-  registerTurboModule(
-      L"AppState", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AppState>());
+  turboModulesProvider->AddModuleProvider(
+      L"AppState", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AppState>(), false /*overrideExisting*/);
 
-  registerTurboModule(
-      L"AppTheme", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AppTheme>());
+  turboModulesProvider->AddModuleProvider(
+      L"AppTheme", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::AppTheme>(), false /*overrideExisting*/);
 
-  registerTurboModule(
-      L"LogBox", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LogBox>());
+  turboModulesProvider->AddModuleProvider(
+      L"LogBox", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LogBox>(), false /*overrideExisting*/);
 
-  registerTurboModule(
-      L"Clipboard", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Clipboard>());
+  turboModulesProvider->AddModuleProvider(
+      L"Clipboard", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Clipboard>(), false /*overrideExisting*/);
 
-  registerTurboModule(
-      L"DeviceInfo", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::DeviceInfo>());
+  turboModulesProvider->AddModuleProvider(
+      L"DeviceInfo", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::DeviceInfo>(), false /*overrideExisting*/);
 
-  registerTurboModule(
-      L"ImageLoader", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
+  turboModulesProvider->AddModuleProvider(
+      L"ImageLoader", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>(), false /*overrideExisting*/);
 
-  registerTurboModule(
+  turboModulesProvider->AddModuleProvider(
       L"NativeAnimatedModule",
-      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
+      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>(), false /*overrideExisting*/);
 
 #elif defined(CORE_ABI) && defined(USE_FABRIC)
   if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
-    registerTurboModule(
+    turboModulesProvider->AddModuleProvider(
         L"ImageLoader",
-        winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>());
+        winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ImageLoader>(), false /*overrideExisting*/);
 
-    registerTurboModule(
+    turboModulesProvider->AddModuleProvider(
         L"NativeAnimatedModule",
-        winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>());
+        winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::NativeAnimatedModule>(), false /*overrideExisting*/);
   }
 #endif
 
-  registerTurboModule(
-      L"DevSettings", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::DevSettings>());
+  turboModulesProvider->AddModuleProvider(
+      L"DevSettings", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::DevSettings>(), false /*overrideExisting*/);
 
 #ifndef CORE_ABI
-  registerTurboModule(
-      L"I18nManager", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::I18nManager>());
+  turboModulesProvider->AddModuleProvider(
+      L"I18nManager", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::I18nManager>(), false /*overrideExisting*/);
 
-  registerTurboModule(
+  turboModulesProvider->AddModuleProvider(
       L"LinkingManager",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LinkingManager>());
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LinkingManager>(), false /*overrideExisting*/);
 
-  registerTurboModule(
-      L"Timing", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Timing>());
+  turboModulesProvider->AddModuleProvider(
+      L"Timing", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Timing>(), false /*overrideExisting*/);
 #endif
 
-  registerTurboModule(
-      ::Microsoft::React::GetWebSocketTurboModuleName(), ::Microsoft::React::GetWebSocketModuleProvider());
+  turboModulesProvider->AddModuleProvider(
+      ::Microsoft::React::GetWebSocketTurboModuleName(), ::Microsoft::React::GetWebSocketModuleProvider(), false /*overrideExisting*/);
 
   if (!Microsoft::React::GetRuntimeOptionBool("Blob.DisableModule")) {
-    registerTurboModule(::Microsoft::React::GetHttpTurboModuleName(), ::Microsoft::React::GetHttpModuleProvider());
+    turboModulesProvider->AddModuleProvider(::Microsoft::React::GetHttpTurboModuleName(), ::Microsoft::React::GetHttpModuleProvider(), false /*overrideExisting*/);
 
-    registerTurboModule(::Microsoft::React::GetBlobTurboModuleName(), ::Microsoft::React::GetBlobModuleProvider());
+    turboModulesProvider->AddModuleProvider(::Microsoft::React::GetBlobTurboModuleName(), ::Microsoft::React::GetBlobModuleProvider(), false /*overrideExisting*/);
 
-    registerTurboModule(
-        ::Microsoft::React::GetFileReaderTurboModuleName(), ::Microsoft::React::GetFileReaderModuleProvider());
+    turboModulesProvider->AddModuleProvider(
+        ::Microsoft::React::GetFileReaderTurboModuleName(), ::Microsoft::React::GetFileReaderModuleProvider(), false /*overrideExisting*/);
   }
 }
 
@@ -464,14 +420,11 @@ void ReactInstanceWin::Initialize() noexcept {
           devSettings->debuggerBreakOnNextLine = m_debuggerBreakOnNextLine;
           devSettings->debuggerPort = m_options.DeveloperSettings.DebuggerPort;
           devSettings->debuggerRuntimeName = m_options.DeveloperSettings.DebuggerRuntimeName;
-          devSettings->useWebDebugger = m_useWebDebugger;
           devSettings->useFastRefresh = m_isFastReloadEnabled;
           devSettings->bundleRootPath = BundleRootPath();
           devSettings->platformName =
               winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetPlatformName(
                   strongThis->m_reactContext->Properties());
-          devSettings->waitingForDebuggerCallback = GetWaitingForDebuggerCallback();
-          devSettings->debuggerAttachCallback = GetDebuggerAttachCallback();
           devSettings->enableDefaultCrashHandler = m_options.EnableDefaultCrashHandler();
           devSettings->bundleAppId = BundleAppId();
           devSettings->devBundle = RequestDevBundle();
@@ -660,7 +613,7 @@ void ReactInstanceWin::LoadJSBundles() noexcept {
   // The OnReactInstanceLoaded internally only accepts the first call and ignores others.
   //
 
-  if (m_useWebDebugger || m_isFastReloadEnabled) {
+  if (m_isFastReloadEnabled) {
     // Getting bundle from the packager, so do everything async.
     auto instanceWrapper = m_instanceWrapper.LoadWithLock();
     instanceWrapper->loadBundle(Mso::Copy(JavaScriptBundleFile()));
@@ -945,14 +898,6 @@ void ReactInstanceWin::OnLiveReload() noexcept {
   }
 }
 
-std::function<void()> ReactInstanceWin::GetWaitingForDebuggerCallback() noexcept {
-  if (m_useWebDebugger) {
-    return Mso::MakeWeakMemberStdFunction(this, &ReactInstanceWin::OnWaitingForDebugger);
-  }
-
-  return {};
-}
-
 void ReactInstanceWin::OnWaitingForDebugger() noexcept {
   auto state = m_state.load();
   while (state == ReactInstanceState::Loading) {
@@ -962,14 +907,6 @@ void ReactInstanceWin::OnWaitingForDebugger() noexcept {
   }
 
   m_updateUI();
-}
-
-std::function<void()> ReactInstanceWin::GetDebuggerAttachCallback() noexcept {
-  if (m_useWebDebugger) {
-    return Mso::MakeWeakMemberStdFunction(this, &ReactInstanceWin::OnDebuggerAttach);
-  }
-
-  return {};
 }
 
 void ReactInstanceWin::OnDebuggerAttach() noexcept {
@@ -1077,7 +1014,7 @@ void ReactInstanceWin::AttachMeasuredRootView(
 
   assert(!useFabric);
 #ifndef CORE_ABI
-  if (!useFabric || m_useWebDebugger) {
+  if (!useFabric) {
     int64_t rootTag = -1;
 
     if (auto uiManager = Microsoft::ReactNative::GetNativeUIManager(*m_reactContext).lock()) {
@@ -1105,7 +1042,7 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView,
   folly::dynamic params = folly::dynamic::array(rootTag);
 
 #ifdef USE_FABRIC
-  if (useFabric && !m_useWebDebugger) {
+  if (useFabric) {
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
     uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(rootTag));
@@ -1134,10 +1071,6 @@ Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
 std::string ReactInstanceWin::getApplicationTempFolder() {
   auto local = winrt::Windows::Storage::ApplicationData::Current().TemporaryFolder().Path();
   return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
-}
-
-bool ReactInstanceWin::UseWebDebugger() const noexcept {
-  return m_useWebDebugger;
 }
 
 bool ReactInstanceWin::UseFastRefresh() const noexcept {

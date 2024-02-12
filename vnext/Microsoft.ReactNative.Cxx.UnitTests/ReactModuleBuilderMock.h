@@ -166,10 +166,6 @@ struct ReactContextMock : implements<ReactContextMock, IReactContext> {
     VerifyElseCrashSz(false, "Not implemented");
   }
 
-  bool UseWebDebugger() noexcept {
-    VerifyElseCrashSz(false, "Not implemented");
-  }
-
   hstring DebugBundlePath() noexcept {
     VerifyElseCrashSz(false, "Not implemented");
   }

@@ -31,9 +31,7 @@ void DevSettings::onFastRefresh() noexcept {
 void DevSettings::setHotLoadingEnabled(bool isHotLoadingEnabled) noexcept {
   Mso::React::ReactOptions::SetUseFastRefresh(m_context.Properties().Handle(), isHotLoadingEnabled);
 }
-
-void DevSettings::setIsDebuggingRemotely(bool isDebuggingRemotelyEnabled) noexcept {
-  Mso::React::ReactOptions::SetUseWebDebugger(m_context.Properties().Handle(), isDebuggingRemotelyEnabled);
+void DevSettings::setIsDebuggingRemotely(bool /*isDebuggingRemotelyEnabled*/) noexcept {
 }
 
 void DevSettings::setProfilingEnabled(bool isProfilingEnabled) noexcept {
