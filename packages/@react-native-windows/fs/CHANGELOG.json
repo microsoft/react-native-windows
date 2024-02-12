@@ -2,6 +2,21 @@
   "name": "@react-native-windows/fs",
   "entries": [
     {
+      "date": "Fri, 09 Feb 2024 21:11:17 GMT",
+      "version": "0.0.0-canary.31",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.31",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/fs",
+            "commit": "36caabe545a82244c0c7299b8ccf47c88f6e7e7a",
+            "comment": "Ensure react-native-windows-init still works on Node 16"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 21 Oct 2023 05:16:09 GMT",
       "version": "0.0.0-canary.30",
       "tag": "@react-native-windows/fs_v0.0.0-canary.30",

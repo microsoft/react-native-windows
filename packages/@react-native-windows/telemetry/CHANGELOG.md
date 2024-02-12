@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Wed, 10 Jan 2024 06:13:20 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Feb 2024 21:11:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.82
+
+Fri, 09 Feb 2024 21:11:17 GMT
+
+### Changes
+
+- Ensure react-native-windows-init still works on Node 16 (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.31
 
 ## 0.0.0-canary.81
 

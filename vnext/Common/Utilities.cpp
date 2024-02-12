@@ -13,6 +13,8 @@
 #include <winrt/Windows.Security.Cryptography.h>
 
 // Standard Library
+#include <sstream>
+
 using std::string;
 using std::string_view;
 using std::wstring_view;

@@ -5,7 +5,6 @@
 
 #include <CreateModules.h>
 #include <ReactPropertyBag.h>
-#include <sstream>
 
 // React Native
 #include <cxxreact/JsArgumentHelpers.h>

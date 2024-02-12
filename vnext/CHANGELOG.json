@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 10 Feb 2024 06:14:25 GMT",
+      "version": "0.0.0-canary.769",
+      "tag": "react-native-windows_v0.0.0-canary.769",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "10cf9298509699589016b9f65d48df831def65fe",
+            "comment": "Add missing sstream includes"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Feb 2024 21:11:18 GMT",
+      "version": "0.0.0-canary.768",
+      "tag": "react-native-windows_v0.0.0-canary.768",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.197",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.74",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.18",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 09 Feb 2024 06:14:32 GMT",
+      "version": "0.0.0-canary.767",
+      "tag": "react-native-windows_v0.0.0-canary.767",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d9bd78f3dde9ae2a5f085f3e5bc11bfac4ee8312",
+            "comment": "Fix Base64 encoding padding"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Feb 2024 06:13:52 GMT",
       "version": "0.0.0-canary.766",
       "tag": "react-native-windows_v0.0.0-canary.766",

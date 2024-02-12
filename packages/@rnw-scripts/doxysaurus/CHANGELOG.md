@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/doxysaurus
 
-This log was last generated on Sat, 21 Oct 2023 05:16:09 GMT and should not be manually modified.
+This log was last generated on Fri, 09 Feb 2024 21:11:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.4.19
+
+Fri, 09 Feb 2024 21:11:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.31
 
 ## 0.4.18
 

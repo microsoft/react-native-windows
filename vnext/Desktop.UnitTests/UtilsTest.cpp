@@ -5,6 +5,9 @@
 #include <Utils.h>
 #include <utilities.h>
 
+// Windows API
+#include <winrt/base.h>
+
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 
 using std::string;

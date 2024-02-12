@@ -1,8 +1,34 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 08 Feb 2024 06:13:52 GMT and should not be manually modified.
+This log was last generated on Sat, 10 Feb 2024 06:14:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.769
+
+Sat, 10 Feb 2024 06:14:25 GMT
+
+### Changes
+
+- Add missing sstream includes (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.768
+
+Fri, 09 Feb 2024 21:11:18 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.197
+- Bump @react-native-windows/codegen to v0.0.0-canary.74
+- Bump react-native-platform-override to v1.9.18
+
+## 0.0.0-canary.767
+
+Fri, 09 Feb 2024 06:14:32 GMT
+
+### Changes
+
+- Fix Base64 encoding padding (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.766
 
