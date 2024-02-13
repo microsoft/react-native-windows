@@ -32,6 +32,8 @@ namespace Microsoft.ReactNative
     FocusNavigationResult NavigateFocus(FocusNavigationRequest request);
 
     Int64 TranslateMessage(UInt32 msg, UInt64 wParam, Int64 lParam);
+
+    Object UiaProvider { get; };
   }
 
 } // namespace Microsoft.ReactNative
