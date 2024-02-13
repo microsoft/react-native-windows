@@ -54,20 +54,20 @@ parameters:
       - BuildEnvironment: SecurePullRequest
         Matrix:
           - Name: X86DebugCompositionExperimentalWinUI3
-              BuildConfiguration: Debug
-              BuildPlatform: x86
-              SolutionFile: Playground-Composition.sln
-              UseExperimentalWinUI3: true
-            - Name: X64DebugCompositionExperimentalWinUI3
-              BuildConfiguration: Debug
-              BuildPlatform: x64
-              SolutionFile: Playground-Composition.sln
-              UseExperimentalWinUI3: true
-            - Name: X64ReleaseCompositionExperimentalWinUI3
-              BuildConfiguration: Release
-              BuildPlatform: x64
-              SolutionFile: Playground-Composition.sln
-              UseExperimentalWinUI3: true
+            BuildConfiguration: Debug
+            BuildPlatform: x86
+            SolutionFile: Playground-Composition.sln
+            UseExperimentalWinUI3: true
+          - Name: X64DebugCompositionExperimentalWinUI3
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            SolutionFile: Playground-Composition.sln
+            UseExperimentalWinUI3: true
+          - Name: X64ReleaseCompositionExperimentalWinUI3
+            BuildConfiguration: Release
+            BuildPlatform: x64
+            SolutionFile: Playground-Composition.sln
+            UseExperimentalWinUI3: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X86DebugUniversal
