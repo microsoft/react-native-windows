@@ -139,10 +139,7 @@ jobs:
               parameters:
                 platform: ${{ matrix.BuildPlatform }}
                 configuration: ${{ matrix.BuildConfiguration }}
-                ${{ if eq(config.BuildEnvironment, 'SecurePullRequest')}}:
-                  buildEnvironment: 'PullRequest'
-                ${{ else }}:
-                  buildEnvironment: ${{ config.BuildEnvironment }}
+                buildEnvironment: ${{ config.BuildEnvironment }}
 
             - ${{if eq(config.BuildEnvironment, 'Continuous')}}:
               - template: ../templates/write-certificate.yml
