@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.74.0-nightly-20240102-05ec058ac",
+  "baseVersion": "0.74.0-nightly-20240108-05ca2c6d8",
   "overrides": [
     {
       "type": "copy",
@@ -320,7 +320,7 @@
       "type": "copy",
       "directory": "js/examples/ScrollView",
       "baseDirectory": "packages/rn-tester/js/examples/ScrollView",
-      "baseHash": "64fdc06a81a909c3f27aa55e52ce98c06b1a90b3",
+      "baseHash": "9649978ae351c87d0f98816da35bc4053feedd6f",
       "issue": 4054
     },
     {
@@ -411,7 +411,7 @@
       "type": "copy",
       "directory": "js/examples/Transform",
       "baseDirectory": "packages/rn-tester/js/examples/Transform",
-      "baseHash": "94dd241d4ed0d038332353ecce19b7052939f9a3",
+      "baseHash": "d2dc7f7cac0ee3c8d8ee4fa29b4b57929c08ee29",
       "issue": 4054
     },
     {
