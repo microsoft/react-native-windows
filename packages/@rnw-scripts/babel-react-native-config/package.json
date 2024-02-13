@@ -10,7 +10,7 @@
     "directory": "packages/@rnw-scripts/babel-react-native-config"
   },
   "dependencies": {
-    "@babel/core": "^7.14.0",
+    "@babel/core": "^7.20.0",
     "@react-native/babel-preset": "0.73.16",
     "babel-plugin-transform-flow-enums": "^0.0.2"
   },
