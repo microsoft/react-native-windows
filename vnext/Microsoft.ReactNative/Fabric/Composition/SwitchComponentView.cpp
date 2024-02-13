@@ -39,16 +39,18 @@ winrt::Microsoft::ReactNative::ComponentView SwitchComponentView::Create(
   return winrt::make<SwitchComponentView>(compContext, tag, reactContext);
 }
 
-void SwitchComponentView::mountChildComponentView(
+void SwitchComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
+  base_type::MountChildComponentView(childComponentView, index);
 }
 
-void SwitchComponentView::unmountChildComponentView(
+void SwitchComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   assert(false);
+  base_type::UnmountChildComponentView(childComponentView, index);
 }
 
 void SwitchComponentView::HandleCommand(

@@ -62,12 +62,6 @@ struct ComponentView : public ComponentViewT<ComponentView> {
       bool customComponent);
 
   virtual std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept;
-  virtual void mountChildComponentView(
-      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
-      uint32_t index) noexcept;
-  virtual void unmountChildComponentView(
-      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
-      uint32_t index) noexcept;
   virtual void updateProps(
       facebook::react::Props::Shared const &props,
       facebook::react::Props::Shared const &oldProps) noexcept;
@@ -117,6 +111,12 @@ struct ComponentView : public ComponentViewT<ComponentView> {
       facebook::react::Props::Shared const &props) noexcept;
 
   // Publicaly overridable APIs
+  virtual void MountChildComponentView(
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+      uint32_t index) noexcept;
+  virtual void UnmountChildComponentView(
+      const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+      uint32_t index) noexcept;
   virtual void HandleCommand(
       winrt::hstring commandName,
       const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept;
