@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 13 Feb 2024 06:14:03 GMT",
+      "version": "0.0.0-canary.770",
+      "tag": "react-native-windows_v0.0.0-canary.770",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c29a3c3754dbdb3ebaf8599184c000e050aa4ad9",
+            "comment": "Add Playground Composition CI Builds with UseExperimentalWinUI3 enabled"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f2a60b1ae5320cb2b61b61b157a1ca758315d8b6",
+            "comment": "Integrate 1/8"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0211cdbdf681bc3400de4d4ab6c72dea54e85b1f",
+            "comment": "Deprecated Web Debugging"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 10 Feb 2024 06:14:25 GMT",
       "version": "0.0.0-canary.769",
       "tag": "react-native-windows_v0.0.0-canary.769",
