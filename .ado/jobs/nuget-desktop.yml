@@ -10,7 +10,7 @@ parameters:
     type: object
 
 jobs:
-  - ${{if ne(config.BuildEnvironment, 'SecurePullRequest')}}:
+  - ${{if ne(parameters.BuildEnvironment, 'SecurePullRequest')}}:
     - job: PackDesktop
       displayName: Pack Desktop NuGet Package
       variables: [template: ../variables/windows.yml]
