@@ -5503,13 +5503,8 @@ protected:
 
 public:
   virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
-  virtual jsi::Object getConstantsForViewManager(jsi::Runtime &rt, jsi::String viewManagerName) = 0;
-  virtual jsi::Array getDefaultEventTypes(jsi::Runtime &rt) = 0;
-  virtual jsi::Object lazilyLoadView(jsi::Runtime &rt, jsi::String name) = 0;
   virtual void createView(jsi::Runtime &rt, std::optional<double> reactTag, jsi::String viewName, double rootTag, jsi::Object props) = 0;
   virtual void updateView(jsi::Runtime &rt, double reactTag, jsi::String viewName, jsi::Object props) = 0;
-  virtual void focus(jsi::Runtime &rt, std::optional<double> reactTag) = 0;
-  virtual void blur(jsi::Runtime &rt, std::optional<double> reactTag) = 0;
   virtual void findSubviewIn(jsi::Runtime &rt, std::optional<double> reactTag, jsi::Array point, jsi::Function callback) = 0;
   virtual void dispatchViewManagerCommand(jsi::Runtime &rt, std::optional<double> reactTag, double commandID, std::optional<jsi::Array> commandArgs) = 0;
   virtual void measure(jsi::Runtime &rt, double reactTag, jsi::Function callback) = 0;
@@ -5520,14 +5515,17 @@ public:
   virtual void setJSResponder(jsi::Runtime &rt, std::optional<double> reactTag, bool blockNativeResponder) = 0;
   virtual void clearJSResponder(jsi::Runtime &rt) = 0;
   virtual void configureNextLayoutAnimation(jsi::Runtime &rt, jsi::Object config, jsi::Function callback, jsi::Function errorCallback) = 0;
-  virtual void removeSubviewsFromContainerWithID(jsi::Runtime &rt, double containerID) = 0;
-  virtual void replaceExistingNonRootView(jsi::Runtime &rt, std::optional<double> reactTag, std::optional<double> newReactTag) = 0;
   virtual void setChildren(jsi::Runtime &rt, std::optional<double> containerTag, jsi::Array reactTags) = 0;
   virtual void manageChildren(jsi::Runtime &rt, std::optional<double> containerTag, jsi::Array moveFromIndices, jsi::Array moveToIndices, jsi::Array addChildReactTags, jsi::Array addAtIndices, jsi::Array removeAtIndices) = 0;
+  virtual jsi::Object getConstantsForViewManager(jsi::Runtime &rt, jsi::String viewManagerName) = 0;
+  virtual jsi::Array getDefaultEventTypes(jsi::Runtime &rt) = 0;
   virtual void setLayoutAnimationEnabledExperimental(jsi::Runtime &rt, bool enabled) = 0;
   virtual void sendAccessibilityEvent(jsi::Runtime &rt, std::optional<double> reactTag, double eventType) = 0;
   virtual void showPopupMenu(jsi::Runtime &rt, std::optional<double> reactTag, jsi::Array items, jsi::Function error, jsi::Function success) = 0;
   virtual void dismissPopupMenu(jsi::Runtime &rt) = 0;
+  virtual jsi::Object lazilyLoadView(jsi::Runtime &rt, jsi::String name) = 0;
+  virtual void focus(jsi::Runtime &rt, std::optional<double> reactTag) = 0;
+  virtual void blur(jsi::Runtime &rt, std::optional<double> reactTag) = 0;
 
 };
 
@@ -5559,30 +5557,6 @@ private:
       return bridging::callFromJs<jsi::Object>(
           rt, &T::getConstants, jsInvoker_, instance_);
     }
-    jsi::Object getConstantsForViewManager(jsi::Runtime &rt, jsi::String viewManagerName) override {
-      static_assert(
-          bridging::getParameterCount(&T::getConstantsForViewManager) == 2,
-          "Expected getConstantsForViewManager(...) to have 2 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::getConstantsForViewManager, jsInvoker_, instance_, std::move(viewManagerName));
-    }
-    jsi::Array getDefaultEventTypes(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getDefaultEventTypes) == 1,
-          "Expected getDefaultEventTypes(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Array>(
-          rt, &T::getDefaultEventTypes, jsInvoker_, instance_);
-    }
-    jsi::Object lazilyLoadView(jsi::Runtime &rt, jsi::String name) override {
-      static_assert(
-          bridging::getParameterCount(&T::lazilyLoadView) == 2,
-          "Expected lazilyLoadView(...) to have 2 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::lazilyLoadView, jsInvoker_, instance_, std::move(name));
-    }
     void createView(jsi::Runtime &rt, std::optional<double> reactTag, jsi::String viewName, double rootTag, jsi::Object props) override {
       static_assert(
           bridging::getParameterCount(&T::createView) == 5,
@@ -5598,22 +5572,6 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::updateView, jsInvoker_, instance_, std::move(reactTag), std::move(viewName), std::move(props));
-    }
-    void focus(jsi::Runtime &rt, std::optional<double> reactTag) override {
-      static_assert(
-          bridging::getParameterCount(&T::focus) == 2,
-          "Expected focus(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::focus, jsInvoker_, instance_, std::move(reactTag));
-    }
-    void blur(jsi::Runtime &rt, std::optional<double> reactTag) override {
-      static_assert(
-          bridging::getParameterCount(&T::blur) == 2,
-          "Expected blur(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::blur, jsInvoker_, instance_, std::move(reactTag));
     }
     void findSubviewIn(jsi::Runtime &rt, std::optional<double> reactTag, jsi::Array point, jsi::Function callback) override {
       static_assert(
@@ -5695,22 +5653,6 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::configureNextLayoutAnimation, jsInvoker_, instance_, std::move(config), std::move(callback), std::move(errorCallback));
     }
-    void removeSubviewsFromContainerWithID(jsi::Runtime &rt, double containerID) override {
-      static_assert(
-          bridging::getParameterCount(&T::removeSubviewsFromContainerWithID) == 2,
-          "Expected removeSubviewsFromContainerWithID(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::removeSubviewsFromContainerWithID, jsInvoker_, instance_, std::move(containerID));
-    }
-    void replaceExistingNonRootView(jsi::Runtime &rt, std::optional<double> reactTag, std::optional<double> newReactTag) override {
-      static_assert(
-          bridging::getParameterCount(&T::replaceExistingNonRootView) == 3,
-          "Expected replaceExistingNonRootView(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::replaceExistingNonRootView, jsInvoker_, instance_, std::move(reactTag), std::move(newReactTag));
-    }
     void setChildren(jsi::Runtime &rt, std::optional<double> containerTag, jsi::Array reactTags) override {
       static_assert(
           bridging::getParameterCount(&T::setChildren) == 3,
@@ -5726,6 +5668,22 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::manageChildren, jsInvoker_, instance_, std::move(containerTag), std::move(moveFromIndices), std::move(moveToIndices), std::move(addChildReactTags), std::move(addAtIndices), std::move(removeAtIndices));
+    }
+    jsi::Object getConstantsForViewManager(jsi::Runtime &rt, jsi::String viewManagerName) override {
+      static_assert(
+          bridging::getParameterCount(&T::getConstantsForViewManager) == 2,
+          "Expected getConstantsForViewManager(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getConstantsForViewManager, jsInvoker_, instance_, std::move(viewManagerName));
+    }
+    jsi::Array getDefaultEventTypes(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getDefaultEventTypes) == 1,
+          "Expected getDefaultEventTypes(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getDefaultEventTypes, jsInvoker_, instance_);
     }
     void setLayoutAnimationEnabledExperimental(jsi::Runtime &rt, bool enabled) override {
       static_assert(
@@ -5758,6 +5716,30 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::dismissPopupMenu, jsInvoker_, instance_);
+    }
+    jsi::Object lazilyLoadView(jsi::Runtime &rt, jsi::String name) override {
+      static_assert(
+          bridging::getParameterCount(&T::lazilyLoadView) == 2,
+          "Expected lazilyLoadView(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::lazilyLoadView, jsInvoker_, instance_, std::move(name));
+    }
+    void focus(jsi::Runtime &rt, std::optional<double> reactTag) override {
+      static_assert(
+          bridging::getParameterCount(&T::focus) == 2,
+          "Expected focus(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::focus, jsInvoker_, instance_, std::move(reactTag));
+    }
+    void blur(jsi::Runtime &rt, std::optional<double> reactTag) override {
+      static_assert(
+          bridging::getParameterCount(&T::blur) == 2,
+          "Expected blur(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::blur, jsInvoker_, instance_, std::move(reactTag));
     }
 
   private:
