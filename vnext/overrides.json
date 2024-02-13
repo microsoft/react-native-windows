@@ -106,20 +106,6 @@
       "issue": 12195
     },
     {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBufferBuilder.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/mapbuffer/MapBufferBuilder.cpp",
-      "baseHash": "9130125a39f3abe55c89f3a48edc48cb113d89f5",
-      "issue": 7821
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mounting/ShadowTree.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/ShadowTree.cpp",
-      "baseHash": "5592f0aa26744ba3972b499e5f6ab811e6596a0d",
-      "issue": 12195
-    },
-    {
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "packages/rn-tester/IntegrationTests",
