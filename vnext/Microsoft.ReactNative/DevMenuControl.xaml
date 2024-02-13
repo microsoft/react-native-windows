@@ -50,21 +50,6 @@
                 <TextBlock Grid.Column='1' Grid.Row='1' FontSize='12' Opacity='0.5' TextWrapping='Wrap'>Restarts the JS instance. Any javascript state will be lost.</TextBlock>
             </Grid>
         </Button>
-        <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='RemoteDebug' Style='{StaticResource ButtonRevealStyle}'>
-            <Grid HorizontalAlignment='Stretch'>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width='Auto'/>
-                    <ColumnDefinition Width='*'/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <FontIcon Grid.Column='0' Grid.Row='0' Grid.RowSpan='2' VerticalAlignment='Top' FontFamily='{StaticResource SymbolThemeFontFamily}' Foreground='{StaticResource SystemControlForegroundAccentBrush}' Margin='8,8,16,8' Glyph='&#xE8AF;'/>
-                <TextBlock Grid.Column='1' Grid.Row='0' x:Name='RemoteDebugText'/>
-                <TextBlock Grid.Column='1' Grid.Row='1' x:Name='RemoteDebugDesc' FontSize='12' Opacity='0.5' TextWrapping='Wrap'/>
-            </Grid>
-        </Button>
         <Button HorizontalAlignment='Stretch' HorizontalContentAlignment='Stretch' x:Name='DirectDebug' Style='{StaticResource ButtonRevealStyle}'>
             <Grid HorizontalAlignment='Stretch'>
                 <Grid.ColumnDefinitions>

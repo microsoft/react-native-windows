@@ -1508,27 +1508,22 @@ winrt::Microsoft::ReactNative::ComponentView ViewComponentView::Create(
   return winrt::make<ViewComponentView>(compContext, tag, reactContext, false);
 }
 
-void ViewComponentView::mountChildComponentView(
+void ViewComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  m_children.InsertAt(index, childComponentView);
+  base_type::MountChildComponentView(childComponentView, index);
 
   indexOffsetForBorder(index);
-
-  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(*this);
-
   ensureVisual();
   m_visual.InsertAt(childComponentView.as<ComponentView>()->OuterVisual(), index);
 }
 
-void ViewComponentView::unmountChildComponentView(
+void ViewComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  m_children.RemoveAt(index);
+  base_type::UnmountChildComponentView(childComponentView, index);
 
   indexOffsetForBorder(index);
-
-  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(nullptr);
   m_visual.Remove(childComponentView.as<ComponentView>()->OuterVisual());
 }
 

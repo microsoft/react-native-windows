@@ -162,13 +162,19 @@ void WindowsModalHostComponentView::RegisterWndClass() noexcept {
   registered = true;
 }
 
-void WindowsModalHostComponentView::mountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
-    uint32_t /*index*/) noexcept {}
+void WindowsModalHostComponentView::MountChildComponentView(
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+    uint32_t index) noexcept {
+  assert(false);
+  base_type::MountChildComponentView(childComponentView, index);
+}
 
-void WindowsModalHostComponentView::unmountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
-    uint32_t /*index*/) noexcept {}
+void WindowsModalHostComponentView::UnmountChildComponentView(
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+    uint32_t index) noexcept {
+  assert(false);
+  base_type::UnmountChildComponentView(childComponentView, index);
+}
 
 void WindowsModalHostComponentView::HandleCommand(
     winrt::hstring commandName,
