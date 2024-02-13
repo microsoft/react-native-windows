@@ -38,7 +38,7 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground-Composition.sln
-          -${{ if eq(variables.System.DefinitionId, 627) }}: # Only add these configurations for Secure PR
+          - ${{ if eq(variables.System.DefinitionId, 627) }}: # Only add these configurations for Secure PR
             - Name: X86DebugCompositionExperimentalWinUI3
               BuildConfiguration: Debug
               BuildPlatform: x86
