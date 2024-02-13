@@ -139,9 +139,9 @@ jobs:
               parameters:
                 platform: ${{ matrix.BuildPlatform }}
                 configuration: ${{ matrix.BuildConfiguration }}
-                - ${{ if eq(config.BuildEnvironment, 'SecurePullRequest')}}:
+                ${{ if eq(config.BuildEnvironment, 'SecurePullRequest')}}:
                   buildEnvironment: 'PullRequest'
-                - ${{ else }}:
+                ${{ else }}:
                   buildEnvironment: ${{ config.BuildEnvironment }}
 
             - ${{if eq(config.BuildEnvironment, 'Continuous')}}:
