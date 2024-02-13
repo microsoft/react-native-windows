@@ -119,6 +119,9 @@ namespace Microsoft.ReactNative
       "Controls whether the instance JavaScript runs in a remote environment such as within a browser.\n"
       "By default, this is using a browser navigated to http://localhost:8081/debugger-ui served by Metro/Haul.\n"
       "Debugging will start as soon as the react native instance is loaded.")
+    [deprecated(
+      "Debugging should be done using DirectDebugging rather than WebDebugger.  Web debugging changes the app behavior "
+      "and will be removed in a future version.", deprecate, 1)]
     Boolean UseWebDebugger { get; set; };
 
     DOC_STRING(
