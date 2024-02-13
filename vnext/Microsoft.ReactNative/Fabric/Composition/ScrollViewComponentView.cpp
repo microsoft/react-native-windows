@@ -675,26 +675,22 @@ ScrollViewComponentView::ScrollViewComponentView(
         */
 }
 
-void ScrollViewComponentView::mountChildComponentView(
+void ScrollViewComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
+  base_type::MountChildComponentView(childComponentView, index);
+
   ensureVisual();
-
-  m_children.InsertAt(index, childComponentView);
-  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(*this);
-
   m_scrollVisual.InsertAt(
       childComponentView.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()->OuterVisual(),
       index);
 }
 
-void ScrollViewComponentView::unmountChildComponentView(
+void ScrollViewComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  m_children.RemoveAt(index);
-
+  base_type::UnmountChildComponentView(childComponentView, index);
   m_scrollVisual.Remove(childComponentView.as<ComponentView>()->OuterVisual());
-  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(nullptr);
 }
 
 void ScrollViewComponentView::updateBackgroundColor(const facebook::react::SharedColor &color) noexcept {

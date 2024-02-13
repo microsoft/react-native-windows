@@ -25,12 +25,11 @@
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/generator": "^7.20.0",
-    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-env": "^7.20.0",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.8.4",
     "@react-native-windows/automation": "^0.3.191",
     "@react-native-windows/automation-commands": "^0.1.211",
-    "@react-native/babel-plugin-codegen": "0.73.0",
     "@react-native/metro-babel-transformer": "0.73.12",
     "@react-native/metro-config": "^0.73.0",
     "@rnw-scripts/babel-node-config": "2.3.1",

@@ -43,13 +43,19 @@ ComponentView::supplementalComponentDescriptorProviders() noexcept {
   return {};
 }
 
-void ComponentView::mountChildComponentView(
+void ComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
-    uint32_t index) noexcept {}
+    uint32_t index) noexcept {
+  m_children.InsertAt(index, childComponentView);
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(*this);
+}
 
-void ComponentView::unmountChildComponentView(
+void ComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
-    uint32_t index) noexcept {}
+    uint32_t index) noexcept {
+  m_children.RemoveAt(index);
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(nullptr);
+}
 
 void ComponentView::updateProps(
     facebook::react::Props::Shared const &props,

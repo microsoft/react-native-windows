@@ -28,16 +28,18 @@ ActivityIndicatorComponentView::ActivityIndicatorComponentView(
   m_props = std::make_shared<facebook::react::ActivityIndicatorViewProps const>();
 }
 
-void ActivityIndicatorComponentView::mountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
-    uint32_t /*index*/) noexcept {
+void ActivityIndicatorComponentView::MountChildComponentView(
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
+  base_type::MountChildComponentView(childComponentView, index);
 }
 
-void ActivityIndicatorComponentView::unmountChildComponentView(
-    const winrt::Microsoft::ReactNative::ComponentView & /*childComponentView*/,
-    uint32_t /*index*/) noexcept {
+void ActivityIndicatorComponentView::UnmountChildComponentView(
+    const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
+    uint32_t index) noexcept {
   assert(false);
+  base_type::UnmountChildComponentView(childComponentView, index);
 }
 
 void ActivityIndicatorComponentView::updateProgressColor(const facebook::react::SharedColor &color) noexcept {

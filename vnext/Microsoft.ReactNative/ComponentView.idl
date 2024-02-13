@@ -77,6 +77,8 @@ namespace Microsoft.ReactNative
     IVectorView<ComponentView> Children { get; };
     IReactContext ReactContext { get;};
 
+    overridable void MountChildComponentView(ComponentView childComponentView, UInt32 index);
+    overridable void UnmountChildComponentView(ComponentView childComponentView, UInt32 index);
     overridable void HandleCommand(String commandName, IJSValueReader args);
     overridable void UpdateProps(IComponentProps props);
     overridable void UpdateState(IComponentState state);
