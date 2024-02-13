@@ -61,10 +61,6 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground-Win32.sln
-          - Name: X64DebugCoreApp
-            BuildConfiguration: Debug
-            BuildPlatform: x64
-            SolutionFile: ..\CoreApp\CoreApp.sln
       - BuildEnvironment: Continuous
         Matrix:
           - Name: X86DebugUniversal
@@ -110,10 +106,6 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground-Win32.sln
-          - Name: X64DebugCoreApp
-            BuildConfiguration: Debug
-            BuildPlatform: x64
-            SolutionFile: ..\CoreApp\CoreApp.sln
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
