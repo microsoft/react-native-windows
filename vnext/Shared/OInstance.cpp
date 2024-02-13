@@ -388,7 +388,7 @@ InstanceImpl::InstanceImpl(
       TurboModuleBinding::install(
           *runtimeHolder->getRuntime(),
           std::function(binding),
-          TurboModuleBindingMode::HostObject,
+          nullptr,
           longLivedObjectCollection);
 
       // init TurboModule

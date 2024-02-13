@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240108-05ca2c6d8",
+  "baseVersion": "0.74.0-nightly-20240109-f7f9250f6",
   "overrides": [
     {
       "type": "derived",
@@ -96,34 +96,6 @@
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/CallbackWrapper.h",
       "baseFile": "packages/react-native/ReactCommon/react/bridging/CallbackWrapper.h",
       "baseHash": "fe1adea3ede6ed141bc6db212be72091722ffa02",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/LongLivedObject.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/bridging/LongLivedObject.cpp",
-      "baseHash": "4998856d2ebeb3fd6985472123764bb00645bd75",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/LongLivedObject.h",
-      "baseFile": "packages/react-native/ReactCommon/react/bridging/LongLivedObject.h",
-      "baseHash": "6ffd4b844e3b205de8ae85ce6d2ff691c99992e1",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModuleBinding.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModuleBinding.cpp",
-      "baseHash": "a2fe17d8840fd038a4b1569d10b7667a1f9e516a",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModuleBinding.h",
-      "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModuleBinding.h",
-      "baseHash": "b3b916aa12828c0f77a434d086248453d6243870",
       "issue": 12195
     },
     {

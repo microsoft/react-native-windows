@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.74.0-nightly-20240108-05ca2c6d8",
+  "baseVersion": "0.74.0-nightly-20240109-f7f9250f6",
   "overrides": [
     {
       "type": "patch",
