@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240102-05ec058ac",
+  "baseVersion": "0.74.0-nightly-20240108-05ca2c6d8",
   "overrides": [
     {
       "type": "derived",
@@ -112,7 +112,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/ScrollView/ScrollView.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "6367cf4ba4637cd8292b68c629cb9d59df99ade1"
+      "baseHash": "20c57531950626dc8be144ddd5a77800631d6b1a"
     },
     {
       "type": "platform",
@@ -170,7 +170,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/Touchable/TouchableNativeFeedback.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableNativeFeedback.js",
-      "baseHash": "ac429ef22142f8bb7a274a6eb98575f6de07295f"
+      "baseHash": "8a1cc3c55ca3af68c5627479b3614fa44a1ffbea"
     },
     {
       "type": "platform",

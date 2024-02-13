@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240102-05ec058ac",
+  "baseVersion": "0.74.0-nightly-20240108-05ca2c6d8",
   "overrides": [
     {
       "type": "derived",
@@ -343,7 +343,7 @@
       "type": "patch",
       "file": "src/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableHighlight.js",
-      "baseHash": "15f8aeb57c64b30ae134c6354df6ca9bd50ff0ec"
+      "baseHash": "cf3126868768ff1456ab8e3c377a9071e8d2a9f4"
     },
     {
       "type": "patch",

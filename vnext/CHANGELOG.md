@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 10 Feb 2024 06:14:25 GMT and should not be manually modified.
+This log was last generated on Tue, 13 Feb 2024 06:14:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.770
+
+Tue, 13 Feb 2024 06:14:03 GMT
+
+### Changes
+
+- Add Playground Composition CI Builds with UseExperimentalWinUI3 enabled (jthysell@microsoft.com)
+- Integrate 1/8 (34109996+chiaramooney@users.noreply.github.com)
+- Deprecated Web Debugging (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.769
 

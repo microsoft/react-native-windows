@@ -124,12 +124,6 @@ struct InAppXamlDevMenu : public IDevMenu, public std::enable_shared_from_this<I
   void Show() noexcept override {
     winrt::Microsoft::ReactNative::DevMenuControl devMenu{};
 
-    devMenu.RemoteDebugText().Text(
-        Mso::React::ReactOptions::UseWebDebugger(m_context->Properties()) ? L"Disable Remote JS Debugging"
-                                                                          : L"Enable Remote JS Debugging");
-    devMenu.RemoteDebugDesc().Text(
-        L"When enabled runs the JS remotely in VSCode or Chrome based on what you attach to the packager.  This means that the JS may run with a different JS engine than it runs in on in the real application, in addition synchronous native module calls, and JSI native modules will not work.");
-
     devMenu.FastRefreshText().Text(FastRefreshLabel(m_context));
     if (Mso::React::ReactOptions::JsiEngine(m_context->Properties()) == Mso::React::JSIEngine::Hermes) {
       devMenu.SamplingProfilerText().Text(HermesProfilerLabel(m_context));
@@ -165,18 +159,6 @@ struct InAppXamlDevMenu : public IDevMenu, public std::enable_shared_from_this<I
         [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
           if (auto strongThis = wkThis.lock()) {
             strongThis->Hide();
-            DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
-          }
-        });
-
-    m_remoteDebugJSRevoker = devMenu.RemoteDebug().Click(
-        winrt::auto_revoke,
-        [wkThis = weak_from_this()](auto const & /*sender*/, xaml::RoutedEventArgs const & /*args*/) noexcept {
-          if (auto strongThis = wkThis.lock()) {
-            strongThis->Hide();
-            Mso::React::ReactOptions::SetUseWebDebugger(
-                strongThis->m_context->Properties(),
-                !Mso::React::ReactOptions::UseWebDebugger(strongThis->m_context->Properties()));
             DevSettings::Reload(React::ReactPropertyBag(strongThis->m_context->Properties()));
           }
         });
@@ -301,7 +283,6 @@ struct InAppXamlDevMenu : public IDevMenu, public std::enable_shared_from_this<I
  private:
   const Mso::CntPtr<Mso::React::IReactContext> m_context;
   xaml::Controls::Flyout m_flyout{nullptr};
-  xaml::Controls::Button::Click_revoker m_remoteDebugJSRevoker{};
   xaml::Controls::Button::Click_revoker m_cancelRevoker{};
   xaml::Controls::Button::Click_revoker m_toggleInspectorRevoker{};
   xaml::Controls::Button::Click_revoker m_configBundlerRevoker{};
