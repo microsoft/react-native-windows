@@ -5,6 +5,7 @@
     <UseHermes>true</UseHermes>
     <UseFabric>true</UseFabric>
     <UseWinUI3>false</UseWinUI3>
+    <UseExperimentalWinUI3>false</UseExperimentalWinUI3>
     <EnableSourceLink>true</EnableSourceLink>
     <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
   </PropertyGroup>
