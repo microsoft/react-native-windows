@@ -38,21 +38,21 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground-Composition.sln
-          # - Name: X86DebugCompositionExperimentalWinUI3
-          #   BuildConfiguration: Debug
-          #   BuildPlatform: x86
-          #   SolutionFile: Playground-Composition.sln
-          #   UseExperimentalWinUI3: true
-          # - Name: X64DebugCompositionExperimentalWinUI3
-          #   BuildConfiguration: Debug
-          #   BuildPlatform: x64
-          #   SolutionFile: Playground-Composition.sln
-          #   UseExperimentalWinUI3: true
-          # - Name: X64ReleaseCompositionExperimentalWinUI3
-          #   BuildConfiguration: Release
-          #   BuildPlatform: x64
-          #   SolutionFile: Playground-Composition.sln
-          #   UseExperimentalWinUI3: true
+          - Name: X86DebugCompositionExperimentalWinUI3
+            BuildConfiguration: Debug
+            BuildPlatform: x86
+            SolutionFile: Playground-Composition.sln
+            UseExperimentalWinUI3: true
+          - Name: X64DebugCompositionExperimentalWinUI3
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            SolutionFile: Playground-Composition.sln
+            UseExperimentalWinUI3: true
+          - Name: X64ReleaseCompositionExperimentalWinUI3
+            BuildConfiguration: Release
+            BuildPlatform: x64
+            SolutionFile: Playground-Composition.sln
+            UseExperimentalWinUI3: true
           - Name: X86DebugWin32
             BuildConfiguration: Debug
             BuildPlatform: x86
@@ -143,19 +143,23 @@ jobs:
                 parameters:
                   certificateName: playgroundEncodedKey
 
-            - ${{ if eq(matrix.UseExperimentalWinUI3, true) }}:
+            - ${{ if and(eq(matrix.UseExperimentalWinUI3, true), eq(variables.System.DefinitionId, 627) }}:
+              - template:  ../templates/set-experimental-feature.yml
+                parameters:
+                  package: packages\playground
+                  feature: UseExperimentalWinUI3
+                  value: true
+
               - task: PowerShell@2
                 displayName: Enable the internal WinAppSDK Feed
                 inputs:
                   targetType: filePath # filePath | inline
                   filePath: $(Build.SourcesDirectory)\vnext\Scripts\EnableInternalWinAppSDKFeed.ps1
-                condition: eq(variables['EnableInternalWinAppSDKFeed'], 'true')
-                
+
               - task: NuGetAuthenticate@1
                 displayName: 'NuGet Authenticate Internal WinAppSDK Feed'
                 inputs:
                   nuGetServiceConnections: $(InternalWinAppSDKFeedServiceConnection)
-                condition: eq(variables['EnableInternalWinAppSDKFeed'], 'true')
 
             # NuGet ignores packages.config if it detects <PackageReference>.
             # Use restore packages.config directly to keep compabitility with ReactNativePicker.
