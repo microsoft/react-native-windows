@@ -43,7 +43,8 @@ const int MODAL_DEFAULT_HEIGHT = 500;
 
 // creates a new modal window
 void WindowsModalHostComponentView::ShowOnUIThread() noexcept {
-  auto host = React::implementation::ReactNativeHost::GetReactNativeHost(m_context.Properties());
+  auto host =
+      winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(m_context.Properties());
   if (!host) {
     return;
   }
@@ -51,7 +52,7 @@ void WindowsModalHostComponentView::ShowOnUIThread() noexcept {
   RegisterWndClass(); // creates and register a windows class
 
   if (!m_hwnd) {
-    auto CompositionHwndHost = React::CompositionHwndHost();
+    auto CompositionHwndHost = winrt::Microsoft::ReactNative::CompositionHwndHost();
     winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
     viewOptions.ComponentName(L"Modal");
     CompositionHwndHost.ReactViewHost(
@@ -98,11 +99,11 @@ LRESULT CALLBACK LogBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lp
       hwnd,
       CompHostProperty)); // gets data handle from the property list of specified window (ie the window we want to make)
   winrt::com_ptr<winrt::IUnknown> spunk;
-  React::CompositionHwndHost host{nullptr};
+  winrt::Microsoft::ReactNative::CompositionHwndHost host{nullptr};
 
   if (data) {
     winrt::check_hresult(data->QueryInterface(
-        winrt::guid_of<React::CompositionHwndHost>(),
+        winrt::guid_of<winrt::Microsoft::ReactNative::CompositionHwndHost>(),
         winrt::put_abi(host))); // look into the data for a CompositionHwndHost and store it in host
     auto result = static_cast<LRESULT>(host.TranslateMessage(message, wparam, lparam));
     if (result)
