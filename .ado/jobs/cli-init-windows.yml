@@ -45,16 +45,11 @@ parameters:
             additionalRunArguments: --no-deploy
       - BuildEnvironment: SecurePullRequest
         Matrix:
-          - Name: FabricX64ReleaseExperimentalWinUI3
+          - Name: FabricX64Release
             template: cpp-app
             configuration: Release
             platform: x64
-            additionalRunArguments: --no-autolink --msbuildprops UseExperimentalWinUI3=true
-          - Name: FabricX86DebugExperimentalWinUI3
-            template: cpp-app
-            configuration: Debug
-            platform: x86
-            additionalRunArguments: --no-autolink --msbuildprops UseExperimentalWinUI3=true
+            additionalRunArguments: --no-autolink
       - BuildEnvironment: Continuous
         Matrix:
           - Name: FabricX64Debug
