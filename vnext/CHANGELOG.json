@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 14 Feb 2024 23:49:13 GMT",
+      "version": "0.73.7",
+      "tag": "react-native-windows_v0.73.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0be6cf505a64a04152fa05d147f7a0210c29a57e",
+            "comment": "Reintroduce experimental yoga flag for use by NetUI"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Feb 2024 16:13:55 GMT",
       "version": "0.73.6",
       "tag": "react-native-windows_v0.73.6",

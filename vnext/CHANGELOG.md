@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 12 Feb 2024 16:13:55 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Feb 2024 23:49:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.7
+
+Wed, 14 Feb 2024 23:49:13 GMT
+
+### Patches
+
+- Reintroduce experimental yoga flag for use by NetUI (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.73.6
 
