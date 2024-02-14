@@ -131,6 +131,12 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/enums/ExperimentalFeature.h",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/enums/ExperimentalFeature.h",
+      "baseHash": "d2531e46c7d9e225e4be0e8612579c8a442bc8f7"
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/LayoutResults.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/LayoutResults.h",
       "baseHash": "7a3bfa391567fd51b10d205a98399bc972048feb",
