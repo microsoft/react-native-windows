@@ -154,7 +154,7 @@ jobs:
               - task: NuGetAuthenticate@1
                 displayName: 'NuGet Authenticate Internal WinAppSDK Feed'
                 inputs:
-                  nuGetServiceConnections: $(InternalWinAppSDKFeedServiceConnection)
+                  nuGetServiceConnections: 'WinAppSDK Experimental NuGet for RNW'
 
             # NuGet ignores packages.config if it detects <PackageReference>.
             # Use restore packages.config directly to keep compabitility with ReactNativePicker.
