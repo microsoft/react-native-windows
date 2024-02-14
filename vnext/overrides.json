@@ -110,6 +110,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/algorithm/CalculateLayout.cpp",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/algorithm/CalculateLayout.cpp",
+      "baseHash": "decbdc356d57a575c9987a8f9bd9ad15641d390a",
+      "issue": 123
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/bits/NumericBitfield.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/bits/NumericBitfield.h",
       "baseHash": "26ae37f6d9d9bf6e8d9c6eb488d825bb6aba6fba",
@@ -121,6 +128,12 @@
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/config/Config.h",
       "baseHash": "c01a9fd4408d1df6419197990a4000a09d28bf52",
       "issue": 12195
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/enums/ExperimentalFeature.h",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/enums/ExperimentalFeature.h",
+      "baseHash": "d2531e46c7d9e225e4be0e8612579c8a442bc8f7"
     },
     {
       "type": "patch",
@@ -142,6 +155,12 @@
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/Node.h",
       "baseHash": "fb60399debf19ffd98dbf34d2946e21998fb2619",
       "issue": 12195
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/YGEnums.h",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/YGEnums.h",
+      "baseHash": "7e169bc6b173d2c1c804b0a93f5a1f3df3038034"
     },
     {
       "type": "patch",
