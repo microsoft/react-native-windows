@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/eslint-config
 
-This log was last generated on Sat, 21 Oct 2023 05:16:08 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Feb 2024 06:16:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.5
+
+Wed, 14 Feb 2024 06:16:54 GMT
+
+### Patches
+
+- Bump Babel Versions (34109996+chiaramooney@users.noreply.github.com)
 
 ## 1.2.4
 

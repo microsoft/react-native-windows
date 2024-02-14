@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/codegen",
-  "version": "0.0.0-canary.74",
+  "version": "0.0.0-canary.75",
   "description": "Generators for react-native-codegen targeting react-native-windows",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -22,7 +22,7 @@
     "react-native-windows-codegen": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^0.0.0-canary.31",
+    "@react-native-windows/fs": "^0.0.0-canary.32",
     "chalk": "^4.1.0",
     "globby": "^11.0.4",
     "mustache": "^4.0.1",
@@ -30,9 +30,9 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.2.4",
-    "@rnw-scripts/jest-unittest-config": "1.5.6",
-    "@rnw-scripts/just-task": "2.3.18",
+    "@rnw-scripts/eslint-config": "1.2.5",
+    "@rnw-scripts/jest-unittest-config": "1.5.7",
+    "@rnw-scripts/just-task": "2.3.19",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/chalk": "^2.2.0",
     "@types/jest": "^29.2.2",

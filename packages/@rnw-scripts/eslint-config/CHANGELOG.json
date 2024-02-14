@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/eslint-config",
   "entries": [
     {
+      "date": "Wed, 14 Feb 2024 06:16:54 GMT",
+      "version": "1.2.5",
+      "tag": "@rnw-scripts/eslint-config_v1.2.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "2cd4937023a0f1f31350717589c298dbbd12853a",
+            "comment": "Bump Babel Versions"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 21 Oct 2023 05:16:08 GMT",
       "version": "1.2.4",
       "tag": "@rnw-scripts/eslint-config_v1.2.4",
