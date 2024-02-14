@@ -14,7 +14,7 @@ import type {RNTesterModule} from '../../types/RNTesterTypes';
 
 import * as React from 'react';
 
-import {Platform, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Alert, Platform, Pressable, StyleSheet, Text, View} from 'react-native';
 
 class ViewBorderStyleExample extends React.Component<
   $ReadOnly<{||}>,
