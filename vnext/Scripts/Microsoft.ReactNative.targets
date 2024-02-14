@@ -19,10 +19,4 @@
 
   </ItemGroup>
 
-  <ItemDefinitionGroup Condition="'$(UseRNCoreApp)'=='true'">
-    <Link>
-      <AdditionalDependencies>$(MSBuildThisFileDirectory)..\..\lib\$(Native-Platform)\Microsoft.ReactNative.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
-
 </Project>

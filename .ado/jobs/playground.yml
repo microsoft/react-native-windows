@@ -47,10 +47,6 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground-Win32.sln
-          - Name: X64DebugCoreApp
-            BuildConfiguration: Debug
-            BuildPlatform: x64
-            SolutionFile: ..\CoreApp\CoreApp.sln
       - BuildEnvironment: SecurePullRequest
         Matrix:
           - Name: X86DebugCompositionExperimentalWinUI3
@@ -113,10 +109,6 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: x64
             SolutionFile: Playground-Win32.sln
-          - Name: X64DebugCoreApp
-            BuildConfiguration: Debug
-            BuildPlatform: x64
-            SolutionFile: ..\CoreApp\CoreApp.sln
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
