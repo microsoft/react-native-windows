@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/just-task",
-  "version": "2.3.18",
+  "version": "2.3.19",
   "license": "MIT",
   "main": "just-task.js",
   "repository": {
@@ -18,13 +18,13 @@
   "dependencies": {
     "@octokit/rest": "^18.5.3",
     "@rnw-scripts/jest-e2e-config": "1.4.6",
-    "@rnw-scripts/jest-unittest-config": "1.5.6",
+    "@rnw-scripts/jest-unittest-config": "1.5.7",
     "depcheck": "^1.4.1",
     "glob": "^7.1.6",
     "just-scripts": "^1.3.3"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.2.4",
+    "@rnw-scripts/eslint-config": "1.2.5",
     "@types/node": "^18.0.0",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.57.1"

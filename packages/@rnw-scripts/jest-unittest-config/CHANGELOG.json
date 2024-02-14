@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/jest-unittest-config",
   "entries": [
     {
+      "date": "Wed, 14 Feb 2024 06:16:54 GMT",
+      "version": "1.5.7",
+      "tag": "@rnw-scripts/jest-unittest-config_v1.5.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/jest-unittest-config",
+            "commit": "2cd4937023a0f1f31350717589c298dbbd12853a",
+            "comment": "Bump Babel Versions"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Jul 2023 05:17:07 GMT",
       "tag": "@rnw-scripts/jest-unittest-config_v1.5.6",
       "version": "1.5.6",

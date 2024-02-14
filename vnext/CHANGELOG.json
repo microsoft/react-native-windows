@@ -2,6 +2,71 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 14 Feb 2024 06:16:55 GMT",
+      "version": "0.0.0-canary.771",
+      "tag": "react-native-windows_v0.0.0-canary.771",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "70dc699b5b233a86fcd3d9d191d5bf00c06af080",
+            "comment": "[Fabric] LogBox crashes when running lifted composition"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4c9dbfcb381f6cd861115e3d96f232d77134a2b2",
+            "comment": "[Fabric] Expose (un)MountChildComponentView to 3P components"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.198",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.75",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.5",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.8",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.19",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.19",
+            "commit": "not available"
+          }
+        ],
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c9ede0f97e20a2d246b8b86fd7b0bd7b301df7f7",
+            "comment": "Update babel config"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 13 Feb 2024 06:14:03 GMT",
       "version": "0.0.0-canary.770",
       "tag": "react-native-windows_v0.0.0-canary.770",

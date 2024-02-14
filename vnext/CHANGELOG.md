@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 13 Feb 2024 06:14:03 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Feb 2024 06:16:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.771
+
+Wed, 14 Feb 2024 06:16:55 GMT
+
+### Changes
+
+- [Fabric] LogBox crashes when running lifted composition (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Expose (un)MountChildComponentView to 3P components (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.198
+- Bump @react-native-windows/codegen to v0.0.0-canary.75
+- Bump @rnw-scripts/eslint-config to v1.2.5
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.8
+- Bump @rnw-scripts/just-task to v2.3.19
+- Bump react-native-platform-override to v1.9.19
 
 ## 0.0.0-canary.770
 
