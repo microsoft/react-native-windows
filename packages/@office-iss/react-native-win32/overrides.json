@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240108-05ca2c6d8",
+  "baseVersion": "0.74.0-nightly-20240115-0c7008f28",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "9c6c26c42702bd360f25551690594d246946173b"
+      "baseHash": "c8d51e03c7f984398c710769a282b9e28d3030b2"
     },
     {
       "type": "derived",
@@ -54,7 +54,7 @@
       "type": "copy",
       "file": "src/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.android.js",
-      "baseHash": "d37b2f72125246ababf3260e99ef790ce76fe3bb",
+      "baseHash": "cbe33fe4080bcdb75c277e03c0383aab0554d604",
       "issue": 4578
     },
     {
@@ -112,7 +112,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/ScrollView/ScrollView.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "20c57531950626dc8be144ddd5a77800631d6b1a"
+      "baseHash": "a842009ee0d0d9ee5ee16e88ff25b9a45f38b667"
     },
     {
       "type": "platform",
@@ -387,7 +387,7 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.win32.js",
       "baseFile": "packages/react-native/Libraries/Pressability/Pressability.js",
-      "baseHash": "d5a39e2602915a52ae14cc88aaba8bd1d1c8be8a",
+      "baseHash": "3b490704a0a3c7f159efe344778cd6217d22d088",
       "issue": 6240
     },
     {
@@ -410,7 +410,7 @@
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.win32.js",
       "baseFile": "packages/react-native/Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "d5bbe5273211e4f39e6468f0c90ec42e5fe0a9c0"
+      "baseHash": "98dab159b858354132b88e7bfb1f376420136a5c"
     },
     {
       "type": "derived",

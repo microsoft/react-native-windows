@@ -1496,23 +1496,6 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_getConstants(jsi::Run
     rt
   );
 }
-static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_getConstantsForViewManager(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->getConstantsForViewManager(
-    rt,
-    args[0].asString(rt)
-  );
-}
-static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_getDefaultEventTypes(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->getDefaultEventTypes(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_lazilyLoadView(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->lazilyLoadView(
-    rt,
-    args[0].asString(rt)
-  );
-}
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_createView(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->createView(
     rt,
@@ -1529,20 +1512,6 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_updateView(jsi::Runti
     args[0].asNumber(),
     args[1].asString(rt),
     args[2].asObject(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_focus(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->focus(
-    rt,
-    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber())
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_blur(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->blur(
-    rt,
-    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber())
   );
   return jsi::Value::undefined();
 }
@@ -1631,21 +1600,6 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_configureNextLayoutAn
   );
   return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_removeSubviewsFromContainerWithID(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->removeSubviewsFromContainerWithID(
-    rt,
-    args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_replaceExistingNonRootView(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->replaceExistingNonRootView(
-    rt,
-    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()),
-    args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asNumber())
-  );
-  return jsi::Value::undefined();
-}
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_setChildren(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->setChildren(
     rt,
@@ -1665,6 +1619,17 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_manageChildren(jsi::R
     args[5].asObject(rt).asArray(rt)
   );
   return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_getConstantsForViewManager(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->getConstantsForViewManager(
+    rt,
+    args[0].asString(rt)
+  );
+}
+static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_getDefaultEventTypes(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->getDefaultEventTypes(
+    rt
+  );
 }
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_setLayoutAnimationEnabledExperimental(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->setLayoutAnimationEnabledExperimental(
@@ -1697,17 +1662,32 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_dismissPopupMenu(jsi:
   );
   return jsi::Value::undefined();
 }
+static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_lazilyLoadView(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->lazilyLoadView(
+    rt,
+    args[0].asString(rt)
+  );
+}
+static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_focus(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->focus(
+    rt,
+    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber())
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_blur(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->blur(
+    rt,
+    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber())
+  );
+  return jsi::Value::undefined();
+}
 
 NativeUIManagerCxxSpecJSI::NativeUIManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("UIManager", jsInvoker) {
   methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeUIManagerCxxSpecJSI_getConstants};
-  methodMap_["getConstantsForViewManager"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_getConstantsForViewManager};
-  methodMap_["getDefaultEventTypes"] = MethodMetadata {0, __hostFunction_NativeUIManagerCxxSpecJSI_getDefaultEventTypes};
-  methodMap_["lazilyLoadView"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_lazilyLoadView};
   methodMap_["createView"] = MethodMetadata {4, __hostFunction_NativeUIManagerCxxSpecJSI_createView};
   methodMap_["updateView"] = MethodMetadata {3, __hostFunction_NativeUIManagerCxxSpecJSI_updateView};
-  methodMap_["focus"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_focus};
-  methodMap_["blur"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_blur};
   methodMap_["findSubviewIn"] = MethodMetadata {3, __hostFunction_NativeUIManagerCxxSpecJSI_findSubviewIn};
   methodMap_["dispatchViewManagerCommand"] = MethodMetadata {3, __hostFunction_NativeUIManagerCxxSpecJSI_dispatchViewManagerCommand};
   methodMap_["measure"] = MethodMetadata {2, __hostFunction_NativeUIManagerCxxSpecJSI_measure};
@@ -1718,14 +1698,17 @@ NativeUIManagerCxxSpecJSI::NativeUIManagerCxxSpecJSI(std::shared_ptr<CallInvoker
   methodMap_["setJSResponder"] = MethodMetadata {2, __hostFunction_NativeUIManagerCxxSpecJSI_setJSResponder};
   methodMap_["clearJSResponder"] = MethodMetadata {0, __hostFunction_NativeUIManagerCxxSpecJSI_clearJSResponder};
   methodMap_["configureNextLayoutAnimation"] = MethodMetadata {3, __hostFunction_NativeUIManagerCxxSpecJSI_configureNextLayoutAnimation};
-  methodMap_["removeSubviewsFromContainerWithID"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_removeSubviewsFromContainerWithID};
-  methodMap_["replaceExistingNonRootView"] = MethodMetadata {2, __hostFunction_NativeUIManagerCxxSpecJSI_replaceExistingNonRootView};
   methodMap_["setChildren"] = MethodMetadata {2, __hostFunction_NativeUIManagerCxxSpecJSI_setChildren};
   methodMap_["manageChildren"] = MethodMetadata {6, __hostFunction_NativeUIManagerCxxSpecJSI_manageChildren};
+  methodMap_["getConstantsForViewManager"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_getConstantsForViewManager};
+  methodMap_["getDefaultEventTypes"] = MethodMetadata {0, __hostFunction_NativeUIManagerCxxSpecJSI_getDefaultEventTypes};
   methodMap_["setLayoutAnimationEnabledExperimental"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_setLayoutAnimationEnabledExperimental};
   methodMap_["sendAccessibilityEvent"] = MethodMetadata {2, __hostFunction_NativeUIManagerCxxSpecJSI_sendAccessibilityEvent};
   methodMap_["showPopupMenu"] = MethodMetadata {4, __hostFunction_NativeUIManagerCxxSpecJSI_showPopupMenu};
   methodMap_["dismissPopupMenu"] = MethodMetadata {0, __hostFunction_NativeUIManagerCxxSpecJSI_dismissPopupMenu};
+  methodMap_["lazilyLoadView"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_lazilyLoadView};
+  methodMap_["focus"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_focus};
+  methodMap_["blur"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_blur};
 }
 static jsi::Value __hostFunction_NativeSettingsManagerCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeSettingsManagerCxxSpecJSI *>(&turboModule)->getConstants(

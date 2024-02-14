@@ -8,15 +8,16 @@
  * @format
  */
 
+import type {RootTag} from '../Types/RootTagTypes';
+import type {UIManagerJSInterface} from '../Types/UIManagerJSInterface';
+
+import NativeUIManager from './NativeUIManager';
+import nullthrows from 'nullthrows';
+
 const NativeModules = require('../BatchedBridge/NativeModules');
 const defineLazyObjectProperty = require('../Utilities/defineLazyObjectProperty');
 const Platform = require('../Utilities/Platform');
 const UIManagerProperties = require('./UIManagerProperties');
-
-import type {RootTag} from '../Types/RootTagTypes';
-import type {UIManagerJSInterface} from '../Types/UIManagerJSInterface';
-import NativeUIManager from './NativeUIManager';
-// import type {RootTag} from 'react-native/Libraries/Types/RootTagTypes'; [Windows]
 
 const viewManagerConfigs: {[string]: any | null} = {};
 
@@ -67,7 +68,7 @@ function getViewManagerConfig(viewManagerName: string): any {
     NativeUIManager.lazilyLoadView &&
     !triedLoadingConfig.has(viewManagerName)
   ) {
-    const result = NativeUIManager.lazilyLoadView(viewManagerName);
+    const result = nullthrows(NativeUIManager.lazilyLoadView)(viewManagerName);
     triedLoadingConfig.add(viewManagerName);
     if (result != null && result.viewConfig != null) {
       getConstants()[viewManagerName] = result.viewConfig;
@@ -178,7 +179,8 @@ if (Platform.OS === 'ios') {
 } else if (getConstants().ViewManagerNames) {
   NativeUIManager.getConstants().ViewManagerNames.forEach(viewManagerName => {
     defineLazyObjectProperty(NativeUIManager, viewManagerName, {
-      get: () => NativeUIManager.getConstantsForViewManager(viewManagerName),
+      get: () =>
+        nullthrows(NativeUIManager.getConstantsForViewManager)(viewManagerName),
     });
   });
 }
