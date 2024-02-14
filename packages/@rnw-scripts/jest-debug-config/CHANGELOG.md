@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/jest-debug-config
 
-This log was last generated on Fri, 14 Jul 2023 05:17:07 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Feb 2024 06:16:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.7
+
+Wed, 14 Feb 2024 06:16:54 GMT
+
+### Patches
+
+- Bump Babel Versions (34109996+chiaramooney@users.noreply.github.com)
 
 ## 1.5.6
 
