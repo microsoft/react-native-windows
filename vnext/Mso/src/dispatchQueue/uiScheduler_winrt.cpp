@@ -278,7 +278,9 @@ void UISchedulerWinRT::Shutdown() noexcept {
 
 void UISchedulerWinRT::AwaitTermination() noexcept {
   Shutdown();
-  m_terminationEvent.Wait();
+  if (m_threadId != std::this_thread::get_id()) {
+    m_terminationEvent.Wait();
+  }
 }
 
 /*static*/ DispatchQueue UISchedulerWinRT::GetOrCreateUIThreadQueue() noexcept {
@@ -343,7 +345,7 @@ void UISchedulerWinRT::CleanupContext::CheckTermination() noexcept {
 }
 
 //=============================================================================
-// DispatchQueueStatic::MakeCurrentThreadUIScheduler implementation
+// DispatchQueueStatic::GetCurrentUIThreadQueue implementation
 //=============================================================================
 
 DispatchQueue DispatchQueueStatic::GetCurrentUIThreadQueue() noexcept {
