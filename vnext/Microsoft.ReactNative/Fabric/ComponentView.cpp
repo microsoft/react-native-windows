@@ -9,6 +9,8 @@
 
 #include "ComponentView.g.cpp"
 #include "CreateComponentViewArgs.g.cpp"
+#include <Fabric/Composition/RootComponentView.h>
+#include "AbiShadowNode.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 struct RootComponentView;
@@ -63,17 +65,20 @@ void ComponentView::updateProps(
   if (m_customComponent) {
     // Review is it expected that I need this cast to call overridden methods?
     winrt::Microsoft::ReactNative::ComponentView outer(*this);
-    outer.UpdateProps(userProps(props));
+    outer.UpdateProps(userProps(props), oldProps ? userProps(oldProps) : nullptr);
   }
 }
 
-void ComponentView::UpdateProps(const winrt::Microsoft::ReactNative::IComponentProps &props) noexcept {}
+void ComponentView::UpdateProps(
+    const winrt::Microsoft::ReactNative::IComponentProps &props,
+    const winrt::Microsoft::ReactNative::IComponentProps &oldProps) noexcept {}
 
 const winrt::Microsoft::ReactNative::IComponentProps ComponentView::userProps(
     facebook::react::Props::Shared const &props) noexcept {
-  assert(false); // Custom components must provide an override to extract the IComponentProps from the specific Props
-                 // object used by the component
-  return nullptr;
+  assert(m_customComponent);
+  const auto &abiProps =
+      *std::static_pointer_cast<const winrt::Microsoft::ReactNative::implementation::AbiProps>(props);
+  return abiProps.UserProps();
 }
 
 void ComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
@@ -101,10 +106,15 @@ void ComponentView::updateLayoutMetrics(
         layoutMetrics.frame.origin.y,
         layoutMetrics.frame.size.width,
         layoutMetrics.frame.size.height},
-       layoutMetrics.pointScaleFactor});
+       layoutMetrics.pointScaleFactor},
+      {{oldLayoutMetrics.frame.origin.x,
+        oldLayoutMetrics.frame.origin.y,
+        oldLayoutMetrics.frame.size.width,
+        oldLayoutMetrics.frame.size.height},
+       oldLayoutMetrics.pointScaleFactor});
 }
 
-void ComponentView::UpdateLayoutMetrics(LayoutMetrics metrics) noexcept {}
+void ComponentView::UpdateLayoutMetrics(const LayoutMetrics &metrics, const LayoutMetrics &oldMetrics) noexcept {}
 
 void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {}
 
@@ -121,12 +131,35 @@ void ComponentView::HandleCommand(
 
 winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
 ComponentView::rootComponentView() noexcept {
-  assert(false);
-  return nullptr;
+  if (m_rootView)
+    return m_rootView;
+
+  if (m_parent) {
+    m_rootView =
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->rootComponentView();
+  }
+
+  return m_rootView;
 }
 
 void ComponentView::parent(const winrt::Microsoft::ReactNative::ComponentView &parent) noexcept {
-  assert(false);
+  if (!parent) {
+    auto root = rootComponentView();
+    winrt::Microsoft::ReactNative::ComponentView view{nullptr};
+    winrt::check_hresult(
+        QueryInterface(winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
+    if (root && root->GetFocusedComponent() == view) {
+      root->SetFocusedComponent(nullptr); // TODO need move focus logic - where should focus go?
+    }
+  }
+
+  if (m_parent != parent) {
+    m_rootView = nullptr;
+    m_parent = parent;
+    if (parent) {
+      theme(winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parent)->theme());
+    }
+  }
 }
 
 winrt::Microsoft::ReactNative::ComponentView ComponentView::Parent() const noexcept {
@@ -137,13 +170,21 @@ winrt::IVectorView<winrt::Microsoft::ReactNative::ComponentView> ComponentView::
   return m_children.GetView();
 }
 
-void ComponentView::theme(winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme) noexcept {
-  assert(false);
+void ComponentView::theme(winrt::Microsoft::ReactNative::Composition::implementation::Theme *value) noexcept {
+  if (m_theme != value) {
+    for (auto it = m_children.begin(); it != m_children.end(); ++it) {
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)->theme(value);
+    }
+
+    m_theme = value;
+    onThemeChanged();
+  }
 }
 
 winrt::Microsoft::ReactNative::Composition::implementation::Theme *ComponentView::theme() const noexcept {
-  assert(false);
-  return nullptr;
+  return m_theme ? m_theme
+                 : winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(
+                       winrt::Microsoft::ReactNative::Composition::implementation::Theme::EmptyTheme());
 }
 
 void ComponentView::onThemeChanged() noexcept {}

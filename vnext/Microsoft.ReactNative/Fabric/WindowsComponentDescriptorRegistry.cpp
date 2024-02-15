@@ -4,6 +4,7 @@
 
 #include "WindowsComponentDescriptorRegistry.h"
 
+#include <Fabric/AbiComponentDescriptor.h>
 #include <Fabric/AbiViewComponentDescriptor.h>
 #include <Fabric/Composition/Modal/WindowsModalHostViewComponentDescriptor.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h>
@@ -67,11 +68,15 @@ void WindowsComponentDescriptorRegistry::Add(
       facebook::react::ComponentName(m_descriptorFlavors.back()->c_str()));
   m_builderByName.emplace(m_descriptorFlavors.back(), builder);
   m_builderByHandle.emplace(handle, builder);
+
   m_componentDescriptorRegistry->add(
       {handle,
        m_descriptorFlavors.back()->c_str(),
        std::static_pointer_cast<void const>(m_descriptorFlavors.back()),
-       &facebook::react::concreteComponentDescriptorConstructor<AbiViewComponentDescriptor>});
+       winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(builder)
+               ->IsViewComponent()
+           ? &facebook::react::concreteComponentDescriptorConstructor<AbiViewComponentDescriptor>
+           : &facebook::react::concreteComponentDescriptorConstructor<AbiComponentDescriptor>});
 }
 
 winrt::Microsoft::ReactNative::IReactViewComponentBuilder WindowsComponentDescriptorRegistry::GetDescriptor(

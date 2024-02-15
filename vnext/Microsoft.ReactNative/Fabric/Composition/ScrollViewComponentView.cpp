@@ -16,9 +16,9 @@
 
 #include <windows.ui.composition.interop.h>
 
+#include <AutoDraw.h>
 #include <Fabric/DWriteHelpers.h>
 #include <unicode.h>
-#include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include "JSValueReader.h"
 #include "RootComponentView.h"
@@ -582,7 +582,12 @@ ScrollViewComponentView::ScrollViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
+    : Super(
+          compContext,
+          tag,
+          reactContext,
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
+          false) {
   static auto const defaultProps = std::make_shared<facebook::react::ScrollViewProps const>();
   m_props = defaultProps;
 

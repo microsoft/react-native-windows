@@ -120,9 +120,11 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   virtual void HandleCommand(
       winrt::hstring commandName,
       const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept;
-  virtual void UpdateProps(const winrt::Microsoft::ReactNative::IComponentProps &props) noexcept;
+  virtual void UpdateProps(
+      const winrt::Microsoft::ReactNative::IComponentProps &props,
+      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) noexcept;
   virtual void UpdateState(const winrt::Microsoft::ReactNative::IComponentState &state) noexcept;
-  virtual void UpdateLayoutMetrics(LayoutMetrics metrics) noexcept;
+  virtual void UpdateLayoutMetrics(const LayoutMetrics &metrics, const LayoutMetrics &oldMetrics) noexcept;
   virtual void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept;
   virtual void OnPointerEntered(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
@@ -150,6 +152,8 @@ struct ComponentView : public ComponentViewT<ComponentView> {
  protected:
   const bool m_customComponent; // Is a user custom component, and so needs to call external override functions
   const facebook::react::Tag m_tag;
+  winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *m_rootView{nullptr};
+  mutable winrt::Microsoft::ReactNative::Composition::implementation::Theme *m_theme{nullptr};
   const winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   winrt::Microsoft::ReactNative::ComponentView m_parent{nullptr};
   winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::ComponentView> m_children{

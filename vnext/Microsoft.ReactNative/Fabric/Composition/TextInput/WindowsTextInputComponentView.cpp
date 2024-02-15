@@ -5,6 +5,7 @@
 
 #include "WindowsTextInputComponentView.h"
 
+#include <AutoDraw.h>
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Fabric/Composition/UiaHelpers.h>
 #include <Utils/ValueUtils.h>
@@ -14,7 +15,6 @@
 #include <winrt/Windows.UI.h>
 #include "../CompositionHelpers.h"
 #include "../RootComponentView.h"
-#include "Composition/AutoDraw.h"
 #include "JSValueReader.h"
 #include "WindowsTextInputShadowNode.h"
 #include "WindowsTextInputState.h"
@@ -483,7 +483,12 @@ WindowsTextInputComponentView::WindowsTextInputComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
+    : Super(
+          compContext,
+          tag,
+          reactContext,
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
+          false) {
   static auto const defaultProps = std::make_shared<facebook::react::WindowsTextInputProps const>();
   m_props = defaultProps;
 
