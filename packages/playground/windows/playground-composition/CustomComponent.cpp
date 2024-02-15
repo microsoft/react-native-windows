@@ -16,9 +16,9 @@
 #include <winrt/Microsoft.UI.interop.h>
 #endif
 
-#include "YogaXamlPanel.h"
-
 #include "App.CustomComponent.g.h"
+#include <NativeModules.h>
+#include "YogaXamlPanel.h"
 
 namespace winrt::PlaygroundApp::implementation {
 
@@ -26,20 +26,16 @@ namespace winrt::PlaygroundApp::implementation {
  * Custom Properties can be passed from JS to this native component
  * This struct will eventually be codegen'd from the JS spec file
  */
+REACT_STRUCT(CustomXamlComponentProps)
 struct CustomXamlComponentProps
     : winrt::implements<CustomXamlComponentProps, winrt::Microsoft::ReactNative::IComponentProps> {
   CustomXamlComponentProps(winrt::Microsoft::ReactNative::ViewProps props) : m_props(props) {}
 
   void SetProp(uint32_t hash, winrt::hstring propName, winrt::Microsoft::ReactNative::IJSValueReader value) noexcept {
-    if (propName == L"label") {
-      if (!value) {
-        label.clear();
-      } else {
-        label = value.GetString();
-      }
-    }
+    winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
   }
 
+  REACT_FIELD(label);
   winrt::hstring label;
   winrt::Microsoft::ReactNative::ViewProps m_props;
 };

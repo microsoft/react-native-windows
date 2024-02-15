@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.74.0-nightly-20240102-05ec058ac",
+  "baseVersion": "0.74.0-nightly-20240115-0c7008f28",
   "overrides": [
     {
       "type": "copy",
@@ -12,7 +12,7 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "640122faf98f80fe689b4ea2aca83f2968b6a831",
+      "baseHash": "1eda76bc2c7d63409b04b40a47dbe02488e08e45",
       "issue": 4054
     },
     {
@@ -320,7 +320,7 @@
       "type": "copy",
       "directory": "js/examples/ScrollView",
       "baseDirectory": "packages/rn-tester/js/examples/ScrollView",
-      "baseHash": "64fdc06a81a909c3f27aa55e52ce98c06b1a90b3",
+      "baseHash": "9649978ae351c87d0f98816da35bc4053feedd6f",
       "issue": 4054
     },
     {
@@ -348,7 +348,7 @@
       "type": "copy",
       "directory": "js/examples/Snapshot",
       "baseDirectory": "packages/rn-tester/js/examples/Snapshot",
-      "baseHash": "a89d2d081fd07cf1db38d739d2ea905c8d9570c1",
+      "baseHash": "501b47ff093bd0e38d8abfae8cd715ccbfab40d2",
       "issue": 4054
     },
     {
@@ -411,7 +411,7 @@
       "type": "copy",
       "directory": "js/examples/Transform",
       "baseDirectory": "packages/rn-tester/js/examples/Transform",
-      "baseHash": "94dd241d4ed0d038332353ecce19b7052939f9a3",
+      "baseHash": "d2dc7f7cac0ee3c8d8ee4fa29b4b57929c08ee29",
       "issue": 4054
     },
     {

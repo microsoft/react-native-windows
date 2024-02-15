@@ -5,6 +5,7 @@ parameters:
     default: PullRequest
     values:
       - PullRequest
+      - SecurePullRequest
       - Continuous
 
 steps:

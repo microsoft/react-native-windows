@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/jest-e2e-config",
   "entries": [
     {
+      "date": "Thu, 15 Feb 2024 06:18:14 GMT",
+      "version": "1.4.7",
+      "tag": "@rnw-scripts/jest-e2e-config_v1.4.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/jest-e2e-config",
+            "commit": "e3409713d5c4e23e83c88ec0c9b6597159325463",
+            "comment": "Integrate 1/9"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Jul 2023 05:17:07 GMT",
       "tag": "@rnw-scripts/jest-e2e-config_v1.4.6",
       "version": "1.4.6",

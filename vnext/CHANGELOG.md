@@ -1,8 +1,54 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 09 Feb 2024 21:11:18 GMT and should not be manually modified.
+This log was last generated on Thu, 15 Feb 2024 06:18:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.772
+
+Thu, 15 Feb 2024 06:18:14 GMT
+
+### Changes
+
+- Integrate 1/9 (34109996+chiaramooney@users.noreply.github.com)
+- Deprecate and remove CoreApp experiment (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.199
+- Bump @react-native-windows/codegen to v0.0.0-canary.76
+- Bump @rnw-scripts/just-task to v2.3.20
+- Bump react-native-platform-override to v1.9.20
+
+## 0.0.0-canary.771
+
+Wed, 14 Feb 2024 06:16:55 GMT
+
+### Changes
+
+- [Fabric] LogBox crashes when running lifted composition (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Expose (un)MountChildComponentView to 3P components (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.198
+- Bump @react-native-windows/codegen to v0.0.0-canary.75
+- Bump @rnw-scripts/eslint-config to v1.2.5
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.8
+- Bump @rnw-scripts/just-task to v2.3.19
+- Bump react-native-platform-override to v1.9.19
+
+## 0.0.0-canary.770
+
+Tue, 13 Feb 2024 06:14:03 GMT
+
+### Changes
+
+- Add Playground Composition CI Builds with UseExperimentalWinUI3 enabled (jthysell@microsoft.com)
+- Integrate 1/8 (34109996+chiaramooney@users.noreply.github.com)
+- Deprecated Web Debugging (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.769
+
+Sat, 10 Feb 2024 06:14:25 GMT
+
+### Changes
+
+- Add missing sstream includes (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.768
 

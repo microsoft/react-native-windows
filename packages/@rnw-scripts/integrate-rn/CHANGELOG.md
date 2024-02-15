@@ -1,8 +1,35 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Fri, 09 Feb 2024 21:11:18 GMT and should not be manually modified.
+This log was last generated on Thu, 15 Feb 2024 06:18:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.21
+
+Thu, 15 Feb 2024 06:18:15 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.62
+- Bump @react-native-windows/fs to v0.0.0-canary.33
+- Bump @react-native-windows/package-utils to v0.0.0-canary.59
+- Bump react-native-platform-override to v1.9.20
+- Bump @rnw-scripts/just-task to v2.3.20
+
+## 1.4.20
+
+Wed, 14 Feb 2024 06:16:54 GMT
+
+### Patches
+
+- Bump Babel Versions (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.61
+- Bump @react-native-windows/fs to v0.0.0-canary.32
+- Bump @react-native-windows/package-utils to v0.0.0-canary.58
+- Bump react-native-platform-override to v1.9.19
+- Bump @rnw-scripts/eslint-config to v1.2.5
+- Bump @rnw-scripts/jest-unittest-config to v1.5.7
+- Bump @rnw-scripts/just-task to v2.3.19
 
 ## 1.4.19
 

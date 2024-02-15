@@ -39804,6 +39804,7 @@ exports[`snapshotAllPages ScrollView 1`] = `
     automaticallyAdjustContentInsets={false}
     nestedScrollEnabled={true}
     onScroll={[Function]}
+    onScrollToTop={[Function]}
     scrollEventThrottle={200}
     style={
       {
