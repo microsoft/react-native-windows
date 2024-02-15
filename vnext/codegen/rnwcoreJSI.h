@@ -4033,61 +4033,6 @@ private:
 };
 
 
-  class JSI_EXPORT NativeModalManagerCxxSpecJSI : public TurboModule {
-protected:
-  NativeModalManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void addListener(jsi::Runtime &rt, jsi::String eventName) = 0;
-  virtual void removeListeners(jsi::Runtime &rt, double count) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeModalManagerCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "ModalManager";
-
-protected:
-  NativeModalManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeModalManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-private:
-  class Delegate : public NativeModalManagerCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeModalManagerCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
-
-    void addListener(jsi::Runtime &rt, jsi::String eventName) override {
-      static_assert(
-          bridging::getParameterCount(&T::addListener) == 2,
-          "Expected addListener(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::addListener, jsInvoker_, instance_, std::move(eventName));
-    }
-    void removeListeners(jsi::Runtime &rt, double count) override {
-      static_assert(
-          bridging::getParameterCount(&T::removeListeners) == 2,
-          "Expected removeListeners(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::removeListeners, jsInvoker_, instance_, std::move(count));
-    }
-
-  private:
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
   
 #pragma mark - NativeMutationObserverCxxBaseNativeMutationObserverObserveOptions
 

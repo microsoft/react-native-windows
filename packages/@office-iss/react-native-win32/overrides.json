@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240115-0c7008f28",
+  "baseVersion": "0.74.0-nightly-20240117-67532e07c",
   "overrides": [
     {
       "type": "derived",
@@ -306,13 +306,13 @@
       "type": "patch",
       "file": "src/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "packages/react-native/Libraries/Inspector/Inspector.js",
-      "baseHash": "db79965ed999c40d6bebaf1860a0921749d54b4f"
+      "baseHash": "41f9953cffe7c0e9dace1f10074136cc169a94ad"
     },
     {
       "type": "patch",
       "file": "src/Libraries/Inspector/InspectorOverlay.win32.js",
       "baseFile": "packages/react-native/Libraries/Inspector/InspectorOverlay.js",
-      "baseHash": "b2d22b7a448802373d619df28cf8a70756c0ce33"
+      "baseHash": "cd2de764e83b79451a3ac0583bd93d5ebb6d36f2"
     },
     {
       "type": "derived",
@@ -499,7 +499,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.flow.win32.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.flow.js",
-      "baseHash": "48e0b6dd625aa58347266a362eb404ddd47b59d4"
+      "baseHash": "28bf66861590ad339749768466fa26e6325a6d1a"
     },
     {
       "type": "derived",

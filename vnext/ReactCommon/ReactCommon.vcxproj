@@ -61,6 +61,7 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>
+        $(ReactNativeDir)\ReactCommon;
         $(ReactNativeDir)\ReactCommon\jsi;
         $(FmtDir)\include;
         $(ReactNativeWindowsDir)stubs;

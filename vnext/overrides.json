@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240115-0c7008f28",
+  "baseVersion": "0.74.0-nightly-20240117-67532e07c",
   "overrides": [
     {
       "type": "derived",
@@ -81,7 +81,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
-      "baseHash": "daa77a3a77ebd409fde7133d9ab40a2efe5ab31b",
+      "baseHash": "0fc900e2bc66a271da55030a90aa4b9842b4870d",
       "issue": 12210
     },
     {
@@ -483,7 +483,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.flow.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.flow.js",
-      "baseHash": "48e0b6dd625aa58347266a362eb404ddd47b59d4"
+      "baseHash": "28bf66861590ad339749768466fa26e6325a6d1a"
     },
     {
       "type": "derived",

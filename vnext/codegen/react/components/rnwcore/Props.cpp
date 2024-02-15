@@ -33,8 +33,7 @@ ModalHostViewProps::ModalHostViewProps(
     hardwareAccelerated(convertRawProp(context, rawProps, "hardwareAccelerated", sourceProps.hardwareAccelerated, {false})),
     visible(convertRawProp(context, rawProps, "visible", sourceProps.visible, {false})),
     animated(convertRawProp(context, rawProps, "animated", sourceProps.animated, {false})),
-    supportedOrientations(convertRawProp(context, rawProps, "supportedOrientations", sourceProps.supportedOrientations, {static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)})),
-    identifier(convertRawProp(context, rawProps, "identifier", sourceProps.identifier, {0}))
+    supportedOrientations(convertRawProp(context, rawProps, "supportedOrientations", sourceProps.supportedOrientations, {static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)}))
       {}
 ActivityIndicatorViewProps::ActivityIndicatorViewProps(
     const PropsParserContext &context,

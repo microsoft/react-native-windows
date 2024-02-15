@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.74.0-nightly-20240115-0c7008f28",
+  "baseVersion": "0.74.0-nightly-20240117-67532e07c",
   "overrides": [
     {
       "type": "copy",
@@ -201,7 +201,7 @@
       "type": "copy",
       "directory": "js/examples/Modal",
       "baseDirectory": "packages/rn-tester/js/examples/Modal",
-      "baseHash": "635b2554a14b7de7a6a692987ded1acc3bc84a0e",
+      "baseHash": "83af30c878d94fc4860f5e1bef8ac4a73fac20b4",
       "issue": 4054
     },
     {
