@@ -158,6 +158,7 @@ class ModalHostViewProps final : public ViewProps {
   bool visible{false};
   bool animated{false};
   ModalHostViewSupportedOrientationsMask supportedOrientations{static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)};
+  int identifier{0};
 };
 
 enum class ActivityIndicatorViewSize { Small, Large };

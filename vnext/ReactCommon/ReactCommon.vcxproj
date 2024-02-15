@@ -62,6 +62,8 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>
         $(ReactNativeDir)\ReactCommon;
+        $(ReactNativeDir)\ReactCommon\react;
+        $(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon;
         $(ReactNativeDir)\ReactCommon\jsi;
         $(FmtDir)\include;
         $(ReactNativeWindowsDir)stubs;

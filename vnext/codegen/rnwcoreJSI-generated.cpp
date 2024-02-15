@@ -1083,6 +1083,26 @@ NativeLinkingManagerCxxSpecJSI::NativeLinkingManagerCxxSpecJSI(std::shared_ptr<C
   methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeLinkingManagerCxxSpecJSI_addListener};
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeLinkingManagerCxxSpecJSI_removeListeners};
 }
+static jsi::Value __hostFunction_NativeModalManagerCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeModalManagerCxxSpecJSI *>(&turboModule)->addListener(
+    rt,
+    args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeModalManagerCxxSpecJSI_removeListeners(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeModalManagerCxxSpecJSI *>(&turboModule)->removeListeners(
+    rt,
+    args[0].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+
+NativeModalManagerCxxSpecJSI::NativeModalManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("ModalManager", jsInvoker) {
+  methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeModalManagerCxxSpecJSI_addListener};
+  methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeModalManagerCxxSpecJSI_removeListeners};
+}
 static jsi::Value __hostFunction_NativeMutationObserverCxxSpecJSI_observe(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeMutationObserverCxxSpecJSI *>(&turboModule)->observe(
     rt,

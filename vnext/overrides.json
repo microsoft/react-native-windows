@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240117-67532e07c",
+  "baseVersion": "0.74.0-nightly-20240120-a58ec074b",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "c8d51e03c7f984398c710769a282b9e28d3030b2"
+      "baseHash": "a243aa54de1d5c568bac704249159975dcc2ccd7"
     },
     {
       "type": "derived",
@@ -483,13 +483,13 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.flow.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.flow.js",
-      "baseHash": "28bf66861590ad339749768466fa26e6325a6d1a"
+      "baseHash": "d07d4656dc872e92e873bcce248262132085bd99"
     },
     {
       "type": "derived",
       "file": "src/Libraries/Utilities/Platform.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
-      "baseHash": "a09b2fdd9859584069281df3311ef188a5640b00"
+      "baseHash": "3c959f078048e8a9cbd6d0463071c2208597ab8a"
     }
   ]
 }
