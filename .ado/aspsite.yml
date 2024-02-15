@@ -13,3 +13,8 @@ steps:
 - pwsh: |
     Write-Host 'Hello World!'
   displayName: Run a one-line script
+
+- task: DotNetCoreCLI@2
+  inputs:
+    command: restore
+    projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
