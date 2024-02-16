@@ -191,6 +191,18 @@ async function upgradeRepoConfig(
   }
 
   const newPackage = (await findRepoPackage('@react-native/monorepo'))!;
+
+  if (newReactNativeVersion.includes('nightly')) {
+    // Daily builds of RN do not update the dependencies wihtin the monorepo package, so any internal package dependencies need to be bumped manually here
+    const internalDevDependencies: Record<string, string> = {};
+    Object.getOwnPropertyNames(newPackage.json.devDependencies)
+      .filter(prop => prop.startsWith('@react-native'))
+      .forEach(prop => {
+        internalDevDependencies[prop] = newReactNativeVersion;
+      });
+    await newPackage.mergeProps({devDependencies: internalDevDependencies});
+  }
+
   return extractPackageDiff(origPackage.json, newPackage.json);
 }
 
