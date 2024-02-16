@@ -10,6 +10,9 @@ pool:
   name: GreenRNW
 
 steps:
+- script: |
+    echo "##vso[task.setvariable variable=AZP_AGENT_CLEANUP_PSMODULES_IN_POWERSHELL]true"
+
 - pwsh: |
     Write-Host 'hello!'
     #Write-Host "[$(Get-Command git)]"
