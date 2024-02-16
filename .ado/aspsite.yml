@@ -40,7 +40,7 @@ steps:
   #   retryCountOnTaskFailure: string # Number of retries if the task fails.
 
 - pwsh: |
-    Write-Host "[$(Get-Command git.exe)]"
+    Write-Host "[$(Get-Command -ShowCommandInfo -Name git.exe)]"
   displayName: Find Git location
 
 - task: DotNetCoreCLI@2
