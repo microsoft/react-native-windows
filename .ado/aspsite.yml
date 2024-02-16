@@ -15,7 +15,7 @@ steps:
     $env:PATH -split ';'
   displayName: Get ENV info
 
-- checkout: git://rnwsite/MyRepo
+- checkout: git://rnwsite/empty
   clean: false
   fetchDepth: 1
 
