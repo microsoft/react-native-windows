@@ -23,10 +23,10 @@ steps:
 - pwsh: |
     Write-Host "[$(Get-Command -ShowCommandInfo -Name git.exe)]"
     Write-Warning 'Printing PATH'
-  displayName: Find Git location
+  displayName: Find Git
 
 - task: DotNetCoreCLI@2
-  enabled: true
+  displayName: Build Test Website
   inputs:
-    command: restore
+    command: build
     projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
