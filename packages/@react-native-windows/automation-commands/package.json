@@ -30,8 +30,8 @@
     "@types/jest": "^29.2.2",
     "@types/node": "^18.0.0",
     "eslint": "^8.19.0",
-    "prettier": "^2.4.1",
-    "typescript": "^4.9.5"
+    "prettier": "2.8.8",
+    "typescript": "5.0.4"
   },
   "files": [
     "lib-commonjs",

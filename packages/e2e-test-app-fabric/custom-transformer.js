@@ -9,7 +9,8 @@
 'use strict';
 
 const generate = require('@babel/generator').default;
-const transformer = require('@react-native/metro-babel-transformer');
+// Require @react-native/metro-babel-transformer from @react-native/metro-config to ensure we pickup the version that @react-native/metro-config uses
+const transformer = require(require.resolve('@react-native/metro-babel-transformer', {paths: [require('path').dirname(require.resolve('@react-native/metro-config/package.json'))]}));
 module.exports = {
   process(src /*: string */, file /*: string */) /*: {code: string, ...} */ {
     const {ast} = transformer.transform({
