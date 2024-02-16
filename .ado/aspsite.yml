@@ -11,8 +11,9 @@ pool:
 
 steps:
 - pwsh: |
-    Write-Host "[$(Get-Command git)]"
-    $env:PATH -split ';'
+    Write-Host 'hello!'
+    #Write-Host "[$(Get-Command git)]"
+    #$env:PATH -split ';'
 
 - checkout: self
   clean: false
