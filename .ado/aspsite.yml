@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - test-net-asp
 
@@ -24,6 +19,12 @@ steps:
     Write-Host "[$(Get-Command -ShowCommandInfo -Name git.exe)]"
     Write-Warning 'Printing PATH'
   displayName: Find Git
+
+- task: DotNetCoreCLI@2
+  displayName: Restore Packages for Test Website
+  inputs:
+    command: restore
+    projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
 
 - task: DotNetCoreCLI@2
   displayName: Build Test Website
