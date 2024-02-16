@@ -15,9 +15,10 @@ steps:
     $env:PATH -split ';'
   displayName: Get ENV info
 
-- checkout: git://rnwsite/empty
+- checkout: emtpy
   clean: false
   fetchDepth: 1
+  continueOnError: true
 
   # - checkout: string # Required as first property. Configures checkout for the specified repository.
   #   clean: string # If true, run git clean -ffdx followed by git reset --hard HEAD before fetching.
