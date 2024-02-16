@@ -12,7 +12,7 @@ pool:
 steps:
 - pwsh: |
     $env:PATH -split ';'
-    Write-Warning "[$(Get-Command git.exe)]"
+    Write-Warning "[$(Get-Command git.exe)]" -ErrorAction Continue
 
 - checkout: self
   clean: false
