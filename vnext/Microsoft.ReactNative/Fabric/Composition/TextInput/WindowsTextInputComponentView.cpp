@@ -755,6 +755,11 @@ void WindowsTextInputComponentView::OnKeyDown(
     if (args.KeyStatus().WasKeyDown)
       lParam |= 0x40000000; // bit 30
 
+    // check to see if shift is pressed
+    if (args.Key() == winrt::Windows::System::VirtualKey::Shift) {
+      m_shiftDown = true;
+    }
+
     LRESULT lresult;
     DrawBlock db(*this);
     auto hr = m_textServices->TxSendMessage(
@@ -786,6 +791,11 @@ void WindowsTextInputComponentView::OnKeyUp(
       lParam |= 0x40000000; // bit 30
     lParam |= 0x80000000; // bit 31 always 1 for WM_KEYUP
 
+    // check to see if shift is released
+    if (args.Key() == winrt::Windows::System::VirtualKey::Shift) {
+      m_shiftDown = false;
+    }
+
     LRESULT lresult;
     DrawBlock db(*this);
     auto hr = m_textServices->TxSendMessage(
@@ -798,6 +808,30 @@ void WindowsTextInputComponentView::OnKeyUp(
   Super::OnKeyDown(source, args);
 }
 
+bool WindowsTextInputComponentView::ShouldSubmit(
+    const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
+  bool shouldSubmit = true;
+  if (shouldSubmit) {
+    if (!m_multiline && m_submitKeyEvents.size() == 0) {
+      // If no 'submitKeyEvents' are supplied, use the default behavior for single-line TextInput
+      shouldSubmit = args.KeyCode() == '\r';
+    } else if (m_submitKeyEvents.size() > 0) {
+      auto submitKeyEvent = m_submitKeyEvents.at(0);
+      // If 'submitKeyEvents' are supplied, use them to determine whether to emit onSubmitEditing' for either
+      // single-line or multi-line TextInput
+      if ((args.KeyCode() == '\r') &&
+          ((m_shiftDown && submitKeyEvent.shiftKey) || (!m_shiftDown && !submitKeyEvent.shiftKey))) {
+        shouldSubmit = true;
+      } else {
+        shouldSubmit = false;
+      }
+    } else {
+      shouldSubmit = false;
+    }
+  }
+  return shouldSubmit;
+}
+
 void WindowsTextInputComponentView::OnCharacterReceived(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
@@ -806,6 +840,24 @@ void WindowsTextInputComponentView::OnCharacterReceived(
   if ((args.KeyCode() == '\t') &&
       (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) !=
        winrt::Windows::UI::Core::CoreVirtualKeyStates::Down)) {
+    return;
+  }
+
+  // Logic for submit events
+  if (ShouldSubmit(args)) {
+    // call onSubmitEditing event
+    if (m_eventEmitter && !m_comingFromJS) {
+      auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+      facebook::react::WindowsTextInputEventEmitter::OnSubmitEditing onSubmitEditingArgs;
+      onSubmitEditingArgs.text = GetTextFromRichEdit();
+      onSubmitEditingArgs.eventCount = ++m_nativeEventCount;
+      emitter->onSubmitEditing(onSubmitEditingArgs);
+    }
+
+    if (m_clearTextOnSubmit) {
+      // clear text from RichEdit
+      m_textServices->TxSetText(L"");
+    }
     return;
   }
 
@@ -926,6 +978,7 @@ void WindowsTextInputComponentView::updateProps(
   }
 
   if (oldTextInputProps.multiline != newTextInputProps.multiline) {
+    m_multiline = newTextInputProps.multiline;
     propBitsMask |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
     if (newTextInputProps.multiline) {
       propBits |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
@@ -950,6 +1003,16 @@ void WindowsTextInputComponentView::updateProps(
 
   if (oldTextInputProps.cursorColor != newTextInputProps.cursorColor) {
     updateCursorColor(newTextInputProps.cursorColor, newTextInputProps.textAttributes.foregroundColor);
+  }
+
+  if (oldTextInputProps.clearTextOnSubmit != newTextInputProps.clearTextOnSubmit) {
+    m_clearTextOnSubmit = newTextInputProps.clearTextOnSubmit;
+  }
+
+  if ((!newTextInputProps.submitKeyEvents.empty())) {
+    m_submitKeyEvents = newTextInputProps.submitKeyEvents;
+  } else {
+    m_submitKeyEvents.clear();
   }
 
   /*
