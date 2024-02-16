@@ -11,10 +11,8 @@ pool:
 
 steps:
 - pwsh: |
-    $env:AZP_AGENT_CLEANUP_PSMODULES_IN_POWERSHELL="true"
-    Write-Host 'hello!'
-    #Write-Host "[$(Get-Command git)]"
-    #$env:PATH -split ';'
+    Write-Warning "[$(Get-Command git)]"
+    $env:PATH -split ';'
 
 - checkout: self
   clean: false
