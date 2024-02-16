@@ -10,12 +10,13 @@ pool:
   name: GreenRNW
 
 steps:
+- pwsh: |
+    Write-Warning "[$(Get-Command git)]"
+    Write-Host $env:PATH -split ';'
+
 - checkout: self
   clean: false
   fetchDepth: 1
-
-- pwsh: |
-    Write-Warning "[$(Get-Command git)]"
 
   # - checkout: string # Required as first property. Configures checkout for the specified repository.
   #   clean: string # If true, run git clean -ffdx followed by git reset --hard HEAD before fetching.
