@@ -11,10 +11,11 @@ pool:
 
 steps:
 - pwsh: |
+    Write-Warning 'Printing PATH:'
     $env:PATH -split ';'
-    Write-Warning "[$(Get-Command git.exe)]" -ErrorAction Continue
+  displayName: Get ENV info
 
-- checkout: self
+- checkout: https://github.com/rtyley/small-test-repo.git
   clean: false
   fetchDepth: 1
 
@@ -38,10 +39,11 @@ steps:
   #   retryCountOnTaskFailure: string # Number of retries if the task fails.
 
 - pwsh: |
-    Write-Host 'Hello World!'
-  displayName: Run a one-line script
+    Write-Host "[$(Get-Command git.exe)]"
+  displayName: Find Git location
 
 - task: DotNetCoreCLI@2
+  enabled: false
   inputs:
     command: restore
     projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
