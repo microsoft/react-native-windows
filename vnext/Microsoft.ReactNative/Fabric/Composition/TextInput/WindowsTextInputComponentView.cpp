@@ -755,11 +755,6 @@ void WindowsTextInputComponentView::OnKeyDown(
     if (args.KeyStatus().WasKeyDown)
       lParam |= 0x40000000; // bit 30
 
-    // check to see if shift is pressed
-    if (args.Key() == winrt::Windows::System::VirtualKey::Shift) {
-      m_shiftDown = true;
-    }
-
     LRESULT lresult;
     DrawBlock db(*this);
     auto hr = m_textServices->TxSendMessage(
@@ -791,11 +786,6 @@ void WindowsTextInputComponentView::OnKeyUp(
       lParam |= 0x40000000; // bit 30
     lParam |= 0x80000000; // bit 31 always 1 for WM_KEYUP
 
-    // check to see if shift is released
-    if (args.Key() == winrt::Windows::System::VirtualKey::Shift) {
-      m_shiftDown = false;
-    }
-
     LRESULT lresult;
     DrawBlock db(*this);
     auto hr = m_textServices->TxSendMessage(
@@ -809,8 +799,10 @@ void WindowsTextInputComponentView::OnKeyUp(
 }
 
 bool WindowsTextInputComponentView::ShouldSubmit(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
   bool shouldSubmit = true;
+
   if (shouldSubmit) {
     if (!m_multiline && m_submitKeyEvents.size() == 0) {
       // If no 'submitKeyEvents' are supplied, use the default behavior for single-line TextInput
@@ -819,9 +811,21 @@ bool WindowsTextInputComponentView::ShouldSubmit(
       auto submitKeyEvent = m_submitKeyEvents.at(0);
       // If 'submitKeyEvents' are supplied, use them to determine whether to emit onSubmitEditing' for either
       // single-line or multi-line TextInput
-      if ((args.KeyCode() == '\r') &&
-          ((m_shiftDown && submitKeyEvent.shiftKey) || (!m_shiftDown && !submitKeyEvent.shiftKey))) {
-        shouldSubmit = true;
+      if (args.KeyCode() == '\r') {
+        bool shiftDown = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) ==
+            winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+        bool ctrlDown = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
+            winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+        bool altDown = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
+            winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+        bool metaDown = source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) ==
+                winrt::Windows::UI::Core::CoreVirtualKeyStates::Down ||
+            source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) ==
+                winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+        return (submitKeyEvent.shiftKey && shiftDown) || (submitKeyEvent.ctrlKey && ctrlDown) ||
+            (submitKeyEvent.altKey && altDown) || (submitKeyEvent.metaKey && metaDown) ||
+            (!submitKeyEvent.shiftKey && !submitKeyEvent.altKey && !submitKeyEvent.metaKey && !submitKeyEvent.altKey &&
+             !shiftDown && !ctrlDown && !altDown && !metaDown);
       } else {
         shouldSubmit = false;
       }
@@ -844,7 +848,7 @@ void WindowsTextInputComponentView::OnCharacterReceived(
   }
 
   // Logic for submit events
-  if (ShouldSubmit(args)) {
+  if (ShouldSubmit(source, args)) {
     // call onSubmitEditing event
     if (m_eventEmitter && !m_comingFromJS) {
       auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
