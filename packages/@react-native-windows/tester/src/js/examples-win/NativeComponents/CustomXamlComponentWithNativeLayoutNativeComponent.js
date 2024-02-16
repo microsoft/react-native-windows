@@ -12,7 +12,6 @@
 
 import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
 import type {HostComponent} from 'react-native/Libraries/Renderer/shims/ReactNativeTypes';
-import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 
 type NativeProps = $ReadOnly<{|
@@ -24,4 +23,6 @@ type NativeProps = $ReadOnly<{|
 
 type ComponentType = HostComponent<NativeProps>;
 
-export default (codegenNativeComponent<NativeProps>('CustomXamlComponentWithNativeLayout'): ComponentType);
+export default (codegenNativeComponent<NativeProps>(
+  'CustomXamlComponentWithNativeLayout',
+): ComponentType);
