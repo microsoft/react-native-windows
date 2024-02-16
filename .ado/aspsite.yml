@@ -12,7 +12,7 @@ pool:
 steps:
 - pwsh: |
     Write-Warning "[$(Get-Command git)]"
-    Write-Host $env:PATH -split ';'
+    $env:PATH -split ';'
 
 - checkout: self
   clean: false
