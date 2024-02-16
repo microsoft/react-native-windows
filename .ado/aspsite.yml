@@ -15,7 +15,7 @@ steps:
     $env:PATH -split ';'
   displayName: Get ENV info
 
-- checkout: https://github.com/rtyley/small-test-repo.git
+- checkout: git://rnwsite/MyRepo
   clean: false
   fetchDepth: 1
 
