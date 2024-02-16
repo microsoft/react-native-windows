@@ -15,7 +15,7 @@ steps:
     $env:PATH -split ';'
   displayName: Get ENV info
 
-- checkout: emtpy
+- checkout: self
   clean: false
   fetchDepth: 1
   continueOnError: true
