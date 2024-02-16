@@ -10,11 +10,6 @@
 // https://jestjs.io/docs/en/configuration.html
 
 const assetTransform = 'react-native-windows/jest/assetFileTransformer.js';
-const reactNativeTransform = './custom-transformer.js';
-const defaultTransform = [
-  'babel-jest',
-  require('@rnw-scripts/babel-node-config'),
-];
 
 const platformDir =
   (process.env.E2ETestFabricBuildPlatform === 'x86'
@@ -42,11 +37,11 @@ module.exports = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '^.+\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$': assetTransform,
-    'node_modules\\\\@?react-native\\\\.*': reactNativeTransform,
-    '@react-native-windows\\\\tester\\\\.*': reactNativeTransform,
-    'vnext\\\\.*': reactNativeTransform,
-    '^.+\\.[jt]sx?$': defaultTransform,
+    '\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$': assetTransform,
+    'node_modules\\\\@?react-native\\\\.*': 'babel-jest',
+    '@react-native-windows\\\\tester\\\\.*': 'babel-jest',
+    'vnext\\\\.*': 'babel-jest',
+    '\\.[jt]sx?$': 'babel-jest',
   },
 
   //snapshotResolver: 'react-native-windows/jest-snapshot-resolver.js',
