@@ -297,12 +297,18 @@
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Utils\ThemeUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\DebuggingOverlayComponentView.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionViewComponentView.cpp" />
+<<<<<<< HEAD
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiComponentDescriptor.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\PlatformConstantsWinModule.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\ExceptionsManager.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\SourceCode.cpp" />
     <ClCompile Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Modules\Timing.cpp" />
+=======
+    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\HttpFilterFactorySettings.cpp">
+      <Filter>Source Files\Networking</Filter>
+    </ClCompile>
+>>>>>>> 9f5197092 (Add factory to configure a custom IHttpFilter for underlying HttpModule)
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
@@ -790,6 +796,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)V8JSIRuntimeHolder.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\Modal\WindowsModalHostViewSate.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionViewComponentView.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Networking\HttpFilterFactorySettings.h">
+      <Filter>Header Files\Networking</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)tracing\rnw.wprp">

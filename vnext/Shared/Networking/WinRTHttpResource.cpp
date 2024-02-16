@@ -14,6 +14,7 @@
 #include "IRedirectEventSource.h"
 #include "OriginPolicyHttpFilter.h"
 #include "RedirectHttpFilter.h"
+#include "HttpFilterFactorySettings.h"
 
 // Boost Libraries
 #include <boost/algorithm/string.hpp>
@@ -644,9 +645,32 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
 /*static*/ shared_ptr<IHttpResource> IHttpResource::Make(
     winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept {
   using namespace winrt::Microsoft::ReactNative;
+  using namespace winrt::Windows::Web::Http::Filters;
   using winrt::Windows::Web::Http::HttpClient;
 
-  auto redirFilter = winrt::make<RedirectHttpFilter>();
+  auto getPropertyBag = [&]() {
+    if (!inspectableProperties) {
+      return ReactPropertyBag{};
+    }
+    return ReactPropertyBag{inspectableProperties.try_as<IReactPropertyBag>()};
+  };
+
+
+
+  IHttpFilter customFilter{nullptr};
+  if (auto propBag = getPropertyBag()) {
+    if (auto factoryDelegate = GetHttpFilterFactoryDelegate(propBag)) {
+      customFilter = factoryDelegate();
+    }
+  }
+
+  IHttpFilter redirFilter{nullptr};
+  if (customFilter) {
+    redirFilter = winrt::make<RedirectHttpFilter>(std::move(customFilter), HttpBaseProtocolFilter{});
+  } else {
+    redirFilter = winrt::make<RedirectHttpFilter>();
+  }
+
   HttpClient client;
 
   if (static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy")) == OriginPolicy::None) {
