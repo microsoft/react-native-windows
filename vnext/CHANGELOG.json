@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 19 Feb 2024 16:15:35 GMT",
+      "tag": "react-native-windows_v0.72.30",
+      "version": "0.72.30",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "26ed970fceeb6617477a575238c746aadf4a6a12",
+            "comment": "Fix UIScheduler deadlock on shutdown"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Feb 2024 16:16:23 GMT",
       "tag": "react-native-windows_v0.72.29",
       "version": "0.72.29",

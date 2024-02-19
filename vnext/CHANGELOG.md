@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 12 Feb 2024 16:16:23 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Feb 2024 16:15:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.30
+
+Mon, 19 Feb 2024 16:15:35 GMT
+
+### Patches
+
+- Fix UIScheduler deadlock on shutdown (vmorozov@microsoft.com)
 
 ## 0.72.29
 
