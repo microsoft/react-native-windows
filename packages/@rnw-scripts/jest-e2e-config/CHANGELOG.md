@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/jest-e2e-config
 
-This log was last generated on Fri, 14 Jul 2023 05:17:07 GMT and should not be manually modified.
+This log was last generated on Thu, 15 Feb 2024 06:18:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.7
+
+Thu, 15 Feb 2024 06:18:14 GMT
+
+### Patches
+
+- Integrate 1/9 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 1.4.6
 

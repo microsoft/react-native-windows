@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240108-05ca2c6d8",
+  "baseVersion": "0.74.0-nightly-20240115-0c7008f28",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "9c6c26c42702bd360f25551690594d246946173b"
+      "baseHash": "c8d51e03c7f984398c710769a282b9e28d3030b2"
     },
     {
       "type": "derived",
@@ -56,7 +56,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputState.cpp",
-      "baseHash": "e5fe1ab887bc6fdd353548276ccf414b11f35c61"
+      "baseHash": "fbfa1d27ab326c8af8453d9c52f3233b9a01ed98"
     },
     {
       "type": "derived",
@@ -100,51 +100,9 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/LongLivedObject.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/bridging/LongLivedObject.cpp",
-      "baseHash": "4998856d2ebeb3fd6985472123764bb00645bd75",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/LongLivedObject.h",
-      "baseFile": "packages/react-native/ReactCommon/react/bridging/LongLivedObject.h",
-      "baseHash": "6ffd4b844e3b205de8ae85ce6d2ff691c99992e1",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModuleBinding.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModuleBinding.cpp",
-      "baseHash": "a2fe17d8840fd038a4b1569d10b7667a1f9e516a",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModuleBinding.h",
-      "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModuleBinding.h",
-      "baseHash": "b3b916aa12828c0f77a434d086248453d6243870",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModuleUtils.h",
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModuleUtils.h",
       "baseHash": "11de652e153bff8c42cc0e2bbf209c762ed3b314",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mapbuffer/MapBufferBuilder.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/mapbuffer/MapBufferBuilder.cpp",
-      "baseHash": "a2fa7db6a41b3bbd170dc24f153185dfb131d121",
-      "issue": 7821
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/mounting/ShadowTree.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/mounting/ShadowTree.cpp",
-      "baseHash": "430fa0d97835b073c9d3266d7d8d21096bae081b",
       "issue": 12195
     },
     {
@@ -239,7 +197,7 @@
       "type": "copy",
       "file": "src/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.android.js",
-      "baseHash": "d37b2f72125246ababf3260e99ef790ce76fe3bb",
+      "baseHash": "cbe33fe4080bcdb75c277e03c0383aab0554d604",
       "issue": 4578
     },
     {
@@ -477,14 +435,14 @@
       "type": "patch",
       "file": "src/Libraries/Pressability/Pressability.windows.js",
       "baseFile": "packages/react-native/Libraries/Pressability/Pressability.js",
-      "baseHash": "d5a39e2602915a52ae14cc88aaba8bd1d1c8be8a",
+      "baseHash": "3b490704a0a3c7f159efe344778cd6217d22d088",
       "issue": 4379
     },
     {
       "type": "patch",
       "file": "src/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "packages/react-native/Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "d5bbe5273211e4f39e6468f0c90ec42e5fe0a9c0"
+      "baseHash": "98dab159b858354132b88e7bfb1f376420136a5c"
     },
     {
       "type": "platform",

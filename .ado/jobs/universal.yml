@@ -4,6 +4,7 @@
       default : PullRequest
       values:
         - PullRequest
+        - SecurePullRequest
         - Continuous
     - name: AgentPool
       type: object

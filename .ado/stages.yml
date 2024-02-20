@@ -4,6 +4,7 @@ parameters:
     default: PullRequest
     values:
       - PullRequest
+      - SecurePullRequest
       - Continuous
   - name: AgentPool
     type: object
@@ -31,6 +32,7 @@ stages:
 
       - template: jobs/nuget-desktop.yml
         parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
 
       # NuGet using tests rely on "UniversalBuild" which is done in the build stage
