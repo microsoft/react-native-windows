@@ -28,4 +28,14 @@ void WindowsTextInputEventEmitter::onSelectionChange(const OnSelectionChange &ev
   });
 }
 
+void WindowsTextInputEventEmitter::onSubmitEditing(OnSubmitEditing event) const {
+  dispatchEvent("textInputSubmitEditing", [event = std::move(event)](jsi::Runtime &runtime) {
+    auto payload = jsi::Object(runtime);
+    payload.setProperty(runtime, "eventCount", event.eventCount);
+    payload.setProperty(runtime, "target", event.target);
+    payload.setProperty(runtime, "text", event.text);
+    return payload;
+  });
+}
+
 } // namespace facebook::react
