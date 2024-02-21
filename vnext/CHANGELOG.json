@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 21 Feb 2024 06:17:46 GMT",
+      "version": "0.0.0-canary.774",
+      "tag": "react-native-windows_v0.0.0-canary.774",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c390c663edc9182eee1e9209853ffb68404c34b2",
+            "comment": "sumbitkeyevents working with shift"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 16 Feb 2024 06:16:12 GMT",
       "version": "0.0.0-canary.773",
       "tag": "react-native-windows_v0.0.0-canary.773",

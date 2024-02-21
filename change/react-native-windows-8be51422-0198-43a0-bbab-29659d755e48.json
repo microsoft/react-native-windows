@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "sumbitkeyevents working with shift",
-  "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}
