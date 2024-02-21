@@ -150,7 +150,8 @@ struct WindowData {
 
           host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
 
-          host.InstanceSettings().BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
+          host.InstanceSettings().BundleRootPath(
+              std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
           host.InstanceSettings().UseDeveloperSupport(true);
 
           // Currently there is only SystemVisualSiteBridge which supports hosing ContentIslands within System

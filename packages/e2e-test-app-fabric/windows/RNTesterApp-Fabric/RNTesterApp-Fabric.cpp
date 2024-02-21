@@ -69,7 +69,7 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
   auto host = winrt::Microsoft::ReactNative::ReactNativeHost();
 
   // Include any autolinked modules
-  //RegisterAutolinkedNativeModulePackages(host.PackageProviders());
+  // RegisterAutolinkedNativeModulePackages(host.PackageProviders());
 
   host.PackageProviders().Append(winrt::make<RNTesterAppReactPackageProvider>());
   host.PackageProviders().Append(winrt::AutomationChannel::ReactPackageProvider());

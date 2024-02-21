@@ -12,8 +12,8 @@
 #define WINRT_LEAN_AND_MEAN 1
 
 // Windows Header Files
-#include <windows.h>
 #include <pathcch.h>
+#include <windows.h>
 
 #pragma push_macro("GetCurrentTime")
 #undef GetCurrentTime
