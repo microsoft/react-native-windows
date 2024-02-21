@@ -52,7 +52,7 @@ struct WindowsModalHostComponentView : WindowsModalHostComponentViewT<WindowsMod
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   // Used for creating new window
-  void ShowOnUIThread() noexcept;
+  void ShowOnUIThread();
   void HideOnUIThread() noexcept;
   static void RegisterWndClass() noexcept;
 

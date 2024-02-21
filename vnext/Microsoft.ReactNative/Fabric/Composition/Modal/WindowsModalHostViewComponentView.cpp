@@ -42,7 +42,7 @@ const int MODAL_DEFAULT_WIDTH = 500;
 const int MODAL_DEFAULT_HEIGHT = 500;
 
 // creates a new modal window
-void WindowsModalHostComponentView::ShowOnUIThread() noexcept {
+void WindowsModalHostComponentView::ShowOnUIThread() {
   auto host =
       winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(m_context.Properties());
   if (!host) {
@@ -82,7 +82,7 @@ void WindowsModalHostComponentView::ShowOnUIThread() noexcept {
     // Check if window creation succeeded
     if (!m_hwnd) {
       spunk.detach();
-      return;
+      throw std::exception("Failed to create new hwnd for Modal: " + GetLastError());
     }
 
     spunk->AddRef(); // Will be stored in windowData
