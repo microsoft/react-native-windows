@@ -140,8 +140,9 @@ struct WindowData {
         if (!m_bundleFile.empty()) {
           PCWSTR appName = (m_bundleFile == LR"(Samples\rntester)") ? L"RNTesterApp" : L"Bootstrap";
 
-          WCHAR workingDir[MAX_PATH];
-          GetCurrentDirectory(MAX_PATH, workingDir);
+          WCHAR appDirectory[MAX_PATH];
+          GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
+          PathCchRemoveFileSpec(appDirectory, MAX_PATH);
 
           auto host = Host();
           // Disable until we have a 3rd party story for custom components
@@ -149,8 +150,7 @@ struct WindowData {
 
           host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
 
-          host.InstanceSettings().BundleRootPath(
-              std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
+          host.InstanceSettings().BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
           host.InstanceSettings().UseDeveloperSupport(true);
 
           // Currently there is only SystemVisualSiteBridge which supports hosing ContentIslands within System

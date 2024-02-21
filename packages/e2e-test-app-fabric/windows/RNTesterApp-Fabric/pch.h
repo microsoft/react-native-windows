@@ -13,6 +13,7 @@
 
 // Windows Header Files
 #include <windows.h>
+#include <pathcch.h>
 
 #pragma push_macro("GetCurrentTime")
 #undef GetCurrentTime

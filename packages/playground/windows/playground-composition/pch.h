@@ -5,6 +5,7 @@
 #define WINRT_LEAN_AND_MEAN 1
 
 #include <windows.h>
+#include <pathcch.h>
 
 // When WINAPI_FAMILY is DESKTOP_APP, windows.h creates a macro for GetCurrentTime, which conflicts with other headers
 #undef GetCurrentTime

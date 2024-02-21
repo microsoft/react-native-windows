@@ -62,26 +62,34 @@ void UpdateRootViewSizeToAppWindow(
 winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
     HWND hwnd,
     const winrt::Microsoft::UI::Composition::Compositor &compositor) {
-  WCHAR workingDir[MAX_PATH];
-  GetCurrentDirectory(MAX_PATH, workingDir);
+  WCHAR appDirectory[MAX_PATH];
+  GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
+  PathCchRemoveFileSpec(appDirectory, MAX_PATH);
 
   auto host = winrt::Microsoft::ReactNative::ReactNativeHost();
-  // Disable until we have a 3rd party story for custom components
-  // RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any
-  // autolinked modules
+
+  // Include any autolinked modules
+  //RegisterAutolinkedNativeModulePackages(host.PackageProviders());
+
   host.PackageProviders().Append(winrt::make<RNTesterAppReactPackageProvider>());
   host.PackageProviders().Append(winrt::AutomationChannel::ReactPackageProvider());
 
+#if BUNDLE
   host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
-  host.InstanceSettings().DebugBundlePath(L"index");
-
-  host.InstanceSettings().BundleRootPath(std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
-  host.InstanceSettings().DebuggerBreakOnNextLine(false);
-#if _DEBUG
-  host.InstanceSettings().UseDirectDebugger(true);
+  host.InstanceSettings().BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
+  host.InstanceSettings().UseFastRefresh(false);
+#else
+  host.InstanceSettings().JavaScriptBundleFile(L"index");
   host.InstanceSettings().UseFastRefresh(true);
 #endif
+
+#if _DEBUG
+  host.InstanceSettings().UseDirectDebugger(true);
   host.InstanceSettings().UseDeveloperSupport(true);
+#else
+  host.InstanceSettings().UseDirectDebugger(false);
+  host.InstanceSettings().UseDeveloperSupport(false);
+#endif
 
   // Test App hooks into JS console.log implementation to record errors/warnings
   host.InstanceSettings().NativeLogger([](winrt::Microsoft::ReactNative::LogLevel level, winrt::hstring message) {
