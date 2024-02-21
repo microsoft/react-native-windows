@@ -55,11 +55,13 @@ UnimplementedViewManager::UnimplementedViewManager(const Mso::React::IReactConte
 const wchar_t *UnimplementedViewManager::GetName() const {
   return m_name.c_str();
 }
+s
 
-void UnimplementedViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
+    void
+    UnimplementedViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {
   Super::GetNativeProps(writer);
 
-  // Modal View Props (Todo: fix so these aren't in UnimplementedView)
+  // Modal View Props (Todo: fix so these aren't in UnimplementedView) #12753
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"animationType", L"string");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"presentationStyle", L"string");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"focusable", L"boolean");
