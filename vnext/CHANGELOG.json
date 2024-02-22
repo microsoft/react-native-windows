@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 22 Feb 2024 06:16:36 GMT",
+      "version": "0.0.0-canary.775",
+      "tag": "react-native-windows_v0.0.0-canary.775",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9bd3906f3bbfb573f9aced3c2bd4f8a73c9c167f",
+            "comment": "Update WinAppSDK versions to latest public builds"
+          },
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "cb71c1663dc2503a281444ca12be4f8fbf344b43",
+            "comment": "Updated min VS version in dependency script"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.200",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Feb 2024 06:17:46 GMT",
       "version": "0.0.0-canary.774",
       "tag": "react-native-windows_v0.0.0-canary.774",

@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 21 Feb 2024 06:17:46 GMT and should not be manually modified.
+This log was last generated on Thu, 22 Feb 2024 06:16:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.775
+
+Thu, 22 Feb 2024 06:16:36 GMT
+
+### Changes
+
+- Update WinAppSDK versions to latest public builds (jthysell@microsoft.com)
+- Updated min VS version in dependency script (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.200
 
 ## 0.0.0-canary.774
 
