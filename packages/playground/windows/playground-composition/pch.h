@@ -4,12 +4,10 @@
 #define WIN32_LEAN_AND_MEAN 1
 #define WINRT_LEAN_AND_MEAN 1
 
-#include <pathcch.h>
 #include <windows.h>
-
 // When WINAPI_FAMILY is DESKTOP_APP, windows.h creates a macro for GetCurrentTime, which conflicts with other headers
 #undef GetCurrentTime
-
+#include <pathcch.h>
 #include <unknwn.h>
 
 #include <CppWinRTIncludes.h>

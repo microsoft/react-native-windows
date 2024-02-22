@@ -12,11 +12,10 @@
 #define WINRT_LEAN_AND_MEAN 1
 
 // Windows Header Files
-#include <pathcch.h>
 #include <windows.h>
-
-#pragma push_macro("GetCurrentTime")
 #undef GetCurrentTime
+#include <pathcch.h>
+#include <unknwn.h>
 
 // Playground pch.h
 #include <CppWinRTIncludes.h>
@@ -32,5 +31,4 @@
 #include <tchar.h>
 
 // reference additional headers your program requires here
-#include <unknwn.h>
 #include <winrt/base.h>
