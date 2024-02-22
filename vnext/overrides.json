@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240120-a58ec074b",
+  "baseVersion": "0.74.0-nightly-20240122-4e92f87df",
   "overrides": [
     {
       "type": "derived",
@@ -477,7 +477,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/NativePlatformConstantsWin.js",
       "baseFile": "packages/react-native/Libraries/Utilities/NativePlatformConstantsIOS.js",
-      "baseHash": "d618776f5251597b9fa13c55be27e09f3ceccdf3"
+      "baseHash": "7b9db1bdc43128938d261961e3765c24d17e68b6"
     },
     {
       "type": "derived",

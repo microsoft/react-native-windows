@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240120-a58ec074b",
+  "baseVersion": "0.74.0-nightly-20240122-4e92f87df",
   "overrides": [
     {
       "type": "derived",
@@ -61,7 +61,7 @@
       "type": "derived",
       "file": "src/Libraries/Components/AccessibilityInfo/NativeAccessibilityInfoWin32.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/NativeAccessibilityInfo.js",
-      "baseHash": "9427a7feebfbe3de606b2d100439cabf2faa8661"
+      "baseHash": "c3b9975c5fe1c91712fe70546c7b06a1e78cea77"
     },
     {
       "type": "derived",
@@ -263,7 +263,7 @@
       "type": "derived",
       "file": "src/Libraries/Image/NativeImageLoaderWin32.js",
       "baseFile": "packages/react-native/Libraries/Image/NativeImageLoaderIOS.js",
-      "baseHash": "d4720d31916ce29c66a1c06906343e31fcd45036",
+      "baseHash": "a6f98dd6f021e1fbfbcdff29b695d2144fdf6559",
       "issue": 4320
     },
     {
@@ -493,7 +493,7 @@
       "type": "derived",
       "file": "src/Libraries/Utilities/NativePlatformConstantsWin.js",
       "baseFile": "packages/react-native/Libraries/Utilities/NativePlatformConstantsIOS.js",
-      "baseHash": "d618776f5251597b9fa13c55be27e09f3ceccdf3"
+      "baseHash": "7b9db1bdc43128938d261961e3765c24d17e68b6"
     },
     {
       "type": "derived",

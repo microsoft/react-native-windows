@@ -16,21 +16,6 @@
 
 namespace facebook::react {
 
-class DebuggingOverlayState {
-public:
-  DebuggingOverlayState() = default;
-
-#ifdef ANDROID
-  DebuggingOverlayState(DebuggingOverlayState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
-  };
-#endif
-};
-
 class ActivityIndicatorViewState {
 public:
   ActivityIndicatorViewState() = default;
@@ -61,6 +46,21 @@ public:
 #endif
 };
 
+class AndroidHorizontalScrollContentViewState {
+public:
+  AndroidHorizontalScrollContentViewState() = default;
+
+#ifdef ANDROID
+  AndroidHorizontalScrollContentViewState(AndroidHorizontalScrollContentViewState const &previousState, folly::dynamic data){};
+  folly::dynamic getDynamic() const {
+    return {};
+  };
+  MapBuffer getMapBuffer() const {
+    return MapBufferBuilder::EMPTY();
+  };
+#endif
+};
+
 class AndroidSwipeRefreshLayoutState {
 public:
   AndroidSwipeRefreshLayoutState() = default;
@@ -76,12 +76,12 @@ public:
 #endif
 };
 
-class PullToRefreshViewState {
+class DebuggingOverlayState {
 public:
-  PullToRefreshViewState() = default;
+  DebuggingOverlayState() = default;
 
 #ifdef ANDROID
-  PullToRefreshViewState(PullToRefreshViewState const &previousState, folly::dynamic data){};
+  DebuggingOverlayState(DebuggingOverlayState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
   };
@@ -91,12 +91,12 @@ public:
 #endif
 };
 
-class AndroidHorizontalScrollContentViewState {
+class PullToRefreshViewState {
 public:
-  AndroidHorizontalScrollContentViewState() = default;
+  PullToRefreshViewState() = default;
 
 #ifdef ANDROID
-  AndroidHorizontalScrollContentViewState(AndroidHorizontalScrollContentViewState const &previousState, folly::dynamic data){};
+  PullToRefreshViewState(PullToRefreshViewState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
   };

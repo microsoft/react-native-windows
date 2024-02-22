@@ -50,6 +50,7 @@ node_modules
 /index.*
 /interface.*
 /src/rntypes
+/private
 /rntypes
 /types
 /typings-index.*

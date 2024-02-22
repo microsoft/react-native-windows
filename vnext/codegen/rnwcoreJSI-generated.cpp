@@ -11,6 +11,179 @@
 
 namespace facebook::react {
 
+static jsi::Value __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeDialogManagerWindowsCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_showAlert(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDialogManagerWindowsCxxSpecJSI *>(&turboModule)->showAlert(
+    rt,
+    args[0].asObject(rt),
+    args[1].asObject(rt).asFunction(rt),
+    args[2].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+
+NativeDialogManagerWindowsCxxSpecJSI::NativeDialogManagerWindowsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("Alert", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_getConstants};
+  methodMap_["showAlert"] = MethodMetadata {3, __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_showAlert};
+}
+static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isReduceMotionEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->isReduceMotionEnabled(
+    rt,
+    args[0].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isTouchExplorationEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->isTouchExplorationEnabled(
+    rt,
+    args[0].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isAccessibilityServiceEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->isAccessibilityServiceEnabled(
+    rt,
+    args[0].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_setAccessibilityFocus(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->setAccessibilityFocus(
+    rt,
+    args[0].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_announceForAccessibility(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->announceForAccessibility(
+    rt,
+    args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_getRecommendedTimeoutMillis(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->getRecommendedTimeoutMillis(
+    rt,
+    args[0].asNumber(),
+    args[1].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+
+NativeAccessibilityInfoCxxSpecJSI::NativeAccessibilityInfoCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("AccessibilityInfo", jsInvoker) {
+  methodMap_["isReduceMotionEnabled"] = MethodMetadata {1, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isReduceMotionEnabled};
+  methodMap_["isTouchExplorationEnabled"] = MethodMetadata {1, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isTouchExplorationEnabled};
+  methodMap_["isAccessibilityServiceEnabled"] = MethodMetadata {1, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isAccessibilityServiceEnabled};
+  methodMap_["setAccessibilityFocus"] = MethodMetadata {1, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_setAccessibilityFocus};
+  methodMap_["announceForAccessibility"] = MethodMetadata {1, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_announceForAccessibility};
+  methodMap_["getRecommendedTimeoutMillis"] = MethodMetadata {2, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_getRecommendedTimeoutMillis};
+}
+static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentBoldTextState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentBoldTextState(
+    rt,
+    args[0].asObject(rt).asFunction(rt),
+    args[1].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentGrayscaleState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentGrayscaleState(
+    rt,
+    args[0].asObject(rt).asFunction(rt),
+    args[1].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentInvertColorsState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentInvertColorsState(
+    rt,
+    args[0].asObject(rt).asFunction(rt),
+    args[1].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentReduceMotionState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentReduceMotionState(
+    rt,
+    args[0].asObject(rt).asFunction(rt),
+    args[1].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentPrefersCrossFadeTransitionsState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentPrefersCrossFadeTransitionsState(
+    rt,
+    args[0].asObject(rt).asFunction(rt),
+    args[1].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentReduceTransparencyState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentReduceTransparencyState(
+    rt,
+    args[0].asObject(rt).asFunction(rt),
+    args[1].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentVoiceOverState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentVoiceOverState(
+    rt,
+    args[0].asObject(rt).asFunction(rt),
+    args[1].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_setAccessibilityContentSizeMultipliers(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->setAccessibilityContentSizeMultipliers(
+    rt,
+    args[0].asObject(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_setAccessibilityFocus(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->setAccessibilityFocus(
+    rt,
+    args[0].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_announceForAccessibility(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->announceForAccessibility(
+    rt,
+    args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_announceForAccessibilityWithOptions(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->announceForAccessibilityWithOptions(
+    rt,
+    args[0].asString(rt),
+    args[1].asObject(rt)
+  );
+  return jsi::Value::undefined();
+}
+
+NativeAccessibilityManagerCxxSpecJSI::NativeAccessibilityManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("AccessibilityManager", jsInvoker) {
+  methodMap_["getCurrentBoldTextState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentBoldTextState};
+  methodMap_["getCurrentGrayscaleState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentGrayscaleState};
+  methodMap_["getCurrentInvertColorsState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentInvertColorsState};
+  methodMap_["getCurrentReduceMotionState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentReduceMotionState};
+  methodMap_["getCurrentPrefersCrossFadeTransitionsState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentPrefersCrossFadeTransitionsState};
+  methodMap_["getCurrentReduceTransparencyState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentReduceTransparencyState};
+  methodMap_["getCurrentVoiceOverState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentVoiceOverState};
+  methodMap_["setAccessibilityContentSizeMultipliers"] = MethodMetadata {1, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_setAccessibilityContentSizeMultipliers};
+  methodMap_["setAccessibilityFocus"] = MethodMetadata {1, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_setAccessibilityFocus};
+  methodMap_["announceForAccessibility"] = MethodMetadata {1, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_announceForAccessibility};
+  methodMap_["announceForAccessibilityWithOptions"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_announceForAccessibilityWithOptions};
+}
 static jsi::Value __hostFunction_NativeActionSheetManagerCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeActionSheetManagerCxxSpecJSI *>(&turboModule)->getConstants(
     rt
@@ -59,26 +232,6 @@ static jsi::Value __hostFunction_NativeAlertManagerCxxSpecJSI_alertWithArgs(jsi:
 NativeAlertManagerCxxSpecJSI::NativeAlertManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("AlertManager", jsInvoker) {
   methodMap_["alertWithArgs"] = MethodMetadata {2, __hostFunction_NativeAlertManagerCxxSpecJSI_alertWithArgs};
-}
-static jsi::Value __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeDialogManagerWindowsCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_showAlert(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDialogManagerWindowsCxxSpecJSI *>(&turboModule)->showAlert(
-    rt,
-    args[0].asObject(rt),
-    args[1].asObject(rt).asFunction(rt),
-    args[2].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-
-NativeDialogManagerWindowsCxxSpecJSI::NativeDialogManagerWindowsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("Alert", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_getConstants};
-  methodMap_["showAlert"] = MethodMetadata {3, __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_showAlert};
 }
 static jsi::Value __hostFunction_NativeAnimatedModuleCxxSpecJSI_startOperationBatch(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeAnimatedModuleCxxSpecJSI *>(&turboModule)->startOperationBatch(
@@ -500,6 +653,60 @@ NativeAnimatedTurboModuleCxxSpecJSI::NativeAnimatedTurboModuleCxxSpecJSI(std::sh
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeAnimatedTurboModuleCxxSpecJSI_removeListeners};
   methodMap_["queueAndExecuteBatchedOperations"] = MethodMetadata {1, __hostFunction_NativeAnimatedTurboModuleCxxSpecJSI_queueAndExecuteBatchedOperations};
 }
+static jsi::Value __hostFunction_NativeAnimationsDebugModuleCxxSpecJSI_startRecordingFps(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAnimationsDebugModuleCxxSpecJSI *>(&turboModule)->startRecordingFps(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAnimationsDebugModuleCxxSpecJSI_stopRecordingFps(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAnimationsDebugModuleCxxSpecJSI *>(&turboModule)->stopRecordingFps(
+    rt,
+    args[0].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+
+NativeAnimationsDebugModuleCxxSpecJSI::NativeAnimationsDebugModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("AnimationsDebugModule", jsInvoker) {
+  methodMap_["startRecordingFps"] = MethodMetadata {0, __hostFunction_NativeAnimationsDebugModuleCxxSpecJSI_startRecordingFps};
+  methodMap_["stopRecordingFps"] = MethodMetadata {1, __hostFunction_NativeAnimationsDebugModuleCxxSpecJSI_stopRecordingFps};
+}
+static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_getColorScheme(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  auto result = static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->getColorScheme(
+    rt
+  );
+  return result ? jsi::Value(std::move(*result)) : jsi::Value::null();
+}
+static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_setColorScheme(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->setColorScheme(
+    rt,
+    args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->addListener(
+    rt,
+    args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_removeListeners(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->removeListeners(
+    rt,
+    args[0].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+
+NativeAppearanceCxxSpecJSI::NativeAppearanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("Appearance", jsInvoker) {
+  methodMap_["getColorScheme"] = MethodMetadata {0, __hostFunction_NativeAppearanceCxxSpecJSI_getColorScheme};
+  methodMap_["setColorScheme"] = MethodMetadata {1, __hostFunction_NativeAppearanceCxxSpecJSI_setColorScheme};
+  methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeAppearanceCxxSpecJSI_addListener};
+  methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeAppearanceCxxSpecJSI_removeListeners};
+}
 static jsi::Value __hostFunction_NativeAppStateCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeAppStateCxxSpecJSI *>(&turboModule)->getConstants(
     rt
@@ -604,25 +811,6 @@ NativeBlobModuleCxxSpecJSI::NativeBlobModuleCxxSpecJSI(std::shared_ptr<CallInvok
   methodMap_["createFromParts"] = MethodMetadata {2, __hostFunction_NativeBlobModuleCxxSpecJSI_createFromParts};
   methodMap_["release"] = MethodMetadata {1, __hostFunction_NativeBlobModuleCxxSpecJSI_release};
 }
-static jsi::Value __hostFunction_NativeFileReaderModuleCxxSpecJSI_readAsDataURL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeFileReaderModuleCxxSpecJSI *>(&turboModule)->readAsDataURL(
-    rt,
-    args[0].asObject(rt)
-  );
-}
-static jsi::Value __hostFunction_NativeFileReaderModuleCxxSpecJSI_readAsText(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeFileReaderModuleCxxSpecJSI *>(&turboModule)->readAsText(
-    rt,
-    args[0].asObject(rt),
-    args[1].asString(rt)
-  );
-}
-
-NativeFileReaderModuleCxxSpecJSI::NativeFileReaderModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("FileReaderModule", jsInvoker) {
-  methodMap_["readAsDataURL"] = MethodMetadata {1, __hostFunction_NativeFileReaderModuleCxxSpecJSI_readAsDataURL};
-  methodMap_["readAsText"] = MethodMetadata {2, __hostFunction_NativeFileReaderModuleCxxSpecJSI_readAsText};
-}
 static jsi::Value __hostFunction_NativeBugReportingCxxSpecJSI_startReportAProblemFlow(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeBugReportingCxxSpecJSI *>(&turboModule)->startReportAProblemFlow(
     rt
@@ -642,6 +830,257 @@ NativeBugReportingCxxSpecJSI::NativeBugReportingCxxSpecJSI(std::shared_ptr<CallI
   : TurboModule("BugReporting", jsInvoker) {
   methodMap_["startReportAProblemFlow"] = MethodMetadata {0, __hostFunction_NativeBugReportingCxxSpecJSI_startReportAProblemFlow};
   methodMap_["setExtraData"] = MethodMetadata {2, __hostFunction_NativeBugReportingCxxSpecJSI_setExtraData};
+}
+static jsi::Value __hostFunction_NativeClipboardCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeClipboardCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeClipboardCxxSpecJSI_getString(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeClipboardCxxSpecJSI *>(&turboModule)->getString(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeClipboardCxxSpecJSI_setString(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeClipboardCxxSpecJSI *>(&turboModule)->setString(
+    rt,
+    args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+
+NativeClipboardCxxSpecJSI::NativeClipboardCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("Clipboard", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeClipboardCxxSpecJSI_getConstants};
+  methodMap_["getString"] = MethodMetadata {0, __hostFunction_NativeClipboardCxxSpecJSI_getString};
+  methodMap_["setString"] = MethodMetadata {1, __hostFunction_NativeClipboardCxxSpecJSI_setString};
+}
+static jsi::Value __hostFunction_NativeDeviceEventManagerCxxSpecJSI_invokeDefaultBackPressHandler(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDeviceEventManagerCxxSpecJSI *>(&turboModule)->invokeDefaultBackPressHandler(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+
+NativeDeviceEventManagerCxxSpecJSI::NativeDeviceEventManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("DeviceEventManager", jsInvoker) {
+  methodMap_["invokeDefaultBackPressHandler"] = MethodMetadata {0, __hostFunction_NativeDeviceEventManagerCxxSpecJSI_invokeDefaultBackPressHandler};
+}
+static jsi::Value __hostFunction_NativeDeviceInfoCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeDeviceInfoCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+
+NativeDeviceInfoCxxSpecJSI::NativeDeviceInfoCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("DeviceInfo", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeDeviceInfoCxxSpecJSI_getConstants};
+}
+static jsi::Value __hostFunction_NativeDevLoadingViewCxxSpecJSI_showMessage(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevLoadingViewCxxSpecJSI *>(&turboModule)->showMessage(
+    rt,
+    args[0].asString(rt),
+    args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asNumber()),
+    args[2].isNull() || args[2].isUndefined() ? std::nullopt : std::make_optional(args[2].asNumber())
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevLoadingViewCxxSpecJSI_hide(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevLoadingViewCxxSpecJSI *>(&turboModule)->hide(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+
+NativeDevLoadingViewCxxSpecJSI::NativeDevLoadingViewCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("DevLoadingView", jsInvoker) {
+  methodMap_["showMessage"] = MethodMetadata {3, __hostFunction_NativeDevLoadingViewCxxSpecJSI_showMessage};
+  methodMap_["hide"] = MethodMetadata {0, __hostFunction_NativeDevLoadingViewCxxSpecJSI_hide};
+}
+static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_show(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->show(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_reload(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->reload(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_debugRemotely(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->debugRemotely(
+    rt,
+    args[0].asBool()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_setProfilingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->setProfilingEnabled(
+    rt,
+    args[0].asBool()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_setHotLoadingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->setHotLoadingEnabled(
+    rt,
+    args[0].asBool()
+  );
+  return jsi::Value::undefined();
+}
+
+NativeDevMenuCxxSpecJSI::NativeDevMenuCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("DevMenu", jsInvoker) {
+  methodMap_["show"] = MethodMetadata {0, __hostFunction_NativeDevMenuCxxSpecJSI_show};
+  methodMap_["reload"] = MethodMetadata {0, __hostFunction_NativeDevMenuCxxSpecJSI_reload};
+  methodMap_["debugRemotely"] = MethodMetadata {1, __hostFunction_NativeDevMenuCxxSpecJSI_debugRemotely};
+  methodMap_["setProfilingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevMenuCxxSpecJSI_setProfilingEnabled};
+  methodMap_["setHotLoadingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevMenuCxxSpecJSI_setHotLoadingEnabled};
+}
+static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_reload(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->reload(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_reloadWithReason(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->reloadWithReason(
+    rt,
+    args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_onFastRefresh(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->onFastRefresh(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_setHotLoadingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->setHotLoadingEnabled(
+    rt,
+    args[0].asBool()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_setIsDebuggingRemotely(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->setIsDebuggingRemotely(
+    rt,
+    args[0].asBool()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_setProfilingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->setProfilingEnabled(
+    rt,
+    args[0].asBool()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_toggleElementInspector(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->toggleElementInspector(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_addMenuItem(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->addMenuItem(
+    rt,
+    args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->addListener(
+    rt,
+    args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_removeListeners(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->removeListeners(
+    rt,
+    args[0].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_setIsShakeToShowDevMenuEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->setIsShakeToShowDevMenuEnabled(
+    rt,
+    args[0].asBool()
+  );
+  return jsi::Value::undefined();
+}
+
+NativeDevSettingsCxxSpecJSI::NativeDevSettingsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("DevSettings", jsInvoker) {
+  methodMap_["reload"] = MethodMetadata {0, __hostFunction_NativeDevSettingsCxxSpecJSI_reload};
+  methodMap_["reloadWithReason"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_reloadWithReason};
+  methodMap_["onFastRefresh"] = MethodMetadata {0, __hostFunction_NativeDevSettingsCxxSpecJSI_onFastRefresh};
+  methodMap_["setHotLoadingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_setHotLoadingEnabled};
+  methodMap_["setIsDebuggingRemotely"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_setIsDebuggingRemotely};
+  methodMap_["setProfilingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_setProfilingEnabled};
+  methodMap_["toggleElementInspector"] = MethodMetadata {0, __hostFunction_NativeDevSettingsCxxSpecJSI_toggleElementInspector};
+  methodMap_["addMenuItem"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_addMenuItem};
+  methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_addListener};
+  methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_removeListeners};
+  methodMap_["setIsShakeToShowDevMenuEnabled"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_setIsShakeToShowDevMenuEnabled};
+}
+static jsi::Value __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_setConsolePatchSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->setConsolePatchSettings(
+    rt,
+    args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getConsolePatchSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  auto result = static_cast<NativeDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->getConsolePatchSettings(
+    rt
+  );
+  return result ? jsi::Value(std::move(*result)) : jsi::Value::null();
+}
+static jsi::Value __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_setProfilingSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->setProfilingSettings(
+    rt,
+    args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getProfilingSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  auto result = static_cast<NativeDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->getProfilingSettings(
+    rt
+  );
+  return result ? jsi::Value(std::move(*result)) : jsi::Value::null();
+}
+
+NativeDevToolsSettingsManagerCxxSpecJSI::NativeDevToolsSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("DevToolsSettingsManager", jsInvoker) {
+  methodMap_["setConsolePatchSettings"] = MethodMetadata {1, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_setConsolePatchSettings};
+  methodMap_["getConsolePatchSettings"] = MethodMetadata {0, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getConsolePatchSettings};
+  methodMap_["setProfilingSettings"] = MethodMetadata {1, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_setProfilingSettings};
+  methodMap_["getProfilingSettings"] = MethodMetadata {0, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getProfilingSettings};
+}
+static jsi::Value __hostFunction_NativeDialogManagerAndroidCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeDialogManagerAndroidCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeDialogManagerAndroidCxxSpecJSI_showAlert(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDialogManagerAndroidCxxSpecJSI *>(&turboModule)->showAlert(
+    rt,
+    args[0].asObject(rt),
+    args[1].asObject(rt).asFunction(rt),
+    args[2].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+
+NativeDialogManagerAndroidCxxSpecJSI::NativeDialogManagerAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("DialogManagerAndroid", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeDialogManagerAndroidCxxSpecJSI_getConstants};
+  methodMap_["showAlert"] = MethodMetadata {3, __hostFunction_NativeDialogManagerAndroidCxxSpecJSI_showAlert};
 }
 static jsi::Value __hostFunction_NativeExceptionsManagerCxxSpecJSI_reportFatalException(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeExceptionsManagerCxxSpecJSI *>(&turboModule)->reportFatalException(
@@ -692,52 +1131,111 @@ NativeExceptionsManagerCxxSpecJSI::NativeExceptionsManagerCxxSpecJSI(std::shared
   methodMap_["updateExceptionMessage"] = MethodMetadata {3, __hostFunction_NativeExceptionsManagerCxxSpecJSI_updateExceptionMessage};
   methodMap_["dismissRedbox"] = MethodMetadata {0, __hostFunction_NativeExceptionsManagerCxxSpecJSI_dismissRedbox};
 }
-static jsi::Value __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_setConsolePatchSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->setConsolePatchSettings(
+static jsi::Value __hostFunction_NativeFileReaderModuleCxxSpecJSI_readAsDataURL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeFileReaderModuleCxxSpecJSI *>(&turboModule)->readAsDataURL(
+    rt,
+    args[0].asObject(rt)
+  );
+}
+static jsi::Value __hostFunction_NativeFileReaderModuleCxxSpecJSI_readAsText(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeFileReaderModuleCxxSpecJSI *>(&turboModule)->readAsText(
+    rt,
+    args[0].asObject(rt),
+    args[1].asString(rt)
+  );
+}
+
+NativeFileReaderModuleCxxSpecJSI::NativeFileReaderModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("FileReaderModule", jsInvoker) {
+  methodMap_["readAsDataURL"] = MethodMetadata {1, __hostFunction_NativeFileReaderModuleCxxSpecJSI_readAsDataURL};
+  methodMap_["readAsText"] = MethodMetadata {2, __hostFunction_NativeFileReaderModuleCxxSpecJSI_readAsText};
+}
+static jsi::Value __hostFunction_NativeFrameRateLoggerCxxSpecJSI_setGlobalOptions(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeFrameRateLoggerCxxSpecJSI *>(&turboModule)->setGlobalOptions(
+    rt,
+    args[0].asObject(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeFrameRateLoggerCxxSpecJSI_setContext(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeFrameRateLoggerCxxSpecJSI *>(&turboModule)->setContext(
     rt,
     args[0].asString(rt)
   );
   return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getConsolePatchSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  auto result = static_cast<NativeDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->getConsolePatchSettings(
+static jsi::Value __hostFunction_NativeFrameRateLoggerCxxSpecJSI_beginScroll(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeFrameRateLoggerCxxSpecJSI *>(&turboModule)->beginScroll(
     rt
-  );
-  return result ? jsi::Value(std::move(*result)) : jsi::Value::null();
-}
-static jsi::Value __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_setProfilingSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->setProfilingSettings(
-    rt,
-    args[0].asString(rt)
   );
   return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getProfilingSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  auto result = static_cast<NativeDevToolsSettingsManagerCxxSpecJSI *>(&turboModule)->getProfilingSettings(
+static jsi::Value __hostFunction_NativeFrameRateLoggerCxxSpecJSI_endScroll(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeFrameRateLoggerCxxSpecJSI *>(&turboModule)->endScroll(
     rt
-  );
-  return result ? jsi::Value(std::move(*result)) : jsi::Value::null();
-}
-
-NativeDevToolsSettingsManagerCxxSpecJSI::NativeDevToolsSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("DevToolsSettingsManager", jsInvoker) {
-  methodMap_["setConsolePatchSettings"] = MethodMetadata {1, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_setConsolePatchSettings};
-  methodMap_["getConsolePatchSettings"] = MethodMetadata {0, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getConsolePatchSettings};
-  methodMap_["setProfilingSettings"] = MethodMetadata {1, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_setProfilingSettings};
-  methodMap_["getProfilingSettings"] = MethodMetadata {0, __hostFunction_NativeDevToolsSettingsManagerCxxSpecJSI_getProfilingSettings};
-}
-static jsi::Value __hostFunction_NativeJSCHeapCaptureCxxSpecJSI_captureComplete(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeJSCHeapCaptureCxxSpecJSI *>(&turboModule)->captureComplete(
-    rt,
-    args[0].asString(rt),
-    args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asString(rt))
   );
   return jsi::Value::undefined();
 }
 
-NativeJSCHeapCaptureCxxSpecJSI::NativeJSCHeapCaptureCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("JSCHeapCapture", jsInvoker) {
-  methodMap_["captureComplete"] = MethodMetadata {2, __hostFunction_NativeJSCHeapCaptureCxxSpecJSI_captureComplete};
+NativeFrameRateLoggerCxxSpecJSI::NativeFrameRateLoggerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("FrameRateLogger", jsInvoker) {
+  methodMap_["setGlobalOptions"] = MethodMetadata {1, __hostFunction_NativeFrameRateLoggerCxxSpecJSI_setGlobalOptions};
+  methodMap_["setContext"] = MethodMetadata {1, __hostFunction_NativeFrameRateLoggerCxxSpecJSI_setContext};
+  methodMap_["beginScroll"] = MethodMetadata {0, __hostFunction_NativeFrameRateLoggerCxxSpecJSI_beginScroll};
+  methodMap_["endScroll"] = MethodMetadata {0, __hostFunction_NativeFrameRateLoggerCxxSpecJSI_endScroll};
+}
+static jsi::Value __hostFunction_NativeHeadlessJsTaskSupportCxxSpecJSI_notifyTaskFinished(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeHeadlessJsTaskSupportCxxSpecJSI *>(&turboModule)->notifyTaskFinished(
+    rt,
+    args[0].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeHeadlessJsTaskSupportCxxSpecJSI_notifyTaskRetry(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeHeadlessJsTaskSupportCxxSpecJSI *>(&turboModule)->notifyTaskRetry(
+    rt,
+    args[0].asNumber()
+  );
+}
+
+NativeHeadlessJsTaskSupportCxxSpecJSI::NativeHeadlessJsTaskSupportCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("HeadlessJsTaskSupport", jsInvoker) {
+  methodMap_["notifyTaskFinished"] = MethodMetadata {1, __hostFunction_NativeHeadlessJsTaskSupportCxxSpecJSI_notifyTaskFinished};
+  methodMap_["notifyTaskRetry"] = MethodMetadata {1, __hostFunction_NativeHeadlessJsTaskSupportCxxSpecJSI_notifyTaskRetry};
+}
+static jsi::Value __hostFunction_NativeI18nManagerCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeI18nManagerCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeI18nManagerCxxSpecJSI_allowRTL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeI18nManagerCxxSpecJSI *>(&turboModule)->allowRTL(
+    rt,
+    args[0].asBool()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeI18nManagerCxxSpecJSI_forceRTL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeI18nManagerCxxSpecJSI *>(&turboModule)->forceRTL(
+    rt,
+    args[0].asBool()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeI18nManagerCxxSpecJSI_swapLeftAndRightInRTL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeI18nManagerCxxSpecJSI *>(&turboModule)->swapLeftAndRightInRTL(
+    rt,
+    args[0].asBool()
+  );
+  return jsi::Value::undefined();
+}
+
+NativeI18nManagerCxxSpecJSI::NativeI18nManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("I18nManager", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeI18nManagerCxxSpecJSI_getConstants};
+  methodMap_["allowRTL"] = MethodMetadata {1, __hostFunction_NativeI18nManagerCxxSpecJSI_allowRTL};
+  methodMap_["forceRTL"] = MethodMetadata {1, __hostFunction_NativeI18nManagerCxxSpecJSI_forceRTL};
+  methodMap_["swapLeftAndRightInRTL"] = MethodMetadata {1, __hostFunction_NativeI18nManagerCxxSpecJSI_swapLeftAndRightInRTL};
 }
 static jsi::Value __hostFunction_NativeImageEditorCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeImageEditorCxxSpecJSI *>(&turboModule)->getConstants(
@@ -923,39 +1421,43 @@ NativeImageStoreIOSCxxSpecJSI::NativeImageStoreIOSCxxSpecJSI(std::shared_ptr<Cal
   methodMap_["removeImageForTag"] = MethodMetadata {1, __hostFunction_NativeImageStoreIOSCxxSpecJSI_removeImageForTag};
   methodMap_["addImageFromBase64"] = MethodMetadata {3, __hostFunction_NativeImageStoreIOSCxxSpecJSI_addImageFromBase64};
 }
-static jsi::Value __hostFunction_NativeFrameRateLoggerCxxSpecJSI_setGlobalOptions(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeFrameRateLoggerCxxSpecJSI *>(&turboModule)->setGlobalOptions(
-    rt,
-    args[0].asObject(rt)
+static jsi::Value __hostFunction_NativeIntentAndroidCxxSpecJSI_getInitialURL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeIntentAndroidCxxSpecJSI *>(&turboModule)->getInitialURL(
+    rt
   );
-  return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativeFrameRateLoggerCxxSpecJSI_setContext(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeFrameRateLoggerCxxSpecJSI *>(&turboModule)->setContext(
+static jsi::Value __hostFunction_NativeIntentAndroidCxxSpecJSI_canOpenURL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeIntentAndroidCxxSpecJSI *>(&turboModule)->canOpenURL(
     rt,
     args[0].asString(rt)
   );
-  return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativeFrameRateLoggerCxxSpecJSI_beginScroll(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeFrameRateLoggerCxxSpecJSI *>(&turboModule)->beginScroll(
+static jsi::Value __hostFunction_NativeIntentAndroidCxxSpecJSI_openURL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeIntentAndroidCxxSpecJSI *>(&turboModule)->openURL(
+    rt,
+    args[0].asString(rt)
+  );
+}
+static jsi::Value __hostFunction_NativeIntentAndroidCxxSpecJSI_openSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeIntentAndroidCxxSpecJSI *>(&turboModule)->openSettings(
     rt
   );
-  return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativeFrameRateLoggerCxxSpecJSI_endScroll(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeFrameRateLoggerCxxSpecJSI *>(&turboModule)->endScroll(
-    rt
+static jsi::Value __hostFunction_NativeIntentAndroidCxxSpecJSI_sendIntent(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeIntentAndroidCxxSpecJSI *>(&turboModule)->sendIntent(
+    rt,
+    args[0].asString(rt),
+    args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asObject(rt).asArray(rt))
   );
-  return jsi::Value::undefined();
 }
 
-NativeFrameRateLoggerCxxSpecJSI::NativeFrameRateLoggerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("FrameRateLogger", jsInvoker) {
-  methodMap_["setGlobalOptions"] = MethodMetadata {1, __hostFunction_NativeFrameRateLoggerCxxSpecJSI_setGlobalOptions};
-  methodMap_["setContext"] = MethodMetadata {1, __hostFunction_NativeFrameRateLoggerCxxSpecJSI_setContext};
-  methodMap_["beginScroll"] = MethodMetadata {0, __hostFunction_NativeFrameRateLoggerCxxSpecJSI_beginScroll};
-  methodMap_["endScroll"] = MethodMetadata {0, __hostFunction_NativeFrameRateLoggerCxxSpecJSI_endScroll};
+NativeIntentAndroidCxxSpecJSI::NativeIntentAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("IntentAndroid", jsInvoker) {
+  methodMap_["getInitialURL"] = MethodMetadata {0, __hostFunction_NativeIntentAndroidCxxSpecJSI_getInitialURL};
+  methodMap_["canOpenURL"] = MethodMetadata {1, __hostFunction_NativeIntentAndroidCxxSpecJSI_canOpenURL};
+  methodMap_["openURL"] = MethodMetadata {1, __hostFunction_NativeIntentAndroidCxxSpecJSI_openURL};
+  methodMap_["openSettings"] = MethodMetadata {0, __hostFunction_NativeIntentAndroidCxxSpecJSI_openSettings};
+  methodMap_["sendIntent"] = MethodMetadata {2, __hostFunction_NativeIntentAndroidCxxSpecJSI_sendIntent};
 }
 static jsi::Value __hostFunction_NativeIntersectionObserverCxxSpecJSI_observe(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeIntersectionObserverCxxSpecJSI *>(&turboModule)->observe(
@@ -999,43 +1501,52 @@ NativeIntersectionObserverCxxSpecJSI::NativeIntersectionObserverCxxSpecJSI(std::
   methodMap_["disconnect"] = MethodMetadata {0, __hostFunction_NativeIntersectionObserverCxxSpecJSI_disconnect};
   methodMap_["takeRecords"] = MethodMetadata {0, __hostFunction_NativeIntersectionObserverCxxSpecJSI_takeRecords};
 }
-static jsi::Value __hostFunction_NativeIntentAndroidCxxSpecJSI_getInitialURL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeIntentAndroidCxxSpecJSI *>(&turboModule)->getInitialURL(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeIntentAndroidCxxSpecJSI_canOpenURL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeIntentAndroidCxxSpecJSI *>(&turboModule)->canOpenURL(
-    rt,
-    args[0].asString(rt)
-  );
-}
-static jsi::Value __hostFunction_NativeIntentAndroidCxxSpecJSI_openURL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeIntentAndroidCxxSpecJSI *>(&turboModule)->openURL(
-    rt,
-    args[0].asString(rt)
-  );
-}
-static jsi::Value __hostFunction_NativeIntentAndroidCxxSpecJSI_openSettings(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeIntentAndroidCxxSpecJSI *>(&turboModule)->openSettings(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeIntentAndroidCxxSpecJSI_sendIntent(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeIntentAndroidCxxSpecJSI *>(&turboModule)->sendIntent(
+static jsi::Value __hostFunction_NativeJSCHeapCaptureCxxSpecJSI_captureComplete(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeJSCHeapCaptureCxxSpecJSI *>(&turboModule)->captureComplete(
     rt,
     args[0].asString(rt),
-    args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asObject(rt).asArray(rt))
+    args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asString(rt))
   );
+  return jsi::Value::undefined();
 }
 
-NativeIntentAndroidCxxSpecJSI::NativeIntentAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("IntentAndroid", jsInvoker) {
-  methodMap_["getInitialURL"] = MethodMetadata {0, __hostFunction_NativeIntentAndroidCxxSpecJSI_getInitialURL};
-  methodMap_["canOpenURL"] = MethodMetadata {1, __hostFunction_NativeIntentAndroidCxxSpecJSI_canOpenURL};
-  methodMap_["openURL"] = MethodMetadata {1, __hostFunction_NativeIntentAndroidCxxSpecJSI_openURL};
-  methodMap_["openSettings"] = MethodMetadata {0, __hostFunction_NativeIntentAndroidCxxSpecJSI_openSettings};
-  methodMap_["sendIntent"] = MethodMetadata {2, __hostFunction_NativeIntentAndroidCxxSpecJSI_sendIntent};
+NativeJSCHeapCaptureCxxSpecJSI::NativeJSCHeapCaptureCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("JSCHeapCapture", jsInvoker) {
+  methodMap_["captureComplete"] = MethodMetadata {2, __hostFunction_NativeJSCHeapCaptureCxxSpecJSI_captureComplete};
+}
+static jsi::Value __hostFunction_NativeJSCSamplingProfilerCxxSpecJSI_operationComplete(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeJSCSamplingProfilerCxxSpecJSI *>(&turboModule)->operationComplete(
+    rt,
+    args[0].asNumber(),
+    args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asString(rt)),
+    args[2].isNull() || args[2].isUndefined() ? std::nullopt : std::make_optional(args[2].asString(rt))
+  );
+  return jsi::Value::undefined();
+}
+
+NativeJSCSamplingProfilerCxxSpecJSI::NativeJSCSamplingProfilerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("JSCSamplingProfiler", jsInvoker) {
+  methodMap_["operationComplete"] = MethodMetadata {3, __hostFunction_NativeJSCSamplingProfilerCxxSpecJSI_operationComplete};
+}
+static jsi::Value __hostFunction_NativeKeyboardObserverCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeKeyboardObserverCxxSpecJSI *>(&turboModule)->addListener(
+    rt,
+    args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeKeyboardObserverCxxSpecJSI_removeListeners(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeKeyboardObserverCxxSpecJSI *>(&turboModule)->removeListeners(
+    rt,
+    args[0].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+
+NativeKeyboardObserverCxxSpecJSI::NativeKeyboardObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("KeyboardObserver", jsInvoker) {
+  methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeKeyboardObserverCxxSpecJSI_addListener};
+  methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeKeyboardObserverCxxSpecJSI_removeListeners};
 }
 static jsi::Value __hostFunction_NativeLinkingManagerCxxSpecJSI_getInitialURL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeLinkingManagerCxxSpecJSI *>(&turboModule)->getInitialURL(
@@ -1082,6 +1593,24 @@ NativeLinkingManagerCxxSpecJSI::NativeLinkingManagerCxxSpecJSI(std::shared_ptr<C
   methodMap_["openSettings"] = MethodMetadata {0, __hostFunction_NativeLinkingManagerCxxSpecJSI_openSettings};
   methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeLinkingManagerCxxSpecJSI_addListener};
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeLinkingManagerCxxSpecJSI_removeListeners};
+}
+static jsi::Value __hostFunction_NativeLogBoxCxxSpecJSI_show(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeLogBoxCxxSpecJSI *>(&turboModule)->show(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeLogBoxCxxSpecJSI_hide(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeLogBoxCxxSpecJSI *>(&turboModule)->hide(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+
+NativeLogBoxCxxSpecJSI::NativeLogBoxCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("LogBox", jsInvoker) {
+  methodMap_["show"] = MethodMetadata {0, __hostFunction_NativeLogBoxCxxSpecJSI_show};
+  methodMap_["hide"] = MethodMetadata {0, __hostFunction_NativeLogBoxCxxSpecJSI_hide};
 }
 static jsi::Value __hostFunction_NativeModalManagerCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeModalManagerCxxSpecJSI *>(&turboModule)->addListener(
@@ -1243,19 +1772,132 @@ NativeNetworkingIOSCxxSpecJSI::NativeNetworkingIOSCxxSpecJSI(std::shared_ptr<Cal
   methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeNetworkingIOSCxxSpecJSI_addListener};
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeNetworkingIOSCxxSpecJSI_removeListeners};
 }
-static jsi::Value __hostFunction_NativeJSCSamplingProfilerCxxSpecJSI_operationComplete(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeJSCSamplingProfilerCxxSpecJSI *>(&turboModule)->operationComplete(
+static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_mark(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->mark(
     rt,
-    args[0].asNumber(),
-    args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asString(rt)),
-    args[2].isNull() || args[2].isUndefined() ? std::nullopt : std::make_optional(args[2].asString(rt))
+    args[0].asString(rt),
+    args[1].asNumber()
   );
   return jsi::Value::undefined();
 }
+static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_measure(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->measure(
+    rt,
+    args[0].asString(rt),
+    args[1].asNumber(),
+    args[2].asNumber(),
+    count <= 3 || args[3].isNull() || args[3].isUndefined() ? std::nullopt : std::make_optional(args[3].asNumber()),
+    count <= 4 || args[4].isNull() || args[4].isUndefined() ? std::nullopt : std::make_optional(args[4].asString(rt)),
+    count <= 5 || args[5].isNull() || args[5].isUndefined() ? std::nullopt : std::make_optional(args[5].asString(rt))
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_getSimpleMemoryInfo(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->getSimpleMemoryInfo(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_getReactNativeStartupTiming(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->getReactNativeStartupTiming(
+    rt
+  );
+}
 
-NativeJSCSamplingProfilerCxxSpecJSI::NativeJSCSamplingProfilerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("JSCSamplingProfiler", jsInvoker) {
-  methodMap_["operationComplete"] = MethodMetadata {3, __hostFunction_NativeJSCSamplingProfilerCxxSpecJSI_operationComplete};
+NativePerformanceCxxSpecJSI::NativePerformanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("NativePerformanceCxx", jsInvoker) {
+  methodMap_["mark"] = MethodMetadata {2, __hostFunction_NativePerformanceCxxSpecJSI_mark};
+  methodMap_["measure"] = MethodMetadata {6, __hostFunction_NativePerformanceCxxSpecJSI_measure};
+  methodMap_["getSimpleMemoryInfo"] = MethodMetadata {0, __hostFunction_NativePerformanceCxxSpecJSI_getSimpleMemoryInfo};
+  methodMap_["getReactNativeStartupTiming"] = MethodMetadata {0, __hostFunction_NativePerformanceCxxSpecJSI_getReactNativeStartupTiming};
+}
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_startReporting(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->startReporting(
+    rt,
+    args[0].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_stopReporting(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->stopReporting(
+    rt,
+    args[0].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_setIsBuffered(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->setIsBuffered(
+    rt,
+    args[0].asObject(rt).asArray(rt),
+    args[1].asBool()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_popPendingEntries(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->popPendingEntries(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_setOnPerformanceEntryCallback(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->setOnPerformanceEntryCallback(
+    rt,
+    count <= 0 || args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asObject(rt).asFunction(rt))
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_logRawEntry(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->logRawEntry(
+    rt,
+    args[0].asObject(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_getEventCounts(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->getEventCounts(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_setDurationThreshold(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->setDurationThreshold(
+    rt,
+    args[0].asNumber(),
+    args[1].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_clearEntries(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->clearEntries(
+    rt,
+    args[0].asNumber(),
+    count <= 1 || args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asString(rt))
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_getEntries(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->getEntries(
+    rt,
+    count <= 0 || args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()),
+    count <= 1 || args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asString(rt))
+  );
+}
+static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_getSupportedPerformanceEntryTypes(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->getSupportedPerformanceEntryTypes(
+    rt
+  );
+}
+
+NativePerformanceObserverCxxSpecJSI::NativePerformanceObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("NativePerformanceObserverCxx", jsInvoker) {
+  methodMap_["startReporting"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_startReporting};
+  methodMap_["stopReporting"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_stopReporting};
+  methodMap_["setIsBuffered"] = MethodMetadata {2, __hostFunction_NativePerformanceObserverCxxSpecJSI_setIsBuffered};
+  methodMap_["popPendingEntries"] = MethodMetadata {0, __hostFunction_NativePerformanceObserverCxxSpecJSI_popPendingEntries};
+  methodMap_["setOnPerformanceEntryCallback"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_setOnPerformanceEntryCallback};
+  methodMap_["logRawEntry"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_logRawEntry};
+  methodMap_["getEventCounts"] = MethodMetadata {0, __hostFunction_NativePerformanceObserverCxxSpecJSI_getEventCounts};
+  methodMap_["setDurationThreshold"] = MethodMetadata {2, __hostFunction_NativePerformanceObserverCxxSpecJSI_setDurationThreshold};
+  methodMap_["clearEntries"] = MethodMetadata {2, __hostFunction_NativePerformanceObserverCxxSpecJSI_clearEntries};
+  methodMap_["getEntries"] = MethodMetadata {2, __hostFunction_NativePerformanceObserverCxxSpecJSI_getEntries};
+  methodMap_["getSupportedPerformanceEntryTypes"] = MethodMetadata {0, __hostFunction_NativePerformanceObserverCxxSpecJSI_getSupportedPerformanceEntryTypes};
 }
 static jsi::Value __hostFunction_NativePermissionsAndroidCxxSpecJSI_checkPermission(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativePermissionsAndroidCxxSpecJSI *>(&turboModule)->checkPermission(
@@ -1288,6 +1930,42 @@ NativePermissionsAndroidCxxSpecJSI::NativePermissionsAndroidCxxSpecJSI(std::shar
   methodMap_["requestPermission"] = MethodMetadata {1, __hostFunction_NativePermissionsAndroidCxxSpecJSI_requestPermission};
   methodMap_["shouldShowRequestPermissionRationale"] = MethodMetadata {1, __hostFunction_NativePermissionsAndroidCxxSpecJSI_shouldShowRequestPermissionRationale};
   methodMap_["requestMultiplePermissions"] = MethodMetadata {1, __hostFunction_NativePermissionsAndroidCxxSpecJSI_requestMultiplePermissions};
+}
+static jsi::Value __hostFunction_NativePlatformConstantsAndroidCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativePlatformConstantsAndroidCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativePlatformConstantsAndroidCxxSpecJSI_getAndroidID(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativePlatformConstantsAndroidCxxSpecJSI *>(&turboModule)->getAndroidID(
+    rt
+  );
+}
+
+NativePlatformConstantsAndroidCxxSpecJSI::NativePlatformConstantsAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("PlatformConstants", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativePlatformConstantsAndroidCxxSpecJSI_getConstants};
+  methodMap_["getAndroidID"] = MethodMetadata {0, __hostFunction_NativePlatformConstantsAndroidCxxSpecJSI_getAndroidID};
+}
+static jsi::Value __hostFunction_NativePlatformConstantsIOSCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativePlatformConstantsIOSCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+
+NativePlatformConstantsIOSCxxSpecJSI::NativePlatformConstantsIOSCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("PlatformConstants", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativePlatformConstantsIOSCxxSpecJSI_getConstants};
+}
+static jsi::Value __hostFunction_NativePlatformConstantsWinCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativePlatformConstantsWinCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+
+NativePlatformConstantsWinCxxSpecJSI::NativePlatformConstantsWinCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("PlatformConstants", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativePlatformConstantsWinCxxSpecJSI_getConstants};
 }
 static jsi::Value __hostFunction_NativePushNotificationManagerIOSCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativePushNotificationManagerIOSCxxSpecJSI *>(&turboModule)->getConstants(
@@ -1438,58 +2116,426 @@ NativePushNotificationManagerIOSCxxSpecJSI::NativePushNotificationManagerIOSCxxS
   methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativePushNotificationManagerIOSCxxSpecJSI_addListener};
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativePushNotificationManagerIOSCxxSpecJSI_removeListeners};
 }
-static jsi::Value __hostFunction_NativeHeadlessJsTaskSupportCxxSpecJSI_notifyTaskFinished(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeHeadlessJsTaskSupportCxxSpecJSI *>(&turboModule)->notifyTaskFinished(
+static jsi::Value __hostFunction_NativeRedBoxCxxSpecJSI_setExtraData(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeRedBoxCxxSpecJSI *>(&turboModule)->setExtraData(
     rt,
-    args[0].asNumber()
+    args[0].asObject(rt),
+    args[1].asString(rt)
   );
   return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativeHeadlessJsTaskSupportCxxSpecJSI_notifyTaskRetry(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeHeadlessJsTaskSupportCxxSpecJSI *>(&turboModule)->notifyTaskRetry(
-    rt,
-    args[0].asNumber()
+static jsi::Value __hostFunction_NativeRedBoxCxxSpecJSI_dismiss(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeRedBoxCxxSpecJSI *>(&turboModule)->dismiss(
+    rt
   );
+  return jsi::Value::undefined();
 }
 
-NativeHeadlessJsTaskSupportCxxSpecJSI::NativeHeadlessJsTaskSupportCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("HeadlessJsTaskSupport", jsInvoker) {
-  methodMap_["notifyTaskFinished"] = MethodMetadata {1, __hostFunction_NativeHeadlessJsTaskSupportCxxSpecJSI_notifyTaskFinished};
-  methodMap_["notifyTaskRetry"] = MethodMetadata {1, __hostFunction_NativeHeadlessJsTaskSupportCxxSpecJSI_notifyTaskRetry};
+NativeRedBoxCxxSpecJSI::NativeRedBoxCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("RedBox", jsInvoker) {
+  methodMap_["setExtraData"] = MethodMetadata {2, __hostFunction_NativeRedBoxCxxSpecJSI_setExtraData};
+  methodMap_["dismiss"] = MethodMetadata {0, __hostFunction_NativeRedBoxCxxSpecJSI_dismiss};
 }
-static jsi::Value __hostFunction_NativeI18nManagerCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeI18nManagerCxxSpecJSI *>(&turboModule)->getConstants(
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getConstants(
     rt
   );
 }
-static jsi::Value __hostFunction_NativeI18nManagerCxxSpecJSI_allowRTL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeI18nManagerCxxSpecJSI *>(&turboModule)->allowRTL(
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_voidFunc(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->voidFunc(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getBool(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getBool(
+    rt,
+    args[0].asBool()
+  );
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getEnum(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getEnum(
+    rt,
+    args[0].asNumber()
+  );
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getNumber(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getNumber(
+    rt,
+    args[0].asNumber()
+  );
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getString(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getString(
+    rt,
+    args[0].asString(rt)
+  );
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getArray(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getArray(
+    rt,
+    args[0].asObject(rt).asArray(rt)
+  );
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getObject(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getObject(
+    rt,
+    args[0].asObject(rt)
+  );
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getUnsafeObject(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getUnsafeObject(
+    rt,
+    args[0].asObject(rt)
+  );
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getRootTag(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getRootTag(
+    rt,
+    args[0].getNumber()
+  );
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getValue(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getValue(
+    rt,
+    args[0].asNumber(),
+    args[1].asString(rt),
+    args[2].asObject(rt)
+  );
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getValueWithCallback(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getValueWithCallback(
+    rt,
+    args[0].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getValueWithPromise(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getValueWithPromise(
+    rt,
+    args[0].asBool()
+  );
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_voidFuncThrows(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->voidFuncThrows(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getObjectThrows(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getObjectThrows(
+    rt,
+    args[0].asObject(rt)
+  );
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_promiseThrows(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->promiseThrows(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_voidFuncAssert(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->voidFuncAssert(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getObjectAssert(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getObjectAssert(
+    rt,
+    args[0].asObject(rt)
+  );
+}
+static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_promiseAssert(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->promiseAssert(
+    rt
+  );
+}
+
+NativeSampleTurboModuleCxxSpecJSI::NativeSampleTurboModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("SampleTurboModule", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getConstants};
+  methodMap_["voidFunc"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_voidFunc};
+  methodMap_["getBool"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getBool};
+  methodMap_["getEnum"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getEnum};
+  methodMap_["getNumber"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getNumber};
+  methodMap_["getString"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getString};
+  methodMap_["getArray"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getArray};
+  methodMap_["getObject"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getObject};
+  methodMap_["getUnsafeObject"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getUnsafeObject};
+  methodMap_["getRootTag"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getRootTag};
+  methodMap_["getValue"] = MethodMetadata {3, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getValue};
+  methodMap_["getValueWithCallback"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getValueWithCallback};
+  methodMap_["getValueWithPromise"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getValueWithPromise};
+  methodMap_["voidFuncThrows"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_voidFuncThrows};
+  methodMap_["getObjectThrows"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getObjectThrows};
+  methodMap_["promiseThrows"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_promiseThrows};
+  methodMap_["voidFuncAssert"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_voidFuncAssert};
+  methodMap_["getObjectAssert"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getObjectAssert};
+  methodMap_["promiseAssert"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_promiseAssert};
+}
+static jsi::Value __hostFunction_NativeSegmentFetcherCxxSpecJSI_fetchSegment(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeSegmentFetcherCxxSpecJSI *>(&turboModule)->fetchSegment(
+    rt,
+    args[0].asNumber(),
+    args[1].asObject(rt),
+    args[2].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeSegmentFetcherCxxSpecJSI_getSegment(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeSegmentFetcherCxxSpecJSI *>(&turboModule)->getSegment(
+    rt,
+    args[0].asNumber(),
+    args[1].asObject(rt),
+    args[2].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+
+NativeSegmentFetcherCxxSpecJSI::NativeSegmentFetcherCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("SegmentFetcher", jsInvoker) {
+  methodMap_["fetchSegment"] = MethodMetadata {3, __hostFunction_NativeSegmentFetcherCxxSpecJSI_fetchSegment};
+  methodMap_["getSegment"] = MethodMetadata {3, __hostFunction_NativeSegmentFetcherCxxSpecJSI_getSegment};
+}
+static jsi::Value __hostFunction_NativeSettingsManagerCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSettingsManagerCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeSettingsManagerCxxSpecJSI_setValues(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeSettingsManagerCxxSpecJSI *>(&turboModule)->setValues(
+    rt,
+    args[0].asObject(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeSettingsManagerCxxSpecJSI_deleteValues(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeSettingsManagerCxxSpecJSI *>(&turboModule)->deleteValues(
+    rt,
+    args[0].asObject(rt).asArray(rt)
+  );
+  return jsi::Value::undefined();
+}
+
+NativeSettingsManagerCxxSpecJSI::NativeSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("SettingsManager", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeSettingsManagerCxxSpecJSI_getConstants};
+  methodMap_["setValues"] = MethodMetadata {1, __hostFunction_NativeSettingsManagerCxxSpecJSI_setValues};
+  methodMap_["deleteValues"] = MethodMetadata {1, __hostFunction_NativeSettingsManagerCxxSpecJSI_deleteValues};
+}
+static jsi::Value __hostFunction_NativeShareModuleCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeShareModuleCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeShareModuleCxxSpecJSI_share(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeShareModuleCxxSpecJSI *>(&turboModule)->share(
+    rt,
+    args[0].asObject(rt),
+    count <= 1 || args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asString(rt))
+  );
+}
+
+NativeShareModuleCxxSpecJSI::NativeShareModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("ShareModule", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeShareModuleCxxSpecJSI_getConstants};
+  methodMap_["share"] = MethodMetadata {2, __hostFunction_NativeShareModuleCxxSpecJSI_share};
+}
+static jsi::Value __hostFunction_NativeSoundManagerCxxSpecJSI_playTouchSound(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeSoundManagerCxxSpecJSI *>(&turboModule)->playTouchSound(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+
+NativeSoundManagerCxxSpecJSI::NativeSoundManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("SoundManager", jsInvoker) {
+  methodMap_["playTouchSound"] = MethodMetadata {0, __hostFunction_NativeSoundManagerCxxSpecJSI_playTouchSound};
+}
+static jsi::Value __hostFunction_NativeSourceCodeCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeSourceCodeCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+
+NativeSourceCodeCxxSpecJSI::NativeSourceCodeCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("SourceCode", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeSourceCodeCxxSpecJSI_getConstants};
+}
+static jsi::Value __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeStatusBarManagerAndroidCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setColor(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeStatusBarManagerAndroidCxxSpecJSI *>(&turboModule)->setColor(
+    rt,
+    args[0].asNumber(),
+    args[1].asBool()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setTranslucent(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeStatusBarManagerAndroidCxxSpecJSI *>(&turboModule)->setTranslucent(
     rt,
     args[0].asBool()
   );
   return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativeI18nManagerCxxSpecJSI_forceRTL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeI18nManagerCxxSpecJSI *>(&turboModule)->forceRTL(
+static jsi::Value __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setStyle(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeStatusBarManagerAndroidCxxSpecJSI *>(&turboModule)->setStyle(
     rt,
-    args[0].asBool()
+    count <= 0 || args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asString(rt))
   );
   return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativeI18nManagerCxxSpecJSI_swapLeftAndRightInRTL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeI18nManagerCxxSpecJSI *>(&turboModule)->swapLeftAndRightInRTL(
+static jsi::Value __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setHidden(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeStatusBarManagerAndroidCxxSpecJSI *>(&turboModule)->setHidden(
     rt,
     args[0].asBool()
   );
   return jsi::Value::undefined();
 }
 
-NativeI18nManagerCxxSpecJSI::NativeI18nManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("I18nManager", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeI18nManagerCxxSpecJSI_getConstants};
-  methodMap_["allowRTL"] = MethodMetadata {1, __hostFunction_NativeI18nManagerCxxSpecJSI_allowRTL};
-  methodMap_["forceRTL"] = MethodMetadata {1, __hostFunction_NativeI18nManagerCxxSpecJSI_forceRTL};
-  methodMap_["swapLeftAndRightInRTL"] = MethodMetadata {1, __hostFunction_NativeI18nManagerCxxSpecJSI_swapLeftAndRightInRTL};
+NativeStatusBarManagerAndroidCxxSpecJSI::NativeStatusBarManagerAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("StatusBarManager", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_getConstants};
+  methodMap_["setColor"] = MethodMetadata {2, __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setColor};
+  methodMap_["setTranslucent"] = MethodMetadata {1, __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setTranslucent};
+  methodMap_["setStyle"] = MethodMetadata {1, __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setStyle};
+  methodMap_["setHidden"] = MethodMetadata {1, __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setHidden};
+}
+static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_getHeight(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->getHeight(
+    rt,
+    args[0].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_setNetworkActivityIndicatorVisible(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->setNetworkActivityIndicatorVisible(
+    rt,
+    args[0].asBool()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->addListener(
+    rt,
+    args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_removeListeners(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->removeListeners(
+    rt,
+    args[0].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_setStyle(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->setStyle(
+    rt,
+    count <= 0 || args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asString(rt)),
+    args[1].asBool()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_setHidden(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->setHidden(
+    rt,
+    args[0].asBool(),
+    args[1].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+
+NativeStatusBarManagerIOSCxxSpecJSI::NativeStatusBarManagerIOSCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("StatusBarManager", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_getConstants};
+  methodMap_["getHeight"] = MethodMetadata {1, __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_getHeight};
+  methodMap_["setNetworkActivityIndicatorVisible"] = MethodMetadata {1, __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_setNetworkActivityIndicatorVisible};
+  methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_addListener};
+  methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_removeListeners};
+  methodMap_["setStyle"] = MethodMetadata {2, __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_setStyle};
+  methodMap_["setHidden"] = MethodMetadata {2, __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_setHidden};
+}
+static jsi::Value __hostFunction_NativeTimingCxxSpecJSI_createTimer(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeTimingCxxSpecJSI *>(&turboModule)->createTimer(
+    rt,
+    args[0].asNumber(),
+    args[1].asNumber(),
+    args[2].asNumber(),
+    args[3].asBool()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeTimingCxxSpecJSI_deleteTimer(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeTimingCxxSpecJSI *>(&turboModule)->deleteTimer(
+    rt,
+    args[0].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeTimingCxxSpecJSI_setSendIdleEvents(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeTimingCxxSpecJSI *>(&turboModule)->setSendIdleEvents(
+    rt,
+    args[0].asBool()
+  );
+  return jsi::Value::undefined();
+}
+
+NativeTimingCxxSpecJSI::NativeTimingCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("Timing", jsInvoker) {
+  methodMap_["createTimer"] = MethodMetadata {4, __hostFunction_NativeTimingCxxSpecJSI_createTimer};
+  methodMap_["deleteTimer"] = MethodMetadata {1, __hostFunction_NativeTimingCxxSpecJSI_deleteTimer};
+  methodMap_["setSendIdleEvents"] = MethodMetadata {1, __hostFunction_NativeTimingCxxSpecJSI_setSendIdleEvents};
+}
+static jsi::Value __hostFunction_NativeToastAndroidCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeToastAndroidCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeToastAndroidCxxSpecJSI_show(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeToastAndroidCxxSpecJSI *>(&turboModule)->show(
+    rt,
+    args[0].asString(rt),
+    args[1].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeToastAndroidCxxSpecJSI_showWithGravity(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeToastAndroidCxxSpecJSI *>(&turboModule)->showWithGravity(
+    rt,
+    args[0].asString(rt),
+    args[1].asNumber(),
+    args[2].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeToastAndroidCxxSpecJSI_showWithGravityAndOffset(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeToastAndroidCxxSpecJSI *>(&turboModule)->showWithGravityAndOffset(
+    rt,
+    args[0].asString(rt),
+    args[1].asNumber(),
+    args[2].asNumber(),
+    args[3].asNumber(),
+    args[4].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+
+NativeToastAndroidCxxSpecJSI::NativeToastAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("ToastAndroid", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeToastAndroidCxxSpecJSI_getConstants};
+  methodMap_["show"] = MethodMetadata {2, __hostFunction_NativeToastAndroidCxxSpecJSI_show};
+  methodMap_["showWithGravity"] = MethodMetadata {3, __hostFunction_NativeToastAndroidCxxSpecJSI_showWithGravity};
+  methodMap_["showWithGravityAndOffset"] = MethodMetadata {5, __hostFunction_NativeToastAndroidCxxSpecJSI_showWithGravityAndOffset};
 }
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->getConstants(
@@ -1710,152 +2756,6 @@ NativeUIManagerCxxSpecJSI::NativeUIManagerCxxSpecJSI(std::shared_ptr<CallInvoker
   methodMap_["focus"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_focus};
   methodMap_["blur"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_blur};
 }
-static jsi::Value __hostFunction_NativeSettingsManagerCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSettingsManagerCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeSettingsManagerCxxSpecJSI_setValues(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeSettingsManagerCxxSpecJSI *>(&turboModule)->setValues(
-    rt,
-    args[0].asObject(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeSettingsManagerCxxSpecJSI_deleteValues(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeSettingsManagerCxxSpecJSI *>(&turboModule)->deleteValues(
-    rt,
-    args[0].asObject(rt).asArray(rt)
-  );
-  return jsi::Value::undefined();
-}
-
-NativeSettingsManagerCxxSpecJSI::NativeSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("SettingsManager", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeSettingsManagerCxxSpecJSI_getConstants};
-  methodMap_["setValues"] = MethodMetadata {1, __hostFunction_NativeSettingsManagerCxxSpecJSI_setValues};
-  methodMap_["deleteValues"] = MethodMetadata {1, __hostFunction_NativeSettingsManagerCxxSpecJSI_deleteValues};
-}
-static jsi::Value __hostFunction_NativeShareModuleCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeShareModuleCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeShareModuleCxxSpecJSI_share(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeShareModuleCxxSpecJSI *>(&turboModule)->share(
-    rt,
-    args[0].asObject(rt),
-    count <= 1 || args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asString(rt))
-  );
-}
-
-NativeShareModuleCxxSpecJSI::NativeShareModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("ShareModule", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeShareModuleCxxSpecJSI_getConstants};
-  methodMap_["share"] = MethodMetadata {2, __hostFunction_NativeShareModuleCxxSpecJSI_share};
-}
-static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_getColorScheme(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  auto result = static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->getColorScheme(
-    rt
-  );
-  return result ? jsi::Value(std::move(*result)) : jsi::Value::null();
-}
-static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_setColorScheme(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->setColorScheme(
-    rt,
-    args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->addListener(
-    rt,
-    args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_removeListeners(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->removeListeners(
-    rt,
-    args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-
-NativeAppearanceCxxSpecJSI::NativeAppearanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("Appearance", jsInvoker) {
-  methodMap_["getColorScheme"] = MethodMetadata {0, __hostFunction_NativeAppearanceCxxSpecJSI_getColorScheme};
-  methodMap_["setColorScheme"] = MethodMetadata {1, __hostFunction_NativeAppearanceCxxSpecJSI_setColorScheme};
-  methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeAppearanceCxxSpecJSI_addListener};
-  methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeAppearanceCxxSpecJSI_removeListeners};
-}
-static jsi::Value __hostFunction_NativeDeviceInfoCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeDeviceInfoCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-
-NativeDeviceInfoCxxSpecJSI::NativeDeviceInfoCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("DeviceInfo", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeDeviceInfoCxxSpecJSI_getConstants};
-}
-static jsi::Value __hostFunction_NativeDevLoadingViewCxxSpecJSI_showMessage(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevLoadingViewCxxSpecJSI *>(&turboModule)->showMessage(
-    rt,
-    args[0].asString(rt),
-    args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asNumber()),
-    args[2].isNull() || args[2].isUndefined() ? std::nullopt : std::make_optional(args[2].asNumber())
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevLoadingViewCxxSpecJSI_hide(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevLoadingViewCxxSpecJSI *>(&turboModule)->hide(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-
-NativeDevLoadingViewCxxSpecJSI::NativeDevLoadingViewCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("DevLoadingView", jsInvoker) {
-  methodMap_["showMessage"] = MethodMetadata {3, __hostFunction_NativeDevLoadingViewCxxSpecJSI_showMessage};
-  methodMap_["hide"] = MethodMetadata {0, __hostFunction_NativeDevLoadingViewCxxSpecJSI_hide};
-}
-static jsi::Value __hostFunction_NativePlatformConstantsAndroidCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativePlatformConstantsAndroidCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativePlatformConstantsAndroidCxxSpecJSI_getAndroidID(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativePlatformConstantsAndroidCxxSpecJSI *>(&turboModule)->getAndroidID(
-    rt
-  );
-}
-
-NativePlatformConstantsAndroidCxxSpecJSI::NativePlatformConstantsAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("PlatformConstants", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativePlatformConstantsAndroidCxxSpecJSI_getConstants};
-  methodMap_["getAndroidID"] = MethodMetadata {0, __hostFunction_NativePlatformConstantsAndroidCxxSpecJSI_getAndroidID};
-}
-static jsi::Value __hostFunction_NativePlatformConstantsIOSCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativePlatformConstantsIOSCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-
-NativePlatformConstantsIOSCxxSpecJSI::NativePlatformConstantsIOSCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("PlatformConstants", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativePlatformConstantsIOSCxxSpecJSI_getConstants};
-}
-static jsi::Value __hostFunction_NativePlatformConstantsWinCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativePlatformConstantsWinCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-
-NativePlatformConstantsWinCxxSpecJSI::NativePlatformConstantsWinCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("PlatformConstants", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativePlatformConstantsWinCxxSpecJSI_getConstants};
-}
 static jsi::Value __hostFunction_NativeVibrationCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeVibrationCxxSpecJSI *>(&turboModule)->getConstants(
     rt
@@ -1889,133 +2789,6 @@ NativeVibrationCxxSpecJSI::NativeVibrationCxxSpecJSI(std::shared_ptr<CallInvoker
   methodMap_["vibrate"] = MethodMetadata {1, __hostFunction_NativeVibrationCxxSpecJSI_vibrate};
   methodMap_["vibrateByPattern"] = MethodMetadata {2, __hostFunction_NativeVibrationCxxSpecJSI_vibrateByPattern};
   methodMap_["cancel"] = MethodMetadata {0, __hostFunction_NativeVibrationCxxSpecJSI_cancel};
-}
-static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_mark(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->mark(
-    rt,
-    args[0].asString(rt),
-    args[1].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_measure(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->measure(
-    rt,
-    args[0].asString(rt),
-    args[1].asNumber(),
-    args[2].asNumber(),
-    count <= 3 || args[3].isNull() || args[3].isUndefined() ? std::nullopt : std::make_optional(args[3].asNumber()),
-    count <= 4 || args[4].isNull() || args[4].isUndefined() ? std::nullopt : std::make_optional(args[4].asString(rt)),
-    count <= 5 || args[5].isNull() || args[5].isUndefined() ? std::nullopt : std::make_optional(args[5].asString(rt))
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_getSimpleMemoryInfo(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->getSimpleMemoryInfo(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_getReactNativeStartupTiming(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->getReactNativeStartupTiming(
-    rt
-  );
-}
-
-NativePerformanceCxxSpecJSI::NativePerformanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("NativePerformanceCxx", jsInvoker) {
-  methodMap_["mark"] = MethodMetadata {2, __hostFunction_NativePerformanceCxxSpecJSI_mark};
-  methodMap_["measure"] = MethodMetadata {6, __hostFunction_NativePerformanceCxxSpecJSI_measure};
-  methodMap_["getSimpleMemoryInfo"] = MethodMetadata {0, __hostFunction_NativePerformanceCxxSpecJSI_getSimpleMemoryInfo};
-  methodMap_["getReactNativeStartupTiming"] = MethodMetadata {0, __hostFunction_NativePerformanceCxxSpecJSI_getReactNativeStartupTiming};
-}
-static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_startReporting(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->startReporting(
-    rt,
-    args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_stopReporting(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->stopReporting(
-    rt,
-    args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_setIsBuffered(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->setIsBuffered(
-    rt,
-    args[0].asObject(rt).asArray(rt),
-    args[1].asBool()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_popPendingEntries(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->popPendingEntries(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_setOnPerformanceEntryCallback(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->setOnPerformanceEntryCallback(
-    rt,
-    count <= 0 || args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asObject(rt).asFunction(rt))
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_logRawEntry(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->logRawEntry(
-    rt,
-    args[0].asObject(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_getEventCounts(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->getEventCounts(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_setDurationThreshold(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->setDurationThreshold(
-    rt,
-    args[0].asNumber(),
-    args[1].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_clearEntries(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->clearEntries(
-    rt,
-    args[0].asNumber(),
-    count <= 1 || args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asString(rt))
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_getEntries(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->getEntries(
-    rt,
-    count <= 0 || args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()),
-    count <= 1 || args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asString(rt))
-  );
-}
-static jsi::Value __hostFunction_NativePerformanceObserverCxxSpecJSI_getSupportedPerformanceEntryTypes(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativePerformanceObserverCxxSpecJSI *>(&turboModule)->getSupportedPerformanceEntryTypes(
-    rt
-  );
-}
-
-NativePerformanceObserverCxxSpecJSI::NativePerformanceObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("NativePerformanceObserverCxx", jsInvoker) {
-  methodMap_["startReporting"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_startReporting};
-  methodMap_["stopReporting"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_stopReporting};
-  methodMap_["setIsBuffered"] = MethodMetadata {2, __hostFunction_NativePerformanceObserverCxxSpecJSI_setIsBuffered};
-  methodMap_["popPendingEntries"] = MethodMetadata {0, __hostFunction_NativePerformanceObserverCxxSpecJSI_popPendingEntries};
-  methodMap_["setOnPerformanceEntryCallback"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_setOnPerformanceEntryCallback};
-  methodMap_["logRawEntry"] = MethodMetadata {1, __hostFunction_NativePerformanceObserverCxxSpecJSI_logRawEntry};
-  methodMap_["getEventCounts"] = MethodMetadata {0, __hostFunction_NativePerformanceObserverCxxSpecJSI_getEventCounts};
-  methodMap_["setDurationThreshold"] = MethodMetadata {2, __hostFunction_NativePerformanceObserverCxxSpecJSI_setDurationThreshold};
-  methodMap_["clearEntries"] = MethodMetadata {2, __hostFunction_NativePerformanceObserverCxxSpecJSI_clearEntries};
-  methodMap_["getEntries"] = MethodMetadata {2, __hostFunction_NativePerformanceObserverCxxSpecJSI_getEntries};
-  methodMap_["getSupportedPerformanceEntryTypes"] = MethodMetadata {0, __hostFunction_NativePerformanceObserverCxxSpecJSI_getSupportedPerformanceEntryTypes};
 }
 static jsi::Value __hostFunction_NativeWebSocketModuleCxxSpecJSI_connect(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeWebSocketModuleCxxSpecJSI *>(&turboModule)->connect(
@@ -2083,779 +2856,6 @@ NativeWebSocketModuleCxxSpecJSI::NativeWebSocketModuleCxxSpecJSI(std::shared_ptr
   methodMap_["close"] = MethodMetadata {3, __hostFunction_NativeWebSocketModuleCxxSpecJSI_close};
   methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeWebSocketModuleCxxSpecJSI_addListener};
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeWebSocketModuleCxxSpecJSI_removeListeners};
-}
-static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isReduceMotionEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->isReduceMotionEnabled(
-    rt,
-    args[0].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isTouchExplorationEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->isTouchExplorationEnabled(
-    rt,
-    args[0].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isAccessibilityServiceEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->isAccessibilityServiceEnabled(
-    rt,
-    args[0].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_setAccessibilityFocus(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->setAccessibilityFocus(
-    rt,
-    args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_announceForAccessibility(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->announceForAccessibility(
-    rt,
-    args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_getRecommendedTimeoutMillis(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->getRecommendedTimeoutMillis(
-    rt,
-    args[0].asNumber(),
-    args[1].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-
-NativeAccessibilityInfoCxxSpecJSI::NativeAccessibilityInfoCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("AccessibilityInfo", jsInvoker) {
-  methodMap_["isReduceMotionEnabled"] = MethodMetadata {1, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isReduceMotionEnabled};
-  methodMap_["isTouchExplorationEnabled"] = MethodMetadata {1, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isTouchExplorationEnabled};
-  methodMap_["isAccessibilityServiceEnabled"] = MethodMetadata {1, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isAccessibilityServiceEnabled};
-  methodMap_["setAccessibilityFocus"] = MethodMetadata {1, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_setAccessibilityFocus};
-  methodMap_["announceForAccessibility"] = MethodMetadata {1, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_announceForAccessibility};
-  methodMap_["getRecommendedTimeoutMillis"] = MethodMetadata {2, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_getRecommendedTimeoutMillis};
-}
-static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentBoldTextState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentBoldTextState(
-    rt,
-    args[0].asObject(rt).asFunction(rt),
-    args[1].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentGrayscaleState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentGrayscaleState(
-    rt,
-    args[0].asObject(rt).asFunction(rt),
-    args[1].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentInvertColorsState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentInvertColorsState(
-    rt,
-    args[0].asObject(rt).asFunction(rt),
-    args[1].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentReduceMotionState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentReduceMotionState(
-    rt,
-    args[0].asObject(rt).asFunction(rt),
-    args[1].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentPrefersCrossFadeTransitionsState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentPrefersCrossFadeTransitionsState(
-    rt,
-    args[0].asObject(rt).asFunction(rt),
-    args[1].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentReduceTransparencyState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentReduceTransparencyState(
-    rt,
-    args[0].asObject(rt).asFunction(rt),
-    args[1].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentVoiceOverState(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->getCurrentVoiceOverState(
-    rt,
-    args[0].asObject(rt).asFunction(rt),
-    args[1].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_setAccessibilityContentSizeMultipliers(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->setAccessibilityContentSizeMultipliers(
-    rt,
-    args[0].asObject(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_setAccessibilityFocus(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->setAccessibilityFocus(
-    rt,
-    args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_announceForAccessibility(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->announceForAccessibility(
-    rt,
-    args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAccessibilityManagerCxxSpecJSI_announceForAccessibilityWithOptions(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAccessibilityManagerCxxSpecJSI *>(&turboModule)->announceForAccessibilityWithOptions(
-    rt,
-    args[0].asString(rt),
-    args[1].asObject(rt)
-  );
-  return jsi::Value::undefined();
-}
-
-NativeAccessibilityManagerCxxSpecJSI::NativeAccessibilityManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("AccessibilityManager", jsInvoker) {
-  methodMap_["getCurrentBoldTextState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentBoldTextState};
-  methodMap_["getCurrentGrayscaleState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentGrayscaleState};
-  methodMap_["getCurrentInvertColorsState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentInvertColorsState};
-  methodMap_["getCurrentReduceMotionState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentReduceMotionState};
-  methodMap_["getCurrentPrefersCrossFadeTransitionsState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentPrefersCrossFadeTransitionsState};
-  methodMap_["getCurrentReduceTransparencyState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentReduceTransparencyState};
-  methodMap_["getCurrentVoiceOverState"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_getCurrentVoiceOverState};
-  methodMap_["setAccessibilityContentSizeMultipliers"] = MethodMetadata {1, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_setAccessibilityContentSizeMultipliers};
-  methodMap_["setAccessibilityFocus"] = MethodMetadata {1, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_setAccessibilityFocus};
-  methodMap_["announceForAccessibility"] = MethodMetadata {1, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_announceForAccessibility};
-  methodMap_["announceForAccessibilityWithOptions"] = MethodMetadata {2, __hostFunction_NativeAccessibilityManagerCxxSpecJSI_announceForAccessibilityWithOptions};
-}
-static jsi::Value __hostFunction_NativeClipboardCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeClipboardCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeClipboardCxxSpecJSI_getString(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeClipboardCxxSpecJSI *>(&turboModule)->getString(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeClipboardCxxSpecJSI_setString(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeClipboardCxxSpecJSI *>(&turboModule)->setString(
-    rt,
-    args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-
-NativeClipboardCxxSpecJSI::NativeClipboardCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("Clipboard", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeClipboardCxxSpecJSI_getConstants};
-  methodMap_["getString"] = MethodMetadata {0, __hostFunction_NativeClipboardCxxSpecJSI_getString};
-  methodMap_["setString"] = MethodMetadata {1, __hostFunction_NativeClipboardCxxSpecJSI_setString};
-}
-static jsi::Value __hostFunction_NativeKeyboardObserverCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeKeyboardObserverCxxSpecJSI *>(&turboModule)->addListener(
-    rt,
-    args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeKeyboardObserverCxxSpecJSI_removeListeners(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeKeyboardObserverCxxSpecJSI *>(&turboModule)->removeListeners(
-    rt,
-    args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-
-NativeKeyboardObserverCxxSpecJSI::NativeKeyboardObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("KeyboardObserver", jsInvoker) {
-  methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeKeyboardObserverCxxSpecJSI_addListener};
-  methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeKeyboardObserverCxxSpecJSI_removeListeners};
-}
-static jsi::Value __hostFunction_NativeSoundManagerCxxSpecJSI_playTouchSound(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeSoundManagerCxxSpecJSI *>(&turboModule)->playTouchSound(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-
-NativeSoundManagerCxxSpecJSI::NativeSoundManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("SoundManager", jsInvoker) {
-  methodMap_["playTouchSound"] = MethodMetadata {0, __hostFunction_NativeSoundManagerCxxSpecJSI_playTouchSound};
-}
-static jsi::Value __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeStatusBarManagerAndroidCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setColor(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeStatusBarManagerAndroidCxxSpecJSI *>(&turboModule)->setColor(
-    rt,
-    args[0].asNumber(),
-    args[1].asBool()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setTranslucent(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeStatusBarManagerAndroidCxxSpecJSI *>(&turboModule)->setTranslucent(
-    rt,
-    args[0].asBool()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setStyle(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeStatusBarManagerAndroidCxxSpecJSI *>(&turboModule)->setStyle(
-    rt,
-    count <= 0 || args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asString(rt))
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setHidden(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeStatusBarManagerAndroidCxxSpecJSI *>(&turboModule)->setHidden(
-    rt,
-    args[0].asBool()
-  );
-  return jsi::Value::undefined();
-}
-
-NativeStatusBarManagerAndroidCxxSpecJSI::NativeStatusBarManagerAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("StatusBarManager", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_getConstants};
-  methodMap_["setColor"] = MethodMetadata {2, __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setColor};
-  methodMap_["setTranslucent"] = MethodMetadata {1, __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setTranslucent};
-  methodMap_["setStyle"] = MethodMetadata {1, __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setStyle};
-  methodMap_["setHidden"] = MethodMetadata {1, __hostFunction_NativeStatusBarManagerAndroidCxxSpecJSI_setHidden};
-}
-static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_getHeight(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->getHeight(
-    rt,
-    args[0].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_setNetworkActivityIndicatorVisible(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->setNetworkActivityIndicatorVisible(
-    rt,
-    args[0].asBool()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->addListener(
-    rt,
-    args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_removeListeners(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->removeListeners(
-    rt,
-    args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_setStyle(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->setStyle(
-    rt,
-    count <= 0 || args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asString(rt)),
-    args[1].asBool()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_setHidden(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeStatusBarManagerIOSCxxSpecJSI *>(&turboModule)->setHidden(
-    rt,
-    args[0].asBool(),
-    args[1].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-
-NativeStatusBarManagerIOSCxxSpecJSI::NativeStatusBarManagerIOSCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("StatusBarManager", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_getConstants};
-  methodMap_["getHeight"] = MethodMetadata {1, __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_getHeight};
-  methodMap_["setNetworkActivityIndicatorVisible"] = MethodMetadata {1, __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_setNetworkActivityIndicatorVisible};
-  methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_addListener};
-  methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_removeListeners};
-  methodMap_["setStyle"] = MethodMetadata {2, __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_setStyle};
-  methodMap_["setHidden"] = MethodMetadata {2, __hostFunction_NativeStatusBarManagerIOSCxxSpecJSI_setHidden};
-}
-static jsi::Value __hostFunction_NativeToastAndroidCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeToastAndroidCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeToastAndroidCxxSpecJSI_show(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeToastAndroidCxxSpecJSI *>(&turboModule)->show(
-    rt,
-    args[0].asString(rt),
-    args[1].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeToastAndroidCxxSpecJSI_showWithGravity(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeToastAndroidCxxSpecJSI *>(&turboModule)->showWithGravity(
-    rt,
-    args[0].asString(rt),
-    args[1].asNumber(),
-    args[2].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeToastAndroidCxxSpecJSI_showWithGravityAndOffset(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeToastAndroidCxxSpecJSI *>(&turboModule)->showWithGravityAndOffset(
-    rt,
-    args[0].asString(rt),
-    args[1].asNumber(),
-    args[2].asNumber(),
-    args[3].asNumber(),
-    args[4].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-
-NativeToastAndroidCxxSpecJSI::NativeToastAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("ToastAndroid", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeToastAndroidCxxSpecJSI_getConstants};
-  methodMap_["show"] = MethodMetadata {2, __hostFunction_NativeToastAndroidCxxSpecJSI_show};
-  methodMap_["showWithGravity"] = MethodMetadata {3, __hostFunction_NativeToastAndroidCxxSpecJSI_showWithGravity};
-  methodMap_["showWithGravityAndOffset"] = MethodMetadata {5, __hostFunction_NativeToastAndroidCxxSpecJSI_showWithGravityAndOffset};
-}
-static jsi::Value __hostFunction_NativeSegmentFetcherCxxSpecJSI_fetchSegment(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeSegmentFetcherCxxSpecJSI *>(&turboModule)->fetchSegment(
-    rt,
-    args[0].asNumber(),
-    args[1].asObject(rt),
-    args[2].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeSegmentFetcherCxxSpecJSI_getSegment(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeSegmentFetcherCxxSpecJSI *>(&turboModule)->getSegment(
-    rt,
-    args[0].asNumber(),
-    args[1].asObject(rt),
-    args[2].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-
-NativeSegmentFetcherCxxSpecJSI::NativeSegmentFetcherCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("SegmentFetcher", jsInvoker) {
-  methodMap_["fetchSegment"] = MethodMetadata {3, __hostFunction_NativeSegmentFetcherCxxSpecJSI_fetchSegment};
-  methodMap_["getSegment"] = MethodMetadata {3, __hostFunction_NativeSegmentFetcherCxxSpecJSI_getSegment};
-}
-static jsi::Value __hostFunction_NativeTimingCxxSpecJSI_createTimer(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeTimingCxxSpecJSI *>(&turboModule)->createTimer(
-    rt,
-    args[0].asNumber(),
-    args[1].asNumber(),
-    args[2].asNumber(),
-    args[3].asBool()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeTimingCxxSpecJSI_deleteTimer(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeTimingCxxSpecJSI *>(&turboModule)->deleteTimer(
-    rt,
-    args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeTimingCxxSpecJSI_setSendIdleEvents(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeTimingCxxSpecJSI *>(&turboModule)->setSendIdleEvents(
-    rt,
-    args[0].asBool()
-  );
-  return jsi::Value::undefined();
-}
-
-NativeTimingCxxSpecJSI::NativeTimingCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("Timing", jsInvoker) {
-  methodMap_["createTimer"] = MethodMetadata {4, __hostFunction_NativeTimingCxxSpecJSI_createTimer};
-  methodMap_["deleteTimer"] = MethodMetadata {1, __hostFunction_NativeTimingCxxSpecJSI_deleteTimer};
-  methodMap_["setSendIdleEvents"] = MethodMetadata {1, __hostFunction_NativeTimingCxxSpecJSI_setSendIdleEvents};
-}
-static jsi::Value __hostFunction_NativeAnimationsDebugModuleCxxSpecJSI_startRecordingFps(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAnimationsDebugModuleCxxSpecJSI *>(&turboModule)->startRecordingFps(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAnimationsDebugModuleCxxSpecJSI_stopRecordingFps(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAnimationsDebugModuleCxxSpecJSI *>(&turboModule)->stopRecordingFps(
-    rt,
-    args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-
-NativeAnimationsDebugModuleCxxSpecJSI::NativeAnimationsDebugModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("AnimationsDebugModule", jsInvoker) {
-  methodMap_["startRecordingFps"] = MethodMetadata {0, __hostFunction_NativeAnimationsDebugModuleCxxSpecJSI_startRecordingFps};
-  methodMap_["stopRecordingFps"] = MethodMetadata {1, __hostFunction_NativeAnimationsDebugModuleCxxSpecJSI_stopRecordingFps};
-}
-static jsi::Value __hostFunction_NativeDeviceEventManagerCxxSpecJSI_invokeDefaultBackPressHandler(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDeviceEventManagerCxxSpecJSI *>(&turboModule)->invokeDefaultBackPressHandler(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-
-NativeDeviceEventManagerCxxSpecJSI::NativeDeviceEventManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("DeviceEventManager", jsInvoker) {
-  methodMap_["invokeDefaultBackPressHandler"] = MethodMetadata {0, __hostFunction_NativeDeviceEventManagerCxxSpecJSI_invokeDefaultBackPressHandler};
-}
-static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_show(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->show(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_reload(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->reload(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_debugRemotely(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->debugRemotely(
-    rt,
-    args[0].asBool()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_setProfilingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->setProfilingEnabled(
-    rt,
-    args[0].asBool()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevMenuCxxSpecJSI_setHotLoadingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevMenuCxxSpecJSI *>(&turboModule)->setHotLoadingEnabled(
-    rt,
-    args[0].asBool()
-  );
-  return jsi::Value::undefined();
-}
-
-NativeDevMenuCxxSpecJSI::NativeDevMenuCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("DevMenu", jsInvoker) {
-  methodMap_["show"] = MethodMetadata {0, __hostFunction_NativeDevMenuCxxSpecJSI_show};
-  methodMap_["reload"] = MethodMetadata {0, __hostFunction_NativeDevMenuCxxSpecJSI_reload};
-  methodMap_["debugRemotely"] = MethodMetadata {1, __hostFunction_NativeDevMenuCxxSpecJSI_debugRemotely};
-  methodMap_["setProfilingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevMenuCxxSpecJSI_setProfilingEnabled};
-  methodMap_["setHotLoadingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevMenuCxxSpecJSI_setHotLoadingEnabled};
-}
-static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_reload(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->reload(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_reloadWithReason(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->reloadWithReason(
-    rt,
-    args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_onFastRefresh(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->onFastRefresh(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_setHotLoadingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->setHotLoadingEnabled(
-    rt,
-    args[0].asBool()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_setIsDebuggingRemotely(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->setIsDebuggingRemotely(
-    rt,
-    args[0].asBool()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_setProfilingEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->setProfilingEnabled(
-    rt,
-    args[0].asBool()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_toggleElementInspector(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->toggleElementInspector(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_addMenuItem(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->addMenuItem(
-    rt,
-    args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->addListener(
-    rt,
-    args[0].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_removeListeners(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->removeListeners(
-    rt,
-    args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_setIsShakeToShowDevMenuEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->setIsShakeToShowDevMenuEnabled(
-    rt,
-    args[0].asBool()
-  );
-  return jsi::Value::undefined();
-}
-
-NativeDevSettingsCxxSpecJSI::NativeDevSettingsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("DevSettings", jsInvoker) {
-  methodMap_["reload"] = MethodMetadata {0, __hostFunction_NativeDevSettingsCxxSpecJSI_reload};
-  methodMap_["reloadWithReason"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_reloadWithReason};
-  methodMap_["onFastRefresh"] = MethodMetadata {0, __hostFunction_NativeDevSettingsCxxSpecJSI_onFastRefresh};
-  methodMap_["setHotLoadingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_setHotLoadingEnabled};
-  methodMap_["setIsDebuggingRemotely"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_setIsDebuggingRemotely};
-  methodMap_["setProfilingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_setProfilingEnabled};
-  methodMap_["toggleElementInspector"] = MethodMetadata {0, __hostFunction_NativeDevSettingsCxxSpecJSI_toggleElementInspector};
-  methodMap_["addMenuItem"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_addMenuItem};
-  methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_addListener};
-  methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_removeListeners};
-  methodMap_["setIsShakeToShowDevMenuEnabled"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_setIsShakeToShowDevMenuEnabled};
-}
-static jsi::Value __hostFunction_NativeDialogManagerAndroidCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeDialogManagerAndroidCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeDialogManagerAndroidCxxSpecJSI_showAlert(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDialogManagerAndroidCxxSpecJSI *>(&turboModule)->showAlert(
-    rt,
-    args[0].asObject(rt),
-    args[1].asObject(rt).asFunction(rt),
-    args[2].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-
-NativeDialogManagerAndroidCxxSpecJSI::NativeDialogManagerAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("DialogManagerAndroid", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeDialogManagerAndroidCxxSpecJSI_getConstants};
-  methodMap_["showAlert"] = MethodMetadata {3, __hostFunction_NativeDialogManagerAndroidCxxSpecJSI_showAlert};
-}
-static jsi::Value __hostFunction_NativeLogBoxCxxSpecJSI_show(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeLogBoxCxxSpecJSI *>(&turboModule)->show(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeLogBoxCxxSpecJSI_hide(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeLogBoxCxxSpecJSI *>(&turboModule)->hide(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-
-NativeLogBoxCxxSpecJSI::NativeLogBoxCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("LogBox", jsInvoker) {
-  methodMap_["show"] = MethodMetadata {0, __hostFunction_NativeLogBoxCxxSpecJSI_show};
-  methodMap_["hide"] = MethodMetadata {0, __hostFunction_NativeLogBoxCxxSpecJSI_hide};
-}
-static jsi::Value __hostFunction_NativeRedBoxCxxSpecJSI_setExtraData(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeRedBoxCxxSpecJSI *>(&turboModule)->setExtraData(
-    rt,
-    args[0].asObject(rt),
-    args[1].asString(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeRedBoxCxxSpecJSI_dismiss(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeRedBoxCxxSpecJSI *>(&turboModule)->dismiss(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-
-NativeRedBoxCxxSpecJSI::NativeRedBoxCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("RedBox", jsInvoker) {
-  methodMap_["setExtraData"] = MethodMetadata {2, __hostFunction_NativeRedBoxCxxSpecJSI_setExtraData};
-  methodMap_["dismiss"] = MethodMetadata {0, __hostFunction_NativeRedBoxCxxSpecJSI_dismiss};
-}
-static jsi::Value __hostFunction_NativeSourceCodeCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSourceCodeCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-
-NativeSourceCodeCxxSpecJSI::NativeSourceCodeCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("SourceCode", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeSourceCodeCxxSpecJSI_getConstants};
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_voidFunc(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->voidFunc(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getBool(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getBool(
-    rt,
-    args[0].asBool()
-  );
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getEnum(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getEnum(
-    rt,
-    args[0].asNumber()
-  );
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getNumber(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getNumber(
-    rt,
-    args[0].asNumber()
-  );
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getString(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getString(
-    rt,
-    args[0].asString(rt)
-  );
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getArray(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getArray(
-    rt,
-    args[0].asObject(rt).asArray(rt)
-  );
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getObject(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getObject(
-    rt,
-    args[0].asObject(rt)
-  );
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getUnsafeObject(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getUnsafeObject(
-    rt,
-    args[0].asObject(rt)
-  );
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getRootTag(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getRootTag(
-    rt,
-    args[0].getNumber()
-  );
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getValue(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getValue(
-    rt,
-    args[0].asNumber(),
-    args[1].asString(rt),
-    args[2].asObject(rt)
-  );
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getValueWithCallback(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getValueWithCallback(
-    rt,
-    args[0].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getValueWithPromise(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getValueWithPromise(
-    rt,
-    args[0].asBool()
-  );
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_voidFuncThrows(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->voidFuncThrows(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getObjectThrows(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getObjectThrows(
-    rt,
-    args[0].asObject(rt)
-  );
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_promiseThrows(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->promiseThrows(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_voidFuncAssert(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->voidFuncAssert(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getObjectAssert(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->getObjectAssert(
-    rt,
-    args[0].asObject(rt)
-  );
-}
-static jsi::Value __hostFunction_NativeSampleTurboModuleCxxSpecJSI_promiseAssert(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeSampleTurboModuleCxxSpecJSI *>(&turboModule)->promiseAssert(
-    rt
-  );
-}
-
-NativeSampleTurboModuleCxxSpecJSI::NativeSampleTurboModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("SampleTurboModule", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getConstants};
-  methodMap_["voidFunc"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_voidFunc};
-  methodMap_["getBool"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getBool};
-  methodMap_["getEnum"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getEnum};
-  methodMap_["getNumber"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getNumber};
-  methodMap_["getString"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getString};
-  methodMap_["getArray"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getArray};
-  methodMap_["getObject"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getObject};
-  methodMap_["getUnsafeObject"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getUnsafeObject};
-  methodMap_["getRootTag"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getRootTag};
-  methodMap_["getValue"] = MethodMetadata {3, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getValue};
-  methodMap_["getValueWithCallback"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getValueWithCallback};
-  methodMap_["getValueWithPromise"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getValueWithPromise};
-  methodMap_["voidFuncThrows"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_voidFuncThrows};
-  methodMap_["getObjectThrows"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getObjectThrows};
-  methodMap_["promiseThrows"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_promiseThrows};
-  methodMap_["voidFuncAssert"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_voidFuncAssert};
-  methodMap_["getObjectAssert"] = MethodMetadata {1, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_getObjectAssert};
-  methodMap_["promiseAssert"] = MethodMetadata {0, __hostFunction_NativeSampleTurboModuleCxxSpecJSI_promiseAssert};
 }
 
 

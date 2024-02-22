@@ -17,6 +17,206 @@
 
 namespace facebook::react {
 
+class RCTFlyoutProps final : public ViewProps {
+ public:
+  RCTFlyoutProps() = default;
+  RCTFlyoutProps(const PropsParserContext& context, const RCTFlyoutProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  double horizontalOffset{0.0};
+  bool isLightDismissEnabled{false};
+  bool autoFocus{false};
+  bool shouldConstrainToRootBounds{false};
+  bool isOverlayEnabled{false};
+  bool isOpen{false};
+  std::string placement{};
+  std::string showMode{};
+  int target{0};
+  double verticalOffset{0.0};
+};
+
+class PLYIconProps final : public ViewProps {
+ public:
+  PLYIconProps() = default;
+  PLYIconProps(const PropsParserContext& context, const PLYIconProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  SharedColor color{};
+  double emSize{0.0};
+  std::string fontUri{};
+  std::string glyph{};
+  bool colorEnabled{false};
+};
+
+class RCTPopupProps final : public ViewProps {
+ public:
+  RCTPopupProps() = default;
+  RCTPopupProps(const PropsParserContext& context, const RCTPopupProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  bool isOpen{false};
+  bool isLightDismissEnabled{false};
+  bool autoFocus{false};
+  double horizontalOffset{0.0};
+  double verticalOffset{0.0};
+  int target{0};
+  std::string testID{};
+};
+
+enum class ActivityIndicatorViewSize { Small, Large };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ActivityIndicatorViewSize &result) {
+  auto string = (std::string)value;
+  if (string == "small") { result = ActivityIndicatorViewSize::Small; return; }
+  if (string == "large") { result = ActivityIndicatorViewSize::Large; return; }
+  abort();
+}
+
+static inline std::string toString(const ActivityIndicatorViewSize &value) {
+  switch (value) {
+    case ActivityIndicatorViewSize::Small: return "small";
+    case ActivityIndicatorViewSize::Large: return "large";
+  }
+}
+
+class ActivityIndicatorViewProps final : public ViewProps {
+ public:
+  ActivityIndicatorViewProps() = default;
+  ActivityIndicatorViewProps(const PropsParserContext& context, const ActivityIndicatorViewProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  bool hidesWhenStopped{true};
+  bool animating{true};
+  SharedColor color{};
+  ActivityIndicatorViewSize size{ActivityIndicatorViewSize::Small};
+};
+
+enum class AndroidDrawerLayoutKeyboardDismissMode { None, OnDrag };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, AndroidDrawerLayoutKeyboardDismissMode &result) {
+  auto string = (std::string)value;
+  if (string == "none") { result = AndroidDrawerLayoutKeyboardDismissMode::None; return; }
+  if (string == "on-drag") { result = AndroidDrawerLayoutKeyboardDismissMode::OnDrag; return; }
+  abort();
+}
+
+static inline std::string toString(const AndroidDrawerLayoutKeyboardDismissMode &value) {
+  switch (value) {
+    case AndroidDrawerLayoutKeyboardDismissMode::None: return "none";
+    case AndroidDrawerLayoutKeyboardDismissMode::OnDrag: return "on-drag";
+  }
+}
+enum class AndroidDrawerLayoutDrawerPosition { Left, Right };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, AndroidDrawerLayoutDrawerPosition &result) {
+  auto string = (std::string)value;
+  if (string == "left") { result = AndroidDrawerLayoutDrawerPosition::Left; return; }
+  if (string == "right") { result = AndroidDrawerLayoutDrawerPosition::Right; return; }
+  abort();
+}
+
+static inline std::string toString(const AndroidDrawerLayoutDrawerPosition &value) {
+  switch (value) {
+    case AndroidDrawerLayoutDrawerPosition::Left: return "left";
+    case AndroidDrawerLayoutDrawerPosition::Right: return "right";
+  }
+}
+enum class AndroidDrawerLayoutDrawerLockMode { Unlocked, LockedClosed, LockedOpen };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, AndroidDrawerLayoutDrawerLockMode &result) {
+  auto string = (std::string)value;
+  if (string == "unlocked") { result = AndroidDrawerLayoutDrawerLockMode::Unlocked; return; }
+  if (string == "locked-closed") { result = AndroidDrawerLayoutDrawerLockMode::LockedClosed; return; }
+  if (string == "locked-open") { result = AndroidDrawerLayoutDrawerLockMode::LockedOpen; return; }
+  abort();
+}
+
+static inline std::string toString(const AndroidDrawerLayoutDrawerLockMode &value) {
+  switch (value) {
+    case AndroidDrawerLayoutDrawerLockMode::Unlocked: return "unlocked";
+    case AndroidDrawerLayoutDrawerLockMode::LockedClosed: return "locked-closed";
+    case AndroidDrawerLayoutDrawerLockMode::LockedOpen: return "locked-open";
+  }
+}
+
+class AndroidDrawerLayoutProps final : public ViewProps {
+ public:
+  AndroidDrawerLayoutProps() = default;
+  AndroidDrawerLayoutProps(const PropsParserContext& context, const AndroidDrawerLayoutProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  AndroidDrawerLayoutKeyboardDismissMode keyboardDismissMode{AndroidDrawerLayoutKeyboardDismissMode::None};
+  SharedColor drawerBackgroundColor{};
+  AndroidDrawerLayoutDrawerPosition drawerPosition{AndroidDrawerLayoutDrawerPosition::Left};
+  Float drawerWidth{};
+  AndroidDrawerLayoutDrawerLockMode drawerLockMode{AndroidDrawerLayoutDrawerLockMode::Unlocked};
+  SharedColor statusBarBackgroundColor{};
+};
+
+class AndroidHorizontalScrollContentViewProps final : public ViewProps {
+ public:
+  AndroidHorizontalScrollContentViewProps() = default;
+  AndroidHorizontalScrollContentViewProps(const PropsParserContext& context, const AndroidHorizontalScrollContentViewProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  bool removeClippedSubviews{false};
+};
+
+enum class AndroidSwipeRefreshLayoutSize { Default, Large };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, AndroidSwipeRefreshLayoutSize &result) {
+  auto string = (std::string)value;
+  if (string == "default") { result = AndroidSwipeRefreshLayoutSize::Default; return; }
+  if (string == "large") { result = AndroidSwipeRefreshLayoutSize::Large; return; }
+  abort();
+}
+
+static inline std::string toString(const AndroidSwipeRefreshLayoutSize &value) {
+  switch (value) {
+    case AndroidSwipeRefreshLayoutSize::Default: return "default";
+    case AndroidSwipeRefreshLayoutSize::Large: return "large";
+  }
+}
+
+class AndroidSwipeRefreshLayoutProps final : public ViewProps {
+ public:
+  AndroidSwipeRefreshLayoutProps() = default;
+  AndroidSwipeRefreshLayoutProps(const PropsParserContext& context, const AndroidSwipeRefreshLayoutProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  bool enabled{true};
+  std::vector<SharedColor> colors{};
+  SharedColor progressBackgroundColor{};
+  AndroidSwipeRefreshLayoutSize size{AndroidSwipeRefreshLayoutSize::Default};
+  Float progressViewOffset{0.0};
+  bool refreshing{false};
+};
+
+class AndroidSwitchProps final : public ViewProps {
+ public:
+  AndroidSwitchProps() = default;
+  AndroidSwitchProps(const PropsParserContext& context, const AndroidSwitchProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  bool disabled{false};
+  bool enabled{true};
+  SharedColor thumbColor{};
+  SharedColor trackColorForFalse{};
+  SharedColor trackColorForTrue{};
+  bool value{false};
+  bool on{false};
+  SharedColor thumbTintColor{};
+  SharedColor trackTintColor{};
+};
+
 class DebuggingOverlayProps final : public ViewProps {
  public:
   DebuggingOverlayProps() = default;
@@ -25,6 +225,46 @@ class DebuggingOverlayProps final : public ViewProps {
 #pragma mark - Props
 
   
+};
+
+class AndroidProgressBarProps final : public ViewProps {
+ public:
+  AndroidProgressBarProps() = default;
+  AndroidProgressBarProps(const PropsParserContext& context, const AndroidProgressBarProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  std::string styleAttr{};
+  std::string typeAttr{};
+  bool indeterminate{false};
+  double progress{0.0};
+  bool animating{true};
+  SharedColor color{};
+  std::string testID{""};
+};
+
+class PullToRefreshViewProps final : public ViewProps {
+ public:
+  PullToRefreshViewProps() = default;
+  PullToRefreshViewProps(const PropsParserContext& context, const PullToRefreshViewProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  SharedColor tintColor{};
+  SharedColor titleColor{};
+  std::string title{};
+  Float progressViewOffset{0.0};
+  bool refreshing{false};
+};
+
+class InputAccessoryProps final : public ViewProps {
+ public:
+  InputAccessoryProps() = default;
+  InputAccessoryProps(const PropsParserContext& context, const InputAccessoryProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  SharedColor backgroundColor{};
 };
 
 enum class ModalHostViewAnimationType { None, Slide, Fade };
@@ -161,208 +401,6 @@ class ModalHostViewProps final : public ViewProps {
   int identifier{0};
 };
 
-enum class ActivityIndicatorViewSize { Small, Large };
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ActivityIndicatorViewSize &result) {
-  auto string = (std::string)value;
-  if (string == "small") { result = ActivityIndicatorViewSize::Small; return; }
-  if (string == "large") { result = ActivityIndicatorViewSize::Large; return; }
-  abort();
-}
-
-static inline std::string toString(const ActivityIndicatorViewSize &value) {
-  switch (value) {
-    case ActivityIndicatorViewSize::Small: return "small";
-    case ActivityIndicatorViewSize::Large: return "large";
-  }
-}
-
-class ActivityIndicatorViewProps final : public ViewProps {
- public:
-  ActivityIndicatorViewProps() = default;
-  ActivityIndicatorViewProps(const PropsParserContext& context, const ActivityIndicatorViewProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  bool hidesWhenStopped{true};
-  bool animating{true};
-  SharedColor color{};
-  ActivityIndicatorViewSize size{ActivityIndicatorViewSize::Small};
-};
-
-enum class AndroidDrawerLayoutKeyboardDismissMode { None, OnDrag };
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, AndroidDrawerLayoutKeyboardDismissMode &result) {
-  auto string = (std::string)value;
-  if (string == "none") { result = AndroidDrawerLayoutKeyboardDismissMode::None; return; }
-  if (string == "on-drag") { result = AndroidDrawerLayoutKeyboardDismissMode::OnDrag; return; }
-  abort();
-}
-
-static inline std::string toString(const AndroidDrawerLayoutKeyboardDismissMode &value) {
-  switch (value) {
-    case AndroidDrawerLayoutKeyboardDismissMode::None: return "none";
-    case AndroidDrawerLayoutKeyboardDismissMode::OnDrag: return "on-drag";
-  }
-}
-enum class AndroidDrawerLayoutDrawerPosition { Left, Right };
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, AndroidDrawerLayoutDrawerPosition &result) {
-  auto string = (std::string)value;
-  if (string == "left") { result = AndroidDrawerLayoutDrawerPosition::Left; return; }
-  if (string == "right") { result = AndroidDrawerLayoutDrawerPosition::Right; return; }
-  abort();
-}
-
-static inline std::string toString(const AndroidDrawerLayoutDrawerPosition &value) {
-  switch (value) {
-    case AndroidDrawerLayoutDrawerPosition::Left: return "left";
-    case AndroidDrawerLayoutDrawerPosition::Right: return "right";
-  }
-}
-enum class AndroidDrawerLayoutDrawerLockMode { Unlocked, LockedClosed, LockedOpen };
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, AndroidDrawerLayoutDrawerLockMode &result) {
-  auto string = (std::string)value;
-  if (string == "unlocked") { result = AndroidDrawerLayoutDrawerLockMode::Unlocked; return; }
-  if (string == "locked-closed") { result = AndroidDrawerLayoutDrawerLockMode::LockedClosed; return; }
-  if (string == "locked-open") { result = AndroidDrawerLayoutDrawerLockMode::LockedOpen; return; }
-  abort();
-}
-
-static inline std::string toString(const AndroidDrawerLayoutDrawerLockMode &value) {
-  switch (value) {
-    case AndroidDrawerLayoutDrawerLockMode::Unlocked: return "unlocked";
-    case AndroidDrawerLayoutDrawerLockMode::LockedClosed: return "locked-closed";
-    case AndroidDrawerLayoutDrawerLockMode::LockedOpen: return "locked-open";
-  }
-}
-
-class AndroidDrawerLayoutProps final : public ViewProps {
- public:
-  AndroidDrawerLayoutProps() = default;
-  AndroidDrawerLayoutProps(const PropsParserContext& context, const AndroidDrawerLayoutProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  AndroidDrawerLayoutKeyboardDismissMode keyboardDismissMode{AndroidDrawerLayoutKeyboardDismissMode::None};
-  SharedColor drawerBackgroundColor{};
-  AndroidDrawerLayoutDrawerPosition drawerPosition{AndroidDrawerLayoutDrawerPosition::Left};
-  Float drawerWidth{};
-  AndroidDrawerLayoutDrawerLockMode drawerLockMode{AndroidDrawerLayoutDrawerLockMode::Unlocked};
-  SharedColor statusBarBackgroundColor{};
-};
-
-class RCTFlyoutProps final : public ViewProps {
- public:
-  RCTFlyoutProps() = default;
-  RCTFlyoutProps(const PropsParserContext& context, const RCTFlyoutProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  double horizontalOffset{0.0};
-  bool isLightDismissEnabled{false};
-  bool autoFocus{false};
-  bool shouldConstrainToRootBounds{false};
-  bool isOverlayEnabled{false};
-  bool isOpen{false};
-  std::string placement{};
-  std::string showMode{};
-  int target{0};
-  double verticalOffset{0.0};
-};
-
-class PLYIconProps final : public ViewProps {
- public:
-  PLYIconProps() = default;
-  PLYIconProps(const PropsParserContext& context, const PLYIconProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  SharedColor color{};
-  double emSize{0.0};
-  std::string fontUri{};
-  std::string glyph{};
-  bool colorEnabled{false};
-};
-
-class RCTPopupProps final : public ViewProps {
- public:
-  RCTPopupProps() = default;
-  RCTPopupProps(const PropsParserContext& context, const RCTPopupProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  bool isOpen{false};
-  bool isLightDismissEnabled{false};
-  bool autoFocus{false};
-  double horizontalOffset{0.0};
-  double verticalOffset{0.0};
-  int target{0};
-  std::string testID{};
-};
-
-class AndroidProgressBarProps final : public ViewProps {
- public:
-  AndroidProgressBarProps() = default;
-  AndroidProgressBarProps(const PropsParserContext& context, const AndroidProgressBarProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  std::string styleAttr{};
-  std::string typeAttr{};
-  bool indeterminate{false};
-  double progress{0.0};
-  bool animating{true};
-  SharedColor color{};
-  std::string testID{""};
-};
-
-enum class AndroidSwipeRefreshLayoutSize { Default, Large };
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, AndroidSwipeRefreshLayoutSize &result) {
-  auto string = (std::string)value;
-  if (string == "default") { result = AndroidSwipeRefreshLayoutSize::Default; return; }
-  if (string == "large") { result = AndroidSwipeRefreshLayoutSize::Large; return; }
-  abort();
-}
-
-static inline std::string toString(const AndroidSwipeRefreshLayoutSize &value) {
-  switch (value) {
-    case AndroidSwipeRefreshLayoutSize::Default: return "default";
-    case AndroidSwipeRefreshLayoutSize::Large: return "large";
-  }
-}
-
-class AndroidSwipeRefreshLayoutProps final : public ViewProps {
- public:
-  AndroidSwipeRefreshLayoutProps() = default;
-  AndroidSwipeRefreshLayoutProps(const PropsParserContext& context, const AndroidSwipeRefreshLayoutProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  bool enabled{true};
-  std::vector<SharedColor> colors{};
-  SharedColor progressBackgroundColor{};
-  AndroidSwipeRefreshLayoutSize size{AndroidSwipeRefreshLayoutSize::Default};
-  Float progressViewOffset{0.0};
-  bool refreshing{false};
-};
-
-class PullToRefreshViewProps final : public ViewProps {
- public:
-  PullToRefreshViewProps() = default;
-  PullToRefreshViewProps(const PropsParserContext& context, const PullToRefreshViewProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  SharedColor tintColor{};
-  SharedColor titleColor{};
-  std::string title{};
-  Float progressViewOffset{0.0};
-  bool refreshing{false};
-};
-
 class SafeAreaViewProps final : public ViewProps {
  public:
   SafeAreaViewProps() = default;
@@ -371,34 +409,6 @@ class SafeAreaViewProps final : public ViewProps {
 #pragma mark - Props
 
   
-};
-
-class AndroidHorizontalScrollContentViewProps final : public ViewProps {
- public:
-  AndroidHorizontalScrollContentViewProps() = default;
-  AndroidHorizontalScrollContentViewProps(const PropsParserContext& context, const AndroidHorizontalScrollContentViewProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  bool removeClippedSubviews{false};
-};
-
-class AndroidSwitchProps final : public ViewProps {
- public:
-  AndroidSwitchProps() = default;
-  AndroidSwitchProps(const PropsParserContext& context, const AndroidSwitchProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  bool disabled{false};
-  bool enabled{true};
-  SharedColor thumbColor{};
-  SharedColor trackColorForFalse{};
-  SharedColor trackColorForTrue{};
-  bool value{false};
-  bool on{false};
-  SharedColor thumbTintColor{};
-  SharedColor trackTintColor{};
 };
 
 class SwitchProps final : public ViewProps {
@@ -416,16 +426,6 @@ class SwitchProps final : public ViewProps {
   SharedColor thumbColor{};
   SharedColor trackColorForFalse{};
   SharedColor trackColorForTrue{};
-};
-
-class InputAccessoryProps final : public ViewProps {
- public:
-  InputAccessoryProps() = default;
-  InputAccessoryProps(const PropsParserContext& context, const InputAccessoryProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  SharedColor backgroundColor{};
 };
 
 class UnimplementedNativeViewProps final : public ViewProps {
