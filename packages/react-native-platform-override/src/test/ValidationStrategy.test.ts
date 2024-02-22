@@ -209,7 +209,10 @@ test('overrideCopyOfBase - File Is Copy', async () => {
 
 test('overrideCopyOfBase - Directory Is Copy', async () => {
   expect(
-    await ValidationStrategies.overrideCopyOfBase('src-win/foo', 'foo').validate(
+    await ValidationStrategies.overrideCopyOfBase(
+      'src-win/foo',
+      'foo',
+    ).validate(
       new MockWritableFileRepository([
         {filename: 'src-win/foo/a.js', content: 'ABCD'},
         {filename: 'src-win/foo/b.js', content: 'EFGH'},
@@ -249,7 +252,10 @@ test('overrideCopyOfBase - File Not A Copy', async () => {
 
 test('overrideCopyOfBase - Directory Not A Copy', async () => {
   expect(
-    await ValidationStrategies.overrideCopyOfBase('src-win/foo', 'foo').validate(
+    await ValidationStrategies.overrideCopyOfBase(
+      'src-win/foo',
+      'foo',
+    ).validate(
       new MockWritableFileRepository([
         {filename: 'src-win/foo/a.js', content: 'ABCDDCBA'},
         {filename: 'src-win/foo/b.js', content: 'EFGH'},
