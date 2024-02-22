@@ -47,8 +47,9 @@ void UpdateRootViewSizeToAppWindow(
 winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
     HWND hwnd,
     const winrt::Microsoft::UI::Composition::Compositor &compositor) {
-  WCHAR workingDir[MAX_PATH];
-  GetCurrentDirectory(MAX_PATH, workingDir);
+  WCHAR appDirectory[MAX_PATH];
+  GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
+  PathCchRemoveFileSpec(appDirectory, MAX_PATH);
 
   auto host = winrt::Microsoft::ReactNative::ReactNativeHost();
 
@@ -57,16 +58,22 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
 
   host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
 
+#if BUNDLE
   host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
-  host.InstanceSettings().DebugBundlePath(L"index");
-
-  host.InstanceSettings().BundleRootPath(std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
-  host.InstanceSettings().DebuggerBreakOnNextLine(false);
-#if _DEBUG
-  host.InstanceSettings().UseDirectDebugger(true);
+  host.InstanceSettings().BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
+  host.InstanceSettings().UseFastRefresh(false);
+#else
+  host.InstanceSettings().JavaScriptBundleFile(L"index");
   host.InstanceSettings().UseFastRefresh(true);
 #endif
+
+#if _DEBUG
+  host.InstanceSettings().UseDirectDebugger(true);
   host.InstanceSettings().UseDeveloperSupport(true);
+#else
+  host.InstanceSettings().UseDirectDebugger(false);
+  host.InstanceSettings().UseDeveloperSupport(false);
+#endif
 
   winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
       host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));

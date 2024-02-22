@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix issue with new arch cpp-app apps not finding the bundle in release builds",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
