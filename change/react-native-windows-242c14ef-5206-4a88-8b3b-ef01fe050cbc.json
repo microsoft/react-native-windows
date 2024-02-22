@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update WinAppSDK versions to latest public builds",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

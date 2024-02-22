@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 15 Feb 2024 06:18:14 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Feb 2024 06:17:46 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.774
+
+Wed, 21 Feb 2024 06:17:46 GMT
+
+### Changes
+
+- sumbitkeyevents working with shift (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.773
+
+Fri, 16 Feb 2024 06:16:12 GMT
+
+### Changes
+
+- Fix UIScheduler deadlock on shutdown (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.772
 

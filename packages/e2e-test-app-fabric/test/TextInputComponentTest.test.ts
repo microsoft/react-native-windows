@@ -264,6 +264,28 @@ describe('TextInput Tests', () => {
       'textinput-clear-on-submit',
     );
     await component.waitForDisplayed({timeout: 5000});
+    await app.waitUntil(
+      async () => {
+        await component.setValue('Hello World');
+        return (await component.getText()) === 'Hello World';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
+    await app.waitUntil(
+      async () => {
+        await component.setValue('\uE007');
+        return (await component.getText()) === '';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
     const dump = await dumpVisualTree('textinput-clear-on-submit');
     expect(dump).toMatchSnapshot();
   });
@@ -283,11 +305,33 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('textinput-clear-on-submit-3');
     expect(dump).toMatchSnapshot();
   });
-  test('TextInputs can submit with custom key', async () => {
+  test('TextInputs can submit with custom key, multilined and submit with enter', async () => {
     const component = await app.findElementByTestID(
       'textinput-clear-on-submit-4',
     );
     await component.waitForDisplayed({timeout: 5000});
+    await app.waitUntil(
+      async () => {
+        await component.setValue('Hello World');
+        return (await component.getText()) === 'Hello World';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
+    await app.waitUntil(
+      async () => {
+        await component.setValue('\uE007');
+        return (await component.getText()) === '';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
     const dump = await dumpVisualTree('textinput-clear-on-submit-4');
     expect(dump).toMatchSnapshot();
   });
