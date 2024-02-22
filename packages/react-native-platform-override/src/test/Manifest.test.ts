@@ -544,7 +544,7 @@ test('String Exact Serialization Round-Trip', () => {
 
 test('String Exact Serialization Round-Trip (With Patterns)', () => {
   const serializedManifest: any = {
-    includePatterns: ['src/**'],
+    includePatterns: ['src-win/**'],
     excludePatterns: ['**/*.png'],
     overrides: [
       {

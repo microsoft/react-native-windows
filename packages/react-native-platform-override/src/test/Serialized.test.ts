@@ -127,7 +127,7 @@ test('Well Formed Directory Copy', () => {
       {
         type: 'copy',
         directory: 'foo',
-        baseDirectory: 'src/foo',
+        baseDirectory: 'src-win/foo',
         baseVersion: '0.61.5',
         baseHash: 'AAAABBBB',
         issue: 4567,
@@ -195,7 +195,7 @@ test('Well Formed Copy Must Have Metadata', () => {
 });
 
 test('Valid includePatterns', () => {
-  const includePatterns = ['src/**', 'copies/**'];
+  const includePatterns = ['src-win/**', 'copies/**'];
 
   const manifest = {
     includePatterns,
