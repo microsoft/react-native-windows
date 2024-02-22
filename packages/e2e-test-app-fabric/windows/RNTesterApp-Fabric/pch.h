@@ -22,7 +22,6 @@
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Foundation.h>
-#pragma pop_macro("GetCurrentTime")
 
 // C RunTime Header Files
 #include <malloc.h>
