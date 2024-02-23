@@ -35,9 +35,7 @@ winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageStreamAsync(ReactImag
       winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::StorageFile> getFileSync{nullptr};
 
       if (isFile) {
-        auto path = winrt::to_string(uri.Path());
-        std::replace(path.begin(), path.end(), '/', '\\');
-        getFileSync = winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(winrt::to_hstring(path));
+        getFileSync = winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(uri.AbsoluteCanonicalUri());
       } else {
         getFileSync = winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
       }

@@ -12,6 +12,6 @@
 /types
 /typings-index.*
 /rntypes
-/src/rntypes
-/private
+/src
+/src-win/rntypes
 /rn-get-polyfills.js

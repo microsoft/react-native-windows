@@ -1,8 +1,20 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Wed, 14 Feb 2024 06:16:54 GMT and should not be manually modified.
+This log was last generated on Thu, 15 Feb 2024 06:18:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.21
+
+Thu, 15 Feb 2024 06:18:15 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.62
+- Bump @react-native-windows/fs to v0.0.0-canary.33
+- Bump @react-native-windows/package-utils to v0.0.0-canary.59
+- Bump react-native-platform-override to v1.9.20
+- Bump @rnw-scripts/just-task to v2.3.20
 
 ## 1.4.20
 

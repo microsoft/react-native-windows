@@ -17,55 +17,6 @@
 
 namespace facebook::react {
 
-class RCTFlyoutProps final : public ViewProps {
- public:
-  RCTFlyoutProps() = default;
-  RCTFlyoutProps(const PropsParserContext& context, const RCTFlyoutProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  double horizontalOffset{0.0};
-  bool isLightDismissEnabled{false};
-  bool autoFocus{false};
-  bool shouldConstrainToRootBounds{false};
-  bool isOverlayEnabled{false};
-  bool isOpen{false};
-  std::string placement{};
-  std::string showMode{};
-  int target{0};
-  double verticalOffset{0.0};
-};
-
-class PLYIconProps final : public ViewProps {
- public:
-  PLYIconProps() = default;
-  PLYIconProps(const PropsParserContext& context, const PLYIconProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  SharedColor color{};
-  double emSize{0.0};
-  std::string fontUri{};
-  std::string glyph{};
-  bool colorEnabled{false};
-};
-
-class RCTPopupProps final : public ViewProps {
- public:
-  RCTPopupProps() = default;
-  RCTPopupProps(const PropsParserContext& context, const RCTPopupProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  bool isOpen{false};
-  bool isLightDismissEnabled{false};
-  bool autoFocus{false};
-  double horizontalOffset{0.0};
-  double verticalOffset{0.0};
-  int target{0};
-  std::string testID{};
-};
-
 enum class ActivityIndicatorViewSize { Small, Large };
 
 static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ActivityIndicatorViewSize &result) {

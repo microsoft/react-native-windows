@@ -13,25 +13,6 @@
 
 namespace facebook::react {
 
-void RCTFlyoutEventEmitter::onDismiss(OnDismiss $event) const {
-  dispatchEvent("dismiss", [$event=std::move($event)](jsi::Runtime &runtime) {
-    auto $payload = jsi::Object(runtime);
-    $payload.setProperty(runtime, "isOpen", $event.isOpen);
-    return $payload;
-  });
-}
-
-
-
-void RCTPopupEventEmitter::onDismiss(OnDismiss $event) const {
-  dispatchEvent("dismiss", [$event=std::move($event)](jsi::Runtime &runtime) {
-    auto $payload = jsi::Object(runtime);
-    $payload.setProperty(runtime, "isOpen", $event.isOpen);
-    return $payload;
-  });
-}
-
-
 
 void AndroidDrawerLayoutEventEmitter::onDrawerSlide(OnDrawerSlide $event) const {
   dispatchEvent("drawerSlide", [$event=std::move($event)](jsi::Runtime &runtime) {

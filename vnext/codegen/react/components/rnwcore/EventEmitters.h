@@ -13,31 +13,6 @@
 
 
 namespace facebook::react {
-class RCTFlyoutEventEmitter : public ViewEventEmitter {
- public:
-  using ViewEventEmitter::ViewEventEmitter;
-
-  struct OnDismiss {
-      bool isOpen;
-    };
-  void onDismiss(OnDismiss value) const;
-};
-class PLYIconEventEmitter : public ViewEventEmitter {
- public:
-  using ViewEventEmitter::ViewEventEmitter;
-
-  
-  
-};
-class RCTPopupEventEmitter : public ViewEventEmitter {
- public:
-  using ViewEventEmitter::ViewEventEmitter;
-
-  struct OnDismiss {
-      bool isOpen;
-    };
-  void onDismiss(OnDismiss value) const;
-};
 class ActivityIndicatorViewEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;

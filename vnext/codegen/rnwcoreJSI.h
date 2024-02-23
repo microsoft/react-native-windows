@@ -15,287 +15,6 @@
 namespace facebook::react {
 
 
-  
-#pragma mark - AlertBaseDialogOptions
-
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
-struct [[deprecated("Use AlertDialogOptions instead.")]] AlertBaseDialogOptions {
-  P0 title;
-  P1 message;
-  P2 buttonPositive;
-  P3 buttonNegative;
-  P4 buttonNeutral;
-  P5 items;
-  P6 cancelable;
-  P7 defaultButton;
-  P8 rootTag;
-  bool operator==(const AlertBaseDialogOptions &other) const {
-    return title == other.title && message == other.message && buttonPositive == other.buttonPositive && buttonNegative == other.buttonNegative && buttonNeutral == other.buttonNeutral && items == other.items && cancelable == other.cancelable && defaultButton == other.defaultButton && rootTag == other.rootTag;
-  }
-};
-
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
-struct [[deprecated("Use AlertDialogOptionsBridging instead.")]] AlertBaseDialogOptionsBridging {
-  static AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7, P8> fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7, P8> result{
-      bridging::fromJs<P0>(rt, value.getProperty(rt, "title"), jsInvoker),
-      bridging::fromJs<P1>(rt, value.getProperty(rt, "message"), jsInvoker),
-      bridging::fromJs<P2>(rt, value.getProperty(rt, "buttonPositive"), jsInvoker),
-      bridging::fromJs<P3>(rt, value.getProperty(rt, "buttonNegative"), jsInvoker),
-      bridging::fromJs<P4>(rt, value.getProperty(rt, "buttonNeutral"), jsInvoker),
-      bridging::fromJs<P5>(rt, value.getProperty(rt, "items"), jsInvoker),
-      bridging::fromJs<P6>(rt, value.getProperty(rt, "cancelable"), jsInvoker),
-      bridging::fromJs<P7>(rt, value.getProperty(rt, "defaultButton"), jsInvoker),
-      bridging::fromJs<P8>(rt, value.getProperty(rt, "rootTag"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static jsi::String titleToJs(jsi::Runtime &rt, P0 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::String messageToJs(jsi::Runtime &rt, P1 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::String buttonPositiveToJs(jsi::Runtime &rt, P2 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::String buttonNegativeToJs(jsi::Runtime &rt, P3 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::String buttonNeutralToJs(jsi::Runtime &rt, P4 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::Array itemsToJs(jsi::Runtime &rt, P5 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static bool cancelableToJs(jsi::Runtime &rt, P6 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static int defaultButtonToJs(jsi::Runtime &rt, P7 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static int rootTagToJs(jsi::Runtime &rt, P8 value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7, P8> &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    if (value.title) {
-      result.setProperty(rt, "title", bridging::toJs(rt, value.title.value(), jsInvoker));
-    }
-    if (value.message) {
-      result.setProperty(rt, "message", bridging::toJs(rt, value.message.value(), jsInvoker));
-    }
-    if (value.buttonPositive) {
-      result.setProperty(rt, "buttonPositive", bridging::toJs(rt, value.buttonPositive.value(), jsInvoker));
-    }
-    if (value.buttonNegative) {
-      result.setProperty(rt, "buttonNegative", bridging::toJs(rt, value.buttonNegative.value(), jsInvoker));
-    }
-    if (value.buttonNeutral) {
-      result.setProperty(rt, "buttonNeutral", bridging::toJs(rt, value.buttonNeutral.value(), jsInvoker));
-    }
-    if (value.items) {
-      result.setProperty(rt, "items", bridging::toJs(rt, value.items.value(), jsInvoker));
-    }
-    if (value.cancelable) {
-      result.setProperty(rt, "cancelable", bridging::toJs(rt, value.cancelable.value(), jsInvoker));
-    }
-    if (value.defaultButton) {
-      result.setProperty(rt, "defaultButton", bridging::toJs(rt, value.defaultButton.value(), jsInvoker));
-    }
-    if (value.rootTag) {
-      result.setProperty(rt, "rootTag", bridging::toJs(rt, value.rootTag.value(), jsInvoker));
-    }
-    return result;
-  }
-};
-
-
-#pragma mark - AlertDialogOptions
-
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
-struct AlertDialogOptions {
-  P0 title;
-  P1 message;
-  P2 buttonPositive;
-  P3 buttonNegative;
-  P4 buttonNeutral;
-  P5 items;
-  P6 cancelable;
-  P7 defaultButton;
-  P8 rootTag;
-  bool operator==(const AlertDialogOptions &other) const {
-    return title == other.title && message == other.message && buttonPositive == other.buttonPositive && buttonNegative == other.buttonNegative && buttonNeutral == other.buttonNeutral && items == other.items && cancelable == other.cancelable && defaultButton == other.defaultButton && rootTag == other.rootTag;
-  }
-};
-
-template <typename T>
-struct AlertDialogOptionsBridging {
-  static T types;
-
-  static T fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    T result{
-      bridging::fromJs<decltype(types.title)>(rt, value.getProperty(rt, "title"), jsInvoker),
-      bridging::fromJs<decltype(types.message)>(rt, value.getProperty(rt, "message"), jsInvoker),
-      bridging::fromJs<decltype(types.buttonPositive)>(rt, value.getProperty(rt, "buttonPositive"), jsInvoker),
-      bridging::fromJs<decltype(types.buttonNegative)>(rt, value.getProperty(rt, "buttonNegative"), jsInvoker),
-      bridging::fromJs<decltype(types.buttonNeutral)>(rt, value.getProperty(rt, "buttonNeutral"), jsInvoker),
-      bridging::fromJs<decltype(types.items)>(rt, value.getProperty(rt, "items"), jsInvoker),
-      bridging::fromJs<decltype(types.cancelable)>(rt, value.getProperty(rt, "cancelable"), jsInvoker),
-      bridging::fromJs<decltype(types.defaultButton)>(rt, value.getProperty(rt, "defaultButton"), jsInvoker),
-      bridging::fromJs<decltype(types.rootTag)>(rt, value.getProperty(rt, "rootTag"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static jsi::String titleToJs(jsi::Runtime &rt, decltype(types.title) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::String messageToJs(jsi::Runtime &rt, decltype(types.message) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::String buttonPositiveToJs(jsi::Runtime &rt, decltype(types.buttonPositive) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::String buttonNegativeToJs(jsi::Runtime &rt, decltype(types.buttonNegative) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::String buttonNeutralToJs(jsi::Runtime &rt, decltype(types.buttonNeutral) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::Array itemsToJs(jsi::Runtime &rt, decltype(types.items) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static bool cancelableToJs(jsi::Runtime &rt, decltype(types.cancelable) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static int defaultButtonToJs(jsi::Runtime &rt, decltype(types.defaultButton) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static int rootTagToJs(jsi::Runtime &rt, decltype(types.rootTag) value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const T &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    if (value.title) {
-      result.setProperty(rt, "title", bridging::toJs(rt, value.title.value(), jsInvoker));
-    }
-    if (value.message) {
-      result.setProperty(rt, "message", bridging::toJs(rt, value.message.value(), jsInvoker));
-    }
-    if (value.buttonPositive) {
-      result.setProperty(rt, "buttonPositive", bridging::toJs(rt, value.buttonPositive.value(), jsInvoker));
-    }
-    if (value.buttonNegative) {
-      result.setProperty(rt, "buttonNegative", bridging::toJs(rt, value.buttonNegative.value(), jsInvoker));
-    }
-    if (value.buttonNeutral) {
-      result.setProperty(rt, "buttonNeutral", bridging::toJs(rt, value.buttonNeutral.value(), jsInvoker));
-    }
-    if (value.items) {
-      result.setProperty(rt, "items", bridging::toJs(rt, value.items.value(), jsInvoker));
-    }
-    if (value.cancelable) {
-      result.setProperty(rt, "cancelable", bridging::toJs(rt, value.cancelable.value(), jsInvoker));
-    }
-    if (value.defaultButton) {
-      result.setProperty(rt, "defaultButton", bridging::toJs(rt, value.defaultButton.value(), jsInvoker));
-    }
-    if (value.rootTag) {
-      result.setProperty(rt, "rootTag", bridging::toJs(rt, value.rootTag.value(), jsInvoker));
-    }
-    return result;
-  }
-};
-
-class JSI_EXPORT NativeDialogManagerWindowsCxxSpecJSI : public TurboModule {
-protected:
-  NativeDialogManagerWindowsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
-  virtual void showAlert(jsi::Runtime &rt, jsi::Object config, jsi::Function onError, jsi::Function onAction) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeDialogManagerWindowsCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "Alert";
-
-protected:
-  NativeDialogManagerWindowsCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeDialogManagerWindowsCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-private:
-  class Delegate : public NativeDialogManagerWindowsCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeDialogManagerWindowsCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
-
-    jsi::Object getConstants(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getConstants) == 1,
-          "Expected getConstants(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::getConstants, jsInvoker_, instance_);
-    }
-    void showAlert(jsi::Runtime &rt, jsi::Object config, jsi::Function onError, jsi::Function onAction) override {
-      static_assert(
-          bridging::getParameterCount(&T::showAlert) == 4,
-          "Expected showAlert(...) to have 4 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::showAlert, jsInvoker_, instance_, std::move(config), std::move(onError), std::move(onAction));
-    }
-
-  private:
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
   class JSI_EXPORT NativeAccessibilityInfoCxxSpecJSI : public TurboModule {
 protected:
   NativeAccessibilityInfoCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -3815,6 +3534,287 @@ private:
   public:
     Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
       NativeDialogManagerAndroidCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
+
+    jsi::Object getConstants(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getConstants) == 1,
+          "Expected getConstants(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getConstants, jsInvoker_, instance_);
+    }
+    void showAlert(jsi::Runtime &rt, jsi::Object config, jsi::Function onError, jsi::Function onAction) override {
+      static_assert(
+          bridging::getParameterCount(&T::showAlert) == 4,
+          "Expected showAlert(...) to have 4 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::showAlert, jsInvoker_, instance_, std::move(config), std::move(onError), std::move(onAction));
+    }
+
+  private:
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  
+#pragma mark - AlertBaseDialogOptions
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
+struct [[deprecated("Use AlertDialogOptions instead.")]] AlertBaseDialogOptions {
+  P0 title;
+  P1 message;
+  P2 buttonPositive;
+  P3 buttonNegative;
+  P4 buttonNeutral;
+  P5 items;
+  P6 cancelable;
+  P7 defaultButton;
+  P8 rootTag;
+  bool operator==(const AlertBaseDialogOptions &other) const {
+    return title == other.title && message == other.message && buttonPositive == other.buttonPositive && buttonNegative == other.buttonNegative && buttonNeutral == other.buttonNeutral && items == other.items && cancelable == other.cancelable && defaultButton == other.defaultButton && rootTag == other.rootTag;
+  }
+};
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
+struct [[deprecated("Use AlertDialogOptionsBridging instead.")]] AlertBaseDialogOptionsBridging {
+  static AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7, P8> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7, P8> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "title"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "message"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "buttonPositive"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "buttonNegative"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "buttonNeutral"), jsInvoker),
+      bridging::fromJs<P5>(rt, value.getProperty(rt, "items"), jsInvoker),
+      bridging::fromJs<P6>(rt, value.getProperty(rt, "cancelable"), jsInvoker),
+      bridging::fromJs<P7>(rt, value.getProperty(rt, "defaultButton"), jsInvoker),
+      bridging::fromJs<P8>(rt, value.getProperty(rt, "rootTag"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static jsi::String titleToJs(jsi::Runtime &rt, P0 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::String messageToJs(jsi::Runtime &rt, P1 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::String buttonPositiveToJs(jsi::Runtime &rt, P2 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::String buttonNegativeToJs(jsi::Runtime &rt, P3 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::String buttonNeutralToJs(jsi::Runtime &rt, P4 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Array itemsToJs(jsi::Runtime &rt, P5 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static bool cancelableToJs(jsi::Runtime &rt, P6 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static int defaultButtonToJs(jsi::Runtime &rt, P7 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static int rootTagToJs(jsi::Runtime &rt, P8 value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7, P8> &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.title) {
+      result.setProperty(rt, "title", bridging::toJs(rt, value.title.value(), jsInvoker));
+    }
+    if (value.message) {
+      result.setProperty(rt, "message", bridging::toJs(rt, value.message.value(), jsInvoker));
+    }
+    if (value.buttonPositive) {
+      result.setProperty(rt, "buttonPositive", bridging::toJs(rt, value.buttonPositive.value(), jsInvoker));
+    }
+    if (value.buttonNegative) {
+      result.setProperty(rt, "buttonNegative", bridging::toJs(rt, value.buttonNegative.value(), jsInvoker));
+    }
+    if (value.buttonNeutral) {
+      result.setProperty(rt, "buttonNeutral", bridging::toJs(rt, value.buttonNeutral.value(), jsInvoker));
+    }
+    if (value.items) {
+      result.setProperty(rt, "items", bridging::toJs(rt, value.items.value(), jsInvoker));
+    }
+    if (value.cancelable) {
+      result.setProperty(rt, "cancelable", bridging::toJs(rt, value.cancelable.value(), jsInvoker));
+    }
+    if (value.defaultButton) {
+      result.setProperty(rt, "defaultButton", bridging::toJs(rt, value.defaultButton.value(), jsInvoker));
+    }
+    if (value.rootTag) {
+      result.setProperty(rt, "rootTag", bridging::toJs(rt, value.rootTag.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+
+#pragma mark - AlertDialogOptions
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
+struct AlertDialogOptions {
+  P0 title;
+  P1 message;
+  P2 buttonPositive;
+  P3 buttonNegative;
+  P4 buttonNeutral;
+  P5 items;
+  P6 cancelable;
+  P7 defaultButton;
+  P8 rootTag;
+  bool operator==(const AlertDialogOptions &other) const {
+    return title == other.title && message == other.message && buttonPositive == other.buttonPositive && buttonNegative == other.buttonNegative && buttonNeutral == other.buttonNeutral && items == other.items && cancelable == other.cancelable && defaultButton == other.defaultButton && rootTag == other.rootTag;
+  }
+};
+
+template <typename T>
+struct AlertDialogOptionsBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.title)>(rt, value.getProperty(rt, "title"), jsInvoker),
+      bridging::fromJs<decltype(types.message)>(rt, value.getProperty(rt, "message"), jsInvoker),
+      bridging::fromJs<decltype(types.buttonPositive)>(rt, value.getProperty(rt, "buttonPositive"), jsInvoker),
+      bridging::fromJs<decltype(types.buttonNegative)>(rt, value.getProperty(rt, "buttonNegative"), jsInvoker),
+      bridging::fromJs<decltype(types.buttonNeutral)>(rt, value.getProperty(rt, "buttonNeutral"), jsInvoker),
+      bridging::fromJs<decltype(types.items)>(rt, value.getProperty(rt, "items"), jsInvoker),
+      bridging::fromJs<decltype(types.cancelable)>(rt, value.getProperty(rt, "cancelable"), jsInvoker),
+      bridging::fromJs<decltype(types.defaultButton)>(rt, value.getProperty(rt, "defaultButton"), jsInvoker),
+      bridging::fromJs<decltype(types.rootTag)>(rt, value.getProperty(rt, "rootTag"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static jsi::String titleToJs(jsi::Runtime &rt, decltype(types.title) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::String messageToJs(jsi::Runtime &rt, decltype(types.message) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::String buttonPositiveToJs(jsi::Runtime &rt, decltype(types.buttonPositive) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::String buttonNegativeToJs(jsi::Runtime &rt, decltype(types.buttonNegative) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::String buttonNeutralToJs(jsi::Runtime &rt, decltype(types.buttonNeutral) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Array itemsToJs(jsi::Runtime &rt, decltype(types.items) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static bool cancelableToJs(jsi::Runtime &rt, decltype(types.cancelable) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static int defaultButtonToJs(jsi::Runtime &rt, decltype(types.defaultButton) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static int rootTagToJs(jsi::Runtime &rt, decltype(types.rootTag) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.title) {
+      result.setProperty(rt, "title", bridging::toJs(rt, value.title.value(), jsInvoker));
+    }
+    if (value.message) {
+      result.setProperty(rt, "message", bridging::toJs(rt, value.message.value(), jsInvoker));
+    }
+    if (value.buttonPositive) {
+      result.setProperty(rt, "buttonPositive", bridging::toJs(rt, value.buttonPositive.value(), jsInvoker));
+    }
+    if (value.buttonNegative) {
+      result.setProperty(rt, "buttonNegative", bridging::toJs(rt, value.buttonNegative.value(), jsInvoker));
+    }
+    if (value.buttonNeutral) {
+      result.setProperty(rt, "buttonNeutral", bridging::toJs(rt, value.buttonNeutral.value(), jsInvoker));
+    }
+    if (value.items) {
+      result.setProperty(rt, "items", bridging::toJs(rt, value.items.value(), jsInvoker));
+    }
+    if (value.cancelable) {
+      result.setProperty(rt, "cancelable", bridging::toJs(rt, value.cancelable.value(), jsInvoker));
+    }
+    if (value.defaultButton) {
+      result.setProperty(rt, "defaultButton", bridging::toJs(rt, value.defaultButton.value(), jsInvoker));
+    }
+    if (value.rootTag) {
+      result.setProperty(rt, "rootTag", bridging::toJs(rt, value.rootTag.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+class JSI_EXPORT NativeDialogManagerWindowsCxxSpecJSI : public TurboModule {
+protected:
+  NativeDialogManagerWindowsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
+  virtual void showAlert(jsi::Runtime &rt, jsi::Object config, jsi::Function onError, jsi::Function onAction) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeDialogManagerWindowsCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+  static constexpr std::string_view kModuleName = "Alert";
+
+protected:
+  NativeDialogManagerWindowsCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeDialogManagerWindowsCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+private:
+  class Delegate : public NativeDialogManagerWindowsCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeDialogManagerWindowsCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
 
     jsi::Object getConstants(jsi::Runtime &rt) override {
       static_assert(

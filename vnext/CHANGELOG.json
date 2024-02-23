@@ -2,6 +2,129 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 23 Feb 2024 06:16:34 GMT",
+      "version": "0.0.0-canary.776",
+      "tag": "react-native-windows_v0.0.0-canary.776",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b99a46fc6a156b95e2398329cab764d080adb537",
+            "comment": "Fix loading images from `file://` URIs"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e69448209d969529c784db0edc0f296d6d199b80",
+            "comment": "Fix issue with new arch cpp-app apps not finding the bundle in release builds"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 22 Feb 2024 06:16:36 GMT",
+      "version": "0.0.0-canary.775",
+      "tag": "react-native-windows_v0.0.0-canary.775",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9bd3906f3bbfb573f9aced3c2bd4f8a73c9c167f",
+            "comment": "Update WinAppSDK versions to latest public builds"
+          },
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "cb71c1663dc2503a281444ca12be4f8fbf344b43",
+            "comment": "Updated min VS version in dependency script"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.200",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Feb 2024 06:17:46 GMT",
+      "version": "0.0.0-canary.774",
+      "tag": "react-native-windows_v0.0.0-canary.774",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c390c663edc9182eee1e9209853ffb68404c34b2",
+            "comment": "sumbitkeyevents working with shift"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 16 Feb 2024 06:16:12 GMT",
+      "version": "0.0.0-canary.773",
+      "tag": "react-native-windows_v0.0.0-canary.773",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e2bf3e27f1ad328bcc74d00083482ed5d74a4af6",
+            "comment": "Fix UIScheduler deadlock on shutdown"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 15 Feb 2024 06:18:14 GMT",
+      "version": "0.0.0-canary.772",
+      "tag": "react-native-windows_v0.0.0-canary.772",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e3409713d5c4e23e83c88ec0c9b6597159325463",
+            "comment": "Integrate 1/9"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3052257c62677af71643ade12e23219827bb98ed",
+            "comment": "Deprecate and remove CoreApp experiment"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.199",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.76",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.20",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.20",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Feb 2024 06:16:55 GMT",
       "version": "0.0.0-canary.771",
       "tag": "react-native-windows_v0.0.0-canary.771",

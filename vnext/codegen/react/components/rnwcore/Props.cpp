@@ -14,46 +14,6 @@
 
 namespace facebook::react {
 
-RCTFlyoutProps::RCTFlyoutProps(
-    const PropsParserContext &context,
-    const RCTFlyoutProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
-
-    horizontalOffset(convertRawProp(context, rawProps, "horizontalOffset", sourceProps.horizontalOffset, {0.0})),
-    isLightDismissEnabled(convertRawProp(context, rawProps, "isLightDismissEnabled", sourceProps.isLightDismissEnabled, {false})),
-    autoFocus(convertRawProp(context, rawProps, "autoFocus", sourceProps.autoFocus, {false})),
-    shouldConstrainToRootBounds(convertRawProp(context, rawProps, "shouldConstrainToRootBounds", sourceProps.shouldConstrainToRootBounds, {false})),
-    isOverlayEnabled(convertRawProp(context, rawProps, "isOverlayEnabled", sourceProps.isOverlayEnabled, {false})),
-    isOpen(convertRawProp(context, rawProps, "isOpen", sourceProps.isOpen, {false})),
-    placement(convertRawProp(context, rawProps, "placement", sourceProps.placement, {})),
-    showMode(convertRawProp(context, rawProps, "showMode", sourceProps.showMode, {})),
-    target(convertRawProp(context, rawProps, "target", sourceProps.target, {0})),
-    verticalOffset(convertRawProp(context, rawProps, "verticalOffset", sourceProps.verticalOffset, {0.0}))
-      {}
-PLYIconProps::PLYIconProps(
-    const PropsParserContext &context,
-    const PLYIconProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
-
-    color(convertRawProp(context, rawProps, "color", sourceProps.color, {})),
-    emSize(convertRawProp(context, rawProps, "emSize", sourceProps.emSize, {0.0})),
-    fontUri(convertRawProp(context, rawProps, "fontUri", sourceProps.fontUri, {})),
-    glyph(convertRawProp(context, rawProps, "glyph", sourceProps.glyph, {})),
-    colorEnabled(convertRawProp(context, rawProps, "colorEnabled", sourceProps.colorEnabled, {false}))
-      {}
-RCTPopupProps::RCTPopupProps(
-    const PropsParserContext &context,
-    const RCTPopupProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
-
-    isOpen(convertRawProp(context, rawProps, "isOpen", sourceProps.isOpen, {false})),
-    isLightDismissEnabled(convertRawProp(context, rawProps, "isLightDismissEnabled", sourceProps.isLightDismissEnabled, {false})),
-    autoFocus(convertRawProp(context, rawProps, "autoFocus", sourceProps.autoFocus, {false})),
-    horizontalOffset(convertRawProp(context, rawProps, "horizontalOffset", sourceProps.horizontalOffset, {0.0})),
-    verticalOffset(convertRawProp(context, rawProps, "verticalOffset", sourceProps.verticalOffset, {0.0})),
-    target(convertRawProp(context, rawProps, "target", sourceProps.target, {0})),
-    testID(convertRawProp(context, rawProps, "testID", sourceProps.testID, {}))
-      {}
 ActivityIndicatorViewProps::ActivityIndicatorViewProps(
     const PropsParserContext &context,
     const ActivityIndicatorViewProps &sourceProps,

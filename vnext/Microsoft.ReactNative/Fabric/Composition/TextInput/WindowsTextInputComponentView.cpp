@@ -798,6 +798,44 @@ void WindowsTextInputComponentView::OnKeyUp(
   Super::OnKeyDown(source, args);
 }
 
+bool WindowsTextInputComponentView::ShouldSubmit(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
+  bool shouldSubmit = true;
+
+  if (shouldSubmit) {
+    if (!m_multiline && m_submitKeyEvents.size() == 0) {
+      // If no 'submitKeyEvents' are supplied, use the default behavior for single-line TextInput
+      shouldSubmit = args.KeyCode() == '\r';
+    } else if (m_submitKeyEvents.size() > 0) {
+      auto submitKeyEvent = m_submitKeyEvents.at(0);
+      // If 'submitKeyEvents' are supplied, use them to determine whether to emit onSubmitEditing' for either
+      // single-line or multi-line TextInput
+      if (args.KeyCode() == '\r') {
+        bool shiftDown = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) ==
+            winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+        bool ctrlDown = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
+            winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+        bool altDown = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
+            winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+        bool metaDown = source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) ==
+                winrt::Windows::UI::Core::CoreVirtualKeyStates::Down ||
+            source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) ==
+                winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+        return (submitKeyEvent.shiftKey && shiftDown) || (submitKeyEvent.ctrlKey && ctrlDown) ||
+            (submitKeyEvent.altKey && altDown) || (submitKeyEvent.metaKey && metaDown) ||
+            (!submitKeyEvent.shiftKey && !submitKeyEvent.altKey && !submitKeyEvent.metaKey && !submitKeyEvent.altKey &&
+             !shiftDown && !ctrlDown && !altDown && !metaDown);
+      } else {
+        shouldSubmit = false;
+      }
+    } else {
+      shouldSubmit = false;
+    }
+  }
+  return shouldSubmit;
+}
+
 void WindowsTextInputComponentView::OnCharacterReceived(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
@@ -806,6 +844,24 @@ void WindowsTextInputComponentView::OnCharacterReceived(
   if ((args.KeyCode() == '\t') &&
       (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) !=
        winrt::Windows::UI::Core::CoreVirtualKeyStates::Down)) {
+    return;
+  }
+
+  // Logic for submit events
+  if (ShouldSubmit(source, args)) {
+    // call onSubmitEditing event
+    if (m_eventEmitter && !m_comingFromJS) {
+      auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+      facebook::react::WindowsTextInputEventEmitter::OnSubmitEditing onSubmitEditingArgs;
+      onSubmitEditingArgs.text = GetTextFromRichEdit();
+      onSubmitEditingArgs.eventCount = ++m_nativeEventCount;
+      emitter->onSubmitEditing(onSubmitEditingArgs);
+    }
+
+    if (m_clearTextOnSubmit) {
+      // clear text from RichEdit
+      m_textServices->TxSetText(L"");
+    }
     return;
   }
 
@@ -926,6 +982,7 @@ void WindowsTextInputComponentView::updateProps(
   }
 
   if (oldTextInputProps.multiline != newTextInputProps.multiline) {
+    m_multiline = newTextInputProps.multiline;
     propBitsMask |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
     if (newTextInputProps.multiline) {
       propBits |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
@@ -950,6 +1007,16 @@ void WindowsTextInputComponentView::updateProps(
 
   if (oldTextInputProps.cursorColor != newTextInputProps.cursorColor) {
     updateCursorColor(newTextInputProps.cursorColor, newTextInputProps.textAttributes.foregroundColor);
+  }
+
+  if (oldTextInputProps.clearTextOnSubmit != newTextInputProps.clearTextOnSubmit) {
+    m_clearTextOnSubmit = newTextInputProps.clearTextOnSubmit;
+  }
+
+  if ((!newTextInputProps.submitKeyEvents.empty())) {
+    m_submitKeyEvents = newTextInputProps.submitKeyEvents;
+  } else {
+    m_submitKeyEvents.clear();
   }
 
   /*

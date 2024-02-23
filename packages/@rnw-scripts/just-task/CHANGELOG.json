@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Thu, 15 Feb 2024 06:18:15 GMT",
+      "version": "2.3.20",
+      "tag": "@rnw-scripts/just-task_v2.3.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/jest-e2e-config to v1.4.7",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Feb 2024 06:16:55 GMT",
       "version": "2.3.19",
       "tag": "@rnw-scripts/just-task_v2.3.19",

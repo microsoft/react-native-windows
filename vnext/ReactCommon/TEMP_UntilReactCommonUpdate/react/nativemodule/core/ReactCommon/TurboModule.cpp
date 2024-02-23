@@ -6,7 +6,7 @@
  */
 
 #include "TurboModule.h"
-#include <react/debug/react_native_assert.h>
+//#include <react/debug/react_native_assert.h>
 
 namespace facebook::react {
 
@@ -30,7 +30,7 @@ TurboModuleMethodValueKind getTurboModuleMethodValueKind(
     }
     return ObjectKind;
   }
-  react_native_assert(false && "Unsupported jsi::Value kind");
+  //react_native_assert(false && "Unsupported jsi::Value kind");
   return VoidKind;
 }
 

@@ -192,13 +192,13 @@ test('hashFileOrDirectory - Different Parents', async () => {
   ]);
 
   const fileRepo2 = new MockFileRepository([
-    {filename: 'src/a/c.txt', content: 'Lorem Ipsum'},
-    {filename: 'src/a/b.txt', content: 'Hello World!'},
-    {filename: 'src/b/a.txt', content: 'Ignore Me'},
+    {filename: 'src-win/a/c.txt', content: 'Lorem Ipsum'},
+    {filename: 'src-win/a/b.txt', content: 'Hello World!'},
+    {filename: 'src-win/b/a.txt', content: 'Ignore Me'},
   ]);
 
   expect(await hashFileOrDirectory('a', fileRepo1)).toBe(
-    await hashFileOrDirectory('src/a', fileRepo2),
+    await hashFileOrDirectory('src-win/a', fileRepo2),
   );
 });
 

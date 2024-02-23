@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/just-task",
-  "version": "2.3.19",
+  "version": "2.3.20",
   "license": "MIT",
   "main": "just-task.js",
   "repository": {
@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^18.5.3",
-    "@rnw-scripts/jest-e2e-config": "1.4.6",
+    "@rnw-scripts/jest-e2e-config": "1.4.7",
     "@rnw-scripts/jest-unittest-config": "1.5.7",
     "depcheck": "^1.4.1",
     "glob": "^7.1.6",

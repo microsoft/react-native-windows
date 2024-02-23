@@ -2,6 +2,27 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Thu, 15 Feb 2024 06:18:15 GMT",
+      "version": "0.0.0-canary.76",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.76",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.33",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.20",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Feb 2024 06:16:55 GMT",
       "version": "0.0.0-canary.75",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.75",

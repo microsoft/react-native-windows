@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Wed, 14 Feb 2024 06:16:55 GMT and should not be manually modified.
+This log was last generated on Thu, 15 Feb 2024 06:18:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.3.20
+
+Thu, 15 Feb 2024 06:18:15 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-e2e-config to v1.4.7
 
 ## 2.3.19
 

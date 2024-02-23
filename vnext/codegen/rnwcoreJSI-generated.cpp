@@ -11,26 +11,6 @@
 
 namespace facebook::react {
 
-static jsi::Value __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeDialogManagerWindowsCxxSpecJSI *>(&turboModule)->getConstants(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_showAlert(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeDialogManagerWindowsCxxSpecJSI *>(&turboModule)->showAlert(
-    rt,
-    args[0].asObject(rt),
-    args[1].asObject(rt).asFunction(rt),
-    args[2].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-
-NativeDialogManagerWindowsCxxSpecJSI::NativeDialogManagerWindowsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("Alert", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_getConstants};
-  methodMap_["showAlert"] = MethodMetadata {3, __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_showAlert};
-}
 static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isReduceMotionEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->isReduceMotionEnabled(
     rt,
@@ -1081,6 +1061,26 @@ NativeDialogManagerAndroidCxxSpecJSI::NativeDialogManagerAndroidCxxSpecJSI(std::
   : TurboModule("DialogManagerAndroid", jsInvoker) {
   methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeDialogManagerAndroidCxxSpecJSI_getConstants};
   methodMap_["showAlert"] = MethodMetadata {3, __hostFunction_NativeDialogManagerAndroidCxxSpecJSI_showAlert};
+}
+static jsi::Value __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeDialogManagerWindowsCxxSpecJSI *>(&turboModule)->getConstants(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_showAlert(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDialogManagerWindowsCxxSpecJSI *>(&turboModule)->showAlert(
+    rt,
+    args[0].asObject(rt),
+    args[1].asObject(rt).asFunction(rt),
+    args[2].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+
+NativeDialogManagerWindowsCxxSpecJSI::NativeDialogManagerWindowsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("Alert", jsInvoker) {
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_getConstants};
+  methodMap_["showAlert"] = MethodMetadata {3, __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_showAlert};
 }
 static jsi::Value __hostFunction_NativeExceptionsManagerCxxSpecJSI_reportFatalException(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeExceptionsManagerCxxSpecJSI *>(&turboModule)->reportFatalException(

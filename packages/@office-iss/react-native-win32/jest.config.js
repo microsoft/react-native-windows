@@ -17,7 +17,7 @@ module.exports = require('@rnx-kit/jest-preset')("win32", {
   testRegex: '/__tests__/.*-test\\.js$',
   testPathIgnorePatterns: [
     // Only run the version of the tests that are part of the merged source output
-    'src',
+    'src-win',
   ],
   unmockedModulePathPatterns: [
     'react',
