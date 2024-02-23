@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 22 Feb 2024 06:16:36 GMT and should not be manually modified.
+This log was last generated on Fri, 23 Feb 2024 06:16:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.776
+
+Fri, 23 Feb 2024 06:16:34 GMT
+
+### Changes
+
+- Fix loading images from `file://` URIs (jthysell@microsoft.com)
+- Fix issue with new arch cpp-app apps not finding the bundle in release builds (jthysell@microsoft.com)
 
 ## 0.0.0-canary.775
 

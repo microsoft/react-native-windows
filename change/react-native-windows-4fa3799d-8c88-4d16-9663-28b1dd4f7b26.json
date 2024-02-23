@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix loading images from `file://` URIs",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

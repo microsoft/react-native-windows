@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 23 Feb 2024 06:16:34 GMT",
+      "version": "0.0.0-canary.776",
+      "tag": "react-native-windows_v0.0.0-canary.776",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b99a46fc6a156b95e2398329cab764d080adb537",
+            "comment": "Fix loading images from `file://` URIs"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e69448209d969529c784db0edc0f296d6d199b80",
+            "comment": "Fix issue with new arch cpp-app apps not finding the bundle in release builds"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Feb 2024 06:16:36 GMT",
       "version": "0.0.0-canary.775",
       "tag": "react-native-windows_v0.0.0-canary.775",
