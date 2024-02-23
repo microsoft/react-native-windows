@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Sorts imports and fixes modernizes types for Flyout component",
+  "packageName": "react-native-windows",
+  "email": "ericroz@meta.com",
+  "dependentChangeType": "patch"
+}
