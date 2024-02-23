@@ -81,11 +81,9 @@ void WindowsModalHostComponentView::ShowOnUIThread() {
 
     // Check if window creation succeeded
     if (!m_hwnd) {
-      spunk.detach();
       throw std::exception("Failed to create new hwnd for Modal: " + GetLastError());
     }
 
-    spunk->AddRef(); // Will be stored in windowData
     spunk.detach();
   }
 
