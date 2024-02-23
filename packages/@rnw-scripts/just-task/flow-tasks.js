@@ -100,10 +100,9 @@ async function downloadFilesFromReactNative(
 
 async function downloadFlowTypes(overwrite = false) {
   const rnDir = path.dirname(require.resolve('react-native/package.json'));
-  const reactNativeVersion = require(path.resolve(
-    rnDir,
-    'package.json',
-  )).version;
+  const reactNativeVersion = require(
+    path.resolve(rnDir, 'package.json'),
+  ).version;
 
   const reactNativeRef = await getAbbreviatedRef(reactNativeVersion);
 
