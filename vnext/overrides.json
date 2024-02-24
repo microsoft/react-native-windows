@@ -490,6 +490,24 @@
       "file": "src-win/Libraries/Utilities/Platform.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
       "baseHash": "3c959f078048e8a9cbd6d0463071c2208597ab8a"
+    },
+    {
+      "type": "platform",
+      "file": "src-win/src/private/specs/modules/NativeAppTheme.js"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/src/private/specs/modules/NativeDialogManagerWindows.js",
+      "baseFile": "packages/react-native/src/private/specs/modules/NativeDialogManagerAndroid.js",
+      "baseHash": "d96d4f28b2380455809e1204ff509ce93cf39ef9",
+      "issue": 0
+    },
+    {
+      "type": "derived",
+      "file": "src-win/src/private/specs/modules/NativePlatformConstantsWin.js",
+      "baseFile": "packages/react-native/src/private/specs/modules/NativePlatformConstantsAndroid.js",
+      "baseHash": "b4a125d9134f33aeaba9e06988e18cbb0b4e9e9c",
+      "issue": 0
     }
   ]
 }

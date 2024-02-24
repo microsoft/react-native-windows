@@ -512,6 +512,27 @@
       "file": "src-win/Libraries/Utilities/useMergeRefs.js",
       "baseFile": "packages/react-native/Libraries/Utilities/useMergeRefs.js",
       "baseHash": "1f1ca637132e6e0fe1549ba520d98508269ca2bd"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/src/private/specs/modules/NativeAccessibilityInfo.win32.js",
+      "baseFile": "packages/react-native/src/private/specs/modules/NativeAccessibilityInfo.js",
+      "baseHash": "3c15b48f632de6b939697ae114734cc54e003027",
+      "issue": 0
+    },
+    {
+      "type": "derived",
+      "file": "src-win/src/private/specs/modules/NativeImageLoaderWin32.js",
+      "baseFile": "packages/react-native/src/private/specs/modules/NativeImageLoaderAndroid.js",
+      "baseHash": "70bc73bc81592060ccbaffc0ff9f612d16c39c6c",
+      "issue": 0
+    },
+    {
+      "type": "derived",
+      "file": "src-win/src/private/specs/modules/NativePlatformConstantsWin.js",
+      "baseFile": "packages/react-native/src/private/specs/modules/NativePlatformConstantsAndroid.js",
+      "baseHash": "b4a125d9134f33aeaba9e06988e18cbb0b4e9e9c",
+      "issue": 0
     }
   ]
 }
