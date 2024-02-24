@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Thu, 15 Feb 2024 06:18:15 GMT and should not be manually modified.
+This log was last generated on Sat, 24 Feb 2024 06:17:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.77
+
+Sat, 24 Feb 2024 06:17:16 GMT
+
+### Changes
+
+- Migrate src directory to src-win (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.34
+- Bump @rnw-scripts/just-task to v2.3.21
 
 ## 0.0.0-canary.76
 

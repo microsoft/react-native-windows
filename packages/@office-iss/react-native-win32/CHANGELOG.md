@@ -1,8 +1,19 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 15 Feb 2024 06:18:14 GMT and should not be manually modified.
+This log was last generated on Sat, 24 Feb 2024 06:17:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.233
+
+Sat, 24 Feb 2024 06:17:16 GMT
+
+### Changes
+
+- Migrate src directory to src-win (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.9
+- Bump @rnw-scripts/just-task to v2.3.21
+- Bump react-native-platform-override to v1.9.21
 
 ## 0.0.0-canary.232
 
