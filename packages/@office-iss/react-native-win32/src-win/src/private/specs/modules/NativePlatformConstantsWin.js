@@ -13,24 +13,24 @@ import type {TurboModule} from '../../../../Libraries/TurboModule/RCTExport';
 import * as TurboModuleRegistry from '../../../../Libraries/TurboModule/TurboModuleRegistry';
 
 export type PlatformConstantsWin32 = {|
-isTesting: boolean,
-isDisableAnimations?: boolean,
-reactNativeVersion: {|
+  isTesting: boolean,
+  isDisableAnimations?: boolean,
+  reactNativeVersion: {|
     major: number,
     minor: number,
     patch: number,
     prerelease: ?string | number,
-|},
-forceTouchAvailable: boolean,
-osVersion: number,
-systemName: string,
-interfaceIdiom: string,
+  |},
+  forceTouchAvailable: boolean,
+  osVersion: number,
+  systemName: string,
+  interfaceIdiom: string,
 |};
 
 export interface Spec extends TurboModule {
-+getConstants: () => PlatformConstantsWin32;
+  +getConstants: () => PlatformConstantsWin32;
 }
 
 export default (TurboModuleRegistry.getEnforcing<Spec>(
-'PlatformConstants',
+  'PlatformConstants',
 ): Spec);

@@ -7,5 +7,5 @@
  */
 
 export * from '../../src/private/specs/modules/NativePlatformConstantsWin';
-import NativePlatformConstantsWindows from '../../src/private/specs/modules/NativePlatformConstantsWin';
-export default NativePlatformConstantsWindows;
+import NativePlatformConstantsWin from '../../src/private/specs/modules/NativePlatformConstantsWin';
+export default NativePlatformConstantsWin;
