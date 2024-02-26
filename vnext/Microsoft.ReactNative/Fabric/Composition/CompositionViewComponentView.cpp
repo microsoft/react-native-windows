@@ -39,19 +39,22 @@ winrt::Microsoft::ReactNative::Composition::ICompositionContext CreateCompositio
   return m_compositionContext;
 }
 
+ComponentViewFeatures CreateCompositionComponentViewArgs::Features() const noexcept {
+  return m_features;
+}
+
+void CreateCompositionComponentViewArgs::Features(ComponentViewFeatures value) noexcept {
+  m_features = value;
+}
+
 ComponentView::ComponentView(const winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs &args)
-    : ComponentView(
-          args.CompositionContext(),
-          args.Tag(),
-          args.ReactContext(),
-          CompositionComponentViewFeatures::Default,
-          true) {}
+    : ComponentView(args.CompositionContext(), args.Tag(), args.ReactContext(), args.Features(), true) {}
 
 ComponentView::ComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,
-    CompositionComponentViewFeatures flags,
+    ComponentViewFeatures flags,
     bool customControl)
     : base_type(tag, reactContext, customControl), m_compContext(compContext), m_flags(flags) {
   m_outerVisual = compContext.CreateSpriteVisual(); // TODO could be a raw ContainerVisual if we had a
@@ -64,69 +67,38 @@ facebook::react::Tag ComponentView::Tag() const noexcept {
   return m_tag;
 }
 
-RootComponentView *ComponentView::rootComponentView() noexcept {
-  if (m_rootView)
-    return m_rootView;
-
-  if (m_parent)
-    return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->rootComponentView();
-
-  return nullptr;
-}
-
 facebook::react::Props::Shared ComponentView::props() noexcept {
   return viewProps();
 }
 
-void ComponentView::parent(const winrt::Microsoft::ReactNative::ComponentView &parent) noexcept {
-  if (!parent) {
-    auto root = rootComponentView();
-    winrt::Microsoft::ReactNative::ComponentView view{nullptr};
-    winrt::check_hresult(
-        QueryInterface(winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
-    if (root && root->GetFocusedComponent() == view) {
-      root->SetFocusedComponent(nullptr); // TODO need move focus logic - where should focus go?
-    }
-  }
-
-  if (m_parent != parent) {
-    m_rootView = nullptr;
-    m_parent = parent;
-    if (parent) {
-      theme(winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parent)->theme());
-    }
-  }
-}
-
-void ComponentView::theme(winrt::Microsoft::ReactNative::Composition::implementation::Theme *value) noexcept {
-  if (m_theme != value) {
-    for (auto it = m_children.begin(); it != m_children.end(); ++it) {
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)->theme(value);
-    }
-
-    m_theme = value;
-    onThemeChanged();
-  }
-}
-
 void ComponentView::onThemeChanged() noexcept {
-  if ((m_flags & CompositionComponentViewFeatures::NativeBorder) == CompositionComponentViewFeatures::NativeBorder) {
+  if ((m_flags & ComponentViewFeatures::Background) == ComponentViewFeatures::Background) {
+    if (viewProps()->backgroundColor) {
+      Visual().as<ISpriteVisual>().Brush(theme()->Brush(*viewProps()->backgroundColor));
+    } else {
+      Visual().as<ISpriteVisual>().Brush(nullptr);
+    }
+  }
+
+  if ((m_flags & ComponentViewFeatures::NativeBorder) == ComponentViewFeatures::NativeBorder) {
     m_needsBorderUpdate = true;
     finalizeBorderUpdates(m_layoutMetrics, *viewProps());
   }
 
-  if ((m_flags & CompositionComponentViewFeatures::ShadowProps) == CompositionComponentViewFeatures::ShadowProps) {
+  if ((m_flags & ComponentViewFeatures::ShadowProps) == ComponentViewFeatures::ShadowProps) {
     applyShadowProps(*viewProps());
   }
 
   base_type::onThemeChanged();
+
+  if (m_customComponent) {
+    // Review is it expected that I need this cast to call overridden methods?
+    winrt::Microsoft::ReactNative::Composition::ComponentView outer(*this);
+    outer.OnThemeChanged();
+  }
 }
 
-winrt::Microsoft::ReactNative::Composition::implementation::Theme *ComponentView::theme() const noexcept {
-  return m_theme ? m_theme
-                 : winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(
-                       winrt::Microsoft::ReactNative::Composition::implementation::Theme::EmptyTheme());
-}
+void ComponentView::OnThemeChanged() noexcept {}
 
 void ComponentView::Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept {
   theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(value));
@@ -146,10 +118,20 @@ void ComponentView::updateProps(
   const auto &oldViewProps = *viewProps();
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(props);
 
-  if ((m_flags & CompositionComponentViewFeatures::NativeBorder) == CompositionComponentViewFeatures::NativeBorder) {
+  if ((m_flags & ComponentViewFeatures::Background) == ComponentViewFeatures::Background) {
+    if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
+      if (newViewProps.backgroundColor) {
+        Visual().as<ISpriteVisual>().Brush(theme()->Brush(*newViewProps.backgroundColor));
+      } else {
+        Visual().as<ISpriteVisual>().Brush(nullptr);
+      }
+    }
+  }
+
+  if ((m_flags & ComponentViewFeatures::NativeBorder) == ComponentViewFeatures::NativeBorder) {
     updateBorderProps(oldViewProps, newViewProps);
   }
-  if ((m_flags & CompositionComponentViewFeatures::ShadowProps) == CompositionComponentViewFeatures::ShadowProps) {
+  if ((m_flags & ComponentViewFeatures::ShadowProps) == ComponentViewFeatures::ShadowProps) {
     updateShadowProps(oldViewProps, newViewProps);
   }
 
@@ -159,7 +141,7 @@ void ComponentView::updateProps(
 void ComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
-  if ((m_flags & CompositionComponentViewFeatures::NativeBorder) == CompositionComponentViewFeatures::NativeBorder) {
+  if ((m_flags & ComponentViewFeatures::NativeBorder) == ComponentViewFeatures::NativeBorder) {
     updateBorderLayoutMetrics(layoutMetrics, *viewProps());
   }
 
@@ -170,7 +152,7 @@ void ComponentView::updateLayoutMetrics(
 }
 
 void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
-  if ((m_flags & CompositionComponentViewFeatures::NativeBorder) == CompositionComponentViewFeatures::NativeBorder) {
+  if ((m_flags & ComponentViewFeatures::NativeBorder) == ComponentViewFeatures::NativeBorder) {
     finalizeBorderUpdates(m_layoutMetrics, *viewProps());
   }
 
@@ -1472,14 +1454,15 @@ std::string ComponentView::DefaultHelpText() const noexcept {
 
 ViewComponentView::ViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs &args)
-    : ViewComponentView(args.CompositionContext(), args.Tag(), args.ReactContext(), true) {}
+    : ViewComponentView(args.CompositionContext(), args.Tag(), args.ReactContext(), args.Features(), true) {}
 
 ViewComponentView::ViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+    ComponentViewFeatures flags,
     bool customComponent)
-    : base_type(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, customComponent) {
+    : base_type(compContext, tag, reactContext, flags, customComponent) {
   static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
   m_props = defaultProps;
 }
@@ -1505,7 +1488,7 @@ winrt::Microsoft::ReactNative::ComponentView ViewComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return winrt::make<ViewComponentView>(compContext, tag, reactContext, false);
+  return winrt::make<ViewComponentView>(compContext, tag, reactContext, ComponentViewFeatures::Default, false);
 }
 
 void ViewComponentView::MountChildComponentView(
@@ -1515,7 +1498,12 @@ void ViewComponentView::MountChildComponentView(
 
   indexOffsetForBorder(index);
   ensureVisual();
-  m_visual.InsertAt(childComponentView.as<ComponentView>()->OuterVisual(), index);
+
+  // TODO if we get mixed children of composition and non-composition ComponentViews the indexes will get mixed up
+  // We could offset the index based on non-composition children in m_children
+  if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
+    m_visual.InsertAt(compositionChild->OuterVisual(), index);
+  }
 }
 
 void ViewComponentView::UnmountChildComponentView(
@@ -1524,7 +1512,9 @@ void ViewComponentView::UnmountChildComponentView(
   base_type::UnmountChildComponentView(childComponentView, index);
 
   indexOffsetForBorder(index);
-  m_visual.Remove(childComponentView.as<ComponentView>()->OuterVisual());
+  if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
+    m_visual.Remove(compositionChild->OuterVisual());
+  }
 }
 
 void ViewComponentView::updateProps(
@@ -1534,14 +1524,6 @@ void ViewComponentView::updateProps(
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(props);
 
   ensureVisual();
-  if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
-    if (newViewProps.backgroundColor) {
-      m_visual.as<ISpriteVisual>().Brush(theme()->Brush(*newViewProps.backgroundColor));
-    } else {
-      m_visual.as<ISpriteVisual>().Brush(nullptr);
-    }
-  }
-
   if (oldViewProps.opacity != newViewProps.opacity) {
     m_visual.Opacity(newViewProps.opacity);
   }
@@ -1559,19 +1541,9 @@ void ViewComponentView::updateProps(
 
 const winrt::Microsoft::ReactNative::IComponentProps ViewComponentView::userProps(
     facebook::react::Props::Shared const &props) noexcept {
+  assert(m_customComponent);
   const auto &abiViewProps = *std::static_pointer_cast<const ::Microsoft::ReactNative::AbiViewProps>(props);
   return abiViewProps.UserProps();
-}
-
-void ViewComponentView::onThemeChanged() noexcept {
-  ensureVisual();
-  if (m_props->backgroundColor) {
-    m_visual.as<ISpriteVisual>().Brush(theme()->Brush(*m_props->backgroundColor));
-  } else {
-    m_visual.as<ISpriteVisual>().Brush(nullptr);
-  }
-
-  base_type::onThemeChanged();
 }
 
 facebook::react::Tag ViewComponentView::hitTest(
@@ -1687,7 +1659,7 @@ void ViewComponentView::updateLayoutMetrics(
   base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 }
 
-void ViewComponentView::UpdateLayoutMetrics(LayoutMetrics metrics) noexcept {
+void ViewComponentView::UpdateLayoutMetrics(const LayoutMetrics &metrics, const LayoutMetrics &oldMetrics) noexcept {
   m_visual.Size({metrics.Frame.Width * metrics.PointScaleFactor, metrics.Frame.Height * metrics.PointScaleFactor});
 }
 

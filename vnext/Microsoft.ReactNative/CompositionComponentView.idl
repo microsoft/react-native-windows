@@ -11,10 +11,25 @@ import "CompositionSwitcher.idl";
 
 namespace Microsoft.ReactNative.Composition
 {
+
+  [flags]
+  [webhosthidden]
+  [experimental]
+  enum ComponentViewFeatures
+  {
+    None          = 0x00000000,
+    NativeBorder  = 0x00000001,
+    ShadowProps   = 0x00000002,
+    Background    = 0x00000004,
+
+    Default       = 0x00000007, // ShadowProps | NativeBorder | Background
+  };
+
   [experimental]
   [webhosthidden]
   runtimeclass CreateCompositionComponentViewArgs : Microsoft.ReactNative.CreateComponentViewArgs {
     ICompositionContext CompositionContext { get; };
+    ComponentViewFeatures Features;
   };
 
   [experimental]
@@ -24,6 +39,7 @@ namespace Microsoft.ReactNative.Composition
 
     ICompositionContext CompositionContext { get; };
     Theme Theme;
+    overridable void OnThemeChanged();
     Boolean CapturePointer(Microsoft.ReactNative.Composition.Input.Pointer pointer);
     void ReleasePointerCapture(Microsoft.ReactNative.Composition.Input.Pointer pointer);
   };

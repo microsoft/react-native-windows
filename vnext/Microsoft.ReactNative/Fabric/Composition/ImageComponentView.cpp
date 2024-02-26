@@ -13,6 +13,7 @@
 
 #include <react/renderer/components/image/ImageEventEmitter.h>
 
+#include <AutoDraw.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Utils/ImageUtils.h>
 #include <shcore.h>
@@ -20,7 +21,6 @@
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
-#include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
 #include "RootComponentView.h"
@@ -52,7 +52,12 @@ ImageComponentView::ImageComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
+    : Super(
+          compContext,
+          tag,
+          reactContext,
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
+          false) {
   static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
   m_props = defaultProps;
 }

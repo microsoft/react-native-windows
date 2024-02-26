@@ -67,7 +67,9 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
     base_type::HandleCommand(commandName, args);
   }
 
-  void UpdateProps(const winrt::Microsoft::ReactNative::IComponentProps &props) {
+  void UpdateProps(
+      const winrt::Microsoft::ReactNative::IComponentProps &props,
+      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) {
     auto myProps = props.as<CustomXamlComponentProps>();
 
     m_buttonLabelTextBlock.Text(myProps->label);
@@ -76,10 +78,10 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
     m_state = state;
   }
 
-  void UpdateLayoutMetrics(const winrt::Microsoft::ReactNative::LayoutMetrics &layoutMetrics) {
-    m_visual.Size(
-        {layoutMetrics.Frame.Width * layoutMetrics.PointScaleFactor,
-         layoutMetrics.Frame.Height * layoutMetrics.PointScaleFactor});
+  void UpdateLayoutMetrics(
+      const winrt::Microsoft::ReactNative::LayoutMetrics &layoutMetrics,
+      const winrt::Microsoft::ReactNative::LayoutMetrics &oldLayoutMetrics) {
+    base_type::UpdateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 #ifdef USE_EXPERIMENTAL_WINUI3
     auto site = m_siteBridge.Site();
     auto siteWindow = site.Environment();
@@ -185,7 +187,7 @@ static void RegisterViewComponent(winrt::Microsoft::ReactNative::IReactPackageBu
         });
         auto compBuilder =
             builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
-        compBuilder.SetCreateComponentView(
+        compBuilder.SetCreateViewComponentView(
             [](const winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs &args) noexcept {
               return winrt::make<CustomComponent>(true, args);
             });
@@ -225,7 +227,7 @@ static void RegisterViewComponent(winrt::Microsoft::ReactNative::IReactPackageBu
         });
         auto compBuilder =
             builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
-        compBuilder.SetCreateComponentView(
+        compBuilder.SetCreateViewComponentView(
             [](const winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs &args) noexcept {
               return winrt::make<CustomComponent>(false, args);
             });

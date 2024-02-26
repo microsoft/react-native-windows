@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/jest-out-of-tree-snapshot-resolver",
   "entries": [
     {
+      "date": "Sat, 24 Feb 2024 06:17:16 GMT",
+      "version": "1.1.9",
+      "tag": "@rnw-scripts/jest-out-of-tree-snapshot-resolver_v1.1.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/jest-out-of-tree-snapshot-resolver",
+            "commit": "1e9197c0efe1e390c874ea22c0ebf181fbb3739d",
+            "comment": "Migrate src directory to src-win"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Feb 2024 06:16:55 GMT",
       "version": "1.1.8",
       "tag": "@rnw-scripts/jest-out-of-tree-snapshot-resolver_v1.1.8",

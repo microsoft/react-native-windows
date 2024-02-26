@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Sat, 24 Feb 2024 06:17:17 GMT",
+      "version": "0.1.218",
+      "tag": "@react-native-windows/automation-commands_v0.1.218",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.116",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.21",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 23 Feb 2024 06:16:34 GMT",
       "version": "0.1.217",
       "tag": "@react-native-windows/automation-commands_v0.1.217",
