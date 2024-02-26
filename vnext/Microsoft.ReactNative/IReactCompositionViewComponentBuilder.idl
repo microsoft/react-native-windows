@@ -14,16 +14,15 @@ import "CompositionComponentView.idl";
 namespace Microsoft.ReactNative.Composition
 {
   [experimental]
-  DOC_STRING("Provides a factory method to create an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetCreateView")
-  delegate Microsoft.ReactNative.ComponentView CompositionComponentFactory(CreateCompositionComponentViewArgs args);
+  DOC_STRING("Provides a factory method to create an instance of a ViewComponentView. See @IReactCompositionViewComponentBuilder.SetCreateViewComponentView")
+  delegate Microsoft.ReactNative.Composition.ViewComponentView CompositionViewComponentViewFactory(CreateCompositionComponentViewArgs args);
 
   [webhosthidden]
   [experimental]
   DOC_STRING(".")
   interface IReactCompositionViewComponentBuilder
   {
-    // (ICompositionContext) => Handle
-    void SetCreateComponentView(CompositionComponentFactory impl);
+    void SetCreateViewComponentView(CompositionViewComponentViewFactory impl);
   };
 
 } // namespace Microsoft.ReactNative
