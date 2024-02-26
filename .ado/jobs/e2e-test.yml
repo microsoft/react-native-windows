@@ -189,7 +189,6 @@ jobs:
                   buildConfiguration: Release
                   buildPlatform: ${{ matrix.BuildPlatform }}
                   buildLogDirectory: $(BuildLogDirectory)
-                  deployOption: '--no-deploy'
                   workingDirectory: packages/e2e-test-app-fabric
 
               - script: |

@@ -16,12 +16,6 @@ const defaultTransform = [
   require('@rnw-scripts/babel-node-config'),
 ];
 
-const platformDir =
-  (process.env.E2ETestFabricBuildPlatform === 'x86'
-    ? ''
-    : (process.env.E2ETestFabricBuildPlatform ?? 'x64') + '\\') +
-  (process.env.E2ETestFabricBuildConfiguration ?? 'Release');
-
 module.exports = {
   preset: '@rnx-kit/jest-preset',
 
@@ -66,15 +60,14 @@ module.exports = {
   setupFilesAfterEnv: ['react-native-windows/jest/setup', './jest.setup.js'],
 
   testEnvironmentOptions: {
-    app: `windows\\${platformDir}\\RNTesterApp-Fabric\\RNTesterApp-Fabric.exe`,
-    appWorkingDir: `windows\\${platformDir}\\RNTesterApp-Fabric`,
+    app: 'RNTesterApp-Fabric',
     enableAutomationChannel: true,
-    /* // Enable for more detailed logging
+    // Enable for more detailed logging
     webdriverOptions: {
       // Level of logging verbosity: trace | debug | info | warn | error
       logLevel: 'info',
+      connectionRetryCount: 10,
     },
-    */
   },
 
   moduleFileExtensions: [
