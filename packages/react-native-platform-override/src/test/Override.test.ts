@@ -63,7 +63,7 @@ const directoryCopyOverride = testCase(
   'Directory Copy',
   DirectoryCopyOverride,
   {
-    directory: 'src/foo',
+    directory: 'src-win/foo',
     baseDirectory: 'foo',
     baseVersion: '0.62.2',
     baseHash: 'abcde',
@@ -102,8 +102,8 @@ test.each(fileOverrides)('name - %s', (_, ovrClass, args) => {
 });
 
 test.each(directoryOverrides)('name - %s', (_, ovrClass, args) => {
-  const override = new ovrClass({...args, directory: 'src/foo/abc'});
-  expect(override.name()).toBe(normalizePath('src/foo/abc'));
+  const override = new ovrClass({...args, directory: 'src-win/foo/abc'});
+  expect(override.name()).toBe(normalizePath('src-win/foo/abc'));
 });
 
 test.each(fileOverrides)(
@@ -117,8 +117,8 @@ test.each(fileOverrides)(
 test.each(directoryOverrides)(
   'includesFile - Has File (%s)',
   (_, ovrClass, args) => {
-    const override = new ovrClass({...args, directory: 'src/foo/abc'});
-    expect(override.includesFile('src/foo/abc/d.txt')).toBe(true);
+    const override = new ovrClass({...args, directory: 'src-win/foo/abc'});
+    expect(override.includesFile('src-win/foo/abc/d.txt')).toBe(true);
   },
 );
 
@@ -130,8 +130,8 @@ test.each(fileOverrides)('includesFile - No File (%s)', (_, ovrClass, args) => {
 test.each(directoryOverrides)(
   'includesFile - No File (%s)',
   (_, ovrClass, args) => {
-    const override = new ovrClass({...args, directory: 'src/foo/abc'});
-    expect(override.includesFile('src/foo/abcd/e.txt')).toBe(false);
+    const override = new ovrClass({...args, directory: 'src-win/foo/abc'});
+    expect(override.includesFile('src-win/foo/abcd/e.txt')).toBe(false);
   },
 );
 
@@ -146,8 +146,8 @@ test.each(fileOverrides)(
 test.each(directoryOverrides)(
   'includesFile - Backslash (%s)',
   (_, ovrClass, args) => {
-    const override = new ovrClass({...args, directory: 'src/foo/abc'});
-    expect(override.includesFile('src\\foo\\abc\\d.txt')).toBe(true);
+    const override = new ovrClass({...args, directory: 'src-win/foo/abc'});
+    expect(override.includesFile('src-win\\foo\\abc\\d.txt')).toBe(true);
   },
 );
 
@@ -159,8 +159,8 @@ test.each(fileOverrides)('includesFile - Slash (%s)', (_, ovrClass, args) => {
 test.each(directoryOverrides)(
   'includesFile - Slash (%s)',
   (_, ovrClass, args) => {
-    const override = new ovrClass({...args, directory: 'src/foo/abc'});
-    expect(override.includesFile('src/foo/abc/d.txt')).toBe(true);
+    const override = new ovrClass({...args, directory: 'src-win/foo/abc'});
+    expect(override.includesFile('src-win/foo/abc/d.txt')).toBe(true);
   },
 );
 

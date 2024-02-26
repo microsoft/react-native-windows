@@ -209,10 +209,13 @@ test('overrideCopyOfBase - File Is Copy', async () => {
 
 test('overrideCopyOfBase - Directory Is Copy', async () => {
   expect(
-    await ValidationStrategies.overrideCopyOfBase('src/foo', 'foo').validate(
+    await ValidationStrategies.overrideCopyOfBase(
+      'src-win/foo',
+      'foo',
+    ).validate(
       new MockWritableFileRepository([
-        {filename: 'src/foo/a.js', content: 'ABCD'},
-        {filename: 'src/foo/b.js', content: 'EFGH'},
+        {filename: 'src-win/foo/a.js', content: 'ABCD'},
+        {filename: 'src-win/foo/b.js', content: 'EFGH'},
       ]),
       new MockReactFileRepository([
         {filename: 'foo/b.js', content: 'EFGH'},
@@ -249,17 +252,20 @@ test('overrideCopyOfBase - File Not A Copy', async () => {
 
 test('overrideCopyOfBase - Directory Not A Copy', async () => {
   expect(
-    await ValidationStrategies.overrideCopyOfBase('src/foo', 'foo').validate(
+    await ValidationStrategies.overrideCopyOfBase(
+      'src-win/foo',
+      'foo',
+    ).validate(
       new MockWritableFileRepository([
-        {filename: 'src/foo/a.js', content: 'ABCDDCBA'},
-        {filename: 'src/foo/b.js', content: 'EFGH'},
+        {filename: 'src-win/foo/a.js', content: 'ABCDDCBA'},
+        {filename: 'src-win/foo/b.js', content: 'EFGH'},
       ]),
       new MockReactFileRepository([
         {filename: 'foo/b.js', content: 'EFGH'},
         {filename: 'foo/a.js', content: 'ABCD'},
       ]),
     ),
-  ).toEqual([{type: 'overrideDifferentFromBase', overrideName: 'src/foo'}]);
+  ).toEqual([{type: 'overrideDifferentFromBase', overrideName: 'src-win/foo'}]);
 });
 
 test('overrideCopyOfBase - Directory Has Extra File', async () => {
@@ -308,19 +314,19 @@ test('overrideDifferentFromBase - File Is Copy', async () => {
 test('overrideDifferentFromBase - Directory Is Copy', async () => {
   expect(
     await ValidationStrategies.overrideDifferentFromBase(
-      'src/foo',
+      'src-win/foo',
       'foo',
     ).validate(
       new MockWritableFileRepository([
-        {filename: 'src/foo/a.js', content: 'ABCD'},
-        {filename: 'src/foo/b.js', content: 'EFGH'},
+        {filename: 'src-win/foo/a.js', content: 'ABCD'},
+        {filename: 'src-win/foo/b.js', content: 'EFGH'},
       ]),
       new MockReactFileRepository([
         {filename: 'foo/b.js', content: 'EFGH'},
         {filename: 'foo/a.js', content: 'ABCD'},
       ]),
     ),
-  ).toEqual([{type: 'overrideSameAsBase', overrideName: 'src/foo'}]);
+  ).toEqual([{type: 'overrideSameAsBase', overrideName: 'src-win/foo'}]);
 });
 
 test('overrideDifferentFromBase - Different Line Endings', async () => {
@@ -363,12 +369,12 @@ test('overrideDifferentFromBase - File Not A Copy', async () => {
 test('overrideDifferentFromBase - Directory Not A Copy', async () => {
   expect(
     await ValidationStrategies.overrideDifferentFromBase(
-      'src/foo',
+      'src-win/foo',
       'foo',
     ).validate(
       new MockWritableFileRepository([
-        {filename: 'src/foo/a.js', content: 'ABCDDCBA'},
-        {filename: 'src/foo/b.js', content: 'EFGH'},
+        {filename: 'src-win/foo/a.js', content: 'ABCDDCBA'},
+        {filename: 'src-win/foo/b.js', content: 'EFGH'},
       ]),
       new MockReactFileRepository([
         {filename: 'foo/b.js', content: 'EFGH'},

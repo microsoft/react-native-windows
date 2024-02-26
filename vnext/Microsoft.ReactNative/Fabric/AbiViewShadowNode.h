@@ -8,6 +8,7 @@
 #include "YogaLayoutableShadowNode.g.h"
 #include <react/components/rnwcore/EventEmitters.h>
 #include <unordered_map>
+#include "AbiShadowNode.h"
 #include "AbiState.h"
 #include "AbiViewProps.h"
 
@@ -45,21 +46,6 @@ struct LayoutContext : LayoutContextT<LayoutContext> {
   }
 
   facebook::react::LayoutContext m_layoutContext;
-};
-
-struct ShadowNode : ShadowNodeT<ShadowNode> {
-  ShadowNode(facebook::react::ShadowNode::Shared shadowNode) noexcept;
-
-  void EnsureUnsealed() noexcept;
-  winrt::IInspectable Tag() const noexcept;
-  void Tag(winrt::IInspectable tag) noexcept;
-
-  winrt::IInspectable StateData() const noexcept;
-  void StateData(winrt::IInspectable tag) noexcept;
-
- protected:
-  facebook::react::ShadowNode::Shared m_shadowNode;
-  winrt::IInspectable m_tag;
 };
 
 struct YogaLayoutableShadowNode : YogaLayoutableShadowNodeT<YogaLayoutableShadowNode, implementation::ShadowNode> {

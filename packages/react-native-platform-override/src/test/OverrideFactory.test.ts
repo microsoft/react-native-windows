@@ -21,7 +21,7 @@ const factory = new OverrideFactoryImpl(
   ]),
   new MockFileRepository([
     {filename: 'foo.windows.js', content: 'DCBA'},
-    {filename: 'src/bar/test.windows.js', content: 'I live in a folder'},
+    {filename: 'src-win/bar/test.windows.js', content: 'I live in a folder'},
   ]),
 );
 
@@ -89,14 +89,14 @@ test('createPatchOverride', async () => {
 
 test('createDirectoryCopyOverride', async () => {
   const override = await factory.createDirectoryCopyOverride(
-    'src/bar',
+    'src-win/bar',
     'bar',
     1245,
   );
-  expect(override.name()).toBe(normalizePath('src/bar'));
+  expect(override.name()).toBe(normalizePath('src-win/bar'));
 
   expect(override.serialize().type).toBe('copy');
-  expect(override.serialize().directory).toBe('src/bar');
+  expect(override.serialize().directory).toBe('src-win/bar');
   expect(override.serialize().baseDirectory).toBe('bar');
   expect(override.serialize().issue).toBe(1245);
 });
@@ -125,7 +125,7 @@ test.each(<TestCall<ReturnsPromise>[]>[
   testCall(factory.createCopyOverride, ['foo.windows.js', 'nope.js', 1245]),
   testCall(factory.createDerivedOverride, ['foo.windows.js', 'nope.js', 1245]),
   testCall(factory.createPatchOverride, ['foo.windows.js', 'nope.js', 1245]),
-  testCall(factory.createDirectoryCopyOverride, ['src/bar', 'nope', 1245]),
+  testCall(factory.createDirectoryCopyOverride, ['src-win/bar', 'nope', 1245]),
 ])('%s - No Base', (_, fn, params) => {
   // eslint-disable-next-line @typescript-eslint/no-floating-promises
   expect(fn.apply(params)).rejects.toThrow();
