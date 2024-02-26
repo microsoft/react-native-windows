@@ -20,7 +20,7 @@
     "react": "18.0.0",
     "react-native": "0.74.0-nightly-20240115-0c7008f28",
     "react-native-windows": "^0.0.0-canary.773",
-    "react-native-xaml": "^0.0.50"
+    "react-native-xaml": "^0.0.78"
   },
   "devDependencies": {
     "@react-native/tester": "0.0.1",
