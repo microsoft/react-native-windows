@@ -79293,6 +79293,99 @@ exports[`snapshotAllPages View 10`] = `
 
 exports[`snapshotAllPages View 11`] = `
 <View
+  style={
+    {
+      "backgroundColor": "yellow",
+      "flexDirection": "row",
+    }
+  }
+  testID="view-test-zindex-with-static"
+>
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 100,
+        "left": 10,
+        "position": "relative",
+        "width": 100,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "purple",
+          "height": 50,
+          "left": 65,
+          "position": "relative",
+          "top": 30,
+          "width": 50,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 100,
+        "position": "static",
+        "width": 100,
+        "zIndex": 100,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "orange",
+          "height": 50,
+          "position": "relative",
+          "top": 10,
+          "width": 50,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "backgroundColor": "brown",
+          "height": 50,
+          "position": "static",
+          "width": 50,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "black",
+            "height": 25,
+            "position": "relative",
+            "top": -10,
+            "width": 25,
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 100,
+        "left": -20,
+        "position": "relative",
+        "width": 100,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages View 12`] = `
+<View
   accessibilityState={
     {
       "busy": undefined,
@@ -79392,7 +79485,7 @@ exports[`snapshotAllPages View 11`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 12`] = `
+exports[`snapshotAllPages View 13`] = `
 <View
   accessibilityLabel="Backface Visibility Example"
   accessible={true}
@@ -79510,7 +79603,7 @@ exports[`snapshotAllPages View 12`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 13`] = `
+exports[`snapshotAllPages View 14`] = `
 <View
   accessibilityLabel="Aria-Label Example"
   accessible={true}
@@ -79535,7 +79628,7 @@ exports[`snapshotAllPages View 13`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 14`] = `
+exports[`snapshotAllPages View 15`] = `
 <View
   accessibilityLabel="Flex Gap Example"
   accessible={true}
@@ -79652,7 +79745,7 @@ exports[`snapshotAllPages View 14`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 15`] = `
+exports[`snapshotAllPages View 16`] = `
 <View
   accessible={true}
   style={
@@ -79875,7 +79968,7 @@ exports[`snapshotAllPages View 15`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 16`] = `
+exports[`snapshotAllPages View 17`] = `
 <View
   accessibilityLabel="Logical Border Color Example"
   accessible={true}
@@ -79965,7 +80058,7 @@ exports[`snapshotAllPages View 16`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 17`] = `
+exports[`snapshotAllPages View 18`] = `
 <View
   accessibilityLabel="Layout Conformance Example"
   accessible={true}
@@ -80086,7 +80179,7 @@ exports[`snapshotAllPages View 17`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 18`] = `
+exports[`snapshotAllPages View 19`] = `
 <View
   accessibilityLabel="NativeID Example"
   accessible={true}
@@ -80099,7 +80192,7 @@ exports[`snapshotAllPages View 18`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 19`] = `
+exports[`snapshotAllPages View 20`] = `
 <View
   accessibilityActions={
     [
@@ -80144,7 +80237,7 @@ exports[`snapshotAllPages View 19`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 20`] = `
+exports[`snapshotAllPages View 21`] = `
 <View
   accessibilityLabel="Shadow Example"
   accessible={true}
@@ -80165,7 +80258,7 @@ exports[`snapshotAllPages View 20`] = `
 />
 `;
 
-exports[`snapshotAllPages View 21`] = `
+exports[`snapshotAllPages View 22`] = `
 <View
   accessibilityLabel="HitSlop Example"
   accessible={true}
@@ -80190,7 +80283,7 @@ exports[`snapshotAllPages View 21`] = `
 />
 `;
 
-exports[`snapshotAllPages View 22`] = `
+exports[`snapshotAllPages View 23`] = `
 <View
   accessibilityLabel="Tooltip Example"
   accessible={true}
