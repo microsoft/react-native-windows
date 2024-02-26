@@ -111,6 +111,7 @@
     "/jest",
     "/JSI",
     "/Libraries",
+    "/src",
     "/Microsoft.ReactNative",
     "/Microsoft.ReactNative.Cxx",
     "/Microsoft.ReactNative.Managed",

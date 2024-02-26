@@ -172,10 +172,6 @@
     },
     {
       "type": "platform",
-      "file": "src-win/Libraries/Alert/NativeDialogManagerWindows.js"
-    },
-    {
-      "type": "platform",
       "file": "src-win/Libraries/AppTheme/AppTheme.js"
     },
     {
@@ -401,6 +397,13 @@
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
       "baseHash": "ae7bdcfff1117d4a349b7b9bcc108a22ae7099ae"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/Libraries/NativeModules/specs/NativeDialogManagerWindows.js",
+      "baseFile": "packages/react-native/Libraries/NativeModules/specs/NativeDialogManagerAndroid.js",
+      "baseHash": "8d5e62de4a21e49992bb92c48b698493346d44c3",
+      "issue": 0
     },
     {
       "type": "copy",
