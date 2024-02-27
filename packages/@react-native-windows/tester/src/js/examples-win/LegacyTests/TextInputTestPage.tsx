@@ -69,10 +69,7 @@ export class TextInputTestPage extends React.Component<
           placeholder="autoCapitalize"
           autoCapitalize="characters"
         />
-        <Text
-          testID="textinput-log"
-          accessible={true}
-          accessibilityHint={this.state.log}>
+        <Text testID="textinput-log" accessible={true}>
           {this.state.log}
         </Text>
       </View>
