@@ -121,7 +121,7 @@ async function multiLineTextInputField() {
   return component;
 }
 
-async function assertLogContains(text: string) {
+async function assertLogContains(_text: string) {
   const textLogComponent = await app.findElementByTestID('textinput-log');
   await textLogComponent.waitForDisplayed({timeout: 5000});
 
