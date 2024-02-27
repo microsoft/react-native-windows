@@ -20,6 +20,8 @@
 #include "WindowsTextInputState.h"
 #include "guid/msoGuid.h"
 
+#include <unicode.h>
+
 // convert a BSTR to a std::string.
 std::string &BstrToStdString(const BSTR bstr, std::string &dst, int cp = CP_UTF8) {
   if (!bstr) {
@@ -755,6 +757,14 @@ void WindowsTextInputComponentView::OnKeyDown(
     if (args.KeyStatus().WasKeyDown)
       lParam |= 0x40000000; // bit 30
 
+    // RichEdit will send onCharcterRecieved before onTextUpdate for Enter/Back button, this catches the edgecases so
+    // onKeyPress always fires after onChange
+    if (args.Key() == winrt::Windows::System::VirtualKey::Enter) {
+      m_lastKeyPressed = "\r";
+    } else if (args.Key() == winrt::Windows::System::VirtualKey::Back) {
+      m_lastKeyPressed = "\b";
+    }
+
     LRESULT lresult;
     DrawBlock db(*this);
     auto hr = m_textServices->TxSendMessage(
@@ -864,6 +874,11 @@ void WindowsTextInputComponentView::OnCharacterReceived(
     }
     return;
   }
+
+  // save the last key pressed for onKeyPress
+  wchar_t key[2] = L" ";
+  key[0] = static_cast<wchar_t>(args.KeyCode());
+  m_lastKeyPressed = ::Microsoft::Common::Unicode::Utf16ToUtf8(key, 1);
 
   WPARAM wParam = static_cast<WPARAM>(args.KeyCode());
   LPARAM lParam = 0;
@@ -1184,13 +1199,29 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   data.mostRecentEventCount = m_nativeEventCount;
 
   m_state->updateState(std::move(data));
+  std::string richEditText = GetTextFromRichEdit();
 
+  // call onChange
   if (m_eventEmitter && !m_comingFromJS) {
     auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
     facebook::react::WindowsTextInputEventEmitter::OnChange onChangeArgs;
-    onChangeArgs.text = GetTextFromRichEdit();
+    onChangeArgs.text = richEditText;
     onChangeArgs.eventCount = ++m_nativeEventCount;
     emitter->onChange(onChangeArgs);
+  }
+
+  // call onKeyPress
+  if (m_eventEmitter && !m_comingFromJS && !richEditText.empty()) {
+    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
+    if (m_lastKeyPressed.compare("\r") == 0) {
+      onKeyPressArgs.key = "Enter";
+    } else if (m_lastKeyPressed.compare("\b") == 0) {
+      onKeyPressArgs.key = "Backspace";
+    } else {
+      onKeyPressArgs.key = m_lastKeyPressed;
+    }
+    emitter->onKeyPress(onKeyPressArgs);
   }
 
   if (m_uiaProvider) {
