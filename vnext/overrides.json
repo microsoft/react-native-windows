@@ -402,8 +402,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeModules/specs/NativeDialogManagerWindows.js",
       "baseFile": "packages/react-native/Libraries/NativeModules/specs/NativeDialogManagerAndroid.js",
-      "baseHash": "8d5e62de4a21e49992bb92c48b698493346d44c3",
-      "issue": 0
+      "baseHash": "8d5e62de4a21e49992bb92c48b698493346d44c3"
     },
     {
       "type": "copy",
@@ -502,15 +501,13 @@
       "type": "derived",
       "file": "src-win/src/private/specs/modules/NativeDialogManagerWindows.js",
       "baseFile": "packages/react-native/src/private/specs/modules/NativeDialogManagerAndroid.js",
-      "baseHash": "d96d4f28b2380455809e1204ff509ce93cf39ef9",
-      "issue": 0
+      "baseHash": "d96d4f28b2380455809e1204ff509ce93cf39ef9"
     },
     {
       "type": "derived",
       "file": "src-win/src/private/specs/modules/NativePlatformConstantsWin.js",
       "baseFile": "packages/react-native/src/private/specs/modules/NativePlatformConstantsAndroid.js",
-      "baseHash": "b4a125d9134f33aeaba9e06988e18cbb0b4e9e9c",
-      "issue": 0
+      "baseHash": "b4a125d9134f33aeaba9e06988e18cbb0b4e9e9c"
     }
   ]
 }
