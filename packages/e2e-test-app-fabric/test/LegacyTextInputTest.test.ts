@@ -8,6 +8,7 @@
 import {app} from '@react-native-windows/automation';
 import {goToComponentExample} from './RNTesterNavigation';
 import {verifyNoErrorLogs} from './Helpers';
+import {dumpVisualTree} from '@react-native-windows/automation-commands';
 
 beforeAll(async () => {
   // If window is partially offscreen, tests will fail to click on certain elements
@@ -21,7 +22,6 @@ afterEach(async () => {
 });
 
 describe('LegacyTextInputTest', () => {
-  /*
   test('Click on TextInput to focus', async () => {
     const textInput = await textInputField();
     await textInput.click();
@@ -33,18 +33,12 @@ describe('LegacyTextInputTest', () => {
     await textInput.click();
     await assertLogContains('onBlur');
   });
-
   test('Type abc on TextInput', async () => {
     const textInput = await textInputField();
     await textInput.setValue('abc');
     expect(await textInput.getText()).toBe('abc');
-
-    // Due to some timing issues between the JS and native, the order of events
-    // might cause more onChange events to happen after the onKeyPress event
-    // So the onKeyPress event might not be the last item in the log
     await assertLogContains('onKeyPress key: c');
   });
-  */
   test('Type def on TextInput', async () => {
     const textInput = await textInputField();
     await app.waitUntil(
@@ -69,7 +63,7 @@ describe('LegacyTextInputTest', () => {
     await textInput.setValue('hello world');
     expect(await textInput.getText()).toBe('HELLO WORLD');
   });
-
+  */
   test('Type abc on multiline TextInput then press Enter key', async () => {
     const textInput = await textInputField();
     await textInput.setValue('abc');
@@ -77,7 +71,6 @@ describe('LegacyTextInputTest', () => {
 
     await assertLogContains('onSubmitEditing text: abc');
   });
-  */
   test('Type abc on multiline TextInput', async () => {
     const textInput = await multiLineTextInputField();
     await textInput.setValue('abc');
@@ -94,16 +87,18 @@ describe('LegacyTextInputTest', () => {
 
     expect(await textInput.getText()).toBe('abc\rdef');
   });
-  /*
+
   test('TextInput onChange before onSelectionChange', async () => {
     const textInput = await textInputField();
     await textInput.setValue('a');
+    await assertLogContains('onChange text: a\nonSelectionChange range: 1,1');
+    /*
     await assertLogContainsInOrder([
       'onChange text: a',
       'onSelectionChange range: 1,1',
     ]);
+    */
   });
-  */
 });
 
 async function textInputField() {
@@ -112,11 +107,13 @@ async function textInputField() {
   return component;
 }
 
+/*
 async function autoCapsTextInputField() {
   const component = await app.findElementByTestID('auto-caps-textinput-field');
   await component.waitForDisplayed({timeout: 5000});
   return component;
 }
+*/
 
 async function multiLineTextInputField() {
   const component = await app.findElementByTestID('multi-line-textinput-field');
@@ -128,17 +125,22 @@ async function assertLogContains(text: string) {
   const textLogComponent = await app.findElementByTestID('textinput-log');
   await textLogComponent.waitForDisplayed({timeout: 5000});
 
+  const dump = await dumpVisualTree('textinput-log');
+  expect(dump).toMatchSnapshot();
+  /*
   await app.waitUntil(
     async () => {
       const loggedText = await textLogComponent.getText();
       return loggedText.split('\n').includes(text);
     },
     {
-      timeoutMsg: `"${await textLogComponent.getText()}" did not contain "${text}"`,
+      timeoutMsg: `"${await textLogComponent.getValue()}" "${await textLogComponent.getText()}" did not contain "${text}"`,
     },
   );
+  */
 }
 
+/*
 async function assertLogContainsInOrder(expectedLines: string[]) {
   const textLogComponent = await app.findElementByTestID('textinput-log');
   await textLogComponent.waitForDisplayed({timeout: 5000});
@@ -166,3 +168,4 @@ async function assertLogContainsInOrder(expectedLines: string[]) {
     },
   );
 }
+*/

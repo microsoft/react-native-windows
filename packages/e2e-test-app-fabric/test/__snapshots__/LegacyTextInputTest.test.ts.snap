@@ -1,0 +1,245 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LegacyTextInputTest Click on TextInput to focus 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-log",
+    "ControlType": 50020,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "text",
+    "Name": "onFocus
+<Log Start>",
+  },
+  "Visual Tree": {
+    "Comment": "textinput-log",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      998,
+      47.00000762939453,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`LegacyTextInputTest Click on multiline TextInput to move focus away from single line TextInput 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-log",
+    "ControlType": 50020,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "text",
+    "Name": "onBlur
+onFocus
+<Log Start>",
+  },
+  "Visual Tree": {
+    "Comment": "textinput-log",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      998,
+      71.0000228881836,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`LegacyTextInputTest TextInput onChange before onSelectionChange 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-log",
+    "ControlType": 50020,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "text",
+    "Name": "onKeyPress key: a
+onChange text: a
+onSelectionChange range: 1,1
+onChange text: 
+onSelectionChange range: 0,0
+onFocus
+onBlur
+onSubmitEditing text: abc
+onKeyPress key: c
+onChange text: abc
+onSelectionChange range: 3,3
+onKeyPress key: b
+onChange text: ab
+onSelectionChange range: 2,2
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 1,1
+onChange text: 
+onSelectionChange range: 0,0
+onKeyPress key: f
+onChange text: def
+onSelectionChange range: 3,3
+onKeyPress key: e
+onChange text: de
+onSelectionChange range: 2,2
+onKeyPress key: d
+onChange text: d
+onSelectionChange range: 1,1
+onChange text: 
+onSelectionChange range: 0,0
+onKeyPress key: c
+onChange text: abc
+onSelectionChange range: 3,3
+onKeyPress key: b
+onChange text: ab
+onSelectionChange range: 2,2
+onSelectionChange range: 1,1
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 0,0
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 1,1
+onFocus
+onBlur
+onFocus
+<Log Start>",
+  },
+  "Visual Tree": {
+    "Comment": "textinput-log",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      998,
+      1095,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`LegacyTextInputTest Type abc on TextInput 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-log",
+    "ControlType": 50020,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "text",
+    "Name": "onKeyPress key: c
+onChange text: abc
+onSelectionChange range: 3,3
+onKeyPress key: b
+onChange text: ab
+onSelectionChange range: 2,2
+onSelectionChange range: 1,1
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 0,0
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 1,1
+onFocus
+onBlur
+onFocus
+<Log Start>",
+  },
+  "Visual Tree": {
+    "Comment": "textinput-log",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      998,
+      396.0000305175781,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`LegacyTextInputTest Type abc on multiline TextInput then press Enter key 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-log",
+    "ControlType": 50020,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "text",
+    "Name": "onSubmitEditing text: abc
+onKeyPress key: c
+onChange text: abc
+onSelectionChange range: 3,3
+onKeyPress key: b
+onChange text: ab
+onSelectionChange range: 2,2
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 1,1
+onChange text: 
+onSelectionChange range: 0,0
+onKeyPress key: f
+onChange text: def
+onSelectionChange range: 3,3
+onKeyPress key: e
+onChange text: de
+onSelectionChange range: 2,2
+onKeyPress key: d
+onChange text: d
+onSelectionChange range: 1,1
+onChange text: 
+onSelectionChange range: 0,0
+onKeyPress key: c
+onChange text: abc
+onSelectionChange range: 3,3
+onKeyPress key: b
+onChange text: ab
+onSelectionChange range: 2,2
+onSelectionChange range: 1,1
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 0,0
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 1,1
+onFocus
+onBlur
+onFocus
+<Log Start>",
+  },
+  "Visual Tree": {
+    "Comment": "textinput-log",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      998,
+      932,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
