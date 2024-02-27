@@ -64,11 +64,10 @@ module.exports = {
     useRootSession: true,
     enableAutomationChannel: true,
     // Enable for more detailed logging
-    webdriverOptions: {
-      // Level of logging verbosity: trace | debug | info | warn | error
-      logLevel: 'info',
-      connectionRetryCount: 10,
-    },
+    // webdriverOptions: {
+    //   // Level of logging verbosity: trace | debug | info | warn | error
+    //   logLevel: 'info',
+    // },
   },
 
   moduleFileExtensions: [
