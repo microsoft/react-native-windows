@@ -11,7 +11,7 @@
 import type {TurboModule} from '../../../../Libraries/TurboModule/RCTExport';
 
 import * as TurboModuleRegistry from '../../../../Libraries/TurboModule/TurboModuleRegistry';
-import type {Int32} from '../../../../Libraries/CodegenTypes';
+import type {Int32} from '../../../../Libraries/Types/CodegenTypes';
 
 /* 'buttonClicked' | 'dismissed' */
 type DialogAction = string;

@@ -21,10 +21,7 @@ export type PlatformConstantsWindows = {|
     patch: number,
     prerelease: ?string,
   |},
-  forceTouchAvailable: boolean,
   osVersion: number,
-  systemName: string,
-  interfaceIdiom: string,
 |};
 
 export interface Spec extends TurboModule {

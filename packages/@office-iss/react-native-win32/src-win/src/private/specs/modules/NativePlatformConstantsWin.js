@@ -25,6 +25,7 @@ export type PlatformConstantsWin32 = {|
   osVersion: number,
   systemName: string,
   interfaceIdiom: string,
+  isMacCatalyst?: boolean,
 |};
 
 export interface Spec extends TurboModule {
