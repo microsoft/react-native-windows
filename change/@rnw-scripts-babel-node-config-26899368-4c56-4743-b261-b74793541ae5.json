@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update rn-integrate script to more aggressively update align dependencies",
-  "packageName": "@rnw-scripts/babel-node-config",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

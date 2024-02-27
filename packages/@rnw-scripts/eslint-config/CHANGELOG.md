@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/eslint-config
 
-This log was last generated on Wed, 14 Feb 2024 06:16:54 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Feb 2024 06:18:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.6
+
+Tue, 27 Feb 2024 06:18:02 GMT
+
+### Patches
+
+- Update rn-integrate script to more aggressively update align dependencies (30809111+acoates-ms@users.noreply.github.com)
 
 ## 1.2.5
 

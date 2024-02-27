@@ -1,8 +1,20 @@
 # Change Log - @react-native-windows/automation
 
-This log was last generated on Sat, 24 Feb 2024 06:17:17 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Feb 2024 06:17:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.199
+
+Tue, 27 Feb 2024 06:17:58 GMT
+
+### Patches
+
+- Update rn-integrate script to more aggressively update align dependencies (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.12.117
+- Bump @react-native-windows/fs to v0.0.0-canary.35
+- Bump @rnw-scripts/eslint-config to v1.2.6
+- Bump @rnw-scripts/just-task to v2.3.22
 
 ## 0.3.198
 
