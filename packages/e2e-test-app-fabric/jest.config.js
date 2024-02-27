@@ -61,6 +61,7 @@ module.exports = {
 
   testEnvironmentOptions: {
     app: 'RNTesterApp-Fabric',
+    useRootSession: true,
     enableAutomationChannel: true,
     // Enable for more detailed logging
     webdriverOptions: {

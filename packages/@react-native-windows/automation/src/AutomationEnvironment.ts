@@ -28,6 +28,8 @@ export type EnvironmentOptions = {
    */
   app?: string;
 
+  useRootSession?: boolean;
+
   /**
    * Arguments to be passed to your application when launched
    */
@@ -48,10 +50,12 @@ type AutomationChannelOptions = {
 };
 
 export default class AutomationEnvironment extends NodeEnvironment {
+  private readonly rootWebDriverOptions?: RemoteOptions;
   private readonly webDriverOptions: RemoteOptions;
   private readonly channelOptions: AutomationChannelOptions;
   private readonly winappdriverBin: string;
   private readonly breakOnStart: boolean;
+  private readonly useRootSession: boolean;
   private winAppDriverProcess: ChildProcess | undefined;
   private browser: BrowserObject | undefined;
   private automationClient: AutomationClient | undefined;
@@ -81,18 +85,7 @@ export default class AutomationEnvironment extends NodeEnvironment {
     const baseOptions: RemoteOptions = {
       hostname: '127.0.0.1',
       port: 4723,
-      capabilities: {
-        app: resolveAppName(passedOptions.app),
-        ...(passedOptions.appWorkingDir && {
-          appWorkingDir: passedOptions.appWorkingDir,
-        }),
-        ...(passedOptions.appArguments && {
-          appArguments: passedOptions.appArguments,
-        }),
 
-        // @ts-ignore
-        'ms:experimental-webdriver': true,
-      },
       // Level of logging verbosity: trace | debug | info | warn | error
       logLevel: 'error',
 
@@ -106,11 +99,55 @@ export default class AutomationEnvironment extends NodeEnvironment {
       connectionRetryCount: 5,
     };
 
-    this.webDriverOptions = Object.assign(
-      {},
-      baseOptions,
-      passedOptions.webdriverOptions,
-    );
+    this.useRootSession = !!passedOptions.useRootSession;
+
+    if (this.useRootSession) {
+      this.rootWebDriverOptions = Object.assign(
+        {},
+        baseOptions,
+        {
+          capabilities: {
+            app: 'Root',
+            // @ts-ignore
+            'ms:experimental-webdriver': true,
+          },
+        },
+        passedOptions.webdriverOptions,
+      );
+
+      this.webDriverOptions = Object.assign(
+        {},
+        baseOptions,
+        {
+          capabilities: {
+            appTopLevelWindow: passedOptions.app,
+            // @ts-ignore
+            'ms:experimental-webdriver': true,
+          },
+        },
+        passedOptions.webdriverOptions,
+      );
+    } else {
+      this.webDriverOptions = Object.assign(
+        {},
+        baseOptions,
+        {
+          capabilities: {
+            app: resolveAppName(passedOptions.app),
+            ...(passedOptions.appWorkingDir && {
+              appWorkingDir: passedOptions.appWorkingDir,
+            }),
+            ...(passedOptions.appArguments && {
+              appArguments: passedOptions.appArguments,
+            }),
+
+            // @ts-ignore
+            'ms:experimental-webdriver': true,
+          },
+        },
+        passedOptions.webdriverOptions,
+      );
+    }
 
     this.webDriverOptions.capabilities = Object.assign(
       this.webDriverOptions.capabilities!,
@@ -131,6 +168,27 @@ export default class AutomationEnvironment extends NodeEnvironment {
       this.winappdriverBin,
       this.webDriverOptions.port!,
     );
+
+    if (this.useRootSession) {
+      const appName = (this.webDriverOptions.capabilities! as any)
+        .appTopLevelWindow;
+
+      const rootBrowser = await webdriverio.remote(this.rootWebDriverOptions);
+
+      const appWindow = await rootBrowser.$(
+        `//Window[@Name="${appName}" and @ClassName="Microsoft.UI.Windowing.Window"]`,
+      );
+
+      const appWindowHandle = parseInt(
+        await appWindow!.getAttribute('NativeWindowHandle'),
+        10,
+      );
+
+      (this.webDriverOptions.capabilities as any).appTopLevelWindow =
+        '0x' + appWindowHandle.toString(16);
+
+      await rootBrowser.deleteSession();
+    }
 
     this.browser = await webdriverio.remote(this.webDriverOptions);
 
