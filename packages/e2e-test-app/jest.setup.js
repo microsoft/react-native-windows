@@ -31,4 +31,16 @@ global.jasmine.addReporter({
 });
 */
 
+// Jest ENV does not have SampleTurboModule native module defined
+jest.mock(
+  'react-native-windows/Libraries/TurboModule/samples/NativeSampleTurboModule',
+  () => jest.fn(),
+);
+
+// Jest ENV cannot resolve ..\..\relay.png since only relay@3.png exists
+jest.mock(
+  '@react-native-windows/tester/js/examples/AnimatedGratuitousApp/AnExChained',
+  () => jest.fn(),
+);
+
 LogBox.ignoreAllLogs(true);
