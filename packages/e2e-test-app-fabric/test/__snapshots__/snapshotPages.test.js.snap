@@ -29713,6 +29713,8 @@ exports[`snapshotAllPages LegacyTextInputTest 1`] = `
     testID="auto-caps-textinput-field"
   />
   <Text
+    accessibilityHint="<Log Start>"
+    accessible={true}
     testID="textinput-log"
   >
     &lt;Log Start&gt;

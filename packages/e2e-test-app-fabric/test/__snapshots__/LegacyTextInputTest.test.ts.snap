@@ -5,7 +5,8 @@ exports[`LegacyTextInputTest Click on TextInput to focus 1`] = `
   "Automation Tree": {
     "AutomationId": "textinput-log",
     "ControlType": 50020,
-    "HelpText": "",
+    "HelpText": "onFocus
+<Log Start>",
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
@@ -22,7 +23,7 @@ exports[`LegacyTextInputTest Click on TextInput to focus 1`] = `
     "Opacity": 1,
     "Size": [
       998,
-      47.00000762939453,
+      38,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -34,7 +35,9 @@ exports[`LegacyTextInputTest Click on multiline TextInput to move focus away fro
   "Automation Tree": {
     "AutomationId": "textinput-log",
     "ControlType": 50020,
-    "HelpText": "",
+    "HelpText": "onBlur
+onFocus
+<Log Start>",
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
@@ -52,7 +55,7 @@ onFocus
     "Opacity": 1,
     "Size": [
       998,
-      71.0000228881836,
+      57,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -64,7 +67,53 @@ exports[`LegacyTextInputTest TextInput onChange before onSelectionChange 1`] = `
   "Automation Tree": {
     "AutomationId": "textinput-log",
     "ControlType": 50020,
-    "HelpText": "",
+    "HelpText": "onKeyPress key: a
+onChange text: a
+onSelectionChange range: 1,1
+onChange text: 
+onSelectionChange range: 0,0
+onFocus
+onBlur
+onSubmitEditing text: abc
+onKeyPress key: c
+onChange text: abc
+onSelectionChange range: 3,3
+onKeyPress key: b
+onChange text: ab
+onSelectionChange range: 2,2
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 1,1
+onChange text: 
+onSelectionChange range: 0,0
+onKeyPress key: f
+onChange text: def
+onSelectionChange range: 3,3
+onKeyPress key: e
+onChange text: de
+onSelectionChange range: 2,2
+onKeyPress key: d
+onChange text: d
+onSelectionChange range: 1,1
+onChange text: 
+onSelectionChange range: 0,0
+onKeyPress key: c
+onChange text: abc
+onSelectionChange range: 3,3
+onKeyPress key: b
+onChange text: ab
+onSelectionChange range: 2,2
+onSelectionChange range: 1,1
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 0,0
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 1,1
+onFocus
+onBlur
+onFocus
+<Log Start>",
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
@@ -126,7 +175,7 @@ onFocus
     "Opacity": 1,
     "Size": [
       998,
-      1095,
+      876,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -138,7 +187,23 @@ exports[`LegacyTextInputTest Type abc on TextInput 1`] = `
   "Automation Tree": {
     "AutomationId": "textinput-log",
     "ControlType": 50020,
-    "HelpText": "",
+    "HelpText": "onKeyPress key: c
+onChange text: abc
+onSelectionChange range: 3,3
+onKeyPress key: b
+onChange text: ab
+onSelectionChange range: 2,2
+onSelectionChange range: 1,1
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 0,0
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 1,1
+onFocus
+onBlur
+onFocus
+<Log Start>",
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
@@ -170,7 +235,7 @@ onFocus
     "Opacity": 1,
     "Size": [
       998,
-      396.0000305175781,
+      318,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -182,7 +247,46 @@ exports[`LegacyTextInputTest Type abc on multiline TextInput then press Enter ke
   "Automation Tree": {
     "AutomationId": "textinput-log",
     "ControlType": 50020,
-    "HelpText": "",
+    "HelpText": "onSubmitEditing text: abc
+onKeyPress key: c
+onChange text: abc
+onSelectionChange range: 3,3
+onKeyPress key: b
+onChange text: ab
+onSelectionChange range: 2,2
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 1,1
+onChange text: 
+onSelectionChange range: 0,0
+onKeyPress key: f
+onChange text: def
+onSelectionChange range: 3,3
+onKeyPress key: e
+onChange text: de
+onSelectionChange range: 2,2
+onKeyPress key: d
+onChange text: d
+onSelectionChange range: 1,1
+onChange text: 
+onSelectionChange range: 0,0
+onKeyPress key: c
+onChange text: abc
+onSelectionChange range: 3,3
+onKeyPress key: b
+onChange text: ab
+onSelectionChange range: 2,2
+onSelectionChange range: 1,1
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 0,0
+onKeyPress key: a
+onChange text: a
+onSelectionChange range: 1,1
+onFocus
+onBlur
+onFocus
+<Log Start>",
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
@@ -237,7 +341,7 @@ onFocus
     "Opacity": 1,
     "Size": [
       998,
-      932,
+      746,
     ],
     "Visual Type": "SpriteVisual",
   },
