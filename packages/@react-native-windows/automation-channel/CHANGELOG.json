@@ -2,6 +2,39 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Tue, 27 Feb 2024 06:17:58 GMT",
+      "version": "0.12.117",
+      "tag": "@react-native-windows/automation-channel_v0.12.117",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "74032cf2ec8ba36b7977ef4be1259cba3ece7d2e",
+            "comment": "Update rn-integrate script to more aggressively update align dependencies"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.6",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.22",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.778",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Feb 2024 06:17:17 GMT",
       "version": "0.12.116",
       "tag": "@react-native-windows/automation-channel_v0.12.116",

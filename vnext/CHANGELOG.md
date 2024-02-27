@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 24 Feb 2024 06:17:17 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Feb 2024 06:18:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.778
+
+Tue, 27 Feb 2024 06:18:05 GMT
+
+### Changes
+
+- [Fabric] Add AbiShadowNode for non View custom components (30809111+acoates-ms@users.noreply.github.com)
+- Update rn-integrate script to more aggressively update align dependencies (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.202
+- Bump @react-native-windows/codegen to v0.0.0-canary.78
+- Bump @rnw-scripts/eslint-config to v1.2.6
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.10
+- Bump @rnw-scripts/just-task to v2.3.22
+- Bump react-native-platform-override to v1.9.22
 
 ## 0.0.0-canary.777
 

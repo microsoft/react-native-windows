@@ -10,7 +10,9 @@
 
 'use strict';
 
-import {get} from 'react-native/Libraries/NativeComponent/NativeComponentRegistry';
+import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
+import type {HostComponent} from 'react-native/Libraries/Renderer/shims/ReactNativeTypes';
+import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 
 type NativeProps = $ReadOnly<{|
   ...ViewProps,
@@ -19,20 +21,8 @@ type NativeProps = $ReadOnly<{|
   label: string,
 |}>;
 
-// Cannot just use codegenNativeComponent, or registerNativeComponent, since we need to provide a custom config
-const CustomXamlComponentWithNativeLayout = get<NativeProps>(
-  'CustomXamlComponentWithNativeLayout',
-  () => {
-    return {
-      uiViewClassName: 'CustomXamlComponentWithNativeLayout',
-      bubblingEventTypes: {},
-      directEventTypes: {},
-      validAttributes: {
-        label: true,
-      },
-    };
-  },
-);
+type ComponentType = HostComponent<NativeProps>;
 
-exports.CustomXamlComponentWithNativeLayout =
-  CustomXamlComponentWithNativeLayout;
+export default (codegenNativeComponent<NativeProps>(
+  'CustomXamlComponentWithNativeLayout',
+): ComponentType);

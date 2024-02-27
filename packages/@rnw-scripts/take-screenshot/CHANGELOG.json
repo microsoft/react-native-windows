@@ -2,6 +2,39 @@
   "name": "@rnw-scripts/take-screenshot",
   "entries": [
     {
+      "date": "Tue, 27 Feb 2024 06:18:04 GMT",
+      "version": "1.1.29",
+      "tag": "@rnw-scripts/take-screenshot_v1.1.29",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@rnw-scripts/take-screenshot",
+            "commit": "74032cf2ec8ba36b7977ef4be1259cba3ece7d2e",
+            "comment": "Update rn-integrate script to more aggressively update align dependencies"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.35",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.6",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.22",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 24 Feb 2024 06:17:17 GMT",
       "version": "1.1.28",
       "tag": "@rnw-scripts/take-screenshot_v1.1.28",

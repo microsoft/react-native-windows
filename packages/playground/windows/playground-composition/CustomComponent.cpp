@@ -71,8 +71,9 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
       const winrt::Microsoft::ReactNative::IComponentProps &props,
       const winrt::Microsoft::ReactNative::IComponentProps &oldProps) {
     auto myProps = props.as<CustomXamlComponentProps>();
-
+#ifdef USE_EXPERIMENTAL_WINUI3
     m_buttonLabelTextBlock.Text(myProps->label);
+#endif
   }
   void UpdateState(const winrt::Microsoft::ReactNative::IComponentState &state) {
     m_state = state;
