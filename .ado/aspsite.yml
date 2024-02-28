@@ -39,4 +39,5 @@ steps:
   displayName: Publish Test Website
   inputs:
     command: publish
+    publishWebProjects: false
     projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
