@@ -40,4 +40,5 @@ steps:
   inputs:
     command: publish
     publishWebProjects: false
+    zipAfterPublish: false
     projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
