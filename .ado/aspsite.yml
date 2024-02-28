@@ -31,3 +31,9 @@ steps:
   inputs:
     command: build
     projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
+
+- task: DotNetCoreCLI@2
+  displayName: Publish Test Website
+  inputs:
+    command: publish
+    projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
