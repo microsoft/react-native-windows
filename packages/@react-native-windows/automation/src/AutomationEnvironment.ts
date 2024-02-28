@@ -29,6 +29,7 @@ export type EnvironmentOptions = {
   app?: string;
 
   useRootSession?: boolean;
+  rootLaunchApp?: boolean;
 
   /**
    * Arguments to be passed to your application when launched
@@ -56,6 +57,7 @@ export default class AutomationEnvironment extends NodeEnvironment {
   private readonly winappdriverBin: string;
   private readonly breakOnStart: boolean;
   private readonly useRootSession: boolean;
+  private readonly rootLaunchApp: boolean;
   private winAppDriverProcess: ChildProcess | undefined;
   private browser: BrowserObject | undefined;
   private automationClient: AutomationClient | undefined;
@@ -100,6 +102,10 @@ export default class AutomationEnvironment extends NodeEnvironment {
     };
 
     this.useRootSession = !!passedOptions.useRootSession;
+    this.rootLaunchApp =
+      passedOptions.rootLaunchApp === undefined
+        ? this.useRootSession
+        : !!passedOptions.rootLaunchApp;
 
     if (this.useRootSession) {
       this.rootWebDriverOptions = Object.assign(
@@ -120,6 +126,7 @@ export default class AutomationEnvironment extends NodeEnvironment {
         baseOptions,
         {
           capabilities: {
+            // Save the name for now, we'll get the handle later
             appTopLevelWindow: passedOptions.app,
             // @ts-ignore
             'ms:experimental-webdriver': true,
@@ -170,15 +177,35 @@ export default class AutomationEnvironment extends NodeEnvironment {
     );
 
     if (this.useRootSession) {
+      // Extract out the saved window name
       const appName = (this.webDriverOptions.capabilities! as any)
         .appTopLevelWindow;
 
+      if (this.rootLaunchApp) {
+        const appPackageName = resolveAppName(appName);
+        execSync(`start shell:AppsFolder\\${appPackageName}`);
+      }
+
+      // Set up the "Desktop" or Root session
       const rootBrowser = await webdriverio.remote(this.rootWebDriverOptions);
 
-      const appWindow = await rootBrowser.$(
-        `//Window[@Name="${appName}" and @ClassName="Microsoft.UI.Windowing.Window"]`,
-      );
+      // Get the list of windows
+      const allWindows = await rootBrowser.$$('//Window');
 
+      // Find our target window
+      let appWindow: webdriverio.Element | undefined;
+      for (const window of allWindows) {
+        if ((await window.getAttribute('Name')) === appName) {
+          appWindow = window;
+          break;
+        }
+      }
+
+      if (!appWindow) {
+        throw new Error(`Unable to find window with Name === '${appName}'.`);
+      }
+
+      // Swap the the window handle for WinAppDriver
       const appWindowHandle = parseInt(
         await appWindow!.getAttribute('NativeWindowHandle'),
         10,
@@ -213,14 +240,16 @@ export default class AutomationEnvironment extends NodeEnvironment {
   }
 
   async teardown() {
-    if (this.browser) {
-      await this.browser.deleteSession();
-    }
-
     if (this.automationClient) {
       this.automationClient.close();
     }
 
+    if (this.browser) {
+      if (this.rootLaunchApp) {
+        await this.browser.closeWindow();
+      }
+      await this.browser.deleteSession();
+    }
     this.winAppDriverProcess?.kill('SIGINT');
     await super.teardown();
   }

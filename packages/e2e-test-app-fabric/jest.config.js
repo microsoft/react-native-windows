@@ -62,12 +62,13 @@ module.exports = {
   testEnvironmentOptions: {
     app: 'RNTesterApp-Fabric',
     useRootSession: true,
+    rootLaunchApp: true,
     enableAutomationChannel: true,
     // Enable for more detailed logging
-    // webdriverOptions: {
-    //   // Level of logging verbosity: trace | debug | info | warn | error
-    //   logLevel: 'info',
-    // },
+    webdriverOptions: {
+      // Level of logging verbosity: trace | debug | info | warn | error
+      logLevel: 'info',
+    },
   },
 
   moduleFileExtensions: [
