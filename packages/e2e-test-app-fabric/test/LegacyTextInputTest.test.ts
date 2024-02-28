@@ -4,7 +4,6 @@
  *
  * @format
  */
-
 import {app} from '@react-native-windows/automation';
 import {goToComponentExample} from './RNTesterNavigation';
 import {verifyNoErrorLogs} from './Helpers';
@@ -54,7 +53,7 @@ describe('LegacyTextInputTest', () => {
     );
     expect(await textInput.getText()).toBe('def');
   });
-  /*
+  /* Issue to enable these tests: #12778
   test('Type hello world on autoCap TextInput', async () => {
     const textInput = await autoCapsTextInputField();
     await textInput.setValue('def');
@@ -92,7 +91,7 @@ describe('LegacyTextInputTest', () => {
     const textInput = await textInputField();
     await textInput.setValue('a');
     await assertLogContains('onChange text: a\nonSelectionChange range: 1,1');
-    /*
+    /* Issue to enable these tests: #12778
     await assertLogContainsInOrder([
       'onChange text: a',
       'onSelectionChange range: 1,1',
@@ -107,7 +106,7 @@ async function textInputField() {
   return component;
 }
 
-/*
+/* Issue to enable these tests: #12778
 async function autoCapsTextInputField() {
   const component = await app.findElementByTestID('auto-caps-textinput-field');
   await component.waitForDisplayed({timeout: 5000});

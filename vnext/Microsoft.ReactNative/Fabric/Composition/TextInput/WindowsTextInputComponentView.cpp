@@ -763,6 +763,13 @@ void WindowsTextInputComponentView::OnKeyDown(
       m_lastKeyPressed = "\r";
     } else if (args.Key() == winrt::Windows::System::VirtualKey::Back) {
       m_lastKeyPressed = "\b";
+      // call onKeyPress event when RichEdit is empty and backspace is pressed
+      if (GetTextFromRichEdit().empty()) {
+        auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+        facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
+        onKeyPressArgs.key = "Backspace";
+        emitter->onKeyPress(onKeyPressArgs);
+      }
     }
 
     LRESULT lresult;
@@ -1199,20 +1206,16 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   data.mostRecentEventCount = m_nativeEventCount;
 
   m_state->updateState(std::move(data));
-  std::string richEditText = GetTextFromRichEdit();
 
-  // call onChange
   if (m_eventEmitter && !m_comingFromJS) {
+    // call onChange event
     auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
     facebook::react::WindowsTextInputEventEmitter::OnChange onChangeArgs;
-    onChangeArgs.text = richEditText;
+    onChangeArgs.text = GetTextFromRichEdit();
     onChangeArgs.eventCount = ++m_nativeEventCount;
     emitter->onChange(onChangeArgs);
-  }
 
-  // call onKeyPress
-  if (m_eventEmitter && !m_comingFromJS && !richEditText.empty()) {
-    auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+    // Call onKeyPress event
     facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
     if (m_lastKeyPressed.compare("\r") == 0) {
       onKeyPressArgs.key = "Enter";
