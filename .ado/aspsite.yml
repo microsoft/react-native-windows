@@ -44,5 +44,11 @@ steps:
     projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
 
 - pwsh: |
+    # Expected output: something like x64\Debug\Microsoft.ReactNative.Test.Services\Publish\
     Write-Warning 'Showing published artifacts'
     Get-ChildItem -Name -Recurse -File vnext/target/
+  displayName: Show published content
+
+- pwsh: |
+    Install-WindowsFeature -Name WebServer
+  displayName: Install IIS
