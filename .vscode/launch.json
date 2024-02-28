@@ -4,6 +4,7 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+        {"name":"Attach to Hermes application - Experimental","request":"attach","type":"reactnativedirect","cwd":"${workspaceFolder}/packages/e2e-test-app"},
         {
             "name": "Attach to RNW App (Hermes Direct Debug w/ Metro)",
             "port": 8081,
