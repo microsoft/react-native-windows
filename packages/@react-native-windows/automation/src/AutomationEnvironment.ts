@@ -28,7 +28,23 @@ export type EnvironmentOptions = {
    */
   app?: string;
 
+  /**
+   * Instead of letting WinAppDriver launch and attach to the app directly,
+   * create a Root (Desktop) session and search for the app's window.
+   *
+   * Note: This is only really necessary to correctly attach to packaged
+   * WinAppSDK apps.
+   */
   useRootSession?: boolean;
+
+  /**
+   * When using a Root (Desktop) session, still launch the test app during setup
+   * and close it during cleanup.
+   *
+   * Defaults to true when using `useRootSession` to mimic the expected test
+   * behavior, but can be disabled if you're trying to test an already
+   * running app instance.
+   */
   rootLaunchApp?: boolean;
 
   /**
@@ -246,6 +262,7 @@ export default class AutomationEnvironment extends NodeEnvironment {
 
     if (this.browser) {
       if (this.rootLaunchApp) {
+        // We started the app, so let's close it too
         await this.browser.closeWindow();
       }
       await this.browser.deleteSession();

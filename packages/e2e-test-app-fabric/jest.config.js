@@ -60,15 +60,16 @@ module.exports = {
   setupFilesAfterEnv: ['react-native-windows/jest/setup', './jest.setup.js'],
 
   testEnvironmentOptions: {
-    app: 'RNTesterApp-Fabric',
-    useRootSession: true,
-    rootLaunchApp: true,
+    app: 'RNTesterApp-Fabric', // Both the app package to launch and the window to attach to
+    useRootSession: true, // Required for packages WinAppSDK apps
+    rootLaunchApp: true, // Disable to test an already running app instance
     enableAutomationChannel: true,
-    // Enable for more detailed logging
+    /* // Enable for more detailed logging
     webdriverOptions: {
       // Level of logging verbosity: trace | debug | info | warn | error
       logLevel: 'info',
     },
+    */
   },
 
   moduleFileExtensions: [

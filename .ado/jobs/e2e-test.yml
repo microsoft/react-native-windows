@@ -195,11 +195,6 @@ jobs:
                   echo ##vso[task.setvariable variable=StartedFabricTests]true
                 displayName: Set StartedFabricTests
 
-              # - powershell: |
-              #     $appPackage = (Get-AppxPackage -Name "RNTesterApp-Fabric").PackageFamilyName
-              #     start shell:AppsFolder\$appPackage!App
-              #   displayName: Launch RNTesterApp-Fabric app
-
               - script: |
                   yarn e2etest
                 displayName: yarn e2etest
