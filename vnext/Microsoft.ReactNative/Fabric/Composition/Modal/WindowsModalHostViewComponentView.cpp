@@ -115,7 +115,7 @@ LRESULT CALLBACK ModalBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM 
     winrt::check_hresult(data->QueryInterface(
         winrt::guid_of<winrt::Microsoft::ReactNative::CompositionHwndHost>(),
         winrt::put_abi(host))); // look into the data for a CompositionHwndHost and store it in host
-    auto result = static_cast<LRESULT>(host.TranslateMessage(message, wparam, lparam));
+    auto result = host.TranslateMessage(message, wparam, lparam);
     if (result) {
       return result;
     }
@@ -178,14 +178,16 @@ void WindowsModalHostComponentView::RegisterWndClass() noexcept {
 void WindowsModalHostComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  // assert(false);
+  // Disabled due to partial Modal implementation. Tracking re-enablement with task list here:
+  // https://github.com/microsoft/react-native-windows/issues/11157 assert(false);
   base_type::MountChildComponentView(childComponentView, index);
 }
 
 void WindowsModalHostComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  // assert(false);
+  // Disabled due to partial Modal implementation.Tracking re-enablement with task list here : https : //
+  // github.com/microsoft/react-native-windows/issues/11157 assert(false);
   base_type::UnmountChildComponentView(childComponentView, index);
 }
 
