@@ -12,7 +12,7 @@
 
 import React from 'react';
 import {Text, View} from 'react-native';
-import {CustomXamlComponentWithYogaLayout} from './CustomXamlComponentWithYogaLayoutNativeComponent';
+import CustomXamlComponentWithYogaLayout from './CustomXamlComponentWithYogaLayoutNativeComponent';
 
 exports.displayName = 'NativeFabricComponentYoga';
 exports.framework = 'React';

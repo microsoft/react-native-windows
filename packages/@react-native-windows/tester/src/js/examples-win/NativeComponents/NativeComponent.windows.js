@@ -12,7 +12,7 @@
 
 import React from 'react';
 import {Text, View} from 'react-native';
-import {CustomXamlComponentWithNativeLayout} from './CustomXamlComponentWithNativeLayoutNativeComponent';
+import CustomXamlComponentWithNativeLayout from './CustomXamlComponentWithNativeLayoutNativeComponent';
 
 exports.displayName = 'NativeFabricComponent';
 exports.framework = 'React';

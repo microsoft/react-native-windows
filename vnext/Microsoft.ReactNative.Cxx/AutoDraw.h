@@ -3,6 +3,8 @@
 
 #include <winrt/Microsoft.ReactNative.Composition.h>
 
+#include <CompositionSwitcher.interop.h>
+
 namespace Microsoft::ReactNative::Composition {
 
 class AutoDrawDrawingSurface {

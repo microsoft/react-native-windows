@@ -37,7 +37,7 @@ path_classifiers:
     - "**/vnext/Test"
     # Other explicit test includes
     - "**/packages/@office-iss/react-native-win32/IntegrationTests"
-    - "**/packages/@office-iss/react-native-win32/src/IntegrationTests"
+    - "**/packages/@office-iss/react-native-win32/src-win/IntegrationTests"
     - "**/vnext/IntegrationTests"
     - "**/vnext/ReactCopies/IntegrationTests"
-    - "**/vnext/src/IntegrationTests"
+    - "**/vnext/src-win/IntegrationTests"

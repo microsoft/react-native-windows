@@ -5,9 +5,9 @@
 
 #include "WindowsModalHostViewComponentView.h"
 
+#include <AutoDraw.h>
 #include <Fabric/DWriteHelpers.h>
 #include "../CompositionDynamicAutomationProvider.h"
-#include "Composition/AutoDraw.h"
 #include "Unicode.h"
 
 #include <Fabric/Composition/CompositionContextHelper.h>
@@ -18,11 +18,18 @@
 #include "ReactNativeHost.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
+
+
 WindowsModalHostComponentView::WindowsModalHostComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
+    : Super(
+          compContext,
+          tag,
+          reactContext,
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
+          false) {
   m_props = std::make_shared<facebook::react::ModalHostViewProps const>();
   m_context = reactContext; // save context
   m_visual = compContext.CreateSpriteVisual();

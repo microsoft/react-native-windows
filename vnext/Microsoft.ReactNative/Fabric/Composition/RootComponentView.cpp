@@ -17,7 +17,14 @@ RootComponentView::RootComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : base_type(compContext, tag, reactContext, false) {}
+    : base_type(
+          compContext,
+          tag,
+          reactContext,
+          ComponentViewFeatures::Default &
+              ~(ComponentViewFeatures::Background | ComponentViewFeatures::ShadowProps |
+                ComponentViewFeatures::NativeBorder),
+          false) {}
 
 winrt::Microsoft::ReactNative::ComponentView RootComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,

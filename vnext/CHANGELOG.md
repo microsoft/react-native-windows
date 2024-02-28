@@ -1,8 +1,63 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 16 Feb 2024 06:16:12 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Feb 2024 06:18:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.778
+
+Tue, 27 Feb 2024 06:18:05 GMT
+
+### Changes
+
+- [Fabric] Add AbiShadowNode for non View custom components (30809111+acoates-ms@users.noreply.github.com)
+- Update rn-integrate script to more aggressively update align dependencies (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.202
+- Bump @react-native-windows/codegen to v0.0.0-canary.78
+- Bump @rnw-scripts/eslint-config to v1.2.6
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.10
+- Bump @rnw-scripts/just-task to v2.3.22
+- Bump react-native-platform-override to v1.9.22
+
+## 0.0.0-canary.777
+
+Sat, 24 Feb 2024 06:17:17 GMT
+
+### Changes
+
+- Migrate src directory to src-win (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.201
+- Bump @react-native-windows/codegen to v0.0.0-canary.77
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.9
+- Bump @rnw-scripts/just-task to v2.3.21
+- Bump react-native-platform-override to v1.9.21
+
+## 0.0.0-canary.776
+
+Fri, 23 Feb 2024 06:16:34 GMT
+
+### Changes
+
+- Fix loading images from `file://` URIs (jthysell@microsoft.com)
+- Fix issue with new arch cpp-app apps not finding the bundle in release builds (jthysell@microsoft.com)
+
+## 0.0.0-canary.775
+
+Thu, 22 Feb 2024 06:16:36 GMT
+
+### Changes
+
+- Update WinAppSDK versions to latest public builds (jthysell@microsoft.com)
+- Updated min VS version in dependency script (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.200
+
+## 0.0.0-canary.774
+
+Wed, 21 Feb 2024 06:17:46 GMT
+
+### Changes
+
+- sumbitkeyevents working with shift (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.773
 

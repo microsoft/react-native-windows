@@ -80,9 +80,9 @@ namespace Microsoft.ReactNative
     overridable void MountChildComponentView(ComponentView childComponentView, UInt32 index);
     overridable void UnmountChildComponentView(ComponentView childComponentView, UInt32 index);
     overridable void HandleCommand(String commandName, IJSValueReader args);
-    overridable void UpdateProps(IComponentProps props);
+    overridable void UpdateProps(IComponentProps props, IComponentProps oldProps);
     overridable void UpdateState(IComponentState state);
-    overridable void UpdateLayoutMetrics(LayoutMetrics metrics);
+    overridable void UpdateLayoutMetrics(LayoutMetrics metrics, LayoutMetrics oldMetrics);
     overridable void FinalizeUpdates(ComponentViewUpdateMask updateMask);
 
     DOC_STRING("Used to handle key down events when this component is focused, or if a child component did not handle the key down")

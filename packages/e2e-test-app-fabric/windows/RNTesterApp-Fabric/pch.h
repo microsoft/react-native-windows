@@ -13,16 +13,15 @@
 
 // Windows Header Files
 #include <windows.h>
-
-#pragma push_macro("GetCurrentTime")
 #undef GetCurrentTime
+#include <pathcch.h>
+#include <unknwn.h>
 
 // Playground pch.h
 #include <CppWinRTIncludes.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Foundation.h>
-#pragma pop_macro("GetCurrentTime")
 
 // C RunTime Header Files
 #include <malloc.h>
@@ -31,5 +30,4 @@
 #include <tchar.h>
 
 // reference additional headers your program requires here
-#include <unknwn.h>
 #include <winrt/base.h>

@@ -62,8 +62,8 @@
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
 
-; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
-.*/vnext/src/.*
+; Ignore the src-win folder - flow files are combined with ones from react-native into the root Libraries folder
+.*/vnext/src-win/.*
 
 .*/node_modules/resolve/test/resolver/malformed_package_json/package\.json$
 

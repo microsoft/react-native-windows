@@ -49,7 +49,7 @@ node_modules
 /RNTester.*
 /index.*
 /interface.*
-/src/rntypes
+/src-win/rntypes
 /rntypes
 /types
 /typings-index.*

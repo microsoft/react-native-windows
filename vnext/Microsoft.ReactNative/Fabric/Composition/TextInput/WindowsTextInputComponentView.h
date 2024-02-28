@@ -109,6 +109,9 @@ struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTex
   void updateCursorColor(
       const facebook::react::SharedColor &cursorColor,
       const facebook::react::SharedColor &foregroundColor) noexcept;
+  bool ShouldSubmit(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
@@ -132,6 +135,9 @@ struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTex
   int m_cDrawBlock{0};
   bool m_needsRedraw{false};
   bool m_drawing{false};
+  bool m_clearTextOnSubmit{false};
+  bool m_multiline{false};
+  std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
