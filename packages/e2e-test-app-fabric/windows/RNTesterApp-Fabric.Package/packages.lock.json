@@ -1,44 +1,21 @@
 {
   "version": 1,
   "dependencies": {
-    "native,Version=v0.0": {
+    "UAP,Version=v10.0.17763": {
       "boost": {
-        "type": "Direct",
-        "requested": "[1.76.0, )",
+        "type": "Transitive",
         "resolved": "1.76.0",
         "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
-      },
-      "Microsoft.JavaScript.Hermes": {
-        "type": "Direct",
-        "requested": "[0.1.18, )",
-        "resolved": "0.1.18",
-        "contentHash": "5K8rRihGwIs2XNOTP2Jsw3T6cegxCBQXcpPS4optONU/AmFElGAfnA6XBQJ4UqlCFCl9Nf9zQrgvCUPBWYHiag=="
-      },
-      "Microsoft.VCRTForwarders.140": {
-        "type": "Direct",
-        "requested": "[1.0.2-rc, )",
-        "resolved": "1.0.2-rc",
-        "contentHash": "/r+sjtEeCIGyDhobIZ5hSmYhC/dSyGZxf1SxYJpElUhB0LMCktOMFs9gXrauXypIFECpVynNyVjAmJt6hjJ5oQ=="
-      },
-      "Microsoft.Windows.CppWinRT": {
-        "type": "Direct",
-        "requested": "[2.0.211028.7, )",
-        "resolved": "2.0.211028.7",
-        "contentHash": "JBGI0c3WLoU6aYJRy9Qo0MLDQfObEp+d4nrhR95iyzf7+HOgjRunHDp/6eGFREd7xq3OI1mll9ecJrMfzBvlyg=="
-      },
-      "Microsoft.WindowsAppSDK": {
-        "type": "Direct",
-        "requested": "[1.4.240211001, )",
-        "resolved": "1.4.240211001",
-        "contentHash": "43PdPLNSbBfugbQ7fd5imnZPpg7TGNirCe1/f3KLLYCg1NgDJeTh7t2ihLPuIdmD7rf6mTaUtRXUJYw0HBOzFQ==",
-        "dependencies": {
-          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
-        }
       },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
         "resolved": "1.1.1",
         "contentHash": "AT3HlgTjsqHnWpBHSNeR0KxbLZD7bztlZVj7I8vgeYG9SYqbeFGh0TM/KVtC6fg53nrWHl3VfZFvb5BiQFcY6Q=="
+      },
+      "Microsoft.JavaScript.Hermes": {
+        "type": "Transitive",
+        "resolved": "0.1.18",
+        "contentHash": "5K8rRihGwIs2XNOTP2Jsw3T6cegxCBQXcpPS4optONU/AmFElGAfnA6XBQJ4UqlCFCl9Nf9zQrgvCUPBWYHiag=="
       },
       "Microsoft.SourceLink.Common": {
         "type": "Transitive",
@@ -54,10 +31,23 @@
           "Microsoft.SourceLink.Common": "1.1.1"
         }
       },
+      "Microsoft.VCRTForwarders.140": {
+        "type": "Transitive",
+        "resolved": "1.0.2-rc",
+        "contentHash": "/r+sjtEeCIGyDhobIZ5hSmYhC/dSyGZxf1SxYJpElUhB0LMCktOMFs9gXrauXypIFECpVynNyVjAmJt6hjJ5oQ=="
+      },
       "Microsoft.Windows.SDK.BuildTools": {
         "type": "Transitive",
         "resolved": "10.0.22621.1",
         "contentHash": "Sp1DkYvg7yxuhamwxv+qFC66KC3paKQpwK8Q1J6XuAh6nzXIInmsDcpJ3szr0XGud4ysXojqwTfGdW01gvZ/0g=="
+      },
+      "Microsoft.WindowsAppSDK": {
+        "type": "Transitive",
+        "resolved": "1.4.240211001",
+        "contentHash": "43PdPLNSbBfugbQ7fd5imnZPpg7TGNirCe1/f3KLLYCg1NgDJeTh7t2ihLPuIdmD7rf6mTaUtRXUJYw0HBOzFQ==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
       },
       "automationchannel": {
         "type": "Project",
@@ -100,18 +90,27 @@
           "Folly": "[1.0.0, )",
           "boost": "[1.76.0, )"
         }
+      },
+      "rntesterapp-fabric": {
+        "type": "Project",
+        "dependencies": {
+          "AutomationChannel": "[1.0.0, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.18, )",
+          "Microsoft.ReactNative": "[1.0.0, )",
+          "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
+          "Microsoft.WindowsAppSDK": "[1.4.240211001, )",
+          "boost": "[1.76.0, )"
+        }
       }
     },
-    "native,Version=v0.0/win": {
+    "UAP,Version=v10.0.17763/win10-arm": {
       "Microsoft.VCRTForwarders.140": {
-        "type": "Direct",
-        "requested": "[1.0.2-rc, )",
+        "type": "Transitive",
         "resolved": "1.0.2-rc",
         "contentHash": "/r+sjtEeCIGyDhobIZ5hSmYhC/dSyGZxf1SxYJpElUhB0LMCktOMFs9gXrauXypIFECpVynNyVjAmJt6hjJ5oQ=="
       },
       "Microsoft.WindowsAppSDK": {
-        "type": "Direct",
-        "requested": "[1.4.240211001, )",
+        "type": "Transitive",
         "resolved": "1.4.240211001",
         "contentHash": "43PdPLNSbBfugbQ7fd5imnZPpg7TGNirCe1/f3KLLYCg1NgDJeTh7t2ihLPuIdmD7rf6mTaUtRXUJYw0HBOzFQ==",
         "dependencies": {
@@ -119,16 +118,14 @@
         }
       }
     },
-    "native,Version=v0.0/win-arm64": {
+    "UAP,Version=v10.0.17763/win10-arm-aot": {
       "Microsoft.VCRTForwarders.140": {
-        "type": "Direct",
-        "requested": "[1.0.2-rc, )",
+        "type": "Transitive",
         "resolved": "1.0.2-rc",
         "contentHash": "/r+sjtEeCIGyDhobIZ5hSmYhC/dSyGZxf1SxYJpElUhB0LMCktOMFs9gXrauXypIFECpVynNyVjAmJt6hjJ5oQ=="
       },
       "Microsoft.WindowsAppSDK": {
-        "type": "Direct",
-        "requested": "[1.4.240211001, )",
+        "type": "Transitive",
         "resolved": "1.4.240211001",
         "contentHash": "43PdPLNSbBfugbQ7fd5imnZPpg7TGNirCe1/f3KLLYCg1NgDJeTh7t2ihLPuIdmD7rf6mTaUtRXUJYw0HBOzFQ==",
         "dependencies": {
@@ -136,16 +133,14 @@
         }
       }
     },
-    "native,Version=v0.0/win-x64": {
+    "UAP,Version=v10.0.17763/win10-arm64-aot": {
       "Microsoft.VCRTForwarders.140": {
-        "type": "Direct",
-        "requested": "[1.0.2-rc, )",
+        "type": "Transitive",
         "resolved": "1.0.2-rc",
         "contentHash": "/r+sjtEeCIGyDhobIZ5hSmYhC/dSyGZxf1SxYJpElUhB0LMCktOMFs9gXrauXypIFECpVynNyVjAmJt6hjJ5oQ=="
       },
       "Microsoft.WindowsAppSDK": {
-        "type": "Direct",
-        "requested": "[1.4.240211001, )",
+        "type": "Transitive",
         "resolved": "1.4.240211001",
         "contentHash": "43PdPLNSbBfugbQ7fd5imnZPpg7TGNirCe1/f3KLLYCg1NgDJeTh7t2ihLPuIdmD7rf6mTaUtRXUJYw0HBOzFQ==",
         "dependencies": {
@@ -153,16 +148,59 @@
         }
       }
     },
-    "native,Version=v0.0/win-x86": {
+    "UAP,Version=v10.0.17763/win10-x64": {
       "Microsoft.VCRTForwarders.140": {
-        "type": "Direct",
-        "requested": "[1.0.2-rc, )",
+        "type": "Transitive",
         "resolved": "1.0.2-rc",
         "contentHash": "/r+sjtEeCIGyDhobIZ5hSmYhC/dSyGZxf1SxYJpElUhB0LMCktOMFs9gXrauXypIFECpVynNyVjAmJt6hjJ5oQ=="
       },
       "Microsoft.WindowsAppSDK": {
-        "type": "Direct",
-        "requested": "[1.4.240211001, )",
+        "type": "Transitive",
+        "resolved": "1.4.240211001",
+        "contentHash": "43PdPLNSbBfugbQ7fd5imnZPpg7TGNirCe1/f3KLLYCg1NgDJeTh7t2ihLPuIdmD7rf6mTaUtRXUJYw0HBOzFQ==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
+      }
+    },
+    "UAP,Version=v10.0.17763/win10-x64-aot": {
+      "Microsoft.VCRTForwarders.140": {
+        "type": "Transitive",
+        "resolved": "1.0.2-rc",
+        "contentHash": "/r+sjtEeCIGyDhobIZ5hSmYhC/dSyGZxf1SxYJpElUhB0LMCktOMFs9gXrauXypIFECpVynNyVjAmJt6hjJ5oQ=="
+      },
+      "Microsoft.WindowsAppSDK": {
+        "type": "Transitive",
+        "resolved": "1.4.240211001",
+        "contentHash": "43PdPLNSbBfugbQ7fd5imnZPpg7TGNirCe1/f3KLLYCg1NgDJeTh7t2ihLPuIdmD7rf6mTaUtRXUJYw0HBOzFQ==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
+      }
+    },
+    "UAP,Version=v10.0.17763/win10-x86": {
+      "Microsoft.VCRTForwarders.140": {
+        "type": "Transitive",
+        "resolved": "1.0.2-rc",
+        "contentHash": "/r+sjtEeCIGyDhobIZ5hSmYhC/dSyGZxf1SxYJpElUhB0LMCktOMFs9gXrauXypIFECpVynNyVjAmJt6hjJ5oQ=="
+      },
+      "Microsoft.WindowsAppSDK": {
+        "type": "Transitive",
+        "resolved": "1.4.240211001",
+        "contentHash": "43PdPLNSbBfugbQ7fd5imnZPpg7TGNirCe1/f3KLLYCg1NgDJeTh7t2ihLPuIdmD7rf6mTaUtRXUJYw0HBOzFQ==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
+      }
+    },
+    "UAP,Version=v10.0.17763/win10-x86-aot": {
+      "Microsoft.VCRTForwarders.140": {
+        "type": "Transitive",
+        "resolved": "1.0.2-rc",
+        "contentHash": "/r+sjtEeCIGyDhobIZ5hSmYhC/dSyGZxf1SxYJpElUhB0LMCktOMFs9gXrauXypIFECpVynNyVjAmJt6hjJ5oQ=="
+      },
+      "Microsoft.WindowsAppSDK": {
+        "type": "Transitive",
         "resolved": "1.4.240211001",
         "contentHash": "43PdPLNSbBfugbQ7fd5imnZPpg7TGNirCe1/f3KLLYCg1NgDJeTh7t2ihLPuIdmD7rf6mTaUtRXUJYw0HBOzFQ==",
         "dependencies": {

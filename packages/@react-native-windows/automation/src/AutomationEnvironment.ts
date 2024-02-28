@@ -29,6 +29,25 @@ export type EnvironmentOptions = {
   app?: string;
 
   /**
+   * Instead of letting WinAppDriver launch and attach to the app directly,
+   * create a Root (Desktop) session and search for the app's window.
+   *
+   * Note: This is only really necessary to correctly attach to packaged
+   * WinAppSDK apps.
+   */
+  useRootSession?: boolean;
+
+  /**
+   * When using a Root (Desktop) session, still launch the test app during setup
+   * and close it during cleanup.
+   *
+   * Defaults to true when using `useRootSession` to mimic the expected test
+   * behavior, but can be disabled if you're trying to test an already
+   * running app instance.
+   */
+  rootLaunchApp?: boolean;
+
+  /**
    * Arguments to be passed to your application when launched
    */
   appArguments?: string;
@@ -48,10 +67,13 @@ type AutomationChannelOptions = {
 };
 
 export default class AutomationEnvironment extends NodeEnvironment {
+  private readonly rootWebDriverOptions?: RemoteOptions;
   private readonly webDriverOptions: RemoteOptions;
   private readonly channelOptions: AutomationChannelOptions;
   private readonly winappdriverBin: string;
   private readonly breakOnStart: boolean;
+  private readonly useRootSession: boolean;
+  private readonly rootLaunchApp: boolean;
   private winAppDriverProcess: ChildProcess | undefined;
   private browser: BrowserObject | undefined;
   private automationClient: AutomationClient | undefined;
@@ -81,18 +103,7 @@ export default class AutomationEnvironment extends NodeEnvironment {
     const baseOptions: RemoteOptions = {
       hostname: '127.0.0.1',
       port: 4723,
-      capabilities: {
-        app: resolveAppName(passedOptions.app),
-        ...(passedOptions.appWorkingDir && {
-          appWorkingDir: passedOptions.appWorkingDir,
-        }),
-        ...(passedOptions.appArguments && {
-          appArguments: passedOptions.appArguments,
-        }),
 
-        // @ts-ignore
-        'ms:experimental-webdriver': true,
-      },
       // Level of logging verbosity: trace | debug | info | warn | error
       logLevel: 'error',
 
@@ -106,11 +117,60 @@ export default class AutomationEnvironment extends NodeEnvironment {
       connectionRetryCount: 5,
     };
 
-    this.webDriverOptions = Object.assign(
-      {},
-      baseOptions,
-      passedOptions.webdriverOptions,
-    );
+    this.useRootSession = !!passedOptions.useRootSession;
+    this.rootLaunchApp =
+      passedOptions.rootLaunchApp === undefined
+        ? this.useRootSession
+        : !!passedOptions.rootLaunchApp;
+
+    if (this.useRootSession) {
+      this.rootWebDriverOptions = Object.assign(
+        {},
+        baseOptions,
+        {
+          capabilities: {
+            app: 'Root',
+            // @ts-ignore
+            'ms:experimental-webdriver': true,
+          },
+        },
+        passedOptions.webdriverOptions,
+      );
+
+      this.webDriverOptions = Object.assign(
+        {},
+        baseOptions,
+        {
+          capabilities: {
+            // Save the name for now, we'll get the handle later
+            appTopLevelWindow: passedOptions.app,
+            // @ts-ignore
+            'ms:experimental-webdriver': true,
+          },
+        },
+        passedOptions.webdriverOptions,
+      );
+    } else {
+      this.webDriverOptions = Object.assign(
+        {},
+        baseOptions,
+        {
+          capabilities: {
+            app: resolveAppName(passedOptions.app),
+            ...(passedOptions.appWorkingDir && {
+              appWorkingDir: passedOptions.appWorkingDir,
+            }),
+            ...(passedOptions.appArguments && {
+              appArguments: passedOptions.appArguments,
+            }),
+
+            // @ts-ignore
+            'ms:experimental-webdriver': true,
+          },
+        },
+        passedOptions.webdriverOptions,
+      );
+    }
 
     this.webDriverOptions.capabilities = Object.assign(
       this.webDriverOptions.capabilities!,
@@ -131,6 +191,47 @@ export default class AutomationEnvironment extends NodeEnvironment {
       this.winappdriverBin,
       this.webDriverOptions.port!,
     );
+
+    if (this.useRootSession) {
+      // Extract out the saved window name
+      const appName = (this.webDriverOptions.capabilities! as any)
+        .appTopLevelWindow;
+
+      if (this.rootLaunchApp) {
+        const appPackageName = resolveAppName(appName);
+        execSync(`start shell:AppsFolder\\${appPackageName}`);
+      }
+
+      // Set up the "Desktop" or Root session
+      const rootBrowser = await webdriverio.remote(this.rootWebDriverOptions);
+
+      // Get the list of windows
+      const allWindows = await rootBrowser.$$('//Window');
+
+      // Find our target window
+      let appWindow: webdriverio.Element | undefined;
+      for (const window of allWindows) {
+        if ((await window.getAttribute('Name')) === appName) {
+          appWindow = window;
+          break;
+        }
+      }
+
+      if (!appWindow) {
+        throw new Error(`Unable to find window with Name === '${appName}'.`);
+      }
+
+      // Swap the the window handle for WinAppDriver
+      const appWindowHandle = parseInt(
+        await appWindow!.getAttribute('NativeWindowHandle'),
+        10,
+      );
+
+      (this.webDriverOptions.capabilities as any).appTopLevelWindow =
+        '0x' + appWindowHandle.toString(16);
+
+      await rootBrowser.deleteSession();
+    }
 
     this.browser = await webdriverio.remote(this.webDriverOptions);
 
@@ -155,14 +256,17 @@ export default class AutomationEnvironment extends NodeEnvironment {
   }
 
   async teardown() {
-    if (this.browser) {
-      await this.browser.deleteSession();
-    }
-
     if (this.automationClient) {
       this.automationClient.close();
     }
 
+    if (this.browser) {
+      if (this.rootLaunchApp) {
+        // We started the app, so let's close it too
+        await this.browser.closeWindow();
+      }
+      await this.browser.deleteSession();
+    }
     this.winAppDriverProcess?.kill('SIGINT');
     await super.teardown();
   }
