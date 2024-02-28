@@ -71,6 +71,7 @@ exports[`LegacyTextInputTest TextInput onChange before onSelectionChange 1`] = `
     "Name": "onKeyPress key: a
 onChange text: a
 onSelectionChange range: 1,1
+onKeyPress key: Enter
 onChange text: 
 onSelectionChange range: 0,0
 onFocus
@@ -105,7 +106,6 @@ onKeyPress key: b
 onChange text: ab
 onSelectionChange range: 2,2
 onSelectionChange range: 1,1
-onKeyPress key: a
 onChange text: a
 onSelectionChange range: 0,0
 onKeyPress key: a
@@ -149,7 +149,6 @@ onKeyPress key: b
 onChange text: ab
 onSelectionChange range: 2,2
 onSelectionChange range: 1,1
-onKeyPress key: a
 onChange text: a
 onSelectionChange range: 0,0
 onKeyPress key: a
@@ -170,7 +169,7 @@ onFocus
     "Opacity": 1,
     "Size": [
       998,
-      318,
+      299,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -216,7 +215,6 @@ onKeyPress key: b
 onChange text: ab
 onSelectionChange range: 2,2
 onSelectionChange range: 1,1
-onKeyPress key: a
 onChange text: a
 onSelectionChange range: 0,0
 onKeyPress key: a
@@ -237,7 +235,7 @@ onFocus
     "Opacity": 1,
     "Size": [
       998,
-      746,
+      727,
     ],
     "Visual Type": "SpriteVisual",
   },
