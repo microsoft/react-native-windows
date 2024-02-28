@@ -42,3 +42,7 @@ steps:
     publishWebProjects: false
     zipAfterPublish: false
     projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
+
+- pwsh: |
+    Write-Warning 'Showing published artifacts'
+    Get-ChildItem -Name -Recurse -File vnext/target/
