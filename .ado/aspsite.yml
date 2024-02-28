@@ -50,5 +50,5 @@ steps:
   displayName: Show published content
 
 - pwsh: |
-    Install-WindowsFeature -Name WebServer
+    Install-WindowsFeature -Name 'Web-Server'
   displayName: Install IIS
