@@ -1078,7 +1078,7 @@ static jsi::Value __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_showAlert(
 }
 
 NativeDialogManagerWindowsCxxSpecJSI::NativeDialogManagerWindowsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("DialogManagerWindows", jsInvoker) {
+  : TurboModule("Alert", jsInvoker) {
   methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_getConstants};
   methodMap_["showAlert"] = MethodMetadata {3, __hostFunction_NativeDialogManagerWindowsCxxSpecJSI_showAlert};
 }
