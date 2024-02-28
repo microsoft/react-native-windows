@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "remove vnext/codegen from clang formatting",
+  "packageName": "@rnw-scripts/format-files",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
