@@ -1,2 +1,4 @@
+# This file prevents clang-format from formating the codegen files
+
 DisableFormat: true
 SortIncludes: false
