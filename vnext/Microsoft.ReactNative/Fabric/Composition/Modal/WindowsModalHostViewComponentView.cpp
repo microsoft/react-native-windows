@@ -115,7 +115,7 @@ LRESULT CALLBACK ModalBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM 
     winrt::check_hresult(data->QueryInterface(
         winrt::guid_of<winrt::Microsoft::ReactNative::CompositionHwndHost>(),
         winrt::put_abi(host))); // look into the data for a CompositionHwndHost and store it in host
-    auto result = host.TranslateMessage(message, wparam, lparam);
+    auto result = static_cast<LRESULT>(host.TranslateMessage(message, wparam, lparam));
     if (result) {
       return result;
     }
