@@ -769,6 +769,8 @@ void WindowsTextInputComponentView::OnKeyDown(
         facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
         onKeyPressArgs.key = "Backspace";
         emitter->onKeyPress(onKeyPressArgs);
+        // we only want to keep track of m_lastKeyPressed for one event fire
+        m_lastKeyPressed = "";
       }
     }
 
@@ -1216,15 +1218,18 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     emitter->onChange(onChangeArgs);
 
     // Call onKeyPress event
-    facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
-    if (m_lastKeyPressed.compare("\r") == 0) {
-      onKeyPressArgs.key = "Enter";
-    } else if (m_lastKeyPressed.compare("\b") == 0) {
-      onKeyPressArgs.key = "Backspace";
-    } else {
-      onKeyPressArgs.key = m_lastKeyPressed;
+    if (!m_lastKeyPressed.empty()) {
+      facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
+      if (m_lastKeyPressed.compare("\r") == 0) {
+        onKeyPressArgs.key = "Enter";
+      } else if (m_lastKeyPressed.compare("\b") == 0) {
+        onKeyPressArgs.key = "Backspace";
+      } else {
+        onKeyPressArgs.key = m_lastKeyPressed;
+      }
+      emitter->onKeyPress(onKeyPressArgs);
+      m_lastKeyPressed = "";
     }
-    emitter->onKeyPress(onKeyPressArgs);
   }
 
   if (m_uiaProvider) {
