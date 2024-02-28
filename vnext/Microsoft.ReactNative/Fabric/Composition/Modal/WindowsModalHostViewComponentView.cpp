@@ -47,54 +47,55 @@ const int MODAL_DEFAULT_WIDTH = 500;
 const int MODAL_DEFAULT_HEIGHT = 500;
 
 // creates a new modal window
-void WindowsModalHostComponentView::ShowOnUIThread() {
+void WindowsModalHostComponentView::EnsureModalCreated() {
   auto host =
       winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(m_context.Properties());
-  if (!host) {
+  // return if hwnd already exists
+  if (!host || m_hwnd) {
     return;
   }
 
   RegisterWndClass(); // creates and register a windows class
+  auto CompositionHwndHost = winrt::Microsoft::ReactNative::CompositionHwndHost();
+  winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
+  viewOptions.ComponentName(L"Modal");
+  CompositionHwndHost.ReactViewHost(winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
+  HINSTANCE hInstance = GetModuleHandle(NULL);
+  winrt::impl::abi<winrt::Microsoft::ReactNative::ICompositionHwndHost>::type *pHost{nullptr};
+  winrt::com_ptr<::IUnknown> spunk;
+  CompositionHwndHost.as(spunk);
 
+  // get the root hwnd
+  auto roothwnd = reinterpret_cast<HWND>(
+      winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(m_context.Properties().Handle()));
+
+  m_hwnd = CreateWindow(
+      c_modalWindowClassName,
+      L"React-Native Modal",
+      WS_OVERLAPPEDWINDOW,
+      CW_USEDEFAULT,
+      CW_USEDEFAULT,
+      MODAL_DEFAULT_WIDTH,
+      MODAL_DEFAULT_HEIGHT,
+      roothwnd, // parent
+      nullptr,
+      hInstance,
+      spunk.get());
+
+  // Check if window creation succeeded
   if (!m_hwnd) {
-    auto CompositionHwndHost = winrt::Microsoft::ReactNative::CompositionHwndHost();
-    winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
-    viewOptions.ComponentName(L"Modal");
-    CompositionHwndHost.ReactViewHost(
-        winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
-    HINSTANCE hInstance = GetModuleHandle(NULL);
-    winrt::impl::abi<winrt::Microsoft::ReactNative::ICompositionHwndHost>::type *pHost{nullptr};
-    winrt::com_ptr<::IUnknown> spunk;
-    CompositionHwndHost.as(spunk);
-
-    // get the root hwnd
-    auto roothwnd = reinterpret_cast<HWND>(
-        winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(m_context.Properties().Handle()));
-
-    m_hwnd = CreateWindow(
-        c_modalWindowClassName,
-        L"React-Native Modal",
-        WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT,
-        CW_USEDEFAULT,
-        MODAL_DEFAULT_WIDTH,
-        MODAL_DEFAULT_HEIGHT,
-        roothwnd, // parent
-        nullptr,
-        hInstance,
-        spunk.get());
-
-    // Check if window creation succeeded
-    if (!m_hwnd) {
-      throw std::exception("Failed to create new hwnd for Modal: " + GetLastError());
-    }
-
-    spunk.detach();
+    throw std::exception("Failed to create new hwnd for Modal: " + GetLastError());
   }
 
-  ShowWindow(m_hwnd, SW_NORMAL);
-  BringWindowToTop(m_hwnd);
-  SetFocus(m_hwnd);
+  spunk.detach();
+}
+
+void WindowsModalHostComponentView::ShowOnUIThread() {
+  if (m_hwnd) {
+    ShowWindow(m_hwnd, SW_NORMAL);
+    BringWindowToTop(m_hwnd);
+    SetFocus(m_hwnd);
+  }
 }
 
 void WindowsModalHostComponentView::HideOnUIThread() noexcept {
@@ -205,6 +206,7 @@ void WindowsModalHostComponentView::updateProps(
 
   // currently Modal only gets Destroyed by closing the window
   if (newModalProps.visible) {
+    EnsureModalCreated();
     ShowOnUIThread();
   }
 

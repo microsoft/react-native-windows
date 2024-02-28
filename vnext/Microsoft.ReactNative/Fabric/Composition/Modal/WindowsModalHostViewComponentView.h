@@ -54,6 +54,7 @@ struct WindowsModalHostComponentView : WindowsModalHostComponentViewT<WindowsMod
   // Used for creating new window
   void ShowOnUIThread();
   void HideOnUIThread() noexcept;
+  void EnsureModalCreated();
   static void RegisterWndClass() noexcept;
 
  private:
