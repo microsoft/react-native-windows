@@ -18,8 +18,6 @@
 #include "ReactNativeHost.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
-
-
 WindowsModalHostComponentView::WindowsModalHostComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
@@ -126,8 +124,8 @@ LRESULT CALLBACK ModalBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM 
   switch (message) {
     case WM_NCCREATE: { // sent before WM_CREATE, lparam should be identical to members of CreateWindowEx
       auto createStruct = reinterpret_cast<CREATESTRUCT *>(lparam); // CreateStruct
-      auto windowData = static_cast<::IUnknown *>(createStruct->lpCreateParams);
-      SetProp(hwnd, CompHostProperty, reinterpret_cast<::IUnknown *>(windowData)); // adds new properties to window
+      data = static_cast<::IUnknown *>(createStruct->lpCreateParams);
+      SetProp(hwnd, CompHostProperty, data); // adds new properties to window
       break;
     }
     case WM_CREATE: { // recieves after window is created but before visible
