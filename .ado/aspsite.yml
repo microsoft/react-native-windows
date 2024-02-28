@@ -4,6 +4,9 @@ trigger:
 pool:
   name: GreenRNW
 
+variables:
+  system.debug: true
+
 steps:
 - pwsh: |
     Write-Warning 'Printing PATH'
