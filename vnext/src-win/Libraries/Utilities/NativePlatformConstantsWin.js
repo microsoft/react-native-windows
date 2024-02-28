@@ -19,6 +19,11 @@ export type PlatformConstantsWindows = {|
     patch: number,
     prerelease: ?string,
   |},
+  reactNativeWindowsVersion: {|
+    major: number,
+    minor: number,
+    patch: number,
+  |},
   osVersion: number,
 |};
 

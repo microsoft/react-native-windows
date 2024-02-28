@@ -11,7 +11,7 @@ namespace Microsoft::ReactNative {
 
 class ReactNativeConfigProperties final : public facebook::react::ReactNativeConfig {
  public:
-  ReactNativeConfigProperties(winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+  ReactNativeConfigProperties(winrt::Microsoft::ReactNative::ReactPropertyBag const &properties);
   virtual ~ReactNativeConfigProperties();
 
   virtual bool getBool(const std::string &param) const override;
@@ -20,7 +20,7 @@ class ReactNativeConfigProperties final : public facebook::react::ReactNativeCon
   virtual double getDouble(const std::string &param) const override;
 
  private:
-  winrt::Microsoft::ReactNative::ReactContext m_context;
+  winrt::Microsoft::ReactNative::ReactPropertyBag m_properties;
 };
 
 } // namespace Microsoft::ReactNative
