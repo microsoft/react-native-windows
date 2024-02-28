@@ -21,7 +21,7 @@ import {getNativeBinary} from 'clang-format';
 
 /// These constants control which files are formatted
 const includeEndsWith = ['.h', '.cpp'];
-const excludePathContains: string[] = ['vnext/codegen'];
+const excludePathContains: string[] = [];
 const excludePathEndsWith = ['.g.h', '.g.cpp'];
 
 const VERIFY_FLAG = '-verify';
