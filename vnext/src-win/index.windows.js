@@ -62,7 +62,6 @@ import typeof VirtualizedSectionList from './Libraries/Lists/VirtualizedSectionL
 import typeof LogBox from './Libraries/LogBox/LogBox';
 import typeof Modal from './Libraries/Modal/Modal';
 import typeof NativeDialogManagerAndroid from './Libraries/NativeModules/specs/NativeDialogManagerAndroid';
-import typeof NativeDialogManagerWindows from './Libraries/NativeModules/specs/NativeDialogManagerWindows';
 import typeof Networking from './Libraries/Network/RCTNetworking';
 import typeof * as Systrace from './Libraries/Performance/Systrace';
 import typeof PermissionsAndroid from './Libraries/PermissionsAndroid/PermissionsAndroid';
@@ -267,10 +266,6 @@ module.exports = {
   },
   get NativeDialogManagerAndroid(): NativeDialogManagerAndroid {
     return require('./Libraries/NativeModules/specs/NativeDialogManagerAndroid')
-      .default;
-  },
-  get NativeDialogManagerWindows(): NativeDialogManagerWindows {
-    return require('./Libraries/NativeModules/specs/NativeDialogManagerWindows')
       .default;
   },
   get NativeEventEmitter(): NativeEventEmitter {

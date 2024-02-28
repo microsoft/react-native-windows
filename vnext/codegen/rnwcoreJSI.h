@@ -3561,10 +3561,10 @@ private:
 
 
   
-#pragma mark - AlertBaseDialogOptions
+#pragma mark - DialogManagerWindowsBaseDialogOptions
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
-struct [[deprecated("Use AlertDialogOptions instead.")]] AlertBaseDialogOptions {
+struct [[deprecated("Use DialogManagerWindowsDialogOptions instead.")]] DialogManagerWindowsBaseDialogOptions {
   P0 title;
   P1 message;
   P2 buttonPositive;
@@ -3574,18 +3574,18 @@ struct [[deprecated("Use AlertDialogOptions instead.")]] AlertBaseDialogOptions 
   P6 cancelable;
   P7 defaultButton;
   P8 rootTag;
-  bool operator==(const AlertBaseDialogOptions &other) const {
+  bool operator==(const DialogManagerWindowsBaseDialogOptions &other) const {
     return title == other.title && message == other.message && buttonPositive == other.buttonPositive && buttonNegative == other.buttonNegative && buttonNeutral == other.buttonNeutral && items == other.items && cancelable == other.cancelable && defaultButton == other.defaultButton && rootTag == other.rootTag;
   }
 };
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
-struct [[deprecated("Use AlertDialogOptionsBridging instead.")]] AlertBaseDialogOptionsBridging {
-  static AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7, P8> fromJs(
+struct [[deprecated("Use DialogManagerWindowsDialogOptionsBridging instead.")]] DialogManagerWindowsBaseDialogOptionsBridging {
+  static DialogManagerWindowsBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7, P8> fromJs(
       jsi::Runtime &rt,
       const jsi::Object &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
-    AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7, P8> result{
+    DialogManagerWindowsBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7, P8> result{
       bridging::fromJs<P0>(rt, value.getProperty(rt, "title"), jsInvoker),
       bridging::fromJs<P1>(rt, value.getProperty(rt, "message"), jsInvoker),
       bridging::fromJs<P2>(rt, value.getProperty(rt, "buttonPositive"), jsInvoker),
@@ -3638,7 +3638,7 @@ struct [[deprecated("Use AlertDialogOptionsBridging instead.")]] AlertBaseDialog
 
   static jsi::Object toJs(
       jsi::Runtime &rt,
-      const AlertBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7, P8> &value,
+      const DialogManagerWindowsBaseDialogOptions<P0, P1, P2, P3, P4, P5, P6, P7, P8> &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     auto result = facebook::jsi::Object(rt);
     if (value.title) {
@@ -3673,10 +3673,10 @@ struct [[deprecated("Use AlertDialogOptionsBridging instead.")]] AlertBaseDialog
 };
 
 
-#pragma mark - AlertDialogOptions
+#pragma mark - DialogManagerWindowsDialogOptions
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
-struct AlertDialogOptions {
+struct DialogManagerWindowsDialogOptions {
   P0 title;
   P1 message;
   P2 buttonPositive;
@@ -3686,13 +3686,13 @@ struct AlertDialogOptions {
   P6 cancelable;
   P7 defaultButton;
   P8 rootTag;
-  bool operator==(const AlertDialogOptions &other) const {
+  bool operator==(const DialogManagerWindowsDialogOptions &other) const {
     return title == other.title && message == other.message && buttonPositive == other.buttonPositive && buttonNegative == other.buttonNegative && buttonNeutral == other.buttonNeutral && items == other.items && cancelable == other.cancelable && defaultButton == other.defaultButton && rootTag == other.rootTag;
   }
 };
 
 template <typename T>
-struct AlertDialogOptionsBridging {
+struct DialogManagerWindowsDialogOptionsBridging {
   static T types;
 
   static T fromJs(
@@ -3803,7 +3803,7 @@ public:
     return delegate_.get(rt, propName);
   }
 
-  static constexpr std::string_view kModuleName = "Alert";
+  static constexpr std::string_view kModuleName = "DialogManagerWindows";
 
 protected:
   NativeDialogManagerWindowsCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)

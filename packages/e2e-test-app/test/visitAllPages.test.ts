@@ -36,8 +36,7 @@ describe('visitAllPages', () => {
   for (const component of componentExamples) {
     if (
       component === 'Fabric Native Component' ||
-      component === 'Fabric Native Component Yoga' ||
-      component === 'SwipeableCard'
+      component === 'Fabric Native Component Yoga'
     ) {
       continue; // disable fabric specific tests
     }

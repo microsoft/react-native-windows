@@ -48,4 +48,4 @@ export interface Spec extends TurboModule {
   ) => void;
 }
 
-export default (TurboModuleRegistry.get<Spec>('Alert'): ?Spec);
+export default (TurboModuleRegistry.get<Spec>('DialogManagerWindows'): ?Spec);
