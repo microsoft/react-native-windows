@@ -369,6 +369,13 @@
       "issue": 10619
     },
     {
+      "type": "patch",
+      "file": "src-win/Libraries/Lists/FlatList.windows.js",
+      "baseFile": "packages/react-native/Libraries/Lists/FlatList.js",
+      "baseHash": "3ae2273b2cf866b2503e17261869c02d2a31f7a4",
+      "issue": 12770
+    },
+    {
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js",
