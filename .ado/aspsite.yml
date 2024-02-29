@@ -138,3 +138,7 @@ steps:
     #AppPoolPassword: # string. Optional. Use when AppPoolIdentity = SpecificUser && ActionIISApplicationPool = CreateOrUpdateAppPool. Password.
   # Advanced
     #AppCmdCommands: # string. Additional appcmd.exe commands.
+
+- pwsh: |
+    Invoke-WebRequest http://localhost:5555
+  displayName: Test HTTP
