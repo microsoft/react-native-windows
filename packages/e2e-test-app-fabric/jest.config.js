@@ -11,12 +11,6 @@
 
 const assetTransform = 'react-native-windows/jest/assetFileTransformer.js';
 
-const platformDir =
-  (process.env.E2ETestFabricBuildPlatform === 'x86'
-    ? ''
-    : (process.env.E2ETestFabricBuildPlatform ?? 'x64') + '\\') +
-  (process.env.E2ETestFabricBuildConfiguration ?? 'Release');
-
 module.exports = {
   preset: '@rnx-kit/jest-preset',
 
@@ -61,8 +55,9 @@ module.exports = {
   setupFilesAfterEnv: ['react-native-windows/jest/setup', './jest.setup.js'],
 
   testEnvironmentOptions: {
-    app: `windows\\${platformDir}\\RNTesterApp-Fabric\\RNTesterApp-Fabric.exe`,
-    appWorkingDir: `windows\\${platformDir}\\RNTesterApp-Fabric`,
+    app: 'RNTesterApp-Fabric', // Both the app package to launch and the window to attach to
+    useRootSession: true, // Required for packages WinAppSDK apps
+    rootLaunchApp: true, // Disable to test an already running app instance
     enableAutomationChannel: true,
     /* // Enable for more detailed logging
     webdriverOptions: {

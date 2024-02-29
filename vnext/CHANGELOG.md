@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 27 Feb 2024 06:18:05 GMT and should not be manually modified.
+This log was last generated on Thu, 29 Feb 2024 06:26:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.779
+
+Thu, 29 Feb 2024 06:26:00 GMT
+
+### Changes
+
+- Add packaging to e2e-test-app-fabric (jthysell@microsoft.com)
+- Remove TurboModuleBinding fork (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.778
 
