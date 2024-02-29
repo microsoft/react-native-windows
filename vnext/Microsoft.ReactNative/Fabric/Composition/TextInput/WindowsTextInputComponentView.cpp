@@ -757,23 +757,6 @@ void WindowsTextInputComponentView::OnKeyDown(
     if (args.KeyStatus().WasKeyDown)
       lParam |= 0x40000000; // bit 30
 
-    // RichEdit will send onCharcterRecieved before onTextUpdate for Enter/Back button, this catches the edgecases so
-    // onKeyPress always fires after onChange
-    if (args.Key() == winrt::Windows::System::VirtualKey::Enter) {
-      m_lastKeyPressed = "\r";
-    } else if (args.Key() == winrt::Windows::System::VirtualKey::Back) {
-      m_lastKeyPressed = "\b";
-      // call onKeyPress event when RichEdit is empty and backspace is pressed
-      if (GetTextFromRichEdit().empty()) {
-        auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
-        facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
-        onKeyPressArgs.key = "Backspace";
-        emitter->onKeyPress(onKeyPressArgs);
-        // we only want to keep track of m_lastKeyPressed for one event fire
-        m_lastKeyPressed = "";
-      }
-    }
-
     LRESULT lresult;
     DrawBlock db(*this);
     auto hr = m_textServices->TxSendMessage(
@@ -884,10 +867,21 @@ void WindowsTextInputComponentView::OnCharacterReceived(
     return;
   }
 
-  // save the last key pressed for onKeyPress
+  // convert keyCode to std::string
   wchar_t key[2] = L" ";
   key[0] = static_cast<wchar_t>(args.KeyCode());
-  m_lastKeyPressed = ::Microsoft::Common::Unicode::Utf16ToUtf8(key, 1);
+  std::string keyString = ::Microsoft::Common::Unicode::Utf16ToUtf8(key, 1);
+  // Call onKeyPress event
+  auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+  facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
+  if (keyString.compare("\r") == 0) {
+    onKeyPressArgs.key = "Enter";
+  } else if (keyString.compare("\b") == 0) {
+    onKeyPressArgs.key = "Backspace";
+  } else {
+    onKeyPressArgs.key = keyString;
+  }
+  emitter->onKeyPress(onKeyPressArgs);
 
   WPARAM wParam = static_cast<WPARAM>(args.KeyCode());
   LPARAM lParam = 0;
@@ -1216,20 +1210,6 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
     onChangeArgs.text = GetTextFromRichEdit();
     onChangeArgs.eventCount = ++m_nativeEventCount;
     emitter->onChange(onChangeArgs);
-
-    // Call onKeyPress event
-    if (!m_lastKeyPressed.empty()) {
-      facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
-      if (m_lastKeyPressed.compare("\r") == 0) {
-        onKeyPressArgs.key = "Enter";
-      } else if (m_lastKeyPressed.compare("\b") == 0) {
-        onKeyPressArgs.key = "Backspace";
-      } else {
-        onKeyPressArgs.key = m_lastKeyPressed;
-      }
-      emitter->onKeyPress(onKeyPressArgs);
-      m_lastKeyPressed = "";
-    }
   }
 
   if (m_uiaProvider) {
