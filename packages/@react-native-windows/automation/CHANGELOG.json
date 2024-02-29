@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Thu, 29 Feb 2024 06:26:00 GMT",
+      "version": "0.3.200",
+      "tag": "@react-native-windows/automation_v0.3.200",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/automation",
+            "commit": "ea3b1005deb83b64534ff9a33d2fca266684cd37",
+            "comment": "Enable testing packaged win32 fabric apps"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.118",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Feb 2024 06:17:58 GMT",
       "version": "0.3.199",
       "tag": "@react-native-windows/automation_v0.3.199",
