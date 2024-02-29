@@ -51,6 +51,15 @@ exports.copyTask = baseDir => {
       paths: reactNative('src/**/*.+(d.ts|js|jsx|png|gif|jpg|html)'),
       dest: base('src'),
     }),
+    // Remove the private __tests__ (until this is fixed: https://github.com/facebook/react-native/issues/43242)
+    cleanTask({
+      paths: [
+        ...glob.sync('src/private/**/__tests__', {
+          cwd: baseDir,
+          absolute: true,
+        }),
+      ],
+    }),
     copyTask({
       paths: reactNative('index.js', 'interface.js', 'rn-get-polyfills.js'),
       dest: base('.'),
