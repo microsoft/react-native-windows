@@ -63,6 +63,8 @@
 #include "Modules/PaperUIManagerModule.h"
 #include "Modules/TimingModule.h"
 #endif
+#include "Modules/ExceptionsManager.h"
+#include "Modules/StatusBarManager.h"
 #include "Modules/PlatformConstantsWinModule.h"
 #include "Modules/ReactRootViewTagGenerator.h"
 #include "Modules/SourceCode.h"
@@ -414,6 +416,16 @@ void ReactInstanceWin::LoadModules(
   }
 #endif
 
+  ::Microsoft::ReactNative::ExceptionsManager::SetRedBoxHander(
+      winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()), m_redboxHandler);
+  registerTurboModule(
+      L"ExceptionsManager",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ExceptionsManager>());
+
+  registerTurboModule(
+      L"StatusBarManager",
+      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::StatusBarManager>());
+
   registerTurboModule(
       L"PlatformConstants",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::PlatformConstants>());
@@ -538,6 +550,7 @@ std::shared_ptr<facebook::react::DevSettings> ReactInstanceWin::CreateDevSetting
   return devSettings;
 }
 
+#ifdef USE_FABRIC
 void ReactInstanceWin::InitializeBridgeless() noexcept {
   InitUIQueue();
   InitDevMenu();
@@ -647,6 +660,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
     }
   });
 }
+#endif
 
 std::unique_ptr<facebook::jsi::PreparedScriptStore> ReactInstanceWin::CreateHermesPreparedScriptStore() noexcept {
   std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
@@ -888,6 +902,7 @@ void ReactInstanceWin::LoadJSBundles() noexcept {
   }
 }
 
+#ifdef USE_FABRIC
 void ReactInstanceWin::LoadJSBundlesBridgeless(std::shared_ptr<facebook::react::DevSettings> devSettings) noexcept {
   if (m_isFastReloadEnabled) {
     // Getting bundle from the packager, so do everything async.
@@ -935,6 +950,7 @@ void ReactInstanceWin::LoadJSBundlesBridgeless(std::shared_ptr<facebook::react::
         });
   }
 }
+#endif
 
 void ReactInstanceWin::OnReactInstanceLoaded(const Mso::ErrorCode &errorCode) noexcept {
   bool isLoadedExpected = false;

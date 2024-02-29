@@ -8,9 +8,6 @@
 #include <cxxreact/ReactNativeVersion.h>
 #include <winrt/Windows.Foundation.Metadata.h>
 
-using namespace winrt::Windows::Foundation;
-using namespace winrt::Windows::ApplicationModel;
-
 namespace Microsoft::ReactNative {
 
 ReactNativeSpecs::PlatformConstantsWinSpec_PlatformConstantsWindows PlatformConstants::GetConstants() noexcept {
@@ -36,17 +33,17 @@ ReactNativeSpecs::PlatformConstantsWinSpec_PlatformConstantsWindows PlatformCons
   // Provide the universal API contract as an OS version
   if (!IsWindows10OrGreater()) {
     constants.osVersion = -1;
-  }
-  else {
-  for (uint16_t i = 1;; ++i) {
-    if (!winrt::Windows::Foundation::Metadata::ApiInformation::IsApiContractPresent(L"Windows.Foundation.UniversalApiContract", i)) {
-      constants.osVersion = i - 1;
-      break;
+  } else {
+    for (uint16_t i = 1;; ++i) {
+      if (!winrt::Windows::Foundation::Metadata::ApiInformation::IsApiContractPresent(
+              L"Windows.Foundation.UniversalApiContract", i)) {
+        constants.osVersion = i - 1;
+        break;
+      }
     }
   }
-  }
 
- return constants;
+  return constants;
 }
 
 } // namespace Microsoft::ReactNative

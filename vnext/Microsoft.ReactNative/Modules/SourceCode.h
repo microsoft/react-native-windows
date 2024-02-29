@@ -17,9 +17,11 @@ struct SourceCode {
   REACT_GET_CONSTANTS(GetConstants)
   ReactNativeSpecs::SourceCodeSpec_SourceCodeConstants GetConstants() noexcept;
 
-  static void SetScriptUrl(const winrt::Microsoft::ReactNative::ReactPropertyBag& propertyBag, const std::string& scriptUrl) noexcept;
+  static void SetScriptUrl(
+      const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag,
+      const std::string &scriptUrl) noexcept;
 
-private:
+ private:
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
 };
 
