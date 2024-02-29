@@ -7,7 +7,6 @@
 namespace Microsoft::ReactNative {
 
 REACT_MODULE(StatusBarManager)
-struct StatusBarManager {
-};
+struct StatusBarManager {};
 
 } // namespace Microsoft::ReactNative

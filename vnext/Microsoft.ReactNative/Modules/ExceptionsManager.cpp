@@ -4,16 +4,16 @@
 #include "pch.h"
 #include "ExceptionsManager.h"
 
-#include <IRedBoxHandler.h>
 #include <DynamicWriter.h>
+#include <IRedBoxHandler.h>
 #include <JSValueWriter.h>
 
 namespace Microsoft::ReactNative {
 
-static const React::ReactPropertyId <
-    React::ReactNonAbiValue<std::shared_ptr<Mso::React::IRedBoxHandler>>> &RedBoxHandlerPropertyId() noexcept {
-  static const React::ReactPropertyId < React::ReactNonAbiValue<std::shared_ptr<Mso::React::IRedBoxHandler>>> prop{
-                                            L"ReactNative.ExceptionsManager", L"RedBoxHandler"};
+static const React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<Mso::React::IRedBoxHandler>>>
+    &RedBoxHandlerPropertyId() noexcept {
+  static const React::ReactPropertyId<React::ReactNonAbiValue<std::shared_ptr<Mso::React::IRedBoxHandler>>> prop{
+      L"ReactNative.ExceptionsManager", L"RedBoxHandler"};
   return prop;
 }
 
@@ -70,7 +70,8 @@ void ExceptionsManager::reportException(ReactNativeSpecs::ExceptionsManagerSpec_
     errorInfo.Id = static_cast<uint32_t>(data.id);
 
     auto writer = winrt::make_self<winrt::Microsoft::ReactNative::DynamicWriter>();
-    winrt::Microsoft::ReactNative::WriteValue(writer.as<winrt::Microsoft::ReactNative::IJSValueWriter>(), data.extraData);
+    winrt::Microsoft::ReactNative::WriteValue(
+        writer.as<winrt::Microsoft::ReactNative::IJSValueWriter>(), data.extraData);
     errorInfo.ExtraData = writer->TakeValue();
 
     for (auto frame : data.stack) {

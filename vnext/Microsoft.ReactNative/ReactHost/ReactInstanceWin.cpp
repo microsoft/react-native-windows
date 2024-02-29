@@ -64,10 +64,10 @@
 #include "Modules/TimingModule.h"
 #endif
 #include "Modules/ExceptionsManager.h"
-#include "Modules/StatusBarManager.h"
 #include "Modules/PlatformConstantsWinModule.h"
 #include "Modules/ReactRootViewTagGenerator.h"
 #include "Modules/SourceCode.h"
+#include "Modules/StatusBarManager.h"
 
 #ifndef CORE_ABI
 #include <Utils/UwpPreparedScriptStore.h>
