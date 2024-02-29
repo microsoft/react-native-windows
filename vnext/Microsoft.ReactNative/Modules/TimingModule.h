@@ -106,7 +106,7 @@ struct Timing : public std::enable_shared_from_this<Timing> {
   void StartDispatcherTimer();
   void StopTicks();
 
-  React::ReactContext m_context; // !bridgeless
+  winrt::Microsoft::ReactNative::ReactContext m_context; // !bridgeless
   TimerRegistry *m_timerRegistry{nullptr}; // bridgeless
   TimerQueue m_timerQueue;
   xaml::Media::CompositionTarget::Rendering_revoker m_rendering;

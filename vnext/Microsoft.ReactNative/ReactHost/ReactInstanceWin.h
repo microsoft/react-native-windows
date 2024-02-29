@@ -4,7 +4,7 @@
 #pragma once
 
 #include <JSI/ScriptStore.h>
-#include <react/runtime/ReactInstance.h>
+#include <tuple>
 #include "IReactDispatcher.h"
 #include "IReactInstanceInternal.h"
 #include "MsoReactContext.h"
@@ -18,7 +18,9 @@
 #include <Views/ExpressionAnimationStore.h>
 #endif
 
-#include <tuple>
+#ifdef USE_FABRIC
+#include <react/runtime/ReactInstance.h>
+#endif
 
 namespace winrt::Microsoft::ReactNative {
 class NativeModulesProvider;

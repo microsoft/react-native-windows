@@ -2,117 +2,96 @@
 // Licensed under the MIT License.
 
 #include "ReactInstanceWin.h"
-#include "MoveOnCopy.h"
-#include "MsoUtils.h"
 
 #include <AppModelHelpers.h>
+#include <CppRuntimeOptions.h>
+#include <CreateInstance.h>
+#include <CreateModules.h>
+#include <JSCallInvokerScheduler.h>
+#include <OInstance.h>
+#include <PackagerConnection.h>
+#include <QuirkSettings.h>
+#include <Shared/DevServerHelper.h>
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
+#include <TurboModuleManager.h>
+#include <Utils/Helpers.h>
+#include <Views/ViewManager.h>
 #include <appModel.h>
 #include <comUtil/qiCast.h>
-#ifndef CORE_ABI
-#include <LayoutService.h>
-#include <XamlUIService.h>
-#endif
-#include "ReactErrorProvider.h"
-
+#include <dispatchQueue/dispatchQueue.h>
+#include <react/renderer/runtimescheduler/RuntimeScheduler.h>
+#include <react/renderer/runtimescheduler/RuntimeSchedulerCallInvoker.h>
+#include <winrt/Windows.Storage.h>
+#include <tuple>
+#include "BaseScriptStoreImpl.h"
+#include "ChakraRuntimeHolder.h"
+#include "CrashManager.h"
+#include "DevMenu.h"
+#include "DynamicWriter.h"
+#include "HermesRuntimeHolder.h"
+#include "IReactContext.h"
+#include "IReactDispatcher.h"
 #include "IReactNotificationService.h"
+#include "JsiApi.h"
+#include "Modules/DevSettingsModule.h"
+#include "Modules/ExceptionsManager.h"
+#include "Modules/PlatformConstantsWinModule.h"
+#include "Modules/ReactRootViewTagGenerator.h"
+#include "Modules/SourceCode.h"
+#include "Modules/StatusBarManager.h"
+#include "MoveOnCopy.h"
+#include "MsoUtils.h"
 #include "NativeModules.h"
 #include "NativeModulesProvider.h"
+#include "ReactCoreInjection.h"
+#include "ReactErrorProvider.h"
+#include "RedBox.h"
 #include "Unicode.h"
 
 #ifdef USE_FABRIC
 #include <Fabric/FabricUIManagerModule.h>
+#include <Fabric/ReactNativeConfigProperties.h>
+#include <Fabric/WindowsComponentDescriptorRegistry.h>
+#include <SchedulerSettings.h>
+#include <jserrorhandler/JsErrorHandler.h>
+#include <react/nativemodule/core/ReactCommon/TurboModuleBinding.h>
+#include <react/renderer/componentregistry/componentNameByReactViewName.h>
+#include <react/renderer/componentregistry/native/NativeComponentRegistryBinding.h>
+#include <react/runtime/JSRuntimeFactory.h>
+#include <react/runtime/PlatformTimerRegistry.h>
+#include <react/runtime/TimerManager.h>
 #endif
-#include <JSCallInvokerScheduler.h>
-#include <QuirkSettings.h>
-#include <Shared/DevServerHelper.h>
-#include <Views/ViewManager.h>
-#include <dispatchQueue/dispatchQueue.h>
-#include "DynamicWriter.h"
+
 #ifndef CORE_ABI
+#include <LayoutService.h>
+#include <Utils/UwpPreparedScriptStore.h>
+#include <Utils/UwpScriptStore.h>
+#include <XamlUIService.h>
 #include "ConfigureBundlerDlg.h"
-#endif
-#include "DevMenu.h"
-#include "IReactContext.h"
-#include "IReactDispatcher.h"
-#ifndef CORE_ABI
 #include "Modules/AccessibilityInfoModule.h"
 #include "Modules/AlertModule.h"
-#endif
-#if !defined(CORE_ABI) || defined(USE_FABRIC)
-#include "Modules/Animated/NativeAnimatedModule.h"
-#endif
-#ifndef CORE_ABI
 #include "Modules/AppStateModule.h"
 #include "Modules/AppThemeModuleUwp.h"
 #include "Modules/ClipboardModule.h"
-#endif
-#include "Modules/DevSettingsModule.h"
-#ifndef CORE_ABI
 #include "Modules/DeviceInfoModule.h"
 #include "Modules/I18nManagerModule.h"
-#endif
-#if !defined(CORE_ABI) || defined(USE_FABRIC)
-#include <Modules/ImageViewManagerModule.h>
-#endif
-#ifndef CORE_ABI
 #include "Modules/LinkingManagerModule.h"
 #include "Modules/LogBoxModule.h"
 #include "Modules/NativeUIManager.h"
 #include "Modules/PaperUIManagerModule.h"
 #include "Modules/TimingModule.h"
 #endif
-#include "Modules/ExceptionsManager.h"
-#include "Modules/PlatformConstantsWinModule.h"
-#include "Modules/ReactRootViewTagGenerator.h"
-#include "Modules/SourceCode.h"
-#include "Modules/StatusBarManager.h"
 
-#ifndef CORE_ABI
-#include <Utils/UwpPreparedScriptStore.h>
-#include <Utils/UwpScriptStore.h>
+#if !defined(CORE_ABI) || defined(USE_FABRIC)
+#include <Modules/ImageViewManagerModule.h>
+#include "Modules/Animated/NativeAnimatedModule.h"
 #endif
-
-#include "BaseScriptStoreImpl.h"
-#include "HermesRuntimeHolder.h"
-
-#include <winrt/Windows.Storage.h>
-#include "BaseScriptStoreImpl.h"
 
 #if defined(USE_V8)
 #include "JSI/V8RuntimeHolder.h"
 #include "V8JSIRuntimeHolder.h"
 #endif // USE_V8
-
-#include "RedBox.h"
-
-#include <tuple>
-#include "ChakraRuntimeHolder.h"
-
-#include <CppRuntimeOptions.h>
-#include <CreateInstance.h>
-#include <CreateModules.h>
-#include <Fabric/ReactNativeConfigProperties.h>
-#include <Fabric/WindowsComponentDescriptorRegistry.h>
-#include <OInstance.h>
-#include <PackagerConnection.h>
-#include <SchedulerSettings.h>
-#include <Threading/MessageQueueThreadFactory.h>
-#include <TurboModuleManager.h>
-#include <Utils/Helpers.h>
-#include <jserrorhandler/JsErrorHandler.h>
-#include <react/nativemodule/core/ReactCommon/TurboModuleBinding.h>
-#include <react/renderer/componentregistry/componentNameByReactViewName.h>
-#include <react/renderer/componentregistry/native/NativeComponentRegistryBinding.h>
-#include <react/renderer/runtimescheduler/RuntimeScheduler.h>
-#include <react/renderer/runtimescheduler/RuntimeSchedulerCallInvoker.h>
-#include <react/runtime/JSRuntimeFactory.h>
-#include <react/runtime/PlatformTimerRegistry.h>
-#include <react/runtime/TimerManager.h>
-#include "CrashManager.h"
-#include "JsiApi.h"
-#include "ReactCoreInjection.h"
 
 namespace Microsoft::ReactNative {
 
