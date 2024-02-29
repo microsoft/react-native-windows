@@ -28,7 +28,7 @@ function getRnwInfo(config = {}, options = {}) {
 
   const rnwVersion = require(path.join(rnwPath, 'package.json')).version;
 
-  const devMode = existsSync(path.join(rnwPath, 'src'));
+  const devMode = existsSync(path.join(rnwPath, 'src-win'));
 
   if (options?.logging) {
     console.log(
