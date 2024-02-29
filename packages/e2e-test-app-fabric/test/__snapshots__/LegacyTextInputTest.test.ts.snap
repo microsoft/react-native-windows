@@ -68,49 +68,48 @@ exports[`LegacyTextInputTest TextInput onChange before onSelectionChange 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
-    "Name": "onKeyPress key: a
-onChange text: a
+    "Name": "onChange text: a
 onSelectionChange range: 1,1
-onKeyPress key: Enter
+onKeyPress key: a
 onChange text: 
 onSelectionChange range: 0,0
 onFocus
 onBlur
 onSubmitEditing text: abc
-onKeyPress key: c
 onChange text: abc
 onSelectionChange range: 3,3
-onKeyPress key: b
+onKeyPress key: c
 onChange text: ab
 onSelectionChange range: 2,2
-onKeyPress key: a
+onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
+onKeyPress key: a
 onChange text: 
 onSelectionChange range: 0,0
-onKeyPress key: f
 onChange text: def
 onSelectionChange range: 3,3
-onKeyPress key: e
+onKeyPress key: f
 onChange text: de
 onSelectionChange range: 2,2
-onKeyPress key: d
+onKeyPress key: e
 onChange text: d
 onSelectionChange range: 1,1
+onKeyPress key: d
 onChange text: 
 onSelectionChange range: 0,0
-onKeyPress key: c
 onChange text: abc
 onSelectionChange range: 3,3
-onKeyPress key: b
+onKeyPress key: c
 onChange text: ab
 onSelectionChange range: 2,2
+onKeyPress key: b
 onSelectionChange range: 1,1
 onChange text: a
 onSelectionChange range: 0,0
-onKeyPress key: a
 onChange text: a
 onSelectionChange range: 1,1
+onKeyPress key: a
 onFocus
 onBlur
 onFocus
@@ -126,7 +125,7 @@ onFocus
     "Opacity": 1,
     "Size": [
       998,
-      876,
+      858,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -142,18 +141,18 @@ exports[`LegacyTextInputTest Type abc on TextInput 1`] = `
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
-    "Name": "onKeyPress key: c
-onChange text: abc
+    "Name": "onChange text: abc
 onSelectionChange range: 3,3
-onKeyPress key: b
+onKeyPress key: c
 onChange text: ab
 onSelectionChange range: 2,2
+onKeyPress key: b
 onSelectionChange range: 1,1
 onChange text: a
 onSelectionChange range: 0,0
-onKeyPress key: a
 onChange text: a
 onSelectionChange range: 1,1
+onKeyPress key: a
 onFocus
 onBlur
 onFocus
@@ -186,40 +185,40 @@ exports[`LegacyTextInputTest Type abc on multiline TextInput then press Enter ke
     "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "onSubmitEditing text: abc
-onKeyPress key: c
 onChange text: abc
 onSelectionChange range: 3,3
-onKeyPress key: b
+onKeyPress key: c
 onChange text: ab
 onSelectionChange range: 2,2
-onKeyPress key: a
+onKeyPress key: b
 onChange text: a
 onSelectionChange range: 1,1
+onKeyPress key: a
 onChange text: 
 onSelectionChange range: 0,0
-onKeyPress key: f
 onChange text: def
 onSelectionChange range: 3,3
-onKeyPress key: e
+onKeyPress key: f
 onChange text: de
 onSelectionChange range: 2,2
-onKeyPress key: d
+onKeyPress key: e
 onChange text: d
 onSelectionChange range: 1,1
+onKeyPress key: d
 onChange text: 
 onSelectionChange range: 0,0
-onKeyPress key: c
 onChange text: abc
 onSelectionChange range: 3,3
-onKeyPress key: b
+onKeyPress key: c
 onChange text: ab
 onSelectionChange range: 2,2
+onKeyPress key: b
 onSelectionChange range: 1,1
 onChange text: a
 onSelectionChange range: 0,0
-onKeyPress key: a
 onChange text: a
 onSelectionChange range: 1,1
+onKeyPress key: a
 onFocus
 onBlur
 onFocus
