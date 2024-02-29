@@ -5,10 +5,10 @@
 
 #include "../../codegen/NativeTimingSpec.g.h"
 
+#include <CppWinRTIncludes.h>
 #include <ReactCoreInjection.h>
 #include <react/runtime/PlatformTimerRegistry.h>
 #include <react/runtime/TimerManager.h>
-#include <CppWinRTIncludes.h>
 
 namespace Microsoft::ReactNative {
 
