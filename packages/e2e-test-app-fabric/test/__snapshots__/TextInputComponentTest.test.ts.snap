@@ -2421,8 +2421,8 @@ exports[`TextInput Tests TextInputs can clear on submit 1`] = `
         ],
         "Opacity": 0,
         "Size": [
-          0,
-          0,
+          1,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -6071,7 +6071,7 @@ exports[`TextInput Tests TextInputs can set their readOnly prop to true 1`] = `
 }
 `;
 
-exports[`TextInput Tests TextInputs can submit with custom key 1`] = `
+exports[`TextInput Tests TextInputs can submit with custom key, multilined and submit with enter 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "textinput-clear-on-submit-4",
@@ -6096,8 +6096,8 @@ exports[`TextInput Tests TextInputs can submit with custom key 1`] = `
         ],
         "Opacity": 0,
         "Size": [
-          0,
-          0,
+          1,
+          19,
         ],
         "Visual Type": "SpriteVisual",
       },
