@@ -16,6 +16,19 @@
 */
 require('react-native');
 
+function componentHasNativeconfig(name: string) {
+  return !(global as unknown as {RN$Bridgeless:boolean}).RN$Bridgeless && name !== 'CustomXamlComponentWithNativeLayout' && name !== 'CustomXamlComponentWithYogaLayout'
+}
+
+const nativeComponentRegistry = require('react-native/Libraries/NativeComponent/NativeComponentRegistry');
+nativeComponentRegistry.setRuntimeConfigProvider((name: string) => {
+  return {
+    native: componentHasNativeconfig(name), // The fabric native component test has no viewmanager to get native config from
+    strict: false,
+    verify: componentHasNativeconfig(name) && name !== 'WindowsTextInput',
+  };
+});
+
 require('@react-native-windows/tester/js/RNTesterApp');
 
 export {};
