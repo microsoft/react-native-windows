@@ -40,6 +40,7 @@
 #include "Modules/ReactRootViewTagGenerator.h"
 #include "Modules/SourceCode.h"
 #include "Modules/StatusBarManager.h"
+#include "Modules/TimingModule.h"
 #include "MoveOnCopy.h"
 #include "MsoUtils.h"
 #include "NativeModules.h"
@@ -80,7 +81,6 @@
 #include "Modules/LogBoxModule.h"
 #include "Modules/NativeUIManager.h"
 #include "Modules/PaperUIManagerModule.h"
-#include "Modules/TimingModule.h"
 #endif
 
 #if !defined(CORE_ABI) || defined(USE_FABRIC)
