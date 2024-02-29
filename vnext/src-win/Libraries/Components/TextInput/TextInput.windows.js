@@ -1723,6 +1723,14 @@ function InternalTextInput(props: Props): React.Node {
   } // [Windows
   else if (Platform.OS === 'windows') {
     textInput = (
+      /* $FlowFixMe[prop-missing] the types for WindowsTextInput don't match up
+       * exactly with the props for TextInput. This will need to get fixed */
+      /* $FlowFixMe[incompatible-type] the types for WindowsTextInput don't
+       * match up exactly with the props for TextInput. This will need to get
+       * fixed */
+      /* $FlowFixMe[incompatible-type-arg] the types for WindowsTextInput don't
+       * match up exactly with the props for TextInput. This will need to get
+       * fixed */
       <WindowsTextInput
         // $FlowFixMe[incompatible-type] - Figure out imperative + forward refs.
         ref={ref}
@@ -1733,8 +1741,17 @@ function InternalTextInput(props: Props): React.Node {
         mostRecentEventCount={mostRecentEventCount}
         onBlur={_onBlur}
         onChange={_onChange}
+        /* $FlowFixMe[incompatible-type] the types for WindowsTextInput
+         * don't match up exactly with the props for TextInput. This will need
+         * to get fixed */
         onContentSizeChange={props.onContentSizeChange}
         onFocus={_onFocus}
+        /* $FlowFixMe[prop-missing] the types for WindowsTextInput don't match
+         * up exactly with the props for TextInput. This will need to get fixed
+         */
+        /* $FlowFixMe[incompatible-type-arg] the types for WindowsTextInput
+         * don't match up exactly with the props for TextInput. This will need
+         * to get fixed */
         onScroll={_onScroll}
         onSelectionChange={_onSelectionChange}
         onSelectionChangeShouldSetResponder={emptyFunctionThatReturnsTrue}

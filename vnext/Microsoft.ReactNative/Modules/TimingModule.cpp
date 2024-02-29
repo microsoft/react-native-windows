@@ -162,10 +162,8 @@ void Timing::OnTick() {
       }
       m_context.CallJSFunction(
           L"JSTimers", L"callTimers", winrt::Microsoft::ReactNative::JSValueArray{std::move(readyTimersJsArray)});
-    } else {
-      if (m_timerRegistry) {
-        m_timerRegistry->callTimers(readyTimers);
-      }
+    } else if (m_timerRegistry) {
+      m_timerRegistry->callTimers(readyTimers);
     }
   }
 }
