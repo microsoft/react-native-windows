@@ -4,7 +4,7 @@
 #include "pch.h"
 #undef Check
 
-#include "TimingModule.h"
+#include "Timing.h"
 
 #include <InstanceManager.h>
 #include <UI.Xaml.Media.h>
@@ -28,6 +28,11 @@ namespace Microsoft::ReactNative {
 //
 static bool IsAnimationFrameRequest(TTimeSpan period, bool repeat) {
   return !repeat && period == std::chrono::milliseconds(1);
+}
+
+winrt::Windows::Foundation::TimeSpan TimeSpanFromMs(double ms) {
+  std::chrono::milliseconds dur((int64_t)ms);
+  return dur;
 }
 
 //

@@ -40,7 +40,7 @@
 #include "Modules/ReactRootViewTagGenerator.h"
 #include "Modules/SourceCode.h"
 #include "Modules/StatusBarManager.h"
-#include "Modules/TimingModule.h"
+#include "Modules/Timing.h"
 #include "MoveOnCopy.h"
 #include "MsoUtils.h"
 #include "NativeModules.h"
