@@ -12,6 +12,5 @@ module.exports = () => ({
   ],
   plugins: [
     "babel-plugin-transform-flow-enums",
-    ["@babel/plugin-transform-private-methods", { "loose": true }],
   ]
 });
