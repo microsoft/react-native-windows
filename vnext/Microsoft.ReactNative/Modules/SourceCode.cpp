@@ -4,13 +4,6 @@
 #include "pch.h"
 #include "SourceCode.h"
 
-#include <VersionHelpers.h>
-#include <cxxreact/ReactNativeVersion.h>
-#include <winrt/Windows.Foundation.Metadata.h>
-
-using namespace winrt::Windows::Foundation;
-using namespace winrt::Windows::ApplicationModel;
-
 namespace Microsoft::ReactNative {
 
 static const React::ReactPropertyId<React::ReactNonAbiValue<std::string>> &ScriptUrlPropertyId() noexcept {

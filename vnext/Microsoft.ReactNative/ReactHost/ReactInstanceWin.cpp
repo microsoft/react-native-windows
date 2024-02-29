@@ -1317,9 +1317,12 @@ void ReactInstanceWin::CallJsFunction(
   }
 
   if (shouldCall) {
+#ifdef USE_FABRIC
     if (m_bridgelessReactInstance) {
       m_bridgelessReactInstance->callFunctionOnModule(moduleName, method, params);
-    } else if (auto instance = m_instance.LoadWithLock()) {
+    } else
+#endif
+        if (auto instance = m_instance.LoadWithLock()) {
       instance->callJSFunction(std::move(moduleName), std::move(method), std::move(params));
     }
   }
@@ -1356,7 +1359,6 @@ winrt::Microsoft::ReactNative::JsiRuntime ReactInstanceWin::JsiRuntime() noexcep
 }
 
 std::shared_ptr<facebook::react::Instance> ReactInstanceWin::GetInnerInstance() noexcept {
-  assert(!m_bridgelessReactInstance); // Who needs this - how to do bridgeless?
   return m_instance.LoadWithLock();
 }
 
