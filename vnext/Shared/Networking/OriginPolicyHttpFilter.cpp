@@ -161,7 +161,7 @@ bool OriginPolicyHttpFilter::CaseInsensitiveComparer::operator()(const wstring &
 }
 
 /*static*/ const hstring OriginPolicyHttpFilter::GetOrigin(Uri const &uri) noexcept {
-  return uri.SchemeName() + L"://" + uri.Host() + to_hstring(uri.Port());
+  return uri.SchemeName() + L"://" + uri.Host() + L":" + to_hstring(uri.Port());
 }
 
 /*static*/ bool OriginPolicyHttpFilter::AreSafeRequestHeaders(
