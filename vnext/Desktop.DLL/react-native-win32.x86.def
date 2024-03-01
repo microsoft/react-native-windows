@@ -31,6 +31,7 @@ EXPORTS
 ?moduleNames@ModuleRegistry@react@facebook@@QAE?AV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@XZ
 ?at@dynamic@folly@@QGBEABU12@V?$Range@PBD@2@@Z
 ?atImpl@dynamic@folly@@AGBEABU12@ABU12@@Z
+?getRuntimeExecutor@Instance@react@facebook@@QAE?AV?$function@$$A6GX$$QAV?$function@$$A6GXAAVRuntime@jsi@facebook@@@Z@std@@@Z@std@@XZ
 ?callJSFunction@Instance@react@facebook@@QAEX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QAUdynamic@folly@@@Z
 ?createI18nModule@windows@react@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$unique_ptr@UII18nModule@windows@react@@U?$default_delete@UII18nModule@windows@react@@@std@@@4@@Z
 ??$to_ascii_size_route@$09@detail@folly@@YGI_K@Z
