@@ -67,6 +67,9 @@
 ; Ignore the src-win folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/react-native-win32/src-win/.*
 
+; Ignore the private __tests__ (until this is fixed: https://github.com/facebook/react-native/issues/43242)
+.*/react-native-win32/src/private/.*/__tests__/.*
+
 ; Ignore files with flow typing issues #9223
 .*/react-native-win32/Libraries/Core/ReactNativeVersionCheck.js
 
@@ -151,4 +154,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.226.0
+^0.227.0

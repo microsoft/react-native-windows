@@ -8,9 +8,10 @@
  * @format
  */
 
-import type {TurboModule} from '../TurboModule/RCTExport';
-import * as TurboModuleRegistry from '../TurboModule/TurboModuleRegistry';
-import type {Int32} from '../Types/CodegenTypes';
+import type {TurboModule} from '../../../../Libraries/TurboModule/RCTExport';
+
+import * as TurboModuleRegistry from '../../../../Libraries/TurboModule/TurboModuleRegistry';
+import type {Int32} from '../../../../Libraries/Types/CodegenTypes';
 
 /* 'buttonClicked' | 'dismissed' */
 type DialogAction = string;
