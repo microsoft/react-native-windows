@@ -44,10 +44,22 @@ steps:
     projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
 
 - pwsh: |
-    # Expected output: something like x64\Debug\Microsoft.ReactNative.Test.Services\Publish\
-    Write-Warning 'Showing published artifacts'
-    Get-ChildItem -Name -Recurse -File vnext/target/
-  displayName: Show published content
+    Invoke-WebRequest `
+      -Uri 'https://download.visualstudio.microsoft.com/download/pr/116578f1-3fd4-4847-8bcb-023aeca2c8b2/bfbd897456eaaf8a56f1e838b35d2717/dotnet-sdk-7.0.406-win-x64.exe' `
+      -OutFile dotnet-sdk-7.0.406-win-x64.exe
+
+    Write-Host 'Installing .NET 7'
+    .\dotnet-sdk-7.0.406-win-x64.exe /install /quiet /norestart
+    Write-Host 'Installed .NET 7'
+
+    Invoke-WebRequest `
+      -Uri 'https://download.visualstudio.microsoft.com/download/pr/98ff0a08-a283-428f-8e54-19841d97154c/8c7d5f9600eadf264f04c82c813b7aab/dotnet-hosting-8.0.2-win.exe' `
+      -OutFile dotnet-hosting-8.0.2-win.exe
+
+    Write-Host 'Installing .NET hosting bundle'
+    .\dotnet-hosting-8.0.2-win.exe /install /quiet /norestart
+    Write-Host 'Installed .NET hosting bundle'
+  displayName: Install the .NET Core Hosting Bundle
 
 - pwsh: |
     Install-WindowsFeature -Name Web-Server, Web-Scripting-Tools
@@ -138,16 +150,6 @@ steps:
     #AppPoolPassword: # string. Optional. Use when AppPoolIdentity = SpecificUser && ActionIISApplicationPool = CreateOrUpdateAppPool. Password.
   # Advanced
     #AppCmdCommands: # string. Additional appcmd.exe commands.
-
-- pwsh: |
-    Invoke-WebRequest `
-      -Uri 'https://download.visualstudio.microsoft.com/download/pr/98ff0a08-a283-428f-8e54-19841d97154c/8c7d5f9600eadf264f04c82c813b7aab/dotnet-hosting-8.0.2-win.exe' `
-      -OutFile dotnet-hosting-8.0.2-win.exe
-
-    Write-Host 'Install .NET hosting bundle'
-    .\dotnet-hosting-8.0.2-win.exe /install /quiet /norestart
-    Write-Host 'Installed .NET hosting bundle'
-  displayName: Install the .NET Core Hosting Bundle
 
 - pwsh: |
     iisreset.exe /RESTART
