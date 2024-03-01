@@ -60,7 +60,7 @@ parameters:
           - X86ReleaseFabric:
             BuildConfiguration: Release
             BuildPlatform: x86
-            UseFabric: true            
+            UseFabric: true
 
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
@@ -100,6 +100,23 @@ jobs:
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
+            # Set up IIS tests {
+            - pwsh: |
+                Install-WindowsFeature -Name Web-Server, Web-Scripting-Tools
+              displayName: Install IIS
+
+            - pwsh: |
+                Invoke-WebRequest `
+                  -Uri 'https://download.visualstudio.microsoft.com/download/pr/98ff0a08-a283-428f-8e54-19841d97154c/8c7d5f9600eadf264f04c82c813b7aab/dotnet-hosting-8.0.2-win.exe' `
+                  -OutFile dotnet-hosting-8.0.2-win.exe
+
+                Write-Host 'Installing .NET hosting bundle'
+                Start-Process -Wait -FilePath .\dotnet-hosting-8.0.2-win.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
+                Write-Host 'Installed .NET hosting bundle'
+              displayName: Install the .NET Core Hosting Bundle
+
+            # } Set up IIS tests
+
             - template: ../templates/checkout-shallow.yml
 
             - template: ../templates/prepare-js-env.yml
@@ -167,6 +184,44 @@ jobs:
                   targetType: filePath # filePath | inline
                   filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
                   arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
+
+              - task: DotNetCoreCLI@2
+                displayName: Publish Test Website
+                inputs:
+                  command: publish
+                  publishWebProjects: false
+                  zipAfterPublish: false
+                  projects: $(Build.SourcesDirectory)\vnext\TestServices\Microsoft.ReactNative.Test.Services.csproj
+
+              - task: IISWebAppManagementOnMachineGroup@0
+                displayName: Create Test Website
+                inputs:
+                  EnableIIS: false
+                  IISDeploymentType: IISWebsite
+                  ActionIISWebsite: CreateOrUpdateWebsite
+                  # IIS Website
+                  WebsiteName: RNW Test Website
+                  WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\x64\Debug\Microsoft.ReactNative.Test.Services\Publish
+                  WebsitePhysicalPathAuth: WebsiteUserPassThrough
+                  CreateOrUpdateAppPoolForWebsite: false
+                  ConfigureAuthenticationForWebsite: false
+                  # IIS Application pool
+                  AppPoolNameForWebsite: DefaultAppPool
+                  # IIS Bindings
+                  # See https://stackoverflow.com/questions/60089756
+                  AddBinding: true
+                  Bindings: |
+                    {
+                      bindings: [
+                        {
+                          "protocol": "http",
+                          "ipAddress": "*",
+                          "port": "5555",
+                          "sslThumbprint": "",
+                          "sniFlag": false
+                        }
+                      ]
+                    }
 
               - task: PowerShell@2
                 displayName: Check the metro bundle server
