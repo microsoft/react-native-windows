@@ -20,6 +20,8 @@
 #include "WindowsTextInputState.h"
 #include "guid/msoGuid.h"
 
+#include <unicode.h>
+
 // convert a BSTR to a std::string.
 std::string &BstrToStdString(const BSTR bstr, std::string &dst, int cp = CP_UTF8) {
   if (!bstr) {
@@ -870,6 +872,22 @@ void WindowsTextInputComponentView::OnCharacterReceived(
     return;
   }
 
+  // convert keyCode to std::string
+  wchar_t key[2] = L" ";
+  key[0] = static_cast<wchar_t>(args.KeyCode());
+  std::string keyString = ::Microsoft::Common::Unicode::Utf16ToUtf8(key, 1);
+  // Call onKeyPress event
+  auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
+  facebook::react::WindowsTextInputEventEmitter::OnKeyPress onKeyPressArgs;
+  if (keyString.compare("\r") == 0) {
+    onKeyPressArgs.key = "Enter";
+  } else if (keyString.compare("\b") == 0) {
+    onKeyPressArgs.key = "Backspace";
+  } else {
+    onKeyPressArgs.key = keyString;
+  }
+  emitter->onKeyPress(onKeyPressArgs);
+
   WPARAM wParam = static_cast<WPARAM>(args.KeyCode());
   LPARAM lParam = 0;
   lParam = args.KeyStatus().RepeatCount; // bits 0-15
@@ -1191,6 +1209,7 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   m_state->updateState(std::move(data));
 
   if (m_eventEmitter && !m_comingFromJS) {
+    // call onChange event
     auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
     facebook::react::WindowsTextInputEventEmitter::OnChange onChangeArgs;
     onChangeArgs.text = GetTextFromRichEdit();

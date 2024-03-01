@@ -98,7 +98,9 @@ const UIManagerJS: UIManagerJSInterface = {
 };
 
 // [Windows The spread operator doesn't work on JSI turbomodules, so use this instead
-for (const propName of Object.getOwnPropertyNames(NativeUIManager)) {
+for (const propName of Object.getOwnPropertyNames(
+  Object.getPrototypeOf(NativeUIManager),
+)) {
   // $FlowFixMe
   UIManagerJS[propName] = NativeUIManager[propName];
 }

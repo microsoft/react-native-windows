@@ -35,9 +35,8 @@ void UpdateRootViewSizeToAppWindow(
   winrt::Windows::Foundation::Size size{
       window.ClientSize().Width / scaleFactor, window.ClientSize().Height / scaleFactor};
   // Do not relayout when minimized
-  if (window.Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>().State() 
-    != winrt::Microsoft::UI::Windowing::OverlappedPresenterState::Minimized)
-  {
+  if (window.Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>().State() !=
+      winrt::Microsoft::UI::Windowing::OverlappedPresenterState::Minimized) {
     rootView.Arrange(size);
     rootView.Size(size);
   }

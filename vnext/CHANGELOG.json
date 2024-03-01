@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 29 Feb 2024 06:26:00 GMT",
+      "version": "0.0.0-canary.779",
+      "tag": "react-native-windows_v0.0.0-canary.779",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ea3b1005deb83b64534ff9a33d2fca266684cd37",
+            "comment": "Add packaging to e2e-test-app-fabric"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "100a2caf09b8a1e22dc5706e0b261c07cfe41439",
+            "comment": "Remove TurboModuleBinding fork"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Feb 2024 06:18:05 GMT",
       "version": "0.0.0-canary.778",
       "tag": "react-native-windows_v0.0.0-canary.778",
