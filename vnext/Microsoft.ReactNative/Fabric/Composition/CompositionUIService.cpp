@@ -20,7 +20,8 @@ void CompositionUIService::SetCompositionContext(
     ICompositionContext const &compositionContext) noexcept {
   ReactPropertyBag(properties).Set(CompositionContextPropertyId(), compositionContext);
   // Default to using Bridgeless mode when using fabric
-  winrt::Microsoft::ReactNative::implementation::QuirkSettings::SetIsBridgeless(ReactPropertyBag(properties), true);
+  winrt::Microsoft::ReactNative::implementation::QuirkSettings::SetIsBridgeless(
+      ReactPropertyBag(properties), !!compositionContext);
 }
 
 ICompositionContext CompositionUIService::GetCompositionContext(const IReactPropertyBag &properties) noexcept {
