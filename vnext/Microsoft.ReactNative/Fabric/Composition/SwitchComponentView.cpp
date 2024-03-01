@@ -316,6 +316,7 @@ void SwitchComponentView::OnPointerPressed(
 
     updateVisuals();
   }
+  base_type::OnPointerPressed(args);
 }
 
 void SwitchComponentView::OnPointerReleased(
@@ -332,6 +333,7 @@ void SwitchComponentView::OnPointerReleased(
   }
 
   m_pressed = false;
+  base_type::OnPointerReleased(args);
 }
 
 void SwitchComponentView::OnPointerEntered(
@@ -339,6 +341,7 @@ void SwitchComponentView::OnPointerEntered(
   m_hovered = true;
   m_supressAnimationForNextFrame = true;
   updateVisuals();
+  base_type::OnPointerEntered(args);
 }
 
 void SwitchComponentView::OnPointerExited(
@@ -346,6 +349,7 @@ void SwitchComponentView::OnPointerExited(
   m_hovered = false;
   m_supressAnimationForNextFrame = true;
   updateVisuals();
+  base_type::OnPointerExited(args);
 }
 
 void SwitchComponentView::OnKeyUp(

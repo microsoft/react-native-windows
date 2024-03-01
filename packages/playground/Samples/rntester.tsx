@@ -17,7 +17,7 @@
 require('react-native');
 
 function componentHasNativeconfig(name: string) {
-  return name !== 'CustomXamlComponentWithNativeLayout' && name !== 'CustomXamlComponentWithYogaLayout'
+  return !(global as unknown as {RN$Bridgeless:boolean}).RN$Bridgeless && name !== 'CustomXamlComponentWithNativeLayout' && name !== 'CustomXamlComponentWithYogaLayout'
 }
 
 const nativeComponentRegistry = require('react-native/Libraries/NativeComponent/NativeComponentRegistry');

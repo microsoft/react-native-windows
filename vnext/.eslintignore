@@ -5,6 +5,7 @@
 /jest
 /lib
 /Libraries
+/src
 /local-cli/lib
 /local-cli/lib-commonjs
 /packages

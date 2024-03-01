@@ -42,6 +42,8 @@ type IOSPlatform = {
   // $FlowFixMe[unsafe-getters-setters]
   get isTV(): boolean,
   // $FlowFixMe[unsafe-getters-setters]
+  get isVision(): boolean,
+  // $FlowFixMe[unsafe-getters-setters]
   get isTesting(): boolean,
   // $FlowFixMe[unsafe-getters-setters]
   get isDisableAnimations(): boolean,
@@ -76,6 +78,8 @@ type AndroidPlatform = {
   // $FlowFixMe[unsafe-getters-setters]
   get isTV(): boolean,
   // $FlowFixMe[unsafe-getters-setters]
+  get isVision(): boolean,
+  // $FlowFixMe[unsafe-getters-setters]
   get isTesting(): boolean,
   // $FlowFixMe[unsafe-getters-setters]
   get isDisableAnimations(): boolean,
@@ -96,6 +100,11 @@ type WindowsPlatform = {
       minor: number,
       patch: number,
       prerelease: ?string,
+    |},
+    reactNativeWindowsVersion: {|
+      major: number,
+      minor: number,
+      patch: number,
     |},
     osVersion: number,
   |},

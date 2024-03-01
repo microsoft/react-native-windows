@@ -47,7 +47,10 @@ exports.copyTask = baseDir => {
       paths: reactNative('Libraries/**/*.+(d.ts|js|jsx|png|gif|jpg|html)'),
       dest: base('Libraries'),
     }),
-
+    copyTask({
+      paths: reactNative('src/**/*.+(d.ts|js|jsx|png|gif|jpg|html)'),
+      dest: base('src'),
+    }),
     copyTask({
       paths: reactNative('index.js', 'interface.js', 'rn-get-polyfills.js'),
       dest: base('.'),
@@ -82,6 +85,7 @@ exports.cleanTask = baseDir => {
       }),
 
       base('Libraries'),
+      base('src'),
       base('index.js'),
       base('interface.js'),
       base('rn-get-polyfills.js'),

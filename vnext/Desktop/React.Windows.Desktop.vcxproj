@@ -120,7 +120,7 @@
       <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj /await</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug' OR '$(UseFabric)' == 'true'">true</RuntimeTypeInfo>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>

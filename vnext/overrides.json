@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240115-0c7008f28",
+  "baseVersion": "0.74.0-nightly-20240122-4e92f87df",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "c8d51e03c7f984398c710769a282b9e28d3030b2"
+      "baseHash": "a243aa54de1d5c568bac704249159975dcc2ccd7"
     },
     {
       "type": "derived",
@@ -81,7 +81,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
-      "baseHash": "daa77a3a77ebd409fde7133d9ab40a2efe5ab31b",
+      "baseHash": "0fc900e2bc66a271da55030a90aa4b9842b4870d",
       "issue": 12210
     },
     {
@@ -169,10 +169,6 @@
       "file": "src-win/Libraries/Alert/Alert.windows.js",
       "baseFile": "packages/react-native/Libraries/Alert/Alert.js",
       "baseHash": "897569d77df852480332b7ce7ec1b594cf40aa28"
-    },
-    {
-      "type": "platform",
-      "file": "src-win/Libraries/Alert/NativeDialogManagerWindows.js"
     },
     {
       "type": "platform",
@@ -287,8 +283,10 @@
       "baseHash": "60655baaca427e1c7c1b8884833b848335c4033b"
     },
     {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/TextInput/WindowsTextInputNativeComponent.js"
+      "type": "derived",
+      "file": "src-win/Libraries/Components/TextInput/WindowsTextInputNativeComponent.js",
+      "baseFile": "packages/react-native/Libraries/Components/TextInput/AndroidTextInputNativeComponent.js",
+      "baseHash": "d46d046c289717a85a927af7fc362873395f9f17"
     },
     {
       "type": "patch",
@@ -373,6 +371,13 @@
       "issue": 10619
     },
     {
+      "type": "patch",
+      "file": "src-win/Libraries/Lists/FlatList.windows.js",
+      "baseFile": "packages/react-native/Libraries/Lists/FlatList.js",
+      "baseHash": "3ae2273b2cf866b2503e17261869c02d2a31f7a4",
+      "issue": 12770
+    },
+    {
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js",
@@ -401,6 +406,12 @@
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
       "baseHash": "ae7bdcfff1117d4a349b7b9bcc108a22ae7099ae"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/Libraries/NativeModules/specs/NativeDialogManagerWindows.js",
+      "baseFile": "packages/react-native/Libraries/NativeModules/specs/NativeDialogManagerAndroid.js",
+      "baseHash": "8d5e62de4a21e49992bb92c48b698493346d44c3"
     },
     {
       "type": "copy",
@@ -477,19 +488,35 @@
       "type": "derived",
       "file": "src-win/Libraries/Utilities/NativePlatformConstantsWin.js",
       "baseFile": "packages/react-native/Libraries/Utilities/NativePlatformConstantsIOS.js",
-      "baseHash": "d618776f5251597b9fa13c55be27e09f3ceccdf3"
+      "baseHash": "7b9db1bdc43128938d261961e3765c24d17e68b6"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Utilities/Platform.flow.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.flow.js",
-      "baseHash": "48e0b6dd625aa58347266a362eb404ddd47b59d4"
+      "baseHash": "d07d4656dc872e92e873bcce248262132085bd99"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Utilities/Platform.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
-      "baseHash": "a09b2fdd9859584069281df3311ef188a5640b00"
+      "baseHash": "3c959f078048e8a9cbd6d0463071c2208597ab8a"
+    },
+    {
+      "type": "platform",
+      "file": "src-win/src/private/specs/modules/NativeAppTheme.js"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/src/private/specs/modules/NativeDialogManagerWindows.js",
+      "baseFile": "packages/react-native/src/private/specs/modules/NativeDialogManagerAndroid.js",
+      "baseHash": "d96d4f28b2380455809e1204ff509ce93cf39ef9"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/src/private/specs/modules/NativePlatformConstantsWin.js",
+      "baseFile": "packages/react-native/src/private/specs/modules/NativePlatformConstantsAndroid.js",
+      "baseHash": "b4a125d9134f33aeaba9e06988e18cbb0b4e9e9c"
     }
   ]
 }

@@ -4,7 +4,7 @@
 #include "pch.h"
 #undef Check
 
-#include "TimingModule.h"
+#include "Timing.h"
 
 #include <InstanceManager.h>
 #include <UI.Xaml.Media.h>
@@ -30,6 +30,11 @@ static bool IsAnimationFrameRequest(TTimeSpan period, bool repeat) {
   return !repeat && period == std::chrono::milliseconds(1);
 }
 
+winrt::Windows::Foundation::TimeSpan TimeSpanFromMs(double ms) {
+  std::chrono::milliseconds dur((int64_t)ms);
+  return dur;
+}
+
 //
 // TimerQueue
 //
@@ -38,7 +43,7 @@ TimerQueue::TimerQueue() {
   std::make_heap(m_timerVector.begin(), m_timerVector.end());
 }
 
-void TimerQueue::Push(int64_t id, TDateTime targetTime, TTimeSpan period, bool repeat) {
+void TimerQueue::Push(uint32_t id, TDateTime targetTime, TTimeSpan period, bool repeat) {
   m_timerVector.emplace_back(id, targetTime, period, repeat);
   std::push_heap(m_timerVector.begin(), m_timerVector.end());
 }
@@ -52,7 +57,7 @@ Timer &TimerQueue::Front() {
   return m_timerVector.front();
 }
 
-void TimerQueue::Remove(int64_t id) {
+void TimerQueue::Remove(uint32_t id) {
   // TODO: This is very inefficient, but doing this with a heap is inherently
   // hard. If performance is not good
   //	enough for the scenarios then a different structure is probably needed.
@@ -67,6 +72,45 @@ bool TimerQueue::IsEmpty() {
   return m_timerVector.empty();
 }
 
+std::unique_ptr<TimerRegistry> TimerRegistry::CreateTimerRegistry(
+    const winrt::Microsoft::ReactNative::IReactDispatcher &uiDispatcher) noexcept {
+  auto registry = std::make_unique<TimerRegistry>();
+  registry->m_timingModule = std::make_shared<Timing>();
+  registry->m_timingModule->InitializeBridgeless(registry.get(), uiDispatcher);
+  return registry;
+}
+
+TimerRegistry::~TimerRegistry() {
+  m_timingModule->DetachBridgeless();
+}
+
+void TimerRegistry::createTimer(uint32_t timerID, double delayMS) {
+  m_timingModule->createTimer(timerID, delayMS / 1000.0, 0.0f, false);
+}
+void TimerRegistry::deleteTimer(uint32_t timerID) {
+  m_timingModule->deleteTimer(timerID);
+}
+void TimerRegistry::createRecurringTimer(uint32_t timerID, double delayMS) {
+  m_timingModule->createTimer(timerID, delayMS / 1000.0, 0.0f, true);
+}
+
+void TimerRegistry::callTimers(const vector<uint32_t> &ids) noexcept {
+#ifdef USE_FABRIC
+  if (auto timerManager = m_timerManager.lock()) {
+    for (auto id : ids) {
+      timerManager->callTimer(id);
+    }
+  }
+#endif
+}
+
+// When running bridgeless mode timers are managed by TimerManager
+void TimerRegistry::setTimerManager(std::weak_ptr<facebook::react::TimerManager> timerManager) {
+#ifdef USE_FABRIC
+  m_timerManager = timerManager;
+#endif
+}
+
 //
 // Timing
 //
@@ -74,10 +118,23 @@ bool TimerQueue::IsEmpty() {
 void Timing::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
   m_usePostForRendering = !xaml::TryGetCurrentApplication();
+  m_uiDispatcher = m_context.UIDispatcher().Handle();
+}
+
+void Timing::InitializeBridgeless(
+    TimerRegistry *timerRegistry,
+    const winrt::Microsoft::ReactNative::IReactDispatcher &uiDispatcher) noexcept {
+  m_timerRegistry = timerRegistry;
+  m_usePostForRendering = !xaml::TryGetCurrentApplication();
+  m_uiDispatcher = {uiDispatcher};
+}
+
+void Timing::DetachBridgeless() {
+  m_timerRegistry = nullptr;
 }
 
 void Timing::OnTick() {
-  winrt::Microsoft::ReactNative::JSValueArray readyTimers;
+  vector<uint32_t> readyTimers;
   auto now = TDateTime::clock::now();
 
   auto emittedAnimationFrame = false;
@@ -107,8 +164,16 @@ void Timing::OnTick() {
   }
 
   if (!readyTimers.empty()) {
-    m_context.CallJSFunction(
-        L"JSTimers", L"callTimers", winrt::Microsoft::ReactNative::JSValueArray{std::move(readyTimers)});
+    if (m_context) {
+      winrt::Microsoft::ReactNative::JSValueArray readyTimersJsArray;
+      for (auto id : readyTimers) {
+        readyTimersJsArray.push_back({id});
+      }
+      m_context.CallJSFunction(
+          L"JSTimers", L"callTimers", winrt::Microsoft::ReactNative::JSValueArray{std::move(readyTimersJsArray)});
+    } else if (m_timerRegistry) {
+      m_timerRegistry->callTimers(readyTimers);
+    }
   }
 }
 
@@ -129,12 +194,14 @@ winrt::dispatching::DispatcherQueueTimer Timing::EnsureDispatcherTimer() {
 void Timing::PostRenderFrame() noexcept {
   assert(m_usePostForRendering);
   m_usingRendering = true;
-  m_context.UIDispatcher().Post([wkThis = std::weak_ptr(this->shared_from_this())]() {
-    if (auto pThis = wkThis.lock()) {
-      pThis->m_usingRendering = false;
-      pThis->OnTick();
-    }
-  });
+  if (auto uiDispatcher = m_uiDispatcher.get()) {
+    uiDispatcher.Post([wkThis = std::weak_ptr(this->shared_from_this())]() {
+      if (auto pThis = wkThis.lock()) {
+        pThis->m_usingRendering = false;
+        pThis->OnTick();
+      }
+    });
+  }
 }
 
 void Timing::StartRendering() {
@@ -173,12 +240,16 @@ void Timing::StopTicks() {
     m_dispatcherQueueTimer.Stop();
 }
 
-void Timing::createTimerOnQueue(int64_t id, double duration, double jsSchedulingTime, bool repeat) noexcept {
+void Timing::createTimerOnQueue(uint32_t id, double duration, double jsSchedulingTime, bool repeat) noexcept {
   if (duration == 0 && !repeat) {
-    m_context.CallJSFunction(
-        L"JSTimers",
-        L"callTimers",
-        winrt::Microsoft::ReactNative::JSValueArray{winrt::Microsoft::ReactNative::JSValueArray{id}});
+    if (m_context) {
+      m_context.CallJSFunction(
+          L"JSTimers",
+          L"callTimers",
+          winrt::Microsoft::ReactNative::JSValueArray{winrt::Microsoft::ReactNative::JSValueArray{id}});
+    } else if (m_timerRegistry) {
+      m_timerRegistry->callTimers({id});
+    }
 
     return;
   }
@@ -198,28 +269,45 @@ void Timing::createTimerOnQueue(int64_t id, double duration, double jsScheduling
   }
 }
 
-void Timing::createTimer(double id, double duration, double jsSchedulingTime, bool repeat) noexcept {
-  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
-      m_context.Handle(), [wkThis = std::weak_ptr(this->shared_from_this()), id, duration, jsSchedulingTime, repeat]() {
-        if (auto pThis = wkThis.lock()) {
-          pThis->createTimerOnQueue(static_cast<int64_t>(id), duration, jsSchedulingTime, repeat);
-        }
-      });
+void Timing::createTimer(uint32_t id, double duration, double jsSchedulingTime, bool repeat) noexcept {
+  if (m_context) {
+    winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+        m_context.Handle(),
+        [wkThis = std::weak_ptr(this->shared_from_this()), id, duration, jsSchedulingTime, repeat]() {
+          if (auto pThis = wkThis.lock()) {
+            pThis->createTimerOnQueue(static_cast<uint32_t>(id), duration, jsSchedulingTime, repeat);
+          }
+        });
+  } else if (auto uiDispatcher = m_uiDispatcher.get()) {
+    uiDispatcher.Post([wkThis = std::weak_ptr(this->shared_from_this()), id, duration, jsSchedulingTime, repeat]() {
+      if (auto pThis = wkThis.lock()) {
+        pThis->createTimerOnQueue(static_cast<uint32_t>(id), duration, jsSchedulingTime, repeat);
+      }
+    });
+  }
 }
 
-void Timing::deleteTimerOnQueue(int64_t id) noexcept {
+void Timing::deleteTimerOnQueue(uint32_t id) noexcept {
   m_timerQueue.Remove(id);
   if (m_timerQueue.IsEmpty())
     StopTicks();
 }
 
-void Timing::deleteTimer(double id) noexcept {
-  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
-      m_context.Handle(), [wkThis = std::weak_ptr(this->shared_from_this()), id]() {
-        if (auto pThis = wkThis.lock()) {
-          pThis->deleteTimerOnQueue(static_cast<int64_t>(id));
-        }
-      });
+void Timing::deleteTimer(uint32_t id) noexcept {
+  if (m_context) {
+    winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueue(
+        m_context.Handle(), [wkThis = std::weak_ptr(this->shared_from_this()), id]() {
+          if (auto pThis = wkThis.lock()) {
+            pThis->deleteTimerOnQueue(static_cast<int64_t>(id));
+          }
+        });
+  } else if (auto uiDispatcher = m_uiDispatcher.get()) {
+    uiDispatcher.Post([wkThis = std::weak_ptr(this->shared_from_this()), id]() {
+      if (auto pThis = wkThis.lock()) {
+        pThis->deleteTimerOnQueue(static_cast<int64_t>(id));
+      }
+    });
+  }
 }
 
 void Timing::setSendIdleEvents(bool /*sendIdleEvents*/) noexcept {

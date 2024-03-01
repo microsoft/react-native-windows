@@ -39,6 +39,8 @@ struct QuirkSettings : QuirkSettingsT<QuirkSettings> {
   static bool GetMapWindowDeactivatedToAppStateInactive(
       winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
 
+  static bool GetIsBridgeless(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept;
+
 #pragma region Public API - part of IDL interface
   static void SetMatchAndroidAndIOSStretchBehavior(
       winrt::Microsoft::ReactNative::ReactInstanceSettings settings,

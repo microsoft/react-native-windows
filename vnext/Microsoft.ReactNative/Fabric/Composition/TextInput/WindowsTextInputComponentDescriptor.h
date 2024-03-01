@@ -7,7 +7,6 @@
 
 #include <yoga/YGEnums.h>
 #include <yoga/YGValue.h>
-#include <yoga/style/CompactValue.h>
 
 #include <unordered_map>
 

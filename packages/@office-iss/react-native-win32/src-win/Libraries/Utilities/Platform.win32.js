@@ -63,6 +63,10 @@ const Platform: PlatformType = {
     // $FlowFixMe[object-this-reference]
     return false;
   },
+  // $FlowFixMe[unsafe-getters-setters]
+  get isVision(): boolean {
+    return false;
+  },
   select: <T>(spec: PlatformSelectSpec<T>): T =>
     'win32' in spec
       ? // $FlowFixMe[incompatible-return]
