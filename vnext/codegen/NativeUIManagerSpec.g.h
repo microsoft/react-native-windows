@@ -30,7 +30,7 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(::React::JSValue, Callback<>, Callback<::React::JSValue>) noexcept>{11, L"configureNextLayoutAnimation"},
       Method<void(std::optional<double>, std::vector<double>) noexcept>{12, L"setChildren"},
       Method<void(std::optional<double>, std::vector<double>, std::vector<double>, std::vector<double>, std::vector<double>, std::vector<double>) noexcept>{13, L"manageChildren"},
-      SyncMethod<::React::JSValue(std::string) noexcept>{14, L"getConstantsForViewManager"},
+      SyncMethod<std::optional<::React::JSValue>(std::string) noexcept>{14, L"getConstantsForViewManager"},
       SyncMethod<std::vector<std::string>() noexcept>{15, L"getDefaultEventTypes"},
       Method<void(bool) noexcept>{16, L"setLayoutAnimationEnabledExperimental"},
       Method<void(std::optional<double>, double) noexcept>{17, L"sendAccessibilityEvent"},
@@ -118,8 +118,8 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           14,
           "getConstantsForViewManager",
-          "    REACT_SYNC_METHOD(getConstantsForViewManager) ::React::JSValue getConstantsForViewManager(std::string viewManagerName) noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(getConstantsForViewManager) static ::React::JSValue getConstantsForViewManager(std::string viewManagerName) noexcept { /* implementation */ }\n");
+          "    REACT_SYNC_METHOD(getConstantsForViewManager) std::optional<::React::JSValue> getConstantsForViewManager(std::string viewManagerName) noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(getConstantsForViewManager) static std::optional<::React::JSValue> getConstantsForViewManager(std::string viewManagerName) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           15,
           "getDefaultEventTypes",

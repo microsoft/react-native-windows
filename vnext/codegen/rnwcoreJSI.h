@@ -15,6 +15,79 @@
 namespace facebook::react {
 
 
+  class JSI_EXPORT NativeReactNativeFeatureFlagsCxxSpecJSI : public TurboModule {
+protected:
+  NativeReactNativeFeatureFlagsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
+  virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
+  virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
+  virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeReactNativeFeatureFlagsCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+  static constexpr std::string_view kModuleName = "NativeReactNativeFeatureFlagsCxx";
+
+protected:
+  NativeReactNativeFeatureFlagsCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeReactNativeFeatureFlagsCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+private:
+  class Delegate : public NativeReactNativeFeatureFlagsCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeReactNativeFeatureFlagsCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
+
+    bool commonTestFlag(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::commonTestFlag) == 1,
+          "Expected commonTestFlag(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::commonTestFlag, jsInvoker_, instance_);
+    }
+    bool useModernRuntimeScheduler(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useModernRuntimeScheduler) == 1,
+          "Expected useModernRuntimeScheduler(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useModernRuntimeScheduler, jsInvoker_, instance_);
+    }
+    bool enableMicrotasks(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableMicrotasks) == 1,
+          "Expected enableMicrotasks(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableMicrotasks, jsInvoker_, instance_);
+    }
+    bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::batchRenderingUpdatesInEventLoop) == 1,
+          "Expected batchRenderingUpdatesInEventLoop(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::batchRenderingUpdatesInEventLoop, jsInvoker_, instance_);
+    }
+
+  private:
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
   class JSI_EXPORT NativeAccessibilityInfoCxxSpecJSI : public TurboModule {
 protected:
   NativeAccessibilityInfoCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -9395,7 +9468,7 @@ public:
   virtual void configureNextLayoutAnimation(jsi::Runtime &rt, jsi::Object config, jsi::Function callback, jsi::Function errorCallback) = 0;
   virtual void setChildren(jsi::Runtime &rt, std::optional<double> containerTag, jsi::Array reactTags) = 0;
   virtual void manageChildren(jsi::Runtime &rt, std::optional<double> containerTag, jsi::Array moveFromIndices, jsi::Array moveToIndices, jsi::Array addChildReactTags, jsi::Array addAtIndices, jsi::Array removeAtIndices) = 0;
-  virtual jsi::Object getConstantsForViewManager(jsi::Runtime &rt, jsi::String viewManagerName) = 0;
+  virtual std::optional<jsi::Object> getConstantsForViewManager(jsi::Runtime &rt, jsi::String viewManagerName) = 0;
   virtual jsi::Array getDefaultEventTypes(jsi::Runtime &rt) = 0;
   virtual void setLayoutAnimationEnabledExperimental(jsi::Runtime &rt, bool enabled) = 0;
   virtual void sendAccessibilityEvent(jsi::Runtime &rt, std::optional<double> reactTag, double eventType) = 0;
@@ -9547,12 +9620,12 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::manageChildren, jsInvoker_, instance_, std::move(containerTag), std::move(moveFromIndices), std::move(moveToIndices), std::move(addChildReactTags), std::move(addAtIndices), std::move(removeAtIndices));
     }
-    jsi::Object getConstantsForViewManager(jsi::Runtime &rt, jsi::String viewManagerName) override {
+    std::optional<jsi::Object> getConstantsForViewManager(jsi::Runtime &rt, jsi::String viewManagerName) override {
       static_assert(
           bridging::getParameterCount(&T::getConstantsForViewManager) == 2,
           "Expected getConstantsForViewManager(...) to have 2 parameters");
 
-      return bridging::callFromJs<jsi::Object>(
+      return bridging::callFromJs<std::optional<jsi::Object>>(
           rt, &T::getConstantsForViewManager, jsInvoker_, instance_, std::move(viewManagerName));
     }
     jsi::Array getDefaultEventTypes(jsi::Runtime &rt) override {
