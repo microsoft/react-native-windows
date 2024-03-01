@@ -1755,7 +1755,6 @@ function InternalTextInput(props: Props): React.Node {
         onScroll={_onScroll}
         onSelectionChange={_onSelectionChange}
         onSelectionChangeShouldSetResponder={emptyFunctionThatReturnsTrue}
-        selection={selection}
         text={text}
         onKeyDown={_keyDown}
         onKeyDownCapture={_keyDownCapture}

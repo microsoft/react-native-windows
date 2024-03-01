@@ -619,6 +619,21 @@ export type NativeProps = $ReadOnly<{|
    */
   mostRecentEventCount: Int32,
   text?: ?string,
+
+  // @windows
+  clearTextOnFocus?: ?boolean,
+
+  // @windows
+  clearTextOnSubmit?: ?boolean,
+
+  // @windows
+  scrollEnabled?: ?boolean,
+
+  // @windows
+  spellCheck?: ?boolean,
+
+  // @windows
+  // submitKeyEvents?
 |}>;
 
 type NativeType = HostComponent<NativeProps>;
@@ -632,36 +647,6 @@ export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
 export const __INTERNAL_VIEW_CONFIG: PartialViewConfig = {
   uiViewClassName: 'WindowsTextInput',
   bubblingEventTypes: {
-    topBlur: {
-      phasedRegistrationNames: {
-        bubbled: 'onBlur',
-        captured: 'onBlurCapture',
-      },
-    },
-    topEndEditing: {
-      phasedRegistrationNames: {
-        bubbled: 'onEndEditing',
-        captured: 'onEndEditingCapture',
-      },
-    },
-    topFocus: {
-      phasedRegistrationNames: {
-        bubbled: 'onFocus',
-        captured: 'onFocusCapture',
-      },
-    },
-    topKeyPress: {
-      phasedRegistrationNames: {
-        bubbled: 'onKeyPress',
-        captured: 'onKeyPressCapture',
-      },
-    },
-    topSubmitEditing: {
-      phasedRegistrationNames: {
-        bubbled: 'onSubmitEditing',
-        captured: 'onSubmitEditingCapture',
-      },
-    },
     topTextInput: {
       phasedRegistrationNames: {
         bubbled: 'onTextInput',
@@ -670,8 +655,39 @@ export const __INTERNAL_VIEW_CONFIG: PartialViewConfig = {
     },
   },
   directEventTypes: {
-    topScroll: {
+    topTextInputScroll: {
+      // [Windows] - event renamed to topTextInputScroll from toScroll
       registrationName: 'onScroll',
+    },
+    topTextInputBlur: {
+      registrationName: 'onBlur', // [Windows] - This is bubbled event in Android
+    },
+    topTextInputChange: {
+      registrationName: 'onChange', // [Windows] - This is bubbled event in Android
+    },
+    topTextInputContentSizeChange: {
+      registrationName: 'onContentSizeChange', // [Windows] - This is bubbled event in Android
+    },
+    topTextInputEndEditing: {
+      registrationName: 'onEndEditing', // [Windows] - This is bubbled event in Android
+    },
+    topTextInputFocus: {
+      registrationName: 'onFocus', // [Windows] - This is bubbled event in Android
+    },
+    topTextInputKeyPress: {
+      registrationName: 'onKeyPress', // [Windows] - This is bubbled event in Android
+    },
+    topTextInputPressIn: {
+      registrationName: 'onPressIn', // [Windows] - This is bubbled event in Android
+    },
+    topTextInputPressOut: {
+      registrationName: 'onPressOut', // [Windows] - This is bubbled event in Android
+    },
+    topTextInputSelectionChange: {
+      registrationName: 'onSelectionChange', // [Windows] - This is bubbled event in Android
+    },
+    topTextInputSubmitEditing: {
+      registrationName: 'onSubmitEditing', // [Windows] - This is bubbled event in Android
     },
   },
   validAttributes: {
@@ -754,6 +770,11 @@ export const __INTERNAL_VIEW_CONFIG: PartialViewConfig = {
     },
     borderTopLeftRadius: true,
     borderTopColor: {process: require('../../StyleSheet/processColor').default},
+    clearTextOnFocus: true, // [Windows]
+    clearTextOnSubmit: true, // [Windows]
+    scrollEnabled: true, // [Windows]
+    spellCheck: true, // [Windows]
+    submitKeyEvents: true, // [Windows]
   },
 };
 

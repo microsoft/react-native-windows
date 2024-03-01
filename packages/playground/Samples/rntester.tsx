@@ -25,7 +25,7 @@ nativeComponentRegistry.setRuntimeConfigProvider((name: string) => {
   return {
     native: componentHasNativeconfig(name), // The fabric native component test has no viewmanager to get native config from
     strict: false,
-    verify: componentHasNativeconfig(name) && name !== 'WindowsTextInput',
+    verify: componentHasNativeconfig(name),
   };
 });
 
