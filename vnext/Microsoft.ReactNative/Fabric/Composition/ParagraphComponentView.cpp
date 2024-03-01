@@ -6,12 +6,12 @@
 
 #include "ParagraphComponentView.h"
 
+#include <AutoDraw.h>
 #include <Utils/ValueUtils.h>
 #include <react/renderer/components/text/ParagraphShadowNode.h>
 #include <react/renderer/components/text/ParagraphState.h>
 #include <unicode.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
-#include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include "CompositionHelpers.h"
 
@@ -21,7 +21,12 @@ ParagraphComponentView::ParagraphComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
+    : Super(
+          compContext,
+          tag,
+          reactContext,
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
+          false) {
   static auto const defaultProps = std::make_shared<facebook::react::ParagraphProps const>();
   m_props = defaultProps;
 }

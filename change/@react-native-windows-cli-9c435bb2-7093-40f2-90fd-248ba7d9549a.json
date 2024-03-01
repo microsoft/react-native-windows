@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "updated test",
-  "packageName": "@react-native-windows/cli",
-  "email": "yajurgrover24@gmail.com",
-  "dependentChangeType": "patch"
-}

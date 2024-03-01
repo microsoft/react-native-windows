@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.74.0-nightly-20240115-0c7008f28",
+  "baseVersion": "0.74.0-nightly-20240122-4e92f87df",
   "overrides": [
     {
       "type": "copy",
@@ -208,7 +208,7 @@
       "type": "copy",
       "directory": "js/examples/MutationObserver",
       "baseDirectory": "packages/rn-tester/js/examples/MutationObserver",
-      "baseHash": "9bd04c23560b48286f7ab56c6a78318a3e8f610d",
+      "baseHash": "920723e15e7b62b5cea3999ee54a35a80be21534",
       "issue": 4054
     },
     {
@@ -439,7 +439,7 @@
       "type": "copy",
       "directory": "js/examples/View",
       "baseDirectory": "packages/rn-tester/js/examples/View",
-      "baseHash": "13d1ccc19c2bac4f92dc26f02e3420a0743235e3",
+      "baseHash": "c3c7574b70fc1d02ffbd87c9e6d2208837583353",
       "issue": 4054
     },
     {

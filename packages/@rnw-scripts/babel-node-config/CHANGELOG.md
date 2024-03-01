@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/babel-node-config
 
-This log was last generated on Fri, 14 Jul 2023 05:17:06 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Feb 2024 06:18:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.3.2
+
+Tue, 27 Feb 2024 06:18:01 GMT
+
+### Patches
+
+- Update rn-integrate script to more aggressively update align dependencies (30809111+acoates-ms@users.noreply.github.com)
 
 ## 2.3.1
 

@@ -141,10 +141,16 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UiaHelpers.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiComponentDescriptor.cpp">
+      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewComponentDescriptor.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewProps.cpp">
+      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiShadowNode.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewShadowNode.cpp">
@@ -481,6 +487,9 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageProps.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageState.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\legacyviewmanagerinterop\UnstableLegacyViewManagerAutomaticComponentDescriptor.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\legacyviewmanagerinterop\UnstableLegacyViewManagerAutomaticShadowNode.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\legacyviewmanagerinterop\LegacyViewManagerInteropViewProps.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\root\RootProps.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\root\RootShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollViewEventEmitter.cpp" DisableSpecificWarnings="4305;%(DisableSpecificWarnings)" />

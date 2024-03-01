@@ -2,6 +2,48 @@
   "name": "@react-native-windows/fs",
   "entries": [
     {
+      "date": "Tue, 27 Feb 2024 06:18:00 GMT",
+      "version": "0.0.0-canary.35",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.35",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/fs",
+            "commit": "74032cf2ec8ba36b7977ef4be1259cba3ece7d2e",
+            "comment": "Update rn-integrate script to more aggressively update align dependencies"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/fs",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.6",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/fs",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.22",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 24 Feb 2024 06:17:17 GMT",
+      "version": "0.0.0-canary.34",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.34",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/fs",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.21",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 15 Feb 2024 06:18:15 GMT",
       "version": "0.0.0-canary.33",
       "tag": "@react-native-windows/fs_v0.0.0-canary.33",

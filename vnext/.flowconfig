@@ -62,8 +62,11 @@
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
 
-; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
-.*/vnext/src/.*
+; Ignore the src-win folder - flow files are combined with ones from react-native into the root Libraries folder
+.*/vnext/src-win/.*
+
+; Ignore the private __tests__ (until this is fixed: https://github.com/facebook/react-native/issues/43242)
+.*/vnext/src/private/.*/__tests__/.*
 
 .*/node_modules/resolve/test/resolver/malformed_package_json/package\.json$
 
@@ -143,4 +146,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.226.0
+^0.227.0

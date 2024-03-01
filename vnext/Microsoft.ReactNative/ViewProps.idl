@@ -3,8 +3,23 @@
 
 #include "DocString.h"
 import "IJSValueReader.idl";
+import "IJSValueWriter.idl";
+import "Theme.idl";
 
 namespace Microsoft.ReactNative {
+
+  [webhosthidden]
+  [experimental]
+  runtimeclass Color {
+    Windows.UI.Color AsWindowsColor(Microsoft.ReactNative.Composition.Theme theme);
+    Microsoft.ReactNative.Composition.IBrush AsBrush(Microsoft.ReactNative.Composition.Theme theme);
+
+    static Color Black();
+    static Color Transparent();
+    static Color ReadValue(IJSValueReader reader);
+    static void WriteValue(IJSValueWriter writer, Color color);
+  };
+
   [webhosthidden]
   [experimental]
   DOC_STRING("Interface to implement custom view component properties.")
@@ -23,6 +38,8 @@ namespace Microsoft.ReactNative {
   runtimeclass ViewProps
   {
     Single Opacity { get; };
+
+    Color BackgroundColor { get; };
 
     // TODO add accessors to all the properties on ViewProps
   };

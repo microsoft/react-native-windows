@@ -38,4 +38,12 @@ void WindowsTextInputEventEmitter::onSubmitEditing(OnSubmitEditing event) const 
   });
 }
 
+void WindowsTextInputEventEmitter::onKeyPress(OnKeyPress event) const {
+  dispatchEvent("textInputKeyPress", [event = std::move(event)](jsi::Runtime &runtime) {
+    auto payload = jsi::Object(runtime);
+    payload.setProperty(runtime, "key", event.key);
+    return payload;
+  });
+}
+
 } // namespace facebook::react

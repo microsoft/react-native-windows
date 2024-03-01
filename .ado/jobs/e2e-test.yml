@@ -189,7 +189,6 @@ jobs:
                   buildConfiguration: Release
                   buildPlatform: ${{ matrix.BuildPlatform }}
                   buildLogDirectory: $(BuildLogDirectory)
-                  deployOption: '--no-deploy'
                   workingDirectory: packages/e2e-test-app-fabric
 
               - script: |
@@ -197,8 +196,6 @@ jobs:
                 displayName: Set StartedFabricTests
 
               - script: |
-                  set E2ETestFabricBuildConfiguration=${{ matrix.BuildConfiguration }}
-                  set E2ETestFabricBuildPlatform=${{ matrix.BuildPlatform }}
                   yarn e2etest
                 displayName: yarn e2etest
                 workingDirectory: packages/e2e-test-app-fabric

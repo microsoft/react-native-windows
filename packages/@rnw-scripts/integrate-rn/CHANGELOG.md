@@ -1,8 +1,35 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Thu, 15 Feb 2024 06:18:15 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Feb 2024 06:18:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.23
+
+Tue, 27 Feb 2024 06:18:02 GMT
+
+### Patches
+
+- Update rn-integrate script to more aggressively update align dependencies (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.64
+- Bump @react-native-windows/fs to v0.0.0-canary.35
+- Bump @react-native-windows/package-utils to v0.0.0-canary.61
+- Bump react-native-platform-override to v1.9.22
+- Bump @rnw-scripts/eslint-config to v1.2.6
+- Bump @rnw-scripts/jest-unittest-config to v1.5.8
+- Bump @rnw-scripts/just-task to v2.3.22
+
+## 1.4.22
+
+Sat, 24 Feb 2024 06:17:17 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.63
+- Bump @react-native-windows/fs to v0.0.0-canary.34
+- Bump @react-native-windows/package-utils to v0.0.0-canary.60
+- Bump react-native-platform-override to v1.9.21
+- Bump @rnw-scripts/just-task to v2.3.21
 
 ## 1.4.21
 

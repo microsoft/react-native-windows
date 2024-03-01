@@ -101,6 +101,74 @@
           "boost": "[1.76.0, )"
         }
       }
+    },
+    "native,Version=v0.0/win": {
+      "Microsoft.VCRTForwarders.140": {
+        "type": "Direct",
+        "requested": "[1.0.2-rc, )",
+        "resolved": "1.0.2-rc",
+        "contentHash": "/r+sjtEeCIGyDhobIZ5hSmYhC/dSyGZxf1SxYJpElUhB0LMCktOMFs9gXrauXypIFECpVynNyVjAmJt6hjJ5oQ=="
+      },
+      "Microsoft.WindowsAppSDK": {
+        "type": "Direct",
+        "requested": "[1.4.240211001, )",
+        "resolved": "1.4.240211001",
+        "contentHash": "43PdPLNSbBfugbQ7fd5imnZPpg7TGNirCe1/f3KLLYCg1NgDJeTh7t2ihLPuIdmD7rf6mTaUtRXUJYw0HBOzFQ==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
+      }
+    },
+    "native,Version=v0.0/win-arm64": {
+      "Microsoft.VCRTForwarders.140": {
+        "type": "Direct",
+        "requested": "[1.0.2-rc, )",
+        "resolved": "1.0.2-rc",
+        "contentHash": "/r+sjtEeCIGyDhobIZ5hSmYhC/dSyGZxf1SxYJpElUhB0LMCktOMFs9gXrauXypIFECpVynNyVjAmJt6hjJ5oQ=="
+      },
+      "Microsoft.WindowsAppSDK": {
+        "type": "Direct",
+        "requested": "[1.4.240211001, )",
+        "resolved": "1.4.240211001",
+        "contentHash": "43PdPLNSbBfugbQ7fd5imnZPpg7TGNirCe1/f3KLLYCg1NgDJeTh7t2ihLPuIdmD7rf6mTaUtRXUJYw0HBOzFQ==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
+      }
+    },
+    "native,Version=v0.0/win-x64": {
+      "Microsoft.VCRTForwarders.140": {
+        "type": "Direct",
+        "requested": "[1.0.2-rc, )",
+        "resolved": "1.0.2-rc",
+        "contentHash": "/r+sjtEeCIGyDhobIZ5hSmYhC/dSyGZxf1SxYJpElUhB0LMCktOMFs9gXrauXypIFECpVynNyVjAmJt6hjJ5oQ=="
+      },
+      "Microsoft.WindowsAppSDK": {
+        "type": "Direct",
+        "requested": "[1.4.240211001, )",
+        "resolved": "1.4.240211001",
+        "contentHash": "43PdPLNSbBfugbQ7fd5imnZPpg7TGNirCe1/f3KLLYCg1NgDJeTh7t2ihLPuIdmD7rf6mTaUtRXUJYw0HBOzFQ==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
+      }
+    },
+    "native,Version=v0.0/win-x86": {
+      "Microsoft.VCRTForwarders.140": {
+        "type": "Direct",
+        "requested": "[1.0.2-rc, )",
+        "resolved": "1.0.2-rc",
+        "contentHash": "/r+sjtEeCIGyDhobIZ5hSmYhC/dSyGZxf1SxYJpElUhB0LMCktOMFs9gXrauXypIFECpVynNyVjAmJt6hjJ5oQ=="
+      },
+      "Microsoft.WindowsAppSDK": {
+        "type": "Direct",
+        "requested": "[1.4.240211001, )",
+        "resolved": "1.4.240211001",
+        "contentHash": "43PdPLNSbBfugbQ7fd5imnZPpg7TGNirCe1/f3KLLYCg1NgDJeTh7t2ihLPuIdmD7rf6mTaUtRXUJYw0HBOzFQ==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.1"
+        }
+      }
     }
   }
 }

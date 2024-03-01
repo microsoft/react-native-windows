@@ -5,28 +5,24 @@
 #include "RNTesterApp-Fabric.h"
 
 #include <UIAutomation.h>
-#include <winrt/Microsoft.ReactNative.Composition.h>
-#include <winrt/Microsoft.ReactNative.h>
-#include <winrt/Microsoft.UI.Composition.h>
-#include <winrt/Microsoft.UI.Content.h>
-#include <winrt/Microsoft.UI.Dispatching.h>
-#include <winrt/Microsoft.UI.Windowing.h>
-#include <winrt/Microsoft.UI.interop.h>
 #include <winrt/Windows.Data.Json.h>
-#include <winrt/Windows.Foundation.h>
 #include "winrt/AutomationChannel.h"
 
-#include <NativeModules.h>
+#include "AutolinkedNativeModules.g.h"
 
-struct RNTesterAppReactPackageProvider
-    : winrt::implements<RNTesterAppReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
+#include "NativeModules.h"
+
+struct CompReactPackageProvider
+    : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
     AddAttributedModules(packageBuilder, true);
   }
 };
 
-constexpr PCWSTR appName = L"RNTesterApp";
+// Global Variables:
+constexpr PCWSTR windowTitle = L"RNTesterApp-Fabric";
+constexpr PCWSTR mainComponentName = L"RNTesterApp";
 
 // Keep track of errors and warnings to be able to report them to automation
 std::vector<std::string> g_Errors;
@@ -62,26 +58,33 @@ void UpdateRootViewSizeToAppWindow(
 winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
     HWND hwnd,
     const winrt::Microsoft::UI::Composition::Compositor &compositor) {
-  WCHAR workingDir[MAX_PATH];
-  GetCurrentDirectory(MAX_PATH, workingDir);
+  WCHAR appDirectory[MAX_PATH];
+  GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
+  PathCchRemoveFileSpec(appDirectory, MAX_PATH);
 
   auto host = winrt::Microsoft::ReactNative::ReactNativeHost();
-  // Disable until we have a 3rd party story for custom components
-  // RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any
-  // autolinked modules
-  host.PackageProviders().Append(winrt::make<RNTesterAppReactPackageProvider>());
-  host.PackageProviders().Append(winrt::AutomationChannel::ReactPackageProvider());
 
+  // Include any autolinked modules
+  RegisterAutolinkedNativeModulePackages(host.PackageProviders());
+
+  host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
+
+#if BUNDLE
   host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
-  host.InstanceSettings().DebugBundlePath(L"index");
-
-  host.InstanceSettings().BundleRootPath(std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
-  host.InstanceSettings().DebuggerBreakOnNextLine(false);
-#if _DEBUG
-  host.InstanceSettings().UseDirectDebugger(true);
+  host.InstanceSettings().BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
+  host.InstanceSettings().UseFastRefresh(false);
+#else
+  host.InstanceSettings().JavaScriptBundleFile(L"index");
   host.InstanceSettings().UseFastRefresh(true);
 #endif
+
+#if _DEBUG
+  host.InstanceSettings().UseDirectDebugger(true);
   host.InstanceSettings().UseDeveloperSupport(true);
+#else
+  host.InstanceSettings().UseDirectDebugger(false);
+  host.InstanceSettings().UseDeveloperSupport(false);
+#endif
 
   // Test App hooks into JS console.log implementation to record errors/warnings
   host.InstanceSettings().NativeLogger([](winrt::Microsoft::ReactNative::LogLevel level, winrt::hstring message) {
@@ -121,7 +124,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   // Create a top-level window.
   auto window = winrt::Microsoft::UI::Windowing::AppWindow::Create();
-  window.Title(appName);
+  window.Title(windowTitle);
   window.Resize({1000, 1000});
   window.Show();
   auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
@@ -135,7 +138,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   // Create a RootView which will present a react-native component
   winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
-  viewOptions.ComponentName(appName);
+  viewOptions.ComponentName(mainComponentName);
   auto rootView = winrt::Microsoft::ReactNative::CompositionRootView(compositor);
   rootView.ReactViewHost(winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
 

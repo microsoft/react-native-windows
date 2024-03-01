@@ -125,7 +125,6 @@ _YGNodeSetContext@8
 _YGNodeSetHasNewLayout@8
 _YGNodeSetMeasureFunc@8
 _YGNodeSetNodeType@8
-_YGNodeSetPrintFunc@8
 _YGNodeStyleGetAlignContent@4
 _YGNodeStyleGetAlignItems@4
 _YGNodeStyleGetAlignSelf@4

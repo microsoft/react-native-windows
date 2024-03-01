@@ -24,7 +24,7 @@ ActivityIndicatorComponentView::ActivityIndicatorComponentView(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
+    : Super(compContext, tag, reactContext, ComponentViewFeatures::Default, false) {
   m_props = std::make_shared<facebook::react::ActivityIndicatorViewProps const>();
 }
 
