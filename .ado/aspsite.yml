@@ -49,7 +49,8 @@ steps:
       -OutFile dotnet-sdk-7.0.406-win-x64.exe
 
     Write-Host 'Installing .NET 7'
-    .\dotnet-sdk-7.0.406-win-x64.exe /install /quiet /norestart
+    #.\dotnet-sdk-7.0.406-win-x64.exe /install /quiet /norestart
+    Start-Process -Wait -FilePath .\dotnet-sdk-7.0.406-win-x64.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
     Write-Host 'Installed .NET 7'
 
     Invoke-WebRequest `
@@ -57,7 +58,8 @@ steps:
       -OutFile dotnet-hosting-8.0.2-win.exe
 
     Write-Host 'Installing .NET hosting bundle'
-    .\dotnet-hosting-8.0.2-win.exe /install /quiet /norestart
+    #.\dotnet-hosting-8.0.2-win.exe /install /quiet /norestart
+    Start-Process -Wait -FilePath .\dotnet-hosting-8.0.2-win.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
     Write-Host 'Installed .NET hosting bundle'
   displayName: Install the .NET Core Hosting Bundle
 
