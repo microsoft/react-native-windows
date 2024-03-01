@@ -102,7 +102,6 @@ steps:
           {
             "protocol": "http",
             "ipAddress": "*",
-            "hostname": "localhost",
             "port": "5555",
             "sslThumbprint": "",
             "sniFlag": false
