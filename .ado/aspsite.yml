@@ -153,6 +153,9 @@ steps:
 
 - pwsh: |
     iisreset.exe /RESTART
+
+    Import-Module IISAdministration
+    Get-IISSite
   displayName: Restart IIS
 
 - pwsh: |
