@@ -4,10 +4,9 @@
  * @flow
  * @format
  */
-
-import type {DialogOptions} from './NativeDialogManagerWindows';
+import type {DialogOptions} from '../NativeModules/specs/NativeDialogManagerWindows';
 const NativeDialogManagerWindows =
-  require('./NativeDialogManagerWindows').default;
+  require('../NativeModules/specs/NativeDialogManagerWindows').default;
 
 export type AlertType =
   | 'default'

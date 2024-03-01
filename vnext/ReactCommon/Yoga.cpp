@@ -60,10 +60,6 @@ void YGNodeSetDirtiedFunc(YGNodeRef node, YGDirtiedFunc dirtiedFunc) {
   resolveRef(node)->setDirtiedFunc(dirtiedFunc);
 }
 
-void YGNodeSetPrintFunc(YGNodeRef node, YGPrintFunc printFunc) {
-  resolveRef(node)->setPrintFunc(printFunc);
-}
-
 bool YGNodeGetHasNewLayout(YGNodeConstRef node) {
   return resolveRef(node)->getHasNewLayout();
 }
