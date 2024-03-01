@@ -152,11 +152,11 @@ steps:
     #AppCmdCommands: # string. Additional appcmd.exe commands.
 
 - pwsh: |
-    iisreset.exe /RESTART
+    #iisreset.exe /RESTART
 
     Import-Module IISAdministration
     Get-IISSite
-  displayName: Restart IIS
+  displayName: Print IIS Site Info
 
 - pwsh: |
     Invoke-WebRequest http://localhost:5555
