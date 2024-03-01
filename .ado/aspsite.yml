@@ -72,7 +72,7 @@ steps:
     #StartStopRecycleAppPoolName: # string. Required when ActionIISApplicationPool = StartAppPool || ActionIISApplicationPool = StopAppPool || ActionIISApplicationPool = RecycleAppPool. Application pool name.
   # IIS Website
     WebsiteName: RNW Test Website # string. Required when ActionIISWebsite = CreateOrUpdateWebsite. Website name.
-    WebsitePhysicalPath: $(Build.SourcesDirectory)/vnext/target/x64/Debug/Microsoft.ReactNative.Test.Services/Publish # string. Required when ActionIISWebsite = CreateOrUpdateWebsite. Physical path. Default: %SystemDrive%\inetpub\wwwroot.
+    WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\x64\Debug\Microsoft.ReactNative.Test.Services\Publish # string. Required when ActionIISWebsite = CreateOrUpdateWebsite. Physical path. Default: %SystemDrive%\inetpub\wwwroot.
     WebsitePhysicalPathAuth: WebsiteUserPassThrough # 'WebsiteUserPassThrough' | 'WebsiteWindowsAuth'. Required when ActionIISWebsite = CreateOrUpdateWebsite. Physical path authentication. Default: WebsiteUserPassThrough.
     #WebsiteAuthUserName: # string. Required when WebsitePhysicalPathAuth = WebsiteWindowsAuth && ActionIISWebsite = CreateOrUpdateWebsite. Username.
     #WebsiteAuthUserPassword: # string. Optional. Use when WebsitePhysicalPathAuth = WebsiteWindowsAuth && ActionIISWebsite = CreateOrUpdateWebsite. Password.
@@ -144,7 +144,9 @@ steps:
       -Uri 'https://download.visualstudio.microsoft.com/download/pr/98ff0a08-a283-428f-8e54-19841d97154c/8c7d5f9600eadf264f04c82c813b7aab/dotnet-hosting-8.0.2-win.exe' `
       -OutFile dotnet-hosting-8.0.2-win.exe
 
+    Write-Host 'Install .NET hosting bundle'
     .\dotnet-hosting-8.0.2-win.exe /install /quiet /norestart
+    Write-Host 'Installed .NET hosting bundle'
   displayName: Install the .NET Core Hosting Bundle
 
 - pwsh: |
