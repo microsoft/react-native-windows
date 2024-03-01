@@ -160,8 +160,8 @@ bool OriginPolicyHttpFilter::CaseInsensitiveComparer::operator()(const wstring &
   return s_simpleCorsMethods.find(request.Method().ToString().c_str()) != s_simpleCorsMethods.cend();
 }
 
-/*static*/ Uri OriginPolicyHttpFilter::GetOrigin(Uri const &uri) noexcept {
-  return Uri{uri.SchemeName() + L"://" + uri.Host() + L":" + to_hstring(uri.Port())};
+/*static*/ const hstring OriginPolicyHttpFilter::GetOrigin(Uri const &uri) noexcept {
+  return uri.SchemeName() + L"://" + uri.Host() + to_hstring(uri.Port());
 }
 
 /*static*/ bool OriginPolicyHttpFilter::AreSafeRequestHeaders(
@@ -683,7 +683,7 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
   }
 
   preflightRequest.Headers().Insert(L"Access-Control-Request-Headers", headerNames);
-  preflightRequest.Headers().Insert(L"Origin", s_origin.AbsoluteCanonicalUri());
+  preflightRequest.Headers().Insert(L"Origin", GetOrigin(s_origin));
   preflightRequest.Headers().Insert(L"Sec-Fetch-Mode", L"CORS");
 
   co_return {co_await m_innerFilter.SendRequestAsync(preflightRequest)};
@@ -769,7 +769,7 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
 
     if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
         originPolicy == OriginPolicy::CrossOriginResourceSharing) {
-      coRequest.Headers().Insert(L"Origin", s_origin.AbsoluteCanonicalUri());
+      coRequest.Headers().Insert(L"Origin", GetOrigin(s_origin));
     }
 
     auto response = co_await m_innerFilter.SendRequestAsync(coRequest);
