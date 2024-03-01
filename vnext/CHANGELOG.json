@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 01 Mar 2024 06:18:16 GMT",
+      "version": "0.0.0-canary.780",
+      "tag": "react-native-windows_v0.0.0-canary.780",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1a0c17613198fb64aca1c1c25c9e3e86b2b24e79",
+            "comment": "Integrate 1/22"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c040ff7051251894f417691a7be961945f18ff5b",
+            "comment": "add fabric onKeyPress to textinput"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.203",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.79",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.7",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.11",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.23",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.23",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 29 Feb 2024 06:26:00 GMT",
       "version": "0.0.0-canary.779",
       "tag": "react-native-windows_v0.0.0-canary.779",

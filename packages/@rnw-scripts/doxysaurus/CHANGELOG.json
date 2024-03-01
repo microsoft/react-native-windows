@@ -2,6 +2,33 @@
   "name": "@rnw-scripts/doxysaurus",
   "entries": [
     {
+      "date": "Fri, 01 Mar 2024 06:18:16 GMT",
+      "version": "0.4.24",
+      "tag": "@rnw-scripts/doxysaurus_v0.4.24",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.36",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.7",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.23",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Feb 2024 06:18:01 GMT",
       "version": "0.4.23",
       "tag": "@rnw-scripts/doxysaurus_v0.4.23",
