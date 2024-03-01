@@ -44,8 +44,10 @@ steps:
     projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
 
 - pwsh: |
-    Install-WindowsFeature -Name Web-Server, Web-Scripting-Tools
+    #Install-WindowsFeature -Name Web-Server
+    Install-WindowsFeature -Name Web-Scripting-Tools
   displayName: Install IIS
+  enabled: true
 
 - pwsh: |
     Invoke-WebRequest `
@@ -70,7 +72,7 @@ steps:
 - task: IISWebAppManagementOnMachineGroup@0
   displayName: Create website
   inputs:
-    #EnableIIS: false # boolean. Enable IIS. Default: false.
+    EnableIIS: true # boolean. Enable IIS. Default: false.
     IISDeploymentType: IISWebsite
     ActionIISWebsite: 'CreateOrUpdateWebsite'
     #ActionIISApplicationPool: 'CreateOrUpdateAppPool' # 'CreateOrUpdateAppPool' | 'StartAppPool' | 'StopAppPool' | 'RecycleAppPool'. Required when IISDeploymentType = IISApplicationPool. Action. Default: CreateOrUpdateAppPool.
