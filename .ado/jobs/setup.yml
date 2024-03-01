@@ -23,26 +23,28 @@ jobs:
 
       - template: ../templates/compute-beachball-branch-name.yml
 
-      # - template: ../templates/strict-yarn-install.yml
-      #   parameters:
-      #     workspace: '@rnw-scripts/beachball-config'
+      - template: ../templates/strict-yarn-install.yml
+        parameters:
+          workspace: '@rnw-scripts/beachball-config'
 
-      # - script: npx lage build --scope @rnw-scripts/beachball-config --no-deps
-      #   displayName: Build @rnw-scripts/beachball-config
+      - script: npx lage build --scope @rnw-scripts/beachball-config --no-deps
+        displayName: Build @rnw-scripts/beachball-config
+      
+      - pwsh: |
+          npx beachball check --verbose 2>&1 | Tee-Object -Variable beachballOutput
+          $beachballErrors = $beachballOutput | Where-Object { $_ -match "ERROR: *"}
+          $beachballErrors | ForEach { Write-Host "##vso[task.logissue type=warning]POSSIBLE $_" }
+        displayName: Warn for possible invalid change files
 
       - ${{ if endsWith(parameters.buildEnvironment, 'PullRequest') }}:
         - script: npx beachball check --branch origin/$(BeachBallBranchName) --verbose --changehint "##vso[task.logissue type=error]Run \"yarn change\" from root of repo to generate a change file."
           displayName: Check for change files
 
-      # - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
-      #   - script: npx beachball check --branch origin/$(BeachBallBranchName) --verbose --changehint "##vso[task.logissue type=error]Run \"yarn change\" from root of repo to generate a change file."
-      #     displayName: Check for change files
+      - script: npx beachball bump --branch origin/$(BeachBallBranchName) --yes --verbose
+        displayName: beachball bump
 
-      # - script: npx beachball bump --branch origin/$(BeachBallBranchName) --yes --verbose
-      #   displayName: beachball bump
+      - template: ../templates/set-version-vars.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
 
-      # - template: ../templates/set-version-vars.yml
-      #   parameters:
-      #     buildEnvironment: ${{ parameters.buildEnvironment }}
-
-      # - template: ../templates/publish-version-vars.yml
+      - template: ../templates/publish-version-vars.yml
