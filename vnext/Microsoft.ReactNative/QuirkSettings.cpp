@@ -77,6 +77,16 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> UseRuntimeSchedulerProperty
   return propId;
 }
 
+winrt::Microsoft::ReactNative::ReactPropertyId<bool> IsBridgelessProperty() noexcept {
+  winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{L"ReactNative", L"IsBridgeless"};
+
+  return propId;
+}
+
+/*static*/ bool QuirkSettings::GetIsBridgeless(winrt::Microsoft::ReactNative::ReactPropertyBag properties) noexcept {
+  return properties.Get(IsBridgelessProperty()).value_or(false);
+}
+
 #pragma region IDL interface
 
 /*static*/ void QuirkSettings::SetMatchAndroidAndIOSStretchBehavior(

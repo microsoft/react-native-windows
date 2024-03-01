@@ -90,7 +90,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug' OR '$(UseFabric)' == 'true'">true</RuntimeTypeInfo>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
@@ -461,7 +461,6 @@
     <ClCompile Include="Modules\LinkingManagerModule.cpp" />
     <ClCompile Include="Modules\LogBoxModule.cpp" />
     <ClCompile Include="Modules\NativeUIManager.cpp" />
-    <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="ReactPointerEventArgs.cpp">
       <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>

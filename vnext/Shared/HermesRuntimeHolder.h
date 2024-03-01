@@ -8,6 +8,7 @@
 #include <ReactPropertyBag.h>
 #include <cxxreact/MessageQueueThread.h>
 #include <hermes/hermes_api.h>
+#include <react/runtime/JSRuntimeFactory.h>
 
 namespace Microsoft::ReactNative {
 
@@ -50,6 +51,16 @@ class HermesRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
   std::weak_ptr<facebook::react::DevSettings> m_weakDevSettings;
   std::shared_ptr<facebook::react::MessageQueueThread> m_jsQueue;
   std::shared_ptr<facebook::jsi::PreparedScriptStore> m_preparedScriptStore;
+};
+
+class HermesJSRuntime : public facebook::react::JSRuntime {
+ public:
+  HermesJSRuntime(std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> hermesRuntimeHolder);
+
+  facebook::jsi::Runtime &getRuntime() noexcept override;
+
+ private:
+  std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> m_holder;
 };
 
 } // namespace Microsoft::ReactNative
