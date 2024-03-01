@@ -36,6 +36,10 @@ app.Map(
   Facebook.React.Test.RNTesterIntegrationTests.WebSocketBinaryTest
   );
 
+app.Map(
+  "/officedev/office-js/issues/4144",
+  Microsoft.Office.Test.OfficeJsTests.Issue4144);
+
 #endregion Request Mappings
 
 await app.RunAsync();
