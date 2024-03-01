@@ -44,7 +44,7 @@ steps:
     projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
 
 - pwsh: |
-    #Install-WindowsFeature -Name Web-Server
+    Install-WindowsFeature -Name Web-Server
     Install-WindowsFeature -Name Web-Scripting-Tools
   displayName: Install IIS
   enabled: true
@@ -72,7 +72,7 @@ steps:
 - task: IISWebAppManagementOnMachineGroup@0
   displayName: Create website
   inputs:
-    EnableIIS: true # boolean. Enable IIS. Default: false.
+    EnableIIS: false # Installs too many unneeded components: Web-Http-Redirect,Web-DAV-Publishing,Web-Custom-Logging,Web-Log-Libraries,Web-ODBC-Logging,Web-Request-Monitor,Web-Http-Tracing,Web-Dyn-Compression,Web-Basic-Auth,Web-CertProvider,Web-Client-Auth,Web-Digest-Auth,Web-Cert-Auth,Web-IP-Security,Web-Url-Auth,Web-Windows-Auth,Web-App-Dev,Web-Net-Ext,NET-Framework-Core,NET-Framework-Features,NET-Framework-45-ASPNET,Web-Net-Ext45,Web-AppInit,Web-ASP,Web-ISAPI-Ext,Web-Asp-Net,Web-ISAPI-Filter,Web-Asp-Net45,Web-CGI,Web-Includes,Web-WebSockets,Web-Ftp-Server,Web-Ftp-Service,Web-Ftp-Ext,Web-Mgmt-Console,Web-Mgmt-Compat,Web-Metabase,Web-Lgcy-Scripting,Web-WMI,Web-Mgmt-Service
     IISDeploymentType: IISWebsite
     ActionIISWebsite: 'CreateOrUpdateWebsite'
     #ActionIISApplicationPool: 'CreateOrUpdateAppPool' # 'CreateOrUpdateAppPool' | 'StartAppPool' | 'StopAppPool' | 'RecycleAppPool'. Required when IISDeploymentType = IISApplicationPool. Action. Default: CreateOrUpdateAppPool.
