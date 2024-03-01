@@ -1,8 +1,21 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 27 Feb 2024 06:17:59 GMT and should not be manually modified.
+This log was last generated on Fri, 01 Mar 2024 06:18:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.203
+
+Fri, 01 Mar 2024 06:18:16 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.79
+- Bump @react-native-windows/fs to v0.0.0-canary.36
+- Bump @react-native-windows/package-utils to v0.0.0-canary.62
+- Bump @react-native-windows/telemetry to v0.0.0-canary.87
+- Bump @rnw-scripts/eslint-config to v1.2.7
+- Bump @rnw-scripts/just-task to v2.3.23
 
 ## 0.0.0-canary.202
 
