@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 01 Mar 2024 20:52:19 GMT",
+      "version": "0.73.9",
+      "tag": "react-native-windows_v0.73.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "531c3b28f349c38330c14f5b2da958be77654ecd",
+            "comment": "Export getRuntimeExecutor for internal usage"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Feb 2024 16:17:21 GMT",
       "version": "0.73.8",
       "tag": "react-native-windows_v0.73.8",
