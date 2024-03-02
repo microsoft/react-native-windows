@@ -161,7 +161,16 @@ bool OriginPolicyHttpFilter::CaseInsensitiveComparer::operator()(const wstring &
 }
 
 /*static*/ const hstring OriginPolicyHttpFilter::GetOrigin(Uri const &uri) noexcept {
-  return uri.SchemeName() + L"://" + uri.Host() + L":" + to_hstring(uri.Port());
+  auto const &scheme = uri.SchemeName();
+  auto port = uri.Port();
+
+  hstring result = scheme + L"://" + uri.Host();
+  if (!(port == 80 && (scheme == L"http" || scheme == L"ws")) &&
+      !(port == 443 && (scheme == L"https" || scheme == L"wss"))) {
+    result = result + L":" + to_hstring(port);
+  }
+
+  return result;
 }
 
 /*static*/ bool OriginPolicyHttpFilter::AreSafeRequestHeaders(
