@@ -366,7 +366,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
         L"https://site.ext:80"};
 
     auto size = sizeof(urls) / sizeof(wchar_t *);
-    for (auto i = 0; i < size; ++i) {
+    for (size_t i = 0; i < size; ++i) {
       Assert::AreEqual(expected[i], OriginPolicyHttpFilter::GetOrigin(Uri{urls[i]}).c_str());
     }
   }
