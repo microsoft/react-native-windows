@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 25.0.1706.8
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.ReactNative.Test.Services", "Microsoft.ReactNative.Test.Services.csproj", "{E2DD641B-CA1C-4161-A00A-ADAACF4DF1AE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Microsoft.ReactNative.Test.Website", "..\Microsoft.ReactNative.Test.Website.csproj", "{E2DD641B-CA1C-4161-A00A-ADAACF4DF1AE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
