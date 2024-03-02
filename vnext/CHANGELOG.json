@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 02 Mar 2024 06:15:01 GMT",
+      "version": "0.0.0-canary.781",
+      "tag": "react-native-windows_v0.0.0-canary.781",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "47f82648129af3ec984582eb6b249090a4802668",
+            "comment": "Add experimental Bridgeless mode"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5458f11fa98a336955441489ee722bded02bc43d",
+            "comment": "add window to Modal"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 01 Mar 2024 06:18:16 GMT",
       "version": "0.0.0-canary.780",
       "tag": "react-native-windows_v0.0.0-canary.780",

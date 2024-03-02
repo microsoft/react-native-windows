@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 01 Mar 2024 06:18:16 GMT and should not be manually modified.
+This log was last generated on Sat, 02 Mar 2024 06:15:01 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.781
+
+Sat, 02 Mar 2024 06:15:01 GMT
+
+### Changes
+
+- Add experimental Bridgeless mode (30809111+acoates-ms@users.noreply.github.com)
+- add window to Modal (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.780
 
