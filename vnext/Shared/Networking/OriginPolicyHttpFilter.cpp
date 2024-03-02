@@ -165,8 +165,7 @@ bool OriginPolicyHttpFilter::CaseInsensitiveComparer::operator()(const wstring &
   auto port = uri.Port();
 
   hstring result = scheme + L"://" + uri.Host();
-  if (!(port == 80 && (scheme == L"http" || scheme == L"ws")) &&
-      !(port == 443 && (scheme == L"https" || scheme == L"wss"))) {
+  if (!(port == 80 && scheme == L"http") && !(port == 443 && scheme == L"https")) {
     result = result + L":" + to_hstring(port);
   }
 
