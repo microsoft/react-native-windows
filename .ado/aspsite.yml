@@ -27,13 +27,13 @@ steps:
   displayName: Restore Packages for Test Website
   inputs:
     command: restore
-    projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
+    projects: vnext/TestWebsite/Microsoft.ReactNative.Test.Website.csproj
 
 - task: DotNetCoreCLI@2
   displayName: Build Test Website
   inputs:
     command: build
-    projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
+    projects: vnext/TestWebsite/Microsoft.ReactNative.Test.Website.csproj
 
 - task: DotNetCoreCLI@2
   displayName: Publish Test Website
@@ -41,7 +41,7 @@ steps:
     command: publish
     publishWebProjects: false
     zipAfterPublish: false
-    projects: vnext/TestServices/Microsoft.ReactNative.Test.Services.csproj
+    projects: vnext/TestWebsite/Microsoft.ReactNative.Test.Website.csproj
 
 - pwsh: |
     Install-WindowsFeature -Name Web-Server
@@ -88,7 +88,7 @@ steps:
     #StartStopRecycleAppPoolName: # string. Required when ActionIISApplicationPool = StartAppPool || ActionIISApplicationPool = StopAppPool || ActionIISApplicationPool = RecycleAppPool. Application pool name.
   # IIS Website
     WebsiteName: RNW Test Website # string. Required when ActionIISWebsite = CreateOrUpdateWebsite. Website name.
-    WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\x64\Debug\Microsoft.ReactNative.Test.Services\Publish # string. Required when ActionIISWebsite = CreateOrUpdateWebsite. Physical path. Default: %SystemDrive%\inetpub\wwwroot.
+    WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\x64\Debug\Microsoft.ReactNative.Test.Website\Publish # string. Required when ActionIISWebsite = CreateOrUpdateWebsite. Physical path. Default: %SystemDrive%\inetpub\wwwroot.
     WebsitePhysicalPathAuth: WebsiteUserPassThrough # 'WebsiteUserPassThrough' | 'WebsiteWindowsAuth'. Required when ActionIISWebsite = CreateOrUpdateWebsite. Physical path authentication. Default: WebsiteUserPassThrough.
     #WebsiteAuthUserName: # string. Required when WebsitePhysicalPathAuth = WebsiteWindowsAuth && ActionIISWebsite = CreateOrUpdateWebsite. Username.
     #WebsiteAuthUserPassword: # string. Optional. Use when WebsitePhysicalPathAuth = WebsiteWindowsAuth && ActionIISWebsite = CreateOrUpdateWebsite. Password.

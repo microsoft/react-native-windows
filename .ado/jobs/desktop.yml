@@ -191,7 +191,7 @@ jobs:
                   command: publish
                   publishWebProjects: false
                   zipAfterPublish: false
-                  projects: $(Build.SourcesDirectory)\vnext\TestServices\Microsoft.ReactNative.Test.Services.csproj
+                  projects: $(Build.SourcesDirectory)\vnext\TestWebsite\Microsoft.ReactNative.Test.Website.csproj
 
               - task: IISWebAppManagementOnMachineGroup@0
                 displayName: Create Test Website
@@ -201,7 +201,7 @@ jobs:
                   ActionIISWebsite: CreateOrUpdateWebsite
                   # IIS Website
                   WebsiteName: RNW Test Website
-                  WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\x64\Debug\Microsoft.ReactNative.Test.Services\Publish
+                  WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\x64\Debug\Microsoft.ReactNative.Test.Website\Publish
                   WebsitePhysicalPathAuth: WebsiteUserPassThrough
                   CreateOrUpdateAppPoolForWebsite: false
                   ConfigureAuthenticationForWebsite: false
