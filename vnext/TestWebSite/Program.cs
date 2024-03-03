@@ -1,6 +1,25 @@
 var builder = WebApplication.CreateBuilder(args);
+
+// CORS middleware
+//TODO: Subordinate to specific set of tests
+var originPolicyName = "AllowedOrigins";
+builder.Services.AddCors(
+  options =>
+  {
+    options.AddPolicy(
+      name: originPolicyName,
+      policy =>
+      {
+        policy
+          .WithOrigins("http://orig.in")
+          .WithMethods("GET")
+          ;
+      });
+  });
+
 var app = builder.Build();
 app.UseWebSockets();
+app.UseCors();
 
 // See https://github.com/dotnet/aspnetcore/blob/v7.0.15/src/Http/Routing/src/RequestDelegateRouteBuilderExtensions.cs
 // app.Map("/", () => "Sample HTTP Response");
@@ -36,9 +55,10 @@ app.Map(
   Facebook.React.Test.RNTesterIntegrationTests.WebSocketBinaryTest
   );
 
-app.Map(
+app.MapGet(
   "/officedev/office-js/issues/4144",
-  Microsoft.Office.Test.OfficeJsTests.Issue4144);
+  () => "Check headers: [Access-Control-Allow-Origin]")
+  .RequireCors(originPolicyName);
 
 #endregion Request Mappings
 
