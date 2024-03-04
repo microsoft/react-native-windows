@@ -101,6 +101,11 @@ type WindowsPlatform = {
       patch: number,
       prerelease: ?string,
     |},
+    reactNativeWindowsVersion: {|
+      major: number,
+      minor: number,
+      patch: number,
+    |},
     osVersion: number,
   |},
   // $FlowFixMe[unsafe-getters-setters]

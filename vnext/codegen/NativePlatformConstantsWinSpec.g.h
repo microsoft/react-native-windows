@@ -20,10 +20,17 @@ struct PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeVersion {
     std::optional<std::string> prerelease;
 };
 
+struct PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeWindowsVersion {
+    double major;
+    double minor;
+    double patch;
+};
+
 struct PlatformConstantsWinSpec_PlatformConstantsWindows {
     bool isTesting;
     std::optional<bool> isDisableAnimations;
     PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeVersion reactNativeVersion;
+    PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeWindowsVersion reactNativeWindowsVersion;
     double osVersion;
 };
 
@@ -38,11 +45,21 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsWi
     return fieldMap;
 }
 
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeWindowsVersion*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"major", &PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeWindowsVersion::major},
+        {L"minor", &PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeWindowsVersion::minor},
+        {L"patch", &PlatformConstantsWinSpec_PlatformConstantsWindows_reactNativeWindowsVersion::patch},
+    };
+    return fieldMap;
+}
+
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsWinSpec_PlatformConstantsWindows*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
         {L"isTesting", &PlatformConstantsWinSpec_PlatformConstantsWindows::isTesting},
         {L"isDisableAnimations", &PlatformConstantsWinSpec_PlatformConstantsWindows::isDisableAnimations},
         {L"reactNativeVersion", &PlatformConstantsWinSpec_PlatformConstantsWindows::reactNativeVersion},
+        {L"reactNativeWindowsVersion", &PlatformConstantsWinSpec_PlatformConstantsWindows::reactNativeWindowsVersion},
         {L"osVersion", &PlatformConstantsWinSpec_PlatformConstantsWindows::osVersion},
     };
     return fieldMap;

@@ -7750,28 +7750,30 @@ private:
   
 #pragma mark - PlatformConstantsBasePlatformConstantsWindows
 
-template <typename P0, typename P1, typename P2, typename P3>
+template <typename P0, typename P1, typename P2, typename P3, typename P4>
 struct [[deprecated("Use PlatformConstantsPlatformConstantsWindows instead.")]] PlatformConstantsBasePlatformConstantsWindows {
   P0 isTesting;
   P1 isDisableAnimations;
   P2 reactNativeVersion;
-  P3 osVersion;
+  P3 reactNativeWindowsVersion;
+  P4 osVersion;
   bool operator==(const PlatformConstantsBasePlatformConstantsWindows &other) const {
-    return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && osVersion == other.osVersion;
+    return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && reactNativeWindowsVersion == other.reactNativeWindowsVersion && osVersion == other.osVersion;
   }
 };
 
-template <typename P0, typename P1, typename P2, typename P3>
+template <typename P0, typename P1, typename P2, typename P3, typename P4>
 struct [[deprecated("Use PlatformConstantsPlatformConstantsWindowsBridging instead.")]] PlatformConstantsBasePlatformConstantsWindowsBridging {
-  static PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3> fromJs(
+  static PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3, P4> fromJs(
       jsi::Runtime &rt,
       const jsi::Object &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
-    PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3> result{
+    PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3, P4> result{
       bridging::fromJs<P0>(rt, value.getProperty(rt, "isTesting"), jsInvoker),
       bridging::fromJs<P1>(rt, value.getProperty(rt, "isDisableAnimations"), jsInvoker),
       bridging::fromJs<P2>(rt, value.getProperty(rt, "reactNativeVersion"), jsInvoker),
-      bridging::fromJs<P3>(rt, value.getProperty(rt, "osVersion"), jsInvoker)};
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "reactNativeWindowsVersion"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "osVersion"), jsInvoker)};
     return result;
   }
 
@@ -7788,14 +7790,18 @@ struct [[deprecated("Use PlatformConstantsPlatformConstantsWindowsBridging inste
     return bridging::toJs(rt, value);
   }
 
-  static double osVersionToJs(jsi::Runtime &rt, P3 value) {
+  static jsi::Object reactNativeWindowsVersionToJs(jsi::Runtime &rt, P3 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double osVersionToJs(jsi::Runtime &rt, P4 value) {
     return bridging::toJs(rt, value);
   }
 #endif
 
   static jsi::Object toJs(
       jsi::Runtime &rt,
-      const PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3> &value,
+      const PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3, P4> &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     auto result = facebook::jsi::Object(rt);
     result.setProperty(rt, "isTesting", bridging::toJs(rt, value.isTesting, jsInvoker));
@@ -7803,6 +7809,7 @@ struct [[deprecated("Use PlatformConstantsPlatformConstantsWindowsBridging inste
       result.setProperty(rt, "isDisableAnimations", bridging::toJs(rt, value.isDisableAnimations.value(), jsInvoker));
     }
     result.setProperty(rt, "reactNativeVersion", bridging::toJs(rt, value.reactNativeVersion, jsInvoker));
+    result.setProperty(rt, "reactNativeWindowsVersion", bridging::toJs(rt, value.reactNativeWindowsVersion, jsInvoker));
     result.setProperty(rt, "osVersion", bridging::toJs(rt, value.osVersion, jsInvoker));
     return result;
   }
@@ -7811,14 +7818,15 @@ struct [[deprecated("Use PlatformConstantsPlatformConstantsWindowsBridging inste
 
 #pragma mark - PlatformConstantsPlatformConstantsWindows
 
-template <typename P0, typename P1, typename P2, typename P3>
+template <typename P0, typename P1, typename P2, typename P3, typename P4>
 struct PlatformConstantsPlatformConstantsWindows {
   P0 isTesting;
   P1 isDisableAnimations;
   P2 reactNativeVersion;
-  P3 osVersion;
+  P3 reactNativeWindowsVersion;
+  P4 osVersion;
   bool operator==(const PlatformConstantsPlatformConstantsWindows &other) const {
-    return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && osVersion == other.osVersion;
+    return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && reactNativeWindowsVersion == other.reactNativeWindowsVersion && osVersion == other.osVersion;
   }
 };
 
@@ -7834,6 +7842,7 @@ struct PlatformConstantsPlatformConstantsWindowsBridging {
       bridging::fromJs<decltype(types.isTesting)>(rt, value.getProperty(rt, "isTesting"), jsInvoker),
       bridging::fromJs<decltype(types.isDisableAnimations)>(rt, value.getProperty(rt, "isDisableAnimations"), jsInvoker),
       bridging::fromJs<decltype(types.reactNativeVersion)>(rt, value.getProperty(rt, "reactNativeVersion"), jsInvoker),
+      bridging::fromJs<decltype(types.reactNativeWindowsVersion)>(rt, value.getProperty(rt, "reactNativeWindowsVersion"), jsInvoker),
       bridging::fromJs<decltype(types.osVersion)>(rt, value.getProperty(rt, "osVersion"), jsInvoker)};
     return result;
   }
@@ -7848,6 +7857,10 @@ struct PlatformConstantsPlatformConstantsWindowsBridging {
   }
 
   static jsi::Object reactNativeVersionToJs(jsi::Runtime &rt, decltype(types.reactNativeVersion) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Object reactNativeWindowsVersionToJs(jsi::Runtime &rt, decltype(types.reactNativeWindowsVersion) value) {
     return bridging::toJs(rt, value);
   }
 
@@ -7866,6 +7879,7 @@ struct PlatformConstantsPlatformConstantsWindowsBridging {
       result.setProperty(rt, "isDisableAnimations", bridging::toJs(rt, value.isDisableAnimations.value(), jsInvoker));
     }
     result.setProperty(rt, "reactNativeVersion", bridging::toJs(rt, value.reactNativeVersion, jsInvoker));
+    result.setProperty(rt, "reactNativeWindowsVersion", bridging::toJs(rt, value.reactNativeWindowsVersion, jsInvoker));
     result.setProperty(rt, "osVersion", bridging::toJs(rt, value.osVersion, jsInvoker));
     return result;
   }
