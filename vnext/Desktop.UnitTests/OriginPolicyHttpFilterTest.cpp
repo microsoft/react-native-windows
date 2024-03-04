@@ -294,6 +294,33 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
       Assert::Fail(e.message().c_str());
     }
   }
+
+  TEST_METHOD(GetOriginRespectsDefaultPorts) {
+    constexpr const wchar_t *urls[] = {
+        L"http://site.ext",
+        L"https://site.ext",
+        L"http://site.ext:80",
+        L"https://site.ext:443",
+        L"http://site.ext:5555",
+        L"https://site.ext:5555",
+        L"http://site.ext:443",
+        L"https://site.ext:80"};
+
+    constexpr const wchar_t *expected[] = {
+        L"http://site.ext",
+        L"https://site.ext",
+        L"http://site.ext",
+        L"https://site.ext",
+        L"http://site.ext:5555",
+        L"https://site.ext:5555",
+        L"http://site.ext:443",
+        L"https://site.ext:80"};
+
+    auto size = sizeof(urls) / sizeof(wchar_t *);
+    for (size_t i = 0; i < size; ++i) {
+      Assert::AreEqual(expected[i], OriginPolicyHttpFilter::GetOrigin(Uri{urls[i]}).c_str());
+    }
+  }
 };
 
 } // namespace Microsoft::React::Test
