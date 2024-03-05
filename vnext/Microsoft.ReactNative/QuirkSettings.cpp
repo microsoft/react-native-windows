@@ -87,6 +87,12 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> IsBridgelessProperty() noex
   return properties.Get(IsBridgelessProperty()).value_or(false);
 }
 
+/*static*/ void QuirkSettings::SetIsBridgeless(
+    const winrt::Microsoft::ReactNative::ReactPropertyBag &properties,
+    bool value) noexcept {
+  properties.Set(IsBridgelessProperty(), value);
+}
+
 #pragma region IDL interface
 
 /*static*/ void QuirkSettings::SetMatchAndroidAndIOSStretchBehavior(
