@@ -529,6 +529,28 @@ std::shared_ptr<facebook::react::DevSettings> ReactInstanceWin::CreateDevSetting
   return devSettings;
 }
 
+Mso::DispatchQueueSettings CreateDispatchQueueSettings(
+    const winrt::Microsoft::ReactNative::IReactNotificationService &service) {
+  Mso::DispatchQueueSettings queueSettings{};
+  queueSettings.TaskStarting = [service](Mso::DispatchQueue const &) noexcept {
+    service.SendNotification(
+        winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherTaskStartingEventName(), nullptr, nullptr);
+  };
+  queueSettings.IdleWaitStarting = [service](Mso::DispatchQueue const &) noexcept {
+    service.SendNotification(
+        winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherIdleWaitStartingEventName(),
+        nullptr,
+        nullptr);
+  };
+  queueSettings.IdleWaitCompleted = [service](Mso::DispatchQueue const &) noexcept {
+    service.SendNotification(
+        winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherIdleWaitCompletedEventName(),
+        nullptr,
+        nullptr);
+  };
+  return queueSettings;
+}
+
 #ifdef USE_FABRIC
 void ReactInstanceWin::InitializeBridgeless() noexcept {
   InitUIQueue();
@@ -550,12 +572,15 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
             // null moduleProvider since native modules are not supported in bridgeless
             LoadModules(devSettings, nullptr, m_options.TurboModuleProvider);
 
-            auto jsDispatchQueue = Mso::DispatchQueue::MakeLooperQueue();
+            auto jsDispatchQueue =
+                Mso::DispatchQueue::MakeLooperQueue(CreateDispatchQueueSettings(m_reactContext->Notifications()));
             auto jsDispatcher =
                 winrt::make<winrt::Microsoft::ReactNative::implementation::ReactDispatcher>(Mso::Copy(jsDispatchQueue));
             m_options.Properties.Set(ReactDispatcherHelper::JSDispatcherProperty(), jsDispatcher);
             m_jsMessageThread.Exchange(std::make_shared<Mso::React::MessageDispatchQueue>(
-                jsDispatchQueue, nullptr /*errorHandler*/, nullptr /*whenQuitPromise*/));
+                jsDispatchQueue,
+                Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
+                Mso::Copy(m_whenDestroyed)));
 
             auto timerRegistry = ::Microsoft::ReactNative::TimerRegistry::CreateTimerRegistry(
                 m_options.Properties.Get(ReactDispatcherHelper::UIDispatcherProperty()).try_as<IReactDispatcher>());
@@ -911,14 +936,7 @@ void ReactInstanceWin::LoadJSBundlesBridgeless(std::shared_ptr<facebook::react::
         [weakThis = Mso::WeakPtr{this},
          loadCallbackGuard = Mso::MakeMoveOnCopyWrapper(LoadedCallbackGuard{*this})]() noexcept {
           if (auto strongThis = weakThis.GetStrongPtr()) {
-            auto instance = strongThis->m_instance.LoadWithLock();
-            auto instanceWrapper = strongThis->m_instanceWrapper.LoadWithLock();
-            if (!instance || !instanceWrapper) {
-              return;
-            }
-
             try {
-              instanceWrapper->loadBundleSync(Mso::Copy(strongThis->JavaScriptBundleFile()));
               if (strongThis->State() != ReactInstanceState::HasError) {
                 strongThis->OnReactInstanceLoaded(Mso::ErrorCode{});
               }
@@ -973,6 +991,25 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
     m_jsDispatchQueue.Exchange(nullptr);
   }
 
+#ifdef USE_FABRIC
+  if (m_bridgelessReactInstance) {
+    if (auto jsMessageThread = m_jsMessageThread.Exchange(nullptr)) {
+      jsMessageThread->runOnQueueSync([&]() noexcept {
+        {
+          // Release the JSI runtime
+          std::scoped_lock lock{m_mutex};
+
+          this->m_jsiRuntimeHolder = nullptr;
+          this->m_jsiRuntime = nullptr;
+        }
+        this->m_bridgelessReactInstance = nullptr;
+        jsMessageThread->quitSynchronous();
+      });
+    }
+    m_jsDispatchQueue.Exchange(nullptr);
+  }
+#endif
+
   return m_whenDestroyedResult;
 }
 
@@ -987,26 +1024,8 @@ ReactInstanceState ReactInstanceWin::State() const noexcept {
 void ReactInstanceWin::InitJSMessageThread() noexcept {
   m_instance.Exchange(std::make_shared<facebook::react::Instance>());
 
-  winrt::Microsoft::ReactNative::IReactNotificationService service = m_reactContext->Notifications();
-  Mso::DispatchQueueSettings queueSettings{};
-  queueSettings.TaskStarting = [service](Mso::DispatchQueue const &) noexcept {
-    service.SendNotification(
-        winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherTaskStartingEventName(), nullptr, nullptr);
-  };
-  queueSettings.IdleWaitStarting = [service](Mso::DispatchQueue const &) noexcept {
-    service.SendNotification(
-        winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherIdleWaitStartingEventName(),
-        nullptr,
-        nullptr);
-  };
-  queueSettings.IdleWaitCompleted = [service](Mso::DispatchQueue const &) noexcept {
-    service.SendNotification(
-        winrt::Microsoft::ReactNative::ReactDispatcherHelper::JSDispatcherIdleWaitCompletedEventName(),
-        nullptr,
-        nullptr);
-  };
   auto scheduler = Mso::MakeJSCallInvokerScheduler(
-      queueSettings,
+      CreateDispatchQueueSettings(m_reactContext->Notifications()),
       m_instance.Load()->getJSCallInvoker(),
       Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
       Mso::Copy(m_whenDestroyed));
@@ -1201,6 +1220,7 @@ void ReactInstanceWin::OnJSError(facebook::react::MapBuffer errorMap) noexcept {
   m_state = ReactInstanceState::HasError;
   AbandonJSCallQueue();
 
+  OnReactInstanceLoaded(errorCode);
   if (m_redboxHandler && m_redboxHandler->isDevSupportEnabled()) {
     m_redboxHandler->showNewError(std::move(errorInfo), isFatal ? ErrorType::JSFatal : ErrorType::JSSoft);
   }

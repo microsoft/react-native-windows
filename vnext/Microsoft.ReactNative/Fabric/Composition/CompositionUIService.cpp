@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "CompositionUIService.h"
 #include "Composition.CompositionUIService.g.cpp"
+#include <QuirkSettings.h>
 
 #include <ReactPropertyBag.h>
 
@@ -18,6 +19,9 @@ void CompositionUIService::SetCompositionContext(
     IReactPropertyBag const &properties,
     ICompositionContext const &compositionContext) noexcept {
   ReactPropertyBag(properties).Set(CompositionContextPropertyId(), compositionContext);
+  // Default to using Bridgeless mode when using fabric
+  winrt::Microsoft::ReactNative::implementation::QuirkSettings::SetIsBridgeless(
+      ReactPropertyBag(properties), !!compositionContext);
 }
 
 ICompositionContext CompositionUIService::GetCompositionContext(const IReactPropertyBag &properties) noexcept {
