@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 05 Mar 2024 00:25:18 GMT",
+      "tag": "react-native-windows_v0.72.31",
+      "version": "0.72.31",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b97a232cabbeefb2eb45d423104236188c50fdd4",
+            "comment": "Omit trailing slash in Origin header #12791"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Feb 2024 16:15:35 GMT",
       "tag": "react-native-windows_v0.72.30",
       "version": "0.72.30",
