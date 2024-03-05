@@ -990,6 +990,7 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
     m_instanceWrapper.Exchange(nullptr);
   }
 
+#ifdef USE_FABRIC
   if (m_bridgelessReactInstance) {
     if (auto jsMessageThread = m_jsMessageThread.Exchange(nullptr)) {
       jsMessageThread->runOnQueueSync([&]() noexcept {
@@ -1004,6 +1005,7 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
         jsMessageThread->quitSynchronous();
       });
     }
+#endif
 
     m_jsDispatchQueue.Exchange(nullptr);
   }
