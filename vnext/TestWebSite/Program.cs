@@ -57,7 +57,7 @@ app.Map(
 
 app.MapGet(
   "/officedev/office-js/issues/4144",
-  () => "Check headers: [Access-Control-Allow-Origin]")
+   Microsoft.Office.Test.OfficeJsTests.Issue4144)
   .RequireCors(originPolicyName);
 
 #endregion Request Mappings
