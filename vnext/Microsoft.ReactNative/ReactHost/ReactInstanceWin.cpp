@@ -988,6 +988,7 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
     m_nativeMessageThread.Exchange(nullptr);
     m_jsMessageThread.Exchange(nullptr);
     m_instanceWrapper.Exchange(nullptr);
+    m_jsDispatchQueue.Exchange(nullptr);
   }
 
 #ifdef USE_FABRIC
@@ -1005,10 +1006,9 @@ Mso::Future<void> ReactInstanceWin::Destroy() noexcept {
         jsMessageThread->quitSynchronous();
       });
     }
-#endif
-
     m_jsDispatchQueue.Exchange(nullptr);
   }
+#endif
 
   return m_whenDestroyedResult;
 }
