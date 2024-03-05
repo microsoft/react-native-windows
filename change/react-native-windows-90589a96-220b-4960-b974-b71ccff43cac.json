@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Omit trailing slash in Origin header #12791",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
