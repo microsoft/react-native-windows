@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 02 Mar 2024 06:15:01 GMT and should not be manually modified.
+This log was last generated on Tue, 05 Mar 2024 06:16:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.782
+
+Tue, 05 Mar 2024 06:16:50 GMT
+
+### Changes
+
+- Export getRuntimeExecutor for internal usage (30809111+acoates-ms@users.noreply.github.com)
+- Omit trailing slash in Origin header (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.781
 

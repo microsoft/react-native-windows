@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 05 Mar 2024 06:16:50 GMT",
+      "version": "0.0.0-canary.782",
+      "tag": "react-native-windows_v0.0.0-canary.782",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e46a18f7b78290373e1d65c63bc2e02fbf6f639e",
+            "comment": "Export getRuntimeExecutor for internal usage"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ed8a4407d5aa78c93a2fbd81eaa56e05153a0c8a",
+            "comment": "Omit trailing slash in Origin header"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 02 Mar 2024 06:15:01 GMT",
       "version": "0.0.0-canary.781",
       "tag": "react-native-windows_v0.0.0-canary.781",
