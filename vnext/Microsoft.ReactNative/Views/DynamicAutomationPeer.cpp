@@ -50,105 +50,152 @@ winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore
 
 std::optional<winrt::AutomationControlType> DynamicAutomationPeer::GetAutomationControlTypeFromAriaRole() const {
   const auto ariaRole = GetAriaRole();
+  // Unless otherwise specified, mappings sourced from:
+  //   https://learn.microsoft.com/en-us/windows/win32/winauto/uiauto-ariaspecification#w3c-aria-role-mapped-to-microsoft-active-accessibility-and-ui-automation
+  // Remaining mappings are:
+  //   "cell": DataItem (based on "gridcell" mapping)
+  //   "feed": List (based on "directory" mapping)
+  //   "figure": Image (based on "img" mapping)
+  //   "math": Group (based on "definition" mapping)
+  //   "meter": Pane (based on "timer" mapping)
+  //   "none": Group (based on "presentation")
+  //   "rowgroup": Group (based on "group" mapping)
+  //   "searchbox": Group (based on "group" mapping)
+  //   "summary": Unknown (based on missing ARIA documentation)
+  //   "switch": CheckBox (based on "checkbox" mapping)
+  //   "table": Grid (based on "grid" mapping)
+  //   "term": Group (based on "definition" mapping)
   switch (ariaRole) {
+    case winrt::Microsoft::ReactNative::AriaRole::Alert:
+      return winrt::AutomationControlType::Text;
+    case winrt::Microsoft::ReactNative::AriaRole::AlertDialog:
+      return winrt::AutomationControlType::Pane;
+    case winrt::Microsoft::ReactNative::AriaRole::Application:
+      return winrt::AutomationControlType::Pane;
+    case winrt::Microsoft::ReactNative::AriaRole::Article:
+      return winrt::AutomationControlType::Document;
+    case winrt::Microsoft::ReactNative::AriaRole::Banner:
+      return winrt::AutomationControlType::Group;
     case winrt::Microsoft::ReactNative::AriaRole::Button:
       return winrt::AutomationControlType::Button;
-    case winrt::Microsoft::ReactNative::AriaRole::CheckBox:
-      return winrt::AutomationControlType::CheckBox;
-    case winrt::Microsoft::ReactNative::AriaRole::ComboBox:
-      return winrt::AutomationControlType::ComboBox;
     case winrt::Microsoft::ReactNative::AriaRole::Cell:
       return winrt::AutomationControlType::DataItem;
-    case winrt::Microsoft::ReactNative::AriaRole::Grid:
-    case winrt::Microsoft::ReactNative::AriaRole::Row:
-      return winrt::AutomationControlType::DataGrid;
-    case winrt::Microsoft::ReactNative::AriaRole::Article:
+    case winrt::Microsoft::ReactNative::AriaRole::CheckBox:
+      return winrt::AutomationControlType::CheckBox;
+    case winrt::Microsoft::ReactNative::AriaRole::ColumnHeader:
+      return winrt::AutomationControlType::DataItem;
+    case winrt::Microsoft::ReactNative::AriaRole::ComboBox:
+      return winrt::AutomationControlType::ComboBox;
+    case winrt::Microsoft::ReactNative::AriaRole::Complementary:
+      return winrt::AutomationControlType::Group;
+    case winrt::Microsoft::ReactNative::AriaRole::ContentInfo:
+      return winrt::AutomationControlType::Group;
+    case winrt::Microsoft::ReactNative::AriaRole::Definition:
+      return winrt::AutomationControlType::Group;
+    case winrt::Microsoft::ReactNative::AriaRole::Dialog:
+      return winrt::AutomationControlType::Pane;
+    case winrt::Microsoft::ReactNative::AriaRole::Directory:
+      return winrt::AutomationControlType::List;
     case winrt::Microsoft::ReactNative::AriaRole::Document:
       return winrt::AutomationControlType::Document;
-    case winrt::Microsoft::ReactNative::AriaRole::SearchBox:
-      return winrt::AutomationControlType::Edit;
-    case winrt::Microsoft::ReactNative::AriaRole::Application:
-    case winrt::Microsoft::ReactNative::AriaRole::Group:
-    case winrt::Microsoft::ReactNative::AriaRole::None:
-    case winrt::Microsoft::ReactNative::AriaRole::RadioGroup:
-    case winrt::Microsoft::ReactNative::AriaRole::Region:
-    case winrt::Microsoft::ReactNative::AriaRole::RowGroup:
-    case winrt::Microsoft::ReactNative::AriaRole::Switch:
-    case winrt::Microsoft::ReactNative::AriaRole::TabPanel:
-    case winrt::Microsoft::ReactNative::AriaRole::Timer:
-      return winrt::AutomationControlType::Group;
-    case winrt::Microsoft::ReactNative::AriaRole::ColumnHeader:
-    case winrt::Microsoft::ReactNative::AriaRole::RowHeader:
-      return winrt::AutomationControlType::HeaderItem;
-    case winrt::Microsoft::ReactNative::AriaRole::Link:
-      return winrt::AutomationControlType::Hyperlink;
+    case winrt::Microsoft::ReactNative::AriaRole::Feed:
+      return winrt::AutomationControlType::List;
     case winrt::Microsoft::ReactNative::AriaRole::Figure:
+      return winrt::AutomationControlType::Image;
+    case winrt::Microsoft::ReactNative::AriaRole::Form:
+      return winrt::AutomationControlType::Group;
+    case winrt::Microsoft::ReactNative::AriaRole::Grid:
+      return winrt::AutomationControlType::DataGrid;
+    case winrt::Microsoft::ReactNative::AriaRole::Group:
+      return winrt::AutomationControlType::Group;
+    case winrt::Microsoft::ReactNative::AriaRole::Heading:
+      return winrt::AutomationControlType::Text;
     case winrt::Microsoft::ReactNative::AriaRole::Img:
       return winrt::AutomationControlType::Image;
+    case winrt::Microsoft::ReactNative::AriaRole::Link:
+      return winrt::AutomationControlType::Hyperlink;
     case winrt::Microsoft::ReactNative::AriaRole::List:
       return winrt::AutomationControlType::List;
     case winrt::Microsoft::ReactNative::AriaRole::ListItem:
       return winrt::AutomationControlType::ListItem;
+    case winrt::Microsoft::ReactNative::AriaRole::Log:
+      return winrt::AutomationControlType::Group;
+    case winrt::Microsoft::ReactNative::AriaRole::Main:
+      return winrt::AutomationControlType::Group;
+    case winrt::Microsoft::ReactNative::AriaRole::Marquee:
+      return winrt::AutomationControlType::Text;
+    case winrt::Microsoft::ReactNative::AriaRole::Math:
+      return winrt::AutomationControlType::Group;
     case winrt::Microsoft::ReactNative::AriaRole::Menu:
       return winrt::AutomationControlType::Menu;
     case winrt::Microsoft::ReactNative::AriaRole::MenuBar:
       return winrt::AutomationControlType::MenuBar;
     case winrt::Microsoft::ReactNative::AriaRole::MenuItem:
       return winrt::AutomationControlType::MenuItem;
+    case winrt::Microsoft::ReactNative::AriaRole::Meter:
+      return winrt::AutomationControlType::Group;
+    case winrt::Microsoft::ReactNative::AriaRole::Navigation:
+      return winrt::AutomationControlType::Group;
+    case winrt::Microsoft::ReactNative::AriaRole::None:
+      return winrt::AutomationControlType::Pane;
+    case winrt::Microsoft::ReactNative::AriaRole::Note:
+      return winrt::AutomationControlType::Group;
+    case winrt::Microsoft::ReactNative::AriaRole::Option:
+      return winrt::AutomationControlType::ListItem;
+    case winrt::Microsoft::ReactNative::AriaRole::Presentation:
+      return winrt::AutomationControlType::Pane;
     case winrt::Microsoft::ReactNative::AriaRole::ProgressBar:
       return winrt::AutomationControlType::ProgressBar;
     case winrt::Microsoft::ReactNative::AriaRole::Radio:
       return winrt::AutomationControlType::RadioButton;
+    case winrt::Microsoft::ReactNative::AriaRole::RadioGroup:
+      return winrt::AutomationControlType::Group;
+    case winrt::Microsoft::ReactNative::AriaRole::Region:
+      return winrt::AutomationControlType::Pane;
+    case winrt::Microsoft::ReactNative::AriaRole::Row:
+      return winrt::AutomationControlType::DataItem;
+    case winrt::Microsoft::ReactNative::AriaRole::RowGroup:
+      return winrt::AutomationControlType::Group;
+    case winrt::Microsoft::ReactNative::AriaRole::RowHeader:
+      return winrt::AutomationControlType::DataItem;
     case winrt::Microsoft::ReactNative::AriaRole::ScrollBar:
       return winrt::AutomationControlType::ScrollBar;
+    case winrt::Microsoft::ReactNative::AriaRole::SearchBox:
+      return winrt::AutomationControlType::Group;
     case winrt::Microsoft::ReactNative::AriaRole::Separator:
       return winrt::AutomationControlType::Separator;
     case winrt::Microsoft::ReactNative::AriaRole::Slider:
       return winrt::AutomationControlType::Slider;
     case winrt::Microsoft::ReactNative::AriaRole::SpinButton:
       return winrt::AutomationControlType::Spinner;
-    case winrt::Microsoft::ReactNative::AriaRole::TabList:
-      return winrt::AutomationControlType::Tab;
+    case winrt::Microsoft::ReactNative::AriaRole::Status:
+      return winrt::AutomationControlType::StatusBar;
+    case winrt::Microsoft::ReactNative::AriaRole::Summary:
+      return winrt::AutomationControlType::Unknown;
+    case winrt::Microsoft::ReactNative::AriaRole::Switch:
+      return winrt::AutomationControlType::CheckBox;
     case winrt::Microsoft::ReactNative::AriaRole::Tab:
       return winrt::AutomationControlType::TabItem;
     case winrt::Microsoft::ReactNative::AriaRole::Table:
-      return winrt::AutomationControlType::Table;
-    case winrt::Microsoft::ReactNative::AriaRole::Alert:
-    case winrt::Microsoft::ReactNative::AriaRole::Banner:
-    case winrt::Microsoft::ReactNative::AriaRole::Complementary:
-    case winrt::Microsoft::ReactNative::AriaRole::ContentInfo:
-    case winrt::Microsoft::ReactNative::AriaRole::Definition:
-    case winrt::Microsoft::ReactNative::AriaRole::Heading:
-    case winrt::Microsoft::ReactNative::AriaRole::Note:
-    case winrt::Microsoft::ReactNative::AriaRole::Status:
-    case winrt::Microsoft::ReactNative::AriaRole::Summary:
-      return winrt::AutomationControlType::Text;
+      return winrt::AutomationControlType::Grid;
+    case winrt::Microsoft::ReactNative::AriaRole::TabList:
+      return winrt::AutomationControlType::Tab;
+    case winrt::Microsoft::ReactNative::AriaRole::TabPanel:
+      return winrt::AutomationControlType::Pane;
+    case winrt::Microsoft::ReactNative::AriaRole::Term:
+      return winrt::AutomationControlType::Group;
+    case winrt::Microsoft::ReactNative::AriaRole::Timer:
+      return winrt::AutomationControlType::Pane;
     case winrt::Microsoft::ReactNative::AriaRole::ToolBar:
       return winrt::AutomationControlType::ToolBar;
     case winrt::Microsoft::ReactNative::AriaRole::ToolTip:
       return winrt::AutomationControlType::ToolTip;
     case winrt::Microsoft::ReactNative::AriaRole::Tree:
-    case winrt::Microsoft::ReactNative::AriaRole::TreeGrid:
       return winrt::AutomationControlType::Tree;
+    case winrt::Microsoft::ReactNative::AriaRole::TreeGrid:
+      return winrt::AutomationControlType::DataGrid;
     case winrt::Microsoft::ReactNative::AriaRole::TreeItem:
       return winrt::AutomationControlType::TreeItem;
-    case winrt::Microsoft::ReactNative::AriaRole::AlertDialog:
-    case winrt::Microsoft::ReactNative::AriaRole::Dialog:
-      return winrt::AutomationControlType::Window;
-    case winrt::Microsoft::ReactNative::AriaRole::Directory:
-    case winrt::Microsoft::ReactNative::AriaRole::Feed:
-    case winrt::Microsoft::ReactNative::AriaRole::Form:
-    case winrt::Microsoft::ReactNative::AriaRole::Log:
-    case winrt::Microsoft::ReactNative::AriaRole::Main:
-    case winrt::Microsoft::ReactNative::AriaRole::Marquee:
-    case winrt::Microsoft::ReactNative::AriaRole::Math:
-    case winrt::Microsoft::ReactNative::AriaRole::Meter:
-    case winrt::Microsoft::ReactNative::AriaRole::Navigation:
-    case winrt::Microsoft::ReactNative::AriaRole::Option:
-    case winrt::Microsoft::ReactNative::AriaRole::Presentation:
-    case winrt::Microsoft::ReactNative::AriaRole::Term:
-    case winrt::Microsoft::ReactNative::AriaRole::Unknown:
-      break;
   }
 
   return std::nullopt;
@@ -450,7 +497,7 @@ winrt::Microsoft::ReactNative::AccessibilityRoles DynamicAutomationPeer::GetAcce
   } catch (...) {
   }
 
-  return winrt::Microsoft::ReactNative::AccessibilityRoles::None;
+  return winrt::Microsoft::ReactNative::AccessibilityRoles::Unknown;
 }
 
 winrt::Microsoft::ReactNative::AriaRole DynamicAutomationPeer::GetAriaRole() const {
