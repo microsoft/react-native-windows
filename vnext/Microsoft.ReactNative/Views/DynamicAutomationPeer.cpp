@@ -61,7 +61,7 @@ std::optional<winrt::AutomationControlType> DynamicAutomationPeer::GetAutomation
   //   "none": Group (based on "presentation")
   //   "rowgroup": Group (based on "group" mapping)
   //   "searchbox": Group (based on "group" mapping)
-  //   "summary": Unknown (based on missing ARIA documentation)
+  //   "summary": N/A (based on missing ARIA documentation)
   //   "switch": CheckBox (based on "checkbox" mapping)
   //   "table": Grid (based on "grid" mapping)
   //   "term": Group (based on "definition" mapping)
@@ -170,14 +170,12 @@ std::optional<winrt::AutomationControlType> DynamicAutomationPeer::GetAutomation
       return winrt::AutomationControlType::Spinner;
     case winrt::Microsoft::ReactNative::AriaRole::Status:
       return winrt::AutomationControlType::StatusBar;
-    case winrt::Microsoft::ReactNative::AriaRole::Summary:
-      return winrt::AutomationControlType::Unknown;
     case winrt::Microsoft::ReactNative::AriaRole::Switch:
       return winrt::AutomationControlType::CheckBox;
     case winrt::Microsoft::ReactNative::AriaRole::Tab:
       return winrt::AutomationControlType::TabItem;
     case winrt::Microsoft::ReactNative::AriaRole::Table:
-      return winrt::AutomationControlType::Grid;
+      return winrt::AutomationControlType::DataGrid;
     case winrt::Microsoft::ReactNative::AriaRole::TabList:
       return winrt::AutomationControlType::Tab;
     case winrt::Microsoft::ReactNative::AriaRole::TabPanel:
@@ -196,9 +194,11 @@ std::optional<winrt::AutomationControlType> DynamicAutomationPeer::GetAutomation
       return winrt::AutomationControlType::DataGrid;
     case winrt::Microsoft::ReactNative::AriaRole::TreeItem:
       return winrt::AutomationControlType::TreeItem;
+    case winrt::Microsoft::ReactNative::AriaRole::Summary:
+    case winrt::Microsoft::ReactNative::AriaRole::Unknown:
+    default:
+      return std::nullopt;
   }
-
-  return std::nullopt;
 }
 
 winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeFromAccessibilityRole() const {
@@ -497,7 +497,7 @@ winrt::Microsoft::ReactNative::AccessibilityRoles DynamicAutomationPeer::GetAcce
   } catch (...) {
   }
 
-  return winrt::Microsoft::ReactNative::AccessibilityRoles::Unknown;
+  return winrt::Microsoft::ReactNative::AccessibilityRoles::None;
 }
 
 winrt::Microsoft::ReactNative::AriaRole DynamicAutomationPeer::GetAriaRole() const {
