@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Export getRuntimeExecutor for internal usage",
+  "comment": "Enable bridgeless by default for fabric apps",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

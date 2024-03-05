@@ -163,9 +163,6 @@ struct WindowData {
           winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
               host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
-          // Nudge the ReactNativeHost to create the instance and wrapping context
-          host.ReloadInstance();
-
           winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
           viewOptions.ComponentName(appName);
           auto windowData = WindowData::GetFromWindow(hwnd);
@@ -240,6 +237,9 @@ struct WindowData {
               m_compRootView.Size({m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)});
             }
           }
+
+          // Nudge the ReactNativeHost to create the instance and wrapping context
+          host.ReloadInstance();
 
           m_compRootView.ReactViewHost(
               winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
