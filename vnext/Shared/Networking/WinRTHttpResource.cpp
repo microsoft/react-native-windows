@@ -648,25 +648,24 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
   using namespace winrt::Windows::Web::Http::Filters;
   using winrt::Windows::Web::Http::HttpClient;
 
-  auto getPropertyBag = [&]() {
-    if (!inspectableProperties) {
-      return ReactPropertyBag{};
-    }
-    return ReactPropertyBag{inspectableProperties.try_as<IReactPropertyBag>()};
-  };
+  auto propertyBag =
+      inspectableProperties ? ReactPropertyBag{inspectableProperties.try_as<IReactPropertyBag>()} : ReactPropertyBag{};
 
-
-
-  IHttpFilter customFilter{nullptr};
-  if (auto propBag = getPropertyBag()) {
-    if (auto factoryDelegate = GetHttpFilterFactoryDelegate(propBag)) {
-      customFilter = factoryDelegate();
+  // RedirectHttpFilter customization requires two filters
+  IHttpFilter customFilter1{nullptr};
+  IHttpFilter customFilter2{nullptr};
+  if (propertyBag) {
+    if (auto factoryDelegate = GetHttpFilterFactoryDelegate(propertyBag)) {
+      customFilter1 = factoryDelegate();
+      customFilter2 = factoryDelegate();
     }
   }
 
+  assert((customFilter1 && customFilter2) || (!customFilter1 && !customFilter2));
+
   IHttpFilter redirFilter{nullptr};
-  if (customFilter) {
-    redirFilter = winrt::make<RedirectHttpFilter>(std::move(customFilter), HttpBaseProtocolFilter{});
+  if (customFilter1 && customFilter2) {
+    redirFilter = winrt::make<RedirectHttpFilter>(std::move(customFilter1), std::move(customFilter2));
   } else {
     redirFilter = winrt::make<RedirectHttpFilter>();
   }
@@ -690,15 +689,14 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
   redirFilter.as<RedirectHttpFilter>()->SetRequestFactory(weak_ptr<IWinRTHttpRequestFactory>{result});
 
   // Register resource as HTTP module proxy.
-  if (inspectableProperties) {
+  if (propertyBag) {
     auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
-    auto propBag = ReactPropertyBag{inspectableProperties.try_as<IReactPropertyBag>()};
     auto moduleProxy = weak_ptr<IHttpModuleProxy>{result};
-    propBag.Set(propId, std::move(moduleProxy));
+    propertyBag.Set(propId, std::move(moduleProxy));
 
     // #11439 - Best-effort attempt to set up the HTTP handler after an initial call to addNetworkingHandler failed.
     auto blobRcPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<Networking::IBlobResource>>>{L"Blob.Resource"};
-    if (auto prop = propBag.Get(blobRcPropId)) {
+    if (auto prop = propertyBag.Get(blobRcPropId)) {
       if (auto blobRc = prop.Value().lock()) {
         blobRc->AddNetworkingHandler();
       }
