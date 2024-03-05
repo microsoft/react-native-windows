@@ -59,7 +59,7 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
 
 #endif
     auto compositor =
-        winrt::Microsoft::ReactNative::Composition::implementation::WindowsCompositionContextHelper::InnerCompositor(
+        winrt::Microsoft::ReactNative::Composition::implementation::SystemCompositionContextHelper::InnerCompositor(
             compositionContext);
     auto interop = compositor.as<ABI::Windows::UI::Composition::Desktop::ICompositorDesktopInterop>();
     winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget target{nullptr};
@@ -75,7 +75,7 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
     target.Root(root);
 
     m_compRootView.RootVisual(
-        winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::CreateVisual(target.Root()));
+        winrt::Microsoft::ReactNative::Composition::SystemCompositionContextHelper::CreateVisual(target.Root()));
 
 #if USE_WINUI3
   }
@@ -101,7 +101,6 @@ void CompositionHwndHost::UpdateSize() noexcept {
       // Do not relayout when minimized
       if (!IsIconic(m_hwnd)) {
         m_compRootView.Size(size);
-        m_compRootView.Measure(size);
         m_compRootView.Arrange(size);
       }
     }
