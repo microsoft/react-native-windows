@@ -1406,8 +1406,6 @@ void ReactInstanceWin::DetachRootView(facebook::react::IReactRootView *rootView,
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()));
     uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(rootTag));
-
-    CallJsFunction("ReactFabric", "unmountComponentAtNode", std::move(params));
   } else
 #endif
   {
