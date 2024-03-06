@@ -427,6 +427,9 @@ const validAttributesForEventProps = {
   onKeyDown: true,
   onKeyUp: true,
   onPointerCancelCapture: true,
+
+  onBlur: true,
+  onFocus: true,
   // Windows]
   // [Windows
 };

@@ -10,8 +10,7 @@
 #include <cmath>
 #include <optional>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 struct WindowsViewEvents {
   std::bitset<32> bits{};
@@ -71,5 +70,4 @@ static inline WindowsViewEvents convertRawProp(
   return result;
 }
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react
