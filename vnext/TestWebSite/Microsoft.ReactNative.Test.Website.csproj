@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <IntDir>$(IntDir)$(TargetFramework)\</IntDir>
     <OutDir>$(OutDir)$(TargetFramework)\</OutDir>
+    <BaseIntermediateOutputPath>$(MSBuildProjectExtensionsPath)</BaseIntermediateOutputPath>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'https' " />
