@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 06 Mar 2024 06:16:51 GMT",
+      "version": "0.0.0-canary.783",
+      "tag": "react-native-windows_v0.0.0-canary.783",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d7f325c73365a8280c3169c44aab73e7222462d2",
+            "comment": "Enable bridgeless by default for fabric apps"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2974feef104eb465db7b8e2f4b5f630fc28a19de",
+            "comment": "Enable bridgeless by default for fabric apps"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 05 Mar 2024 06:16:50 GMT",
       "version": "0.0.0-canary.782",
       "tag": "react-native-windows_v0.0.0-canary.782",
