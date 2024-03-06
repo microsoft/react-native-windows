@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adds option to set Non-ABI Runtime instance",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}

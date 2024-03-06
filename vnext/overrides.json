@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240122-4e92f87df",
+  "baseVersion": "0.74.0-nightly-20240129-39cb02f6f",
   "overrides": [
     {
       "type": "derived",
@@ -283,8 +283,10 @@
       "baseHash": "60655baaca427e1c7c1b8884833b848335c4033b"
     },
     {
-      "type": "platform",
-      "file": "src-win/Libraries/Components/TextInput/WindowsTextInputNativeComponent.js"
+      "type": "derived",
+      "file": "src-win/Libraries/Components/TextInput/WindowsTextInputNativeComponent.js",
+      "baseFile": "packages/react-native/Libraries/Components/TextInput/AndroidTextInputNativeComponent.js",
+      "baseHash": "d46d046c289717a85a927af7fc362873395f9f17"
     },
     {
       "type": "patch",

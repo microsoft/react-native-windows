@@ -31,6 +31,12 @@ const Platform: PlatformType = {
       patch: number,
       prerelease: ?string,
     |},
+    reactNativeWindowsVersion: {|
+      // [Windows]
+      major: number,
+      minor: number,
+      patch: number,
+    |},
     osVersion: number,
   |} {
     // $FlowFixMe[object-this-reference]

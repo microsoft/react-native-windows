@@ -79,6 +79,16 @@ describe('TextInput Tests', () => {
     );
     expect(await component.getText()).toBe('HelloWorld');
     await clear.click();
+    await app.waitUntil(
+      async () => {
+        return (await component.getText()) === '';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Clicking clear button should clear text.`,
+      },
+    );
     expect(await component.getText()).toBe('');
   });
   test('TextInputs can autocapitalize: Autocapitalize Turned Off', async () => {

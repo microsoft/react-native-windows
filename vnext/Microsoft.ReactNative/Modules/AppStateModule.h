@@ -22,7 +22,7 @@ struct AppState : public std::enable_shared_from_this<AppState> {
   REACT_METHOD(GetCurrentAppState, L"getCurrentAppState")
   void GetCurrentAppState(
       std::function<void(AppStateChangeArgs const &)> const &success,
-      std::function<void(React::JSValue const &)> const &error) noexcept;
+      std::function<void(winrt::Microsoft::ReactNative::JSValue const &)> const &error) noexcept;
 
   REACT_METHOD(AddListener, L"addListener")
   void AddListener(std::string &&eventName) noexcept;
@@ -45,7 +45,7 @@ struct AppState : public std::enable_shared_from_this<AppState> {
   std::atomic<bool> m_deactivated;
   std::atomic<bool> m_enteredBackground;
   char const *m_lastState{nullptr};
-  React::ReactContext m_context;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
 #ifndef USE_WINUI3
   xaml::Application::EnteredBackground_revoker m_enteredBackgroundRevoker;
   xaml::Application::LeavingBackground_revoker m_leavingBackgroundRevoker;

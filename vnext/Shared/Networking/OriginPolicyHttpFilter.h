@@ -58,7 +58,7 @@ class OriginPolicyHttpFilter
       winrt::Windows::Foundation::Uri const &u1,
       winrt::Windows::Foundation::Uri const &u2) noexcept;
 
-  static winrt::Windows::Foundation::Uri GetOrigin(winrt::Windows::Foundation::Uri const &uri) noexcept;
+  static const winrt::hstring GetOrigin(winrt::Windows::Foundation::Uri const &uri) noexcept;
 
   static bool IsSimpleCorsRequest(winrt::Windows::Web::Http::HttpRequestMessage const &request) noexcept;
 

@@ -15,6 +15,79 @@
 namespace facebook::react {
 
 
+  class JSI_EXPORT NativeReactNativeFeatureFlagsCxxSpecJSI : public TurboModule {
+protected:
+  NativeReactNativeFeatureFlagsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
+  virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
+  virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
+  virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeReactNativeFeatureFlagsCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+  static constexpr std::string_view kModuleName = "NativeReactNativeFeatureFlagsCxx";
+
+protected:
+  NativeReactNativeFeatureFlagsCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeReactNativeFeatureFlagsCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+private:
+  class Delegate : public NativeReactNativeFeatureFlagsCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeReactNativeFeatureFlagsCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
+
+    bool commonTestFlag(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::commonTestFlag) == 1,
+          "Expected commonTestFlag(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::commonTestFlag, jsInvoker_, instance_);
+    }
+    bool useModernRuntimeScheduler(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useModernRuntimeScheduler) == 1,
+          "Expected useModernRuntimeScheduler(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useModernRuntimeScheduler, jsInvoker_, instance_);
+    }
+    bool enableMicrotasks(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableMicrotasks) == 1,
+          "Expected enableMicrotasks(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableMicrotasks, jsInvoker_, instance_);
+    }
+    bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::batchRenderingUpdatesInEventLoop) == 1,
+          "Expected batchRenderingUpdatesInEventLoop(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::batchRenderingUpdatesInEventLoop, jsInvoker_, instance_);
+    }
+
+  private:
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
   class JSI_EXPORT NativeAccessibilityInfoCxxSpecJSI : public TurboModule {
 protected:
   NativeAccessibilityInfoCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -7677,28 +7750,30 @@ private:
   
 #pragma mark - PlatformConstantsBasePlatformConstantsWindows
 
-template <typename P0, typename P1, typename P2, typename P3>
+template <typename P0, typename P1, typename P2, typename P3, typename P4>
 struct [[deprecated("Use PlatformConstantsPlatformConstantsWindows instead.")]] PlatformConstantsBasePlatformConstantsWindows {
   P0 isTesting;
   P1 isDisableAnimations;
   P2 reactNativeVersion;
-  P3 osVersion;
+  P3 reactNativeWindowsVersion;
+  P4 osVersion;
   bool operator==(const PlatformConstantsBasePlatformConstantsWindows &other) const {
-    return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && osVersion == other.osVersion;
+    return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && reactNativeWindowsVersion == other.reactNativeWindowsVersion && osVersion == other.osVersion;
   }
 };
 
-template <typename P0, typename P1, typename P2, typename P3>
+template <typename P0, typename P1, typename P2, typename P3, typename P4>
 struct [[deprecated("Use PlatformConstantsPlatformConstantsWindowsBridging instead.")]] PlatformConstantsBasePlatformConstantsWindowsBridging {
-  static PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3> fromJs(
+  static PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3, P4> fromJs(
       jsi::Runtime &rt,
       const jsi::Object &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
-    PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3> result{
+    PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3, P4> result{
       bridging::fromJs<P0>(rt, value.getProperty(rt, "isTesting"), jsInvoker),
       bridging::fromJs<P1>(rt, value.getProperty(rt, "isDisableAnimations"), jsInvoker),
       bridging::fromJs<P2>(rt, value.getProperty(rt, "reactNativeVersion"), jsInvoker),
-      bridging::fromJs<P3>(rt, value.getProperty(rt, "osVersion"), jsInvoker)};
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "reactNativeWindowsVersion"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "osVersion"), jsInvoker)};
     return result;
   }
 
@@ -7715,14 +7790,18 @@ struct [[deprecated("Use PlatformConstantsPlatformConstantsWindowsBridging inste
     return bridging::toJs(rt, value);
   }
 
-  static double osVersionToJs(jsi::Runtime &rt, P3 value) {
+  static jsi::Object reactNativeWindowsVersionToJs(jsi::Runtime &rt, P3 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double osVersionToJs(jsi::Runtime &rt, P4 value) {
     return bridging::toJs(rt, value);
   }
 #endif
 
   static jsi::Object toJs(
       jsi::Runtime &rt,
-      const PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3> &value,
+      const PlatformConstantsBasePlatformConstantsWindows<P0, P1, P2, P3, P4> &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     auto result = facebook::jsi::Object(rt);
     result.setProperty(rt, "isTesting", bridging::toJs(rt, value.isTesting, jsInvoker));
@@ -7730,6 +7809,7 @@ struct [[deprecated("Use PlatformConstantsPlatformConstantsWindowsBridging inste
       result.setProperty(rt, "isDisableAnimations", bridging::toJs(rt, value.isDisableAnimations.value(), jsInvoker));
     }
     result.setProperty(rt, "reactNativeVersion", bridging::toJs(rt, value.reactNativeVersion, jsInvoker));
+    result.setProperty(rt, "reactNativeWindowsVersion", bridging::toJs(rt, value.reactNativeWindowsVersion, jsInvoker));
     result.setProperty(rt, "osVersion", bridging::toJs(rt, value.osVersion, jsInvoker));
     return result;
   }
@@ -7738,14 +7818,15 @@ struct [[deprecated("Use PlatformConstantsPlatformConstantsWindowsBridging inste
 
 #pragma mark - PlatformConstantsPlatformConstantsWindows
 
-template <typename P0, typename P1, typename P2, typename P3>
+template <typename P0, typename P1, typename P2, typename P3, typename P4>
 struct PlatformConstantsPlatformConstantsWindows {
   P0 isTesting;
   P1 isDisableAnimations;
   P2 reactNativeVersion;
-  P3 osVersion;
+  P3 reactNativeWindowsVersion;
+  P4 osVersion;
   bool operator==(const PlatformConstantsPlatformConstantsWindows &other) const {
-    return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && osVersion == other.osVersion;
+    return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && reactNativeWindowsVersion == other.reactNativeWindowsVersion && osVersion == other.osVersion;
   }
 };
 
@@ -7761,6 +7842,7 @@ struct PlatformConstantsPlatformConstantsWindowsBridging {
       bridging::fromJs<decltype(types.isTesting)>(rt, value.getProperty(rt, "isTesting"), jsInvoker),
       bridging::fromJs<decltype(types.isDisableAnimations)>(rt, value.getProperty(rt, "isDisableAnimations"), jsInvoker),
       bridging::fromJs<decltype(types.reactNativeVersion)>(rt, value.getProperty(rt, "reactNativeVersion"), jsInvoker),
+      bridging::fromJs<decltype(types.reactNativeWindowsVersion)>(rt, value.getProperty(rt, "reactNativeWindowsVersion"), jsInvoker),
       bridging::fromJs<decltype(types.osVersion)>(rt, value.getProperty(rt, "osVersion"), jsInvoker)};
     return result;
   }
@@ -7775,6 +7857,10 @@ struct PlatformConstantsPlatformConstantsWindowsBridging {
   }
 
   static jsi::Object reactNativeVersionToJs(jsi::Runtime &rt, decltype(types.reactNativeVersion) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Object reactNativeWindowsVersionToJs(jsi::Runtime &rt, decltype(types.reactNativeWindowsVersion) value) {
     return bridging::toJs(rt, value);
   }
 
@@ -7793,6 +7879,7 @@ struct PlatformConstantsPlatformConstantsWindowsBridging {
       result.setProperty(rt, "isDisableAnimations", bridging::toJs(rt, value.isDisableAnimations.value(), jsInvoker));
     }
     result.setProperty(rt, "reactNativeVersion", bridging::toJs(rt, value.reactNativeVersion, jsInvoker));
+    result.setProperty(rt, "reactNativeWindowsVersion", bridging::toJs(rt, value.reactNativeWindowsVersion, jsInvoker));
     result.setProperty(rt, "osVersion", bridging::toJs(rt, value.osVersion, jsInvoker));
     return result;
   }
@@ -9395,7 +9482,7 @@ public:
   virtual void configureNextLayoutAnimation(jsi::Runtime &rt, jsi::Object config, jsi::Function callback, jsi::Function errorCallback) = 0;
   virtual void setChildren(jsi::Runtime &rt, std::optional<double> containerTag, jsi::Array reactTags) = 0;
   virtual void manageChildren(jsi::Runtime &rt, std::optional<double> containerTag, jsi::Array moveFromIndices, jsi::Array moveToIndices, jsi::Array addChildReactTags, jsi::Array addAtIndices, jsi::Array removeAtIndices) = 0;
-  virtual jsi::Object getConstantsForViewManager(jsi::Runtime &rt, jsi::String viewManagerName) = 0;
+  virtual std::optional<jsi::Object> getConstantsForViewManager(jsi::Runtime &rt, jsi::String viewManagerName) = 0;
   virtual jsi::Array getDefaultEventTypes(jsi::Runtime &rt) = 0;
   virtual void setLayoutAnimationEnabledExperimental(jsi::Runtime &rt, bool enabled) = 0;
   virtual void sendAccessibilityEvent(jsi::Runtime &rt, std::optional<double> reactTag, double eventType) = 0;
@@ -9547,12 +9634,12 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::manageChildren, jsInvoker_, instance_, std::move(containerTag), std::move(moveFromIndices), std::move(moveToIndices), std::move(addChildReactTags), std::move(addAtIndices), std::move(removeAtIndices));
     }
-    jsi::Object getConstantsForViewManager(jsi::Runtime &rt, jsi::String viewManagerName) override {
+    std::optional<jsi::Object> getConstantsForViewManager(jsi::Runtime &rt, jsi::String viewManagerName) override {
       static_assert(
           bridging::getParameterCount(&T::getConstantsForViewManager) == 2,
           "Expected getConstantsForViewManager(...) to have 2 parameters");
 
-      return bridging::callFromJs<jsi::Object>(
+      return bridging::callFromJs<std::optional<jsi::Object>>(
           rt, &T::getConstantsForViewManager, jsInvoker_, instance_, std::move(viewManagerName));
     }
     jsi::Array getDefaultEventTypes(jsi::Runtime &rt) override {

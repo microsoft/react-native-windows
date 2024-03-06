@@ -12,6 +12,7 @@
 #include <string>
 #include <vector>
 #include "DevSettings.h"
+#include "IDevSupportManager.h"
 #include "IReactRootView.h"
 
 namespace folly {
@@ -65,3 +66,7 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
     std::shared_ptr<DevSettings> devSettings) noexcept;
 
 } // namespace facebook::react
+
+namespace Microsoft::ReactNative {
+const std::shared_ptr<facebook::react::IDevSupportManager> &GetSharedDevManager() noexcept;
+}

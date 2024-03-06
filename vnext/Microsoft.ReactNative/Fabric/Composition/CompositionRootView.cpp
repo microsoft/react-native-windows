@@ -14,6 +14,7 @@
 #include <ReactPropertyBag.h>
 #include <Utils/Helpers.h>
 #include <dispatchQueue/dispatchQueue.h>
+#include <eventWaitHandle/eventWaitHandle.h>
 #include <react/renderer/core/LayoutConstraints.h>
 #include <react/renderer/core/LayoutContext.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
@@ -64,21 +65,24 @@ void CompositionReactViewInstance::InitRootView(
                        .Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
                        .try_as<IReactDispatcher>();
 
-  PostInUIQueue([context{std::move(context)}, viewOptions{std::move(viewOptions)}](
-                    winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionRootView>
-                        &rootControl) mutable noexcept {
+  assert(m_uiDispatcher.HasThreadAccess());
+  if (auto rootControl = m_weakRootControl.get()) {
     rootControl->InitRootView(std::move(context), std::move(viewOptions));
-  });
+  }
 }
 
 void CompositionReactViewInstance::UpdateRootView() noexcept {
-  PostInUIQueue([](winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionRootView>
-                       &rootControl) mutable noexcept { rootControl->UpdateRootView(); });
+  assert(m_uiDispatcher.HasThreadAccess());
+  if (auto rootControl = m_weakRootControl.get()) {
+    rootControl->UpdateRootView();
+  }
 }
 
 void CompositionReactViewInstance::UninitRootView() noexcept {
-  PostInUIQueue([](winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionRootView>
-                       &rootControl) mutable noexcept { rootControl->UninitRootView(); });
+  assert(m_uiDispatcher.HasThreadAccess());
+  if (auto rootControl = m_weakRootControl.get()) {
+    rootControl->UninitRootView();
+  }
 }
 
 //===========================================================================
@@ -353,7 +357,12 @@ void CompositionRootView::UninitRootView() noexcept {
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()));
     uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(GetTag()));
 
-    m_context.CallJSFunction(L"ReactFabric", L"unmountComponentAtNode", GetTag());
+    // This is needed to ensure that the unmount JS logic is completed before the the instance is shutdown during
+    // instance destruction. Aligns with similar code in ReactInstanceWin::DetachRootView for paper Future: Instead this
+    // method should return a Promise, which should be resolved when the JS logic is complete.
+    Mso::ManualResetEvent mre;
+    m_context.JSDispatcher().Post([&]() { mre.Set(); });
+    mre.Wait();
 
     // Paper version gives the JS thread time to finish executing - Is this needed?
     // m_jsMessageThread.Load()->runOnQueueSync([]() {});

@@ -393,4 +393,11 @@ void HermesRuntimeHolder::removeFromProfiling() const noexcept {
   CRASH_ON_ERROR(getHermesApi().hermes_sampling_profiler_dump_to_file(fileName.c_str()));
 }
 
+HermesJSRuntime::HermesJSRuntime(std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> hermesRuntimeHolder)
+    : m_holder(std::move(hermesRuntimeHolder)) {}
+
+facebook::jsi::Runtime &HermesJSRuntime::getRuntime() noexcept {
+  return *m_holder->getRuntime();
+}
+
 } // namespace Microsoft::ReactNative
