@@ -357,8 +357,6 @@ void CompositionRootView::UninitRootView() noexcept {
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()));
     uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(GetTag()));
 
-    m_context.CallJSFunction(L"ReactFabric", L"unmountComponentAtNode", GetTag());
-
     // This is needed to ensure that the unmount JS logic is completed before the the instance is shutdown during
     // instance destruction. Aligns with similar code in ReactInstanceWin::DetachRootView for paper Future: Instead this
     // method should return a Promise, which should be resolved when the JS logic is complete.
