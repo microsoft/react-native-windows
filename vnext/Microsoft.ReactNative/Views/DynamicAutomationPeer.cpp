@@ -50,30 +50,19 @@ winrt::AutomationControlType DynamicAutomationPeer::GetAutomationControlTypeCore
 
 std::optional<winrt::AutomationControlType> DynamicAutomationPeer::GetAutomationControlTypeFromAriaRole() const {
   const auto ariaRole = GetAriaRole();
-  // Unless otherwise specified, mappings sourced from:
-  //   https://learn.microsoft.com/en-us/windows/win32/winauto/uiauto-ariaspecification#w3c-aria-role-mapped-to-microsoft-active-accessibility-and-ui-automation
-  // Remaining mappings are:
-  //   "cell": DataItem (based on "gridcell" mapping)
-  //   "feed": List (based on "directory" mapping)
-  //   "figure": Image (based on "img" mapping)
-  //   "math": Group (based on "definition" mapping)
-  //   "meter": Pane (based on "timer" mapping)
-  //   "none": Group (based on "presentation")
-  //   "rowgroup": Group (based on "group" mapping)
-  //   "searchbox": Group (based on "group" mapping)
-  //   "summary": N/A (based on missing ARIA documentation)
-  //   "switch": CheckBox (based on "checkbox" mapping)
-  //   "table": Grid (based on "grid" mapping)
-  //   "term": Group (based on "definition" mapping)
+  // Sourced from: https://www.w3.org/TR/core-aam-1.2
+  // Remaining unmapped roles are:
+  // - "none"
+  // - "presentation"
   switch (ariaRole) {
     case winrt::Microsoft::ReactNative::AriaRole::Alert:
-      return winrt::AutomationControlType::Text;
+      return winrt::AutomationControlType::Group;
     case winrt::Microsoft::ReactNative::AriaRole::AlertDialog:
       return winrt::AutomationControlType::Pane;
     case winrt::Microsoft::ReactNative::AriaRole::Application:
       return winrt::AutomationControlType::Pane;
     case winrt::Microsoft::ReactNative::AriaRole::Article:
-      return winrt::AutomationControlType::Document;
+      return winrt::AutomationControlType::Group;
     case winrt::Microsoft::ReactNative::AriaRole::Banner:
       return winrt::AutomationControlType::Group;
     case winrt::Microsoft::ReactNative::AriaRole::Button:
@@ -99,9 +88,9 @@ std::optional<winrt::AutomationControlType> DynamicAutomationPeer::GetAutomation
     case winrt::Microsoft::ReactNative::AriaRole::Document:
       return winrt::AutomationControlType::Document;
     case winrt::Microsoft::ReactNative::AriaRole::Feed:
-      return winrt::AutomationControlType::List;
+      return winrt::AutomationControlType::Group;
     case winrt::Microsoft::ReactNative::AriaRole::Figure:
-      return winrt::AutomationControlType::Image;
+      return winrt::AutomationControlType::Group;
     case winrt::Microsoft::ReactNative::AriaRole::Form:
       return winrt::AutomationControlType::Group;
     case winrt::Microsoft::ReactNative::AriaRole::Grid:
@@ -133,45 +122,46 @@ std::optional<winrt::AutomationControlType> DynamicAutomationPeer::GetAutomation
     case winrt::Microsoft::ReactNative::AriaRole::MenuItem:
       return winrt::AutomationControlType::MenuItem;
     case winrt::Microsoft::ReactNative::AriaRole::Meter:
-      return winrt::AutomationControlType::Group;
+      return winrt::AutomationControlType::ProgressBar;
     case winrt::Microsoft::ReactNative::AriaRole::Navigation:
       return winrt::AutomationControlType::Group;
-    case winrt::Microsoft::ReactNative::AriaRole::None:
-      return winrt::AutomationControlType::Pane;
     case winrt::Microsoft::ReactNative::AriaRole::Note:
       return winrt::AutomationControlType::Group;
     case winrt::Microsoft::ReactNative::AriaRole::Option:
       return winrt::AutomationControlType::ListItem;
-    case winrt::Microsoft::ReactNative::AriaRole::Presentation:
-      return winrt::AutomationControlType::Pane;
     case winrt::Microsoft::ReactNative::AriaRole::ProgressBar:
       return winrt::AutomationControlType::ProgressBar;
     case winrt::Microsoft::ReactNative::AriaRole::Radio:
       return winrt::AutomationControlType::RadioButton;
     case winrt::Microsoft::ReactNative::AriaRole::RadioGroup:
-      return winrt::AutomationControlType::Group;
+      return winrt::AutomationControlType::List;
     case winrt::Microsoft::ReactNative::AriaRole::Region:
-      return winrt::AutomationControlType::Pane;
+      return winrt::AutomationControlType::Group;
     case winrt::Microsoft::ReactNative::AriaRole::Row:
       return winrt::AutomationControlType::DataItem;
     case winrt::Microsoft::ReactNative::AriaRole::RowGroup:
       return winrt::AutomationControlType::Group;
     case winrt::Microsoft::ReactNative::AriaRole::RowHeader:
-      return winrt::AutomationControlType::DataItem;
+      return winrt::AutomationControlType::HeaderItem;
     case winrt::Microsoft::ReactNative::AriaRole::ScrollBar:
       return winrt::AutomationControlType::ScrollBar;
     case winrt::Microsoft::ReactNative::AriaRole::SearchBox:
-      return winrt::AutomationControlType::Group;
+      return winrt::AutomationControlType::Edit;
     case winrt::Microsoft::ReactNative::AriaRole::Separator:
+      if (auto const &viewControl = Owner().try_as<winrt::Microsoft::ReactNative::ViewControl>()) {
+        if (viewControl.IsTabStop()) {
+          return winrt::AutomationControlType::Thumb;
+        }
+      }
       return winrt::AutomationControlType::Separator;
     case winrt::Microsoft::ReactNative::AriaRole::Slider:
       return winrt::AutomationControlType::Slider;
     case winrt::Microsoft::ReactNative::AriaRole::SpinButton:
       return winrt::AutomationControlType::Spinner;
     case winrt::Microsoft::ReactNative::AriaRole::Status:
-      return winrt::AutomationControlType::StatusBar;
+      return winrt::AutomationControlType::Group;
     case winrt::Microsoft::ReactNative::AriaRole::Switch:
-      return winrt::AutomationControlType::CheckBox;
+      return winrt::AutomationControlType::Button;
     case winrt::Microsoft::ReactNative::AriaRole::Tab:
       return winrt::AutomationControlType::TabItem;
     case winrt::Microsoft::ReactNative::AriaRole::Table:
@@ -181,9 +171,9 @@ std::optional<winrt::AutomationControlType> DynamicAutomationPeer::GetAutomation
     case winrt::Microsoft::ReactNative::AriaRole::TabPanel:
       return winrt::AutomationControlType::Pane;
     case winrt::Microsoft::ReactNative::AriaRole::Term:
-      return winrt::AutomationControlType::Group;
+      return winrt::AutomationControlType::Text;
     case winrt::Microsoft::ReactNative::AriaRole::Timer:
-      return winrt::AutomationControlType::Pane;
+      return winrt::AutomationControlType::Group;
     case winrt::Microsoft::ReactNative::AriaRole::ToolBar:
       return winrt::AutomationControlType::ToolBar;
     case winrt::Microsoft::ReactNative::AriaRole::ToolTip:
@@ -194,8 +184,8 @@ std::optional<winrt::AutomationControlType> DynamicAutomationPeer::GetAutomation
       return winrt::AutomationControlType::DataGrid;
     case winrt::Microsoft::ReactNative::AriaRole::TreeItem:
       return winrt::AutomationControlType::TreeItem;
-    case winrt::Microsoft::ReactNative::AriaRole::Summary:
-    case winrt::Microsoft::ReactNative::AriaRole::Unknown:
+    case winrt::Microsoft::ReactNative::AriaRole::None:
+    case winrt::Microsoft::ReactNative::AriaRole::Presentation:
     default:
       return std::nullopt;
   }
