@@ -64,13 +64,8 @@
     "yargs": "^17.6.2"
   },
   "devDependencies": {
-<<<<<<< HEAD
-    "@react-native-windows/codegen": "0.0.0-canary.79",
-    "@react-native/metro-config": "0.74.0-nightly-20240204-fafd00ab1",
-=======
     "@react-native-windows/codegen": "0.0.0-canary.80",
-    "@react-native/metro-config": "0.74.0-nightly-20240129-39cb02f6f",
->>>>>>> a10abd99ca3c2a6a094ad59eda2a5e898d0044f4
+    "@react-native/metro-config": "0.74.0-nightly-20240204-fafd00ab1",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.8",
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.1.12",
