@@ -555,6 +555,7 @@ Mso::DispatchQueueSettings CreateDispatchQueueSettings(
 #ifdef USE_FABRIC
 void ReactInstanceWin::InitializeBridgeless() noexcept {
   InitUIQueue();
+  InitUIMessageThread(false);
   InitDevMenu();
 
   m_uiQueue->Post([this, weakThis = Mso::WeakPtr{this}]() noexcept {
@@ -697,7 +698,7 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
   InitNativeMessageThread();
 
   InitUIQueue();
-  InitUIMessageThread();
+  InitUIMessageThread(true);
 
 #ifndef CORE_ABI
   // InitUIManager uses m_legacyReactInstance
@@ -1060,7 +1061,7 @@ void ReactInstanceWin::InitUIQueue() noexcept {
   VerifyElseCrashSz(m_uiQueue, "No UI Dispatcher provided");
 }
 
-void ReactInstanceWin::InitUIMessageThread() noexcept {
+void ReactInstanceWin::InitUIMessageThread(bool haveBridge) noexcept {
   m_uiMessageThread.Exchange(std::make_shared<MessageDispatchQueue2>(
       *m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
@@ -1077,10 +1078,12 @@ void ReactInstanceWin::InitUIMessageThread() noexcept {
             }
           });
 
-  m_jsDispatchQueue.Load().Post(
-      [batchingUIThread, instance = std::weak_ptr<facebook::react::Instance>(m_instance.Load())]() noexcept {
-        batchingUIThread->decoratedNativeCallInvokerReady(instance);
-      });
+  if (haveBridge) {
+    m_jsDispatchQueue.Load().Post(
+        [batchingUIThread, instance = std::weak_ptr<facebook::react::Instance>(m_instance.Load())]() noexcept {
+          batchingUIThread->decoratedNativeCallInvokerReady(instance);
+        });
+  }
 }
 
 bool ReactInstanceWin::IsBridgeless() noexcept {
