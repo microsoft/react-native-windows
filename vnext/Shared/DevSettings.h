@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 #pragma once
+
+#include "JSI/JSExecutorFactoryDelegate.h"
 #include "Logging.h"
 
 #include <IRedBoxHandler.h>
@@ -85,6 +87,10 @@ struct DevSettings {
   /// thread, unless the specific runtime implementation explicitly guarantees
   /// reentrancy.
   std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> jsiRuntimeHolder;
+
+  /// A function that can be called with the current Instance to get
+  /// a JSExecutorFactory. This can be used to bypass the ABI JSI.
+  JSExecutorFactoryDelegate jsExecutorFactoryDelegate{nullptr};
 
   // Until the ABI story is addressed we'll use this instead of the above for
   // the purposes of selecting a JSI Runtime to use.
