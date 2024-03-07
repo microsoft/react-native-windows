@@ -201,7 +201,7 @@ jobs:
                   ActionIISWebsite: CreateOrUpdateWebsite
                   # IIS Website
                   WebsiteName: RNW Test Website
-                  WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\x64\Debug\Microsoft.ReactNative.Test.Website\Publish
+                  WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\AnyCPU\Debug\Microsoft.ReactNative.Test.Website\Publish
                   WebsitePhysicalPathAuth: WebsiteUserPassThrough
                   CreateOrUpdateAppPoolForWebsite: false
                   ConfigureAuthenticationForWebsite: false
