@@ -1228,6 +1228,7 @@ exports[`snapshotAllPages Alerts 1`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -1287,6 +1288,7 @@ exports[`snapshotAllPages Alerts 2`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -1345,6 +1347,7 @@ exports[`snapshotAllPages Alerts 3`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -1404,6 +1407,7 @@ exports[`snapshotAllPages Alerts 4`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -1462,6 +1466,7 @@ exports[`snapshotAllPages Alerts 5`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -1520,6 +1525,7 @@ exports[`snapshotAllPages Alerts 6`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -1578,6 +1584,7 @@ exports[`snapshotAllPages Alerts 7`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -1654,6 +1661,7 @@ exports[`snapshotAllPages Alerts 8`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -1707,6 +1715,7 @@ exports[`snapshotAllPages Alerts 8`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -1760,6 +1769,7 @@ exports[`snapshotAllPages Alerts 8`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -1813,6 +1823,7 @@ exports[`snapshotAllPages Alerts 8`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -1866,6 +1877,7 @@ exports[`snapshotAllPages Alerts 8`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -1924,6 +1936,7 @@ exports[`snapshotAllPages Alerts 9`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -1977,6 +1990,7 @@ exports[`snapshotAllPages Alerts 9`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -2030,6 +2044,7 @@ exports[`snapshotAllPages Alerts 9`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -2160,6 +2175,7 @@ exports[`snapshotAllPages Animated 1`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -2226,6 +2242,7 @@ exports[`snapshotAllPages Animated 1`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -2292,6 +2309,7 @@ exports[`snapshotAllPages Animated 1`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -2358,6 +2376,7 @@ exports[`snapshotAllPages Animated 1`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -2424,6 +2443,7 @@ exports[`snapshotAllPages Animated 1`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -2490,6 +2510,7 @@ exports[`snapshotAllPages Animated 1`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -2556,6 +2577,7 @@ exports[`snapshotAllPages Animated 1`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -2622,6 +2644,7 @@ exports[`snapshotAllPages Animated 1`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -2688,6 +2711,7 @@ exports[`snapshotAllPages Animated 1`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -2754,6 +2778,7 @@ exports[`snapshotAllPages Animated 1`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -2820,6 +2845,7 @@ exports[`snapshotAllPages Animated 1`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -2886,6 +2912,7 @@ exports[`snapshotAllPages Animated 1`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -2954,6 +2981,7 @@ exports[`snapshotAllPages Animated 1`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -3088,6 +3116,7 @@ exports[`snapshotAllPages Animated 2`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -3276,6 +3305,7 @@ exports[`snapshotAllPages Animated 3`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -3577,6 +3607,7 @@ exports[`snapshotAllPages Animated 4`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -3630,6 +3661,7 @@ exports[`snapshotAllPages Animated 4`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -3683,6 +3715,7 @@ exports[`snapshotAllPages Animated 4`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -3868,6 +3901,7 @@ exports[`snapshotAllPages Animated 4`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -3921,6 +3955,7 @@ exports[`snapshotAllPages Animated 4`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -3974,6 +4009,7 @@ exports[`snapshotAllPages Animated 4`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -4159,6 +4195,7 @@ exports[`snapshotAllPages Animated 4`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -4212,6 +4249,7 @@ exports[`snapshotAllPages Animated 4`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -4265,6 +4303,7 @@ exports[`snapshotAllPages Animated 4`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -4450,6 +4489,7 @@ exports[`snapshotAllPages Animated 4`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -4503,6 +4543,7 @@ exports[`snapshotAllPages Animated 4`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -4556,6 +4597,7 @@ exports[`snapshotAllPages Animated 4`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -4805,6 +4847,7 @@ exports[`snapshotAllPages Animated 5`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -4921,6 +4964,7 @@ exports[`snapshotAllPages Animated 5`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -5037,6 +5081,7 @@ exports[`snapshotAllPages Animated 5`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -5177,6 +5222,7 @@ exports[`snapshotAllPages Animated 5`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -5293,6 +5339,7 @@ exports[`snapshotAllPages Animated 5`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -5409,6 +5456,7 @@ exports[`snapshotAllPages Animated 5`] = `
                 }
               }
               accessible={true}
+              disabled={false}
               focusable={true}
               onBlur={[Function]}
               onClick={[Function]}
@@ -5530,6 +5578,7 @@ exports[`snapshotAllPages Animated 6`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -5688,6 +5737,7 @@ exports[`snapshotAllPages Animated 7`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -5869,6 +5919,7 @@ exports[`snapshotAllPages Animated 8`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         onBlur={[Function]}
         onClick={[Function]}
@@ -5923,6 +5974,7 @@ exports[`snapshotAllPages Animated 8`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         onBlur={[Function]}
         onClick={[Function]}
@@ -5976,6 +6028,7 @@ exports[`snapshotAllPages Animated 8`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         onBlur={[Function]}
         onClick={[Function]}
@@ -6029,6 +6082,7 @@ exports[`snapshotAllPages Animated 8`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         onBlur={[Function]}
         onClick={[Function]}
@@ -6133,6 +6187,7 @@ exports[`snapshotAllPages Animated 9`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -6263,6 +6318,7 @@ exports[`snapshotAllPages Animated 10`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -12233,6 +12289,7 @@ exports[`snapshotAllPages FlatList 2`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -12297,6 +12354,7 @@ exports[`snapshotAllPages FlatList 2`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -12361,6 +12419,7 @@ exports[`snapshotAllPages FlatList 2`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -12425,6 +12484,7 @@ exports[`snapshotAllPages FlatList 2`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -12489,6 +12549,7 @@ exports[`snapshotAllPages FlatList 2`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -12553,6 +12614,7 @@ exports[`snapshotAllPages FlatList 2`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -12777,6 +12839,7 @@ exports[`snapshotAllPages FlatList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -12842,6 +12905,7 @@ exports[`snapshotAllPages FlatList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -12907,6 +12971,7 @@ exports[`snapshotAllPages FlatList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -12972,6 +13037,7 @@ exports[`snapshotAllPages FlatList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -13037,6 +13103,7 @@ exports[`snapshotAllPages FlatList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -13102,6 +13169,7 @@ exports[`snapshotAllPages FlatList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -13167,6 +13235,7 @@ exports[`snapshotAllPages FlatList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -13232,6 +13301,7 @@ exports[`snapshotAllPages FlatList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -13297,6 +13367,7 @@ exports[`snapshotAllPages FlatList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -13362,6 +13433,7 @@ exports[`snapshotAllPages FlatList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -13637,6 +13709,7 @@ exports[`snapshotAllPages FlatList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -13702,6 +13775,7 @@ exports[`snapshotAllPages FlatList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -13767,6 +13841,7 @@ exports[`snapshotAllPages FlatList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -13832,6 +13907,7 @@ exports[`snapshotAllPages FlatList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -13897,6 +13973,7 @@ exports[`snapshotAllPages FlatList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -13962,6 +14039,7 @@ exports[`snapshotAllPages FlatList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -14027,6 +14105,7 @@ exports[`snapshotAllPages FlatList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -14092,6 +14171,7 @@ exports[`snapshotAllPages FlatList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -14157,6 +14237,7 @@ exports[`snapshotAllPages FlatList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -14222,6 +14303,7 @@ exports[`snapshotAllPages FlatList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -14457,6 +14539,7 @@ exports[`snapshotAllPages FlatList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -14522,6 +14605,7 @@ exports[`snapshotAllPages FlatList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -14587,6 +14671,7 @@ exports[`snapshotAllPages FlatList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -14652,6 +14737,7 @@ exports[`snapshotAllPages FlatList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -14717,6 +14803,7 @@ exports[`snapshotAllPages FlatList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -14782,6 +14869,7 @@ exports[`snapshotAllPages FlatList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -14847,6 +14935,7 @@ exports[`snapshotAllPages FlatList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -14912,6 +15001,7 @@ exports[`snapshotAllPages FlatList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -14977,6 +15067,7 @@ exports[`snapshotAllPages FlatList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -15042,6 +15133,7 @@ exports[`snapshotAllPages FlatList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -15207,6 +15299,7 @@ exports[`snapshotAllPages FlatList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -15272,6 +15365,7 @@ exports[`snapshotAllPages FlatList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -15337,6 +15431,7 @@ exports[`snapshotAllPages FlatList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -15402,6 +15497,7 @@ exports[`snapshotAllPages FlatList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -15467,6 +15563,7 @@ exports[`snapshotAllPages FlatList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -15532,6 +15629,7 @@ exports[`snapshotAllPages FlatList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -15597,6 +15695,7 @@ exports[`snapshotAllPages FlatList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -15662,6 +15761,7 @@ exports[`snapshotAllPages FlatList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -15727,6 +15827,7 @@ exports[`snapshotAllPages FlatList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -15792,6 +15893,7 @@ exports[`snapshotAllPages FlatList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -15917,6 +16019,7 @@ exports[`snapshotAllPages FlatList 7`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -16005,6 +16108,7 @@ exports[`snapshotAllPages FlatList 7`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -16093,6 +16197,7 @@ exports[`snapshotAllPages FlatList 7`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -16181,6 +16286,7 @@ exports[`snapshotAllPages FlatList 7`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -16269,6 +16375,7 @@ exports[`snapshotAllPages FlatList 7`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -16357,6 +16464,7 @@ exports[`snapshotAllPages FlatList 7`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -16445,6 +16553,7 @@ exports[`snapshotAllPages FlatList 7`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -16533,6 +16642,7 @@ exports[`snapshotAllPages FlatList 7`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -16621,6 +16731,7 @@ exports[`snapshotAllPages FlatList 7`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -16709,6 +16820,7 @@ exports[`snapshotAllPages FlatList 7`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -32164,6 +32276,7 @@ exports[`snapshotAllPages Performance Comparison Examples 1`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -32217,6 +32330,7 @@ exports[`snapshotAllPages Performance Comparison Examples 1`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -32324,6 +32438,7 @@ exports[`snapshotAllPages Performance Comparison Examples 2`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -32377,6 +32492,7 @@ exports[`snapshotAllPages Performance Comparison Examples 2`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -32484,6 +32600,7 @@ exports[`snapshotAllPages Performance Comparison Examples 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -32537,6 +32654,7 @@ exports[`snapshotAllPages Performance Comparison Examples 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -32644,6 +32762,7 @@ exports[`snapshotAllPages Performance Comparison Examples 4`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -32697,6 +32816,7 @@ exports[`snapshotAllPages Performance Comparison Examples 4`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -32804,6 +32924,7 @@ exports[`snapshotAllPages Performance Comparison Examples 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -32857,6 +32978,7 @@ exports[`snapshotAllPages Performance Comparison Examples 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -32964,6 +33086,7 @@ exports[`snapshotAllPages Performance Comparison Examples 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -33017,6 +33140,7 @@ exports[`snapshotAllPages Performance Comparison Examples 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -34795,6 +34919,7 @@ exports[`snapshotAllPages Pressable 1`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -34868,6 +34993,7 @@ exports[`snapshotAllPages Pressable 2`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -34946,6 +35072,7 @@ exports[`snapshotAllPages Pressable 3`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -35023,6 +35150,7 @@ exports[`snapshotAllPages Pressable 4`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -35092,6 +35220,7 @@ exports[`snapshotAllPages Pressable 5`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -35144,6 +35273,7 @@ exports[`snapshotAllPages Pressable 5`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -35196,6 +35326,7 @@ exports[`snapshotAllPages Pressable 5`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -35255,6 +35386,7 @@ exports[`snapshotAllPages Pressable 5`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -35320,6 +35452,7 @@ exports[`snapshotAllPages Pressable 5`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -35424,6 +35557,7 @@ exports[`snapshotAllPages Pressable 7`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -35568,6 +35702,7 @@ exports[`snapshotAllPages Pressable 9`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       hitSlop={
         {
@@ -35658,6 +35793,7 @@ exports[`snapshotAllPages Pressable 10`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -35702,6 +35838,7 @@ exports[`snapshotAllPages Pressable 11`] = `
       }
     }
     accessible={true}
+    disabled={true}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -35759,6 +35896,7 @@ exports[`snapshotAllPages Pressable 11`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -35837,6 +35975,7 @@ exports[`snapshotAllPages Pressable 12`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -35900,6 +36039,7 @@ exports[`snapshotAllPages Pressable 13`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -36009,6 +36149,7 @@ exports[`snapshotAllPages Pressable 14`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -36101,6 +36242,7 @@ exports[`snapshotAllPages Pressable 15`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       keyDownEvents={
         [
@@ -36176,6 +36318,7 @@ exports[`snapshotAllPages Pressable 16`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36235,6 +36378,7 @@ exports[`snapshotAllPages Pressable 17`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36277,6 +36421,7 @@ exports[`snapshotAllPages Pressable 17`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36319,6 +36464,7 @@ exports[`snapshotAllPages Pressable 17`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36361,6 +36507,7 @@ exports[`snapshotAllPages Pressable 17`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36403,6 +36550,7 @@ exports[`snapshotAllPages Pressable 17`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36445,6 +36593,7 @@ exports[`snapshotAllPages Pressable 17`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36487,6 +36636,7 @@ exports[`snapshotAllPages Pressable 17`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36529,6 +36679,7 @@ exports[`snapshotAllPages Pressable 17`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36571,6 +36722,7 @@ exports[`snapshotAllPages Pressable 17`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36613,6 +36765,7 @@ exports[`snapshotAllPages Pressable 17`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36655,6 +36808,7 @@ exports[`snapshotAllPages Pressable 17`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36705,6 +36859,7 @@ exports[`snapshotAllPages Pressable 18`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36748,6 +36903,7 @@ exports[`snapshotAllPages Pressable 18`] = `
       }
     }
     accessible={false}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36791,6 +36947,7 @@ exports[`snapshotAllPages Pressable 18`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={false}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36834,6 +36991,7 @@ exports[`snapshotAllPages Pressable 18`] = `
       }
     }
     accessible={false}
+    disabled={false}
     focusable={false}
     onBlur={[Function]}
     onClick={[Function]}
@@ -36882,6 +37040,7 @@ exports[`snapshotAllPages Pressable 19`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     nativeID="Pressable-NativeID"
     onBlur={[Function]}
@@ -36934,6 +37093,7 @@ exports[`snapshotAllPages Pressable 20`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     importantForAccessibility="no-hide-descendants"
     onBlur={[Function]}
@@ -36973,6 +37133,7 @@ exports[`snapshotAllPages Pressable 20`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -37037,6 +37198,7 @@ exports[`snapshotAllPages Pressable 21`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -37085,6 +37247,7 @@ exports[`snapshotAllPages Pressable 21`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -37158,6 +37321,7 @@ exports[`snapshotAllPages Pressable 21`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -37206,6 +37370,7 @@ exports[`snapshotAllPages Pressable 21`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -43530,6 +43695,7 @@ exports[`snapshotAllPages ScrollView 10`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -54166,6 +54332,7 @@ exports[`snapshotAllPages SectionList 1`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -54229,6 +54396,7 @@ exports[`snapshotAllPages SectionList 1`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -54292,6 +54460,7 @@ exports[`snapshotAllPages SectionList 1`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -54376,6 +54545,7 @@ exports[`snapshotAllPages SectionList 1`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -54439,6 +54609,7 @@ exports[`snapshotAllPages SectionList 1`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -54502,6 +54673,7 @@ exports[`snapshotAllPages SectionList 1`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -54773,6 +54945,7 @@ exports[`snapshotAllPages SectionList 2`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -54836,6 +55009,7 @@ exports[`snapshotAllPages SectionList 2`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -54899,6 +55073,7 @@ exports[`snapshotAllPages SectionList 2`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -54983,6 +55158,7 @@ exports[`snapshotAllPages SectionList 2`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -55046,6 +55222,7 @@ exports[`snapshotAllPages SectionList 2`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -55109,6 +55286,7 @@ exports[`snapshotAllPages SectionList 2`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -55302,6 +55480,7 @@ exports[`snapshotAllPages SectionList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -55365,6 +55544,7 @@ exports[`snapshotAllPages SectionList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -55428,6 +55608,7 @@ exports[`snapshotAllPages SectionList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -55512,6 +55693,7 @@ exports[`snapshotAllPages SectionList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -55575,6 +55757,7 @@ exports[`snapshotAllPages SectionList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -55638,6 +55821,7 @@ exports[`snapshotAllPages SectionList 3`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -55823,6 +56007,7 @@ exports[`snapshotAllPages SectionList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -55910,6 +56095,7 @@ exports[`snapshotAllPages SectionList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -55997,6 +56183,7 @@ exports[`snapshotAllPages SectionList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -56127,6 +56314,7 @@ exports[`snapshotAllPages SectionList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -56214,6 +56402,7 @@ exports[`snapshotAllPages SectionList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -56301,6 +56490,7 @@ exports[`snapshotAllPages SectionList 4`] = `
               }
             }
             accessible={true}
+            disabled={false}
             focusable={true}
             onBlur={[Function]}
             onClick={[Function]}
@@ -56594,6 +56784,7 @@ exports[`snapshotAllPages SectionList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -56657,6 +56848,7 @@ exports[`snapshotAllPages SectionList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -56720,6 +56912,7 @@ exports[`snapshotAllPages SectionList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -56804,6 +56997,7 @@ exports[`snapshotAllPages SectionList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -56867,6 +57061,7 @@ exports[`snapshotAllPages SectionList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -56930,6 +57125,7 @@ exports[`snapshotAllPages SectionList 5`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -57203,6 +57399,7 @@ exports[`snapshotAllPages SectionList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -57266,6 +57463,7 @@ exports[`snapshotAllPages SectionList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -57329,6 +57527,7 @@ exports[`snapshotAllPages SectionList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -57413,6 +57612,7 @@ exports[`snapshotAllPages SectionList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -57476,6 +57676,7 @@ exports[`snapshotAllPages SectionList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -57539,6 +57740,7 @@ exports[`snapshotAllPages SectionList 6`] = `
             }
           }
           accessible={true}
+          disabled={false}
           focusable={true}
           onBlur={[Function]}
           onClick={[Function]}
@@ -72935,6 +73137,7 @@ exports[`snapshotAllPages TextInput 18`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -76109,6 +76312,7 @@ exports[`snapshotAllPages Timers 1`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -76167,6 +76371,7 @@ exports[`snapshotAllPages Timers 1`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -76225,6 +76430,7 @@ exports[`snapshotAllPages Timers 1`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -76288,6 +76494,7 @@ exports[`snapshotAllPages Timers 2`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -76352,6 +76559,7 @@ exports[`snapshotAllPages Timers 3`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -76405,6 +76613,7 @@ exports[`snapshotAllPages Timers 3`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -76458,6 +76667,7 @@ exports[`snapshotAllPages Timers 3`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -76511,6 +76721,7 @@ exports[`snapshotAllPages Timers 3`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -76564,6 +76775,7 @@ exports[`snapshotAllPages Timers 3`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -76626,6 +76838,7 @@ exports[`snapshotAllPages Timers 4`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -76690,6 +76903,7 @@ exports[`snapshotAllPages Timers 5`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -76748,6 +76962,7 @@ exports[`snapshotAllPages Timers 5`] = `
         }
       }
       accessible={true}
+      disabled={false}
       focusable={true}
       onBlur={[Function]}
       onClick={[Function]}
@@ -76802,6 +77017,7 @@ exports[`snapshotAllPages Timers 5`] = `
       }
     }
     accessible={true}
+    disabled={false}
     focusable={true}
     onBlur={[Function]}
     onClick={[Function]}
@@ -78600,6 +78816,7 @@ exports[`snapshotAllPages View 5`] = `
     }
   }
   accessible={true}
+  disabled={false}
   focusable={true}
   onBlur={[Function]}
   onClick={[Function]}
@@ -79012,6 +79229,7 @@ exports[`snapshotAllPages View 9`] = `
     }
   }
   accessible={true}
+  disabled={false}
   focusable={true}
   onBlur={[Function]}
   onClick={[Function]}
@@ -79170,6 +79388,7 @@ exports[`snapshotAllPages View 10`] = `
     }
   }
   accessible={true}
+  disabled={false}
   focusable={true}
   onBlur={[Function]}
   onClick={[Function]}
@@ -79405,6 +79624,7 @@ exports[`snapshotAllPages View 12`] = `
     }
   }
   accessible={true}
+  disabled={false}
   focusable={true}
   onBlur={[Function]}
   onClick={[Function]}
@@ -81060,6 +81280,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -81126,6 +81347,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -81192,6 +81414,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -81258,6 +81481,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           }
         }
         accessible={true}
+        disabled={true}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -81327,6 +81551,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -81393,6 +81618,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -81459,6 +81685,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -81525,6 +81752,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -81591,6 +81819,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -81657,6 +81886,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -81723,6 +81953,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
@@ -81789,6 +82020,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           }
         }
         accessible={true}
+        disabled={false}
         focusable={true}
         hitSlop={4}
         onBlur={[Function]}
