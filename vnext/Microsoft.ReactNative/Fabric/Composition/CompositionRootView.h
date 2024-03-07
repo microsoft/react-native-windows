@@ -64,8 +64,8 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   float ScaleFactor() noexcept;
   void ScaleFactor(float value) noexcept;
 
-  void AddRenderedVisual(const winrt::Microsoft::ReactNative::Composition::IVisual& visual) noexcept;
-  void RemoveRenderedVisual(const winrt::Microsoft::ReactNative::Composition::IVisual& visual) noexcept;
+  void AddRenderedVisual(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept;
+  void RemoveRenderedVisual(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept;
 
   winrt::Microsoft::ReactNative::Composition::Theme Theme() noexcept;
   void Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept;

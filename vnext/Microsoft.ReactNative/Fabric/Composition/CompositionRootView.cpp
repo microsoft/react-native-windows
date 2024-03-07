@@ -80,12 +80,11 @@ void CompositionReactViewInstance::UpdateRootView() noexcept {
 }
 
 void CompositionReactViewInstance::UninitRootView() noexcept {
-  // m_uiDispatcher will not be initialized if InitRootView has not been run in which case we do not need to run UninitRootView
-  if (m_uiDispatcher) 
-  {
+  // m_uiDispatcher will not be initialized if InitRootView has not been run in which case we do not need to run
+  // UninitRootView
+  if (m_uiDispatcher) {
     assert(m_uiDispatcher.HasThreadAccess());
-    if (auto rootControl = m_weakRootControl.get())
-    {
+    if (auto rootControl = m_weakRootControl.get()) {
       rootControl->UninitRootView();
     }
   }
@@ -153,13 +152,15 @@ void CompositionRootView::RootVisual(winrt::Microsoft::ReactNative::Composition:
   }
 }
 
-void CompositionRootView::AddRenderedVisual(const winrt::Microsoft::ReactNative::Composition::IVisual& visual) noexcept {
+void CompositionRootView::AddRenderedVisual(
+    const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
   assert(!m_hasRenderedVisual);
   RootVisual().InsertAt(visual, 0);
   m_hasRenderedVisual = true;
 }
 
-void CompositionRootView::RemoveRenderedVisual(const winrt::Microsoft::ReactNative::Composition::IVisual& visual) noexcept {
+void CompositionRootView::RemoveRenderedVisual(
+    const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
   assert(m_hasRenderedVisual);
   RootVisual().Remove(visual);
   m_hasRenderedVisual = false;

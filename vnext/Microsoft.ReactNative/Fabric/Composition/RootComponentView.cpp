@@ -27,9 +27,9 @@ RootComponentView::RootComponentView(
           false) {}
 
 RootComponentView::~RootComponentView() {
-  if (auto rootView = m_wkRootView.get())
-  {
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)->RemoveRenderedVisual(OuterVisual());
+  if (auto rootView = m_wkRootView.get()) {
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)->RemoveRenderedVisual(
+        OuterVisual());
   }
 }
 
@@ -161,7 +161,8 @@ uint32_t RootComponentView::overlayIndex() noexcept {
 }
 
 void RootComponentView::start(const winrt::Microsoft::ReactNative::CompositionRootView &rootView) noexcept {
-  winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)->AddRenderedVisual(OuterVisual());
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)->AddRenderedVisual(
+      OuterVisual());
   m_wkRootView = rootView;
 }
 
