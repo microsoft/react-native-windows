@@ -224,10 +224,15 @@ jobs:
                     }
 
               - task: PowerShell@2
-                displayName: Check the metro bundle server
+                displayName: Ensure servers readiness
                 inputs:
                   targetType: 'inline'
-                  script: Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windows&dev=true"
+                  script: |
+                    # Test website
+                    Invoke-WebRequest -Uri 'http://localhost:5555'
+
+                    # Bundler
+                    Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windows&dev=true"
 
               - task: VSTest@2
                 displayName: Run Desktop Integration Tests
