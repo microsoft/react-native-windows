@@ -1,17 +1,17 @@
 /**
- * Copyright (c) Microsoft Corporation.
- * Licensed under the MIT License.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
  *
  * @format
  * @flow
- * @generate-docs
  */
 
 'use strict';
 
 import type {TextStyleProp, ViewStyleProp} from '../StyleSheet/StyleSheet';
 import type {PressEvent} from '../Types/CoreEventTypes';
-import type {Button as ButtonType} from './Button.flow';
 import type {
   AccessibilityActionEvent,
   AccessibilityActionInfo,
@@ -25,8 +25,8 @@ import Text from '../Text/Text';
 // import TouchableOpacity from './Touchable/TouchableOpacity';
 import TouchableHighlight from './Touchable/TouchableHighlight';
 import {PlatformColor} from '../StyleSheet/PlatformColorValueTypes';
-import Platform from '../Utilities/Platform';
 // Windows]
+import Platform from '../Utilities/Platform';
 import View from './View/View';
 import invariant from 'invariant';
 import * as React from 'react';
@@ -171,7 +171,6 @@ type ButtonProps = $ReadOnly<{|
   importantForAccessibility?: ?('auto' | 'yes' | 'no' | 'no-hide-descendants'),
   accessibilityHint?: ?string,
   accessibilityLanguage?: ?Stringish,
-
   // [Windows
   /**
     Set the order in which elements receive focus when the user navigates through them by pressing Tab.
@@ -291,224 +290,212 @@ type ButtonProps = $ReadOnly<{|
   ```
  */
 
-class Button extends React.Component<
-  ButtonProps,
-  {hover: boolean, pressed: boolean},
-> {
+const Button: React.AbstractComponent<ButtonProps> = (props: ButtonProps) => {
   // [Windows
-  constructor(props: Object) {
-    super(props);
-    this.state = {
-      hover: false,
-      pressed: false,
-    };
-  }
+  const [hover, setHover] = React.useState(false);
+  const [pressed, setPressed] = React.useState(false);
   // Windows]
-  render(): React.Node {
-    const {
-      accessibilityLabel,
-      accessibilityState,
-      'aria-busy': ariaBusy,
-      'aria-checked': ariaChecked,
-      'aria-disabled': ariaDisabled,
-      'aria-expanded': ariaExpanded,
-      'aria-label': ariaLabel,
-      'aria-selected': ariaSelected,
-      importantForAccessibility,
-      color,
-      onPress,
-      touchSoundDisabled,
-      title,
-      hasTVPreferredFocus,
-      nextFocusDown,
-      nextFocusForward,
-      nextFocusLeft,
-      nextFocusRight,
-      nextFocusUp,
-      testID,
-      accessible,
-      accessibilityActions,
-      accessibilityHint,
-      accessibilityLanguage,
-      onAccessibilityAction,
-      tabIndex,
-    } = this.props;
-    const buttonStyles: Array<ViewStyleProp> = [styles.button];
-    const textStyles: Array<TextStyleProp> = [styles.text];
-    if (color) {
-      if (Platform.OS === 'ios') {
-        textStyles.push({color: color});
-      } else {
-        buttonStyles.push({backgroundColor: color});
-      }
+  const {
+    accessibilityLabel,
+    accessibilityState,
+    'aria-busy': ariaBusy,
+    'aria-checked': ariaChecked,
+    'aria-disabled': ariaDisabled,
+    'aria-expanded': ariaExpanded,
+    'aria-label': ariaLabel,
+    'aria-selected': ariaSelected,
+    importantForAccessibility,
+    color,
+    onPress,
+    touchSoundDisabled,
+    title,
+    hasTVPreferredFocus,
+    nextFocusDown,
+    nextFocusForward,
+    nextFocusLeft,
+    nextFocusRight,
+    nextFocusUp,
+    testID,
+    accessible,
+    accessibilityActions,
+    accessibilityHint,
+    accessibilityLanguage,
+    onAccessibilityAction,
+    tabIndex,
+  } = props;
+  const buttonStyles: Array<ViewStyleProp> = [styles.button];
+  const textStyles: Array<TextStyleProp> = [styles.text];
+  if (color) {
+    if (Platform.OS === 'ios') {
+      textStyles.push({color: color});
+    } else {
+      buttonStyles.push({backgroundColor: color});
     }
+  }
 
-    let _accessibilityState = {
-      busy: ariaBusy ?? accessibilityState?.busy,
-      checked: ariaChecked ?? accessibilityState?.checked,
-      disabled: ariaDisabled ?? accessibilityState?.disabled,
-      expanded: ariaExpanded ?? accessibilityState?.expanded,
-      selected: ariaSelected ?? accessibilityState?.selected,
-    };
+  let _accessibilityState = {
+    busy: ariaBusy ?? accessibilityState?.busy,
+    checked: ariaChecked ?? accessibilityState?.checked,
+    disabled: ariaDisabled ?? accessibilityState?.disabled,
+    expanded: ariaExpanded ?? accessibilityState?.expanded,
+    selected: ariaSelected ?? accessibilityState?.selected,
+  };
 
-    const disabled =
-      this.props.disabled != null
-        ? this.props.disabled
-        : _accessibilityState?.disabled;
+  const disabled =
+    props.disabled != null ? props.disabled : _accessibilityState?.disabled;
 
-    _accessibilityState =
-      disabled !== _accessibilityState?.disabled
-        ? {..._accessibilityState, disabled}
-        : _accessibilityState;
+  _accessibilityState =
+    disabled !== _accessibilityState?.disabled
+      ? {..._accessibilityState, disabled}
+      : _accessibilityState;
 
-    if (disabled) {
-      buttonStyles.push(styles.buttonDisabled);
-      textStyles.push(styles.textDisabled);
-    }
+  if (disabled) {
+    buttonStyles.push(styles.buttonDisabled);
+    textStyles.push(styles.textDisabled);
+  }
 
-    invariant(
-      typeof title === 'string',
-      'The title prop of a Button must be a string',
-    );
-    const formattedTitle =
-      Platform.OS === 'android' ? title.toUpperCase() : title;
-
-    // If `no` is specified for `importantForAccessibility`, it will be changed to `no-hide-descendants` because the text inside should not be focused.
-    const _importantForAccessibility =
-      importantForAccessibility === 'no'
-        ? 'no-hide-descendants'
-        : importantForAccessibility;
-
-    // [Windows - render a TouchableHighlight
-    const Touchable = TouchableHighlight;
-    //  Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
-    // Windows]
-    // [Windows
-    if (Platform.OS === 'windows') {
-      return (
-        <Touchable
-          accessible={accessible}
-          accessibilityLabel={ariaLabel || accessibilityLabel}
-          accessibilityHint={accessibilityHint}
-          accessibilityLanguage={accessibilityLanguage}
-          accessibilityRole="button"
-          accessibilityState={_accessibilityState}
-          hasTVPreferredFocus={hasTVPreferredFocus}
-          nextFocusDown={nextFocusDown}
-          nextFocusForward={nextFocusForward}
-          nextFocusLeft={nextFocusLeft}
-          nextFocusRight={nextFocusRight}
-          nextFocusUp={nextFocusUp}
-          testID={testID}
-          disabled={disabled}
-          onPress={onPress}
-          tabIndex={tabIndex}
-          touchSoundDisabled={touchSoundDisabled}
-          underlayColor={
-            color
-              ? PlatformColor('SolidBackgroundFillColorBaseBrush')
-              : PlatformColor('ButtonBackgroundPressed')
-          }
-          onShowUnderlay={() => {
-            this.setState({pressed: true});
-          }}
-          onHideUnderlay={() => {
-            this.setState({pressed: false});
-          }}
+  invariant(
+    typeof title === 'string',
+    'The title prop of a Button must be a string',
+  );
+  const formattedTitle =
+    Platform.OS === 'android' ? title.toUpperCase() : title;
+  const Touchable = TouchableHighlight // Windows
+  // If `no` is specified for `importantForAccessibility`, it will be changed to `no-hide-descendants` because the text inside should not be focused.
+  const _importantForAccessibility =
+    importantForAccessibility === 'no'
+      ? 'no-hide-descendants'
+      : importantForAccessibility;
+  // [Windows
+      if (Platform.OS === 'windows') {
+    return (
+      <Touchable
+        accessible={accessible}
+        accessibilityLabel={ariaLabel || accessibilityLabel}
+        accessibilityHint={accessibilityHint}
+        accessibilityLanguage={accessibilityLanguage}
+        accessibilityRole="button"
+        accessibilityState={_accessibilityState}
+        importantForAccessibility={_importantForAccessibility}
+        hasTVPreferredFocus={hasTVPreferredFocus}
+        nextFocusDown={nextFocusDown}
+        nextFocusForward={nextFocusForward}
+        nextFocusLeft={nextFocusLeft}
+        nextFocusRight={nextFocusRight}
+        nextFocusUp={nextFocusUp}
+        testID={testID}
+        disabled={disabled}
+        onPress={onPress}
+        tabIndex={tabIndex}
+        touchSoundDisabled={touchSoundDisabled}
+        underlayColor={
+          color
+            ? PlatformColor('SolidBackgroundFillColorBaseBrush')
+            : PlatformColor('ButtonBackgroundPressed')
+        }
+        onShowUnderlay={() => {
+          setPressed(true);
+        }}
+        onHideUnderlay={() => {
+          setPressed(false);
+        }}
+        style={
+          color
+            ? {borderRadius: 3}
+            : pressed
+            ? [buttonStyles, styles.buttonPressed]
+            : hover
+            ? [buttonStyles, styles.buttonHover]
+            : buttonStyles
+        }
+        onMouseEnter={() => {
+          if (!disabled) setHover(true);
+        }}
+        onMouseLeave={() => {
+          if (!disabled) setHover(false);
+        }}>
+        <View
           style={
             color
-              ? {borderRadius: 3}
-              : this.state.pressed
-              ? [buttonStyles, styles.buttonPressed]
-              : this.state.hover
-              ? [buttonStyles, styles.buttonHover]
-              : buttonStyles
-          }
-          onMouseEnter={() => {
-            if (!disabled) this.setState({hover: true});
-          }}
-          onMouseLeave={() => {
-            if (!disabled) this.setState({hover: false});
-          }}>
+              ? pressed
+                ? [buttonStyles, styles.buttonPressed]
+                : buttonStyles
+              : {}
+          }>
           <View
             style={
               color
-                ? this.state.pressed
-                  ? [buttonStyles, styles.buttonPressed]
-                  : buttonStyles
+                ? hover
+                  ? [
+                      styles.buttonHover,
+                      {
+                        backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                      },
+                    ]
+                  : {}
                 : {}
             }>
-            <View
+            <Text
               style={
                 color
-                  ? this.state.hover
-                    ? [
-                        styles.buttonHover,
-                        {
-                          backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                        },
-                      ]
-                    : {}
-                  : {}
-              }>
-              <Text
-                style={
-                  color
-                    ? textStyles
-                    : this.state.pressed
-                    ? [
-                        textStyles,
-                        {
-                          color: PlatformColor('ButtonForegroundPressed'),
-                        },
-                      ]
-                    : this.state.hover
-                    ? [
-                        textStyles,
-                        {
-                          color: PlatformColor('ButtonForegroundPointerOver'),
-                        },
-                      ]
-                    : textStyles
-                }
-                disabled={disabled}>
-                {formattedTitle}
-              </Text>
-            </View>
-          </View>
-        </Touchable>
-      );
-    } else {
-      return (
-        <Touchable
-          accessible={accessible}
-          accessibilityActions={accessibilityActions}
-          onAccessibilityAction={onAccessibilityAction}
-          accessibilityLabel={accessibilityLabel}
-          accessibilityHint={accessibilityHint}
-          accessibilityRole="button"
-          accessibilityState={accessibilityState}
-          hasTVPreferredFocus={hasTVPreferredFocus}
-          nextFocusDown={nextFocusDown}
-          nextFocusForward={nextFocusForward}
-          nextFocusLeft={nextFocusLeft}
-          nextFocusRight={nextFocusRight}
-          nextFocusUp={nextFocusUp}
-          testID={testID}
-          disabled={disabled}
-          onPress={onPress}
-          touchSoundDisabled={touchSoundDisabled}>
-          <View style={buttonStyles}>
-            <Text style={textStyles} disabled={disabled}>
+                  ? textStyles
+                  : pressed
+                  ? [
+                      textStyles,
+                      {
+                        color: PlatformColor('ButtonForegroundPressed'),
+                      },
+                    ]
+                  : hover
+                  ? [
+                      textStyles,
+                      {
+                        color: PlatformColor('ButtonForegroundPointerOver'),
+                      },
+                    ]
+                  : textStyles
+              }
+              disabled={disabled}>
               {formattedTitle}
             </Text>
           </View>
-        </Touchable>
-      );
-    }
-    // Windows]
+        </View>
+      </Touchable>
+    );
+  } else {
+    return (
+      <Touchable
+        accessible={accessible}
+        accessibilityActions={accessibilityActions}
+        onAccessibilityAction={onAccessibilityAction}
+        accessibilityLabel={ariaLabel || accessibilityLabel}
+        accessibilityHint={accessibilityHint}
+        accessibilityLanguage={accessibilityLanguage}
+        accessibilityRole="button"
+        accessibilityState={_accessibilityState}
+        importantForAccessibility={_importantForAccessibility}
+        hasTVPreferredFocus={hasTVPreferredFocus}
+        nextFocusDown={nextFocusDown}
+        nextFocusForward={nextFocusForward}
+        nextFocusLeft={nextFocusLeft}
+        nextFocusRight={nextFocusRight}
+        nextFocusUp={nextFocusUp}
+        testID={testID}
+        disabled={disabled}
+        onPress={onPress}
+        touchSoundDisabled={touchSoundDisabled}>
+        <View style={buttonStyles}>
+          <Text style={textStyles} disabled={disabled}>
+            {formattedTitle}
+          </Text>
+        </View>
+      </Touchable>
+    );
   }
-}
+  // Windows]
+};
+
+Button.displayName = 'Button';
 
 const styles = StyleSheet.create({
   button: Platform.select({
@@ -588,4 +575,4 @@ const styles = StyleSheet.create({
   // Windows]
 });
 
-module.exports = (Button: ButtonType);
+export default Button;
