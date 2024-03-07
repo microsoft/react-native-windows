@@ -2,6 +2,39 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Thu, 07 Mar 2024 06:16:47 GMT",
+      "version": "0.0.0-canary.80",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.80",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "8f4fb70927ba3cb6825fe736403c9cf006f7908b",
+            "comment": "Integrate 1/26"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.37",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.8",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.24",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 01 Mar 2024 06:18:16 GMT",
       "version": "0.0.0-canary.79",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.79",

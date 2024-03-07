@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Fri, 01 Mar 2024 06:18:15 GMT and should not be manually modified.
+This log was last generated on Thu, 07 Mar 2024 06:16:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.3.24
+
+Thu, 07 Mar 2024 06:16:48 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.8
 
 ## 2.3.23
 
