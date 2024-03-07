@@ -62,10 +62,6 @@ winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
   return nullptr;
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual CompositionRootView::GetVisual() const noexcept {
-  return nullptr;
-}
-
 std::string CompositionRootView::JSComponentName() const noexcept {
   return {};
 }

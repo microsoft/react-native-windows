@@ -72,7 +72,6 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
 
   ComponentViewRegistry m_registry;
   struct SurfaceInfo {
-    winrt::Microsoft::ReactNative::Composition::IVisual rootVisual{nullptr};
     winrt::weak_ref<winrt::Microsoft::ReactNative::CompositionRootView> wkRootView{nullptr};
   };
 
