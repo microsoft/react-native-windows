@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240201-aefca27c6",
+  "baseVersion": "0.74.0-nightly-20240204-fafd00ab1",
   "overrides": [
     {
       "type": "derived",
@@ -50,7 +50,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.h",
-      "baseHash": "10cd4b533faa9503f7957fca6c9d282e1d432d48"
+      "baseHash": "9b075422a4efd6cd2aff7a02815616c91e9c1150"
     },
     {
       "type": "derived",
@@ -116,7 +116,7 @@
       "type": "derived",
       "file": "src-win/index.windows.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "e9b8155ec5aa3957ac571272fd8ddc304a97786a"
+      "baseHash": "61c4b4c9f7660a5870cd243037c730bf5a43ee7d"
     },
     {
       "type": "platform",
@@ -197,12 +197,6 @@
       "issue": 4578
     },
     {
-      "type": "patch",
-      "file": "src-win/Libraries/Components/Button.windows.js",
-      "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "31731fd48736bfcd3c36eb60a242b187236e124b"
-    },
-    {
       "type": "platform",
       "file": "src-win/Libraries/Components/Flyout/Flyout.d.ts"
     },
@@ -268,7 +262,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Switch/Switch.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Switch/Switch.js",
-      "baseHash": "31b8cd62b5acb1a237f5373d1618869f5afebdd3"
+      "baseHash": "d69f9d7f1ea07f0d43fb6fec796624910eb21777"
     },
     {
       "type": "patch",
@@ -453,7 +447,7 @@
       "type": "patch",
       "file": "src-win/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "packages/react-native/Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "98dab159b858354132b88e7bfb1f376420136a5c"
+      "baseHash": "5421778518fbd545ba3896bdfb1fb4f829d016fd"
     },
     {
       "type": "platform",

@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240201-aefca27c6",
+  "baseVersion": "0.74.0-nightly-20240204-fafd00ab1",
   "overrides": [
     {
       "type": "derived",
@@ -19,7 +19,7 @@
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "e9b8155ec5aa3957ac571272fd8ddc304a97786a"
+      "baseHash": "61c4b4c9f7660a5870cd243037c730bf5a43ee7d"
     },
     {
       "type": "platform",
@@ -35,7 +35,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Animated/NativeAnimatedHelper.win32.js",
       "baseFile": "packages/react-native/Libraries/Animated/NativeAnimatedHelper.js",
-      "baseHash": "8bca307f500feef9f3a9ca1ef784d4a87f61ca43",
+      "baseHash": "96eb39e775435801b031cd1a41265ed73705cd72",
       "issue": 11041
     },
     {
@@ -62,12 +62,6 @@
       "file": "src-win/Libraries/Components/AccessibilityInfo/NativeAccessibilityInfoWin32.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/NativeAccessibilityInfo.js",
       "baseHash": "c3b9975c5fe1c91712fe70546c7b06a1e78cea77"
-    },
-    {
-      "type": "derived",
-      "file": "src-win/Libraries/Components/Button.win32.js",
-      "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "31731fd48736bfcd3c36eb60a242b187236e124b"
     },
     {
       "type": "platform",
@@ -410,7 +404,7 @@
       "type": "patch",
       "file": "src-win/Libraries/ReactNative/PaperUIManager.win32.js",
       "baseFile": "packages/react-native/Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "98dab159b858354132b88e7bfb1f376420136a5c"
+      "baseHash": "5421778518fbd545ba3896bdfb1fb4f829d016fd"
     },
     {
       "type": "derived",

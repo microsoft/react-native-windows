@@ -26,6 +26,7 @@ public:
   virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
   virtual bool enableSpannableBuildingUnification(jsi::Runtime &rt) = 0;
   virtual bool enableCustomDrawOrderFabric(jsi::Runtime &rt) = 0;
+  virtual bool enableFixForClippedSubviewsCrash(jsi::Runtime &rt) = 0;
 
 };
 
@@ -96,6 +97,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableCustomDrawOrderFabric, jsInvoker_, instance_);
+    }
+    bool enableFixForClippedSubviewsCrash(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableFixForClippedSubviewsCrash) == 1,
+          "Expected enableFixForClippedSubviewsCrash(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableFixForClippedSubviewsCrash, jsInvoker_, instance_);
     }
 
   private:
@@ -9486,29 +9495,29 @@ protected:
 
 public:
   virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
-  virtual void createView(jsi::Runtime &rt, std::optional<double> reactTag, jsi::String viewName, double rootTag, jsi::Object props) = 0;
+  virtual void createView(jsi::Runtime &rt, double reactTag, jsi::String viewName, double rootTag, jsi::Object props) = 0;
   virtual void updateView(jsi::Runtime &rt, double reactTag, jsi::String viewName, jsi::Object props) = 0;
-  virtual void findSubviewIn(jsi::Runtime &rt, std::optional<double> reactTag, jsi::Array point, jsi::Function callback) = 0;
-  virtual void dispatchViewManagerCommand(jsi::Runtime &rt, std::optional<double> reactTag, double commandID, std::optional<jsi::Array> commandArgs) = 0;
+  virtual void findSubviewIn(jsi::Runtime &rt, double reactTag, jsi::Array point, jsi::Function callback) = 0;
+  virtual void dispatchViewManagerCommand(jsi::Runtime &rt, double reactTag, double commandID, std::optional<jsi::Array> commandArgs) = 0;
   virtual void measure(jsi::Runtime &rt, double reactTag, jsi::Function callback) = 0;
   virtual void measureInWindow(jsi::Runtime &rt, double reactTag, jsi::Function callback) = 0;
-  virtual void viewIsDescendantOf(jsi::Runtime &rt, std::optional<double> reactTag, std::optional<double> ancestorReactTag, jsi::Function callback) = 0;
+  virtual void viewIsDescendantOf(jsi::Runtime &rt, double reactTag, double ancestorReactTag, jsi::Function callback) = 0;
   virtual void measureLayout(jsi::Runtime &rt, double reactTag, double ancestorReactTag, jsi::Function errorCallback, jsi::Function callback) = 0;
   virtual void measureLayoutRelativeToParent(jsi::Runtime &rt, double reactTag, jsi::Function errorCallback, jsi::Function callback) = 0;
-  virtual void setJSResponder(jsi::Runtime &rt, std::optional<double> reactTag, bool blockNativeResponder) = 0;
+  virtual void setJSResponder(jsi::Runtime &rt, double reactTag, bool blockNativeResponder) = 0;
   virtual void clearJSResponder(jsi::Runtime &rt) = 0;
   virtual void configureNextLayoutAnimation(jsi::Runtime &rt, jsi::Object config, jsi::Function callback, jsi::Function errorCallback) = 0;
-  virtual void setChildren(jsi::Runtime &rt, std::optional<double> containerTag, jsi::Array reactTags) = 0;
-  virtual void manageChildren(jsi::Runtime &rt, std::optional<double> containerTag, jsi::Array moveFromIndices, jsi::Array moveToIndices, jsi::Array addChildReactTags, jsi::Array addAtIndices, jsi::Array removeAtIndices) = 0;
+  virtual void setChildren(jsi::Runtime &rt, double containerTag, jsi::Array reactTags) = 0;
+  virtual void manageChildren(jsi::Runtime &rt, double containerTag, jsi::Array moveFromIndices, jsi::Array moveToIndices, jsi::Array addChildReactTags, jsi::Array addAtIndices, jsi::Array removeAtIndices) = 0;
   virtual std::optional<jsi::Object> getConstantsForViewManager(jsi::Runtime &rt, jsi::String viewManagerName) = 0;
   virtual jsi::Array getDefaultEventTypes(jsi::Runtime &rt) = 0;
   virtual void setLayoutAnimationEnabledExperimental(jsi::Runtime &rt, bool enabled) = 0;
-  virtual void sendAccessibilityEvent(jsi::Runtime &rt, std::optional<double> reactTag, double eventType) = 0;
-  virtual void showPopupMenu(jsi::Runtime &rt, std::optional<double> reactTag, jsi::Array items, jsi::Function error, jsi::Function success) = 0;
+  virtual void sendAccessibilityEvent(jsi::Runtime &rt, double reactTag, double eventType) = 0;
+  virtual void showPopupMenu(jsi::Runtime &rt, double reactTag, jsi::Array items, jsi::Function error, jsi::Function success) = 0;
   virtual void dismissPopupMenu(jsi::Runtime &rt) = 0;
   virtual jsi::Object lazilyLoadView(jsi::Runtime &rt, jsi::String name) = 0;
-  virtual void focus(jsi::Runtime &rt, std::optional<double> reactTag) = 0;
-  virtual void blur(jsi::Runtime &rt, std::optional<double> reactTag) = 0;
+  virtual void focus(jsi::Runtime &rt, double reactTag) = 0;
+  virtual void blur(jsi::Runtime &rt, double reactTag) = 0;
 
 };
 
@@ -9540,7 +9549,7 @@ private:
       return bridging::callFromJs<jsi::Object>(
           rt, &T::getConstants, jsInvoker_, instance_);
     }
-    void createView(jsi::Runtime &rt, std::optional<double> reactTag, jsi::String viewName, double rootTag, jsi::Object props) override {
+    void createView(jsi::Runtime &rt, double reactTag, jsi::String viewName, double rootTag, jsi::Object props) override {
       static_assert(
           bridging::getParameterCount(&T::createView) == 5,
           "Expected createView(...) to have 5 parameters");
@@ -9556,7 +9565,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::updateView, jsInvoker_, instance_, std::move(reactTag), std::move(viewName), std::move(props));
     }
-    void findSubviewIn(jsi::Runtime &rt, std::optional<double> reactTag, jsi::Array point, jsi::Function callback) override {
+    void findSubviewIn(jsi::Runtime &rt, double reactTag, jsi::Array point, jsi::Function callback) override {
       static_assert(
           bridging::getParameterCount(&T::findSubviewIn) == 4,
           "Expected findSubviewIn(...) to have 4 parameters");
@@ -9564,7 +9573,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::findSubviewIn, jsInvoker_, instance_, std::move(reactTag), std::move(point), std::move(callback));
     }
-    void dispatchViewManagerCommand(jsi::Runtime &rt, std::optional<double> reactTag, double commandID, std::optional<jsi::Array> commandArgs) override {
+    void dispatchViewManagerCommand(jsi::Runtime &rt, double reactTag, double commandID, std::optional<jsi::Array> commandArgs) override {
       static_assert(
           bridging::getParameterCount(&T::dispatchViewManagerCommand) == 4,
           "Expected dispatchViewManagerCommand(...) to have 4 parameters");
@@ -9588,7 +9597,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::measureInWindow, jsInvoker_, instance_, std::move(reactTag), std::move(callback));
     }
-    void viewIsDescendantOf(jsi::Runtime &rt, std::optional<double> reactTag, std::optional<double> ancestorReactTag, jsi::Function callback) override {
+    void viewIsDescendantOf(jsi::Runtime &rt, double reactTag, double ancestorReactTag, jsi::Function callback) override {
       static_assert(
           bridging::getParameterCount(&T::viewIsDescendantOf) == 4,
           "Expected viewIsDescendantOf(...) to have 4 parameters");
@@ -9612,7 +9621,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::measureLayoutRelativeToParent, jsInvoker_, instance_, std::move(reactTag), std::move(errorCallback), std::move(callback));
     }
-    void setJSResponder(jsi::Runtime &rt, std::optional<double> reactTag, bool blockNativeResponder) override {
+    void setJSResponder(jsi::Runtime &rt, double reactTag, bool blockNativeResponder) override {
       static_assert(
           bridging::getParameterCount(&T::setJSResponder) == 3,
           "Expected setJSResponder(...) to have 3 parameters");
@@ -9636,7 +9645,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::configureNextLayoutAnimation, jsInvoker_, instance_, std::move(config), std::move(callback), std::move(errorCallback));
     }
-    void setChildren(jsi::Runtime &rt, std::optional<double> containerTag, jsi::Array reactTags) override {
+    void setChildren(jsi::Runtime &rt, double containerTag, jsi::Array reactTags) override {
       static_assert(
           bridging::getParameterCount(&T::setChildren) == 3,
           "Expected setChildren(...) to have 3 parameters");
@@ -9644,7 +9653,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::setChildren, jsInvoker_, instance_, std::move(containerTag), std::move(reactTags));
     }
-    void manageChildren(jsi::Runtime &rt, std::optional<double> containerTag, jsi::Array moveFromIndices, jsi::Array moveToIndices, jsi::Array addChildReactTags, jsi::Array addAtIndices, jsi::Array removeAtIndices) override {
+    void manageChildren(jsi::Runtime &rt, double containerTag, jsi::Array moveFromIndices, jsi::Array moveToIndices, jsi::Array addChildReactTags, jsi::Array addAtIndices, jsi::Array removeAtIndices) override {
       static_assert(
           bridging::getParameterCount(&T::manageChildren) == 7,
           "Expected manageChildren(...) to have 7 parameters");
@@ -9676,7 +9685,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::setLayoutAnimationEnabledExperimental, jsInvoker_, instance_, std::move(enabled));
     }
-    void sendAccessibilityEvent(jsi::Runtime &rt, std::optional<double> reactTag, double eventType) override {
+    void sendAccessibilityEvent(jsi::Runtime &rt, double reactTag, double eventType) override {
       static_assert(
           bridging::getParameterCount(&T::sendAccessibilityEvent) == 3,
           "Expected sendAccessibilityEvent(...) to have 3 parameters");
@@ -9684,7 +9693,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::sendAccessibilityEvent, jsInvoker_, instance_, std::move(reactTag), std::move(eventType));
     }
-    void showPopupMenu(jsi::Runtime &rt, std::optional<double> reactTag, jsi::Array items, jsi::Function error, jsi::Function success) override {
+    void showPopupMenu(jsi::Runtime &rt, double reactTag, jsi::Array items, jsi::Function error, jsi::Function success) override {
       static_assert(
           bridging::getParameterCount(&T::showPopupMenu) == 5,
           "Expected showPopupMenu(...) to have 5 parameters");
@@ -9708,7 +9717,7 @@ private:
       return bridging::callFromJs<jsi::Object>(
           rt, &T::lazilyLoadView, jsInvoker_, instance_, std::move(name));
     }
-    void focus(jsi::Runtime &rt, std::optional<double> reactTag) override {
+    void focus(jsi::Runtime &rt, double reactTag) override {
       static_assert(
           bridging::getParameterCount(&T::focus) == 2,
           "Expected focus(...) to have 2 parameters");
@@ -9716,7 +9725,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::focus, jsInvoker_, instance_, std::move(reactTag));
     }
-    void blur(jsi::Runtime &rt, std::optional<double> reactTag) override {
+    void blur(jsi::Runtime &rt, double reactTag) override {
       static_assert(
           bridging::getParameterCount(&T::blur) == 2,
           "Expected blur(...) to have 2 parameters");

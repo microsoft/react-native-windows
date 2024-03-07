@@ -41,6 +41,11 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableC
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableFixForClippedSubviewsCrash(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableFixForClippedSubviewsCrash(
+    rt
+  );
+}
 
 NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("NativeReactNativeFeatureFlagsCxx", jsInvoker) {
@@ -50,6 +55,7 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["batchRenderingUpdatesInEventLoop"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_batchRenderingUpdatesInEventLoop};
   methodMap_["enableSpannableBuildingUnification"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableSpannableBuildingUnification};
   methodMap_["enableCustomDrawOrderFabric"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableCustomDrawOrderFabric};
+  methodMap_["enableFixForClippedSubviewsCrash"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableFixForClippedSubviewsCrash};
 }
 static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isReduceMotionEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->isReduceMotionEnabled(
@@ -2585,7 +2591,7 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_getConstants(jsi::Run
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_createView(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->createView(
     rt,
-    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()),
+    args[0].asNumber(),
     args[1].asString(rt),
     args[2].getNumber(),
     args[3].asObject(rt)
@@ -2604,7 +2610,7 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_updateView(jsi::Runti
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_findSubviewIn(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->findSubviewIn(
     rt,
-    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()),
+    args[0].asNumber(),
     args[1].asObject(rt).asArray(rt),
     args[2].asObject(rt).asFunction(rt)
   );
@@ -2613,7 +2619,7 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_findSubviewIn(jsi::Ru
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_dispatchViewManagerCommand(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->dispatchViewManagerCommand(
     rt,
-    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()),
+    args[0].asNumber(),
     args[1].asNumber(),
     args[2].isNull() || args[2].isUndefined() ? std::nullopt : std::make_optional(args[2].asObject(rt).asArray(rt))
   );
@@ -2638,8 +2644,8 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_measureInWindow(jsi::
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_viewIsDescendantOf(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->viewIsDescendantOf(
     rt,
-    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()),
-    args[1].isNull() || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asNumber()),
+    args[0].asNumber(),
+    args[1].asNumber(),
     args[2].asObject(rt).asFunction(rt)
   );
   return jsi::Value::undefined();
@@ -2666,7 +2672,7 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_measureLayoutRelative
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_setJSResponder(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->setJSResponder(
     rt,
-    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()),
+    args[0].asNumber(),
     args[1].asBool()
   );
   return jsi::Value::undefined();
@@ -2689,7 +2695,7 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_configureNextLayoutAn
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_setChildren(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->setChildren(
     rt,
-    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()),
+    args[0].asNumber(),
     args[1].asObject(rt).asArray(rt)
   );
   return jsi::Value::undefined();
@@ -2697,7 +2703,7 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_setChildren(jsi::Runt
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_manageChildren(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->manageChildren(
     rt,
-    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()),
+    args[0].asNumber(),
     args[1].asObject(rt).asArray(rt),
     args[2].asObject(rt).asArray(rt),
     args[3].asObject(rt).asArray(rt),
@@ -2728,7 +2734,7 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_setLayoutAnimationEna
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_sendAccessibilityEvent(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->sendAccessibilityEvent(
     rt,
-    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()),
+    args[0].asNumber(),
     args[1].asNumber()
   );
   return jsi::Value::undefined();
@@ -2736,7 +2742,7 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_sendAccessibilityEven
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_showPopupMenu(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->showPopupMenu(
     rt,
-    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber()),
+    args[0].asNumber(),
     args[1].asObject(rt).asArray(rt),
     args[2].asObject(rt).asFunction(rt),
     args[3].asObject(rt).asFunction(rt)
@@ -2758,14 +2764,14 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_lazilyLoadView(jsi::R
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_focus(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->focus(
     rt,
-    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber())
+    args[0].asNumber()
   );
   return jsi::Value::undefined();
 }
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_blur(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->blur(
     rt,
-    args[0].isNull() || args[0].isUndefined() ? std::nullopt : std::make_optional(args[0].asNumber())
+    args[0].asNumber()
   );
   return jsi::Value::undefined();
 }

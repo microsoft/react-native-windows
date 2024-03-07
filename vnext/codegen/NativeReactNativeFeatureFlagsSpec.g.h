@@ -22,6 +22,7 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{3, L"batchRenderingUpdatesInEventLoop"},
       SyncMethod<bool() noexcept>{4, L"enableSpannableBuildingUnification"},
       SyncMethod<bool() noexcept>{5, L"enableCustomDrawOrderFabric"},
+      SyncMethod<bool() noexcept>{6, L"enableFixForClippedSubviewsCrash"},
   };
 
   template <class TModule>
@@ -58,6 +59,11 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "enableCustomDrawOrderFabric",
           "    REACT_SYNC_METHOD(enableCustomDrawOrderFabric) bool enableCustomDrawOrderFabric() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableCustomDrawOrderFabric) static bool enableCustomDrawOrderFabric() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          6,
+          "enableFixForClippedSubviewsCrash",
+          "    REACT_SYNC_METHOD(enableFixForClippedSubviewsCrash) bool enableFixForClippedSubviewsCrash() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(enableFixForClippedSubviewsCrash) static bool enableFixForClippedSubviewsCrash() noexcept { /* implementation */ }\n");
   }
 };
 
