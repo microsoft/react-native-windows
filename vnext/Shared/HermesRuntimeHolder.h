@@ -59,10 +59,9 @@ class HermesJSRuntime : public facebook::react::JSRuntime {
 
   facebook::jsi::Runtime &getRuntime() noexcept override;
 
-  std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgent>
-  createInspectorAgent(
+  std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgent> createInspectorAgent(
       facebook::react::jsinspector_modern::FrontendChannel frontendChannel,
-      facebook::react::jsinspector_modern::SessionState& sessionState) override;
+      facebook::react::jsinspector_modern::SessionState &sessionState) override;
 
  private:
   std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> m_holder;

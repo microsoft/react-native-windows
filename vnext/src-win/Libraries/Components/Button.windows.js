@@ -360,14 +360,14 @@ const Button: React.AbstractComponent<ButtonProps> = (props: ButtonProps) => {
   );
   const formattedTitle =
     Platform.OS === 'android' ? title.toUpperCase() : title;
-  const Touchable = TouchableHighlight // Windows
+  const Touchable = TouchableHighlight; // Windows
   // If `no` is specified for `importantForAccessibility`, it will be changed to `no-hide-descendants` because the text inside should not be focused.
   const _importantForAccessibility =
     importantForAccessibility === 'no'
       ? 'no-hide-descendants'
       : importantForAccessibility;
   // [Windows
-      if (Platform.OS === 'windows') {
+  if (Platform.OS === 'windows') {
     return (
       <Touchable
         accessible={accessible}

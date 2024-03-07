@@ -401,8 +401,8 @@ facebook::jsi::Runtime &HermesJSRuntime::getRuntime() noexcept {
 }
 
 std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgent> HermesJSRuntime::createInspectorAgent(
-      facebook::react::jsinspector_modern::FrontendChannel frontendChannel,
-      facebook::react::jsinspector_modern::SessionState& sessionState) {
+    facebook::react::jsinspector_modern::FrontendChannel frontendChannel,
+    facebook::react::jsinspector_modern::SessionState &sessionState) {
   (void)frontendChannel;
   (void)sessionState;
   return nullptr;

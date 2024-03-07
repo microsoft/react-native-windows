@@ -7,6 +7,7 @@
 
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
 #include <ReactContext.h>
+#include <react/utils/CoreFeatures.h>
 #include <type_traits>
 #include "DynamicReader.h"
 

@@ -21,6 +21,7 @@ protected:
 
 public:
   virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
+  virtual bool enableBackgroundExecutor(jsi::Runtime &rt) = 0;
   virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
   virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
@@ -57,6 +58,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::commonTestFlag, jsInvoker_, instance_);
+    }
+    bool enableBackgroundExecutor(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableBackgroundExecutor) == 1,
+          "Expected enableBackgroundExecutor(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableBackgroundExecutor, jsInvoker_, instance_);
     }
     bool useModernRuntimeScheduler(jsi::Runtime &rt) override {
       static_assert(

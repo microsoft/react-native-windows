@@ -17,12 +17,13 @@ namespace Microsoft::ReactNativeSpecs {
 struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       SyncMethod<bool() noexcept>{0, L"commonTestFlag"},
-      SyncMethod<bool() noexcept>{1, L"useModernRuntimeScheduler"},
-      SyncMethod<bool() noexcept>{2, L"enableMicrotasks"},
-      SyncMethod<bool() noexcept>{3, L"batchRenderingUpdatesInEventLoop"},
-      SyncMethod<bool() noexcept>{4, L"enableSpannableBuildingUnification"},
-      SyncMethod<bool() noexcept>{5, L"enableCustomDrawOrderFabric"},
-      SyncMethod<bool() noexcept>{6, L"enableFixForClippedSubviewsCrash"},
+      SyncMethod<bool() noexcept>{1, L"enableBackgroundExecutor"},
+      SyncMethod<bool() noexcept>{2, L"useModernRuntimeScheduler"},
+      SyncMethod<bool() noexcept>{3, L"enableMicrotasks"},
+      SyncMethod<bool() noexcept>{4, L"batchRenderingUpdatesInEventLoop"},
+      SyncMethod<bool() noexcept>{5, L"enableSpannableBuildingUnification"},
+      SyncMethod<bool() noexcept>{6, L"enableCustomDrawOrderFabric"},
+      SyncMethod<bool() noexcept>{7, L"enableFixForClippedSubviewsCrash"},
   };
 
   template <class TModule>
@@ -36,31 +37,36 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(commonTestFlag) static bool commonTestFlag() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
+          "enableBackgroundExecutor",
+          "    REACT_SYNC_METHOD(enableBackgroundExecutor) bool enableBackgroundExecutor() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(enableBackgroundExecutor) static bool enableBackgroundExecutor() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          2,
           "useModernRuntimeScheduler",
           "    REACT_SYNC_METHOD(useModernRuntimeScheduler) bool useModernRuntimeScheduler() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useModernRuntimeScheduler) static bool useModernRuntimeScheduler() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          2,
+          3,
           "enableMicrotasks",
           "    REACT_SYNC_METHOD(enableMicrotasks) bool enableMicrotasks() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableMicrotasks) static bool enableMicrotasks() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          3,
+          4,
           "batchRenderingUpdatesInEventLoop",
           "    REACT_SYNC_METHOD(batchRenderingUpdatesInEventLoop) bool batchRenderingUpdatesInEventLoop() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(batchRenderingUpdatesInEventLoop) static bool batchRenderingUpdatesInEventLoop() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          4,
+          5,
           "enableSpannableBuildingUnification",
           "    REACT_SYNC_METHOD(enableSpannableBuildingUnification) bool enableSpannableBuildingUnification() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableSpannableBuildingUnification) static bool enableSpannableBuildingUnification() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          5,
+          6,
           "enableCustomDrawOrderFabric",
           "    REACT_SYNC_METHOD(enableCustomDrawOrderFabric) bool enableCustomDrawOrderFabric() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableCustomDrawOrderFabric) static bool enableCustomDrawOrderFabric() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          6,
+          7,
           "enableFixForClippedSubviewsCrash",
           "    REACT_SYNC_METHOD(enableFixForClippedSubviewsCrash) bool enableFixForClippedSubviewsCrash() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableFixForClippedSubviewsCrash) static bool enableFixForClippedSubviewsCrash() noexcept { /* implementation */ }\n");
