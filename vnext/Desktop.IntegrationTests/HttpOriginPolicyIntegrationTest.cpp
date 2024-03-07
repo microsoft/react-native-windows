@@ -745,10 +745,10 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
   TEST_METHOD(OfficeDev_OfficeJS_4144)
   {
-    SetRuntimeOptionString("Http.GlobalOrigin", s_crossOriginUrl);
+    SetRuntimeOptionString("Http.GlobalOrigin", "http://orig.in");
     SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
 
-    ClientParams clientArgs(http::verb::get, {{ "Content-Type", "text/plain"}});
+    ClientParams clientArgs(http::verb::get, {} /*headers*/);
     auto resource = IHttpResource::Make();
     resource->SetOnResponse([&clientArgs](int64_t, IHttpResource::Response&& res)
     {
@@ -775,8 +775,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
       false,                      /*useIncrementalUpdates*/
       0,                          /*timeout*/
       clientArgs.WithCredentials, /*withCredentials*/
-      [](int64_t)
-    {}              /*reactCallback*/
+      [](int64_t) {}              /*reactCallback*/
     );
 
     clientArgs.ContentPromise.get_future().wait();
