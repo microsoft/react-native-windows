@@ -24,6 +24,8 @@ public:
   virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
   virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
+  virtual bool enableSpannableBuildingUnification(jsi::Runtime &rt) = 0;
+  virtual bool enableCustomDrawOrderFabric(jsi::Runtime &rt) = 0;
 
 };
 
@@ -78,6 +80,22 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::batchRenderingUpdatesInEventLoop, jsInvoker_, instance_);
+    }
+    bool enableSpannableBuildingUnification(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableSpannableBuildingUnification) == 1,
+          "Expected enableSpannableBuildingUnification(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableSpannableBuildingUnification, jsInvoker_, instance_);
+    }
+    bool enableCustomDrawOrderFabric(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableCustomDrawOrderFabric) == 1,
+          "Expected enableCustomDrawOrderFabric(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableCustomDrawOrderFabric, jsInvoker_, instance_);
     }
 
   private:

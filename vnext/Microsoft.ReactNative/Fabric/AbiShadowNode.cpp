@@ -5,7 +5,6 @@
 
 #include <Fabric/Composition/ReactCompositionViewComponentBuilder.h>
 #include <react/debug/react_native_assert.h>
-#include <react/renderer/core/TraitCast.h>
 #include <react/renderer/core/conversions.h>
 
 #include <utility>

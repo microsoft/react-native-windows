@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.74.0-nightly-20240129-39cb02f6f",
+  "baseVersion": "0.74.0-nightly-20240201-aefca27c6",
   "overrides": [
     {
       "type": "copy",

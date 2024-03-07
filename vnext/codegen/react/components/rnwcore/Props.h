@@ -178,6 +178,16 @@ class DebuggingOverlayProps final : public ViewProps {
   
 };
 
+class AndroidPopupMenuProps final : public ViewProps {
+ public:
+  AndroidPopupMenuProps() = default;
+  AndroidPopupMenuProps(const PropsParserContext& context, const AndroidPopupMenuProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  std::vector<std::string> menuItems{};
+};
+
 class AndroidProgressBarProps final : public ViewProps {
  public:
   AndroidProgressBarProps() = default;

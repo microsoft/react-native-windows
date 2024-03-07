@@ -20,6 +20,8 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{1, L"useModernRuntimeScheduler"},
       SyncMethod<bool() noexcept>{2, L"enableMicrotasks"},
       SyncMethod<bool() noexcept>{3, L"batchRenderingUpdatesInEventLoop"},
+      SyncMethod<bool() noexcept>{4, L"enableSpannableBuildingUnification"},
+      SyncMethod<bool() noexcept>{5, L"enableCustomDrawOrderFabric"},
   };
 
   template <class TModule>
@@ -46,6 +48,16 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "batchRenderingUpdatesInEventLoop",
           "    REACT_SYNC_METHOD(batchRenderingUpdatesInEventLoop) bool batchRenderingUpdatesInEventLoop() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(batchRenderingUpdatesInEventLoop) static bool batchRenderingUpdatesInEventLoop() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          4,
+          "enableSpannableBuildingUnification",
+          "    REACT_SYNC_METHOD(enableSpannableBuildingUnification) bool enableSpannableBuildingUnification() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(enableSpannableBuildingUnification) static bool enableSpannableBuildingUnification() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          5,
+          "enableCustomDrawOrderFabric",
+          "    REACT_SYNC_METHOD(enableCustomDrawOrderFabric) bool enableCustomDrawOrderFabric() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(enableCustomDrawOrderFabric) static bool enableCustomDrawOrderFabric() noexcept { /* implementation */ }\n");
   }
 };
 
