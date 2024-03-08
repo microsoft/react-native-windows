@@ -496,9 +496,9 @@ configuration:
       #       label: 'Area: Component Views'
       #   - labelAdded:
       #       label: 'Area: Turbo Modules'
-      # - not:
-      #   hasLabel:
-      #     label: 'New Architecture'
+      - not:
+        hasLabel:
+          label: 'New Architecture'
       then:
       - addLabel:
           label: 'New Architecture'
