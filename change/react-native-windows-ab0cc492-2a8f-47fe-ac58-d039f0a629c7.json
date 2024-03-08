@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "proper disabled prop fix",
-  "packageName": "react-native-windows",
-  "email": "yajurgrover24@gmail.com",
-  "dependentChangeType": "patch"
-}
