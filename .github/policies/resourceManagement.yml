@@ -499,8 +499,8 @@ configuration:
       #   - labelAdded:
       #       label: 'Area: Turbo Modules'
       - not:
-        hasLabel:
-          label: 'New Architecture'
+          hasLabel:
+              label: 'New Architecture'
       then:
       - addLabel:
           label: 'New Architecture'
