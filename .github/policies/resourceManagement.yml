@@ -489,6 +489,8 @@ configuration:
     - description: Mark issues labeled with new architecture Areas as New Architecture
       if:
       - payloadType: Issues
+      - isAction:
+          action: Opened
       # - or:
       #   - labelAdded:
       #       label: 'Area: Fabric'
