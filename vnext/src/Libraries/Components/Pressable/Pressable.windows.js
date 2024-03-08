@@ -325,6 +325,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
     accessibilityLiveRegion,
     accessibilityLabel,
     accessibilityState: _accessibilityState,
+    disabled: disabled == true,
     focusable: focusable !== false,
     accessibilityValue,
     hitSlop,
