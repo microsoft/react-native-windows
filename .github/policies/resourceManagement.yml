@@ -489,9 +489,6 @@ configuration:
     - description: Mark issues labeled with new architecture Areas as New Architecture
       if:
       - payloadType: Issues
-      - not:
-        hasLabel:
-          label: 'New Architecture'
       - or:
         - labelAdded:
             label: 'Area: Fabric'
@@ -499,6 +496,9 @@ configuration:
             label: 'Area: Component Views'
         - labelAdded:
             label: 'Area: Turbo Modules'
+      - not:
+        hasLabel:
+          label: 'New Architecture'
       then:
       - addLabel:
           label: 'New Architecture'
