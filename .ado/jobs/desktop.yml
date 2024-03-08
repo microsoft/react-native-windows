@@ -113,6 +113,14 @@ jobs:
                 Write-Host 'Installing .NET hosting bundle'
                 Start-Process -Wait -FilePath .\dotnet-hosting-8.0.2-win.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
                 Write-Host 'Installed .NET hosting bundle'
+
+                Invoke-WebRequest `
+                  -Uri 'https://download.visualstudio.microsoft.com/download/pr/116578f1-3fd4-4847-8bcb-023aeca2c8b2/bfbd897456eaaf8a56f1e838b35d2717/dotnet-sdk-7.0.406-win-x64.exe' `
+                  -OutFile dotnet-sdk-7.0.406-win-x64.exe
+
+                Write-Host 'Installing .NET 7 SDK'
+                Start-Process -Wait -FilePath .\dotnet-sdk-7.0.406-win-x64.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
+                Write-Host 'Installed .NET 7 SDK'
               displayName: Install the .NET Core Hosting Bundle
 
             # } Set up IIS tests
