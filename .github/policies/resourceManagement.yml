@@ -417,6 +417,10 @@ configuration:
           pattern: Breaking Change
       - labelSync:
           pattern: Backport
+      - labelSync:
+          pattern: 'Parity:'
+      - labelSync:
+          pattern: Architecture
     - description: Close issues resolved as being better served by Stack Overflow
       if:
       - payloadType: Issues
@@ -482,5 +486,39 @@ configuration:
       - addReply:
           reply: There is no immediate intention to take a fix for this issue. In an intent to create clear expectations, the issue has been closed. The issue still exists and may be referred to and commented on. If additional justification is made, it may be reactivated in the future.
       - closeIssue
+    - description: Mark items labeled with new architecture Areas as New Architecture
+      if:
+      - or:
+        - payloadType: Issues
+        - payloadType: Pull_Request
+      - not:
+        - hasLabel: 'New Architecture'
+      - or:
+        - labelAdded:
+            label: 'Area: Fabric'
+        - labelAdded:
+            label: 'Area: Component Views'
+        - labelAdded:
+            label: 'Area: Turbo Modules'
+      then:
+      - addLabel:
+          label: 'New Architecture'
+    - description: Mark items labeled with old architecture Areas as Old Architecture
+      if:
+      - or:
+        - payloadType: Issues
+        - payloadType: Pull_Request
+      - not:
+        - hasLabel: 'Old Architecture'
+      - or:
+        - labelAdded:
+            label: 'Area: Paper'
+        - labelAdded:
+            label: 'Area: View Managers'
+        - labelAdded:
+            label: 'Area: Native Modules'
+      then:
+      - addLabel:
+          label: 'Old Architecture'
 onFailure: 
 onSuccess: 
