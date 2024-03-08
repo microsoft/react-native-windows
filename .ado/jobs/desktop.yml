@@ -192,7 +192,7 @@ jobs:
                   publishWebProjects: false
                   zipAfterPublish: false
                   projects: $(Build.SourcesDirectory)\vnext\TestWebsite\Microsoft.ReactNative.Test.Website.csproj
-                  configuration: $(BuildConfiguration)
+                  configuration: ${{ matrix.BuildConfiguration }}
 
               - task: IISWebAppManagementOnMachineGroup@0
                 displayName: Create Test Website
