@@ -486,11 +486,9 @@ configuration:
       - addReply:
           reply: There is no immediate intention to take a fix for this issue. In an intent to create clear expectations, the issue has been closed. The issue still exists and may be referred to and commented on. If additional justification is made, it may be reactivated in the future.
       - closeIssue
-    - description: Mark items labeled with new architecture Areas as New Architecture
+    - description: Mark issues labeled with new architecture Areas as New Architecture
       if:
-      - or:
-        - payloadType: Issues
-        - payloadType: Pull_Request
+      - payloadType: Issues
       - not:
         hasLabel:
           label: 'New Architecture'
@@ -504,11 +502,41 @@ configuration:
       then:
       - addLabel:
           label: 'New Architecture'
-    - description: Mark items labeled with old architecture Areas as Old Architecture
+    - description: Mark PRs labeled with new architecture Areas as New Architecture
       if:
+      - payloadType: Pull_Request
+      - not:
+        hasLabel:
+          label: 'New Architecture'
       - or:
-        - payloadType: Issues
-        - payloadType: Pull_Request
+        - labelAdded:
+            label: 'Area: Fabric'
+        - labelAdded:
+            label: 'Area: Component Views'
+        - labelAdded:
+            label: 'Area: Turbo Modules'
+      then:
+      - addLabel:
+          label: 'New Architecture'
+    - description: Mark issues labeled with old architecture Areas as Old Architecture
+      if:
+      - payloadType: Issues
+      - not:
+        hasLabel:
+          label: 'Old Architecture'
+      - or:
+        - labelAdded:
+            label: 'Area: Paper'
+        - labelAdded:
+            label: 'Area: View Managers'
+        - labelAdded:
+            label: 'Area: Native Modules'
+      then:
+      - addLabel:
+          label: 'Old Architecture'
+    - description: Mark PRs labeled with old architecture Areas as Old Architecture
+      if:
+      - payloadType: Pull_Request
       - not:
         hasLabel:
           label: 'Old Architecture'
