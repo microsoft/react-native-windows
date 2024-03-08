@@ -492,7 +492,7 @@ configuration:
         - payloadType: Issues
         - payloadType: Pull_Request
       - not:
-        - hasLabel:
+          hasLabel:
             label: 'New Architecture'
       - or:
         - labelAdded:
@@ -510,7 +510,7 @@ configuration:
         - payloadType: Issues
         - payloadType: Pull_Request
       - not:
-        - hasLabel:
+          hasLabel:
             label: 'Old Architecture'
       - or:
         - labelAdded:
