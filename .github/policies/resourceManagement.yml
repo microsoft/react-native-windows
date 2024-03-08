@@ -492,7 +492,8 @@ configuration:
         - payloadType: Issues
         - payloadType: Pull_Request
       - not:
-        - hasLabel: 'New Architecture'
+        - hasLabel:
+          - label: 'New Architecture'
       - or:
         - labelAdded:
             label: 'Area: Fabric'
@@ -509,7 +510,8 @@ configuration:
         - payloadType: Issues
         - payloadType: Pull_Request
       - not:
-        - hasLabel: 'Old Architecture'
+        - hasLabel:
+          - label: 'Old Architecture'
       - or:
         - labelAdded:
             label: 'Area: Paper'
