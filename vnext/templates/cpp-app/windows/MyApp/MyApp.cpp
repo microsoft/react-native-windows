@@ -20,9 +20,6 @@ struct CompReactPackageProvider
 constexpr PCWSTR windowTitle = L"{{ mainComponentName }}";
 constexpr PCWSTR mainComponentName = L"{{ mainComponentName }}";
 
-HWND global_hwnd;
-winrt::Microsoft::ReactNative::CompositionRootView *global_rootView{nullptr};
-
 float ScaleFactor(HWND hwnd) noexcept {
   return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
 }
@@ -106,7 +103,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   window.Resize({1000, 1000});
   window.Show();
   auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
-  global_hwnd = hwnd;
   auto scaleFactor = ScaleFactor(hwnd);
 
   auto host = CreateReactNativeHost(hwnd, compositor);
