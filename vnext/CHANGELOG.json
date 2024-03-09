@@ -2,6 +2,84 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 Mar 2024 06:15:54 GMT",
+      "version": "0.0.0-canary.785",
+      "tag": "react-native-windows_v0.0.0-canary.785",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "b129040736b64001391b344f09d6469aeec668f1",
+            "comment": "proper disabled prop fix"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 Mar 2024 06:16:47 GMT",
+      "version": "0.0.0-canary.784",
+      "tag": "react-native-windows_v0.0.0-canary.784",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9262f0d5d87590d4d8b466eb14b389361027f8e7",
+            "comment": "Better align native and JS view configs"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8f4fb70927ba3cb6825fe736403c9cf006f7908b",
+            "comment": "Integrate 1/26"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "c6057a5c20d4b4edba9b90399e59da9573187964",
+            "comment": "Adds option to set Non-ABI Runtime instance"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.204",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.80",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.8",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.12",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.24",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.24",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Mar 2024 06:16:51 GMT",
       "version": "0.0.0-canary.783",
       "tag": "react-native-windows_v0.0.0-canary.783",

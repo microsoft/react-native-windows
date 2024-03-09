@@ -1,8 +1,32 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 06 Mar 2024 06:16:51 GMT and should not be manually modified.
+This log was last generated on Fri, 08 Mar 2024 06:15:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.785
+
+Fri, 08 Mar 2024 06:15:54 GMT
+
+### Changes
+
+- proper disabled prop fix (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.784
+
+Thu, 07 Mar 2024 06:16:47 GMT
+
+### Changes
+
+- Better align native and JS view configs (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 1/26 (34109996+chiaramooney@users.noreply.github.com)
+- Adds option to set Non-ABI Runtime instance (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.204
+- Bump @react-native-windows/codegen to v0.0.0-canary.80
+- Bump @rnw-scripts/eslint-config to v1.2.8
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.12
+- Bump @rnw-scripts/just-task to v2.3.24
+- Bump react-native-platform-override to v1.9.24
 
 ## 0.0.0-canary.783
 
