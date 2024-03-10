@@ -1299,7 +1299,12 @@ void ReactInstanceWin::DrainJSCallQueue() noexcept {
       }
     }
 
-    if (auto instance = m_instance.LoadWithLock()) {
+#ifdef USE_FABRIC
+    if (m_bridgelessReactInstance) {
+      m_bridgelessReactInstance->callFunctionOnModule(entry.ModuleName, entry.MethodName, entry.Args);
+    } else
+#endif
+        if (auto instance = m_instance.LoadWithLock()) {
       instance->callJSFunction(std::move(entry.ModuleName), std::move(entry.MethodName), std::move(entry.Args));
     }
   }
