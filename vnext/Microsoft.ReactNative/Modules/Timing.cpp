@@ -85,13 +85,21 @@ TimerRegistry::~TimerRegistry() {
 }
 
 void TimerRegistry::createTimer(uint32_t timerID, double delayMS) {
-  m_timingModule->createTimer(timerID, delayMS / 1000.0, 0.0f, false);
+  m_timingModule->createTimer(
+      timerID,
+      delayMS * 1000.0,
+      std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now().time_since_epoch()).count(),
+      false);
 }
 void TimerRegistry::deleteTimer(uint32_t timerID) {
   m_timingModule->deleteTimer(timerID);
 }
 void TimerRegistry::createRecurringTimer(uint32_t timerID, double delayMS) {
-  m_timingModule->createTimer(timerID, delayMS / 1000.0, 0.0f, true);
+  m_timingModule->createTimer(
+      timerID,
+      delayMS * 1000.0,
+      std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now().time_since_epoch()).count(),
+      true);
 }
 
 void TimerRegistry::callTimers(const vector<uint32_t> &ids) noexcept {
