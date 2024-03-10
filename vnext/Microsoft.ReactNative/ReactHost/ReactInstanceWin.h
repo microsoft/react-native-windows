@@ -109,7 +109,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   void LoadJSBundles() noexcept;
   void InitJSMessageThread() noexcept;
   void InitNativeMessageThread() noexcept;
-  void InitUIMessageThread(bool haveBridge) noexcept;
+  void InitUIMessageThread() noexcept;
   void SetupHMRClient() noexcept;
 #ifndef CORE_ABI
   void InitUIManager() noexcept;

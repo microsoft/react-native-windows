@@ -555,7 +555,23 @@ Mso::DispatchQueueSettings CreateDispatchQueueSettings(
 #ifdef USE_FABRIC
 void ReactInstanceWin::InitializeBridgeless() noexcept {
   InitUIQueue();
-  InitUIMessageThread(false);
+
+  m_uiMessageThread.Exchange(std::make_shared<MessageDispatchQueue2>(
+      *m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
+
+  auto batchingUIThread = Microsoft::ReactNative::MakeBatchingQueueThread(m_uiMessageThread.Load());
+  m_batchingUIThread = batchingUIThread;
+
+  ReactPropertyBag(m_reactContext->Properties())
+      .Set(
+          winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueueProperty(),
+          [wkBatchingUIThread = std::weak_ptr<facebook::react::MessageQueueThread>(m_uiMessageThread.Load())](
+              winrt::Microsoft::ReactNative::ReactDispatcherCallback const &callback) {
+            if (auto batchingUIThread = wkBatchingUIThread.lock()) {
+              batchingUIThread->runOnQueue(callback);
+            }
+          });
+
   InitDevMenu();
 
   m_uiQueue->Post([this, weakThis = Mso::WeakPtr{this}]() noexcept {
@@ -700,7 +716,7 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
   InitNativeMessageThread();
 
   InitUIQueue();
-  InitUIMessageThread(true);
+  InitUIMessageThread();
 
 #ifndef CORE_ABI
   // InitUIManager uses m_legacyReactInstance
@@ -1066,7 +1082,7 @@ void ReactInstanceWin::InitUIQueue() noexcept {
   VerifyElseCrashSz(m_uiQueue, "No UI Dispatcher provided");
 }
 
-void ReactInstanceWin::InitUIMessageThread(bool haveBridge) noexcept {
+void ReactInstanceWin::InitUIMessageThread() noexcept {
   m_uiMessageThread.Exchange(std::make_shared<MessageDispatchQueue2>(
       *m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
@@ -1083,12 +1099,10 @@ void ReactInstanceWin::InitUIMessageThread(bool haveBridge) noexcept {
             }
           });
 
-  if (haveBridge) {
-    m_jsDispatchQueue.Load().Post(
-        [batchingUIThread, instance = std::weak_ptr<facebook::react::Instance>(m_instance.Load())]() noexcept {
-          batchingUIThread->decoratedNativeCallInvokerReady(instance);
-        });
-  }
+  m_jsDispatchQueue.Load().Post(
+      [batchingUIThread, instance = std::weak_ptr<facebook::react::Instance>(m_instance.Load())]() noexcept {
+        batchingUIThread->decoratedNativeCallInvokerReady(instance);
+      });
 }
 
 bool ReactInstanceWin::IsBridgeless() noexcept {
