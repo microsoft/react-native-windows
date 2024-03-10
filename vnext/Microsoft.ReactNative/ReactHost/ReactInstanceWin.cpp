@@ -651,6 +651,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
             FireInstanceCreatedCallback();
 
             LoadJSBundlesBridgeless(devSettings);
+            SetupHMRClient();
 
           } catch (std::exception &e) {
             OnErrorWithMessage(e.what());
@@ -831,18 +832,7 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
 
             FireInstanceCreatedCallback();
             LoadJSBundles();
-
-            if (UseDeveloperSupport() && State() != ReactInstanceState::HasError) {
-              folly::dynamic params = folly::dynamic::array(
-                  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetPlatformName(
-                      m_reactContext->Properties()),
-                  DebugBundlePath(),
-                  SourceBundleHost(),
-                  SourceBundlePort(),
-                  m_isFastReloadEnabled,
-                  "ws");
-              m_instance.Load()->callJSFunction("HMRClient", "setup", std::move(params));
-            }
+            SetupHMRClient();
 
           } catch (std::exception &e) {
             OnErrorWithMessage(e.what());
@@ -857,6 +847,20 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
       });
     };
   });
+}
+
+void ReactInstanceWin::SetupHMRClient() noexcept {
+  if (UseDeveloperSupport() && State() != ReactInstanceState::HasError) {
+    folly::dynamic params = folly::dynamic::array(
+        winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetPlatformName(
+            m_reactContext->Properties()),
+        DebugBundlePath(),
+        SourceBundleHost(),
+        SourceBundlePort(),
+        m_isFastReloadEnabled,
+        "ws");
+    CallJsFunction("HMRClient", "setup", std::move(params));
+  }
 }
 
 void ReactInstanceWin::LoadJSBundles() noexcept {
