@@ -26,6 +26,13 @@ RootComponentView::RootComponentView(
                 ComponentViewFeatures::NativeBorder),
           false) {}
 
+RootComponentView::~RootComponentView() {
+  if (auto rootView = m_wkRootView.get()) {
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)->RemoveRenderedVisual(
+        OuterVisual());
+  }
+}
+
 winrt::Microsoft::ReactNative::ComponentView RootComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
     facebook::react::Tag tag,
@@ -147,6 +154,16 @@ HRESULT RootComponentView::GetFragmentRoot(IRawElementProviderFragmentRoot **pRe
   }
 
   return S_OK;
+}
+
+uint32_t RootComponentView::overlayIndex() noexcept {
+  return 1;
+}
+
+void RootComponentView::start(const winrt::Microsoft::ReactNative::CompositionRootView &rootView) noexcept {
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)->AddRenderedVisual(
+      OuterVisual());
+  m_wkRootView = rootView;
 }
 
 winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixels) noexcept {

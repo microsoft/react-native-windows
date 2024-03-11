@@ -64,6 +64,9 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   float ScaleFactor() noexcept;
   void ScaleFactor(float value) noexcept;
 
+  void AddRenderedVisual(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept;
+  void RemoveRenderedVisual(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept;
+
   winrt::Microsoft::ReactNative::Composition::Theme Theme() noexcept;
   void Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept;
 
@@ -88,9 +91,6 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
       const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
       facebook::react::Tag tag) noexcept;
 
- public: // ICompositionRootView
-  winrt::Microsoft::ReactNative::Composition::IVisual GetVisual() const noexcept override;
-
  public: // IReactRootView
   std::string JSComponentName() const noexcept override;
   int64_t GetActualHeight() const noexcept override;
@@ -114,6 +114,8 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   HWND m_hwnd{0};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
+  bool m_hasRenderedVisual{false};
+  bool m_showingLoadingUI{false};
   IReactDispatcher m_uiDispatcher{nullptr};
   winrt::IInspectable m_uiaProvider{nullptr};
   int64_t m_rootTag{-1};
@@ -124,6 +126,7 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   winrt::Microsoft::ReactNative::ReactViewOptions m_reactViewOptions;
   std::shared_ptr<::Microsoft::ReactNative::CompositionEventHandler> m_CompositionEventHandler;
   winrt::Microsoft::ReactNative::Composition::IVisual m_rootVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_loadingVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::Theme m_theme{nullptr};
   winrt::Microsoft::ReactNative::ReactNotificationSubscription m_themeChangedSubscription{nullptr};
   winrt::Microsoft::ReactNative::Composition::Theme::ThemeChanged_revoker m_themeChangedRevoker;

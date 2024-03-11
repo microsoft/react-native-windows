@@ -35,6 +35,10 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
 
   RootComponentView *rootComponentView() noexcept override;
 
+  // Index that visuals can be inserted into OuterVisual for debugging UI
+  uint32_t overlayIndex() noexcept;
+  void start(const winrt::Microsoft::ReactNative::CompositionRootView &rootView) noexcept;
+
   HRESULT GetFragmentRoot(IRawElementProviderFragmentRoot **pRetVal) noexcept;
   winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept override;
 
@@ -45,11 +49,14 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
+  virtual ~RootComponentView();
+
  private:
   // should this be a ReactTaggedView? - It shouldn't actually matter since if the view is going away it should always
   // be clearing its focus But being a reactTaggedView might make it easier to identify cases where that isn't
   // happening.
   winrt::Microsoft::ReactNative::ComponentView m_focusedComponent{nullptr};
+  winrt::weak_ref<winrt::Microsoft::ReactNative::CompositionRootView> m_wkRootView{nullptr};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
