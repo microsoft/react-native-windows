@@ -316,6 +316,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\Parsing.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\FallbackRuntimeAgent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeAgent.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\Instance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

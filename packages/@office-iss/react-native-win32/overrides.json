@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240207-5e03813d1",
+  "baseVersion": "0.74.0-nightly-20240208-b796cda38",
   "overrides": [
     {
       "type": "derived",
@@ -67,8 +67,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Button.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "8d5fb0563e76b6e9f2ce3532f319041248587b63",
-      "issue": 0
+      "baseHash": "8d5fb0563e76b6e9f2ce3532f319041248587b63"
     },
     {
       "type": "platform",
