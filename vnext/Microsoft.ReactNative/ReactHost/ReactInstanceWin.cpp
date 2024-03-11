@@ -555,6 +555,20 @@ Mso::DispatchQueueSettings CreateDispatchQueueSettings(
 #ifdef USE_FABRIC
 void ReactInstanceWin::InitializeBridgeless() noexcept {
   InitUIQueue();
+
+  m_uiMessageThread.Exchange(std::make_shared<MessageDispatchQueue2>(
+      *m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
+
+  ReactPropertyBag(m_reactContext->Properties())
+      .Set(
+          winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueueProperty(),
+          [wkBatchingUIThread = std::weak_ptr<facebook::react::MessageQueueThread>(m_uiMessageThread.Load())](
+              winrt::Microsoft::ReactNative::ReactDispatcherCallback const &callback) {
+            if (auto batchingUIThread = wkBatchingUIThread.lock()) {
+              batchingUIThread->runOnQueue(callback);
+            }
+          });
+
   InitDevMenu();
 
   m_uiQueue->Post([this, weakThis = Mso::WeakPtr{this}]() noexcept {
@@ -583,31 +597,33 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                 Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError),
                 Mso::Copy(m_whenDestroyed)));
 
-            auto timerRegistry = ::Microsoft::ReactNative::TimerRegistry::CreateTimerRegistry(
-                m_options.Properties.Get(ReactDispatcherHelper::UIDispatcherProperty()).try_as<IReactDispatcher>());
-            auto timerRegistryRaw = timerRegistry.get();
+            m_jsMessageThread.Load()->runOnQueueSync([&]() {
+              ::SetThreadDescription(GetCurrentThread(), L"React-Native JavaScript Thread");
+              auto timerRegistry = ::Microsoft::ReactNative::TimerRegistry::CreateTimerRegistry(
+                  m_options.Properties.Get(ReactDispatcherHelper::UIDispatcherProperty()).try_as<IReactDispatcher>());
+              auto timerRegistryRaw = timerRegistry.get();
 
-            auto timerManager = std::make_shared<facebook::react::TimerManager>(std::move(timerRegistry));
-            timerRegistryRaw->setTimerManager(timerManager);
+              auto timerManager = std::make_shared<facebook::react::TimerManager>(std::move(timerRegistry));
+              timerRegistryRaw->setTimerManager(timerManager);
 
-            auto jsErrorHandlingFunc = [this](facebook::react::MapBuffer errorMap) noexcept {
-              OnJSError(std::move(errorMap));
-            };
+              auto jsErrorHandlingFunc = [this](facebook::react::MapBuffer errorMap) noexcept {
+                OnJSError(std::move(errorMap));
+              };
 
-            m_jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
-                devSettings, m_jsMessageThread.Load(), CreateHermesPreparedScriptStore());
-            m_bridgelessReactInstance = std::make_unique<facebook::react::ReactInstance>(
-                std::make_unique<Microsoft::ReactNative::HermesJSRuntime>(m_jsiRuntimeHolder),
-                m_jsMessageThread.Load(),
-                timerManager,
-                jsErrorHandlingFunc);
+              m_jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
+                  devSettings, m_jsMessageThread.Load(), CreateHermesPreparedScriptStore());
+              auto jsRuntime = std::make_unique<Microsoft::ReactNative::HermesJSRuntime>(m_jsiRuntimeHolder);
+              jsRuntime->getRuntime();
+              m_bridgelessReactInstance = std::make_unique<facebook::react::ReactInstance>(
+                  std::move(jsRuntime), m_jsMessageThread.Load(), timerManager, jsErrorHandlingFunc);
 
-            auto bufferedRuntimeExecutor = m_bridgelessReactInstance->getBufferedRuntimeExecutor();
-            timerManager->setRuntimeExecutor(bufferedRuntimeExecutor);
+              auto bufferedRuntimeExecutor = m_bridgelessReactInstance->getBufferedRuntimeExecutor();
+              timerManager->setRuntimeExecutor(bufferedRuntimeExecutor);
 
-            Microsoft::ReactNative::SchedulerSettings::SetRuntimeScheduler(
-                winrt::Microsoft::ReactNative::ReactPropertyBag(m_options.Properties),
-                m_bridgelessReactInstance->getRuntimeScheduler());
+              Microsoft::ReactNative::SchedulerSettings::SetRuntimeScheduler(
+                  winrt::Microsoft::ReactNative::ReactPropertyBag(m_options.Properties),
+                  m_bridgelessReactInstance->getRuntimeScheduler());
+            });
 
             facebook::react::ReactInstance::JSRuntimeFlags options;
             m_bridgelessReactInstance->initializeRuntime(options, [=](facebook::jsi::Runtime &runtime) {
@@ -650,6 +666,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
             FireInstanceCreatedCallback();
 
             LoadJSBundlesBridgeless(devSettings);
+            SetupHMRClient();
 
           } catch (std::exception &e) {
             OnErrorWithMessage(e.what());
@@ -830,18 +847,7 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
 
             FireInstanceCreatedCallback();
             LoadJSBundles();
-
-            if (UseDeveloperSupport() && State() != ReactInstanceState::HasError) {
-              folly::dynamic params = folly::dynamic::array(
-                  winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetPlatformName(
-                      m_reactContext->Properties()),
-                  DebugBundlePath(),
-                  SourceBundleHost(),
-                  SourceBundlePort(),
-                  m_isFastReloadEnabled,
-                  "ws");
-              m_instance.Load()->callJSFunction("HMRClient", "setup", std::move(params));
-            }
+            SetupHMRClient();
 
           } catch (std::exception &e) {
             OnErrorWithMessage(e.what());
@@ -856,6 +862,20 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
       });
     };
   });
+}
+
+void ReactInstanceWin::SetupHMRClient() noexcept {
+  if (UseDeveloperSupport() && State() != ReactInstanceState::HasError) {
+    folly::dynamic params = folly::dynamic::array(
+        winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetPlatformName(
+            m_reactContext->Properties()),
+        DebugBundlePath(),
+        SourceBundleHost(),
+        SourceBundlePort(),
+        m_isFastReloadEnabled,
+        "ws");
+    CallJsFunction("HMRClient", "setup", std::move(params));
+  }
 }
 
 void ReactInstanceWin::LoadJSBundles() noexcept {
@@ -1292,7 +1312,12 @@ void ReactInstanceWin::DrainJSCallQueue() noexcept {
       }
     }
 
-    if (auto instance = m_instance.LoadWithLock()) {
+#ifdef USE_FABRIC
+    if (m_bridgelessReactInstance) {
+      m_bridgelessReactInstance->callFunctionOnModule(entry.ModuleName, entry.MethodName, entry.Args);
+    } else
+#endif
+        if (auto instance = m_instance.LoadWithLock()) {
       instance->callJSFunction(std::move(entry.ModuleName), std::move(entry.MethodName), std::move(entry.Args));
     }
   }

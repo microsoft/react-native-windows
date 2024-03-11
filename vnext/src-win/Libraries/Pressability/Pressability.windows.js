@@ -652,14 +652,15 @@ export default class Pressability {
         this._isKeyDown = false;
       },
       onKeyDown: (event: KeyEvent): void => {
-        const {onKeyDown} = this._config;
+        const {onKeyDown, disabled} = this._config;
         onKeyDown && onKeyDown(event);
 
         if (
           (event.nativeEvent.code === 'Space' ||
             event.nativeEvent.code === 'Enter' ||
             event.nativeEvent.code === 'GamepadA') &&
-          event.defaultPrevented !== true
+          event.defaultPrevented !== true &&
+          disabled !== true
         ) {
           const {onPressIn} = this._config;
           this._isKeyDown = true;
