@@ -79,9 +79,11 @@ void CompositionReactViewInstance::UpdateRootView() noexcept {
 }
 
 void CompositionReactViewInstance::UninitRootView() noexcept {
-  assert(m_uiDispatcher.HasThreadAccess());
-  if (auto rootControl = m_weakRootControl.get()) {
-    rootControl->UninitRootView();
+  if (m_uiDispatcher) {
+    assert(m_uiDispatcher.HasThreadAccess());
+    if (auto rootControl = m_weakRootControl.get()) {
+      rootControl->UninitRootView();
+    }
   }
 }
 
