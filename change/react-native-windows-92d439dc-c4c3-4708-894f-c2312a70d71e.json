@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "backport disabled prop change",
-  "packageName": "react-native-windows",
-  "email": "yajurgrover24@gmail.com",
-  "dependentChangeType": "patch"
-}

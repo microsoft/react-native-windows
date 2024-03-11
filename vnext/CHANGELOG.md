@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 01 Mar 2024 20:52:19 GMT and should not be manually modified.
+This log was last generated on Mon, 11 Mar 2024 15:15:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.10
+
+Mon, 11 Mar 2024 15:15:28 GMT
+
+### Patches
+
+- Omit trailing slash in Origin header #12791 (julio.rocha@microsoft.com)
+- backport disabled prop change (yajurgrover24@gmail.com)
 
 ## 0.73.9
 
