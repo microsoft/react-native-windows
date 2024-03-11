@@ -559,9 +559,6 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
   m_uiMessageThread.Exchange(std::make_shared<MessageDispatchQueue2>(
       *m_uiQueue, Mso::MakeWeakMemberFunctor(this, &ReactInstanceWin::OnError)));
 
-  auto batchingUIThread = Microsoft::ReactNative::MakeBatchingQueueThread(m_uiMessageThread.Load());
-  m_batchingUIThread = batchingUIThread;
-
   ReactPropertyBag(m_reactContext->Properties())
       .Set(
           winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::PostToUIBatchingQueueProperty(),
@@ -601,6 +598,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                 Mso::Copy(m_whenDestroyed)));
 
             m_jsMessageThread.Load()->runOnQueueSync([&]() {
+              ::SetThreadDescription(GetCurrentThread(), L"React-Native JavaScript Thread");
               auto timerRegistry = ::Microsoft::ReactNative::TimerRegistry::CreateTimerRegistry(
                   m_options.Properties.Get(ReactDispatcherHelper::UIDispatcherProperty()).try_as<IReactDispatcher>());
               auto timerRegistryRaw = timerRegistry.get();
