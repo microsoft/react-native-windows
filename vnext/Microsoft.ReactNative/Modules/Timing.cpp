@@ -84,22 +84,20 @@ TimerRegistry::~TimerRegistry() {
   m_timingModule->DetachBridgeless();
 }
 
+double SchedulingTimeNow() {
+  const int64_t msFrom1601to1970 = 11644473600000;
+  return std::chrono::duration<double, std::milli>(TDateTime::clock::now().time_since_epoch()).count() -
+      msFrom1601to1970;
+}
+
 void TimerRegistry::createTimer(uint32_t timerID, double delayMS) {
-  m_timingModule->createTimer(
-      timerID,
-      delayMS * 1000.0,
-      std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now().time_since_epoch()).count(),
-      false);
+  m_timingModule->createTimer(timerID, delayMS, SchedulingTimeNow(), false);
 }
 void TimerRegistry::deleteTimer(uint32_t timerID) {
   m_timingModule->deleteTimer(timerID);
 }
 void TimerRegistry::createRecurringTimer(uint32_t timerID, double delayMS) {
-  m_timingModule->createTimer(
-      timerID,
-      delayMS * 1000.0,
-      std::chrono::duration<double, std::milli>(std::chrono::steady_clock::now().time_since_epoch()).count(),
-      true);
+  m_timingModule->createTimer(timerID, delayMS, SchedulingTimeNow(), true);
 }
 
 void TimerRegistry::callTimers(const vector<uint32_t> &ids) noexcept {
