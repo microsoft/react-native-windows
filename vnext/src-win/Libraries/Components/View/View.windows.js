@@ -179,7 +179,7 @@ const View: React.AbstractComponent<
         if (React.isValidElement(child)) {
           // $FlowFixMe[incompatible-use]
           if (child.props.children) {
-            // $FlowFixMe[incompatible-type]
+            // $FlowFixMe[incompatible-call]
             return React.cloneElement(child, {
               accessible: false,
               children: childrenWithImportantForAccessibility(
@@ -187,7 +187,7 @@ const View: React.AbstractComponent<
               ),
             });
           } else {
-            // $FlowFixMe[incompatible-type]
+            // $FlowFixMe[incompatible-call]
             return React.cloneElement(child, {accessible: false});
           }
         }

@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 07 Mar 2024 06:16:47 GMT and should not be manually modified.
+This log was last generated on Sat, 09 Mar 2024 06:16:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.786
+
+Sat, 09 Mar 2024 06:16:03 GMT
+
+### Changes
+
+- Remove unused globals from Fabric template (4123478+tido64@users.noreply.github.com)
+
+## 0.0.0-canary.785
+
+Fri, 08 Mar 2024 06:15:54 GMT
+
+### Changes
+
+- proper disabled prop fix (yajurgrover24@gmail.com)
 
 ## 0.0.0-canary.784
 

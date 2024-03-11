@@ -2,6 +2,36 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 09 Mar 2024 06:16:03 GMT",
+      "version": "0.0.0-canary.786",
+      "tag": "react-native-windows_v0.0.0-canary.786",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "4123478+tido64@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e966f8e94f70400db2f06dcd03e4d4b351245192",
+            "comment": "Remove unused globals from Fabric template"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 Mar 2024 06:15:54 GMT",
+      "version": "0.0.0-canary.785",
+      "tag": "react-native-windows_v0.0.0-canary.785",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "b129040736b64001391b344f09d6469aeec668f1",
+            "comment": "proper disabled prop fix"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 07 Mar 2024 06:16:47 GMT",
       "version": "0.0.0-canary.784",
       "tag": "react-native-windows_v0.0.0-canary.784",
