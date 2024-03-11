@@ -126,6 +126,7 @@ void FrameworkElementViewManager::GetNativeProps(const winrt::Microsoft::ReactNa
 
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"accessible", L"boolean");
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"accessibilityRole", L"string");
+  winrt::Microsoft::ReactNative::WriteProperty(writer, L"role", L"string");
   writer.WritePropertyName(L"accessibilityState");
   GetAccessibilityStateProps(writer);
   winrt::Microsoft::ReactNative::WriteProperty(writer, L"accessibilityHint", L"string");
@@ -432,6 +433,142 @@ bool FrameworkElementViewManager::UpdateProperty(
               element, winrt::Microsoft::ReactNative::AccessibilityRoles::Unknown);
       } else if (propertyValue.IsNull()) {
         element.ClearValue(DynamicAutomationProperties::AccessibilityRoleProperty());
+      }
+    } else if (propertyName == "role") {
+      if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+        const std::string &role = propertyValue.AsString();
+        if (role == "alert")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Alert);
+        else if (role == "alertdialog")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::AlertDialog);
+        else if (role == "application")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Application);
+        else if (role == "article")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Article);
+        else if (role == "banner")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Banner);
+        else if (role == "button")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Button);
+        else if (role == "cell")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Cell);
+        else if (role == "checkbox")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::CheckBox);
+        else if (role == "columnheader")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::ColumnHeader);
+        else if (role == "combobox")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::ComboBox);
+        else if (role == "complementary")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Complementary);
+        else if (role == "contentinfo")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::ContentInfo);
+        else if (role == "definition")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Definition);
+        else if (role == "dialog")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Dialog);
+        else if (role == "directory")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Directory);
+        else if (role == "document")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Document);
+        else if (role == "feed")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Feed);
+        else if (role == "figure")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Figure);
+        else if (role == "form")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Form);
+        else if (role == "grid")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Grid);
+        else if (role == "group")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Group);
+        else if (role == "heading")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Heading);
+        else if (role == "img")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Img);
+        else if (role == "link")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Link);
+        else if (role == "list")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::List);
+        else if (role == "listitem")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::ListItem);
+        else if (role == "log")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Log);
+        else if (role == "main")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Main);
+        else if (role == "marquee")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Marquee);
+        else if (role == "math")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Math);
+        else if (role == "menu")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Menu);
+        else if (role == "menubar")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::MenuBar);
+        else if (role == "menuitem")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::MenuItem);
+        else if (role == "meter")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Meter);
+        else if (role == "navigation")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Navigation);
+        else if (role == "none")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::None);
+        else if (role == "note")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Note);
+        else if (role == "option")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Option);
+        else if (role == "presentation")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Presentation);
+        else if (role == "progressbar")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::ProgressBar);
+        else if (role == "radio")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Radio);
+        else if (role == "radiogroup")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::RadioGroup);
+        else if (role == "region")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Region);
+        else if (role == "row")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Row);
+        else if (role == "rowgroup")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::RowGroup);
+        else if (role == "rowheader")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::RowHeader);
+        else if (role == "scrollbar")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::ScrollBar);
+        else if (role == "searchbox")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::SearchBox);
+        else if (role == "separator")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Separator);
+        else if (role == "slider")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Slider);
+        else if (role == "spinbutton")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::SpinButton);
+        else if (role == "status")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Status);
+        else if (role == "summary")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Summary);
+        else if (role == "switch")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Switch);
+        else if (role == "tab")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Tab);
+        else if (role == "tablist")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::TabList);
+        else if (role == "tabpanel")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::TabPanel);
+        else if (role == "term")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Term);
+        else if (role == "timer")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Timer);
+        else if (role == "toolbar")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::ToolBar);
+        else if (role == "tooltip")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::ToolTip);
+        else if (role == "tree")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Tree);
+        else if (role == "treegrid")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::TreeGrid);
+        else if (role == "treeitem")
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::TreeItem);
+        else
+          DynamicAutomationProperties::SetAriaRole(element, winrt::Microsoft::ReactNative::AriaRole::Unknown);
+      } else if (propertyValue.IsNull()) {
+        element.ClearValue(DynamicAutomationProperties::AriaRoleProperty());
       }
     } else if (propertyName == "accessibilityState") {
       if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
