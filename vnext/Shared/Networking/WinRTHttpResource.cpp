@@ -641,8 +641,7 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
 
 #pragma region IHttpResource
 
-/*static*/ shared_ptr<IHttpResource> IHttpResource::Make(
-    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept {
+/*static*/ shared_ptr<IHttpResource> IHttpResource::Make(IInspectable const &inspectableProperties) noexcept {
   using namespace winrt::Microsoft::ReactNative;
   using winrt::Windows::Web::Http::HttpClient;
 
