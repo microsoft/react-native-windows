@@ -115,15 +115,6 @@ bool OriginPolicyHttpFilter::CaseInsensitiveComparer::operator()(const wstring &
 /*static*/ set<const wchar_t *, OriginPolicyHttpFilter::CaseInsensitiveComparer>
     OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNamePrefixes = {L"Proxy-", L"Sec-"};
 
-/*static*/ Uri OriginPolicyHttpFilter::s_origin{nullptr};
-
-/*static*/ void OriginPolicyHttpFilter::SetStaticOrigin(std::string &&url) {
-  if (!url.empty())
-    s_origin = Uri{to_hstring(url)};
-  else
-    s_origin = nullptr;
-}
-
 /*static*/ bool OriginPolicyHttpFilter::IsSameOrigin(Uri const &u1, Uri const &u2) noexcept {
   return (u1 && u2) && u1.SchemeName() == u2.SchemeName() && u1.Host() == u2.Host() && u1.Port() == u2.Port();
 }

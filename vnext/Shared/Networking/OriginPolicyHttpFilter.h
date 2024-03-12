@@ -37,9 +37,6 @@ class OriginPolicyHttpFilter
   static std::set<const wchar_t *, CaseInsensitiveComparer> s_corsForbiddenRequestHeaderNamePrefixes;
   static std::set<const wchar_t *, CaseInsensitiveComparer> s_cookieSettingResponseHeaders;
 
-  // NOTE: Assumes static origin through owning client/resource/module/(React) instance's lifetime.
-  static winrt::Windows::Foundation::Uri s_origin;
-
   struct AccessControlValues {
     winrt::hstring AllowedOrigin;
     winrt::hstring AllowedCredentials;
@@ -54,8 +51,6 @@ class OriginPolicyHttpFilter
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilter;
 
  public:
-  static void SetStaticOrigin(std::string &&url);
-
   static bool IsSameOrigin(
       winrt::Windows::Foundation::Uri const &u1,
       winrt::Windows::Foundation::Uri const &u2) noexcept;
