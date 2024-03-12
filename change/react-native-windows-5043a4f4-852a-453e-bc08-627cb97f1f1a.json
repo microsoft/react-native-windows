@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Pass RuntimeSchedulerCallInvoker to C++ TurboModule initialization",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
