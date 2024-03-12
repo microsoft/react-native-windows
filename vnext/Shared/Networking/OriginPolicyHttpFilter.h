@@ -49,6 +49,8 @@ class OriginPolicyHttpFilter
     size_t MaxAge;
   };
 
+  winrt::Windows::Foundation::Uri m_origin;
+
   winrt::Windows::Web::Http::Filters::IHttpFilter m_innerFilter;
 
  public:
@@ -80,9 +82,9 @@ class OriginPolicyHttpFilter
       winrt::Windows::Web::Http::HttpResponseMessage const &response,
       bool removeAll);
 
-  OriginPolicyHttpFilter(winrt::Windows::Web::Http::Filters::IHttpFilter const &innerFilter);
+  OriginPolicyHttpFilter(std::string &&origin, winrt::Windows::Web::Http::Filters::IHttpFilter const &innerFilter);
 
-  OriginPolicyHttpFilter();
+  OriginPolicyHttpFilter(std::string &&origin);
 
   OriginPolicy ValidateRequest(winrt::Windows::Web::Http::HttpRequestMessage const &request);
 
