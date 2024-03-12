@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 12 Mar 2024 05:15:10 GMT",
+      "version": "0.0.0-canary.787",
+      "tag": "react-native-windows_v0.0.0-canary.787",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b8bf7364ed34c76f329f2656cef811ffba8868fb",
+            "comment": "[Fabric] Implement LoadingUI and DebuggingOverlay"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f14ca259113218656089e80554e2ba4748719aa3",
+            "comment": "Rename WindowsCompositionContextHelper -> SystemCompositionContextHelper"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "bc70cea24148f802dddaf8aed931ce0e9a10615e",
+            "comment": "Adds ARIA role support to Paper UIManager"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "27574eb5126c0b067580848ca42cd8dc2a908cb5",
+            "comment": "Add UIBatchingQueue to bridgeless mode"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 09 Mar 2024 06:16:03 GMT",
       "version": "0.0.0-canary.786",
       "tag": "react-native-windows_v0.0.0-canary.786",

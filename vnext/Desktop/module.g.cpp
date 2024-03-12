@@ -10,7 +10,7 @@ void* winrt_make_Microsoft_ReactNative_CompositionRootView();
 #ifdef USE_WINUI3
 void *winrt_make_Microsoft_ReactNative_Composition_MicrosoftCompositionContextHelper();
 #endif
-void *winrt_make_Microsoft_ReactNative_Composition_WindowsCompositionContextHelper();
+void *winrt_make_Microsoft_ReactNative_Composition_SystemCompositionContextHelper();
 void *winrt_make_Microsoft_ReactNative_Composition_CompositionUIService();
 void* winrt_make_Microsoft_ReactNative_JsiRuntime();
 void* winrt_make_Microsoft_ReactNative_ReactCoreInjection();
@@ -54,8 +54,8 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
       return winrt_make_Microsoft_ReactNative_Composition_MicrosoftCompositionContextHelper();
     }
 #endif
-    if (requal(name, L"Microsoft.ReactNative.Composition.WindowsCompositionContextHelper")) {
-      return winrt_make_Microsoft_ReactNative_Composition_WindowsCompositionContextHelper();
+    if (requal(name, L"Microsoft.ReactNative.Composition.SystemCompositionContextHelper")) {
+      return winrt_make_Microsoft_ReactNative_Composition_SystemCompositionContextHelper();
     }
     if (requal(name, L"Microsoft.ReactNative.Composition.CompositionUIService")) {
       return winrt_make_Microsoft_ReactNative_Composition_CompositionUIService();

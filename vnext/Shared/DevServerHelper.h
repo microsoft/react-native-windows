@@ -8,9 +8,6 @@
 namespace facebook {
 namespace react {
 
-using JSECreator =
-    std::function<std::unique_ptr<JSExecutor>(std::shared_ptr<ExecutorDelegate>, std::shared_ptr<MessageQueueThread>)>;
-
 class DevServerHelper {
  public:
   DevServerHelper() = default;

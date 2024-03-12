@@ -157,7 +157,7 @@ void DeviceInfoHolder::SetCallback(
 }
 
 void DeviceInfoHolder::updateDeviceInfo() noexcept {
-  if (xaml::Window::Current()) {
+  if (xaml::TryGetCurrentApplication() && xaml::Window::Current()) {
     auto const window = xaml::Window::Current().CoreWindow();
 
     m_windowWidth = window.Bounds().Width;

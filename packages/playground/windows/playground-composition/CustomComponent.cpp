@@ -114,7 +114,7 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
 #ifdef USE_EXPERIMENTAL_WINUI3
 
     auto parentSystemVisual =
-        winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::InnerVisual(m_visual)
+        winrt::Microsoft::ReactNative::Composition::SystemCompositionContextHelper::InnerVisual(m_visual)
             .as<winrt::Windows::UI::Composition::ContainerVisual>();
 
     auto hwnd = reinterpret_cast<HWND>(

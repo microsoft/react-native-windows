@@ -23,6 +23,7 @@
 #include "CompositionContextHelper.h"
 #include "CompositionHelpers.h"
 #include "CompositionRootAutomationProvider.h"
+#include "CompositionUIService.h"
 #include "ReactNativeHost.h"
 #include "RootComponentView.h"
 
@@ -79,9 +80,13 @@ void CompositionReactViewInstance::UpdateRootView() noexcept {
 }
 
 void CompositionReactViewInstance::UninitRootView() noexcept {
-  assert(m_uiDispatcher.HasThreadAccess());
-  if (auto rootControl = m_weakRootControl.get()) {
-    rootControl->UninitRootView();
+  // m_uiDispatcher will not be initialized if InitRootView has not been run in which case we do not need to run
+  // UninitRootView
+  if (m_uiDispatcher) {
+    assert(m_uiDispatcher.HasThreadAccess());
+    if (auto rootControl = m_weakRootControl.get()) {
+      rootControl->UninitRootView();
+    }
   }
 }
 
@@ -145,6 +150,20 @@ void CompositionRootView::RootVisual(winrt::Microsoft::ReactNative::Composition:
     assert(!m_rootVisual);
     m_rootVisual = value;
   }
+}
+
+void CompositionRootView::AddRenderedVisual(
+    const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
+  assert(!m_hasRenderedVisual);
+  RootVisual().InsertAt(visual, 0);
+  m_hasRenderedVisual = true;
+}
+
+void CompositionRootView::RemoveRenderedVisual(
+    const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
+  assert(m_hasRenderedVisual);
+  RootVisual().Remove(visual);
+  m_hasRenderedVisual = false;
 }
 
 winrt::Windows::Foundation::Size CompositionRootView::Size() noexcept {
@@ -229,10 +248,6 @@ winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
     }
   }
   return m_uiaProvider;
-}
-
-winrt::Microsoft::ReactNative::Composition::IVisual CompositionRootView::GetVisual() const noexcept {
-  return m_rootVisual;
 }
 
 std::string CompositionRootView::JSComponentName() const noexcept {
@@ -375,7 +390,14 @@ void CompositionRootView::UninitRootView() noexcept {
   m_isInitialized = false;
 }
 
-void CompositionRootView::ClearLoadingUI() noexcept {}
+void CompositionRootView::ClearLoadingUI() noexcept {
+  if (!m_loadingVisual)
+    return;
+
+  RootVisual().Remove(m_loadingVisual);
+
+  m_loadingVisual = nullptr;
+}
 
 void CompositionRootView::EnsureLoadingUI() noexcept {}
 
@@ -399,13 +421,36 @@ void CompositionRootView::ShowInstanceLoaded() noexcept {
   }
 }
 
-void CompositionRootView::ShowInstanceError() noexcept {}
+void CompositionRootView::ShowInstanceError() noexcept {
+  ClearLoadingUI();
+}
 
 void CompositionRootView::ShowInstanceLoading() noexcept {
   if (!Mso::React::ReactOptions::UseDeveloperSupport(m_context.Properties().Handle()))
     return;
 
-  // TODO: Show loading UI here
+  if (m_loadingVisual)
+    return;
+
+  auto compContext =
+      winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
+          m_context.Properties().Handle());
+
+  auto brush = compContext.CreateColorBrush({0x80, 0x03, 0x29, 0x29});
+  m_loadingVisual = compContext.CreateSpriteVisual();
+  m_loadingVisual.RelativeSizeWithOffset({0.0f, 50.0f}, {1.0f, 0.0f});
+  m_loadingVisual.Offset({0.0f, -25.0f, 0.0f}, {0.0f, 0.5f, 0.0f});
+  m_loadingVisual.Brush(brush);
+
+  auto foregroundBrush = compContext.CreateColorBrush({255, 255, 255, 255});
+
+  auto activity = compContext.CreateActivityVisual();
+  activity.Size(15.0f);
+  activity.Brush(foregroundBrush);
+  activity.Offset({-50.0f, 5.0f, 0.0f}, {0.5f, 0.0f, 0.0f});
+  m_loadingVisual.InsertAt(activity, 0);
+
+  RootVisual().InsertAt(m_loadingVisual, m_hasRenderedVisual ? 1 : 0);
 }
 
 winrt::Windows::Foundation::Size CompositionRootView::Measure(
