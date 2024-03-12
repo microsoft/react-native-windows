@@ -49,6 +49,7 @@
     <file src="$nugetroot$\inc\Shared\DevSettings.h" target="inc"/>
     <file src="$nugetroot$\inc\ReactWin32\INativeUIManagerLegacy.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\InstanceManager.h" target="inc"/>
+    <file src="$nugetroot$\inc\Shared\IDevSupportManager.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IReactRootView.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\IRedBoxHandler.h" target="inc"/>
     <file src="$nugetroot$\inc\Shared\JSBigAbiString.h" target="inc"/>

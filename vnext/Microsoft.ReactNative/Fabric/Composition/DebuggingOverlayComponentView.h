@@ -31,6 +31,9 @@ struct DebuggingOverlayComponentView
 
   void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
       override;
+
+ private:
+  uint32_t m_activeOverlays{0};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

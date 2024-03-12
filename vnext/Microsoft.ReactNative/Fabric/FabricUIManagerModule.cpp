@@ -146,7 +146,7 @@ void FabricUIManager::startSurface(
     facebook::react::SurfaceId surfaceId,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
-  m_surfaceRegistry.insert({surfaceId, {rootView.RootVisual(), rootView}});
+  m_surfaceRegistry.insert({surfaceId, {rootView}});
 
   m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId, rootView]() {
     auto &rootComponentViewDescriptor = self->m_registry.dequeueComponentViewWithComponentHandle(
@@ -155,8 +155,7 @@ void FabricUIManager::startSurface(
     auto root = rootComponentViewDescriptor.view
                     .as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
     root->theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(rootView.Theme()));
-
-    self->m_surfaceRegistry.at(surfaceId).rootVisual.InsertAt(root->OuterVisual(), 0);
+    root->start(rootView);
   });
 
   facebook::react::LayoutContext context;

@@ -11,7 +11,7 @@ namespace Microsoft.ReactNative.Composition
   [default_interface]
   [experimental]
   DOC_STRING("A helper static class for to create a @ICompositionContext based on Windows.Composition Visuals.  And to access the underlying Windows.Composition objects from the abstraction.")
-  static runtimeclass WindowsCompositionContextHelper
+  static runtimeclass SystemCompositionContextHelper
   {
     DOC_STRING(
       "Creates a @ICompositionContext from a Compositor")
