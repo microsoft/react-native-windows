@@ -252,6 +252,48 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     }
   }
 
+  TEST_METHOD(ValidatePreflightResponseHeadersCaseMismatchSucceeds) {
+    auto mockFilter = winrt::make<MockHttpBaseFilter>();
+    mockFilter.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
+        [](HttpRequestMessage const &request) -> ResponseOperation {
+      HttpResponseMessage response{};
+
+      response.StatusCode(HttpStatusCode::Ok);
+      response.Headers().Insert(L"Access-Control-Allow-Origin", L"*");
+
+      // Return allowed headers as requested by client, in lower case.
+      // This tests case-insensitive preflight validation.
+      auto allowHeaders = boost::to_lower_copy(wstring{request.Headers().Lookup(L"Access-Control-Request-Headers")});
+      response.Headers().Insert(L"Access-Control-Allow-Headers", std::move(allowHeaders));
+
+      co_return response;
+    };
+
+    auto reqArgs = winrt::make<RequestArgs>();
+    auto request = HttpRequestMessage(HttpMethod::Get(), Uri{L"http://somehost"});
+    request.Properties().Insert(L"RequestArgs", reqArgs);
+    request.Headers().TryAppendWithoutValidation(L"ChangeMyCase", L"Value");
+    // Should implicitly set Content-Length and Content-Type
+    request.Content(HttpStringContent{L"PreflightContent"});
+
+    auto filter = winrt::make<OriginPolicyHttpFilter>("http://somehost", mockFilter);
+    auto opFilter = filter.as<OriginPolicyHttpFilter>();
+
+    try {
+      auto sendOp = opFilter->SendPreflightAsync(request);
+      sendOp.get();
+
+      auto response = sendOp.GetResults();
+      opFilter->ValidatePreflightResponse(request, response);
+
+      Assert::IsTrue(boost::iequals(
+          response.Headers().Lookup(L"Access-Control-Allow-Headers").c_str(),
+          L"ChangeMyCase, Content-Length, Content-Type"));
+    } catch (const winrt::hresult_error &e) {
+      Assert::Fail(e.message().c_str());
+    }
+  }
+
   TEST_METHOD(ValidatePreflightResponseMainAndContentHeadersSucceeds) {
     auto mockFilter = winrt::make<MockHttpBaseFilter>();
     mockFilter.as<MockHttpBaseFilter>()->Mocks.SendRequestAsync =
@@ -274,10 +316,9 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     // Should implicitly set Conent-Length and Content-Type
     request.Content(HttpStringContent{L"PreflightContent"});
 
-    auto filter = winrt::make<OriginPolicyHttpFilter>(mockFilter);
+    auto filter = winrt::make<OriginPolicyHttpFilter>("http://somehost", mockFilter);
     auto opFilter = filter.as<OriginPolicyHttpFilter>();
 
-    OriginPolicyHttpFilter::SetStaticOrigin("http://somehost");
     try {
       auto sendOp = opFilter->SendPreflightAsync(request);
       sendOp.get();
@@ -285,12 +326,10 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
       auto response = sendOp.GetResults();
       opFilter->ValidatePreflightResponse(request, response);
 
-      OriginPolicyHttpFilter::SetStaticOrigin({});
       Assert::AreEqual(
           L"Authorization, Content-Length, Content-Type",
           response.Headers().Lookup(L"Access-Control-Allow-Headers").c_str());
     } catch (const winrt::hresult_error &e) {
-      OriginPolicyHttpFilter::SetStaticOrigin({});
       Assert::Fail(e.message().c_str());
     }
   }
