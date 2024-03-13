@@ -22,6 +22,7 @@ const PressabilityDebug = require('../Pressability/PressabilityDebug');
 const ReactNative = require('../Renderer/shims/ReactNative');
 const {findNodeHandle} = require('../ReactNative/RendererProxy');
 const StyleSheet = require('../StyleSheet/StyleSheet');
+const Dimensions = require('../Utilities/Dimensions').default;
 const Platform = require('../Utilities/Platform');
 const View = require('../Components/View/View');
 const getInspectorDataForViewAtPoint = require('./getInspectorDataForViewAtPoint');
@@ -117,7 +118,6 @@ function Inspector({
       // $FlowFixMe[incompatible-call] `props` from InspectorData are defined as <string, string> dictionary, which is incompatible with ViewStyleProp
       setInspectedElement({
         frame,
-        source,
         style: props.style,
       });
     };
