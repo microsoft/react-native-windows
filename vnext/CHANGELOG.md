@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 12 Mar 2024 05:15:10 GMT and should not be manually modified.
+This log was last generated on Wed, 13 Mar 2024 05:14:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.788
+
+Wed, 13 Mar 2024 05:14:11 GMT
+
+### Changes
+
+- Minor clean up for headers for Office consumption (30809111+acoates-ms@users.noreply.github.com)
+- Make HTTP origin value an instance member (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.787
 
