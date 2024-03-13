@@ -24,6 +24,8 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{5, L"enableSpannableBuildingUnification"},
       SyncMethod<bool() noexcept>{6, L"enableCustomDrawOrderFabric"},
       SyncMethod<bool() noexcept>{7, L"enableFixForClippedSubviewsCrash"},
+      SyncMethod<bool() noexcept>{8, L"inspectorEnableCxxInspectorPackagerConnection"},
+      SyncMethod<bool() noexcept>{9, L"inspectorEnableModernCDPRegistry"},
   };
 
   template <class TModule>
@@ -70,6 +72,16 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "enableFixForClippedSubviewsCrash",
           "    REACT_SYNC_METHOD(enableFixForClippedSubviewsCrash) bool enableFixForClippedSubviewsCrash() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableFixForClippedSubviewsCrash) static bool enableFixForClippedSubviewsCrash() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          8,
+          "inspectorEnableCxxInspectorPackagerConnection",
+          "    REACT_SYNC_METHOD(inspectorEnableCxxInspectorPackagerConnection) bool inspectorEnableCxxInspectorPackagerConnection() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(inspectorEnableCxxInspectorPackagerConnection) static bool inspectorEnableCxxInspectorPackagerConnection() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          9,
+          "inspectorEnableModernCDPRegistry",
+          "    REACT_SYNC_METHOD(inspectorEnableModernCDPRegistry) bool inspectorEnableModernCDPRegistry() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(inspectorEnableModernCDPRegistry) static bool inspectorEnableModernCDPRegistry() noexcept { /* implementation */ }\n");
   }
 };
 

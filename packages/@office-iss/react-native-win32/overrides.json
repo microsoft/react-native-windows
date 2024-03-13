@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240208-b796cda38",
+  "baseVersion": "0.74.0-nightly-20240214-b8ad91732",
   "overrides": [
     {
       "type": "derived",
@@ -306,7 +306,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "packages/react-native/Libraries/Inspector/Inspector.js",
-      "baseHash": "41f9953cffe7c0e9dace1f10074136cc169a94ad"
+      "baseHash": "847b7e0e4f2088fac00f36eb30f3fa3b8e94ec14"
     },
     {
       "type": "patch",

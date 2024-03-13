@@ -38,10 +38,8 @@ type SelectedTab =
   | 'performance-profiling';
 
 export type InspectedElementFrame = TouchedViewDataAtPoint['frame'];
-export type InspectedElementSource = InspectorData['source'];
 export type InspectedElement = $ReadOnly<{
   frame: InspectedElementFrame,
-  source?: InspectedElementSource,
   style?: ViewStyleProp,
 }>;
 export type ElementsHierarchy = InspectorData['hierarchy'];
@@ -76,14 +74,12 @@ function Inspector({
     }
 
     // We pass in findNodeHandle as the method is injected
-    const {measure, props, source} =
-      hierarchyItem.getInspectorData(findNodeHandle);
+    const {measure, props} = hierarchyItem.getInspectorData(findNodeHandle);
 
     measure((x, y, width, height, left, top) => {
       // $FlowFixMe[incompatible-call] `props` from InspectorData are defined as <string, string> dictionary, which is incompatible with ViewStyleProp
       setInspectedElement({
         frame: {left, top, width, height},
-        source,
         style: props.style,
       });
 
@@ -97,7 +93,6 @@ function Inspector({
         hierarchy,
         props,
         selectedIndex,
-        source,
         frame,
         pointerY,
         touchedViewTag,
@@ -114,19 +109,16 @@ function Inspector({
         }
       }
 
-      // [Win32 Avoid Dimensions call
-      const node = ReactNative.findNodeHandle(inspectedViewRef);
-      // $FlowFixMe[incompatible-call]
-      UIManager.measure(node, (x, y, width, height, left, top) => {
-        setPanelPosition(pointerY > height / 2 ? 'top' : 'bottom');
-        setSelectionIndex(selectedIndex);
-        setElementsHierarchy(hierarchy);
-        // $FlowFixMe[incompatible-call] `props` from InspectorData are defined as <string, string> dictionary, which is incompatible with ViewStyleProp
-        setInspectedElement({
-          frame,
-          source,
-          style: props.style,
-        });
+      setPanelPosition(
+        pointerY > Dimensions.get('window').height / 2 ? 'top' : 'bottom',
+      );
+      setSelectionIndex(selectedIndex);
+      setElementsHierarchy(hierarchy);
+      // $FlowFixMe[incompatible-call] `props` from InspectorData are defined as <string, string> dictionary, which is incompatible with ViewStyleProp
+      setInspectedElement({
+        frame,
+        source,
+        style: props.style,
       });
     };
 

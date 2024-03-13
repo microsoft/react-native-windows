@@ -28,6 +28,8 @@ public:
   virtual bool enableSpannableBuildingUnification(jsi::Runtime &rt) = 0;
   virtual bool enableCustomDrawOrderFabric(jsi::Runtime &rt) = 0;
   virtual bool enableFixForClippedSubviewsCrash(jsi::Runtime &rt) = 0;
+  virtual bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) = 0;
+  virtual bool inspectorEnableModernCDPRegistry(jsi::Runtime &rt) = 0;
 
 };
 
@@ -114,6 +116,22 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableFixForClippedSubviewsCrash, jsInvoker_, instance_);
+    }
+    bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::inspectorEnableCxxInspectorPackagerConnection) == 1,
+          "Expected inspectorEnableCxxInspectorPackagerConnection(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::inspectorEnableCxxInspectorPackagerConnection, jsInvoker_, instance_);
+    }
+    bool inspectorEnableModernCDPRegistry(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::inspectorEnableModernCDPRegistry) == 1,
+          "Expected inspectorEnableModernCDPRegistry(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::inspectorEnableModernCDPRegistry, jsInvoker_, instance_);
     }
 
   private:
@@ -6586,483 +6604,6 @@ private:
 };
 
 
-  class JSI_EXPORT NativePerformanceCxxSpecJSI : public TurboModule {
-protected:
-  NativePerformanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void mark(jsi::Runtime &rt, jsi::String name, double startTime) = 0;
-  virtual void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
-  virtual jsi::Object getSimpleMemoryInfo(jsi::Runtime &rt) = 0;
-  virtual jsi::Object getReactNativeStartupTiming(jsi::Runtime &rt) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativePerformanceCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "NativePerformanceCxx";
-
-protected:
-  NativePerformanceCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativePerformanceCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-private:
-  class Delegate : public NativePerformanceCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativePerformanceCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
-
-    void mark(jsi::Runtime &rt, jsi::String name, double startTime) override {
-      static_assert(
-          bridging::getParameterCount(&T::mark) == 3,
-          "Expected mark(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::mark, jsInvoker_, instance_, std::move(name), std::move(startTime));
-    }
-    void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
-      static_assert(
-          bridging::getParameterCount(&T::measure) == 7,
-          "Expected measure(...) to have 7 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::measure, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(endTime), std::move(duration), std::move(startMark), std::move(endMark));
-    }
-    jsi::Object getSimpleMemoryInfo(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getSimpleMemoryInfo) == 1,
-          "Expected getSimpleMemoryInfo(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::getSimpleMemoryInfo, jsInvoker_, instance_);
-    }
-    jsi::Object getReactNativeStartupTiming(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getReactNativeStartupTiming) == 1,
-          "Expected getReactNativeStartupTiming(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::getReactNativeStartupTiming, jsInvoker_, instance_);
-    }
-
-  private:
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  
-#pragma mark - NativePerformanceObserverCxxBaseRawPerformanceEntry
-
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
-struct [[deprecated("Use NativePerformanceObserverCxxRawPerformanceEntry instead.")]] NativePerformanceObserverCxxBaseRawPerformanceEntry {
-  P0 name;
-  P1 entryType;
-  P2 startTime;
-  P3 duration;
-  P4 processingStart;
-  P5 processingEnd;
-  P6 interactionId;
-  bool operator==(const NativePerformanceObserverCxxBaseRawPerformanceEntry &other) const {
-    return name == other.name && entryType == other.entryType && startTime == other.startTime && duration == other.duration && processingStart == other.processingStart && processingEnd == other.processingEnd && interactionId == other.interactionId;
-  }
-};
-
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
-struct [[deprecated("Use NativePerformanceObserverCxxRawPerformanceEntryBridging instead.")]] NativePerformanceObserverCxxBaseRawPerformanceEntryBridging {
-  static NativePerformanceObserverCxxBaseRawPerformanceEntry<P0, P1, P2, P3, P4, P5, P6> fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    NativePerformanceObserverCxxBaseRawPerformanceEntry<P0, P1, P2, P3, P4, P5, P6> result{
-      bridging::fromJs<P0>(rt, value.getProperty(rt, "name"), jsInvoker),
-      bridging::fromJs<P1>(rt, value.getProperty(rt, "entryType"), jsInvoker),
-      bridging::fromJs<P2>(rt, value.getProperty(rt, "startTime"), jsInvoker),
-      bridging::fromJs<P3>(rt, value.getProperty(rt, "duration"), jsInvoker),
-      bridging::fromJs<P4>(rt, value.getProperty(rt, "processingStart"), jsInvoker),
-      bridging::fromJs<P5>(rt, value.getProperty(rt, "processingEnd"), jsInvoker),
-      bridging::fromJs<P6>(rt, value.getProperty(rt, "interactionId"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static jsi::String nameToJs(jsi::Runtime &rt, P0 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double entryTypeToJs(jsi::Runtime &rt, P1 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double startTimeToJs(jsi::Runtime &rt, P2 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double durationToJs(jsi::Runtime &rt, P3 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double processingStartToJs(jsi::Runtime &rt, P4 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double processingEndToJs(jsi::Runtime &rt, P5 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double interactionIdToJs(jsi::Runtime &rt, P6 value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const NativePerformanceObserverCxxBaseRawPerformanceEntry<P0, P1, P2, P3, P4, P5, P6> &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    result.setProperty(rt, "name", bridging::toJs(rt, value.name, jsInvoker));
-    result.setProperty(rt, "entryType", bridging::toJs(rt, value.entryType, jsInvoker));
-    result.setProperty(rt, "startTime", bridging::toJs(rt, value.startTime, jsInvoker));
-    result.setProperty(rt, "duration", bridging::toJs(rt, value.duration, jsInvoker));
-    if (value.processingStart) {
-      result.setProperty(rt, "processingStart", bridging::toJs(rt, value.processingStart.value(), jsInvoker));
-    }
-    if (value.processingEnd) {
-      result.setProperty(rt, "processingEnd", bridging::toJs(rt, value.processingEnd.value(), jsInvoker));
-    }
-    if (value.interactionId) {
-      result.setProperty(rt, "interactionId", bridging::toJs(rt, value.interactionId.value(), jsInvoker));
-    }
-    return result;
-  }
-};
-
-
-
-#pragma mark - NativePerformanceObserverCxxBaseGetPendingEntriesResult
-
-template <typename P0, typename P1>
-struct [[deprecated("Use NativePerformanceObserverCxxGetPendingEntriesResult instead.")]] NativePerformanceObserverCxxBaseGetPendingEntriesResult {
-  P0 entries;
-  P1 droppedEntriesCount;
-  bool operator==(const NativePerformanceObserverCxxBaseGetPendingEntriesResult &other) const {
-    return entries == other.entries && droppedEntriesCount == other.droppedEntriesCount;
-  }
-};
-
-template <typename P0, typename P1>
-struct [[deprecated("Use NativePerformanceObserverCxxGetPendingEntriesResultBridging instead.")]] NativePerformanceObserverCxxBaseGetPendingEntriesResultBridging {
-  static NativePerformanceObserverCxxBaseGetPendingEntriesResult<P0, P1> fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    NativePerformanceObserverCxxBaseGetPendingEntriesResult<P0, P1> result{
-      bridging::fromJs<P0>(rt, value.getProperty(rt, "entries"), jsInvoker),
-      bridging::fromJs<P1>(rt, value.getProperty(rt, "droppedEntriesCount"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static jsi::Array entriesToJs(jsi::Runtime &rt, P0 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double droppedEntriesCountToJs(jsi::Runtime &rt, P1 value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const NativePerformanceObserverCxxBaseGetPendingEntriesResult<P0, P1> &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    result.setProperty(rt, "entries", bridging::toJs(rt, value.entries, jsInvoker));
-    result.setProperty(rt, "droppedEntriesCount", bridging::toJs(rt, value.droppedEntriesCount, jsInvoker));
-    return result;
-  }
-};
-
-
-#pragma mark - NativePerformanceObserverCxxRawPerformanceEntry
-
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
-struct NativePerformanceObserverCxxRawPerformanceEntry {
-  P0 name;
-  P1 entryType;
-  P2 startTime;
-  P3 duration;
-  P4 processingStart;
-  P5 processingEnd;
-  P6 interactionId;
-  bool operator==(const NativePerformanceObserverCxxRawPerformanceEntry &other) const {
-    return name == other.name && entryType == other.entryType && startTime == other.startTime && duration == other.duration && processingStart == other.processingStart && processingEnd == other.processingEnd && interactionId == other.interactionId;
-  }
-};
-
-template <typename T>
-struct NativePerformanceObserverCxxRawPerformanceEntryBridging {
-  static T types;
-
-  static T fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    T result{
-      bridging::fromJs<decltype(types.name)>(rt, value.getProperty(rt, "name"), jsInvoker),
-      bridging::fromJs<decltype(types.entryType)>(rt, value.getProperty(rt, "entryType"), jsInvoker),
-      bridging::fromJs<decltype(types.startTime)>(rt, value.getProperty(rt, "startTime"), jsInvoker),
-      bridging::fromJs<decltype(types.duration)>(rt, value.getProperty(rt, "duration"), jsInvoker),
-      bridging::fromJs<decltype(types.processingStart)>(rt, value.getProperty(rt, "processingStart"), jsInvoker),
-      bridging::fromJs<decltype(types.processingEnd)>(rt, value.getProperty(rt, "processingEnd"), jsInvoker),
-      bridging::fromJs<decltype(types.interactionId)>(rt, value.getProperty(rt, "interactionId"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static jsi::String nameToJs(jsi::Runtime &rt, decltype(types.name) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double entryTypeToJs(jsi::Runtime &rt, decltype(types.entryType) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double startTimeToJs(jsi::Runtime &rt, decltype(types.startTime) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double durationToJs(jsi::Runtime &rt, decltype(types.duration) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double processingStartToJs(jsi::Runtime &rt, decltype(types.processingStart) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double processingEndToJs(jsi::Runtime &rt, decltype(types.processingEnd) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double interactionIdToJs(jsi::Runtime &rt, decltype(types.interactionId) value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const T &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    result.setProperty(rt, "name", bridging::toJs(rt, value.name, jsInvoker));
-    result.setProperty(rt, "entryType", bridging::toJs(rt, value.entryType, jsInvoker));
-    result.setProperty(rt, "startTime", bridging::toJs(rt, value.startTime, jsInvoker));
-    result.setProperty(rt, "duration", bridging::toJs(rt, value.duration, jsInvoker));
-    if (value.processingStart) {
-      result.setProperty(rt, "processingStart", bridging::toJs(rt, value.processingStart.value(), jsInvoker));
-    }
-    if (value.processingEnd) {
-      result.setProperty(rt, "processingEnd", bridging::toJs(rt, value.processingEnd.value(), jsInvoker));
-    }
-    if (value.interactionId) {
-      result.setProperty(rt, "interactionId", bridging::toJs(rt, value.interactionId.value(), jsInvoker));
-    }
-    return result;
-  }
-};
-
-
-
-#pragma mark - NativePerformanceObserverCxxGetPendingEntriesResult
-
-template <typename P0, typename P1>
-struct NativePerformanceObserverCxxGetPendingEntriesResult {
-  P0 entries;
-  P1 droppedEntriesCount;
-  bool operator==(const NativePerformanceObserverCxxGetPendingEntriesResult &other) const {
-    return entries == other.entries && droppedEntriesCount == other.droppedEntriesCount;
-  }
-};
-
-template <typename T>
-struct NativePerformanceObserverCxxGetPendingEntriesResultBridging {
-  static T types;
-
-  static T fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    T result{
-      bridging::fromJs<decltype(types.entries)>(rt, value.getProperty(rt, "entries"), jsInvoker),
-      bridging::fromJs<decltype(types.droppedEntriesCount)>(rt, value.getProperty(rt, "droppedEntriesCount"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static jsi::Array entriesToJs(jsi::Runtime &rt, decltype(types.entries) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double droppedEntriesCountToJs(jsi::Runtime &rt, decltype(types.droppedEntriesCount) value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const T &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    result.setProperty(rt, "entries", bridging::toJs(rt, value.entries, jsInvoker));
-    result.setProperty(rt, "droppedEntriesCount", bridging::toJs(rt, value.droppedEntriesCount, jsInvoker));
-    return result;
-  }
-};
-
-class JSI_EXPORT NativePerformanceObserverCxxSpecJSI : public TurboModule {
-protected:
-  NativePerformanceObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void startReporting(jsi::Runtime &rt, double entryType) = 0;
-  virtual void stopReporting(jsi::Runtime &rt, double entryType) = 0;
-  virtual void setIsBuffered(jsi::Runtime &rt, jsi::Array entryTypes, bool isBuffered) = 0;
-  virtual jsi::Object popPendingEntries(jsi::Runtime &rt) = 0;
-  virtual void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) = 0;
-  virtual void logRawEntry(jsi::Runtime &rt, jsi::Object entry) = 0;
-  virtual jsi::Array getEventCounts(jsi::Runtime &rt) = 0;
-  virtual void setDurationThreshold(jsi::Runtime &rt, double entryType, double durationThreshold) = 0;
-  virtual void clearEntries(jsi::Runtime &rt, double entryType, std::optional<jsi::String> entryName) = 0;
-  virtual jsi::Array getEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) = 0;
-  virtual jsi::Array getSupportedPerformanceEntryTypes(jsi::Runtime &rt) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativePerformanceObserverCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "NativePerformanceObserverCxx";
-
-protected:
-  NativePerformanceObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativePerformanceObserverCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-private:
-  class Delegate : public NativePerformanceObserverCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativePerformanceObserverCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
-
-    void startReporting(jsi::Runtime &rt, double entryType) override {
-      static_assert(
-          bridging::getParameterCount(&T::startReporting) == 2,
-          "Expected startReporting(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::startReporting, jsInvoker_, instance_, std::move(entryType));
-    }
-    void stopReporting(jsi::Runtime &rt, double entryType) override {
-      static_assert(
-          bridging::getParameterCount(&T::stopReporting) == 2,
-          "Expected stopReporting(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::stopReporting, jsInvoker_, instance_, std::move(entryType));
-    }
-    void setIsBuffered(jsi::Runtime &rt, jsi::Array entryTypes, bool isBuffered) override {
-      static_assert(
-          bridging::getParameterCount(&T::setIsBuffered) == 3,
-          "Expected setIsBuffered(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setIsBuffered, jsInvoker_, instance_, std::move(entryTypes), std::move(isBuffered));
-    }
-    jsi::Object popPendingEntries(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::popPendingEntries) == 1,
-          "Expected popPendingEntries(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::popPendingEntries, jsInvoker_, instance_);
-    }
-    void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::setOnPerformanceEntryCallback) == 2,
-          "Expected setOnPerformanceEntryCallback(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setOnPerformanceEntryCallback, jsInvoker_, instance_, std::move(callback));
-    }
-    void logRawEntry(jsi::Runtime &rt, jsi::Object entry) override {
-      static_assert(
-          bridging::getParameterCount(&T::logRawEntry) == 2,
-          "Expected logRawEntry(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::logRawEntry, jsInvoker_, instance_, std::move(entry));
-    }
-    jsi::Array getEventCounts(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getEventCounts) == 1,
-          "Expected getEventCounts(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Array>(
-          rt, &T::getEventCounts, jsInvoker_, instance_);
-    }
-    void setDurationThreshold(jsi::Runtime &rt, double entryType, double durationThreshold) override {
-      static_assert(
-          bridging::getParameterCount(&T::setDurationThreshold) == 3,
-          "Expected setDurationThreshold(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setDurationThreshold, jsInvoker_, instance_, std::move(entryType), std::move(durationThreshold));
-    }
-    void clearEntries(jsi::Runtime &rt, double entryType, std::optional<jsi::String> entryName) override {
-      static_assert(
-          bridging::getParameterCount(&T::clearEntries) == 3,
-          "Expected clearEntries(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::clearEntries, jsInvoker_, instance_, std::move(entryType), std::move(entryName));
-    }
-    jsi::Array getEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) override {
-      static_assert(
-          bridging::getParameterCount(&T::getEntries) == 3,
-          "Expected getEntries(...) to have 3 parameters");
-
-      return bridging::callFromJs<jsi::Array>(
-          rt, &T::getEntries, jsInvoker_, instance_, std::move(entryType), std::move(entryName));
-    }
-    jsi::Array getSupportedPerformanceEntryTypes(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getSupportedPerformanceEntryTypes) == 1,
-          "Expected getSupportedPerformanceEntryTypes(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Array>(
-          rt, &T::getSupportedPerformanceEntryTypes, jsInvoker_, instance_);
-    }
-
-  private:
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
   class JSI_EXPORT NativePermissionsAndroidCxxSpecJSI : public TurboModule {
 protected:
   NativePermissionsAndroidCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -9914,6 +9455,483 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::removeListeners, jsInvoker_, instance_, std::move(count));
+    }
+
+  private:
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  class JSI_EXPORT NativePerformanceCxxSpecJSI : public TurboModule {
+protected:
+  NativePerformanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void mark(jsi::Runtime &rt, jsi::String name, double startTime) = 0;
+  virtual void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
+  virtual jsi::Object getSimpleMemoryInfo(jsi::Runtime &rt) = 0;
+  virtual jsi::Object getReactNativeStartupTiming(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativePerformanceCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+  static constexpr std::string_view kModuleName = "NativePerformanceCxx";
+
+protected:
+  NativePerformanceCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativePerformanceCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+private:
+  class Delegate : public NativePerformanceCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativePerformanceCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
+
+    void mark(jsi::Runtime &rt, jsi::String name, double startTime) override {
+      static_assert(
+          bridging::getParameterCount(&T::mark) == 3,
+          "Expected mark(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::mark, jsInvoker_, instance_, std::move(name), std::move(startTime));
+    }
+    void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
+      static_assert(
+          bridging::getParameterCount(&T::measure) == 7,
+          "Expected measure(...) to have 7 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::measure, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(endTime), std::move(duration), std::move(startMark), std::move(endMark));
+    }
+    jsi::Object getSimpleMemoryInfo(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getSimpleMemoryInfo) == 1,
+          "Expected getSimpleMemoryInfo(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getSimpleMemoryInfo, jsInvoker_, instance_);
+    }
+    jsi::Object getReactNativeStartupTiming(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getReactNativeStartupTiming) == 1,
+          "Expected getReactNativeStartupTiming(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getReactNativeStartupTiming, jsInvoker_, instance_);
+    }
+
+  private:
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  
+#pragma mark - NativePerformanceObserverCxxBaseRawPerformanceEntry
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+struct [[deprecated("Use NativePerformanceObserverCxxRawPerformanceEntry instead.")]] NativePerformanceObserverCxxBaseRawPerformanceEntry {
+  P0 name;
+  P1 entryType;
+  P2 startTime;
+  P3 duration;
+  P4 processingStart;
+  P5 processingEnd;
+  P6 interactionId;
+  bool operator==(const NativePerformanceObserverCxxBaseRawPerformanceEntry &other) const {
+    return name == other.name && entryType == other.entryType && startTime == other.startTime && duration == other.duration && processingStart == other.processingStart && processingEnd == other.processingEnd && interactionId == other.interactionId;
+  }
+};
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+struct [[deprecated("Use NativePerformanceObserverCxxRawPerformanceEntryBridging instead.")]] NativePerformanceObserverCxxBaseRawPerformanceEntryBridging {
+  static NativePerformanceObserverCxxBaseRawPerformanceEntry<P0, P1, P2, P3, P4, P5, P6> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    NativePerformanceObserverCxxBaseRawPerformanceEntry<P0, P1, P2, P3, P4, P5, P6> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "name"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "entryType"), jsInvoker),
+      bridging::fromJs<P2>(rt, value.getProperty(rt, "startTime"), jsInvoker),
+      bridging::fromJs<P3>(rt, value.getProperty(rt, "duration"), jsInvoker),
+      bridging::fromJs<P4>(rt, value.getProperty(rt, "processingStart"), jsInvoker),
+      bridging::fromJs<P5>(rt, value.getProperty(rt, "processingEnd"), jsInvoker),
+      bridging::fromJs<P6>(rt, value.getProperty(rt, "interactionId"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static jsi::String nameToJs(jsi::Runtime &rt, P0 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double entryTypeToJs(jsi::Runtime &rt, P1 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double startTimeToJs(jsi::Runtime &rt, P2 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double durationToJs(jsi::Runtime &rt, P3 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double processingStartToJs(jsi::Runtime &rt, P4 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double processingEndToJs(jsi::Runtime &rt, P5 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double interactionIdToJs(jsi::Runtime &rt, P6 value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const NativePerformanceObserverCxxBaseRawPerformanceEntry<P0, P1, P2, P3, P4, P5, P6> &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "name", bridging::toJs(rt, value.name, jsInvoker));
+    result.setProperty(rt, "entryType", bridging::toJs(rt, value.entryType, jsInvoker));
+    result.setProperty(rt, "startTime", bridging::toJs(rt, value.startTime, jsInvoker));
+    result.setProperty(rt, "duration", bridging::toJs(rt, value.duration, jsInvoker));
+    if (value.processingStart) {
+      result.setProperty(rt, "processingStart", bridging::toJs(rt, value.processingStart.value(), jsInvoker));
+    }
+    if (value.processingEnd) {
+      result.setProperty(rt, "processingEnd", bridging::toJs(rt, value.processingEnd.value(), jsInvoker));
+    }
+    if (value.interactionId) {
+      result.setProperty(rt, "interactionId", bridging::toJs(rt, value.interactionId.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativePerformanceObserverCxxBaseGetPendingEntriesResult
+
+template <typename P0, typename P1>
+struct [[deprecated("Use NativePerformanceObserverCxxGetPendingEntriesResult instead.")]] NativePerformanceObserverCxxBaseGetPendingEntriesResult {
+  P0 entries;
+  P1 droppedEntriesCount;
+  bool operator==(const NativePerformanceObserverCxxBaseGetPendingEntriesResult &other) const {
+    return entries == other.entries && droppedEntriesCount == other.droppedEntriesCount;
+  }
+};
+
+template <typename P0, typename P1>
+struct [[deprecated("Use NativePerformanceObserverCxxGetPendingEntriesResultBridging instead.")]] NativePerformanceObserverCxxBaseGetPendingEntriesResultBridging {
+  static NativePerformanceObserverCxxBaseGetPendingEntriesResult<P0, P1> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    NativePerformanceObserverCxxBaseGetPendingEntriesResult<P0, P1> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "entries"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "droppedEntriesCount"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static jsi::Array entriesToJs(jsi::Runtime &rt, P0 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double droppedEntriesCountToJs(jsi::Runtime &rt, P1 value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const NativePerformanceObserverCxxBaseGetPendingEntriesResult<P0, P1> &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "entries", bridging::toJs(rt, value.entries, jsInvoker));
+    result.setProperty(rt, "droppedEntriesCount", bridging::toJs(rt, value.droppedEntriesCount, jsInvoker));
+    return result;
+  }
+};
+
+
+#pragma mark - NativePerformanceObserverCxxRawPerformanceEntry
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+struct NativePerformanceObserverCxxRawPerformanceEntry {
+  P0 name;
+  P1 entryType;
+  P2 startTime;
+  P3 duration;
+  P4 processingStart;
+  P5 processingEnd;
+  P6 interactionId;
+  bool operator==(const NativePerformanceObserverCxxRawPerformanceEntry &other) const {
+    return name == other.name && entryType == other.entryType && startTime == other.startTime && duration == other.duration && processingStart == other.processingStart && processingEnd == other.processingEnd && interactionId == other.interactionId;
+  }
+};
+
+template <typename T>
+struct NativePerformanceObserverCxxRawPerformanceEntryBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.name)>(rt, value.getProperty(rt, "name"), jsInvoker),
+      bridging::fromJs<decltype(types.entryType)>(rt, value.getProperty(rt, "entryType"), jsInvoker),
+      bridging::fromJs<decltype(types.startTime)>(rt, value.getProperty(rt, "startTime"), jsInvoker),
+      bridging::fromJs<decltype(types.duration)>(rt, value.getProperty(rt, "duration"), jsInvoker),
+      bridging::fromJs<decltype(types.processingStart)>(rt, value.getProperty(rt, "processingStart"), jsInvoker),
+      bridging::fromJs<decltype(types.processingEnd)>(rt, value.getProperty(rt, "processingEnd"), jsInvoker),
+      bridging::fromJs<decltype(types.interactionId)>(rt, value.getProperty(rt, "interactionId"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static jsi::String nameToJs(jsi::Runtime &rt, decltype(types.name) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double entryTypeToJs(jsi::Runtime &rt, decltype(types.entryType) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double startTimeToJs(jsi::Runtime &rt, decltype(types.startTime) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double durationToJs(jsi::Runtime &rt, decltype(types.duration) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double processingStartToJs(jsi::Runtime &rt, decltype(types.processingStart) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double processingEndToJs(jsi::Runtime &rt, decltype(types.processingEnd) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double interactionIdToJs(jsi::Runtime &rt, decltype(types.interactionId) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "name", bridging::toJs(rt, value.name, jsInvoker));
+    result.setProperty(rt, "entryType", bridging::toJs(rt, value.entryType, jsInvoker));
+    result.setProperty(rt, "startTime", bridging::toJs(rt, value.startTime, jsInvoker));
+    result.setProperty(rt, "duration", bridging::toJs(rt, value.duration, jsInvoker));
+    if (value.processingStart) {
+      result.setProperty(rt, "processingStart", bridging::toJs(rt, value.processingStart.value(), jsInvoker));
+    }
+    if (value.processingEnd) {
+      result.setProperty(rt, "processingEnd", bridging::toJs(rt, value.processingEnd.value(), jsInvoker));
+    }
+    if (value.interactionId) {
+      result.setProperty(rt, "interactionId", bridging::toJs(rt, value.interactionId.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativePerformanceObserverCxxGetPendingEntriesResult
+
+template <typename P0, typename P1>
+struct NativePerformanceObserverCxxGetPendingEntriesResult {
+  P0 entries;
+  P1 droppedEntriesCount;
+  bool operator==(const NativePerformanceObserverCxxGetPendingEntriesResult &other) const {
+    return entries == other.entries && droppedEntriesCount == other.droppedEntriesCount;
+  }
+};
+
+template <typename T>
+struct NativePerformanceObserverCxxGetPendingEntriesResultBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.entries)>(rt, value.getProperty(rt, "entries"), jsInvoker),
+      bridging::fromJs<decltype(types.droppedEntriesCount)>(rt, value.getProperty(rt, "droppedEntriesCount"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static jsi::Array entriesToJs(jsi::Runtime &rt, decltype(types.entries) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double droppedEntriesCountToJs(jsi::Runtime &rt, decltype(types.droppedEntriesCount) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "entries", bridging::toJs(rt, value.entries, jsInvoker));
+    result.setProperty(rt, "droppedEntriesCount", bridging::toJs(rt, value.droppedEntriesCount, jsInvoker));
+    return result;
+  }
+};
+
+class JSI_EXPORT NativePerformanceObserverCxxSpecJSI : public TurboModule {
+protected:
+  NativePerformanceObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void startReporting(jsi::Runtime &rt, double entryType) = 0;
+  virtual void stopReporting(jsi::Runtime &rt, double entryType) = 0;
+  virtual void setIsBuffered(jsi::Runtime &rt, jsi::Array entryTypes, bool isBuffered) = 0;
+  virtual jsi::Object popPendingEntries(jsi::Runtime &rt) = 0;
+  virtual void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) = 0;
+  virtual void logRawEntry(jsi::Runtime &rt, jsi::Object entry) = 0;
+  virtual jsi::Array getEventCounts(jsi::Runtime &rt) = 0;
+  virtual void setDurationThreshold(jsi::Runtime &rt, double entryType, double durationThreshold) = 0;
+  virtual void clearEntries(jsi::Runtime &rt, double entryType, std::optional<jsi::String> entryName) = 0;
+  virtual jsi::Array getEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) = 0;
+  virtual jsi::Array getSupportedPerformanceEntryTypes(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativePerformanceObserverCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+  static constexpr std::string_view kModuleName = "NativePerformanceObserverCxx";
+
+protected:
+  NativePerformanceObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativePerformanceObserverCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+private:
+  class Delegate : public NativePerformanceObserverCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativePerformanceObserverCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
+
+    void startReporting(jsi::Runtime &rt, double entryType) override {
+      static_assert(
+          bridging::getParameterCount(&T::startReporting) == 2,
+          "Expected startReporting(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::startReporting, jsInvoker_, instance_, std::move(entryType));
+    }
+    void stopReporting(jsi::Runtime &rt, double entryType) override {
+      static_assert(
+          bridging::getParameterCount(&T::stopReporting) == 2,
+          "Expected stopReporting(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::stopReporting, jsInvoker_, instance_, std::move(entryType));
+    }
+    void setIsBuffered(jsi::Runtime &rt, jsi::Array entryTypes, bool isBuffered) override {
+      static_assert(
+          bridging::getParameterCount(&T::setIsBuffered) == 3,
+          "Expected setIsBuffered(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setIsBuffered, jsInvoker_, instance_, std::move(entryTypes), std::move(isBuffered));
+    }
+    jsi::Object popPendingEntries(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::popPendingEntries) == 1,
+          "Expected popPendingEntries(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::popPendingEntries, jsInvoker_, instance_);
+    }
+    void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) override {
+      static_assert(
+          bridging::getParameterCount(&T::setOnPerformanceEntryCallback) == 2,
+          "Expected setOnPerformanceEntryCallback(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setOnPerformanceEntryCallback, jsInvoker_, instance_, std::move(callback));
+    }
+    void logRawEntry(jsi::Runtime &rt, jsi::Object entry) override {
+      static_assert(
+          bridging::getParameterCount(&T::logRawEntry) == 2,
+          "Expected logRawEntry(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::logRawEntry, jsInvoker_, instance_, std::move(entry));
+    }
+    jsi::Array getEventCounts(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getEventCounts) == 1,
+          "Expected getEventCounts(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getEventCounts, jsInvoker_, instance_);
+    }
+    void setDurationThreshold(jsi::Runtime &rt, double entryType, double durationThreshold) override {
+      static_assert(
+          bridging::getParameterCount(&T::setDurationThreshold) == 3,
+          "Expected setDurationThreshold(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setDurationThreshold, jsInvoker_, instance_, std::move(entryType), std::move(durationThreshold));
+    }
+    void clearEntries(jsi::Runtime &rt, double entryType, std::optional<jsi::String> entryName) override {
+      static_assert(
+          bridging::getParameterCount(&T::clearEntries) == 3,
+          "Expected clearEntries(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::clearEntries, jsInvoker_, instance_, std::move(entryType), std::move(entryName));
+    }
+    jsi::Array getEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) override {
+      static_assert(
+          bridging::getParameterCount(&T::getEntries) == 3,
+          "Expected getEntries(...) to have 3 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getEntries, jsInvoker_, instance_, std::move(entryType), std::move(entryName));
+    }
+    jsi::Array getSupportedPerformanceEntryTypes(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getSupportedPerformanceEntryTypes) == 1,
+          "Expected getSupportedPerformanceEntryTypes(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getSupportedPerformanceEntryTypes, jsInvoker_, instance_);
     }
 
   private:

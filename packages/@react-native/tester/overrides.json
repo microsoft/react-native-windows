@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.74.0-nightly-20240208-b796cda38",
+  "baseVersion": "0.74.0-nightly-20240214-b8ad91732",
   "overrides": [
     {
       "type": "copy",
@@ -250,7 +250,7 @@
       "type": "copy",
       "directory": "js/examples/Performance",
       "baseDirectory": "packages/rn-tester/js/examples/Performance",
-      "baseHash": "184fd3a94cbf3ad4fce8d4fde1e92e7e80fa06f9",
+      "baseHash": "2cb56896687df27a1f22fad45a2d608167859a61",
       "issue": 0
     },
     {
@@ -495,14 +495,14 @@
       "type": "copy",
       "file": "NativeComponentExample/js/MyNativeView.js",
       "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeView.js",
-      "baseHash": "442b01294a01bf770a9a7a791c1605879d9f9cd1",
+      "baseHash": "37f9257087d5f4e9ed18566a5f79ecf9ef0a44ec",
       "issue": 4054
     },
     {
       "type": "copy",
       "file": "NativeComponentExample/js/MyNativeViewNativeComponent.js",
       "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeViewNativeComponent.js",
-      "baseHash": "b15bb86ece03e843cae1b85049b09f7ade4d7221",
+      "baseHash": "d23f5402d30ccf2d3283ea14b993523ae9121529",
       "issue": 4054
     },
     {
@@ -523,7 +523,7 @@
       "type": "copy",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "f98df2702420d6a05214aab7467ca13b8bbf0947",
+      "baseHash": "30849d22dd65d92f54f9e405bd9f26ebe5967f87",
       "issue": 4054
     }
   ]
