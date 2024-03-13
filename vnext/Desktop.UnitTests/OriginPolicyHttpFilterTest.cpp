@@ -280,10 +280,9 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     // Should implicitly set Content-Length and Content-Type
     request.Content(HttpStringContent{L"PreflightContent"});
 
-    auto filter = winrt::make<OriginPolicyHttpFilter>(mockFilter);
+    auto filter = winrt::make<OriginPolicyHttpFilter>("http://somehost", mockFilter);
     auto opFilter = filter.as<OriginPolicyHttpFilter>();
 
-    OriginPolicyHttpFilter::SetStaticOrigin("http://somehost");
     try {
       auto sendOp = opFilter->SendPreflightAsync(request);
       sendOp.get();
@@ -291,12 +290,10 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
       auto response = sendOp.GetResults();
       opFilter->ValidatePreflightResponse(request, response);
 
-      OriginPolicyHttpFilter::SetStaticOrigin({});
       Assert::IsTrue(boost::iequals(
           response.Headers().Lookup(L"Access-Control-Allow-Headers").c_str(),
           L"ChangeMyCase, Content-Length, Content-Type"));
     } catch (const winrt::hresult_error &e) {
-      OriginPolicyHttpFilter::SetStaticOrigin({});
       Assert::Fail(e.message().c_str());
     }
   }
@@ -323,10 +320,9 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     // Should implicitly set Content-Length and Content-Type
     request.Content(HttpStringContent{L"PreflightContent"});
 
-    auto filter = winrt::make<OriginPolicyHttpFilter>(mockFilter);
+    auto filter = winrt::make<OriginPolicyHttpFilter>("http://somehost", mockFilter);
     auto opFilter = filter.as<OriginPolicyHttpFilter>();
 
-    OriginPolicyHttpFilter::SetStaticOrigin("http://somehost");
     try {
       auto sendOp = opFilter->SendPreflightAsync(request);
       sendOp.get();
@@ -334,12 +330,10 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
       auto response = sendOp.GetResults();
       opFilter->ValidatePreflightResponse(request, response);
 
-      OriginPolicyHttpFilter::SetStaticOrigin({});
       Assert::AreEqual(
           L"Authorization, Content-Length, Content-Type",
           response.Headers().Lookup(L"Access-Control-Allow-Headers").c_str());
     } catch (const winrt::hresult_error &e) {
-      OriginPolicyHttpFilter::SetStaticOrigin({});
       Assert::Fail(e.message().c_str());
     }
   }
