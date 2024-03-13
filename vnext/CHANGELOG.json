@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 13 Mar 2024 05:14:11 GMT",
+      "version": "0.0.0-canary.788",
+      "tag": "react-native-windows_v0.0.0-canary.788",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a74c6a8e4a813b987a9201c36a08a35868bbf6b4",
+            "comment": "Minor clean up for headers for Office consumption"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "fadb98c131b81a873dfdb8b9168eb185ad5ac19f",
+            "comment": "Make HTTP origin value an instance member"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Mar 2024 05:15:10 GMT",
       "version": "0.0.0-canary.787",
       "tag": "react-native-windows_v0.0.0-canary.787",
