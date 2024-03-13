@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Make HTTP origin value an instance member (#12821)",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
