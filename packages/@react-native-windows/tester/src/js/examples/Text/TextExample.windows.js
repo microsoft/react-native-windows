@@ -16,6 +16,7 @@ import TextAdjustsDynamicLayoutExample from './TextAdjustsDynamicLayoutExample';
 import React from 'react';
 import {
   LayoutAnimation,
+  Platform,
   /*Image,*/
   StyleSheet,
   Switch,
@@ -1012,7 +1013,7 @@ export class TextExample extends React.Component<
             Neat, huh?
           </Text>
         </RNTesterBlock>
-        { platform.OS !== 'windows' ?
+        { Platform.OS !== 'windows' ?
           <View>
             <RNTesterBlock title="Inline views">
               <TextInlineView.Basic />
