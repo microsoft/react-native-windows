@@ -47,7 +47,7 @@ interface IAttributeTogglerState {
 }
 export class AttributeToggler extends React.Component<
   {},
-  IAttributeTogglerState
+  IAttributeTogglerState,
 > {
   state: IAttributeTogglerState = {fontWeight: 'bold', fontSize: 15};
 
@@ -307,7 +307,7 @@ export class BackgroundColorDemo extends React.Component<{}> {
 
 export class TextHighlightDemo extends React.Component<
   {},
-  {search: string; toggled: boolean}
+  {search: string, toggled: boolean},
 > {
   constructor(props: any) {
     super(props);
@@ -367,7 +367,7 @@ export class TextHighlightDemo extends React.Component<
 
 export class TextExample extends React.Component<
   {},
-  {toggle1: boolean; toggle2: boolean; toggle3: boolean}
+  {toggle1: boolean, toggle2: boolean, toggle3: boolean},
 > {
   constructor(props: any) {
     super(props);
@@ -810,10 +810,10 @@ export class TextExample extends React.Component<
               right right
             </Text>
             <Text style={{textAlign: 'justify'}}>
-              justify (works when api level >= 26 otherwise fallbacks to "left"):
-              this text component{"'"}s contents are laid out with "textAlign:
-              justify" and as you can see all of the lines except the last one
-              span the available width of the parent container.
+              justify (works when api level >= 26 otherwise fallbacks to
+              "left"): this text component{"'"}s contents are laid out with
+              "textAlign: justify" and as you can see all of the lines except
+              the last one span the available width of the parent container.
             </Text>
           </View>
         </RNTesterBlock>
@@ -1013,7 +1013,7 @@ export class TextExample extends React.Component<
             Neat, huh?
           </Text>
         </RNTesterBlock>
-        { Platform.OS !== 'windows' ?
+        {Platform.OS !== 'windows' ? (
           <View>
             <RNTesterBlock title="Inline views">
               <TextInlineView.Basic />
@@ -1034,7 +1034,7 @@ export class TextExample extends React.Component<
               <TextInlineView.ChangeInnerViewSize />
             </RNTesterBlock>
           </View>
-        : null }
+        ) : null}
         <RNTesterBlock title="Text shadow">
           <Text
             style={{
