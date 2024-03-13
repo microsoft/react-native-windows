@@ -24,7 +24,6 @@ using Microsoft::React::Networking::OriginPolicyHttpFilter;
 using Microsoft::React::Networking::RequestArgs;
 using Microsoft::React::Networking::ResponseOperation;
 using std::wstring;
-using std::wstring;
 using winrt::Windows::Foundation::Uri;
 
 namespace Microsoft::React::Test {
