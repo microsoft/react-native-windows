@@ -641,8 +641,7 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
 
 #pragma region IHttpResource
 
-/*static*/ shared_ptr<IHttpResource> IHttpResource::Make(
-    winrt::Windows::Foundation::IInspectable const &inspectableProperties) noexcept {
+/*static*/ shared_ptr<IHttpResource> IHttpResource::Make(IInspectable const &inspectableProperties) noexcept {
   using namespace winrt::Microsoft::ReactNative;
   using winrt::Windows::Web::Http::HttpClient;
 
@@ -653,8 +652,7 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
     client = HttpClient{redirFilter};
   } else {
     auto globalOrigin = GetRuntimeOptionString("Http.GlobalOrigin");
-    OriginPolicyHttpFilter::SetStaticOrigin(std::move(globalOrigin));
-    auto opFilter = winrt::make<OriginPolicyHttpFilter>(redirFilter);
+    auto opFilter = winrt::make<OriginPolicyHttpFilter>(std::move(globalOrigin), redirFilter);
     redirFilter.as<RedirectHttpFilter>()->SetRedirectSource(opFilter.as<IRedirectEventSource>());
 
     client = HttpClient{opFilter};
