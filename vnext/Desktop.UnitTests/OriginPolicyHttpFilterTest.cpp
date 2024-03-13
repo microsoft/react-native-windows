@@ -7,6 +7,9 @@
 #include <Networking/WinRTTypes.h>
 #include "WinRTNetworkingMocks.h"
 
+// Boost Library
+#include <boost/algorithm/string.hpp>
+
 // Windows API
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Web.Http.h>
@@ -17,6 +20,7 @@ using namespace winrt::Windows::Web::Http;
 using Microsoft::React::Networking::OriginPolicyHttpFilter;
 using Microsoft::React::Networking::RequestArgs;
 using Microsoft::React::Networking::ResponseOperation;
+using std::wstring;
 using winrt::Windows::Foundation::Uri;
 
 namespace Microsoft::React::Test {
@@ -313,7 +317,7 @@ TEST_CLASS (OriginPolicyHttpFilterTest) {
     auto request = HttpRequestMessage(HttpMethod::Get(), Uri{L"http://somehost"});
     request.Properties().Insert(L"RequestArgs", reqArgs);
     request.Headers().TryAppendWithoutValidation(L"Authorization", L"Bearer abc");
-    // Should implicitly set Conent-Length and Content-Type
+    // Should implicitly set Content-Length and Content-Type
     request.Content(HttpStringContent{L"PreflightContent"});
 
     auto filter = winrt::make<OriginPolicyHttpFilter>("http://somehost", mockFilter);
