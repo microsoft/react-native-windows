@@ -448,6 +448,12 @@
     },
     {
       "type": "derived",
+      "file": "src/Libraries/Text/Text.d.ts",
+      "baseFile": "packages/react-native/Libraries/Text/Text.d.ts",
+      "baseHash": "9e85e4822b99786481f22d4bac2fd0f24be40d78"
+    },
+    {
+      "type": "derived",
       "file": "src/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextNativeComponent.js",
       "baseHash": "abcdb74e2fe1e491baaefdd0ba6369199b8032d0",

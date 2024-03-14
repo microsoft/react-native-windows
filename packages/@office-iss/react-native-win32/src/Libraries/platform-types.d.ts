@@ -11,7 +11,7 @@ export { AccessibilityPropsWin32 } from '@office-iss/react-native-win32/Librarie
 export type IViewWin32Props = IViewWin32PropsOnly & AccessibilityPropsWin32;
 export {ViewWin32} from './Components/View/ViewWin32';
 export {IKeyboardEvent, IHandledKeyboardEvent, EventPhase} from './Components/View/ViewPropTypes';
-import {ITextWin32Props as ITextWin32PropsOnly} from './Components/Text/TextWin32.Props';
+import {TextPropsWin32 as ITextWin32PropsOnly} from './Text/Text';
 export type ITextWin32Props = ITextWin32PropsOnly & AccessibilityPropsWin32;
 export {TextWin32TextStyle } from './Components/Text/TextWin32.Props';
 export {TextWin32} from './Components/Text/TextWin32';
