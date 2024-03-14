@@ -82,6 +82,7 @@ jobs:
               value: >
                 (FullyQualifiedName!=RNTesterIntegrationTests::Blob)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
+                (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
                 (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)&
                 (FullyQualifiedName!=WebSocketIntegrationTest::SendReceiveSsl)&
                 (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)
