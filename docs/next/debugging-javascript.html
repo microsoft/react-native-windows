@@ -65,10 +65,13 @@
 <p>Unless stated otherwise, each of the debugging scenarios detailed below assume you're loading your JS bundle from the Metro Packager, not loading a prebuilt bundle file.</p>
 </blockquote>
 <h2><a class="anchor" aria-hidden="true" id="web-debugging"></a><a href="#web-debugging" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Web Debugging</h2>
-<p><em>Web Debugging</em> (also referred to as <em>Remote JS Debugging</em>) is the original JS debugging solution for RN.</p>
+<p><em>Web Debugging</em> (also referred to as <em>Remote JS Debugging</em>) is the original JS debugging solution for RN and the default solution enabled in new RNW projects.</p>
 <p>It works by running your app's JS code within the JS engine of an external process, usually a web browser such as Edge (or Chrome). You're then able to debug your app using the development tools of that external process, i.e. the browser's web development tools.</p>
 <blockquote>
 <p>Web Debugging requires the Metro Packager, as Metro proxies the connection between your native Windows app and the remote JS engine.</p>
+</blockquote>
+<blockquote>
+<p><strong>Important:</strong>: Web Debugging was officially marked as deprecated in RN 0.73 and will be removed in a later release.</p>
 </blockquote>
 <h3><a class="anchor" aria-hidden="true" id="web-debugging-tool-support"></a><a href="#web-debugging-tool-support" aria-hidden="true" class="hash-link"><svg class="hash-link-icon" aria-hidden="true" height="16" version="1.1" viewBox="0 0 16 16" width="16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a>Web Debugging Tool Support</h3>
 <table>
@@ -76,8 +79,8 @@
 <tr><th style="text-align:left">JavaScript Engine</th><th style="text-align:center">Edge Developer Tools</th><th style="text-align:center">Visual Studio Code<br/> w/ React Native Tools</th></tr>
 </thead>
 <tbody>
-<tr><td style="text-align:left">Chakra (Default)</td><td style="text-align:center">✅</td><td style="text-align:center">✅</td></tr>
-<tr><td style="text-align:left">Hermes</td><td style="text-align:center">✅</td><td style="text-align:center">✅</td></tr>
+<tr><td style="text-align:left">Hermes (Default)</td><td style="text-align:center">✅</td><td style="text-align:center">✅</td></tr>
+<tr><td style="text-align:left">Chakra</td><td style="text-align:center">✅</td><td style="text-align:center">✅</td></tr>
 </tbody>
 </table>
 <blockquote>
@@ -153,7 +156,7 @@
 <li>Provide a list of debug configurations. Check the box for <em>Debug Windows</em> and click <em>OK</em>. OR</li>
 <li>Guide you through a series of prompts. Select <em>Debug application</em>, <em>Windows</em>, <em>Classic application</em>.</li>
 </ol></li>
-<li>A new configuration should appear in your <code>launch.json</code> file. Rename it if you want but it should look like this:</li>
+<li>A new (possibly incorrect) entry should appear in your <code>launch.json</code> file. The config will need to look like this (the <code>name</code> doesn't matter) to debug properly:</li>
 </ol>
 <pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Debug Windows"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnative"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span><br />    <span class="token property">"platform"</span><span class="token operator">:</span> <span class="token string">"windows"</span><br /><span class="token punctuation">}</span><br /></code></pre>
 <ol start="3">
@@ -171,7 +174,7 @@
 <li>Provide a list of debug configurations. Check the box for <em>Attach to packager</em> and click <em>OK</em>. OR</li>
 <li>Guide you through a series of prompts. Select <em>Attach to application</em>, <em>Classic application</em>, <code>localhost</code>, <code>8081</code>.</li>
 </ol></li>
-<li>A new configuration should appear in your <code>launch.json</code> file. Rename it if you want but it should look like this:</li>
+<li>A new (possibly incorrect) entry should appear in your <code>launch.json</code> file. The config will need to look like this (the <code>name</code> doesn't matter) to debug properly:</li>
 </ol>
 <pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Attach to packager"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnative"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"attach"</span><br /><span class="token punctuation">}</span><br /></code></pre>
 <ol start="3">
@@ -206,8 +209,8 @@
 <tr><th style="text-align:left">JavaScript Engine</th><th style="text-align:center">Edge Developer Tools</th><th style="text-align:center">Visual Studio</th><th style="text-align:center">Visual Studio Code</th><th style="text-align:center">Visual Studio Code<br/> w/ React Native Tools</th></tr>
 </thead>
 <tbody>
-<tr><td style="text-align:left">Chakra (Default)</td><td style="text-align:center">🟥</td><td style="text-align:center">✅</td><td style="text-align:center">🟥</td><td style="text-align:center">🟥</td></tr>
-<tr><td style="text-align:left">Hermes</td><td style="text-align:center">✅</td><td style="text-align:center">✅</td><td style="text-align:center">✅</td><td style="text-align:center">✅</td></tr>
+<tr><td style="text-align:left">Hermes (Default)</td><td style="text-align:center">✅</td><td style="text-align:center">✅</td><td style="text-align:center">✅</td><td style="text-align:center">✅</td></tr>
+<tr><td style="text-align:left">Chakra</td><td style="text-align:center">🟥</td><td style="text-align:center">✅</td><td style="text-align:center">🟥</td><td style="text-align:center">🟥</td></tr>
 </tbody>
 </table>
 <blockquote>
@@ -370,7 +373,7 @@
 <p>If you don't see <em>Node.js</em>, try again without a code file opened in the editor.</p>
 </blockquote>
 <ol start="2">
-<li>A new configuration should appear in your <code>launch.json</code> file. Rename it if you want but it should look like this:</li>
+<li>A new (possibly incorrect) entry should appear in your <code>launch.json</code> file. The config will need to look like this (the <code>name</code> doesn't matter) to debug properly:</li>
 </ol>
 <pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Attach"</span><span class="token punctuation">,</span><br />    <span class="token property">"port"</span><span class="token operator">:</span> <span class="token number">8081</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"attach"</span><span class="token punctuation">,</span><br />    <span class="token property">"skipFiles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br />        <span class="token string">"&lt;node_internals>/**"</span><br />    <span class="token punctuation">]</span><span class="token punctuation">,</span><br />    <span class="token property">"outFiles"</span><span class="token operator">:</span> <span class="token punctuation">[</span><br />        <span class="token string">"${workspaceFolder}/**/*"</span><br />    <span class="token punctuation">]</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"node"</span><br /><span class="token punctuation">}</span><br /></code></pre>
 <ol start="3">
@@ -405,7 +408,7 @@
 <li>Provide a list of debug configurations. Check the box for <em>Debug Windows Hermes -Experimental</em> and click <em>OK</em>. OR</li>
 <li>Guide you through a series of prompts. Select <em>Debug application</em>, <em>Windows</em>, <em>Application in direct mode(Hermes)</em>.</li>
 </ol></li>
-<li>A new configuration should appear in your <code>launch.json</code> file. Rename it if you want but it should look like this:</li>
+<li>A new (possibly incorrect) entry should appear in your <code>launch.json</code> file. The config will need to look like this (the <code>name</code> doesn't matter) to debug properly:</li>
 </ol>
 <pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Debug Windows Hermes - Experimental"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnativedirect"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"launch"</span><span class="token punctuation">,</span><br />    <span class="token property">"platform"</span><span class="token operator">:</span> <span class="token string">"windows"</span><br /><span class="token punctuation">}</span><br /></code></pre>
 <ol start="3">
@@ -424,7 +427,7 @@
 <li>Provide a list of debug configurations. Check the box for <em>Attach to Hermes application</em> and click <em>OK</em>. OR</li>
 <li>Guide you through a series of prompts. Select <em>Attach to application</em>, <em>Application in direct mode(Hermes)</em>, <em>Hermes engine</em>, <code>localhost</code>, <code>8081</code>.</li>
 </ol></li>
-<li>A new configuration should appear in your <code>launch.json</code> file. Rename it if you want but it should look like this:</li>
+<li>A new (possibly incorrect) entry should appear in your <code>launch.json</code> file. The config will need to look like this (the <code>name</code> doesn't matter) to debug properly:</li>
 </ol>
 <pre><code class="hljs css language-json"><span class="token punctuation">{</span><br />    <span class="token property">"name"</span><span class="token operator">:</span> <span class="token string">"Attach to Hermes application - Experimental"</span><span class="token punctuation">,</span><br />    <span class="token property">"cwd"</span><span class="token operator">:</span> <span class="token string">"${workspaceFolder}"</span><span class="token punctuation">,</span><br />    <span class="token property">"type"</span><span class="token operator">:</span> <span class="token string">"reactnativedirect"</span><span class="token punctuation">,</span><br />    <span class="token property">"request"</span><span class="token operator">:</span> <span class="token string">"attach"</span><br /><span class="token punctuation">}</span><br /></code></pre>
 <ol start="3">
