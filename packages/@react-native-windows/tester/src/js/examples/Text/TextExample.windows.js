@@ -45,10 +45,7 @@ interface IAttributeTogglerState {
   fontWeight: 'bold' | 'normal';
   fontSize: number;
 }
-class AttributeToggler extends React.Component<
-  {},
-  IAttributeTogglerState,
-> {
+class AttributeToggler extends React.Component<{}, IAttributeTogglerState> {
   state: IAttributeTogglerState = {fontWeight: 'bold', fontSize: 15};
 
   toggleWeight = () => {
@@ -420,12 +417,12 @@ class TextExample extends React.Component<
                 </Text>
               </Text>
             </Text>
-          <Text>
-            Should be "AbC":
-            <Text style={{textTransform: 'uppercase'}}>
-              a<Text style={{textTransform: 'none'}}>b</Text>c
+            <Text>
+              Should be "AbC":
+              <Text style={{textTransform: 'uppercase'}}>
+                a<Text style={{textTransform: 'none'}}>b</Text>c
+              </Text>
             </Text>
-          </Text>
             <Text>
               Should be "XyZ":
               <Text style={{textTransform: 'uppercase'}}>
@@ -440,28 +437,30 @@ class TextExample extends React.Component<
                 </Text>
               </Text>
             </Text>
-            { Platform.OS !== 'windows' ? (
-              <Text style={{textTransform: 'none'}}>
-                {
-                  '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
-                }
-              </Text>
-              <Text style={{textTransform: 'uppercase'}}>
-                {
-                  '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
-                }
-              </Text>
-              <Text style={{textTransform: 'lowercase'}}>
-                {
-                  '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
-                }
-              </Text>
-              <Text style={{textTransform: 'capitalize'}}>
-                {
-                  '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
-                }
-              </Text>
-            ) : null }
+            {Platform.OS !== 'windows' ? (
+              <View>
+                <Text style={{textTransform: 'none'}}>
+                  {
+                    '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
+                  }
+                </Text>
+                <Text style={{textTransform: 'uppercase'}}>
+                  {
+                    '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
+                  }
+                </Text>
+                <Text style={{textTransform: 'lowercase'}}>
+                  {
+                    '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
+                  }
+                </Text>
+                <Text style={{textTransform: 'capitalize'}}>
+                  {
+                    '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
+                  }
+                </Text>
+              </View>
+            ) : null}
             <Text onPress={() => this.setState({toggle1: !this.state.toggle1})}>
               Click to toggle uppercase:{' '}
               <Text
@@ -491,18 +490,18 @@ class TextExample extends React.Component<
                 </Text>
               </View>
             </TouchableWithoutFeedback>
-          <Text
-            style={{
-              textTransform: 'uppercase',
-              fontSize: 16,
-              color: 'turquoise',
-              backgroundColor: 'blue',
-              lineHeight: 32,
-              letterSpacing: 2,
-              alignSelf: 'flex-start',
-            }}>
-            Works with other text styles
-          </Text>
+            <Text
+              style={{
+                textTransform: 'uppercase',
+                fontSize: 16,
+                color: 'turquoise',
+                backgroundColor: 'blue',
+                lineHeight: 32,
+                letterSpacing: 2,
+                alignSelf: 'flex-start',
+              }}>
+              Works with other text styles
+            </Text>
           </View>
         </RNTesterBlock>
         <RNTesterBlock title="Substring Emoji (should only see 'test')">
@@ -1081,6 +1080,7 @@ class TextExample extends React.Component<
             Neat, huh?
           </Text>
         </RNTesterBlock>
+        {/* Adding platform conditional since this android-imported example is making e2e tests hang indefinitely */}
         {Platform.OS !== 'windows' ? (
           <View>
             <RNTesterBlock title="Inline views">
