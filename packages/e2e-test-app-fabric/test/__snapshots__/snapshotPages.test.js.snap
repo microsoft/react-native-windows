@@ -103,7 +103,7 @@ exports[`snapshotAllPages Accessibility Windows 2`] = `
     accessibilityLabel="Pressed 0 times"
     accessibilityLiveRegion="polite"
   >
-    Pressed 
+    Pressed
     0
      times
   </Text>
@@ -117,7 +117,7 @@ exports[`snapshotAllPages Accessibility Windows 3`] = `
   </Text>
   <View>
     <Text>
-      isHighContrast: 
+      isHighContrast:
       False
     </Text>
   </View>
@@ -132,7 +132,7 @@ exports[`snapshotAllPages Accessibility Windows 3`] = `
   >
     <Text>
       ButtonFace High Contrast Hex Value:
-       
+
     </Text>
   </View>
   <View
@@ -146,7 +146,7 @@ exports[`snapshotAllPages Accessibility Windows 3`] = `
   >
     <Text>
       ButtonText High Contrast Color Hex Value:
-       
+
     </Text>
   </View>
   <View
@@ -160,7 +160,7 @@ exports[`snapshotAllPages Accessibility Windows 3`] = `
   >
     <Text>
       GrayText High Contrast Color Hex Value:
-       
+
     </Text>
   </View>
   <View
@@ -174,7 +174,7 @@ exports[`snapshotAllPages Accessibility Windows 3`] = `
   >
     <Text>
       Highlight High Contrast Color Hex Value:
-       
+
     </Text>
   </View>
   <View
@@ -188,7 +188,7 @@ exports[`snapshotAllPages Accessibility Windows 3`] = `
   >
     <Text>
       HighlightText High Contrast Color Hex Value:
-       
+
     </Text>
   </View>
   <View
@@ -202,7 +202,7 @@ exports[`snapshotAllPages Accessibility Windows 3`] = `
   >
     <Text>
       Hotlight High Contrast Color Hex Value:
-       
+
     </Text>
   </View>
   <View
@@ -216,7 +216,7 @@ exports[`snapshotAllPages Accessibility Windows 3`] = `
   >
     <Text>
       Window High Contrast Color Hex Value:
-       
+
     </Text>
   </View>
   <View
@@ -230,7 +230,7 @@ exports[`snapshotAllPages Accessibility Windows 3`] = `
   >
     <Text>
       WindowText High Contrast Color Hex Value:
-       
+
     </Text>
   </View>
 </View>
@@ -293,7 +293,7 @@ exports[`snapshotAllPages Accessibility Windows 4`] = `
   >
     <Text>
       This View should be
-       
+
       enabled
        according to UIA
     </Text>
@@ -531,9 +531,9 @@ exports[`snapshotAllPages Accessibility Windows 4`] = `
   >
     <Text>
       This View should be
-       
+
       Unchecked
-       
+
       according to UIA
     </Text>
   </View>
@@ -591,9 +591,9 @@ exports[`snapshotAllPages Accessibility Windows 4`] = `
     }
   >
     <Text>
-      This View should be 
+      This View should be
       Not Busy
-       
+
       according to UIA
     </Text>
   </View>
@@ -653,7 +653,7 @@ exports[`snapshotAllPages Accessibility Windows 4`] = `
   >
     <Text>
       This View should be
-       
+
       Expanded
        according to UIA
     </Text>
@@ -717,11 +717,11 @@ exports[`snapshotAllPages Accessibility Windows 4`] = `
   >
     <Text>
       The View's (accessibilityRole == adjustable, ie. Slider) properties should be the following according to UIA: Min-
-       
+
       5
-      Max- 
+      Max-
       125
-      Now- 
+      Now-
       10
     </Text>
   </View>
@@ -743,7 +743,7 @@ exports[`snapshotAllPages Accessibility Windows 4`] = `
     }
   >
     <Text>
-      The View's properties should be the following according to UIA: Text- 
+      The View's properties should be the following according to UIA: Text-
       testText
     </Text>
   </View>
@@ -801,7 +801,7 @@ exports[`snapshotAllPages Accessibility Windows 5`] = `
             }
           >
             <Text>
-              Item 
+              Item
               1
             </Text>
           </View>
@@ -824,7 +824,7 @@ exports[`snapshotAllPages Accessibility Windows 5`] = `
             }
           >
             <Text>
-              Item 
+              Item
               2
             </Text>
           </View>
@@ -847,7 +847,7 @@ exports[`snapshotAllPages Accessibility Windows 5`] = `
             }
           >
             <Text>
-              Item 
+              Item
               3
             </Text>
           </View>
@@ -927,7 +927,7 @@ exports[`snapshotAllPages Accessibility Windows 5`] = `
             }
           >
             <Text>
-              Touchable 
+              Touchable
               1
             </Text>
           </View>
@@ -973,7 +973,7 @@ exports[`snapshotAllPages Accessibility Windows 5`] = `
             }
           >
             <Text>
-              Touchable 
+              Touchable
               2
             </Text>
           </View>
@@ -1019,7 +1019,7 @@ exports[`snapshotAllPages Accessibility Windows 5`] = `
             }
           >
             <Text>
-              Touchable 
+              Touchable
               3
             </Text>
           </View>
@@ -1640,7 +1640,7 @@ exports[`snapshotAllPages Alerts 8`] = `
     >
       Prompt value:
     </Text>
-     
+
   </Text>
   <View
     accessibilityState={
@@ -3194,7 +3194,7 @@ exports[`snapshotAllPages Animated 2`] = `
     }
   >
     <Text>
-      The 
+      The
     </Text>
     <Text
       collapsable={false}
@@ -3207,7 +3207,7 @@ exports[`snapshotAllPages Animated 2`] = `
       quick
     </Text>
     <Text>
-       brown 
+       brown
     </Text>
     <Text
       collapsable={false}
@@ -3338,7 +3338,7 @@ exports[`snapshotAllPages Animated 3`] = `
     testID="toggle-button"
   >
     <Text>
-      Press to 
+      Press to
       Hide
     </Text>
   </View>
@@ -6350,7 +6350,7 @@ exports[`snapshotAllPages Animated 10`] = `
     }
   >
     <Text>
-      Press to 
+      Press to
       Start
     </Text>
   </View>
@@ -8353,9 +8353,9 @@ exports[`snapshotAllPages Composition Bugs Example 1`] = `
     />
   </View>
   <Text>
-    Value: 
+    Value:
     0
-    
+
 
   </Text>
   <View>
@@ -8385,9 +8385,9 @@ exports[`snapshotAllPages Composition Bugs Example 1`] = `
     />
   </View>
   <Text>
-    Value: 
+    Value:
     0
-    
+
 
   </Text>
   <View>
@@ -8417,9 +8417,9 @@ exports[`snapshotAllPages Composition Bugs Example 1`] = `
     />
   </View>
   <Text>
-    Value: 
+    Value:
     0
-    
+
 
   </Text>
 </View>
@@ -8791,8 +8791,8 @@ exports[`snapshotAllPages Composition Bugs Example 5`] = `
     />
   </View>
   <Text>
-    Final Value: 
-    
+    Final Value:
+
 
   </Text>
   <View>
@@ -8822,8 +8822,8 @@ exports[`snapshotAllPages Composition Bugs Example 5`] = `
     />
   </View>
   <Text>
-    Final Value: 
-    
+    Final Value:
+
 
   </Text>
   <View>
@@ -8853,8 +8853,8 @@ exports[`snapshotAllPages Composition Bugs Example 5`] = `
     />
   </View>
   <Text>
-    Final Value: 
-    
+    Final Value:
+
 
   </Text>
 </View>
@@ -9849,7 +9849,7 @@ exports[`snapshotAllPages Fast Path Texts 5`] = `
 exports[`snapshotAllPages Fast Path Texts 6`] = `
 <View>
   <Text>
-    I'm a 
+    I'm a
     slowText
      because my string interpolation needs to all be within a pair of curly brackets.
   </Text>
@@ -11247,7 +11247,7 @@ exports[`snapshotAllPages FlatList 1`] = `
                   }
                 >
                   Item 550
-                   - 
+                   -
                   Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentu
                 </Text>
               </View>
@@ -11335,7 +11335,7 @@ exports[`snapshotAllPages FlatList 1`] = `
                   }
                 >
                   Item 551
-                   - 
+                   -
                   Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur nec. Erat ocurreret m
                 </Text>
               </View>
@@ -11423,7 +11423,7 @@ exports[`snapshotAllPages FlatList 1`] = `
                   }
                 >
                   Item 552
-                   - 
+                   -
                   Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id
                 </Text>
               </View>
@@ -11511,7 +11511,7 @@ exports[`snapshotAllPages FlatList 1`] = `
                   }
                 >
                   Item 553
-                   - 
+                   -
                   Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur
                 </Text>
               </View>
@@ -11599,7 +11599,7 @@ exports[`snapshotAllPages FlatList 1`] = `
                   }
                 >
                   Item 554
-                   - 
+                   -
                   Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequu
                 </Text>
               </View>
@@ -11687,7 +11687,7 @@ exports[`snapshotAllPages FlatList 1`] = `
                   }
                 >
                   Item 555
-                   - 
+                   -
                   Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, a
                 </Text>
               </View>
@@ -11775,7 +11775,7 @@ exports[`snapshotAllPages FlatList 1`] = `
                   }
                 >
                   Item 556
-                   - 
+                   -
                   Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur nec. Erat ocurreret mei ei. Eu paulo sapientem vulputate est, vel an accusam intellegam i
                 </Text>
               </View>
@@ -11863,8 +11863,8 @@ exports[`snapshotAllPages FlatList 1`] = `
                   }
                 >
                   Item 557
-                   - 
-                  Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, 
+                   -
+                  Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint,
                 </Text>
               </View>
             </View>
@@ -11951,7 +11951,7 @@ exports[`snapshotAllPages FlatList 1`] = `
                   }
                 >
                   Item 558
-                   - 
+                   -
                   Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur nec. Erat ocurreret mei ei. Eu paulo sapientem vulputa
                 </Text>
               </View>
@@ -12039,7 +12039,7 @@ exports[`snapshotAllPages FlatList 1`] = `
                   }
                 >
                   Item 559
-                   - 
+                   -
                   Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur nec. Erat ocurreret mei ei. E
                 </Text>
               </View>
@@ -16990,7 +16990,7 @@ exports[`snapshotAllPages FlatList 8`] = `
           value=""
         />
         <Text>
-           numColumns: 
+           numColumns:
         </Text>
         <TextInput
           autoCapitalize="none"
@@ -23286,7 +23286,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 0
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur nec. Erat ocurreret mei ei. Eu paulo sa
                   </Text>
                 </View>
@@ -23372,7 +23372,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 1
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam cas
                   </Text>
                 </View>
@@ -23471,7 +23471,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 2
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur nec. Erat ocurreret mei ei. Eu paulo sapientem vulputate est, ve
                   </Text>
                 </View>
@@ -23557,7 +23557,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 3
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te me
                   </Text>
                 </View>
@@ -23656,7 +23656,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 4
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur nec. Erat ocurreret mei ei. Eu paulo sapientem vulputate est, vel an accusam intellegam i
                   </Text>
                 </View>
@@ -23742,7 +23742,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 5
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Se
                   </Text>
                 </View>
@@ -23841,7 +23841,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 6
-                     - 
+                     -
                     Lorem ipsum dolor sit amet
                   </Text>
                 </View>
@@ -23927,7 +23927,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 7
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In
                   </Text>
                 </View>
@@ -24026,7 +24026,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 8
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oporter
                   </Text>
                 </View>
@@ -24112,7 +24112,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 9
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur n
                   </Text>
                 </View>
@@ -24211,7 +24211,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 10
-                     - 
+                     -
                     Lorem ipsum dolor sit a
                   </Text>
                 </View>
@@ -24297,7 +24297,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 11
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrum
                   </Text>
                 </View>
@@ -24396,7 +24396,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 12
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi a
                   </Text>
                 </View>
@@ -24482,7 +24482,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 13
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur ne
                   </Text>
                 </View>
@@ -24581,8 +24581,8 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 14
-                     - 
-                    Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre 
+                     -
+                    Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre
                   </Text>
                 </View>
               </View>
@@ -24667,8 +24667,8 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 15
-                     - 
-                    Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur nec. Erat ocurreret mei ei. 
+                     -
+                    Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur nec. Erat ocurreret mei ei.
                   </Text>
                 </View>
               </View>
@@ -24766,7 +24766,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 16
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint, te mea facilisi adipiscing. Sea id integre luptatum. In tota sale consequuntur nec. Erat ocurreret mei ei. Eu paulo sapientem vulputate est, vel an accusam intellegam inte
                   </Text>
                 </View>
@@ -24852,7 +24852,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 17
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an
                   </Text>
                 </View>
@@ -24951,7 +24951,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 18
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit referrentur. Te nam case ludus inciderint
                   </Text>
                 </View>
@@ -25037,7 +25037,7 @@ exports[`snapshotAllPages FlatList 8`] = `
                     }
                   >
                     Item 19
-                     - 
+                     -
                     Lorem ipsum dolor sit amet, ius ad pertinax oportere accommodare, an vix civibus corrumpit ref
                   </Text>
                 </View>
@@ -25435,7 +25435,7 @@ exports[`snapshotAllPages FlatList 10`] = `
         }
       >
         Outer Viewable:
-        
+
 
       </Text>
     </Text>
@@ -25454,7 +25454,7 @@ exports[`snapshotAllPages FlatList 10`] = `
         }
       >
         Outer Rendered:
-        
+
 
       </Text>
       0 (head)
@@ -25474,7 +25474,7 @@ exports[`snapshotAllPages FlatList 10`] = `
         }
       >
         Inner Viewable:
-        
+
 
       </Text>
     </Text>
@@ -25493,7 +25493,7 @@ exports[`snapshotAllPages FlatList 10`] = `
         }
       >
         Inner Rendered:
-        
+
 
       </Text>
     </Text>
@@ -25593,7 +25593,7 @@ exports[`snapshotAllPages Flyout 1`] = `
         }
       }
     >
-      Placement Options: 
+      Placement Options:
     </Text>
     <RNCPicker
       items={
@@ -25977,7 +25977,7 @@ exports[`snapshotAllPages Flyout 1`] = `
       }
     >
       Text Input to Anchor flyout to:
-       
+
     </Text>
     <TextInput
       style={
@@ -26060,7 +26060,7 @@ exports[`snapshotAllPages Keyboard 1`] = `
 <View>
   <Text>
     <Text>
-      Keyboard is 
+      Keyboard is
     </Text>
     <Text
       style={
@@ -26092,7 +26092,7 @@ exports[`snapshotAllPages Keyboard 2`] = `
 <View>
   <Text>
     <Text>
-      Keyboard is 
+      Keyboard is
     </Text>
     <Text
       style={
@@ -26526,7 +26526,7 @@ exports[`snapshotAllPages Keyboard Focus Example 1`] = `
       }
     />
     <Text>
-      Key 
+      Key
       unknown
     </Text>
   </View>
@@ -26568,7 +26568,7 @@ exports[`snapshotAllPages Keyboard Focus Example 1`] = `
     </View>
     <Text>
       Last focus event for TouchableHighlight:
-       
+
     </Text>
     <View
       accessibilityState={
@@ -26622,7 +26622,7 @@ exports[`snapshotAllPages Keyboard Focus Example 1`] = `
     </View>
     <Text>
       Last focus event for TouchableOpacity:
-       
+
     </Text>
     <View
       accessibilityState={
@@ -26659,7 +26659,7 @@ exports[`snapshotAllPages Keyboard Focus Example 1`] = `
     />
     <Text>
       Last focus event for TouchableWithoutFeedback:
-       
+
     </Text>
   </View>
 </View>
@@ -26734,19 +26734,19 @@ exports[`snapshotAllPages Keyboard extension Example 1`] = `
         OnKeyDown Key and Code
       </Text>
       <Text>
-         
+
       </Text>
       <Text>
-         
+
       </Text>
       <Text>
         OnKeyDownCapture Key and Code
       </Text>
       <Text>
-         
+
       </Text>
       <Text>
-         
+
       </Text>
     </View>
     <View
@@ -26763,19 +26763,19 @@ exports[`snapshotAllPages Keyboard extension Example 1`] = `
         OnKeyUp Key and Code
       </Text>
       <Text>
-         
+
       </Text>
       <Text>
-         
+
       </Text>
       <Text>
         OnKeyUpCapture Key and Code
       </Text>
       <Text>
-         
+
       </Text>
       <Text>
-         
+
       </Text>
     </View>
     <View
@@ -28601,7 +28601,7 @@ exports[`snapshotAllPages Layout Events 1`] = `
 <View>
   <Text>
     layout events are called on mount and whenever layout is recalculated. Note that the layout event will typically be received
-     
+
     <Text
       style={
         {
@@ -28612,7 +28612,7 @@ exports[`snapshotAllPages Layout Events 1`] = `
       before
     </Text>
      the layout has updated on screen, especially when using layout animations.
-      
+
     <Text
       onPress={[Function]}
       style={
@@ -28658,7 +28658,7 @@ exports[`snapshotAllPages Layout Events 1`] = `
     />
     <Text>
       ViewLayout:
-       
+
       undefined
 
 
@@ -28676,14 +28676,14 @@ exports[`snapshotAllPages Layout Events 1`] = `
       A simple piece of text.
     </Text>
     <Text>
-      
 
-      Text w/h: 
+
+      Text w/h:
       ?
       /
       ?
 
-      Image x/y: 
+      Image x/y:
       ?
       /
       ?
@@ -29239,7 +29239,7 @@ exports[`snapshotAllPages LegacySelectableTextTest 1`] = `
   <Text
     testID="pressed-state"
   >
-    Pressed: 
+    Pressed:
     0
      times.
   </Text>
@@ -29248,7 +29248,7 @@ exports[`snapshotAllPages LegacySelectableTextTest 1`] = `
     testID="text-example"
   >
     Text before
-     
+
     <Text
       onPress={[Function]}
       style={
@@ -29260,7 +29260,7 @@ exports[`snapshotAllPages LegacySelectableTextTest 1`] = `
     >
       click here
     </Text>
-     
+
     text after
   </Text>
   <View
@@ -29443,7 +29443,7 @@ exports[`snapshotAllPages LegacyTextHitTestTest 1`] = `
   <Text
     testID="pressed-state"
   >
-    Pressed: 
+    Pressed:
     0
      times.
   </Text>
@@ -29451,13 +29451,13 @@ exports[`snapshotAllPages LegacyTextHitTestTest 1`] = `
     testID="virtual-text"
   >
     Nested
-     
+
     <Text>
       pressable
-       
+
       <Text>
         text:
-         
+
         <Text
           onPress={[Function]}
           style={
@@ -29475,7 +29475,7 @@ exports[`snapshotAllPages LegacyTextHitTestTest 1`] = `
     testID="nested-text"
   >
     Nested text inside pressable text:
-     
+
     <Text
       onPress={[Function]}
       style={
@@ -29493,7 +29493,7 @@ exports[`snapshotAllPages LegacyTextHitTestTest 1`] = `
     testID="multiline-text"
   >
     Multiline pressable test:
-     
+
     <Text
       onPress={[Function]}
       style={
@@ -29510,7 +29510,7 @@ or click here.
     testID="multiline-rtl-text"
   >
     Multiline pressable RTL text:
-     
+
     <Text
       onPress={[Function]}
       style={
@@ -29527,7 +29527,7 @@ or click here.
     testID="rtl-text"
   >
     RTL text in LTR flow direction:
-     
+
     <Text
       onPress={[Function]}
       style={
@@ -29548,7 +29548,7 @@ or click here.
     testID="rtl-rtl-flow-text"
   >
     RTL text in RTL flow direction:
-     
+
     <Text
       onPress={[Function]}
       style={
@@ -29569,7 +29569,7 @@ or click here.
     testID="ltr-rtl-flow-text"
   >
     LTR text in RTL flow direction:
-     
+
     <Text
       onPress={[Function]}
       style={
@@ -29585,7 +29585,7 @@ or click here.
     testID="bidirectional-text"
   >
     Bidirectional text in a single run:
-     
+
     <Text
       onPress={[Function]}
       style={
@@ -29601,7 +29601,7 @@ or click here.
     testID="separate-bidirectional-text"
   >
     Bidirectional text in separate runs:
-     
+
     <Text
       onPress={[Function]}
       style={
@@ -29618,7 +29618,7 @@ or click here.
     testID="inserted-text"
   >
     Add pressable inline text child:
-     
+
     <Text
       onPress={[Function]}
       style={
@@ -29628,7 +29628,7 @@ or click here.
       }
     >
       Click to add
-       
+
     </Text>
   </Text>
   <Text
@@ -29657,7 +29657,7 @@ or click here.
     testID="toggled-text"
   >
     Click anywhere to toggle pressability:
-     
+
     <Text
       onPress={[Function]}
       style={
@@ -29892,7 +29892,7 @@ exports[`snapshotAllPages Linking 1`] = `
             }
           }
         >
-          Open 
+          Open
           https://www.facebook.com
         </Text>
       </View>
@@ -29953,7 +29953,7 @@ exports[`snapshotAllPages Linking 1`] = `
             }
           }
         >
-          Open 
+          Open
           http://www.facebook.com
         </Text>
       </View>
@@ -30014,7 +30014,7 @@ exports[`snapshotAllPages Linking 1`] = `
             }
           }
         >
-          Open 
+          Open
           http://facebook.com
         </Text>
       </View>
@@ -30075,7 +30075,7 @@ exports[`snapshotAllPages Linking 1`] = `
             }
           }
         >
-          Open 
+          Open
           fb://notifications
         </Text>
       </View>
@@ -30136,7 +30136,7 @@ exports[`snapshotAllPages Linking 1`] = `
             }
           }
         >
-          Open 
+          Open
           geo:37.484847,-122.148386
         </Text>
       </View>
@@ -30197,7 +30197,7 @@ exports[`snapshotAllPages Linking 1`] = `
             }
           }
         >
-          Open 
+          Open
           tel:9876543210
         </Text>
       </View>
@@ -30573,7 +30573,7 @@ exports[`snapshotAllPages Mouse Events 1`] = `
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
         >
-          Hoverable 
+          Hoverable
           <Text
             onMouseEnter={[Function]}
             onMouseLeave={[Function]}
@@ -31522,7 +31522,7 @@ exports[`snapshotAllPages Native Animated Example 10`] = `
     />
   </View>
   <Text>
-    Value: 
+    Value:
     0
   </Text>
 </View>
@@ -34257,7 +34257,7 @@ exports[`snapshotAllPages Pointer Events 7`] = `
             }
           }
         >
-          A: overflow: 
+          A: overflow:
           visible
         </Text>
       </View>
@@ -34430,7 +34430,7 @@ exports[`snapshotAllPages Pointer Events 8`] = `
             }
           }
         >
-          A: overflow: 
+          A: overflow:
           hidden
         </Text>
       </View>
@@ -34595,7 +34595,7 @@ exports[`snapshotAllPages Popup 1`] = `
       }
     >
       Text Input to Anchor popup to:
-       
+
     </Text>
     <TextInput
       style={
@@ -38667,10 +38667,10 @@ exports[`snapshotAllPages RTLExample 9`] = `
       }
     }
   >
-    Demo: 
+    Demo:
   </Text>
   <Text>
-    The 
+    The
     teal
      is padding.
   </Text>
@@ -38818,7 +38818,7 @@ exports[`snapshotAllPages RTLExample 10`] = `
       }
     }
   >
-    Demo: 
+    Demo:
   </Text>
   <Text>
     The green is margin.
@@ -38964,7 +38964,7 @@ exports[`snapshotAllPages RTLExample 11`] = `
       }
     }
   >
-    Demo: 
+    Demo:
   </Text>
   <Text>
     The orange is position.
@@ -39101,7 +39101,7 @@ exports[`snapshotAllPages RTLExample 11`] = `
       }
     }
   >
-    Demo: 
+    Demo:
   </Text>
   <Text>
     The orange is position.
@@ -39245,7 +39245,7 @@ exports[`snapshotAllPages RTLExample 12`] = `
       }
     }
   >
-    Demo: 
+    Demo:
   </Text>
   <View
     style={
@@ -39384,7 +39384,7 @@ exports[`snapshotAllPages RTLExample 13`] = `
       }
     }
   >
-    Demo: 
+    Demo:
   </Text>
   <View
     style={
@@ -39532,7 +39532,7 @@ exports[`snapshotAllPages RTLExample 14`] = `
       }
     }
   >
-    Demo: 
+    Demo:
   </Text>
   <View
     style={
@@ -39681,7 +39681,7 @@ exports[`snapshotAllPages RTLExample 15`] = `
       }
     }
   >
-    Demo: 
+    Demo:
   </Text>
   <View
     style={
@@ -39842,7 +39842,7 @@ exports[`snapshotAllPages RTLExample 16`] = `
       }
     }
   >
-    Demo: 
+    Demo:
   </Text>
   <View
     style={
@@ -44574,7 +44574,7 @@ exports[`snapshotAllPages ScrollView 11`] = `
 exports[`snapshotAllPages ScrollView 12`] = `
 <View>
   <Text>
-    Content Size Changed: 
+    Content Size Changed:
     original
   </Text>
   <RCTScrollView
@@ -44866,7 +44866,7 @@ exports[`snapshotAllPages ScrollView 12`] = `
 exports[`snapshotAllPages ScrollView 13`] = `
 <View>
   <Text>
-    Scroll State: 
+    Scroll State:
     none
   </Text>
   <RCTScrollView
@@ -45110,7 +45110,7 @@ exports[`snapshotAllPages ScrollView 13`] = `
 exports[`snapshotAllPages ScrollView 14`] = `
 <View>
   <Text>
-    onScroll: 
+    onScroll:
     none
   </Text>
   <RCTScrollView
@@ -58351,7 +58351,7 @@ exports[`snapshotAllPages SectionList 7`] = `
                     ]
                   }
                 >
-                  Out of Viewable Area (See warning) 
+                  Out of Viewable Area (See warning)
                 </Text>
               </View>
             </View>
@@ -65018,7 +65018,7 @@ exports[`snapshotAllPages SectionList 7`] = `
                 }
               }
             >
-              SECTION HEADER: 
+              SECTION HEADER:
               empty section
             </Text>
             <View
@@ -65051,7 +65051,7 @@ exports[`snapshotAllPages SectionList 7`] = `
                 }
               }
             >
-              SECTION FOOTER: 
+              SECTION FOOTER:
               empty section
             </Text>
             <View
@@ -65084,7 +65084,7 @@ exports[`snapshotAllPages SectionList 7`] = `
                 }
               }
             >
-              SECTION HEADER: 
+              SECTION HEADER:
               s1
             </Text>
             <View
@@ -65143,7 +65143,7 @@ exports[`snapshotAllPages SectionList 7`] = `
                 }
               >
                 Item In Header Section
-                 - 
+                 -
                 Section s1
               </Text>
               <Image
@@ -65205,7 +65205,7 @@ exports[`snapshotAllPages SectionList 7`] = `
                 }
               }
             >
-              SECTION FOOTER: 
+              SECTION FOOTER:
               s1
             </Text>
             <View
@@ -65238,7 +65238,7 @@ exports[`snapshotAllPages SectionList 7`] = `
                 }
               }
             >
-              SECTION HEADER: 
+              SECTION HEADER:
               s2
             </Text>
             <View
@@ -65353,7 +65353,7 @@ exports[`snapshotAllPages SectionList 7`] = `
                 }
               }
             >
-              SECTION FOOTER: 
+              SECTION FOOTER:
               s2
             </Text>
             <View
@@ -65386,7 +65386,7 @@ exports[`snapshotAllPages SectionList 7`] = `
                 }
               }
             >
-              SECTION HEADER: 
+              SECTION HEADER:
               0 - 9
             </Text>
             <View
@@ -65676,7 +65676,7 @@ exports[`snapshotAllPages Share 3`] = `
   }
 >
   <Text>
-    action: 
+    action:
     null
   </Text>
   <Text
@@ -66957,7 +66957,7 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               }
             >
-              Add text to me to watch me shrink! 
+              Add text to me to watch me shrink!
             </Text>
             <Text
               adjustsFontSizeToFit={true}
@@ -66970,7 +66970,7 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               }
             >
-              Multiline text component shrinking is supported, watch as this reeeeaaaally loooooong teeeeeeext grooooows and then shriiiinks as you add text to me! ioahsdia soady auydoa aoisyd aosdy  
+              Multiline text component shrinking is supported, watch as this reeeeaaaally loooooong teeeeeeext grooooows and then shriiiinks as you add text to me! ioahsdia soady auydoa aoisyd aosdy
             </Text>
             <Text
               adjustsFontSizeToFit={true}
@@ -66982,7 +66982,7 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               }
             >
-              Text limited by height, watch as this reeeeaaaally loooooong teeeeeeext grooooows and then shriiiinks as you add text to me! ioahsdia soady auydoa aoisyd aosdy  
+              Text limited by height, watch as this reeeeaaaally loooooong teeeeeeext grooooows and then shriiiinks as you add text to me! ioahsdia soady auydoa aoisyd aosdy
             </Text>
             <Text
               adjustsFontSizeToFit={true}
@@ -67000,7 +67000,7 @@ exports[`snapshotAllPages Text 1`] = `
                   }
                 }
               >
-                Differently sized nested elements will shrink together. 
+                Differently sized nested elements will shrink together.
               </Text>
               <Text
                 style={
@@ -67009,7 +67009,7 @@ exports[`snapshotAllPages Text 1`] = `
                   }
                 }
               >
-                LARGE TEXT! 
+                LARGE TEXT!
               </Text>
             </Text>
             <View
@@ -67524,7 +67524,7 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               }
             >
-              Normal: 
+              Normal:
             </Text>
             WillHaveAHyphenWhenBreakingForNewLine
           </Text>
@@ -67538,7 +67538,7 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               }
             >
-              None: 
+              None:
             </Text>
             WillNotHaveAHyphenWhenBreakingForNewLine
           </Text>
@@ -67552,7 +67552,7 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               }
             >
-              Full: 
+              Full:
             </Text>
             WillHaveAHyphenWhenBreakingForNewLine
           </Text>
@@ -67650,7 +67650,7 @@ exports[`snapshotAllPages Text 1`] = `
               }
             >
               Mixed:
-               
+
               <Text
                 style={
                   {
@@ -67658,7 +67658,7 @@ exports[`snapshotAllPages Text 1`] = `
                   }
                 }
               >
-                uppercase 
+                uppercase
               </Text>
               <Text
                 style={
@@ -67667,7 +67667,7 @@ exports[`snapshotAllPages Text 1`] = `
                   }
                 }
               >
-                LoWeRcAsE 
+                LoWeRcAsE
               </Text>
               <Text
                 style={
@@ -67741,7 +67741,7 @@ exports[`snapshotAllPages Text 1`] = `
               onPress={[Function]}
             >
               Click to toggle uppercase:
-               
+
               <Text
                 style={
                   {
@@ -67757,7 +67757,7 @@ exports[`snapshotAllPages Text 1`] = `
             >
               <Text>
                 Click to change raw text:
-                 
+
                 <Text
                   style={
                     {
@@ -67765,7 +67765,7 @@ exports[`snapshotAllPages Text 1`] = `
                     }
                   }
                 >
-                  Hello 
+                  Hello
                   World
                 </Text>
               </Text>
@@ -67864,7 +67864,7 @@ exports[`snapshotAllPages Text 1`] = `
           <Text
             testID="text-wrap"
           >
-            The text should wrap if it goes on multiple lines. See, this is going to the next line. 
+            The text should wrap if it goes on multiple lines. See, this is going to the next line.
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.
           </Text>
         </View>
@@ -70557,7 +70557,7 @@ exports[`snapshotAllPages Text 1`] = `
           </Text>
           <Text>
             Mixed text with
-             
+
             <Text
               style={
                 {
@@ -70568,7 +70568,7 @@ exports[`snapshotAllPages Text 1`] = `
               underline
             </Text>
              and
-             
+
             <Text
               style={
                 {
@@ -70578,7 +70578,7 @@ exports[`snapshotAllPages Text 1`] = `
             >
               line-through
             </Text>
-             
+
             text nodes
           </Text>
         </View>
@@ -70830,7 +70830,7 @@ exports[`snapshotAllPages Text 1`] = `
             }
           >
             Nested text with size 8,
-             
+
             <Text
               style={
                 {
@@ -70838,7 +70838,7 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               }
             >
-              size 23, 
+              size 23,
             </Text>
             and size 8 again
           </Text>
@@ -70850,7 +70850,7 @@ exports[`snapshotAllPages Text 1`] = `
             }
           >
             Nested text with red color,
-             
+
             <Text
               style={
                 {
@@ -70858,7 +70858,7 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               }
             >
-              blue color, 
+              blue color,
             </Text>
             and red color again
           </Text>
@@ -71130,9 +71130,9 @@ exports[`snapshotAllPages Text 1`] = `
           }
         >
           <Text>
-            A 
+            A
             generated
-             
+
             string
              and some     spaces
           </Text>
@@ -71199,7 +71199,7 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               }
             >
-              Holisticly formulate inexpensive ideas before best-of-breed benefits. 
+              Holisticly formulate inexpensive ideas before best-of-breed benefits.
               <Text
                 style={
                   {
@@ -71218,7 +71218,7 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               }
             >
-              Holisticly formulate inexpensive ideas before best-of-breed benefits. 
+              Holisticly formulate inexpensive ideas before best-of-breed benefits.
               <Text
                 style={
                   {
@@ -71499,7 +71499,7 @@ exports[`snapshotAllPages Text 1`] = `
             <Text>
               <Text>
                 See how it will even work on
-                 
+
                 <Text
                   style={
                     {
@@ -71595,7 +71595,7 @@ exports[`snapshotAllPages Text 1`] = `
             <Text
               style={{}}
             >
-              Outer 
+              Outer
               <Text
                 style={
                   {
@@ -71610,7 +71610,7 @@ exports[`snapshotAllPages Text 1`] = `
               style={{}}
             >
               Outer
-               
+
               <Text
                 style={
                   {
@@ -71629,7 +71629,7 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               }
             >
-              Outer pink 
+              Outer pink
               <Text
                 style={
                   {
@@ -71648,7 +71648,7 @@ exports[`snapshotAllPages Text 1`] = `
               }
             >
               Outer on green
-               
+
               <Text
                 style={
                   {
@@ -71668,7 +71668,7 @@ exports[`snapshotAllPages Text 1`] = `
               }
             >
               Outer orange on green
-               
+
               <Text
                 style={
                   {
@@ -71688,7 +71688,7 @@ exports[`snapshotAllPages Text 1`] = `
               }
             >
               Outer orange
-               
+
               <Text
                 style={
                   {
@@ -71719,7 +71719,7 @@ exports[`snapshotAllPages Text 1`] = `
             </Text>
             <Text>
               Outer no_color
-               
+
               <Text
                 style={
                   {
@@ -71729,7 +71729,7 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               >
                 START_NESTED green
-                 
+
                 <Text
                   style={
                     {
@@ -71740,18 +71740,18 @@ exports[`snapshotAllPages Text 1`] = `
                 >
                   DEEPER_NESTED magenta on blue
                 </Text>
-                 
+
                 END_NESTED
               </Text>
-               
+
               attributes.
             </Text>
             <Text>
               Outer no_color
-               
+
               <Text>
                 START_NESTED no_color
-                 
+
                 <Text
                   style={
                     {
@@ -71761,61 +71761,15 @@ exports[`snapshotAllPages Text 1`] = `
                 >
                   DEEPER_NESTED blue
                 </Text>
-                 
+
                 END_NESTED
               </Text>
-               
+
               attributes.
             </Text>
             <Text>
               Outer no_color
-               
-              <Text
-                style={
-                  {
-                    "backgroundColor": "green",
-                  }
-                }
-              >
-                START_NESTED green 
-                <Text>
-                  DEEPER_NESTED inherit green
-                </Text>
-                 
-                END_NESTED
-              </Text>
-               
-              attributes.
-            </Text>
-            <Text
-              style={
-                {
-                  "backgroundColor": "red",
-                }
-              }
-            >
-              Outer red
-               
-              <Text>
-                START_NESTED inherit red 
-                <Text>
-                  DEEPER_NESTED inherit red
-                </Text>
-                 
-                END_NESTED
-              </Text>
-               
-              attributes.
-            </Text>
-            <Text
-              style={
-                {
-                  "backgroundColor": "red",
-                }
-              }
-            >
-              Outer red
-               
+
               <Text
                 style={
                   {
@@ -71824,7 +71778,53 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               >
                 START_NESTED green
-                 
+                <Text>
+                  DEEPER_NESTED inherit green
+                </Text>
+
+                END_NESTED
+              </Text>
+
+              attributes.
+            </Text>
+            <Text
+              style={
+                {
+                  "backgroundColor": "red",
+                }
+              }
+            >
+              Outer red
+
+              <Text>
+                START_NESTED inherit red
+                <Text>
+                  DEEPER_NESTED inherit red
+                </Text>
+
+                END_NESTED
+              </Text>
+
+              attributes.
+            </Text>
+            <Text
+              style={
+                {
+                  "backgroundColor": "red",
+                }
+              }
+            >
+              Outer red
+
+              <Text
+                style={
+                  {
+                    "backgroundColor": "green",
+                  }
+                }
+              >
+                START_NESTED green
+
                 <Text
                   style={
                     {
@@ -71834,10 +71834,10 @@ exports[`snapshotAllPages Text 1`] = `
                 >
                   DEEPER_NESTED blue
                 </Text>
-                 
+
                 END_NESTED
               </Text>
-               
+
               attributes.
             </Text>
           </View>
@@ -71909,10 +71909,10 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               }
             >
-               
+
               blue background,
               <Text>
-                 
+
                 inherited blue background,
                 <Text
                   style={
@@ -71921,7 +71921,7 @@ exports[`snapshotAllPages Text 1`] = `
                     }
                   }
                 >
-                   
+
                   nested green background.
                 </Text>
               </Text>
@@ -72126,7 +72126,7 @@ exports[`snapshotAllPages Text 1`] = `
           >
             Maximum of one line no matter now much I write here. If I keep writing it
             '
-            ll just truncate after one line. 
+            ll just truncate after one line.
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.
           </Text>
           <Text
@@ -72144,7 +72144,7 @@ exports[`snapshotAllPages Text 1`] = `
           >
             Maximum of two lines no matter now much I write here. If I keep writing it
             '
-            ll just truncate after two lines. 
+            ll just truncate after two lines.
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.
           </Text>
           <Text
@@ -72160,7 +72160,7 @@ exports[`snapshotAllPages Text 1`] = `
           <Text>
             No maximum lines specified no matter now much I write here. If I keep writing it
             '
-            ll just keep going and going. 
+            ll just keep going and going.
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.
           </Text>
         </View>
@@ -72226,7 +72226,7 @@ exports[`snapshotAllPages Text 1`] = `
               }
             }
           >
-            You can disable scaling for your Text component by passing 
+            You can disable scaling for your Text component by passing
             "
             allowFontScaling=
             {
@@ -72244,7 +72244,7 @@ exports[`snapshotAllPages Text 1`] = `
             }
           >
             This text will not scale.
-             
+
             <Text
               style={
                 {
@@ -72429,8 +72429,8 @@ exports[`snapshotAllPages Text 1`] = `
         >
           <Text>
             This text contains an inline image
-             
-             
+
+
             Neat, huh?
           </Text>
         </View>
@@ -72572,7 +72572,7 @@ exports[`snapshotAllPages Text 1`] = `
               numberOfLines={1}
             >
               This very long text should be truncated with dots in the end.
-               
+
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.
             </Text>
             <Text
@@ -72590,7 +72590,7 @@ exports[`snapshotAllPages Text 1`] = `
               numberOfLines={1}
             >
               This very long text should be truncated with dots in the middle.
-               
+
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.
             </Text>
             <Text
@@ -72607,7 +72607,7 @@ exports[`snapshotAllPages Text 1`] = `
               ellipsizeMode="head"
               numberOfLines={1}
             >
-              This very long text should be truncated with dots in the beginning. 
+              This very long text should be truncated with dots in the beginning.
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.
             </Text>
             <Text
@@ -72624,7 +72624,7 @@ exports[`snapshotAllPages Text 1`] = `
               ellipsizeMode="clip"
               numberOfLines={1}
             >
-              This very long text should be clipped and this will not be visible. 
+              This very long text should be clipped and this will not be visible.
               Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.
             </Text>
           </View>
@@ -72691,7 +72691,7 @@ exports[`snapshotAllPages Text 1`] = `
             }
           >
             Small Caps
-            
+
 
           </Text>
           <Text
@@ -72705,7 +72705,7 @@ exports[`snapshotAllPages Text 1`] = `
             }
           >
             Old Style nums 0123456789
-            
+
 
           </Text>
           <Text
@@ -72719,7 +72719,7 @@ exports[`snapshotAllPages Text 1`] = `
             }
           >
             Lining nums 0123456789
-            
+
 
           </Text>
           <Text
@@ -72732,13 +72732,13 @@ exports[`snapshotAllPages Text 1`] = `
             }
           >
             Tabular nums
-            
+
 
             1111
-            
+
 
             2222
-            
+
 
           </Text>
           <Text
@@ -72751,13 +72751,13 @@ exports[`snapshotAllPages Text 1`] = `
             }
           >
             Proportional nums
-            
+
 
             1111
-            
+
 
             2222
-            
+
 
           </Text>
         </View>
@@ -72994,7 +72994,7 @@ exports[`snapshotAllPages Text 1`] = `
               }
             }
           >
-            Mixed: 
+            Mixed:
             <Text
               style={
                 {
@@ -73002,7 +73002,7 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               }
             >
-              uppercase 
+              uppercase
             </Text>
             <Text
               style={
@@ -73011,7 +73011,7 @@ exports[`snapshotAllPages Text 1`] = `
                 }
               }
             >
-              LoWeRcAsE 
+              LoWeRcAsE
             </Text>
             <Text
               style={
@@ -73068,9 +73068,9 @@ exports[`snapshotAllPages Text 1`] = `
               }
             }
           >
-            .aa	bb		cc  dd EE 
-ZZ I like to eat apples. 
-中文éé 我喜欢吃苹果。awdawd   
+            .aa	bb		cc  dd EE
+ZZ I like to eat apples.
+中文éé 我喜欢吃苹果。awdawd
           </Text>
           <Text
             style={
@@ -73079,9 +73079,9 @@ ZZ I like to eat apples.
               }
             }
           >
-            .aa	bb		cc  dd EE 
-ZZ I like to eat apples. 
-中文éé 我喜欢吃苹果。awdawd   
+            .aa	bb		cc  dd EE
+ZZ I like to eat apples.
+中文éé 我喜欢吃苹果。awdawd
           </Text>
           <Text
             style={
@@ -73090,9 +73090,9 @@ ZZ I like to eat apples.
               }
             }
           >
-            .aa	bb		cc  dd EE 
-ZZ I like to eat apples. 
-中文éé 我喜欢吃苹果。awdawd   
+            .aa	bb		cc  dd EE
+ZZ I like to eat apples.
+中文éé 我喜欢吃苹果。awdawd
           </Text>
           <Text
             style={
@@ -73101,9 +73101,9 @@ ZZ I like to eat apples.
               }
             }
           >
-            .aa	bb		cc  dd EE 
-ZZ I like to eat apples. 
-中文éé 我喜欢吃苹果。awdawd   
+            .aa	bb		cc  dd EE
+ZZ I like to eat apples.
+中文éé 我喜欢吃苹果。awdawd
           </Text>
           <Text
             style={
@@ -73336,7 +73336,7 @@ ZZ I like to eat apples.
               }
             >
               Some more bordered text + a tad of CSS.
-              
+
 
               <Text
                 style={
@@ -73347,7 +73347,7 @@ ZZ I like to eat apples.
                 }
               >
                 1st nested - border specifcied but ignored.
-                
+
 
                 <Text
                   style={
@@ -73363,7 +73363,7 @@ ZZ I like to eat apples.
             </Text>
             <Text>
               This text is
-               
+
               <Text
                 style={
                   {
@@ -73374,7 +73374,7 @@ ZZ I like to eat apples.
                 }
               >
                 outlined
-                 
+
               </Text>
               and laid out within the normal text run, so will wrap etc as normal text.
             </Text>
@@ -76242,19 +76242,19 @@ exports[`snapshotAllPages TextInput 12`] = `
     }
   >
     &lt;No Event&gt;
-    
 
-    (prev: 
+
+    (prev:
     &lt;No Event&gt;
     )
-    
 
-    (prev2: 
+
+    (prev2:
     &lt;No Event&gt;
     )
-    
 
-    (prev3: 
+
+    (prev3:
     &lt;No Event&gt;
     )
   </Text>
@@ -76360,7 +76360,7 @@ exports[`snapshotAllPages TextInput 14`] = `
   >
     <Text>
       Hello
-       
+
       <Text
         style={
           {
@@ -76414,7 +76414,7 @@ exports[`snapshotAllPages TextInput 15`] = `
         testID="singleline-selection"
       >
         selection =
-         
+
         {start:0,end:0}
       </Text>
       <Text
@@ -76429,7 +76429,7 @@ exports[`snapshotAllPages TextInput 15`] = `
       >
         Place at End (
         29
-        , 
+        ,
         29
         )
       </Text>
@@ -76490,7 +76490,7 @@ can also be changed"
         testID="multiline-selection"
       >
         selection =
-         
+
         {start:0,end:0}
       </Text>
       <Text
@@ -76505,7 +76505,7 @@ can also be changed"
       >
         Place at End (
         44
-        , 
+        ,
         44
         )
       </Text>
@@ -76561,7 +76561,7 @@ exports[`snapshotAllPages TextInput 16`] = `
         testID="singlelineImperative-selection"
       >
         selection =
-         
+
         {start:0,end:0}
       </Text>
       <Text
@@ -76576,7 +76576,7 @@ exports[`snapshotAllPages TextInput 16`] = `
       >
         Place at End (
         42
-        , 
+        ,
         42
         )
       </Text>
@@ -76631,7 +76631,7 @@ can also be changed imperatively"
         testID="multilineImperative-selection"
       >
         selection =
-         
+
         {start:0,end:0}
       </Text>
       <Text
@@ -76646,7 +76646,7 @@ can also be changed imperatively"
       >
         Place at End (
         57
-        , 
+        ,
         57
         )
       </Text>
@@ -76745,7 +76745,7 @@ exports[`snapshotAllPages TextInput 18`] = `
     <Text
       testID="cycle-styles-label"
     >
-      Cycle 
+      Cycle
       1
       /
       6
@@ -76836,7 +76836,7 @@ exports[`snapshotAllPages TextInput 18`] = `
                 }
               }
             >
-               
+
             </Text>
           </Text>
           <Text
@@ -76941,7 +76941,7 @@ exports[`snapshotAllPages TextInput 18`] = `
                 }
               }
             >
-               
+
             </Text>
           </Text>
           <Text
@@ -77046,7 +77046,7 @@ exports[`snapshotAllPages TextInput 18`] = `
                 }
               }
             >
-               
+
             </Text>
           </Text>
           <Text
@@ -77151,7 +77151,7 @@ exports[`snapshotAllPages TextInput 18`] = `
                 }
               }
             >
-               
+
             </Text>
           </Text>
           <Text
@@ -77256,7 +77256,7 @@ exports[`snapshotAllPages TextInput 18`] = `
                 }
               }
             >
-               
+
             </Text>
           </Text>
           <Text
@@ -77361,7 +77361,7 @@ exports[`snapshotAllPages TextInput 18`] = `
                 }
               }
             >
-               
+
             </Text>
           </Text>
           <Text
@@ -77466,7 +77466,7 @@ exports[`snapshotAllPages TextInput 18`] = `
                 }
               }
             >
-               
+
             </Text>
           </Text>
           <Text
@@ -77547,7 +77547,7 @@ exports[`snapshotAllPages TextInput 18`] = `
         >
           <Text>
             Hel
-            
+
 
           </Text>
           <Text
@@ -77557,8 +77557,8 @@ exports[`snapshotAllPages TextInput 18`] = `
               }
             }
           >
-            lo 
-            
+            lo
+
 
           </Text>
           <Text
@@ -77569,7 +77569,7 @@ exports[`snapshotAllPages TextInput 18`] = `
             }
           >
             Wor
-            
+
 
           </Text>
           <Text
@@ -77656,7 +77656,7 @@ exports[`snapshotAllPages TextInput 18`] = `
                 }
               }
             >
-               
+
             </Text>
           </Text>
           <Text
@@ -77781,7 +77781,7 @@ exports[`snapshotAllPages TextInput 18`] = `
                 }
               }
             >
-               
+
             </Text>
           </Text>
           <Text
@@ -78491,7 +78491,7 @@ exports[`snapshotAllPages TextInput 28`] = `
     </Text>
     <Text />
     <Text>
-      Content Size: 
+      Content Size:
       {"width":0,"height":0}
     </Text>
   </View>
@@ -79917,11 +79917,11 @@ exports[`snapshotAllPages Timers 1`] = `
     }
   >
     <Text>
-      Measure: 
+      Measure:
       setTimeout
       (
       fn, 0
-      ) - 
+      ) -
       0
     </Text>
   </View>
@@ -79976,11 +79976,11 @@ exports[`snapshotAllPages Timers 1`] = `
     }
   >
     <Text>
-      Measure: 
+      Measure:
       setTimeout
       (
       fn, 1
-      ) - 
+      ) -
       0
     </Text>
   </View>
@@ -80035,11 +80035,11 @@ exports[`snapshotAllPages Timers 1`] = `
     }
   >
     <Text>
-      Measure: 
+      Measure:
       setTimeout
       (
       fn, 100
-      ) - 
+      ) -
       0
     </Text>
   </View>
@@ -80099,11 +80099,11 @@ exports[`snapshotAllPages Timers 2`] = `
     }
   >
     <Text>
-      Measure: 
+      Measure:
       requestAnimationFrame
       (
       fn
-      ) - 
+      ) -
       0
     </Text>
   </View>
@@ -80443,11 +80443,11 @@ exports[`snapshotAllPages Timers 4`] = `
     }
   >
     <Text>
-      Measure: 
+      Measure:
       setImmediate
       (
       fn
-      ) - 
+      ) -
       0
     </Text>
   </View>
@@ -80508,11 +80508,11 @@ exports[`snapshotAllPages Timers 5`] = `
       }
     >
       <Text>
-        Measure: 
+        Measure:
         setInterval
         (
         fn, 25
-        ) - 
+        ) -
         0
       </Text>
     </View>
@@ -80950,7 +80950,7 @@ exports[`snapshotAllPages Touchable* and onPress 6`] = `
 >
   <Text>
     This touchable is not focused.
-    
+
 
     This item still has focus, onBlur is not called
   </Text>
@@ -81360,7 +81360,7 @@ exports[`snapshotAllPages Touchable* and onPress 12`] = `
       <View />
     </View>
     <Text>
-      TouchableHighlight: 
+      TouchableHighlight:
       Native Methods Exist
     </Text>
   </View>
@@ -81420,7 +81420,7 @@ exports[`snapshotAllPages Touchable* and onPress 12`] = `
       <View />
     </View>
     <Text>
-      TouchableOpacity: 
+      TouchableOpacity:
       Native Methods Exist
     </Text>
   </View>
@@ -81885,7 +81885,7 @@ exports[`snapshotAllPages TransferProperties 2`] = `
       testID="automationID"
     >
       <Text>
-        ZIndex 
+        ZIndex
         2
       </Text>
     </View>
@@ -81908,7 +81908,7 @@ exports[`snapshotAllPages TransferProperties 2`] = `
       }
     >
       <Text>
-        ZIndex 
+        ZIndex
         1
       </Text>
     </View>
@@ -81931,7 +81931,7 @@ exports[`snapshotAllPages TransferProperties 2`] = `
       }
     >
       <Text>
-        ZIndex 
+        ZIndex
         0
       </Text>
     </View>
@@ -81954,7 +81954,7 @@ exports[`snapshotAllPages TransferProperties 2`] = `
       }
     >
       <Text>
-        ZIndex 
+        ZIndex
         -1
       </Text>
     </View>
@@ -82889,9 +82889,9 @@ exports[`snapshotAllPages View 9`] = `
         }
       }
     >
-      Tap to 
+      Tap to
       deactivate
-       
+
       needsOffscreenAlphaCompositing
     </Text>
     <View
@@ -83007,7 +83007,7 @@ exports[`snapshotAllPages View 10`] = `
       }
     >
       <Text>
-        ZIndex 
+        ZIndex
         2
       </Text>
     </View>
@@ -83030,7 +83030,7 @@ exports[`snapshotAllPages View 10`] = `
       }
     >
       <Text>
-        ZIndex 
+        ZIndex
         1
       </Text>
     </View>
@@ -83053,7 +83053,7 @@ exports[`snapshotAllPages View 10`] = `
       }
     >
       <Text>
-        ZIndex 
+        ZIndex
         0
       </Text>
     </View>
@@ -83076,7 +83076,7 @@ exports[`snapshotAllPages View 10`] = `
       }
     >
       <Text>
-        ZIndex 
+        ZIndex
         -1
       </Text>
     </View>
@@ -84018,7 +84018,7 @@ exports[`snapshotAllPages View 20`] = `
     A View with accessibility values.
   </Text>
   <Text>
-    Current Number of Accessibility Taps: 
+    Current Number of Accessibility Taps:
     0
   </Text>
   <View
@@ -84795,11 +84795,11 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
         }
       }
     >
-      onprogress: 
+      onprogress:
       0
       /
       0
-       
+
       KB
     </Text>
   </View>
