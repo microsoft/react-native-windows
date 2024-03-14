@@ -37,10 +37,3 @@ if ($Preload) {
 
 # Use the environment variables input below to pass secret variables to this script.
 Write-Host "##vso[task.setvariable variable=PackagerId;]$($packagerProc.Id)"
-
-if ($UseNodeWsServer.IsPresent) {
-	Write-Host "##vso[task.setvariable variable=WebSocketServerId;]$($wsProc.Id)"
-	return ($packagerProc, $wsProc)
-} else {
-	return ($packagerProc)
-}
