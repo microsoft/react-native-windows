@@ -31,7 +31,7 @@ const RNTesterBlock = require('../../components/RNTesterBlock');
 const RNTesterPage = require('../../components/RNTesterPage');
 const TextInlineView = require('../../components/TextInlineView');
 
-export class Entity extends React.Component<React.PropsWithChildren<{}>> {
+class Entity extends React.Component<React.PropsWithChildren<{}>> {
   render() {
     return (
       <Text style={{fontWeight: 'bold', color: '#527fe4'}}>
@@ -45,7 +45,7 @@ interface IAttributeTogglerState {
   fontWeight: 'bold' | 'normal';
   fontSize: number;
 }
-export class AttributeToggler extends React.Component<
+class AttributeToggler extends React.Component<
   {},
   IAttributeTogglerState,
 > {
@@ -216,7 +216,7 @@ class AdjustingFontSize extends React.Component<
   }
 }
 
-export class BackgroundColorDemo extends React.Component<{}> {
+class BackgroundColorDemo extends React.Component<{}> {
   render() {
     return (
       <View testID={'text-background-color'}>
@@ -305,7 +305,7 @@ export class BackgroundColorDemo extends React.Component<{}> {
   }
 }
 
-export class TextHighlightDemo extends React.Component<
+class TextHighlightDemo extends React.Component<
   {},
   {search: string, toggled: boolean},
 > {
@@ -365,7 +365,7 @@ export class TextHighlightDemo extends React.Component<
   }
 }
 
-export class TextExample extends React.Component<
+class TextExample extends React.Component<
   {},
   {toggle1: boolean, toggle2: boolean, toggle3: boolean},
 > {
@@ -380,32 +380,6 @@ export class TextExample extends React.Component<
 
     return (
       <RNTesterPage title="<Text>">
-        <RNTesterBlock title="Dynamic Font Size Adjustment">
-          <AdjustingFontSize />
-        </RNTesterBlock>
-        <RNTesterBlock title="Font Size Adjustment with Dynamic Layout">
-          <TextAdjustsDynamicLayoutExample />
-        </RNTesterBlock>
-        <RNTesterBlock title="Wrap">
-          <Text>
-            The text should wrap if it goes on multiple lines. See, this is
-            going to the next line.
-          </Text>
-        </RNTesterBlock>
-        <RNTesterBlock title="Hyphenation">
-          <Text android_hyphenationFrequency="normal">
-            <Text style={{color: 'red'}}>Normal: </Text>
-            WillHaveAHyphenWhenBreakingForNewLine
-          </Text>
-          <Text android_hyphenationFrequency="none">
-            <Text style={{color: 'red'}}>None: </Text>
-            WillNotHaveAHyphenWhenBreakingForNewLine
-          </Text>
-          <Text android_hyphenationFrequency="full">
-            <Text style={{color: 'red'}}>Full: </Text>
-            WillHaveAHyphenWhenBreakingForNewLine
-          </Text>
-        </RNTesterBlock>
         <RNTesterBlock title="textTransform">
           <View testID={'text-transform'}>
             <Text style={{textTransform: 'uppercase'}}>
@@ -416,6 +390,18 @@ export class TextExample extends React.Component<
             </Text>
             <Text style={{textTransform: 'capitalize'}}>
               This text should be CAPITALIZED.
+            </Text>
+            <Text>
+              Capitalize a date:
+              <Text style={{textTransform: 'capitalize'}}>
+                the 9th of november, 1998
+              </Text>
+            </Text>
+            <Text>
+              Capitalize a 2 digit date:
+              <Text style={{textTransform: 'capitalize'}}>
+                the 25th of december
+              </Text>
             </Text>
             <Text style={{textTransform: 'capitalize'}}>
               Mixed:{' '}
@@ -434,6 +420,12 @@ export class TextExample extends React.Component<
                 </Text>
               </Text>
             </Text>
+          <Text>
+            Should be "AbC":
+            <Text style={{textTransform: 'uppercase'}}>
+              a<Text style={{textTransform: 'none'}}>b</Text>c
+            </Text>
+          </Text>
             <Text>
               Should be "XyZ":
               <Text style={{textTransform: 'uppercase'}}>
@@ -448,6 +440,28 @@ export class TextExample extends React.Component<
                 </Text>
               </Text>
             </Text>
+            { Platform.OS !== 'windows' ? (
+              <Text style={{textTransform: 'none'}}>
+                {
+                  '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
+                }
+              </Text>
+              <Text style={{textTransform: 'uppercase'}}>
+                {
+                  '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
+                }
+              </Text>
+              <Text style={{textTransform: 'lowercase'}}>
+                {
+                  '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
+                }
+              </Text>
+              <Text style={{textTransform: 'capitalize'}}>
+                {
+                  '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
+                }
+              </Text>
+            ) : null }
             <Text onPress={() => this.setState({toggle1: !this.state.toggle1})}>
               Click to toggle uppercase:{' '}
               <Text
@@ -477,7 +491,61 @@ export class TextExample extends React.Component<
                 </Text>
               </View>
             </TouchableWithoutFeedback>
+          <Text
+            style={{
+              textTransform: 'uppercase',
+              fontSize: 16,
+              color: 'turquoise',
+              backgroundColor: 'blue',
+              lineHeight: 32,
+              letterSpacing: 2,
+              alignSelf: 'flex-start',
+            }}>
+            Works with other text styles
+          </Text>
           </View>
+        </RNTesterBlock>
+        <RNTesterBlock title="Substring Emoji (should only see 'test')">
+          <Text>{'test🙃'.substring(0, 5)}</Text>
+        </RNTesterBlock>
+        <RNTesterBlock title="Text linkify">
+          <Text dataDetectorType="phoneNumber">Phone number: 123-123-1234</Text>
+          <Text dataDetectorType="link">Link: https://www.facebook.com</Text>
+          <Text dataDetectorType="email">Email: employee@facebook.com</Text>
+          <Text dataDetectorType="none">
+            Phone number: 123-123-1234 Link: https://www.facebook.com Email:
+            employee@facebook.com
+          </Text>
+          <Text dataDetectorType="all">
+            Phone number: 123-123-1234 Link: https://www.facebook.com Email:
+            employee@facebook.com
+          </Text>
+        </RNTesterBlock>
+        <RNTesterBlock title="Dynamic Font Size Adjustment">
+          <AdjustingFontSize />
+        </RNTesterBlock>
+        <RNTesterBlock title="Font Size Adjustment with Dynamic Layout">
+          <TextAdjustsDynamicLayoutExample />
+        </RNTesterBlock>
+        <RNTesterBlock title="Wrap">
+          <Text>
+            The text should wrap if it goes on multiple lines. See, this is
+            going to the next line.
+          </Text>
+        </RNTesterBlock>
+        <RNTesterBlock title="Hyphenation">
+          <Text android_hyphenationFrequency="normal">
+            <Text style={{color: 'red'}}>Normal: </Text>
+            WillHaveAHyphenWhenBreakingForNewLine
+          </Text>
+          <Text android_hyphenationFrequency="none">
+            <Text style={{color: 'red'}}>None: </Text>
+            WillNotHaveAHyphenWhenBreakingForNewLine
+          </Text>
+          <Text android_hyphenationFrequency="full">
+            <Text style={{color: 'red'}}>Full: </Text>
+            WillHaveAHyphenWhenBreakingForNewLine
+          </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Wrap">
           <Text testID={'text-wrap'}>
@@ -1132,96 +1200,6 @@ export class TextExample extends React.Component<
             make text look slightly misaligned when centered vertically.
           </Text>
         </RNTesterBlock>
-        <RNTesterBlock title="Text transform">
-          <Text style={{textTransform: 'uppercase'}}>
-            This text should be uppercased.
-          </Text>
-          <Text style={{textTransform: 'lowercase'}}>
-            This TEXT SHOULD be lowercased.
-          </Text>
-          <Text style={{textTransform: 'capitalize'}}>
-            This text should be CAPITALIZED.
-          </Text>
-          <Text>
-            Capitalize a date:
-            <Text style={{textTransform: 'capitalize'}}>
-              the 9th of november, 1998
-            </Text>
-          </Text>
-          <Text>
-            Capitalize a 2 digit date:
-            <Text style={{textTransform: 'capitalize'}}>
-              the 25th of december
-            </Text>
-          </Text>
-          <Text style={{textTransform: 'capitalize'}}>
-            Mixed: <Text style={{textTransform: 'uppercase'}}>uppercase </Text>
-            <Text style={{textTransform: 'lowercase'}}>LoWeRcAsE </Text>
-            <Text style={{textTransform: 'capitalize'}}>
-              capitalize each word
-            </Text>
-          </Text>
-          <Text>
-            Should be "ABC":
-            <Text style={{textTransform: 'uppercase'}}>
-              a<Text>b</Text>c
-            </Text>
-          </Text>
-          <Text>
-            Should be "AbC":
-            <Text style={{textTransform: 'uppercase'}}>
-              a<Text style={{textTransform: 'none'}}>b</Text>c
-            </Text>
-          </Text>
-          <Text style={{textTransform: 'none'}}>
-            {
-              '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
-            }
-          </Text>
-          <Text style={{textTransform: 'uppercase'}}>
-            {
-              '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
-            }
-          </Text>
-          <Text style={{textTransform: 'lowercase'}}>
-            {
-              '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
-            }
-          </Text>
-          <Text style={{textTransform: 'capitalize'}}>
-            {
-              '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
-            }
-          </Text>
-          <Text
-            style={{
-              textTransform: 'uppercase',
-              fontSize: 16,
-              color: 'turquoise',
-              backgroundColor: 'blue',
-              lineHeight: 32,
-              letterSpacing: 2,
-              alignSelf: 'flex-start',
-            }}>
-            Works with other text styles
-          </Text>
-        </RNTesterBlock>
-        <RNTesterBlock title="Substring Emoji (should only see 'test')">
-          <Text>{'test🙃'.substring(0, 5)}</Text>
-        </RNTesterBlock>
-        <RNTesterBlock title="Text linkify">
-          <Text dataDetectorType="phoneNumber">Phone number: 123-123-1234</Text>
-          <Text dataDetectorType="link">Link: https://www.facebook.com</Text>
-          <Text dataDetectorType="email">Email: employee@facebook.com</Text>
-          <Text dataDetectorType="none">
-            Phone number: 123-123-1234 Link: https://www.facebook.com Email:
-            employee@facebook.com
-          </Text>
-          <Text dataDetectorType="all">
-            Phone number: 123-123-1234 Link: https://www.facebook.com Email:
-            employee@facebook.com
-          </Text>
-        </RNTesterBlock>
         <RNTesterBlock title="Text With Border">
           <View testID={'text-border'}>
             <Text style={styles.borderedTextSimple}>
@@ -1409,7 +1387,7 @@ export class TextExample extends React.Component<
   }
 }
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   backgroundColorText: {
     left: 5,
     backgroundColor: 'rgba(100, 100, 100, 0.3)',
@@ -1494,10 +1472,7 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
   );
 }
 
-export const displayName = (_undefined?: string) => {};
-export const title = 'Text';
-export const description = 'Base component for rendering styled text.';
-export const examples = [
+const examples = [
   {
     title: 'Basic text',
     render: function (): JSX.Element {
@@ -1544,3 +1519,12 @@ export const examples = [
     },
   },
 ];
+
+module.exports = ({
+  title: 'Text',
+  documentationURL: 'https://reactnative.dev/docs/text',
+  category: 'Basic',
+  description: 'Base component for rendering styled text.',
+  displayName: 'TextExample',
+  examples,
+}: RNTesterModule);
