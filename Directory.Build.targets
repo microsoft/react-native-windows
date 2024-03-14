@@ -94,6 +94,7 @@
         BaseIntermediateOutputPath;
         IntermediateOutputPath;
         OutputPath;
+        OS;
       " />
       <_VarsCustom Include="
         RootDir;
