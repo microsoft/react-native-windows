@@ -84,14 +84,14 @@ steps:
     $certPath = "${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12"
     $certPass = ConvertTo-SecureString -AsPlainText -String $(TESTWEBSITECERTPASSWORD)
 
-    Make available to IIS
+    # Make available to IIS
     Import-PfxCertificate `
       -Exportable `
       -Password $certPass `
       -FilePath $certPath `
       -CertStoreLocation Cert:\LocalMachine\My\
 
-    Trust globally
+    # Trust globally
     Import-PfxCertificate `
       -Exportable `
       -Password $certPass `
