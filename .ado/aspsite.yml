@@ -28,7 +28,7 @@ steps:
     ls ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12
     Get-PfxCertificate `
       -FilePath ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12 `
-      -Password $(TESTWEBSITECERTPASSWORD)
+      -Password $(ConvertTo-SecureString -AsPlainText -String $(TESTWEBSITECERTPASSWORD))
 
 - checkout: self
   clean: false
@@ -92,7 +92,7 @@ steps:
     # Make available to IIS
     Import-PfxCertificate `
       -Exportable `
-      -Password $(ConvertTo-SecureString -AsPlainText -String ${env:TESTWEBSITECERTPASSWORD}) `
+      -Password $(ConvertTo-SecureString -AsPlainText -String $(TESTWEBSITECERTPASSWORD)) `
       -FilePath ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12 `
       -CertStoreLocation Cert:\LocalMachine\My\
 
@@ -100,7 +100,7 @@ steps:
   displayName: Install TLS Certificate
     Import-PfxCertificate `
       -Exportable `
-      -Password $(ConvertTo-SecureString -AsPlainText -String ${env:TESTWEBSITECERTPASSWORD}) `
+      -Password $(ConvertTo-SecureString -AsPlainText -String $(TESTWEBSITECERTPASSWORD)) `
       -FilePath ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12 `
       -CertStoreLocation Cert:\LocalMachine\Root\
 - task: IISWebAppManagementOnMachineGroup@0
