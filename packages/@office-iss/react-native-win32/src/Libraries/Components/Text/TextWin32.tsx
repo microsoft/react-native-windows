@@ -1,6 +1,6 @@
 import React from 'react'
 import RN = require('react-native');
-import type { ITextWin32Props } from './TextWin32.Props';
+import type { TextProps } from '../../Text/Text';
 
 /**
  * All of TOrigin except Key from TUse
@@ -11,11 +11,11 @@ type UseFrom<TOrigin, TUse, Key extends keyof TUse> = Pick<TOrigin, Exclude<keyo
  * React-native <Text> control with additional Win32-specific functionality.
  */
 
-type InnerViewProps = UseFrom<ITextWin32Props, RN.TextProps, 'accessibilityRole'> &
-  UseFrom<ITextWin32Props, RN.TextProps, 'accessibilityState'> &
-  UseFrom<ITextWin32Props, RN.TextProps, 'accessibilityActions'>;
-export class TextWin32 extends React.Component<ITextWin32Props, {}> {
-  constructor(props: ITextWin32Props) {
+type InnerViewProps = UseFrom<TextProps, RN.TextProps, 'accessibilityRole'> &
+  UseFrom<TextProps, RN.TextProps, 'accessibilityState'> &
+  UseFrom<TextProps, RN.TextProps, 'accessibilityActions'>;
+export class TextWin32 extends React.Component<TextProps, {}> {
+  constructor(props: TextProps) {
     super(props);
   }
 

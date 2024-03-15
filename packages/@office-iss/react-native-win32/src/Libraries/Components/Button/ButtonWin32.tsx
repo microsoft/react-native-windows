@@ -1,7 +1,7 @@
 import React from 'react'
 import RN = require('react-native');
 import type { IViewWin32Props } from '../View/ViewPropTypes';
-import type { ITextWin32Props } from '../Text/TextWin32.Props';
+import type { TextProps } from '../../Text/Text';
 import type { IButtonWin32Props } from './ButtonWin32.Props';
 
 const enum SelectState {
@@ -40,7 +40,7 @@ export class ButtonWin32 extends React.Component<IButtonWin32Props, IButtonWin32
       style: this.props.style as RN.StyleProp<RN.ViewStyle>,
     };
 
-    const textProps: ITextWin32Props = {
+    const textProps: TextProps = {
       textStyle: 'None',
     };
     if (this.props.color) {

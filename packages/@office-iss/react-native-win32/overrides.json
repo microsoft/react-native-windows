@@ -116,10 +116,6 @@
     },
     {
       "type": "platform",
-      "file": "src/Libraries/Components/Text/TextWin32.Props.ts"
-    },
-    {
-      "type": "platform",
       "file": "src/Libraries/Components/Text/TextWin32.tsx"
     },
     {
@@ -445,6 +441,12 @@
       "file": "src/Libraries/StyleSheet/StyleSheet.win32.js",
       "baseFile": "packages/react-native/Libraries/StyleSheet/StyleSheet.js",
       "baseHash": "b279b836217a0870546010c935fb53e6a889f0dd"
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Text/Text.d.ts",
+      "baseFile": "packages/react-native/Libraries/Text/Text.d.ts",
+      "baseHash": "9e85e4822b99786481f22d4bac2fd0f24be40d78"
     },
     {
       "type": "derived",
