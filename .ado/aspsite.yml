@@ -83,7 +83,7 @@ steps:
 - pwsh: |
     $certPath = "${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12"
     $certPass = ConvertTo-SecureString -AsPlainText -String $(TestWebsiteCertPassword)
-    $certHash = (Get-PfxCertificate -FilePath -Password $certPass).Thumbprint
+    $certHash = (Get-PfxCertificate -FilePath $certPath -Password $certPass).Thumbprint
     Write-Host "##vso[task.setvariable variable=TestWebsiteCertificateThumbprint]$certHash"
 
     # Make available to IIS
