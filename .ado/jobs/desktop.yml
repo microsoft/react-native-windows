@@ -207,12 +207,32 @@ jobs:
                   projects: $(Build.SourcesDirectory)\vnext\TestWebsite\Microsoft.ReactNative.Test.Website.csproj
                   arguments: --configuration ${{ matrix.BuildConfiguration }}
 
+              - pwsh: |
+                  $certPath = "${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12"
+                  $certPass = ConvertTo-SecureString -AsPlainText -String $(TestWebsiteCertificatePassword)
+
+                  # Make available to IIS
+                  Import-PfxCertificate `
+                    -Exportable `
+                    -Password $certPass `
+                    -FilePath $certPath `
+                    -CertStoreLocation Cert:\LocalMachine\My\
+
+                  # Trust globally
+                  Import-PfxCertificate `
+                    -Exportable `
+                    -Password $certPass `
+                    -FilePath $certPath `
+                    -CertStoreLocation Cert:\LocalMachine\Root\
+                displayName: Install TLS Certificate
+
               - task: IISWebAppManagementOnMachineGroup@0
                 displayName: Create Test Website
                 inputs:
                   EnableIIS: false
                   IISDeploymentType: IISWebsite
                   ActionIISWebsite: CreateOrUpdateWebsite
+                  SSLCertThumbPrint: $(TestWebsiteCertificateThumbprint)
                   # IIS Website
                   WebsiteName: RNW Test Website
                   WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative.Test.Website\Publish
@@ -233,6 +253,13 @@ jobs:
                           "port": "5555",
                           "sslThumbprint": "",
                           "sniFlag": false
+                        },
+                        {
+                          "protocol": "https",
+                          "ipAddress": "*",
+                          "port": "5543",
+                          "sslThumbprint": "$(TestWebsiteCertificateThumbprint)",
+                          "sniFlag": false
                         }
                       ]
                     }
@@ -244,6 +271,7 @@ jobs:
                   script: |
                     # Test website
                     Invoke-WebRequest -Uri 'http://localhost:5555'
+                    Invoke-WebRequest -Uri 'https://localhost:5543'
 
                     # Bundler
                     Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windows&dev=true"
