@@ -81,7 +81,7 @@ steps:
   displayName: Install the .NET Core Hosting Bundle
 
 - pwsh: |
-    $certPath = ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12
+    $certPath = "${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12"
     $certPass = ConvertTo-SecureString -AsPlainText -String $(TESTWEBSITECERTPASSWORD)
 
     # Make available to IIS
