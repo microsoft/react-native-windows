@@ -437,6 +437,9 @@ class TextExample extends React.Component<
                 </Text>
               </Text>
             </Text>
+            {/*
+              This test makes e2e tests hang indefinitely on Windows.
+             */}
             {Platform.OS !== 'windows' ? (
               <View>
                 <Text style={{textTransform: 'none'}}>
@@ -504,6 +507,10 @@ class TextExample extends React.Component<
             </Text>
           </View>
         </RNTesterBlock>
+        {/*
+          Emoji gets rendered on windows which causes issues with e2e tests.
+          It seems they can't deal with the character properly which makes them always fail
+        */}
         {Platform.OS !== 'windows' ? (
           <RNTesterBlock title="Substring Emoji (should only see 'test')">
             <Text>{'test🙃'.substring(0, 5)}</Text>
@@ -1082,7 +1089,9 @@ class TextExample extends React.Component<
             Neat, huh?
           </Text>
         </RNTesterBlock>
-        {/* Adding platform conditional since this android-imported example is making e2e tests hang indefinitely */}
+        {/*
+          This tests renders <View> nested within <Text> which is not allowed in Windows
+         */}
         {Platform.OS !== 'windows' ? (
           <View>
             <RNTesterBlock title="Inline views">
