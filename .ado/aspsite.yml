@@ -82,7 +82,9 @@ steps:
 
 - pwsh: |
     $certPath = "${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12"
-    $certPass = ConvertTo-SecureString -AsPlainText -String $(TESTWEBSITECERTPASSWORD)
+    $certPass = ConvertTo-SecureString -AsPlainText -String $(TestWebsiteCertPassword)
+    $certHash = (Get-PfxCertificate -FilePath -Password $certPass).Thumbprint
+    Write-Host "##vso[task.setvariable variable=TestWebsiteCertificateThumbprint]$certHash"
 
     # Make available to IIS
     Import-PfxCertificate `
@@ -98,12 +100,12 @@ steps:
       -FilePath $certPath `
       -CertStoreLocation Cert:\LocalMachine\Root\
 
-    # Remove-Item -Path Cert:\LocalMachine\My\95747B436CFE090C5ED08FA50853FA000FA16BEE -ErrorAction Ignore
-    # Remove-Item -Path Cert:\LocalMachine\Root\95747B436CFE090C5ED08FA50853FA000FA16BEE -ErrorAction Ignore
+    # Remove-Item -Path Cert:\LocalMachine\My\$certHash -ErrorAction Ignore
+    # Remove-Item -Path Cert:\LocalMachine\Root\$certHash -ErrorAction Ignore
   displayName: Install TLS Certificate
 
 - task: IISWebAppManagementOnMachineGroup@0
-  enabled: false
+  enabled: true
   displayName: Create website
   inputs:
     EnableIIS: false # Installs too many unneeded components: Web-Http-Redirect,Web-DAV-Publishing,Web-Custom-Logging,Web-Log-Libraries,Web-ODBC-Logging,Web-Request-Monitor,Web-Http-Tracing,Web-Dyn-Compression,Web-Basic-Auth,Web-CertProvider,Web-Client-Auth,Web-Digest-Auth,Web-Cert-Auth,Web-IP-Security,Web-Url-Auth,Web-Windows-Auth,Web-App-Dev,Web-Net-Ext,NET-Framework-Core,NET-Framework-Features,NET-Framework-45-ASPNET,Web-Net-Ext45,Web-AppInit,Web-ASP,Web-ISAPI-Ext,Web-Asp-Net,Web-ISAPI-Filter,Web-Asp-Net45,Web-CGI,Web-Includes,Web-WebSockets,Web-Ftp-Server,Web-Ftp-Service,Web-Ftp-Ext,Web-Mgmt-Console,Web-Mgmt-Compat,Web-Metabase,Web-Lgcy-Scripting,Web-WMI,Web-Mgmt-Service
@@ -118,7 +120,7 @@ steps:
     #HostNameWithOutSNI: # string. Optional. Use when IISDeploymentType = randomDeployment. Host name.
     #HostNameWithHttp: # string. Optional. Use when IISDeploymentType = randomDeployment. Host name.
     #HostNameWithSNI: # string. Required when IISDeploymentType = randomDeployment. Host name.
-    SSLCertThumbPrint: 95747B436CFE090C5ED08FA50853FA000FA16BEE
+    SSLCertThumbPrint: $(TestWebsiteCertificateThumbprint)
     #StartStopRecycleAppPoolName: # string. Required when ActionIISApplicationPool = StartAppPool || ActionIISApplicationPool = StopAppPool || ActionIISApplicationPool = RecycleAppPool. Application pool name.
   # IIS Website
     WebsiteName: RNW Test Website # string. Required when ActionIISWebsite = CreateOrUpdateWebsite. Website name.
@@ -146,7 +148,7 @@ steps:
             "protocol": "https",
             "ipAddress": "*",
             "port": "5543",
-            "sslThumbprint": "95747B436CFE090C5ED08FA50853FA000FA16BEE",
+            "sslThumbprint": "$(TestWebsiteCertificateThumbprint)",
             "sniFlag": false
           }
         ]
