@@ -85,7 +85,7 @@ steps:
     Import-PfxCertificate `
       -Exportable `
       -Password ${env:TESTWEBSITECERTPASSWORD} `
-      -FilePath ${env:BUILD_SOURCESDIRECTORY}\localhost.p12 `
+      -FilePath ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12 `
       -CertStoreLocation Cert:\LocalMachine\My\
 
     # Trust globally
@@ -93,7 +93,7 @@ steps:
     Import-PfxCertificate `
       -Exportable `
       -Password ${env:TESTWEBSITECERTPASSWORD} `
-      -FilePath ${env:BUILD_SOURCESDIRECTORY}\localhost.p12 `
+      -FilePath ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12 `
       -CertStoreLocation Cert:\LocalMachine\Root\
 - task: IISWebAppManagementOnMachineGroup@0
   displayName: Create website
