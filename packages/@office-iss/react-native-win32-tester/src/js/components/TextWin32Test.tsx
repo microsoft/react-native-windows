@@ -1,17 +1,17 @@
 'use strict';
 import React from 'react'
-import { Button, TextWin32, View, ViewWin32 } from 'react-native';
+import { Button, Text, View, ViewWin32 } from 'react-native';
 
 // Disabling no-jsx-lambda so functional components are more convenient to use
 
 const TextRunsTest: React.FC<{}> = () => {
   return (
     <View focusable>
-      <TextWin32>
-        <TextWin32>Text With </TextWin32>
-        <TextWin32>Multiple Text </TextWin32>
-        <TextWin32>Children [Runs]</TextWin32>
-      </TextWin32>
+      <Text>
+        <Text>Text With </Text>
+        <Text>Multiple Text </Text>
+        <Text>Children [Runs]</Text>
+      </Text>
     </View>
   );
 };
@@ -19,7 +19,7 @@ const TextRunsTest: React.FC<{}> = () => {
 const FocusableTextTest: React.FC<{}> = () => {
   return (
     <ViewWin32>
-      <TextWin32 focusable>This TextWin32 demonstrates focusable</TextWin32>
+      <Text focusable>This Text demonstrates focusable</Text>
     </ViewWin32>
   );
 };
@@ -27,7 +27,7 @@ const FocusableTextTest: React.FC<{}> = () => {
 const SelectableTextTest: React.FC<{}> = () => {
   return (
     <ViewWin32>
-      <TextWin32 selectable>This TextWin32 demonstrates selectable</TextWin32>
+      <Text selectable>This Text demonstrates selectable</Text>
     </ViewWin32>
   );
 };
@@ -35,7 +35,7 @@ const SelectableTextTest: React.FC<{}> = () => {
 const TextStyleTest: React.FC<{}> = () => {
   return (
     <ViewWin32>
-      <TextWin32 textStyle={'MediumBold'}>MediumBold TextStyle</TextWin32>
+      <Text textStyle={'MediumBold'}>MediumBold TextStyle</Text>
     </ViewWin32>
   );
 };
@@ -43,7 +43,7 @@ const TextStyleTest: React.FC<{}> = () => {
 const TextAcessibilityTest: React.FC<{}> = () => {
   return (
     <ViewWin32>
-      <TextWin32 accessibilityDescription="A11y description" >This TextWin32 text with accessibilityDescription</TextWin32>
+      <Text accessibilityDescription="A11y description" >This Text text with accessibilityDescription</Text>
     </ViewWin32>
   );
 };
@@ -51,7 +51,7 @@ const TextAcessibilityTest: React.FC<{}> = () => {
 const TooltipTextTest: React.FC<{}> = () => {
   return (
     <ViewWin32>
-      <TextWin32 tooltip="Example Tooltip">This TextWin32 demonstrates a tooltip</TextWin32>
+      <Text tooltip="Example Tooltip">This Text demonstrates a tooltip</Text>
     </ViewWin32>
   );
 };
@@ -78,17 +78,17 @@ const TextPromotionTest: React.FC<{}> = () => {
             setFocusabilityState(FocusabilityState.Selectable);
           }
         }}  />
-      <TextWin32
+      <Text
         focusable={focusabilityState === FocusabilityState.Focusable}
         selectable={focusabilityState === FocusabilityState.Selectable}
       >
         This text is currently...
-      </TextWin32>
-      <TextWin32>
+      </Text>
+      <Text>
         {(focusabilityState === FocusabilityState.NoFocus) ? 'No Focusability' : 
          (focusabilityState === FocusabilityState.Focusable) ? 'Focusable' :
          'Selectable'}
-      </TextWin32>
+      </Text>
     </ViewWin32>
   );
 };
@@ -98,18 +98,18 @@ const BlurringAndFocusingTextTest: React.FC<{}> = () => {
   const [isSelectableFocused, setIsSelectableFocused] = React.useState(false);
   return (
     <View>
-      <TextWin32
+      <Text
         focusable
         onBlur={() => setIsFocusableFocused(false)}
-        onFocus={() => setIsFocusableFocused(true)}>Focusable text is focused:</TextWin32>
-        <TextWin32
-        textStyle={isFocusableFocused ? 'MediumBold' : 'MediumStandard'}>{isFocusableFocused ? 'true' : 'false'}</TextWin32>
-      <TextWin32
+        onFocus={() => setIsFocusableFocused(true)}>Focusable text is focused:</Text>
+        <Text
+        textStyle={isFocusableFocused ? 'MediumBold' : 'MediumStandard'}>{isFocusableFocused ? 'true' : 'false'}</Text>
+      <Text
         selectable
         onBlur={() => setIsSelectableFocused(false)}
-        onFocus={() => setIsSelectableFocused(true)}>Selectable text is focused:</TextWin32>
-        <TextWin32
-        textStyle={isSelectableFocused ? 'MediumBold' : 'MediumStandard'}>{isSelectableFocused ? 'true' : 'false'}</TextWin32>
+        onFocus={() => setIsSelectableFocused(true)}>Selectable text is focused:</Text>
+        <Text
+        textStyle={isSelectableFocused ? 'MediumBold' : 'MediumStandard'}>{isSelectableFocused ? 'true' : 'false'}</Text>
     </View>
   );
 };
