@@ -22,6 +22,14 @@ steps:
     $env:PATH -split ';'
   displayName: Get ENV info
 
+- pwsh: |
+    Write-Host "[${env:TESTWEBSITECERTPASSWORD}]"
+    Write-Host 'Test on cert'
+    ls ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12
+    Get-PfxCertificate `
+      -FilePath ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12 `
+      -Password ${env:TESTWEBSITECERTPASSWORD}
+
 - checkout: self
   clean: false
   fetchDepth: 1
