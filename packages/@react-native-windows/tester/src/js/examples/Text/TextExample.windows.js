@@ -504,11 +504,11 @@ class TextExample extends React.Component<
             </Text>
           </View>
         </RNTesterBlock>
-        { Platform.OS !== 'windows' ? (
+        {Platform.OS !== 'windows' ? (
           <RNTesterBlock title="Substring Emoji (should only see 'test')">
             <Text>{'test🙃'.substring(0, 5)}</Text>
           </RNTesterBlock>
-        ) : null }
+        ) : null}
         <RNTesterBlock title="Text linkify">
           <Text dataDetectorType="phoneNumber">Phone number: 123-123-1234</Text>
           <Text dataDetectorType="link">Link: https://www.facebook.com</Text>
@@ -1083,7 +1083,7 @@ class TextExample extends React.Component<
           </Text>
         </RNTesterBlock>
         {/* Adding platform conditional since this android-imported example is making e2e tests hang indefinitely */}
-        { Platform.OS !== 'windows' ? (
+        {Platform.OS !== 'windows' ? (
           <View>
             <RNTesterBlock title="Inline views">
               <TextInlineView.Basic />
@@ -1104,7 +1104,7 @@ class TextExample extends React.Component<
               <TextInlineView.ChangeInnerViewSize />
             </RNTesterBlock>
           </View>
-        ) : null }
+        ) : null}
         <RNTesterBlock title="Text shadow">
           <Text
             style={{
