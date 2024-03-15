@@ -114,7 +114,7 @@ steps:
     #HostNameWithOutSNI: # string. Optional. Use when IISDeploymentType = randomDeployment. Host name.
     #HostNameWithHttp: # string. Optional. Use when IISDeploymentType = randomDeployment. Host name.
     #HostNameWithSNI: # string. Required when IISDeploymentType = randomDeployment. Host name.
-    SSLCertThumbPrint: 95747B436CFE090C5ED08FA50853FA000FA16BEE
+    #SSLCertThumbPrint: 95747B436CFE090C5ED08FA50853FA000FA16BEE
     #StartStopRecycleAppPoolName: # string. Required when ActionIISApplicationPool = StartAppPool || ActionIISApplicationPool = StopAppPool || ActionIISApplicationPool = RecycleAppPool. Application pool name.
   # IIS Website
     WebsiteName: RNW Test Website # string. Required when ActionIISWebsite = CreateOrUpdateWebsite. Website name.
