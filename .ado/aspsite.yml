@@ -22,14 +22,6 @@ steps:
     $env:PATH -split ';'
   displayName: Get ENV info
 
-- pwsh: |
-    Write-Host "[$(TESTWEBSITECERTPASSWORD)]"
-    Write-Host 'Test on cert'
-    ls ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12
-    Get-PfxCertificate `
-      -FilePath ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12 `
-      -Password $(ConvertTo-SecureString -AsPlainText -String $(TESTWEBSITECERTPASSWORD))
-
 - checkout: self
   clean: false
   fetchDepth: 1
@@ -89,20 +81,24 @@ steps:
   displayName: Install the .NET Core Hosting Bundle
 
 - pwsh: |
+    $certPath = ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12
+    $certPass = ConvertTo-SecureString -AsPlainText -String $(TESTWEBSITECERTPASSWORD)
+
     # Make available to IIS
     Import-PfxCertificate `
       -Exportable `
-      -Password $(ConvertTo-SecureString -AsPlainText -String $(TESTWEBSITECERTPASSWORD)) `
-      -FilePath ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12 `
+      -Password $certPass `
+      -FilePath $certPath `
       -CertStoreLocation Cert:\LocalMachine\My\
 
     # Trust globally
-  displayName: Install TLS Certificate
     Import-PfxCertificate `
       -Exportable `
-      -Password $(ConvertTo-SecureString -AsPlainText -String $(TESTWEBSITECERTPASSWORD)) `
-      -FilePath ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12 `
+      -Password $certPass `
+      -FilePath $certPath `
       -CertStoreLocation Cert:\LocalMachine\Root\
+  displayName: Install TLS Certificate
+
 - task: IISWebAppManagementOnMachineGroup@0
   displayName: Create website
   inputs:
@@ -118,7 +114,7 @@ steps:
     #HostNameWithOutSNI: # string. Optional. Use when IISDeploymentType = randomDeployment. Host name.
     #HostNameWithHttp: # string. Optional. Use when IISDeploymentType = randomDeployment. Host name.
     #HostNameWithSNI: # string. Required when IISDeploymentType = randomDeployment. Host name.
-    #SSLCertThumbPrint: # string. Required when IISDeploymentType = randomDeployment. SSL certificate thumbprint.
+    SSLCertThumbPrint: 95747B436CFE090C5ED08FA50853FA000FA16BEE
     #StartStopRecycleAppPoolName: # string. Required when ActionIISApplicationPool = StartAppPool || ActionIISApplicationPool = StopAppPool || ActionIISApplicationPool = RecycleAppPool. Application pool name.
   # IIS Website
     WebsiteName: RNW Test Website # string. Required when ActionIISWebsite = CreateOrUpdateWebsite. Website name.
