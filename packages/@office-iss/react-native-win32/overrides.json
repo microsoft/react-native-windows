@@ -116,10 +116,6 @@
     },
     {
       "type": "platform",
-      "file": "src-win/Libraries/Components/Text/TextWin32.tsx"
-    },
-    {
-      "type": "platform",
       "file": "src-win/Libraries/Components/TextInput/Tests/TextInputTest.tsx"
     },
     {
