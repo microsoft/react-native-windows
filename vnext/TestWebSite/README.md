@@ -1,6 +1,8 @@
 # Integration Test Website
 
-## Other info
+## SSL Certificate
+
+The certificate password is mapped to DevOps variable `$(TestWebsiteCertPassword)`.
 
 Certificate thumbprint (`localhost.pfx`):
 ```

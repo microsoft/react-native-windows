@@ -80,6 +80,21 @@ steps:
     Write-Host 'Installed .NET hosting bundle'
   displayName: Install the .NET Core Hosting Bundle
 
+- pwsh: |
+    # Make available to IIS
+    Import-PfxCertificate `
+      -Exportable `
+      -Password ${env:TESTWEBSITECERTPASSWORD} `
+      -FilePath ${env:BUILD_SOURCESDIRECTORY}\localhost.p12 `
+      -CertStoreLocation Cert:\LocalMachine\My\
+
+    # Trust globally
+  displayName: Install TLS Certificate
+    Import-PfxCertificate `
+      -Exportable `
+      -Password ${env:TESTWEBSITECERTPASSWORD} `
+      -FilePath ${env:BUILD_SOURCESDIRECTORY}\localhost.p12 `
+      -CertStoreLocation Cert:\LocalMachine\Root\
 - task: IISWebAppManagementOnMachineGroup@0
   displayName: Create website
   inputs:
@@ -117,6 +132,13 @@ steps:
             "ipAddress": "*",
             "port": "5555",
             "sslThumbprint": "",
+            "sniFlag": false
+          },
+          {
+            "protocol": "https",
+            "ipAddress": "*",
+            "port": "5543",
+            "sslThumbprint": "95747B436CFE090C5ED08FA50853FA000FA16BEE",
             "sniFlag": false
           }
         ]
@@ -173,7 +195,11 @@ steps:
   displayName: Print IIS Site Info
 
 - pwsh: |
+    # Test HTTP
     Invoke-WebRequest http://localhost:5555
+
+    # Test HTTPS
+    Invoke-WebRequest https://localhost:5543
   displayName: Test HTTP
 
 - pwsh: |
