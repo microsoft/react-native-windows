@@ -178,7 +178,7 @@ steps:
 
 - pwsh: |
     Invoke-WebRequest -UseBasicParsing -Uri https://jurocha-green:666/rnwit.zip -OutFile rnwit.zip
-    Expand-Archive -DestinationPath ${env:TEMP}\rnwit rnwit.zip
+    Expand-Archive -DestinationPath ${env:BUILD_SOURCESDIRECTORY}\rnwit rnwit.zip
   displayName: Extract RNW Test Binaries
 
 # Visual Studio Test v3
@@ -188,12 +188,12 @@ steps:
   inputs:
   # Test selection
     testSelector: testAssemblies
-    testAssemblyVer2: ${env:TEMP}\rnwit\React.Windows.Desktop.IntegrationTests.dll
+    testAssemblyVer2: $(Build.SourcesDirectory)\rnwit\React.Windows.Desktop.IntegrationTests.dll
     #testPlan: # string. Required when testSelector = testPlan. Test plan.
     #testSuite: # string. Required when testSelector = testPlan. Test suite.
     #testConfiguration: # string. Required when testSelector = testPlan. Test configuration.
     #tcmTestRun: '$(test.RunId)' # string. Optional. Use when testSelector = testRun. Test Run. Default: $(test.RunId).
-    searchFolder: ${env:TEMP}\rnwit
+    searchFolder: $(Build.SourcesDirectory)\rnwit
     #resultsFolder: '$(Agent.TempDirectory)\TestResults' # string. Test results folder. Default: $(Agent.TempDirectory)\TestResults.
     testFiltercriteria: $(Desktop.IntegrationTests.Filter)
     #runOnlyImpactedTests: False # boolean. Optional. Use when testSelector = testAssemblies. Run only impacted tests. Default: False.
