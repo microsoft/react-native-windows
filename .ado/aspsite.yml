@@ -22,7 +22,9 @@ steps:
 - pwsh: |
     Write-Host "[$(Get-Command -ShowCommandInfo -Name git.exe)]"
     Write-Warning 'Printing PATH'
-  displayName: Find Git
+
+    Write-Host "Downloading from [${env:DOWNLOAD_SITE}]"
+  displayName: Print relevant info
 
 - task: DotNetCoreCLI@2
   displayName: Restore Packages for Test Website
