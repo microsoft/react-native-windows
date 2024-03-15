@@ -58,7 +58,7 @@ steps:
     Install-WindowsFeature -Name Web-Server
     Install-WindowsFeature -Name Web-Scripting-Tools
   displayName: Install IIS
-  enabled: false
+  enabled: true
 
 - pwsh: |
     Invoke-WebRequest `
