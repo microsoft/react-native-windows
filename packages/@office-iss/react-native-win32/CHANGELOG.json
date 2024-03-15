@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 15 Mar 2024 22:28:10 GMT",
+      "tag": "@office-iss/react-native-win32_v0.72.13",
+      "version": "0.72.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "6a915591746c71b0ecbf7cb96bc3d0f1d704c03e",
+            "comment": "TextProps from rn-win32 should include win32 properties"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Feb 2024 21:50:06 GMT",
       "tag": "@office-iss/react-native-win32_v0.72.12",
       "version": "0.72.12",
