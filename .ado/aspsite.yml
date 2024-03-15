@@ -84,7 +84,7 @@ steps:
     # Make available to IIS
     Import-PfxCertificate `
       -Exportable `
-      -Password ${env:TESTWEBSITECERTPASSWORD} `
+      -Password $(ConvertTo-SecureString -AsPlainText -String ${env:TESTWEBSITECERTPASSWORD}) `
       -FilePath ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12 `
       -CertStoreLocation Cert:\LocalMachine\My\
 
@@ -92,7 +92,7 @@ steps:
   displayName: Install TLS Certificate
     Import-PfxCertificate `
       -Exportable `
-      -Password ${env:TESTWEBSITECERTPASSWORD} `
+      -Password $(ConvertTo-SecureString -AsPlainText -String ${env:TESTWEBSITECERTPASSWORD}) `
       -FilePath ${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12 `
       -CertStoreLocation Cert:\LocalMachine\Root\
 - task: IISWebAppManagementOnMachineGroup@0
