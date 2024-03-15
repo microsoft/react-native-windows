@@ -21,7 +21,7 @@ exports[`Text Tests Padding can be added to Text 1`] = `
     "Opacity": 1,
     "Size": [
       834,
-      40,
+      39,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -49,7 +49,7 @@ exports[`Text Tests Text can be restricted to one line 1`] = `
     "Opacity": 1,
     "Size": [
       834,
-      20,
+      19,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -77,7 +77,7 @@ exports[`Text Tests Text can be selectable 1`] = `
     "Opacity": 1,
     "Size": [
       834,
-      19,
+      20,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -105,7 +105,7 @@ exports[`Text Tests Text can have a color 1`] = `
     "Opacity": 1,
     "Size": [
       834,
-      19,
+      20,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -133,7 +133,7 @@ exports[`Text Tests Text can have a customized selection color 1`] = `
     "Opacity": 1,
     "Size": [
       834,
-      20,
+      19,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -161,7 +161,7 @@ exports[`Text Tests Text can have a size 1`] = `
     "Opacity": 1,
     "Size": [
       834,
-      31,
+      32,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -189,7 +189,7 @@ exports[`Text Tests Text can have an outer color 1`] = `
     "Opacity": 1,
     "Size": [
       834,
-      19,
+      20,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -245,7 +245,7 @@ exports[`Text Tests Text can have decoration lines: Underline 1`] = `
     "Opacity": 1,
     "Size": [
       834,
-      19,
+      20,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -273,7 +273,7 @@ exports[`Text Tests Text can have shadows 1`] = `
     "Opacity": 1,
     "Size": [
       834,
-      28,
+      27,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -301,7 +301,7 @@ exports[`Text Tests Text can wrap 1`] = `
     "Opacity": 1,
     "Size": [
       834,
-      168,
+      169,
     ],
     "Visual Type": "SpriteVisual",
   },
