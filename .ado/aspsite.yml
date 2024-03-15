@@ -183,7 +183,7 @@ steps:
 
 # Visual Studio Test v3
 # Run unit and functional tests (Selenium, Appium, Coded UI test, etc.) using the Visual Studio Test (VsTest) runner. Test frameworks that have a Visual Studio test adapter such as MsTest, xUnit, NUnit, Chutzpah (for JavaScript tests using QUnit, Mocha and Jasmine), etc. can be run. Tests can be distributed on multiple agents using this task (version 2).
-- task: VSTest@3
+- task: VSTest@2
   displayName: Run Integration Tests
   inputs:
   # Test selection
