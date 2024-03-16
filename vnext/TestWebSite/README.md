@@ -61,11 +61,11 @@ Here are the steps for Micrososoft's IIS:
 
 - The website is meant to run on ports `5555` (`http`, `ws`) and `5543` (`https`, `wss`).\
   This can be modified via command line arguments or in [Properties/launchSettings.json](Properties/launchSettings.json).
-- For encryption, self-signed PKCS12 certificate `localhost.p12` is used.
+- For encryption, self-signed PKCS12 certificate `localhost.p12` is used (DevOps only).
   The certificate is set to expire on January 1st, 2030.\
   After that date, new one must be generated.
 
-### Replacing the SSL certificate
+### Replacing the DevOps SSL certificate
 
 1.  Generate a new self-signed x509 web certificate.\
     Use common name `CN=localhost`.
