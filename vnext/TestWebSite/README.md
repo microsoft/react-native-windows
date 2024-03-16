@@ -24,16 +24,17 @@ Deploying this website in Continuous Integration/Delivery environments also remo
     Set-Location vnext
     npm run start
     ```
+1.  Trust the .NET-provided development SSL certificate:\
+    This should be a one-time step per .NET version.\
+    See https://learn.microsoft.com/en-us/aspnet/core/security/enforcing-ssl#trust-the-aspnet-core-https-development-certificate-on-windows-and-macos.
+    ```cmd
+    dotnet dev-certs https --trust
+    ```
 1.  Start this website.
     ```cmd
     dotnet run --project vnext\TestWebSite
     ```
 1.  Run integration tests.
-1.  You may need to trust the .NET-provided development SSL certificate:\
-    See https://learn.microsoft.com/en-us/aspnet/core/security/enforcing-ssl#trust-the-aspnet-core-https-development-certificate-on-windows-and-macos.
-    ```cmd
-    dotnet dev-certs https --trust
-    ```
 
 ### Continuous Integration Workflow
 The website gets deployed to a web server.\
