@@ -86,8 +86,6 @@ jobs:
                 (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketBlob)&
-                (FullyQualifiedName!=WebSocketResourcePerformanceTest::ProcessThreadsPerResource)&
-                (FullyQualifiedName!=WebSocketIntegrationTest::SendReceiveSsl)&
                 (FullyQualifiedName!=Microsoft::React::Test::HttpOriginPolicyIntegrationTest)
             #6799 -
             #       HostFunctionTest              - Crashes under JSI/V8
