@@ -56,6 +56,11 @@ app.Map(
   Facebook.React.Test.RNTesterIntegrationTests.WebSocketBinaryTest
   );
 
+app.Map(
+  "/rnw/websockets/echosuffix",
+  Microsoft.React.Test.WebSocketTests.EchoSuffix
+  );
+
 app.MapGet(
   "/officedev/office-js/issues/4144",
    Microsoft.Office.Test.OfficeJsTests.Issue4144)
