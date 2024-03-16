@@ -20,6 +20,7 @@ builder.Services.AddCors(
 var app = builder.Build();
 app.UseWebSockets();
 app.UseCors();
+app.UseStaticFiles();
 
 // See https://github.com/dotnet/aspnetcore/blob/v7.0.15/src/Http/Routing/src/RequestDelegateRouteBuilderExtensions.cs
 // app.Map("/", () => "Sample HTTP Response");
