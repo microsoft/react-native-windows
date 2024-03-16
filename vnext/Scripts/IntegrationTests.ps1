@@ -98,8 +98,9 @@ if ($NoRun) {
 	Exit
 }
 
+$filter = ''
 if ($Include.Count) {
-	$filter = "(FullyQualifiedName~" + ($Include -join ')&(FullyQualifiedName~') + ")"
+	$filter += "(FullyQualifiedName~" + ($Include -join ')&(FullyQualifiedName~') + ")"
 }
 
 if ($Exclude.Count) {
@@ -107,6 +108,8 @@ if ($Exclude.Count) {
 }
 
 # Run Integration Test assemblies.
-$command = "$VsTest $Assemblies --InIsolation --Platform:$Platform ('', '--TestCaseFilter:$filter')[$filter.Length -gt 0]"
-echo $command
-& $VsTest $Assemblies --InIsolation --Platform:$Platform ('', "--TestCaseFilter:$filter")[$filter.Length -gt 0]
+if ($filter.Length -gt 0) {
+	& $VsTest $Assemblies --InIsolation --Platform:$Platform "--TestCaseFilter:$filter"
+} else {
+	& $VsTest $Assemblies --InIsolation --Platform:$Platform
+}
