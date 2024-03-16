@@ -83,7 +83,6 @@ jobs:
             #         RNTesterIntegrationTests::WebSocketBlob
             - name: Desktop.IntegrationTests.Filter
               value: >
-                (FullyQualifiedName!=RNTesterIntegrationTests::Blob)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocket)&
                 (FullyQualifiedName!=RNTesterIntegrationTests::WebSocketBlob)&
