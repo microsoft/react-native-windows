@@ -54,14 +54,14 @@ Here are the steps for Micrososoft's IIS:
 1.  Install the ASP.NET Core Hosting Bundle.\
     https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-8.0.3-windows-hosting-bundle-installer
 1.  Create or update a website that binds ports `5555` to `http` and `5543` to `https`.\
-    *For `https`, any trusted SSL certificate will work. There is no need to install `localhost.p12`.*
+    *For `https`, any trusted SSL certificate will work. There is no need to install `localhost.cicert`.*
     1.  Set the location to the publish directory (i.e. `C:\repo\react-native-windows\vnext\target\x64\Debug\Microsoft.ReactNative.Test.Website\Publish`)
 
 ## Technical Information
 
 - The website is meant to run on ports `5555` (`http`, `ws`) and `5543` (`https`, `wss`).\
   This can be modified via command line arguments or in [Properties/launchSettings.json](Properties/launchSettings.json).
-- For encryption, self-signed PKCS12 certificate `localhost.p12` is used (DevOps only).
+- For encryption, self-signed PKCS12 certificate `localhost.cicert` is used (DevOps only).
   The certificate is set to expire on January 1st, 2030.\
   After that date, new one must be generated.
 
@@ -69,6 +69,6 @@ Here are the steps for Micrososoft's IIS:
 
 1.  Generate a new self-signed x509 web certificate.\
     Use common name `CN=localhost`.
-1.  Replace the `localhost.p12` with the new certificate.
+1.  Replace the `localhost.cicert` with the new certificate.
 1.  Update the password in the Continuous Integration system.\
     *The certificate password is mapped to DevOps variable `$(TestWebsiteCertPassword)`.*

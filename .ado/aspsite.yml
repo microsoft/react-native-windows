@@ -81,7 +81,7 @@ steps:
   displayName: Install the .NET Core Hosting Bundle
 
 - pwsh: |
-    $certPath = "${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.p12"
+    $certPath = "${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.cicert"
     $certPass = ConvertTo-SecureString -AsPlainText -String $(TestWebsiteCertPassword)
     $certHash = (Get-PfxCertificate -FilePath $certPath -Password $certPass).Thumbprint
     Write-Host "##vso[task.setvariable variable=TestWebsiteCertificateThumbprint]$certHash"
