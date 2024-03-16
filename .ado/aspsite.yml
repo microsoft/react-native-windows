@@ -62,21 +62,21 @@ steps:
 
 - pwsh: |
     Invoke-WebRequest `
-      -Uri 'https://download.visualstudio.microsoft.com/download/pr/116578f1-3fd4-4847-8bcb-023aeca2c8b2/bfbd897456eaaf8a56f1e838b35d2717/dotnet-sdk-7.0.406-win-x64.exe' `
-      -OutFile dotnet-sdk-7.0.406-win-x64.exe
+      -Uri 'https://download.visualstudio.microsoft.com/download/pr/f2ec926e-0d98-4a8b-8c70-722ccc2ca0e5/b59941b0c60f16421679baafdb7e9338/dotnet-sdk-7.0.407-win-x64.exe' `
+      -OutFile dotnet-sdk-7.0.407-win-x64.exe
 
     Write-Host 'Installing .NET 7'
-    #.\dotnet-sdk-7.0.406-win-x64.exe /install /quiet /norestart
-    Start-Process -Wait -FilePath .\dotnet-sdk-7.0.406-win-x64.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
+    #.\dotnet-sdk-7.0.407-win-x64.exe /install /quiet /norestart
+    Start-Process -Wait -FilePath .\dotnet-sdk-7.0.407-win-x64.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
     Write-Host 'Installed .NET 7'
 
     Invoke-WebRequest `
-      -Uri 'https://download.visualstudio.microsoft.com/download/pr/98ff0a08-a283-428f-8e54-19841d97154c/8c7d5f9600eadf264f04c82c813b7aab/dotnet-hosting-8.0.2-win.exe' `
-      -OutFile dotnet-hosting-8.0.2-win.exe
+      -Uri 'https://download.visualstudio.microsoft.com/download/pr/20598243-c38f-4538-b2aa-af33bc232f80/ea9b2ca232f59a6fdc84b7a31da88464/dotnet-hosting-8.0.3-win.exe' `
+      -OutFile dotnet-hosting-8.0.3-win.exe
 
     Write-Host 'Installing .NET hosting bundle'
-    #.\dotnet-hosting-8.0.2-win.exe /install /quiet /norestart
-    Start-Process -Wait -FilePath .\dotnet-hosting-8.0.2-win.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
+    #.\dotnet-hosting-8.0.3-win.exe /install /quiet /norestart
+    Start-Process -Wait -FilePath .\dotnet-hosting-8.0.3-win.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
     Write-Host 'Installed .NET hosting bundle'
   displayName: Install the .NET Core Hosting Bundle
 
