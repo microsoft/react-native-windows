@@ -29,6 +29,11 @@ Deploying this website in Continuous Integration/Delivery environments also remo
     dotnet run --project vnext\TestWebSite
     ```
 1.  Run integration tests.
+1.  You may need to trust the .NET-provided development SSL certificate:\
+    See https://learn.microsoft.com/en-us/aspnet/core/security/enforcing-ssl#trust-the-aspnet-core-https-development-certificate-on-windows-and-macos.
+    ```cmd
+    dotnet dev-certs https --trust
+    ```
 
 ### Continuous Integration Workflow
 The website gets deployed to a web server.\
@@ -49,7 +54,7 @@ Here are the steps for Micrososoft's IIS:
 1.  Install the ASP.NET Core Hosting Bundle.\
     https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-8.0.3-windows-hosting-bundle-installer
 1.  Create or update a website that binds ports `5555` to `http` and `5543` to `https`.\
-    *For `https`, any trusted certificate will work. There is no need to install `localhost.p12`.*
+    *For `https`, any trusted SSL certificate will work. There is no need to install `localhost.p12`.*
     1.  Set the location to the publish directory (i.e. `C:\repo\react-native-windows\vnext\target\x64\Debug\Microsoft.ReactNative.Test.Website\Publish`)
 
 ## Technical Information
