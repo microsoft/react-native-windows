@@ -116,7 +116,7 @@ jobs:
                   -OutFile dotnet-hosting-8.0.3-win.exe
 
                 Write-Host 'Installing .NET hosting bundle'
-                Start-Process -Wait -FilePath .\dotnet-hosting-8.0.2-win.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
+                Start-Process -Wait -FilePath .\dotnet-hosting-8.0.3-win.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
                 Write-Host 'Installed .NET hosting bundle'
 
                 Invoke-WebRequest `
