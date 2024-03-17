@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "updated accessibilityRole and accessibilityLevel logic",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
