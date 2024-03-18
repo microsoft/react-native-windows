@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
+{
+  "Automation Tree": {},
+  "Visual Tree": {
+    "Comment": "control-style-switch-view",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      984,
+      180,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
+{
+  "Automation Tree": {},
+  "Visual Tree": {
+    "Comment": "control-style-switch-view",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      984,
+      180,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
+{
+  "Automation Tree": {},
+  "Visual Tree": {
+    "Comment": "control-style-switch-view",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      984,
+      180,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
