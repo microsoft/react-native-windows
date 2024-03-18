@@ -1,0 +1,7 @@
+{
+  "type": "none",
+  "comment": "Run NuGetRestoreForceEvaluateAllSolutions.ps1",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "none"
+}
