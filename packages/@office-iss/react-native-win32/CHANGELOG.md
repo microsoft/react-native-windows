@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 09 Feb 2024 17:12:46 GMT and should not be manually modified.
+This log was last generated on Mon, 18 Mar 2024 15:15:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.2
+
+Mon, 18 Mar 2024 15:15:54 GMT
+
+### Patches
+
+- TextProps from rn-win32 should include win32 properties (30809111+acoates-ms@users.noreply.github.com)
+- Update react-native 0.73.4 -> 0.73.6 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.73.1
 

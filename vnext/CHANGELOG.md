@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 11 Mar 2024 15:15:28 GMT and should not be manually modified.
+This log was last generated on Mon, 18 Mar 2024 15:15:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.11
+
+Mon, 18 Mar 2024 15:15:55 GMT
+
+### Patches
+
+- Make HTTP origin value an instance member (#12821) (julio.rocha@microsoft.com)
+- Update react-native 0.73.4 -> 0.73.6 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.73.10
 

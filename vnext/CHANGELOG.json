@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 18 Mar 2024 15:15:55 GMT",
+      "version": "0.73.11",
+      "tag": "react-native-windows_v0.73.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dad540175f8769ab01fff8a5a696e9893d5b1581",
+            "comment": "Make HTTP origin value an instance member (#12821)"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e0cd40b5f2d99ae208f1e1540426ec8275039171",
+            "comment": "Update react-native 0.73.4 -> 0.73.6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Mar 2024 15:15:28 GMT",
       "version": "0.73.10",
       "tag": "react-native-windows_v0.73.10",
