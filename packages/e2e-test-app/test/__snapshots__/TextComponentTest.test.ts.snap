@@ -9,7 +9,7 @@ exports[`TextTest Text alignment 1`] = `
   "Clip": null,
   "CornerRadius": "0,0,0,0",
   "FlowDirection": "LeftToRight",
-  "Height": 95,
+  "Height": 151,
   "HorizontalAlignment": "Stretch",
   "Left": 0,
   "Margin": "0,0,0,0",
@@ -17,7 +17,7 @@ exports[`TextTest Text alignment 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
@@ -33,7 +33,7 @@ exports[`TextTest Text alignment 1`] = `
       "Top": 0,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -49,7 +49,7 @@ exports[`TextTest Text alignment 1`] = `
       "Top": 19,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -65,7 +65,7 @@ exports[`TextTest Text alignment 1`] = `
       "Top": 38,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -81,7 +81,7 @@ exports[`TextTest Text alignment 1`] = `
       "Top": 57,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -97,7 +97,23 @@ exports[`TextTest Text alignment 1`] = `
       "Top": 76,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 56,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "justify (works when api level >= 26 otherwise fallbacks to "left"): this text component's contents are laid out with "textAlign: justify" and as you can see all of the lines except the last one span the available width of the parent container.",
+      "Top": 95,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
   ],
@@ -121,7 +137,7 @@ exports[`TextTest Text background color 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
@@ -138,7 +154,7 @@ exports[`TextTest Text background color 1`] = `
       "Top": 0,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -155,7 +171,7 @@ exports[`TextTest Text background color 1`] = `
       "Top": 19,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -183,7 +199,7 @@ exports[`TextTest Text background color 1`] = `
       "Top": 38,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -200,7 +216,7 @@ exports[`TextTest Text background color 1`] = `
       "Top": 57,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -238,7 +254,7 @@ exports[`TextTest Text background color 1`] = `
       "Top": 76,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -276,7 +292,7 @@ exports[`TextTest Text background color 1`] = `
       "Top": 95,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -304,7 +320,7 @@ exports[`TextTest Text background color 1`] = `
       "Top": 114,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -332,7 +348,7 @@ exports[`TextTest Text background color 1`] = `
       "Top": 133,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -370,7 +386,7 @@ exports[`TextTest Text background color 1`] = `
       "Top": 152,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -398,7 +414,7 @@ exports[`TextTest Text background color 1`] = `
       "Top": 171,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -426,7 +442,7 @@ exports[`TextTest Text background color 1`] = `
       "Top": 190,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -454,7 +470,7 @@ exports[`TextTest Text background color 1`] = `
       "Top": 209,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -502,7 +518,7 @@ exports[`TextTest Text background color 1`] = `
       "Top": 228,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
   ],
@@ -526,7 +542,7 @@ exports[`TextTest Text border 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
@@ -580,7 +596,7 @@ exports[`TextTest Text border 1`] = `
       "Top": 132,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 518,
+      "Width": 436,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
@@ -598,7 +614,7 @@ exports[`TextTest Text border 1`] = `
           "Top": 33,
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
-          "Width": 452,
+          "Width": 370,
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
       ],
@@ -616,7 +632,7 @@ exports[`TextTest Text border 1`] = `
       "Top": 376,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
   ],
@@ -640,7 +656,7 @@ exports[`TextTest Text can have advanced borders 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
@@ -658,7 +674,7 @@ exports[`TextTest Text can have advanced borders 1`] = `
       "Top": 0,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
@@ -674,7 +690,7 @@ exports[`TextTest Text can have advanced borders 1`] = `
           "Top": 15,
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
-          "Width": 688,
+          "Width": 606,
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
       ],
@@ -694,7 +710,7 @@ exports[`TextTest Text can have advanced borders 1`] = `
       "Top": 59,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
@@ -710,7 +726,7 @@ exports[`TextTest Text can have advanced borders 1`] = `
           "Top": 15,
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
-          "Width": 688,
+          "Width": 606,
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
       ],
@@ -730,7 +746,7 @@ exports[`TextTest Text can have advanced borders 1`] = `
       "Top": 118,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
@@ -746,7 +762,7 @@ exports[`TextTest Text can have advanced borders 1`] = `
           "Top": 1,
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
-          "Width": 716,
+          "Width": 634,
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
       ],
@@ -773,7 +789,7 @@ exports[`TextTest Text can have customized accessibility 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
@@ -808,7 +824,7 @@ exports[`TextTest Text can have customized accessibility 1`] = `
           "Top": 0,
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
-          "Width": 718,
+          "Width": 636,
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
@@ -824,7 +840,7 @@ exports[`TextTest Text can have customized accessibility 1`] = `
               "Top": 0,
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
-              "Width": 718,
+              "Width": 636,
               "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
             },
           ],
@@ -853,7 +869,7 @@ exports[`TextTest Text can have customized dimensions 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Microsoft.ReactNative.ViewControl",
   "children": [
     {
@@ -888,7 +904,7 @@ exports[`TextTest Text can have customized dimensions 1`] = `
           "Top": 0,
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
-          "Width": 718,
+          "Width": 636,
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
@@ -932,7 +948,7 @@ exports[`TextTest Text can have font variants 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
@@ -948,7 +964,7 @@ exports[`TextTest Text can have font variants 1`] = `
       "Top": 0,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -964,7 +980,7 @@ exports[`TextTest Text can have font variants 1`] = `
       "Top": 19,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -980,7 +996,7 @@ exports[`TextTest Text can have font variants 1`] = `
       "Top": 38,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -996,7 +1012,7 @@ exports[`TextTest Text can have font variants 1`] = `
       "Top": 57,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1012,7 +1028,7 @@ exports[`TextTest Text can have font variants 1`] = `
       "Top": 76,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
   ],
@@ -1034,7 +1050,7 @@ exports[`TextTest Text color 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -1054,7 +1070,7 @@ exports[`TextTest Text color with children 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -1074,7 +1090,7 @@ exports[`TextTest Text decoration solid linethrough 1`] = `
   "Top": 38,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -1094,7 +1110,7 @@ exports[`TextTest Text decoration underline 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -1116,7 +1132,7 @@ exports[`TextTest Text ellipsize 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
@@ -1132,7 +1148,7 @@ exports[`TextTest Text ellipsize 1`] = `
       "Top": 0,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1148,7 +1164,7 @@ exports[`TextTest Text ellipsize 1`] = `
       "Top": 19,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1164,7 +1180,7 @@ exports[`TextTest Text ellipsize 1`] = `
       "Top": 58,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1180,7 +1196,7 @@ exports[`TextTest Text ellipsize 1`] = `
       "Top": 77,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1196,7 +1212,7 @@ exports[`TextTest Text ellipsize 1`] = `
       "Top": 116,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1212,7 +1228,7 @@ exports[`TextTest Text ellipsize 1`] = `
       "Top": 135,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1228,7 +1244,7 @@ exports[`TextTest Text ellipsize 1`] = `
       "Top": 174,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1244,7 +1260,7 @@ exports[`TextTest Text ellipsize 1`] = `
       "Top": 193,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
   ],
@@ -1266,7 +1282,7 @@ exports[`TextTest Text font family 1`] = `
   "Top": 17,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -1288,7 +1304,7 @@ exports[`TextTest Text font padding 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
@@ -1300,7 +1316,7 @@ exports[`TextTest Text font padding 1`] = `
       "FlowDirection": "LeftToRight",
       "Height": 163,
       "HorizontalAlignment": "Stretch",
-      "Left": 110,
+      "Left": 90,
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Top": 0,
@@ -1352,7 +1368,7 @@ exports[`TextTest Text font padding 1`] = `
       "FlowDirection": "LeftToRight",
       "Height": 163,
       "HorizontalAlignment": "Stretch",
-      "Left": 450,
+      "Left": 388,
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Top": 0,
@@ -1414,7 +1430,7 @@ exports[`TextTest Text force one line 1`] = `
   "Top": 19,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -1434,7 +1450,7 @@ exports[`TextTest Text is selectable 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -1456,7 +1472,7 @@ exports[`TextTest Text letter spacing 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
@@ -1472,7 +1488,7 @@ exports[`TextTest Text letter spacing 1`] = `
       "Top": 0,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1488,7 +1504,7 @@ exports[`TextTest Text letter spacing 1`] = `
       "Top": 24,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1504,7 +1520,7 @@ exports[`TextTest Text letter spacing 1`] = `
       "Top": 48,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1522,7 +1538,7 @@ exports[`TextTest Text letter spacing 1`] = `
       "Top": 67,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
@@ -1556,7 +1572,7 @@ exports[`TextTest Text letter spacing 1`] = `
       "Top": 93,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1572,7 +1588,7 @@ exports[`TextTest Text letter spacing 1`] = `
       "Top": 117,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
   ],
@@ -1596,7 +1612,7 @@ exports[`TextTest Text line height 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
@@ -1612,7 +1628,7 @@ exports[`TextTest Text line height 1`] = `
       "Top": 0,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1628,7 +1644,7 @@ exports[`TextTest Text line height 1`] = `
       "Top": 70,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
   ],
@@ -1650,7 +1666,7 @@ exports[`TextTest Text padding 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -1672,7 +1688,7 @@ exports[`TextTest Text ranging opacity 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
@@ -1688,7 +1704,7 @@ exports[`TextTest Text ranging opacity 1`] = `
       "Top": 0,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1704,7 +1720,7 @@ exports[`TextTest Text ranging opacity 1`] = `
       "Top": 19,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1720,7 +1736,7 @@ exports[`TextTest Text ranging opacity 1`] = `
       "Top": 38,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1736,7 +1752,7 @@ exports[`TextTest Text ranging opacity 1`] = `
       "Top": 57,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1752,7 +1768,7 @@ exports[`TextTest Text ranging opacity 1`] = `
       "Top": 76,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1768,7 +1784,7 @@ exports[`TextTest Text ranging opacity 1`] = `
       "Top": 95,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1784,7 +1800,7 @@ exports[`TextTest Text ranging opacity 1`] = `
       "Top": 114,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1800,7 +1816,7 @@ exports[`TextTest Text ranging opacity 1`] = `
       "Top": 133,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1816,7 +1832,7 @@ exports[`TextTest Text ranging opacity 1`] = `
       "Top": 152,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1832,7 +1848,7 @@ exports[`TextTest Text ranging opacity 1`] = `
       "Top": 171,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
   ],
@@ -1854,7 +1870,7 @@ exports[`TextTest Text selection color 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -1874,7 +1890,7 @@ exports[`TextTest Text shadows 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -1894,7 +1910,7 @@ exports[`TextTest Text size 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -1908,7 +1924,7 @@ exports[`TextTest Text transform 1`] = `
   "Clip": null,
   "CornerRadius": "0,0,0,0",
   "FlowDirection": "LeftToRight",
-  "Height": 209,
+  "Height": 298,
   "HorizontalAlignment": "Stretch",
   "Left": 0,
   "Margin": "0,0,0,0",
@@ -1916,7 +1932,7 @@ exports[`TextTest Text transform 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
@@ -1932,7 +1948,7 @@ exports[`TextTest Text transform 1`] = `
       "Top": 0,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1948,7 +1964,7 @@ exports[`TextTest Text transform 1`] = `
       "Top": 19,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1964,7 +1980,39 @@ exports[`TextTest Text transform 1`] = `
       "Top": 38,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "Capitalize a date:The 9Th Of November, 1998",
+      "Top": 57,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 636,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "Capitalize a 2 digit date:The 25Th Of December",
+      "Top": 76,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1977,10 +2025,10 @@ exports[`TextTest Text transform 1`] = `
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Mixed: UPPERCASE lowercase Capitalize Each Word",
-      "Top": 57,
+      "Top": 95,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -1993,10 +2041,26 @@ exports[`TextTest Text transform 1`] = `
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Should be "ABC":ABC",
-      "Top": 76,
+      "Top": 114,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF000000",
+      "Height": 19,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "Should be "AbC":AbC",
+      "Top": 133,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -2009,10 +2073,10 @@ exports[`TextTest Text transform 1`] = `
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Should be "XyZ":XyZ",
-      "Top": 95,
+      "Top": 152,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -2025,10 +2089,10 @@ exports[`TextTest Text transform 1`] = `
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Should be "xYz":xYz",
-      "Top": 114,
+      "Top": 171,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -2041,10 +2105,10 @@ exports[`TextTest Text transform 1`] = `
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Click to toggle uppercase: Hello",
-      "Top": 133,
+      "Top": 190,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -2057,10 +2121,10 @@ exports[`TextTest Text transform 1`] = `
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
       "Text": "Click to change raw text: HELLO WORLD",
-      "Top": 152,
+      "Top": 209,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
     {
@@ -2076,10 +2140,10 @@ exports[`TextTest Text transform 1`] = `
       "Left": 0,
       "Margin": "0,0,0,0",
       "Padding": "0,0,0,0",
-      "Top": 171,
+      "Top": 228,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Microsoft.ReactNative.ViewControl",
       "children": [
         {
@@ -2114,7 +2178,7 @@ exports[`TextTest Text transform 1`] = `
               "Top": 0,
               "VerticalAlignment": "Stretch",
               "Visibility": "Visible",
-              "Width": 718,
+              "Width": 636,
               "XamlType": "Microsoft.ReactNative.ViewPanel",
               "children": [
                 {
@@ -2130,7 +2194,7 @@ exports[`TextTest Text transform 1`] = `
                   "Top": 0,
                   "VerticalAlignment": "Stretch",
                   "Visibility": "Visible",
-                  "Width": 718,
+                  "Width": 636,
                   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
                 },
                 {
@@ -2146,7 +2210,7 @@ exports[`TextTest Text transform 1`] = `
                   "Top": 19,
                   "VerticalAlignment": "Stretch",
                   "Visibility": "Visible",
-                  "Width": 718,
+                  "Width": 636,
                   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
                 },
               ],
@@ -2154,6 +2218,22 @@ exports[`TextTest Text transform 1`] = `
           ],
         },
       ],
+    },
+    {
+      "Clip": null,
+      "FlowDirection": "LeftToRight",
+      "Foreground": "#FF40E0D0",
+      "Height": 32,
+      "HorizontalAlignment": "Stretch",
+      "Left": 0,
+      "Margin": "0,0,0,0",
+      "Padding": "0,0,0,0",
+      "Text": "WORKS WITH OTHER TEXT STYLES",
+      "Top": 266,
+      "VerticalAlignment": "Stretch",
+      "Visibility": "Visible",
+      "Width": 246,
+      "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
     },
   ],
 }
@@ -2176,7 +2256,7 @@ exports[`TextTest Text unicode characters 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Microsoft.ReactNative.ViewPanel",
   "children": [
     {
@@ -2194,7 +2274,7 @@ exports[`TextTest Text unicode characters 1`] = `
       "Top": 0,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
@@ -2230,7 +2310,7 @@ exports[`TextTest Text unicode characters 1`] = `
       "Top": 19,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
@@ -2246,7 +2326,7 @@ exports[`TextTest Text unicode characters 1`] = `
           "Top": 0,
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
-          "Width": 718,
+          "Width": 636,
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
       ],
@@ -2266,7 +2346,7 @@ exports[`TextTest Text unicode characters 1`] = `
       "Top": 38,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
@@ -2275,7 +2355,7 @@ exports[`TextTest Text unicode characters 1`] = `
           "Foreground": "#FF000000",
           "Height": 19,
           "HorizontalAlignment": "Stretch",
-          "Left": 263,
+          "Left": 222,
           "Margin": "0,0,0,0",
           "Padding": "0,0,0,0",
           "Text": "星际争霸是世界上最好的游戏。",
@@ -2302,7 +2382,7 @@ exports[`TextTest Text unicode characters 1`] = `
       "Top": 57,
       "VerticalAlignment": "Stretch",
       "Visibility": "Visible",
-      "Width": 718,
+      "Width": 636,
       "XamlType": "Microsoft.ReactNative.ViewPanel",
       "children": [
         {
@@ -2318,7 +2398,7 @@ exports[`TextTest Text unicode characters 1`] = `
           "Top": 0,
           "VerticalAlignment": "Stretch",
           "Visibility": "Visible",
-          "Width": 718,
+          "Width": 636,
           "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
         },
       ],
@@ -2333,7 +2413,7 @@ exports[`TextTest Text wrapping 1`] = `
   "Clip": null,
   "FlowDirection": "LeftToRight",
   "Foreground": "#FF000000",
-  "Height": 187,
+  "Height": 205,
   "HorizontalAlignment": "Stretch",
   "Left": 0,
   "Margin": "0,0,0,0",
@@ -2342,7 +2422,7 @@ exports[`TextTest Text wrapping 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 718,
+  "Width": 636,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
