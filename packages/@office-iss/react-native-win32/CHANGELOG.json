@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 18 Mar 2024 20:19:30 GMT",
+      "tag": "@office-iss/react-native-win32_v0.72.14",
+      "version": "0.72.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "f40c11b5ba8c6ccb5b9d2a9f8cdbe4dd9748197e",
+            "comment": "Missed property when adding win32 specific text type info"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Mar 2024 22:28:10 GMT",
       "tag": "@office-iss/react-native-win32_v0.72.13",
       "version": "0.72.13",
