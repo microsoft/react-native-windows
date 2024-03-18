@@ -103,6 +103,28 @@ jobs:
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
+            #TODO: Remove before merging
+            - pwsh: |
+                $certPath = "${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.cicert"
+                $certPass = ConvertTo-SecureString -AsPlainText -String $(TestWebsiteCertificatePassword)
+                $certHash = (Get-PfxCertificate -FilePath $certPath -Password $certPass).Thumbprint
+                Write-Host "##vso[task.setvariable variable=TestWebsiteCertificateThumbprint]$certHash"
+
+                # Make available to IIS
+                Import-PfxCertificate `
+                  -Exportable `
+                  -Password $certPass `
+                  -FilePath $certPath `
+                  -CertStoreLocation Cert:\LocalMachine\My\
+
+                # Trust globally
+                Import-PfxCertificate `
+                  -Exportable `
+                  -Password $certPass `
+                  -FilePath $certPath `
+                  -CertStoreLocation Cert:\LocalMachine\Root\
+              displayName: Install TLS Certificate
+
             # Set up IIS tests {
             - pwsh: |
                 Install-WindowsFeature -Name Web-Server, Web-Scripting-Tools
@@ -225,6 +247,7 @@ jobs:
                     -FilePath $certPath `
                     -CertStoreLocation Cert:\LocalMachine\Root\
                 displayName: Install TLS Certificate
+                enabled: false #TODO: Re-enable before merging
 
               - task: IISWebAppManagementOnMachineGroup@0
                 displayName: Create Test Website
