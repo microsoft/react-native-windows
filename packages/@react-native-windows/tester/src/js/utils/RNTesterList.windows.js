@@ -128,7 +128,7 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'TextExample',
     category: 'Basic',
-    module: require('../examples-win/Text/TextExample'),
+    module: require('../examples/Text/TextExample'),
   },
   {
     key: 'TextInputExample',

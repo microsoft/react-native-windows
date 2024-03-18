@@ -610,6 +610,11 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                 OnJSError(std::move(errorMap));
               };
 
+              if (devSettings->useDirectDebugger) {
+                ::Microsoft::ReactNative::GetSharedDevManager()->EnsureHermesInspector(
+                    devSettings->sourceBundleHost, devSettings->sourceBundlePort);
+              }
+
               m_jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
                   devSettings, m_jsMessageThread.Load(), CreateHermesPreparedScriptStore());
               auto jsRuntime = std::make_unique<Microsoft::ReactNative::HermesJSRuntime>(m_jsiRuntimeHolder);
