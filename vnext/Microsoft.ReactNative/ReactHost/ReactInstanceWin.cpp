@@ -611,7 +611,8 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
               };
 
               if (devSettings->useDirectDebugger) {
-                ::Microsoft::ReactNative::GetSharedDevManager()->EnsureHermesInspector(devSettings->sourceBundleHost, devSettings->sourceBundlePort);
+                ::Microsoft::ReactNative::GetSharedDevManager()->EnsureHermesInspector(
+                    devSettings->sourceBundleHost, devSettings->sourceBundlePort);
               }
 
               m_jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
