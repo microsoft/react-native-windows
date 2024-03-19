@@ -12,7 +12,7 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder #2 1`] = `
     ],
     "Opacity": 1,
     "Size": [
-      984,
+      998,
       180,
     ],
     "Visual Type": "SpriteVisual",
@@ -32,7 +32,7 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRegularBorder 1`] = `
     ],
     "Opacity": 1,
     "Size": [
-      984,
+      998,
       180,
     ],
     "Visual Type": "SpriteVisual",
@@ -52,7 +52,7 @@ exports[`LegacyControlStyleTest ControlStyleTestWithRoundBorder 1`] = `
     ],
     "Opacity": 1,
     "Size": [
-      984,
+      998,
       180,
     ],
     "Visual Type": "SpriteVisual",
