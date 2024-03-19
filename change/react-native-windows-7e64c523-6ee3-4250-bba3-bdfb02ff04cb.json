@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Bump Microsoft.Windows.CppWinRT to 2.0.230706.1",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
