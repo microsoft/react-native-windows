@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 07 Mar 2024 06:16:47 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Mar 2024 05:17:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.205
+
+Tue, 19 Mar 2024 05:17:44 GMT
+
+### Changes
+
+- Fix `run-windows` to use 64-bit MSBuild (jthysell@microsoft.com)
 
 ## 0.0.0-canary.204
 

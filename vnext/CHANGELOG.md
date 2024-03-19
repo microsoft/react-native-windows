@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 13 Mar 2024 05:14:11 GMT and should not be manually modified.
+This log was last generated on Tue, 19 Mar 2024 05:17:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.789
+
+Tue, 19 Mar 2024 05:17:45 GMT
+
+### Changes
+
+- Ensure Hermes Inspector in bridgeless (30809111+acoates-ms@users.noreply.github.com)
+- Bump WindowsAppSDK version to 1.5.240227000 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.205
 
 ## 0.0.0-canary.788
 

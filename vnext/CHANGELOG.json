@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 19 Mar 2024 05:17:45 GMT",
+      "version": "0.0.0-canary.789",
+      "tag": "react-native-windows_v0.0.0-canary.789",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8b92b21c3304882baccfa84cc7ebe407dcd8c520",
+            "comment": "Ensure Hermes Inspector in bridgeless"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1c177d7469b52f14cc31e9bda6101549b712d0bc",
+            "comment": "Bump WindowsAppSDK version to 1.5.240227000"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.205",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Mar 2024 05:14:11 GMT",
       "version": "0.0.0-canary.788",
       "tag": "react-native-windows_v0.0.0-canary.788",
