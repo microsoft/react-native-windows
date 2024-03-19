@@ -3,7 +3,6 @@
 import React from 'react'
 import {NativeSyntheticEvent, StyleSheet, Text, ViewStyle } from 'react-native';
 import {Insets} from 'react-native/types/public/Insets';
-import { TextWin32 } from '../../Text/TextWin32';
 import { ViewWin32 } from '../../View/ViewWin32';
 import { IViewWin32Props, IKeyboardEvent } from '../../View/ViewPropTypes';
 import { TouchableWin32 } from '../TouchableWin32';
@@ -338,7 +337,7 @@ class TouchableWithoutFeedbackExample extends React.Component<{}, IExampleState>
       <ViewWin32 style={styles.largeContainer}>
         <TouchableWin32WithoutFeedback style={styles.outerTouch} onPress={this._onPress}>
           <ViewWin32>
-            <TextWin32>Press me</TextWin32>
+            <Text>Press me</Text>
           </ViewWin32>
         </TouchableWin32WithoutFeedback>
 
@@ -346,12 +345,12 @@ class TouchableWithoutFeedbackExample extends React.Component<{}, IExampleState>
           <ViewWin32 style={styles.smallContainer}>
             <TouchableWin32WithoutFeedback style={styles.innerTouch} onPress={this._onPress}>
               <ViewWin32>
-                <TextWin32>You can also have nested Touchables</TextWin32>
+                <Text>You can also have nested Touchables</Text>
               </ViewWin32>
             </TouchableWin32WithoutFeedback>
           </ViewWin32>
         </TouchableWin32WithoutFeedback>
-        <TextWin32>{'Number of Recognized Presses: ' + this.state.numberOfPresses}</TextWin32>
+        <Text>{'Number of Recognized Presses: ' + this.state.numberOfPresses}</Text>
       </ViewWin32>
     );
   }
@@ -375,7 +374,7 @@ class TouchableHighlightExample extends React.Component<{}, IExampleState> {
       <ViewWin32 style={styles.largeContainer}>
         <TouchableWin32Highlight style={styles.outerTouch} onPress={this._onPress}>
           <ViewWin32>
-            <TextWin32>Press me</TextWin32>
+            <Text>Press me</Text>
           </ViewWin32>
         </TouchableWin32Highlight>
 
@@ -384,9 +383,9 @@ class TouchableHighlightExample extends React.Component<{}, IExampleState> {
             <TouchableWin32Highlight style={styles.innerTouch} onPress={this._onPress} children={this._getChildrenOfInnerTouchable} />
           </ViewWin32>
         </TouchableWin32Highlight>
-        <TextWin32 style={{ color: 'red' }} textStyle="None">
+        <Text style={{ color: 'red' }} textStyle="None">
           {'Number of Recognized Presses: ' + this.state.numberOfPresses}
-        </TextWin32>
+        </Text>
       </ViewWin32>
     );
   }
@@ -405,7 +404,7 @@ class TouchableHighlightExample extends React.Component<{}, IExampleState> {
           width: 70,
         }}
       >
-        <TextWin32
+        <Text
           style={{
             color: this._pickColor(state.isHovered, state.isPressed),
             fontSize: state.isFocused ? 8 : 10,
@@ -413,7 +412,7 @@ class TouchableHighlightExample extends React.Component<{}, IExampleState> {
           textStyle="None"
         >
           Press Me!
-        </TextWin32>
+        </Text>
       </ViewWin32>
     );
   };
