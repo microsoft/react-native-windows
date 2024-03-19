@@ -88,6 +88,7 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactInstanceSettings InstanceSettings() noexcept {
     if (!m_instanceSettings) {
       m_instanceSettings = winrt::Microsoft::ReactNative::ReactInstanceSettings();
+      m_instanceSettings.UseDirectDebugger(true);
       m_instanceSettings.UseFastRefresh(true);
     }
 
@@ -237,6 +238,15 @@ struct WindowData {
               m_compRootView.Size({m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)});
             }
           }
+
+          /*
+           * Uncomment this to run using the bridge.  This isn't publicly exposed, and isn't a mode that we will
+           * support (Fabric will always be bridgeless for windows.)  But it can be useful for internal bug diagnosis.
+           */
+          /*
+          winrt::Microsoft::ReactNative::ReactPropertyBag{host.InstanceSettings().Properties()}.Set(
+              winrt::Microsoft::ReactNative::ReactPropertyId<bool>(L"ReactNative", L"IsBridgeless"), true);
+          */
 
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();
