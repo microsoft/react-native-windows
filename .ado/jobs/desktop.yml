@@ -107,6 +107,7 @@ jobs:
                 # Create and make available to IIS
                 $cert = New-SelfSignedCertificate `
                   -Type SSLServerAuthentication `
+                  -KeyExportPolicy Exportable `
                   -Subject 'CN=localhost' `
                   -NotAfter ([DateTime]::Now).AddHours(2) `
                   -CertStoreLocation Cert:\LocalMachine\My\
@@ -116,20 +117,19 @@ jobs:
                 $certHash = $cert.Thumbprint
                 Write-Host "##vso[task.setvariable variable=TestWebsiteCertificateThumbprint]$certHash"
 
-                echo "thumbprint: [$certHash]"
-                echo "location: [$(ls Cert:\LocalMachine\My\$certHash)]"
-
                 # Export PFX
-                Export-PfxCertificate `
-                  -Password $certPass `
-                  -Cert Cert:\LocalMachine\My\$certHash `
-                  -FilePath $certPath
+                $cert | Export-PfxCertificate -FilePath $certPath -Password $certPass
+
+                # Test exported cert.TODO: Remove
+                echo "thumbprint: [$certHash]"
+                echo "location: [$certPath]"
+                Get-PfxCertificate -FilePath $certPath -Password $certPass
 
                 # Trust globally
                 Import-PfxCertificate `
                   -Exportable `
-                  -Password $certPass `
                   -FilePath $certPath `
+                  -Password $certPass `
                   -CertStoreLocation Cert:\LocalMachine\Root\
               displayName: Install SSL Certificate
 
