@@ -81,6 +81,36 @@ steps:
   displayName: Install the .NET Core Hosting Bundle
 
 - pwsh: |
+    # Create and make available to IIS
+    $cert = New-SelfSignedCertificate `
+      -Type SSLServerAuthentication `
+      -Subject 'CN=localhost' `
+      -NotAfter ([DateTime]::Now).AddHours(2) `
+      -CertStoreLocation Cert:\LocalMachine\My\
+
+    $certPath = "${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.pfx"
+    $certPass = -join ('a'..'z' | Get-Random -Count 32) | ConvertTo-SecureString -AsPlainText -Force
+    $certHash = $cert.Thumbprint
+    Write-Host "##vso[task.setvariable variable=TestWebsiteCertificateThumbprint]$certHash"
+
+    echo "thumbprint: [$certHash]"
+    echo "location: [$(ls Cert:\LocalMachine\My\$certHash)]"
+
+    # Export PFX
+    Export-PfxCertificate `
+      -Password $certPass `
+      -Cert Cert:\LocalMachine\My\$certHash `
+      -FilePath $certPath
+
+    # Trust globally
+    Import-PfxCertificate `
+      -Exportable `
+      -Password $certPass `
+      -FilePath $certPath `
+      -CertStoreLocation Cert:\LocalMachine\Root\
+  displayName: Install SSL Certificate
+
+- pwsh: |
     $certPath = "${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.cicert"
     $certPass = ConvertTo-SecureString -AsPlainText -String $(TestWebsiteCertPassword)
     $certHash = (Get-PfxCertificate -FilePath $certPath -Password $certPass).Thumbprint
@@ -103,6 +133,7 @@ steps:
     # Remove-Item -Path Cert:\LocalMachine\My\$certHash -ErrorAction Ignore
     # Remove-Item -Path Cert:\LocalMachine\Root\$certHash -ErrorAction Ignore
   displayName: Install TLS Certificate
+  enabled: false
 
 - task: IISWebAppManagementOnMachineGroup@0
   enabled: true
