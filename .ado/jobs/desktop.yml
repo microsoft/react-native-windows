@@ -112,7 +112,7 @@ jobs:
                   -NotAfter ([DateTime]::Now).AddHours(2) `
                   -CertStoreLocation Cert:\LocalMachine\My\
 
-                $certPath = "${env:BUILD_SOURCESDIRECTORY}\vnext\TestWebSite\localhost.cicert"
+                $certPath = "${env:TEMP}\localhost.cicert"
                 $certPass = -join ('a'..'z' | Get-Random -Count 32) | ConvertTo-SecureString -AsPlainText -Force
                 $certHash = $cert.Thumbprint
                 Write-Host "##vso[task.setvariable variable=TestWebsiteCertificateThumbprint]$certHash"
