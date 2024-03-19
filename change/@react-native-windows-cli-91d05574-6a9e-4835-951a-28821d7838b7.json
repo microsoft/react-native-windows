@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix `run-windows` to use 64-bit MSBuild",
-  "packageName": "@react-native-windows/cli",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

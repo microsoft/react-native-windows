@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Ensure Hermes Inspector in bridgeless",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
