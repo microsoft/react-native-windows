@@ -2780,9 +2780,9 @@
     "@types/responselike" "^1.0.0"
 
 "@types/chai@^4.2.14":
-  version "4.3.12"
-  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.12.tgz#b192fe1c553b54f45d20543adc2ab88455a07d5e"
-  integrity sha512-zNKDHG/1yxm8Il6uCCVsm+dRdEsJlFoDu73X17y09bId6UwoYww+vFBsAcRzl8knM1sab3Dp1VRikFQwDOtDDw==
+  version "4.3.13"
+  resolved "https://registry.yarnpkg.com/@types/chai/-/chai-4.3.13.tgz#1b152232b93959829842177cbdfc756ed27e9fd9"
+  integrity sha512-+LxQEbg4BDUf88utmhpUpTyYn1zHao443aGnXIAQak9ZMt9Rtsic0Oig0OS1xyIqdDXc5uMekoC6NaiUlkT/qA==
 
 "@types/chalk@^2.2.0":
   version "2.2.0"
