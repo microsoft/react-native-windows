@@ -1,11 +1,11 @@
 #pragma once
-#include "ReactPackageProvider.g.h"
+#include "PlaygroundReactPackageProvider.g.h"
 
 using namespace winrt::Microsoft::ReactNative;
 
 namespace winrt::PlaygroundNativeModules::implementation {
-struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider> {
-  ReactPackageProvider() = default;
+struct PlaygroundReactPackageProvider : PlaygroundReactPackageProviderT<PlaygroundReactPackageProvider> {
+  PlaygroundReactPackageProvider() = default;
 
   void CreatePackage(IReactPackageBuilder const &packageBuilder) noexcept;
 };
@@ -13,6 +13,8 @@ struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider> {
 
 namespace winrt::PlaygroundNativeModules::factory_implementation {
 
-struct ReactPackageProvider : ReactPackageProviderT<ReactPackageProvider, implementation::ReactPackageProvider> {};
+struct PlaygroundReactPackageProvider
+    : PlaygroundReactPackageProviderT<PlaygroundReactPackageProvider, implementation::PlaygroundReactPackageProvider> {
+};
 
 } // namespace winrt::PlaygroundNativeModules::factory_implementation

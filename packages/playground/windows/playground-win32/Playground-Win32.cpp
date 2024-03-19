@@ -15,6 +15,7 @@
 #include <winrt/Microsoft.Toolkit.Win32.UI.XamlHost.h>
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
 #include <winrt/Microsoft.UI.Xaml.XamlTypeInfo.h>
+#include <winrt/PlaygroundNativeModules.h>
 
 #pragma push_macro("GetCurrentTime")
 #undef GetCurrentTime
@@ -112,6 +113,7 @@ struct WindowData {
 
           auto host = Host();
           RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any autolinked modules
+          host.PackageProviders().Append(winrt::PlaygroundNativeModules::PlaygroundReactPackageProvider());
 
           host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
 
