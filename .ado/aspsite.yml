@@ -7,7 +7,7 @@ pool:
 
 variables:
   - name: system.debug
-    value: true
+    value: false
   - name: Desktop.IntegrationTests.Filter
     value: >
       (FullyQualifiedName!~RNTesterIntegrationTests::)&
