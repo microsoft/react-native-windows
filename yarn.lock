@@ -2473,9 +2473,9 @@
     rimraf "^3.0.2"
 
 "@rnx-kit/cli@^0.16.10":
-  version "0.16.22"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-0.16.22.tgz#63f98affdce7c7c3ecde459c0491ed7137e720d0"
-  integrity sha512-pXsm3aqi1hOq6nTgafofuC+zMGkJA7jKTmjvp0Cb13Sr5TEQxh5zofO84AyanYBOFK0YiJZp1JJFyMhFmuaplA==
+  version "0.16.23"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-0.16.23.tgz#d35ff84038e93c8c702f55e210079ae35040f538"
+  integrity sha512-lGjW13Yx4DQ2QSQvNYwccSc6qFrrESzfljoNj6cyr5ahmftkFPP3S7yjUMJ2kA0KONytPccIXkoCjfkcYhzHjw==
   dependencies:
     "@rnx-kit/align-deps" "^2.3.3"
     "@rnx-kit/config" "^0.6.6"
