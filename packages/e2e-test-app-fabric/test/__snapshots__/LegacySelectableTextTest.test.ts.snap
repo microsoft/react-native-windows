@@ -1,0 +1,113 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LegacySelectableTextTest DoubleClickWhenNotSelectable 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "pressed-state",
+    "ControlType": 50020,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "text",
+    "Name": "Pressed: 2 times.",
+  },
+  "Visual Tree": {
+    "Comment": "pressed-state",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      103,
+      20,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`LegacySelectableTextTest DoubleClickWhenSelectable 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "pressed-state",
+    "ControlType": 50020,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "text",
+    "Name": "Pressed: 2 times.",
+  },
+  "Visual Tree": {
+    "Comment": "pressed-state",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      103,
+      20,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`LegacySelectableTextTest PressableWhenNotSelectable 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "pressed-state",
+    "ControlType": 50020,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "text",
+    "Name": "Pressed: 1 times.",
+  },
+  "Visual Tree": {
+    "Comment": "pressed-state",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      103,
+      20,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`LegacySelectableTextTest PressableWhenSelectable 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "pressed-state",
+    "ControlType": 50020,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "text",
+    "Name": "Pressed: 1 times.",
+  },
+  "Visual Tree": {
+    "Comment": "pressed-state",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      103,
+      20,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
