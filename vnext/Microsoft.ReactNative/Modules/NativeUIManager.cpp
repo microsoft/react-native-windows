@@ -799,7 +799,7 @@ void NativeUIManager::CreateView(ShadowNode &shadowNode, React::JSValueObject &p
       if (func != nullptr) {
         YGNodeSetMeasureFunc(yogaNode, func);
 
-        auto context = std::make_unique<Microsoft::ReactNative::YogaContext>(node.GetView());
+        auto context = std::make_unique<Microsoft::ReactNative::YogaContext>(node.GetView(), node.GetViewManager());
         YGNodeSetContext(yogaNode, reinterpret_cast<void *>(context.get()));
 
         m_tagsToYogaContext.emplace(node.m_tag, std::move(context));
@@ -857,7 +857,7 @@ void NativeUIManager::ReplaceView(ShadowNode &shadowNode) {
       YGNodeRef yogaNode = it->second.get();
 
       if (pViewManager->IsNativeControlWithSelfLayout()) {
-        auto context = std::make_unique<YogaContext>(node.GetView());
+        auto context = std::make_unique<YogaContext>(node.GetView(), node.GetViewManager());
         YGNodeSetContext(yogaNode, reinterpret_cast<void *>(context.get()));
 
         m_tagsToYogaContext.erase(node.m_tag);
