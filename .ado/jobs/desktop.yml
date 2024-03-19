@@ -71,7 +71,6 @@ jobs:
 
           variables:
             - template: ../variables/windows.yml
-            - group: RNW Secrets
 
             # Enable if any issues RNTesterIntegrationTests::* become unstable.
             - name: Desktop.IntegrationTests.SkipRNTester
@@ -116,6 +115,9 @@ jobs:
                 $certPass = -join ('a'..'z' | Get-Random -Count 32) | ConvertTo-SecureString -AsPlainText -Force
                 $certHash = $cert.Thumbprint
                 Write-Host "##vso[task.setvariable variable=TestWebsiteCertificateThumbprint]$certHash"
+
+                echo "thumbprint: [$certHash]"
+                echo "location: [$(ls Cert:\LocalMachine\My\$certHash)]"
 
                 # Export PFX
                 Export-PfxCertificate `
