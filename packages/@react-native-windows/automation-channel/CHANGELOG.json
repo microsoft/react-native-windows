@@ -2,6 +2,50 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Wed, 20 Mar 2024 05:16:36 GMT",
+      "version": "0.12.129",
+      "tag": "@react-native-windows/automation-channel_v0.12.129",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "1adf98db529f8be9087bdaa383b6ea5378744a37",
+            "comment": "Bump Microsoft.Windows.CppWinRT to 2.0.230706.1"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.790",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 19 Mar 2024 05:17:44 GMT",
+      "version": "0.12.128",
+      "tag": "@react-native-windows/automation-channel_v0.12.128",
+      "comments": {
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "1c177d7469b52f14cc31e9bda6101549b712d0bc",
+            "comment": "Run NuGetRestoreForceEvaluateAllSolutions.ps1"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.789",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Mar 2024 05:14:12 GMT",
       "version": "0.12.127",
       "tag": "@react-native-windows/automation-channel_v0.12.127",

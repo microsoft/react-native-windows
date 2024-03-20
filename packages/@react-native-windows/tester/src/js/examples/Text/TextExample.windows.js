@@ -1,27 +1,38 @@
 /**
- * Copyright (c) Microsoft Corporation.
- * Licensed under the MIT License.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE file in the root directory of this source tree.
+ *
  * @format
+ * @flow strict-local
  */
 
 // This is a port of TextExample.android.js
 // Image inline in Text removed
 
+import TextLegend from '../../components/TextLegend';
+import TextAdjustsDynamicLayoutExample from './TextAdjustsDynamicLayoutExample';
 import React from 'react';
 import {
-  /*Image,*/ StyleSheet,
+  LayoutAnimation,
+  Platform,
+  /*Image,*/
+  StyleSheet,
   Switch,
   Text,
   TextInput,
-  View,
   TextStyle,
   TouchableWithoutFeedback,
+  View,
 } from 'react-native';
+
 const RNTesterBlock = require('../../components/RNTesterBlock');
 const RNTesterPage = require('../../components/RNTesterPage');
+const TextInlineView = require('../../components/TextInlineView');
 
-export class Entity extends React.Component<React.PropsWithChildren<{}>> {
-  public render() {
+class Entity extends React.Component<React.PropsWithChildren<{}>> {
+  render() {
     return (
       <Text style={{fontWeight: 'bold', color: '#527fe4'}}>
         {this.props.children}
@@ -34,25 +45,22 @@ interface IAttributeTogglerState {
   fontWeight: 'bold' | 'normal';
   fontSize: number;
 }
-export class AttributeToggler extends React.Component<
-  {},
-  IAttributeTogglerState
-> {
-  public state: IAttributeTogglerState = {fontWeight: 'bold', fontSize: 15};
+class AttributeToggler extends React.Component<{}, IAttributeTogglerState> {
+  state: IAttributeTogglerState = {fontWeight: 'bold', fontSize: 15};
 
-  public toggleWeight = () => {
+  toggleWeight = () => {
     this.setState({
       fontWeight: this.state.fontWeight === 'bold' ? 'normal' : 'bold',
     });
   };
 
-  public increaseSize = () => {
+  increaseSize = () => {
     this.setState({
       fontSize: this.state.fontSize + 1,
     });
   };
 
-  public render() {
+  render() {
     const curStyle: TextStyle = {
       fontWeight: this.state.fontWeight,
       fontSize: this.state.fontSize,
@@ -80,8 +88,133 @@ export class AttributeToggler extends React.Component<
   }
 }
 
-export class BackgroundColorDemo extends React.Component<{}> {
-  public render() {
+type AdjustingFontSizeProps = $ReadOnly<{||}>;
+
+type AdjustingFontSizeState = {|
+  dynamicText: string,
+  shouldRender: boolean,
+|};
+
+class AdjustingFontSize extends React.Component<
+  AdjustingFontSizeProps,
+  AdjustingFontSizeState,
+> {
+  state: AdjustingFontSizeState = {
+    dynamicText: '',
+    shouldRender: true,
+  };
+
+  reset = () => {
+    LayoutAnimation.easeInEaseOut();
+    this.setState({
+      shouldRender: false,
+    });
+    setTimeout(() => {
+      LayoutAnimation.easeInEaseOut();
+      this.setState({
+        dynamicText: '',
+        shouldRender: true,
+      });
+    }, 300);
+  };
+
+  addText = () => {
+    this.setState({
+      dynamicText:
+        this.state.dynamicText +
+        (Math.floor((Math.random() * 10) % 2) ? ' foo' : ' bar'),
+    });
+  };
+
+  removeText = () => {
+    this.setState({
+      dynamicText: this.state.dynamicText.slice(
+        0,
+        this.state.dynamicText.length - 4,
+      ),
+    });
+  };
+
+  render(): React.Node {
+    if (!this.state.shouldRender) {
+      return <View />;
+    }
+    return (
+      <View>
+        <Text
+          ellipsizeMode="tail"
+          numberOfLines={1}
+          style={{fontSize: 36, marginVertical: 6}}>
+          Truncated text is baaaaad.
+        </Text>
+        <Text
+          numberOfLines={1}
+          adjustsFontSizeToFit={true}
+          style={{fontSize: 40, marginVertical: 6}}>
+          Shrinking to fit available space is much better!
+        </Text>
+
+        <Text
+          adjustsFontSizeToFit={true}
+          numberOfLines={1}
+          style={{fontSize: 30, marginVertical: 6}}>
+          {'Add text to me to watch me shrink!' + ' ' + this.state.dynamicText}
+        </Text>
+
+        <Text
+          adjustsFontSizeToFit={true}
+          numberOfLines={4}
+          android_hyphenationFrequency="normal"
+          style={{fontSize: 20, marginVertical: 6}}>
+          {'Multiline text component shrinking is supported, watch as this reeeeaaaally loooooong teeeeeeext grooooows and then shriiiinks as you add text to me! ioahsdia soady auydoa aoisyd aosdy ' +
+            ' ' +
+            this.state.dynamicText}
+        </Text>
+
+        <Text
+          adjustsFontSizeToFit={true}
+          style={{fontSize: 20, marginVertical: 6, maxHeight: 50}}>
+          {'Text limited by height, watch as this reeeeaaaally loooooong teeeeeeext grooooows and then shriiiinks as you add text to me! ioahsdia soady auydoa aoisyd aosdy ' +
+            ' ' +
+            this.state.dynamicText}
+        </Text>
+
+        <Text
+          adjustsFontSizeToFit={true}
+          numberOfLines={1}
+          style={{marginVertical: 6}}>
+          <Text style={{fontSize: 14}}>
+            {'Differently sized nested elements will shrink together. '}
+          </Text>
+          <Text style={{fontSize: 20}}>
+            {'LARGE TEXT! ' + this.state.dynamicText}
+          </Text>
+        </Text>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-around',
+            marginTop: 5,
+            marginVertical: 6,
+          }}>
+          <Text style={{backgroundColor: '#ffaaaa'}} onPress={this.reset}>
+            Reset
+          </Text>
+          <Text style={{backgroundColor: '#aaaaff'}} onPress={this.removeText}>
+            Remove Text
+          </Text>
+          <Text style={{backgroundColor: '#aaffaa'}} onPress={this.addText}>
+            Add Text
+          </Text>
+        </View>
+      </View>
+    );
+  }
+}
+
+class BackgroundColorDemo extends React.Component<{}> {
+  render() {
     return (
       <View testID={'text-background-color'}>
         <Text style={{color: 'pink'}}>Outer pink</Text>
@@ -169,16 +302,16 @@ export class BackgroundColorDemo extends React.Component<{}> {
   }
 }
 
-export class TextHighlightDemo extends React.Component<
+class TextHighlightDemo extends React.Component<
   {},
-  {search: string; toggled: boolean}
+  {search: string, toggled: boolean},
 > {
   constructor(props: any) {
     super(props);
     this.state = {search: '', toggled: false};
   }
 
-  private getTextParts(text: string) {
+  getTextParts(text: string) {
     if (this.state.search === '') {
       return [text];
     }
@@ -203,7 +336,7 @@ export class TextHighlightDemo extends React.Component<
     ));
   }
 
-  public render() {
+  render() {
     const exampleText = 'The quick brown fox jumped over the lazy dog.';
     const parts = this.getTextParts(exampleText);
     const rootHighlight = {
@@ -229,21 +362,21 @@ export class TextHighlightDemo extends React.Component<
   }
 }
 
-export class TextExample extends React.Component<
+class TextExample extends React.Component<
   {},
-  {toggle1: boolean; toggle2: boolean; toggle3: boolean}
+  {toggle1: boolean, toggle2: boolean, toggle3: boolean},
 > {
   constructor(props: any) {
     super(props);
     this.state = {toggle1: false, toggle2: false, toggle3: false};
   }
 
-  public render() {
+  render() {
     const lorumIpsum =
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.';
 
     return (
-      <RNTesterPage>
+      <RNTesterPage title="<Text>">
         <RNTesterBlock title="textTransform">
           <View testID={'text-transform'}>
             <Text style={{textTransform: 'uppercase'}}>
@@ -254,6 +387,18 @@ export class TextExample extends React.Component<
             </Text>
             <Text style={{textTransform: 'capitalize'}}>
               This text should be CAPITALIZED.
+            </Text>
+            <Text>
+              Capitalize a date:
+              <Text style={{textTransform: 'capitalize'}}>
+                the 9th of november, 1998
+              </Text>
+            </Text>
+            <Text>
+              Capitalize a 2 digit date:
+              <Text style={{textTransform: 'capitalize'}}>
+                the 25th of december
+              </Text>
             </Text>
             <Text style={{textTransform: 'capitalize'}}>
               Mixed:{' '}
@@ -273,6 +418,12 @@ export class TextExample extends React.Component<
               </Text>
             </Text>
             <Text>
+              Should be "AbC":
+              <Text style={{textTransform: 'uppercase'}}>
+                a<Text style={{textTransform: 'none'}}>b</Text>c
+              </Text>
+            </Text>
+            <Text>
               Should be "XyZ":
               <Text style={{textTransform: 'uppercase'}}>
                 x<Text style={{textTransform: 'none'}}>y</Text>z
@@ -286,6 +437,33 @@ export class TextExample extends React.Component<
                 </Text>
               </Text>
             </Text>
+            {/*
+              This test makes e2e tests hang indefinitely on Windows.
+             */}
+            {Platform.OS !== 'windows' ? (
+              <View>
+                <Text style={{textTransform: 'none'}}>
+                  {
+                    '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
+                  }
+                </Text>
+                <Text style={{textTransform: 'uppercase'}}>
+                  {
+                    '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
+                  }
+                </Text>
+                <Text style={{textTransform: 'lowercase'}}>
+                  {
+                    '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
+                  }
+                </Text>
+                <Text style={{textTransform: 'capitalize'}}>
+                  {
+                    '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
+                  }
+                </Text>
+              </View>
+            ) : null}
             <Text onPress={() => this.setState({toggle1: !this.state.toggle1})}>
               Click to toggle uppercase:{' '}
               <Text
@@ -315,7 +493,67 @@ export class TextExample extends React.Component<
                 </Text>
               </View>
             </TouchableWithoutFeedback>
+            <Text
+              style={{
+                textTransform: 'uppercase',
+                fontSize: 16,
+                color: 'turquoise',
+                backgroundColor: 'blue',
+                lineHeight: 32,
+                letterSpacing: 2,
+                alignSelf: 'flex-start',
+              }}>
+              Works with other text styles
+            </Text>
           </View>
+        </RNTesterBlock>
+        {/*
+          Emoji gets rendered on windows which causes issues with e2e tests.
+          It seems they can't deal with the character properly which makes them always fail
+        */}
+        {Platform.OS !== 'windows' ? (
+          <RNTesterBlock title="Substring Emoji (should only see 'test')">
+            <Text>{'test🙃'.substring(0, 5)}</Text>
+          </RNTesterBlock>
+        ) : null}
+        <RNTesterBlock title="Text linkify">
+          <Text dataDetectorType="phoneNumber">Phone number: 123-123-1234</Text>
+          <Text dataDetectorType="link">Link: https://www.facebook.com</Text>
+          <Text dataDetectorType="email">Email: employee@facebook.com</Text>
+          <Text dataDetectorType="none">
+            Phone number: 123-123-1234 Link: https://www.facebook.com Email:
+            employee@facebook.com
+          </Text>
+          <Text dataDetectorType="all">
+            Phone number: 123-123-1234 Link: https://www.facebook.com Email:
+            employee@facebook.com
+          </Text>
+        </RNTesterBlock>
+        <RNTesterBlock title="Dynamic Font Size Adjustment">
+          <AdjustingFontSize />
+        </RNTesterBlock>
+        <RNTesterBlock title="Font Size Adjustment with Dynamic Layout">
+          <TextAdjustsDynamicLayoutExample />
+        </RNTesterBlock>
+        <RNTesterBlock title="Wrap">
+          <Text>
+            The text should wrap if it goes on multiple lines. See, this is
+            going to the next line.
+          </Text>
+        </RNTesterBlock>
+        <RNTesterBlock title="Hyphenation">
+          <Text android_hyphenationFrequency="normal">
+            <Text style={{color: 'red'}}>Normal: </Text>
+            WillHaveAHyphenWhenBreakingForNewLine
+          </Text>
+          <Text android_hyphenationFrequency="none">
+            <Text style={{color: 'red'}}>None: </Text>
+            WillNotHaveAHyphenWhenBreakingForNewLine
+          </Text>
+          <Text android_hyphenationFrequency="full">
+            <Text style={{color: 'red'}}>Full: </Text>
+            WillHaveAHyphenWhenBreakingForNewLine
+          </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Wrap">
           <Text testID={'text-wrap'}>
@@ -327,6 +565,9 @@ export class TextExample extends React.Component<
           <Text style={{padding: 10}} testID={'text-padding'}>
             This text is indented by 10px padding on all sides.
           </Text>
+        </RNTesterBlock>
+        <RNTesterBlock title="Text metrics legend">
+          <TextLegend />
         </RNTesterBlock>
         <RNTesterBlock title="Font Family">
           <Text style={{fontFamily: 'sans-serif'}}>Sans-Serif</Text>
@@ -342,6 +583,9 @@ export class TextExample extends React.Component<
           <Text style={{fontFamily: 'monospace'}}>Monospace</Text>
           <Text style={{fontFamily: 'monospace', fontWeight: 'bold'}}>
             Monospace Bold (After 5.0)
+          </Text>
+          <Text style={{fontFamily: 'Unknown Font Family'}}>
+            Unknown Font Family
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Android Material Design fonts">
@@ -424,6 +668,42 @@ export class TextExample extends React.Component<
               <Text style={{fontFamily: 'notoserif', fontStyle: 'italic'}}>
                 NotoSerif Italic (Missing Font file)
               </Text>
+              <Text
+                style={{
+                  fontFamily: 'Rubik',
+                  fontWeight: 'normal',
+                }}>
+                Rubik Regular
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Rubik',
+                  fontWeight: '300',
+                }}>
+                Rubik Light
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Rubik',
+                  fontWeight: '700',
+                }}>
+                Rubik Bold
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Rubik',
+                  fontWeight: '500',
+                }}>
+                Rubik Medium
+              </Text>
+              <Text
+                style={{
+                  fontFamily: 'Rubik',
+                  fontStyle: 'italic',
+                  fontWeight: '500',
+                }}>
+                Rubik Medium Italic
+              </Text>
             </View>
           </View>
         </RNTesterBlock>
@@ -443,14 +723,33 @@ export class TextExample extends React.Component<
         <RNTesterBlock title="Font Weight">
           <Text style={{fontWeight: 'bold'}}>Move fast and be bold</Text>
           <Text style={{fontWeight: 'normal'}}>Move fast and be bold</Text>
+          <Text style={{fontWeight: 'normal'}}>Move fast and be normal</Text>
+          <Text style={{fontWeight: '900'}}>FONT WEIGHT 900</Text>
+          <Text style={{fontWeight: '800'}}>FONT WEIGHT 800</Text>
+          <Text style={{fontWeight: '700'}}>FONT WEIGHT 700</Text>
+          <Text style={{fontWeight: '600'}}>FONT WEIGHT 600</Text>
+          <Text style={{fontWeight: '500'}}>FONT WEIGHT 500</Text>
+          <Text style={{fontWeight: '400'}}>FONT WEIGHT 400</Text>
+          <Text style={{fontWeight: '300'}}>FONT WEIGHT 300</Text>
+          <Text style={{fontWeight: '200'}}>FONT WEIGHT 200</Text>
+          <Text style={{fontWeight: '100'}}>FONT WEIGHT 100</Text>
+          <Text style={{fontWeight: 900}}>FONT WEIGHT 900</Text>
+          <Text style={{fontWeight: 800}}>FONT WEIGHT 800</Text>
+          <Text style={{fontWeight: 700}}>FONT WEIGHT 700</Text>
+          <Text style={{fontWeight: 600}}>FONT WEIGHT 600</Text>
+          <Text style={{fontWeight: 500}}>FONT WEIGHT 500</Text>
+          <Text style={{fontWeight: 400}}>FONT WEIGHT 400</Text>
+          <Text style={{fontWeight: 300}}>FONT WEIGHT 300</Text>
+          <Text style={{fontWeight: 200}}>FONT WEIGHT 200</Text>
+          <Text style={{fontWeight: 100}}>FONT WEIGHT 100</Text>
         </RNTesterBlock>
         <RNTesterBlock title="Font Style">
-          <Text style={{fontStyle: 'italic'}}>Move fast and be bold</Text>
-          <Text style={{fontStyle: 'normal'}}>Move fast and be bold</Text>
+          <Text style={{fontStyle: 'italic'}}>Move fast and be italic</Text>
+          <Text style={{fontStyle: 'normal'}}>Move fast and be normal</Text>
         </RNTesterBlock>
         <RNTesterBlock title="Font Style and Weight">
           <Text style={{fontStyle: 'italic', fontWeight: 'bold'}}>
-            Move fast and be bold
+            Move fast and be both bold and italic
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Text Decoration">
@@ -559,6 +858,16 @@ export class TextExample extends React.Component<
           <Text style={{fontSize: 12}}>
             <Entity>Entity Name</Entity>
           </Text>
+          <Text style={{fontSize: 8}}>
+            Nested text with size 8,{' '}
+            <Text style={{fontSize: 23}}>size 23, </Text>
+            and size 8 again
+          </Text>
+          <Text style={{color: 'red'}}>
+            Nested text with red color,{' '}
+            <Text style={{color: 'blue'}}>blue color, </Text>
+            and red color again
+          </Text>
         </RNTesterBlock>
         <RNTesterBlock title="Text Align">
           <View testID={'text-align'}>
@@ -575,6 +884,12 @@ export class TextExample extends React.Component<
             <Text style={{textAlign: 'right'}}>
               right right right right right right right right right right right
               right right
+            </Text>
+            <Text style={{textAlign: 'justify'}}>
+              justify (works when api level >= 26 otherwise fallbacks to
+              "left"): this text component{"'"}s contents are laid out with
+              "textAlign: justify" and as you can see all of the lines except
+              the last one span the available width of the parent container.
             </Text>
           </View>
         </RNTesterBlock>
@@ -719,7 +1034,6 @@ export class TextExample extends React.Component<
             Maximum of one line no matter now much I write here. If I keep
             writing it{"'"}ll just truncate after one line. {lorumIpsum}
           </Text>
-
           <Text style={{marginTop: 20, fontStyle: 'italic'}}>2</Text>
           <Text numberOfLines={2}>
             Maximum of two lines no matter now much I write here. If I keep
@@ -732,6 +1046,25 @@ export class TextExample extends React.Component<
           <Text>
             No maximum lines specified no matter now much I write here. If I
             keep writing it{"'"}ll just keep going and going. {lorumIpsum}
+          </Text>
+        </RNTesterBlock>
+        <RNTesterBlock title="allowFontScaling attribute">
+          <Text>
+            By default, text will respect Text Size accessibility setting on
+            Android. It means that all font sizes will be increased or decreased
+            depending on the value of the Text Size setting in the OS's Settings
+            app.
+          </Text>
+          <Text style={{marginTop: 10}}>
+            You can disable scaling for your Text component by passing {'"'}
+            allowFontScaling={'{'}false{'}"'} prop.
+          </Text>
+          <Text allowFontScaling={false} style={{marginTop: 20, fontSize: 15}}>
+            This text will not scale.{' '}
+            <Text style={{fontSize: 15}}>
+              This text also won't scale because it inherits "allowFontScaling"
+              from its parent.
+            </Text>
           </Text>
         </RNTesterBlock>
         <RNTesterBlock title="selectable attribute">
@@ -756,6 +1089,31 @@ export class TextExample extends React.Component<
             Neat, huh?
           </Text>
         </RNTesterBlock>
+        {/*
+          This tests renders <View> nested within <Text> which is not allowed in Windows
+         */}
+        {Platform.OS !== 'windows' ? (
+          <View>
+            <RNTesterBlock title="Inline views">
+              <TextInlineView.Basic />
+            </RNTesterBlock>
+            <RNTesterBlock title="Inline views with multiple nested texts">
+              <TextInlineView.NestedTexts />
+            </RNTesterBlock>
+            <RNTesterBlock title="Inline image/view clipped by <Text>">
+              <TextInlineView.ClippedByText />
+            </RNTesterBlock>
+            <RNTesterBlock title="Relayout inline image">
+              <TextInlineView.ChangeImageSize />
+            </RNTesterBlock>
+            <RNTesterBlock title="Relayout inline view">
+              <TextInlineView.ChangeViewSize />
+            </RNTesterBlock>
+            <RNTesterBlock title="Relayout nested inline view">
+              <TextInlineView.ChangeInnerViewSize />
+            </RNTesterBlock>
+          </View>
+        ) : null}
         <RNTesterBlock title="Text shadow">
           <Text
             style={{
@@ -797,6 +1155,33 @@ export class TextExample extends React.Component<
             </Text>
           </View>
         </RNTesterBlock>
+        <RNTesterBlock title="Font variants">
+          <Text style={{fontVariant: ['small-caps']}}>Small Caps{'\n'}</Text>
+          <Text
+            style={{
+              fontFamily: 'Roboto',
+              fontVariant: ['oldstyle-nums'],
+            }}>
+            Old Style nums 0123456789{'\n'}
+          </Text>
+          <Text
+            style={{
+              fontFamily: 'Roboto',
+              fontVariant: ['lining-nums'],
+            }}>
+            Lining nums 0123456789{'\n'}
+          </Text>
+          <Text style={{fontVariant: ['tabular-nums']}}>
+            Tabular nums{'\n'}
+            1111{'\n'}
+            2222{'\n'}
+          </Text>
+          <Text style={{fontVariant: ['proportional-nums']}}>
+            Proportional nums{'\n'}
+            1111{'\n'}
+            2222{'\n'}
+          </Text>
+        </RNTesterBlock>
         <RNTesterBlock title="Include Font Padding">
           <View
             style={{
@@ -826,7 +1211,6 @@ export class TextExample extends React.Component<
             make text look slightly misaligned when centered vertically.
           </Text>
         </RNTesterBlock>
-
         <RNTesterBlock title="Text With Border">
           <View testID={'text-border'}>
             <Text style={styles.borderedTextSimple}>
@@ -1014,7 +1398,7 @@ export class TextExample extends React.Component<
   }
 }
 
-export const styles = StyleSheet.create({
+const styles = StyleSheet.create({
   backgroundColorText: {
     left: 5,
     backgroundColor: 'rgba(100, 100, 100, 0.3)',
@@ -1044,13 +1428,114 @@ export const styles = StyleSheet.create({
   },
 });
 
-export const displayName = (_undefined?: string) => {};
-export const title = 'Text';
-export const description = 'Base component for rendering styled text.';
-export const examples = [
+function TextBaseLineLayoutExample(props: {}): React.Node {
+  const texts = [];
+  for (let i = 9; i >= 0; i--) {
+    texts.push(
+      <Text
+        key={i}
+        style={{fontSize: 8 + i * 5, maxWidth: 20, backgroundColor: '#eee'}}>
+        {i}
+      </Text>,
+    );
+  }
+
+  const marker = (
+    <View style={{width: 20, height: 20, backgroundColor: 'gray'}} />
+  );
+  const subtitleStyle = {fontSize: 16, marginTop: 8, fontWeight: 'bold'};
+
+  return (
+    <View>
+      <Text style={subtitleStyle}>{'Nested <Text/>s:'}</Text>
+      <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+        {marker}
+        <Text>{texts}</Text>
+        {marker}
+      </View>
+
+      <Text style={subtitleStyle}>{'Array of <Text/>s in <View>:'}</Text>
+      <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+        {marker}
+        {texts}
+        {marker}
+      </View>
+
+      <Text style={subtitleStyle}>{'Interleaving <View> and <Text>:'}</Text>
+      <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+        {marker}
+        <Text selectable={true}>
+          Some text.
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'baseline',
+              backgroundColor: '#eee',
+            }}>
+            {marker}
+            <Text>Text inside View.</Text>
+            {marker}
+          </View>
+        </Text>
+        {marker}
+      </View>
+    </View>
+  );
+}
+
+const examples = [
   {
+    title: 'Basic text',
     render: function (): JSX.Element {
       return <TextExample />;
     },
   },
+  {
+    platform: 'android',
+    title: "Text `alignItems: 'baseline'` style",
+    render: function (): React.Node {
+      return <TextBaseLineLayoutExample />;
+    },
+  },
+  {
+    title: 'Selectable Text',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text style={{userSelect: 'auto'}}>Text element is selectable</Text>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Text alignment',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text style={{textAlignVertical: 'top', borderWidth: 1, height: 75}}>
+            Text element aligned to the top via textAlignVertical
+          </Text>
+          <Text style={{verticalAlign: 'top', borderWidth: 1, height: 75}}>
+            Text element aligned to the top via verticalAlign
+          </Text>
+          <Text
+            style={{textAlignVertical: 'center', borderWidth: 1, height: 75}}>
+            Text element aligned to the middle via textAlignVertical
+          </Text>
+          <Text style={{verticalAlign: 'middle', borderWidth: 1, height: 75}}>
+            Text element aligned to the middle via verticalAlign
+          </Text>
+        </View>
+      );
+    },
+  },
 ];
+
+module.exports = ({
+  title: 'Text',
+  documentationURL: 'https://reactnative.dev/docs/text',
+  category: 'Basic',
+  description: 'Base component for rendering styled text.',
+  displayName: 'TextExample',
+  examples,
+}: RNTesterModule);

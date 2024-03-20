@@ -35,6 +35,12 @@
       "issue": 6240
     },
     {
+      "type": "derived",
+      "file": "src/js/examples/Text/TextExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Text/TextExample.android.js",
+      "baseHash": "9cb2d3e8b597365523aab44fd22ef0341f0627a0"
+    },
+    {
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",

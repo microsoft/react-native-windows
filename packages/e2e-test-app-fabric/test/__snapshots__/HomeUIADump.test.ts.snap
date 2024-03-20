@@ -16959,7 +16959,7 @@ exports[`Home UIA Tree Dump Text 1`] = `
         "IsEnabled": true,
         "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
-        "Name": "Other",
+        "Name": "Basic",
       },
       {
         "AutomationId": "",

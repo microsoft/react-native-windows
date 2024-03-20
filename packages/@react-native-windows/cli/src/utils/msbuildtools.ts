@@ -39,10 +39,10 @@ export default class MSBuildTools {
   ) {}
 
   /**
-   * @returns directory where x86 msbuild can be found
+   * @returns directory where x64 msbuild can be found
    */
   msbuildPath() {
-    return path.join(this.installationPath, 'MSBuild/Current/Bin');
+    return path.join(this.installationPath, 'MSBuild/Current/Bin/amd64');
   }
 
   cleanProject(slnFile: string) {
@@ -226,7 +226,7 @@ export default class MSBuildTools {
 
     const toolsPath = path.join(
       vsInstallation.installationPath,
-      'MSBuild/Current/Bin',
+      'MSBuild/Current/Bin/amd64',
     );
 
     if (fs.existsSync(toolsPath)) {
