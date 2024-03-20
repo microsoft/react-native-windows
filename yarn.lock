@@ -2526,10 +2526,10 @@
     invariant "^2.2.4"
     nullthrows "^1.1.1"
 
-"@rnx-kit/align-deps@^2.3.3":
-  version "2.3.4"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/align-deps/-/align-deps-2.3.4.tgz#f27434ac7b0f8d6a9338d68e6013b02848a47e3f"
-  integrity sha512-UO6dm7/VQnu+2V3cjOGrAdvAQfmqB2Exj10h1NATCwOonwa0JpRNCpXCqgeeMgE/mNVudaWpIE/6GZ1G9oZ8Hw==
+"@rnx-kit/align-deps@^2.4.0":
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/align-deps/-/align-deps-2.4.0.tgz#612340b21f8d6f5c20408314d6c92f1d18395008"
+  integrity sha512-75n3BQj4Qr7clPzNdSdBWBsX0x10OVgXJEfpSRrc+Kuquv6JCdlhcxpf6PXEZ8+JOdxwTP6FRznjZOCAYR/Kvg==
 
 "@rnx-kit/chromium-edge-launcher@^1.0.0":
   version "1.0.0"
@@ -2544,11 +2544,11 @@
     rimraf "^3.0.2"
 
 "@rnx-kit/cli@^0.16.10":
-  version "0.16.23"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-0.16.23.tgz#d35ff84038e93c8c702f55e210079ae35040f538"
-  integrity sha512-lGjW13Yx4DQ2QSQvNYwccSc6qFrrESzfljoNj6cyr5ahmftkFPP3S7yjUMJ2kA0KONytPccIXkoCjfkcYhzHjw==
+  version "0.16.24"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-0.16.24.tgz#59cf235d510772fab97a87ad66c010eb5f741eef"
+  integrity sha512-WNpyFgs+NxKkI+b8S8EpMTh9b+Rt/4dnMFgJd6v5o8Cex4hfY5Sx2B+xqNkvginzvtEfj8JWvz12OoQkH5Il8w==
   dependencies:
-    "@rnx-kit/align-deps" "^2.3.3"
+    "@rnx-kit/align-deps" "^2.4.0"
     "@rnx-kit/config" "^0.6.6"
     "@rnx-kit/console" "^1.0.11"
     "@rnx-kit/metro-plugin-cyclic-dependencies-detector" "^1.1.1"
