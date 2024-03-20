@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 20 Mar 2024 05:16:36 GMT",
+      "version": "0.0.0-canary.237",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.237",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "621c11ec1ec382da6f30c540294666ae41f5288f",
+            "comment": "TextProps from rn-win32 should export win32 specific properties"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 07 Mar 2024 06:16:46 GMT",
       "version": "0.0.0-canary.236",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.236",
