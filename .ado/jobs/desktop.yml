@@ -102,37 +102,6 @@ jobs:
           cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
 
           steps:
-            #TODO: Move before merging
-            - pwsh: |
-                # Create and make available to IIS
-                $cert = New-SelfSignedCertificate `
-                  -Type SSLServerAuthentication `
-                  -KeyExportPolicy Exportable `
-                  -Subject 'CN=localhost' `
-                  -NotAfter ([DateTime]::Now).AddHours(2) `
-                  -CertStoreLocation Cert:\LocalMachine\My\
-
-                $certPath = "${env:TEMP}\localhost.pfx"
-                $certPass = -join ('a'..'z' | Get-Random -Count 32) | ConvertTo-SecureString -AsPlainText -Force
-                $certHash = $cert.Thumbprint
-                Write-Host "##vso[task.setvariable variable=TestWebsiteCertificateThumbprint]$certHash"
-
-                # Export PFX
-                $cert | Export-PfxCertificate -FilePath $certPath -Password $certPass
-
-                # Test exported cert.TODO: Remove
-                echo "thumbprint: [$certHash]"
-                echo "location: [$certPath]"
-                Get-PfxCertificate -FilePath $certPath -Password $certPass
-
-                # Trust globally
-                Import-PfxCertificate `
-                  -Exportable `
-                  -FilePath $certPath `
-                  -Password $certPass `
-                  -CertStoreLocation Cert:\LocalMachine\Root\
-              displayName: Install SSL Certificate
-
             # Set up IIS tests {
             - pwsh: |
                 Install-WindowsFeature -Name Web-Server, Web-Scripting-Tools
@@ -236,26 +205,34 @@ jobs:
                   arguments: --configuration ${{ matrix.BuildConfiguration }}
 
               - pwsh: |
-                  $certPath = "${env:BUILD_SOURCESDIRECTORY}/vnext/TestWebSite/localhost.cicert"
-                  $certPass = ConvertTo-SecureString -AsPlainText -String $(TestWebsiteCertificatePassword)
-                  $certHash = (Get-PfxCertificate -FilePath $certPath -Password $certPass).Thumbprint
+                  # Create and make available to IIS
+                  $cert = New-SelfSignedCertificate `
+                    -Type SSLServerAuthentication `
+                    -KeyExportPolicy Exportable `
+                    -Subject 'CN=localhost' `
+                    -NotAfter ([DateTime]::Now).AddHours(2) `
+                    -CertStoreLocation Cert:\LocalMachine\My\
+
+                  $certPath = "${env:TEMP}\localhost.pfx"
+                  $certPass = -join ('a'..'z' | Get-Random -Count 32) | ConvertTo-SecureString -AsPlainText -Force
+                  $certHash = $cert.Thumbprint
                   Write-Host "##vso[task.setvariable variable=TestWebsiteCertificateThumbprint]$certHash"
 
-                  # Make available to IIS
-                  Import-PfxCertificate `
-                    -Exportable `
-                    -Password $certPass `
-                    -FilePath $certPath `
-                    -CertStoreLocation Cert:\LocalMachine\My\
+                  # Export PFX
+                  $cert | Export-PfxCertificate -FilePath $certPath -Password $certPass
+
+                  # Test exported cert.TODO: Remove
+                  echo "thumbprint: [$certHash]"
+                  echo "location: [$certPath]"
+                  Get-PfxCertificate -FilePath $certPath -Password $certPass
 
                   # Trust globally
                   Import-PfxCertificate `
                     -Exportable `
-                    -Password $certPass `
                     -FilePath $certPath `
+                    -Password $certPass `
                     -CertStoreLocation Cert:\LocalMachine\Root\
-                displayName: Install TLS Certificate
-                enabled: false #TODO: Re-enable before merging
+                displayName: Install SSL Certificate
 
               - task: IISWebAppManagementOnMachineGroup@0
                 displayName: Create Test Website
