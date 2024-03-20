@@ -22,7 +22,6 @@ const PressabilityDebug = require('../Pressability/PressabilityDebug');
 const ReactNative = require('../Renderer/shims/ReactNative');
 const {findNodeHandle} = require('../ReactNative/RendererProxy');
 const StyleSheet = require('../StyleSheet/StyleSheet');
-const Dimensions = require('../Utilities/Dimensions').default;
 const Platform = require('../Utilities/Platform');
 const View = require('../Components/View/View');
 const getInspectorDataForViewAtPoint = require('./getInspectorDataForViewAtPoint');
@@ -110,15 +109,18 @@ function Inspector({
         }
       }
 
-      setPanelPosition(
-        pointerY > Dimensions.get('window').height / 2 ? 'top' : 'bottom',
-      );
-      setSelectionIndex(selectedIndex);
-      setElementsHierarchy(hierarchy);
-      // $FlowFixMe[incompatible-call] `props` from InspectorData are defined as <string, string> dictionary, which is incompatible with ViewStyleProp
-      setInspectedElement({
-        frame,
-        style: props.style,
+      // [Win32 Avoid Dimensions call
+      const node = ReactNative.findNodeHandle(inspectedViewRef);
+      // $FlowFixMe[incompatible-call]
+      UIManager.measure(node, (x, y, width, height, left, top) => {
+        setPanelPosition(pointerY > height / 2 ? 'top' : 'bottom');
+        setSelectionIndex(selectedIndex);
+        setElementsHierarchy(hierarchy);
+        // $FlowFixMe[incompatible-call] `props` from InspectorData are defined as <string, string> dictionary, which is incompatible with ViewStyleProp
+        setInspectedElement({
+          frame,
+          style: props.style,
+        });
       });
     };
 
