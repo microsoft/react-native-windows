@@ -319,7 +319,11 @@ void TextInputShadowNode::registerEvents() {
       }
     }
 
+#ifdef USE_WINUI3
+    auto contentElement = control.as<xaml::Controls::IControlProtected>().GetTemplateChild(L"ContentElement");
+#else
     auto contentElement = control.GetTemplateChild(L"ContentElement");
+#endif
     auto textBoxView = contentElement.as<xaml::Controls::ScrollViewer>();
     if (textBoxView) {
       m_scrollViewerViewChangingRevoker = textBoxView.ViewChanging(
