@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 07 Mar 2024 06:16:46 GMT and should not be manually modified.
+This log was last generated on Wed, 20 Mar 2024 05:16:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.237
+
+Wed, 20 Mar 2024 05:16:36 GMT
+
+### Changes
+
+- TextProps from rn-win32 should export win32 specific properties (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.236
 
