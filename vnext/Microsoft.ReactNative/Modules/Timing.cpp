@@ -73,10 +73,10 @@ bool TimerQueue::IsEmpty() {
 }
 
 std::unique_ptr<TimerRegistry> TimerRegistry::CreateTimerRegistry(
-    const winrt::Microsoft::ReactNative::IReactDispatcher &uiDispatcher) noexcept {
+    const winrt::Microsoft::ReactNative::IReactPropertyBag &properties) noexcept {
   auto registry = std::make_unique<TimerRegistry>();
   registry->m_timingModule = std::make_shared<Timing>();
-  registry->m_timingModule->InitializeBridgeless(registry.get(), uiDispatcher);
+  registry->m_timingModule->InitializeBridgeless(registry.get(), properties);
   return registry;
 }
 
@@ -123,16 +123,19 @@ void TimerRegistry::setTimerManager(std::weak_ptr<facebook::react::TimerManager>
 
 void Timing::Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   m_context = reactContext;
+  m_properties = reactContext.Properties().Handle();
   m_usePostForRendering = !xaml::TryGetCurrentApplication();
   m_uiDispatcher = m_context.UIDispatcher().Handle();
 }
 
 void Timing::InitializeBridgeless(
     TimerRegistry *timerRegistry,
-    const winrt::Microsoft::ReactNative::IReactDispatcher &uiDispatcher) noexcept {
+    const winrt::Microsoft::ReactNative::IReactPropertyBag &properties) noexcept {
   m_timerRegistry = timerRegistry;
+  m_properties = properties;
   m_usePostForRendering = !xaml::TryGetCurrentApplication();
-  m_uiDispatcher = {uiDispatcher};
+  m_uiDispatcher = {properties.Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
+                        .try_as<winrt::Microsoft::ReactNative::IReactDispatcher>()};
 }
 
 void Timing::DetachBridgeless() {
@@ -183,10 +186,9 @@ void Timing::OnTick() {
   }
 }
 
-winrt::dispatching::DispatcherQueueTimer Timing::EnsureDispatcherTimer() {
+winrt::Microsoft::ReactNative::ITimer Timing::EnsureDispatcherTimer() {
   if (!m_dispatcherQueueTimer) {
-    const auto queue = winrt::dispatching::DispatcherQueue::GetForCurrentThread();
-    m_dispatcherQueueTimer = queue.CreateTimer();
+    m_dispatcherQueueTimer = winrt::Microsoft::ReactNative::Timer::Create(m_properties);
     m_dispatcherQueueTimer.Tick([wkThis = std::weak_ptr(this->shared_from_this())](auto &&...) {
       if (auto pThis = wkThis.lock()) {
         pThis->OnTick();

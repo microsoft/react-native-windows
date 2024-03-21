@@ -109,6 +109,21 @@ void ReactCoreInjection::SetTopLevelWindowId(const IReactPropertyBag &properties
   ReactPropertyBag(properties).Set(TopLevelWindowIdPropertyId(), windowId);
 }
 
+static const ReactPropertyId<TimerFactory> &TimerFactoryPropertyId() noexcept {
+  static const ReactPropertyId<TimerFactory> prop{L"ReactNative.Injection", L"TimerFactory"};
+  return prop;
+}
+
+void ReactCoreInjection::SetTimerFactory(
+    const IReactPropertyBag &properties,
+    const TimerFactory &timerFactory) noexcept {
+  ReactPropertyBag(properties).Set(TimerFactoryPropertyId(), timerFactory);
+}
+
+TimerFactory ReactCoreInjection::GetTimerFactory(const IReactPropertyBag &properties) noexcept {
+  return ReactPropertyBag(properties).Get(TimerFactoryPropertyId()).value_or(nullptr);
+}
+
 ReactViewHost::ReactViewHost(
     const ReactNative::ReactNativeHost &host,
     Mso::React::IReactViewHost &viewHost,
