@@ -62,15 +62,6 @@ void ActivityIndicatorComponentView::updateProps(
     m_visual.Comment(winrt::to_hstring(newViewProps->testId));
   }
 
-  // update size if needed
-  if (newViewProps->size != oldViewProps->size) {
-    if (newViewProps->size == facebook::react::ActivityIndicatorViewSize::Small) {
-      m_ActivityIndicatorVisual.Size(m_radiusSmall);
-    } else {
-      m_ActivityIndicatorVisual.Size(m_radiusLarge);
-    }
-  }
-
   // update color if needed
   if (!oldProps || newViewProps->color != oldViewProps->color) {
     updateProgressColor(newViewProps->color);
@@ -83,6 +74,19 @@ void ActivityIndicatorComponentView::updateProps(
   Super::updateProps(props, oldProps);
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
+}
+
+void ActivityIndicatorComponentView::FinalizeUpdates(
+    winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
+  static constexpr float radiusSmall = 10.0f;
+  static constexpr float radiusLarge = 18.0f;
+
+  if (std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props)->size ==
+      facebook::react::ActivityIndicatorViewSize::Small) {
+    m_ActivityIndicatorVisual.Size(radiusSmall * m_layoutMetrics.pointScaleFactor);
+  } else {
+    m_ActivityIndicatorVisual.Size(radiusLarge * m_layoutMetrics.pointScaleFactor);
+  }
 }
 
 void ActivityIndicatorComponentView::updateState(
@@ -114,7 +118,7 @@ facebook::react::SharedViewProps ActivityIndicatorComponentView::viewProps() noe
 void ActivityIndicatorComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     m_visual = m_compContext.CreateSpriteVisual();
-    m_ActivityIndicatorVisual = m_compContext.CreateActivityVisual(); // creates COM control
+    m_ActivityIndicatorVisual = m_compContext.CreateActivityVisual();
 
     OuterVisual().InsertAt(m_ActivityIndicatorVisual, 0);
     OuterVisual().InsertAt(m_visual, 0);

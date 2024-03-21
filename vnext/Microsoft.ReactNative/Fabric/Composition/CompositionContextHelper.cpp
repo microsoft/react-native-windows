@@ -37,17 +37,26 @@ struct CompositionTypeTraits<WindowsTypeTag> {
   using CompositionAnimation = winrt::Windows::UI::Composition::CompositionAnimation;
   using CompositionBackfaceVisibility = winrt::Windows::UI::Composition::CompositionBackfaceVisibility;
   using CompositionBrush = winrt::Windows::UI::Composition::CompositionBrush;
+  using CompositionColorBrush = winrt::Windows::UI::Composition::CompositionColorBrush;
+  using CompositionContainerShape = winrt::Windows::UI::Composition::CompositionContainerShape;
   using CompositionDrawingSurface = winrt::Windows::UI::Composition::CompositionDrawingSurface;
+  using CompositionEasingFunction = winrt::Windows::UI::Composition::CompositionEasingFunction;
   using CompositionEllipseGeometry = winrt::Windows::UI::Composition::CompositionEllipseGeometry;
+  using CompositionGeometry = winrt::Windows::UI::Composition::CompositionGeometry;
   using CompositionRoundedRectangleGeometry = winrt::Windows::UI::Composition::CompositionRoundedRectangleGeometry;
   using CompositionNineGridBrush = winrt::Windows::UI::Composition::CompositionNineGridBrush;
+  using CompositionObject = winrt::Windows::UI::Composition::CompositionObject;
   using CompositionPath = winrt::Windows::UI::Composition::CompositionPath;
+  using CompositionPropertySet = winrt::Windows::UI::Composition::CompositionPropertySet;
   using CompositionSpriteShape = winrt::Windows::UI::Composition::CompositionSpriteShape;
   using CompositionStretch = winrt::Windows::UI::Composition::CompositionStretch;
+  using CompositionStrokeCap = winrt::Windows::UI::Composition::CompositionStrokeCap;
   using CompositionSurfaceBrush = winrt::Windows::UI::Composition::CompositionSurfaceBrush;
   using Compositor = winrt::Windows::UI::Composition::Compositor;
   using ContainerVisual = winrt::Windows::UI::Composition::ContainerVisual;
+  using CubicBezierEasingFunction = winrt::Windows::UI::Composition::CubicBezierEasingFunction;
   using DropShadow = winrt::Windows::UI::Composition::DropShadow;
+  using ExpressionAnimation = winrt::Windows::UI::Composition::ExpressionAnimation;
   using ICompositionSurface = winrt::Windows::UI::Composition::ICompositionSurface;
   using IInteractionTrackerOwner = winrt::Windows::UI::Composition::Interactions::IInteractionTrackerOwner;
   using InteractionSourceMode = winrt::Windows::UI::Composition::Interactions::InteractionSourceMode;
@@ -67,6 +76,7 @@ struct CompositionTypeTraits<WindowsTypeTag> {
   using ScalarKeyFrameAnimation = winrt::Windows::UI::Composition::ScalarKeyFrameAnimation;
   using ShapeVisual = winrt::Windows::UI::Composition::ShapeVisual;
   using SpriteVisual = winrt::Windows::UI::Composition::SpriteVisual;
+  using StepEasingFunction = winrt::Windows::UI::Composition::StepEasingFunction;
   using Visual = winrt::Windows::UI::Composition::Visual;
   using VisualInteractionSource = winrt::Windows::UI::Composition::Interactions::VisualInteractionSource;
   using VisualInteractionSourceRedirectionMode =
@@ -95,17 +105,26 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
   using CompositionAnimation = winrt::Microsoft::UI::Composition::CompositionAnimation;
   using CompositionBackfaceVisibility = winrt::Microsoft::UI::Composition::CompositionBackfaceVisibility;
   using CompositionBrush = winrt::Microsoft::UI::Composition::CompositionBrush;
+  using CompositionColorBrush = winrt::Microsoft::UI::Composition::CompositionColorBrush;
+  using CompositionContainerShape = winrt::Microsoft::UI::Composition::CompositionContainerShape;
   using CompositionDrawingSurface = winrt::Microsoft::UI::Composition::CompositionDrawingSurface;
+  using CompositionEasingFunction = winrt::Microsoft::UI::Composition::CompositionEasingFunction;
   using CompositionEllipseGeometry = winrt::Microsoft::UI::Composition::CompositionEllipseGeometry;
+  using CompositionGeometry = winrt::Microsoft::UI::Composition::CompositionGeometry;
   using CompositionRoundedRectangleGeometry = winrt::Microsoft::UI::Composition::CompositionRoundedRectangleGeometry;
   using CompositionNineGridBrush = winrt::Microsoft::UI::Composition::CompositionNineGridBrush;
+  using CompositionObject = winrt::Microsoft::UI::Composition::CompositionObject;
   using CompositionPath = winrt::Microsoft::UI::Composition::CompositionPath;
+  using CompositionPropertySet = winrt::Microsoft::UI::Composition::CompositionPropertySet;
   using CompositionSpriteShape = winrt::Microsoft::UI::Composition::CompositionSpriteShape;
   using CompositionStretch = winrt::Microsoft::UI::Composition::CompositionStretch;
+  using CompositionStrokeCap = winrt::Microsoft::UI::Composition::CompositionStrokeCap;
   using CompositionSurfaceBrush = winrt::Microsoft::UI::Composition::CompositionSurfaceBrush;
   using Compositor = winrt::Microsoft::UI::Composition::Compositor;
   using ContainerVisual = winrt::Microsoft::UI::Composition::ContainerVisual;
+  using CubicBezierEasingFunction = winrt::Microsoft::UI::Composition::CubicBezierEasingFunction;
   using DropShadow = winrt::Microsoft::UI::Composition::DropShadow;
+  using ExpressionAnimation = winrt::Microsoft::UI::Composition::ExpressionAnimation;
   using ICompositionSurface = winrt::Microsoft::UI::Composition::ICompositionSurface;
   using IInteractionTrackerOwner = winrt::Microsoft::UI::Composition::Interactions::IInteractionTrackerOwner;
   using InteractionSourceMode = winrt::Microsoft::UI::Composition::Interactions::InteractionSourceMode;
@@ -125,6 +144,7 @@ struct CompositionTypeTraits<MicrosoftTypeTag> {
   using ScalarKeyFrameAnimation = winrt::Microsoft::UI::Composition::ScalarKeyFrameAnimation;
   using ShapeVisual = winrt::Microsoft::UI::Composition::ShapeVisual;
   using SpriteVisual = winrt::Microsoft::UI::Composition::SpriteVisual;
+  using StepEasingFunction = winrt::Microsoft::UI::Composition::StepEasingFunction;
   using Visual = winrt::Microsoft::UI::Composition::Visual;
   using VisualInteractionSource = winrt::Microsoft::UI::Composition::Interactions::VisualInteractionSource;
   using VisualInteractionSourceRedirectionMode =
@@ -949,91 +969,361 @@ struct CompActivityVisual : winrt::implements<
                                 winrt::Microsoft::ReactNative::Composition::IVisual,
                                 typename TTypeRedirects::IInnerCompositionVisual,
                                 IVisualInterop> {
-  CompActivityVisual(typename TTypeRedirects::SpriteVisual const &visual) : m_visual(visual) {
-    auto compositor = m_visual.Compositor();
-    m_contentVisual = compositor.CreateSpriteVisual();
+  /************************************************************************************
+   * Begin of copy from ProgressRingIndeterminate.cpp which is autogen'd from lottie
+   * Changes were made to the namespaces, but otherwise code should be untouched
+   ************************************************************************************/
 
-    // radiusSmall is the default size
-    Size(8.0f);
+  static constexpr int64_t c_durationTicks{20000000L};
+  typename TTypeRedirects::Compositor const _c{nullptr};
+  typename TTypeRedirects::ExpressionAnimation const _reusableExpressionAnimation{nullptr};
+  typename TTypeRedirects::CompositionPropertySet const _themeProperties{nullptr};
+  typename TTypeRedirects::CompositionColorBrush _themeColor_Foreground_0{nullptr};
+  typename TTypeRedirects::CompositionColorBrush _themeColor_Foreground_1{nullptr};
+  typename TTypeRedirects::ContainerVisual _root{nullptr};
+  typename TTypeRedirects::CubicBezierEasingFunction _cubicBezierEasingFunction_0{nullptr};
+  typename TTypeRedirects::ExpressionAnimation _rootProgress{nullptr};
+  typename TTypeRedirects::StepEasingFunction _holdThenStepEasingFunction{nullptr};
+
+  static void StartProgressBoundAnimation(
+      typename TTypeRedirects::CompositionObject target,
+      winrt::hstring animatedPropertyName,
+      typename TTypeRedirects::CompositionAnimation animation,
+      typename TTypeRedirects::ExpressionAnimation controllerProgressExpression) {
+    target.StartAnimation(animatedPropertyName, animation);
+    const auto controller = target.TryGetAnimationController(animatedPropertyName);
+    controller.Pause();
+    controller.StartAnimation(L"Progress", controllerProgressExpression);
+  }
+
+  void BindProperty(
+      typename TTypeRedirects::CompositionObject target,
+      winrt::hstring animatedPropertyName,
+      winrt::hstring expression,
+      winrt::hstring referenceParameterName,
+      typename TTypeRedirects::CompositionObject referencedObject) {
+    _reusableExpressionAnimation.ClearAllParameters();
+    _reusableExpressionAnimation.Expression(expression);
+    _reusableExpressionAnimation.SetReferenceParameter(referenceParameterName, referencedObject);
+    target.StartAnimation(animatedPropertyName, _reusableExpressionAnimation);
+  }
+
+  void BindProperty2(
+      typename TTypeRedirects::CompositionObject target,
+      winrt::hstring animatedPropertyName,
+      winrt::hstring expression,
+      winrt::hstring referenceParameterName0,
+      typename TTypeRedirects::CompositionObject referencedObject0,
+      winrt::hstring referenceParameterName1,
+      typename TTypeRedirects::CompositionObject referencedObject1) {
+    _reusableExpressionAnimation.ClearAllParameters();
+    _reusableExpressionAnimation.Expression(expression);
+    _reusableExpressionAnimation.SetReferenceParameter(referenceParameterName0, referencedObject0);
+    _reusableExpressionAnimation.SetReferenceParameter(referenceParameterName1, referencedObject1);
+    target.StartAnimation(animatedPropertyName, _reusableExpressionAnimation);
+  }
+
+  typename TTypeRedirects::ScalarKeyFrameAnimation CreateScalarKeyFrameAnimation(
+      float initialProgress,
+      float initialValue,
+      typename TTypeRedirects::CompositionEasingFunction initialEasingFunction) {
+    const auto result = _c.CreateScalarKeyFrameAnimation();
+    result.Duration(winrt::Windows::Foundation::TimeSpan{c_durationTicks});
+    result.InsertKeyFrame(initialProgress, initialValue, initialEasingFunction);
+    return result;
+  }
+
+  typename TTypeRedirects::CompositionSpriteShape CreateSpriteShape(
+      typename TTypeRedirects::CompositionGeometry geometry,
+      winrt::Windows::Foundation::Numerics::float3x2 transformMatrix) {
+    const auto result = _c.CreateSpriteShape(geometry);
+    result.TransformMatrix(transformMatrix);
+    return result;
+  }
+
+  // - Layer aggregator
+  // Scale:5,5, Offset:<40, 40>
+  // Color bound to theme property value: Background
+  typename TTypeRedirects::CompositionColorBrush ThemeColor_Background() {
+    const auto result = _c.CreateColorBrush();
+    BindProperty(
+        result,
+        L"Color",
+        L"ColorRGB(_theme.Background.W*1,_theme.Background.X,_theme.Background.Y,_theme.Background.Z)",
+        L"_theme",
+        _themeProperties);
+    return result;
+  }
+
+  // - - Layer aggregator
+  // -  Scale:5,5, Offset:<40, 40>
+  // ShapeGroup: Ellipse B
+  // Color bound to theme property value: Foreground
+  typename TTypeRedirects::CompositionColorBrush ThemeColor_Foreground_0() {
+    const auto result = _themeColor_Foreground_0 = _c.CreateColorBrush();
+    const auto propertySet = result.Properties();
+    propertySet.InsertScalar(L"Opacity0", 0.0F);
+    BindProperty2(
+        result,
+        L"Color",
+        L"ColorRGB(_theme.Foreground.W*my.Opacity0,_theme.Foreground.X,_theme.Foreground.Y,_theme.Foreground.Z)",
+        L"_theme",
+        _themeProperties,
+        L"my",
+        propertySet);
+    StartProgressBoundAnimation(propertySet, L"Opacity0", Opacity0ScalarAnimation_0_to_1(), _rootProgress);
+    return result;
+  }
+
+  // - - Layer aggregator
+  // -  Scale:5,5, Offset:<40, 40>
+  // ShapeGroup: Ellipse B
+  // Color bound to theme property value: Foreground
+  typename TTypeRedirects::CompositionColorBrush ThemeColor_Foreground_1() {
+    const auto result = _themeColor_Foreground_1 = _c.CreateColorBrush();
+    const auto propertySet = result.Properties();
+    propertySet.InsertScalar(L"Opacity0", 1.0F);
+    BindProperty2(
+        result,
+        L"Color",
+        L"ColorRGB(_theme.Foreground.W*my.Opacity0,_theme.Foreground.X,_theme.Foreground.Y,_theme.Foreground.Z)",
+        L"_theme",
+        _themeProperties,
+        L"my",
+        propertySet);
+    StartProgressBoundAnimation(propertySet, L"Opacity0", Opacity0ScalarAnimation_1_to_0(), _rootProgress);
+    return result;
+  }
+
+  // Layer aggregator
+  // Transforms for Radial
+  typename TTypeRedirects::CompositionContainerShape ContainerShape() {
+    const auto result = _c.CreateContainerShape();
+    // Offset:<40, 40>, Scale:<5, 5>
+    result.TransformMatrix({5.0F, 0.0F, 0.0F, 5.0F, 40.0F, 40.0F});
+    const auto shapes = result.Shapes();
+    // ShapeGroup: Ellipse B
+    shapes.Append(SpriteShape_1());
+    // ShapeGroup: Ellipse B
+    shapes.Append(SpriteShape_2());
+    StartProgressBoundAnimation(
+        result, L"RotationAngleInDegrees", RotationAngleInDegreesScalarAnimation_0_to_900(), _rootProgress);
+    return result;
+  }
+
+  // - Layer aggregator
+  // Scale:5,5, Offset:<40, 40>
+  // Ellipse Path.EllipseGeometry
+  typename TTypeRedirects::CompositionEllipseGeometry Ellipse_7_0() {
+    const auto result = _c.CreateEllipseGeometry();
+    result.Radius({7.0F, 7.0F});
+    return result;
+  }
+
+  // - - Layer aggregator
+  // -  Scale:5,5, Offset:<40, 40>
+  // ShapeGroup: Ellipse B
+  // Ellipse Path.EllipseGeometry
+  typename TTypeRedirects::CompositionEllipseGeometry Ellipse_7_1() {
+    const auto result = _c.CreateEllipseGeometry();
+    result.TrimEnd(0.5F);
+    result.Radius({7.0F, 7.0F});
+    StartProgressBoundAnimation(result, L"TrimStart", TrimStartScalarAnimation_0_to_0p5(), RootProgress());
+    return result;
+  }
+
+  // - - Layer aggregator
+  // -  Scale:5,5, Offset:<40, 40>
+  // ShapeGroup: Ellipse B
+  // Ellipse Path.EllipseGeometry
+  typename TTypeRedirects::CompositionEllipseGeometry Ellipse_7_2() {
+    const auto result = _c.CreateEllipseGeometry();
+    result.Radius({7.0F, 7.0F});
+    StartProgressBoundAnimation(result, L"TrimEnd", TrimEndScalarAnimation_0_to_0p5(), _rootProgress);
+    return result;
+  }
+
+  // Layer aggregator
+  // Ellipse Path
+  typename TTypeRedirects::CompositionSpriteShape SpriteShape_0() {
+    // Offset:<40, 40>, Scale:<5, 5>
+    const auto result = CreateSpriteShape(Ellipse_7_0(), {5.0F, 0.0F, 0.0F, 5.0F, 40.0F, 40.0F});
+    result.StrokeBrush(ThemeColor_Background());
+    result.StrokeDashCap(TTypeRedirects::CompositionStrokeCap::Round);
+    result.StrokeThickness(1.5F);
+    return result;
+  }
+
+  // - Layer aggregator
+  // Scale:5,5, Offset:<40, 40>
+  // Ellipse Path
+  typename TTypeRedirects::CompositionSpriteShape SpriteShape_1() {
+    const auto result = _c.CreateSpriteShape(Ellipse_7_1());
+    result.StrokeBrush(ThemeColor_Foreground_0());
+    result.StrokeDashCap(TTypeRedirects::CompositionStrokeCap::Round);
+    result.StrokeStartCap(TTypeRedirects::CompositionStrokeCap::Round);
+    result.StrokeEndCap(TTypeRedirects::CompositionStrokeCap::Round);
+    result.StrokeThickness(1.5F);
+    return result;
+  }
+
+  // - Layer aggregator
+  // Scale:5,5, Offset:<40, 40>
+  // Ellipse Path
+  typename TTypeRedirects::CompositionSpriteShape SpriteShape_2() {
+    const auto result = _c.CreateSpriteShape(Ellipse_7_2());
+    result.StrokeBrush(ThemeColor_Foreground_1());
+    result.StrokeDashCap(TTypeRedirects::CompositionStrokeCap::Round);
+    result.StrokeStartCap(TTypeRedirects::CompositionStrokeCap::Round);
+    result.StrokeEndCap(TTypeRedirects::CompositionStrokeCap::Round);
+    result.StrokeThickness(1.5F);
+    return result;
+  }
+
+  // The root of the composition.
+  typename TTypeRedirects::ContainerVisual Root() {
+    const auto result = _root = _c.CreateContainerVisual();
+    const auto propertySet = result.Properties();
+    propertySet.InsertScalar(L"Progress", 0.0F);
+    // Layer aggregator
+    result.Children().InsertAtTop(ShapeVisual_0());
+    return result;
+  }
+
+  typename TTypeRedirects::CubicBezierEasingFunction CubicBezierEasingFunction_0() {
+    return _cubicBezierEasingFunction_0 =
+               _c.CreateCubicBezierEasingFunction({0.166999996F, 0.166999996F}, {0.833000004F, 0.833000004F});
+  }
+
+  typename TTypeRedirects::ExpressionAnimation RootProgress() {
+    const auto result = _rootProgress = _c.CreateExpressionAnimation(L"_.Progress");
+    result.SetReferenceParameter(L"_", _root);
+    return result;
+  }
+
+  // Opacity0
+  typename TTypeRedirects::ScalarKeyFrameAnimation Opacity0ScalarAnimation_0_to_1() {
+    const auto result = CreateScalarKeyFrameAnimation(0.0F, 0.0F, _holdThenStepEasingFunction);
+    result.InsertKeyFrame(0.5F, 1.0F, _holdThenStepEasingFunction);
+    return result;
+  }
+
+  // Opacity0
+  typename TTypeRedirects::ScalarKeyFrameAnimation Opacity0ScalarAnimation_1_to_0() {
+    const auto result = CreateScalarKeyFrameAnimation(0.0F, 1.0F, _holdThenStepEasingFunction);
+    result.InsertKeyFrame(0.5F, 0.0F, _holdThenStepEasingFunction);
+    return result;
+  }
+
+  // - Layer aggregator
+  // Scale:5,5, Offset:<40, 40>
+  // Rotation
+  typename TTypeRedirects::ScalarKeyFrameAnimation RotationAngleInDegreesScalarAnimation_0_to_900() {
+    const auto result = CreateScalarKeyFrameAnimation(0.0F, 0.0F, _holdThenStepEasingFunction);
+    result.InsertKeyFrame(0.5F, 450.0F, _cubicBezierEasingFunction_0);
+    result.InsertKeyFrame(1.0F, 900.0F, _cubicBezierEasingFunction_0);
+    return result;
+  }
+
+  // - - - Layer aggregator
+  // - -  Scale:5,5, Offset:<40, 40>
+  // - ShapeGroup: Ellipse B
+  // Ellipse Path.EllipseGeometry
+  // TrimEnd
+  typename TTypeRedirects::ScalarKeyFrameAnimation TrimEndScalarAnimation_0_to_0p5() {
+    const auto result = CreateScalarKeyFrameAnimation(0.0F, 9.99999975E-05F, _holdThenStepEasingFunction);
+    result.InsertKeyFrame(0.5F, 0.5F, _cubicBezierEasingFunction_0);
+    return result;
+  }
+
+  // - - - Layer aggregator
+  // - -  Scale:5,5, Offset:<40, 40>
+  // - ShapeGroup: Ellipse B
+  // Ellipse Path.EllipseGeometry
+  // TrimStart
+  typename TTypeRedirects::ScalarKeyFrameAnimation TrimStartScalarAnimation_0_to_0p5() {
+    const auto result = CreateScalarKeyFrameAnimation(0.0F, 0.0F, StepThenHoldEasingFunction());
+    result.InsertKeyFrame(0.5F, 0.0F, HoldThenStepEasingFunction());
+    result.InsertKeyFrame(1.0F, 0.5F, CubicBezierEasingFunction_0());
+    return result;
+  }
+
+  // Layer aggregator
+  typename TTypeRedirects::ShapeVisual ShapeVisual_0() {
+    const auto result = _c.CreateShapeVisual();
+    result.Size({80.0F, 80.0F});
+    const auto shapes = result.Shapes();
+    // Scale:5,5, Offset:<40, 40>
+    shapes.Append(SpriteShape_0());
+    // Scale:5,5, Offset:<40, 40>
+    shapes.Append(ContainerShape());
+    return result;
+  }
+
+  typename TTypeRedirects::StepEasingFunction HoldThenStepEasingFunction() {
+    const auto result = _holdThenStepEasingFunction = _c.CreateStepEasingFunction();
+    result.IsFinalStepSingleFrame(true);
+    return result;
+  }
+
+  // - - - - Layer aggregator
+  // - - -  Scale:5,5, Offset:<40, 40>
+  // - - ShapeGroup: Ellipse B
+  // - Ellipse Path.EllipseGeometry
+  // TrimStart
+  typename TTypeRedirects::StepEasingFunction StepThenHoldEasingFunction() {
+    const auto result = _c.CreateStepEasingFunction();
+    result.IsInitialStepSingleFrame(true);
+    return result;
+  }
+
+  /************************************************************************************
+   * End of copy from ProgressRingIndeterminate.cpp which is autogen'd from lottie
+   ************************************************************************************/
+
+  winrt::Windows::Foundation::Numerics::float4 ColorAsVector4(winrt::Windows::UI::Color color) {
+    return {
+        static_cast<float>(color.R),
+        static_cast<float>(color.G),
+        static_cast<float>(color.B),
+        static_cast<float>(color.A)};
+  }
+
+  CompActivityVisual(typename TTypeRedirects::SpriteVisual const &visual)
+      : m_visual(visual),
+        _c(visual.Compositor()),
+        _reusableExpressionAnimation(_c.CreateExpressionAnimation()),
+        _themeProperties(_c.CreatePropertySet()) {
+    // Default colors
+    _themeProperties.InsertVector4(L"Background", ColorAsVector4({0, 0, 0, 0}));
+    _themeProperties.InsertVector4(L"Foreground", ColorAsVector4({0, 0, 0, 0}));
+
+    visual.Children().InsertAtTop(Root());
+
+    auto easing = _c.CreateLinearEasingFunction();
+    const auto progressAnimation = _c.CreateScalarKeyFrameAnimation();
+    progressAnimation.Duration(winrt::Windows::Foundation::TimeSpan{c_durationTicks});
+    progressAnimation.InsertKeyFrame(0.0f, 0.0f);
+    progressAnimation.InsertKeyFrame(1.0f, 1.0f, easing);
+    progressAnimation.IterationBehavior(TTypeRedirects::AnimationIterationBehavior::Forever);
+
+    _root.Properties().StartAnimation(L"Progress", progressAnimation);
+    _root.StartAnimation(L"Progress", progressAnimation);
   }
 
   void Brush(winrt::Microsoft::ReactNative::Composition::IBrush brush) noexcept {
-    // Change the color of each SpriteVisual
     auto innerBrush = TTypeRedirects::CompositionContextHelper::InnerBrush(brush);
-    for (auto &spriteVisual : m_spriteVisuals) {
-      spriteVisual.FillBrush(innerBrush);
+    if (brush) {
+      _themeProperties.InsertVector4(
+          L"Foreground", ColorAsVector4(innerBrush.as<TTypeRedirects::CompositionColorBrush>().Color()));
+    } else {
+      _themeProperties.InsertVector4(L"Foreground", ColorAsVector4({0, 0, 0, 0}));
     }
   }
 
   void Size(float radius) noexcept {
-    auto compositor = m_visual.Compositor();
-    m_contentVisual = compositor.CreateSpriteVisual();
-
-    // clear old animation
-    m_visual.Children().RemoveAll();
-    m_spriteVisuals.clear();
-
-    // Create loading circles
-    for (int i = 0; i < 4; i++) {
-      auto loadingCircle = createLoadingCircle(compositor, i * 200, radius);
-      m_visual.Children().InsertAtTop(loadingCircle);
-    }
-  }
-
-  typename TTypeRedirects::ShapeVisual
-  createLoadingCircle(typename TTypeRedirects::Compositor compositor, int delay, float radius) noexcept {
-    // center
-    float ringWidth = radius / 4.5f;
-    float centerX = radius + ringWidth;
-    float centerY = radius + ringWidth;
-
-    // Create circle
-    auto ellipse = compositor.CreateEllipseGeometry();
-    ellipse.Radius({ringWidth, ringWidth});
-    auto spriteShape = compositor.CreateSpriteShape();
-    spriteShape.Geometry(ellipse);
-    spriteShape.Offset(winrt::Windows::Foundation::Numerics::float2(centerX, centerY + radius));
-    auto spriteVisualBrush = compositor.CreateColorBrush({255, 211, 211, 211} /* Light Gray */);
-    spriteShape.FillBrush(spriteVisualBrush);
-    auto circleShape = compositor.CreateShapeVisual();
-    circleShape.Shapes().Append(spriteShape);
-    circleShape.Size({radius * 12.5f, radius * 12.5f});
-    circleShape.Opacity(0.0f);
-    m_spriteVisuals.push_back(spriteShape);
-
-    // Create an OpacityAnimation
-    auto opacityAnimation = compositor.CreateScalarKeyFrameAnimation();
-    opacityAnimation.Duration(std::chrono::seconds(2));
-    opacityAnimation.IterationBehavior(TTypeRedirects::AnimationIterationBehavior::Forever);
-    opacityAnimation.DelayTime(std::chrono::milliseconds(650 + delay));
-
-    opacityAnimation.InsertKeyFrame(0.0f, 0.0f); // Initial opacity (fully transparent)
-    opacityAnimation.InsertKeyFrame(0.5f, 1.0f); // Intermediate opacity (fully opaque)
-    opacityAnimation.InsertKeyFrame(1.0f, 0.0f); // Intermediate opacity (fully opaque)
-    opacityAnimation.InsertKeyFrame(0.0f, 0.0f); // Final opacity (fully transparent)
-
-    // create an animation for the Offset property of the ShapeVisual
-    auto animation = compositor.CreateVector2KeyFrameAnimation();
-    animation.Duration(std::chrono::seconds(2));
-    animation.Direction(TTypeRedirects::AnimationDirection::Normal);
-    animation.IterationBehavior(TTypeRedirects::AnimationIterationBehavior::Forever);
-    animation.DelayTime(std::chrono::milliseconds(delay));
-    animation.DelayBehavior(TTypeRedirects::AnimationDelayBehavior::SetInitialValueAfterDelay);
-
-    // create path animation
-    float progress = 2.0f * static_cast<float>(M_PI); // specifies the end of the keyframe progress
-    for (float angle = 0.0f; angle < progress; angle += 0.1f) {
-      float x = centerX + radius * cos(angle);
-      float y = centerY + radius * sin(angle);
-      animation.InsertKeyFrame(
-          angle / (2.0f * static_cast<float>(M_PI)), winrt::Windows::Foundation::Numerics::float2(x, y));
-    }
-
-    // run animations
-    circleShape.StartAnimation(L"Opacity", opacityAnimation);
-    spriteShape.StartAnimation(L"Offset", animation);
-
-    return circleShape;
+    auto scale = radius / 40.0f;
+    _root.Scale({scale, scale, 1.0f});
   }
 
   typename TTypeRedirects::Visual InnerVisual() const noexcept {
@@ -1088,7 +1378,6 @@ struct CompActivityVisual : winrt::implements<
   }
 
   void Size(winrt::Windows::Foundation::Numerics::float2 const &size) noexcept {
-    m_visualSize = size;
     m_visual.Size(size);
   }
 
@@ -1143,10 +1432,8 @@ struct CompActivityVisual : winrt::implements<
   }
 
  private:
-  winrt::Windows::Foundation::Numerics::float2 m_visualSize{0};
   typename TTypeRedirects::SpriteVisual m_visual{nullptr};
   typename TTypeRedirects::SpriteVisual m_contentVisual{nullptr};
-  std::vector<typename TTypeRedirects::CompositionSpriteShape> m_spriteVisuals;
 };
 using WindowsCompActivityVisual = CompActivityVisual<WindowsTypeRedirects>;
 #ifdef USE_WINUI3
