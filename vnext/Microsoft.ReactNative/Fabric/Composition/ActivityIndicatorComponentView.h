@@ -34,6 +34,7 @@ struct ActivityIndicatorComponentView : ActivityIndicatorComponentViewT<Activity
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
+  void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept override;
   void prepareForRecycle() noexcept override;
   facebook::react::SharedViewProps viewProps() noexcept override;
   bool focusable() const noexcept override;
@@ -51,13 +52,12 @@ struct ActivityIndicatorComponentView : ActivityIndicatorComponentViewT<Activity
 
  private:
   void ensureVisual() noexcept;
+  void updateVisualSize() noexcept;
   void updateProgressColor(const facebook::react::SharedColor &color) noexcept;
 
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::Composition::IActivityVisual m_ActivityIndicatorVisual{nullptr};
   facebook::react::SharedViewProps m_props;
-  float m_radiusSmall = 8.0f;
-  float m_radiusLarge = 16.0f;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
