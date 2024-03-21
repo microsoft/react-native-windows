@@ -57,7 +57,7 @@ class TimerQueue {
 
 struct TimerRegistry : public facebook::react::PlatformTimerRegistry {
   static std::unique_ptr<TimerRegistry> CreateTimerRegistry(
-      const winrt::Microsoft::ReactNative::IReactDispatcher &uiDispatcher) noexcept;
+      const winrt::Microsoft::ReactNative::IReactPropertyBag &properties) noexcept;
 
   ~TimerRegistry();
 
@@ -86,7 +86,7 @@ struct Timing : public std::enable_shared_from_this<Timing> {
 
   void InitializeBridgeless(
       TimerRegistry *timerRegistry,
-      const winrt::Microsoft::ReactNative::IReactDispatcher &uiDispatcher) noexcept;
+      const winrt::Microsoft::ReactNative::IReactPropertyBag &properties) noexcept;
   void DetachBridgeless();
 
   REACT_METHOD(createTimer)
@@ -101,7 +101,7 @@ struct Timing : public std::enable_shared_from_this<Timing> {
   void createTimerOnQueue(uint32_t id, double duration, double jsSchedulingTime, bool repeat) noexcept;
   void deleteTimerOnQueue(uint32_t id) noexcept;
   void OnTick();
-  winrt::dispatching::DispatcherQueueTimer EnsureDispatcherTimer();
+  winrt::Microsoft::ReactNative::ITimer EnsureDispatcherTimer();
   void StartRendering();
   void PostRenderFrame() noexcept;
   void StartDispatcherTimer();
@@ -109,9 +109,10 @@ struct Timing : public std::enable_shared_from_this<Timing> {
 
   winrt::Microsoft::ReactNative::ReactContext m_context; // !bridgeless
   TimerRegistry *m_timerRegistry{nullptr}; // bridgeless
+  winrt::Microsoft::ReactNative::IReactPropertyBag m_properties{nullptr};
   TimerQueue m_timerQueue;
   xaml::Media::CompositionTarget::Rendering_revoker m_rendering;
-  winrt::dispatching::DispatcherQueueTimer m_dispatcherQueueTimer{nullptr};
+  winrt::Microsoft::ReactNative::ITimer m_dispatcherQueueTimer{nullptr};
   winrt::weak_ref<winrt::Microsoft::ReactNative::IReactDispatcher> m_uiDispatcher;
   bool m_usingRendering{false};
   bool m_usePostForRendering{false};
