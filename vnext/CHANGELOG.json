@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 21 Mar 2024 05:14:45 GMT",
+      "version": "0.0.0-canary.791",
+      "tag": "react-native-windows_v0.0.0-canary.791",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a09af289ffd3662a0e23e1b980401697c78d36b4",
+            "comment": "Implement test website"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 20 Mar 2024 05:16:36 GMT",
       "version": "0.0.0-canary.790",
       "tag": "react-native-windows_v0.0.0-canary.790",
