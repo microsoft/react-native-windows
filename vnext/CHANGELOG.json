@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 22 Mar 2024 05:15:47 GMT",
+      "version": "0.0.0-canary.792",
+      "tag": "react-native-windows_v0.0.0-canary.792",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "34c5cd8809049238dc9737efca32398be6451a81",
+            "comment": "Enable custom timer factory to be provided"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "576ee6627bd73a4c39efdae80c8fc8f2b8e11b74",
+            "comment": "[Fabric] Update ActivityIndicator to newer visuals"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 21 Mar 2024 05:14:45 GMT",
       "version": "0.0.0-canary.791",
       "tag": "react-native-windows_v0.0.0-canary.791",

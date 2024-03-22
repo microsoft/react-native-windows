@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 21 Mar 2024 05:14:45 GMT and should not be manually modified.
+This log was last generated on Fri, 22 Mar 2024 05:15:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.792
+
+Fri, 22 Mar 2024 05:15:47 GMT
+
+### Changes
+
+- Enable custom timer factory to be provided (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Update ActivityIndicator to newer visuals (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.791
 
