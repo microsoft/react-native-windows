@@ -290,7 +290,7 @@ type ButtonProps = $ReadOnly<{|
   ```
  */
 
-const Button: React.AbstractComponent<ButtonProps> = (props: ButtonProps) => {
+const Button: React.AbstractComponent<ButtonProps, React.ElementRef<typeof Button>> = React.forwardRef((props: ButtonProps, ref) => { // Windows
   // [Windows
   const [hover, setHover] = React.useState(false);
   const [pressed, setPressed] = React.useState(false);
@@ -413,7 +413,8 @@ const Button: React.AbstractComponent<ButtonProps> = (props: ButtonProps) => {
         }}
         onMouseLeave={() => {
           if (!disabled) setHover(false);
-        }}>
+        }}
+        ref={ref}>
         <View
           style={
             color
@@ -483,7 +484,8 @@ const Button: React.AbstractComponent<ButtonProps> = (props: ButtonProps) => {
         testID={testID}
         disabled={disabled}
         onPress={onPress}
-        touchSoundDisabled={touchSoundDisabled}>
+        touchSoundDisabled={touchSoundDisabled}
+        ref={ref}>
         <View style={buttonStyles}>
           <Text style={textStyles} disabled={disabled}>
             {formattedTitle}
@@ -493,7 +495,7 @@ const Button: React.AbstractComponent<ButtonProps> = (props: ButtonProps) => {
     );
   }
   // Windows]
-};
+});
 
 Button.displayName = 'Button';
 

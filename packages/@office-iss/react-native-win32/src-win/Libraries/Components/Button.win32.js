@@ -283,7 +283,7 @@ type ButtonProps = $ReadOnly<{|
   ```
  */
 
-const Button: React.AbstractComponent<ButtonProps> = (props: ButtonProps) => {
+const Button: React.AbstractComponent<ButtonProps, React.ElementRef<typeof Button>> = React.forwardRef((props: ButtonProps, ref) => { // Win32
   const {
     accessibilityLabel,
     accessibilityState,
@@ -381,7 +381,8 @@ const Button: React.AbstractComponent<ButtonProps> = (props: ButtonProps) => {
       testID={testID}
       disabled={disabled}
       onPress={onPress}
-      touchSoundDisabled={touchSoundDisabled}>
+      touchSoundDisabled={touchSoundDisabled}
+      ref={ref}>
       <View style={buttonStyles}>
         <Text style={textStyles} disabled={disabled}>
           {formattedTitle}
@@ -389,7 +390,7 @@ const Button: React.AbstractComponent<ButtonProps> = (props: ButtonProps) => {
       </View>
     </Touchable>
   );
-};
+});
 
 Button.displayName = 'Button';
 
