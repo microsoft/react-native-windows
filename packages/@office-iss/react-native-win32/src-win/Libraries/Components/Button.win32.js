@@ -285,7 +285,7 @@ type ButtonProps = $ReadOnly<{|
 
 const Button: React.AbstractComponent<
   ButtonProps,
-  React.ElementRef<typeof View>,
+  React.ElementRef<typeof TouchableNativeFeedback | typeof TouchableOpacity>,
 > = React.forwardRef((props: ButtonProps, ref) => {
   // Win32
   const {
