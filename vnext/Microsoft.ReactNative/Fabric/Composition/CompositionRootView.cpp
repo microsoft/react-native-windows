@@ -359,6 +359,13 @@ void CompositionRootView::UpdateRootViewInternal() noexcept {
   }
 }
 
+struct AutoMRE {
+  ~AutoMRE() {
+    mre->Set();
+  }
+  std::shared_ptr<Mso::ManualResetEvent> mre;
+};
+
 void CompositionRootView::UninitRootView() noexcept {
   if (!m_isInitialized) {
     return;
@@ -375,9 +382,11 @@ void CompositionRootView::UninitRootView() noexcept {
     // This is needed to ensure that the unmount JS logic is completed before the the instance is shutdown during
     // instance destruction. Aligns with similar code in ReactInstanceWin::DetachRootView for paper Future: Instead this
     // method should return a Promise, which should be resolved when the JS logic is complete.
-    Mso::ManualResetEvent mre;
-    m_context.JSDispatcher().Post([&]() { mre.Set(); });
-    mre.Wait();
+    // The task will auto set the event on destruction to ensure that the event is set if the JS Queue has already been
+    // shutdown
+    auto mre = std::make_shared<Mso::ManualResetEvent>();
+    m_context.JSDispatcher().Post([autoMRE = std::make_shared<AutoMRE>(AutoMRE{mre})]() {});
+    mre->Wait();
 
     // Paper version gives the JS thread time to finish executing - Is this needed?
     // m_jsMessageThread.Load()->runOnQueueSync([]() {});
