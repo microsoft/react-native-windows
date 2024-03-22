@@ -7,7 +7,6 @@
 #include <react/debug/react_native_assert.h>
 #include <react/renderer/core/LayoutConstraints.h>
 #include <react/renderer/core/LayoutContext.h>
-#include <react/renderer/core/TraitCast.h>
 #include <react/renderer/core/conversions.h>
 
 #include <utility>
@@ -19,7 +18,7 @@ YogaLayoutableShadowNode::YogaLayoutableShadowNode(facebook::react::ShadowNode::
 
 void YogaLayoutableShadowNode::Layout(winrt::Microsoft::ReactNative::LayoutContext layoutContext) noexcept {
   std::const_pointer_cast<facebook::react::YogaLayoutableShadowNode>(
-      facebook::react::traitCast<facebook::react::YogaLayoutableShadowNode>(m_shadowNode))
+      std::dynamic_pointer_cast<const facebook::react::YogaLayoutableShadowNode>(m_shadowNode))
       ->facebook::react::YogaLayoutableShadowNode::layout(
           winrt::get_self<winrt::Microsoft::ReactNative::implementation::LayoutContext>(layoutContext)
               ->m_layoutContext);
