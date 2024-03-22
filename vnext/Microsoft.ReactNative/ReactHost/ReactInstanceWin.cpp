@@ -599,8 +599,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
 
             m_jsMessageThread.Load()->runOnQueueSync([&]() {
               ::SetThreadDescription(GetCurrentThread(), L"React-Native JavaScript Thread");
-              auto timerRegistry = ::Microsoft::ReactNative::TimerRegistry::CreateTimerRegistry(
-                  m_options.Properties.Get(ReactDispatcherHelper::UIDispatcherProperty()).try_as<IReactDispatcher>());
+              auto timerRegistry = ::Microsoft::ReactNative::TimerRegistry::CreateTimerRegistry(m_options.Properties);
               auto timerRegistryRaw = timerRegistry.get();
 
               auto timerManager = std::make_shared<facebook::react::TimerManager>(std::move(timerRegistry));
