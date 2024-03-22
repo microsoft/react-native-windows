@@ -292,7 +292,7 @@ type ButtonProps = $ReadOnly<{|
 
 const Button: React.AbstractComponent<
   ButtonProps,
-  React.ElementRef<typeof Button>,
+  React.ElementRef<typeof TouchableHighlight>,
 > = React.forwardRef((props: ButtonProps, ref) => {
   // Windows
   // [Windows
