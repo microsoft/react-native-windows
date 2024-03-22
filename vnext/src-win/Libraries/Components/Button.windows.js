@@ -290,7 +290,11 @@ type ButtonProps = $ReadOnly<{|
   ```
  */
 
-const Button: React.AbstractComponent<ButtonProps, React.ElementRef<typeof Button>> = React.forwardRef((props: ButtonProps, ref) => { // Windows
+const Button: React.AbstractComponent<
+  ButtonProps,
+  React.ElementRef<typeof Button>,
+> = React.forwardRef((props: ButtonProps, ref) => {
+  // Windows
   // [Windows
   const [hover, setHover] = React.useState(false);
   const [pressed, setPressed] = React.useState(false);

@@ -283,7 +283,11 @@ type ButtonProps = $ReadOnly<{|
   ```
  */
 
-const Button: React.AbstractComponent<ButtonProps, React.ElementRef<typeof Button>> = React.forwardRef((props: ButtonProps, ref) => { // Win32
+const Button: React.AbstractComponent<
+  ButtonProps,
+  React.ElementRef<typeof Button>,
+> = React.forwardRef((props: ButtonProps, ref) => {
+  // Win32
   const {
     accessibilityLabel,
     accessibilityState,
