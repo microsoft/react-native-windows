@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/format-files",
   "entries": [
     {
+      "date": "Sat, 23 Mar 2024 05:17:01 GMT",
+      "version": "1.1.28",
+      "tag": "@rnw-scripts/format-files_v1.1.28",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/format-files",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.9",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/format-files",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.25",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 07 Mar 2024 06:16:48 GMT",
       "version": "1.1.27",
       "tag": "@rnw-scripts/format-files_v1.1.27",
