@@ -1144,7 +1144,8 @@ void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept 
   winrt::check_hresult(m_textServices->TxSendMessage(
       EM_SETTEXTEX, reinterpret_cast<WPARAM>(&stt), reinterpret_cast<LPARAM>(str.c_str()), &res));
 
-  winrt::check_hresult(m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(cr.cpMin), static_cast<LPARAM>(cr.cpMax), &res));
+  winrt::check_hresult(
+      m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(cr.cpMin), static_cast<LPARAM>(cr.cpMax), &res));
 
   // enable colored emojis
   winrt::check_hresult(
@@ -1215,7 +1216,7 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
 }
 
 void WindowsTextInputComponentView::OnSelectionChanged(LONG start, LONG end) noexcept {
-  if (m_eventEmitter /* && !m_comingFromState && !m_comingFromJS ?? */) {
+  if (m_eventEmitter && !m_comingFromState /* && !m_comingFromJS ?? */) {
     auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
     facebook::react::WindowsTextInputEventEmitter::OnSelectionChange onSelectionChangeArgs;
     onSelectionChangeArgs.selection.start = start;
