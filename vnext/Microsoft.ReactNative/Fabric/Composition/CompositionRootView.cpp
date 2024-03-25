@@ -363,7 +363,7 @@ struct AutoMRE {
   ~AutoMRE() {
     mre->Set();
   }
-  std::shared_ptr<Mso::ManualResetEvent> mre;
+  Mso::ManualResetEvent mre;
 };
 
 void CompositionRootView::UninitRootView() noexcept {
@@ -384,9 +384,9 @@ void CompositionRootView::UninitRootView() noexcept {
     // method should return a Promise, which should be resolved when the JS logic is complete.
     // The task will auto set the event on destruction to ensure that the event is set if the JS Queue has already been
     // shutdown
-    auto mre = std::make_shared<Mso::ManualResetEvent>();
+    Mso::ManualResetEvent mre;
     m_context.JSDispatcher().Post([autoMRE = std::make_shared<AutoMRE>(AutoMRE{mre})]() {});
-    mre->Wait();
+    mre.Wait();
 
     // Paper version gives the JS thread time to finish executing - Is this needed?
     // m_jsMessageThread.Load()->runOnQueueSync([]() {});
