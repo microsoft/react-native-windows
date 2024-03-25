@@ -385,7 +385,7 @@ void CompositionRootView::UninitRootView() noexcept {
     // The task will auto set the event on destruction to ensure that the event is set if the JS Queue has already been
     // shutdown
     Mso::ManualResetEvent mre;
-    m_context.JSDispatcher().Post([autoMRE = std::make_shared<AutoMRE>(AutoMRE{mre})]() {});
+    m_context.JSDispatcher().Post([autoMRE = std::make_unique<AutoMRE>(AutoMRE{mre})]() {});
     mre.Wait();
 
     // Paper version gives the JS thread time to finish executing - Is this needed?
