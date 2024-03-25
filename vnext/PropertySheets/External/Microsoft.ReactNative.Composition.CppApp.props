@@ -17,7 +17,7 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Appx.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Autolink.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Codegen.props" />
-  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\HybridCRT.props" Condition="'$(UseWinUI3)'=='true'"/>
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\HybridCRT.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.Cpp.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\CppAppConsumeCSharpModule.props" />
