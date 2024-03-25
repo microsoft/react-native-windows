@@ -361,7 +361,7 @@ void CompositionRootView::UpdateRootViewInternal() noexcept {
 
 struct AutoMRE {
   ~AutoMRE() {
-    mre->Set();
+    mre.Set();
   }
   Mso::ManualResetEvent mre;
 };
