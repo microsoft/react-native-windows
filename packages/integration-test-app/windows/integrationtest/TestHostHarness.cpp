@@ -167,7 +167,7 @@ winrt::fire_and_forget TestHostHarness::TimeoutOnInactivity(winrt::weak_ref<Test
   winrt::apartment_context harnessContext;
   auto weakThis = get_weak();
 
-  co_await 20s;
+  co_await winrt::operator co_await(20s);
   co_await harnessContext;
 
   if (auto strongTransaction = transaction.get()) {

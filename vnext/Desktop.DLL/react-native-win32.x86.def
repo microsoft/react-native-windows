@@ -60,7 +60,8 @@ EXPORTS
 ?MakeJSQueueThread@ReactNative@Microsoft@@YG?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
 ?Hash128@SpookyHashV2@hash@folly@@SGXPBXIPA_K1@Z
 ?assertionFailure@detail@folly@@YGXPBD00I0H@Z
-??1Instance@react@facebook@@QAE@XZ
+??1Instance@react@facebook@@UAE@XZ
+??1InstanceTargetDelegate@jsinspector_modern@react@facebook@@UAE@XZ
 ?invokeAsync@JSCallInvoker@Instance@react@facebook@@UAEX$$QAV?$function@$$A6GXXZ@std@@@Z
 ?invokeSync@JSCallInvoker@Instance@react@facebook@@UAEX$$QAV?$function@$$A6GXXZ@std@@@Z
 
@@ -194,7 +195,6 @@ _YGNodeStyleSetWidthPercent@8
 _YGNodeTypeToString@4
 _YGOverflowToString@4
 _YGPositionTypeToString@4
-_YGPrintOptionsToString@4
 _YGUnitToString@4
 _YGWrapToString@4
 

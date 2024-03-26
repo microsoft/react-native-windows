@@ -127,6 +127,7 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   std::shared_ptr<::Microsoft::ReactNative::CompositionEventHandler> m_CompositionEventHandler;
   winrt::Microsoft::ReactNative::Composition::IVisual m_rootVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_loadingVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::IActivityVisual m_loadingActivityVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::Theme m_theme{nullptr};
   winrt::Microsoft::ReactNative::ReactNotificationSubscription m_themeChangedSubscription{nullptr};
   winrt::Microsoft::ReactNative::Composition::Theme::ThemeChanged_revoker m_themeChangedRevoker;
@@ -137,6 +138,9 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   void ShowInstanceLoaded() noexcept;
   void ShowInstanceError() noexcept;
   void ShowInstanceLoading() noexcept;
+  void UpdateRootVisualSize() noexcept;
+  void UpdateLoadingVisualSize() noexcept;
+  Composition::IDrawingSurfaceBrush CreateLoadingVisualBrush() noexcept;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

@@ -1,8 +1,48 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 19 Mar 2024 05:17:45 GMT and should not be manually modified.
+This log was last generated on Sat, 23 Mar 2024 05:17:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.793
+
+Sat, 23 Mar 2024 05:17:00 GMT
+
+### Changes
+
+- Extract RenderText into helper function (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 2/1 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.206
+- Bump @react-native-windows/codegen to v0.0.0-canary.81
+- Bump @rnw-scripts/eslint-config to v1.2.9
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.13
+- Bump @rnw-scripts/just-task to v2.3.25
+- Bump react-native-platform-override to v1.9.25
+
+## 0.0.0-canary.792
+
+Fri, 22 Mar 2024 05:15:47 GMT
+
+### Changes
+
+- Enable custom timer factory to be provided (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Update ActivityIndicator to newer visuals (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.791
+
+Thu, 21 Mar 2024 05:14:45 GMT
+
+### Changes
+
+- Implement test website (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.790
+
+Wed, 20 Mar 2024 05:16:36 GMT
+
+### Changes
+
+- Bump Microsoft.Windows.CppWinRT to 2.0.230706.1 (jthysell@microsoft.com)
 
 ## 0.0.0-canary.789
 

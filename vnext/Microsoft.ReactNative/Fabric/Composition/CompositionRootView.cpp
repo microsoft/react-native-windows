@@ -5,6 +5,7 @@
 #include "CompositionRootView.g.cpp"
 #include "FocusNavigationRequest.g.cpp"
 
+#include <AutoDraw.h>
 #include <DynamicWriter.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <IReactInstance.h>
@@ -15,8 +16,10 @@
 #include <Utils/Helpers.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include <eventWaitHandle/eventWaitHandle.h>
+#include <react/renderer/attributedstring/AttributedStringBox.h>
 #include <react/renderer/core/LayoutConstraints.h>
 #include <react/renderer/core/LayoutContext.h>
+#include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.UI.Core.h>
@@ -26,12 +29,19 @@
 #include "CompositionUIService.h"
 #include "ReactNativeHost.h"
 #include "RootComponentView.h"
+#include "TextDrawing.h"
 
 #ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Content.h>
 #endif
 
 namespace winrt::Microsoft::ReactNative::implementation {
+
+constexpr float loadingActivitySize = 12.0f;
+constexpr float loadingActivityHorizontalOffset = 16.0f;
+constexpr float loadingBarHeight = 36.0f;
+constexpr float loadingBarFontSize = 20.0f;
+constexpr float loadingTextHorizontalOffset = 48.0f;
 
 //! This class ensures that we access ReactRootView from UI thread.
 struct CompositionReactViewInstance
@@ -149,6 +159,7 @@ void CompositionRootView::RootVisual(winrt::Microsoft::ReactNative::Composition:
   if (m_rootVisual != value) {
     assert(!m_rootVisual);
     m_rootVisual = value;
+    UpdateRootVisualSize();
   }
 }
 
@@ -172,6 +183,28 @@ winrt::Windows::Foundation::Size CompositionRootView::Size() noexcept {
 
 void CompositionRootView::Size(winrt::Windows::Foundation::Size value) noexcept {
   m_size = value;
+  UpdateRootVisualSize();
+}
+
+void CompositionRootView::UpdateRootVisualSize() noexcept {
+  if (m_rootVisual)
+    m_rootVisual.Size({m_size.Width * m_scaleFactor, m_size.Height * m_scaleFactor});
+
+  UpdateLoadingVisualSize();
+}
+
+void CompositionRootView::UpdateLoadingVisualSize() noexcept {
+  if (m_loadingVisual) {
+    auto drawingSurface = CreateLoadingVisualBrush();
+    m_loadingVisual.Brush(drawingSurface);
+    m_loadingVisual.Offset({0.0f, -(loadingBarHeight * m_scaleFactor / 2.0f), 0.0f}, {0.0f, 0.5f, 0.0f});
+    m_loadingVisual.Size({m_size.Width * m_scaleFactor, loadingBarHeight * m_scaleFactor});
+    m_loadingActivityVisual.Size(loadingActivitySize * m_scaleFactor);
+    const float loadingActivityVerticalOffset = ((loadingBarHeight - (loadingActivitySize * 2)) * m_scaleFactor) / 2;
+
+    m_loadingActivityVisual.Offset(
+        {loadingActivityHorizontalOffset * m_scaleFactor, loadingActivityVerticalOffset, 0.0f});
+  }
 }
 
 float CompositionRootView::ScaleFactor() noexcept {
@@ -179,7 +212,10 @@ float CompositionRootView::ScaleFactor() noexcept {
 }
 
 void CompositionRootView::ScaleFactor(float value) noexcept {
-  m_scaleFactor = value;
+  if (m_scaleFactor != value) {
+    m_scaleFactor = value;
+    UpdateRootVisualSize();
+  }
 }
 
 winrt::Microsoft::ReactNative::Composition::Theme CompositionRootView::Theme() noexcept {
@@ -359,6 +395,13 @@ void CompositionRootView::UpdateRootViewInternal() noexcept {
   }
 }
 
+struct AutoMRE {
+  ~AutoMRE() {
+    mre.Set();
+  }
+  Mso::ManualResetEvent mre;
+};
+
 void CompositionRootView::UninitRootView() noexcept {
   if (!m_isInitialized) {
     return;
@@ -375,8 +418,10 @@ void CompositionRootView::UninitRootView() noexcept {
     // This is needed to ensure that the unmount JS logic is completed before the the instance is shutdown during
     // instance destruction. Aligns with similar code in ReactInstanceWin::DetachRootView for paper Future: Instead this
     // method should return a Promise, which should be resolved when the JS logic is complete.
+    // The task will auto set the event on destruction to ensure that the event is set if the JS Queue has already been
+    // shutdown
     Mso::ManualResetEvent mre;
-    m_context.JSDispatcher().Post([&]() { mre.Set(); });
+    m_context.JSDispatcher().Post([autoMRE = std::make_unique<AutoMRE>(AutoMRE{mre})]() {});
     mre.Wait();
 
     // Paper version gives the JS thread time to finish executing - Is this needed?
@@ -397,6 +442,7 @@ void CompositionRootView::ClearLoadingUI() noexcept {
   RootVisual().Remove(m_loadingVisual);
 
   m_loadingVisual = nullptr;
+  m_loadingActivityVisual = nullptr;
 }
 
 void CompositionRootView::EnsureLoadingUI() noexcept {}
@@ -425,6 +471,63 @@ void CompositionRootView::ShowInstanceError() noexcept {
   ClearLoadingUI();
 }
 
+Composition::IDrawingSurfaceBrush CompositionRootView::CreateLoadingVisualBrush() noexcept {
+  auto compContext =
+      winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
+          m_context.Properties().Handle());
+
+  winrt::Windows::Foundation::Size surfaceSize = {
+      m_size.Width * m_scaleFactor, std::min(m_size.Height, loadingBarHeight) * m_scaleFactor};
+  auto drawingSurface = compContext.CreateDrawingSurfaceBrush(
+      surfaceSize,
+      winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
+      winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+
+  POINT offset;
+  {
+    ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, &offset);
+    if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
+      d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Green));
+
+      facebook::react::LayoutConstraints constraints;
+      constraints.maximumSize.width = std::max(0.0f, m_size.Width - loadingTextHorizontalOffset);
+      constraints.maximumSize.height = std::max(0.0f, m_size.Height - loadingBarHeight);
+
+      auto attributedString = facebook::react::AttributedString{};
+      auto fragment = facebook::react::AttributedString::Fragment{};
+      fragment.string = "Loading";
+      fragment.textAttributes.fontSize = loadingBarFontSize;
+      attributedString.appendFragment(fragment);
+      auto attributedStringBox = facebook::react::AttributedStringBox{attributedString};
+
+      auto textAttributes = facebook::react::TextAttributes{};
+      textAttributes.foregroundColor = facebook::react::whiteColor();
+
+      winrt::com_ptr<::IDWriteTextLayout> textLayout;
+      facebook::react::TextLayoutManager::GetTextLayout(
+          attributedStringBox, {} /*paragraphAttributes*/, constraints, textLayout);
+
+      DWRITE_TEXT_METRICS tm;
+      textLayout->GetMetrics(&tm);
+      const float textVerticalOffsetWithinLoadingBar = ((loadingBarHeight - tm.height) * m_scaleFactor) / 2;
+
+      auto theme = winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(Theme());
+
+      Composition::RenderText(
+          *d2dDeviceContext,
+          *textLayout,
+          attributedStringBox.getValue(),
+          textAttributes,
+          {static_cast<float>(offset.x + (loadingTextHorizontalOffset * m_scaleFactor)),
+           static_cast<float>(offset.y + textVerticalOffsetWithinLoadingBar)},
+          m_scaleFactor,
+          *theme);
+    }
+  }
+
+  return drawingSurface;
+}
+
 void CompositionRootView::ShowInstanceLoading() noexcept {
   if (!Mso::React::ReactOptions::UseDeveloperSupport(m_context.Properties().Handle()))
     return;
@@ -436,19 +539,18 @@ void CompositionRootView::ShowInstanceLoading() noexcept {
       winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
           m_context.Properties().Handle());
 
-  auto brush = compContext.CreateColorBrush({0x80, 0x03, 0x29, 0x29});
+  auto drawingSurface = CreateLoadingVisualBrush();
+
   m_loadingVisual = compContext.CreateSpriteVisual();
-  m_loadingVisual.RelativeSizeWithOffset({0.0f, 50.0f}, {1.0f, 0.0f});
-  m_loadingVisual.Offset({0.0f, -25.0f, 0.0f}, {0.0f, 0.5f, 0.0f});
-  m_loadingVisual.Brush(brush);
+  m_loadingVisual.Brush(drawingSurface);
 
   auto foregroundBrush = compContext.CreateColorBrush({255, 255, 255, 255});
 
-  auto activity = compContext.CreateActivityVisual();
-  activity.Size(15.0f);
-  activity.Brush(foregroundBrush);
-  activity.Offset({-50.0f, 5.0f, 0.0f}, {0.5f, 0.0f, 0.0f});
-  m_loadingVisual.InsertAt(activity, 0);
+  m_loadingActivityVisual = compContext.CreateActivityVisual();
+  m_loadingActivityVisual.Brush(foregroundBrush);
+  m_loadingVisual.InsertAt(m_loadingActivityVisual, 0);
+
+  UpdateLoadingVisualSize();
 
   RootVisual().InsertAt(m_loadingVisual, m_hasRenderedVisual ? 1 : 0);
 }
@@ -523,7 +625,6 @@ winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() noexc
 
   if (!m_island) {
     auto rootVisual = m_compositor.CreateSpriteVisual();
-    rootVisual.RelativeSizeAdjustment({1, 1});
 
     RootVisual(winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::CreateVisual(rootVisual));
     m_island = winrt::Microsoft::UI::Content::ContentIsland::Create(rootVisual);

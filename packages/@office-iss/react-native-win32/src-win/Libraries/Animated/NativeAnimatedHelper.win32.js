@@ -20,7 +20,7 @@ import type {InterpolationConfigType} from './nodes/AnimatedInterpolation';
 
 import NativeEventEmitter from '../EventEmitter/NativeEventEmitter';
 import RCTDeviceEventEmitter from '../EventEmitter/RCTDeviceEventEmitter';
-import ReactNativeFeatureFlags from '../ReactNative/ReactNativeFeatureFlags';
+import * as ReactNativeFeatureFlags from '../../src/private/featureflags/ReactNativeFeatureFlags';
 import Platform from '../Utilities/Platform';
 import NativeAnimatedNonTurboModule from './NativeAnimatedModule';
 import NativeAnimatedTurboModule from './NativeAnimatedTurboModule';

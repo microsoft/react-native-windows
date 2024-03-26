@@ -400,4 +400,12 @@ facebook::jsi::Runtime &HermesJSRuntime::getRuntime() noexcept {
   return *m_holder->getRuntime();
 }
 
+std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> HermesJSRuntime::createAgentDelegate(
+    facebook::react::jsinspector_modern::FrontendChannel frontendChannel,
+    facebook::react::jsinspector_modern::SessionState &sessionState) {
+  (void)frontendChannel;
+  (void)sessionState;
+  return nullptr;
+}
+
 } // namespace Microsoft::ReactNative

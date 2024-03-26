@@ -111,7 +111,7 @@ module.exports = {
       .default;
   },
   get Button(): Button {
-    return require('./Libraries/Components/Button');
+    return require('./Libraries/Components/Button').default;
   },
   // $FlowFixMe[value-as-type]
   get DrawerLayoutAndroid(): DrawerLayoutAndroid {
@@ -127,7 +127,8 @@ module.exports = {
     return require('./Libraries/Image/ImageBackground');
   },
   get InputAccessoryView(): InputAccessoryView {
-    return require('./Libraries/Components/TextInput/InputAccessoryView');
+    return require('./Libraries/Components/TextInput/InputAccessoryView')
+      .default;
   },
   get KeyboardAvoidingView(): KeyboardAvoidingView {
     return require('./Libraries/Components/Keyboard/KeyboardAvoidingView')
@@ -394,7 +395,8 @@ module.exports = {
     return require('./Libraries/Components/View/ViewWin32');
   },
   get TextWin32(): any {
-    return require('./Libraries/Components/Text/TextWin32').TextWin32;
+    // Legacy export
+    return require('./Libraries/Text/Text');
   },
   get ButtonWin32(): any {
     return require('./Libraries/Components/Button/ButtonWin32').ButtonWin32;
