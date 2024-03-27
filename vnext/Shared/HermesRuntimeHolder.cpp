@@ -401,8 +401,12 @@ facebook::jsi::Runtime &HermesJSRuntime::getRuntime() noexcept {
 }
 
 std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> HermesJSRuntime::createAgentDelegate(
-    facebook::react::jsinspector_modern::FrontendChannel frontendChannel,
-    facebook::react::jsinspector_modern::SessionState &sessionState) {
+      facebook::react::jsinspector_modern::FrontendChannel frontendChannel,
+      facebook::react::jsinspector_modern::SessionState &sessionState,
+      std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate::ExportedState>
+          previouslyExportedState,
+      const facebook::react::jsinspector_modern::ExecutionContextDescription&
+          executionContextDescription) {
   (void)frontendChannel;
   (void)sessionState;
   return nullptr;
