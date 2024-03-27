@@ -554,6 +554,7 @@ struct AutoDrawHelper {
   }
 
   ~AutoDrawHelper() {
+    m_pRT = nullptr;
     m_surface->EndDraw();
   }
 
