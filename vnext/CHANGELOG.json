@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 27 Mar 2024 05:17:31 GMT",
+      "version": "0.0.0-canary.794",
+      "tag": "react-native-windows_v0.0.0-canary.794",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b99ccd7dd82949cba08ad3d3480ac67d6a2e830e",
+            "comment": "[Fabric] Fix hang on shutdown when JS instance failed to start"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Mar 2024 05:17:00 GMT",
       "version": "0.0.0-canary.793",
       "tag": "react-native-windows_v0.0.0-canary.793",
