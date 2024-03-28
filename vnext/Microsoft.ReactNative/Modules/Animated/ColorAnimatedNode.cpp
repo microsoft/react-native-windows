@@ -4,9 +4,9 @@
 #include "pch.h"
 
 #include <UI.Composition.h>
+#include <Utils/ValueUtils.h>
 #include "ColorAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
-#include <Utils/ValueUtils.h>
 
 namespace Microsoft::ReactNative {
 ColorAnimatedNode::ColorAnimatedNode(

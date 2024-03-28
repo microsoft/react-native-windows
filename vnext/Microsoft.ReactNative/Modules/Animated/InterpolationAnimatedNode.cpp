@@ -7,8 +7,21 @@
 #include "ExtrapolationType.h"
 #include "InterpolationAnimatedNode.h"
 #include "NativeAnimatedNodeManager.h"
+#include "Utils/ValueUtils.h"
 
 namespace Microsoft::ReactNative {
+
+inline int32_t ColorToInt(winrt::Windows::UI::Color color) {
+  return static_cast<uint8_t>(color.A) << 24 | static_cast<uint8_t>(color.R) << 16 |
+      static_cast<uint8_t>(color.G) << 8 | static_cast<uint8_t>(color.B);
+}
+
+inline uint8_t ScaleByte(uint8_t min, uint8_t max, double ratio) {
+  const auto scaledValue = min + (max - min) * ratio;
+  const auto clampedValue = std::clamp(static_cast<uint32_t>(std::round(scaledValue)), 0u, 255u);
+  return static_cast<uint8_t>(clampedValue);
+}
+
 InterpolationAnimatedNode::InterpolationAnimatedNode(
     int64_t tag,
     const winrt::Microsoft::ReactNative::JSValueObject &config,
@@ -17,8 +30,18 @@ InterpolationAnimatedNode::InterpolationAnimatedNode(
   for (const auto &rangeValue : config[s_inputRangeName].AsArray()) {
     m_inputRanges.push_back(rangeValue.AsDouble());
   }
-  for (const auto &rangeValue : config[s_outputRangeName].AsArray()) {
-    m_outputRanges.push_back(rangeValue.AsDouble());
+
+  const auto isColorOutput = config[s_outputTypeName].AsString() == s_colorOutputType;
+  if (!m_useComposition && isColorOutput) {
+    m_isColorOutput = true;
+    for (const auto &rangeValue : config[s_outputRangeName].AsArray()) {
+      m_colorOutputRanges.push_back(ColorFrom(rangeValue));
+    }
+  } else {
+    assert(!isColorOutput && "Color interpolation not supported");
+    for (const auto &rangeValue : config[s_outputRangeName].AsArray()) {
+      m_defaultOutputRanges.push_back(rangeValue.AsDouble());
+    }
   }
 
   m_extrapolateLeft = config[s_extrapolateLeftName].AsString();
@@ -33,7 +56,11 @@ void InterpolationAnimatedNode::Update() {
 
   if (const auto manager = m_manager.lock()) {
     if (const auto node = manager->GetValueAnimatedNode(m_parentTag)) {
-      RawValue(InterpolateValue(node->Value()));
+      if (m_isColorOutput) {
+        RawValue(InterpolateColor(node->Value()));
+      } else {
+        RawValue(InterpolateValue(node->Value()));
+      }
     }
   }
 }
@@ -95,8 +122,9 @@ comp::ExpressionAnimation InterpolationAnimatedNode::CreateExpressionAnimation(
   for (size_t i = 0; i < m_inputRanges.size(); i++) {
     animation.SetScalarParameter(s_inputName.data() + std::to_wstring(i), static_cast<float>(m_inputRanges[i]));
   }
-  for (size_t i = 0; i < m_outputRanges.size(); i++) {
-    animation.SetScalarParameter(s_outputName.data() + std::to_wstring(i), static_cast<float>(m_outputRanges[i]));
+  for (size_t i = 0; i < m_defaultOutputRanges.size(); i++) {
+    animation.SetScalarParameter(
+        s_outputName.data() + std::to_wstring(i), static_cast<float>(m_defaultOutputRanges[i]));
   }
   return animation;
 }
@@ -173,7 +201,7 @@ winrt::hstring InterpolationAnimatedNode::GetRightExpression(
     const winrt::hstring &value,
     const winrt::hstring &rightInterpolateExpression) {
   const auto lastInput = s_inputName.data() + std::to_wstring(m_inputRanges.size() - 1);
-  const auto lastOutput = s_outputName.data() + std::to_wstring(m_outputRanges.size() - 1);
+  const auto lastOutput = s_outputName.data() + std::to_wstring(m_defaultOutputRanges.size() - 1);
   switch (ExtrapolationTypeFromString(m_extrapolateRight)) {
     case ExtrapolationType::Clamp:
       return value + L" > " + lastInput + L" ? " + lastOutput + L" : ";
@@ -200,10 +228,49 @@ double InterpolationAnimatedNode::InterpolateValue(double value) {
       value,
       m_inputRanges[index],
       m_inputRanges[index + 1],
-      m_outputRanges[index],
-      m_outputRanges[index + 1],
+      m_defaultOutputRanges[index],
+      m_defaultOutputRanges[index + 1],
       m_extrapolateLeft,
       m_extrapolateRight);
+}
+
+double InterpolationAnimatedNode::InterpolateColor(double value) {
+  // Compute range index
+  size_t index = 1;
+  for (; index < m_inputRanges.size() - 1; ++index) {
+    if (m_inputRanges[index] >= value) {
+      break;
+    }
+  }
+  index--;
+
+  double result;
+  const auto outputMin = m_colorOutputRanges[index];
+  const auto outputMax = m_colorOutputRanges[index + 1];
+  const auto outputMinInt = ColorToInt(outputMin);
+  const auto outputMaxInt = ColorToInt(outputMax);
+  if (outputMin == outputMax) {
+    memcpy(&result, &outputMinInt, sizeof(int32_t));
+    return result;
+  }
+
+  const auto inputMin = m_inputRanges[index];
+  const auto inputMax = m_inputRanges[index + 1];
+  if (inputMin == inputMax) {
+    if (value <= inputMin) {
+      memcpy(&result, &outputMinInt, sizeof(int32_t));
+    } else {
+      memcpy(&result, &outputMaxInt, sizeof(int32_t));
+    }
+    return result;
+  }
+
+  const auto ratio = (value - inputMin) / (inputMax - inputMin);
+  const auto interpolatedColor = ScaleByte(outputMin.A, outputMax.A, ratio) << 24 |
+      ScaleByte(outputMin.R, outputMax.R, ratio) << 16 | ScaleByte(outputMin.G, outputMax.G, ratio) << 8 |
+      ScaleByte(outputMin.B, outputMax.B, ratio);
+  memcpy(&result, &interpolatedColor, sizeof(int32_t));
+  return result;
 }
 
 } // namespace Microsoft::ReactNative

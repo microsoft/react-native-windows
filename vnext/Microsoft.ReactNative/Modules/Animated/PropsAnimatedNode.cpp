@@ -126,6 +126,11 @@ void PropsAnimatedNode::UpdateView() {
           if (facade != FacadeType::None) {
             MakeAnimation(entry.second, facade);
           }
+        } else if (valueNode->IsColorValue()) {
+          const auto value = valueNode->Value();
+          int32_t color;
+          memcpy(&color, &value, sizeof(int32_t));
+          m_props[entry.first] = color;
         } else {
           m_props[entry.first] = valueNode->Value();
         }
@@ -135,6 +140,11 @@ void PropsAnimatedNode::UpdateView() {
           if (facade != FacadeType::None) {
             MakeAnimation(entry.second, facade);
           }
+        } else if (valueNode->IsColorValue()) {
+          const auto value = valueNode->Value();
+          int32_t color;
+          memcpy(&color, &value, sizeof(int32_t));
+          m_props[entry.first] = color;
         } else {
           m_props[entry.first] = colorNode->GetColor();
         }

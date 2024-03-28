@@ -31,6 +31,10 @@ class ValueAnimatedNode : public AnimatedNode {
   void OnValueUpdate();
   void ValueListener(const ValueListenerCallback &callback);
 
+  virtual bool IsColorValue() {
+    return false;
+  }
+
   comp::CompositionPropertySet PropertySet() {
     return m_propertySet;
   };
