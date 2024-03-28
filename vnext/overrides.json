@@ -103,7 +103,7 @@
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModuleBinding.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModuleBinding.cpp",
       "baseHash": "2bae5a32d3d3f54fcab6e27844eee899f417815d",
-      "issue": 0
+      "issue": 12891
     },
     {
       "type": "patch",
@@ -124,21 +124,21 @@
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
       "baseHash": "137fbf8e43ddd0be9691028ce2bca3e67a8c60d6",
-      "issue": 0
+      "issue": 12891
     },
     {
       "type": "copy",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/utils/jsi-utils.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/utils/jsi.cpp",
       "baseHash": "ed26bfa57fa5969486056b23b7257703d0ed3e67",
-      "issue": 0
+      "issue": 12891
     },
     {
       "type": "copy",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/utils/jsi-utils.h",
       "baseFile": "packages/react-native/ReactCommon/react/utils/jsi.h",
       "baseHash": "139ce975574c9afbb43ed2ee81727faacd38e362",
-      "issue": 0
+      "issue": 12891
     },
     {
       "type": "copy",
