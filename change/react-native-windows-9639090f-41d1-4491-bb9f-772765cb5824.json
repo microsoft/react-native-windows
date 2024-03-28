@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Renames TM spec",
+  "packageName": "react-native-windows",
+  "email": "ericroz@meta.com",
+  "dependentChangeType": "patch"
+}
