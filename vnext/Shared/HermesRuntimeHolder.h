@@ -62,10 +62,8 @@ class HermesJSRuntime : public facebook::react::JSRuntime {
   std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> createAgentDelegate(
       facebook::react::jsinspector_modern::FrontendChannel frontendChannel,
       facebook::react::jsinspector_modern::SessionState &sessionState,
-      std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate::ExportedState>
-          previouslyExportedState,
-      const facebook::react::jsinspector_modern::ExecutionContextDescription&
-          executionContextDescription) override;
+      std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate::ExportedState> previouslyExportedState,
+      const facebook::react::jsinspector_modern::ExecutionContextDescription &executionContextDescription) override;
 
  private:
   std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> m_holder;
