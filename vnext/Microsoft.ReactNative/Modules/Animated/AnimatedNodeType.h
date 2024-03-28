@@ -18,6 +18,7 @@ enum class AnimatedNodeType {
   Diffclamp,
   Transform,
   Tracking,
+  Color,
 };
 
 static AnimatedNodeType AnimatedNodeTypeFromString(const std::string &string) {
@@ -43,7 +44,8 @@ static AnimatedNodeType AnimatedNodeTypeFromString(const std::string &string) {
     return AnimatedNodeType::Diffclamp;
   if (string == "transform")
     return AnimatedNodeType::Transform;
-
-  assert(string == "tracking");
-  return AnimatedNodeType::Tracking;
+  if (string == "tracking")
+    return AnimatedNodeType::Tracking;
+  assert(string == "color");
+  return AnimatedNodeType::Color;
 };
