@@ -33,22 +33,22 @@ const STICKY_HEADER_INDICES = [0, 2, 4];
 const Item = ({item, separators}: RenderItemProps<string>) => {
   return (
     <View style={styles.item}>
-      <Text style={styles.title} accessible>{item}</Text>
+      <Text style={styles.title}>{item}</Text>
     </View>
   );
 };
 
 export function FlatList_stickyHeaders(): React.Node {
   return (
-    <FlatList
-      data={DATA}
-      keyExtractor={(item, index) => item + index}
-      style={styles.list}
-      stickyHeaderIndices={STICKY_HEADER_INDICES}
-      renderItem={Item}
-      testID="flatlist-sticky"
-      accessible
-    />
+    <View testID="flatlist-sticky" accessible>
+      <FlatList
+        data={DATA}
+        keyExtractor={(item, index) => item + index}
+        style={styles.list}
+        stickyHeaderIndices={STICKY_HEADER_INDICES}
+        renderItem={Item}
+      />
+    </View>
   );
 }
 
