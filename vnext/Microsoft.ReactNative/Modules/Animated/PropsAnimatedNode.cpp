@@ -129,6 +129,15 @@ void PropsAnimatedNode::UpdateView() {
         } else {
           m_props[entry.first] = valueNode->Value();
         }
+      } else if (const auto &colorNode = manager->GetColorAnimatedNode(entry.second)) {
+        if (m_useComposition) {
+          const auto &facade = StringToFacadeType(entry.first);
+          if (facade != FacadeType::None) {
+            MakeAnimation(entry.second, facade);
+          }
+        } else {
+          m_props[entry.first] = colorNode->GetColor();
+        }
       }
     }
   }
