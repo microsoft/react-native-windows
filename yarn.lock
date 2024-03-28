@@ -9230,9 +9230,9 @@ metro-runtime@0.80.6:
     "@babel/runtime" "^7.0.0"
 
 metro-runtime@^0.80.3:
-  version "0.80.7"
-  resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.80.7.tgz#fa11c35d5d7307329c0efc0cbbe98280a2a215ea"
-  integrity sha512-gWqzfm9YQw9I08L23hcLmY7XNx48W0c0vLEkVEF5P7ZNIOSfX9CkEv0JvTTJWshRYkbgIqsdtpMAHq13LJJ6iA==
+  version "0.80.8"
+  resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.80.8.tgz#8f265369c05d9a3f05f9915842fac5d4e93f44bd"
+  integrity sha512-2oScjfv6Yb79PelU1+p8SVrCMW9ZjgEiipxq7jMRn8mbbtWzyv3g8Mkwr+KwOoDFI/61hYPUbY8cUnu278+x1g==
   dependencies:
     "@babel/runtime" "^7.0.0"
 
