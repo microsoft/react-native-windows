@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Use std:: coroutines for compatibility with C++20 and Clang 17",
+  "packageName": "react-native-windows",
+  "email": "ericroz@meta.com",
+  "dependentChangeType": "patch"
+}
