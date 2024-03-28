@@ -33,7 +33,7 @@ parameters:
           - Name: X86Release
             BuildConfiguration: Release
             BuildPlatform: x86
-          - X86ReleaseFabric:
+          - Name: X86ReleaseFabric
             BuildConfiguration: Release
             BuildPlatform: x86
             UseFabric: true
@@ -63,7 +63,7 @@ parameters:
           - Name: X86Release
             BuildConfiguration: Release
             BuildPlatform: x86
-          - X86ReleaseFabric:
+          - Name: X86ReleaseFabric
             BuildConfiguration: Release
             BuildPlatform: x86
             UseFabric: true
