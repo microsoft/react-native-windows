@@ -7564,7 +7564,7 @@ struct [[deprecated("Use PushNotificationManagerPermissionsBridging instead.")]]
 
 #pragma mark - PushNotificationManagerBaseNotification
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9, typename P10>
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
 struct [[deprecated("Use PushNotificationManagerNotification instead.")]] PushNotificationManagerBaseNotification {
   P0 alertTitle;
   P1 alertBody;
@@ -7575,20 +7575,18 @@ struct [[deprecated("Use PushNotificationManagerNotification instead.")]] PushNo
   P6 applicationIconBadgeNumber;
   P7 isSilent;
   P8 soundName;
-  P9 alertAction;
-  P10 repeatInterval;
   bool operator==(const PushNotificationManagerBaseNotification &other) const {
-    return alertTitle == other.alertTitle && alertBody == other.alertBody && userInfo == other.userInfo && category == other.category && fireDate == other.fireDate && fireIntervalSeconds == other.fireIntervalSeconds && applicationIconBadgeNumber == other.applicationIconBadgeNumber && isSilent == other.isSilent && soundName == other.soundName && alertAction == other.alertAction && repeatInterval == other.repeatInterval;
+    return alertTitle == other.alertTitle && alertBody == other.alertBody && userInfo == other.userInfo && category == other.category && fireDate == other.fireDate && fireIntervalSeconds == other.fireIntervalSeconds && applicationIconBadgeNumber == other.applicationIconBadgeNumber && isSilent == other.isSilent && soundName == other.soundName;
   }
 };
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9, typename P10>
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
 struct [[deprecated("Use PushNotificationManagerNotificationBridging instead.")]] PushNotificationManagerBaseNotificationBridging {
-  static PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10> fromJs(
+  static PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8> fromJs(
       jsi::Runtime &rt,
       const jsi::Object &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
-    PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10> result{
+    PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8> result{
       bridging::fromJs<P0>(rt, value.getProperty(rt, "alertTitle"), jsInvoker),
       bridging::fromJs<P1>(rt, value.getProperty(rt, "alertBody"), jsInvoker),
       bridging::fromJs<P2>(rt, value.getProperty(rt, "userInfo"), jsInvoker),
@@ -7597,9 +7595,7 @@ struct [[deprecated("Use PushNotificationManagerNotificationBridging instead.")]
       bridging::fromJs<P5>(rt, value.getProperty(rt, "fireIntervalSeconds"), jsInvoker),
       bridging::fromJs<P6>(rt, value.getProperty(rt, "applicationIconBadgeNumber"), jsInvoker),
       bridging::fromJs<P7>(rt, value.getProperty(rt, "isSilent"), jsInvoker),
-      bridging::fromJs<P8>(rt, value.getProperty(rt, "soundName"), jsInvoker),
-      bridging::fromJs<P9>(rt, value.getProperty(rt, "alertAction"), jsInvoker),
-      bridging::fromJs<P10>(rt, value.getProperty(rt, "repeatInterval"), jsInvoker)};
+      bridging::fromJs<P8>(rt, value.getProperty(rt, "soundName"), jsInvoker)};
     return result;
   }
 
@@ -7639,19 +7635,11 @@ struct [[deprecated("Use PushNotificationManagerNotificationBridging instead.")]
   static std::optional<jsi::String> soundNameToJs(jsi::Runtime &rt, P8 value) {
     return bridging::toJs(rt, value);
   }
-
-  static std::optional<jsi::String> alertActionToJs(jsi::Runtime &rt, P9 value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static std::optional<jsi::String> repeatIntervalToJs(jsi::Runtime &rt, P10 value) {
-    return bridging::toJs(rt, value);
-  }
 #endif
 
   static jsi::Object toJs(
       jsi::Runtime &rt,
-      const PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10> &value,
+      const PushNotificationManagerBaseNotification<P0, P1, P2, P3, P4, P5, P6, P7, P8> &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     auto result = facebook::jsi::Object(rt);
     if (value.alertTitle) {
@@ -7680,12 +7668,6 @@ struct [[deprecated("Use PushNotificationManagerNotificationBridging instead.")]
     }
     if (value.soundName) {
       result.setProperty(rt, "soundName", bridging::toJs(rt, value.soundName.value(), jsInvoker));
-    }
-    if (value.alertAction) {
-      result.setProperty(rt, "alertAction", bridging::toJs(rt, value.alertAction.value(), jsInvoker));
-    }
-    if (value.repeatInterval) {
-      result.setProperty(rt, "repeatInterval", bridging::toJs(rt, value.repeatInterval.value(), jsInvoker));
     }
     return result;
   }
@@ -7749,7 +7731,7 @@ struct PushNotificationManagerPermissionsBridging {
 
 #pragma mark - PushNotificationManagerNotification
 
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9, typename P10>
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
 struct PushNotificationManagerNotification {
   P0 alertTitle;
   P1 alertBody;
@@ -7760,10 +7742,8 @@ struct PushNotificationManagerNotification {
   P6 applicationIconBadgeNumber;
   P7 isSilent;
   P8 soundName;
-  P9 alertAction;
-  P10 repeatInterval;
   bool operator==(const PushNotificationManagerNotification &other) const {
-    return alertTitle == other.alertTitle && alertBody == other.alertBody && userInfo == other.userInfo && category == other.category && fireDate == other.fireDate && fireIntervalSeconds == other.fireIntervalSeconds && applicationIconBadgeNumber == other.applicationIconBadgeNumber && isSilent == other.isSilent && soundName == other.soundName && alertAction == other.alertAction && repeatInterval == other.repeatInterval;
+    return alertTitle == other.alertTitle && alertBody == other.alertBody && userInfo == other.userInfo && category == other.category && fireDate == other.fireDate && fireIntervalSeconds == other.fireIntervalSeconds && applicationIconBadgeNumber == other.applicationIconBadgeNumber && isSilent == other.isSilent && soundName == other.soundName;
   }
 };
 
@@ -7784,9 +7764,7 @@ struct PushNotificationManagerNotificationBridging {
       bridging::fromJs<decltype(types.fireIntervalSeconds)>(rt, value.getProperty(rt, "fireIntervalSeconds"), jsInvoker),
       bridging::fromJs<decltype(types.applicationIconBadgeNumber)>(rt, value.getProperty(rt, "applicationIconBadgeNumber"), jsInvoker),
       bridging::fromJs<decltype(types.isSilent)>(rt, value.getProperty(rt, "isSilent"), jsInvoker),
-      bridging::fromJs<decltype(types.soundName)>(rt, value.getProperty(rt, "soundName"), jsInvoker),
-      bridging::fromJs<decltype(types.alertAction)>(rt, value.getProperty(rt, "alertAction"), jsInvoker),
-      bridging::fromJs<decltype(types.repeatInterval)>(rt, value.getProperty(rt, "repeatInterval"), jsInvoker)};
+      bridging::fromJs<decltype(types.soundName)>(rt, value.getProperty(rt, "soundName"), jsInvoker)};
     return result;
   }
 
@@ -7826,14 +7804,6 @@ struct PushNotificationManagerNotificationBridging {
   static std::optional<jsi::String> soundNameToJs(jsi::Runtime &rt, decltype(types.soundName) value) {
     return bridging::toJs(rt, value);
   }
-
-  static std::optional<jsi::String> alertActionToJs(jsi::Runtime &rt, decltype(types.alertAction) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static std::optional<jsi::String> repeatIntervalToJs(jsi::Runtime &rt, decltype(types.repeatInterval) value) {
-    return bridging::toJs(rt, value);
-  }
 #endif
 
   static jsi::Object toJs(
@@ -7867,12 +7837,6 @@ struct PushNotificationManagerNotificationBridging {
     }
     if (value.soundName) {
       result.setProperty(rt, "soundName", bridging::toJs(rt, value.soundName.value(), jsInvoker));
-    }
-    if (value.alertAction) {
-      result.setProperty(rt, "alertAction", bridging::toJs(rt, value.alertAction.value(), jsInvoker));
-    }
-    if (value.repeatInterval) {
-      result.setProperty(rt, "repeatInterval", bridging::toJs(rt, value.repeatInterval.value(), jsInvoker));
     }
     return result;
   }
