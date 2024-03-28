@@ -19,6 +19,9 @@
 #include <Fabric/Composition/CompositionContextHelper.h>
 #include <Fabric/Composition/CompositionUIService.h>
 #include <Fabric/FabricUIManagerModule.h>
+#elif USE_WINUI_FABRIC
+#include <Fabric/WinUI/Components/FrameworkElementComponentView.h>
+#include <Fabric/WinUI/FabricUIManagerModule.h>
 #endif
 
 namespace Microsoft::ReactNative {
@@ -128,6 +131,15 @@ void PropsAnimatedNode::UpdateView() {
           }
         } else {
           m_props[entry.first] = valueNode->Value();
+        }
+      } else if (const auto &colorNode = manager->GetColorAnimatedNode(entry.second)) {
+        if (m_useComposition) {
+          const auto &facade = StringToFacadeType(entry.first);
+          if (facade != FacadeType::None) {
+            MakeAnimation(entry.second, facade);
+          }
+        } else {
+          m_props[entry.first] = colorNode->GetColor();
         }
       }
     }
@@ -347,6 +359,14 @@ xaml::UIElement PropsAnimatedNode::GetUIElement() {
 
 void PropsAnimatedNode::CommitProps() {
 #ifndef CORE_ABI
+#ifdef USE_WINUI_FABRIC
+  if (auto fabricuiManager = FabricUIManager::FromProperties(m_context.Properties())) {
+    if (fabricuiManager->synchronouslyUpdateViewOnUIThread(
+            static_cast<facebook::react::Tag>(m_connectedViewTag), m_props)) {
+      return;
+    }
+  }
+#endif
   if (const auto node = GetShadowNodeBase()) {
     if (!node->m_zombie) {
       node->updateProperties(m_props);
@@ -356,20 +376,26 @@ void PropsAnimatedNode::CommitProps() {
 }
 
 PropsAnimatedNode::AnimationView PropsAnimatedNode::GetAnimationView() {
-#ifdef USE_FABRIC
+#ifdef USE_FABRIC_CORE
   if (auto fabricuiManager = FabricUIManager::FromProperties(m_context.Properties())) {
     auto componentView = fabricuiManager->GetViewRegistry().findComponentViewWithTag(
         static_cast<facebook::react::Tag>(m_connectedViewTag));
     if (componentView) {
+#ifdef USE_WINUI_FABRIC
+      if (componentView->Element().try_as<xaml::FrameworkElement>()) {
+        return {nullptr, std::static_pointer_cast<FrameworkElementComponentView>(componentView)};
+      }
+#else
       return {nullptr, componentView};
+#endif
     }
   }
-#endif // USE_FABRIC
+#endif // USE_FABRIC_CORE
 #ifndef CORE_ABI
   if (IsRS5OrHigher()) {
     if (const auto shadowNodeBase = GetShadowNodeBase()) {
       if (const auto shadowNodeView = shadowNodeBase->GetView()) {
-#ifdef USE_FABRIC
+#ifdef USE_FABRIC_CORE
         return {shadowNodeView.as<xaml::UIElement>(), nullptr};
 #else
         return {shadowNodeView.as<xaml::UIElement>()};
@@ -379,7 +405,7 @@ PropsAnimatedNode::AnimationView PropsAnimatedNode::GetAnimationView() {
   }
 #endif // CORE_ABI
 
-#ifdef USE_FABRIC
+#ifdef USE_FABRIC_CORE
   return {nullptr, nullptr};
 #else
   return {nullptr};
@@ -412,6 +438,9 @@ void PropsAnimatedNode::StartAnimation(
       }
       visual.StartAnimation(targetProp, animation);
     }
+#elif USE_WINUI_FABRIC
+  } else if (view.m_componentView) {
+    view.m_componentView->Element().as<xaml::UIElement>().StartAnimation(animation);
 #endif
   }
 }
@@ -426,6 +455,11 @@ comp::CompositionPropertySet PropsAnimatedNode::EnsureCenterPointPropertySet(con
   if (view.m_componentView) {
     return view.m_componentView.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()
         ->EnsureCenterPointPropertySet();
+  }
+#endif
+#ifdef USE_WINUI_FABRIC
+  if (view.m_componentView) {
+    return view.m_componentView->EnsureCenterPointPropertySet();
   }
 #endif
   return nullptr;
