@@ -2303,13 +2303,6 @@
     shell-quote "^1.7.3"
     sudo-prompt "^9.0.0"
 
-"@react-native-community/cli-types@13.5.1":
-  version "13.5.1"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-13.5.1.tgz#a8d68f61a8ba7e59add7f492daa0288ed0ad61ce"
-  integrity sha512-hvRqXZdCPc8kPnKtXxH9dVlEFiMZTPlaJ1p5tV2p3Y+rFkK1mf0Kb6CHG3mDgJhSt1Ssbg159nfNzD0ApC25lA==
-  dependencies:
-    joi "^17.2.1"
-
 "@react-native-community/cli-types@13.6.0":
   version "13.6.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-13.6.0.tgz#b30053d3409bc876660183e46b8e360bb35ceeba"
