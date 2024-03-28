@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Remove previous SizeChanged event listener when reloading the app",
+  "packageName": "react-native-windows",
+  "email": "ericroz@meta.com",
+  "dependentChangeType": "patch"
+}

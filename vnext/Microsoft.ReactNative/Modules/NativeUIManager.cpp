@@ -234,15 +234,18 @@ void NativeUIManager::AddRootView(ShadowNode &shadowNode, facebook::react::IReac
   Microsoft::ReactNative::SetTag(element, rootTag);
 
   // Add listener to size change so we can redo the layout when that happens
-  m_sizeChangedVector.push_back(view.as<xaml::FrameworkElement>().SizeChanged(
-      winrt::auto_revoke, [this, rootTag](auto &&, xaml::SizeChangedEventArgs const &args) {
-        ApplyLayout(rootTag, args.NewSize().Width, args.NewSize().Height);
-      }));
+  m_sizeChangedMap.insert(
+      {rootTag,
+       view.as<xaml::FrameworkElement>().SizeChanged(
+           winrt::auto_revoke, [this, rootTag](auto &&, xaml::SizeChangedEventArgs const &args) {
+             ApplyLayout(rootTag, args.NewSize().Width, args.NewSize().Height);
+           })});
 }
 
 void NativeUIManager::removeRootView(Microsoft::ReactNative::ShadowNode &shadow) {
   SystraceSection s("NativeUIManager::removeRootView");
   m_tagsToXamlReactControl.erase(shadow.m_tag);
+  m_sizeChangedMap.erase(shadow.m_tag);
   RemoveView(shadow, true);
 }
 
