@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Support WinAppSDK + cppwinrt 2.240111.5",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
