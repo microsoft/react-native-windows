@@ -17,7 +17,7 @@
 
 #pragma warning(push)
 #pragma warning(disable : 4127) // conditional expression is constant
-#include <folly/container/detail/F14table.h>
+#include <folly/container/detail/F14Table.h>
 #pragma warning(pop)
 
 #include <folly/Memory.h>
