@@ -33,7 +33,7 @@ const STICKY_HEADER_INDICES = [0, 2, 4];
 const Item = ({item, separators}: RenderItemProps<string>) => {
   return (
     <View style={styles.item}>
-      <Text style={styles.title}>{item}</Text>
+      <Text style={styles.title} accessible>{item}</Text>
     </View>
   );
 };
