@@ -88,7 +88,11 @@ exports.examples = [
       return (
         <View>
           <ActivityIndicator style={[styles.centering]} />
-          <ActivityIndicator style={[styles.centering, styles.gray]}  testID="activity-gray" accessible/>
+          <ActivityIndicator
+            style={[styles.centering, styles.gray]}
+            testID="activity-gray"
+            accessible
+          />
         </View>
       );
     },
@@ -98,10 +102,10 @@ exports.examples = [
     render(): Node {
       return (
         <View style={styles.horizontal} testID="activity-color" accessible>
-          <ActivityIndicator color="#0000ff" accessible/>
-          <ActivityIndicator color="#aa00aa" accessible/>
-          <ActivityIndicator color="#aa3300" accessible/>
-          <ActivityIndicator color="#00aa00" accessible/>
+          <ActivityIndicator color="#0000ff" accessible />
+          <ActivityIndicator color="#aa00aa" accessible />
+          <ActivityIndicator color="#aa3300" accessible />
+          <ActivityIndicator color="#00aa00" accessible />
         </View>
       );
     },
@@ -114,7 +118,7 @@ exports.examples = [
           style={[styles.centering, styles.gray]}
           size="large"
           color="white"
-          testID='activity-large'
+          testID="activity-large"
           accessible
         />
       );
@@ -124,11 +128,14 @@ exports.examples = [
     title: 'Large, custom colors',
     render(): Node {
       return (
-        <View style={styles.horizontal} testID="activity-large-color" accessible>
-          <ActivityIndicator size="large" color="#0000ff" accessible/>
-          <ActivityIndicator size="large" color="#aa00aa" accessible/>
-          <ActivityIndicator size="large" color="#aa3300" accessible/>
-          <ActivityIndicator size="large" color="#00aa00" accessible/>
+        <View
+          style={styles.horizontal}
+          testID="activity-large-color"
+          accessible>
+          <ActivityIndicator size="large" color="#0000ff" accessible />
+          <ActivityIndicator size="large" color="#aa00aa" accessible />
+          <ActivityIndicator size="large" color="#aa3300" accessible />
+          <ActivityIndicator size="large" color="#00aa00" accessible />
         </View>
       );
     },

@@ -23,7 +23,9 @@ afterEach(async () => {
 
 describe('ActivityIndicator Tests', () => {
   test('An ActivityIndicator can render', async () => {
-    const component = await app.findElementByTestID('default_activity_indicator');
+    const component = await app.findElementByTestID(
+      'default_activity_indicator',
+    );
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('default_activity_indicator');
     expect(dump).toMatchSnapshot();
