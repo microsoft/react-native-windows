@@ -106,6 +106,27 @@
       "issue": 12195
     },
     {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/scrollview/ScrollViewProps.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/scrollview/ScrollViewProps.cpp",
+      "baseHash": "8f39e994dcc9dd871d502637f01fbcd6bfd2cccc",
+      "issue": 12879
+    },
+    {
+      "type": "copy",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/utils/jsi-utils.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/utils/jsi.cpp",
+      "baseHash": "ed26bfa57fa5969486056b23b7257703d0ed3e67",
+      "issue": 12891
+    },
+    {
+      "type": "copy",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/utils/jsi-utils.h",
+      "baseFile": "packages/react-native/ReactCommon/react/utils/jsi.h",
+      "baseHash": "139ce975574c9afbb43ed2ee81727faacd38e362",
+      "issue": 12891
+    },
+    {
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "packages/rn-tester/IntegrationTests",
