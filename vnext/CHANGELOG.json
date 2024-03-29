@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 29 Mar 2024 05:15:22 GMT",
+      "version": "0.0.0-canary.795",
+      "tag": "react-native-windows_v0.0.0-canary.795",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "1fc19bf7b35b96efc2827f78125228043bef8cb9",
+            "comment": "Clang portable header fix"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "537ef434c3e9b20c9565e157760cf1e17c8163f2",
+            "comment": "Release render target before calling enddraw"
+          },
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "20fbbb078a49cad5cfe367e042841b4aa4454ad6",
+            "comment": "Remove previous SizeChanged event listener when reloading the app"
+          },
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "0385d909ea2ddff8d7bd4a07a0ed490aac39d996",
+            "comment": "Use std:: coroutines for compatibility with C++20 and Clang 17"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "467a8d50aa3c919640ae24256d49b1e2778ea8eb",
+            "comment": "Support WinAppSDK + cppwinrt 2.240111.5"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 27 Mar 2024 05:17:31 GMT",
       "version": "0.0.0-canary.794",
       "tag": "react-native-windows_v0.0.0-canary.794",

@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Release render target before calling enddraw",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
