@@ -28,10 +28,10 @@ ColorAnimatedNode::ColorAnimatedNode(
 }
 
 uint32_t ColorAnimatedNode::GetColor() {
-  uint8_t r = 0;
-  uint8_t g = 0;
-  uint8_t b = 0;
-  uint8_t a = 0;
+  uint32_t r = 0;
+  uint32_t g = 0;
+  uint32_t b = 0;
+  uint32_t a = 0;
 
   if (const auto manager = m_manager.lock()) {
     if (const auto rNode = manager->GetValueAnimatedNode(m_rNodeId)) {
