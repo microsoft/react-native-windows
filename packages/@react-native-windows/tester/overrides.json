@@ -52,6 +52,10 @@
       "file": "src/js/examples/FlatList/FlatList-stickyHeaders.windows.js",
       "baseFile": "packages/rn-tester/js/examples/FlatList/FlatList-stickyHeaders.js",
       "baseHash": "7d524f19d1e93ea6f15b87d6c8096e13bb015847",
+    },
+      "file": "src/js/examples/ActivityIndicator/ActivityIndicatorExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/ActivityIndicator/ActivityIndicatorExample.js",
+      "baseHash": "31eeee8ffdda9f3f235d2d3100ac3641ea4f4e4a",
       "issue": 12869
     },
     {
@@ -61,6 +65,13 @@
     {
       "type": "platform",
       "file": "src/js/examples/HTTP/HTTPExampleMultiPartFormData.js"
+    },
+    {
+      "type": "patch",
+      "file": "src/js/examples/Image/ImageExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
+      "baseHash": "4f4ba1856f82ded3cfad2920145b0ea6eb760eaa",
+      "issue": 12869
     },
     {
       "type": "patch",

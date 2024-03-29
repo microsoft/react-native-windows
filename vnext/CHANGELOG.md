@@ -1,8 +1,28 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 23 Mar 2024 05:17:00 GMT and should not be manually modified.
+This log was last generated on Fri, 29 Mar 2024 05:15:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.795
+
+Fri, 29 Mar 2024 05:15:22 GMT
+
+### Changes
+
+- Clang portable header fix (ericroz@meta.com)
+- Release render target before calling enddraw (30809111+acoates-ms@users.noreply.github.com)
+- Remove previous SizeChanged event listener when reloading the app (ericroz@meta.com)
+- Use std:: coroutines for compatibility with C++20 and Clang 17 (ericroz@meta.com)
+- Support WinAppSDK + cppwinrt 2.240111.5 (erozell@outlook.com)
+
+## 0.0.0-canary.794
+
+Wed, 27 Mar 2024 05:17:31 GMT
+
+### Changes
+
+- [Fabric] Fix hang on shutdown when JS instance failed to start (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.793
 
