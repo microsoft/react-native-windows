@@ -25,6 +25,21 @@ afterEach(async () => {
 });
 
 const searchBox = async (input: string) => {
+  const searchBox = await app.findElementByTestID('example_search');
+  await app.waitUntil(
+    async () => {
+      await searchBox.setValue(input);
+      return (await searchBox.getText()) === input;
+    },
+    {
+      interval: 1500,
+      timeout: 5000,
+      timeoutMsg: `Unable to enter correct search text into test searchbox.`,
+    },
+  );
+};
+
+const searchBoxBasic = async (input: string) => {
   const searchBox = await app.findElementByTestID('search_bar_flat_list');
   await app.waitUntil(
     async () => {
@@ -47,6 +62,7 @@ const goToFlatListExample = async (input: string) => {
 
 describe('FlatList Tests', () => {
   test('A FlatList can display a list of components', async () => {
+    await searchBox('Basic');
     await goToFlatListExample('Basic');
     const component = await app.findElementByTestID('flatlist-basic');
     await component.waitForDisplayed({timeout: 5000});
@@ -54,14 +70,16 @@ describe('FlatList Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('A FlatList can be filtered by a key word', async () => {
+    await searchBox('Basic');
     await goToFlatListExample('Basic');
-    await searchBox('555');
+    await searchBoxBasic('555');
     const component = await app.findElementByTestID('flatlist-basic');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('flatlist-basic');
     expect(dump).toMatchSnapshot();
   });
   test('A FlatList has an onStartReached event', async () => {
+    await searchBox('onStartReached');
     await goToFlatListExample('onStartReached');
     const component = await app.findElementByTestID('flat_list');
     await component.waitForDisplayed({timeout: 5000});
@@ -69,6 +87,7 @@ describe('FlatList Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('A FlatList has an onEndReached event', async () => {
+    await searchBox('onEndReached');
     await goToFlatListExample('onEndReached');
     const component = await app.findElementByTestID('flat_list');
     await component.waitForDisplayed({timeout: 5000});
@@ -76,6 +95,7 @@ describe('FlatList Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('A FlatList can have a content inset', async () => {
+    await searchBox('Content');
     await goToFlatListExample('Content Inset');
     const component = await app.findElementByTestID('flat_list');
     await component.waitForDisplayed({timeout: 5000});
@@ -83,6 +103,7 @@ describe('FlatList Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('A FlatList can be inverted', async () => {
+    await searchBox('Inverted');
     await goToFlatListExample('Inverted');
     const component = await app.findElementByTestID('flat_list');
     await component.waitForDisplayed({timeout: 5000});
@@ -90,6 +111,7 @@ describe('FlatList Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('A FlatList can set onViewableItemsChanged', async () => {
+    await searchBox('onViewable');
     await goToFlatListExample('onViewableItemsChanged');
     const component = await app.findElementByTestID('flat_list');
     await component.waitForDisplayed({timeout: 5000});
@@ -97,6 +119,7 @@ describe('FlatList Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('A FlatList can have separators', async () => {
+    await searchBox('separators');
     await goToFlatListExample('FlatList with Separators');
     const component = await app.findElementByTestID('flat_list');
     await component.waitForDisplayed({timeout: 5000});
@@ -104,6 +127,7 @@ describe('FlatList Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('A FlatList can have multiple columns', async () => {
+    await searchBox('MultiColumn');
     await goToFlatListExample('MultiColumn');
     const component = await app.findElementByTestID('flatlist-multicolumn');
     await component.waitForDisplayed({timeout: 5000});
@@ -111,6 +135,7 @@ describe('FlatList Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('A FlatList can have sticky headers', async () => {
+    await searchBox('Sticky');
     await goToFlatListExample('Sticky Headers');
     const component = await app.findElementByTestID('flatlist-sticky');
     await component.waitForDisplayed({timeout: 5000});
@@ -118,6 +143,7 @@ describe('FlatList Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('A FlatList can nest other Flatlists', async () => {
+    await searchBox('Nested');
     await goToFlatListExample('Nested');
     const component = await app.findElementByTestID('flatlist-nested');
     await component.waitForDisplayed({timeout: 5000});
