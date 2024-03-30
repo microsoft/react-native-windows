@@ -25,8 +25,8 @@
     "@typescript-eslint/parser": "^5.57.1"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.2.9",
-    "@rnw-scripts/just-task": "2.3.25",
+    "@rnw-scripts/eslint-config": "1.2.10",
+    "@rnw-scripts/just-task": "2.3.26",
     "eslint": "^8.19.0",
     "prettier": "2.8.8"
   },
