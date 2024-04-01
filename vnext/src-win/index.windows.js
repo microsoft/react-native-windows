@@ -174,7 +174,7 @@ module.exports = {
     return require('./Libraries/Components/TextInput/TextInput');
   },
   get Touchable(): Touchable {
-    return require('./Libraries/Components/Touchable/Touchable');
+    return require('./Libraries/Components/Touchable/Touchable').default;
   },
   get TouchableHighlight(): TouchableHighlight {
     return require('./Libraries/Components/Touchable/TouchableHighlight');
