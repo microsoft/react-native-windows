@@ -80,15 +80,6 @@ class DebuggingOverlayEventEmitter : public ViewEventEmitter {
   
   
 };
-class AndroidPopupMenuEventEmitter : public ViewEventEmitter {
- public:
-  using ViewEventEmitter::ViewEventEmitter;
-
-  struct OnSelectionChange {
-      int item;
-    };
-  void onSelectionChange(OnSelectionChange value) const;
-};
 class AndroidProgressBarEventEmitter : public ViewEventEmitter {
  public:
   using ViewEventEmitter::ViewEventEmitter;

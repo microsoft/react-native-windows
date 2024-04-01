@@ -77,13 +77,6 @@ DebuggingOverlayProps::DebuggingOverlayProps(
 
     
       {}
-AndroidPopupMenuProps::AndroidPopupMenuProps(
-    const PropsParserContext &context,
-    const AndroidPopupMenuProps &sourceProps,
-    const RawProps &rawProps): ViewProps(context, sourceProps, rawProps),
-
-    menuItems(convertRawProp(context, rawProps, "menuItems", sourceProps.menuItems, {}))
-      {}
 AndroidProgressBarProps::AndroidProgressBarProps(
     const PropsParserContext &context,
     const AndroidProgressBarProps &sourceProps,

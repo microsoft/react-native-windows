@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240221-a1171f79f",
+  "baseVersion": "0.75.0-nightly-20240229-21171222e",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "c86109b8683d5b05c15f365efe90f9da2b0f8f38"
+      "baseHash": "bdebcba51a5c13fbe5acab9e07720acff0825bc9"
     },
     {
       "type": "derived",
@@ -137,7 +137,7 @@
       "type": "derived",
       "file": "src-win/index.windows.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "7e8cd1a3073bf2ee25706f1828d255c602c1207d"
+      "baseHash": "dd3b224f82882d17be0a79a368b293c9ac6599a0"
     },
     {
       "type": "platform",
@@ -283,7 +283,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollViewNativeComponent.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollViewNativeComponent.js",
-      "baseHash": "625be8cb73e6fcbd89643812e322beed7208ac79"
+      "baseHash": "d61578e0a2278516d44f653e360b3bffa01fbd39"
     },
     {
       "type": "derived",
@@ -381,7 +381,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Image/Image.windows.js",
       "baseFile": "packages/react-native/Libraries/Image/Image.ios.js",
-      "baseHash": "751390bc6d7b721b5101138b682973410216c720",
+      "baseHash": "f3298e1dac3f1cd3d277b15b916753535b677f04",
       "issue": 4590
     },
     {
@@ -395,7 +395,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Lists/FlatList.windows.js",
       "baseFile": "packages/react-native/Libraries/Lists/FlatList.js",
-      "baseHash": "0b547fb6789de4e498ea99335a3493519412f686",
+      "baseHash": "e77c1e23e0ae682b1818b26c9d547b6cb4c11b8e",
       "issue": 12770
     },
     {
