@@ -152,12 +152,12 @@ export class InitWindows {
     }
     const templateConfig = this.templates.get(this.options.template)!;
 
-    // if (this.options.name && !this.isValidProjectName(this.options.name)) {
-    //   throw new CodedError(
-    //     'InvalidProjectName',
-    //     `The specified name is not a valid identifier`,
-    //   );
-    // }
+    if (this.options.name && !this.isValidProjectName(this.options.name)) {
+      throw new CodedError(
+        'InvalidProjectName',
+        `The specified name is not a valid identifier`,
+      );
+    }
 
     if (!this.options.name) {
       const projectName = this.getReactNativeProjectName(this.config.root);
