@@ -107,7 +107,10 @@
                 - template: ../templates/msbuild-sln.yml
                   parameters:
                     solutionDir: vnext
-                    solutionName: Microsoft.ReactNative.sln
+                    ${{ if eq(matrix.UseFabric, true) }}:
+                      solutionName: Microsoft.ReactNative.CppOnly.slnf
+                    ${{ else }}:
+                      solutionName: Microsoft.ReactNative.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
 
@@ -271,7 +274,7 @@
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
-                  condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')))
+                  condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')), eq('${{ matrix.UseFabric }}', 'false'))
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (NetCore)
@@ -289,4 +292,4 @@
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
-                  condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x64'))
+                  condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x64'), eq('${{ matrix.UseFabric }}', 'false'))
