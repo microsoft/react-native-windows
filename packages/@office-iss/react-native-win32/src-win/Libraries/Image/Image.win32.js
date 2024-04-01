@@ -55,6 +55,7 @@ function getSize(
     (width: number, height: number, err?: string) => {
       // $FlowFixMe[sketchy-null-string]
       if (!err) {
+        // $FlowFixMe[not-a-function]
         success(width, height);
       } else {
         if (failure) {
@@ -77,6 +78,7 @@ function getSizeWithHeaders(
 ): any {
   return NativeImageLoaderWin32.getSizeWithHeaders(uri, headers)
     .then(function (sizes) {
+      // $FlowFixMe[not-a-function]
       success(sizes.width, sizes.height);
     })
     .catch(
