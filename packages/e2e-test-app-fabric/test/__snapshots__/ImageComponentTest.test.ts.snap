@@ -1,0 +1,7073 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Image Tests A legacy local image can still render 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-legacy",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Comment": "image-legacy",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      120,
+      120,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests A network Image example 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-network",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Comment": "image-network",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      64,
+      64,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can a border radius 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-border-radius",
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          4,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          76,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          148,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  14,
+                  14,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  14,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  46,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  -4,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  -4,
+                  4,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  36,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  -24,
+                  -24,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  24,
+                  24,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  4,
+                  -4,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  36,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  -4,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  14,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  46,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          220,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  14,
+                  14,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  14,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  52,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  -24,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  24,
+                  24,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  -4,
+                  24,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  -34,
+                  -34,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  34,
+                  34,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  44,
+                  -4,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  12,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  -44,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  44,
+                  44,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  14,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          292,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  14,
+                  14,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  14,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  52,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  -24,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  24,
+                  24,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  -4,
+                  24,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  -34,
+                  -34,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  34,
+                  34,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  44,
+                  -4,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  12,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  -44,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  44,
+                  44,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  14,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          390,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  14,
+                  14,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  14,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  52,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  -24,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  24,
+                  24,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  -4,
+                  24,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  -34,
+                  -34,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  34,
+                  34,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  44,
+                  -4,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  12,
+                  4,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  -44,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  44,
+                  44,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(255, 0, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  14,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  4,
+                  6,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          488,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "image-border-radius",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      72,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can be added to the accessibility tree 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-accessible",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Comment": "image-accessible",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      64,
+      64,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can be nested inside of a component 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-nested",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "React",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              52,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          12,
+          20,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          52,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "image-nested",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      64,
+      64,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can be rendered at a different size 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-size",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Comment": "image-size",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      60,
+      60,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can borders 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-border",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          5,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          5,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          -10,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -5,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          5,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -5,
+          5,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          5,
+          -10,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          -5,
+          -5,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          5,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          5,
+          -5,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          -10,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          0,
+          -5,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          5,
+          5,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": [
+          0,
+          5,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          5,
+          -10,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "image-border",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      64,
+      64,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can have a background color 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-background-color",
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          4,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          76,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          148,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  28,
+                  28,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  28,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  8,
+                  3,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  -28,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  28,
+                  28,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  -3,
+                  28,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  3,
+                  8,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  -28,
+                  -28,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  28,
+                  28,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  28,
+                  -3,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  8,
+                  3,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  -28,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  28,
+                  28,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 128, 0, 255)",
+                },
+                "Offset": [
+                  0,
+                  28,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  3,
+                  8,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          220,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "image-background-color",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      72,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can have a can have alt text 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-alt",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "Picture of people standing around a table",
+  },
+  "Visual Tree": {
+    "Comment": "image-alt",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      64,
+      64,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can have a custom blur radius 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-blur-radius",
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          4,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          76,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          148,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          220,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          292,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          364,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "image-blur-radius",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      72,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can have a loading indicator visual 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-loading-indicator",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Comment": "image-loading-indicator",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      64,
+      64,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can have a tint color 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-tint-color",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "It also works using the \`tintColor\` style prop",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "The \`tintColor\` prop has precedence over the \`tintColor\` style prop",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "It also works with downloaded images:",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          4,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          27,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          50,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          73,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              916,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          29,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          916,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          4,
+          58,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          27,
+          58,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          50,
+          58,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          73,
+          58,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              916,
+              19,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          82,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          916,
+          19,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          4,
+          111,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          27,
+          111,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          50,
+          111,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          73,
+          111,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              916,
+              20,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          136,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          916,
+          20,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          4,
+          165,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          76,
+          165,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          148,
+          165,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          220,
+          165,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "image-tint-color",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      233,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can have an accessibilityLabel 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-accessibilitylabel",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "Picture of people standing around a table",
+  },
+  "Visual Tree": {
+    "Comment": "image-accessibilitylabel",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      64,
+      64,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can have custom opacity 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-opacity",
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          4,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 0.800000011920929,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          76,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 0.6000000238418579,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          148,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 0.4000000059604645,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          220,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 0.20000000298023224,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          292,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 0,
+            "Size": [
+              64,
+              64,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          364,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          64,
+          64,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "image-opacity",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      72,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can have multiple sources 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-multiple-sources",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Comment": "image-multiple-sources",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      30,
+      30,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can have multiple sources through the srcSet prop 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-srcset",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Comment": "image-srcset",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      64,
+      64,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can have onLayout behavior 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-onlayout",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Comment": "image-onlayout",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      30,
+      30,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can load a static image 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-static",
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          4,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          27,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          50,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              15,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          73,
+          4,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          15,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "image-static",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      23,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can load an image through its source prop 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-plain-source",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Comment": "image-plain-source",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      64,
+      64,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image can load an image through its src prop 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-plain-src",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Comment": "image-plain-src",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      64,
+      64,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image component can have a network callback 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-network-callback",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Comment": "image-network-callback",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      64,
+      64,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image component can hve a network callback 2 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-network-callback-2",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Comment": "image-network-callback-2",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      64,
+      64,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image component can render a blob image 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-blob",
+    "ControlType": 50006,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "image",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Comment": "image-blob",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      64,
+      64,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests An Image customized how it is rendered within the frame using the objectFit styles 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-object-fit",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Contain",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Cover",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Fill",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Scale Down",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Contain",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Cover",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Fill",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Scale Down",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              16,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          16,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          18,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              16,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          16,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          18,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          78,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          96,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          78,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          96,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              16,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          155,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          16,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          173,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              16,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          155,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          16,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          173,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              16,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          233,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          16,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          251,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              16,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          233,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          16,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          251,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "image-object-fit",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      311,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;
+
+exports[`Image Tests Images have multiple resize modes 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "image-resize-mode",
+    "Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Contain",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Cover",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Stretch",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Repeat",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Center",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Contain",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Cover",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Stretch",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Repeat",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
+        "Name": "Center",
+      },
+    ],
+    "ControlType": 50026,
+    "HelpText": "",
+    "IsEnabled": true,
+    "IsKeyboardFocusable": false,
+    "LocalizedControlType": "group",
+    "Name": "",
+  },
+  "Visual Tree": {
+    "Children": [
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              16,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          16,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          18,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              16,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          16,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          18,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              16,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          78,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          16,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          96,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              16,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          78,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          16,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          96,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              16,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          200,
+          78,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          16,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          200,
+          96,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          155,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          173,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              15,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          155,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          15,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          173,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              16,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          233,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          16,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          0,
+          251,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              16,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          233,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          16,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          100,
+          251,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              16,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          200,
+          233,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          16,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Children": [
+              {
+                "Offset": [
+                  0,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  0,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  -1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  1,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  -2,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  -1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  1,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": [
+                  0,
+                  1,
+                  0,
+                ],
+                "Opacity": 1,
+                "Size": [
+                  1,
+                  -2,
+                ],
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              90,
+              60,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              0,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              0,
+              0,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+        "Offset": [
+          200,
+          251,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          90,
+          60,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+    "Comment": "image-resize-mode",
+    "Offset": [
+      0,
+      0,
+      0,
+    ],
+    "Opacity": 1,
+    "Size": [
+      916,
+      310,
+    ],
+    "Visual Type": "SpriteVisual",
+  },
+}
+`;

@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240129-39cb02f6f",
+  "baseVersion": "0.75.0-nightly-20240221-a1171f79f",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a243aa54de1d5c568bac704249159975dcc2ccd7"
+      "baseHash": "c86109b8683d5b05c15f365efe90f9da2b0f8f38"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "e9b8155ec5aa3957ac571272fd8ddc304a97786a"
+      "baseHash": "7e8cd1a3073bf2ee25706f1828d255c602c1207d"
     },
     {
       "type": "platform",
@@ -35,7 +35,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Animated/NativeAnimatedHelper.win32.js",
       "baseFile": "packages/react-native/Libraries/Animated/NativeAnimatedHelper.js",
-      "baseHash": "8bca307f500feef9f3a9ca1ef784d4a87f61ca43",
+      "baseHash": "96eb39e775435801b031cd1a41265ed73705cd72",
       "issue": 11041
     },
     {
@@ -67,7 +67,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Button.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "31731fd48736bfcd3c36eb60a242b187236e124b"
+      "baseHash": "8d5fb0563e76b6e9f2ce3532f319041248587b63"
     },
     {
       "type": "platform",
@@ -149,7 +149,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/Touchable.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/Touchable.js",
-      "baseHash": "ddfc674fe37ab886bd73a263786a4049b3cc73ff",
+      "baseHash": "965bd1e103f7bd92340917acf231516659aba36c",
       "issue": 0
     },
     {
@@ -298,7 +298,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "packages/react-native/Libraries/Inspector/Inspector.js",
-      "baseHash": "41f9953cffe7c0e9dace1f10074136cc169a94ad"
+      "baseHash": "847b7e0e4f2088fac00f36eb30f3fa3b8e94ec14"
     },
     {
       "type": "patch",
@@ -402,7 +402,7 @@
       "type": "patch",
       "file": "src-win/Libraries/ReactNative/PaperUIManager.win32.js",
       "baseFile": "packages/react-native/Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "98dab159b858354132b88e7bfb1f376420136a5c"
+      "baseHash": "5421778518fbd545ba3896bdfb1fb4f829d016fd"
     },
     {
       "type": "derived",

@@ -8,6 +8,7 @@
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
 #include <ReactContext.h>
 #include <react/renderer/components/view/ViewPropsInterpolation.h>
+#include <type_traits>
 #include "DynamicReader.h"
 
 namespace Microsoft::ReactNative {
@@ -88,10 +89,8 @@ facebook::react::Props::Shared AbiViewComponentDescriptor::cloneProps(
     return ShadowNodeT::defaultSharedProps();
   }
 
-  if (facebook::react::CoreFeatures::excludeYogaFromRawProps) {
-    if (ShadowNodeT::IdentifierTrait() == facebook::react::ShadowNodeTraits::Trait::YogaLayoutableKind) {
-      rawProps.filterYogaStylePropsInDynamicConversion();
-    }
+  if constexpr (facebook::react::RawPropsFilterable<ShadowNodeT>) {
+    ShadowNodeT::filterRawProps(rawProps);
   }
 
   rawProps.parse(rawPropsParser_);

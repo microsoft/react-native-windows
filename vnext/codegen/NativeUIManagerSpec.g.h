@@ -16,29 +16,29 @@ namespace Microsoft::ReactNativeSpecs {
 
 struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
-      Method<void(std::optional<double>, std::string, double, ::React::JSValue) noexcept>{0, L"createView"},
+      Method<void(double, std::string, double, ::React::JSValue) noexcept>{0, L"createView"},
       Method<void(double, std::string, ::React::JSValue) noexcept>{1, L"updateView"},
-      Method<void(std::optional<double>, std::vector<double>, Callback<double, double, double, double, double>) noexcept>{2, L"findSubviewIn"},
-      Method<void(std::optional<double>, double, std::optional<::React::JSValueArray>) noexcept>{3, L"dispatchViewManagerCommand"},
+      Method<void(double, std::vector<double>, Callback<double, double, double, double, double>) noexcept>{2, L"findSubviewIn"},
+      Method<void(double, double, std::optional<::React::JSValueArray>) noexcept>{3, L"dispatchViewManagerCommand"},
       Method<void(double, Callback<double, double, double, double, double, double>) noexcept>{4, L"measure"},
       Method<void(double, Callback<double, double, double, double>) noexcept>{5, L"measureInWindow"},
-      Method<void(std::optional<double>, std::optional<double>, Callback<std::vector<bool>>) noexcept>{6, L"viewIsDescendantOf"},
+      Method<void(double, double, Callback<std::vector<bool>>) noexcept>{6, L"viewIsDescendantOf"},
       Method<void(double, double, Callback<::React::JSValue>, Callback<double, double, double, double>) noexcept>{7, L"measureLayout"},
       Method<void(double, Callback<::React::JSValue>, Callback<double, double, double, double>) noexcept>{8, L"measureLayoutRelativeToParent"},
-      Method<void(std::optional<double>, bool) noexcept>{9, L"setJSResponder"},
+      Method<void(double, bool) noexcept>{9, L"setJSResponder"},
       Method<void() noexcept>{10, L"clearJSResponder"},
       Method<void(::React::JSValue, Callback<>, Callback<::React::JSValue>) noexcept>{11, L"configureNextLayoutAnimation"},
-      Method<void(std::optional<double>, std::vector<double>) noexcept>{12, L"setChildren"},
-      Method<void(std::optional<double>, std::vector<double>, std::vector<double>, std::vector<double>, std::vector<double>, std::vector<double>) noexcept>{13, L"manageChildren"},
+      Method<void(double, std::vector<double>) noexcept>{12, L"setChildren"},
+      Method<void(double, std::vector<double>, std::vector<double>, std::vector<double>, std::vector<double>, std::vector<double>) noexcept>{13, L"manageChildren"},
       SyncMethod<std::optional<::React::JSValue>(std::string) noexcept>{14, L"getConstantsForViewManager"},
       SyncMethod<std::vector<std::string>() noexcept>{15, L"getDefaultEventTypes"},
       Method<void(bool) noexcept>{16, L"setLayoutAnimationEnabledExperimental"},
-      Method<void(std::optional<double>, double) noexcept>{17, L"sendAccessibilityEvent"},
-      Method<void(std::optional<double>, std::vector<std::string>, Callback<::React::JSValue>, Callback<std::string, double>) noexcept>{18, L"showPopupMenu"},
+      Method<void(double, double) noexcept>{17, L"sendAccessibilityEvent"},
+      Method<void(double, std::vector<std::string>, Callback<::React::JSValue>, Callback<std::string, double>) noexcept>{18, L"showPopupMenu"},
       Method<void() noexcept>{19, L"dismissPopupMenu"},
       SyncMethod<::React::JSValue(std::string) noexcept>{20, L"lazilyLoadView"},
-      Method<void(std::optional<double>) noexcept>{21, L"focus"},
-      Method<void(std::optional<double>) noexcept>{22, L"blur"},
+      Method<void(double) noexcept>{21, L"focus"},
+      Method<void(double) noexcept>{22, L"blur"},
   };
 
   template <class TModule>
@@ -48,8 +48,8 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           0,
           "createView",
-          "    REACT_METHOD(createView) void createView(std::optional<double> reactTag, std::string viewName, double rootTag, ::React::JSValue && props) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(createView) static void createView(std::optional<double> reactTag, std::string viewName, double rootTag, ::React::JSValue && props) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(createView) void createView(double reactTag, std::string viewName, double rootTag, ::React::JSValue && props) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(createView) static void createView(double reactTag, std::string viewName, double rootTag, ::React::JSValue && props) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "updateView",
@@ -58,13 +58,13 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "findSubviewIn",
-          "    REACT_METHOD(findSubviewIn) void findSubviewIn(std::optional<double> reactTag, std::vector<double> const & point, std::function<void(double, double, double, double, double)> const & callback) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(findSubviewIn) static void findSubviewIn(std::optional<double> reactTag, std::vector<double> const & point, std::function<void(double, double, double, double, double)> const & callback) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(findSubviewIn) void findSubviewIn(double reactTag, std::vector<double> const & point, std::function<void(double, double, double, double, double)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(findSubviewIn) static void findSubviewIn(double reactTag, std::vector<double> const & point, std::function<void(double, double, double, double, double)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "dispatchViewManagerCommand",
-          "    REACT_METHOD(dispatchViewManagerCommand) void dispatchViewManagerCommand(std::optional<double> reactTag, double commandID, std::optional<::React::JSValueArray> commandArgs) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(dispatchViewManagerCommand) static void dispatchViewManagerCommand(std::optional<double> reactTag, double commandID, std::optional<::React::JSValueArray> commandArgs) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(dispatchViewManagerCommand) void dispatchViewManagerCommand(double reactTag, double commandID, std::optional<::React::JSValueArray> commandArgs) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(dispatchViewManagerCommand) static void dispatchViewManagerCommand(double reactTag, double commandID, std::optional<::React::JSValueArray> commandArgs) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           4,
           "measure",
@@ -78,8 +78,8 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           6,
           "viewIsDescendantOf",
-          "    REACT_METHOD(viewIsDescendantOf) void viewIsDescendantOf(std::optional<double> reactTag, std::optional<double> ancestorReactTag, std::function<void(std::vector<bool> const &)> const & callback) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(viewIsDescendantOf) static void viewIsDescendantOf(std::optional<double> reactTag, std::optional<double> ancestorReactTag, std::function<void(std::vector<bool> const &)> const & callback) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(viewIsDescendantOf) void viewIsDescendantOf(double reactTag, double ancestorReactTag, std::function<void(std::vector<bool> const &)> const & callback) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(viewIsDescendantOf) static void viewIsDescendantOf(double reactTag, double ancestorReactTag, std::function<void(std::vector<bool> const &)> const & callback) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           7,
           "measureLayout",
@@ -93,8 +93,8 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           9,
           "setJSResponder",
-          "    REACT_METHOD(setJSResponder) void setJSResponder(std::optional<double> reactTag, bool blockNativeResponder) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(setJSResponder) static void setJSResponder(std::optional<double> reactTag, bool blockNativeResponder) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(setJSResponder) void setJSResponder(double reactTag, bool blockNativeResponder) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(setJSResponder) static void setJSResponder(double reactTag, bool blockNativeResponder) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           10,
           "clearJSResponder",
@@ -108,13 +108,13 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           12,
           "setChildren",
-          "    REACT_METHOD(setChildren) void setChildren(std::optional<double> containerTag, std::vector<double> const & reactTags) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(setChildren) static void setChildren(std::optional<double> containerTag, std::vector<double> const & reactTags) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(setChildren) void setChildren(double containerTag, std::vector<double> const & reactTags) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(setChildren) static void setChildren(double containerTag, std::vector<double> const & reactTags) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           13,
           "manageChildren",
-          "    REACT_METHOD(manageChildren) void manageChildren(std::optional<double> containerTag, std::vector<double> const & moveFromIndices, std::vector<double> const & moveToIndices, std::vector<double> const & addChildReactTags, std::vector<double> const & addAtIndices, std::vector<double> const & removeAtIndices) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(manageChildren) static void manageChildren(std::optional<double> containerTag, std::vector<double> const & moveFromIndices, std::vector<double> const & moveToIndices, std::vector<double> const & addChildReactTags, std::vector<double> const & addAtIndices, std::vector<double> const & removeAtIndices) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(manageChildren) void manageChildren(double containerTag, std::vector<double> const & moveFromIndices, std::vector<double> const & moveToIndices, std::vector<double> const & addChildReactTags, std::vector<double> const & addAtIndices, std::vector<double> const & removeAtIndices) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(manageChildren) static void manageChildren(double containerTag, std::vector<double> const & moveFromIndices, std::vector<double> const & moveToIndices, std::vector<double> const & addChildReactTags, std::vector<double> const & addAtIndices, std::vector<double> const & removeAtIndices) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           14,
           "getConstantsForViewManager",
@@ -133,13 +133,13 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           17,
           "sendAccessibilityEvent",
-          "    REACT_METHOD(sendAccessibilityEvent) void sendAccessibilityEvent(std::optional<double> reactTag, double eventType) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(sendAccessibilityEvent) static void sendAccessibilityEvent(std::optional<double> reactTag, double eventType) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(sendAccessibilityEvent) void sendAccessibilityEvent(double reactTag, double eventType) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(sendAccessibilityEvent) static void sendAccessibilityEvent(double reactTag, double eventType) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           18,
           "showPopupMenu",
-          "    REACT_METHOD(showPopupMenu) void showPopupMenu(std::optional<double> reactTag, std::vector<std::string> const & items, std::function<void(::React::JSValue const &)> const & error, std::function<void(std::string, double)> const & success) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(showPopupMenu) static void showPopupMenu(std::optional<double> reactTag, std::vector<std::string> const & items, std::function<void(::React::JSValue const &)> const & error, std::function<void(std::string, double)> const & success) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(showPopupMenu) void showPopupMenu(double reactTag, std::vector<std::string> const & items, std::function<void(::React::JSValue const &)> const & error, std::function<void(std::string, double)> const & success) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(showPopupMenu) static void showPopupMenu(double reactTag, std::vector<std::string> const & items, std::function<void(::React::JSValue const &)> const & error, std::function<void(std::string, double)> const & success) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           19,
           "dismissPopupMenu",
@@ -153,13 +153,13 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           21,
           "focus",
-          "    REACT_METHOD(focus) void focus(std::optional<double> reactTag) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(focus) static void focus(std::optional<double> reactTag) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(focus) void focus(double reactTag) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(focus) static void focus(double reactTag) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           22,
           "blur",
-          "    REACT_METHOD(blur) void blur(std::optional<double> reactTag) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(blur) static void blur(std::optional<double> reactTag) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(blur) void blur(double reactTag) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(blur) static void blur(double reactTag) noexcept { /* implementation */ }\n");
   }
 };
 

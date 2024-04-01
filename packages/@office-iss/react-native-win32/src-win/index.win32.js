@@ -111,7 +111,7 @@ module.exports = {
       .default;
   },
   get Button(): Button {
-    return require('./Libraries/Components/Button');
+    return require('./Libraries/Components/Button').default;
   },
   // $FlowFixMe[value-as-type]
   get DrawerLayoutAndroid(): DrawerLayoutAndroid {
@@ -127,7 +127,8 @@ module.exports = {
     return require('./Libraries/Image/ImageBackground');
   },
   get InputAccessoryView(): InputAccessoryView {
-    return require('./Libraries/Components/TextInput/InputAccessoryView');
+    return require('./Libraries/Components/TextInput/InputAccessoryView')
+      .default;
   },
   get KeyboardAvoidingView(): KeyboardAvoidingView {
     return require('./Libraries/Components/Keyboard/KeyboardAvoidingView')
@@ -175,7 +176,7 @@ module.exports = {
     return require('./Libraries/Components/TextInput/TextInput');
   },
   get Touchable(): Touchable {
-    return require('./Libraries/Components/Touchable/Touchable');
+    return require('./Libraries/Components/Touchable/Touchable').default;
   },
   get TouchableHighlight(): TouchableHighlight {
     return require('./Libraries/Components/Touchable/TouchableHighlight');

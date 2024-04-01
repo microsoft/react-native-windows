@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240129-39cb02f6f",
+  "baseVersion": "0.75.0-nightly-20240221-a1171f79f",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a243aa54de1d5c568bac704249159975dcc2ccd7"
+      "baseHash": "c86109b8683d5b05c15f365efe90f9da2b0f8f38"
     },
     {
       "type": "derived",
@@ -50,7 +50,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.h",
-      "baseHash": "10cd4b533faa9503f7957fca6c9d282e1d432d48"
+      "baseHash": "9b075422a4efd6cd2aff7a02815616c91e9c1150"
     },
     {
       "type": "derived",
@@ -106,6 +106,27 @@
       "issue": 12195
     },
     {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/scrollview/ScrollViewProps.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/scrollview/ScrollViewProps.cpp",
+      "baseHash": "8f39e994dcc9dd871d502637f01fbcd6bfd2cccc",
+      "issue": 12879
+    },
+    {
+      "type": "copy",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/utils/jsi-utils.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/utils/jsi.cpp",
+      "baseHash": "ed26bfa57fa5969486056b23b7257703d0ed3e67",
+      "issue": 12891
+    },
+    {
+      "type": "copy",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/utils/jsi-utils.h",
+      "baseFile": "packages/react-native/ReactCommon/react/utils/jsi.h",
+      "baseHash": "139ce975574c9afbb43ed2ee81727faacd38e362",
+      "issue": 12891
+    },
+    {
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "packages/rn-tester/IntegrationTests",
@@ -116,7 +137,7 @@
       "type": "derived",
       "file": "src-win/index.windows.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "e9b8155ec5aa3957ac571272fd8ddc304a97786a"
+      "baseHash": "7e8cd1a3073bf2ee25706f1828d255c602c1207d"
     },
     {
       "type": "platform",
@@ -197,10 +218,10 @@
       "issue": 4578
     },
     {
-      "type": "patch",
+      "type": "derived",
       "file": "src-win/Libraries/Components/Button.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "31731fd48736bfcd3c36eb60a242b187236e124b"
+      "baseHash": "8d5fb0563e76b6e9f2ce3532f319041248587b63"
     },
     {
       "type": "platform",
@@ -268,7 +289,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Switch/Switch.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Switch/Switch.js",
-      "baseHash": "31b8cd62b5acb1a237f5373d1618869f5afebdd3"
+      "baseHash": "d69f9d7f1ea07f0d43fb6fec796624910eb21777"
     },
     {
       "type": "patch",
@@ -292,20 +313,20 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/Touchable.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/Touchable.js",
-      "baseHash": "ddfc674fe37ab886bd73a263786a4049b3cc73ff",
+      "baseHash": "965bd1e103f7bd92340917acf231516659aba36c",
       "issue": 0
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableHighlight.js",
-      "baseHash": "cf3126868768ff1456ab8e3c377a9071e8d2a9f4"
+      "baseHash": "9d57e5e91830560775ab1b1cc0836bd35de10281"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "0ffd849f81f3fbfc6fa2a04034e8e99dac84244f"
+      "baseHash": "085bdd1ca6e28feefe9da746cdca354ae2394301"
     },
     {
       "type": "patch",
@@ -367,14 +388,14 @@
       "type": "patch",
       "file": "src-win/Libraries/Image/resolveAssetSource.windows.js",
       "baseFile": "packages/react-native/Libraries/Image/resolveAssetSource.js",
-      "baseHash": "e8a001f301489c72ac5a0e798f28d7b6418c4c9f",
+      "baseHash": "5f95ed29c1af2c4636331cc663b8fc18cd9a3754",
       "issue": 10619
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Lists/FlatList.windows.js",
       "baseFile": "packages/react-native/Libraries/Lists/FlatList.js",
-      "baseHash": "3ae2273b2cf866b2503e17261869c02d2a31f7a4",
+      "baseHash": "0b547fb6789de4e498ea99335a3493519412f686",
       "issue": 12770
     },
     {
@@ -453,7 +474,7 @@
       "type": "patch",
       "file": "src-win/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "packages/react-native/Libraries/ReactNative/PaperUIManager.js",
-      "baseHash": "98dab159b858354132b88e7bfb1f376420136a5c"
+      "baseHash": "5421778518fbd545ba3896bdfb1fb4f829d016fd"
     },
     {
       "type": "platform",

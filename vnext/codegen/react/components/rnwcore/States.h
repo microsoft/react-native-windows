@@ -91,6 +91,21 @@ public:
 #endif
 };
 
+class AndroidPopupMenuState {
+public:
+  AndroidPopupMenuState() = default;
+
+#ifdef ANDROID
+  AndroidPopupMenuState(AndroidPopupMenuState const &previousState, folly::dynamic data){};
+  folly::dynamic getDynamic() const {
+    return {};
+  };
+  MapBuffer getMapBuffer() const {
+    return MapBufferBuilder::EMPTY();
+  };
+#endif
+};
+
 class PullToRefreshViewState {
 public:
   PullToRefreshViewState() = default;

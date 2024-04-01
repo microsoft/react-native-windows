@@ -10,9 +10,9 @@
 
 #pragma once
 
-#include <EventEmitters.h>
-#include <Props.h>
-#include <States.h>
+#include "EventEmitters.h"
+#include "Props.h"
+#include "States.h"
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <jsi/jsi.h>
 
@@ -72,6 +72,17 @@ using DebuggingOverlayShadowNode = ConcreteViewShadowNode<
     DebuggingOverlayProps,
     DebuggingOverlayEventEmitter,
     DebuggingOverlayState>;
+
+JSI_EXPORT extern const char AndroidPopupMenuComponentName[];
+
+/*
+ * `ShadowNode` for <AndroidPopupMenu> component.
+ */
+using AndroidPopupMenuShadowNode = ConcreteViewShadowNode<
+    AndroidPopupMenuComponentName,
+    AndroidPopupMenuProps,
+    AndroidPopupMenuEventEmitter,
+    AndroidPopupMenuState>;
 
 JSI_EXPORT extern const char PullToRefreshViewComponentName[];
 

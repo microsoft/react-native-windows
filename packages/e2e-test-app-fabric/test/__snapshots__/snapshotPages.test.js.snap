@@ -1033,6 +1033,7 @@ exports[`snapshotAllPages Accessibility Windows 5`] = `
 exports[`snapshotAllPages ActivityIndicator 1`] = `
 <ActivityIndicator
   accessibilityLabel="Wait for content to load!"
+  accessible={true}
   color="white"
   style={
     [
@@ -1064,6 +1065,7 @@ exports[`snapshotAllPages ActivityIndicator 2`] = `
     }
   />
   <ActivityIndicator
+    accessible={true}
     style={
       [
         {
@@ -1076,12 +1078,14 @@ exports[`snapshotAllPages ActivityIndicator 2`] = `
         },
       ]
     }
+    testID="activity-gray"
   />
 </View>
 `;
 
 exports[`snapshotAllPages ActivityIndicator 3`] = `
 <View
+  accessible={true}
   style={
     {
       "flexDirection": "row",
@@ -1089,17 +1093,22 @@ exports[`snapshotAllPages ActivityIndicator 3`] = `
       "padding": 8,
     }
   }
+  testID="activity-color"
 >
   <ActivityIndicator
+    accessible={true}
     color="#0000ff"
   />
   <ActivityIndicator
+    accessible={true}
     color="#aa00aa"
   />
   <ActivityIndicator
+    accessible={true}
     color="#aa3300"
   />
   <ActivityIndicator
+    accessible={true}
     color="#00aa00"
   />
 </View>
@@ -1107,6 +1116,7 @@ exports[`snapshotAllPages ActivityIndicator 3`] = `
 
 exports[`snapshotAllPages ActivityIndicator 4`] = `
 <ActivityIndicator
+  accessible={true}
   color="white"
   size="large"
   style={
@@ -1121,11 +1131,13 @@ exports[`snapshotAllPages ActivityIndicator 4`] = `
       },
     ]
   }
+  testID="activity-large"
 />
 `;
 
 exports[`snapshotAllPages ActivityIndicator 5`] = `
 <View
+  accessible={true}
   style={
     {
       "flexDirection": "row",
@@ -1133,20 +1145,25 @@ exports[`snapshotAllPages ActivityIndicator 5`] = `
       "padding": 8,
     }
   }
+  testID="activity-large-color"
 >
   <ActivityIndicator
+    accessible={true}
     color="#0000ff"
     size="large"
   />
   <ActivityIndicator
+    accessible={true}
     color="#aa00aa"
     size="large"
   />
   <ActivityIndicator
+    accessible={true}
     color="#aa3300"
     size="large"
   />
   <ActivityIndicator
+    accessible={true}
     color="#00aa00"
     size="large"
   />
@@ -1155,6 +1172,7 @@ exports[`snapshotAllPages ActivityIndicator 5`] = `
 
 exports[`snapshotAllPages ActivityIndicator 6`] = `
 <ActivityIndicator
+  accessible={true}
   animating={true}
   size="large"
   style={
@@ -1169,11 +1187,13 @@ exports[`snapshotAllPages ActivityIndicator 6`] = `
       },
     ]
   }
+  testID="activity-toggle"
 />
 `;
 
 exports[`snapshotAllPages ActivityIndicator 7`] = `
 <ActivityIndicator
+  accessible={true}
   size="large"
   style={
     [
@@ -1191,6 +1211,7 @@ exports[`snapshotAllPages ActivityIndicator 7`] = `
       },
     ]
   }
+  testID="activity-size"
 />
 `;
 
