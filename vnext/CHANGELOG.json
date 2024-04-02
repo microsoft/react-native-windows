@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 02 Apr 2024 17:57:27 GMT",
+      "version": "0.0.0-canary.797",
+      "tag": "react-native-windows_v0.0.0-canary.797",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1ea5673aab57cdd13fe2566b1708bcf294f4b407",
+            "comment": "Add builds and nugets for MS.RN Fabric"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 30 Mar 2024 05:18:04 GMT",
       "version": "0.0.0-canary.796",
       "tag": "react-native-windows_v0.0.0-canary.796",
