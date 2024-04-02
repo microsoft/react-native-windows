@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 30 Mar 2024 05:18:04 GMT and should not be manually modified.
+This log was last generated on Tue, 02 Apr 2024 17:57:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.797
+
+Tue, 02 Apr 2024 17:57:27 GMT
+
+### Changes
+
+- Add builds and nugets for MS.RN Fabric (jthysell@microsoft.com)
 
 ## 0.0.0-canary.796
 
