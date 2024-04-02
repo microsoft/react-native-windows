@@ -1661,7 +1661,7 @@ exports[`snapshotAllPages Alerts 8`] = `
     >
       Prompt value:
     </Text>
-     
+    ""
   </Text>
   <View
     accessibilityState={
@@ -55986,109 +55986,107 @@ exports[`snapshotAllPages SectionList 4`] = `
         onLayout={[Function]}
         style={null}
       >
-        <View>
-          <View
-            style={
-              [
-                {
-                  "height": 12,
-                },
-                {
-                  "backgroundColor": "lightblue",
-                },
-              ]
-            }
-          >
-            <Text
-              style={
-                {
-                  "fontSize": 10,
-                }
-              }
-            >
-              Section separator for leading undefined and trailing Pizza has not been pressed
-            </Text>
-          </View>
-          <View
-            accessibilityState={
+        <View
+          style={
+            [
               {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": undefined,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
+                "height": 12,
+              },
               {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            disabled={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            onKeyUp={[Function]}
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+                "backgroundColor": "lightblue",
+              },
+            ]
+          }
+        >
+          <Text
             style={
-              [
-                {
-                  "backgroundColor": "pink",
-                  "marginVertical": 8,
-                  "padding": 20,
-                },
-                {
-                  "backgroundColor": "pink",
-                },
-              ]
-            }
-            testID="Pizza"
-          >
-            <Text
-              style={
-                {
-                  "fontSize": 24,
-                }
+              {
+                "fontSize": 10,
               }
-            >
-              Pizza
-            </Text>
-          </View>
-          <View
-            style={
-              [
-                {
-                  "height": 12,
-                },
-                {
-                  "backgroundColor": "lightgreen",
-                },
-              ]
             }
           >
-            <Text
-              style={
-                {
-                  "fontSize": 10,
-                }
+            Section separator for leading undefined and trailing Pizza has not been pressed
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "backgroundColor": "pink",
+                "marginVertical": 8,
+                "padding": 20,
+              },
+              {
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="Pizza"
+        >
+          <Text
+            style={
+              {
+                "fontSize": 24,
               }
-            >
-              separator for leading Pizza and trailing Burger has not been pressed
-            </Text>
-          </View>
+            }
+          >
+            Pizza
+          </Text>
+        </View>
+        <View
+          style={
+            [
+              {
+                "height": 12,
+              },
+              {
+                "backgroundColor": "lightgreen",
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "fontSize": 10,
+              }
+            }
+          >
+            separator for leading Pizza and trailing Burger has not been pressed
+          </Text>
         </View>
       </View>
       <View
@@ -56096,87 +56094,85 @@ exports[`snapshotAllPages SectionList 4`] = `
         onLayout={[Function]}
         style={null}
       >
-        <View>
-          <View
-            accessibilityState={
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
               {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": undefined,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
+                "backgroundColor": "pink",
+                "marginVertical": 8,
+                "padding": 20,
+              },
               {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            disabled={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            onKeyUp={[Function]}
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="Burger"
+        >
+          <Text
             style={
-              [
-                {
-                  "backgroundColor": "pink",
-                  "marginVertical": 8,
-                  "padding": 20,
-                },
-                {
-                  "backgroundColor": "pink",
-                },
-              ]
-            }
-            testID="Burger"
-          >
-            <Text
-              style={
-                {
-                  "fontSize": 24,
-                }
+              {
+                "fontSize": 24,
               }
-            >
-              Burger
-            </Text>
-          </View>
-          <View
-            style={
-              [
-                {
-                  "height": 12,
-                },
-                {
-                  "backgroundColor": "lightgreen",
-                },
-              ]
             }
           >
-            <Text
-              style={
-                {
-                  "fontSize": 10,
-                }
+            Burger
+          </Text>
+        </View>
+        <View
+          style={
+            [
+              {
+                "height": 12,
+              },
+              {
+                "backgroundColor": "lightgreen",
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "fontSize": 10,
               }
-            >
-              separator for leading Burger and trailing Risotto has not been pressed
-            </Text>
-          </View>
+            }
+          >
+            separator for leading Burger and trailing Risotto has not been pressed
+          </Text>
         </View>
       </View>
       <View
@@ -56184,87 +56180,85 @@ exports[`snapshotAllPages SectionList 4`] = `
         onLayout={[Function]}
         style={null}
       >
-        <View>
-          <View
-            accessibilityState={
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
               {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": undefined,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
+                "backgroundColor": "pink",
+                "marginVertical": 8,
+                "padding": 20,
+              },
               {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            disabled={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            onKeyUp={[Function]}
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="Risotto"
+        >
+          <Text
             style={
-              [
-                {
-                  "backgroundColor": "pink",
-                  "marginVertical": 8,
-                  "padding": 20,
-                },
-                {
-                  "backgroundColor": "pink",
-                },
-              ]
-            }
-            testID="Risotto"
-          >
-            <Text
-              style={
-                {
-                  "fontSize": 24,
-                }
+              {
+                "fontSize": 24,
               }
-            >
-              Risotto
-            </Text>
-          </View>
-          <View
-            style={
-              [
-                {
-                  "height": 12,
-                },
-                {
-                  "backgroundColor": "lightblue",
-                },
-              ]
             }
           >
-            <Text
-              style={
-                {
-                  "fontSize": 10,
-                }
+            Risotto
+          </Text>
+        </View>
+        <View
+          style={
+            [
+              {
+                "height": 12,
+              },
+              {
+                "backgroundColor": "lightblue",
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "fontSize": 10,
               }
-            >
-              Section separator for leading Risotto and trailing undefined has not been pressed
-            </Text>
-          </View>
+            }
+          >
+            Section separator for leading Risotto and trailing undefined has not been pressed
+          </Text>
         </View>
       </View>
       <View
@@ -56293,109 +56287,107 @@ exports[`snapshotAllPages SectionList 4`] = `
         onLayout={[Function]}
         style={null}
       >
-        <View>
-          <View
-            style={
-              [
-                {
-                  "height": 12,
-                },
-                {
-                  "backgroundColor": "lightblue",
-                },
-              ]
-            }
-          >
-            <Text
-              style={
-                {
-                  "fontSize": 10,
-                }
-              }
-            >
-              Section separator for leading undefined and trailing French Fries has not been pressed
-            </Text>
-          </View>
-          <View
-            accessibilityState={
+        <View
+          style={
+            [
               {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": undefined,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
+                "height": 12,
+              },
               {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            disabled={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            onKeyUp={[Function]}
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+                "backgroundColor": "lightblue",
+              },
+            ]
+          }
+        >
+          <Text
             style={
-              [
-                {
-                  "backgroundColor": "pink",
-                  "marginVertical": 8,
-                  "padding": 20,
-                },
-                {
-                  "backgroundColor": "pink",
-                },
-              ]
-            }
-            testID="French Fries"
-          >
-            <Text
-              style={
-                {
-                  "fontSize": 24,
-                }
+              {
+                "fontSize": 10,
               }
-            >
-              French Fries
-            </Text>
-          </View>
-          <View
-            style={
-              [
-                {
-                  "height": 12,
-                },
-                {
-                  "backgroundColor": "lightgreen",
-                },
-              ]
             }
           >
-            <Text
-              style={
-                {
-                  "fontSize": 10,
-                }
+            Section separator for leading undefined and trailing French Fries has not been pressed
+          </Text>
+        </View>
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "backgroundColor": "pink",
+                "marginVertical": 8,
+                "padding": 20,
+              },
+              {
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="French Fries"
+        >
+          <Text
+            style={
+              {
+                "fontSize": 24,
               }
-            >
-              separator for leading French Fries and trailing Onion Rings has not been pressed
-            </Text>
-          </View>
+            }
+          >
+            French Fries
+          </Text>
+        </View>
+        <View
+          style={
+            [
+              {
+                "height": 12,
+              },
+              {
+                "backgroundColor": "lightgreen",
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "fontSize": 10,
+              }
+            }
+          >
+            separator for leading French Fries and trailing Onion Rings has not been pressed
+          </Text>
         </View>
       </View>
       <View
@@ -56403,87 +56395,85 @@ exports[`snapshotAllPages SectionList 4`] = `
         onLayout={[Function]}
         style={null}
       >
-        <View>
-          <View
-            accessibilityState={
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
               {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": undefined,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
+                "backgroundColor": "pink",
+                "marginVertical": 8,
+                "padding": 20,
+              },
               {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            disabled={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            onKeyUp={[Function]}
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="Onion Rings"
+        >
+          <Text
             style={
-              [
-                {
-                  "backgroundColor": "pink",
-                  "marginVertical": 8,
-                  "padding": 20,
-                },
-                {
-                  "backgroundColor": "pink",
-                },
-              ]
-            }
-            testID="Onion Rings"
-          >
-            <Text
-              style={
-                {
-                  "fontSize": 24,
-                }
+              {
+                "fontSize": 24,
               }
-            >
-              Onion Rings
-            </Text>
-          </View>
-          <View
-            style={
-              [
-                {
-                  "height": 12,
-                },
-                {
-                  "backgroundColor": "lightgreen",
-                },
-              ]
             }
           >
-            <Text
-              style={
-                {
-                  "fontSize": 10,
-                }
+            Onion Rings
+          </Text>
+        </View>
+        <View
+          style={
+            [
+              {
+                "height": 12,
+              },
+              {
+                "backgroundColor": "lightgreen",
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "fontSize": 10,
               }
-            >
-              separator for leading Onion Rings and trailing Fried Shrimps has not been pressed
-            </Text>
-          </View>
+            }
+          >
+            separator for leading Onion Rings and trailing Fried Shrimps has not been pressed
+          </Text>
         </View>
       </View>
       <View
@@ -56491,87 +56481,85 @@ exports[`snapshotAllPages SectionList 4`] = `
         onLayout={[Function]}
         style={null}
       >
-        <View>
-          <View
-            accessibilityState={
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
               {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": undefined,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
+                "backgroundColor": "pink",
+                "marginVertical": 8,
+                "padding": 20,
+              },
               {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            disabled={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            onKeyUp={[Function]}
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="Fried Shrimps"
+        >
+          <Text
             style={
-              [
-                {
-                  "backgroundColor": "pink",
-                  "marginVertical": 8,
-                  "padding": 20,
-                },
-                {
-                  "backgroundColor": "pink",
-                },
-              ]
-            }
-            testID="Fried Shrimps"
-          >
-            <Text
-              style={
-                {
-                  "fontSize": 24,
-                }
+              {
+                "fontSize": 24,
               }
-            >
-              Fried Shrimps
-            </Text>
-          </View>
-          <View
-            style={
-              [
-                {
-                  "height": 12,
-                },
-                {
-                  "backgroundColor": "lightblue",
-                },
-              ]
             }
           >
-            <Text
-              style={
-                {
-                  "fontSize": 10,
-                }
+            Fried Shrimps
+          </Text>
+        </View>
+        <View
+          style={
+            [
+              {
+                "height": 12,
+              },
+              {
+                "backgroundColor": "lightblue",
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "fontSize": 10,
               }
-            >
-              Section separator for leading Fried Shrimps and trailing undefined has not been pressed
-            </Text>
-          </View>
+            }
+          >
+            Section separator for leading Fried Shrimps and trailing undefined has not been pressed
+          </Text>
         </View>
       </View>
       <View
@@ -65123,87 +65111,85 @@ exports[`snapshotAllPages SectionList 7`] = `
           onLayout={[Function]}
           style={null}
         >
-          <View>
-            <View
-              style={
-                [
-                  {
-                    "backgroundColor": "rgb(200, 199, 204)",
-                  },
-                  false,
-                ]
-              }
-            >
-              <Text
-                style={
-                  {
-                    "alignSelf": "center",
-                    "color": "gray",
-                    "fontSize": 7,
-                  }
-                }
-              >
-                SECTION SEPARATOR
-              </Text>
-            </View>
-            <View
+          <View
+            style={
+              [
+                {
+                  "backgroundColor": "rgb(200, 199, 204)",
+                },
+                false,
+              ]
+            }
+          >
+            <Text
               style={
                 {
-                  "alignItems": "center",
-                  "backgroundColor": "white",
-                  "padding": 10,
+                  "alignSelf": "center",
+                  "color": "gray",
+                  "fontSize": 7,
                 }
               }
             >
-              <Text
-                style={
-                  {
-                    "fontSize": 18,
-                    "padding": 4,
-                  }
-                }
-              >
-                Item In Header Section
-                 - 
-                Section s1
-              </Text>
-              <Image
-                source={
-                  {
-                    "testUri": "../../packages/@react-native-windows/tester/js/assets/victory.png",
-                  }
-                }
-                style={
-                  {
-                    "height": 50,
-                    "left": -5,
-                    "width": 50,
-                  }
-                }
-              />
-            </View>
-            <View
+              SECTION SEPARATOR
+            </Text>
+          </View>
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "white",
+                "padding": 10,
+              }
+            }
+          >
+            <Text
               style={
-                [
-                  {
-                    "backgroundColor": "rgb(200, 199, 204)",
-                  },
-                  false,
-                ]
+                {
+                  "fontSize": 18,
+                  "padding": 4,
+                }
               }
             >
-              <Text
-                style={
-                  {
-                    "alignSelf": "center",
-                    "color": "gray",
-                    "fontSize": 7,
-                  }
+              Item In Header Section
+               - 
+              Section s1
+            </Text>
+            <Image
+              source={
+                {
+                  "testUri": "../../packages/@react-native-windows/tester/js/assets/victory.png",
                 }
-              >
-                SECTION SEPARATOR
-              </Text>
-            </View>
+              }
+              style={
+                {
+                  "height": 50,
+                  "left": -5,
+                  "width": 50,
+                }
+              }
+            />
+          </View>
+          <View
+            style={
+              [
+                {
+                  "backgroundColor": "rgb(200, 199, 204)",
+                },
+                false,
+              ]
+            }
+          >
+            <Text
+              style={
+                {
+                  "alignSelf": "center",
+                  "color": "gray",
+                  "fontSize": 7,
+                }
+              }
+            >
+              SECTION SEPARATOR
+            </Text>
           </View>
         </View>
         <View
@@ -65277,51 +65263,49 @@ exports[`snapshotAllPages SectionList 7`] = `
           onLayout={[Function]}
           style={null}
         >
-          <View>
-            <View
+          <View
+            style={
+              [
+                {
+                  "backgroundColor": "rgb(200, 199, 204)",
+                },
+                false,
+              ]
+            }
+          >
+            <Text
               style={
-                [
-                  {
-                    "backgroundColor": "rgb(200, 199, 204)",
-                  },
-                  false,
-                ]
+                {
+                  "alignSelf": "center",
+                  "color": "gray",
+                  "fontSize": 7,
+                }
               }
             >
-              <Text
-                style={
-                  {
-                    "alignSelf": "center",
-                    "color": "gray",
-                    "fontSize": 7,
-                  }
-                }
-              >
-                SECTION SEPARATOR
-              </Text>
-            </View>
-            <View
+              SECTION SEPARATOR
+            </Text>
+          </View>
+          <View
+            style={
+              [
+                {
+                  "backgroundColor": "rgb(200, 199, 204)",
+                },
+                false,
+              ]
+            }
+          >
+            <Text
               style={
-                [
-                  {
-                    "backgroundColor": "rgb(200, 199, 204)",
-                  },
-                  false,
-                ]
+                {
+                  "alignSelf": "center",
+                  "color": "gray",
+                  "fontSize": 7,
+                }
               }
             >
-              <Text
-                style={
-                  {
-                    "alignSelf": "center",
-                    "color": "gray",
-                    "fontSize": 7,
-                  }
-                }
-              >
-                ITEM SEPARATOR
-              </Text>
-            </View>
+              ITEM SEPARATOR
+            </Text>
           </View>
         </View>
         <View
@@ -65329,29 +65313,27 @@ exports[`snapshotAllPages SectionList 7`] = `
           onLayout={[Function]}
           style={null}
         >
-          <View>
-            <View
+          <View
+            style={
+              [
+                {
+                  "backgroundColor": "rgb(200, 199, 204)",
+                },
+                false,
+              ]
+            }
+          >
+            <Text
               style={
-                [
-                  {
-                    "backgroundColor": "rgb(200, 199, 204)",
-                  },
-                  false,
-                ]
+                {
+                  "alignSelf": "center",
+                  "color": "gray",
+                  "fontSize": 7,
+                }
               }
             >
-              <Text
-                style={
-                  {
-                    "alignSelf": "center",
-                    "color": "gray",
-                    "fontSize": 7,
-                  }
-                }
-              >
-                SECTION SEPARATOR
-              </Text>
-            </View>
+              SECTION SEPARATOR
+            </Text>
           </View>
         </View>
         <View
