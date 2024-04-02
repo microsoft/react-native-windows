@@ -321,6 +321,7 @@ extends:
         - ${{ each matrix in parameters.universalBuildMatrix }}:
           - job: RnwNativeBuildUniversal${{ matrix.Name }}
             displayName: Build Universal ${{ matrix.Name }}
+            dependsOn: RnwNpmPublish
             pool: ${{ parameters.AgentPool.Large }}
             timeoutInMinutes: 360 # CodeQL requires 3x usual build timeout
             steps:
