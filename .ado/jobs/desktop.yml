@@ -24,16 +24,20 @@ parameters:
           - Name: X86Debug
             BuildConfiguration: Debug
             BuildPlatform: x86
+          - Name: X86Release
+            BuildConfiguration: Release
+            BuildPlatform: x86
           - Name: Arm64Debug
             BuildConfiguration: Debug
             BuildPlatform: ARM64
           - Name: Arm64Release
             BuildConfiguration: Release
             BuildPlatform: ARM64
-          - Name: X86Release
-            BuildConfiguration: Release
-            BuildPlatform: x86
-          - Name: X86ReleaseFabric
+          - Name: X64DebugFabric
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            UseFabric: true
+          - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
             BuildConfiguration: Release
             BuildPlatform: x86
             UseFabric: true
@@ -54,16 +58,20 @@ parameters:
           - Name: X86Debug
             BuildConfiguration: Debug
             BuildPlatform: x86
+          - Name: X86Release
+            BuildConfiguration: Release
+            BuildPlatform: x86
           - Name: Arm64Debug
             BuildConfiguration: Debug
             BuildPlatform: ARM64
           - Name: Arm64Release
             BuildConfiguration: Release
             BuildPlatform: ARM64
-          - Name: X86Release
-            BuildConfiguration: Release
-            BuildPlatform: x86
-          - Name: X86ReleaseFabric
+          - Name: X64DebugFabric
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            UseFabric: true
+          - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
             BuildConfiguration: Release
             BuildPlatform: x86
             UseFabric: true
