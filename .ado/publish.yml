@@ -294,7 +294,7 @@ extends:
                 UseFabric: false
               Arm64Debug:
                 BuildConfiguration: Debug
-                BuildPlatform: ARM64Debug
+                BuildPlatform: ARM64
                 UseFabric: false
               X64ReleaseFabric:
                 BuildConfiguration: Release
