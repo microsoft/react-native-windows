@@ -378,9 +378,9 @@ extends:
                 SymbolServerType: TeamServices
 
             templateContext:
-            sdl:
-              binskim:
-                analyzeTargetGlob: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative\Microsoft.ReactNative.dll'
+              sdl:
+                binskim:
+                  analyzeTargetGlob: '$(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative\Microsoft.ReactNative.dll'
               outputs:
               - output: pipelineArtifact
                 displayName: 'Upload build logs'
