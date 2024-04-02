@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "fix OnSelectionChanged running multiple times",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
