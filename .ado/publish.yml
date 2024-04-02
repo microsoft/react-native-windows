@@ -231,7 +231,7 @@ extends:
                 oneESMode: true ## Files are only copied to staging, not published
                 ${{ if eq(matrix.UseFabric, true) }}:
                   artifactName: DesktopFabric
-                ${{ if eq(matrix.UseFabric, false) }}:
+                ${{ else }}:
                   artifactName: Desktop
                 buildPlatform: ${{ matrix.BuildPlatform }}
                 buildConfiguration: ${{ matrix.BuildConfiguration }}
@@ -262,7 +262,7 @@ extends:
                   displayName: 'Publish Artifact: DesktopFabric.${{matrix.buildPlatform}}.${{matrix.buildConfiguration}}'
                   artifactName: DesktopFabric.${{matrix.buildPlatform}}.${{matrix.buildConfiguration}}
                   targetPath: $(Build.StagingDirectory)/NuGet/DesktopFabric/${{matrix.buildPlatform}}/${{matrix.buildConfiguration}}
-                ${{ if eq(matrix.UseFabric, false) }}:
+                ${{ else }}:
                   displayName: 'Publish Artifact: Desktop.${{matrix.buildPlatform}}.${{matrix.buildConfiguration}}'
                   artifactName: Desktop.${{matrix.buildPlatform}}.${{matrix.buildConfiguration}}
                   targetPath: $(Build.StagingDirectory)/NuGet/Desktop/${{matrix.buildPlatform}}/${{matrix.buildConfiguration}}
@@ -334,7 +334,7 @@ extends:
 
           - template: .ado/templates/apply-published-version-vars.yml@self
 
-          - ${{ if eq(variables.UseFabric, true) }}:
+          - ${{ if eq(variables['UseFabric'], 'true') }}:
             - template: .ado/templates/enable-fabric-experimental-feature.yml@self
 
           - template: .ado/templates/msbuild-sln.yml@self
@@ -354,9 +354,9 @@ extends:
           - template: .ado/templates/publish-build-artifacts.yml@self
             parameters:
               oneESMode: true ## Files are only copied to staging, not published
-              ${{ if eq(variables.UseFabric, true) }}:
+              ${{ if eq(variables['UseFabric'], 'true') }}:
                 artifactName: ReactWindowsFabric
-              ${{ if eq(variables.UseFabric, false) }}:
+              ${{ else }}:
                 artifactName: ReactWindows
               buildPlatform: $(BuildPlatform)
               buildConfiguration: $(BuildConfiguration)
@@ -390,11 +390,11 @@ extends:
               targetPath: '$(CrashDumpRootPath)'
               artifactName: Crash dumps - $(Agent.JobName)-$(System.JobAttempt)
             - output: pipelineArtifact
-              ${{ if eq(variables.UseFabric, true) }}:
+              ${{ if eq(variables['UseFabric'], 'true') }}:
                 displayName: 'Publish Artifact: ReactWindowsFabric.$(BuildPlatform).$(BuildConfiguration)'
                 artifactName: ReactWindowsFabric.$(BuildPlatform).$(BuildConfiguration)
                 targetPath: $(Build.StagingDirectory)/NuGet/ReactWindowsFabric/$(BuildPlatform)/$(BuildConfiguration)
-              ${{ if eq(variables.UseFabric, false) }}:
+              ${{ else }}:
                 displayName: 'Publish Artifact: ReactWindows.$(BuildPlatform).$(BuildConfiguration)'
                 artifactName: ReactWindows.$(BuildPlatform).$(BuildConfiguration)
                 targetPath: $(Build.StagingDirectory)/NuGet/ReactWindows/$(BuildPlatform)/$(BuildConfiguration)
