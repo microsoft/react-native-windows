@@ -104,9 +104,7 @@ onKeyPress key: c
 onChange text: ab
 onSelectionChange range: 2,2
 onKeyPress key: b
-onSelectionChange range: 1,1
 onChange text: a
-onSelectionChange range: 0,0
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
@@ -125,7 +123,7 @@ onFocus
     "Opacity": 1,
     "Size": [
       998,
-      858,
+      820,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -147,9 +145,7 @@ onKeyPress key: c
 onChange text: ab
 onSelectionChange range: 2,2
 onKeyPress key: b
-onSelectionChange range: 1,1
 onChange text: a
-onSelectionChange range: 0,0
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
@@ -168,7 +164,7 @@ onFocus
     "Opacity": 1,
     "Size": [
       998,
-      299,
+      262,
     ],
     "Visual Type": "SpriteVisual",
   },
@@ -213,9 +209,7 @@ onKeyPress key: c
 onChange text: ab
 onSelectionChange range: 2,2
 onKeyPress key: b
-onSelectionChange range: 1,1
 onChange text: a
-onSelectionChange range: 0,0
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
@@ -234,7 +228,7 @@ onFocus
     "Opacity": 1,
     "Size": [
       998,
-      727,
+      690,
     ],
     "Visual Type": "SpriteVisual",
   },
