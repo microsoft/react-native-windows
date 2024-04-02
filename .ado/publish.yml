@@ -74,51 +74,51 @@ parameters:
 - name: universalBuildMatrix
   type: object
   default:
-    - Name: X64Release:
+    - Name: X64Release
       BuildConfiguration: Release
       BuildPlatform: x64
       UseFabric: false
-    - Name: X86Release:
+    - Name: X86Release
       BuildConfiguration: Release
       BuildPlatform: x86
       UseFabric: false
-    - Name: Arm64Release:
+    - Name: Arm64Release
       BuildConfiguration: Release
       BuildPlatform: ARM64
       UseFabric: false
-    - Name: X64Debug:
+    - Name: X64Debug
       BuildConfiguration: Debug
       BuildPlatform: x64
       UseFabric: false
-    - Name: X86Debug:
+    - Name: X86Debug
       BuildConfiguration: Debug
       BuildPlatform: x86
       UseFabric: false
-    - Name: Arm64Debug:
+    - Name: Arm64Debug
       BuildConfiguration: Debug
       BuildPlatform: ARM64
       UseFabric: false
-    - Name: X64ReleaseFabric:
+    - Name: X64ReleaseFabric
       BuildConfiguration: Release
       BuildPlatform: x64
       UseFabric: true
-    - Name: X86ReleaseFabric:
+    - Name: X86ReleaseFabric
       BuildConfiguration: Release
       BuildPlatform: x86
       UseFabric: true
-    - Name: Arm64ReleaseFabric:
+    - Name: Arm64ReleaseFabric
       BuildConfiguration: Release
       BuildPlatform: ARM64
       UseFabric: true
-    - Name: X64DebugFabric:
+    - Name: X64DebugFabric
       BuildConfiguration: Debug
       BuildPlatform: x64
       UseFabric: true
-    - Name: X86DebugFabric:
+    - Name: X86DebugFabric
       BuildConfiguration: Debug
       BuildPlatform: x86
       UseFabric: true
-    - Name: Arm64DebugFabric:
+    - Name: Arm64DebugFabric
       BuildConfiguration: Debug
       BuildPlatform: ARM64
       UseFabric: true
