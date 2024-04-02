@@ -334,7 +334,7 @@ extends:
 
           - template: .ado/templates/apply-published-version-vars.yml@self
 
-          - ${{ if eq(matrix.UseFabric, true) }}:
+          - ${{ if eq($(UseFabric), true) }}:
             - template: .ado/templates/enable-fabric-experimental-feature.yml@self
 
           - template: .ado/templates/msbuild-sln.yml@self
@@ -354,9 +354,9 @@ extends:
           - template: .ado/templates/publish-build-artifacts.yml@self
             parameters:
               oneESMode: true ## Files are only copied to staging, not published
-              ${{ if eq(matrix.UseFabric, true) }}:
+              ${{ if eq($(UseFabric), true) }}:
                 artifactName: ReactWindowsFabric
-              ${{ if eq(matrix.UseFabric, false) }}:
+              ${{ if eq($(UseFabric), false) }}:
                 artifactName: ReactWindows
               buildPlatform: $(BuildPlatform)
               buildConfiguration: $(BuildConfiguration)
@@ -390,11 +390,11 @@ extends:
               targetPath: '$(CrashDumpRootPath)'
               artifactName: Crash dumps - $(Agent.JobName)-$(System.JobAttempt)
             - output: pipelineArtifact
-              ${{ if eq(matrix.UseFabric, true) }}:
+              ${{ if eq($(UseFabric), true) }}:
                 displayName: 'Publish Artifact: ReactWindowsFabric.$(BuildPlatform).$(BuildConfiguration)'
                 artifactName: ReactWindowsFabric.$(BuildPlatform).$(BuildConfiguration)
                 targetPath: $(Build.StagingDirectory)/NuGet/ReactWindowsFabric/$(BuildPlatform)/$(BuildConfiguration)
-              ${{ if eq(matrix.UseFabric, false) }}:
+              ${{ if eq($(UseFabric), false) }}:
                 displayName: 'Publish Artifact: ReactWindows.$(BuildPlatform).$(BuildConfiguration)'
                 artifactName: ReactWindows.$(BuildPlatform).$(BuildConfiguration)
                 targetPath: $(Build.StagingDirectory)/NuGet/ReactWindows/$(BuildPlatform)/$(BuildConfiguration)
