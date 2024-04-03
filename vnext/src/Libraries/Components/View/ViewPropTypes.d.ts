@@ -172,16 +172,16 @@ export interface ViewPropsAndroid {
 
 // [Windows
 
-export enum EventPhase {
-  None = 0,
-  Capturing,
-  AtTarget,
-  Bubbling,
+export namespace EventPhase {
+  export const None = 0;
+  export const Capturing = 1;
+  export const AtTarget = 2;
+  export const Bubbling = 3;
 }
 
-export enum HandledEventPhase {
-  Capturing = EventPhase.Capturing,
-  Bubbling = EventPhase.Bubbling,
+export namespace HandledEventPhase {
+  const Capturing = EventPhase.Capturing;
+  const Bubbling = EventPhase.Bubbling;
 }
 
 export interface INativeKeyboardEvent {
@@ -191,7 +191,11 @@ export interface INativeKeyboardEvent {
   shiftKey: boolean;
   key: string;
   code: string;
-  eventPhase: EventPhase;
+  eventPhase:
+    | EventPhase.None
+    | EventPhase.Capturing
+    | EventPhase.AtTarget
+    | EventPhase.Bubbling;
 }
 
 export interface IHandledKeyboardEvent {
@@ -200,7 +204,7 @@ export interface IHandledKeyboardEvent {
   metaKey?: boolean;
   shiftKey?: boolean;
   code: string;
-  handledEventPhase?: HandledEventPhase;
+  handledEventPhase?: EventPhase.Capturing | EventPhase.Bubbling;
 }
 
 export type IKeyboardEvent = NativeSyntheticEvent<INativeKeyboardEvent>;
