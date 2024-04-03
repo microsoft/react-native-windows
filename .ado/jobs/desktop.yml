@@ -109,6 +109,12 @@ jobs:
           steps:
             # Set up IIS tests {
             - pwsh: |
+                #TODO: Remove before merging
+                Write-Host "'$env:BuildPlatform' => [$env:BuildPlatform]"
+                Write-Host "'$env:BUILDPLATFORM' => [$env:BUILDPLATFORM]"
+                Write-Host "'$(BuildPlatform)' => [$(BuildPlatform)]"
+                Write-Host "'${{ matrix.BuildPlatform }}' => [${{ matrix.BuildPlatform }}]"
+
                 Install-WindowsFeature -Name Web-Server, Web-Scripting-Tools
               displayName: Install IIS
 
@@ -215,7 +221,7 @@ jobs:
                   publishWebProjects: false
                   zipAfterPublish: false
                   projects: $(Build.SourcesDirectory)\vnext\TestWebsite\Microsoft.ReactNative.Test.Website.csproj
-                  arguments: --configuration ${{ matrix.BuildConfiguration }}
+                  arguments: --configuration ${{ matrix.BuildConfiguration }} --arch ${{ matrix.BuildPlatform }}
 
               - pwsh: |
                   # Create and make available to IIS
