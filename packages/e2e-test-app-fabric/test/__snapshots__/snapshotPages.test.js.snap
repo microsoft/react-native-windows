@@ -25125,314 +25125,311 @@ exports[`snapshotAllPages FlatList 8`] = `
 `;
 
 exports[`snapshotAllPages FlatList 9`] = `
-<View
+<RCTScrollView
   accessible={true}
+  data={
+    [
+      "Sticky Pizza",
+      "Burger",
+      "Sticky Risotto",
+      "French Fries",
+      "Sticky Onion Rings",
+      "Fried Shrimps",
+      "Water",
+      "Coke",
+      "Beer",
+      "Cheesecake",
+      "Ice Cream",
+    ]
+  }
+  getItem={[Function]}
+  getItemCount={[Function]}
+  keyExtractor={[Function]}
+  onContentSizeChange={[Function]}
+  onLayout={[Function]}
+  onMomentumScrollBegin={[Function]}
+  onMomentumScrollEnd={[Function]}
+  onScroll={[Function]}
+  onScrollBeginDrag={[Function]}
+  onScrollEndDrag={[Function]}
+  removeClippedSubviews={false}
+  renderItem={[Function]}
+  scrollEventThrottle={0.0001}
+  stickyHeaderIndices={
+    [
+      0,
+      2,
+      4,
+    ]
+  }
+  style={
+    {
+      "flex": 1,
+    }
+  }
   testID="flatlist-sticky"
+  viewabilityConfigCallbackPairs={[]}
 >
-  <RCTScrollView
-    data={
-      [
-        "Sticky Pizza",
-        "Burger",
-        "Sticky Risotto",
-        "French Fries",
-        "Sticky Onion Rings",
-        "Fried Shrimps",
-        "Water",
-        "Coke",
-        "Beer",
-        "Cheesecake",
-        "Ice Cream",
-      ]
-    }
-    getItem={[Function]}
-    getItemCount={[Function]}
-    keyExtractor={[Function]}
-    onContentSizeChange={[Function]}
-    onLayout={[Function]}
-    onMomentumScrollBegin={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    removeClippedSubviews={false}
-    renderItem={[Function]}
-    scrollEventThrottle={0.0001}
-    stickyHeaderIndices={
-      [
-        0,
-        2,
-        4,
-      ]
-    }
-    style={
-      {
-        "flex": 1,
-      }
-    }
-    viewabilityConfigCallbackPairs={[]}
-  >
-    <View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "backgroundColor": "pink",
-              "marginVertical": 8,
-              "padding": 20,
-            }
-          }
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Sticky Pizza
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "backgroundColor": "pink",
-              "marginVertical": 8,
-              "padding": 20,
-            }
-          }
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Burger
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "backgroundColor": "pink",
-              "marginVertical": 8,
-              "padding": 20,
-            }
-          }
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Sticky Risotto
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "backgroundColor": "pink",
-              "marginVertical": 8,
-              "padding": 20,
-            }
-          }
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            French Fries
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "backgroundColor": "pink",
-              "marginVertical": 8,
-              "padding": 20,
-            }
-          }
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Sticky Onion Rings
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "backgroundColor": "pink",
-              "marginVertical": 8,
-              "padding": 20,
-            }
-          }
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Fried Shrimps
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "backgroundColor": "pink",
-              "marginVertical": 8,
-              "padding": 20,
-            }
-          }
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Water
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "backgroundColor": "pink",
-              "marginVertical": 8,
-              "padding": 20,
-            }
-          }
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Coke
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "backgroundColor": "pink",
-              "marginVertical": 8,
-              "padding": 20,
-            }
-          }
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Beer
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          style={
-            {
-              "backgroundColor": "pink",
-              "marginVertical": 8,
-              "padding": 20,
-            }
-          }
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Cheesecake
-          </Text>
-        </View>
-      </View>
+  <View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
       <View
         style={
           {
-            "height": 0,
+            "backgroundColor": "pink",
+            "marginVertical": 8,
+            "padding": 20,
           }
         }
-      />
+      >
+        <Text
+          style={
+            {
+              "fontSize": 24,
+            }
+          }
+        >
+          Sticky Pizza
+        </Text>
+      </View>
     </View>
-  </RCTScrollView>
-</View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "pink",
+            "marginVertical": 8,
+            "padding": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "fontSize": 24,
+            }
+          }
+        >
+          Burger
+        </Text>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "pink",
+            "marginVertical": 8,
+            "padding": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "fontSize": 24,
+            }
+          }
+        >
+          Sticky Risotto
+        </Text>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "pink",
+            "marginVertical": 8,
+            "padding": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "fontSize": 24,
+            }
+          }
+        >
+          French Fries
+        </Text>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "pink",
+            "marginVertical": 8,
+            "padding": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "fontSize": 24,
+            }
+          }
+        >
+          Sticky Onion Rings
+        </Text>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "pink",
+            "marginVertical": 8,
+            "padding": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "fontSize": 24,
+            }
+          }
+        >
+          Fried Shrimps
+        </Text>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "pink",
+            "marginVertical": 8,
+            "padding": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "fontSize": 24,
+            }
+          }
+        >
+          Water
+        </Text>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "pink",
+            "marginVertical": 8,
+            "padding": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "fontSize": 24,
+            }
+          }
+        >
+          Coke
+        </Text>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "pink",
+            "marginVertical": 8,
+            "padding": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "fontSize": 24,
+            }
+          }
+        >
+          Beer
+        </Text>
+      </View>
+    </View>
+    <View
+      onFocusCapture={[Function]}
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "pink",
+            "marginVertical": 8,
+            "padding": 20,
+          }
+        }
+      >
+        <Text
+          style={
+            {
+              "fontSize": 24,
+            }
+          }
+        >
+          Cheesecake
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        {
+          "height": 0,
+        }
+      }
+    />
+  </View>
+</RCTScrollView>
 `;
 
 exports[`snapshotAllPages FlatList 10`] = `

@@ -56253,6 +56253,15 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
         "IsEnabled": true,
         "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
+        "Name": "Ice Cream",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "HelpText": "",
+        "IsEnabled": true,
+        "IsKeyboardFocusable": false,
+        "LocalizedControlType": "text",
         "Name": "Sticky Pizza",
       },
       {
@@ -56274,31 +56283,719 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
         "Name": "Sticky Onion Rings",
       },
     ],
-    "ControlType": 50026,
+    "ControlType": 50014,
     "HelpText": "",
     "IsEnabled": true,
     "IsKeyboardFocusable": false,
-    "LocalizedControlType": "group",
+    "LocalizedControlType": "scroll bar",
     "Name": "",
   },
   "Visual Tree": {
     "Children": [
       {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 0)",
+        },
         "Children": [
           {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 0)",
+            },
             "Children": [
               {
-                "Brush": {
-                  "Brush Type": "ColorBrush",
-                  "Color": "rgba(0, 0, 0, 0)",
-                },
                 "Children": [
                   {
-                    "Brush": {
-                      "Brush Type": "ColorBrush",
-                      "Color": "rgba(0, 0, 0, 0)",
-                    },
                     "Children": [
+                      {
+                        "Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(255, 192, 203, 255)",
+                            },
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              998,
+                              72,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          0,
+                          96,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          998,
+                          72,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              958,
+                              33,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          20,
+                          116,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          958,
+                          33,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(255, 192, 203, 255)",
+                            },
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              998,
+                              72,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          0,
+                          272,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          998,
+                          72,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              958,
+                              33,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          20,
+                          292,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          958,
+                          33,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(255, 192, 203, 255)",
+                            },
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              998,
+                              72,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          0,
+                          448,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          998,
+                          72,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              958,
+                              33,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          20,
+                          468,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          958,
+                          33,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(255, 192, 203, 255)",
+                            },
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              998,
+                              71,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          0,
+                          536,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          998,
+                          71,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              958,
+                              33,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          20,
+                          556,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          958,
+                          33,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(255, 192, 203, 255)",
+                            },
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              998,
+                              72,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          0,
+                          623,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          998,
+                          72,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              958,
+                              33,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          20,
+                          643,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          958,
+                          33,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(255, 192, 203, 255)",
+                            },
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              998,
+                              72,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          0,
+                          711,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          998,
+                          72,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              958,
+                              33,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          20,
+                          731,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          958,
+                          33,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(255, 192, 203, 255)",
+                            },
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              998,
+                              72,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          0,
+                          799,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          998,
+                          72,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              958,
+                              33,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          20,
+                          819,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          958,
+                          33,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Brush": {
+                              "Brush Type": "ColorBrush",
+                              "Color": "rgba(255, 192, 203, 255)",
+                            },
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              998,
+                              72,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          0,
+                          887,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          998,
+                          72,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              958,
+                              33,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          20,
+                          907,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          958,
+                          33,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
                       {
                         "Children": [
                           {
@@ -56338,7 +57035,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                                 ],
                                 "Offset": [
                                   0,
-                                  96,
+                                  8,
                                   0,
                                 ],
                                 "Opacity": 1,
@@ -56359,7 +57056,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                                     "Opacity": 1,
                                     "Size": [
                                       958,
-                                      33,
+                                      32,
                                     ],
                                     "Visual Type": "SpriteVisual",
                                   },
@@ -56379,916 +57076,13 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                                 ],
                                 "Offset": [
                                   20,
-                                  116,
+                                  28,
                                   0,
                                 ],
                                 "Opacity": 1,
                                 "Size": [
                                   958,
-                                  33,
-                                ],
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Children": [
-                                  {
-                                    "Brush": {
-                                      "Brush Type": "ColorBrush",
-                                      "Color": "rgba(255, 192, 203, 255)",
-                                    },
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      998,
-                                      72,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      0,
-                                      0,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                ],
-                                "Offset": [
-                                  0,
-                                  272,
-                                  0,
-                                ],
-                                "Opacity": 1,
-                                "Size": [
-                                  998,
-                                  72,
-                                ],
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Children": [
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      958,
-                                      33,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      0,
-                                      0,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                ],
-                                "Offset": [
-                                  20,
-                                  292,
-                                  0,
-                                ],
-                                "Opacity": 1,
-                                "Size": [
-                                  958,
-                                  33,
-                                ],
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Children": [
-                                  {
-                                    "Brush": {
-                                      "Brush Type": "ColorBrush",
-                                      "Color": "rgba(255, 192, 203, 255)",
-                                    },
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      998,
-                                      72,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      0,
-                                      0,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                ],
-                                "Offset": [
-                                  0,
-                                  448,
-                                  0,
-                                ],
-                                "Opacity": 1,
-                                "Size": [
-                                  998,
-                                  72,
-                                ],
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Children": [
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      958,
-                                      33,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      0,
-                                      0,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                ],
-                                "Offset": [
-                                  20,
-                                  468,
-                                  0,
-                                ],
-                                "Opacity": 1,
-                                "Size": [
-                                  958,
-                                  33,
-                                ],
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Children": [
-                                  {
-                                    "Brush": {
-                                      "Brush Type": "ColorBrush",
-                                      "Color": "rgba(255, 192, 203, 255)",
-                                    },
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      998,
-                                      71,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      0,
-                                      0,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                ],
-                                "Offset": [
-                                  0,
-                                  536,
-                                  0,
-                                ],
-                                "Opacity": 1,
-                                "Size": [
-                                  998,
-                                  71,
-                                ],
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Children": [
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      958,
-                                      33,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      0,
-                                      0,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                ],
-                                "Offset": [
-                                  20,
-                                  556,
-                                  0,
-                                ],
-                                "Opacity": 1,
-                                "Size": [
-                                  958,
-                                  33,
-                                ],
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Children": [
-                                  {
-                                    "Brush": {
-                                      "Brush Type": "ColorBrush",
-                                      "Color": "rgba(255, 192, 203, 255)",
-                                    },
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      998,
-                                      72,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      0,
-                                      0,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                ],
-                                "Offset": [
-                                  0,
-                                  623,
-                                  0,
-                                ],
-                                "Opacity": 1,
-                                "Size": [
-                                  998,
-                                  72,
-                                ],
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Children": [
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      958,
-                                      33,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      0,
-                                      0,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                ],
-                                "Offset": [
-                                  20,
-                                  643,
-                                  0,
-                                ],
-                                "Opacity": 1,
-                                "Size": [
-                                  958,
-                                  33,
-                                ],
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Children": [
-                                  {
-                                    "Brush": {
-                                      "Brush Type": "ColorBrush",
-                                      "Color": "rgba(255, 192, 203, 255)",
-                                    },
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      998,
-                                      72,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      0,
-                                      0,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                ],
-                                "Offset": [
-                                  0,
-                                  711,
-                                  0,
-                                ],
-                                "Opacity": 1,
-                                "Size": [
-                                  998,
-                                  72,
-                                ],
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Children": [
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      958,
-                                      33,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      0,
-                                      0,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                ],
-                                "Offset": [
-                                  20,
-                                  731,
-                                  0,
-                                ],
-                                "Opacity": 1,
-                                "Size": [
-                                  958,
-                                  33,
-                                ],
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Children": [
-                                  {
-                                    "Brush": {
-                                      "Brush Type": "ColorBrush",
-                                      "Color": "rgba(255, 192, 203, 255)",
-                                    },
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      998,
-                                      72,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      0,
-                                      0,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                ],
-                                "Offset": [
-                                  0,
-                                  799,
-                                  0,
-                                ],
-                                "Opacity": 1,
-                                "Size": [
-                                  998,
-                                  72,
-                                ],
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Children": [
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      958,
-                                      33,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      0,
-                                      0,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                ],
-                                "Offset": [
-                                  20,
-                                  819,
-                                  0,
-                                ],
-                                "Opacity": 1,
-                                "Size": [
-                                  958,
-                                  33,
-                                ],
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Children": [
-                                  {
-                                    "Children": [
-                                      {
-                                        "Children": [
-                                          {
-                                            "Brush": {
-                                              "Brush Type": "ColorBrush",
-                                              "Color": "rgba(255, 192, 203, 255)",
-                                            },
-                                            "Offset": [
-                                              0,
-                                              0,
-                                              0,
-                                            ],
-                                            "Opacity": 1,
-                                            "Size": [
-                                              998,
-                                              72,
-                                            ],
-                                            "Visual Type": "SpriteVisual",
-                                          },
-                                          {
-                                            "Offset": [
-                                              0,
-                                              0,
-                                              0,
-                                            ],
-                                            "Opacity": 1,
-                                            "Size": [
-                                              0,
-                                              0,
-                                            ],
-                                            "Visual Type": "SpriteVisual",
-                                          },
-                                        ],
-                                        "Offset": [
-                                          0,
-                                          8,
-                                          0,
-                                        ],
-                                        "Opacity": 1,
-                                        "Size": [
-                                          998,
-                                          72,
-                                        ],
-                                        "Visual Type": "SpriteVisual",
-                                      },
-                                      {
-                                        "Children": [
-                                          {
-                                            "Offset": [
-                                              0,
-                                              0,
-                                              0,
-                                            ],
-                                            "Opacity": 1,
-                                            "Size": [
-                                              958,
-                                              32,
-                                            ],
-                                            "Visual Type": "SpriteVisual",
-                                          },
-                                          {
-                                            "Offset": [
-                                              0,
-                                              0,
-                                              0,
-                                            ],
-                                            "Opacity": 1,
-                                            "Size": [
-                                              0,
-                                              0,
-                                            ],
-                                            "Visual Type": "SpriteVisual",
-                                          },
-                                        ],
-                                        "Offset": [
-                                          20,
-                                          28,
-                                          0,
-                                        ],
-                                        "Opacity": 1,
-                                        "Size": [
-                                          958,
-                                          32,
-                                        ],
-                                        "Visual Type": "SpriteVisual",
-                                      },
-                                    ],
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      998,
-                                      88,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      0,
-                                      0,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                ],
-                                "Offset": [
-                                  0,
-                                  0,
-                                  0,
-                                ],
-                                "Opacity": 1,
-                                "Size": [
-                                  998,
-                                  88,
-                                ],
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Children": [
-                                  {
-                                    "Children": [
-                                      {
-                                        "Children": [
-                                          {
-                                            "Brush": {
-                                              "Brush Type": "ColorBrush",
-                                              "Color": "rgba(255, 192, 203, 255)",
-                                            },
-                                            "Offset": [
-                                              0,
-                                              0,
-                                              0,
-                                            ],
-                                            "Opacity": 1,
-                                            "Size": [
-                                              998,
-                                              72,
-                                            ],
-                                            "Visual Type": "SpriteVisual",
-                                          },
-                                          {
-                                            "Offset": [
-                                              0,
-                                              0,
-                                              0,
-                                            ],
-                                            "Opacity": 1,
-                                            "Size": [
-                                              0,
-                                              0,
-                                            ],
-                                            "Visual Type": "SpriteVisual",
-                                          },
-                                        ],
-                                        "Offset": [
-                                          0,
-                                          8,
-                                          0,
-                                        ],
-                                        "Opacity": 1,
-                                        "Size": [
-                                          998,
-                                          72,
-                                        ],
-                                        "Visual Type": "SpriteVisual",
-                                      },
-                                      {
-                                        "Children": [
-                                          {
-                                            "Offset": [
-                                              0,
-                                              0,
-                                              0,
-                                            ],
-                                            "Opacity": 1,
-                                            "Size": [
-                                              958,
-                                              33,
-                                            ],
-                                            "Visual Type": "SpriteVisual",
-                                          },
-                                          {
-                                            "Offset": [
-                                              0,
-                                              0,
-                                              0,
-                                            ],
-                                            "Opacity": 1,
-                                            "Size": [
-                                              0,
-                                              0,
-                                            ],
-                                            "Visual Type": "SpriteVisual",
-                                          },
-                                        ],
-                                        "Offset": [
-                                          20,
-                                          28,
-                                          0,
-                                        ],
-                                        "Opacity": 1,
-                                        "Size": [
-                                          958,
-                                          33,
-                                        ],
-                                        "Visual Type": "SpriteVisual",
-                                      },
-                                    ],
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      998,
-                                      88,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      0,
-                                      0,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                ],
-                                "Offset": [
-                                  0,
-                                  176,
-                                  0,
-                                ],
-                                "Opacity": 1,
-                                "Size": [
-                                  998,
-                                  88,
-                                ],
-                                "Visual Type": "SpriteVisual",
-                              },
-                              {
-                                "Children": [
-                                  {
-                                    "Children": [
-                                      {
-                                        "Children": [
-                                          {
-                                            "Brush": {
-                                              "Brush Type": "ColorBrush",
-                                              "Color": "rgba(255, 192, 203, 255)",
-                                            },
-                                            "Offset": [
-                                              0,
-                                              0,
-                                              0,
-                                            ],
-                                            "Opacity": 1,
-                                            "Size": [
-                                              998,
-                                              72,
-                                            ],
-                                            "Visual Type": "SpriteVisual",
-                                          },
-                                          {
-                                            "Offset": [
-                                              0,
-                                              0,
-                                              0,
-                                            ],
-                                            "Opacity": 1,
-                                            "Size": [
-                                              0,
-                                              0,
-                                            ],
-                                            "Visual Type": "SpriteVisual",
-                                          },
-                                        ],
-                                        "Offset": [
-                                          0,
-                                          8,
-                                          0,
-                                        ],
-                                        "Opacity": 1,
-                                        "Size": [
-                                          998,
-                                          72,
-                                        ],
-                                        "Visual Type": "SpriteVisual",
-                                      },
-                                      {
-                                        "Children": [
-                                          {
-                                            "Offset": [
-                                              0,
-                                              0,
-                                              0,
-                                            ],
-                                            "Opacity": 1,
-                                            "Size": [
-                                              958,
-                                              33,
-                                            ],
-                                            "Visual Type": "SpriteVisual",
-                                          },
-                                          {
-                                            "Offset": [
-                                              0,
-                                              0,
-                                              0,
-                                            ],
-                                            "Opacity": 1,
-                                            "Size": [
-                                              0,
-                                              0,
-                                            ],
-                                            "Visual Type": "SpriteVisual",
-                                          },
-                                        ],
-                                        "Offset": [
-                                          20,
-                                          28,
-                                          0,
-                                        ],
-                                        "Opacity": 1,
-                                        "Size": [
-                                          958,
-                                          33,
-                                        ],
-                                        "Visual Type": "SpriteVisual",
-                                      },
-                                    ],
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      998,
-                                      88,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                  {
-                                    "Offset": [
-                                      0,
-                                      0,
-                                      0,
-                                    ],
-                                    "Opacity": 1,
-                                    "Size": [
-                                      0,
-                                      0,
-                                    ],
-                                    "Visual Type": "SpriteVisual",
-                                  },
-                                ],
-                                "Offset": [
-                                  0,
-                                  352,
-                                  0,
-                                ],
-                                "Opacity": 1,
-                                "Size": [
-                                  998,
-                                  88,
+                                  32,
                                 ],
                                 "Visual Type": "SpriteVisual",
                               },
@@ -57301,7 +57095,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                             "Opacity": 1,
                             "Size": [
                               998,
-                              879,
+                              88,
                             ],
                             "Visual Type": "SpriteVisual",
                           },
@@ -57327,7 +57121,265 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                         "Opacity": 1,
                         "Size": [
                           998,
-                          879,
+                          88,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Children": [
+                              {
+                                "Children": [
+                                  {
+                                    "Brush": {
+                                      "Brush Type": "ColorBrush",
+                                      "Color": "rgba(255, 192, 203, 255)",
+                                    },
+                                    "Offset": [
+                                      0,
+                                      0,
+                                      0,
+                                    ],
+                                    "Opacity": 1,
+                                    "Size": [
+                                      998,
+                                      72,
+                                    ],
+                                    "Visual Type": "SpriteVisual",
+                                  },
+                                  {
+                                    "Offset": [
+                                      0,
+                                      0,
+                                      0,
+                                    ],
+                                    "Opacity": 1,
+                                    "Size": [
+                                      0,
+                                      0,
+                                    ],
+                                    "Visual Type": "SpriteVisual",
+                                  },
+                                ],
+                                "Offset": [
+                                  0,
+                                  8,
+                                  0,
+                                ],
+                                "Opacity": 1,
+                                "Size": [
+                                  998,
+                                  72,
+                                ],
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Children": [
+                                  {
+                                    "Offset": [
+                                      0,
+                                      0,
+                                      0,
+                                    ],
+                                    "Opacity": 1,
+                                    "Size": [
+                                      958,
+                                      33,
+                                    ],
+                                    "Visual Type": "SpriteVisual",
+                                  },
+                                  {
+                                    "Offset": [
+                                      0,
+                                      0,
+                                      0,
+                                    ],
+                                    "Opacity": 1,
+                                    "Size": [
+                                      0,
+                                      0,
+                                    ],
+                                    "Visual Type": "SpriteVisual",
+                                  },
+                                ],
+                                "Offset": [
+                                  20,
+                                  28,
+                                  0,
+                                ],
+                                "Opacity": 1,
+                                "Size": [
+                                  958,
+                                  33,
+                                ],
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              998,
+                              88,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          0,
+                          176,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          998,
+                          88,
+                        ],
+                        "Visual Type": "SpriteVisual",
+                      },
+                      {
+                        "Children": [
+                          {
+                            "Children": [
+                              {
+                                "Children": [
+                                  {
+                                    "Brush": {
+                                      "Brush Type": "ColorBrush",
+                                      "Color": "rgba(255, 192, 203, 255)",
+                                    },
+                                    "Offset": [
+                                      0,
+                                      0,
+                                      0,
+                                    ],
+                                    "Opacity": 1,
+                                    "Size": [
+                                      998,
+                                      72,
+                                    ],
+                                    "Visual Type": "SpriteVisual",
+                                  },
+                                  {
+                                    "Offset": [
+                                      0,
+                                      0,
+                                      0,
+                                    ],
+                                    "Opacity": 1,
+                                    "Size": [
+                                      0,
+                                      0,
+                                    ],
+                                    "Visual Type": "SpriteVisual",
+                                  },
+                                ],
+                                "Offset": [
+                                  0,
+                                  8,
+                                  0,
+                                ],
+                                "Opacity": 1,
+                                "Size": [
+                                  998,
+                                  72,
+                                ],
+                                "Visual Type": "SpriteVisual",
+                              },
+                              {
+                                "Children": [
+                                  {
+                                    "Offset": [
+                                      0,
+                                      0,
+                                      0,
+                                    ],
+                                    "Opacity": 1,
+                                    "Size": [
+                                      958,
+                                      33,
+                                    ],
+                                    "Visual Type": "SpriteVisual",
+                                  },
+                                  {
+                                    "Offset": [
+                                      0,
+                                      0,
+                                      0,
+                                    ],
+                                    "Opacity": 1,
+                                    "Size": [
+                                      0,
+                                      0,
+                                    ],
+                                    "Visual Type": "SpriteVisual",
+                                  },
+                                ],
+                                "Offset": [
+                                  20,
+                                  28,
+                                  0,
+                                ],
+                                "Opacity": 1,
+                                "Size": [
+                                  958,
+                                  33,
+                                ],
+                                "Visual Type": "SpriteVisual",
+                              },
+                            ],
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              998,
+                              88,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                          {
+                            "Offset": [
+                              0,
+                              0,
+                              0,
+                            ],
+                            "Opacity": 1,
+                            "Size": [
+                              0,
+                              0,
+                            ],
+                            "Visual Type": "SpriteVisual",
+                          },
+                        ],
+                        "Offset": [
+                          0,
+                          352,
+                          0,
+                        ],
+                        "Opacity": 1,
+                        "Size": [
+                          998,
+                          88,
                         ],
                         "Visual Type": "SpriteVisual",
                       },
@@ -57340,7 +57392,20 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                     "Opacity": 1,
                     "Size": [
                       998,
-                      879,
+                      967,
+                    ],
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": [
+                      0,
+                      0,
+                      0,
+                    ],
+                    "Opacity": 1,
+                    "Size": [
+                      0,
+                      0,
                     ],
                     "Visual Type": "SpriteVisual",
                   },
@@ -57353,141 +57418,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
                 "Opacity": 1,
                 "Size": [
                   998,
-                  0,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      -12,
-                      3,
-                      0,
-                    ],
-                    "Opacity": 0,
-                    "Size": [
-                      12,
-                      0,
-                    ],
-                    "Visual Type": "Visual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      4,
-                      0,
-                    ],
-                    "Opacity": 0,
-                    "Size": [
-                      12,
-                      12,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      -16,
-                      0,
-                    ],
-                    "Opacity": 0,
-                    "Size": [
-                      12,
-                      12,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      -5,
-                      16,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      6,
-                      0,
-                    ],
-                    "Visual Type": "Visual",
-                  },
-                ],
-                "Offset": [
-                  -13,
-                  0,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  12,
-                  0,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      3,
-                      -12,
-                      0,
-                    ],
-                    "Opacity": 0,
-                    "Size": [
-                      992,
-                      12,
-                    ],
-                    "Visual Type": "Visual",
-                  },
-                  {
-                    "Offset": [
-                      4,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 0,
-                    "Size": [
-                      12,
-                      12,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      -16,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 0,
-                    "Size": [
-                      12,
-                      12,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      16,
-                      -5,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      966,
-                      6,
-                    ],
-                    "Visual Type": "Visual",
-                  },
-                ],
-                "Offset": [
-                  0,
-                  -13,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  0,
-                  12,
+                  967,
                 ],
                 "Visual Type": "SpriteVisual",
               },
@@ -57500,20 +57431,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
             "Opacity": 1,
             "Size": [
               998,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
+              995,
             ],
             "Visual Type": "SpriteVisual",
           },
@@ -57526,7 +57444,141 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
         "Opacity": 1,
         "Size": [
           998,
+          995,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              -12,
+              3,
+              0,
+            ],
+            "Opacity": 0,
+            "Size": [
+              12,
+              989,
+            ],
+            "Visual Type": "Visual",
+          },
+          {
+            "Offset": [
+              0,
+              4,
+              0,
+            ],
+            "Opacity": 0,
+            "Size": [
+              12,
+              12,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              0,
+              -16,
+              0,
+            ],
+            "Opacity": 0,
+            "Size": [
+              12,
+              12,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              -5,
+              16,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              6,
+              963,
+            ],
+            "Visual Type": "Visual",
+          },
+        ],
+        "Offset": [
+          -13,
           0,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          12,
+          0,
+        ],
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Children": [
+          {
+            "Offset": [
+              3,
+              -12,
+              0,
+            ],
+            "Opacity": 0,
+            "Size": [
+              992,
+              12,
+            ],
+            "Visual Type": "Visual",
+          },
+          {
+            "Offset": [
+              4,
+              0,
+              0,
+            ],
+            "Opacity": 0,
+            "Size": [
+              12,
+              12,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              -16,
+              0,
+              0,
+            ],
+            "Opacity": 0,
+            "Size": [
+              12,
+              12,
+            ],
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": [
+              16,
+              -5,
+              0,
+            ],
+            "Opacity": 1,
+            "Size": [
+              966,
+              6,
+            ],
+            "Visual Type": "Visual",
+          },
+        ],
+        "Offset": [
+          0,
+          -13,
+          0,
+        ],
+        "Opacity": 1,
+        "Size": [
+          0,
+          12,
         ],
         "Visual Type": "SpriteVisual",
       },
@@ -57540,7 +57592,7 @@ exports[`FlatList Tests A FlatList can have sticky headers 1`] = `
     "Opacity": 1,
     "Size": [
       998,
-      0,
+      995,
     ],
     "Visual Type": "SpriteVisual",
   },

@@ -40,15 +40,15 @@ const Item = ({item, separators}: RenderItemProps<string>) => {
 
 export function FlatList_stickyHeaders(): React.Node {
   return (
-    <View testID="flatlist-sticky" accessible>
-      <FlatList
-        data={DATA}
-        keyExtractor={(item, index) => item + index}
-        style={styles.list}
-        stickyHeaderIndices={STICKY_HEADER_INDICES}
-        renderItem={Item}
-      />
-    </View>
+    <FlatList
+      data={DATA}
+      keyExtractor={(item, index) => item + index}
+      style={styles.list}
+      stickyHeaderIndices={STICKY_HEADER_INDICES}
+      renderItem={Item}
+      testID="flatlist-sticky"
+      accessible
+    />
   );
 }
 
