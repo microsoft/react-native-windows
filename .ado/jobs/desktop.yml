@@ -114,10 +114,10 @@ jobs:
             # Set up IIS tests {
             - pwsh: |
                 #TODO: Remove before merging
-                Write-Host "'$env:BuildPlatform' => [$env:BuildPlatform]"
-                Write-Host "'$env:BUILDPLATFORM' => [$env:BUILDPLATFORM]"
-                #Write-Host "'$(BuildPlatform)' => [$(BuildPlatform)]"
-                Write-Host "'${{ matrix.BuildPlatform }}' => [${{ matrix.BuildPlatform }}]"
+                Write-Host "env:BuildPlatform => [$env:BuildPlatform]"
+                Write-Host "env:BUILDPLATFORM => [$env:BUILDPLATFORM]"
+                #Write-Host "(BuildPlatform) => [$(BuildPlatform)]"
+                Write-Host "{{ matrix.BuildPlatform }} => [${{ matrix.BuildPlatform }}]"
 
                 Install-WindowsFeature -Name Web-Server, Web-Scripting-Tools
               displayName: Install IIS
@@ -131,11 +131,11 @@ jobs:
                 Start-Process -Wait -FilePath .\dotnet-hosting-8.0.3-win.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
                 Write-Host 'Installed .NET hosting bundle'
 
-                if ('x64' -eq "$env:BuildPlatform") {
+                if ('x64' -eq "${{ matrix.BuildPlatform }}") {
                   $dotnetSdkOutFile = 'dotnet-sdk-7.0.407-win-x64.exe'
                   $dotnetSdkUrl = "https://download.visualstudio.microsoft.com/download/pr/f2ec926e-0d98-4a8b-8c70-722ccc2ca0e5/b59941b0c60f16421679baafdb7e9338/$dotnetSdkOutFile"
                 }
-                elseif ('x86' -eq "$env:BuildPlatform") {
+                elseif ('x86' -eq "${{ matrix.BuildPlatform }}") {
                   $dotnetSdkOutFile = 'dotnet-sdk-7.0.407-win-x86.exe'
                   $dotnetSdkUrl = "https://download.visualstudio.microsoft.com/download/pr/f7f831c9-ee1e-4501-bfc8-d3750aeb0e76/8a7dce2defcd92c77e147603fce87528/$dotnetSdkOutFile"
                 } else {
