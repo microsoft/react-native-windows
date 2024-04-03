@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 02 Apr 2024 17:57:27 GMT and should not be manually modified.
+This log was last generated on Wed, 03 Apr 2024 05:15:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.798
+
+Wed, 03 Apr 2024 05:15:20 GMT
+
+### Changes
+
+- fix OnSelectionChanged running multiple times (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.797
 
