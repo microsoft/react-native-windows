@@ -16,7 +16,7 @@ const {AppRegistry, View} = ReactNative;
 const {TestModule} = ReactNative.NativeModules;
 
 // eslint-disable-next-line @microsoft/sdl/no-insecure-url
-const DEFAULT_WS_URL = 'ws://localhost:5557/';
+const DEFAULT_WS_URL = 'ws://localhost:5555/rnw/rntester/websocketbinarytest';
 
 const WS_EVENTS = ['close', 'error', 'message', 'open'];
 

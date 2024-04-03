@@ -280,7 +280,44 @@ TEST_CLASS (WebSocketIntegrationTest)
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(SendReceiveSsl)
   {
-    SendReceiveCloseBase(/*isSecure*/ true);
+    auto ws = IWebSocketResource::Make();
+    promise<size_t> sentSizePromise;
+    ws->SetOnSend([&sentSizePromise](size_t size)
+    {
+      sentSizePromise.set_value(size);
+    });
+    promise<string> receivedPromise;
+    ws->SetOnMessage([&receivedPromise](size_t size, const string& message, bool isBinary)
+    {
+      receivedPromise.set_value(message);
+    });
+    string clientError{};
+    ws->SetOnError([&clientError, &sentSizePromise, &receivedPromise](Error err)
+    {
+      clientError = err.Message;
+      sentSizePromise.set_value(0);
+      receivedPromise.set_value("");
+    });
+
+    string sent = "prefix";
+    auto expectedSize = sent.size();
+    ws->Connect("wss://localhost:5543/rnw/websockets/echosuffix");
+    ws->Send(std::move(sent));
+
+    // Block until response is received. Fail in case of a remote endpoint failure.
+    auto sentSizeFuture = sentSizePromise.get_future();
+    sentSizeFuture.wait();
+    auto sentSize = sentSizeFuture.get();
+    auto receivedFuture = receivedPromise.get_future();
+    receivedFuture.wait();
+    string received = receivedFuture.get();
+    Assert::AreEqual({}, clientError);
+
+    ws->Close(CloseCode::Normal, "Closing after reading");
+
+    Assert::AreEqual({}, clientError);
+    Assert::AreEqual(expectedSize, sentSize);
+    Assert::AreEqual({"prefix_response"}, received);
   }
 
   BEGIN_TEST_METHOD_ATTRIBUTE(SendBinary)

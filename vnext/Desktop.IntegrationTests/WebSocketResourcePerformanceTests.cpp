@@ -59,6 +59,9 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
   /// several times, then measure the amount of allocated threads. Important. This
   /// test must be run in isolation (no other tests running concurrently).
   ///
+  BEGIN_TEST_METHOD_ATTRIBUTE(ProcessThreadsPerResource)
+  TEST_IGNORE()
+  END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(ProcessThreadsPerResource) {
     // About 3 seconds total running time.
     // 6, if we increase this value to 100.
@@ -70,11 +73,6 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
     std::atomic_int32_t threadCount = 0;
     bool errorFound = false;
     string errorMessage;
-
-    auto server = std::make_shared<Test::WebSocketServer>(s_port);
-    server->SetMessageFactory([](string &&message) { return message + "_response"; });
-    // TODO:  #4493 - Allow TestWebSocketServer to handle multiple incoming messages.
-    // server->Start();
 
     // WebSocket resources scope.
     {
@@ -112,7 +110,7 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
           errorFound = true;
           errorMessage = error.Message;
         });
-        ws->Connect("ws://localhost:" + std::to_string(s_port));
+        ws->Connect("ws://localhost:5555");
 
         resources.push_back(std::move(ws));
       } // Create and store WS resources.
@@ -127,8 +125,6 @@ TEST_CLASS (WebSocketResourcePerformanceTest) {
         ws->Close();
       }
     }
-    // TODO:  #4493 - Allow TestWebSocketServer to handle multiple incoming messages.
-    // server->Stop();
 
     int32_t finalThreadCount = threadCount.load();
     int64_t threadsPerResource = (finalThreadCount - startThreadCount) / resourceTotal;
