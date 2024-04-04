@@ -229,7 +229,7 @@ jobs:
                   publishWebProjects: false
                   zipAfterPublish: false
                   projects: $(Build.SourcesDirectory)\vnext\TestWebsite\Microsoft.ReactNative.Test.Website.csproj
-                  arguments: --configuration ${{ matrix.BuildConfiguration }} --arch ${{ matrix.BuildPlatform }}
+                  arguments: --configuration ${{ matrix.BuildConfiguration }} --arch ${{ matrix.BuildPlatform }} -p:PlatformTarget=${{ matrix.BuildPlatform }}
 
               - pwsh: |
                   # Create and make available to IIS
