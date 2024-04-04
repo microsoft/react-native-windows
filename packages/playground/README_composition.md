@@ -18,7 +18,7 @@ Playground is a sample standalone application that allows testing of various JS 
 
 1. Open the app solution file in Visual Studio `packages\playground\windows\playground-composition.sln`
 
-1. Ensure **Playground-composition** project is set as startup project
+1. Ensure **playground-composition.Package** project is set as startup project
 
 1. Hit F5
 
