@@ -131,16 +131,16 @@ jobs:
                 Start-Process -Wait -FilePath .\dotnet-hosting-8.0.3-win.exe -ArgumentList '/INSTALL', '/QUIET', '/NORESTART'
                 Write-Host 'Installed .NET hosting bundle'
 
-                if ('x64' -eq "${{ matrix.BuildPlatform }}") {
+                #if ('x64' -eq "${{ matrix.BuildPlatform }}") {
                   $dotnetSdkOutFile = 'dotnet-sdk-7.0.407-win-x64.exe'
                   $dotnetSdkUrl = "https://download.visualstudio.microsoft.com/download/pr/f2ec926e-0d98-4a8b-8c70-722ccc2ca0e5/b59941b0c60f16421679baafdb7e9338/$dotnetSdkOutFile"
-                }
-                elseif ('x86' -eq "${{ matrix.BuildPlatform }}") {
-                  $dotnetSdkOutFile = 'dotnet-sdk-7.0.407-win-x86.exe'
-                  $dotnetSdkUrl = "https://download.visualstudio.microsoft.com/download/pr/f7f831c9-ee1e-4501-bfc8-d3750aeb0e76/8a7dce2defcd92c77e147603fce87528/$dotnetSdkOutFile"
-                } else {
-                  Write-Error 'Unsupported platform for test website'
-                }
+                #}
+                #elseif ('x86' -eq "${{ matrix.BuildPlatform }}") {
+                #  $dotnetSdkOutFile = 'dotnet-sdk-7.0.407-win-x86.exe'
+                #  $dotnetSdkUrl = "https://download.visualstudio.microsoft.com/download/pr/f7f831c9-ee1e-4501-bfc8-d3750aeb0e76/8a7dce2defcd92c77e147603fce87528/$dotnetSdkOutFile"
+                #} else {
+                #  Write-Error 'Unsupported platform for test website'
+                #}
                 Invoke-WebRequest `
                   -Uri $dotnetSdkUrl `
                   -OutFile $dotnetSdkOutFile
@@ -232,6 +232,8 @@ jobs:
                   arguments: --configuration ${{ matrix.BuildConfiguration }} --arch ${{ matrix.BuildPlatform }} -p:PlatformTarget=${{ matrix.BuildPlatform }}
 
               - pwsh: |
+                  ls vnext\target\x64\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative.Test.Website\Publish
+
                   # Create and make available to IIS
                   $cert = New-SelfSignedCertificate `
                     -Type SSLServerAuthentication `
