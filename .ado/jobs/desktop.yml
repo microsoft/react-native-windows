@@ -220,6 +220,8 @@ jobs:
                   filePath: $(Build.SourcesDirectory)\vnext\Scripts\Tfs\Start-TestServers.ps1
                   arguments: -SourcesDirectory $(Build.SourcesDirectory)\vnext -Preload -SleepSeconds 120
 
+              - task: NuGetAuthenticate@1
+
               - task: DotNetCoreCLI@2
                 displayName: Publish Test Website
                 inputs:
