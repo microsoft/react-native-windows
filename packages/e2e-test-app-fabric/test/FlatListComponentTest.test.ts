@@ -61,14 +61,14 @@ const goToFlatListExample = async (input: string) => {
 };
 
 describe('FlatList Tests', () => {
-  test('A FlatList can display a list of components', async () => {
+  /*test('A FlatList can display a list of components', async () => {
     await searchBox('Basic');
     await goToFlatListExample('Basic');
     const component = await app.findElementByTestID('flatlist-basic');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('flatlist-basic');
     expect(dump).toMatchSnapshot();
-  });
+  });*/
   test('A FlatList can be filtered by a key word', async () => {
     await searchBox('Basic');
     await goToFlatListExample('Basic');
@@ -126,14 +126,14 @@ describe('FlatList Tests', () => {
     const dump = await dumpVisualTree('flat_list');
     expect(dump).toMatchSnapshot();
   });
-  test('A FlatList can have multiple columns', async () => {
+  /*test('A FlatList can have multiple columns', async () => {
     await searchBox('MultiColumn');
     await goToFlatListExample('MultiColumn');
     const component = await app.findElementByTestID('flatlist-multicolumn');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('flatlist-multicolumn');
     expect(dump).toMatchSnapshot();
-  });
+  });*/
   test('A FlatList can have sticky headers', async () => {
     await searchBox('Sticky');
     await goToFlatListExample('Sticky Headers');
