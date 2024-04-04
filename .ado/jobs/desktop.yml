@@ -31,10 +31,6 @@ parameters:
             BuildConfiguration: Debug
             BuildPlatform: x64
             UseFabric: true
-            #TODO: Remove before merging
-          - Name: X86Release
-            BuildConfiguration: Release
-            BuildPlatform: x86
       - BuildEnvironment: SecurePullRequest
         Matrix:
           - Name: X64DebugFabric
