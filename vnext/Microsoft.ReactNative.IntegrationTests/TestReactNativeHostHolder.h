@@ -8,9 +8,9 @@
 #include <string_view>
 
 #ifdef USE_WINUI3
-  #include <winrt/Microsoft.UI.Dispatching.h>
+#include <winrt/Microsoft.UI.Dispatching.h>
 #else
-  #include <winrt/Windows.System.h>
+#include <winrt/Windows.System.h>
 #endif
 
 namespace ReactNativeIntegrationTests {
