@@ -8,12 +8,12 @@
 
   <Identity
     Name="playground-composition"
-    Publisher="CN=jthysell"
+    Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
     Version="1.0.0.0" />
 
   <Properties>
     <DisplayName>playground-composition</DisplayName>
-    <PublisherDisplayName>jthysell</PublisherDisplayName>
+    <PublisherDisplayName>react-native-windows-testing</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 
