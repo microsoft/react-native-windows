@@ -52,6 +52,10 @@
               BuildConfiguration: Debug
               BuildPlatform: x64
               UseFabric: true
+            - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
+              BuildConfiguration: Release
+              BuildPlatform: x86
+              UseFabric: true
         - BuildEnvironment: Continuous
           Matrix:
             - Name: X64Debug

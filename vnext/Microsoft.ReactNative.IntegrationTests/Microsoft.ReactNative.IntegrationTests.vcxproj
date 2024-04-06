@@ -10,6 +10,15 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
+  <!-- Because the test exe is unpackaged, it needs the self contained WinAppSDK stuff below when testing against fabric -->
+  <PropertyGroup Label="FromWinUI3_VSIX" Condition="'$(UseWinUI3)'=='true'">
+    <AppContainerApplication>false</AppContainerApplication>
+    <ApplicationType>Windows Store</ApplicationType>
+    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
+    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
+    <WindowsPackageType>None</WindowsPackageType>
+  </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -53,6 +62,9 @@
     <!--
     <Import Project="PropertySheet.props" />
     -->
+  </ImportGroup>
+  <ImportGroup Condition=" '$(UseFabric)' == 'true' AND '$(UseWinUI3)' == 'true' ">
+    <Import Project="..\PropertySheets\WinUI.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup>
@@ -166,6 +178,9 @@
     <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.6" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
+  </ItemGroup>
+  <ItemGroup Condition=" '$(UseFabric)' == 'true' AND '$(UseWinUI3)' == 'true' ">
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Import Project="TestBundle.targets" />
