@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 03 Apr 2024 05:15:20 GMT and should not be manually modified.
+This log was last generated on Sat, 06 Apr 2024 05:16:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.799
+
+Sat, 06 Apr 2024 05:16:35 GMT
+
+### Changes
+
+- Fix Microsoft.ReactNative.IntegrationTests to run with Fabric (jthysell@microsoft.com)
 
 ## 0.0.0-canary.798
 
