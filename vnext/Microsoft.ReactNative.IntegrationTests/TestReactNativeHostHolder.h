@@ -5,8 +5,13 @@
 
 #include <functional/functor.h>
 #include <winrt/Microsoft.ReactNative.h>
-#include <winrt/Windows.System.h>
 #include <string_view>
+
+#ifdef USE_WINUI3
+#include <winrt/Microsoft.UI.Dispatching.h>
+#else
+#include <winrt/Windows.System.h>
+#endif
 
 namespace ReactNativeIntegrationTests {
 
@@ -25,7 +30,11 @@ struct TestReactNativeHostHolder {
 
  private:
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
+#ifdef USE_WINUI3
+  winrt::Microsoft::UI::Dispatching::DispatcherQueueController m_queueController{nullptr};
+#else
   winrt::Windows::System::DispatcherQueueController m_queueController{nullptr};
+#endif
 };
 
 } // namespace ReactNativeIntegrationTests

@@ -1113,8 +1113,6 @@ void WindowsTextInputComponentView::updateState(
     return;
   }
 
-  auto data = m_state->getData();
-
   if (!oldState) {
     m_mostRecentEventCount = m_state->getData().mostRecentEventCount;
   }
@@ -1123,18 +1121,10 @@ void WindowsTextInputComponentView::updateState(
     m_comingFromState = true;
     // Only handle single/empty fragments right now -- ignore the other fragments
 
-    LRESULT res;
-    CHARRANGE cr;
-    cr.cpMin = cr.cpMax = 0;
-    winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
-
     UpdateText(
         m_state->getData().attributedString.getFragments().size()
             ? m_state->getData().attributedString.getFragments()[0].string
             : "");
-
-    winrt::check_hresult(
-        m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(cr.cpMin), static_cast<LPARAM>(cr.cpMax), &res));
 
     m_comingFromState = false;
   }
@@ -1154,7 +1144,8 @@ void WindowsTextInputComponentView::UpdateText(const std::string &str) noexcept 
   winrt::check_hresult(m_textServices->TxSendMessage(
       EM_SETTEXTEX, reinterpret_cast<WPARAM>(&stt), reinterpret_cast<LPARAM>(str.c_str()), &res));
 
-  winrt::check_hresult(m_textServices->TxSendMessage(EM_EXGETSEL, 0, reinterpret_cast<LPARAM>(&cr), &res));
+  winrt::check_hresult(
+      m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(cr.cpMin), static_cast<LPARAM>(cr.cpMax), &res));
 
   // enable colored emojis
   winrt::check_hresult(
@@ -1225,7 +1216,7 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
 }
 
 void WindowsTextInputComponentView::OnSelectionChanged(LONG start, LONG end) noexcept {
-  if (m_eventEmitter /* && !m_comingFromJS ?? */) {
+  if (m_eventEmitter && !m_comingFromState /* && !m_comingFromJS ?? */) {
     auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
     facebook::react::WindowsTextInputEventEmitter::OnSelectionChange onSelectionChangeArgs;
     onSelectionChangeArgs.selection.start = start;

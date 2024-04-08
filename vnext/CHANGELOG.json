@@ -2,6 +2,36 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 06 Apr 2024 05:16:35 GMT",
+      "version": "0.0.0-canary.799",
+      "tag": "react-native-windows_v0.0.0-canary.799",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5c71eaccf2df6c23e47fb74bcd4e9eecbeb7c180",
+            "comment": "Fix Microsoft.ReactNative.IntegrationTests to run with Fabric"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 03 Apr 2024 05:15:20 GMT",
+      "version": "0.0.0-canary.798",
+      "tag": "react-native-windows_v0.0.0-canary.798",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "187f3a6cbeb5470af9560e41ff38a6b0552c366d",
+            "comment": "fix OnSelectionChanged running multiple times"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 02 Apr 2024 17:57:27 GMT",
       "version": "0.0.0-canary.797",
       "tag": "react-native-windows_v0.0.0-canary.797",

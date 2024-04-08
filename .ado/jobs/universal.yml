@@ -30,11 +30,19 @@
               BuildConfiguration: Debug
               BuildPlatform: x64
               UseFabric: true
+            - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
+              BuildConfiguration: Release
+              BuildPlatform: x86
+              UseFabric: true
         - BuildEnvironment: SecurePullRequest
           Matrix:
             - Name: X64DebugFabric
               BuildConfiguration: Debug
               BuildPlatform: x64
+              UseFabric: true
+            - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
+              BuildConfiguration: Release
+              BuildPlatform: x86
               UseFabric: true
         - BuildEnvironment: Continuous
           Matrix:
@@ -164,7 +172,7 @@
                   value: $(Agent.TempDirectory)/NuGetPackages
               displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
-                - UniversalBuild${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
+                - UniversalBuild${{ matrix.Name }}
 
               pool: ${{ parameters.AgentPool.Medium }}
               timeoutInMinutes: 60
@@ -189,10 +197,16 @@
                     arguments: -NoPrompt -Tags buildLab
 
                 - task: DownloadPipelineArtifact@1
-                  displayName: Download "ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}"
+                  ${{ if eq(matrix.UseFabric, true) }}:
+                    displayName: Download "ReactWindowsFabric.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}"
+                  ${{ else }}:
+                    displayName: Download "ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}"
                   inputs:
                     targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-                    artifactName: ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
+                    ${{ if eq(matrix.UseFabric, true) }}:
+                      artifactName: ReactWindowsFabric.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
+                    ${{ else }}:
+                      artifactName: ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
 
                 - task: BinSkim@4
                   displayName: Run Binskim Analysis

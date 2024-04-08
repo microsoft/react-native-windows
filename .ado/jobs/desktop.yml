@@ -243,7 +243,9 @@ jobs:
                   SSLCertThumbPrint: $(TestWebsiteCertificateThumbprint)
                   # IIS Website
                   WebsiteName: RNW Test Website
-                  WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative.Test.Website\Publish
+                  # Hard-coding x64 for publish path.
+                  # Our MSBuild customizations cause dotnet commans to assume the default PlatformTarget
+                  WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\x64\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative.Test.Website\Publish
                   WebsitePhysicalPathAuth: WebsiteUserPassThrough
                   CreateOrUpdateAppPoolForWebsite: false
                   ConfigureAuthenticationForWebsite: false
