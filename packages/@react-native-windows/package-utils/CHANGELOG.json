@@ -2,6 +2,33 @@
   "name": "@react-native-windows/package-utils",
   "entries": [
     {
+      "date": "Mon, 08 Apr 2024 15:16:49 GMT",
+      "version": "0.74.0-preview.1",
+      "tag": "@react-native-windows/package-utils_v0.74.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/package-utils",
+            "commit": "001f5fe72f13f7583f27e585962860fe4fdf229a",
+            "comment": "Promote 0.74 to preview"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.74.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/package-utils",
+            "comment": "Bump @react-native-windows/fs to v0.74.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Mar 2024 05:17:01 GMT",
       "version": "0.0.0-canary.64",
       "tag": "@react-native-windows/package-utils_v0.0.0-canary.64",

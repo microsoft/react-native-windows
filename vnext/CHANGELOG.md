@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 23 Mar 2024 05:17:00 GMT and should not be manually modified.
+This log was last generated on Mon, 08 Apr 2024 15:16:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.0-preview.1
+
+Mon, 08 Apr 2024 15:16:50 GMT
+
+### Changes
+
+- Promote 0.74 to preview (tatianakapos@microsoft.com)
+- [NetUI] Reintroduce experimental yoga flag for use by NetUI (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.74.0-preview.1
+- Bump @react-native-windows/codegen to v0.74.0-preview.1
 
 ## 0.0.0-canary.793
 
