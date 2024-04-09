@@ -17,11 +17,10 @@
 namespace facebook::react {
 
 void TextLayoutManager::GetTextLayout(
-    const AttributedString& attributedString,
-    const ParagraphAttributes& paragraphAttributes,
+    const AttributedString &attributedString,
+    const ParagraphAttributes &paragraphAttributes,
     Size size,
     winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept {
-
   auto fragments = attributedString.getFragments();
   auto outerFragment = fragments[0];
 
@@ -127,13 +126,11 @@ void TextLayoutManager::GetTextLayout(
   }
 }
 
-
 void TextLayoutManager::GetTextLayout(
-    const AttributedStringBox& attributedStringBox,
-    const ParagraphAttributes& paragraphAttributes,
+    const AttributedStringBox &attributedStringBox,
+    const ParagraphAttributes &paragraphAttributes,
     LayoutConstraints layoutConstraints,
     winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept {
-
   if (attributedStringBox.getValue().isEmpty())
     return;
 
@@ -141,8 +138,8 @@ void TextLayoutManager::GetTextLayout(
 }
 
 TextMeasurement TextLayoutManager::measure(
-    const AttributedStringBox& attributedStringBox,
-    const ParagraphAttributes& paragraphAttributes,
+    const AttributedStringBox &attributedStringBox,
+    const ParagraphAttributes &paragraphAttributes,
     const TextLayoutContext &layoutContext,
     LayoutConstraints layoutConstraints,
     std::shared_ptr<void> /* hostTextStorage */) const {
@@ -196,7 +193,7 @@ TextMeasurement TextLayoutManager::measure(
  */
 TextMeasurement TextLayoutManager::measureCachedSpannableById(
     int64_t cacheId,
-    const ParagraphAttributes& paragraphAttributes,
+    const ParagraphAttributes &paragraphAttributes,
     LayoutConstraints layoutConstraints) const {
   assert(false);
   return {};
@@ -222,10 +219,9 @@ Microsoft::ReactNative::TextTransform ConvertTextTransform(std::optional<TextTra
 }
 
 LinesMeasurements TextLayoutManager::measureLines(
-    const AttributedString& attributedString,
-    const ParagraphAttributes& paragraphAttributes,
+    const AttributedString &attributedString,
+    const ParagraphAttributes &paragraphAttributes,
     Size size) const {
-
   LinesMeasurements lineMeasurements{};
 
   winrt::com_ptr<IDWriteTextLayout> spTextLayout;
@@ -233,61 +229,61 @@ LinesMeasurements TextLayoutManager::measureLines(
   GetTextLayout(attributedString, paragraphAttributes, size, spTextLayout);
 
   if (spTextLayout) {
-      std::vector<DWRITE_LINE_METRICS> lineMetrics;
-      uint32_t actualLineCount;
-      spTextLayout->GetLineMetrics(nullptr, 0, &actualLineCount);
-      lineMetrics.resize(static_cast<size_t>(actualLineCount));
-      winrt::check_hresult(spTextLayout->GetLineMetrics(lineMetrics.data(), actualLineCount, &actualLineCount));
-      uint32_t startRange = 0;
-      const auto count = (paragraphAttributes.maximumNumberOfLines > 0)
-          ? std::min(static_cast<uint32_t>(paragraphAttributes.maximumNumberOfLines), actualLineCount)
-          : actualLineCount;
-      for (uint32_t i = 0; i < count; ++i) {
-        UINT32 actualHitTestCount = 0;
-        spTextLayout->HitTestTextRange(
-            startRange,
-            lineMetrics[i].length,
-            0, // x
-            0, // y
-            NULL,
-            0, // metrics count
-            &actualHitTestCount);
+    std::vector<DWRITE_LINE_METRICS> lineMetrics;
+    uint32_t actualLineCount;
+    spTextLayout->GetLineMetrics(nullptr, 0, &actualLineCount);
+    lineMetrics.resize(static_cast<size_t>(actualLineCount));
+    winrt::check_hresult(spTextLayout->GetLineMetrics(lineMetrics.data(), actualLineCount, &actualLineCount));
+    uint32_t startRange = 0;
+    const auto count = (paragraphAttributes.maximumNumberOfLines > 0)
+        ? std::min(static_cast<uint32_t>(paragraphAttributes.maximumNumberOfLines), actualLineCount)
+        : actualLineCount;
+    for (uint32_t i = 0; i < count; ++i) {
+      UINT32 actualHitTestCount = 0;
+      spTextLayout->HitTestTextRange(
+          startRange,
+          lineMetrics[i].length,
+          0, // x
+          0, // y
+          NULL,
+          0, // metrics count
+          &actualHitTestCount);
 
-        // Allocate enough room to return all hit-test metrics.
-        std::vector<DWRITE_HIT_TEST_METRICS> hitTestMetrics(actualHitTestCount);
-        spTextLayout->HitTestTextRange(
-            startRange,
-            lineMetrics[i].length,
-            0, // x
-            0, // y
-            &hitTestMetrics[0],
-            static_cast<UINT32>(hitTestMetrics.size()),
-            &actualHitTestCount);
+      // Allocate enough room to return all hit-test metrics.
+      std::vector<DWRITE_HIT_TEST_METRICS> hitTestMetrics(actualHitTestCount);
+      spTextLayout->HitTestTextRange(
+          startRange,
+          lineMetrics[i].length,
+          0, // x
+          0, // y
+          &hitTestMetrics[0],
+          static_cast<UINT32>(hitTestMetrics.size()),
+          &actualHitTestCount);
 
-        float width = 0;
-        for (auto tm : hitTestMetrics) {
-          width += tm.width;
-        }
+      float width = 0;
+      for (auto tm : hitTestMetrics) {
+        width += tm.width;
+      }
 
-        std::string str;
-        for (const auto &fragment : attributedString.getFragments()) {
-          str = str +
-              winrt::to_string(Microsoft::ReactNative::TransformableText::TransformText(
-                  winrt::hstring{Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string)},
-                  ConvertTextTransform(fragment.textAttributes.textTransform)));
-        }
+      std::string str;
+      for (const auto &fragment : attributedString.getFragments()) {
+        str = str +
+            winrt::to_string(Microsoft::ReactNative::TransformableText::TransformText(
+                winrt::hstring{Microsoft::Common::Unicode::Utf8ToUtf16(fragment.string)},
+                ConvertTextTransform(fragment.textAttributes.textTransform)));
+      }
 
-        lineMeasurements.emplace_back(LineMeasurement(
-            str.substr(startRange, lineMetrics[i].length),
-            {{hitTestMetrics[0].left, hitTestMetrics[0].top}, // origin
-             {width, lineMetrics[i].height}},
-            0.0f, // TODO descender
-            0.0f, // TODO: capHeight
-            0.0f, // TODO ascender
-            0.0f // TODO: xHeight
-            ));
+      lineMeasurements.emplace_back(LineMeasurement(
+          str.substr(startRange, lineMetrics[i].length),
+          {{hitTestMetrics[0].left, hitTestMetrics[0].top}, // origin
+           {width, lineMetrics[i].height}},
+          0.0f, // TODO descender
+          0.0f, // TODO: capHeight
+          0.0f, // TODO ascender
+          0.0f // TODO: xHeight
+          ));
 
-        startRange += lineMetrics[i].length;
+      startRange += lineMetrics[i].length;
     }
   }
 
@@ -295,8 +291,8 @@ LinesMeasurements TextLayoutManager::measureLines(
 }
 
 std::shared_ptr<void> TextLayoutManager::getHostTextStorage(
-    const AttributedString& attributedString,
-    const ParagraphAttributes& paragraphAttributes,
+    const AttributedString &attributedString,
+    const ParagraphAttributes &paragraphAttributes,
     LayoutConstraints layoutConstraints) const {
   return nullptr;
 }
@@ -305,7 +301,7 @@ void *TextLayoutManager::getNativeTextLayoutManager() const {
   return (void *)this;
 }
 
-winrt::hstring TextLayoutManager::GetTransformedText(const AttributedString& attributedString) {
+winrt::hstring TextLayoutManager::GetTransformedText(const AttributedString &attributedString) {
   winrt::hstring result{};
   for (const auto &fragment : attributedString.getFragments()) {
     result = result +
