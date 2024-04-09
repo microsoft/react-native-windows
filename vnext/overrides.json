@@ -144,7 +144,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/algorithm/CalculateLayout.cpp",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/algorithm/CalculateLayout.cpp",
-      "baseHash": "7382d295a155c454e5f2311b326a7522296cf1d8"
+      "baseHash": "7b41187f8b5803e238b1b461e058ef87f079e9c2"
     },
     {
       "type": "patch",
