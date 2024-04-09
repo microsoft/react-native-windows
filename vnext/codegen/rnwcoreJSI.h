@@ -2293,7 +2293,99 @@ private:
 };
 
 
-  class JSI_EXPORT NativeBlobModuleCxxSpecJSI : public TurboModule {
+  
+#pragma mark - BlobModuleBaseConstants
+
+template <typename P0, typename P1>
+struct [[deprecated("Use BlobModuleConstants instead.")]] BlobModuleBaseConstants {
+  P0 BLOB_URI_SCHEME;
+  P1 BLOB_URI_HOST;
+  bool operator==(const BlobModuleBaseConstants &other) const {
+    return BLOB_URI_SCHEME == other.BLOB_URI_SCHEME && BLOB_URI_HOST == other.BLOB_URI_HOST;
+  }
+};
+
+template <typename P0, typename P1>
+struct [[deprecated("Use BlobModuleConstantsBridging instead.")]] BlobModuleBaseConstantsBridging {
+  static BlobModuleBaseConstants<P0, P1> fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    BlobModuleBaseConstants<P0, P1> result{
+      bridging::fromJs<P0>(rt, value.getProperty(rt, "BLOB_URI_SCHEME"), jsInvoker),
+      bridging::fromJs<P1>(rt, value.getProperty(rt, "BLOB_URI_HOST"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static std::optional<jsi::String> BLOB_URI_SCHEMEToJs(jsi::Runtime &rt, P0 value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static std::optional<jsi::String> BLOB_URI_HOSTToJs(jsi::Runtime &rt, P1 value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const BlobModuleBaseConstants<P0, P1> &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "BLOB_URI_SCHEME", bridging::toJs(rt, value.BLOB_URI_SCHEME, jsInvoker));
+    result.setProperty(rt, "BLOB_URI_HOST", bridging::toJs(rt, value.BLOB_URI_HOST, jsInvoker));
+    return result;
+  }
+};
+
+
+#pragma mark - BlobModuleConstants
+
+template <typename P0, typename P1>
+struct BlobModuleConstants {
+  P0 BLOB_URI_SCHEME;
+  P1 BLOB_URI_HOST;
+  bool operator==(const BlobModuleConstants &other) const {
+    return BLOB_URI_SCHEME == other.BLOB_URI_SCHEME && BLOB_URI_HOST == other.BLOB_URI_HOST;
+  }
+};
+
+template <typename T>
+struct BlobModuleConstantsBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.BLOB_URI_SCHEME)>(rt, value.getProperty(rt, "BLOB_URI_SCHEME"), jsInvoker),
+      bridging::fromJs<decltype(types.BLOB_URI_HOST)>(rt, value.getProperty(rt, "BLOB_URI_HOST"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static std::optional<jsi::String> BLOB_URI_SCHEMEToJs(jsi::Runtime &rt, decltype(types.BLOB_URI_SCHEME) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static std::optional<jsi::String> BLOB_URI_HOSTToJs(jsi::Runtime &rt, decltype(types.BLOB_URI_HOST) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "BLOB_URI_SCHEME", bridging::toJs(rt, value.BLOB_URI_SCHEME, jsInvoker));
+    result.setProperty(rt, "BLOB_URI_HOST", bridging::toJs(rt, value.BLOB_URI_HOST, jsInvoker));
+    return result;
+  }
+};
+
+class JSI_EXPORT NativeBlobModuleCxxSpecJSI : public TurboModule {
 protected:
   NativeBlobModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 

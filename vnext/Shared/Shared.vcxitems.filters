@@ -322,6 +322,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\ExecutionContext.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\jsi-utils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextDrawing.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\ColorComponents.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">
