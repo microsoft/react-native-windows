@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 09 Apr 2024 05:15:27 GMT",
+      "version": "0.0.0-canary.800",
+      "tag": "react-native-windows_v0.0.0-canary.800",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "80688a379bd50ada12089796dd6f875d80fbe116",
+            "comment": "Rework EventPhase type to avoid using TS enum"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 06 Apr 2024 05:16:35 GMT",
       "version": "0.0.0-canary.799",
       "tag": "react-native-windows_v0.0.0-canary.799",

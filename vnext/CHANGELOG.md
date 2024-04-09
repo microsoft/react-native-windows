@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 06 Apr 2024 05:16:35 GMT and should not be manually modified.
+This log was last generated on Tue, 09 Apr 2024 05:15:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.800
+
+Tue, 09 Apr 2024 05:15:27 GMT
+
+### Changes
+
+- Rework EventPhase type to avoid using TS enum (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.799
 
