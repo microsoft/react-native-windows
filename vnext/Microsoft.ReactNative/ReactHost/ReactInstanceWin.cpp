@@ -646,8 +646,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                 return turboModuleManager->getModule(name);
               };
 
-              facebook::react::TurboModuleBinding::install(
-                  runtime, std::function(binding), nullptr, m_options.TurboModuleProvider->LongLivedObjectCollection());
+              facebook::react::TurboModuleBinding::install(runtime, std::function(binding));
 
               auto componentDescriptorRegistry =
                   Microsoft::ReactNative::WindowsComponentDescriptorRegistry::FromProperties(
@@ -840,7 +839,6 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
                 std::move(bundleRootPath), // bundleRootPath
                 std::move(cxxModules),
                 m_options.TurboModuleProvider,
-                m_options.TurboModuleProvider->LongLivedObjectCollection(),
                 m_reactContext->Properties(),
                 std::make_unique<BridgeUIBatchInstanceCallback>(weakThis),
                 m_jsMessageThread.Load(),

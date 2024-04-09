@@ -26,12 +26,8 @@ class TurboModulesProvider final : public facebook::react::TurboModuleRegistry {
       winrt::hstring const &moduleName,
       ReactModuleProvider const &moduleProvider,
       bool overwriteExisting) noexcept;
-  std::shared_ptr<facebook::react::LongLivedObjectCollection> const &LongLivedObjectCollection() noexcept;
 
  private:
-  // To keep a list of deferred asynchronous callbacks and promises.
-  std::shared_ptr<facebook::react::LongLivedObjectCollection> m_longLivedObjectCollection{
-      std::make_shared<facebook::react::LongLivedObjectCollection>()};
   std::unordered_map<std::string, ReactModuleProvider> m_moduleProviders;
   IReactContext m_reactContext;
 };
