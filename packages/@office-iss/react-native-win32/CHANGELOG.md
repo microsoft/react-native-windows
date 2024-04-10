@@ -1,8 +1,20 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 30 Mar 2024 05:18:03 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Apr 2024 05:18:18 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.240
+
+Wed, 10 Apr 2024 05:18:18 GMT
+
+### Changes
+
+- integrate 2/29 (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.11
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.15
+- Bump @rnw-scripts/just-task to v2.3.27
+- Bump react-native-platform-override to v1.9.27
 
 ## 0.0.0-canary.239
 

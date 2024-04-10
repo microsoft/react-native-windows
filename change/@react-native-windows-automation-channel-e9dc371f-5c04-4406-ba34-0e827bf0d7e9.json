@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "integrate 2/29",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "yajurgrover24@gmail.com",
-  "dependentChangeType": "patch"
-}
