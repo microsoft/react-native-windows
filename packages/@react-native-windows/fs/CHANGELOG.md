@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Sat, 30 Mar 2024 05:18:04 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Apr 2024 05:18:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.40
+
+Wed, 10 Apr 2024 05:18:19 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.11
+- Bump @rnw-scripts/just-task to v2.3.27
 
 ## 0.0.0-canary.39
 

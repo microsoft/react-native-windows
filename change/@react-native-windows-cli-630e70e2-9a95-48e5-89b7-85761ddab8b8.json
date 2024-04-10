@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "fix cli version",
-  "packageName": "@react-native-windows/cli",
-  "email": "yajurgrover24@gmail.com",
-  "dependentChangeType": "patch"
-}
