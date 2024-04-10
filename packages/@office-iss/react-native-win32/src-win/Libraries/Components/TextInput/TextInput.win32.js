@@ -1873,10 +1873,13 @@ const ExportedForwardRef: React.AbstractComponent<
           : undefined
       }
       textContentType={
-        Platform.OS === 'ios' &&
-        autoComplete &&
-        autoComplete in autoCompleteWebToTextContentTypeMap
-          ? // $FlowFixMe
+        textContentType != null
+          ? textContentType
+          : Platform.OS === 'ios' &&
+            autoComplete &&
+            autoComplete in autoCompleteWebToTextContentTypeMap
+          ? // $FlowFixMe[invalid-computed-prop]
+            // $FlowFixMe[prop-missing]
             autoCompleteWebToTextContentTypeMap[autoComplete]
           : textContentType
       }

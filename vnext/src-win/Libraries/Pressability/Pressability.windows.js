@@ -148,33 +148,6 @@ export type PressabilityConfig = $ReadOnly<{|
    */
   blockNativeResponder?: ?boolean,
 
-  /**
-   * Returns whether a long press gesture should cancel the press gesture.
-   * Defaults to true.
-   *
-   * @deprecated
-   */
-  onLongPressShouldCancelPress_DEPRECATED?: ?() => boolean,
-
-  /**
-   * If `cancelable` is set, this will be ignored.
-   *
-   * Returns whether to yield to a lock termination request (e.g. if a native
-   * scroll gesture attempts to steal the responder lock).
-   *
-   * @deprecated
-   */
-  onResponderTerminationRequest_DEPRECATED?: ?() => boolean,
-
-  /**
-   * If `disabled` is set, this will be ignored.
-   *
-   * Returns whether to start a press gesture.
-   *
-   * @deprecated
-   */
-  onStartShouldSetResponder_DEPRECATED?: ?() => boolean,
-
   // [Windows
   /**
    * Raw handler for onMouseEnter that will be preferred if set over hover
@@ -508,13 +481,7 @@ export default class Pressability {
     const responderEventHandlers = {
       onStartShouldSetResponder: (): boolean => {
         const {disabled} = this._config;
-        if (disabled == null) {
-          const {onStartShouldSetResponder_DEPRECATED} = this._config;
-          return onStartShouldSetResponder_DEPRECATED == null
-            ? true
-            : onStartShouldSetResponder_DEPRECATED();
-        }
-        return !disabled;
+        return !disabled ?? true;
       },
 
       onResponderGrant: (event: PressEvent): void | boolean => {
@@ -592,13 +559,7 @@ export default class Pressability {
 
       onResponderTerminationRequest: (): boolean => {
         const {cancelable} = this._config;
-        if (cancelable == null) {
-          const {onResponderTerminationRequest_DEPRECATED} = this._config;
-          return onResponderTerminationRequest_DEPRECATED == null
-            ? true
-            : onResponderTerminationRequest_DEPRECATED();
-        }
-        return cancelable;
+        return cancelable ?? true;
       },
 
       onClick: (event: PressEvent): void => {
@@ -892,9 +853,7 @@ export default class Pressability {
         this._isDefaultPressButton(getTouchFromPressEvent(event).button)
       ) {
         const isPressCanceledByLongPress =
-          onLongPress != null &&
-          prevState === 'RESPONDER_ACTIVE_LONG_PRESS_IN' &&
-          this._shouldLongPressCancelPress();
+          onLongPress != null && prevState === 'RESPONDER_ACTIVE_LONG_PRESS_IN';
         if (!isPressCanceledByLongPress) {
           if (Platform.OS === 'android' && android_disableSound !== true) {
             SoundManager.playTouchSound();
@@ -1029,13 +988,6 @@ export default class Pressability {
     ) {
       this._receiveSignal('LONG_PRESS_DETECTED', event);
     }
-  }
-
-  _shouldLongPressCancelPress(): boolean {
-    return (
-      this._config.onLongPressShouldCancelPress_DEPRECATED == null ||
-      this._config.onLongPressShouldCancelPress_DEPRECATED()
-    );
   }
 
   _cancelHoverInDelayTimeout(): void {

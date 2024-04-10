@@ -21,15 +21,17 @@ protected:
 
 public:
   virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
-  virtual bool enableBackgroundExecutor(jsi::Runtime &rt) = 0;
-  virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
-  virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
   virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
-  virtual bool enableSpannableBuildingUnification(jsi::Runtime &rt) = 0;
+  virtual bool enableBackgroundExecutor(jsi::Runtime &rt) = 0;
   virtual bool enableCustomDrawOrderFabric(jsi::Runtime &rt) = 0;
   virtual bool enableFixForClippedSubviewsCrash(jsi::Runtime &rt) = 0;
+  virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
+  virtual bool enableMountHooksAndroid(jsi::Runtime &rt) = 0;
+  virtual bool enableSpannableBuildingUnification(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableModernCDPRegistry(jsi::Runtime &rt) = 0;
+  virtual bool skipMountHookNotifications(jsi::Runtime &rt) = 0;
+  virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
 
 };
 
@@ -61,30 +63,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::commonTestFlag, jsInvoker_, instance_);
     }
-    bool enableBackgroundExecutor(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::enableBackgroundExecutor) == 1,
-          "Expected enableBackgroundExecutor(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::enableBackgroundExecutor, jsInvoker_, instance_);
-    }
-    bool useModernRuntimeScheduler(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::useModernRuntimeScheduler) == 1,
-          "Expected useModernRuntimeScheduler(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::useModernRuntimeScheduler, jsInvoker_, instance_);
-    }
-    bool enableMicrotasks(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::enableMicrotasks) == 1,
-          "Expected enableMicrotasks(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::enableMicrotasks, jsInvoker_, instance_);
-    }
     bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::batchRenderingUpdatesInEventLoop) == 1,
@@ -93,13 +71,13 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::batchRenderingUpdatesInEventLoop, jsInvoker_, instance_);
     }
-    bool enableSpannableBuildingUnification(jsi::Runtime &rt) override {
+    bool enableBackgroundExecutor(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::enableSpannableBuildingUnification) == 1,
-          "Expected enableSpannableBuildingUnification(...) to have 1 parameters");
+          bridging::getParameterCount(&T::enableBackgroundExecutor) == 1,
+          "Expected enableBackgroundExecutor(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::enableSpannableBuildingUnification, jsInvoker_, instance_);
+          rt, &T::enableBackgroundExecutor, jsInvoker_, instance_);
     }
     bool enableCustomDrawOrderFabric(jsi::Runtime &rt) override {
       static_assert(
@@ -117,6 +95,30 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableFixForClippedSubviewsCrash, jsInvoker_, instance_);
     }
+    bool enableMicrotasks(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableMicrotasks) == 1,
+          "Expected enableMicrotasks(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableMicrotasks, jsInvoker_, instance_);
+    }
+    bool enableMountHooksAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableMountHooksAndroid) == 1,
+          "Expected enableMountHooksAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableMountHooksAndroid, jsInvoker_, instance_);
+    }
+    bool enableSpannableBuildingUnification(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableSpannableBuildingUnification) == 1,
+          "Expected enableSpannableBuildingUnification(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableSpannableBuildingUnification, jsInvoker_, instance_);
+    }
     bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::inspectorEnableCxxInspectorPackagerConnection) == 1,
@@ -132,6 +134,22 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::inspectorEnableModernCDPRegistry, jsInvoker_, instance_);
+    }
+    bool skipMountHookNotifications(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::skipMountHookNotifications) == 1,
+          "Expected skipMountHookNotifications(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::skipMountHookNotifications, jsInvoker_, instance_);
+    }
+    bool useModernRuntimeScheduler(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useModernRuntimeScheduler) == 1,
+          "Expected useModernRuntimeScheduler(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useModernRuntimeScheduler, jsInvoker_, instance_);
     }
 
   private:

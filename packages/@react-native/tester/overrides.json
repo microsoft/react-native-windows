@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.75.0-nightly-20240229-21171222e",
+  "baseVersion": "0.75.0-nightly-20240307-ff03b149e",
   "overrides": [
     {
       "type": "copy",
@@ -19,7 +19,7 @@
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
-      "baseHash": "bf3ca247de469a20291dac344b4817a363581763",
+      "baseHash": "c3e22748043a47b6947f0fdb6f9374e57112f4de",
       "issue": 4054
     },
     {
@@ -250,7 +250,7 @@
       "type": "copy",
       "directory": "js/examples/Performance",
       "baseDirectory": "packages/rn-tester/js/examples/Performance",
-      "baseHash": "2cb56896687df27a1f22fad45a2d608167859a61",
+      "baseHash": "d5feb94a551a591ced92e86c28c01cf99b3021ec",
       "issue": 0
     },
     {
@@ -264,7 +264,7 @@
       "type": "copy",
       "directory": "js/examples/PlatformColor",
       "baseDirectory": "packages/rn-tester/js/examples/PlatformColor",
-      "baseHash": "083ae8ddb7675a0678a84ade2354921709e0fe29",
+      "baseHash": "359ac542e21946a5bc85aac1153d708fffa9aebd",
       "issue": 4054
     },
     {
@@ -278,7 +278,7 @@
       "type": "copy",
       "directory": "js/examples/Pressable",
       "baseDirectory": "packages/rn-tester/js/examples/Pressable",
-      "baseHash": "aea3af3c27e5db79bb2a92ee6546ee047a83b5b5",
+      "baseHash": "5773550e2dc20f6a1d786d24460267c637deecf2",
       "issue": 4054
     },
     {
@@ -404,7 +404,7 @@
       "type": "copy",
       "directory": "js/examples/Touchable",
       "baseDirectory": "packages/rn-tester/js/examples/Touchable",
-      "baseHash": "cdc451d462449c9b55cae0a7dce5abeef72509d1",
+      "baseHash": "fa97ac7e0abb2dc21087923a3887cbe307b29c5f",
       "issue": 4054
     },
     {
@@ -474,7 +474,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "e15cbd95c6c07cb7cdfdea1baebd192fe7392438",
+      "baseHash": "df33c55275d69437bad7d62806a7fe3b81c19b5b",
       "issue": 4054
     },
     {
@@ -488,7 +488,7 @@
       "type": "copy",
       "directory": "js/utils",
       "baseDirectory": "packages/rn-tester/js/utils",
-      "baseHash": "808ce3514bdbf7b99623d31a786538a3b8c5c346",
+      "baseHash": "df5dbcb578e750a6e9c5ebd11bbda593c12d796b",
       "issue": 4054
     },
     {
@@ -523,7 +523,7 @@
       "type": "copy",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "5594c2c07f69b4db976a835bfb57611a147d5809",
+      "baseHash": "e21499711af0cee6e00c28af01d3b87c501fa0b7",
       "issue": 4054
     }
   ]
