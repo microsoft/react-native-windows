@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 08 Apr 2024 15:16:48 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Apr 2024 16:29:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.0-preview.2
+
+Thu, 11 Apr 2024 16:29:48 GMT
+
+### Changes
+
+- integrate react-native 0.74-rc6 (email not defined)
 
 ## 0.74.0-preview.1
 

@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 11 Apr 2024 16:29:48 GMT",
+      "version": "0.74.0-preview.2",
+      "tag": "react-native-windows_v0.74.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "5f10e604924b47b0baa64825d8770be4e3a074b1",
+            "comment": "integrate react-native 0.74-rc6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.74.0-preview.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 08 Apr 2024 15:16:50 GMT",
       "version": "0.74.0-preview.1",
       "tag": "react-native-windows_v0.74.0-preview.1",
