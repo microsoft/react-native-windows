@@ -12,6 +12,7 @@
 
 import type {ResolvedAssetSource} from './AssetSourceResolver';
 import type {ImageSource} from './ImageSource';
+const ensureShortPath = require('./assetPaths.js');
 
 import SourceCode from '../NativeModules/specs/NativeSourceCode';
 
