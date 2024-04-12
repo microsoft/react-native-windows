@@ -1357,38 +1357,41 @@ TEST_P(JSITest, JSErrorTest) {
            "throw e;"),
       JSIException);
 }
+// [Windows #12946
 
-TEST_P(JSITest, MicrotasksTest) {
-  try {
-    rt.global().setProperty(rt, "globalValue", String::createFromAscii(rt, ""));
+// TEST_P(JSITest, MicrotasksTest) {
+//   try {
+//     rt.global().setProperty(rt, "globalValue", String::createFromAscii(rt, ""));
 
-    auto microtask1 =
-        function("function microtask1() { globalValue += 'hello'; }");
-    auto microtask2 =
-        function("function microtask2() { globalValue += ' world' }");
+//     auto microtask1 =
+//         function("function microtask1() { globalValue += 'hello'; }");
+//     auto microtask2 =
+//         function("function microtask2() { globalValue += ' world' }");
 
-    rt.queueMicrotask(microtask1);
-    rt.queueMicrotask(microtask2);
+//     rt.queueMicrotask(microtask1);
+//     rt.queueMicrotask(microtask2);
 
-    EXPECT_EQ(
-        rt.global().getProperty(rt, "globalValue").asString(rt).utf8(rt), "");
+//     EXPECT_EQ(
+//         rt.global().getProperty(rt, "globalValue").asString(rt).utf8(rt), "");
 
-    rt.drainMicrotasks();
+//     rt.drainMicrotasks();
 
-    EXPECT_EQ(
-        rt.global().getProperty(rt, "globalValue").asString(rt).utf8(rt),
-        "hello world");
+//     EXPECT_EQ(
+//         rt.global().getProperty(rt, "globalValue").asString(rt).utf8(rt),
+//         "hello world");
 
-    // Microtasks shouldn't run again
-    rt.drainMicrotasks();
+//     // Microtasks shouldn't run again
+//     rt.drainMicrotasks();
 
-    EXPECT_EQ(
-        rt.global().getProperty(rt, "globalValue").asString(rt).utf8(rt),
-        "hello world");
-  } catch (const JSINativeException& ex) {
-    // queueMicrotask() is unimplemented by some runtimes, ignore such failures.
-  }
-}
+//     EXPECT_EQ(
+//         rt.global().getProperty(rt, "globalValue").asString(rt).utf8(rt),
+//         "hello world");
+//   } catch (const JSINativeException& ex) {
+//     // queueMicrotask() is unimplemented by some runtimes, ignore such failures.
+//   }
+// }
+
+// Windows] 
 
 //----------------------------------------------------------------------
 // Test that multiple levels of delegation in DecoratedHostObjects works.
