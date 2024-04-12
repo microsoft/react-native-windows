@@ -28,6 +28,7 @@ const {
   getAndroidResourceIdentifier,
 } = require('@react-native/assets-registry/path-support');
 const invariant = require('invariant');
+// $FlowFixMe[untyped-import]
 const ensureShortPath = require('./assetPaths.js'); // [Windows]
 
 // [Windows - instead of using basePath from @react-native/assets-registry/path-support]
@@ -41,6 +42,7 @@ function getBasePath(asset: PackagerAsset, local: boolean) {
     const safePath = basePath.replace(/\.\.\//g, '_');
     // If this asset was created with saveAssetPlugin, then we should shorten the path
     // This conditional allow compat of bundles which might have been created without the saveAssetPlugin
+    // $FlowFixMe[prop-missing]
     if (asset.__useShortPath) {
       return ensureShortPath(safePath);
     }
