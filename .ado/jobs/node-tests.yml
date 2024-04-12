@@ -12,7 +12,7 @@ parameters:
 
   - name: versions
     type: object
-    default: [18]
+    default: [20]
 
 jobs:
   - ${{ each nodeVersion in parameters.versions }}:
@@ -20,7 +20,7 @@ jobs:
       displayName: Node Tests v${{ nodeVersion }}
       timeoutInMinutes: 20
       variables: [template: ../variables/windows.yml]
-      pool: ${{ parameters.AgentPool.Medium }}
+      pool: windows-2022
 
       steps:
         - template: ../templates/checkout-shallow.yml
