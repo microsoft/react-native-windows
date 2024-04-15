@@ -20,7 +20,7 @@ jobs:
       displayName: Node Tests v${{ nodeVersion }}
       timeoutInMinutes: 20
       variables: [template: ../variables/windows.yml]
-      pool: windows-2022
+      pool: ubuntu-latest
 
       steps:
         - template: ../templates/checkout-shallow.yml
