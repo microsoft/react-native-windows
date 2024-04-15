@@ -528,6 +528,20 @@
       "file": "src-win/src/private/specs/modules/NativePlatformConstantsWin.js",
       "baseFile": "packages/react-native/src/private/specs/modules/NativePlatformConstantsAndroid.js",
       "baseHash": "b4a125d9134f33aeaba9e06988e18cbb0b4e9e9c"
+    },
+    {
+      "type": "patch",
+      "file": "src-win/src/private/webapis/dom/nodes/ReadOnlyElement.js",
+      "baseFile": "packages/react-native/src/private/webapis/dom/nodes/ReadOnlyElement.js",
+      "baseHash": "e049a95c6fab9e5d3f7e13edbeb7b12440f71259",
+      "issue": 12951
+    },
+    {
+      "type": "patch",
+      "file": "src-win/src/private/webapis/dom/nodes/ReadOnlyNode.js",
+      "baseFile": "packages/react-native/src/private/webapis/dom/nodes/ReadOnlyNode.js",
+      "baseHash": "bbb8d136ec9b0f56a3843ea9da0bd1e17a50a7a3",
+      "issue": 12951
     }
   ]
 }
