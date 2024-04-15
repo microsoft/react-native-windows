@@ -1,11 +1,11 @@
 {
-  "baseVersion": "0.74.0-rc.8",
+  "baseVersion": "0.74.0-rc.9",
   "overrides": [
     {
       "type": "patch",
       "file": "package.json",
       "baseFile": "package.json",
-      "baseHash": "7a6392ca447a470389d5fb7e983abaa7942090e0"
+      "baseHash": "82a51585963d4dbfd6fdf7e69b059b8b2db5246e"
     }
   ]
 }

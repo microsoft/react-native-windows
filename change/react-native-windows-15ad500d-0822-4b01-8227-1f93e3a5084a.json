@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "integrate rc8",
+  "comment": "integrate rc9",
   "packageName": "react-native-windows",
   "email": "tatianakapos@microsoft.com",
   "dependentChangeType": "patch"
