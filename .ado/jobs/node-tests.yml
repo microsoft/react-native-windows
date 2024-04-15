@@ -29,8 +29,6 @@ jobs:
           parameters:
             workspace: '@rnw-scripts/beachball-config'
 
-        - template: ../templates/prepare-js-env.yml
-
         - task: NodeTool@0
           displayName: Using Node ${{ nodeVersion }}.x
           inputs:
