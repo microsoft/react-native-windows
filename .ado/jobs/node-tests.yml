@@ -26,8 +26,6 @@ jobs:
         - template: ../templates/checkout-shallow.yml
 
         - template: ../templates/strict-yarn-install.yml
-          parameters:
-            workspace: '@rnw-scripts/beachball-config'
 
         - task: NodeTool@0
           displayName: Using Node ${{ nodeVersion }}.x
