@@ -12,7 +12,7 @@ parameters:
 
   - name: versions
     type: object
-    default: [20]
+    default: [18]
 
 jobs:
   - ${{ each nodeVersion in parameters.versions }}:
@@ -20,12 +20,12 @@ jobs:
       displayName: Node Tests v${{ nodeVersion }}
       timeoutInMinutes: 20
       variables: [template: ../variables/windows.yml]
-      pool: {vmImage: ubuntu-latest}
+      pool: ${{ parameters.AgentPool.Medium }}
 
       steps:
         - template: ../templates/checkout-shallow.yml
 
-        - template: ../templates/strict-yarn-install.yml
+        - template: ../templates/prepare-js-env.yml
 
         - task: NodeTool@0
           displayName: Using Node ${{ nodeVersion }}.x
