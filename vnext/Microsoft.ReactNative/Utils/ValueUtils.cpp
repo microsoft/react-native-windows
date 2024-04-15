@@ -200,7 +200,7 @@ REACTWINDOWS_API_(winrt::Color) ColorFrom(const folly::dynamic &d) {
   return ColorFromNumber(static_cast<UINT>(d.asInt()));
 }
 
-winrt::Color ColorFrom(const winrt::Microsoft::ReactNative::JSValue &v) {
+REACTWINDOWS_API_(winrt::Color) ColorFrom(const winrt::Microsoft::ReactNative::JSValue &v) {
   if (v.Type() != winrt::Microsoft::ReactNative::JSValueType::Int64 &&
       v.Type() != winrt::Microsoft::ReactNative::JSValueType::Double)
     return winrt::Colors::Transparent();
