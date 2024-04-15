@@ -25,6 +25,10 @@ jobs:
       steps:
         - template: ../templates/checkout-shallow.yml
 
+        - template: ../templates/strict-yarn-install.yml
+          parameters:
+            workspace: '@rnw-scripts/beachball-config'
+
         - template: ../templates/prepare-js-env.yml
 
         - task: NodeTool@0
