@@ -2543,9 +2543,9 @@
   integrity sha512-ePKKxVvql214HHFFmG5RR5t/DFeCQFKB8Xnzh90YwSHEM/5QsncdDrRAKBeEa6liE+DH2FvXVnnYXYhPxqZNSA==
 
 "@react-native/popup-menu-android@^0.74.0":
-  version "0.74.76"
-  resolved "https://registry.yarnpkg.com/@react-native/popup-menu-android/-/popup-menu-android-0.74.76.tgz#9c986ddcdfee80b62d3cdfbf882cfe6efcfbdad6"
-  integrity sha512-oveo2vTkUMWOC6odeGKbopId8TczPZFy26UrZjoOFDKRmTkMl/JZ3AuwbefIrEX6EwBqxVXVMEXKIUgEW225PQ==
+  version "0.74.79"
+  resolved "https://registry.yarnpkg.com/@react-native/popup-menu-android/-/popup-menu-android-0.74.79.tgz#92c5d2ab0048d9b2aa12c60111c2c14700c705c0"
+  integrity sha512-Hyv4Sjy7sbLtcbjmDXnJiiFq/qnBsRblH8lre52pCwqOT8f4Pd/f6gHXEpZRzNl5bx2uiCcapV7n5ZfxxQeoVg==
   dependencies:
     nullthrows "^1.1.1"
 
@@ -10644,9 +10644,9 @@ react-clone-referenced-element@^1.0.1:
   integrity sha512-LZBPvQV8W0B5dFzXFu+D3Tpil8YHS8tO00iFsfXcTLdtpuH7XyvaHqHcoz4hd4uNPQCZ30fceh+s7mLznzMXvg==
 
 react-devtools-core@^5.0.0:
-  version "5.0.2"
-  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-5.0.2.tgz#c3c11c7b91857131d694457885ef49b7ae590857"
-  integrity sha512-+fDp3kDfPpF5xbAACJmihPHL0iDKpnKr7MyRvW0nZq71xwHWDW3zRCNpiiAJWd85vAGT+GbV9O87zAIDgvV1gw==
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-5.1.0.tgz#3396494ac94b21602cac4fd657d600e0b52f4a0b"
+  integrity sha512-NRtLBqYVLrIY+lOa2oTpFiAhI7Hru0AUXI0tP9neCyaPPAzlZyeH0i+VZ0shIyRTJbpvyqbD/uCsewA2hpfZHw==
   dependencies:
     shell-quote "^1.6.1"
     ws "^7"
