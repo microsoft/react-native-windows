@@ -410,6 +410,16 @@
       "baseHash": "1c9eb481e8ed077fa650e3ea34837e2a31310366"
     },
     {
+      "type": "platform",
+      "file": "src-win/Libraries/Image/assetPaths.js"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/Libraries/Image/AssetSourceResolver.windows.js",
+      "baseFile": "packages/react-native/Libraries/Image/AssetSourceResolver.js",
+      "baseHash": "d9d768a3b1d5cd394e63e8bf68456e1e6ca7f5d2"
+    },
+    {
       "type": "patch",
       "file": "src-win/Libraries/Image/Image.windows.js",
       "baseFile": "packages/react-native/Libraries/Image/Image.ios.js",
