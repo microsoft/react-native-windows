@@ -79,6 +79,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsc/JSCRuntime.cpp",
+      "baseFile": "packages/react-native/ReactCommon/jsc/JSCRuntime.cpp",
+      "baseHash": "c5582f1198a7de95ab6cf491143478b1a5cab019",
+      "issue": 12952
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
       "baseHash": "4cab1f3169cfe38e0bf7933406dd960fda2e5d28",
