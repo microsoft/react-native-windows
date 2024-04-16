@@ -86,6 +86,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.h",
+      "baseFile": "packages/react-native/ReactCommon/jsi/jsi/jsi.h",
+      "baseHash": "f0572224c27daf62c1c0c5713381d5c311da7ab7",
+      "issue": 12951
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
       "baseHash": "4cab1f3169cfe38e0bf7933406dd960fda2e5d28",
