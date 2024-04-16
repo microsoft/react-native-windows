@@ -89,7 +89,7 @@
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.h",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/jsi.h",
       "baseHash": "f0572224c27daf62c1c0c5713381d5c311da7ab7",
-      "issue": 12951
+      "issue": 12952
     },
     {
       "type": "patch",
