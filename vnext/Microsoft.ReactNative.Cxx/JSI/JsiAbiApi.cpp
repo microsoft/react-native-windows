@@ -233,7 +233,9 @@ bool JsiAbiRuntime::drainMicrotasks(int maxMicrotasksHint) try {
   throw;
 }
 
-void JsiAbiRuntime::queueMicrotask(const facebook::jsi::Function &) {}
+void JsiAbiRuntime::queueMicrotask(const facebook::jsi::Function &/*callback*/) {
+  // TODO: implement
+}
 
 Object JsiAbiRuntime::global() try { return MakeObject(m_runtime.Global()); } catch (hresult_error const &) {
   RethrowJsiError();
