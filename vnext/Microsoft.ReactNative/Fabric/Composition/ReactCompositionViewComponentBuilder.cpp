@@ -96,7 +96,7 @@ void ReactCompositionViewComponentBuilder::SetLayoutHandler(
 winrt::Microsoft::ReactNative::ComponentView ReactCompositionViewComponentBuilder::CreateView(
     const IReactContext &reactContext,
     int32_t tag,
-    const ICompositionContext &context) noexcept {
+    const Experimental::ICompositionContext &context) noexcept {
   if (m_createView) {
     auto args = winrt::make<implementation::CreateCompositionComponentViewArgs>(reactContext, tag, context);
     return m_createView(args);

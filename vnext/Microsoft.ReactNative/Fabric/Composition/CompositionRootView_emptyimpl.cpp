@@ -35,11 +35,9 @@ ReactNative::IReactViewHost CompositionRootView::ReactViewHost() noexcept {
 
 void CompositionRootView::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewHost const &) noexcept {}
 
-winrt::Microsoft::ReactNative::Composition::IVisual CompositionRootView::RootVisual() noexcept {
+winrt::Microsoft::UI::Composition::Visual CompositionRootView::RootVisual() noexcept {
   return nullptr;
 }
-
-void CompositionRootView::RootVisual(winrt::Microsoft::ReactNative::Composition::IVisual const &) noexcept {}
 
 winrt::Windows::Foundation::Size CompositionRootView::Size() noexcept {
   return {};

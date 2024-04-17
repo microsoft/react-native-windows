@@ -37,12 +37,21 @@ namespace Microsoft.ReactNative.Composition
     event Windows.Foundation.EventHandler<Object> ResourcesChanged;
   };
 
+  namespace Experimental {
+    [webhosthidden]
+    [experimental]
+    interface IInternalTheme {
+      Microsoft.ReactNative.Composition.Experimental.IBrush InternalPlatformBrush(String platformColor);
+    }
+  }
+
   [webhosthidden]
   [experimental]
   runtimeclass Theme {
     Theme(Microsoft.ReactNative.IReactContext reactContext, ICustomResourceLoader resourceLoader);
 
-    Microsoft.ReactNative.Composition.IBrush PlatformBrush(String platformColor);
+    Microsoft.UI.Composition.CompositionBrush PlatformBrush(String platformColor);
+
     Boolean TryGetPlatformColor(String platformColor, out Windows.UI.Color color);
     DOC_STRING("An empty theme is used when the final theme is not yet known.  It will generally return transparent colors.")
     Boolean IsEmpty { get; };

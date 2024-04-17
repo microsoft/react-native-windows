@@ -21,7 +21,7 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   using Super = RootComponentViewT<RootComponentView, ViewComponentView>;
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
@@ -45,7 +45,7 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   winrt::IInspectable UiaProviderFromPoint(const POINT &ptPixels) noexcept;
 
   RootComponentView(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 

@@ -42,7 +42,7 @@ void ComponentViewRegistry::Initialize(winrt::Microsoft::ReactNative::ReactConte
 ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithComponentHandle(
     facebook::react::ComponentHandle componentHandle,
     facebook::react::Tag tag,
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext) noexcept {
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext) noexcept {
   // TODO implement recycled components like core does
 
   winrt::Microsoft::ReactNative::ComponentView view{nullptr};

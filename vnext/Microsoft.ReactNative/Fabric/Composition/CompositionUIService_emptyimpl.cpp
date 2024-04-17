@@ -11,7 +11,11 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 void CompositionUIService::SetCompositionContext(IReactPropertyBag const &, ICompositionContext const &) noexcept {}
 
-ICompositionContext CompositionUIService::GetCompositionContext(const IReactPropertyBag &) noexcept {
+winrt::Microsoft::UI::Compositor CompositionUIService::GetCompositor(const IReactPropertyBag &) noexcept {
+  return nullptr;
+}
+
+void CompositionUIService::SetCompositor(const winrt::Microsoft::UI::Compositor &) noexcept {
   return nullptr;
 }
 

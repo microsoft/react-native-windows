@@ -1,16 +1,16 @@
 
 #include "pch.h"
 #include "CompositionContextHelper.h"
-#if __has_include("Composition.SystemCompositionContextHelper.g.cpp")
-#include "Composition.SystemCompositionContextHelper.g.cpp"
+#if __has_include("Composition.Experimental.SystemCompositionContextHelper.g.cpp")
+#include "Composition.Experimental.SystemCompositionContextHelper.g.cpp"
 #endif
 #ifdef USE_WINUI3
-#if __has_include("Composition.MicrosoftCompositionContextHelper.g.cpp")
-#include "Composition.MicrosoftCompositionContextHelper.g.cpp"
+#if __has_include("Composition.Experimental.MicrosoftCompositionContextHelper.g.cpp")
+#include "Composition.Experimental.MicrosoftCompositionContextHelper.g.cpp"
 #endif
 #endif
 
-namespace winrt::Microsoft::ReactNative::Composition::implementation {
+namespace winrt::Microsoft::ReactNative::Composition::Experimental::implementation {
 
 ICompositionContext SystemCompositionContextHelper::CreateContext(
     winrt::Windows::UI::Composition::Compositor const &) noexcept {
@@ -76,4 +76,4 @@ winrt::Windows::UI::Composition::ICompositionSurface MicrosoftCompositionContext
 }
 #endif
 
-} // namespace winrt::Microsoft::ReactNative::Composition::implementation
+} // namespace winrt::Microsoft::ReactNative::Composition::Experimental::implementation

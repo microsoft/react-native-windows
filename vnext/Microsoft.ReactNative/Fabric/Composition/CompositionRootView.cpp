@@ -151,11 +151,17 @@ void CompositionRootView::ReactViewHost(winrt::Microsoft::ReactNative::IReactVie
   }
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual CompositionRootView::RootVisual() noexcept {
+winrt::Microsoft::UI::Composition::Visual CompositionRootView::RootVisual() noexcept {
+  return winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
+      m_rootVisual);
+}
+
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual CompositionRootView::InternalRootVisual() noexcept {
   return m_rootVisual;
 }
 
-void CompositionRootView::RootVisual(winrt::Microsoft::ReactNative::Composition::IVisual const &value) noexcept {
+void CompositionRootView::InternalRootVisual(
+    winrt::Microsoft::ReactNative::Composition::Experimental::IVisual const &value) noexcept {
   if (m_rootVisual != value) {
     assert(!m_rootVisual);
     m_rootVisual = value;
@@ -164,16 +170,16 @@ void CompositionRootView::RootVisual(winrt::Microsoft::ReactNative::Composition:
 }
 
 void CompositionRootView::AddRenderedVisual(
-    const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
+    const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept {
   assert(!m_hasRenderedVisual);
-  RootVisual().InsertAt(visual, 0);
+  InternalRootVisual().InsertAt(visual, 0);
   m_hasRenderedVisual = true;
 }
 
 void CompositionRootView::RemoveRenderedVisual(
-    const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept {
+    const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept {
   assert(m_hasRenderedVisual);
-  RootVisual().Remove(visual);
+  InternalRootVisual().Remove(visual);
   m_hasRenderedVisual = false;
 }
 
@@ -214,6 +220,11 @@ float CompositionRootView::ScaleFactor() noexcept {
 void CompositionRootView::ScaleFactor(float value) noexcept {
   if (m_scaleFactor != value) {
     m_scaleFactor = value;
+    // Lifted ContentIslands apply a scale that we need to reverse
+    if (auto rootView = RootVisual()) {
+      auto invScale = 1.0f / value;
+      rootView.Scale({invScale, invScale, invScale});
+    }
     UpdateRootVisualSize();
   }
 }
@@ -439,7 +450,7 @@ void CompositionRootView::ClearLoadingUI() noexcept {
   if (!m_loadingVisual)
     return;
 
-  RootVisual().Remove(m_loadingVisual);
+  InternalRootVisual().Remove(m_loadingVisual);
 
   m_loadingVisual = nullptr;
   m_loadingActivityVisual = nullptr;
@@ -471,7 +482,7 @@ void CompositionRootView::ShowInstanceError() noexcept {
   ClearLoadingUI();
 }
 
-Composition::IDrawingSurfaceBrush CompositionRootView::CreateLoadingVisualBrush() noexcept {
+Composition::Experimental::IDrawingSurfaceBrush CompositionRootView::CreateLoadingVisualBrush() noexcept {
   auto compContext =
       winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
           m_context.Properties().Handle());
@@ -552,7 +563,7 @@ void CompositionRootView::ShowInstanceLoading() noexcept {
 
   UpdateLoadingVisualSize();
 
-  RootVisual().InsertAt(m_loadingVisual, m_hasRenderedVisual ? 1 : 0);
+  InternalRootVisual().InsertAt(m_loadingVisual, m_hasRenderedVisual ? 1 : 0);
 }
 
 winrt::Windows::Foundation::Size CompositionRootView::Measure(
@@ -626,7 +637,9 @@ winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() noexc
   if (!m_island) {
     auto rootVisual = m_compositor.CreateSpriteVisual();
 
-    RootVisual(winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::CreateVisual(rootVisual));
+    InternalRootVisual(
+        winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateVisual(
+            rootVisual));
     m_island = winrt::Microsoft::UI::Content::ContentIsland::Create(rootVisual);
 
     m_island.AutomationProviderRequested(

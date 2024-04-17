@@ -14,7 +14,7 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 RootComponentView::RootComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : base_type(
@@ -34,7 +34,7 @@ RootComponentView::~RootComponentView() {
 }
 
 winrt::Microsoft::ReactNative::ComponentView RootComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<RootComponentView>(compContext, tag, reactContext);

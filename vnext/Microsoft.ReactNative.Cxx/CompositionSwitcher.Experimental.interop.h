@@ -12,7 +12,7 @@
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Windows.Graphics.DirectX.Direct3D11.h>
 
-namespace Microsoft::ReactNative::Composition {
+namespace Microsoft::ReactNative::Composition::Experimental {
 
 struct __declspec(uuid("941FDD90-ED27-49CE-A1CD-86ECB2D4A0FA")) ICompositionDrawingSurfaceInterop : public IUnknown {
   virtual HRESULT BeginDraw(ID2D1DeviceContext **deviceContextOut, POINT *offset) noexcept = 0;

@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import "CompositionContext.idl";
 import "IJSValueWriter.idl";
 import "ReactCoreInjection.idl";
 import "ReactNativeHost.idl";
@@ -41,6 +40,21 @@ namespace Microsoft.ReactNative
     Boolean WasFocusMoved {get;};
   };
 
+  namespace Composition.Experimental {
+  [webhosthidden]
+  [experimental]
+  DOC_STRING("Custom ViewComponents need to implement this interface to be able to provide a custom"
+  " visual using the composition context that allows custom compositors.  This is only required for"
+  " custom components that need to support running in RNW instances with custom compositors.  Most"
+  " custom components can just override CreateVisual on ViewComponentView. This interface will be removed"
+  " in future versions")
+  interface IInternalCompositionRootView
+  {
+    DOC_STRING("The RootVisual associated with the @CompositionRootView. It must be set to show any React UI elements.")
+    Microsoft.ReactNative.Composition.Experimental.IVisual InternalRootVisual { get; set; };
+  }
+  }
+
   [default_interface]
   [webhosthidden]
   [experimental]
@@ -60,7 +74,7 @@ namespace Microsoft.ReactNative
     IReactViewHost ReactViewHost { get; set; };
 
     DOC_STRING("The RootVisual associated with the @CompositionRootView. It must be set to show any React UI elements.")
-    Microsoft.ReactNative.Composition.IVisual RootVisual { get; set; };
+    Microsoft.UI.Composition.Visual RootVisual { get; };
 
     Windows.Foundation.Size Size {get; set; };
 

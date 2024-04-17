@@ -21,7 +21,7 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   using Super = ParagraphComponentViewT<ParagraphComponentView, ComponentView>;
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
@@ -48,12 +48,12 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   void onThemeChanged() noexcept override;
   facebook::react::SharedViewEventEmitter eventEmitterAtPoint(facebook::react::Point pt) noexcept override;
 
-  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual Visual() const noexcept override;
   virtual std::string DefaultControlType() const noexcept override;
   virtual std::string DefaultAccessibleName() const noexcept override;
 
   ParagraphComponentView(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
@@ -64,13 +64,13 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   void updateTextAlignment(const std::optional<facebook::react::TextAlignment> &fbAlignment) noexcept;
 
   std::shared_ptr<facebook::react::ParagraphProps const> m_props;
-  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual m_visual{nullptr};
   winrt::com_ptr<::IDWriteTextLayout> m_textLayout;
   facebook::react::AttributedStringBox m_attributedStringBox;
   facebook::react::ParagraphAttributes m_paragraphAttributes;
 
   bool m_requireRedraw{true};
-  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

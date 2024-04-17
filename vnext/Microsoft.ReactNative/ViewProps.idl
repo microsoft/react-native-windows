@@ -8,11 +8,19 @@ import "Theme.idl";
 
 namespace Microsoft.ReactNative {
 
+  namespace Composition.Experimental {
+    [webhosthidden]
+    [experimental]
+    interface IInternalColor {
+      Microsoft.ReactNative.Composition.Experimental.IBrush AsInternalBrush(Microsoft.ReactNative.Composition.Theme theme);
+    }
+  }
+
   [webhosthidden]
   [experimental]
   runtimeclass Color {
     Windows.UI.Color AsWindowsColor(Microsoft.ReactNative.Composition.Theme theme);
-    Microsoft.ReactNative.Composition.IBrush AsBrush(Microsoft.ReactNative.Composition.Theme theme);
+    Microsoft.UI.Composition.CompositionBrush AsBrush(Microsoft.ReactNative.Composition.Theme theme);
 
     static Color Black();
     static Color Transparent();

@@ -6,6 +6,7 @@ import "Theme.idl";
 import "ViewProps.idl";
 import "Composition.Input.idl";
 import "CompositionSwitcher.idl";
+import "IReactContext.idl";
 
 #include "DocString.h"
 
@@ -28,7 +29,7 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   [webhosthidden]
   runtimeclass CreateCompositionComponentViewArgs : Microsoft.ReactNative.CreateComponentViewArgs {
-    ICompositionContext CompositionContext { get; };
+    Microsoft.UI.Composition.Compositor Compositor { get; };
     ComponentViewFeatures Features;
   };
 
@@ -37,12 +38,26 @@ namespace Microsoft.ReactNative.Composition
   unsealed runtimeclass ComponentView : Microsoft.ReactNative.ComponentView {
     ComponentView(CreateCompositionComponentViewArgs args);
 
-    ICompositionContext CompositionContext { get; };
+    Microsoft.UI.Composition.Compositor Compositor { get; };
     Theme Theme;
     overridable void OnThemeChanged();
     Boolean CapturePointer(Microsoft.ReactNative.Composition.Input.Pointer pointer);
     void ReleasePointerCapture(Microsoft.ReactNative.Composition.Input.Pointer pointer);
   };
+
+  namespace Experimental {
+    [webhosthidden]
+    [experimental]
+    DOC_STRING("Custom ViewComponents need to implement this interface to be able to provide a custom"
+    " visual using the composition context that allows custom compositors. This is only required for"
+    " custom components that need to support running in RNW instances with custom compositors. Most"
+    " custom components can just override CreateVisual on ViewComponentView."
+    " This will be removed in a future version")
+    interface IInternalCreateVisual
+    {
+      Microsoft.ReactNative.Composition.Experimental.IVisual CreateInternalVisual();
+    }
+  }
 
   [experimental]
   [webhosthidden]
@@ -51,7 +66,7 @@ namespace Microsoft.ReactNative.Composition
 
     Microsoft.ReactNative.ViewProps ViewProps { get; };
 
-    overridable IVisual CreateVisual();
+    overridable Microsoft.UI.Composition.Visual CreateVisual();
   };
 
   [experimental]

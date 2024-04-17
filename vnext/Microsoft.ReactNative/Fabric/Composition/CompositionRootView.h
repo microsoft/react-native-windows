@@ -7,6 +7,7 @@
 #include <FocusNavigationResult.g.h>
 
 #include <ReactContext.h>
+#include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include "CompositionEventHandler.h"
 #include "ReactHost/React.h"
@@ -40,7 +41,9 @@ struct FocusNavigationResult : FocusNavigationResultT<FocusNavigationResult> {
   const bool m_wasFocusMoved;
 };
 
-struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Microsoft::ReactNative::ICompositionRootView {
+struct CompositionRootView
+    : CompositionRootViewT<CompositionRootView, Composition::Experimental::IInternalCompositionRootView>,
+      ::Microsoft::ReactNative::ICompositionRootView {
   CompositionRootView() noexcept;
 
 #ifdef USE_WINUI3
@@ -52,9 +55,11 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   ReactNative::IReactViewHost ReactViewHost() noexcept;
   void ReactViewHost(ReactNative::IReactViewHost const &value) noexcept;
 
+  winrt::Microsoft::UI::Composition::Visual RootVisual() noexcept;
+
   // property RootVisual
-  winrt::Microsoft::ReactNative::Composition::IVisual RootVisual() noexcept;
-  void RootVisual(winrt::Microsoft::ReactNative::Composition::IVisual const &value) noexcept;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual InternalRootVisual() noexcept;
+  void InternalRootVisual(winrt::Microsoft::ReactNative::Composition::Experimental::IVisual const &value) noexcept;
 
   // property Size
   winrt::Windows::Foundation::Size Size() noexcept;
@@ -64,8 +69,8 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   float ScaleFactor() noexcept;
   void ScaleFactor(float value) noexcept;
 
-  void AddRenderedVisual(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept;
-  void RemoveRenderedVisual(const winrt::Microsoft::ReactNative::Composition::IVisual &visual) noexcept;
+  void AddRenderedVisual(const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept;
+  void RemoveRenderedVisual(const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept;
 
   winrt::Microsoft::ReactNative::Composition::Theme Theme() noexcept;
   void Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept;
@@ -125,9 +130,9 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   winrt::Microsoft::ReactNative::IReactViewHost m_reactViewHost;
   winrt::Microsoft::ReactNative::ReactViewOptions m_reactViewOptions;
   std::shared_ptr<::Microsoft::ReactNative::CompositionEventHandler> m_CompositionEventHandler;
-  winrt::Microsoft::ReactNative::Composition::IVisual m_rootVisual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_loadingVisual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::IActivityVisual m_loadingActivityVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_rootVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual m_loadingVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IActivityVisual m_loadingActivityVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::Theme m_theme{nullptr};
   winrt::Microsoft::ReactNative::ReactNotificationSubscription m_themeChangedSubscription{nullptr};
   winrt::Microsoft::ReactNative::Composition::Theme::ThemeChanged_revoker m_themeChangedRevoker;
@@ -140,7 +145,7 @@ struct CompositionRootView : CompositionRootViewT<CompositionRootView>, ::Micros
   void ShowInstanceLoading() noexcept;
   void UpdateRootVisualSize() noexcept;
   void UpdateLoadingVisualSize() noexcept;
-  Composition::IDrawingSurfaceBrush CreateLoadingVisualBrush() noexcept;
+  Composition::Experimental::IDrawingSurfaceBrush CreateLoadingVisualBrush() noexcept;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
