@@ -278,7 +278,7 @@ bool ChakraRuntime::drainMicrotasks(int /*maxMicrotasksHint*/) {
   return true;
 }
 
-void ChakraRuntime::queueMicrotask(const facebook::jsi::Function &/*callback*/) {
+void ChakraRuntime::queueMicrotask(const facebook::jsi::Function & /*callback*/) {
   // TODO: implement
 }
 

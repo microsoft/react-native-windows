@@ -233,7 +233,7 @@ bool JsiAbiRuntime::drainMicrotasks(int maxMicrotasksHint) try {
   throw;
 }
 
-void JsiAbiRuntime::queueMicrotask(const facebook::jsi::Function &/*callback*/) {
+void JsiAbiRuntime::queueMicrotask(const facebook::jsi::Function & /*callback*/) {
   // TODO: implement
 }
 
