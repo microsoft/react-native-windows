@@ -2557,10 +2557,10 @@
     invariant "^2.2.4"
     nullthrows "^1.1.1"
 
-"@rnx-kit/align-deps@^2.4.2":
-  version "2.4.2"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/align-deps/-/align-deps-2.4.2.tgz#616a3e8770f72cf21ba93a4cb3a99eaef9dbfdab"
-  integrity sha512-CG6z9BKzOqSLSu3vqnwc/wLDnKG0otq4HWSMq7SsuRM7JP5rWy/WcnMIRWo7PP7+XscqZHNBIbVGAhcenrMgxg==
+"@rnx-kit/align-deps@^2.4.3":
+  version "2.4.3"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/align-deps/-/align-deps-2.4.3.tgz#5fe8a2e3e938a8e398af8f33c2337e46166602b5"
+  integrity sha512-/kMtl05I+xlaYHXsftv5gSHl7LPwh1m6Ttd24+NGHoqQwD0MMF6VJ2dVu8vUUrF4PArxAb2V6YoJQRJAQGB54Q==
 
 "@rnx-kit/chromium-edge-launcher@^1.0.0":
   version "1.0.0"
@@ -2575,11 +2575,11 @@
     rimraf "^3.0.2"
 
 "@rnx-kit/cli@^0.16.10":
-  version "0.16.25"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-0.16.25.tgz#06df1f4a24e5cd1628efc94148f72bcb5947fafd"
-  integrity sha512-tz3XRtspiilWFi4dt0Ysr2LWwfgWFJbYF9MsLJ9ehF5y/Ez2gjvCpstkh31Mi7mrPMXtM580ZIxESi3spiNgBg==
+  version "0.16.26"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-0.16.26.tgz#47f192d207a8f4337d5e50ce1fec19606d17f499"
+  integrity sha512-EeJRkrCMmwLeayESG6ozoNfqCzeyqAP4DO444SPt6Q8cwDPJagVDOUc/11BAo+TE3onCQhMjMjeckxv0UWrXJA==
   dependencies:
-    "@rnx-kit/align-deps" "^2.4.2"
+    "@rnx-kit/align-deps" "^2.4.3"
     "@rnx-kit/config" "^0.6.6"
     "@rnx-kit/console" "^1.1.0"
     "@rnx-kit/metro-plugin-cyclic-dependencies-detector" "^1.1.1"
@@ -3131,9 +3131,9 @@
     puppeteer "*"
 
 "@types/react@*", "@types/react@^18.2.6":
-  version "18.2.75"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.75.tgz#45d18f384939306d35312def1bf532eb38a68562"
-  integrity sha512-+DNnF7yc5y0bHkBTiLKqXFe+L4B3nvOphiMY3tuA5X10esmjqk7smyBZzbGTy2vsiy/Bnzj8yFIBL8xhRacoOg==
+  version "18.2.78"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.78.tgz#94aec453d0ccca909998a2b4b2fd78af15a7d2fe"
+  integrity sha512-qOwdPnnitQY4xKlKayt42q5W5UQrSHjgoXNVEtxeqdITJ99k4VXJOP3vt8Rkm9HmgJpH50UNU+rlqfkfWOqp0A==
   dependencies:
     "@types/prop-types" "*"
     csstype "^3.0.2"
