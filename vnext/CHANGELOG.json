@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 17 Apr 2024 05:14:47 GMT",
+      "version": "0.0.0-canary.802",
+      "tag": "react-native-windows_v0.0.0-canary.802",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1dc39a459b72feddfbdfee8cd029102b0237b028",
+            "comment": "Handling for long asset paths"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Apr 2024 05:18:19 GMT",
       "version": "0.0.0-canary.801",
       "tag": "react-native-windows_v0.0.0-canary.801",
