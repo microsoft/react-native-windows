@@ -14,7 +14,7 @@
 #include <mutex>
 #include <sstream>
 
-namespace Microsoft::JSI {
+namespace Microsoft::JSI 
 
 // Implementation of Chakra JSI Runtime
 class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi::IExceptionThrower {
@@ -37,8 +37,6 @@ class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi
       const std::shared_ptr<const facebook::jsi::PreparedJavaScript> &js) override;
 
   bool drainMicrotasks(int maxMicrotasksHint = -1) override;
-
-  void queueMicrotask(const facebook::jsi::Function &callback);
 
   facebook::jsi::Object global() override;
 
