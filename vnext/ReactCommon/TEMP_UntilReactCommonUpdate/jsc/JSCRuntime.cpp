@@ -57,9 +57,8 @@ class JSCRuntime : public jsi::Runtime {
   // Not doing this would result in a non-compliant behavior, as microtasks
   // wouldn't execute in the order in which they were queued.
 
-  // [Windows #12952 - Comment out queueMicrotask declarations while function is implemented for RNW
-  // void queueMicrotask(const jsi::Function& callback) override;
-  // Windows]
+  void queueMicrotask(const jsi::Function& callback) override;
+
   bool drainMicrotasks(int maxMicrotasksHint = -1) override;
 
   jsi::Object global() override;
@@ -448,10 +447,10 @@ jsi::Value JSCRuntime::evaluateJavaScript(
   return createValue(res);
 }
 
-// [Windows #12952 - Comment out queueMicrotask declarations while function is implemented for RNW
-// void JSCRuntime::queueMicrotask(const jsi::Function& callback) {
-//   microtaskQueue_.emplace_back(callback.getFunction(*this));
-// }
+// [Windows #12952
+void JSCRuntime::queueMicrotask(const jsi::Function& callback) {
+  // TODO: implement
+}
 // Windows]
 
 bool JSCRuntime::drainMicrotasks(int /*maxMicrotasksHint*/) {
