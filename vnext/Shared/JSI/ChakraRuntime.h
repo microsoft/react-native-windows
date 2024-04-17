@@ -14,7 +14,7 @@
 #include <mutex>
 #include <sstream>
 
-namespace Microsoft::JSI 
+namespace Microsoft::JSI {
 
 // Implementation of Chakra JSI Runtime
 class ChakraRuntime : public facebook::jsi::Runtime, public ChakraApi, ChakraApi::IExceptionThrower {
