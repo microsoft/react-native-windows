@@ -39,8 +39,6 @@ winrt::Microsoft::UI::Dispatching::DispatcherQueueController g_liftedDispatcherQ
 winrt::Microsoft::UI::Composition::Compositor g_liftedCompositor{nullptr};
 #endif
 
-#undef SendMessage
-
 void RegisterCustomComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept;
 
 // Have to use TurboModules to override built in modules.. so the standard attributed package provider doesn't work.
@@ -301,7 +299,8 @@ struct WindowData {
 
   LRESULT TranslateMessage(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
     if (!m_useLiftedComposition && m_compRootView) {
-      return static_cast<LRESULT>(m_compRootView.SendMessage(message, wparam, lparam));
+      return static_cast<LRESULT>(m_compRootView
+                  .as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>().SendMessage(message, wparam, lparam));
     }
     return 0;
   }
