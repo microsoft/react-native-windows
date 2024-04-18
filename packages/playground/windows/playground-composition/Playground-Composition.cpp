@@ -219,7 +219,9 @@ struct WindowData {
               root.RelativeSizeAdjustment({1.0f, 1.0f});
               root.Offset({0, 0, 0});
               m_target.Root(root);
-              m_compRootView.SetWindow(reinterpret_cast<uint64_t>(hwnd));
+              m_compRootView
+                  .as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>()
+                  .SetWindow(reinterpret_cast<uint64_t>(hwnd));
               m_compRootView
                   .as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>()
                   .InternalRootVisual(winrt::Microsoft::ReactNative::Composition::Experimental::

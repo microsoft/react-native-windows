@@ -450,10 +450,12 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IBrush Theme::Internal
   return PlatformBrush(winrt::to_string(platformColor));
 }
 
+#ifdef USE_WINUI3
 winrt::Microsoft::UI::Composition::CompositionBrush Theme::PlatformBrush(winrt::hstring platformColor) noexcept {
   return winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerBrush(
       PlatformBrush(winrt::to_string(platformColor)));
 }
+#endif
 
 winrt::Microsoft::ReactNative::Composition::Experimental::IBrush Theme::PlatformBrush(
     const std::string &platformColor) noexcept {

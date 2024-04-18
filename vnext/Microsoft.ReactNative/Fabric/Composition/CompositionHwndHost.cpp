@@ -40,7 +40,6 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
           winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(
               compositionContext)) {
     m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView(liftedCompositor);
-    m_compRootView.SetWindow(reinterpret_cast<uint64_t>(m_hwnd));
 
     auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
         liftedCompositor, winrt::Microsoft::UI::GetWindowIdFromWindow(m_hwnd));
@@ -54,7 +53,8 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
     bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
   } else {
     m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView();
-    m_compRootView.SetWindow(reinterpret_cast<uint64_t>(m_hwnd));
+    m_compRootView.as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>()
+        .SetWindow(reinterpret_cast<uint64_t>(m_hwnd));
 
 #endif
     auto compositor =
@@ -123,7 +123,9 @@ LRESULT CompositionHwndHost::TranslateMessage(int msg, uint64_t wParam, int64_t 
 #if USE_WINUI3
     if (!m_compRootView.Island()) // When using Island hosting we dont need to forward window messages
 #endif
-      return static_cast<LRESULT>(m_compRootView.SendMessage(msg, wParam, lParam));
+      return static_cast<LRESULT>(
+          m_compRootView.as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>()
+              .SendMessage(msg, wParam, lParam));
   }
   return 0;
 }

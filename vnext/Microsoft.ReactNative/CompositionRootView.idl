@@ -52,6 +52,12 @@ namespace Microsoft.ReactNative
   {
     DOC_STRING("The RootVisual associated with the @CompositionRootView. It must be set to show any React UI elements.")
     Microsoft.ReactNative.Composition.Experimental.IVisual InternalRootVisual { get; set; };
+    
+    DOC_STRING("Hosting Window that input is coming from. Only required when not using ContentIslands")
+    void SetWindow(UInt64 hwnd);
+
+    DOC_STRING("Forward input to the RootView. Only required when not using ContentIslands")
+    Int64 SendMessage(UInt32 Msg, UInt64 WParam, Int64 LParam);
   }
   }
 
@@ -86,12 +92,6 @@ namespace Microsoft.ReactNative
 
     Windows.Foundation.Size Measure(Windows.Foundation.Size availableSize);
     Windows.Foundation.Size Arrange(Windows.Foundation.Size availableSize);
-
-    DOC_STRING("Hosting Window that input is coming from. Only required when not using ContentIslands")
-    void SetWindow(UInt64 hwnd);
-
-    DOC_STRING("Forward input to the RootView. Only required when not using ContentIslands")
-    Int64 SendMessage(UInt32 Msg, UInt64 WParam, Int64 LParam);
 
     Object GetUiaProvider();
 

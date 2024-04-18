@@ -31,4 +31,4 @@ struct __declspec(uuid("4742F122-3EE0-48AA-9EA9-44A00147B55F")) ICompositionCont
   virtual void D2DFactory(ID2D1Factory1 **outD2DFactory) noexcept = 0;
 };
 
-} // namespace Microsoft::ReactNative::Composition
+} // namespace Microsoft::ReactNative::Composition::Experimental
