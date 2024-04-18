@@ -126,7 +126,7 @@ inline Mso::Future<void> CompositionReactViewInstance::PostInUIQueue(TAction &&a
 CompositionRootView::CompositionRootView() noexcept {}
 
 #ifdef USE_WINUI3
-CompositionRootView::CompositionRootView(const winrt::Microsoft::UI::Composition::Compositor& compositor) noexcept
+CompositionRootView::CompositionRootView(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept
     : m_compositor(compositor) {}
 #endif
 
