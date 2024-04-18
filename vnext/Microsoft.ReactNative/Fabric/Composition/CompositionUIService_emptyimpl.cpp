@@ -6,16 +6,15 @@
 #include "CompositionUIService.h"
 
 #include "Composition.CompositionUIService.g.cpp"
+#include <winrt/Microsoft.UI.Composition.h>
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-void CompositionUIService::SetCompositionContext(IReactPropertyBag const &, ICompositionContext const &) noexcept {}
+void CompositionUIService::SetCompositor(
+    ReactInstanceSettings const &,
+    winrt::Microsoft::UI::Composition::Compositor const &) noexcept {}
 
-winrt::Microsoft::UI::Compositor CompositionUIService::GetCompositor(const IReactPropertyBag &) noexcept {
-  return nullptr;
-}
-
-void CompositionUIService::SetCompositor(const winrt::Microsoft::UI::Compositor &) noexcept {
+winrt::Microsoft::UI::Composition::Compositor CompositionUIService::GetCompositor(const IReactPropertyBag &) noexcept {
   return nullptr;
 }
 

@@ -47,7 +47,7 @@ struct CompositionRootView
   CompositionRootView() noexcept;
 
 #ifdef USE_WINUI3
-  CompositionRootView(winrt::Microsoft::UI::Composition::Compositor compositor) noexcept;
+  CompositionRootView(const winrt::Microsoft::UI::Composition::Compositor& compositor) noexcept;
   winrt::Microsoft::UI::Content::ContentIsland Island() noexcept;
 #endif
 
