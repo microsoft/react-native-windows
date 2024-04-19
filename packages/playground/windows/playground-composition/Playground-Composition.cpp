@@ -299,8 +299,9 @@ struct WindowData {
 
   LRESULT TranslateMessage(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
     if (!m_useLiftedComposition && m_compRootView) {
-      return static_cast<LRESULT>(m_compRootView
-                  .as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>().SendMessage(message, wparam, lparam));
+      return static_cast<LRESULT>(
+          m_compRootView.as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>()
+              .SendMessage(message, wparam, lparam));
     }
     return 0;
   }
