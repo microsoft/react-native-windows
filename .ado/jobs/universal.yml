@@ -13,52 +13,90 @@
       default:
         - BuildEnvironment: PullRequest
           Matrix:
-            - Name: Arm64Debug
-              BuildConfiguration: Debug
-              BuildPlatform: ARM64
-            - Name: Arm64Release
-              BuildConfiguration: Release
-              BuildPlatform: ARM64
             - Name: X64Debug
               BuildConfiguration: Debug
               BuildPlatform: x64
+              UseFabric: false
             - Name: X64Release
               BuildConfiguration: Release
               BuildPlatform: x64
+              UseFabric: false
             - Name: X86Debug
               BuildConfiguration: Debug
               BuildPlatform: x86
+              UseFabric: false
               CreateApiDocs: true
             - Name: X86Release
               BuildConfiguration: Release
               BuildPlatform: x86
+              UseFabric: false
+            - Name: Arm64Debug
+              BuildConfiguration: Debug
+              BuildPlatform: ARM64
+              UseFabric: false
+            - Name: Arm64Release
+              BuildConfiguration: Release
+              BuildPlatform: ARM64
+              UseFabric: false
+            - Name: X64DebugFabric
+              BuildConfiguration: Debug
+              BuildPlatform: x64
+              UseFabric: true
+            - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
+              BuildConfiguration: Release
+              BuildPlatform: x86
+              UseFabric: true
+        - BuildEnvironment: SecurePullRequest
+          Matrix:
+            - Name: X64DebugFabric
+              BuildConfiguration: Debug
+              BuildPlatform: x64
+              UseFabric: true
+            - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
+              BuildConfiguration: Release
+              BuildPlatform: x86
+              UseFabric: true
         - BuildEnvironment: Continuous
           Matrix:
-            - Name: Arm64Debug
-              BuildConfiguration: Debug
-              BuildPlatform: ARM64
-            - Name: Arm64Release
-              BuildConfiguration: Release
-              BuildPlatform: ARM64
             - Name: X64Debug
               BuildConfiguration: Debug
               BuildPlatform: x64
+              UseFabric: false
             - Name: X64Release
               BuildConfiguration: Release
               BuildPlatform: x64
+              UseFabric: false
             - Name: X86Debug
               BuildConfiguration: Debug
               BuildPlatform: x86
+              UseFabric: false
               CreateApiDocs: true
             - Name: X86Release
               BuildConfiguration: Release
               BuildPlatform: x86
+              UseFabric: false
+            - Name: Arm64Debug
+              BuildConfiguration: Debug
+              BuildPlatform: ARM64
+              UseFabric: false
+            - Name: Arm64Release
+              BuildConfiguration: Release
+              BuildPlatform: ARM64
+              UseFabric: false
+            - Name: X64DebugFabric
+              BuildConfiguration: Debug
+              BuildPlatform: x64
+              UseFabric: true
+            - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
+              BuildConfiguration: Release
+              BuildPlatform: x86
+              UseFabric: true
 
   jobs:
     - ${{ each config in parameters.buildMatrix }}:
       - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
         - ${{ each matrix in config.Matrix }}:
-            - job: UniversalBuild${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
+            - job: UniversalBuild${{ matrix.Name }}
               variables:
                 - template: ../variables/windows.yml
                 # Some tasks run on a different user (VssAdministrator) instead of the default user (AzDevOps).
@@ -83,10 +121,16 @@
 
                 - template: ../templates/apply-published-version-vars.yml
 
+                - ${{ if eq(matrix.UseFabric, true) }}:
+                  - template: ../templates/enable-fabric-experimental-feature.yml
+
                 - template: ../templates/msbuild-sln.yml
                   parameters:
                     solutionDir: vnext
-                    solutionName: Microsoft.ReactNative.sln
+                    ${{ if eq(matrix.UseFabric, true) }}:
+                      solutionName: Microsoft.ReactNative.CppOnly.slnf
+                    ${{ else }}:
+                      solutionName: Microsoft.ReactNative.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
 
@@ -114,7 +158,10 @@
 
                 - template: ../templates/publish-build-artifacts.yml
                   parameters:
-                    artifactName: ReactWindows
+                    ${{ if eq(matrix.UseFabric, true) }}:
+                      artifactName: ReactWindowsFabric
+                    ${{ else }}:
+                      artifactName: ReactWindows
                     buildPlatform: ${{ matrix.BuildPlatform }}
                     buildConfiguration: ${{ matrix.BuildConfiguration }}
                     contents: |
@@ -137,7 +184,7 @@
                   value: $(Agent.TempDirectory)/NuGetPackages
               displayName: Universal Test ${{ matrix.Name }}
               dependsOn:
-                - UniversalBuild${{ matrix.BuildPlatform }}${{ matrix.BuildConfiguration }}
+                - UniversalBuild${{ matrix.Name }}
 
               pool: ${{ parameters.AgentPool.Medium }}
               timeoutInMinutes: 60
@@ -162,10 +209,16 @@
                     arguments: -NoPrompt -Tags buildLab
 
                 - task: DownloadPipelineArtifact@1
-                  displayName: Download "ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}"
+                  ${{ if eq(matrix.UseFabric, true) }}:
+                    displayName: Download "ReactWindowsFabric.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}"
+                  ${{ else }}:
+                    displayName: Download "ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}"
                   inputs:
                     targetPath: $(Build.SourcesDirectory)/vnext/target/${{ matrix.BuildPlatform }}/${{ matrix.BuildConfiguration }}
-                    artifactName: ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
+                    ${{ if eq(matrix.UseFabric, true) }}:
+                      artifactName: ReactWindowsFabric.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
+                    ${{ else }}:
+                      artifactName: ReactWindows.${{ matrix.BuildPlatform }}.${{ matrix.BuildConfiguration }}
 
                 - task: BinSkim@4
                   displayName: Run Binskim Analysis
@@ -247,7 +300,7 @@
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
-                  condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')))
+                  condition: and(succeeded(), not(eq('${{ matrix.BuildPlatform }}', 'ARM64')), eq('${{ matrix.UseFabric }}', 'false'))
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (NetCore)
@@ -265,4 +318,4 @@
                     collectDumpOn: onAbortOnly
                     vsTestVersion: latest
                     failOnMinTestsNotRun: true
-                  condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x64'))
+                  condition: and(succeeded(), eq('${{ matrix.BuildPlatform }}', 'x64'), eq('${{ matrix.UseFabric }}', 'false'))
