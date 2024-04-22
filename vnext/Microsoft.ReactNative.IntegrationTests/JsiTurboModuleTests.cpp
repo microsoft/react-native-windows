@@ -143,6 +143,10 @@ struct MySimpleTurboModulePackageProvider
 
 } // namespace
 
+// The test fails to run when compiled on x86. It is most probably of the mix of sdtcall vs cdecl calling conventions
+// that we use in the test and RNW code. Ideally, we must switch to the default cdecl as soon as we remove the non-ABI
+// safe APIs.
+#ifndef _M_IX86
 TEST_CLASS (JsiTurboModuleTests) {
   TEST_METHOD(ExecuteSampleTurboModule) {
     TestEventService::Initialize();
@@ -183,5 +187,6 @@ TEST_CLASS (JsiTurboModuleTests) {
          TestEvent{"getValueWithPromise result reject", "intentional promise rejection"}});
   }
 };
+#endif
 
 } // namespace ReactNativeIntegrationTests

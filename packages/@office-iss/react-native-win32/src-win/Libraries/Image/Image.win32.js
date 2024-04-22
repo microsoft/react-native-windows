@@ -34,7 +34,7 @@ import * as React from 'react';
 
 function getSize(
   uri: string,
-  success: (width: number, height: number) => void,
+  success?: (width: number, height: number) => void,
   // $FlowFixMe[unclear-type]
   failure?: (error: any) => void,
 ) {
@@ -45,7 +45,7 @@ function getSize(
     .catch(
       failure ||
         function () {
-          console.warn('Failed to get size for image ' + uri);
+          console.warn('Failed to get size for image: ' + uri);
         },
     );
   */
@@ -55,6 +55,7 @@ function getSize(
     (width: number, height: number, err?: string) => {
       // $FlowFixMe[sketchy-null-string]
       if (!err) {
+        // $FlowFixMe[not-a-function]
         success(width, height);
       } else {
         if (failure) {
@@ -71,12 +72,13 @@ function getSize(
 function getSizeWithHeaders(
   uri: string,
   headers: {[string]: string, ...},
-  success: (width: number, height: number) => void,
+  success?: (width: number, height: number) => void,
   failure?: (error: mixed) => void,
   // $FlowFixMe[unclear-type]
 ): any {
   return NativeImageLoaderWin32.getSizeWithHeaders(uri, headers)
     .then(function (sizes) {
+      // $FlowFixMe[not-a-function]
       success(sizes.width, sizes.height);
     })
     .catch(

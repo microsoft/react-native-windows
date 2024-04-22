@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.75.0-nightly-20240221-a1171f79f",
+  "baseVersion": "0.75.0-nightly-20240229-21171222e",
   "overrides": [
     {
       "type": "copy",
@@ -40,7 +40,7 @@
       "type": "copy",
       "directory": "js/examples/Alert",
       "baseDirectory": "packages/rn-tester/js/examples/Alert",
-      "baseHash": "b070f0b2d1a412fe8b070620d082db65dfb7a59b",
+      "baseHash": "5ed9654a15f3a9b536e322433fe350cbe0fa9802",
       "issue": 4054
     },
     {
@@ -523,7 +523,7 @@
       "type": "copy",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "f98df2702420d6a05214aab7467ca13b8bbf0947",
+      "baseHash": "5594c2c07f69b4db976a835bfb57611a147d5809",
       "issue": 4054
     }
   ]

@@ -1,8 +1,42 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Wed, 03 Apr 2024 05:15:20 GMT and should not be manually modified.
+This log was last generated on Wed, 17 Apr 2024 05:14:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.243
+
+Wed, 17 Apr 2024 05:14:47 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.141
+
+## 0.1.242
+
+Wed, 10 Apr 2024 05:18:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.140
+- Bump @rnw-scripts/eslint-config to v1.2.11
+- Bump @rnw-scripts/just-task to v2.3.27
+
+## 0.1.241
+
+Tue, 09 Apr 2024 05:15:27 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.139
+
+## 0.1.240
+
+Sat, 06 Apr 2024 05:16:35 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.138
 
 ## 0.1.239
 
