@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 22 Apr 2024 15:16:53 GMT",
+      "version": "0.74.0-preview.3",
+      "tag": "react-native-windows_v0.74.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c13ef9da244498a96f2750b9407c7007251d246d",
+            "comment": "integrate rc9"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a7fbde79bab1d8ce811614bfaa5d2770d6c69041",
+            "comment": "Handling for long asset paths"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 Apr 2024 16:29:48 GMT",
       "version": "0.74.0-preview.2",
       "tag": "react-native-windows_v0.74.0-preview.2",

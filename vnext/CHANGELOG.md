@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 11 Apr 2024 16:29:48 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Apr 2024 15:16:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.0-preview.3
+
+Mon, 22 Apr 2024 15:16:53 GMT
+
+### Changes
+
+- integrate rc9 (tatianakapos@microsoft.com)
+- Handling for long asset paths (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.0-preview.2
 
