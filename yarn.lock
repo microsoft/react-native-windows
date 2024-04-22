@@ -2543,9 +2543,9 @@
   integrity sha512-ePKKxVvql214HHFFmG5RR5t/DFeCQFKB8Xnzh90YwSHEM/5QsncdDrRAKBeEa6liE+DH2FvXVnnYXYhPxqZNSA==
 
 "@react-native/popup-menu-android@^0.74.0":
-  version "0.74.80"
-  resolved "https://registry.yarnpkg.com/@react-native/popup-menu-android/-/popup-menu-android-0.74.80.tgz#f0cecba4509ec98d21c504a4c4ebdefef8310190"
-  integrity sha512-2tEmTRU45AZ/0AwUvugbaEWvdhqUeuNdYOk0cy5yLJxGkVEK3j/coiiYi5XlSNOV78eiqQH4K3vbI3V+HNBOGQ==
+  version "0.74.81"
+  resolved "https://registry.yarnpkg.com/@react-native/popup-menu-android/-/popup-menu-android-0.74.81.tgz#3009aefcd5608720d13f693f95d3c0118709f37b"
+  integrity sha512-8awxrIQaP/bBd466REB2xoYjoIUk8/UUEZAbCSApDSWjSXvlbdNCa1BT0cmeii3FSKn5vTU4bx+xIwxhcYjClA==
   dependencies:
     nullthrows "^1.1.1"
 
