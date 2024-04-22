@@ -73,17 +73,6 @@ using DebuggingOverlayShadowNode = ConcreteViewShadowNode<
     DebuggingOverlayEventEmitter,
     DebuggingOverlayState>;
 
-JSI_EXPORT extern const char AndroidPopupMenuComponentName[];
-
-/*
- * `ShadowNode` for <AndroidPopupMenu> component.
- */
-using AndroidPopupMenuShadowNode = ConcreteViewShadowNode<
-    AndroidPopupMenuComponentName,
-    AndroidPopupMenuProps,
-    AndroidPopupMenuEventEmitter,
-    AndroidPopupMenuState>;
-
 JSI_EXPORT extern const char PullToRefreshViewComponentName[];
 
 /*

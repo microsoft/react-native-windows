@@ -1,8 +1,28 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 23 Mar 2024 05:17:01 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Apr 2024 16:29:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.0-preview.2
+
+Thu, 11 Apr 2024 16:29:48 GMT
+
+### Changes
+
+- integrate react-native 0.74-rc6 (email not defined)
+
+## 0.74.0-preview.1
+
+Mon, 08 Apr 2024 15:16:48 GMT
+
+### Changes
+
+- Promote 0.74 to preview (tatianakapos@microsoft.com)
+- Bump @react-native-windows/codegen to v0.74.0-preview.1
+- Bump @react-native-windows/fs to v0.74.0-preview.1
+- Bump @react-native-windows/package-utils to v0.74.0-preview.1
+- Bump @react-native-windows/telemetry to v0.74.0-preview.1
 
 ## 0.0.0-canary.206
 

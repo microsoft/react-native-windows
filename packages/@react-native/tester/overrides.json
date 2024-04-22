@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.74.0-rc.0",
+  "baseVersion": "0.74.0-rc.9",
   "overrides": [
     {
       "type": "copy",
@@ -488,7 +488,7 @@
       "type": "copy",
       "directory": "js/utils",
       "baseDirectory": "packages/rn-tester/js/utils",
-      "baseHash": "808ce3514bdbf7b99623d31a786538a3b8c5c346",
+      "baseHash": "df5dbcb578e750a6e9c5ebd11bbda593c12d796b",
       "issue": 4054
     },
     {
@@ -523,7 +523,7 @@
       "type": "copy",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "f98df2702420d6a05214aab7467ca13b8bbf0947",
+      "baseHash": "ea47db91279ce5454bdf94e8f4ddcc1cab2e2d61",
       "issue": 4054
     }
   ]

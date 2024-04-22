@@ -2,6 +2,81 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 22 Apr 2024 15:16:53 GMT",
+      "version": "0.74.0-preview.3",
+      "tag": "react-native-windows_v0.74.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c13ef9da244498a96f2750b9407c7007251d246d",
+            "comment": "integrate rc9"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a7fbde79bab1d8ce811614bfaa5d2770d6c69041",
+            "comment": "Handling for long asset paths"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 11 Apr 2024 16:29:48 GMT",
+      "version": "0.74.0-preview.2",
+      "tag": "react-native-windows_v0.74.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "5f10e604924b47b0baa64825d8770be4e3a074b1",
+            "comment": "integrate react-native 0.74-rc6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.74.0-preview.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 08 Apr 2024 15:16:50 GMT",
+      "version": "0.74.0-preview.1",
+      "tag": "react-native-windows_v0.74.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "001f5fe72f13f7583f27e585962860fe4fdf229a",
+            "comment": "Promote 0.74 to preview"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d4a7dc9eb62a9677f872d81e3285343822f848d7",
+            "comment": "[NetUI] Reintroduce experimental yoga flag for use by NetUI"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.74.0-preview.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.74.0-preview.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Mar 2024 05:17:00 GMT",
       "version": "0.0.0-canary.793",
       "tag": "react-native-windows_v0.0.0-canary.793",
