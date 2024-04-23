@@ -12,7 +12,6 @@ parameters:
     type: object
     default:
       - BuildEnvironment: PullRequest
-      - BuildEnvironment: Continuous
         Matrix:
           - Name: FabricX64Debug
             template: cpp-app
