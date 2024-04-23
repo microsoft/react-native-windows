@@ -14,7 +14,7 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 UnimplementedNativeViewComponentView::UnimplementedNativeViewComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : base_type(
@@ -30,7 +30,7 @@ UnimplementedNativeViewComponentView::UnimplementedNativeViewComponentView(
 }
 
 winrt::Microsoft::ReactNative::ComponentView UnimplementedNativeViewComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<UnimplementedNativeViewComponentView>(compContext, tag, reactContext);
@@ -65,7 +65,7 @@ void UnimplementedNativeViewComponentView::updateLayoutMetrics(
 
     drawingSurface.HorizontalAlignmentRatio(0.f);
     drawingSurface.VerticalAlignmentRatio(0.f);
-    drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
+    drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::None);
     m_labelVisual.Brush(drawingSurface);
     m_labelVisual.Size(surfaceSize);
     m_labelVisual.Offset({

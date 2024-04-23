@@ -27,16 +27,18 @@ struct CreateCompositionComponentViewArgs
   CreateCompositionComponentViewArgs(
       const winrt::Microsoft::ReactNative::IReactContext &reactContext,
       facebook::react::Tag tag,
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compositionContext);
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compositionContext);
 
-  winrt::Microsoft::ReactNative::Composition::ICompositionContext CompositionContext() const noexcept;
+  winrt::Microsoft::UI::Composition::Compositor Compositor() const noexcept;
+
+  winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext CompositionContext() const noexcept;
 
   ComponentViewFeatures Features() const noexcept;
   void Features(ComponentViewFeatures value) noexcept;
 
  private:
   ComponentViewFeatures m_features{ComponentViewFeatures::Default};
-  winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compositionContext;
+  winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compositionContext;
 };
 
 struct ComponentView
@@ -45,17 +47,17 @@ struct ComponentView
 
   ComponentView(winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs const &args);
   ComponentView(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext,
       ComponentViewFeatures flags,
       bool customControl);
 
-  virtual winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept {
+  virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual Visual() const noexcept {
     return nullptr;
   };
   // Visual that should be parented to this ComponentView's parent
-  virtual winrt::Microsoft::ReactNative::Composition::IVisual OuterVisual() const noexcept;
+  virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual OuterVisual() const noexcept;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
   const facebook::react::SharedViewEventEmitter &GetEventEmitter() const noexcept;
   void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
@@ -94,7 +96,7 @@ struct ComponentView
   void updateTransformProps(
       const facebook::react::ViewProps &oldViewProps,
       const facebook::react::ViewProps &newViewProps,
-      winrt::Microsoft::ReactNative::Composition::IVisual m_visual) noexcept;
+      winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_visual) noexcept;
   void updateAccessibilityProps(
       const facebook::react::ViewProps &oldView,
       const facebook::react::ViewProps &newViewProps) noexcept;
@@ -116,7 +118,8 @@ struct ComponentView
   virtual std::string DefaultAccessibleName() const noexcept;
   virtual std::string DefaultHelpText() const noexcept;
 
-  winrt::Microsoft::ReactNative::Composition::ICompositionContext CompositionContext() const noexcept;
+  winrt::Microsoft::UI::Composition::Compositor Compositor() const noexcept;
+  winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext CompositionContext() const noexcept;
 
   // Publicaly overridable APIs
   void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept override;
@@ -129,7 +132,7 @@ struct ComponentView
       facebook::react::Point &localPt) const noexcept;
 
   winrt::IInspectable m_uiaProvider{nullptr};
-  winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
+  winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compContext;
   comp::CompositionPropertySet m_centerPropSet{nullptr};
   facebook::react::SharedViewEventEmitter m_eventEmitter;
   facebook::react::LayoutMetrics m_layoutMetrics;
@@ -150,23 +153,24 @@ struct ComponentView
       const facebook::react::ViewProps &viewProps) noexcept;
   bool TryUpdateSpecialBorderLayers(
       winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
-      std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, SpecialBorderLayerCount> &spBorderVisuals,
+      std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
+          &spBorderVisuals,
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
-  std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, SpecialBorderLayerCount>
+  std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
   FindSpecialBorderLayers() const noexcept;
   void UpdateCenterPropertySet() noexcept;
 
   ComponentViewFeatures m_flags;
   void showFocusVisual(bool show) noexcept;
-  winrt::Microsoft::ReactNative::Composition::IFocusVisual m_focusVisual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::IVisual m_outerVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IFocusVisual m_focusVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_outerVisual{nullptr};
 };
 
 struct ViewComponentView : public ViewComponentViewT<ViewComponentView, ComponentView> {
   ViewComponentView(winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs const &args);
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
@@ -200,23 +204,25 @@ struct ViewComponentView : public ViewComponentViewT<ViewComponentView, Componen
       bool ignorePointerEvents = false) const noexcept override;
   const winrt::Microsoft::ReactNative::IComponentProps userProps(
       facebook::react::Props::Shared const &props) noexcept override;
-  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual Visual() const noexcept override;
   void ensureVisual() noexcept;
 
   ViewComponentView(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext,
       ComponentViewFeatures flags,
       bool customComponent);
 
-  // Publicaly overridable APIs
-  virtual winrt::Microsoft::ReactNative::Composition::IVisual CreateVisual() noexcept;
+  virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual createVisual() noexcept;
+
+  // Publicly overridable APIs
+  virtual winrt::Microsoft::UI::Composition::Visual CreateVisual() noexcept;
   virtual void UpdateLayoutMetrics(const LayoutMetrics &metrics, const LayoutMetrics &oldMetrics) noexcept;
 
  private:
   facebook::react::SharedViewProps m_props;
-  winrt::Microsoft::ReactNative::Composition::IVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_visual{nullptr};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

@@ -19,7 +19,7 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 WindowsModalHostComponentView::WindowsModalHostComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : Super(
@@ -34,7 +34,7 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
 }
 
 winrt::Microsoft::ReactNative::ComponentView WindowsModalHostComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<WindowsModalHostComponentView>(compContext, tag, reactContext);
@@ -240,7 +240,7 @@ void WindowsModalHostComponentView::updateLayoutMetrics(
 
     drawingSurface.HorizontalAlignmentRatio(0.f);
     drawingSurface.VerticalAlignmentRatio(0.f);
-    drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
+    drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::None);
     m_visual.Brush(drawingSurface);
     m_visual.Size(surfaceSize);
     m_visual.Offset({
@@ -307,11 +307,13 @@ facebook::react::SharedViewProps WindowsModalHostComponentView::viewProps() noex
   return m_props;
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual WindowsModalHostComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual WindowsModalHostComponentView::Visual()
+    const noexcept {
   return m_visual;
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual WindowsModalHostComponentView::OuterVisual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual WindowsModalHostComponentView::OuterVisual()
+    const noexcept {
   return m_visual;
 }
 

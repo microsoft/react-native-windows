@@ -25,7 +25,7 @@ constexpr float trackStrokeThickness = 1.0f;
 } // namespace SwitchConstants
 
 SwitchComponentView::SwitchComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : base_type(
@@ -38,7 +38,7 @@ SwitchComponentView::SwitchComponentView(
 }
 
 winrt::Microsoft::ReactNative::ComponentView SwitchComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<SwitchComponentView>(compContext, tag, reactContext);
@@ -137,9 +137,9 @@ void SwitchComponentView::handleScaleChange() noexcept {
 void SwitchComponentView::updateVisuals() noexcept {
   const auto switchProps = std::static_pointer_cast<const facebook::react::SwitchProps>(m_props);
   auto &theme = *this->theme();
-  winrt::Microsoft::ReactNative::Composition::IBrush defaultColor;
-  winrt::Microsoft::ReactNative::Composition::IBrush fillColor;
-  winrt::Microsoft::ReactNative::Composition::IBrush thumbFill;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IBrush defaultColor;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IBrush fillColor;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IBrush thumbFill;
 
   auto thumbWidth = SwitchConstants::thumbWidth;
   auto thumbHeight = SwitchConstants::thumbWidth;
@@ -217,7 +217,7 @@ void SwitchComponentView::updateVisuals() noexcept {
   float offsetY = ((SwitchConstants::trackHeight - thumbHeight) * m_layoutMetrics.pointScaleFactor) / 2.0f;
 
   if (m_supressAnimationForNextFrame) {
-    m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::None);
+    m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::None);
   }
 
   if (switchProps->value) {
@@ -235,7 +235,7 @@ void SwitchComponentView::updateVisuals() noexcept {
   m_thumbVisual.Brush(thumbFill);
 
   if (m_supressAnimationForNextFrame) {
-    m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::SwitchThumb);
+    m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::SwitchThumb);
     m_supressAnimationForNextFrame = false;
   }
 }
@@ -264,7 +264,7 @@ void SwitchComponentView::ensureVisual() noexcept {
     m_visual.InsertAt(m_trackVisual, 0);
 
     m_thumbVisual = m_compContext.CreateRoundedRectangleVisual();
-    m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::SwitchThumb);
+    m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::SwitchThumb);
     m_trackVisual.InsertAt(m_thumbVisual, 0);
 
     handleScaleChange();
@@ -288,7 +288,7 @@ facebook::react::Tag SwitchComponentView::hitTest(
   return -1;
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual SwitchComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual SwitchComponentView::Visual() const noexcept {
   return m_visual;
 }
 

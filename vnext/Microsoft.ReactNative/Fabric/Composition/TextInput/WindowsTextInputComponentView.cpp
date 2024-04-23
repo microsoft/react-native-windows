@@ -482,7 +482,7 @@ facebook::react::AttributedString WindowsTextInputComponentView::getAttributedSt
 }
 
 WindowsTextInputComponentView::WindowsTextInputComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : Super(
@@ -1380,7 +1380,7 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
 
     m_drawingSurface.HorizontalAlignmentRatio(0.f);
     m_drawingSurface.VerticalAlignmentRatio(0.f);
-    m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
+    m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::None);
     m_visual.Brush(m_drawingSurface);
   }
 }
@@ -1556,12 +1556,13 @@ void WindowsTextInputComponentView::onThemeChanged() noexcept {
   base_type::onThemeChanged();
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual WindowsTextInputComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual WindowsTextInputComponentView::Visual()
+    const noexcept {
   return m_visual;
 }
 
 winrt::Microsoft::ReactNative::ComponentView WindowsTextInputComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<WindowsTextInputComponentView>(compContext, tag, reactContext);
