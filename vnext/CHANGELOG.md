@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 17 Apr 2024 05:14:47 GMT and should not be manually modified.
+This log was last generated on Tue, 23 Apr 2024 05:15:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.803
+
+Tue, 23 Apr 2024 05:15:26 GMT
+
+### Changes
+
+- Package Playground Composition (jthysell@microsoft.com)
 
 ## 0.0.0-canary.802
 
