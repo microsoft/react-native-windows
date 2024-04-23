@@ -53,6 +53,7 @@
     <V8AppPlatform>win32</V8AppPlatform>
     <HermesCompileRtti>false</HermesCompileRtti>
     <IncludeFabricInterface Condition="'$(IncludeFabricInterface)' == ''">true</IncludeFabricInterface>
+    <UseWinUI3 Condition="'$(UseWinUI3)' == ''">true</UseWinUI3>
   </PropertyGroup>
   <PropertyGroup Label="Permissive">
     <ENABLEPermissive>true</ENABLEPermissive>

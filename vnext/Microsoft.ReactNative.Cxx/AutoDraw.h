@@ -3,14 +3,14 @@
 
 #include <winrt/Microsoft.ReactNative.Composition.h>
 
-#include <CompositionSwitcher.interop.h>
+#include <CompositionSwitcher.Experimental.interop.h>
 
 namespace Microsoft::ReactNative::Composition {
 
 class AutoDrawDrawingSurface {
  public:
   AutoDrawDrawingSurface(
-      winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush &drawingSurface,
+      winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush &drawingSurface,
       POINT *offset) noexcept {
     drawingSurface.as(m_drawingSurfaceInterop);
     m_drawingSurfaceInterop->BeginDraw(m_d2dDeviceContext.put(), offset);
@@ -31,7 +31,7 @@ class AutoDrawDrawingSurface {
   }
 
  private:
-  winrt::com_ptr<ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop;
+  winrt::com_ptr<Experimental::ICompositionDrawingSurfaceInterop> m_drawingSurfaceInterop;
   winrt::com_ptr<ID2D1DeviceContext> m_d2dDeviceContext;
 };
 

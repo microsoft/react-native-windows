@@ -14,14 +14,14 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 winrt::Microsoft::ReactNative::ComponentView ActivityIndicatorComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<ActivityIndicatorComponentView>(compContext, tag, reactContext);
 }
 
 ActivityIndicatorComponentView::ActivityIndicatorComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : Super(compContext, tag, reactContext, ComponentViewFeatures::Default, false) {
@@ -141,7 +141,8 @@ facebook::react::Tag ActivityIndicatorComponentView::hitTest(
   return -1;
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual ActivityIndicatorComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ActivityIndicatorComponentView::Visual()
+    const noexcept {
   return m_visual;
 }
 

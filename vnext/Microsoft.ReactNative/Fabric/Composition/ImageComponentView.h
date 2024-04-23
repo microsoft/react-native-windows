@@ -32,7 +32,7 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ComponentVie
   using Super = ImageComponentViewT<ImageComponentView, ComponentView>;
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
@@ -56,12 +56,12 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ComponentVie
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
-  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual Visual() const noexcept override;
   bool focusable() const noexcept override;
   virtual std::string DefaultControlType() const noexcept;
 
   ImageComponentView(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
@@ -91,8 +91,8 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ComponentVie
 
   std::shared_ptr<const facebook::react::ImageProps> m_props;
 
-  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface;
+  winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface;
   winrt::com_ptr<IWICBitmap> m_wicbmp;
   std::shared_ptr<WindowsImageResponseObserver> m_imageResponseObserver;
   facebook::react::ImageShadowNode::ConcreteState::Shared m_state;

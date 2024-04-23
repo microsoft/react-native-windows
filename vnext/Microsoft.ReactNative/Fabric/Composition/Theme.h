@@ -7,18 +7,21 @@
 #include "Composition.Theme.g.h"
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 #include <react/renderer/graphics/Color.h>
+#include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Windows.UI.ViewManagement.h>
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-struct Theme : ThemeT<Theme> {
+struct Theme : ThemeT<Theme, Experimental::IInternalTheme> {
   Theme(
       const winrt::Microsoft::ReactNative::ReactContext &reactContext,
       const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &customResourceLoader) noexcept;
 
-  // Public APIs
-  winrt::Microsoft::ReactNative::Composition::IBrush PlatformBrush(winrt::hstring platformColor) noexcept;
+// Public APIs
+#ifdef USE_WINUI3
+  winrt::Microsoft::UI::Composition::CompositionBrush PlatformBrush(winrt::hstring platformColor) noexcept;
+#endif
   bool TryGetPlatformColor(winrt::hstring platformColor, winrt::Windows::UI::Color &color) noexcept;
   bool IsEmpty() const noexcept;
 
@@ -29,9 +32,13 @@ struct Theme : ThemeT<Theme> {
   // Internal APIs
   Theme() noexcept;
 
+  winrt::Microsoft::ReactNative::Composition::Experimental::IBrush InternalPlatformBrush(
+      winrt::hstring platformColor) noexcept;
+
   winrt::Windows::UI::Color PlatformColor(const std::string &platformColor) noexcept;
-  winrt::Microsoft::ReactNative::Composition::IBrush PlatformBrush(const std::string &platformColor) noexcept;
-  winrt::Microsoft::ReactNative::Composition::IBrush Brush(const facebook::react::Color &color) noexcept;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IBrush PlatformBrush(
+      const std::string &platformColor) noexcept;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IBrush Brush(const facebook::react::Color &color) noexcept;
   winrt::Windows::UI::Color Color(const facebook::react::Color &color) noexcept;
 
   D2D1::ColorF D2DColor(const facebook::react::Color &color) noexcept;
@@ -59,9 +66,10 @@ struct Theme : ThemeT<Theme> {
   std::unordered_map<std::string, std::pair<bool, winrt::Windows::UI::Color>> m_colorCache;
   winrt::Windows::UI::ViewManagement::UISettings m_uisettings;
   winrt::Windows::UI::ViewManagement::UISettings::ColorValuesChanged_revoker m_colorValuesChangedRevoker;
-  std::unordered_map<std::string, winrt::Microsoft::ReactNative::Composition::IBrush> m_platformColorBrushCache;
-  std::unordered_map<DWORD, winrt::Microsoft::ReactNative::Composition::IBrush> m_colorBrushCache;
-  winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compositionContext;
+  std::unordered_map<std::string, winrt::Microsoft::ReactNative::Composition::Experimental::IBrush>
+      m_platformColorBrushCache;
+  std::unordered_map<DWORD, winrt::Microsoft::ReactNative::Composition::Experimental::IBrush> m_colorBrushCache;
+  winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compositionContext;
   winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader m_customResourceLoader;
   winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader::ResourcesChanged_revoker m_resourceChangedRevoker;
 };

@@ -74,11 +74,8 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
   winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
       host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
-  // By using the MicrosoftCompositionContextHelper here, React Native Windows will use Lifted Visuals for its
-  // tree.
-  winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
-      host.InstanceSettings().Properties(),
-      winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::CreateContext(compositor));
+  winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(
+      host.InstanceSettings(), compositor);
 
   return host;
 }
@@ -144,8 +141,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   bridge.Connect(rootView.Island());
   bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
-  auto invScale = 1.0f / scaleFactor;
-  rootView.RootVisual().Scale({invScale, invScale, invScale});
   rootView.ScaleFactor(scaleFactor);
 
   // Set the intialSize of the root view

@@ -3,6 +3,7 @@
 // Licensed under the MIT License.
 
 #include <react/renderer/core/ReactPrimitives.h>
+#include "winrt/Microsoft.ReactNative.Composition.Experimental.h"
 #include "winrt/Microsoft.ReactNative.Composition.h"
 #include "winrt/Microsoft.ReactNative.h"
 
@@ -40,8 +41,10 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   LayoutHandler LayoutHandler() const noexcept;
   bool IsViewComponent() const noexcept;
 
-  winrt::Microsoft::ReactNative::ComponentView
-  CreateView(const IReactContext &reactContext, facebook::react::Tag tag, const ICompositionContext &context) noexcept;
+  winrt::Microsoft::ReactNative::ComponentView CreateView(
+      const IReactContext &reactContext,
+      facebook::react::Tag tag,
+      const Experimental::ICompositionContext &context) noexcept;
 
  private:
   ViewPropsFactory m_propsFactory;

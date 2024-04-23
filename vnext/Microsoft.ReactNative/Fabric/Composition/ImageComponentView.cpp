@@ -49,7 +49,7 @@ void ImageComponentView::WindowsImageResponseObserver::didReceiveFailure() const
 }
 
 ImageComponentView::ImageComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : Super(
@@ -244,13 +244,14 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
 
     switch (imageProps->resizeMode) {
       case facebook::react::ImageResizeMode::Stretch:
-        m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::Fill);
+        m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::Fill);
         break;
       case facebook::react::ImageResizeMode::Cover:
-        m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::UniformToFill);
+        m_drawingSurface.Stretch(
+            winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::UniformToFill);
         break;
       case facebook::react::ImageResizeMode::Contain:
-        m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::Uniform);
+        m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::Uniform);
         break;
       case facebook::react::ImageResizeMode::Repeat:
         // TODO - set AlignmentRatio back to 0.5f when switching between resizeModes once we no longer recreate the
@@ -262,8 +263,8 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
       case facebook::react::ImageResizeMode::Center: {
         m_drawingSurface.Stretch(
             (height < frame.height && width < frame.width)
-                ? winrt::Microsoft::ReactNative::Composition::CompositionStretch::None
-                : winrt::Microsoft::ReactNative::Composition::CompositionStretch::Uniform);
+                ? winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::None
+                : winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::Uniform);
         break;
       }
       default:
@@ -416,7 +417,7 @@ void ImageComponentView::ensureVisual() noexcept {
   }
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual ImageComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ImageComponentView::Visual() const noexcept {
   return m_visual;
 }
 
@@ -429,7 +430,7 @@ std::string ImageComponentView::DefaultControlType() const noexcept {
 }
 
 winrt::Microsoft::ReactNative::ComponentView ImageComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<ImageComponentView>(compContext, tag, reactContext);
