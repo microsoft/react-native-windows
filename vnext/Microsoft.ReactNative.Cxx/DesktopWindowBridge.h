@@ -13,6 +13,8 @@
 
 #include <winrt/Microsoft.ReactNative.h>
 
+#include "CppWinRTIncludes.h"
+
 namespace winrt::Microsoft::ReactNative {
 
 namespace details {

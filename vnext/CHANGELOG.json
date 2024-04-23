@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 23 Apr 2024 05:15:26 GMT",
+      "version": "0.0.0-canary.803",
+      "tag": "react-native-windows_v0.0.0-canary.803",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "992e2d8ae26f7c1bef5c8e367be03ab67d003804",
+            "comment": "Package Playground Composition"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 17 Apr 2024 05:14:47 GMT",
       "version": "0.0.0-canary.802",
       "tag": "react-native-windows_v0.0.0-canary.802",
