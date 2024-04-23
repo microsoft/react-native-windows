@@ -1440,24 +1440,26 @@ TEST_P(JSITest, MultilevelDecoratedHostObject) {
   EXPECT_EQ(1, RD2::numGets);
 }
 
-// [Windows #12946
-// TEST_P(JSITest, ArrayBufferSizeTest) {
-//   auto ab =
-//       eval("var x = new ArrayBuffer(10); x").getObject(rt).getArrayBuffer(rt);
-//   EXPECT_EQ(ab.size(rt), 10);
 
-//   try {
-//     // Ensure we can safely write some data to the buffer.
-//     memset(ab.data(rt), 0xab, 10);
-//   } catch (const JSINativeException&) {
-//     // data() is unimplemented by some runtimes, ignore such failures.
-//   }
+TEST_P(JSITest, ArrayBufferSizeTest) {
+  auto ab =
+      eval("var x = new ArrayBuffer(10); x").getObject(rt).getArrayBuffer(rt);
+  EXPECT_EQ(ab.size(rt), 10);
 
-//   // Ensure that setting the byteLength property does not change the length.
-//   eval("Object.defineProperty(x, 'byteLength', {value: 20})");
-//   EXPECT_EQ(ab.size(rt), 10);
-// }
-// Windows]
+  try {
+    // Ensure we can safely write some data to the buffer.
+    memset(ab.data(rt), 0xab, 10);
+  } catch (const JSINativeException&) {
+    // data() is unimplemented by some runtimes, ignore such failures.
+  }
+
+  // Ensure that setting the byteLength property does not change the length.
+  // [Windows #12210
+  // eval("Object.defineProperty(x, 'byteLength', {value: 20})");
+  // EXPECT_EQ(ab.size(rt), 10);
+  //  Windows]
+  
+}
 
 namespace {
 

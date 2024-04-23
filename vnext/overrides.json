@@ -79,6 +79,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
+      "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
+      "baseHash": "4cab1f3169cfe38e0bf7933406dd960fda2e5d28",
+      "issue": 12210
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/Bridging.h",
       "baseFile": "packages/react-native/ReactCommon/react/bridging/Bridging.h",
       "baseHash": "7298e5365811b51bcd892732dcb51110ecbed5ec",
