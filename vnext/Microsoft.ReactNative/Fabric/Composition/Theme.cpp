@@ -445,11 +445,20 @@ winrt::Windows::UI::Color Theme::PlatformColor(const std::string &platformColor)
   return {0, 0, 0, 0}; // Transparent
 }
 
-winrt::Microsoft::ReactNative::Composition::IBrush Theme::PlatformBrush(winrt::hstring platformColor) noexcept {
+winrt::Microsoft::ReactNative::Composition::Experimental::IBrush Theme::InternalPlatformBrush(
+    winrt::hstring platformColor) noexcept {
   return PlatformBrush(winrt::to_string(platformColor));
 }
 
-winrt::Microsoft::ReactNative::Composition::IBrush Theme::PlatformBrush(const std::string &platformColor) noexcept {
+#ifdef USE_WINUI3
+winrt::Microsoft::UI::Composition::CompositionBrush Theme::PlatformBrush(winrt::hstring platformColor) noexcept {
+  return winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerBrush(
+      PlatformBrush(winrt::to_string(platformColor)));
+}
+#endif
+
+winrt::Microsoft::ReactNative::Composition::Experimental::IBrush Theme::PlatformBrush(
+    const std::string &platformColor) noexcept {
   if (m_emptyTheme)
     return nullptr;
 
@@ -465,7 +474,8 @@ winrt::Microsoft::ReactNative::Composition::IBrush Theme::PlatformBrush(const st
   return nullptr;
 }
 
-winrt::Microsoft::ReactNative::Composition::IBrush Theme::Brush(const facebook::react::Color &color) noexcept {
+winrt::Microsoft::ReactNative::Composition::Experimental::IBrush Theme::Brush(
+    const facebook::react::Color &color) noexcept {
   if (m_emptyTheme)
     return nullptr;
 

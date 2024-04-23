@@ -10,21 +10,32 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-static const ReactPropertyId<ICompositionContext> &CompositionContextPropertyId() noexcept {
-  static const ReactPropertyId<ICompositionContext> prop{L"ReactNative.Composition", L"CompositionContext"};
+static const ReactPropertyId<Experimental::ICompositionContext> &CompositionContextPropertyId() noexcept {
+  static const ReactPropertyId<Experimental::ICompositionContext> prop{
+      L"ReactNative.Composition", L"CompositionContext"};
   return prop;
 }
 
-void CompositionUIService::SetCompositionContext(
-    IReactPropertyBag const &properties,
-    ICompositionContext const &compositionContext) noexcept {
-  ReactPropertyBag(properties).Set(CompositionContextPropertyId(), compositionContext);
+void CompositionUIService::SetCompositor(
+    const winrt::Microsoft::ReactNative::ReactInstanceSettings &settings,
+    const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept {
+  ReactPropertyBag properties(settings.Properties());
+  properties.Set(
+      CompositionContextPropertyId(),
+      winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateContext(
+          compositor));
   // Default to using Bridgeless mode when using fabric
-  winrt::Microsoft::ReactNative::implementation::QuirkSettings::SetIsBridgeless(
-      ReactPropertyBag(properties), !!compositionContext);
+  winrt::Microsoft::ReactNative::implementation::QuirkSettings::SetIsBridgeless(properties, !!compositor);
 }
 
-ICompositionContext CompositionUIService::GetCompositionContext(const IReactPropertyBag &properties) noexcept {
+winrt::Microsoft::UI::Composition::Compositor CompositionUIService::GetCompositor(
+    const IReactPropertyBag &properties) noexcept {
+  return winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(
+      GetCompositionContext(properties));
+}
+
+Experimental::ICompositionContext CompositionUIService::GetCompositionContext(
+    const IReactPropertyBag &properties) noexcept {
   return ReactPropertyBag(properties).Get(CompositionContextPropertyId());
 }
 

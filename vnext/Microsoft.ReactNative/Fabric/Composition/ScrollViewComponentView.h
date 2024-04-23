@@ -54,7 +54,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   using Super = ScrollViewComponentViewT<ScrollViewComponentView, ComponentView>;
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
@@ -82,7 +82,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
   facebook::react::Point getClientOffset() const noexcept override;
-  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual Visual() const noexcept override;
 
   void onThemeChanged() noexcept override;
   void OnPointerReleased(
@@ -101,7 +101,7 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   void scrollTo(winrt::Windows::Foundation::Numerics::float3 offset, bool animate) noexcept;
 
   ScrollViewComponentView(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
@@ -125,11 +125,11 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   void updateStateWithContentOffset() noexcept;
 
   facebook::react::Size m_contentSize;
-  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::IScrollVisual m_scrollVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual m_scrollVisual{nullptr};
   std::shared_ptr<ScrollBarComponent> m_horizontalScrollbarComponent{nullptr};
   std::shared_ptr<ScrollBarComponent> m_verticalScrollbarComponent{nullptr};
-  winrt::Microsoft::ReactNative::Composition::IScrollVisual::ScrollPositionChanged_revoker
+  winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual::ScrollPositionChanged_revoker
       m_scrollPositionChangedRevoker{};
 
   facebook::react::SharedViewProps m_props;

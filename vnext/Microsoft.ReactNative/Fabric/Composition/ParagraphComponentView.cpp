@@ -19,7 +19,7 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 ParagraphComponentView::ParagraphComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : Super(
@@ -285,7 +285,7 @@ void ParagraphComponentView::updateVisualBrush() noexcept {
     if (m_drawingSurface) {
       m_drawingSurface.HorizontalAlignmentRatio(horizAlignment);
       m_drawingSurface.VerticalAlignmentRatio(0.f);
-      m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
+      m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::None);
     }
     m_visual.Brush(m_drawingSurface);
   }
@@ -346,12 +346,12 @@ std::string ParagraphComponentView::DefaultAccessibleName() const noexcept {
   return m_attributedStringBox.getValue().getString();
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual ParagraphComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ParagraphComponentView::Visual() const noexcept {
   return m_visual;
 }
 
 winrt::Microsoft::ReactNative::ComponentView ParagraphComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<ParagraphComponentView>(compContext, tag, reactContext);
