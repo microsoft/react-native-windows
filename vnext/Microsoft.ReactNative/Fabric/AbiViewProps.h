@@ -7,6 +7,7 @@
 #include "ViewProps.g.h"
 
 #include <react/renderer/components/view/ViewProps.h>
+#include "winrt/Microsoft.ReactNative.Composition.Experimental.h"
 #include "winrt/Microsoft.ReactNative.h"
 
 namespace Microsoft::ReactNative {
@@ -35,11 +36,15 @@ class AbiViewProps final : public facebook::react::ViewProps {
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-struct Color : ColorT<Color> {
+struct Color : ColorT<Color, Composition::Experimental::IInternalColor> {
   Color(facebook::react::SharedColor color);
 
   winrt::Windows::UI::Color AsWindowsColor(const winrt::Microsoft::ReactNative::Composition::Theme &theme) noexcept;
-  winrt::Microsoft::ReactNative::Composition::IBrush AsBrush(
+#ifdef USE_WINUI3
+  winrt::Microsoft::UI::Composition::CompositionBrush AsBrush(
+      const winrt::Microsoft::ReactNative::Composition::Theme theme) noexcept;
+#endif
+  winrt::Microsoft::ReactNative::Composition::Experimental::IBrush AsInternalBrush(
       const winrt::Microsoft::ReactNative::Composition::Theme theme) noexcept;
 
   static winrt::Microsoft::ReactNative::Color ReadValue(

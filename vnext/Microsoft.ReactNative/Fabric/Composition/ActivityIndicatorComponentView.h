@@ -17,7 +17,7 @@ struct ActivityIndicatorComponentView : ActivityIndicatorComponentViewT<Activity
   using Super = ActivityIndicatorComponentViewT<ActivityIndicatorComponentView, ComponentView>;
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
@@ -42,11 +42,11 @@ struct ActivityIndicatorComponentView : ActivityIndicatorComponentViewT<Activity
 
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
-  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual Visual() const noexcept override;
   virtual std::string DefaultControlType() const noexcept;
 
   ActivityIndicatorComponentView(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
@@ -55,8 +55,8 @@ struct ActivityIndicatorComponentView : ActivityIndicatorComponentViewT<Activity
   void updateVisualSize() noexcept;
   void updateProgressColor(const facebook::react::SharedColor &color) noexcept;
 
-  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::IActivityVisual m_ActivityIndicatorVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IActivityVisual m_ActivityIndicatorVisual{nullptr};
   facebook::react::SharedViewProps m_props;
 };
 

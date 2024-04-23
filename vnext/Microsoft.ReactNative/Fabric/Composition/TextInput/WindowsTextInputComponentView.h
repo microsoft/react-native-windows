@@ -25,7 +25,7 @@ struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTex
 
   using Super = WindowsTextInputComponentViewT<WindowsTextInputComponentView, ComponentView>;
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
@@ -52,7 +52,7 @@ struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTex
       facebook::react::Point &localPt,
       bool ignorePointerEvents = false) const noexcept override;
   void OnRenderingDeviceLost() noexcept override;
-  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual Visual() const noexcept override;
   void onFocusLost() noexcept override;
   void onFocusGained() noexcept override;
   bool focusable() const noexcept override;
@@ -83,7 +83,7 @@ struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTex
   bool getAcccessiblityIsReadOnly() noexcept override;
 
   WindowsTextInputComponentView(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
@@ -114,9 +114,9 @@ struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTex
       const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
-  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::ICaretVisual m_caretVisual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface{nullptr};
 
   // Used by ITextHost impl
   CHARFORMAT2W m_cf;

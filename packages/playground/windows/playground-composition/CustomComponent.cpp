@@ -100,7 +100,7 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
     base_type::FinalizeUpdates(updateMask);
   }
 
-  winrt::Microsoft::ReactNative::Composition::IVisual CreateVisual() noexcept {
+  winrt::Microsoft::UI::Composition::Visual CreateVisual() noexcept {
 #ifdef USE_EXPERIMENTAL_WINUI3
 
     m_xamlIsland = winrt::Microsoft::UI::Xaml::XamlIsland{};
@@ -109,19 +109,15 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
     m_contentIsland = m_xamlIsland.ContentIsland();
 #endif
 
-    m_visual = CompositionContext().CreateSpriteVisual();
+    m_visual = Compositor().CreateSpriteVisual();
     // m_visual.Brush(CompositionContext().CreateColorBrush({255, 255, 0, 255}));
 #ifdef USE_EXPERIMENTAL_WINUI3
-
-    auto parentSystemVisual =
-        winrt::Microsoft::ReactNative::Composition::SystemCompositionContextHelper::InnerVisual(m_visual)
-            .as<winrt::Windows::UI::Composition::ContainerVisual>();
 
     auto hwnd = reinterpret_cast<HWND>(
         winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(ReactContext().Properties()));
 
     m_siteBridge = winrt::Microsoft::UI::Content::SystemVisualSiteBridge::Create(
-        m_contentIsland.Compositor(), parentSystemVisual, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
+        m_contentIsland.Compositor(), m_visual, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
     m_siteBridge.Connect(m_contentIsland);
 
     auto rootXamlVisualSize = m_contentIsland.Root().Size();
@@ -171,7 +167,7 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
   const bool m_nativeLayout;
   winrt::Microsoft::UI::Xaml::Controls::TextBlock m_buttonLabelTextBlock{nullptr};
   winrt::Microsoft::ReactNative::IComponentState m_state;
-  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
+  winrt::Microsoft::UI::Composition::Visual m_visual{nullptr};
 #ifdef USE_EXPERIMENTAL_WINUI3
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
   winrt::Microsoft::UI::Content::ContentIsland m_contentIsland{nullptr};

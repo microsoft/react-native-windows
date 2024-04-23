@@ -11,7 +11,7 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 DebuggingOverlayComponentView::DebuggingOverlayComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : base_type(
@@ -38,7 +38,7 @@ void DebuggingOverlayComponentView::UnmountChildComponentView(
 }
 
 winrt::Microsoft::ReactNative::ComponentView DebuggingOverlayComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<DebuggingOverlayComponentView>(compContext, tag, reactContext);

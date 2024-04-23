@@ -4,7 +4,7 @@
 #include "NamespaceRedirect.h"
 #include "DocString.h"
 
-namespace Microsoft.ReactNative.Composition
+namespace Microsoft.ReactNative.Composition.Experimental
 {
   enum CompositionStretch
   {
@@ -161,4 +161,4 @@ namespace Microsoft.ReactNative.Composition
     // event Windows.Foundation.EventHandler<RenderingDeviceReplacedArgs> RenderingDeviceReplaced;
   }
 
-} // namespace Microsoft.ReactNative.Composition
+} // namespace Microsoft.ReactNative.Composition.Experimental
