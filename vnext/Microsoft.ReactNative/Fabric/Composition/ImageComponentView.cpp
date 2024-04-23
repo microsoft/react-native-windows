@@ -225,7 +225,7 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
     const auto frame{m_layoutMetrics.getContentFrame().size};
 
     if (imageProps->resizeMode == facebook::react::ImageResizeMode::Repeat) {
-      drawingSurfaceSize = {frame.width, frame.height};
+      drawingSurfaceSize = {frame.width * m_layoutMetrics.pointScaleFactor, frame.height * m_layoutMetrics.pointScaleFactor };
     } else if (imageProps->blurRadius > 0) {
       // https://learn.microsoft.com/en-us/windows/win32/direct2d/gaussian-blur#output-bitmap
       // The following equation that can be used to compute the output bitmap:
@@ -291,7 +291,7 @@ void ImageComponentView::DrawImage() noexcept {
 
   assert(m_reactContext.UIDispatcher().HasThreadAccess());
 
-  ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, &offset);
+  ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, 1.0f, &offset);
   if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
     winrt::com_ptr<ID2D1Bitmap1> bitmap;
     winrt::check_hresult(d2dDeviceContext->CreateBitmapFromWicBitmap(m_wicbmp.get(), nullptr, bitmap.put()));
@@ -362,20 +362,12 @@ void ImageComponentView::DrawImage() noexcept {
       winrt::check_hresult(m_wicbmp->GetSize(&width, &height));
 
       D2D1_RECT_F rect = D2D1::RectF(
-          static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor),
-          static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor),
-          static_cast<float>((offset.x + width) / m_layoutMetrics.pointScaleFactor),
-          static_cast<float>((offset.y + height) / m_layoutMetrics.pointScaleFactor));
-
-      const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-      float oldDpiX, oldDpiY;
-      d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-      d2dDeviceContext->SetDpi(dpi, dpi);
+          static_cast<float>(offset.x),
+          static_cast<float>(offset.y),
+          static_cast<float>(offset.x + width),
+          static_cast<float>(offset.y + height));
 
       d2dDeviceContext->DrawBitmap(bitmap.get(), rect);
-
-      // Restore old dpi setting
-      d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
     }
   }
 }

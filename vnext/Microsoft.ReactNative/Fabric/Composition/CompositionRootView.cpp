@@ -496,7 +496,7 @@ Composition::Experimental::IDrawingSurfaceBrush CompositionRootView::CreateLoadi
 
   POINT offset;
   {
-    ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, &offset);
+    ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, m_scaleFactor, &offset);
     if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
       d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Green));
 
