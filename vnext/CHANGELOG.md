@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 22 Apr 2024 15:16:53 GMT and should not be manually modified.
+This log was last generated on Tue, 23 Apr 2024 23:07:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.0-preview.4
+
+Tue, 23 Apr 2024 23:07:50 GMT
+
+### Changes
+
+- Move CompositionSwitcher to Experimental namespace (30809111+acoates-ms@users.noreply.github.com)
+- Add builds and nugets for MS.RN Fabric (jthysell@microsoft.com)
+- Package Playground Composition (jthysell@microsoft.com)
+- Fix Microsoft.ReactNative.IntegrationTests to run with Fabric (jthysell@microsoft.com)
 
 ## 0.74.0-preview.3
 

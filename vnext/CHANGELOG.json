@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 23 Apr 2024 23:07:50 GMT",
+      "version": "0.74.0-preview.4",
+      "tag": "react-native-windows_v0.74.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "377d16da702ed9ba7e7e66cc3483fffe72d56d9e",
+            "comment": "Move CompositionSwitcher to Experimental namespace"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a399157c81c94778117b2ad1cfb74c4f97b3a234",
+            "comment": "Add builds and nugets for MS.RN Fabric"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4b3db7970fbaf555fb102ef2da7414b146aca852",
+            "comment": "Package Playground Composition"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a399157c81c94778117b2ad1cfb74c4f97b3a234",
+            "comment": "Fix Microsoft.ReactNative.IntegrationTests to run with Fabric"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Apr 2024 15:16:53 GMT",
       "version": "0.74.0-preview.3",
       "tag": "react-native-windows_v0.74.0-preview.3",

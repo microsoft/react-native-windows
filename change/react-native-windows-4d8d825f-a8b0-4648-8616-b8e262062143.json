@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[0.74] Fix Microsoft.ReactNative.IntegrationTests to run with Fabric",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
