@@ -866,6 +866,7 @@ void ScrollViewComponentView::OnPointerWheelChanged(
       }
     }
   }
+  Super::OnPointerWheelChanged(args);
 }
 
 void ScrollViewComponentView::OnPointerPressed(
