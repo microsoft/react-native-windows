@@ -9539,11 +9539,58 @@ private:
 };
 
 
+  class JSI_EXPORT NativeMicrotasksCxxSpecJSI : public TurboModule {
+protected:
+  NativeMicrotasksCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void queueMicrotask(jsi::Runtime &rt, jsi::Function callback) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeMicrotasksCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+  static constexpr std::string_view kModuleName = "NativeMicrotasksCxx";
+
+protected:
+  NativeMicrotasksCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeMicrotasksCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+private:
+  class Delegate : public NativeMicrotasksCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeMicrotasksCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
+
+    void queueMicrotask(jsi::Runtime &rt, jsi::Function callback) override {
+      static_assert(
+          bridging::getParameterCount(&T::queueMicrotask) == 2,
+          "Expected queueMicrotask(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::queueMicrotask, jsInvoker_, instance_, std::move(callback));
+    }
+
+  private:
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
   class JSI_EXPORT NativePerformanceCxxSpecJSI : public TurboModule {
 protected:
   NativePerformanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
 public:
+  virtual double now(jsi::Runtime &rt) = 0;
   virtual void mark(jsi::Runtime &rt, jsi::String name, double startTime) = 0;
   virtual void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
   virtual jsi::Object getSimpleMemoryInfo(jsi::Runtime &rt) = 0;
@@ -9571,6 +9618,14 @@ private:
     Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
       NativePerformanceCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
 
+    double now(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::now) == 1,
+          "Expected now(...) to have 1 parameters");
+
+      return bridging::callFromJs<double>(
+          rt, &T::now, jsInvoker_, instance_);
+    }
     void mark(jsi::Runtime &rt, jsi::String name, double startTime) override {
       static_assert(
           bridging::getParameterCount(&T::mark) == 3,

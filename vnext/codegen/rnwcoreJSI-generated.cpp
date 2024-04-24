@@ -2807,6 +2807,23 @@ NativeWebSocketModuleCxxSpecJSI::NativeWebSocketModuleCxxSpecJSI(std::shared_ptr
   methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeWebSocketModuleCxxSpecJSI_addListener};
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeWebSocketModuleCxxSpecJSI_removeListeners};
 }
+static jsi::Value __hostFunction_NativeMicrotasksCxxSpecJSI_queueMicrotask(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeMicrotasksCxxSpecJSI *>(&turboModule)->queueMicrotask(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
+
+NativeMicrotasksCxxSpecJSI::NativeMicrotasksCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("NativeMicrotasksCxx", jsInvoker) {
+  methodMap_["queueMicrotask"] = MethodMetadata {1, __hostFunction_NativeMicrotasksCxxSpecJSI_queueMicrotask};
+}
+static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_now(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->now(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_mark(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativePerformanceCxxSpecJSI *>(&turboModule)->mark(
     rt,
@@ -2840,6 +2857,7 @@ static jsi::Value __hostFunction_NativePerformanceCxxSpecJSI_getReactNativeStart
 
 NativePerformanceCxxSpecJSI::NativePerformanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("NativePerformanceCxx", jsInvoker) {
+  methodMap_["now"] = MethodMetadata {0, __hostFunction_NativePerformanceCxxSpecJSI_now};
   methodMap_["mark"] = MethodMetadata {2, __hostFunction_NativePerformanceCxxSpecJSI_mark};
   methodMap_["measure"] = MethodMetadata {6, __hostFunction_NativePerformanceCxxSpecJSI_measure};
   methodMap_["getSimpleMemoryInfo"] = MethodMetadata {0, __hostFunction_NativePerformanceCxxSpecJSI_getSimpleMemoryInfo};

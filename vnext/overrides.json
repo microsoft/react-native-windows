@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240307-ff03b149e",
+  "baseVersion": "0.75.0-nightly-20240315-f2f62cdf5",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "bdebcba51a5c13fbe5acab9e07720acff0825bc9"
+      "baseHash": "a57066be1285dc8bc5d9702d0227d04c1c6447ce"
     },
     {
       "type": "derived",
@@ -95,14 +95,14 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/CallbackWrapper.h",
       "baseFile": "packages/react-native/ReactCommon/react/bridging/CallbackWrapper.h",
-      "baseHash": "fe1adea3ede6ed141bc6db212be72091722ffa02",
+      "baseHash": "fe297f56ac277e5ff3ebcb284eea1f511b5e2d8e",
       "issue": 12195
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModuleUtils.h",
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModuleUtils.h",
-      "baseHash": "11de652e153bff8c42cc0e2bbf209c762ed3b314",
+      "baseHash": "ba5efe9ba0db80a3f38c94deb8983420fd82beff",
       "issue": 12195
     },
     {
@@ -295,7 +295,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "f05b36551197bfa87f2342bd6d1c9b134c1731b2"
+      "baseHash": "b1ef5981a6abbb0548fc5fd835ad711c10712d61"
     },
     {
       "type": "patch",
@@ -424,7 +424,7 @@
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorReactFrames.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js",
-      "baseHash": "04c1210d0198315af8358b22a81dc74dc76ef752"
+      "baseHash": "3a765d2180cca25ed35172ebce8294fc569486aa"
     },
     {
       "type": "derived",
