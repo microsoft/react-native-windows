@@ -6,6 +6,7 @@
 
 #include "CompositionViewComponentView.h"
 
+#include <AutoDraw.h>
 #include <Fabric/AbiState.h>
 #include <Fabric/AbiViewProps.h>
 #include <Fabric/Composition/CompositionRootView.h>
@@ -568,31 +569,6 @@ void DrawShape(
   pRT->DrawGeometry(&geometry, brush, strokeWidth, strokeStyle);
 }
 
-struct AutoDrawHelper {
-  AutoDrawHelper(
-      winrt::com_ptr<::Microsoft::ReactNative::Composition::Experimental::ICompositionDrawingSurfaceInterop> &surface) {
-    m_surface = surface;
-    m_surface->BeginDraw(m_pRT.put(), &m_offset);
-  }
-
-  ~AutoDrawHelper() {
-    m_surface->EndDraw();
-  }
-
-  const winrt::com_ptr<ID2D1DeviceContext> &GetRenderTarget() const noexcept {
-    return m_pRT;
-  }
-
-  POINT Offset() const noexcept {
-    return m_offset;
-  }
-
- private:
-  winrt::com_ptr<::Microsoft::ReactNative::Composition::Experimental::ICompositionDrawingSurfaceInterop> m_surface;
-  POINT m_offset;
-  winrt::com_ptr<ID2D1DeviceContext> m_pRT;
-};
-
 template <typename TShape>
 void SetBorderLayerPropertiesCommon(
     winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
@@ -622,66 +598,59 @@ void SetBorderLayerPropertiesCommon(
 
   layer.Brush(surface);
 
-  AutoDrawHelper autoDraw(borderTexture);
+  POINT offset;
+  ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(
+      surface, 1.0f /* We have already done the dpi scaling */, &offset);
+  if (auto pRT = autoDraw.GetRenderTarget()) {
+    // Clear with transparency
+    pRT->Clear();
 
-  winrt::com_ptr<ID2D1DeviceContext> pRT{autoDraw.GetRenderTarget()};
+    if (!facebook::react::isColorMeaningful(borderColor)) {
+      return;
+    }
 
-  if (!pRT) {
-    return;
+    winrt::com_ptr<ID2D1Factory> spFactory;
+    pRT->GetFactory(spFactory.put());
+    assert(spFactory);
+    if (spFactory == nullptr)
+      return;
+
+    winrt::com_ptr<ID2D1SolidColorBrush> spBorderBrush;
+    pRT->CreateSolidColorBrush(theme->D2DColor(*borderColor), spBorderBrush.put());
+    assert(spBorderBrush);
+    if (spBorderBrush == nullptr)
+      return;
+
+    winrt::com_ptr<ID2D1StrokeStyle> spStrokeStyle;
+
+    enum class BorderStyle { Solid, Dotted, Dashed };
+
+    if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
+      const auto capStyle =
+          borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_CAP_STYLE_FLAT : D2D1_CAP_STYLE_ROUND;
+      const auto strokeStyleProps = D2D1::StrokeStyleProperties(
+          capStyle,
+          capStyle,
+          capStyle,
+          D2D1_LINE_JOIN_MITER,
+          10.0f,
+          borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_DASH_STYLE_DASH : D2D1_DASH_STYLE_DOT,
+          0.0f);
+      spFactory->CreateStrokeStyle(&strokeStyleProps, nullptr, 0, spStrokeStyle.put());
+    }
+    D2D1::Matrix3x2F originalTransform;
+    D2D1::Matrix3x2F translationTransform =
+        D2D1::Matrix3x2F::Translation(-textureRect.left + offset.x, -textureRect.top + offset.y);
+
+    pRT->GetTransform(&originalTransform);
+    translationTransform = originalTransform * translationTransform;
+
+    pRT->SetTransform(translationTransform);
+
+    DrawShape(pRT, shape, spBorderBrush.get(), strokeWidth, spStrokeStyle.get());
+
+    pRT->SetTransform(originalTransform);
   }
-
-  // Clear with transparency
-  pRT->Clear();
-
-  if (!facebook::react::isColorMeaningful(borderColor)) {
-    return;
-  }
-
-  winrt::com_ptr<ID2D1Factory> spFactory;
-  pRT->GetFactory(spFactory.put());
-  assert(spFactory);
-  if (spFactory == nullptr)
-    return;
-
-  winrt::com_ptr<ID2D1SolidColorBrush> spBorderBrush;
-  pRT->CreateSolidColorBrush(theme->D2DColor(*borderColor), spBorderBrush.put());
-  assert(spBorderBrush);
-  if (spBorderBrush == nullptr)
-    return;
-
-  winrt::com_ptr<ID2D1StrokeStyle> spStrokeStyle;
-
-  enum class BorderStyle { Solid, Dotted, Dashed };
-
-  if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
-    const auto capStyle =
-        borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_CAP_STYLE_FLAT : D2D1_CAP_STYLE_ROUND;
-    const auto strokeStyleProps = D2D1::StrokeStyleProperties(
-        capStyle,
-        capStyle,
-        capStyle,
-        D2D1_LINE_JOIN_MITER,
-        10.0f,
-        borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_DASH_STYLE_DASH : D2D1_DASH_STYLE_DOT,
-        0.0f);
-    spFactory->CreateStrokeStyle(&strokeStyleProps, nullptr, 0, spStrokeStyle.put());
-  }
-  D2D1::Matrix3x2F originalTransform;
-  D2D1::Matrix3x2F translationTransform =
-      D2D1::Matrix3x2F::Translation(-textureRect.left + autoDraw.Offset().x, -textureRect.top + autoDraw.Offset().y);
-
-  pRT->GetTransform(&originalTransform);
-  translationTransform = originalTransform * translationTransform;
-
-  float oldDpiX, oldDpiY;
-  pRT->SetTransform(translationTransform);
-  pRT->GetDpi(&oldDpiX, &oldDpiY);
-  pRT->SetDpi(96.0f, 96.0f); // We have already done the dpi scaling...
-
-  DrawShape(pRT.get(), shape, spBorderBrush.get(), strokeWidth, spStrokeStyle.get());
-
-  pRT->SetDpi(oldDpiX, oldDpiY);
-  pRT->SetTransform(originalTransform);
 }
 
 template <typename TShape>

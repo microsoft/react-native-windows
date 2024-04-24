@@ -55,8 +55,12 @@ void RootComponentView::SetFocusedComponent(const winrt::Microsoft::ReactNative:
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_focusedComponent)->onFocusLost();
   }
 
-  if (value)
+  if (value) {
+    if (auto rootView = m_wkRootView.get()) {
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)->TrySetFocus();
+    }
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(value)->onFocusGained();
+  }
 
   m_focusedComponent = value;
 }
