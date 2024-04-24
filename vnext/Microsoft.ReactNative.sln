@@ -16,6 +16,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Include", "include\Include.vcxitems", "{EF074BA1-2D54-4D49-A28E-5E040B47CD2E}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Cxx.UnitTests", "Microsoft.ReactNative.Cxx.UnitTests\Microsoft.ReactNative.Cxx.UnitTests.vcxproj", "{6C60E295-C8CA-4DC5-B8BE-09888F58B249}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD} = {A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.ComponentTests", "Microsoft.ReactNative.ComponentTests\Microsoft.ReactNative.ComponentTests.vcxproj", "{93792779-4948-4A5D-8CA7-86ED5E3BEC27}"
 EndProject
