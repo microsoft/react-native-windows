@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 24 Apr 2024 05:15:12 GMT",
+      "version": "0.0.0-canary.804",
+      "tag": "react-native-windows_v0.0.0-canary.804",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "347922f9c9e3fdde0468e15e4c17c8a0f057954d",
+            "comment": "Move CompositionSwitcher to Experimental namespace"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 23 Apr 2024 05:15:26 GMT",
       "version": "0.0.0-canary.803",
       "tag": "react-native-windows_v0.0.0-canary.803",
