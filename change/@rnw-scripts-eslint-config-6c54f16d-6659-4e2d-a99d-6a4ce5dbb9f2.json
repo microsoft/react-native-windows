@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "integrate react-native-3-21",
+  "packageName": "@rnw-scripts/eslint-config",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
