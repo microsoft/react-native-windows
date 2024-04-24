@@ -599,14 +599,13 @@ void SetBorderLayerPropertiesCommon(
   layer.Brush(surface);
 
   POINT offset;
-  ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(surface, 1.0f /* We have already done the dpi scaling */, &offset);
-  if (auto pRT = autoDraw.GetRenderTarget())
-  {
+  ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(
+      surface, 1.0f /* We have already done the dpi scaling */, &offset);
+  if (auto pRT = autoDraw.GetRenderTarget()) {
     // Clear with transparency
     pRT->Clear();
 
-    if (!facebook::react::isColorMeaningful(borderColor))
-    {
+    if (!facebook::react::isColorMeaningful(borderColor)) {
       return;
     }
 
@@ -624,28 +623,24 @@ void SetBorderLayerPropertiesCommon(
 
     winrt::com_ptr<ID2D1StrokeStyle> spStrokeStyle;
 
-    enum class BorderStyle
-    {
-      Solid, Dotted, Dashed
-    };
+    enum class BorderStyle { Solid, Dotted, Dashed };
 
-    if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed)
-    {
+    if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
       const auto capStyle =
-        borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_CAP_STYLE_FLAT : D2D1_CAP_STYLE_ROUND;
+          borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_CAP_STYLE_FLAT : D2D1_CAP_STYLE_ROUND;
       const auto strokeStyleProps = D2D1::StrokeStyleProperties(
-        capStyle,
-        capStyle,
-        capStyle,
-        D2D1_LINE_JOIN_MITER,
-        10.0f,
-        borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_DASH_STYLE_DASH : D2D1_DASH_STYLE_DOT,
-        0.0f);
+          capStyle,
+          capStyle,
+          capStyle,
+          D2D1_LINE_JOIN_MITER,
+          10.0f,
+          borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_DASH_STYLE_DASH : D2D1_DASH_STYLE_DOT,
+          0.0f);
       spFactory->CreateStrokeStyle(&strokeStyleProps, nullptr, 0, spStrokeStyle.put());
     }
     D2D1::Matrix3x2F originalTransform;
     D2D1::Matrix3x2F translationTransform =
-      D2D1::Matrix3x2F::Translation(-textureRect.left + offset.x, -textureRect.top + offset.y);
+        D2D1::Matrix3x2F::Translation(-textureRect.left + offset.x, -textureRect.top + offset.y);
 
     pRT->GetTransform(&originalTransform);
     translationTransform = originalTransform * translationTransform;

@@ -186,15 +186,13 @@ void CompositionRootView::RemoveRenderedVisual(
 
 bool CompositionRootView::TrySetFocus() noexcept {
 #ifdef USE_WINUI3
-  if (m_island)
-  {
+  if (m_island) {
     auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
     return focusController.TrySetFocus();
   }
 #endif
   return false;
 }
-
 
 winrt::Windows::Foundation::Size CompositionRootView::Size() noexcept {
   return m_size;

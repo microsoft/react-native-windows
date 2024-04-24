@@ -263,7 +263,8 @@ struct CompDrawingSurfaceBrush : public winrt::implements<
     assert(size.Width != 0 && size.Height != 0);
 #endif
 
-    auto hr = m_drawingSurfaceInterop->BeginDraw(nullptr, __uuidof(ID2D1DeviceContext), (void **)deviceContextOut, offset);
+    auto hr =
+        m_drawingSurfaceInterop->BeginDraw(nullptr, __uuidof(ID2D1DeviceContext), (void **)deviceContextOut, offset);
     if (SUCCEEDED(hr)) {
       (*deviceContextOut)->SetDpi(xDpi, yDpi);
     }

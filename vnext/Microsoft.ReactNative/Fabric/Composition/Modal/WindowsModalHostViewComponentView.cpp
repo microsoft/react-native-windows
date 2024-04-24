@@ -251,7 +251,8 @@ void WindowsModalHostComponentView::updateLayoutMetrics(
 
     POINT offset;
     {
-      ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, m_layoutMetrics.pointScaleFactor, &offset);
+      ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(
+          drawingSurface, m_layoutMetrics.pointScaleFactor, &offset);
       if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
         d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Blue, 0.3f));
         assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);

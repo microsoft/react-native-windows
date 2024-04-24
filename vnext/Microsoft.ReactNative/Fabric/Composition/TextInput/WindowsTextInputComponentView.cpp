@@ -635,7 +635,9 @@ void WindowsTextInputComponentView::OnPointerPressed(
 
   auto pp = args.GetCurrentPoint(-1); // TODO use local coords?
   auto position = pp.Position();
-  POINT ptContainer = {static_cast<LONG>(position.X * m_layoutMetrics.pointScaleFactor), static_cast<LONG>(position.Y * m_layoutMetrics.pointScaleFactor)};
+  POINT ptContainer = {
+      static_cast<LONG>(position.X * m_layoutMetrics.pointScaleFactor),
+      static_cast<LONG>(position.Y * m_layoutMetrics.pointScaleFactor)};
   lParam = static_cast<LPARAM>(POINTTOPOINTS(ptContainer));
 
   if (pp.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
@@ -680,7 +682,9 @@ void WindowsTextInputComponentView::OnPointerReleased(
 
   auto pp = args.GetCurrentPoint(-1);
   auto position = pp.Position();
-  POINT ptContainer = {static_cast<LONG>(position.X * m_layoutMetrics.pointScaleFactor), static_cast<LONG>(position.Y * m_layoutMetrics.pointScaleFactor)};
+  POINT ptContainer = {
+      static_cast<LONG>(position.X * m_layoutMetrics.pointScaleFactor),
+      static_cast<LONG>(position.Y * m_layoutMetrics.pointScaleFactor)};
   lParam = static_cast<LPARAM>(POINTTOPOINTS(ptContainer));
 
   if (pp.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
@@ -725,7 +729,9 @@ void WindowsTextInputComponentView::OnPointerMoved(
 
   auto pp = args.GetCurrentPoint(-1);
   auto position = pp.Position();
-  POINT ptContainer = {static_cast<LONG>(position.X * m_layoutMetrics.pointScaleFactor), static_cast<LONG>(position.Y * m_layoutMetrics.pointScaleFactor)};
+  POINT ptContainer = {
+      static_cast<LONG>(position.X * m_layoutMetrics.pointScaleFactor),
+      static_cast<LONG>(position.Y * m_layoutMetrics.pointScaleFactor)};
   lParam = static_cast<LPARAM>(POINTTOPOINTS(ptContainer));
 
   if (pp.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
@@ -1426,7 +1432,8 @@ void WindowsTextInputComponentView::DrawText() noexcept {
 
   m_drawing = true;
   {
-    ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, m_layoutMetrics.pointScaleFactor, &offset);
+    ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(
+        m_drawingSurface, m_layoutMetrics.pointScaleFactor, &offset);
     if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
       d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
       assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);

@@ -225,7 +225,8 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
     const auto frame{m_layoutMetrics.getContentFrame().size};
 
     if (imageProps->resizeMode == facebook::react::ImageResizeMode::Repeat) {
-      drawingSurfaceSize = {frame.width * m_layoutMetrics.pointScaleFactor, frame.height * m_layoutMetrics.pointScaleFactor };
+      drawingSurfaceSize = {
+          frame.width * m_layoutMetrics.pointScaleFactor, frame.height * m_layoutMetrics.pointScaleFactor};
     } else if (imageProps->blurRadius > 0) {
       // https://learn.microsoft.com/en-us/windows/win32/direct2d/gaussian-blur#output-bitmap
       // The following equation that can be used to compute the output bitmap:

@@ -312,7 +312,8 @@ void ParagraphComponentView::DrawText() noexcept {
 
   POINT offset;
   {
-    ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, m_layoutMetrics.pointScaleFactor, &offset);
+    ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(
+        m_drawingSurface, m_layoutMetrics.pointScaleFactor, &offset);
     if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
       d2dDeviceContext->Clear(
           m_props->backgroundColor ? theme()->D2DColor(*m_props->backgroundColor)
