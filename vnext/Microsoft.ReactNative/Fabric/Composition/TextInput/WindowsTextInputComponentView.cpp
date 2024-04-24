@@ -635,7 +635,7 @@ void WindowsTextInputComponentView::OnPointerPressed(
 
   auto pp = args.GetCurrentPoint(-1); // TODO use local coords?
   auto position = pp.Position();
-  POINT ptContainer = {static_cast<LONG>(position.X), static_cast<LONG>(position.Y)};
+  POINT ptContainer = {static_cast<LONG>(position.X * m_layoutMetrics.pointScaleFactor), static_cast<LONG>(position.Y * m_layoutMetrics.pointScaleFactor)};
   lParam = static_cast<LPARAM>(POINTTOPOINTS(ptContainer));
 
   if (pp.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
@@ -680,7 +680,7 @@ void WindowsTextInputComponentView::OnPointerReleased(
 
   auto pp = args.GetCurrentPoint(-1);
   auto position = pp.Position();
-  POINT ptContainer = {static_cast<LONG>(position.X), static_cast<LONG>(position.Y)};
+  POINT ptContainer = {static_cast<LONG>(position.X * m_layoutMetrics.pointScaleFactor), static_cast<LONG>(position.Y * m_layoutMetrics.pointScaleFactor)};
   lParam = static_cast<LPARAM>(POINTTOPOINTS(ptContainer));
 
   if (pp.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
@@ -725,7 +725,7 @@ void WindowsTextInputComponentView::OnPointerMoved(
 
   auto pp = args.GetCurrentPoint(-1);
   auto position = pp.Position();
-  POINT ptContainer = {static_cast<LONG>(position.X), static_cast<LONG>(position.Y)};
+  POINT ptContainer = {static_cast<LONG>(position.X * m_layoutMetrics.pointScaleFactor), static_cast<LONG>(position.Y * m_layoutMetrics.pointScaleFactor)};
   lParam = static_cast<LPARAM>(POINTTOPOINTS(ptContainer));
 
   if (pp.PointerDeviceType() == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse) {
@@ -766,7 +766,7 @@ void WindowsTextInputComponentView::OnKeyDown(
     DrawBlock db(*this);
     auto hr = m_textServices->TxSendMessage(
         args.KeyStatus().IsMenuKeyDown ? WM_SYSKEYDOWN : WM_KEYDOWN, wParam, lParam, &lresult);
-    if (hr >= 0 && lresult) {
+    if (hr == S_OK) { // S_FALSE or S_MSG_KEY_IGNORED means RichEdit didn't handle the key
       args.Handled(true);
     }
   }
@@ -797,12 +797,12 @@ void WindowsTextInputComponentView::OnKeyUp(
     DrawBlock db(*this);
     auto hr = m_textServices->TxSendMessage(
         args.KeyStatus().IsMenuKeyDown ? WM_SYSKEYUP : WM_KEYUP, wParam, lParam, &lresult);
-    if (hr >= 0 && lresult) {
+    if (hr == S_OK) { // S_FALSE or S_MSG_KEY_IGNORED means RichEdit didn't handle the key
       args.Handled(true);
     }
   }
 
-  Super::OnKeyDown(source, args);
+  Super::OnKeyUp(source, args);
 }
 
 bool WindowsTextInputComponentView::ShouldSubmit(
@@ -906,7 +906,7 @@ void WindowsTextInputComponentView::OnCharacterReceived(
   LRESULT lresult;
   DrawBlock db(*this);
   auto hr = m_textServices->TxSendMessage(WM_CHAR, wParam, lParam, &lresult);
-  if (hr >= 0 && lresult) {
+  if (hr >= 0) {
     args.Handled(true);
   }
 }
@@ -1034,6 +1034,11 @@ void WindowsTextInputComponentView::updateProps(
 
   if (oldTextInputProps.clearTextOnSubmit != newTextInputProps.clearTextOnSubmit) {
     m_clearTextOnSubmit = newTextInputProps.clearTextOnSubmit;
+  }
+
+  if (oldTextInputProps.maxLength != newTextInputProps.maxLength) {
+    LRESULT res;
+    winrt::check_hresult(m_textServices->TxSendMessage(EM_LIMITTEXT, newTextInputProps.maxLength, 0, &res));
   }
 
   if ((!newTextInputProps.submitKeyEvents.empty())) {
