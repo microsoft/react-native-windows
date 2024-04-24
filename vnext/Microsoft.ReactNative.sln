@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative", "Microsoft.ReactNative\Microsoft.ReactNative.vcxproj", "{F7D32BD0-2749-483E-9A0D-1635EF7E3136}"
+	ProjectSection(ProjectDependencies) = postProject
+		{14B93DC8-FD93-4A6D-81CB-8BC96644501C} = {14B93DC8-FD93-4A6D-81CB-8BC96644501C}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chakra", "Chakra\Chakra.vcxitems", "{C38970C0-5FBF-4D69-90D8-CBAC225AE895}"
 EndProject
@@ -17,10 +20,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Include", "include\Include.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Cxx.UnitTests", "Microsoft.ReactNative.Cxx.UnitTests\Microsoft.ReactNative.Cxx.UnitTests.vcxproj", "{6C60E295-C8CA-4DC5-B8BE-09888F58B249}"
 	ProjectSection(ProjectDependencies) = postProject
-		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD} = {A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136} = {F7D32BD0-2749-483E-9A0D-1635EF7E3136}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.ComponentTests", "Microsoft.ReactNative.ComponentTests\Microsoft.ReactNative.ComponentTests.vcxproj", "{93792779-4948-4A5D-8CA7-86ED5E3BEC27}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F7D32BD0-2749-483E-9A0D-1635EF7E3136} = {F7D32BD0-2749-483E-9A0D-1635EF7E3136}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Microsoft.ReactNative.Cxx", "Microsoft.ReactNative.Cxx\Microsoft.ReactNative.Cxx.vcxitems", "{DA8B35B3-DA00-4B02-BDE6-6A397B3FD46B}"
 EndProject
