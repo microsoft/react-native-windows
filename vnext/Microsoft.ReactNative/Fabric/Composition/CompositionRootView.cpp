@@ -33,6 +33,7 @@
 
 #ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Content.h>
+#include <winrt/Microsoft.UI.Input.h>
 #endif
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -181,6 +182,16 @@ void CompositionRootView::RemoveRenderedVisual(
   assert(m_hasRenderedVisual);
   InternalRootVisual().Remove(visual);
   m_hasRenderedVisual = false;
+}
+
+bool CompositionRootView::TrySetFocus() noexcept {
+#ifdef USE_WINUI3
+  if (m_island) {
+    auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
+    return focusController.TrySetFocus();
+  }
+#endif
+  return false;
 }
 
 winrt::Windows::Foundation::Size CompositionRootView::Size() noexcept {
@@ -496,7 +507,7 @@ Composition::Experimental::IDrawingSurfaceBrush CompositionRootView::CreateLoadi
 
   POINT offset;
   {
-    ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, &offset);
+    ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, m_scaleFactor, &offset);
     if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
       d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Green));
 

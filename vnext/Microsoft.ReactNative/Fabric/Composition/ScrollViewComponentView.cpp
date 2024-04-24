@@ -465,14 +465,10 @@ struct ScrollBarComponent {
 
     POINT offset;
     {
-      ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, &offset);
+      ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, m_scaleFactor, &offset);
       if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
         d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
         assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
-        const auto dpi = m_scaleFactor * 96.0f;
-        float oldDpiX, oldDpiY;
-        d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-        d2dDeviceContext->SetDpi(dpi, dpi);
 
         // Create a solid color brush for the text. A more sophisticated application might want
         // to cache and reuse a brush across all text elements instead, taking care to recreate
@@ -507,9 +503,6 @@ struct ScrollBarComponent {
             spTextLayout.get(),
             brush.get(),
             D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
-
-        // restore dpi to old state
-        d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
       }
     }
     if (drawingSurface) {
@@ -873,6 +866,7 @@ void ScrollViewComponentView::OnPointerWheelChanged(
       }
     }
   }
+  Super::OnPointerWheelChanged(args);
 }
 
 void ScrollViewComponentView::OnPointerPressed(

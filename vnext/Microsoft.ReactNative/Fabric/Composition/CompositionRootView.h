@@ -71,6 +71,7 @@ struct CompositionRootView
 
   void AddRenderedVisual(const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept;
   void RemoveRenderedVisual(const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept;
+  bool TrySetFocus() noexcept;
 
   winrt::Microsoft::ReactNative::Composition::Theme Theme() noexcept;
   void Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept;
