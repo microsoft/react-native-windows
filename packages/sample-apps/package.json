@@ -15,7 +15,7 @@
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.57.1",
     "react": "18.2.0",
-    "react-native": "0.75.0-nightly-20240229-21171222e",
+    "react-native": "0.75.0-nightly-20240307-ff03b149e",
     "react-native-windows": "^0.0.0-canary.804"
   },
   "devDependencies": {
@@ -24,7 +24,7 @@
     "@babel/runtime": "^7.20.0",
     "@react-native-windows/cli": "0.0.0-canary.208",
     "@react-native-windows/codegen": "0.0.0-canary.83",
-    "@react-native/metro-config": "0.75.0-nightly-20240229-21171222e",
+    "@react-native/metro-config": "0.75.0-nightly-20240307-ff03b149e",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.11",
     "@rnw-scripts/just-task": "2.3.27",

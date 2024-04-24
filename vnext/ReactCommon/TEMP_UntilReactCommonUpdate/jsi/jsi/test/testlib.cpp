@@ -1440,6 +1440,7 @@ TEST_P(JSITest, MultilevelDecoratedHostObject) {
   EXPECT_EQ(1, RD2::numGets);
 }
 
+
 TEST_P(JSITest, ArrayBufferSizeTest) {
   auto ab =
       eval("var x = new ArrayBuffer(10); x").getObject(rt).getArrayBuffer(rt);
@@ -1453,9 +1454,11 @@ TEST_P(JSITest, ArrayBufferSizeTest) {
   }
 
   // Ensure that setting the byteLength property does not change the length.
-  // TODO: Make it pass on Hermes
-  //eval("Object.defineProperty(x, 'byteLength', {value: 20})");
-  //EXPECT_EQ(ab.size(rt), 10);
+  // [Windows #12210
+  // eval("Object.defineProperty(x, 'byteLength', {value: 20})");
+  // EXPECT_EQ(ab.size(rt), 10);
+  //  Windows]
+  
 }
 
 namespace {
