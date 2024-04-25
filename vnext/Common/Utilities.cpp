@@ -48,8 +48,8 @@ string EncodeBase64(string_view text) noexcept {
   std::copy(encode_base64(bytes.cbegin()), encode_base64(bytes.cend()), ostream_iterator<char>(oss));
 
   // https://unix.stackexchange.com/questions/631501
-  auto padLength = (4 - (oss.tellp() % 4)) % 4;
-  for (auto i = 0; i < padLength; ++i) {
+  size_t padLength = (4 - (oss.tellp() % 4)) % 4;
+  for (size_t i = 0; i < padLength; ++i) {
     oss << '=';
   }
 
