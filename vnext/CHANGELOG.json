@@ -2,65 +2,6 @@
   "name": "react-native-windows",
   "entries": [
     {
-      "date": "Thu, 25 Apr 2024 05:19:13 GMT",
-      "version": "0.0.1-0",
-      "tag": "react-native-windows_v0.0.1-0",
-      "comments": {
-        "prerelease": [
-          {
-            "author": "30809111+acoates-ms@users.noreply.github.com",
-            "package": "react-native-windows",
-            "commit": "89538936b34ea592412c5fd7fde812320941d2f5",
-            "comment": "Handle dpi during drawing more consistently"
-          },
-          {
-            "author": "yajurgrover24@gmail.com",
-            "package": "react-native-windows",
-            "commit": "2b8821b81ab7ec1e8cc483dcbd9573455b4d5d24",
-            "comment": "Integrate 3/7"
-          }
-        ],
-        "prepatch": [
-          {
-            "author": "beachball",
-            "package": "react-native-windows",
-            "comment": "Bump @react-native-windows/cli to v0.0.1-0",
-            "commit": "not available"
-          },
-          {
-            "author": "beachball",
-            "package": "react-native-windows",
-            "comment": "Bump @react-native-windows/codegen to v0.0.1-0",
-            "commit": "not available"
-          },
-          {
-            "author": "beachball",
-            "package": "react-native-windows",
-            "comment": "Bump @rnw-scripts/eslint-config to v1.2.12",
-            "commit": "not available"
-          },
-          {
-            "author": "beachball",
-            "package": "react-native-windows",
-            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.16",
-            "commit": "not available"
-          },
-          {
-            "author": "beachball",
-            "package": "react-native-windows",
-            "comment": "Bump @rnw-scripts/just-task to v2.3.28",
-            "commit": "not available"
-          },
-          {
-            "author": "beachball",
-            "package": "react-native-windows",
-            "comment": "Bump react-native-platform-override to v1.9.28",
-            "commit": "not available"
-          }
-        ]
-      }
-    },
-    {
       "date": "Wed, 24 Apr 2024 05:15:12 GMT",
       "version": "0.0.0-canary.804",
       "tag": "react-native-windows_v0.0.0-canary.804",
