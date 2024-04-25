@@ -51,7 +51,7 @@ export class Hasher {
   private readonly hashOpts: HashOpts;
 
   constructor(hashOpts?: HashOpts) {
-    this.hash = crypto.createHash('sha256');
+    this.hash = crypto.createHash('sha1');
     this.hashOpts = hashOpts || {};
   }
 
