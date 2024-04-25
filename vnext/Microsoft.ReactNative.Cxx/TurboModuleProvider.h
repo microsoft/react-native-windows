@@ -11,7 +11,7 @@
 namespace winrt::Microsoft::ReactNative {
 
 // Creates CallInvoker based on JSDispatcher.
-std::shared_ptr<facebook::react::CallInvoker> MakeAbiCallInvoker(IReactContext const& context) noexcept;
+std::shared_ptr<facebook::react::CallInvoker> MakeAbiCallInvoker(IReactContext const &context) noexcept;
 
 template <
     typename TTurboModule,

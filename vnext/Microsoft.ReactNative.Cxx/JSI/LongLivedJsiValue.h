@@ -38,9 +38,7 @@ struct LongLivedJsiRuntime : facebook::react::LongLivedObject {
   LongLivedJsiRuntime(
       std::shared_ptr<facebook::react::LongLivedObjectCollection> const &longLivedObjectCollection,
       facebook::jsi::Runtime &runtime)
-      : LongLivedObject(runtime),
-        runtime_(runtime),
-        longLivedObjectCollection_(longLivedObjectCollection) {}
+      : LongLivedObject(runtime), runtime_(runtime), longLivedObjectCollection_(longLivedObjectCollection) {}
 
   LongLivedJsiRuntime(LongLivedJsiRuntime const &) = delete;
 

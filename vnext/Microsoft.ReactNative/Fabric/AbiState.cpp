@@ -21,9 +21,7 @@ void AbiComponentState::UpdateState(const winrt::Windows::Foundation::IInspectab
 
 void AbiComponentState::UpdateStateWithMutation(
     const winrt::Microsoft::ReactNative::StateUpdateMutation &mutation) noexcept {
-  m_state->updateState(
-    [mutation](const AbiStateData& oldData)
-  {
+  m_state->updateState([mutation](const AbiStateData &oldData) {
     return std::make_shared<AbiStateData const>(mutation(oldData.userdata));
   });
 }
