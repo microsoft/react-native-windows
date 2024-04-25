@@ -20,21 +20,6 @@ namespace Microsoft.ReactNative
   [experimental]
   delegate Object StateUpdateMutation(Object props);
 
-  [webhosthidden]
-  [experimental]
-  enum EventPriority
-  {
-    SynchronousUnbatched,
-    SynchronousBatched,
-    AsynchronousUnbatched,
-    AsynchronousBatched,
-
-    Sync = SynchronousUnbatched,
-    Work = SynchronousBatched,
-    Interactive = AsynchronousUnbatched,
-    Deferred = AsynchronousBatched
-  };
-
   [flags]
   [webhosthidden]
   [experimental]
@@ -55,9 +40,7 @@ namespace Microsoft.ReactNative
   {
     Object Data { get; };
     void UpdateState(Object data);
-    void UpdateStateWithPriority(Object data, EventPriority priority);
     void UpdateStateWithMutation(StateUpdateMutation mutation);
-    void UpdateStateWithMutationAndPriority(StateUpdateMutation mutation, EventPriority priority);
   };
 
   [experimental]

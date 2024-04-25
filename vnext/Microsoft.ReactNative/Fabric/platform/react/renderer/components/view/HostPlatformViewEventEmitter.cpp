@@ -42,7 +42,6 @@ void HostPlatformViewEventEmitter::onMouseEnter(PointerEvent const &pointerEvent
   dispatchEvent(
       "mouseEnter",
       std::make_shared<PointerEvent>(pointerEvent),
-      EventPriority::AsynchronousBatched,
       RawEvent::Category::ContinuousStart);
 }
 
@@ -50,7 +49,6 @@ void HostPlatformViewEventEmitter::onMouseLeave(PointerEvent const &pointerEvent
   dispatchEvent(
       "mouseLeave",
       std::make_shared<PointerEvent>(pointerEvent),
-      EventPriority::AsynchronousBatched,
       RawEvent::Category::ContinuousStart);
 }
 
