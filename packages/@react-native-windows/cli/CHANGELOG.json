@@ -2,6 +2,51 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 25 Apr 2024 05:19:14 GMT",
+      "version": "0.0.1-0",
+      "tag": "@react-native-windows/cli_v0.0.1-0",
+      "comments": {
+        "prepatch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.1-0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.0.1-0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.1-0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.1-0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.12",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.28",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Apr 2024 05:18:18 GMT",
       "version": "0.0.0-canary.208",
       "tag": "@react-native-windows/cli_v0.0.0-canary.208",
