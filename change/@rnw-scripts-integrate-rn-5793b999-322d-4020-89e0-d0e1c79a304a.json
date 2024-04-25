@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix bad version bump",
-  "packageName": "@rnw-scripts/integrate-rn",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
