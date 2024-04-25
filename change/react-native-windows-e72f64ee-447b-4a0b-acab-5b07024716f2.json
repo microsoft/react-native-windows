@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Integrate 3/7",
+  "comment": "CodeQL fixes",
   "packageName": "react-native-windows",
-  "email": "yajurgrover24@gmail.com",
+  "email": "email not defined",
   "dependentChangeType": "patch"
 }

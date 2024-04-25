@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "CodeQL fixes",
+  "packageName": "@react-native-windows/cli",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}

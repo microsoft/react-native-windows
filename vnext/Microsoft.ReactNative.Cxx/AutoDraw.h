@@ -11,9 +11,11 @@ class AutoDrawDrawingSurface {
  public:
   AutoDrawDrawingSurface(
       winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush &drawingSurface,
+      float scaleFactor,
       POINT *offset) noexcept {
     drawingSurface.as(m_drawingSurfaceInterop);
-    m_drawingSurfaceInterop->BeginDraw(m_d2dDeviceContext.put(), offset);
+    auto dpi = scaleFactor * 96.0f;
+    m_drawingSurfaceInterop->BeginDraw(m_d2dDeviceContext.put(), dpi, dpi, offset);
   }
 
   ~AutoDrawDrawingSurface() noexcept {
