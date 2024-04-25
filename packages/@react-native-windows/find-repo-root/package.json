@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/find-repo-root",
-  "version": "0.0.1-0",
+  "version": "0.0.0-canary.69",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -16,7 +16,7 @@
     "directory": "packages/@react-native-windows/find-repo-root"
   },
   "dependencies": {
-    "@react-native-windows/fs": "^0.0.1-0",
+    "@react-native-windows/fs": "^0.0.0-canary.40",
     "find-up": "^4.1.0"
   },
   "devDependencies": {
@@ -36,7 +36,10 @@
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "patch"
+      "patch",
+      "premajor",
+      "preminor",
+      "prepatch"
     ]
   },
   "promoteRelease": true,

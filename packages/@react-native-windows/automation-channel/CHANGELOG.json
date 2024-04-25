@@ -2,39 +2,6 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
-      "date": "Thu, 25 Apr 2024 05:19:13 GMT",
-      "version": "0.12.144",
-      "tag": "@react-native-windows/automation-channel_v0.12.144",
-      "comments": {
-        "patch": [
-          {
-            "author": "yajurgrover24@gmail.com",
-            "package": "@react-native-windows/automation-channel",
-            "commit": "2b8821b81ab7ec1e8cc483dcbd9573455b4d5d24",
-            "comment": "Integrate 3/7"
-          },
-          {
-            "author": "beachball",
-            "package": "@react-native-windows/automation-channel",
-            "comment": "Bump @rnw-scripts/eslint-config to v1.2.12",
-            "commit": "not available"
-          },
-          {
-            "author": "beachball",
-            "package": "@react-native-windows/automation-channel",
-            "comment": "Bump @rnw-scripts/just-task to v2.3.28",
-            "commit": "not available"
-          },
-          {
-            "author": "beachball",
-            "package": "@react-native-windows/automation-channel",
-            "comment": "Bump react-native-windows to v0.0.1-0",
-            "commit": "not available"
-          }
-        ]
-      }
-    },
-    {
       "date": "Wed, 24 Apr 2024 05:15:13 GMT",
       "version": "0.12.143",
       "tag": "@react-native-windows/automation-channel_v0.12.143",

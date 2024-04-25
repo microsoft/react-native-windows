@@ -155,7 +155,14 @@ async function updatePackageBeachballConfig(
       return pkg.mergeProps({
         beachball: {
           defaultNpmTag: distTag(release, version),
-          disallowedChangeTypes: ['major', 'minor', 'patch'],
+          disallowedChangeTypes: [
+            'major',
+            'minor',
+            'patch',
+            'premajor',
+            'preminor',
+            'prepatch',
+          ],
         },
       });
 
@@ -163,7 +170,14 @@ async function updatePackageBeachballConfig(
       return pkg.mergeProps({
         beachball: {
           defaultNpmTag: distTag(release, version),
-          disallowedChangeTypes: ['major', 'minor', 'prerelease'],
+          disallowedChangeTypes: [
+            'major',
+            'minor',
+            'prerelease',
+            'premajor',
+            'preminor',
+            'prepatch',
+          ],
         },
       });
 
@@ -171,7 +185,14 @@ async function updatePackageBeachballConfig(
       return pkg.mergeProps({
         beachball: {
           defaultNpmTag: distTag(release, version),
-          disallowedChangeTypes: ['major', 'minor', 'prerelease'],
+          disallowedChangeTypes: [
+            'major',
+            'minor',
+            'prerelease',
+            'premajor',
+            'preminor',
+            'prepatch',
+          ],
         },
       });
   }

@@ -1,21 +1,8 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Thu, 25 Apr 2024 05:19:14 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Apr 2024 05:18:19 GMT and should not be manually modified.
 
 <!-- Start content -->
-
-## 1.4.29
-
-Thu, 25 Apr 2024 05:19:14 GMT
-
-### Patches
-
-- Bump @react-native-windows/find-repo-root to v0.0.1-0
-- Bump @react-native-windows/fs to v0.0.1-0
-- Bump @react-native-windows/package-utils to v0.0.1-0
-- Bump react-native-platform-override to v1.9.28
-- Bump @rnw-scripts/eslint-config to v1.2.12
-- Bump @rnw-scripts/just-task to v2.3.28
 
 ## 1.4.28
 
