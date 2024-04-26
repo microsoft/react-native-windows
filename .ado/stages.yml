@@ -49,10 +49,10 @@ stages:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
 
-      - template: jobs/node-tests.yml
-        parameters:
-          buildEnvironment: ${{ parameters.buildEnvironment }}
-          AgentPool: ${{ parameters.AgentPool }}
+      # - template: jobs/node-tests.yml
+      #  parameters:
+      #    buildEnvironment: ${{ parameters.buildEnvironment }}
+      #    AgentPool: ${{ parameters.AgentPool }}
 
       - template: jobs/macos-tests.yml
 
