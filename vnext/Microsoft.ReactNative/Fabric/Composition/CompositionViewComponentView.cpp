@@ -1593,7 +1593,7 @@ inline winrt::Windows::System::VirtualKey GetLeftOrRightModifiedKey(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     winrt::Windows::System::VirtualKey leftKey,
     winrt::Windows::System::VirtualKey rightKey) {
-  return (source.GetKeyState(leftKey) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ? leftKey : rightKey;
+  return (source.GetKeyState(leftKey) == winrt::Windows::UI::Core::CoreVirtualKeyStates::Down) ? leftKey : rightKey;
 }
 
 std::string CodeFromVirtualKey(
@@ -1619,13 +1619,13 @@ std::string CodeFromVirtualKey(
     }
   }
 
-  return GetOrUnidentified(virtualKey, g_virtualKeyToCode);
+  return ::Microsoft::ReactNative::GetOrUnidentifiedCode(virtualKey);
 }
 
 void ViewComponentView::OnKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  auto eventCode = ::Microsoft::ReactNative::CodeFromVirtualKey(source, args.Key());
+  auto eventCode = CodeFromVirtualKey(source, args.Key());
   bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) !=
       winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
   bool fAlt = source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) !=
@@ -1664,7 +1664,7 @@ void ViewComponentView::OnKeyDown(
 void ViewComponentView::OnKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  auto eventCode = ::Microsoft::ReactNative::CodeFromVirtualKey(source, args.Key());
+  auto eventCode = CodeFromVirtualKey(source, args.Key());
   bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) !=
       winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
   bool fAlt = source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) !=
