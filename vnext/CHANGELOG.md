@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 18 Mar 2024 15:15:55 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Apr 2024 22:42:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.12
+
+Fri, 26 Apr 2024 22:42:39 GMT
+
+### Patches
+
+- Promote 0.73 to legacy (tatianakapos@microsoft.com)
+- Rework EventPhase type to avoid using TS enum (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.73.3
+- Bump @react-native-windows/codegen to v0.73.1
 
 ## 0.73.11
 

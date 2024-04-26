@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/package-utils
 
-This log was last generated on Fri, 08 Dec 2023 00:26:15 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Apr 2024 22:42:38 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.1
+
+Fri, 26 Apr 2024 22:42:38 GMT
+
+### Patches
+
+- Promote 0.73 to legacy (tatianakapos@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.73.1
+- Bump @react-native-windows/fs to v0.73.1
 
 ## 0.73.0
 

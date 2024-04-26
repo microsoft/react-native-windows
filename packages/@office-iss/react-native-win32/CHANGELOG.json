@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Fri, 26 Apr 2024 22:42:37 GMT",
+      "version": "0.73.3",
+      "tag": "@office-iss/react-native-win32_v0.73.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "f8a684071f7e12095dd89543b5217843086ee400",
+            "comment": "Promote 0.73 to legacy"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 18 Mar 2024 15:15:54 GMT",
       "version": "0.73.2",
       "tag": "@office-iss/react-native-win32_v0.73.2",

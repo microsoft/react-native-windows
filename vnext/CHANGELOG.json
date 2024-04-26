@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 Apr 2024 22:42:39 GMT",
+      "version": "0.73.12",
+      "tag": "react-native-windows_v0.73.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f8a684071f7e12095dd89543b5217843086ee400",
+            "comment": "Promote 0.73 to legacy"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8991de33a47f365975705039a7b35958c7b8a7cd",
+            "comment": "Rework EventPhase type to avoid using TS enum"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.73.3",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.73.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 18 Mar 2024 15:15:55 GMT",
       "version": "0.73.11",
       "tag": "react-native-windows_v0.73.11",

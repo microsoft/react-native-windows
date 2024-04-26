@@ -2,6 +2,27 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Fri, 26 Apr 2024 22:42:38 GMT",
+      "version": "0.73.2",
+      "tag": "@react-native-windows/telemetry_v0.73.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "f8a684071f7e12095dd89543b5217843086ee400",
+            "comment": "Promote 0.73 to legacy"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v0.73.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jan 2024 23:56:55 GMT",
       "version": "0.73.1",
       "tag": "@react-native-windows/telemetry_v0.73.1",
