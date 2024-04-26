@@ -80,6 +80,7 @@ YGConfigGetUseWebDefaults
 YGConfigIsExperimentalFeatureEnabled
 YGConfigNew
 YGConfigSetContext
+YGConfigSetErrata
 YGConfigSetExperimentalFeatureEnabled
 YGConfigSetLogger
 YGConfigSetPointScaleFactor
