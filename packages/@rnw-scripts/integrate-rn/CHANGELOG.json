@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Fri, 26 Apr 2024 05:16:49 GMT",
+      "version": "1.4.31",
+      "tag": "@rnw-scripts/integrate-rn_v1.4.31",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/integrate-rn",
+            "comment": "Bump react-native-platform-override to v1.9.30",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Apr 2024 20:12:44 GMT",
       "version": "1.4.30",
       "tag": "@rnw-scripts/integrate-rn_v1.4.30",

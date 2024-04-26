@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 25 Apr 2024 20:12:41 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Apr 2024 05:16:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.242
+
+Fri, 26 Apr 2024 05:16:49 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.9.30
 
 ## 0.0.0-canary.241
 

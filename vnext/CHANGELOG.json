@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 26 Apr 2024 05:16:48 GMT",
+      "version": "0.0.0-canary.806",
+      "tag": "react-native-windows_v0.0.0-canary.806",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "b229b2e239844d659a961e19da2cd78b07886d5a",
+            "comment": "CodeQL fixes"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.210",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.30",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Apr 2024 20:12:44 GMT",
       "version": "0.0.0-canary.805",
       "tag": "react-native-windows_v0.0.0-canary.805",
