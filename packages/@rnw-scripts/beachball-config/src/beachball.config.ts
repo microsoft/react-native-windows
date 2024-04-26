@@ -5,7 +5,8 @@
  * @format
  */
 
-import {execFileSync} from 'child_process';
+import {execSync} from 'child_process';
+import {quote} from 'shell-quote';
 import {findRepoPackageSync} from '@react-native-windows/package-utils';
 
 import type {RepoOptions} from 'beachball/lib/types/BeachballOptions';
@@ -27,8 +28,8 @@ const Options: RepoOptions = {
     // Stamp versions when we publish a new package
     postbump: (_packagePath, name, version) => {
       if (name === 'react-native-windows') {
-        console.log(`Stamping RNW Version ${version}`);
-        execFileSync(`yarn`, [`stamp-version`, `${version}`]);
+        console.log(`Stamping RNW Version ` + quote([`${version}`]));
+        execSync(`yarn stamp-version ` + quote([`${version}`]));
       }
     }
   },

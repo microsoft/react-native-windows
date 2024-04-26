@@ -3160,6 +3160,11 @@
   resolved "https://registry.yarnpkg.com/@types/semver/-/semver-7.5.7.tgz#326f5fdda70d13580777bcaa1bc6fa772a5aef0e"
   integrity sha512-/wdoPq1QqkSj9/QOeKkFquEuPzQbHTWAMPH/PaUMB+JuR31lXhlWXRZ52IpfDYVlDOUBvX09uBrPwxGT1hjNBg==
 
+"@types/shell-quote@^1.7.5":
+  version "1.7.5"
+  resolved "https://registry.yarnpkg.com/@types/shell-quote/-/shell-quote-1.7.5.tgz#6db4704742d307cd6d604e124e3ad6cd5ed943f3"
+  integrity sha512-+UE8GAGRPbJVQDdxi16dgadcBfQ+KG2vgZhV1+3A1XmHbmwcdwhCUwIdy+d3pAGrbvgRoVSjeI9vOWyq376Yzw==
+
 "@types/shelljs@^0.8.8":
   version "0.8.15"
   resolved "https://registry.yarnpkg.com/@types/shelljs/-/shelljs-0.8.15.tgz#22c6ab9dfe05cec57d8e6cb1a95ea173aee9fcac"
