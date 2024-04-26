@@ -1593,10 +1593,12 @@ inline winrt::Windows::System::VirtualKey GetLeftOrRightModifiedKey(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     winrt::Windows::System::VirtualKey leftKey,
     winrt::Windows::System::VirtualKey rightKey) {
-  return (source.GetKeyState(leftKey) == winrt::Microsoft::UI::Input::VirtualKeyStates::KeyDown) ? leftKey : rightKey;
+  return (source.GetKeyState(leftKey) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ? leftKey : rightKey;
 }
 
-std::string CodeFromVirtualKey(const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source, winrt::Windows::System::VirtualKey virtualKey) {
+std::string CodeFromVirtualKey(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    winrt::Windows::System::VirtualKey virtualKey) {
   int key = static_cast<int>(virtualKey);
 
   if (isdigit(key)) {
@@ -1607,9 +1609,7 @@ std::string CodeFromVirtualKey(const winrt::Microsoft::ReactNative::Composition:
     // Override the virtual key if it's modified key of Control, Shift or Menu
     if (virtualKey == winrt::Windows::System::VirtualKey::Control) {
       virtualKey = GetLeftOrRightModifiedKey(
-          source,
-          winrt::Windows::System::VirtualKey::LeftControl,
-          winrt::Windows::System::VirtualKey::RightControl);
+          source, winrt::Windows::System::VirtualKey::LeftControl, winrt::Windows::System::VirtualKey::RightControl);
     } else if (virtualKey == winrt::Windows::System::VirtualKey::Shift) {
       virtualKey = GetLeftOrRightModifiedKey(
           source, winrt::Windows::System::VirtualKey::LeftShift, winrt::Windows::System::VirtualKey::RightShift);
