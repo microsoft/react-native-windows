@@ -28,7 +28,7 @@ const Options: RepoOptions = {
     postbump: (_packagePath, name, version) => {
       if (name === 'react-native-windows') {
         console.log(`Stamping RNW Version ${version}`);
-        execFileSync(`yarn stamp-version`, [version]);
+        execFileSync(`yarn`, [`stamp-version`, `${version}`]);
       }
     }
   },
