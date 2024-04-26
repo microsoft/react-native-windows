@@ -78,7 +78,10 @@
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "prerelease"
+      "prerelease",
+      "premajor",
+      "preminor",
+      "prepatch"
     ]
   },
   "promoteRelease": true,

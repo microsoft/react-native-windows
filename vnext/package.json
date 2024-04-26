@@ -96,7 +96,10 @@
     "disallowedChangeTypes": [
       "major",
       "minor",
-      "prerelease"
+      "prerelease",
+      "premajor",
+      "preminor",
+      "prepatch"
     ],
     "gitTags": true
   },
