@@ -5,7 +5,7 @@
  * @format
  */
 
-import {execFile, execFileSync, execSync} from 'child_process';
+import {execFileSync} from 'child_process';
 import {findRepoPackageSync} from '@react-native-windows/package-utils';
 
 import type {RepoOptions} from 'beachball/lib/types/BeachballOptions';
