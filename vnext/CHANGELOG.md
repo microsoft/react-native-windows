@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 26 Apr 2024 05:16:48 GMT and should not be manually modified.
+This log was last generated on Sat, 27 Apr 2024 05:16:26 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.807
+
+Sat, 27 Apr 2024 05:16:26 GMT
+
+### Changes
+
+- Dont use CoreWindow to determine key state (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.806
 

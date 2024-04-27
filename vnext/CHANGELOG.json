@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 27 Apr 2024 05:16:26 GMT",
+      "version": "0.0.0-canary.807",
+      "tag": "react-native-windows_v0.0.0-canary.807",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a4f55e5165e6e75a2a4f080cc528652610c0f29f",
+            "comment": "Dont use CoreWindow to determine key state"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Apr 2024 05:16:48 GMT",
       "version": "0.0.0-canary.806",
       "tag": "react-native-windows_v0.0.0-canary.806",
