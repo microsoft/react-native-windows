@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 23 Apr 2024 23:07:50 GMT and should not be manually modified.
+This log was last generated on Sat, 27 Apr 2024 21:16:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.0
+
+Sat, 27 Apr 2024 21:16:05 GMT
+
+### Patches
+
+- Dont use CoreWindow to determine key state (30809111+acoates-ms@users.noreply.github.com)
+- Promote 0.74 to latest (tatianakapos@microsoft.com)
+- Handle dpi during drawing more consistently (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.74.0
+- Bump @react-native-windows/codegen to v0.74.0
 
 ## 0.74.0-preview.4
 

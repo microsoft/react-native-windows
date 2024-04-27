@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 27 Apr 2024 21:16:05 GMT",
+      "version": "0.74.0",
+      "tag": "@office-iss/react-native-win32_v0.74.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "b332d7b05a4fdb862bde456f7e668fde4e6e5b04",
+            "comment": "Promote 0.74 to latest"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "64098613bcff397b400baa4b1870f0311cc073a7",
+            "comment": "Fix PaperUIManager (port from windows)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Apr 2024 15:16:53 GMT",
       "version": "0.74.0-preview.3",
       "tag": "@office-iss/react-native-win32_v0.74.0-preview.3",
