@@ -20,6 +20,7 @@ class AutoDrawDrawingSurface {
 
   ~AutoDrawDrawingSurface() noexcept {
     if (m_d2dDeviceContext) {
+      m_d2dDeviceContext = nullptr;
       m_drawingSurfaceInterop->EndDraw();
     }
   }
