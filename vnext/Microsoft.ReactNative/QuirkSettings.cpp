@@ -9,9 +9,25 @@
 #include "React.h"
 #include "ReactPropertyBag.h"
 
+#include <react/featureflags/ReactNativeFeatureFlags.h>
+#include <react/featureflags/ReactNativeFeatureFlagsDefaults.h>
+
 namespace winrt::Microsoft::ReactNative::implementation {
 
 QuirkSettings::QuirkSettings() noexcept {}
+
+class QuirkSettingsReactNativeFeatureFlags : public facebook::react::ReactNativeFeatureFlagsDefaults {
+ public:
+  QuirkSettingsReactNativeFeatureFlags(bool enableModernCDPRegistry)
+      : m_enableModernCDPRegistry(enableModernCDPRegistry) {}
+
+  bool inspectorEnableModernCDPRegistry() override {
+    return m_enableModernCDPRegistry;
+  }
+
+ private:
+  bool m_enableModernCDPRegistry;
+};
 
 winrt::Microsoft::ReactNative::ReactPropertyId<bool> MatchAndroidAndIOSStretchBehaviorProperty() noexcept {
   static winrt::Microsoft::ReactNative::ReactPropertyId<bool> propId{
@@ -135,6 +151,10 @@ winrt::Microsoft::ReactNative::ReactPropertyId<bool> IsBridgelessProperty() noex
     winrt::Microsoft::ReactNative::ReactInstanceSettings settings,
     bool value) noexcept {
   ReactPropertyBag(settings.Properties()).Set(UseRuntimeSchedulerProperty(), value);
+}
+
+/*static*/ void QuirkSettings::SetUseFusebox(bool value) noexcept {
+  facebook::react::ReactNativeFeatureFlags::override(std::make_unique<QuirkSettingsReactNativeFeatureFlags>(value));
 }
 
 #pragma endregion IDL interface

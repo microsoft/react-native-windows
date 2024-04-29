@@ -85,6 +85,7 @@ struct WindowData {
 
   winrt::Microsoft::ReactNative::ReactNativeHost Host() noexcept {
     if (!m_host) {
+      winrt::Microsoft::ReactNative::QuirkSettings::SetUseFusebox(true);
       m_host = winrt::Microsoft::ReactNative::ReactNativeHost();
       m_host.InstanceSettings(InstanceSettings());
     }
