@@ -73,6 +73,9 @@ struct CompositionRootView
   void RemoveRenderedVisual(const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept;
   bool TrySetFocus() noexcept;
 
+  winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader Resources() noexcept;
+  void Resources(const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &resources) noexcept;
+
   winrt::Microsoft::ReactNative::Composition::Theme Theme() noexcept;
   void Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept;
 
@@ -134,8 +137,8 @@ struct CompositionRootView
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_rootVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual m_loadingVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::IActivityVisual m_loadingActivityVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader m_resources{nullptr};
   winrt::Microsoft::ReactNative::Composition::Theme m_theme{nullptr};
-  winrt::Microsoft::ReactNative::ReactNotificationSubscription m_themeChangedSubscription{nullptr};
   winrt::Microsoft::ReactNative::Composition::Theme::ThemeChanged_revoker m_themeChangedRevoker;
 
   void UpdateRootViewInternal() noexcept;
