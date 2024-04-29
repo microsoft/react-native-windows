@@ -16,7 +16,10 @@
 
 #include <Utils/CppWinrtLessExceptions.h>
 #include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Security.Cryptography.Core.h>
+#include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
+#include <winrt/Windows.System.Profile.h>
 #include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
@@ -171,6 +174,33 @@ bool IsIgnorablePollHResult(HRESULT hr) {
   return hr == WININET_E_INVALID_SERVER_RESPONSE;
 }
 
+std::string GetDeviceId(const std::string &bundleAppId) {
+  const auto hash = winrt::Windows::Security::Cryptography::Core::HashAlgorithmProvider::OpenAlgorithm(
+                        winrt::Windows::Security::Cryptography::Core::HashAlgorithmNames::Sha256())
+                        .CreateHash();
+  hash.Append(winrt::Windows::System::Profile::SystemIdentification::GetSystemIdForPublisher().Id());
+  winrt::Windows::Storage::Streams::InMemoryRandomAccessStream stream;
+  winrt::Windows::Storage::Streams::DataWriter writer;
+  // If an app ID is provided, we will allow reconnection to DevTools.
+  // Apps must supply a unique app ID to each ReactNativeHost instance settings for this to behave correctly.
+  if (!bundleAppId.empty()) {
+    const auto bundleAppIdBuffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::ConvertStringToBinary(
+        winrt::to_hstring(bundleAppId), winrt::Windows::Security::Cryptography::BinaryStringEncoding::Utf16BE);
+    hash.Append(bundleAppIdBuffer);
+  } else {
+    const auto processId = GetCurrentProcessId();
+    std::vector<uint8_t> processIdBytes(
+        reinterpret_cast<const uint8_t *>(&processId), reinterpret_cast<const uint8_t *>(&processId + 1));
+    winrt::array_view<uint8_t> processIdByteArray(processIdBytes);
+    const auto processIdBuffer =
+        winrt::Windows::Security::Cryptography::CryptographicBuffer::CreateFromByteArray(processIdByteArray);
+    hash.Append(processIdBuffer);
+  }
+  const auto hashBuffer = hash.GetValueAndReset();
+  const auto hashString = winrt::Windows::Security::Cryptography::CryptographicBuffer::EncodeToHexString(hashBuffer);
+  return winrt::to_string(hashString);
+}
+
 std::future<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(const std::string &url) {
   winrt::Windows::Web::Http::HttpClient httpClient;
   winrt::Windows::Foundation::Uri uri(Microsoft::Common::Unicode::Utf8ToUtf16(url));
@@ -240,16 +270,21 @@ void DevSupportManager::StopPollingLiveReload() {
 
 void DevSupportManager::EnsureHermesInspector(
     [[maybe_unused]] const std::string &packagerHost,
-    [[maybe_unused]] const uint16_t packagerPort) noexcept {
+    [[maybe_unused]] const uint16_t packagerPort,
+    [[maybe_unused]] const std::string &bundleAppId) noexcept {
   static std::once_flag once;
-  std::call_once(once, [this, &packagerHost, packagerPort]() {
+  std::call_once(once, [this, &packagerHost, packagerPort, &jsBundleName]() {
     // TODO: should we use the bundleAppId as the app param if available?
-    std::string packageName("RNW");
-    wchar_t fullName[PACKAGE_FULL_NAME_MAX_LENGTH]{};
-    UINT32 size = ARRAYSIZE(fullName);
-    if (SUCCEEDED(GetCurrentPackageFullName(&size, fullName))) {
-      // we are in an unpackaged app
-      packageName = winrt::to_string(fullName);
+
+    std::string packageName{bundleAppId};
+    if (packageName == "") {
+      std::string packageName("RNW");
+      wchar_t fullName[PACKAGE_FULL_NAME_MAX_LENGTH]{};
+      UINT32 size = ARRAYSIZE(fullName);
+      if (SUCCEEDED(GetCurrentPackageFullName(&size, fullName))) {
+        // we are in an unpackaged app
+        packageName = winrt::to_string(fullName);
+      }
     }
 
     std::string deviceName("RNWHost");
@@ -258,8 +293,10 @@ void DevSupportManager::EnsureHermesInspector(
       deviceName = winrt::to_string(hostNames.First().Current().DisplayName());
     }
 
+    const auto deviceId = GetDeviceId(packageName);
     m_inspectorPackagerConnection = std::make_shared<InspectorPackagerConnection>(
-        facebook::react::DevServerHelper::get_InspectorDeviceUrl(packagerHost, packagerPort, deviceName, packageName),
+        facebook::react::DevServerHelper::get_InspectorDeviceUrl(
+            packagerHost, packagerPort, deviceName, packageName, deviceId),
         m_BundleStatusProvider);
     m_inspectorPackagerConnection->connectAsync();
   });

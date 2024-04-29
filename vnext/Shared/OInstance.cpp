@@ -73,6 +73,20 @@ using namespace Microsoft::JSI;
 using std::make_shared;
 using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
 
+namespace facebook::react {
+bool shouldStartHermesInspector(DevSettings &devSettings) {
+  bool isHermes =
+      ((devSettings.jsiEngineOverride == JSIEngineOverride::Hermes) ||
+       (devSettings.jsiEngineOverride == JSIEngineOverride::Default && devSettings.jsiRuntimeHolder &&
+        devSettings.jsiRuntimeHolder->getRuntimeType() == facebook::react::JSIEngineOverride::Hermes));
+
+  if (isHermes && devSettings.useDirectDebugger && !devSettings.useWebDebugger)
+    return true;
+  else
+    return false;
+}
+} // namespace facebook::react
+
 namespace Microsoft::ReactNative {
 
 // Note: Based on
@@ -104,6 +118,12 @@ void LoadRemoteUrlScript(
 #if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
   hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
 #endif
+
+  const auto bundlePath = ;
+  if (facebook::react::shouldStartHermesInspector(*devSettings)) {
+    devManager->EnsureHermesInspector(
+        devSettings->sourceBundleHost, devSettings->sourceBundlePort, devSettings->bundleAppId);
+  }
 
   auto [jsBundleString, success] = GetJavaScriptFromServer(
       devSettings->sourceBundleHost,
@@ -329,20 +349,6 @@ void InstanceImpl::SetInError() noexcept {
   m_isInError = true;
 }
 
-namespace {
-bool shouldStartHermesInspector(DevSettings &devSettings) {
-  bool isHermes =
-      ((devSettings.jsiEngineOverride == JSIEngineOverride::Hermes) ||
-       (devSettings.jsiEngineOverride == JSIEngineOverride::Default && devSettings.jsiRuntimeHolder &&
-        devSettings.jsiRuntimeHolder->getRuntimeType() == facebook::react::JSIEngineOverride::Hermes));
-
-  if (isHermes && devSettings.useDirectDebugger && !devSettings.useWebDebugger)
-    return true;
-  else
-    return false;
-}
-} // namespace
-
 InstanceImpl::InstanceImpl(
     std::shared_ptr<Instance> &&instance,
     std::string &&jsBundleBasePath,
@@ -372,10 +378,6 @@ InstanceImpl::InstanceImpl(
   // TODO :: Find a better place to initialize ETW once per process.
   facebook::react::tracing::initializeETW();
 #endif
-
-  if (shouldStartHermesInspector(*m_devSettings)) {
-    m_devManager->EnsureHermesInspector(m_devSettings->sourceBundleHost, m_devSettings->sourceBundlePort);
-  }
 
   // Default (common) NativeModules
   auto modules = GetDefaultNativeModules(nativeQueue);
