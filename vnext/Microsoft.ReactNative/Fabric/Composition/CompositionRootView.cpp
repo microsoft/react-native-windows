@@ -383,12 +383,9 @@ void CompositionRootView::InitRootView(
 
   m_context = winrt::Microsoft::ReactNative::ReactContext(std::move(context));
 
-  winrt::Microsoft::ReactNative::CompositionRootView compositionRootView;
-  get_strong().as(compositionRootView);
-
   m_reactViewOptions = std::move(viewOptions);
   m_CompositionEventHandler =
-      std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, compositionRootView);
+      std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this);
 
   UpdateRootViewInternal();
 
