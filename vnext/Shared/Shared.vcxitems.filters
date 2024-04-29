@@ -94,6 +94,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)JSI\JSExecutorFactorySettings.cpp">
       <Filter>Source Files\JSI</Filter>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)FuseboxInspectorPackagerConnectionDelegate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -613,6 +616,9 @@
       <Filter>Header Files\JSI</Filter>
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\include\Shared\cdebug.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)FuseboxInspectorPackagerConnectionDelegate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>    
     <ClInclude Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.h">
       <Filter>Header Files</Filter>
     </ClInclude>

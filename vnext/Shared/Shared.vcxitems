@@ -218,6 +218,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Hasher.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)HermesSamplingProfiler.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)FuseboxInspectorPackagerConnectionDelegate.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)InstanceManager.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)JSBigAbiString.cpp" />
@@ -415,6 +416,7 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)FuseboxInspectorThread.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)Executors\WebSocketJSExecutor.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)HermesRuntimeHolder.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)FuseboxInspectorPackagerConnectionDelegate.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)InspectorPackagerConnection.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)IDevSupportManager.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)InstanceManager.h" />
