@@ -16,7 +16,10 @@
 
 #include <Utils/CppWinrtLessExceptions.h>
 #include <winrt/Windows.Foundation.h>
+#include <winrt/Windows.Security.Cryptography.Core.h>
+#include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
+#include <winrt/Windows.System.Profile.h>
 #include <winrt/Windows.Web.Http.Filters.h>
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
@@ -171,6 +174,19 @@ bool IsIgnorablePollHResult(HRESULT hr) {
   return hr == WININET_E_INVALID_SERVER_RESPONSE;
 }
 
+std::string GetDeviceId(const std::string &bundleName) {
+  const auto hash = winrt::Windows::Security::Cryptography::Core::HashAlgorithmProvider::OpenAlgorithm(
+                        winrt::Windows::Security::Cryptography::Core::HashAlgorithmNames::Sha256())
+                        .CreateHash();
+  hash.Append(winrt::Windows::System::Profile::SystemIdentification::GetSystemIdForPublisher().Id());
+  const auto bundleId = winrt::Windows::Security::Cryptography::CryptographicBuffer::ConvertStringToBinary(
+      winrt::to_hstring(bundleName), winrt::Windows::Security::Cryptography::BinaryStringEncoding::Utf16BE);
+  hash.Append(bundleId);
+  const auto hashBuffer = hash.GetValueAndReset();
+  const auto hashString = winrt::Windows::Security::Cryptography::CryptographicBuffer::EncodeToHexString(hashBuffer);
+  return winrt::to_string(hashString);
+}
+
 std::future<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(const std::string &url) {
   winrt::Windows::Web::Http::HttpClient httpClient;
   winrt::Windows::Foundation::Uri uri(Microsoft::Common::Unicode::Utf8ToUtf16(url));
@@ -240,9 +256,10 @@ void DevSupportManager::StopPollingLiveReload() {
 
 void DevSupportManager::EnsureHermesInspector(
     [[maybe_unused]] const std::string &packagerHost,
-    [[maybe_unused]] const uint16_t packagerPort) noexcept {
+    [[maybe_unused]] const uint16_t packagerPort,
+    [[maybe_unused]] const std::string &jsBundleName) noexcept {
   static std::once_flag once;
-  std::call_once(once, [this, &packagerHost, packagerPort]() {
+  std::call_once(once, [this, &packagerHost, packagerPort, &jsBundleName]() {
     // TODO: should we use the bundleAppId as the app param if available?
     std::string packageName("RNW");
     wchar_t fullName[PACKAGE_FULL_NAME_MAX_LENGTH]{};
@@ -258,8 +275,10 @@ void DevSupportManager::EnsureHermesInspector(
       deviceName = winrt::to_string(hostNames.First().Current().DisplayName());
     }
 
+    const auto deviceId = GetDeviceId(jsBundleName);
     m_inspectorPackagerConnection = std::make_shared<InspectorPackagerConnection>(
-        facebook::react::DevServerHelper::get_InspectorDeviceUrl(packagerHost, packagerPort, deviceName, packageName),
+        facebook::react::DevServerHelper::get_InspectorDeviceUrl(
+            packagerHost, packagerPort, deviceName, packageName, deviceId),
         m_BundleStatusProvider);
     m_inspectorPackagerConnection->connectAsync();
   });
