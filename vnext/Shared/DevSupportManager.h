@@ -15,6 +15,7 @@
 #include <string>
 
 #include <InspectorPackagerConnection.h>
+#include <jsinspector-modern/InspectorPackagerConnection.h>
 
 namespace facebook {
 namespace react {
@@ -59,6 +60,8 @@ class DevSupportManager final : public facebook::react::IDevSupportManager {
   std::atomic_bool m_cancellation_token;
 
   std::shared_ptr<InspectorPackagerConnection> m_inspectorPackagerConnection;
+  std::unique_ptr<facebook::react::jsinspector_modern::InspectorPackagerConnection>
+      m_fuseboxInspectorPackagerConnection;
 
   struct BundleStatusProvider : public InspectorPackagerConnection::IBundleStatusProvider {
     virtual InspectorPackagerConnection::BundleStatus getBundleStatus() {

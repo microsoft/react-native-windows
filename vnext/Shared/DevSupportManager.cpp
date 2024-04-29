@@ -9,12 +9,14 @@
 #include <Shared/DevSettings.h>
 
 #include <Executors/WebSocketJSExecutor.h>
+#include "FuseboxInspectorPackagerConnectionDelegate.h"
 #include "PackagerConnection.h"
 
 #include "Unicode.h"
 #include "Utilities.h"
 
 #include <Utils/CppWinrtLessExceptions.h>
+#include <jsinspector-modern/InspectorFlags.h>
 #include <winrt/Windows.Foundation.h>
 #include <winrt/Windows.Security.Cryptography.Core.h>
 #include <winrt/Windows.Security.Cryptography.h>
@@ -273,12 +275,10 @@ void DevSupportManager::EnsureHermesInspector(
     [[maybe_unused]] const uint16_t packagerPort,
     [[maybe_unused]] const std::string &bundleAppId) noexcept {
   static std::once_flag once;
-  std::call_once(once, [this, &packagerHost, packagerPort, &jsBundleName]() {
-    // TODO: should we use the bundleAppId as the app param if available?
-
+  std::call_once(once, [this, &packagerHost, packagerPort, &bundleAppId]() {
     std::string packageName{bundleAppId};
-    if (packageName == "") {
-      std::string packageName("RNW");
+    if (packageName.empty()) {
+      packageName = "RNW";
       wchar_t fullName[PACKAGE_FULL_NAME_MAX_LENGTH]{};
       UINT32 size = ARRAYSIZE(fullName);
       if (SUCCEEDED(GetCurrentPackageFullName(&size, fullName))) {
@@ -294,11 +294,20 @@ void DevSupportManager::EnsureHermesInspector(
     }
 
     const auto deviceId = GetDeviceId(packageName);
-    m_inspectorPackagerConnection = std::make_shared<InspectorPackagerConnection>(
-        facebook::react::DevServerHelper::get_InspectorDeviceUrl(
-            packagerHost, packagerPort, deviceName, packageName, deviceId),
-        m_BundleStatusProvider);
-    m_inspectorPackagerConnection->connectAsync();
+    auto inspectorUrl = facebook::react::DevServerHelper::get_InspectorDeviceUrl(
+        packagerHost, packagerPort, deviceName, packageName, deviceId);
+    auto &inspectorFlags = jsinspector_modern::InspectorFlags::getInstance();
+    if (inspectorFlags.getEnableCxxInspectorPackagerConnection()) {
+      m_fuseboxInspectorPackagerConnection = std::make_unique<jsinspector_modern::InspectorPackagerConnection>(
+          inspectorUrl,
+          packageName,
+          std::make_unique<Microsoft::ReactNative::FuseboxInspectorPackagerConnectionDelegate>());
+      m_fuseboxInspectorPackagerConnection->connect();
+    } else {
+      m_inspectorPackagerConnection =
+          std::make_shared<InspectorPackagerConnection>(std::move(inspectorUrl), m_BundleStatusProvider);
+      m_inspectorPackagerConnection->connectAsync();
+    }
   });
 }
 

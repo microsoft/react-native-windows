@@ -111,6 +111,7 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorFlags.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorInterfaces.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorPackagerConnection.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGEnums.h" />
     <ClInclude Include="$(YogaDir)\yoga\YGMacros.h" />
@@ -134,6 +135,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorFlags.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorInterfaces.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorPackagerConnection.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\logger\react_native_log.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\reactperflogger\reactperflogger\BridgeNativeModulePerfLogger.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp" />
