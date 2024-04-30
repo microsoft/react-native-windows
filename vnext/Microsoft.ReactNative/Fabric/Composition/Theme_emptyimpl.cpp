@@ -74,12 +74,8 @@ winrt::Microsoft::ReactNative::Composition::Theme Theme::EmptyTheme() noexcept {
   return nullptr;
 }
 
-/*static*/ void Theme::SetDefaultTheme(
+/*static*/ void Theme::SetDefaultResources(
     const winrt::Microsoft::ReactNative::ReactInstanceSettings &,
-    const winrt::Microsoft::ReactNative::Composition::Theme &) noexcept {}
-
-/*static*/ IReactPropertyName Theme::ThemeChangedEventName() noexcept {
-  return nullptr;
-}
+    const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &) noexcept {}
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

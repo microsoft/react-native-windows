@@ -50,12 +50,13 @@ struct Theme : ThemeT<Theme, Experimental::IInternalTheme> {
 
   static winrt::Microsoft::ReactNative::Composition::Theme GetDefaultTheme(
       const winrt::Microsoft::ReactNative::IReactContext &context) noexcept;
-  static void SetDefaultTheme(
+  static void SetDefaultResources(
       const winrt::Microsoft::ReactNative::ReactInstanceSettings &settings,
-      const winrt::Microsoft::ReactNative::Composition::Theme &theme) noexcept;
-  static winrt::Microsoft::ReactNative::IReactPropertyName ThemeChangedEventName() noexcept;
+      const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &resources) noexcept;
 
  private:
+  void UpdateCustomResources(
+      const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &resources) noexcept;
   bool TryGetPlatformColor(const std::string &platformColor, winrt::Windows::UI::Color &color) noexcept;
   void ClearCacheAndRaiseChangedEvent() noexcept;
 
