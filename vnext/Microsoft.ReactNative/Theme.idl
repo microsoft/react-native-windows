@@ -61,8 +61,7 @@ namespace Microsoft.ReactNative.Composition
     event Windows.Foundation.EventHandler<Object> ThemeChanged;
 
     static Theme GetDefaultTheme(Microsoft.ReactNative.IReactContext context);
-    static void SetDefaultTheme(Microsoft.ReactNative.ReactInstanceSettings settings, Theme theme);
-    static Microsoft.ReactNative.IReactPropertyName ThemeChangedEventName { get; };
+    static void SetDefaultResources(Microsoft.ReactNative.ReactInstanceSettings settings, ICustomResourceLoader theme);
   };
 
 } // namespace Microsoft.ReactNative

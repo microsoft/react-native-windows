@@ -72,8 +72,8 @@ void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition
 winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader CompositionRootView::Resources() noexcept {
   return nullptr;
 }
-void CompositionRootView::Resources(const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &) noexcept {}
-
+void CompositionRootView::Resources(
+    const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &) noexcept {}
 
 winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
   return nullptr;
