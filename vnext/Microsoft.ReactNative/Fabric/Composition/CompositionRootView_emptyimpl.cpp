@@ -28,6 +28,7 @@ struct CompositionReactViewInstance
 //===========================================================================
 
 CompositionRootView::CompositionRootView() noexcept {}
+CompositionRootView::~CompositionRootView() noexcept {}
 
 CompositionRootView::CompositionRootView(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept {}
 
