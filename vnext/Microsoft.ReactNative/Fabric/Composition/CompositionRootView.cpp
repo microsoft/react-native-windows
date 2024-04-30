@@ -131,6 +131,13 @@ CompositionRootView::CompositionRootView(const winrt::Microsoft::UI::Composition
     : m_compositor(compositor) {}
 #endif
 
+CompositionRootView::~CompositionRootView() noexcept {
+  if (m_uiDispatcher) {
+    assert(m_uiDispatcher.HasThreadAccess());
+    UninitRootView();
+  }
+}
+
 ReactNative::IReactViewHost CompositionRootView::ReactViewHost() noexcept {
   return m_reactViewHost;
 }
