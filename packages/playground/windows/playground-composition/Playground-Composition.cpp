@@ -462,14 +462,21 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
     case WM_DESTROY: {
       auto data = WindowData::GetFromWindow(hwnd);
       // Before we shutdown the application - gracefully unload the ReactNativeHost instance
-      auto async = data->m_host.UnloadInstance();
-      async.Completed([host = data->m_host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
-        assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
-        host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
-      });
+      bool shouldPostQuitMessage = true;
+      if (data->m_host) {
+        shouldPostQuitMessage = false;
+        auto async = data->m_host.UnloadInstance();
+        async.Completed([host = data->m_host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
+          host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
+        });
+      }
 
       delete WindowData::GetFromWindow(hwnd);
       SetProp(hwnd, WindowDataProperty, 0);
+      if (shouldPostQuitMessage) {
+        PostQuitMessage(0);
+      }
       return 0;
     }
     case WM_NCCREATE: {
