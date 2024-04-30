@@ -95,8 +95,10 @@ namespace Microsoft.ReactNative
 
     Object GetUiaProvider();
 
-    DOC_STRING("Theme used for Platform colors within this RootView")
-    Microsoft.ReactNative.Composition.Theme Theme;
+    DOC_STRING("Provides resources used for Platform colors within this RootView")
+    Microsoft.ReactNative.Composition.ICustomResourceLoader Resources;
+
+    Microsoft.ReactNative.Composition.Theme Theme { get; };
 
 #ifdef USE_WINUI3
     Microsoft.UI.Content.ContentIsland Island { get; };

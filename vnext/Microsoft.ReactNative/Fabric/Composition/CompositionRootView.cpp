@@ -247,29 +247,32 @@ void CompositionRootView::ScaleFactor(float value) noexcept {
   }
 }
 
+winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader CompositionRootView::Resources() noexcept {
+  return m_resources;
+}
+
+void CompositionRootView::Resources(
+    const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &resources) noexcept {
+  m_resources = resources;
+
+  if (m_context && m_theme) {
+    Theme(winrt::make<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(m_context, m_resources));
+  }
+}
+
 winrt::Microsoft::ReactNative::Composition::Theme CompositionRootView::Theme() noexcept {
   if (!m_theme) {
-    Theme(winrt::Microsoft::ReactNative::Composition::Theme::GetDefaultTheme(m_context.Handle()));
-    m_themeChangedSubscription = m_context.Notifications().Subscribe(
-        winrt::Microsoft::ReactNative::ReactNotificationId<void>(
-            winrt::Microsoft::ReactNative::Composition::Theme::ThemeChangedEventName()),
-        m_context.UIDispatcher(),
-        [wkThis = get_weak()](
-            IInspectable const & /*sender*/,
-            winrt::Microsoft::ReactNative::ReactNotificationArgs<void> const & /*args*/) {
-          auto pThis = wkThis.get();
-          pThis->Theme(winrt::Microsoft::ReactNative::Composition::Theme::GetDefaultTheme(pThis->m_context.Handle()));
-        });
+    assert(m_context);
+    if (m_resources) {
+      Theme(winrt::make<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(m_context, m_resources));
+    } else {
+      Theme(winrt::Microsoft::ReactNative::Composition::Theme::GetDefaultTheme(m_context.Handle()));
+    }
   }
   return m_theme;
 }
 
 void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept {
-  if (m_themeChangedSubscription) {
-    m_themeChangedSubscription.Unsubscribe();
-    m_themeChangedSubscription = nullptr;
-  }
-
   if (value == m_theme)
     return;
 
@@ -277,20 +280,22 @@ void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition
 
   m_themeChangedRevoker = m_theme.ThemeChanged(
       winrt::auto_revoke,
-      [this](
+      [wkThis = get_weak()](
           const winrt::Windows::Foundation::IInspectable & /*sender*/,
           const winrt::Windows::Foundation::IInspectable & /*args*/) {
-        if (auto rootView = GetComponentView()) {
-          Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> fn =
-              [](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
-                winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->onThemeChanged();
-                return false;
-              };
+        if (auto strongThis = wkThis.get()) {
+          if (auto rootView = strongThis->GetComponentView()) {
+            Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> fn =
+                [](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+                  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->onThemeChanged();
+                  return false;
+                };
 
-          winrt::Microsoft::ReactNative::ComponentView view{nullptr};
-          winrt::check_hresult(rootView->QueryInterface(
-              winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
-          walkTree(view, true, fn);
+            winrt::Microsoft::ReactNative::ComponentView view{nullptr};
+            winrt::check_hresult(rootView->QueryInterface(
+                winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
+            walkTree(view, true, fn);
+          }
         }
       });
 
@@ -389,7 +394,6 @@ void CompositionRootView::InitRootView(
   }
 
   m_context = winrt::Microsoft::ReactNative::ReactContext(std::move(context));
-
   m_reactViewOptions = std::move(viewOptions);
   m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this);
 
