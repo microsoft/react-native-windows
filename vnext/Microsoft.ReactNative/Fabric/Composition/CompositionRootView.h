@@ -45,6 +45,7 @@ struct CompositionRootView
     : CompositionRootViewT<CompositionRootView, Composition::Experimental::IInternalCompositionRootView>,
       ::Microsoft::ReactNative::ICompositionRootView {
   CompositionRootView() noexcept;
+  ~CompositionRootView() noexcept;
 
 #ifdef USE_WINUI3
   CompositionRootView(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept;
