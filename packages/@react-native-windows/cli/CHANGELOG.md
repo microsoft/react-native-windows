@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Thu, 25 Apr 2024 20:12:42 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Apr 2024 05:16:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.210
+
+Fri, 26 Apr 2024 05:16:48 GMT
+
+### Changes
+
+- CodeQL fixes (email not defined)
 
 ## 0.0.0-canary.209
 

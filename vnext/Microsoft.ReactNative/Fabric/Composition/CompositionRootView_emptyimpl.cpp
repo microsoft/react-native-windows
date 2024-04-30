@@ -28,6 +28,7 @@ struct CompositionReactViewInstance
 //===========================================================================
 
 CompositionRootView::CompositionRootView() noexcept {}
+CompositionRootView::~CompositionRootView() noexcept {}
 
 CompositionRootView::CompositionRootView(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept {}
 
@@ -68,6 +69,12 @@ winrt::Microsoft::ReactNative::Composition::Theme CompositionRootView::Theme() n
   return nullptr;
 }
 void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition::Theme &) noexcept {}
+
+winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader CompositionRootView::Resources() noexcept {
+  return nullptr;
+}
+void CompositionRootView::Resources(
+    const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &) noexcept {}
 
 winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
   return nullptr;
