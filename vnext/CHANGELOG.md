@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 27 Apr 2024 05:16:26 GMT and should not be manually modified.
+This log was last generated on Tue, 30 Apr 2024 05:15:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.808
+
+Tue, 30 Apr 2024 05:15:58 GMT
+
+### Changes
+
+- Ensure D2D device context is not used outside Begin/End draw (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.807
 

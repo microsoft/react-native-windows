@@ -526,6 +526,15 @@ static const winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Microsoft::Re
   return prop;
 }
 
+static const winrt::Microsoft::ReactNative::ReactPropertyId<
+    winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader>
+    &ThemeResourcesPropertyId() noexcept {
+  static const winrt::Microsoft::ReactNative::ReactPropertyId<
+      winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader>
+      prop{L"ReactNative.Composition", L"ThemeResources"};
+  return prop;
+}
+
 winrt::Microsoft::ReactNative::Composition::Theme Theme::EmptyTheme() noexcept {
   static winrt::Microsoft::ReactNative::Composition::Theme s_emptyTheme{nullptr};
   if (!s_emptyTheme) {
@@ -537,24 +546,33 @@ winrt::Microsoft::ReactNative::Composition::Theme Theme::EmptyTheme() noexcept {
 /*static*/ winrt::Microsoft::ReactNative::Composition::Theme Theme::GetDefaultTheme(
     const winrt::Microsoft::ReactNative::IReactContext &context) noexcept {
   return winrt::Microsoft::ReactNative::ReactPropertyBag(context.Properties())
-      .GetOrCreate(ThemePropertyId(), [context]() { return winrt::make<Theme>(context, nullptr); });
+      .GetOrCreate(ThemePropertyId(), [context]() {
+        return winrt::make<Theme>(
+            context,
+            winrt::Microsoft::ReactNative::ReactPropertyBag(context.Properties()).Get(ThemeResourcesPropertyId()));
+      });
 }
 
-/*static*/ void Theme::SetDefaultTheme(
+/*static*/ void Theme::SetDefaultResources(
     const winrt::Microsoft::ReactNative::ReactInstanceSettings &settings,
-    const winrt::Microsoft::ReactNative::Composition::Theme &theme) noexcept {
-  winrt::Microsoft::ReactNative::ReactPropertyBag(settings.Properties()).Set(ThemePropertyId(), theme);
-  settings.Notifications().SendNotification(ThemeChangedEventName(), nullptr, nullptr);
+    const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &resources) noexcept {
+  winrt::Microsoft::ReactNative::ReactPropertyBag properties(settings.Properties());
+  properties.Set(ThemeResourcesPropertyId(), resources);
+  // If a default theme has already been created - we need to update it with the new resources
+  if (auto theme = properties.Get(ThemePropertyId())) {
+    winrt::get_self<Theme>(theme)->UpdateCustomResources(resources);
+  }
+}
+
+void Theme::UpdateCustomResources(
+    const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &resources) noexcept {
+  m_customResourceLoader = resources;
+  ClearCacheAndRaiseChangedEvent();
 }
 
 IReactPropertyNamespace ThemeNamespace() noexcept {
   static IReactPropertyNamespace value = ReactPropertyBagHelper::GetNamespace(L"ReactNative.Theme");
   return value;
-}
-
-/*static*/ IReactPropertyName Theme::ThemeChangedEventName() noexcept {
-  static IReactPropertyName propName = ReactPropertyBagHelper::GetName(ThemeNamespace(), L"Changed");
-  return propName;
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
