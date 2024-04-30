@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240315-f2f62cdf5",
+  "baseVersion": "0.75.0-nightly-20240321-7d180d712",
   "overrides": [
     {
       "type": "derived",
@@ -104,13 +104,6 @@
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModuleUtils.h",
       "baseHash": "ba5efe9ba0db80a3f38c94deb8983420fd82beff",
       "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/scrollview/ScrollViewProps.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/scrollview/ScrollViewProps.cpp",
-      "baseHash": "8f39e994dcc9dd871d502637f01fbcd6bfd2cccc",
-      "issue": 12879
     },
     {
       "type": "copy",

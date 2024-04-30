@@ -499,6 +499,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeAgent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeTarget.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeTargetConsole.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\ConsoleMessage.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\jsi-utils.cpp" />
   </ItemGroup>
   <ItemGroup>
