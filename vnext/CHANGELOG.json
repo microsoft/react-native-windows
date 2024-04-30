@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 30 Apr 2024 05:15:58 GMT",
+      "version": "0.0.0-canary.808",
+      "tag": "react-native-windows_v0.0.0-canary.808",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5fa1ba4feab618f97b116db106a782849f612d58",
+            "comment": "Ensure D2D device context is not used outside Begin/End draw"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 27 Apr 2024 05:16:26 GMT",
       "version": "0.0.0-canary.807",
       "tag": "react-native-windows_v0.0.0-canary.807",
