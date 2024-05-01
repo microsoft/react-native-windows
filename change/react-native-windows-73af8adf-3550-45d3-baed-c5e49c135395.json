@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Fix a reference cycle between CompositionRootView and CompositionEventHandler",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
