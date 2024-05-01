@@ -28,7 +28,7 @@ class JSRuntime {
    * this JSRuntime. This reference must remain valid for the duration of the
    * JSRuntime's lifetime.
    */
-  // virtual jsinspector_modern::RuntimeTargetDelegate& getRuntimeTargetDelegate();
+  // [Windows Fix: #13172] virtual jsinspector_modern::RuntimeTargetDelegate& getRuntimeTargetDelegate();
 
  private:
   /**

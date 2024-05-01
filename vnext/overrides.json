@@ -106,6 +106,20 @@
       "issue": 12195
     },
     {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/JSRuntimeFactory.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/runtime/JSRuntimeFactory.cpp",
+      "baseHash": "c77f0b0829b850f8e2f115bfc3440ce94feb207d",
+      "issue": 12195
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/JSRuntimeFactory.h",
+      "baseFile": "packages/react-native/ReactCommon/react/runtime/JSRuntimeFactory.h",
+      "baseHash": "a3cf8c924d0bd3419943f0e46d603f84eb5b52ab",
+      "issue": 12195
+    },
+    {
       "type": "copy",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/utils/jsi-utils.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/utils/jsi.cpp",

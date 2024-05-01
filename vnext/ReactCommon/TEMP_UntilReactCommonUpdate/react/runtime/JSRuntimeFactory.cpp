@@ -18,14 +18,14 @@ JSIRuntimeHolder::JSIRuntimeHolder(std::unique_ptr<jsi::Runtime> runtime)
   assert(runtime_ != nullptr);
 }
 
-/*
+/* [Windows Fix: #13172
 jsinspector_modern::RuntimeTargetDelegate&
 JSRuntime::getRuntimeTargetDelegate() {
   if (!runtimeTargetDelegate_) {
     runtimeTargetDelegate_.emplace(getRuntime().description());
   }
   return *runtimeTargetDelegate_;
-}
+} Windows]
 */
 
 } // namespace facebook::react
