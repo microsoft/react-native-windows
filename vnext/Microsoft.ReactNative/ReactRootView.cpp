@@ -5,7 +5,10 @@
 #include "ReactRootView.g.cpp"
 
 #include <QuirkSettings.h>
+#include <ReactHost/DebuggerNotifications.h>
 #include <ReactHost/MsoUtils.h>
+#include <UI.Text.h>
+#include <UI.Xaml.Controls.Primitives.h>
 #include <UI.Xaml.Input.h>
 #include <UI.Xaml.Media.Media3D.h>
 #include <Utils/Helpers.h>
@@ -45,6 +48,20 @@ void ReactRootView::ReactNativeHost(ReactNative::ReactNativeHost const &value) n
   if (m_reactNativeHost != value) {
     ReactViewHost(nullptr);
     m_reactNativeHost = value;
+    const auto weakThis = this->get_weak();
+    ::Microsoft::ReactNative::DebuggerNotifications::SubscribeShowDebuggerPausedOverlay(
+        m_reactNativeHost.InstanceSettings().Notifications(),
+        m_reactNativeHost.InstanceSettings().UIDispatcher(),
+        [weakThis](std::string message, std::function<void()> onResume) {
+          if (auto strongThis = weakThis.get()) {
+            strongThis->ShowDebuggerPausedOverlay(message, onResume);
+          }
+        },
+        [weakThis]() {
+          if (auto strongThis = weakThis.get()) {
+            strongThis->HideDebuggerPausedOverlay();
+          }
+        });
     ReloadView();
   }
 }
@@ -281,6 +298,65 @@ void ReactRootView::EnsureLoadingUI() noexcept {
       children.Append(m_greenBoxGrid);
     }
   }
+}
+
+void ReactRootView::HideDebuggerPausedOverlay() noexcept {
+  m_isDebuggerPausedOverlayOpen = false;
+  if (m_debuggerPausedFlyout) {
+    m_debuggerPausedFlyout.Hide();
+    m_debuggerPausedFlyout = nullptr;
+  }
+}
+
+void ReactRootView::ShowDebuggerPausedOverlay(
+    const std::string &message,
+    const std::function<void()> &onResume) noexcept {
+  // Initialize content
+  const xaml::Controls::Grid contentGrid;
+  xaml::Controls::ColumnDefinition messageColumnDefinition;
+  xaml::Controls::ColumnDefinition buttonColumnDefinition;
+  messageColumnDefinition.MinWidth(60);
+  buttonColumnDefinition.MinWidth(36);
+  contentGrid.ColumnDefinitions().Append(messageColumnDefinition);
+  contentGrid.ColumnDefinitions().Append(buttonColumnDefinition);
+  xaml::Controls::TextBlock messageBlock;
+  messageBlock.Text(winrt::to_hstring(message));
+  messageBlock.FontWeight(winrt::Windows::UI::Text::FontWeights::SemiBold());
+  xaml::Controls::FontIcon resumeGlyph;
+  resumeGlyph.FontFamily(xaml::Media::FontFamily(L"Segoe MDL2 Assets"));
+  resumeGlyph.Foreground(xaml::Media::SolidColorBrush(winrt::Colors::Green()));
+  resumeGlyph.Glyph(L"\uF5B0");
+  resumeGlyph.HorizontalAlignment(xaml::HorizontalAlignment::Right);
+  resumeGlyph.PointerReleased([onResume](auto &&...) { onResume(); });
+  xaml::Controls::Grid::SetColumn(resumeGlyph, 1);
+  contentGrid.Children().Append(messageBlock);
+  contentGrid.Children().Append(resumeGlyph);
+
+  // Configure flyout
+  m_isDebuggerPausedOverlayOpen = true;
+  xaml::Style flyoutStyle(
+      {XAML_NAMESPACE_STR L".Controls.FlyoutPresenter", winrt::Windows::UI::Xaml::Interop::TypeKind::Metadata});
+  flyoutStyle.Setters().Append(winrt::Setter(
+      xaml::Controls::Control::CornerRadiusProperty(), winrt::box_value(xaml::CornerRadius{12, 12, 12, 12})));
+  flyoutStyle.Setters().Append(winrt::Setter(
+      xaml::Controls::Control::BackgroundProperty(),
+      winrt::box_value(xaml::Media::SolidColorBrush{FromArgb(255, 255, 255, 193)})));
+  flyoutStyle.Setters().Append(
+      winrt::Setter(xaml::FrameworkElement::MarginProperty(), winrt::box_value(xaml::Thickness{0, 12, 0, 0})));
+  m_debuggerPausedFlyout = xaml::Controls::Flyout{};
+  m_debuggerPausedFlyout.FlyoutPresenterStyle(flyoutStyle);
+  m_debuggerPausedFlyout.LightDismissOverlayMode(xaml::Controls::LightDismissOverlayMode::On);
+  m_debuggerPausedFlyout.Content(contentGrid);
+
+  // Disable light dismiss
+  m_debuggerPausedFlyout.Closing([weakThis = this->get_weak()](auto &&, const auto &args) {
+    if (auto strongThis = weakThis.get()) {
+      args.Cancel(strongThis->m_isDebuggerPausedOverlayOpen);
+    }
+  });
+
+  // Show flyout
+  m_debuggerPausedFlyout.ShowAt(*this);
 }
 
 void ReactRootView::ShowInstanceLoaded() noexcept {
