@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "[CodeQL] Suppress false positive",
-  "packageName": "react-native-platform-override",
-  "email": "email not defined",
-  "dependentChangeType": "none"
-}

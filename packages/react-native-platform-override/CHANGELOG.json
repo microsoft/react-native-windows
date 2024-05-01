@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Wed, 01 May 2024 05:15:55 GMT",
+      "version": "1.9.30",
+      "tag": "react-native-platform-override_v1.9.30",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "react-native-platform-override",
+            "commit": "23f224cd4f68e69657b0c5666fd42c2540fb0462",
+            "comment": "[CodeQL] Suppress false positive"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Apr 2024 05:16:48 GMT",
       "version": "1.9.30",
       "tag": "react-native-platform-override_v1.9.30",
