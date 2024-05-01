@@ -460,9 +460,23 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
           hwnd, LOWORD(wparam), reinterpret_cast<HWND>(lparam), HIWORD(wparam));
     }
     case WM_DESTROY: {
+      auto data = WindowData::GetFromWindow(hwnd);
+      // Before we shutdown the application - gracefully unload the ReactNativeHost instance
+      bool shouldPostQuitMessage = true;
+      if (data->m_host) {
+        shouldPostQuitMessage = false;
+        auto async = data->m_host.UnloadInstance();
+        async.Completed([host = data->m_host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
+          host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
+        });
+      }
+
       delete WindowData::GetFromWindow(hwnd);
       SetProp(hwnd, WindowDataProperty, 0);
-      PostQuitMessage(0);
+      if (shouldPostQuitMessage) {
+        PostQuitMessage(0);
+      }
       return 0;
     }
     case WM_NCCREATE: {
@@ -530,6 +544,14 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
   HACCEL hAccelTable = LoadAccelerators(WindowData::s_instance, MAKEINTRESOURCE(IDC_PLAYGROUND_COMPOSITION));
 
   g_liftedDispatcherQueueController.DispatcherQueue().RunEventLoop();
+
+  // Rundown the DispatcherQueue. This drains the queue and raises events to let components
+  // know the message loop has finished.
+  g_liftedDispatcherQueueController.ShutdownQueue();
+
+  // Destroy all Composition objects
+  g_compositor.Close();
+  g_compositor = nullptr;
 
   return 0;
 }

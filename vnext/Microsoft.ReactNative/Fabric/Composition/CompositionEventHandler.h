@@ -154,7 +154,7 @@ class CompositionEventHandler {
   PointerId m_touchId = 0;
 
   std::map<PointerId, std::vector<ReactTaggedView>> m_currentlyHoveredViewsPerPointer;
-  winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};
+  winrt::weak_ref<winrt::Microsoft::ReactNative::CompositionRootView> m_wkRootView;
   winrt::Microsoft::ReactNative::ReactContext m_context;
 
   facebook::react::Tag m_pointerCapturingComponentTag{-1}; // Component that has captured input
