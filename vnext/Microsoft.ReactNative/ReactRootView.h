@@ -89,6 +89,7 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
   winrt::Grid m_greenBoxGrid{nullptr};
   winrt::TextBlock m_waitingTextBlock{nullptr};
   winrt::SystemNavigationManager::BackRequested_revoker m_backRequestedRevoker{};
+  std::vector<xaml::XamlRoot> m_subscribedDebuggerRoots{};
 
   // Visual tree to support safe harbor
   // this
@@ -116,6 +117,7 @@ struct ReactRootView : ReactRootViewT<ReactRootView>, ::Microsoft::ReactNative::
   bool OnBackRequested() noexcept;
   Mso::React::IReactViewHost *ReactViewHost() noexcept;
   void ReactViewHost(Mso::React::IReactViewHost *viewHost) noexcept;
+  void SetupDevToolsShortcut() noexcept;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

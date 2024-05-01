@@ -14,8 +14,10 @@
 #include <Utils/Helpers.h>
 #include <dispatchQueue/dispatchQueue.h>
 #include <winrt/Windows.UI.Core.h>
+#include "InstanceManager.h"
 #include "ReactNativeHost.h"
 #include "ReactViewInstance.h"
+#include "Utils/KeyboardUtils.h"
 #include "XamlUtils.h"
 
 #include <winrt/Microsoft.UI.Xaml.Controls.h>
@@ -37,6 +39,7 @@ ReactRootView::ReactRootView() noexcept : m_uiQueue(Mso::DispatchQueue::GetCurre
   UpdatePerspective();
   Loaded([this](auto &&, auto &&) {
     ::Microsoft::ReactNative::SetCompositor(::Microsoft::ReactNative::GetCompositor(*this));
+    SetupDevToolsShortcut();
   });
 }
 
@@ -555,6 +558,35 @@ void ReactRootView::RemoveAllChildren() {
 
 void ReactRootView::RemoveChildAt(uint32_t index) {
   Children().RemoveAt(RNIndexToXamlIndex(index));
+}
+
+bool IsCtrlShiftI(winrt::Windows::System::VirtualKey key) noexcept {
+  return (
+      key == winrt::Windows::System::VirtualKey::I &&
+      ::Microsoft::ReactNative::IsModifiedKeyPressed(
+          winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Shift) &&
+      ::Microsoft::ReactNative::IsModifiedKeyPressed(
+          winrt::CoreWindow::GetForCurrentThread(), winrt::Windows::System::VirtualKey::Control));
+}
+
+void ReactRootView::SetupDevToolsShortcut() noexcept {
+  if (auto xamlRoot = XamlRoot()) {
+    if (std::find(m_subscribedDebuggerRoots.begin(), m_subscribedDebuggerRoots.end(), xamlRoot) ==
+        m_subscribedDebuggerRoots.end()) {
+      if (auto rootContent = xamlRoot.Content()) {
+        m_subscribedDebuggerRoots.push_back(xamlRoot);
+        rootContent.KeyDown(
+            [weakThis = this->get_weak()](const auto & /*sender*/, const xaml::Input::KeyRoutedEventArgs &args) {
+              if (const auto strongThis = weakThis.get()) {
+                if (IsCtrlShiftI(args.Key())) {
+                  ::Microsoft::ReactNative::GetSharedDevManager()->OpenDevTools(
+                      winrt::to_string(strongThis->m_reactNativeHost.InstanceSettings().BundleAppId()));
+                }
+              };
+            });
+      }
+    }
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

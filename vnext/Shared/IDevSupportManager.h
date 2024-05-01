@@ -24,6 +24,7 @@ struct IDevSupportManager {
       const uint16_t sourceBundlePort,
       std::function<void()> onChangeCallback) = 0;
   virtual void StopPollingLiveReload() = 0;
+  virtual void OpenDevTools(const std::string &bundleAppId) = 0;
 
   virtual void EnsureHermesInspector(
       const std::string &packagerHost,

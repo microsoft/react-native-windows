@@ -176,7 +176,7 @@ bool IsIgnorablePollHResult(HRESULT hr) {
   return hr == WININET_E_INVALID_SERVER_RESPONSE;
 }
 
-std::string GetDeviceId(const std::string &bundleAppId) {
+std::string GetDeviceId(const std::string &packageName) {
   const auto hash = winrt::Windows::Security::Cryptography::Core::HashAlgorithmProvider::OpenAlgorithm(
                         winrt::Windows::Security::Cryptography::Core::HashAlgorithmNames::Sha256())
                         .CreateHash();
@@ -186,9 +186,9 @@ std::string GetDeviceId(const std::string &bundleAppId) {
   // If an app ID is provided, we will allow reconnection to DevTools.
   // Apps must supply a unique app ID to each ReactNativeHost instance settings for this to behave correctly.
   if (!bundleAppId.empty()) {
-    const auto bundleAppIdBuffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::ConvertStringToBinary(
-        winrt::to_hstring(bundleAppId), winrt::Windows::Security::Cryptography::BinaryStringEncoding::Utf16BE);
-    hash.Append(bundleAppIdBuffer);
+    const auto packageNameBuffer = winrt::Windows::Security::Cryptography::CryptographicBuffer::ConvertStringToBinary(
+        winrt::to_hstring(packageName), winrt::Windows::Security::Cryptography::BinaryStringEncoding::Utf16BE);
+    hash.Append(packageNameBuffer);
   } else {
     const auto processId = GetCurrentProcessId();
     std::vector<uint8_t> processIdBytes(
@@ -201,6 +201,22 @@ std::string GetDeviceId(const std::string &bundleAppId) {
   const auto hashBuffer = hash.GetValueAndReset();
   const auto hashString = winrt::Windows::Security::Cryptography::CryptographicBuffer::EncodeToHexString(hashBuffer);
   return winrt::to_string(hashString);
+}
+
+std::string GetPackageName(const std::string &bundleAppId) {
+  if (!bundleAppId.empty()) {
+    return bundleAppId;
+  }
+
+  std::string packageName{"RNW"};
+  wchar_t fullName[PACKAGE_FULL_NAME_MAX_LENGTH]{};
+  UINT32 size = ARRAYSIZE(fullName);
+  if (SUCCEEDED(GetCurrentPackageFullName(&size, fullName))) {
+    // we are in an unpackaged app
+    packageName = winrt::to_string(fullName);
+  }
+
+  return packageName;
 }
 
 std::future<winrt::Windows::Web::Http::HttpStatusCode> PollForLiveReload(const std::string &url) {
@@ -270,23 +286,28 @@ void DevSupportManager::StopPollingLiveReload() {
   m_cancellation_token = true;
 }
 
+void DevSupportManager::OpenDevTools(const std::string &bundleAppId) {
+  winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter filter;
+  filter.CacheControl().ReadBehavior(winrt::Windows::Web::Http::Filters::HttpCacheReadBehavior::NoCache);
+  winrt::Windows::Web::Http::HttpClient httpClient(filter);
+  // TODO: Use currently configured dev server host
+  winrt::Windows::Foundation::Uri uri(
+      Microsoft::Common::Unicode::Utf8ToUtf16(facebook::react::DevServerHelper::get_OpenDebuggerUrl(
+          std::string{DevServerHelper::DefaultPackagerHost},
+          DevServerHelper::DefaultPackagerPort,
+          GetDeviceId(GetPackageName(bundleAppId)))));
+
+  winrt::Windows::Web::Http::HttpRequestMessage request(winrt::Windows::Web::Http::HttpMethod::Post(), uri);
+  httpClient.SendRequestAsync(request);
+}
+
 void DevSupportManager::EnsureHermesInspector(
     [[maybe_unused]] const std::string &packagerHost,
     [[maybe_unused]] const uint16_t packagerPort,
     [[maybe_unused]] const std::string &bundleAppId) noexcept {
   static std::once_flag once;
   std::call_once(once, [this, &packagerHost, packagerPort, &bundleAppId]() {
-    std::string packageName{bundleAppId};
-    if (packageName.empty()) {
-      packageName = "RNW";
-      wchar_t fullName[PACKAGE_FULL_NAME_MAX_LENGTH]{};
-      UINT32 size = ARRAYSIZE(fullName);
-      if (SUCCEEDED(GetCurrentPackageFullName(&size, fullName))) {
-        // we are in an unpackaged app
-        packageName = winrt::to_string(fullName);
-      }
-    }
-
+    std::string packageName = GetPackageName(bundleAppId);
     std::string deviceName("RNWHost");
     auto hostNames = winrt::Windows::Networking::Connectivity::NetworkInformation::GetHostNames();
     if (hostNames && hostNames.First() && hostNames.First().Current()) {
