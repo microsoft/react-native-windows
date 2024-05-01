@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 30 Apr 2024 05:15:58 GMT and should not be manually modified.
+This log was last generated on Wed, 01 May 2024 05:15:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.809
+
+Wed, 01 May 2024 05:15:55 GMT
+
+### Changes
+
+- Rework custom resources API (30809111+acoates-ms@users.noreply.github.com)
+- Fix a reference cycle between CompositionRootView and CompositionEventHandler (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.808
 

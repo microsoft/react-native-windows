@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 01 May 2024 05:15:55 GMT",
+      "version": "0.0.0-canary.809",
+      "tag": "react-native-windows_v0.0.0-canary.809",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c15f1bbfd8c89cf552319579eda2e702c195a76d",
+            "comment": "Rework custom resources API"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7bace67668e77f5614141df6a47e5b6a50c2f3c7",
+            "comment": "Fix a reference cycle between CompositionRootView and CompositionEventHandler"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 30 Apr 2024 05:15:58 GMT",
       "version": "0.0.0-canary.808",
       "tag": "react-native-windows_v0.0.0-canary.808",
