@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Ensure D2D device context is not used outside Begin/End draw",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

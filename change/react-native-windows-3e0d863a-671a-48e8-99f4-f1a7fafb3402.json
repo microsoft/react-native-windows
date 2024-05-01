@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "target 0.73 and add carets to versions",
-  "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}

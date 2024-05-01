@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 01 May 2024 20:37:36 GMT",
+      "version": "0.74.1",
+      "tag": "react-native-windows_v0.74.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "19493123db48b16af9ae6ecc6229cea694e00c2f",
+            "comment": "target 0.73 and add carets to versions"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a16c243119d5eec194615fc3782018eeecf09d8e",
+            "comment": "Ensure D2D device context is not used outside Begin/End draw"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7fd1f4439e2e1f109d4d2b20a97073f14bcbf504",
+            "comment": "Rework custom resources API"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7fd1f4439e2e1f109d4d2b20a97073f14bcbf504",
+            "comment": "Fix a reference cycle between CompositionRootView and CompositionEventHandler"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 27 Apr 2024 21:16:05 GMT",
       "version": "0.74.0",
       "tag": "react-native-windows_v0.74.0",
