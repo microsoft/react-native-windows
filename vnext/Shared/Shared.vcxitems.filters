@@ -507,6 +507,9 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)DevSettings.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)FuseboxInspectorThread.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)IDevSupportManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
