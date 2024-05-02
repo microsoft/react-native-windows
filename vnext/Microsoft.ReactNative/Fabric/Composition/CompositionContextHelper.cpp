@@ -1966,6 +1966,12 @@ winrt::Microsoft::UI::Composition::ICompositionSurface MicrosoftCompositionConte
   surface.try_as(s);
   return s ? s->Inner() : nullptr;
 }
+
+winrt::Microsoft::ReactNative::Composition::Experimental::IBrush MicrosoftCompositionContextHelper::WrapBrush(
+    const winrt::Microsoft::UI::Composition::CompositionBrush &brush) noexcept {
+  return winrt::make<::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompBrush>(brush);
+}
+
 #endif
 
 } // namespace winrt::Microsoft::ReactNative::Composition::Experimental::implementation
