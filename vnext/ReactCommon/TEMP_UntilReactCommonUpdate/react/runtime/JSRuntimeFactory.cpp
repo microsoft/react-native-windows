@@ -6,6 +6,8 @@
  */
 
 #include "JSRuntimeFactory.h"
+#include <jsinspector-modern/ConsoleMessage.h>
+#include <jsinspector-modern/FallbackRuntimeAgentDelegate.h>
 
 namespace facebook::react {
 
@@ -18,14 +20,26 @@ JSIRuntimeHolder::JSIRuntimeHolder(std::unique_ptr<jsi::Runtime> runtime)
   assert(runtime_ != nullptr);
 }
 
-/* [Windows Fix: #13172
-jsinspector_modern::RuntimeTargetDelegate&
-JSRuntime::getRuntimeTargetDelegate() {
-  if (!runtimeTargetDelegate_) {
-    runtimeTargetDelegate_.emplace(getRuntime().description());
-  }
-  return *runtimeTargetDelegate_;
-} Windows]
-*/
+void JSIRuntimeHolder::addConsoleMessage(jsi::Runtime& runtime, jsinspector_modern::ConsoleMessage message) {
+  return;
+}
+
+bool JSIRuntimeHolder::supportsConsole() const{
+  return false;
+}
+
+std::unique_ptr<jsinspector_modern::RuntimeAgentDelegate>
+JSIRuntimeHolder::createAgentDelegate(
+    jsinspector_modern::FrontendChannel frontendChannel,
+    jsinspector_modern::SessionState& sessionState,
+    std::unique_ptr<jsinspector_modern::RuntimeAgentDelegate::ExportedState>,
+    const jsinspector_modern::ExecutionContextDescription&
+        executionContextDescription,
+    RuntimeExecutor runtimeExecutor) {
+  (void)executionContextDescription;
+  (void)runtimeExecutor;
+  return std::make_unique<jsinspector_modern::FallbackRuntimeAgentDelegate>(
+      std::move(frontendChannel), sessionState, runtime_->description());
+}
 
 } // namespace facebook::react

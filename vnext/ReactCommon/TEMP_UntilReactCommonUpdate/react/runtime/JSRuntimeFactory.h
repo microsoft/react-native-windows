@@ -9,34 +9,24 @@
 
 #include <ReactCommon/RuntimeExecutor.h>
 #include <cxxreact/MessageQueueThread.h>
+#include <jsinspector-modern/ConsoleMessage.h>
 #include <jsi/jsi.h>
 #include <jsinspector-modern/ReactCdp.h>
+
 
 namespace facebook::react {
 
 /**
  * An interface that represents an instance of a JS VM
  */
-class JSRuntime {
+class JSRuntime : public jsinspector_modern::RuntimeTargetDelegate {
  public:
   virtual jsi::Runtime& getRuntime() noexcept = 0;
 
   virtual ~JSRuntime() = default;
 
-  /**
-   * Get a reference to the \c RuntimeTargetDelegate owned (or implemented) by
-   * this JSRuntime. This reference must remain valid for the duration of the
-   * JSRuntime's lifetime.
-   */
-  // [Windows Fix: #13172] virtual jsinspector_modern::RuntimeTargetDelegate& getRuntimeTargetDelegate();
-
- private:
-  /**
-   * Initialized by \c getRuntimeTargetDelegate if not overridden, and then
-   * never changes.
-   */
-  std::optional<jsinspector_modern::FallbackRuntimeTargetDelegate>
-      runtimeTargetDelegate_;
+  virtual void addConsoleMessage(jsi::Runtime& runtime, jsinspector_modern::ConsoleMessage message) = 0;
+  virtual bool supportsConsole() const = 0;
 };
 
 /**
@@ -56,6 +46,17 @@ class JSRuntimeFactory {
 class JSIRuntimeHolder : public JSRuntime {
  public:
   jsi::Runtime& getRuntime() noexcept override;
+  void addConsoleMessage(jsi::Runtime& runtime, jsinspector_modern::ConsoleMessage message) override;
+  bool supportsConsole() const override;
+
+  std::unique_ptr<jsinspector_modern::RuntimeAgentDelegate> createAgentDelegate(
+      jsinspector_modern::FrontendChannel frontendChannel,
+      jsinspector_modern::SessionState& sessionState,
+      std::unique_ptr<jsinspector_modern::RuntimeAgentDelegate::ExportedState>
+          previouslyExportedState,
+      const jsinspector_modern::ExecutionContextDescription&
+          executionContextDescription,
+      RuntimeExecutor runtimeExecutor) override;
 
   explicit JSIRuntimeHolder(std::unique_ptr<jsi::Runtime> runtime);
 
