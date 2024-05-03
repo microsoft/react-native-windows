@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.74.0",
+  "baseVersion": "0.74.1",
   "overrides": [
     {
       "type": "derived",
@@ -358,7 +358,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "085bdd1ca6e28feefe9da746cdca354ae2394301"
+      "baseHash": "164afe5ce3379b2ae08164a2c6f90e6f705be769"
     },
     {
       "type": "patch",

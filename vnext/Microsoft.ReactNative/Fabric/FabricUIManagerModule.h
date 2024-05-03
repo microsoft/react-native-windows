@@ -78,6 +78,8 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   std::unordered_map<facebook::react::SurfaceId, SurfaceInfo> m_surfaceRegistry;
 
   // Inherited via SchedulerDelegate
+  virtual void schedulerShouldRenderTransactions(
+      const facebook::react::MountingCoordinator::Shared &mountingCoordinator) override;
   virtual void schedulerDidFinishTransaction(
       const facebook::react::MountingCoordinator::Shared &mountingCoordinator) override;
   virtual void schedulerDidRequestPreliminaryViewAllocation(
