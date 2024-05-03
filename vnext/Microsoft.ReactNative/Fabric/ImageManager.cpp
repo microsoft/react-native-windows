@@ -9,8 +9,9 @@
 namespace facebook {
 namespace react {
 
-ImageManager::ImageManager(ContextContainer::Shared const &) {
-  self_ = new Microsoft::ReactNative::WindowsImageManager();
+ImageManager::ImageManager(ContextContainer::Shared const &contextContainer) {
+  auto reactContext = *contextContainer->find<winrt::Microsoft::ReactNative::ReactContext>("MSRN.ReactContext");
+  self_ = new Microsoft::ReactNative::WindowsImageManager(reactContext);
 }
 
 ImageManager::~ImageManager() {
