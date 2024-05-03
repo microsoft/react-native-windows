@@ -9,6 +9,7 @@
 #include <Fabric/Composition/ImageResponseImage.h>
 #include <Fabric/Composition/UriImageManager.h>
 #include <Utils/ImageUtils.h>
+#include <functional/functor.h>
 #include <shcore.h>
 #include <wincodec.h>
 
@@ -78,7 +79,7 @@ std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::Imag
 template <typename T>
 void ProcessImageRequestTask(
     std::weak_ptr<const facebook::react::ImageResponseObserverCoordinator> &weakObserverCoordinator,
-    const winrt::IAsyncOperation<T> &task,
+    const winrt::Windows::Foundation::IAsyncOperation<T> &task,
     Mso::Functor<std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::ImageResponseImage>(
         const T &result)> &&onSuccess) {
   task.Completed([weakObserverCoordinator, onSuccess = std::move(onSuccess)](auto asyncOp, auto status) {
@@ -91,7 +92,7 @@ void ProcessImageRequestTask(
       case winrt::Windows::Foundation::AsyncStatus::Completed: {
         auto imageResponseImage = onSuccess(asyncOp.GetResults());
         if (imageResponseImage)
-          observerCoordinator.nativeImageResponseComplete(
+          observerCoordinator->nativeImageResponseComplete(
               facebook::react::ImageResponse(imageResponseImage, nullptr /*metadata*/));
         else
           observerCoordinator->nativeImageResponseFailed();
@@ -163,7 +164,7 @@ facebook::react::ImageRequest WindowsImageManager::requestImage(
     return imageRequest;
   };
 
-  winrt::IAsyncOperation<winrt::Windows::Storage::Streams::IRandomAccessStream> task;
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IRandomAccessStream> task;
   if (auto imageStreamProvider =
           provider.try_as<winrt::Microsoft::ReactNative::Composition::IUriImageStreamProvider>()) {
     task = imageStreamProvider.GetSourceAsync(m_reactContext.Handle(), rnImageSource);
