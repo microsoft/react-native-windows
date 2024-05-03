@@ -497,9 +497,6 @@ function bumpSemver(origVersion: string, newVersion: string): string {
     (origVersion.startsWith(`~`) || origVersion.startsWith('^')) &&
     !(newVersion.startsWith(`~`) || newVersion.startsWith('^'))
   ) {
-    console.log(
-      `bumpSemver version: origVersion: ${origVersion} = ${origVersion[0]}${newVersion}}`,
-    );
     return `${origVersion[0]}${newVersion}`;
   } else {
     return newVersion;
