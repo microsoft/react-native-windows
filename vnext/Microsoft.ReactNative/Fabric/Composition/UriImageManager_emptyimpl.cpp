@@ -3,8 +3,8 @@
 
 #include "pch.h"
 
-#include "Composition.CompositionUIService.g.cpp"
-#include "CompositionUIService.h"
+#include "Composition.UriImageManager.g.cpp"
+#include "UriImageManager.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
