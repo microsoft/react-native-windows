@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[cpp-lib] Fix typo in metro.config.js",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}

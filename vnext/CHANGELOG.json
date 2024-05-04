@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 04 May 2024 05:18:09 GMT",
+      "version": "0.0.0-canary.810",
+      "tag": "react-native-windows_v0.0.0-canary.810",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "90d111926e631360690bad0be727b4130ecab379",
+            "comment": "[cpp-lib] Fix typo in metro.config.js"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a645675b59f48f1586f6173f547f330a0db7e50d",
+            "comment": "Add ability to provide custom image uri handlers"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 May 2024 05:15:55 GMT",
       "version": "0.0.0-canary.809",
       "tag": "react-native-windows_v0.0.0-canary.809",

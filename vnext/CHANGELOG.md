@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 01 May 2024 05:15:55 GMT and should not be manually modified.
+This log was last generated on Sat, 04 May 2024 05:18:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.810
+
+Sat, 04 May 2024 05:18:09 GMT
+
+### Changes
+
+- [cpp-lib] Fix typo in metro.config.js (email not defined)
+- Add ability to provide custom image uri handlers (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.809
 
