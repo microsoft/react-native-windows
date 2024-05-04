@@ -493,7 +493,10 @@ function bumpSemver(origVersion: string, newVersion: string): string {
     throw new Error(`Unable to bump complicated semver '${origVersion}'`);
   }
 
-  if (origVersion.startsWith(`~`) || origVersion.startsWith('^')) {
+  if (
+    (origVersion.startsWith(`~`) || origVersion.startsWith('^')) &&
+    !(newVersion.startsWith(`~`) || newVersion.startsWith('^'))
+  ) {
     return `${origVersion[0]}${newVersion}`;
   } else {
     return newVersion;

@@ -21,10 +21,12 @@ protected:
 
 public:
   virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
+  virtual bool androidEnablePendingFabricTransactions(jsi::Runtime &rt) = 0;
+  virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
+  virtual bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) = 0;
   virtual bool enableBackgroundExecutor(jsi::Runtime &rt) = 0;
   virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
-  virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
   virtual bool enableSpannableBuildingUnification(jsi::Runtime &rt) = 0;
   virtual bool enableCustomDrawOrderFabric(jsi::Runtime &rt) = 0;
   virtual bool enableFixForClippedSubviewsCrash(jsi::Runtime &rt) = 0;
@@ -61,6 +63,30 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::commonTestFlag, jsInvoker_, instance_);
     }
+    bool androidEnablePendingFabricTransactions(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::androidEnablePendingFabricTransactions) == 1,
+          "Expected androidEnablePendingFabricTransactions(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::androidEnablePendingFabricTransactions, jsInvoker_, instance_);
+    }
+    bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::batchRenderingUpdatesInEventLoop) == 1,
+          "Expected batchRenderingUpdatesInEventLoop(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::batchRenderingUpdatesInEventLoop, jsInvoker_, instance_);
+    }
+    bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::destroyFabricSurfacesInReactInstanceManager) == 1,
+          "Expected destroyFabricSurfacesInReactInstanceManager(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::destroyFabricSurfacesInReactInstanceManager, jsInvoker_, instance_);
+    }
     bool enableBackgroundExecutor(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableBackgroundExecutor) == 1,
@@ -84,14 +110,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableMicrotasks, jsInvoker_, instance_);
-    }
-    bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::batchRenderingUpdatesInEventLoop) == 1,
-          "Expected batchRenderingUpdatesInEventLoop(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::batchRenderingUpdatesInEventLoop, jsInvoker_, instance_);
     }
     bool enableSpannableBuildingUnification(jsi::Runtime &rt) override {
       static_assert(
