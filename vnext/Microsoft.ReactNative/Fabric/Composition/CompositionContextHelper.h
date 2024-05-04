@@ -45,6 +45,8 @@ struct MicrosoftCompositionContextHelper : MicrosoftCompositionContextHelperT<Mi
   static winrt::Microsoft::UI::Composition::DropShadow InnerDropShadow(IDropShadow shadow) noexcept;
   static winrt::Microsoft::UI::Composition::CompositionBrush InnerBrush(IBrush brush) noexcept;
   static winrt::Microsoft::UI::Composition::ICompositionSurface InnerSurface(IDrawingSurfaceBrush surface) noexcept;
+
+  static IBrush WrapBrush(const winrt::Microsoft::UI::Composition::CompositionBrush &brush) noexcept;
 };
 #endif
 
