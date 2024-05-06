@@ -1388,7 +1388,7 @@ exports.examples = [
       return (
         <Image
           style={styles.base64}
-          source={{uri: dataImageSvg}}
+          source={{uri: dataImageSvg, width: 48, height: 48}}
           testID="image-datasvg"
           accessible
         />
