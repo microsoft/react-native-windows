@@ -17,7 +17,7 @@
     "chai": "^4.2.0",
     "react": "18.2.0",
     "react-native": "0.71.12",
-    "react-native-windows": "0.71.44"
+    "react-native-windows": "0.71.45"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 06 May 2024 15:14:30 GMT",
+      "tag": "react-native-windows_v0.71.45",
+      "version": "0.71.45",
+      "comments": {
+        "patch": [
+          {
+            "author": "mcota@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "90e0aa5837a45b75eb4b1320d860a0bd30bcd07c",
+            "comment": "update fmt to 10.1.0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Dec 2023 16:14:12 GMT",
       "tag": "react-native-windows_v0.71.44",
       "version": "0.71.44",
