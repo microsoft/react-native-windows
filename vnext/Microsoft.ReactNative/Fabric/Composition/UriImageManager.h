@@ -12,7 +12,7 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 struct UriImageManager : UriImageManagerT<UriImageManager> {
-  UriImageManager() = default;
+  UriImageManager();
 
   static void AddUriImageProvider(
       const winrt::Microsoft::ReactNative::IReactPropertyBag &properties,
