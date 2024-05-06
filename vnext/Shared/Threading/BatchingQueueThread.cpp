@@ -16,7 +16,9 @@ BatchingQueueCallInvoker::BatchingQueueCallInvoker(
     std::shared_ptr<facebook::react::MessageQueueThread> const &queueThread)
     : m_queueThread(queueThread) {}
 
-void BatchingQueueCallInvoker::invokeAsync(const std::string &methodName, std::function<void()> &&func) noexcept {
+void BatchingQueueCallInvoker::invokeAsync(
+    const std::string &methodName,
+    facebook::react::NativeMethodCallFunc &&func) noexcept {
   EnsureQueue();
   m_taskQueue->emplace_back(std::move(func));
 
@@ -58,7 +60,9 @@ void BatchingQueueCallInvoker::quitSynchronous() noexcept {
   m_queueThread->quitSynchronous();
 }
 
-void BatchingQueueCallInvoker::invokeSync(const std::string &methodName, std::function<void()> &&func) noexcept {
+void BatchingQueueCallInvoker::invokeSync(
+    const std::string &methodName,
+    facebook::react::NativeMethodCallFunc &&func) noexcept {
   assert(false && "Not supported");
   std::terminate();
 }
