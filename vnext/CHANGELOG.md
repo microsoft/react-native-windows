@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 01 May 2024 20:37:36 GMT and should not be manually modified.
+This log was last generated on Mon, 06 May 2024 15:17:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.2
+
+Mon, 06 May 2024 15:17:11 GMT
+
+### Patches
+
+- Add ability to provide custom image uri handlers (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 0.74.1 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.1
 

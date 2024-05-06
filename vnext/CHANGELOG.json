@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 06 May 2024 15:17:11 GMT",
+      "version": "0.74.2",
+      "tag": "react-native-windows_v0.74.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b422f06e2b5ac1bd5fb7cffbc9f247024452120a",
+            "comment": "Add ability to provide custom image uri handlers"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "64ae33cd632a5818a03e3d86b0268f801431d85c",
+            "comment": "Integrate 0.74.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 01 May 2024 20:37:36 GMT",
       "version": "0.74.1",
       "tag": "react-native-windows_v0.74.1",
