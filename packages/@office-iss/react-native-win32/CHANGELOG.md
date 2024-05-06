@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 26 Apr 2024 22:42:37 GMT and should not be manually modified.
+This log was last generated on Mon, 06 May 2024 15:14:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.4
+
+Mon, 06 May 2024 15:14:45 GMT
+
+### Patches
+
+- PaperUIManager running as turbomodule fix (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.73.3
 

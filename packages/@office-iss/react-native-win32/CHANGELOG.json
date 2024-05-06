@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 06 May 2024 15:14:45 GMT",
+      "version": "0.73.4",
+      "tag": "@office-iss/react-native-win32_v0.73.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "9193b07740af1cf670844eb274be91b9cbd634f1",
+            "comment": "PaperUIManager running as turbomodule fix"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Apr 2024 22:42:37 GMT",
       "version": "0.73.3",
       "tag": "@office-iss/react-native-win32_v0.73.3",
