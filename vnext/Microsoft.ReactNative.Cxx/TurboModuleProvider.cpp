@@ -6,6 +6,12 @@
 
 namespace winrt::Microsoft::ReactNative {
 
+ReactPropertyId<ReactNonAbiValue<std::weak_ptr<facebook::react::CallInvoker>>> CallInvokerProperty() noexcept {
+  ReactPropertyId<ReactNonAbiValue<std::weak_ptr<facebook::react::CallInvoker>>> propId{
+      L"ReactNative.JSI", L"CallInvoker"};
+  return propId;
+}
+
 // CallInvoker implementation based on JSDispatcher.
 struct AbiCallInvoker final : facebook::react::CallInvoker {
   AbiCallInvoker(IReactDispatcher const &jsDispatcher) : m_jsDispatcher(jsDispatcher) {}
@@ -24,9 +30,23 @@ struct AbiCallInvoker final : facebook::react::CallInvoker {
   IReactDispatcher m_jsDispatcher{nullptr};
 };
 
-// Creates CallInvoker based on JSDispatcher.
-std::shared_ptr<facebook::react::CallInvoker> MakeAbiCallInvoker(IReactDispatcher const &jsDispatcher) noexcept {
-  return std::make_shared<AbiCallInvoker>(jsDispatcher);
+std::shared_ptr<facebook::react::CallInvoker> GetCallInvokerFromContext(IReactContext const &context) noexcept {
+  // Try to get the CallInvoker instance from Context
+  const auto callInvokerPropertyValue = ReactPropertyBag{context.Properties()}.Get(CallInvokerProperty());
+  const auto weakCallInvoker =
+      callInvokerPropertyValue ? callInvokerPropertyValue.Value() : std::weak_ptr<facebook::react::CallInvoker>{};
+  if (const auto callInvoker = weakCallInvoker.lock()) {
+    return callInvoker;
+  }
+
+  // Fallback to creating CallInvoker based on JSDispatcher.
+  return std::make_shared<AbiCallInvoker>(context.JSDispatcher());
+}
+
+void SetCallInvoker(
+    IReactPropertyBag const &properties,
+    std::weak_ptr<facebook::react::CallInvoker> const &value) noexcept {
+  ReactPropertyBag{properties}.Set(CallInvokerProperty(), value);
 }
 
 } // namespace winrt::Microsoft::ReactNative

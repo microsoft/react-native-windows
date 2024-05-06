@@ -43,6 +43,7 @@
 #include <ReactPropertyBag.h>
 #include <SchedulerSettings.h>
 #include <Shlwapi.h>
+#include <TurboModuleProvider.h>
 #include <WebSocketJSExecutorFactory.h>
 #include <safeint.h>
 #include "PackagerConnection.h"
@@ -513,10 +514,13 @@ InstanceImpl::InstanceImpl(
       if (runtimeScheduler) {
         RuntimeSchedulerBinding::createAndInstallIfNeeded(*runtimeHolder->getRuntime(), runtimeScheduler);
       }
-      auto turboModuleManager = std::make_shared<TurboModuleManager>(
-          turboModuleRegistry,
-          runtimeScheduler ? std::make_shared<RuntimeSchedulerCallInvoker>(runtimeScheduler)
-                           : innerInstance->getJSCallInvoker());
+
+      const auto callInvoker = runtimeScheduler ? std::make_shared<RuntimeSchedulerCallInvoker>(runtimeScheduler)
+                                                : innerInstance->getJSCallInvoker();
+
+      auto turboModuleManager = std::make_shared<TurboModuleManager>(turboModuleRegistry, callInvoker);
+
+      SetCallInvoker(propertyBag, callInvoker);
 
       // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
       // [@vmoroz] Note, that we must not use the RN TurboCxxModule.h code because it uses global
