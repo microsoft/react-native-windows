@@ -52,6 +52,7 @@
 #include "Unicode.h"
 
 #ifdef USE_FABRIC
+#include <Fabric/Composition/UriImageManager.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
@@ -570,6 +571,8 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
           });
 
   InitDevMenu();
+  winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager::Install(
+      ReactPropertyBag(m_reactContext->Properties()), m_options.UriImageManager);
 
   m_uiQueue->Post([this, weakThis = Mso::WeakPtr{this}]() noexcept {
     // Objects that must be created on the UI thread

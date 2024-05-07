@@ -16,6 +16,7 @@
 
 #ifdef USE_FABRIC
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
+#include <ReactPackageBuilder.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #endif
 
@@ -92,6 +93,9 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
 
   auto turboModulesProvider = std::make_shared<TurboModulesProvider>();
 
+  auto uriImageManager =
+      std::make_shared<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager>();
+
 #ifdef USE_FABRIC
   auto componentregistry = std::make_shared<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry>();
   auto componentDescriptorRegistry = std::make_shared<facebook::react::ComponentDescriptorProviderRegistry>();
@@ -108,6 +112,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
       turboModulesProvider,
 #ifdef USE_FABRIC
       componentregistry,
+      uriImageManager,
 #endif
       m_instanceSettings.UseWebDebugger());
 
@@ -163,6 +168,10 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   reactOptions.ViewManagerProvider = viewManagersProvider;
 #endif
   reactOptions.TurboModuleProvider = turboModulesProvider;
+
+#ifdef USE_FABRIC
+  reactOptions.UriImageManager = uriImageManager;
+#endif
 
   reactOptions.OnInstanceCreated = [](Mso::CntPtr<Mso::React::IReactContext> &&context) {
     auto notifications = context->Notifications();

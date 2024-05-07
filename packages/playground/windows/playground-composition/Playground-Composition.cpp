@@ -92,10 +92,15 @@ struct EllipseImageHandler : winrt::implements<
   }
 };
 
-void RegisterEllipseUriImageHandler(const winrt::Microsoft::ReactNative::ReactInstanceSettings &settings) noexcept {
-  winrt::Microsoft::ReactNative::Composition::UriImageManager::AddUriImageProvider(
-      settings.Properties(), winrt::make<EllipseImageHandler>());
-}
+struct EllipseReactPackageProvider
+    : winrt::implements<EllipseReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
+ public: // IReactPackageProvider
+  void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
+    // Register ellipse: uri handler for images
+    packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddUriImageProvider(
+        winrt::make<EllipseImageHandler>());
+  }
+};
 
 // Have to use TurboModules to override built in modules.. so the standard attributed package provider doesn't work.
 struct CompReactPackageProvider
@@ -238,7 +243,7 @@ struct WindowData {
                   InstanceSettings(), g_liftedCompositor);
 
               // Register ellipse:// uri hander for images
-              RegisterEllipseUriImageHandler(host.InstanceSettings());
+              host.PackageProviders().Append(winrt::make<EllipseReactPackageProvider>());
 
               auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
                   g_liftedCompositor, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));

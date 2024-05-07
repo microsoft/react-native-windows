@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import "IReactViewComponentBuilder.idl";
+import "UriImageManager.idl";
 
 #include "DocString.h"
 
@@ -18,6 +19,10 @@ namespace Microsoft.ReactNative
   {
     DOC_STRING("Registers a custom native view component.")
     void AddViewComponent(String componentName, ReactViewComponentProvider componentProvider);
+
+    DOC_STRING(
+      "Ability to load images using custom Uri protocol handlers. The provider should implement @Composition.IUriImageStreamProvider or @Composition.Experimental.IUriBrushProvider.")
+    void AddUriImageProvider(Microsoft.ReactNative.Composition.IUriImageProvider provider);
   };
 
 } // namespace Microsoft.ReactNative
