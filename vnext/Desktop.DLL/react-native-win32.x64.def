@@ -65,6 +65,8 @@ EXPORTS
 ??1InstanceTargetDelegate@jsinspector_modern@react@facebook@@UEAA@XZ
 ?invokeAsync@JSCallInvoker@Instance@react@facebook@@UEAAX$$QEAV?$function@$$A6AXXZ@std@@@Z
 ?invokeSync@JSCallInvoker@Instance@react@facebook@@UEAAX$$QEAV?$function@$$A6AXXZ@std@@@Z
+?invokeAsync@JSCallInvoker@Instance@react@facebook@@UEAAX$$QEAV?$function@$$A6AXAEAVRuntime@jsi@facebook@@@Z@std@@@Z
+?invokeSync@JSCallInvoker@Instance@react@facebook@@UEAAX$$QEAV?$function@$$A6AXAEAVRuntime@jsi@facebook@@@Z@std@@@Z
 
 MicrosoftReactSetRuntimeOptionBool
 MicrosoftReactSetRuntimeOptionInt
