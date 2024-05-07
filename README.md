@@ -53,13 +53,14 @@ For a full and detailed list of the system requirements and how to set up your d
 Search the [existing issues](https://github.com/microsoft/react-native-windows/issues) and try to make sure your problem doesn’t already exist before opening a new issue. If your issue doesn't exist yet, provide as much information as possible so we can better help you. Include the information requested by the [appropriate issue template](https://github.com/microsoft/react-native-windows/issues/new/choose).
 
 ## Documentation
-React Native has [great documentation](https://reactnative.dev/docs/getting-started). React Native for Windows adds it's own separate [Windows and macOS documentation](https://microsoft.github.io/react-native-windows/) for desktop platform information like API docs and blog updates.
+React Native has [great documentation](https://reactnative.dev/docs/getting-started). React Native for Windows adds its own separate [Windows and macOS documentation](https://microsoft.github.io/react-native-windows/) for desktop platform information like API docs and blog updates.
 
 ### Examples
 - Using the CLI in the [Getting Started](https://microsoft.github.io/react-native-windows/docs/getting-started) guide will set you up with a sample React Native for Windows app that you can begin editing right away.
 - Check the [samples repo](https://github.com/microsoft/react-native-windows-samples) for more standalone samples.
 - The [React Native Gallery](https://github.com/microsoft/react-native-gallery) app demonstrates various components in an interactive way.
-- For more sample code browse the [RNTester folder](https://github.com/microsoft/react-native-windows/tree/main/packages/e2e-test-app/windows/RNTesterApp) in the GitHub web UI
+- Check out the [React Native Developer Blog](https://devblogs.microsoft.com/react-native/) to see examples from past conference talks, blog posts, and more.
+- For more sample code browse the [RNTester folder](https://github.com/microsoft/react-native-windows/tree/main/packages/e2e-test-app/windows/RNTesterApp) in the GitHub web UI.
 
 ## Contributing
 See [Contributing guidelines](https://github.com/microsoft/react-native-windows/blob/main/CONTRIBUTING.md) for how to setup your fork of the repo and start a PR to contribute to React Native for Windows.
