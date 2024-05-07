@@ -10,6 +10,7 @@
 #include <NodeApiJsiRuntime.h>
 #include <crash/verifyElseCrash.h>
 #include <cxxreact/SystraceSection.h>
+#include <jsinspector-modern/ConsoleMessage.h>
 #include <jsinspector-modern/InspectorInterfaces.h>
 #include <mutex>
 #include "SafeLoadLibrary.h"
@@ -400,11 +401,25 @@ facebook::jsi::Runtime &HermesJSRuntime::getRuntime() noexcept {
   return *m_holder->getRuntime();
 }
 
-facebook::react::jsinspector_modern::RuntimeTargetDelegate &HermesJSRuntime::getRuntimeTargetDelegate() {
-  if (!runtimeTargetDelegate_) {
-    runtimeTargetDelegate_.emplace(getRuntime().description());
-  }
-  return *runtimeTargetDelegate_;
+void HermesJSRuntime::addConsoleMessage(
+    facebook::jsi::Runtime &runtime,
+    facebook::react::jsinspector_modern::ConsoleMessage message) {
+  return;
+}
+
+bool HermesJSRuntime::supportsConsole() const {
+  return false;
+}
+
+std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> HermesJSRuntime::createAgentDelegate(
+    facebook::react::jsinspector_modern::FrontendChannel frontendChannel,
+    facebook::react::jsinspector_modern::SessionState &sessionState,
+    std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate::ExportedState> previouslyExportedState,
+    const facebook::react::jsinspector_modern::ExecutionContextDescription &executionContextDescription,
+    facebook::react::RuntimeExecutor runtimeExecutor) {
+  (void)frontendChannel;
+  (void)sessionState;
+  return nullptr;
 }
 
 } // namespace Microsoft::ReactNative
