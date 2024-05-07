@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 07 May 2024 05:15:36 GMT",
+      "version": "0.0.0-canary.811",
+      "tag": "react-native-windows_v0.0.0-canary.811",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "974ae25882120fcdcfaa58ce969c3297a712d87c",
+            "comment": "[Fabric] Add support for data: images"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 04 May 2024 05:18:09 GMT",
       "version": "0.0.0-canary.810",
       "tag": "react-native-windows_v0.0.0-canary.810",
