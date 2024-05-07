@@ -1,8 +1,68 @@
 # Change Log - @react-native-windows/automation
 
-This log was last generated on Wed, 24 Apr 2024 05:15:13 GMT and should not be manually modified.
+This log was last generated on Tue, 07 May 2024 05:15:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.233
+
+Tue, 07 May 2024 05:15:36 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.151
+
+## 0.3.232
+
+Sat, 04 May 2024 05:18:09 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.150
+
+## 0.3.231
+
+Wed, 01 May 2024 05:15:56 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.149
+
+## 0.3.230
+
+Tue, 30 Apr 2024 05:15:58 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.148
+
+## 0.3.229
+
+Sat, 27 Apr 2024 05:16:26 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.147
+
+## 0.3.228
+
+Fri, 26 Apr 2024 05:16:49 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.146
+
+## 0.3.227
+
+Thu, 25 Apr 2024 20:12:41 GMT
+
+### Patches
+
+- Fix bad version bump (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.12.145
+- Bump @react-native-windows/fs to v0.0.0-canary.41
+- Bump @rnw-scripts/eslint-config to v1.2.13
+- Bump @rnw-scripts/just-task to v2.3.29
 
 ## 0.3.225
 

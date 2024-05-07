@@ -6,6 +6,7 @@
 
 #include "CompositionViewComponentView.h"
 
+#include <AutoDraw.h>
 #include <Fabric/AbiState.h>
 #include <Fabric/AbiViewProps.h>
 #include <Fabric/Composition/CompositionRootView.h>
@@ -568,32 +569,6 @@ void DrawShape(
   pRT->DrawGeometry(&geometry, brush, strokeWidth, strokeStyle);
 }
 
-struct AutoDrawHelper {
-  AutoDrawHelper(
-      winrt::com_ptr<::Microsoft::ReactNative::Composition::Experimental::ICompositionDrawingSurfaceInterop> &surface) {
-    m_surface = surface;
-    m_surface->BeginDraw(m_pRT.put(), &m_offset);
-  }
-
-  ~AutoDrawHelper() {
-    m_pRT = nullptr;
-    m_surface->EndDraw();
-  }
-
-  const winrt::com_ptr<ID2D1DeviceContext> &GetRenderTarget() const noexcept {
-    return m_pRT;
-  }
-
-  POINT Offset() const noexcept {
-    return m_offset;
-  }
-
- private:
-  winrt::com_ptr<::Microsoft::ReactNative::Composition::Experimental::ICompositionDrawingSurfaceInterop> m_surface;
-  POINT m_offset;
-  winrt::com_ptr<ID2D1DeviceContext> m_pRT;
-};
-
 template <typename TShape>
 void SetBorderLayerPropertiesCommon(
     winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
@@ -623,66 +598,59 @@ void SetBorderLayerPropertiesCommon(
 
   layer.Brush(surface);
 
-  AutoDrawHelper autoDraw(borderTexture);
+  POINT offset;
+  ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(
+      surface, 1.0f /* We have already done the dpi scaling */, &offset);
+  if (auto pRT = autoDraw.GetRenderTarget()) {
+    // Clear with transparency
+    pRT->Clear();
 
-  winrt::com_ptr<ID2D1DeviceContext> pRT{autoDraw.GetRenderTarget()};
+    if (!facebook::react::isColorMeaningful(borderColor)) {
+      return;
+    }
 
-  if (!pRT) {
-    return;
+    winrt::com_ptr<ID2D1Factory> spFactory;
+    pRT->GetFactory(spFactory.put());
+    assert(spFactory);
+    if (spFactory == nullptr)
+      return;
+
+    winrt::com_ptr<ID2D1SolidColorBrush> spBorderBrush;
+    pRT->CreateSolidColorBrush(theme->D2DColor(*borderColor), spBorderBrush.put());
+    assert(spBorderBrush);
+    if (spBorderBrush == nullptr)
+      return;
+
+    winrt::com_ptr<ID2D1StrokeStyle> spStrokeStyle;
+
+    enum class BorderStyle { Solid, Dotted, Dashed };
+
+    if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
+      const auto capStyle =
+          borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_CAP_STYLE_FLAT : D2D1_CAP_STYLE_ROUND;
+      const auto strokeStyleProps = D2D1::StrokeStyleProperties(
+          capStyle,
+          capStyle,
+          capStyle,
+          D2D1_LINE_JOIN_MITER,
+          10.0f,
+          borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_DASH_STYLE_DASH : D2D1_DASH_STYLE_DOT,
+          0.0f);
+      spFactory->CreateStrokeStyle(&strokeStyleProps, nullptr, 0, spStrokeStyle.put());
+    }
+    D2D1::Matrix3x2F originalTransform;
+    D2D1::Matrix3x2F translationTransform =
+        D2D1::Matrix3x2F::Translation(-textureRect.left + offset.x, -textureRect.top + offset.y);
+
+    pRT->GetTransform(&originalTransform);
+    translationTransform = originalTransform * translationTransform;
+
+    pRT->SetTransform(translationTransform);
+
+    DrawShape(pRT, shape, spBorderBrush.get(), strokeWidth, spStrokeStyle.get());
+
+    pRT->SetTransform(originalTransform);
   }
-
-  // Clear with transparency
-  pRT->Clear();
-
-  if (!facebook::react::isColorMeaningful(borderColor)) {
-    return;
-  }
-
-  winrt::com_ptr<ID2D1Factory> spFactory;
-  pRT->GetFactory(spFactory.put());
-  assert(spFactory);
-  if (spFactory == nullptr)
-    return;
-
-  winrt::com_ptr<ID2D1SolidColorBrush> spBorderBrush;
-  pRT->CreateSolidColorBrush(theme->D2DColor(*borderColor), spBorderBrush.put());
-  assert(spBorderBrush);
-  if (spBorderBrush == nullptr)
-    return;
-
-  winrt::com_ptr<ID2D1StrokeStyle> spStrokeStyle;
-
-  enum class BorderStyle { Solid, Dotted, Dashed };
-
-  if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
-    const auto capStyle =
-        borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_CAP_STYLE_FLAT : D2D1_CAP_STYLE_ROUND;
-    const auto strokeStyleProps = D2D1::StrokeStyleProperties(
-        capStyle,
-        capStyle,
-        capStyle,
-        D2D1_LINE_JOIN_MITER,
-        10.0f,
-        borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_DASH_STYLE_DASH : D2D1_DASH_STYLE_DOT,
-        0.0f);
-    spFactory->CreateStrokeStyle(&strokeStyleProps, nullptr, 0, spStrokeStyle.put());
-  }
-  D2D1::Matrix3x2F originalTransform;
-  D2D1::Matrix3x2F translationTransform =
-      D2D1::Matrix3x2F::Translation(-textureRect.left + autoDraw.Offset().x, -textureRect.top + autoDraw.Offset().y);
-
-  pRT->GetTransform(&originalTransform);
-  translationTransform = originalTransform * translationTransform;
-
-  float oldDpiX, oldDpiY;
-  pRT->SetTransform(translationTransform);
-  pRT->GetDpi(&oldDpiX, &oldDpiY);
-  pRT->SetDpi(96.0f, 96.0f); // We have already done the dpi scaling...
-
-  DrawShape(pRT.get(), shape, spBorderBrush.get(), strokeWidth, spStrokeStyle.get());
-
-  pRT->SetDpi(oldDpiX, oldDpiY);
-  pRT->SetTransform(originalTransform);
 }
 
 template <typename TShape>
@@ -1621,10 +1589,43 @@ facebook::react::Tag ViewComponentView::hitTest(
   return -1;
 }
 
+inline winrt::Windows::System::VirtualKey GetLeftOrRightModifiedKey(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    winrt::Windows::System::VirtualKey leftKey,
+    winrt::Windows::System::VirtualKey rightKey) {
+  return (source.GetKeyState(leftKey) == winrt::Windows::UI::Core::CoreVirtualKeyStates::Down) ? leftKey : rightKey;
+}
+
+std::string CodeFromVirtualKey(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    winrt::Windows::System::VirtualKey virtualKey) {
+  int key = static_cast<int>(virtualKey);
+
+  if (isdigit(key)) {
+    return "Digit" + std::string(1, static_cast<char>(key));
+  } else if (isupper(key)) {
+    return "Key" + std::string(1, static_cast<char>(key));
+  } else {
+    // Override the virtual key if it's modified key of Control, Shift or Menu
+    if (virtualKey == winrt::Windows::System::VirtualKey::Control) {
+      virtualKey = GetLeftOrRightModifiedKey(
+          source, winrt::Windows::System::VirtualKey::LeftControl, winrt::Windows::System::VirtualKey::RightControl);
+    } else if (virtualKey == winrt::Windows::System::VirtualKey::Shift) {
+      virtualKey = GetLeftOrRightModifiedKey(
+          source, winrt::Windows::System::VirtualKey::LeftShift, winrt::Windows::System::VirtualKey::RightShift);
+    } else if (virtualKey == winrt::Windows::System::VirtualKey::Menu) {
+      virtualKey = GetLeftOrRightModifiedKey(
+          source, winrt::Windows::System::VirtualKey::LeftMenu, winrt::Windows::System::VirtualKey::RightMenu);
+    }
+  }
+
+  return ::Microsoft::ReactNative::GetOrUnidentifiedCode(virtualKey);
+}
+
 void ViewComponentView::OnKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  auto eventCode = ::Microsoft::ReactNative::CodeFromVirtualKey(args.Key());
+  auto eventCode = CodeFromVirtualKey(source, args.Key());
   bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) !=
       winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
   bool fAlt = source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) !=
@@ -1663,7 +1664,7 @@ void ViewComponentView::OnKeyDown(
 void ViewComponentView::OnKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  auto eventCode = ::Microsoft::ReactNative::CodeFromVirtualKey(args.Key());
+  auto eventCode = CodeFromVirtualKey(source, args.Key());
   bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) !=
       winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
   bool fAlt = source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) !=

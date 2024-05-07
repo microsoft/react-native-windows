@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Integrate 3/7",
-  "packageName": "@rnw-scripts/eslint-config",
-  "email": "yajurgrover24@gmail.com",
-  "dependentChangeType": "patch"
-}

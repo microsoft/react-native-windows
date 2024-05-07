@@ -23,6 +23,7 @@
 
 #include <DesktopWindowBridge.h>
 #include "App.xaml.h"
+#include "AutoDraw.h"
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 
@@ -40,6 +41,61 @@ winrt::Microsoft::UI::Composition::Compositor g_liftedCompositor{nullptr};
 #endif
 
 void RegisterCustomComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept;
+
+/**
+ * This ImageHandler will accept images with a uri using the ellipse protocol and render an ellipse image
+ *
+ *   <Image
+ *      style={{width: 400, height: 200}}
+ *      source={{uri: 'customimage://test'}}
+ *   />
+ *
+ * This allows applications to provide custom image rendering pipelines.
+ */
+struct EllipseImageHandler : winrt::implements<
+                                 EllipseImageHandler,
+                                 winrt::Microsoft::ReactNative::Composition::Experimental::IUriBrushProvider,
+                                 winrt::Microsoft::ReactNative::Composition::IUriImageProvider> {
+  bool CanLoadImageUri(winrt::Microsoft::ReactNative::IReactContext context, winrt::Windows::Foundation::Uri uri) {
+    return uri.SchemeName() == L"ellipse";
+  }
+
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::Experimental::UriBrushFactory>
+  GetSourceAsync(
+      const winrt::Microsoft::ReactNative::IReactContext &context,
+      const winrt::Microsoft::ReactNative::Composition::ImageSource &imageSource) {
+    co_return [uri = imageSource.Uri(), size = imageSource.Size(), scale = imageSource.Scale(), context](
+                  const winrt::Microsoft::ReactNative::IReactContext &reactContext,
+                  const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext
+                      &compositionContext) -> winrt::Microsoft::ReactNative::Composition::Experimental::IBrush {
+      auto compositor =
+          winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(
+              compositionContext);
+      auto drawingBrush = compositionContext.CreateDrawingSurfaceBrush(
+          size,
+          winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
+          winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+      POINT pt;
+      Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingBrush, scale, &pt);
+      auto renderTarget = autoDraw.GetRenderTarget();
+
+      winrt::com_ptr<ID2D1SolidColorBrush> brush;
+      renderTarget->CreateSolidColorBrush({1.0f, 0.0f, 0.0f, 1.0f}, brush.put());
+      renderTarget->DrawEllipse(
+          {{(pt.x + size.Width / 2) / scale, (pt.y + size.Height / 2) / scale},
+           (size.Width / 2) / scale,
+           (size.Height / 2) / scale},
+          brush.get());
+
+      return drawingBrush;
+    };
+  }
+};
+
+void RegisterEllipseUriImageHandler(const winrt::Microsoft::ReactNative::ReactInstanceSettings &settings) noexcept {
+  winrt::Microsoft::ReactNative::Composition::UriImageManager::AddUriImageProvider(
+      settings.Properties(), winrt::make<EllipseImageHandler>());
+}
 
 // Have to use TurboModules to override built in modules.. so the standard attributed package provider doesn't work.
 struct CompReactPackageProvider
@@ -180,6 +236,9 @@ struct WindowData {
               // By setting the compositor here we opt into using the new architecture.
               winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(
                   InstanceSettings(), g_liftedCompositor);
+
+              // Register ellipse:// uri hander for images
+              RegisterEllipseUriImageHandler(host.InstanceSettings());
 
               auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
                   g_liftedCompositor, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
@@ -460,9 +519,23 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
           hwnd, LOWORD(wparam), reinterpret_cast<HWND>(lparam), HIWORD(wparam));
     }
     case WM_DESTROY: {
+      auto data = WindowData::GetFromWindow(hwnd);
+      // Before we shutdown the application - gracefully unload the ReactNativeHost instance
+      bool shouldPostQuitMessage = true;
+      if (data->m_host) {
+        shouldPostQuitMessage = false;
+        auto async = data->m_host.UnloadInstance();
+        async.Completed([host = data->m_host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
+          host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
+        });
+      }
+
       delete WindowData::GetFromWindow(hwnd);
       SetProp(hwnd, WindowDataProperty, 0);
-      PostQuitMessage(0);
+      if (shouldPostQuitMessage) {
+        PostQuitMessage(0);
+      }
       return 0;
     }
     case WM_NCCREATE: {
@@ -530,6 +603,14 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
   HACCEL hAccelTable = LoadAccelerators(WindowData::s_instance, MAKEINTRESOURCE(IDC_PLAYGROUND_COMPOSITION));
 
   g_liftedDispatcherQueueController.DispatcherQueue().RunEventLoop();
+
+  // Rundown the DispatcherQueue. This drains the queue and raises events to let components
+  // know the message loop has finished.
+  g_liftedDispatcherQueueController.ShutdownQueue();
+
+  // Destroy all Composition objects
+  g_compositor.Close();
+  g_compositor = nullptr;
 
   return 0;
 }

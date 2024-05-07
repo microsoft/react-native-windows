@@ -14,6 +14,7 @@
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionHelpers.h"
 #include "CompositionViewComponentView.h"
+#include "ImageResponseImage.h"
 
 #pragma warning(push)
 #pragma warning(disable : 4244 4305)
@@ -83,7 +84,7 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ComponentVie
 
   void ImageLoadStart() noexcept;
   void ImageLoaded() noexcept;
-  void didReceiveImage(const winrt::com_ptr<IWICBitmap> &wicbmp) noexcept;
+  void didReceiveImage(const std::shared_ptr<ImageResponseImage> &wicbmp) noexcept;
   void didReceiveFailureFromObserver() noexcept;
   void setStateAndResubscribeImageResponseObserver(
       facebook::react::ImageShadowNode::ConcreteState::Shared const &state) noexcept;
@@ -93,7 +94,7 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ComponentVie
 
   winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface;
-  winrt::com_ptr<IWICBitmap> m_wicbmp;
+  std::shared_ptr<ImageResponseImage> m_imageResponseImage;
   std::shared_ptr<WindowsImageResponseObserver> m_imageResponseObserver;
   facebook::react::ImageShadowNode::ConcreteState::Shared m_state;
 };

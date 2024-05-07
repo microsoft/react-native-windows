@@ -25621,66 +25621,79 @@ exports[`snapshotAllPages Flyout 1`] = `
         [
           {
             "label": "top",
+            "testID": undefined,
             "textColor": undefined,
             "value": "top",
           },
           {
             "label": "bottom",
+            "testID": undefined,
             "textColor": undefined,
             "value": "bottom",
           },
           {
             "label": "left",
+            "testID": undefined,
             "textColor": undefined,
             "value": "left",
           },
           {
             "label": "right",
+            "testID": undefined,
             "textColor": undefined,
             "value": "right",
           },
           {
             "label": "full",
+            "testID": undefined,
             "textColor": undefined,
             "value": "full",
           },
           {
             "label": "top-edge-aligned-left",
+            "testID": undefined,
             "textColor": undefined,
             "value": "top-edge-aligned-left",
           },
           {
             "label": "top-edge-aligned-right",
+            "testID": undefined,
             "textColor": undefined,
             "value": "top-edge-aligned-right",
           },
           {
             "label": "bottom-edge-aligned-left",
+            "testID": undefined,
             "textColor": undefined,
             "value": "bottom-edge-aligned-left",
           },
           {
             "label": "bottom-edge-aligned-right",
+            "testID": undefined,
             "textColor": undefined,
             "value": "bottom-edge-aligned-right",
           },
           {
             "label": "left-edge-aligned-top",
+            "testID": undefined,
             "textColor": undefined,
             "value": "left-edge-aligned-top",
           },
           {
             "label": "right-edge-aligned-top",
+            "testID": undefined,
             "textColor": undefined,
             "value": "right-edge-aligned-top",
           },
           {
             "label": "left-edge-aligned-bottom",
+            "testID": undefined,
             "textColor": undefined,
             "value": "left-edge-aligned-bottom",
           },
           {
             "label": "right-edge-aligned-bottom",
+            "testID": undefined,
             "textColor": undefined,
             "value": "right-edge-aligned-bottom",
           },
@@ -26331,6 +26344,7 @@ exports[`snapshotAllPages Keyboard 3`] = `
         [
           {
             "label": "tabIndex 11",
+            "testID": undefined,
             "textColor": undefined,
             "value": undefined,
           },
@@ -26358,6 +26372,7 @@ exports[`snapshotAllPages Keyboard 3`] = `
         [
           {
             "label": "tabIndex 13",
+            "testID": undefined,
             "textColor": undefined,
             "value": undefined,
           },
@@ -26385,6 +26400,7 @@ exports[`snapshotAllPages Keyboard 3`] = `
         [
           {
             "label": "tabIndex 12",
+            "testID": undefined,
             "textColor": undefined,
             "value": undefined,
           },
@@ -26433,31 +26449,37 @@ exports[`snapshotAllPages Keyboard Focus Example 1`] = `
       [
         {
           "label": "View",
+          "testID": undefined,
           "textColor": undefined,
           "value": "View",
         },
         {
           "label": "Picker",
+          "testID": undefined,
           "textColor": undefined,
           "value": "Picker",
         },
         {
           "label": "TextInput",
+          "testID": undefined,
           "textColor": undefined,
           "value": "TextInput",
         },
         {
           "label": "TextInput2",
+          "testID": undefined,
           "textColor": undefined,
           "value": "TextInput2",
         },
         {
           "label": "TouchableHighlight",
+          "testID": undefined,
           "textColor": undefined,
           "value": "TouchableHighlight",
         },
         {
           "label": "TouchableOpacity",
+          "testID": undefined,
           "textColor": undefined,
           "value": "TouchableOpacity",
         },
@@ -26498,6 +26520,7 @@ exports[`snapshotAllPages Keyboard Focus Example 1`] = `
         [
           {
             "label": "Picker accept focus",
+            "testID": undefined,
             "textColor": undefined,
             "value": undefined,
           },

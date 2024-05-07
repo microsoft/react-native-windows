@@ -67,7 +67,7 @@ export class InitWindows {
     for (const file of await glob('**/template.config.js', {
       cwd: templatesRoot,
     })) {
-      const templateName = path.dirname(file).replace('\\', '/');
+      const templateName = path.dirname(file).replace(/[\\]/g, '/');
       const templateConfig: InitWindowsTemplateConfig = require(path.join(
         templatesRoot,
         file,
@@ -144,7 +144,7 @@ export class InitWindows {
     this.options.template ??= this.getDefaultTemplateName();
 
     spinner.info(`Using template '${this.options.template}'...`);
-    if (!this.templates.has(this.options.template.replace('\\', '/'))) {
+    if (!this.templates.has(this.options.template.replace(/[\\]/g, '/'))) {
       throw new CodedError(
         'InvalidTemplateName',
         `Unable to find template '${this.options.template}'.`,

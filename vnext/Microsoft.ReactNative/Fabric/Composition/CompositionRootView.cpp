@@ -33,6 +33,7 @@
 
 #ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Content.h>
+#include <winrt/Microsoft.UI.Input.h>
 #endif
 
 namespace winrt::Microsoft::ReactNative::implementation {
@@ -130,6 +131,13 @@ CompositionRootView::CompositionRootView(const winrt::Microsoft::UI::Composition
     : m_compositor(compositor) {}
 #endif
 
+CompositionRootView::~CompositionRootView() noexcept {
+  if (m_uiDispatcher) {
+    assert(m_uiDispatcher.HasThreadAccess());
+    UninitRootView();
+  }
+}
+
 ReactNative::IReactViewHost CompositionRootView::ReactViewHost() noexcept {
   return m_reactViewHost;
 }
@@ -183,6 +191,16 @@ void CompositionRootView::RemoveRenderedVisual(
   m_hasRenderedVisual = false;
 }
 
+bool CompositionRootView::TrySetFocus() noexcept {
+#ifdef USE_WINUI3
+  if (m_island) {
+    auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
+    return focusController.TrySetFocus();
+  }
+#endif
+  return false;
+}
+
 winrt::Windows::Foundation::Size CompositionRootView::Size() noexcept {
   return m_size;
 }
@@ -229,29 +247,32 @@ void CompositionRootView::ScaleFactor(float value) noexcept {
   }
 }
 
+winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader CompositionRootView::Resources() noexcept {
+  return m_resources;
+}
+
+void CompositionRootView::Resources(
+    const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &resources) noexcept {
+  m_resources = resources;
+
+  if (m_context && m_theme) {
+    Theme(winrt::make<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(m_context, m_resources));
+  }
+}
+
 winrt::Microsoft::ReactNative::Composition::Theme CompositionRootView::Theme() noexcept {
   if (!m_theme) {
-    Theme(winrt::Microsoft::ReactNative::Composition::Theme::GetDefaultTheme(m_context.Handle()));
-    m_themeChangedSubscription = m_context.Notifications().Subscribe(
-        winrt::Microsoft::ReactNative::ReactNotificationId<void>(
-            winrt::Microsoft::ReactNative::Composition::Theme::ThemeChangedEventName()),
-        m_context.UIDispatcher(),
-        [wkThis = get_weak()](
-            IInspectable const & /*sender*/,
-            winrt::Microsoft::ReactNative::ReactNotificationArgs<void> const & /*args*/) {
-          auto pThis = wkThis.get();
-          pThis->Theme(winrt::Microsoft::ReactNative::Composition::Theme::GetDefaultTheme(pThis->m_context.Handle()));
-        });
+    assert(m_context);
+    if (m_resources) {
+      Theme(winrt::make<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(m_context, m_resources));
+    } else {
+      Theme(winrt::Microsoft::ReactNative::Composition::Theme::GetDefaultTheme(m_context.Handle()));
+    }
   }
   return m_theme;
 }
 
 void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept {
-  if (m_themeChangedSubscription) {
-    m_themeChangedSubscription.Unsubscribe();
-    m_themeChangedSubscription = nullptr;
-  }
-
   if (value == m_theme)
     return;
 
@@ -259,20 +280,22 @@ void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition
 
   m_themeChangedRevoker = m_theme.ThemeChanged(
       winrt::auto_revoke,
-      [this](
+      [wkThis = get_weak()](
           const winrt::Windows::Foundation::IInspectable & /*sender*/,
           const winrt::Windows::Foundation::IInspectable & /*args*/) {
-        if (auto rootView = GetComponentView()) {
-          Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> fn =
-              [](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
-                winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->onThemeChanged();
-                return false;
-              };
+        if (auto strongThis = wkThis.get()) {
+          if (auto rootView = strongThis->GetComponentView()) {
+            Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> fn =
+                [](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+                  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->onThemeChanged();
+                  return false;
+                };
 
-          winrt::Microsoft::ReactNative::ComponentView view{nullptr};
-          winrt::check_hresult(rootView->QueryInterface(
-              winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
-          walkTree(view, true, fn);
+            winrt::Microsoft::ReactNative::ComponentView view{nullptr};
+            winrt::check_hresult(rootView->QueryInterface(
+                winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
+            walkTree(view, true, fn);
+          }
         }
       });
 
@@ -371,13 +394,8 @@ void CompositionRootView::InitRootView(
   }
 
   m_context = winrt::Microsoft::ReactNative::ReactContext(std::move(context));
-
-  winrt::Microsoft::ReactNative::CompositionRootView compositionRootView;
-  get_strong().as(compositionRootView);
-
   m_reactViewOptions = std::move(viewOptions);
-  m_CompositionEventHandler =
-      std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, compositionRootView);
+  m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this);
 
   UpdateRootViewInternal();
 
@@ -496,7 +514,7 @@ Composition::Experimental::IDrawingSurfaceBrush CompositionRootView::CreateLoadi
 
   POINT offset;
   {
-    ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, &offset);
+    ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, m_scaleFactor, &offset);
     if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
       d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Green));
 

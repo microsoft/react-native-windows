@@ -1,8 +1,75 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 24 Apr 2024 05:15:12 GMT and should not be manually modified.
+This log was last generated on Tue, 07 May 2024 05:15:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.811
+
+Tue, 07 May 2024 05:15:36 GMT
+
+### Changes
+
+- [Fabric] Add support for data: images (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.810
+
+Sat, 04 May 2024 05:18:09 GMT
+
+### Changes
+
+- [cpp-lib] Fix typo in metro.config.js (email not defined)
+- Add ability to provide custom image uri handlers (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.809
+
+Wed, 01 May 2024 05:15:55 GMT
+
+### Changes
+
+- Rework custom resources API (30809111+acoates-ms@users.noreply.github.com)
+- Fix a reference cycle between CompositionRootView and CompositionEventHandler (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.808
+
+Tue, 30 Apr 2024 05:15:58 GMT
+
+### Changes
+
+- Ensure D2D device context is not used outside Begin/End draw (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.807
+
+Sat, 27 Apr 2024 05:16:26 GMT
+
+### Changes
+
+- Dont use CoreWindow to determine key state (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.806
+
+Fri, 26 Apr 2024 05:16:48 GMT
+
+### Changes
+
+- CodeQL fixes (email not defined)
+- Bump @react-native-windows/cli to v0.0.0-canary.210
+- Bump react-native-platform-override to v1.9.30
+
+## 0.0.0-canary.805
+
+Thu, 25 Apr 2024 20:12:44 GMT
+
+### Changes
+
+- Handle dpi during drawing more consistently (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 3/7 (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.209
+- Bump @react-native-windows/codegen to v0.0.0-canary.84
+- Bump @rnw-scripts/eslint-config to v1.2.13
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.17
+- Bump @rnw-scripts/just-task to v2.3.29
+- Bump react-native-platform-override to v1.9.29
 
 ## 0.0.0-canary.804
 

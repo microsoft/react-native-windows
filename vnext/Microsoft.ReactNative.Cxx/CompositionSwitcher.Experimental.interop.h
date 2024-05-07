@@ -15,7 +15,7 @@
 namespace Microsoft::ReactNative::Composition::Experimental {
 
 struct __declspec(uuid("941FDD90-ED27-49CE-A1CD-86ECB2D4A0FA")) ICompositionDrawingSurfaceInterop : public IUnknown {
-  virtual HRESULT BeginDraw(ID2D1DeviceContext **deviceContextOut, POINT *offset) noexcept = 0;
+  virtual HRESULT BeginDraw(ID2D1DeviceContext **deviceContextOut, float xDpi, float yDpi, POINT *offset) noexcept = 0;
   virtual HRESULT EndDraw() noexcept = 0;
 };
 

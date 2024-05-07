@@ -21,6 +21,7 @@ void* winrt_make_Microsoft_ReactNative_ReactNotificationServiceHelper();
 void* winrt_make_Microsoft_ReactNative_ReactPropertyBagHelper();
 void* winrt_make_Microsoft_ReactNative_ReactViewOptions();
 void* winrt_make_Microsoft_ReactNative_RedBoxHelper();
+void* winrt_make_Microsoft_ReactNative_QuirkSettings();
 void* winrt_make_facebook_react_NativeLogEventSource();
 void* winrt_make_facebook_react_NativeTraceEventSource();
 
@@ -103,6 +104,11 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
     if (requal(name, L"Microsoft.ReactNative.RedBoxHelper"))
     {
         return winrt_make_Microsoft_ReactNative_RedBoxHelper();
+    }
+
+    if (requal(name, L"Microsoft.ReactNative.QuirkSettings"))
+    {
+        return winrt_make_Microsoft_ReactNative_QuirkSettings();
     }
 
     if (requal(name, L"facebook.react.NativeLogEventSource"))

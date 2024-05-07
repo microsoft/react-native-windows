@@ -256,13 +256,19 @@ struct CompDrawingSurfaceBrush : public winrt::implements<
     drawingSurface.as(m_drawingSurfaceInterop);
   }
 
-  HRESULT BeginDraw(ID2D1DeviceContext **deviceContextOut, POINT *offset) noexcept {
+  HRESULT BeginDraw(ID2D1DeviceContext **deviceContextOut, float xDpi, float yDpi, POINT *offset) noexcept {
 #ifdef DEBUG
     // Drawing to a zero sized surface is a waste of time
     auto size = m_drawingSurfaceInterop.as<typename TTypeRedirects::CompositionDrawingSurface>().Size();
     assert(size.Width != 0 && size.Height != 0);
 #endif
-    return m_drawingSurfaceInterop->BeginDraw(nullptr, __uuidof(ID2D1DeviceContext), (void **)deviceContextOut, offset);
+
+    auto hr =
+        m_drawingSurfaceInterop->BeginDraw(nullptr, __uuidof(ID2D1DeviceContext), (void **)deviceContextOut, offset);
+    if (SUCCEEDED(hr)) {
+      (*deviceContextOut)->SetDpi(xDpi, yDpi);
+    }
+    return hr;
   }
 
   HRESULT EndDraw() noexcept {
@@ -1960,6 +1966,12 @@ winrt::Microsoft::UI::Composition::ICompositionSurface MicrosoftCompositionConte
   surface.try_as(s);
   return s ? s->Inner() : nullptr;
 }
+
+winrt::Microsoft::ReactNative::Composition::Experimental::IBrush MicrosoftCompositionContextHelper::WrapBrush(
+    const winrt::Microsoft::UI::Composition::CompositionBrush &brush) noexcept {
+  return winrt::make<::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompBrush>(brush);
+}
+
 #endif
 
 } // namespace winrt::Microsoft::ReactNative::Composition::Experimental::implementation

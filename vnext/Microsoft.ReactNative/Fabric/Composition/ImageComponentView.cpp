@@ -39,9 +39,9 @@ void ImageComponentView::WindowsImageResponseObserver::didReceiveProgress(float 
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveImage(
     facebook::react::ImageResponse const &imageResponse) const {
-  auto sharedwicbmp = std::static_pointer_cast<winrt::com_ptr<IWICBitmap>>(imageResponse.getImage());
+  auto imageResponseImage = std::static_pointer_cast<ImageResponseImage>(imageResponse.getImage());
   m_image->m_reactContext.UIDispatcher().Post(
-      [wicbmp = *sharedwicbmp, image = m_image]() { image->didReceiveImage(wicbmp); });
+      [imageResponseImage, image = m_image]() { image->didReceiveImage(imageResponseImage); });
 }
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveFailure() const {
@@ -83,7 +83,7 @@ void ImageComponentView::ImageLoadStart() noexcept {
   }
 }
 
-void ImageComponentView::didReceiveImage(const winrt::com_ptr<IWICBitmap> &wicbmp) noexcept {
+void ImageComponentView::didReceiveImage(const std::shared_ptr<ImageResponseImage> &imageResponseImage) noexcept {
   // TODO check for recycled?
 
   auto imageEventEmitter = std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter);
@@ -99,7 +99,7 @@ void ImageComponentView::didReceiveImage(const winrt::com_ptr<IWICBitmap> &wicbm
   assert(uiDispatcher.HasThreadAccess());
 #endif
 
-  m_wicbmp = wicbmp;
+  m_imageResponseImage = imageResponseImage;
   ensureDrawingSurface();
 }
 
@@ -198,7 +198,8 @@ void ImageComponentView::updateLayoutMetrics(
 }
 
 void ImageComponentView::OnRenderingDeviceLost() noexcept {
-  DrawImage();
+  m_drawingSurface = nullptr;
+  ensureDrawingSurface();
 }
 
 bool ImageComponentView::themeEffectsImage() const noexcept {
@@ -207,7 +208,8 @@ bool ImageComponentView::themeEffectsImage() const noexcept {
 
 void ImageComponentView::onThemeChanged() noexcept {
   if (themeEffectsImage()) {
-    DrawImage();
+    m_drawingSurface = nullptr;
+    ensureDrawingSurface();
   }
   Super::onThemeChanged();
 }
@@ -215,17 +217,25 @@ void ImageComponentView::onThemeChanged() noexcept {
 void ImageComponentView::ensureDrawingSurface() noexcept {
   assert(m_reactContext.UIDispatcher().HasThreadAccess());
 
-  UINT width, height;
-  winrt::check_hresult(m_wicbmp->GetSize(&width, &height));
+  if (!m_imageResponseImage) {
+    m_visual.Brush(nullptr);
+    return;
+  }
 
-  if (!m_drawingSurface && m_wicbmp) {
+  UINT width = 0, height = 0;
+  if (m_imageResponseImage->m_wicbmp) {
+    winrt::check_hresult(m_imageResponseImage->m_wicbmp->GetSize(&width, &height));
+  }
+
+  if (!m_drawingSurface && m_imageResponseImage->m_wicbmp) {
     winrt::Windows::Foundation::Size drawingSurfaceSize{static_cast<float>(width), static_cast<float>(height)};
 
     const auto imageProps = std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
     const auto frame{m_layoutMetrics.getContentFrame().size};
 
     if (imageProps->resizeMode == facebook::react::ImageResizeMode::Repeat) {
-      drawingSurfaceSize = {frame.width, frame.height};
+      drawingSurfaceSize = {
+          frame.width * m_layoutMetrics.pointScaleFactor, frame.height * m_layoutMetrics.pointScaleFactor};
     } else if (imageProps->blurRadius > 0) {
       // https://learn.microsoft.com/en-us/windows/win32/direct2d/gaussian-blur#output-bitmap
       // The following equation that can be used to compute the output bitmap:
@@ -272,6 +282,8 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
     }
 
     m_visual.Brush(m_drawingSurface);
+  } else if (m_imageResponseImage->m_brushFactory) {
+    m_visual.Brush(m_imageResponseImage->m_brushFactory(m_reactContext.Handle(), m_compContext));
   }
 }
 
@@ -285,16 +297,17 @@ void ImageComponentView::DrawImage() noexcept {
     return;
   }
 
-  if (!m_wicbmp) {
+  if (!m_imageResponseImage->m_wicbmp) {
     return;
   }
 
   assert(m_reactContext.UIDispatcher().HasThreadAccess());
 
-  ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, &offset);
+  ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(m_drawingSurface, 1.0f, &offset);
   if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
     winrt::com_ptr<ID2D1Bitmap1> bitmap;
-    winrt::check_hresult(d2dDeviceContext->CreateBitmapFromWicBitmap(m_wicbmp.get(), nullptr, bitmap.put()));
+    winrt::check_hresult(
+        d2dDeviceContext->CreateBitmapFromWicBitmap(m_imageResponseImage->m_wicbmp.get(), nullptr, bitmap.put()));
 
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
     if (m_props->backgroundColor) {
@@ -310,7 +323,8 @@ void ImageComponentView::DrawImage() noexcept {
     if (useEffects) {
       winrt::com_ptr<ID2D1Effect> bitmapEffects;
       winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1BitmapSource, bitmapEffects.put()));
-      winrt::check_hresult(bitmapEffects->SetValue(D2D1_BITMAPSOURCE_PROP_WIC_BITMAP_SOURCE, m_wicbmp.get()));
+      winrt::check_hresult(
+          bitmapEffects->SetValue(D2D1_BITMAPSOURCE_PROP_WIC_BITMAP_SOURCE, m_imageResponseImage->m_wicbmp.get()));
 
       if (imageProps->blurRadius > 0) {
         winrt::com_ptr<ID2D1Effect> gaussianBlurEffect;
@@ -359,23 +373,15 @@ void ImageComponentView::DrawImage() noexcept {
       }
     } else {
       UINT width, height;
-      winrt::check_hresult(m_wicbmp->GetSize(&width, &height));
+      winrt::check_hresult(m_imageResponseImage->m_wicbmp->GetSize(&width, &height));
 
       D2D1_RECT_F rect = D2D1::RectF(
-          static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor),
-          static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor),
-          static_cast<float>((offset.x + width) / m_layoutMetrics.pointScaleFactor),
-          static_cast<float>((offset.y + height) / m_layoutMetrics.pointScaleFactor));
-
-      const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-      float oldDpiX, oldDpiY;
-      d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-      d2dDeviceContext->SetDpi(dpi, dpi);
+          static_cast<float>(offset.x),
+          static_cast<float>(offset.y),
+          static_cast<float>(offset.x + width),
+          static_cast<float>(offset.y + height));
 
       d2dDeviceContext->DrawBitmap(bitmap.get(), rect);
-
-      // Restore old dpi setting
-      d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
     }
   }
 }

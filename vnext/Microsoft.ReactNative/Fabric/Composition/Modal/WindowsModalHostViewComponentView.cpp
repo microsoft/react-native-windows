@@ -251,14 +251,11 @@ void WindowsModalHostComponentView::updateLayoutMetrics(
 
     POINT offset;
     {
-      ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, &offset);
+      ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(
+          drawingSurface, m_layoutMetrics.pointScaleFactor, &offset);
       if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
         d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Blue, 0.3f));
         assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
-        const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-        float oldDpiX, oldDpiY;
-        d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-        d2dDeviceContext->SetDpi(dpi, dpi);
 
         float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
         float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
