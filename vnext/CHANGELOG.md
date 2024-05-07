@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 04 May 2024 05:18:09 GMT and should not be manually modified.
+This log was last generated on Tue, 07 May 2024 05:15:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.811
+
+Tue, 07 May 2024 05:15:36 GMT
+
+### Changes
+
+- [Fabric] Add support for data: images (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.810
 
