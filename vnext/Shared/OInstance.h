@@ -10,7 +10,6 @@
 #include "InstanceManager.h"
 
 // React Native
-#include <ReactCommon/LongLivedObject.h>
 #include <cxxreact/Instance.h>
 #include <react/renderer/runtimescheduler/RuntimeScheduler.h>
 
@@ -34,7 +33,6 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
           std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
           &&cxxModules,
       std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
-      std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
       const winrt::Microsoft::ReactNative::IReactPropertyBag &propertyBag,
       std::unique_ptr<InstanceCallback> &&callback,
       std::shared_ptr<MessageQueueThread> jsQueue,
@@ -76,7 +74,6 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
           std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
           &&cxxModules,
       std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
-      std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
       const winrt::Microsoft::ReactNative::IReactPropertyBag &propertyBag,
       std::unique_ptr<InstanceCallback> &&callback,
       std::shared_ptr<MessageQueueThread> jsQueue,
@@ -96,7 +93,6 @@ class InstanceImpl final : public InstanceWrapper, private ::std::enable_shared_
   std::string m_jsBundleBasePath;
   std::shared_ptr<facebook::react::ModuleRegistry> m_moduleRegistry;
   std::shared_ptr<TurboModuleRegistry> m_turboModuleRegistry;
-  std::shared_ptr<facebook::react::LongLivedObjectCollection> m_longLivedObjectCollection;
   std::shared_ptr<MessageQueueThread> m_jsThread;
   std::shared_ptr<MessageQueueThread> m_nativeQueue;
 

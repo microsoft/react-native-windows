@@ -268,7 +268,6 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
-    std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
     const winrt::Microsoft::ReactNative::IReactPropertyBag &propertyBag,
     std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
@@ -280,7 +279,6 @@ void logMarker(const facebook::react::ReactMarker::ReactMarkerId /*id*/, const c
       std::move(jsBundleBasePath),
       std::move(cxxModules),
       std::move(turboModuleRegistry),
-      std::move(longLivedObjectCollection),
       propertyBag,
       std::move(callback),
       std::move(jsQueue),
@@ -350,7 +348,6 @@ InstanceImpl::InstanceImpl(
         std::tuple<std::string, facebook::xplat::module::CxxModule::Provider, std::shared_ptr<MessageQueueThread>>>
         &&cxxModules,
     std::shared_ptr<TurboModuleRegistry> turboModuleRegistry,
-    std::shared_ptr<facebook::react::LongLivedObjectCollection> longLivedObjectCollection,
     const winrt::Microsoft::ReactNative::IReactPropertyBag &propertyBag,
     std::unique_ptr<InstanceCallback> &&callback,
     std::shared_ptr<MessageQueueThread> jsQueue,
@@ -358,7 +355,6 @@ InstanceImpl::InstanceImpl(
     std::shared_ptr<DevSettings> devSettings,
     std::shared_ptr<IDevSupportManager> devManager)
     : m_turboModuleRegistry(std::move(turboModuleRegistry)),
-      m_longLivedObjectCollection(std::move(longLivedObjectCollection)),
       m_jsThread(std::move(jsQueue)),
       m_nativeQueue(nativeQueue),
       m_jsBundleBasePath(std::move(jsBundleBasePath)),
@@ -508,8 +504,7 @@ InstanceImpl::InstanceImpl(
                                 innerInstance = m_innerInstance,
                                 runtimeHolder = m_devSettings->jsiRuntimeHolder,
                                 runtimeScheduler = m_runtimeScheduler,
-                                turboModuleRegistry = m_turboModuleRegistry,
-                                longLivedObjectCollection = m_longLivedObjectCollection]() {
+                                turboModuleRegistry = m_turboModuleRegistry]() {
       if (runtimeScheduler) {
         RuntimeSchedulerBinding::createAndInstallIfNeeded(*runtimeHolder->getRuntime(), runtimeScheduler);
       }
@@ -519,14 +514,11 @@ InstanceImpl::InstanceImpl(
                            : innerInstance->getJSCallInvoker());
 
       // TODO: The binding here should also add the proxys that convert cxxmodules into turbomodules
-      // [@vmoroz] Note, that we must not use the RN TurboCxxModule.h code because it uses global
-      // LongLivedObjectCollection instance that prevents us from using multiple RN instance in the same process.
       auto binding = [turboModuleManager](const std::string &name) -> std::shared_ptr<TurboModule> {
         return turboModuleManager->getModule(name);
       };
 
-      TurboModuleBinding::install(
-          *runtimeHolder->getRuntime(), std::function(binding), nullptr, longLivedObjectCollection);
+      TurboModuleBinding::install(*runtimeHolder->getRuntime(), std::function(binding));
 
       // init TurboModule
       for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {

@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Cleans up LongLivedObjectCollection created by RN Windows",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}
