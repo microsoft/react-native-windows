@@ -167,7 +167,7 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
   const bool m_nativeLayout;
   winrt::Microsoft::UI::Xaml::Controls::TextBlock m_buttonLabelTextBlock{nullptr};
   winrt::Microsoft::ReactNative::IComponentState m_state;
-  winrt::Microsoft::UI::Composition::Visual m_visual{nullptr};
+  winrt::Microsoft::UI::Composition::SpriteVisual m_visual{nullptr};
 #ifdef USE_EXPERIMENTAL_WINUI3
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
   winrt::Microsoft::UI::Content::ContentIsland m_contentIsland{nullptr};
