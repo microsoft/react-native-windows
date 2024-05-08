@@ -5,7 +5,6 @@
 #include "UriImageManager.h"
 
 #include "Composition.ImageSource.g.h"
-#include "Composition.UriImageManager.g.cpp"
 #include <AutoDraw.h>
 #include <ReactPropertyBag.h>
 #include <d2d1_3.h>
@@ -183,8 +182,8 @@ struct DataImageHandler : winrt::implements<
   }
 };
 
-static const ReactPropertyId<ReactNonAbiValue<winrt::com_ptr<UriImageManager>>> &UriImageManagerPropertyId() noexcept {
-  static const ReactPropertyId<ReactNonAbiValue<winrt::com_ptr<UriImageManager>>> prop{
+static const ReactPropertyId<ReactNonAbiValue<std::shared_ptr<UriImageManager>>> &UriImageManagerPropertyId() noexcept {
+  static const ReactPropertyId<ReactNonAbiValue<std::shared_ptr<UriImageManager>>> prop{
       L"ReactNative", L"UriImageManager"};
   return prop;
 }
@@ -194,21 +193,21 @@ UriImageManager::UriImageManager() {
   m_providers.push_back(winrt::make<DataImageHandler>());
 }
 
-winrt::com_ptr<UriImageManager> UriImageManager::GetOrCreate(
-    const winrt::Microsoft::ReactNative::ReactPropertyBag &properties) noexcept {
-  auto uriImageManager =
-      winrt::Microsoft::ReactNative::ReactPropertyBag(properties).GetOrCreate(UriImageManagerPropertyId(), []() {
-        return winrt::make_self<UriImageManager>();
-      });
-  return uriImageManager.Value();
+void UriImageManager::Install(
+    const winrt::Microsoft::ReactNative::ReactPropertyBag &properties,
+    const std::shared_ptr<UriImageManager> &manager) noexcept {
+  properties.Set(UriImageManagerPropertyId(), manager);
 }
 
-void UriImageManager::AddUriImageProvider(
-    const winrt::Microsoft::ReactNative::IReactPropertyBag &properties,
-    const IUriImageProvider &provider) {
+std::shared_ptr<UriImageManager> UriImageManager::Get(
+    const winrt::Microsoft::ReactNative::ReactPropertyBag &properties) noexcept {
+  return winrt::Microsoft::ReactNative::ReactPropertyBag(properties).Get(UriImageManagerPropertyId()).Value();
+}
+
+void UriImageManager::AddUriImageProvider(const IUriImageProvider &provider) {
   if (!provider)
     winrt::throw_hresult(E_INVALIDARG);
-  GetOrCreate(winrt::Microsoft::ReactNative::ReactPropertyBag(properties))->m_providers.push_back(provider);
+  m_providers.push_back(provider);
 }
 
 IUriImageProvider UriImageManager::TryGetUriImageProvider(

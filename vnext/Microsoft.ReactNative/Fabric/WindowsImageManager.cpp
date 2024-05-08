@@ -19,8 +19,8 @@ namespace Microsoft::ReactNative {
 
 WindowsImageManager::WindowsImageManager(winrt::Microsoft::ReactNative::ReactContext reactContext)
     : m_reactContext(reactContext) {
-  m_uriImageManager = winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager::GetOrCreate(
-      reactContext.Properties());
+  m_uriImageManager =
+      winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager::Get(reactContext.Properties());
 }
 
 winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(
