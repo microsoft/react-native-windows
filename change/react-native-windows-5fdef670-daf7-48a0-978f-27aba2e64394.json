@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Wire up Fusebox InspectorPackagerConnection",
+  "packageName": "react-native-windows",
+  "email": "erozell@outlook.com",
+  "dependentChangeType": "patch"
+}

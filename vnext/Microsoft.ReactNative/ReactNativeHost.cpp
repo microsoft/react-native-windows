@@ -5,13 +5,16 @@
 #include "ReactNativeHost.h"
 #include "ReactNativeHost.g.cpp"
 
+#include "FuseboxInspectorThread.h"
 #include "ReactPackageBuilder.h"
 #include "RedBox.h"
 #include "TurboModulesProvider.h"
 
 #include <future/futureWinRT.h>
+#include <jsinspector-modern/InspectorFlags.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include "IReactContext.h"
+#include "ReactHost/DebuggerNotifications.h"
 #include "ReactInstanceSettings.h"
 
 #ifdef USE_FABRIC
@@ -30,6 +33,39 @@ using namespace xaml::Controls;
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
+class FuseboxHostTargetDelegate : public facebook::react::jsinspector_modern::HostTargetDelegate,
+                                  public std::enable_shared_from_this<FuseboxHostTargetDelegate> {
+ public:
+  FuseboxHostTargetDelegate(ReactNativeHost *reactNativeHost) : m_reactNativeHost(reactNativeHost) {}
+
+  void onReload(facebook::react::jsinspector_modern::HostTargetDelegate::PageReloadRequest const &request) override {
+    m_reactNativeHost->ReloadInstance();
+  }
+
+#ifdef HAS_FUSEBOX_PAUSED_OVERLAY // Remove after syncing past https://github.com/facebook/react-native/pull/44078
+  void onSetPausedInDebuggerMessage(
+      facebook::react::jsinspector_modern::HostTargetDelegate::OverlaySetPausedInDebuggerMessageRequest const &request)
+      override {
+    const auto instanceSettings = m_reactNativeHost->InstanceSettings();
+    if (instanceSettings) {
+      if (request.message.has_value()) {
+        ::Microsoft::ReactNative::DebuggerNotifications::OnShowDebuggerPausedOverlay(
+            instanceSettings.Notifications(), request.message.value(), [weakThis = weak_from_this()]() {
+              if (auto strongThis = weakThis.lock()) {
+                strongThis->m_reactNativeHost->OnDebuggerResume();
+              }
+            });
+      } else {
+        ::Microsoft::ReactNative::DebuggerNotifications::OnHideDebuggerPausedOverlay(instanceSettings.Notifications());
+      }
+    }
+  }
+#endif
+
+ private:
+  ReactNativeHost *m_reactNativeHost;
+};
+
 ReactNativeHost::ReactNativeHost() noexcept : m_reactHost{Mso::React::MakeReactHost()} {
 #if _DEBUG
   facebook::react::InitializeLogging([](facebook::react::RCTLogLevel /*logLevel*/, const char *message) {
@@ -37,6 +73,45 @@ ReactNativeHost::ReactNativeHost() noexcept : m_reactHost{Mso::React::MakeReactH
     OutputDebugStringA(str.c_str());
   });
 #endif
+
+  auto &inspectorFlags = facebook::react::jsinspector_modern::InspectorFlags::getInstance();
+  if (inspectorFlags.getEnableModernCDPRegistry() && !m_inspectorPageId.has_value()) {
+    m_inspectorHostDelegate = std::make_shared<FuseboxHostTargetDelegate>(this);
+    m_inspectorTarget = facebook::react::jsinspector_modern::HostTarget::create(
+        *m_inspectorHostDelegate, [](std::function<void()> &&callback) {
+          ::Microsoft::ReactNative::FuseboxInspectorThread::Instance().InvokeElsePost([callback]() { callback(); });
+        });
+
+    std::weak_ptr<facebook::react::jsinspector_modern::HostTarget> weakInspectorTarget = m_inspectorTarget;
+    facebook::react::jsinspector_modern::InspectorTargetCapabilities capabilities;
+#ifdef HAS_FUSEBOX_CAPABILITIES // Remove after syncing past https://github.com/facebook/react-native/pull/43689
+    capabilities.nativePageReloads = true;
+    capabilities.prefersFuseboxFrontend = true;
+#endif
+    m_inspectorPageId = facebook::react::jsinspector_modern::getInspectorInstance().addPage(
+        "React Native Windows (Experimental)",
+        /* vm */ "",
+        [weakInspectorTarget](std::unique_ptr<facebook::react::jsinspector_modern::IRemoteConnection> remote)
+            -> std::unique_ptr<facebook::react::jsinspector_modern::ILocalConnection> {
+          if (const auto inspectorTarget = weakInspectorTarget.lock()) {
+            facebook::react::jsinspector_modern::HostTarget::SessionMetadata sessionMetadata;
+            sessionMetadata.integrationName = "React Native Windows (Host)";
+            return inspectorTarget->connect(std::move(remote), sessionMetadata);
+          }
+
+          // This can happen if we're about to be dealloc'd. Reject the connection.
+          return nullptr;
+        },
+        capabilities);
+  }
+}
+
+ReactNativeHost::~ReactNativeHost() noexcept {
+  if (m_inspectorPageId.has_value()) {
+    facebook::react::jsinspector_modern::getInspectorInstance().removePage(*m_inspectorPageId);
+    m_inspectorPageId.reset();
+    m_inspectorTarget.reset();
+  }
 }
 
 /*static*/ ReactNative::ReactNativeHost ReactNativeHost::FromContext(
@@ -186,6 +261,7 @@ IAsyncAction ReactNativeHost::ReloadInstance() noexcept {
   }
 
   reactOptions.Identity = jsBundleFile;
+  reactOptions.InspectorTarget = m_inspectorTarget.get();
   return make<Mso::AsyncActionFutureAdapter>(m_reactHost->ReloadInstanceWithOptions(std::move(reactOptions)));
 }
 
@@ -195,6 +271,17 @@ IAsyncAction ReactNativeHost::UnloadInstance() noexcept {
 
 Mso::React::IReactHost *ReactNativeHost::ReactHost() noexcept {
   return m_reactHost.Get();
+}
+
+void ReactNativeHost::OnDebuggerResume() noexcept {
+#ifdef HAS_FUSEBOX_PAUSED_OVERLAY // Remove after syncing past https://github.com/facebook/react-native/pull/44078
+  ::Microsoft::ReactNative::FuseboxInspectorThread::Instance().InvokeElsePost(
+      [weakInspectorTarget = std::weak_ptr(m_inspectorTarget)]() {
+        if (const auto inspectorTarget = weakInspectorTarget.lock()) {
+          inspectorTarget->sendCommand(facebook::react::jsinspector_modern::HostCommand::DebuggerResume);
+        }
+      });
+#endif
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
