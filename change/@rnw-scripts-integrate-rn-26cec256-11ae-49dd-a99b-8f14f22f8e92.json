@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix upgradeDependencies when core has a ^ dependency",
-  "packageName": "@rnw-scripts/integrate-rn",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
