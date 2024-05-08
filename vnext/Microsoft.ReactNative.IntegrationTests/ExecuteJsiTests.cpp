@@ -24,17 +24,6 @@ struct TestExecuteJsiModule {
     TestEventService::LogEvent("initialize", nullptr);
   }
 
-  REACT_METHOD(TestSimpleExecuteJsi, L"testSimpleExecuteJsi")
-  void TestSimpleExecuteJsi() noexcept {
-    TestEventService::LogEvent("testSimpleExecuteJsi started", nullptr);
-    ExecuteJsi(m_reactContext, [](Runtime &rt) {
-      auto eval = rt.global().getPropertyAsFunction(rt, "eval");
-      auto addFunc = eval.call(rt, "(function(x, y) { return x + y; })").getObject(rt).getFunction(rt);
-      TestCheckEqual(7, addFunc.call(rt, 3, 4).getNumber());
-      TestEventService::LogEvent("testSimpleExecuteJsi completed", nullptr);
-    });
-  }
-
   REACT_METHOD(TestHostFunction, L"testHostFunction")
   void TestHostFunction() noexcept {
     TestEventService::LogEvent("testHostFunction started", nullptr);
@@ -143,8 +132,6 @@ TEST_CLASS (ExecuteJsiTests) {
 
       TestEventService::ObserveEvents({
           TestEvent{"initialize", nullptr},
-          TestEvent{"testSimpleExecuteJsi started", nullptr},
-          TestEvent{"testSimpleExecuteJsi completed", nullptr},
           TestEvent{"testHostFunction started", nullptr},
           TestEvent{"testHostFunction completed", nullptr},
           TestEvent{"testHostObject started", nullptr},

@@ -72,14 +72,4 @@ namespace Microsoft.ReactNative.Composition
     Windows.Foundation.IAsyncOperation<UriBrushFactory> GetSourceAsync(Microsoft.ReactNative.IReactContext context, Microsoft.ReactNative.Composition.ImageSource imageSource);
   }
   }
-
-  [default_interface]
-  [webhosthidden]
-  [experimental]
-  DOC_STRING(
-    "Ability to load images using custom Uri protocol handlers.  The provider should implement @IUriImageStreamProvider or @Experimental.IUriBrushProvider")
-  runtimeclass UriImageManager
-  {
-    static void AddUriImageProvider(Microsoft.ReactNative.IReactPropertyBag properties, IUriImageProvider provider);
-  }
 } // namespace Microsoft.ReactNative.Composition
