@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/integrate-rn",
   "entries": [
     {
+      "date": "Wed, 08 May 2024 05:15:07 GMT",
+      "version": "1.4.32",
+      "tag": "@rnw-scripts/integrate-rn_v1.4.32",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@rnw-scripts/integrate-rn",
+            "commit": "1c52d08bda69217884c3a21edc8346407225d5c3",
+            "comment": "Fix upgradeDependencies when core has a ^ dependency"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Apr 2024 05:16:49 GMT",
       "version": "1.4.31",
       "tag": "@rnw-scripts/integrate-rn_v1.4.31",

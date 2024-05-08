@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Fri, 26 Apr 2024 05:16:49 GMT and should not be manually modified.
+This log was last generated on Wed, 08 May 2024 05:15:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.32
+
+Wed, 08 May 2024 05:15:07 GMT
+
+### Patches
+
+- Fix upgradeDependencies when core has a ^ dependency (30809111+acoates-ms@users.noreply.github.com)
 
 ## 1.4.31
 
