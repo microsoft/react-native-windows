@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 May 2024 22:08:13 GMT",
+      "version": "0.74.3",
+      "tag": "react-native-windows_v0.74.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6e935c2cf39436706361e0e612454fafe20f6d66",
+            "comment": "Move UriHandler registration to PackageProvider"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a33399a8f256f0572f60efd0e0e503b2b7f3a452",
+            "comment": "[Fabric] Add support for data: images"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 May 2024 15:17:11 GMT",
       "version": "0.74.2",
       "tag": "react-native-windows_v0.74.2",

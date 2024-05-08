@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 06 May 2024 15:17:11 GMT and should not be manually modified.
+This log was last generated on Wed, 08 May 2024 22:08:13 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.3
+
+Wed, 08 May 2024 22:08:13 GMT
+
+### Patches
+
+- Move UriHandler registration to PackageProvider (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Add support for data: images (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.2
 
