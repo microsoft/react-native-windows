@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240307-ff03b149e",
+  "baseVersion": "0.75.0-nightly-20240321-7d180d712",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "bdebcba51a5c13fbe5acab9e07720acff0825bc9"
+      "baseHash": "a57066be1285dc8bc5d9702d0227d04c1c6447ce"
     },
     {
       "type": "derived",
@@ -122,7 +122,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "f05b36551197bfa87f2342bd6d1c9b134c1731b2"
+      "baseHash": "b1ef5981a6abbb0548fc5fd835ad711c10712d61"
     },
     {
       "type": "patch",
@@ -323,7 +323,7 @@
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorReactFrames.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js",
-      "baseHash": "04c1210d0198315af8358b22a81dc74dc76ef752"
+      "baseHash": "3a765d2180cca25ed35172ebce8294fc569486aa"
     },
     {
       "type": "derived",
@@ -528,20 +528,6 @@
       "file": "src-win/src/private/specs/modules/NativePlatformConstantsWin.js",
       "baseFile": "packages/react-native/src/private/specs/modules/NativePlatformConstantsAndroid.js",
       "baseHash": "b4a125d9134f33aeaba9e06988e18cbb0b4e9e9c"
-    },
-    {
-      "type": "patch",
-      "file": "src-win/src/private/webapis/dom/nodes/ReadOnlyElement.js",
-      "baseFile": "packages/react-native/src/private/webapis/dom/nodes/ReadOnlyElement.js",
-      "baseHash": "e049a95c6fab9e5d3f7e13edbeb7b12440f71259",
-      "issue": 12951
-    },
-    {
-      "type": "patch",
-      "file": "src-win/src/private/webapis/dom/nodes/ReadOnlyNode.js",
-      "baseFile": "packages/react-native/src/private/webapis/dom/nodes/ReadOnlyNode.js",
-      "baseHash": "bbb8d136ec9b0f56a3843ea9da0bd1e17a50a7a3",
-      "issue": 12951
     }
   ]
 }

@@ -80,20 +80,8 @@ void FabricUIManager::installFabricUIManager() noexcept {
     runtimeExecutor = [runtimeScheduler](std::function<void(facebook::jsi::Runtime & runtime)> &&callback) {
       runtimeScheduler->scheduleWork(std::move(callback));
     };
-    facebook::react::EventBeat::Factory synchronousBeatFactory =
-        [runtimeExecutor, context = m_context, runtimeScheduler](
-            facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
-          return std::make_unique<SynchronousEventBeat>(ownerBox, context, runtimeExecutor, runtimeScheduler);
-        };
-    toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
   } else {
     runtimeExecutor = SchedulerSettings::GetRuntimeExecutor(m_context.Properties());
-
-    facebook::react::EventBeat::Factory synchronousBeatFactory =
-        [runtimeExecutor, context = m_context](facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
-          return std::make_unique<AsynchronousEventBeat>(ownerBox, context, runtimeExecutor);
-        };
-    toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
   }
 
   facebook::react::EventBeat::Factory asynchronousBeatFactory =

@@ -1148,7 +1148,7 @@ void ScrollViewComponentView::ensureVisual() noexcept {
           updateStateWithContentOffset();
           auto eventEmitter = GetEventEmitter();
           if (eventEmitter) {
-            facebook::react::ScrollViewMetrics scrollMetrics;
+            facebook::react::ScrollViewEventEmitter::Metrics scrollMetrics;
             scrollMetrics.containerSize.height = m_layoutMetrics.frame.size.height;
             scrollMetrics.containerSize.width = m_layoutMetrics.frame.size.width;
             scrollMetrics.contentOffset.x = args.Position().x / m_layoutMetrics.pointScaleFactor;

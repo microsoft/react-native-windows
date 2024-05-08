@@ -26,8 +26,7 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{7, L"enableSpannableBuildingUnification"},
       SyncMethod<bool() noexcept>{8, L"inspectorEnableCxxInspectorPackagerConnection"},
       SyncMethod<bool() noexcept>{9, L"inspectorEnableModernCDPRegistry"},
-      SyncMethod<bool() noexcept>{10, L"skipMountHookNotifications"},
-      SyncMethod<bool() noexcept>{11, L"useModernRuntimeScheduler"},
+      SyncMethod<bool() noexcept>{10, L"useModernRuntimeScheduler"},
   };
 
   template <class TModule>
@@ -86,11 +85,6 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(inspectorEnableModernCDPRegistry) static bool inspectorEnableModernCDPRegistry() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           10,
-          "skipMountHookNotifications",
-          "    REACT_SYNC_METHOD(skipMountHookNotifications) bool skipMountHookNotifications() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(skipMountHookNotifications) static bool skipMountHookNotifications() noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          11,
           "useModernRuntimeScheduler",
           "    REACT_SYNC_METHOD(useModernRuntimeScheduler) bool useModernRuntimeScheduler() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useModernRuntimeScheduler) static bool useModernRuntimeScheduler() noexcept { /* implementation */ }\n");

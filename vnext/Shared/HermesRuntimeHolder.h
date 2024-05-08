@@ -58,6 +58,9 @@ class HermesJSRuntime : public facebook::react::JSRuntime {
   HermesJSRuntime(std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> hermesRuntimeHolder);
 
   facebook::jsi::Runtime &getRuntime() noexcept override;
+  void addConsoleMessage(facebook::jsi::Runtime &runtime, facebook::react::jsinspector_modern::ConsoleMessage message)
+      override;
+  bool supportsConsole() const override;
 
   std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> createAgentDelegate(
       facebook::react::jsinspector_modern::FrontendChannel frontendChannel,

@@ -11129,7 +11129,6 @@ exports[`snapshotAllPages FlatList 1`] = `
         renderItem={[Function]}
         scrollEventThrottle={0.0001}
         stickyHeaderIndices={[]}
-        style={{}}
         viewabilityConfig={
           {
             "minimumViewTime": 3000,
@@ -47617,7 +47616,6 @@ exports[`snapshotAllPages ScrollViewAnimated 1`] = `
     horizontal={true}
     onScroll={[Function]}
     scrollEventThrottle={16}
-    style={{}}
   >
     <View>
       <View

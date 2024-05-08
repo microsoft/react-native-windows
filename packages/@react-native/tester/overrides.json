@@ -1,18 +1,18 @@
 {
-  "baseVersion": "0.75.0-nightly-20240307-ff03b149e",
+  "baseVersion": "0.75.0-nightly-20240321-7d180d712",
   "overrides": [
     {
       "type": "copy",
       "directory": "js/assets",
       "baseDirectory": "packages/rn-tester/js/assets",
-      "baseHash": "abb5cf85647531d0c8f89c7281c3b6808eec12e8",
+      "baseHash": "414d1c3b1d436448a773bb772f0ec93cf2402055",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "1eda76bc2c7d63409b04b40a47dbe02488e08e45",
+      "baseHash": "4e779d653a3fb4c692026045a003a1716127d4b7",
       "issue": 4054
     },
     {
@@ -61,7 +61,7 @@
       "type": "copy",
       "directory": "js/examples/Appearance",
       "baseDirectory": "packages/rn-tester/js/examples/Appearance",
-      "baseHash": "dc660f8ee6a129b7ed8f4ec7f299ca6c73ac781e",
+      "baseHash": "6e1c89669e9495d50d06e27c6c203012a6c480da",
       "issue": 4054
     },
     {
@@ -523,7 +523,7 @@
       "type": "copy",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "e21499711af0cee6e00c28af01d3b87c501fa0b7",
+      "baseHash": "2df1789eee76067765485f86d45809d93a65fc92",
       "issue": 4054
     }
   ]

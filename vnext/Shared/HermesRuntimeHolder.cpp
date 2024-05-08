@@ -10,6 +10,7 @@
 #include <NodeApiJsiRuntime.h>
 #include <crash/verifyElseCrash.h>
 #include <cxxreact/SystraceSection.h>
+#include <jsinspector-modern/ConsoleMessage.h>
 #include <jsinspector-modern/InspectorInterfaces.h>
 #include <mutex>
 #include "SafeLoadLibrary.h"
@@ -398,6 +399,16 @@ HermesJSRuntime::HermesJSRuntime(std::shared_ptr<Microsoft::JSI::RuntimeHolderLa
 
 facebook::jsi::Runtime &HermesJSRuntime::getRuntime() noexcept {
   return *m_holder->getRuntime();
+}
+
+void HermesJSRuntime::addConsoleMessage(
+    facebook::jsi::Runtime &runtime,
+    facebook::react::jsinspector_modern::ConsoleMessage message) {
+  return;
+}
+
+bool HermesJSRuntime::supportsConsole() const {
+  return false;
 }
 
 std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> HermesJSRuntime::createAgentDelegate(
