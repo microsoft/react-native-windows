@@ -74,8 +74,7 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
   winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
       host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
-  winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(
-      host.InstanceSettings(), compositor);
+  winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(host.InstanceSettings(), compositor);
 
   return host;
 }
