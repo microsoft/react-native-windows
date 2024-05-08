@@ -11,6 +11,7 @@ File not found edge:/inspect while parsing packages/playground/README_compositio
 !packages/e2e-test-app/node_modules
 !packages/e2e-test-app-fabric/node_modules
 !packages/sample-apps/node_modules
+!packages/sample-app-fabric/node_modules
 !packages/playground/node_modules
 !packages/@react-native-windows/codegen/node_modules
 !packages/react-native-windows-init/node_modules
