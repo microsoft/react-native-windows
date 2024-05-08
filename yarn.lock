@@ -2597,6 +2597,11 @@
   dependencies:
     nullthrows "^1.1.1"
 
+"@react-native/typescript-config@0.75.0-nightly-20240307-ff03b149e":
+  version "0.75.0-nightly-20240307-ff03b149e"
+  resolved "https://registry.yarnpkg.com/@react-native/typescript-config/-/typescript-config-0.75.0-nightly-20240307-ff03b149e.tgz#572d2d7482e6268026dd7b8127a9ad75ea9ada67"
+  integrity sha512-QxcKRBLG9w6CE0Z83M9hQK3LGxpft7AtbPciet1lMqpKA1sOXUb5veBsn71ureL3vXbDw+NorzqLYiA6ttA4WA==
+
 "@react-native/virtualized-lists@0.75.0-nightly-20240307-ff03b149e":
   version "0.75.0-nightly-20240307-ff03b149e"
   resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.75.0-nightly-20240307-ff03b149e.tgz#484a57eda4fd61c35c036e965157423f03faaacc"
@@ -3177,6 +3182,13 @@
   integrity sha512-ja78vquZc8y+GM2al07GZqWDKQskQXygCDiu0e3uO0DMRKqE0MjrFBFmTulfPYzLB6WnL7Kl2tFPy0WXSpPomg==
   dependencies:
     puppeteer "*"
+
+"@types/react-test-renderer@^18.0.0":
+  version "18.3.0"
+  resolved "https://registry.yarnpkg.com/@types/react-test-renderer/-/react-test-renderer-18.3.0.tgz#839502eae70058a4ae161f63385a8e7929cef4c0"
+  integrity sha512-HW4MuEYxfDbOHQsVlY/XtOvNHftCVEPhJF2pQXXwcUiUF+Oyb0usgp48HSgpK5rt8m9KZb22yqOeZm+rrVG8gw==
+  dependencies:
+    "@types/react" "*"
 
 "@types/react@*", "@types/react@^18.2.6":
   version "18.3.1"
