@@ -729,6 +729,10 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
 #endif
 
   InitDevMenu();
+#ifdef USE_FABRIC
+  winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager::Install(
+      ReactPropertyBag(m_reactContext->Properties()), m_options.UriImageManager);
+#endif
 
   m_uiQueue->Post([this, weakThis = Mso::WeakPtr{this}]() noexcept {
     // Objects that must be created on the UI thread
