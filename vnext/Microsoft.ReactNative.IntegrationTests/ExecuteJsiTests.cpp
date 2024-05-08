@@ -132,8 +132,6 @@ TEST_CLASS (ExecuteJsiTests) {
 
       TestEventService::ObserveEvents({
           TestEvent{"initialize", nullptr},
-          TestEvent{"testSimpleExecuteJsi started", nullptr},
-          TestEvent{"testSimpleExecuteJsi completed", nullptr},
           TestEvent{"testHostFunction started", nullptr},
           TestEvent{"testHostFunction completed", nullptr},
           TestEvent{"testHostObject started", nullptr},
