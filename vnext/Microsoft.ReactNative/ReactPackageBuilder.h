@@ -9,7 +9,9 @@
 #endif
 #include "winrt/Microsoft.ReactNative.h"
 #ifdef USE_FABRIC
+#include <Fabric/Composition/UriImageManager.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
+#include "winrt/Microsoft.ReactNative.Composition.h"
 #endif
 
 namespace winrt::Microsoft::ReactNative {
@@ -30,6 +32,8 @@ struct ReactPackageBuilder : winrt::implements<
       std::shared_ptr<TurboModulesProvider> const &turboModulesProvider,
 #ifdef USE_FABRIC
       std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> const &componentRegistry,
+      std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> const
+          &uriImageManager,
 #endif
       bool isWebDebugging) noexcept;
 
@@ -43,6 +47,7 @@ struct ReactPackageBuilder : winrt::implements<
 #ifdef USE_FABRIC
   // IReactPackageBuilderFabric
   void AddViewComponent(winrt::hstring componentName, ReactViewComponentProvider const &viewComponentProvider) noexcept;
+  void AddUriImageProvider(const winrt::Microsoft::ReactNative::Composition::IUriImageProvider &provider) noexcept;
 #endif // USE_FABRIC
 
  private:
@@ -54,6 +59,7 @@ struct ReactPackageBuilder : winrt::implements<
 
 #ifdef USE_FABRIC
   std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry> m_componentRegistry;
+  std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> m_uriImageManager;
 #endif
 
   const bool m_isWebDebugging;
