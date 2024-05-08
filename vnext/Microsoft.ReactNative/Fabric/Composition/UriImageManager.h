@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #pragma once
-#include "Composition.UriImageManager.g.h"
 
 #include <ReactPropertyBag.h>
 #include <Utils/ImageUtils.h>
@@ -11,14 +10,16 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-struct UriImageManager : UriImageManagerT<UriImageManager> {
+struct UriImageManager {
   UriImageManager();
 
-  static void AddUriImageProvider(
-      const winrt::Microsoft::ReactNative::IReactPropertyBag &properties,
-      const IUriImageProvider &provider);
+  void AddUriImageProvider(const IUriImageProvider &provider);
 
-  static winrt::com_ptr<UriImageManager> GetOrCreate(
+  static void Install(
+      const winrt::Microsoft::ReactNative::ReactPropertyBag &properties,
+      const std::shared_ptr<UriImageManager> &manager) noexcept;
+
+  static std::shared_ptr<UriImageManager> Get(
       const winrt::Microsoft::ReactNative::ReactPropertyBag &properties) noexcept;
 
   IUriImageProvider TryGetUriImageProvider(
@@ -33,7 +34,3 @@ winrt::Microsoft::ReactNative::Composition::ImageSource MakeImageSource(
     const facebook::react::ImageSource &source) noexcept;
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
-
-namespace winrt::Microsoft::ReactNative::Composition::factory_implementation {
-struct UriImageManager : UriImageManagerT<UriImageManager, implementation::UriImageManager> {};
-} // namespace winrt::Microsoft::ReactNative::Composition::factory_implementation
