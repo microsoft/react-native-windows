@@ -28,6 +28,8 @@ public:
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
   virtual bool enableMountHooksAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableSpannableBuildingUnification(jsi::Runtime &rt) = 0;
+  virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
+  virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableModernCDPRegistry(jsi::Runtime &rt) = 0;
   virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
@@ -117,6 +119,22 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableSpannableBuildingUnification, jsInvoker_, instance_);
+    }
+    bool enableSynchronousStateUpdates(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableSynchronousStateUpdates) == 1,
+          "Expected enableSynchronousStateUpdates(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableSynchronousStateUpdates, jsInvoker_, instance_);
+    }
+    bool enableUIConsistency(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableUIConsistency) == 1,
+          "Expected enableUIConsistency(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableUIConsistency, jsInvoker_, instance_);
     }
     bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) override {
       static_assert(
@@ -10067,21 +10085,24 @@ protected:
   NativeDOMCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
 public:
-  virtual std::optional<jsi::Value> getParentNode(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual std::optional<jsi::Array> getChildNodes(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
+  virtual jsi::Value getParentNode(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
+  virtual jsi::Array getChildNodes(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
   virtual bool isConnected(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
   virtual double compareDocumentPosition(jsi::Runtime &rt, jsi::Value shadowNode, jsi::Value otherShadowNode) = 0;
   virtual jsi::String getTextContent(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual std::optional<jsi::Array> getBoundingClientRect(jsi::Runtime &rt, jsi::Value shadowNode, bool includeTransform) = 0;
-  virtual std::optional<jsi::Array> getOffset(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual std::optional<jsi::Array> getScrollPosition(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual std::optional<jsi::Array> getScrollSize(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual std::optional<jsi::Array> getInnerSize(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
-  virtual std::optional<jsi::Array> getBorderSize(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
+  virtual jsi::Array getBoundingClientRect(jsi::Runtime &rt, jsi::Value shadowNode, bool includeTransform) = 0;
+  virtual jsi::Array getOffset(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
+  virtual jsi::Array getScrollPosition(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
+  virtual jsi::Array getScrollSize(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
+  virtual jsi::Array getInnerSize(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
+  virtual jsi::Array getBorderWidth(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
   virtual jsi::String getTagName(jsi::Runtime &rt, jsi::Value shadowNode) = 0;
   virtual bool hasPointerCapture(jsi::Runtime &rt, jsi::Value shadowNode, double pointerId) = 0;
   virtual void setPointerCapture(jsi::Runtime &rt, jsi::Value shadowNode, double pointerId) = 0;
   virtual void releasePointerCapture(jsi::Runtime &rt, jsi::Value shadowNode, double pointerId) = 0;
+  virtual void measure(jsi::Runtime &rt, jsi::Value shadowNode, jsi::Function callback) = 0;
+  virtual void measureInWindow(jsi::Runtime &rt, jsi::Value shadowNode, jsi::Function callback) = 0;
+  virtual void measureLayout(jsi::Runtime &rt, jsi::Value shadowNode, jsi::Value relativeNode, jsi::Function onFail, jsi::Function onSuccess) = 0;
 
 };
 
@@ -10105,20 +10126,20 @@ private:
     Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
       NativeDOMCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
 
-    std::optional<jsi::Value> getParentNode(jsi::Runtime &rt, jsi::Value shadowNode) override {
+    jsi::Value getParentNode(jsi::Runtime &rt, jsi::Value shadowNode) override {
       static_assert(
           bridging::getParameterCount(&T::getParentNode) == 2,
           "Expected getParentNode(...) to have 2 parameters");
 
-      return bridging::callFromJs<std::optional<jsi::Value>>(
+      return bridging::callFromJs<jsi::Value>(
           rt, &T::getParentNode, jsInvoker_, instance_, std::move(shadowNode));
     }
-    std::optional<jsi::Array> getChildNodes(jsi::Runtime &rt, jsi::Value shadowNode) override {
+    jsi::Array getChildNodes(jsi::Runtime &rt, jsi::Value shadowNode) override {
       static_assert(
           bridging::getParameterCount(&T::getChildNodes) == 2,
           "Expected getChildNodes(...) to have 2 parameters");
 
-      return bridging::callFromJs<std::optional<jsi::Array>>(
+      return bridging::callFromJs<jsi::Array>(
           rt, &T::getChildNodes, jsInvoker_, instance_, std::move(shadowNode));
     }
     bool isConnected(jsi::Runtime &rt, jsi::Value shadowNode) override {
@@ -10145,53 +10166,53 @@ private:
       return bridging::callFromJs<jsi::String>(
           rt, &T::getTextContent, jsInvoker_, instance_, std::move(shadowNode));
     }
-    std::optional<jsi::Array> getBoundingClientRect(jsi::Runtime &rt, jsi::Value shadowNode, bool includeTransform) override {
+    jsi::Array getBoundingClientRect(jsi::Runtime &rt, jsi::Value shadowNode, bool includeTransform) override {
       static_assert(
           bridging::getParameterCount(&T::getBoundingClientRect) == 3,
           "Expected getBoundingClientRect(...) to have 3 parameters");
 
-      return bridging::callFromJs<std::optional<jsi::Array>>(
+      return bridging::callFromJs<jsi::Array>(
           rt, &T::getBoundingClientRect, jsInvoker_, instance_, std::move(shadowNode), std::move(includeTransform));
     }
-    std::optional<jsi::Array> getOffset(jsi::Runtime &rt, jsi::Value shadowNode) override {
+    jsi::Array getOffset(jsi::Runtime &rt, jsi::Value shadowNode) override {
       static_assert(
           bridging::getParameterCount(&T::getOffset) == 2,
           "Expected getOffset(...) to have 2 parameters");
 
-      return bridging::callFromJs<std::optional<jsi::Array>>(
+      return bridging::callFromJs<jsi::Array>(
           rt, &T::getOffset, jsInvoker_, instance_, std::move(shadowNode));
     }
-    std::optional<jsi::Array> getScrollPosition(jsi::Runtime &rt, jsi::Value shadowNode) override {
+    jsi::Array getScrollPosition(jsi::Runtime &rt, jsi::Value shadowNode) override {
       static_assert(
           bridging::getParameterCount(&T::getScrollPosition) == 2,
           "Expected getScrollPosition(...) to have 2 parameters");
 
-      return bridging::callFromJs<std::optional<jsi::Array>>(
+      return bridging::callFromJs<jsi::Array>(
           rt, &T::getScrollPosition, jsInvoker_, instance_, std::move(shadowNode));
     }
-    std::optional<jsi::Array> getScrollSize(jsi::Runtime &rt, jsi::Value shadowNode) override {
+    jsi::Array getScrollSize(jsi::Runtime &rt, jsi::Value shadowNode) override {
       static_assert(
           bridging::getParameterCount(&T::getScrollSize) == 2,
           "Expected getScrollSize(...) to have 2 parameters");
 
-      return bridging::callFromJs<std::optional<jsi::Array>>(
+      return bridging::callFromJs<jsi::Array>(
           rt, &T::getScrollSize, jsInvoker_, instance_, std::move(shadowNode));
     }
-    std::optional<jsi::Array> getInnerSize(jsi::Runtime &rt, jsi::Value shadowNode) override {
+    jsi::Array getInnerSize(jsi::Runtime &rt, jsi::Value shadowNode) override {
       static_assert(
           bridging::getParameterCount(&T::getInnerSize) == 2,
           "Expected getInnerSize(...) to have 2 parameters");
 
-      return bridging::callFromJs<std::optional<jsi::Array>>(
+      return bridging::callFromJs<jsi::Array>(
           rt, &T::getInnerSize, jsInvoker_, instance_, std::move(shadowNode));
     }
-    std::optional<jsi::Array> getBorderSize(jsi::Runtime &rt, jsi::Value shadowNode) override {
+    jsi::Array getBorderWidth(jsi::Runtime &rt, jsi::Value shadowNode) override {
       static_assert(
-          bridging::getParameterCount(&T::getBorderSize) == 2,
-          "Expected getBorderSize(...) to have 2 parameters");
+          bridging::getParameterCount(&T::getBorderWidth) == 2,
+          "Expected getBorderWidth(...) to have 2 parameters");
 
-      return bridging::callFromJs<std::optional<jsi::Array>>(
-          rt, &T::getBorderSize, jsInvoker_, instance_, std::move(shadowNode));
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::getBorderWidth, jsInvoker_, instance_, std::move(shadowNode));
     }
     jsi::String getTagName(jsi::Runtime &rt, jsi::Value shadowNode) override {
       static_assert(
@@ -10224,6 +10245,30 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::releasePointerCapture, jsInvoker_, instance_, std::move(shadowNode), std::move(pointerId));
+    }
+    void measure(jsi::Runtime &rt, jsi::Value shadowNode, jsi::Function callback) override {
+      static_assert(
+          bridging::getParameterCount(&T::measure) == 3,
+          "Expected measure(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::measure, jsInvoker_, instance_, std::move(shadowNode), std::move(callback));
+    }
+    void measureInWindow(jsi::Runtime &rt, jsi::Value shadowNode, jsi::Function callback) override {
+      static_assert(
+          bridging::getParameterCount(&T::measureInWindow) == 3,
+          "Expected measureInWindow(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::measureInWindow, jsInvoker_, instance_, std::move(shadowNode), std::move(callback));
+    }
+    void measureLayout(jsi::Runtime &rt, jsi::Value shadowNode, jsi::Value relativeNode, jsi::Function onFail, jsi::Function onSuccess) override {
+      static_assert(
+          bridging::getParameterCount(&T::measureLayout) == 5,
+          "Expected measureLayout(...) to have 5 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::measureLayout, jsInvoker_, instance_, std::move(shadowNode), std::move(relativeNode), std::move(onFail), std::move(onSuccess));
     }
 
   private:

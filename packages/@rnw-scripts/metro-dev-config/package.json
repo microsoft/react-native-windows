@@ -17,7 +17,7 @@
     "lint:fix": "rnw-scripts lint:fix"
   },
   "dependencies": {
-    "@react-native/metro-config": "0.75.0-nightly-20240321-7d180d712",
+    "@react-native/metro-config": "0.75.0-nightly-20240329-3f8882116",
     "@rnx-kit/metro-config": "^1.3.5",
     "@rnx-kit/metro-plugin-duplicates-checker": "^2.1.0",
     "@rnx-kit/metro-serializer": "^1.0.11",

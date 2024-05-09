@@ -24,9 +24,11 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{5, L"enableMicrotasks"},
       SyncMethod<bool() noexcept>{6, L"enableMountHooksAndroid"},
       SyncMethod<bool() noexcept>{7, L"enableSpannableBuildingUnification"},
-      SyncMethod<bool() noexcept>{8, L"inspectorEnableCxxInspectorPackagerConnection"},
-      SyncMethod<bool() noexcept>{9, L"inspectorEnableModernCDPRegistry"},
-      SyncMethod<bool() noexcept>{10, L"useModernRuntimeScheduler"},
+      SyncMethod<bool() noexcept>{8, L"enableSynchronousStateUpdates"},
+      SyncMethod<bool() noexcept>{9, L"enableUIConsistency"},
+      SyncMethod<bool() noexcept>{10, L"inspectorEnableCxxInspectorPackagerConnection"},
+      SyncMethod<bool() noexcept>{11, L"inspectorEnableModernCDPRegistry"},
+      SyncMethod<bool() noexcept>{12, L"useModernRuntimeScheduler"},
   };
 
   template <class TModule>
@@ -75,16 +77,26 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(enableSpannableBuildingUnification) static bool enableSpannableBuildingUnification() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           8,
+          "enableSynchronousStateUpdates",
+          "    REACT_SYNC_METHOD(enableSynchronousStateUpdates) bool enableSynchronousStateUpdates() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(enableSynchronousStateUpdates) static bool enableSynchronousStateUpdates() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          9,
+          "enableUIConsistency",
+          "    REACT_SYNC_METHOD(enableUIConsistency) bool enableUIConsistency() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(enableUIConsistency) static bool enableUIConsistency() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          10,
           "inspectorEnableCxxInspectorPackagerConnection",
           "    REACT_SYNC_METHOD(inspectorEnableCxxInspectorPackagerConnection) bool inspectorEnableCxxInspectorPackagerConnection() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(inspectorEnableCxxInspectorPackagerConnection) static bool inspectorEnableCxxInspectorPackagerConnection() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          9,
+          11,
           "inspectorEnableModernCDPRegistry",
           "    REACT_SYNC_METHOD(inspectorEnableModernCDPRegistry) bool inspectorEnableModernCDPRegistry() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(inspectorEnableModernCDPRegistry) static bool inspectorEnableModernCDPRegistry() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          10,
+          12,
           "useModernRuntimeScheduler",
           "    REACT_SYNC_METHOD(useModernRuntimeScheduler) bool useModernRuntimeScheduler() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useModernRuntimeScheduler) static bool useModernRuntimeScheduler() noexcept { /* implementation */ }\n");

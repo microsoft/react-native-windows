@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240321-7d180d712",
+  "baseVersion": "0.75.0-nightly-20240329-3f8882116",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a57066be1285dc8bc5d9702d0227d04c1c6447ce"
+      "baseHash": "47a3426b7d1053a171e1ee1c56120e0e2f1ce887"
     },
     {
       "type": "derived",
@@ -67,7 +67,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Button.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "8d5fb0563e76b6e9f2ce3532f319041248587b63"
+      "baseHash": "b59e0b119a7a930e835ff3eefa780e757a97b31f"
     },
     {
       "type": "platform",
@@ -112,7 +112,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollView.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "a716917b86257f6ff8c818a7a3a4a5e7e0667845"
+      "baseHash": "732f5ccb69ff37895b3da2a160a0a6842a770385"
     },
     {
       "type": "platform",

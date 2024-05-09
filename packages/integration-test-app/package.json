@@ -12,11 +12,12 @@
   "dependencies": {
     "@react-native-windows/automation-channel": "^0.12.151",
     "@react-native-windows/fs": "^0.0.0-canary.41",
+    "@types/react": "^18.2.6",
     "@typescript-eslint/eslint-plugin": "^5.21.0",
     "@typescript-eslint/parser": "^5.21.0",
     "chai": "^4.2.0",
     "react": "18.2.0",
-    "react-native": "0.75.0-nightly-20240321-7d180d712",
+    "react-native": "0.75.0-nightly-20240329-3f8882116",
     "react-native-windows": "^0.0.0-canary.811"
   },
   "devDependencies": {
@@ -26,7 +27,7 @@
     "@babel/preset-typescript": "^7.11.5",
     "@babel/traverse": "^7.11.5",
     "@babel/types": "^7.11.5",
-    "@react-native/metro-config": "0.75.0-nightly-20240321-7d180d712",
+    "@react-native/metro-config": "0.75.0-nightly-20240329-3f8882116",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/eslint-config": "^1.2.13",
     "@rnw-scripts/just-task": "^2.3.29",
