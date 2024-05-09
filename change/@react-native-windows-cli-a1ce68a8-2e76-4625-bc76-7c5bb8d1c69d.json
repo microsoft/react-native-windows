@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "integrate react-native-3-21",
-  "packageName": "@react-native-windows/cli",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}
