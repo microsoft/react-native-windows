@@ -125,7 +125,7 @@ const PASSTHROUGH_PROPS = [
   'tooltip', // [Windows]
 ];
 
-module.exports = function TouchableWithoutFeedback(props: Props): React.Node {
+module.exports = function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
   const {
     disabled,
     rejectResponderTermination,
@@ -146,6 +146,7 @@ module.exports = function TouchableWithoutFeedback(props: Props): React.Node {
     onMouseEnter, // [Windows]
     onMouseLeave, // [Windows]
   } = props;
+
 
   const pressabilityConfig = useMemo(
     () => ({
@@ -240,6 +241,7 @@ module.exports = function TouchableWithoutFeedback(props: Props): React.Node {
     accessibilityLiveRegion:
       ariaLive === 'off' ? 'none' : ariaLive ?? props.accessibilityLiveRegion,
     nativeID: props.id ?? props.nativeID,
+    ref: forwardedRef,
   };
 
   for (const prop of PASSTHROUGH_PROPS) {
