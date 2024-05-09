@@ -55,6 +55,8 @@ namespace Microsoft.ReactNative {
     // TODO add accessors to all the properties on ViewProps
   };
 
+  [webhosthidden]
+  [experimental]
   enum ImageSourceType
   {
     Invalid = 0,
@@ -62,6 +64,9 @@ namespace Microsoft.ReactNative {
     Local = 2,
   };
 
+  [default_interface]
+  [webhosthidden]
+  [experimental]
   runtimeclass ImageSource
   {
     ImageSourceType Type { get; };
@@ -73,6 +78,9 @@ namespace Microsoft.ReactNative {
     static ImageSource ReadValue(IJSValueReader reader);
   }
 
+  [default_interface]
+  [webhosthidden]
+  [experimental]
   runtimeclass ImageProps : ViewProps
   {
     Windows.Foundation.Collections.IVectorView<ImageSource> Sources { get; };
