@@ -179,6 +179,8 @@ winrt::Microsoft::ReactNative::ImageSource ImageSource::ReadValue(
           imageSource.size.height = static_cast<float>(reader.GetDouble());
         } else if (propertyName == L"scale") {
           imageSource.scale = static_cast<float>(reader.GetDouble());
+        } else if (propertyName == L"uri") {
+          imageSource.uri = winrt::to_string(reader.GetString());
         } else if (propertyName == L"url") {
           imageSource.uri = winrt::to_string(reader.GetString());
         } else if (propertyName == L"bundle") {
