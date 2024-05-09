@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240329-3f8882116",
+  "baseVersion": "0.75.0-nightly-20240406-a05466c5b",
   "overrides": [
     {
       "type": "derived",
@@ -204,7 +204,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "7ab8da32f3f0390cd415db0c2c4127d8b7b930f8"
+      "baseHash": "59baf00fff15e8fefbc0bce732af1c247d4695be"
     },
     {
       "type": "patch",

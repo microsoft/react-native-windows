@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240329-3f8882116",
+  "baseVersion": "0.75.0-nightly-20240406-a05466c5b",
   "overrides": [
     {
       "type": "derived",
@@ -44,13 +44,13 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
-      "baseHash": "e43e6cb2df75b8f51422bdbef42e99f2c4f2018d"
+      "baseHash": "7ebdd278017806fbd142f3589e15bc16eb0d442b"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.h",
-      "baseHash": "9b075422a4efd6cd2aff7a02815616c91e9c1150"
+      "baseHash": "0257630564d2a8784c39101a4d99ca3b4fe62b26"
     },
     {
       "type": "derived",
@@ -391,7 +391,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "7ab8da32f3f0390cd415db0c2c4127d8b7b930f8"
+      "baseHash": "59baf00fff15e8fefbc0bce732af1c247d4695be"
     },
     {
       "type": "patch",
