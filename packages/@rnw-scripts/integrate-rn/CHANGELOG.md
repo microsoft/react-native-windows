@@ -1,8 +1,29 @@
 # Change Log - @rnw-scripts/integrate-rn
 
-This log was last generated on Fri, 26 Apr 2024 05:16:49 GMT and should not be manually modified.
+This log was last generated on Thu, 09 May 2024 05:18:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.33
+
+Thu, 09 May 2024 05:18:44 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.71
+- Bump @react-native-windows/fs to v0.0.0-canary.42
+- Bump @react-native-windows/package-utils to v0.0.0-canary.68
+- Bump react-native-platform-override to v1.9.31
+- Bump @rnw-scripts/eslint-config to v1.2.14
+- Bump @rnw-scripts/just-task to v2.3.30
+
+## 1.4.32
+
+Wed, 08 May 2024 05:15:07 GMT
+
+### Patches
+
+- Fix upgradeDependencies when core has a ^ dependency (30809111+acoates-ms@users.noreply.github.com)
 
 ## 1.4.31
 

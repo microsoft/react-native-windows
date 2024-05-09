@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 07 May 2024 05:15:36 GMT and should not be manually modified.
+This log was last generated on Thu, 09 May 2024 05:18:44 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.812
+
+Thu, 09 May 2024 05:18:44 GMT
+
+### Changes
+
+- Move UriHandler registration to PackageProvider (30809111+acoates-ms@users.noreply.github.com)
+- integrate react-native-3-21 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.211
+- Bump @react-native-windows/codegen to v0.0.0-canary.85
+- Bump @rnw-scripts/eslint-config to v1.2.14
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.18
+- Bump @rnw-scripts/just-task to v2.3.30
+- Bump react-native-platform-override to v1.9.31
 
 ## 0.0.0-canary.811
 

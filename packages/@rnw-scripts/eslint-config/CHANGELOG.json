@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/eslint-config",
   "entries": [
     {
+      "date": "Thu, 09 May 2024 05:18:43 GMT",
+      "version": "1.2.14",
+      "tag": "@rnw-scripts/eslint-config_v1.2.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "b85780ba8a1c0dc0aa82344eddd1a8daeb08e15a",
+            "comment": "integrate react-native-3-21"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 25 Apr 2024 20:12:43 GMT",
       "version": "1.2.13",
       "tag": "@rnw-scripts/eslint-config_v1.2.13",

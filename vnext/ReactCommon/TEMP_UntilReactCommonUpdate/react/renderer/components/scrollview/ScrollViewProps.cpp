@@ -111,17 +111,6 @@ ScrollViewProps::ScrollViewProps(
                     // [Windows fix
                     (Float)1)),
                     // Windows]
-      endDraggingSensitivityVelocityMultiplier(
-          CoreFeatures::enablePropIteratorSetter
-              ? sourceProps.endDraggingSensitivityVelocityMultiplier
-              : convertRawProp(
-                    context,
-                    rawProps,
-                    "endDraggingSensitivityVelocityMultiplier",
-                    sourceProps.endDraggingSensitivityVelocityMultiplier,
-                    // [Windows fix
-                    (Float)0)),
-                    // Windows]
       directionalLockEnabled(
           CoreFeatures::enablePropIteratorSetter
               ? sourceProps.directionalLockEnabled
@@ -533,3 +522,4 @@ SharedDebugStringConvertibleList ScrollViewProps::getDebugProps() const {
 #endif
 
 } // namespace facebook::react
+	

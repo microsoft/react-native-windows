@@ -1,8 +1,22 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 26 Apr 2024 05:16:48 GMT and should not be manually modified.
+This log was last generated on Thu, 09 May 2024 05:18:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.211
+
+Thu, 09 May 2024 05:18:43 GMT
+
+### Changes
+
+- integrate react-native-3-21 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.85
+- Bump @react-native-windows/fs to v0.0.0-canary.42
+- Bump @react-native-windows/package-utils to v0.0.0-canary.68
+- Bump @react-native-windows/telemetry to v0.0.0-canary.93
+- Bump @rnw-scripts/eslint-config to v1.2.14
+- Bump @rnw-scripts/just-task to v2.3.30
 
 ## 0.0.0-canary.210
 

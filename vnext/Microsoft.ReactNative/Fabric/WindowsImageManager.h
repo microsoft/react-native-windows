@@ -19,7 +19,7 @@ struct WindowsImageManager {
 
  private:
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
-  winrt::com_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> m_uriImageManager;
+  std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> m_uriImageManager;
 };
 
 } // namespace Microsoft::ReactNative
