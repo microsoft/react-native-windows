@@ -8,7 +8,7 @@
 
   <Identity
     Name="SampleAppFabric"
-    Publisher="CN=vemancha"
+    Publisher="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
     Version="1.0.0.0" />
 
   <Properties>

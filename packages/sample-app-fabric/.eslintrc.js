@@ -1,4 +1,4 @@
 module.exports = {
-  root: true,
-  extends: '@react-native',
+  extends: ['@rnw-scripts'],
+  parserOptions: { tsconfigRootDir: __dirname },
 };
