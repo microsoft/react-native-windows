@@ -196,7 +196,7 @@ struct ViewComponentView : public ViewComponentViewT<ViewComponentView, Componen
   std::string DefaultControlType() const noexcept override;
 
   facebook::react::SharedViewProps viewProps() noexcept override;
-  winrt::Microsoft::ReactNative::ViewProps ViewProps() noexcept;
+  virtual winrt::Microsoft::ReactNative::ViewProps ViewProps() noexcept;
 
   facebook::react::Tag hitTest(
       facebook::react::Point pt,

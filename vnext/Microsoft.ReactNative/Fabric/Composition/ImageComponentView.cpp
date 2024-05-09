@@ -14,6 +14,7 @@
 #include <react/renderer/components/image/ImageEventEmitter.h>
 
 #include <AutoDraw.h>
+#include <Fabric/AbiViewProps.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Utils/ImageUtils.h>
 #include <shcore.h>
@@ -195,6 +196,13 @@ void ImageComponentView::updateLayoutMetrics(
   m_visual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+}
+
+winrt::Microsoft::ReactNative::ImageProps ImageComponentView::ImageProps() noexcept {
+  // We do not currently support custom ImageComponentView's
+  // If we did we would need to create a AbiImageProps and possibly return them here
+  assert(!m_customComponent);
+  return winrt::make<winrt::Microsoft::ReactNative::implementation::ImageProps>(m_props);
 }
 
 void ImageComponentView::OnRenderingDeviceLost() noexcept {

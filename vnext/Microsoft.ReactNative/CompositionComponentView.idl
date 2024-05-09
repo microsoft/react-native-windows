@@ -103,6 +103,7 @@ namespace Microsoft.ReactNative.Composition
   [webhosthidden]
   [default_interface]
   unsealed runtimeclass ImageComponentView : ComponentView {
+    Microsoft.ReactNative.ImageProps ImageProps { get; };
   };
 
   [experimental]

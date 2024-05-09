@@ -45,13 +45,39 @@ namespace Microsoft.ReactNative {
   [webhosthidden]
   [experimental]
   DOC_STRING("Provides access to the properties on standard ViewProps.")
-  runtimeclass ViewProps
+  unsealed runtimeclass ViewProps
   {
     Single Opacity { get; };
-
     Color BackgroundColor { get; };
-
+    String TestId { get; };
+    String AccessibilityLabel { get; };
+    
     // TODO add accessors to all the properties on ViewProps
   };
+
+  enum ImageSourceType
+  {
+    Invalid = 0,
+    Remote = 1,
+    Local = 2,
+  };
+
+  runtimeclass ImageSource
+  {
+    ImageSourceType Type { get; };
+    String Uri { get; };
+    String Bundle { get; };
+    Single Scale { get; };
+    Windows.Foundation.Size Size { get; };
+
+    static ImageSource ReadValue(IJSValueReader reader);
+  }
+
+  runtimeclass ImageProps : ViewProps
+  {
+    Windows.Foundation.Collections.IVectorView<ImageSource> Sources { get; };
+    // TODO add accessors to all the properties on ImageProps
+  }
+  
 
 } // namespace Microsoft. ReactNative

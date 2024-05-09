@@ -7,10 +7,12 @@
 
 #include <Fabric/Composition/Theme.h>
 #include <JSValueReader.h>
+#include <react/renderer/components/image/ImageProps.h>
+#include <winrt/Microsoft.ReactNative.h>
+#include <winrt/Windows.Foundation.h>
 
-#if __has_include("Color.g.cpp")
 #include "Color.g.cpp"
-#endif
+#include "ImageSource.g.cpp"
 
 namespace Microsoft::ReactNative {
 
@@ -21,24 +23,24 @@ AbiViewProps::AbiViewProps(
     : facebook::react::ViewProps(context, sourceProps, rawProps) {}
 
 AbiViewProps::~AbiViewProps() {
-  if (m_userProps) {
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::UserViewProps>(m_userProps)->Disconnect();
+  if (m_innerProps) {
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ViewProps>(m_innerProps)->Disconnect();
   }
 }
 
 void AbiViewProps::SetUserProps(
-    winrt::Microsoft::ReactNative::IComponentProps componentProps,
-    winrt::Microsoft::ReactNative::ViewProps userProps) noexcept {
-  m_componentProps = componentProps;
+    winrt::Microsoft::ReactNative::IComponentProps userProps,
+    winrt::Microsoft::ReactNative::ViewProps innerProps) noexcept {
   m_userProps = userProps;
+  m_innerProps = innerProps;
 }
 
 winrt::Microsoft::ReactNative::IComponentProps AbiViewProps::UserProps() const noexcept {
-  return m_componentProps;
+  return m_userProps;
 }
 
 winrt::Microsoft::ReactNative::ViewProps AbiViewProps::ViewProps() const noexcept {
-  return m_userProps;
+  return m_innerProps;
 }
 
 } // namespace Microsoft::ReactNative
@@ -124,29 +126,112 @@ winrt::Microsoft::ReactNative::Color Color::White() noexcept {
   return winrt::make<Color>(facebook::react::whiteColor());
 }
 
-UserViewProps::UserViewProps(std::shared_ptr<::Microsoft::ReactNative::AbiViewProps const> viewProps) noexcept
-    : m_viewProps(viewProps.get()) {}
+ImageSource::ImageSource(const facebook::react::ImageSource &imageSource) : m_imageSource(imageSource) {}
 
-void UserViewProps::Disconnect() noexcept {
+ImageSourceType ImageSource::Type() noexcept {
+  static_assert(
+      winrt::Microsoft::ReactNative::ImageSourceType::Invalid ==
+      static_cast<winrt::Microsoft::ReactNative::ImageSourceType>(facebook::react::ImageSource::Type::Invalid));
+  static_assert(
+      winrt::Microsoft::ReactNative::ImageSourceType::Remote ==
+      static_cast<winrt::Microsoft::ReactNative::ImageSourceType>(facebook::react::ImageSource::Type::Remote));
+  static_assert(
+      winrt::Microsoft::ReactNative::ImageSourceType::Local ==
+      static_cast<winrt::Microsoft::ReactNative::ImageSourceType>(facebook::react::ImageSource::Type::Local));
+  return static_cast<winrt::Microsoft::ReactNative::ImageSourceType>(m_imageSource.type);
+}
+
+winrt::hstring ImageSource::Uri() noexcept {
+  return winrt::to_hstring(m_imageSource.uri);
+}
+
+winrt::hstring ImageSource::Bundle() noexcept {
+  return winrt::to_hstring(m_imageSource.bundle);
+}
+
+float ImageSource::Scale() noexcept {
+  return m_imageSource.scale;
+}
+
+winrt::Windows::Foundation::Size ImageSource::Size() noexcept {
+  return {m_imageSource.size.width, m_imageSource.size.height};
+}
+
+winrt::Microsoft::ReactNative::ImageSource ImageSource::ReadValue(
+    const winrt::Microsoft::ReactNative::IJSValueReader &reader) noexcept {
+  facebook::react::ImageSource imageSource;
+  switch (reader.ValueType()) {
+    case JSValueType::String: {
+      imageSource.type = facebook::react::ImageSource::Type::Remote;
+      imageSource.uri = winrt::to_string(reader.GetString());
+      break;
+    }
+    case JSValueType::Object: {
+      imageSource.type = facebook::react::ImageSource::Type::Remote;
+
+      winrt::hstring propertyName;
+      while (reader.GetNextObjectProperty(/*out*/ propertyName)) {
+        if (propertyName == L"__packager_asset") {
+          imageSource.type = facebook::react::ImageSource::Type::Local;
+        } else if (propertyName == L"width") {
+          imageSource.size.width = static_cast<float>(reader.GetDouble());
+        } else if (propertyName == L"height") {
+          imageSource.size.height = static_cast<float>(reader.GetDouble());
+        } else if (propertyName == L"scale") {
+          imageSource.scale = static_cast<float>(reader.GetDouble());
+        } else if (propertyName == L"url") {
+          imageSource.uri = winrt::to_string(reader.GetString());
+        } else if (propertyName == L"bundle") {
+          imageSource.bundle = winrt::to_string(reader.GetString());
+          imageSource.type = facebook::react::ImageSource::Type::Local;
+        }
+      }
+      break;
+    }
+    default: {
+      imageSource.type = facebook::react::ImageSource::Type::Invalid;
+      break;
+    }
+  }
+  return winrt::make<ImageSource>(imageSource);
+}
+
+ViewProps::ViewProps(facebook::react::SharedViewProps props, bool holdRef) noexcept
+    : m_props(holdRef ? props : nullptr), m_viewProps(static_cast<const facebook::react::ViewProps *>(props.get())) {}
+
+void ViewProps::Disconnect() noexcept {
   m_viewProps = nullptr;
 }
 
-float UserViewProps::Opacity() noexcept {
+float ViewProps::Opacity() noexcept {
   return m_viewProps ? m_viewProps->opacity : 1.0f;
 }
 
-winrt::Microsoft::ReactNative::Color UserViewProps::BackgroundColor() noexcept {
+winrt::Microsoft::ReactNative::Color ViewProps::BackgroundColor() noexcept {
   return winrt::make<Color>(m_viewProps ? m_viewProps->backgroundColor : facebook::react::clearColor());
 }
 
-ViewProps::ViewProps(facebook::react::SharedViewProps props) noexcept : m_props(props) {}
-
-float ViewProps::Opacity() noexcept {
-  return m_props->opacity;
+winrt::hstring ViewProps::TestId() noexcept {
+  return m_viewProps ? winrt::to_hstring(m_viewProps->testId) : winrt::hstring{};
 }
 
-winrt::Microsoft::ReactNative::Color ViewProps::BackgroundColor() noexcept {
-  return winrt::make<Color>(m_props->backgroundColor);
+winrt::hstring ViewProps::AccessibilityLabel() noexcept {
+  return m_viewProps ? winrt::to_hstring(m_viewProps->accessibilityLabel) : winrt::hstring{};
+}
+
+ImageProps::ImageProps(facebook::react::SharedViewProps props) noexcept : Super(props) {}
+
+winrt::Windows::Foundation::Collections::IVectorView<winrt::Microsoft::ReactNative::ImageSource>
+ImageProps::Sources() noexcept {
+  winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::ImageSource> sources{
+      winrt::single_threaded_vector<winrt::Microsoft::ReactNative::ImageSource>()};
+  const auto imageProps = std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
+
+  for (const auto &source : imageProps->sources) {
+    sources.Append(winrt::make<ImageSource>(source));
+  }
+
+  return sources.GetView();
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

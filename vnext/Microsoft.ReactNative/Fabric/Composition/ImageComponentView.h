@@ -66,6 +66,8 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ComponentVie
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
+  winrt::Microsoft::ReactNative::ImageProps ImageProps() noexcept;
+
  private:
   struct WindowsImageResponseObserver : facebook::react::ImageResponseObserver {
    public:
