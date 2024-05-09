@@ -1,5 +1,8 @@
 {
   "extends": "@rnw-scripts/ts-config",
+  "compilerOptions": {
+    "types": ["jest"]
+  },
   "exclude": [
     "node_modules"
   ]

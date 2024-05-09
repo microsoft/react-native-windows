@@ -13,7 +13,7 @@
 
   <Properties>
     <DisplayName>SampleAppFabric</DisplayName>
-    <PublisherDisplayName>vemancha</PublisherDisplayName>
+    <PublisherDisplayName>react-native-windows-testing</PublisherDisplayName>
     <Logo>Images\StoreLogo.png</Logo>
   </Properties>
 
