@@ -291,6 +291,10 @@ void NAPI_CDECL removeInspectorPage(int32_t pageId) noexcept {
 
 } // namespace
 
+//==============================================================================
+// HermesRuntimeHolder implementation
+//==============================================================================
+
 HermesRuntimeHolder::HermesRuntimeHolder(
     std::shared_ptr<facebook::react::DevSettings> devSettings,
     std::shared_ptr<facebook::react::MessageQueueThread> jsQueue,
@@ -392,6 +396,10 @@ void HermesRuntimeHolder::removeFromProfiling() const noexcept {
 /*static*/ void HermesRuntimeHolder::dumpSampledTraceToFile(const std::string &fileName) noexcept {
   CRASH_ON_ERROR(getHermesApi().hermes_sampling_profiler_dump_to_file(fileName.c_str()));
 }
+
+//==============================================================================
+// HermesJSRuntime implementation
+//==============================================================================
 
 HermesJSRuntime::HermesJSRuntime(std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> hermesRuntimeHolder)
     : m_holder(std::move(hermesRuntimeHolder)) {}
