@@ -117,7 +117,7 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
         winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(ReactContext().Properties()));
 
     m_siteBridge = winrt::Microsoft::UI::Content::SystemVisualSiteBridge::Create(
-        m_contentIsland.Compositor(), *m_visual, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
+        m_contentIsland.Compositor(), m_visual, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
     m_siteBridge.Connect(m_contentIsland);
 
     auto rootXamlVisualSize = m_contentIsland.Root().Size();
@@ -167,7 +167,7 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
   const bool m_nativeLayout;
   winrt::Microsoft::UI::Xaml::Controls::TextBlock m_buttonLabelTextBlock{nullptr};
   winrt::Microsoft::ReactNative::IComponentState m_state;
-  winrt::Microsoft::UI::Composition::SpriteVisual m_visual{nullptr};
+  winrt::Microsoft::UI::Composition::ContainerVisual m_visual{nullptr};
 #ifdef USE_EXPERIMENTAL_WINUI3
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
   winrt::Microsoft::UI::Content::ContentIsland m_contentIsland{nullptr};
