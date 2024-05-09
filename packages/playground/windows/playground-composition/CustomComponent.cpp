@@ -117,7 +117,7 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
         winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(ReactContext().Properties()));
 
     m_siteBridge = winrt::Microsoft::UI::Content::SystemVisualSiteBridge::Create(
-        m_contentIsland.Compositor(), &m_visual, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
+        m_contentIsland.Compositor(), *m_visual, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
     m_siteBridge.Connect(m_contentIsland);
 
     auto rootXamlVisualSize = m_contentIsland.Root().Size();
