@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/eslint-config
 
-This log was last generated on Thu, 25 Apr 2024 20:12:43 GMT and should not be manually modified.
+This log was last generated on Thu, 09 May 2024 05:18:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.14
+
+Thu, 09 May 2024 05:18:43 GMT
+
+### Patches
+
+- integrate react-native-3-21 (tatianakapos@microsoft.com)
 
 ## 1.2.13
 
