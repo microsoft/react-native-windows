@@ -151,7 +151,7 @@ class PressInOutEvents extends React.Component<
     return (
       <View>
         <Text>{this.state.text}</Text>
-        <TextInput
+        <ExampleTextInput
           placeholder="Click inside the box to observe events being fired."
           style={[styles.singleLineWithHeightTextInput]}
           onPressIn={() =>
@@ -189,7 +189,7 @@ function PropagationSample() {
           logEvent('outer keyDownCapture ' + event.nativeEvent.code)
         }>
         <Text>some text to focus on</Text>
-        <TextInput
+        <ExampleTextInput
           placeholder="Click inside the box to observe events being fired."
           style={[styles.singleLineWithHeightTextInput]}
           onKeyDown={event =>
@@ -227,7 +227,7 @@ function SpellCheckSample() {
          * found when making Flow check .android.js files. */
         onValueChange={setSpellCheckEnabled}
       />
-      <TextInput
+      <ExampleTextInput
         placeholder="Type text to test spell check functionality."
         style={[styles.singleLineWithHeightTextInput]}
         spellCheck={spellCheckEnabled}
@@ -680,20 +680,20 @@ const examples: Array<RNTesterModuleExample> = [
       return (
         <View>
           <Text>Default submit key (Enter):</Text>
-          <TextInput
+          <ExampleTextInput
             clearTextOnSubmit
             style={styles.singleLine}
             testID="textinput-clear-on-submit"
           />
           <Text>Custom submit key event (Shift + Enter), single-line:</Text>
-          <TextInput
+          <ExampleTextInput
             clearTextOnSubmit
             style={styles.singleLine}
             submitKeyEvents={[{code: 'Enter', shiftKey: true}]}
             testID="textinput-clear-on-submit-2"
           />
           <Text>Custom submit key event (Shift + Enter), multi-line:</Text>
-          <TextInput
+          <ExampleTextInput
             multiline
             clearTextOnSubmit
             style={styles.multiline}
@@ -701,7 +701,7 @@ const examples: Array<RNTesterModuleExample> = [
             testID="textinput-clear-on-submit-3"
           />
           <Text>Submit with Enter key, return key with Shift + Enter</Text>
-          <TextInput
+          <ExampleTextInput
             multiline
             clearTextOnSubmit
             style={styles.multiline}
@@ -730,7 +730,7 @@ const examples: Array<RNTesterModuleExample> = [
       return (
         <View>
           <Text>CaretHidden</Text>
-          <TextInput
+          <ExampleTextInput
             style={styles.singleLine}
             caretHidden={true}
             placeholder="caretHidden={true}"
@@ -746,7 +746,7 @@ const examples: Array<RNTesterModuleExample> = [
       return (
         <View>
           <Text>Cursorcolor</Text>
-          <TextInput
+          <ExampleTextInput
             style={styles.singleLine}
             cursorColor={'green'}
             placeholder='cursorColor={"green"}'
@@ -762,7 +762,7 @@ const examples: Array<RNTesterModuleExample> = [
       return (
         <View>
           <Text>Shadow</Text>
-          <TextInput
+          <ExampleTextInput
             placeholder="shadowColor: purple"
             testID="textinput-shadow"
             style={{

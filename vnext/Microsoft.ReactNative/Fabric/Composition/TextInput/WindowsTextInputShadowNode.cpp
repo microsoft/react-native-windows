@@ -4,8 +4,6 @@
 #include "WindowsTextInputShadowNode.h"
 
 #include <react/debug/react_native_assert.h>
-#include <react/featureflags/ReactNativeFeatureFlags.h>
-#include <react/jni/ReadableNativeMap.h>
 #include <react/renderer/attributedstring/AttributedStringBox.h>
 #include <react/renderer/attributedstring/TextAttributes.h>
 #include <react/renderer/components/text/BaseTextShadowNode.h>

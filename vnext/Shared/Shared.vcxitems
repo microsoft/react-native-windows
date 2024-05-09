@@ -580,6 +580,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\InstanceHandle.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertible.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\debug\DebugStringConvertibleItem.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\dom\DOM.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Color.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\Transform.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\imagemanager\ImageResponse.cpp" />
@@ -606,6 +607,8 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\bindingUtils.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\PointerEventsProcessor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\PointerHoverTracker.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\consistency\LatestShadowTreeRevisionProvider.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\consistency\LazyShadowTreeRevisionConsistencyManager.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\SurfaceRegistryBinding.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManager.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\UIManagerBinding.cpp" DisableSpecificWarnings="4389;4715;%(DisableSpecificWarnings)" />
