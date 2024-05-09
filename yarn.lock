@@ -11347,7 +11347,7 @@ semver-regex@^3.1.2:
   resolved "https://registry.yarnpkg.com/semver-regex/-/semver-regex-3.1.4.tgz#13053c0d4aa11d070a2f2872b6b1e3ae1e1971b4"
   integrity sha512-6IiqeZNgq01qGf0TId0t3NvKzSvUsjcpdEO3AQNeIjR6A2+ckTnQlDpl4qu1bjRv0RzN3FP9hzFmws3lKqRWkA==
 
-"semver@2 >=2.2.1 || 3.x || 4 || 5 || 7", semver@^7.0.0, semver@^7.3.2, semver@^7.3.4, semver@^7.3.5, semver@^7.3.7, semver@^7.5.1, semver@^7.5.2, semver@^7.5.3, semver@^7.5.4:
+"semver@2 >=2.2.1 || 3.x || 4 || 5 || 7", semver@^7.0.0, semver@^7.3.2, semver@^7.3.4, semver@^7.3.5, semver@^7.3.7, semver@^7.5.1, semver@^7.5.2, semver@^7.5.3, semver@^7.5.4, semver@^7.6.0:
   version "7.6.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-7.6.1.tgz#60bfe090bf907a25aa8119a72b9f90ef7ca281b2"
   integrity sha512-f/vbBsu+fOiYt+lmwZV0rVwJScl46HppnOA1ZvIuBWKOTlllpyJ3bfVax76/OrhCH38dyxoDIA8K7uB963IYgA==
@@ -11361,13 +11361,6 @@ semver@^6.1.0, semver@^6.2.0, semver@^6.3.0, semver@^6.3.1:
   version "6.3.1"
   resolved "https://registry.yarnpkg.com/semver/-/semver-6.3.1.tgz#556d2ef8689146e46dcea4bfdd095f3434dffcb4"
   integrity sha512-BR7VvDCVHO+q2xBEWskxS6DJE1qRnb7DxzUrogb71CWoSficBxYsiAGd+Kl0mmq/MprG9yArRkyrQxTO6XjMzA==
-
-semver@^7.6.0:
-  version "7.6.0"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-7.6.0.tgz#1a46a4db4bffcccd97b743b5005c8325f23d4e2d"
-  integrity sha512-EnwXhrlwXMk9gKu5/flx5sv/an57AkRplG3hTK68W7FRDN+k+OWBj65M7719OkA82XLBxrcX0KSHj+X5COhOVg==
-  dependencies:
-    lru-cache "^6.0.0"
 
 semver@~7.5.4:
   version "7.5.4"
