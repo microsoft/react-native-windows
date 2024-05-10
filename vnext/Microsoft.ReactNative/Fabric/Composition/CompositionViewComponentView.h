@@ -23,7 +23,8 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 struct CreateCompositionComponentViewArgs
     : public CreateCompositionComponentViewArgsT<
           CreateCompositionComponentViewArgs,
-          winrt::Microsoft::ReactNative::implementation::CreateComponentViewArgs> {
+          winrt::Microsoft::ReactNative::implementation::CreateComponentViewArgs,
+          winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCreateComponentViewArgs> {
   CreateCompositionComponentViewArgs(
       const winrt::Microsoft::ReactNative::IReactContext &reactContext,
       facebook::react::Tag tag,
