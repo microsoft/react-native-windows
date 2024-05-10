@@ -23,6 +23,7 @@ path_classifiers:
     - "**/packages/integration-test-app"
     - "**/packages/playground"
     - "**/packages/sample-apps"
+    - "**/packages/sample-app-fabric"
     - "**/vnext/Desktop.ABITests"
     - "**/vnext/Desktop.IntegrationTests"
     - "**/vnext/Desktop.Test.DLL"

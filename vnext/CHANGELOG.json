@@ -2,6 +2,29 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 10 May 2024 05:18:21 GMT",
+      "version": "0.0.0-canary.813",
+      "tag": "react-native-windows_v0.0.0-canary.813",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5a5053bfec174796e8f255955c03cb945d5b708a",
+            "comment": "Change Hermes package version to 0.1.21"
+          }
+        ],
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "39f82e7176a20eef0f82ae3e619d09734e2120a7",
+            "comment": "Update rnw-dependencies script to check for the correct Node version"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 May 2024 05:18:44 GMT",
       "version": "0.0.0-canary.812",
       "tag": "react-native-windows_v0.0.0-canary.812",
