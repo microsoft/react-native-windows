@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Update rnw-dependencies script to check for the correct Node version",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "none"
-}
