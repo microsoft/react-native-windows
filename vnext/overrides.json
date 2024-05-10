@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240321-7d180d712",
+  "baseVersion": "0.75.0-nightly-20240406-a05466c5b",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "a57066be1285dc8bc5d9702d0227d04c1c6447ce"
+      "baseHash": "47a3426b7d1053a171e1ee1c56120e0e2f1ce887"
     },
     {
       "type": "derived",
@@ -44,13 +44,13 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
-      "baseHash": "e43e6cb2df75b8f51422bdbef42e99f2c4f2018d"
+      "baseHash": "7ebdd278017806fbd142f3589e15bc16eb0d442b"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.h",
-      "baseHash": "9b075422a4efd6cd2aff7a02815616c91e9c1150"
+      "baseHash": "0257630564d2a8784c39101a4d99ca3b4fe62b26"
     },
     {
       "type": "derived",
@@ -130,7 +130,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/scrollview/ScrollViewProps.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/scrollview/ScrollViewProps.cpp",
-      "baseHash": "9ac8a49eedc2f175f2aac3c67a3f3667842e4ca4",
+      "baseHash": "e4adfb6ee6a9ba5037b2fff3fbc11ed81e157d1b",
       "issue": 12879
     },
     {
@@ -151,22 +151,8 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "779898014c0487575738e29afce2596eea34b19e",
+      "baseHash": "363481d0b8c942f1ec0a63ec063dec10c75ace07",
       "issue": 13172
-    },
-    {
-      "type": "copy",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/utils/jsi-utils.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/utils/jsi.cpp",
-      "baseHash": "ed26bfa57fa5969486056b23b7257703d0ed3e67",
-      "issue": 12891
-    },
-    {
-      "type": "copy",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/utils/jsi-utils.h",
-      "baseFile": "packages/react-native/ReactCommon/react/utils/jsi.h",
-      "baseHash": "139ce975574c9afbb43ed2ee81727faacd38e362",
-      "issue": 12891
     },
     {
       "type": "copy",
@@ -263,7 +249,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Button.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "8d5fb0563e76b6e9f2ce3532f319041248587b63"
+      "baseHash": "b59e0b119a7a930e835ff3eefa780e757a97b31f"
     },
     {
       "type": "platform",
@@ -325,7 +311,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollViewNativeComponent.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollViewNativeComponent.js",
-      "baseHash": "b067f5fb881d4227eca5b12318b90859b70acbef"
+      "baseHash": "4b6a972a3a5458a6528d7ea4e67b5f8fd5ac52f2"
     },
     {
       "type": "derived",
@@ -374,7 +360,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseHash": "1e89c911237edcc649102c728afef2931e16cead"
+      "baseHash": "98e8e444c40dc5e010af9d22a7cff24f314cff35"
     },
     {
       "type": "patch",
@@ -405,7 +391,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "7ab8da32f3f0390cd415db0c2c4127d8b7b930f8"
+      "baseHash": "59baf00fff15e8fefbc0bce732af1c247d4695be"
     },
     {
       "type": "patch",

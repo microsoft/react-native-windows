@@ -356,6 +356,7 @@ const Button: React.AbstractComponent<
   );
   const formattedTitle =
     Platform.OS === 'android' ? title.toUpperCase() : title;
+
   const Touchable =
     Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
 

@@ -31,8 +31,8 @@
     "beachball": "^2.20.0",
     "eslint": "^8.19.0",
     "prettier": "2.8.8",
-    "typescript": "5.0.4",
-    "shell-quote": "^1.8.1"
+    "shell-quote": "^1.8.1",
+    "typescript": "5.0.4"
   },
   "files": [
     "lib-commonjs"
