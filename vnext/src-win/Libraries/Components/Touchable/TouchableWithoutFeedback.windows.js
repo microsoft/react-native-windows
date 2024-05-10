@@ -29,6 +29,7 @@ import {PressabilityDebugView} from '../../Pressability/PressabilityDebug';
 import usePressability from '../../Pressability/usePressability';
 import * as React from 'react';
 import {useMemo} from 'react';
+import Animated from '../../Animated/Animated'; // Windows
 
 type Props = $ReadOnly<{|
   accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
@@ -90,7 +91,7 @@ type Props = $ReadOnly<{|
   onMouseLeave?: ?(event: MouseEvent) => void, // [Windows]
   tabIndex?: ?number, // [Windows]
   tooltip?: ?Stringish, // [Windows]
-  hostRef?: ?React.Ref<typeof React.Element>, // [Windows]
+  hostRef?: ?React.Ref<typeof Animated.View>, // [Windows]
 |}>;
 
 const PASSTHROUGH_PROPS = [
@@ -127,10 +128,10 @@ const PASSTHROUGH_PROPS = [
 ];
 
 // Modify the function to accept the ref prop and forward it
-module.exports = React.forwardRef(function TouchableWithoutFeedback(
-  props: Props,
-  ref
-): React.Node {
+const TouchableWithoutFeedback: React.AbstractComponent<
+  Props,
+  React.ElementRef<typeof Animated.View>,
+> = React.forwardRef(function TouchableWithoutFeedback(props: Props, ref): React.Node {
   const {
     disabled,
     rejectResponderTermination,
@@ -257,3 +258,5 @@ module.exports = React.forwardRef(function TouchableWithoutFeedback(
   // $FlowFixMe[incompatible-call]
   return React.cloneElement(element, {...elementProps, ref}, ...children);
 });
+
+module.exports = TouchableWithoutFeedback;
