@@ -90,6 +90,7 @@ type Props = $ReadOnly<{|
   onMouseLeave?: ?(event: MouseEvent) => void, // [Windows]
   tabIndex?: ?number, // [Windows]
   tooltip?: ?Stringish, // [Windows]
+  hostRef?: ?React.Ref<typeof React.Element>, // [Windows]
 |}>;
 
 const PASSTHROUGH_PROPS = [
@@ -125,7 +126,11 @@ const PASSTHROUGH_PROPS = [
   'tooltip', // [Windows]
 ];
 
-module.exports = function TouchableWithoutFeedback(props: Props, forwardedRef): React.Node {
+// Modify the function to accept the ref prop and forward it
+module.exports = React.forwardRef(function TouchableWithoutFeedback(
+  props: Props,
+  ref
+): React.Node {
   const {
     disabled,
     rejectResponderTermination,
@@ -241,7 +246,6 @@ module.exports = function TouchableWithoutFeedback(props: Props, forwardedRef): 
     accessibilityLiveRegion:
       ariaLive === 'off' ? 'none' : ariaLive ?? props.accessibilityLiveRegion,
     nativeID: props.id ?? props.nativeID,
-    ref: forwardedRef,
   };
 
   for (const prop of PASSTHROUGH_PROPS) {
@@ -251,5 +255,5 @@ module.exports = function TouchableWithoutFeedback(props: Props, forwardedRef): 
   }
 
   // $FlowFixMe[incompatible-call]
-  return React.cloneElement(element, elementProps, ...children);
-};
+  return React.cloneElement(element, {...elementProps, ref}, ...children);
+});
