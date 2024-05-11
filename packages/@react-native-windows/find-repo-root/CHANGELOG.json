@@ -2,6 +2,33 @@
   "name": "@react-native-windows/find-repo-root",
   "entries": [
     {
+      "date": "Sat, 11 May 2024 05:18:30 GMT",
+      "version": "0.0.0-canary.72",
+      "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.72",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.43",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.15",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.31",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 09 May 2024 05:18:44 GMT",
       "version": "0.0.0-canary.71",
       "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.71",
