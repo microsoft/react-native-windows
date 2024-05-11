@@ -1411,79 +1411,6 @@ private:
 };
 
 
-  class JSI_EXPORT NativeAppearanceCxxSpecJSI : public TurboModule {
-protected:
-  NativeAppearanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual std::optional<jsi::String> getColorScheme(jsi::Runtime &rt) = 0;
-  virtual void setColorScheme(jsi::Runtime &rt, jsi::String colorScheme) = 0;
-  virtual void addListener(jsi::Runtime &rt, jsi::String eventName) = 0;
-  virtual void removeListeners(jsi::Runtime &rt, double count) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeAppearanceCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "Appearance";
-
-protected:
-  NativeAppearanceCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeAppearanceCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-private:
-  class Delegate : public NativeAppearanceCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeAppearanceCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
-
-    std::optional<jsi::String> getColorScheme(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getColorScheme) == 1,
-          "Expected getColorScheme(...) to have 1 parameters");
-
-      return bridging::callFromJs<std::optional<jsi::String>>(
-          rt, &T::getColorScheme, jsInvoker_, instance_);
-    }
-    void setColorScheme(jsi::Runtime &rt, jsi::String colorScheme) override {
-      static_assert(
-          bridging::getParameterCount(&T::setColorScheme) == 2,
-          "Expected setColorScheme(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setColorScheme, jsInvoker_, instance_, std::move(colorScheme));
-    }
-    void addListener(jsi::Runtime &rt, jsi::String eventName) override {
-      static_assert(
-          bridging::getParameterCount(&T::addListener) == 2,
-          "Expected addListener(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::addListener, jsInvoker_, instance_, std::move(eventName));
-    }
-    void removeListeners(jsi::Runtime &rt, double count) override {
-      static_assert(
-          bridging::getParameterCount(&T::removeListeners) == 2,
-          "Expected removeListeners(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::removeListeners, jsInvoker_, instance_, std::move(count));
-    }
-
-  private:
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
   
 #pragma mark - AppStateAppStateConstants
 
@@ -1821,6 +1748,79 @@ private:
 };
 
 
+  class JSI_EXPORT NativeAppearanceCxxSpecJSI : public TurboModule {
+protected:
+  NativeAppearanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual std::optional<jsi::String> getColorScheme(jsi::Runtime &rt) = 0;
+  virtual void setColorScheme(jsi::Runtime &rt, jsi::String colorScheme) = 0;
+  virtual void addListener(jsi::Runtime &rt, jsi::String eventName) = 0;
+  virtual void removeListeners(jsi::Runtime &rt, double count) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeAppearanceCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+  static constexpr std::string_view kModuleName = "Appearance";
+
+protected:
+  NativeAppearanceCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeAppearanceCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+private:
+  class Delegate : public NativeAppearanceCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeAppearanceCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
+
+    std::optional<jsi::String> getColorScheme(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getColorScheme) == 1,
+          "Expected getColorScheme(...) to have 1 parameters");
+
+      return bridging::callFromJs<std::optional<jsi::String>>(
+          rt, &T::getColorScheme, jsInvoker_, instance_);
+    }
+    void setColorScheme(jsi::Runtime &rt, jsi::String colorScheme) override {
+      static_assert(
+          bridging::getParameterCount(&T::setColorScheme) == 2,
+          "Expected setColorScheme(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setColorScheme, jsInvoker_, instance_, std::move(colorScheme));
+    }
+    void addListener(jsi::Runtime &rt, jsi::String eventName) override {
+      static_assert(
+          bridging::getParameterCount(&T::addListener) == 2,
+          "Expected addListener(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::addListener, jsInvoker_, instance_, std::move(eventName));
+    }
+    void removeListeners(jsi::Runtime &rt, double count) override {
+      static_assert(
+          bridging::getParameterCount(&T::removeListeners) == 2,
+          "Expected removeListeners(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::removeListeners, jsInvoker_, instance_, std::move(count));
+    }
+
+  private:
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
   
 #pragma mark - BlobModuleConstants
 
@@ -2077,348 +2077,6 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::setString, jsInvoker_, instance_, std::move(content));
-    }
-
-  private:
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  class JSI_EXPORT NativeDeviceEventManagerCxxSpecJSI : public TurboModule {
-protected:
-  NativeDeviceEventManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void invokeDefaultBackPressHandler(jsi::Runtime &rt) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeDeviceEventManagerCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "DeviceEventManager";
-
-protected:
-  NativeDeviceEventManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeDeviceEventManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-private:
-  class Delegate : public NativeDeviceEventManagerCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeDeviceEventManagerCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
-
-    void invokeDefaultBackPressHandler(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::invokeDefaultBackPressHandler) == 1,
-          "Expected invokeDefaultBackPressHandler(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::invokeDefaultBackPressHandler, jsInvoker_, instance_);
-    }
-
-  private:
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  
-#pragma mark - DeviceInfoDisplayMetrics
-
-template <typename P0, typename P1, typename P2, typename P3>
-struct DeviceInfoDisplayMetrics {
-  P0 width;
-  P1 height;
-  P2 scale;
-  P3 fontScale;
-  bool operator==(const DeviceInfoDisplayMetrics &other) const {
-    return width == other.width && height == other.height && scale == other.scale && fontScale == other.fontScale;
-  }
-};
-
-template <typename T>
-struct DeviceInfoDisplayMetricsBridging {
-  static T types;
-
-  static T fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    T result{
-      bridging::fromJs<decltype(types.width)>(rt, value.getProperty(rt, "width"), jsInvoker),
-      bridging::fromJs<decltype(types.height)>(rt, value.getProperty(rt, "height"), jsInvoker),
-      bridging::fromJs<decltype(types.scale)>(rt, value.getProperty(rt, "scale"), jsInvoker),
-      bridging::fromJs<decltype(types.fontScale)>(rt, value.getProperty(rt, "fontScale"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static double widthToJs(jsi::Runtime &rt, decltype(types.width) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double heightToJs(jsi::Runtime &rt, decltype(types.height) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double scaleToJs(jsi::Runtime &rt, decltype(types.scale) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double fontScaleToJs(jsi::Runtime &rt, decltype(types.fontScale) value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const T &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    result.setProperty(rt, "width", bridging::toJs(rt, value.width, jsInvoker));
-    result.setProperty(rt, "height", bridging::toJs(rt, value.height, jsInvoker));
-    result.setProperty(rt, "scale", bridging::toJs(rt, value.scale, jsInvoker));
-    result.setProperty(rt, "fontScale", bridging::toJs(rt, value.fontScale, jsInvoker));
-    return result;
-  }
-};
-
-
-
-#pragma mark - DeviceInfoDisplayMetricsAndroid
-
-template <typename P0, typename P1, typename P2, typename P3, typename P4>
-struct DeviceInfoDisplayMetricsAndroid {
-  P0 width;
-  P1 height;
-  P2 scale;
-  P3 fontScale;
-  P4 densityDpi;
-  bool operator==(const DeviceInfoDisplayMetricsAndroid &other) const {
-    return width == other.width && height == other.height && scale == other.scale && fontScale == other.fontScale && densityDpi == other.densityDpi;
-  }
-};
-
-template <typename T>
-struct DeviceInfoDisplayMetricsAndroidBridging {
-  static T types;
-
-  static T fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    T result{
-      bridging::fromJs<decltype(types.width)>(rt, value.getProperty(rt, "width"), jsInvoker),
-      bridging::fromJs<decltype(types.height)>(rt, value.getProperty(rt, "height"), jsInvoker),
-      bridging::fromJs<decltype(types.scale)>(rt, value.getProperty(rt, "scale"), jsInvoker),
-      bridging::fromJs<decltype(types.fontScale)>(rt, value.getProperty(rt, "fontScale"), jsInvoker),
-      bridging::fromJs<decltype(types.densityDpi)>(rt, value.getProperty(rt, "densityDpi"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static double widthToJs(jsi::Runtime &rt, decltype(types.width) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double heightToJs(jsi::Runtime &rt, decltype(types.height) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double scaleToJs(jsi::Runtime &rt, decltype(types.scale) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double fontScaleToJs(jsi::Runtime &rt, decltype(types.fontScale) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double densityDpiToJs(jsi::Runtime &rt, decltype(types.densityDpi) value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const T &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    result.setProperty(rt, "width", bridging::toJs(rt, value.width, jsInvoker));
-    result.setProperty(rt, "height", bridging::toJs(rt, value.height, jsInvoker));
-    result.setProperty(rt, "scale", bridging::toJs(rt, value.scale, jsInvoker));
-    result.setProperty(rt, "fontScale", bridging::toJs(rt, value.fontScale, jsInvoker));
-    result.setProperty(rt, "densityDpi", bridging::toJs(rt, value.densityDpi, jsInvoker));
-    return result;
-  }
-};
-
-
-
-#pragma mark - DeviceInfoDimensionsPayload
-
-template <typename P0, typename P1, typename P2, typename P3>
-struct DeviceInfoDimensionsPayload {
-  P0 window;
-  P1 screen;
-  P2 windowPhysicalPixels;
-  P3 screenPhysicalPixels;
-  bool operator==(const DeviceInfoDimensionsPayload &other) const {
-    return window == other.window && screen == other.screen && windowPhysicalPixels == other.windowPhysicalPixels && screenPhysicalPixels == other.screenPhysicalPixels;
-  }
-};
-
-template <typename T>
-struct DeviceInfoDimensionsPayloadBridging {
-  static T types;
-
-  static T fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    T result{
-      bridging::fromJs<decltype(types.window)>(rt, value.getProperty(rt, "window"), jsInvoker),
-      bridging::fromJs<decltype(types.screen)>(rt, value.getProperty(rt, "screen"), jsInvoker),
-      bridging::fromJs<decltype(types.windowPhysicalPixels)>(rt, value.getProperty(rt, "windowPhysicalPixels"), jsInvoker),
-      bridging::fromJs<decltype(types.screenPhysicalPixels)>(rt, value.getProperty(rt, "screenPhysicalPixels"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static jsi::Object windowToJs(jsi::Runtime &rt, decltype(types.window) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::Object screenToJs(jsi::Runtime &rt, decltype(types.screen) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::Object windowPhysicalPixelsToJs(jsi::Runtime &rt, decltype(types.windowPhysicalPixels) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::Object screenPhysicalPixelsToJs(jsi::Runtime &rt, decltype(types.screenPhysicalPixels) value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const T &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    if (value.window) {
-      result.setProperty(rt, "window", bridging::toJs(rt, value.window.value(), jsInvoker));
-    }
-    if (value.screen) {
-      result.setProperty(rt, "screen", bridging::toJs(rt, value.screen.value(), jsInvoker));
-    }
-    if (value.windowPhysicalPixels) {
-      result.setProperty(rt, "windowPhysicalPixels", bridging::toJs(rt, value.windowPhysicalPixels.value(), jsInvoker));
-    }
-    if (value.screenPhysicalPixels) {
-      result.setProperty(rt, "screenPhysicalPixels", bridging::toJs(rt, value.screenPhysicalPixels.value(), jsInvoker));
-    }
-    return result;
-  }
-};
-
-
-
-#pragma mark - DeviceInfoDeviceInfoConstants
-
-template <typename P0, typename P1>
-struct DeviceInfoDeviceInfoConstants {
-  P0 Dimensions;
-  P1 isIPhoneX_deprecated;
-  bool operator==(const DeviceInfoDeviceInfoConstants &other) const {
-    return Dimensions == other.Dimensions && isIPhoneX_deprecated == other.isIPhoneX_deprecated;
-  }
-};
-
-template <typename T>
-struct DeviceInfoDeviceInfoConstantsBridging {
-  static T types;
-
-  static T fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    T result{
-      bridging::fromJs<decltype(types.Dimensions)>(rt, value.getProperty(rt, "Dimensions"), jsInvoker),
-      bridging::fromJs<decltype(types.isIPhoneX_deprecated)>(rt, value.getProperty(rt, "isIPhoneX_deprecated"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static jsi::Object DimensionsToJs(jsi::Runtime &rt, decltype(types.Dimensions) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static bool isIPhoneX_deprecatedToJs(jsi::Runtime &rt, decltype(types.isIPhoneX_deprecated) value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const T &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    result.setProperty(rt, "Dimensions", bridging::toJs(rt, value.Dimensions, jsInvoker));
-    if (value.isIPhoneX_deprecated) {
-      result.setProperty(rt, "isIPhoneX_deprecated", bridging::toJs(rt, value.isIPhoneX_deprecated.value(), jsInvoker));
-    }
-    return result;
-  }
-};
-
-class JSI_EXPORT NativeDeviceInfoCxxSpecJSI : public TurboModule {
-protected:
-  NativeDeviceInfoCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeDeviceInfoCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "DeviceInfo";
-
-protected:
-  NativeDeviceInfoCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeDeviceInfoCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-private:
-  class Delegate : public NativeDeviceInfoCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeDeviceInfoCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
-
-    jsi::Object getConstants(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getConstants) == 1,
-          "Expected getConstants(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::getConstants, jsInvoker_, instance_);
     }
 
   private:
@@ -2765,6 +2423,348 @@ private:
 
       return bridging::callFromJs<std::optional<jsi::String>>(
           rt, &T::getProfilingSettings, jsInvoker_, instance_);
+    }
+
+  private:
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  class JSI_EXPORT NativeDeviceEventManagerCxxSpecJSI : public TurboModule {
+protected:
+  NativeDeviceEventManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void invokeDefaultBackPressHandler(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeDeviceEventManagerCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+  static constexpr std::string_view kModuleName = "DeviceEventManager";
+
+protected:
+  NativeDeviceEventManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeDeviceEventManagerCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+private:
+  class Delegate : public NativeDeviceEventManagerCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeDeviceEventManagerCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
+
+    void invokeDefaultBackPressHandler(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::invokeDefaultBackPressHandler) == 1,
+          "Expected invokeDefaultBackPressHandler(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::invokeDefaultBackPressHandler, jsInvoker_, instance_);
+    }
+
+  private:
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  
+#pragma mark - DeviceInfoDisplayMetrics
+
+template <typename P0, typename P1, typename P2, typename P3>
+struct DeviceInfoDisplayMetrics {
+  P0 width;
+  P1 height;
+  P2 scale;
+  P3 fontScale;
+  bool operator==(const DeviceInfoDisplayMetrics &other) const {
+    return width == other.width && height == other.height && scale == other.scale && fontScale == other.fontScale;
+  }
+};
+
+template <typename T>
+struct DeviceInfoDisplayMetricsBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.width)>(rt, value.getProperty(rt, "width"), jsInvoker),
+      bridging::fromJs<decltype(types.height)>(rt, value.getProperty(rt, "height"), jsInvoker),
+      bridging::fromJs<decltype(types.scale)>(rt, value.getProperty(rt, "scale"), jsInvoker),
+      bridging::fromJs<decltype(types.fontScale)>(rt, value.getProperty(rt, "fontScale"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double widthToJs(jsi::Runtime &rt, decltype(types.width) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double heightToJs(jsi::Runtime &rt, decltype(types.height) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double scaleToJs(jsi::Runtime &rt, decltype(types.scale) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double fontScaleToJs(jsi::Runtime &rt, decltype(types.fontScale) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "width", bridging::toJs(rt, value.width, jsInvoker));
+    result.setProperty(rt, "height", bridging::toJs(rt, value.height, jsInvoker));
+    result.setProperty(rt, "scale", bridging::toJs(rt, value.scale, jsInvoker));
+    result.setProperty(rt, "fontScale", bridging::toJs(rt, value.fontScale, jsInvoker));
+    return result;
+  }
+};
+
+
+
+#pragma mark - DeviceInfoDisplayMetricsAndroid
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4>
+struct DeviceInfoDisplayMetricsAndroid {
+  P0 width;
+  P1 height;
+  P2 scale;
+  P3 fontScale;
+  P4 densityDpi;
+  bool operator==(const DeviceInfoDisplayMetricsAndroid &other) const {
+    return width == other.width && height == other.height && scale == other.scale && fontScale == other.fontScale && densityDpi == other.densityDpi;
+  }
+};
+
+template <typename T>
+struct DeviceInfoDisplayMetricsAndroidBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.width)>(rt, value.getProperty(rt, "width"), jsInvoker),
+      bridging::fromJs<decltype(types.height)>(rt, value.getProperty(rt, "height"), jsInvoker),
+      bridging::fromJs<decltype(types.scale)>(rt, value.getProperty(rt, "scale"), jsInvoker),
+      bridging::fromJs<decltype(types.fontScale)>(rt, value.getProperty(rt, "fontScale"), jsInvoker),
+      bridging::fromJs<decltype(types.densityDpi)>(rt, value.getProperty(rt, "densityDpi"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double widthToJs(jsi::Runtime &rt, decltype(types.width) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double heightToJs(jsi::Runtime &rt, decltype(types.height) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double scaleToJs(jsi::Runtime &rt, decltype(types.scale) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double fontScaleToJs(jsi::Runtime &rt, decltype(types.fontScale) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double densityDpiToJs(jsi::Runtime &rt, decltype(types.densityDpi) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "width", bridging::toJs(rt, value.width, jsInvoker));
+    result.setProperty(rt, "height", bridging::toJs(rt, value.height, jsInvoker));
+    result.setProperty(rt, "scale", bridging::toJs(rt, value.scale, jsInvoker));
+    result.setProperty(rt, "fontScale", bridging::toJs(rt, value.fontScale, jsInvoker));
+    result.setProperty(rt, "densityDpi", bridging::toJs(rt, value.densityDpi, jsInvoker));
+    return result;
+  }
+};
+
+
+
+#pragma mark - DeviceInfoDimensionsPayload
+
+template <typename P0, typename P1, typename P2, typename P3>
+struct DeviceInfoDimensionsPayload {
+  P0 window;
+  P1 screen;
+  P2 windowPhysicalPixels;
+  P3 screenPhysicalPixels;
+  bool operator==(const DeviceInfoDimensionsPayload &other) const {
+    return window == other.window && screen == other.screen && windowPhysicalPixels == other.windowPhysicalPixels && screenPhysicalPixels == other.screenPhysicalPixels;
+  }
+};
+
+template <typename T>
+struct DeviceInfoDimensionsPayloadBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.window)>(rt, value.getProperty(rt, "window"), jsInvoker),
+      bridging::fromJs<decltype(types.screen)>(rt, value.getProperty(rt, "screen"), jsInvoker),
+      bridging::fromJs<decltype(types.windowPhysicalPixels)>(rt, value.getProperty(rt, "windowPhysicalPixels"), jsInvoker),
+      bridging::fromJs<decltype(types.screenPhysicalPixels)>(rt, value.getProperty(rt, "screenPhysicalPixels"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static jsi::Object windowToJs(jsi::Runtime &rt, decltype(types.window) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Object screenToJs(jsi::Runtime &rt, decltype(types.screen) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Object windowPhysicalPixelsToJs(jsi::Runtime &rt, decltype(types.windowPhysicalPixels) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Object screenPhysicalPixelsToJs(jsi::Runtime &rt, decltype(types.screenPhysicalPixels) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.window) {
+      result.setProperty(rt, "window", bridging::toJs(rt, value.window.value(), jsInvoker));
+    }
+    if (value.screen) {
+      result.setProperty(rt, "screen", bridging::toJs(rt, value.screen.value(), jsInvoker));
+    }
+    if (value.windowPhysicalPixels) {
+      result.setProperty(rt, "windowPhysicalPixels", bridging::toJs(rt, value.windowPhysicalPixels.value(), jsInvoker));
+    }
+    if (value.screenPhysicalPixels) {
+      result.setProperty(rt, "screenPhysicalPixels", bridging::toJs(rt, value.screenPhysicalPixels.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+
+
+#pragma mark - DeviceInfoDeviceInfoConstants
+
+template <typename P0, typename P1>
+struct DeviceInfoDeviceInfoConstants {
+  P0 Dimensions;
+  P1 isIPhoneX_deprecated;
+  bool operator==(const DeviceInfoDeviceInfoConstants &other) const {
+    return Dimensions == other.Dimensions && isIPhoneX_deprecated == other.isIPhoneX_deprecated;
+  }
+};
+
+template <typename T>
+struct DeviceInfoDeviceInfoConstantsBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.Dimensions)>(rt, value.getProperty(rt, "Dimensions"), jsInvoker),
+      bridging::fromJs<decltype(types.isIPhoneX_deprecated)>(rt, value.getProperty(rt, "isIPhoneX_deprecated"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static jsi::Object DimensionsToJs(jsi::Runtime &rt, decltype(types.Dimensions) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static bool isIPhoneX_deprecatedToJs(jsi::Runtime &rt, decltype(types.isIPhoneX_deprecated) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "Dimensions", bridging::toJs(rt, value.Dimensions, jsInvoker));
+    if (value.isIPhoneX_deprecated) {
+      result.setProperty(rt, "isIPhoneX_deprecated", bridging::toJs(rt, value.isIPhoneX_deprecated.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+class JSI_EXPORT NativeDeviceInfoCxxSpecJSI : public TurboModule {
+protected:
+  NativeDeviceInfoCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeDeviceInfoCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+  static constexpr std::string_view kModuleName = "DeviceInfo";
+
+protected:
+  NativeDeviceInfoCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeDeviceInfoCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+private:
+  class Delegate : public NativeDeviceInfoCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeDeviceInfoCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
+
+    jsi::Object getConstants(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getConstants) == 1,
+          "Expected getConstants(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Object>(
+          rt, &T::getConstants, jsInvoker_, instance_);
     }
 
   private:

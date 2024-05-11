@@ -196,8 +196,7 @@ std::unique_ptr<const facebook::react::JSBigString> JsBigStringFromPath(
   return facebook::react::FileMappingBigString::fromPath(bundlePath);
 #else
   std::wstring bundlePath;
-  // TODO: Replace call to private string function with C++ 20 `starts_with`
-  if (devSettings->bundleRootPath._Starts_with("resource://")) {
+  if (devSettings->bundleRootPath.starts_with("resource://")) {
     auto uri = winrt::Windows::Foundation::Uri(
         winrt::to_hstring(devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
     bundlePath = uri.ToString();
