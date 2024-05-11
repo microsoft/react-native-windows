@@ -10,6 +10,7 @@
 #include <NodeApiJsiRuntime.h>
 #include <crash/verifyElseCrash.h>
 #include <cxxreact/SystraceSection.h>
+#include <jsinspector-modern/ConsoleMessage.h>
 #include <jsinspector-modern/InspectorInterfaces.h>
 #include <mutex>
 #include "SafeLoadLibrary.h"
@@ -291,6 +292,10 @@ void NAPI_CDECL removeInspectorPage(int32_t pageId) noexcept {
 
 } // namespace
 
+//==============================================================================
+// HermesRuntimeHolder implementation
+//==============================================================================
+
 HermesRuntimeHolder::HermesRuntimeHolder(
     std::shared_ptr<facebook::react::DevSettings> devSettings,
     std::shared_ptr<facebook::react::MessageQueueThread> jsQueue,
@@ -393,11 +398,25 @@ void HermesRuntimeHolder::removeFromProfiling() const noexcept {
   CRASH_ON_ERROR(getHermesApi().hermes_sampling_profiler_dump_to_file(fileName.c_str()));
 }
 
+//==============================================================================
+// HermesJSRuntime implementation
+//==============================================================================
+
 HermesJSRuntime::HermesJSRuntime(std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> hermesRuntimeHolder)
     : m_holder(std::move(hermesRuntimeHolder)) {}
 
 facebook::jsi::Runtime &HermesJSRuntime::getRuntime() noexcept {
   return *m_holder->getRuntime();
+}
+
+void HermesJSRuntime::addConsoleMessage(
+    facebook::jsi::Runtime &runtime,
+    facebook::react::jsinspector_modern::ConsoleMessage message) {
+  return;
+}
+
+bool HermesJSRuntime::supportsConsole() const {
+  return false;
 }
 
 std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> HermesJSRuntime::createAgentDelegate(

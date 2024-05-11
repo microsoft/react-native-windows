@@ -1,8 +1,46 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 07 May 2024 05:15:36 GMT and should not be manually modified.
+This log was last generated on Sat, 11 May 2024 05:18:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.814
+
+Sat, 11 May 2024 05:18:29 GMT
+
+### Changes
+
+- integrate rn nightly 4/5/2024 (email not defined)
+- Expose CompositionContext from CreateCompositionComponentViewArgs (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.212
+- Bump @react-native-windows/codegen to v0.0.0-canary.86
+- Bump @rnw-scripts/eslint-config to v1.2.15
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.19
+- Bump @rnw-scripts/just-task to v2.3.31
+- Bump react-native-platform-override to v1.9.32
+
+## 0.0.0-canary.813
+
+Fri, 10 May 2024 05:18:21 GMT
+
+### Changes
+
+- Change Hermes package version to 0.1.21 (vmorozov@microsoft.com)
+
+## 0.0.0-canary.812
+
+Thu, 09 May 2024 05:18:44 GMT
+
+### Changes
+
+- Move UriHandler registration to PackageProvider (30809111+acoates-ms@users.noreply.github.com)
+- integrate react-native-3-21 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.211
+- Bump @react-native-windows/codegen to v0.0.0-canary.85
+- Bump @rnw-scripts/eslint-config to v1.2.14
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.18
+- Bump @rnw-scripts/just-task to v2.3.30
+- Bump react-native-platform-override to v1.9.31
 
 ## 0.0.0-canary.811
 

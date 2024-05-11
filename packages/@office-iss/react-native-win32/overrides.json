@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240307-ff03b149e",
+  "baseVersion": "0.75.0-nightly-20240406-a05466c5b",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "bdebcba51a5c13fbe5acab9e07720acff0825bc9"
+      "baseHash": "47a3426b7d1053a171e1ee1c56120e0e2f1ce887"
     },
     {
       "type": "derived",
@@ -67,7 +67,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Button.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "8d5fb0563e76b6e9f2ce3532f319041248587b63"
+      "baseHash": "b59e0b119a7a930e835ff3eefa780e757a97b31f"
     },
     {
       "type": "platform",
@@ -112,7 +112,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollView.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "a716917b86257f6ff8c818a7a3a4a5e7e0667845"
+      "baseHash": "732f5ccb69ff37895b3da2a160a0a6842a770385"
     },
     {
       "type": "platform",
@@ -122,7 +122,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "f05b36551197bfa87f2342bd6d1c9b134c1731b2"
+      "baseHash": "b1ef5981a6abbb0548fc5fd835ad711c10712d61"
     },
     {
       "type": "patch",
@@ -204,7 +204,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "7ab8da32f3f0390cd415db0c2c4127d8b7b930f8"
+      "baseHash": "59baf00fff15e8fefbc0bce732af1c247d4695be"
     },
     {
       "type": "patch",
@@ -323,7 +323,7 @@
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorReactFrames.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js",
-      "baseHash": "04c1210d0198315af8358b22a81dc74dc76ef752"
+      "baseHash": "3a765d2180cca25ed35172ebce8294fc569486aa"
     },
     {
       "type": "derived",
@@ -528,20 +528,6 @@
       "file": "src-win/src/private/specs/modules/NativePlatformConstantsWin.js",
       "baseFile": "packages/react-native/src/private/specs/modules/NativePlatformConstantsAndroid.js",
       "baseHash": "b4a125d9134f33aeaba9e06988e18cbb0b4e9e9c"
-    },
-    {
-      "type": "patch",
-      "file": "src-win/src/private/webapis/dom/nodes/ReadOnlyElement.js",
-      "baseFile": "packages/react-native/src/private/webapis/dom/nodes/ReadOnlyElement.js",
-      "baseHash": "e049a95c6fab9e5d3f7e13edbeb7b12440f71259",
-      "issue": 12951
-    },
-    {
-      "type": "patch",
-      "file": "src-win/src/private/webapis/dom/nodes/ReadOnlyNode.js",
-      "baseFile": "packages/react-native/src/private/webapis/dom/nodes/ReadOnlyNode.js",
-      "baseHash": "bbb8d136ec9b0f56a3843ea9da0bd1e17a50a7a3",
-      "issue": 12951
     }
   ]
 }

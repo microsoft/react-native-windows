@@ -1,8 +1,28 @@
 # Change Log - @react-native-windows/find-repo-root
 
-This log was last generated on Thu, 25 Apr 2024 20:12:42 GMT and should not be manually modified.
+This log was last generated on Sat, 11 May 2024 05:18:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.72
+
+Sat, 11 May 2024 05:18:30 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.43
+- Bump @rnw-scripts/eslint-config to v1.2.15
+- Bump @rnw-scripts/just-task to v2.3.31
+
+## 0.0.0-canary.71
+
+Thu, 09 May 2024 05:18:44 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.42
+- Bump @rnw-scripts/eslint-config to v1.2.14
+- Bump @rnw-scripts/just-task to v2.3.30
 
 ## 0.0.0-canary.70
 

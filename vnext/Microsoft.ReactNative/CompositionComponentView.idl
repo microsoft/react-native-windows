@@ -26,6 +26,15 @@ namespace Microsoft.ReactNative.Composition
     Default       = 0x00000007, // ShadowProps | NativeBorder | Background
   };
 
+  namespace Experimental {
+    [webhosthidden]
+    [experimental]
+    interface IInternalCreateComponentViewArgs
+    {
+      ICompositionContext CompositionContext { get; };
+    }
+  }
+
   [experimental]
   [webhosthidden]
   runtimeclass CreateCompositionComponentViewArgs : Microsoft.ReactNative.CreateComponentViewArgs {

@@ -11129,7 +11129,6 @@ exports[`snapshotAllPages FlatList 1`] = `
         renderItem={[Function]}
         scrollEventThrottle={0.0001}
         stickyHeaderIndices={[]}
-        style={{}}
         viewabilityConfig={
           {
             "minimumViewTime": 3000,
@@ -31935,159 +31934,121 @@ exports[`snapshotAllPages PanResponder Sample 1`] = `
 exports[`snapshotAllPages Performance API Examples 1`] = `
 <View
   style={
-    [
-      {
-        "flex": 1,
-      },
-      {
-        "backgroundColor": "#f2f2f7ff",
-      },
-    ]
+    {
+      "padding": 10,
+    }
   }
 >
   <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
       [
         {
-          "borderRadius": 4,
-          "borderWidth": 0.5,
-          "height": 45,
-          "margin": 10,
-          "marginBottom": 0,
-          "padding": 10,
-        },
-        {
-          "backgroundColor": "#f2f2f7ff",
-          "borderColor": "#3c3c4349",
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
         },
       ]
     }
   >
-    <Text
-      style={
-        [
-          {
-            "fontSize": 19,
-            "fontWeight": "500",
-          },
-          {
-            "color": "#000000ff",
-          },
-        ]
-      }
-    >
-      performance.memory
-    </Text>
-  </View>
-  <View
-    style={
-      {
-        "flex": 1,
-        "rowGap": 30,
-      }
-    }
-  >
     <View
-      style={
-        {
-          "padding": 10,
-        }
-      }
+      style={{}}
     >
       <View
-        accessibilityRole="button"
-        accessibilityState={
-          {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        focusable={true}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        onMouseEnter={[Function]}
-        onMouseLeave={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          [
-            {
-              "backgroundColor": {
-                "windowsbrush": [
-                  "ButtonBackground",
-                ],
-              },
-              "borderBottomWidth": 1.5,
-              "borderColor": {
-                "windowsbrush": [
-                  "ButtonBorderBrush",
-                ],
-              },
-              "borderRadius": 3,
-              "borderWidth": 1,
-            },
-          ]
-        }
+        style={{}}
       >
-        <View
-          style={{}}
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
         >
-          <View
-            style={{}}
-          >
-            <Text
-              style={
-                [
-                  {
-                    "color": {
-                      "windowsbrush": [
-                        "ButtonForeground",
-                      ],
-                    },
-                    "fontSize": 14,
-                    "fontWeight": "400",
-                    "margin": 8,
-                    "textAlign": "center",
-                  },
-                ]
-              }
-            >
-              Click to update memory info
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View>
-        <Text>
-          jsHeapSizeLimit: undefined bytes
-        </Text>
-        <Text>
-          totalJSHeapSize: undefined bytes
-        </Text>
-        <Text>
-          usedJSHeapSize: undefined bytes
+          Click to update memory info
         </Text>
       </View>
     </View>
+  </View>
+  <View>
+    <Text
+      style={
+        {
+          "color": "#000000ff",
+        }
+      }
+    >
+      jsHeapSizeLimit: undefined bytes
+    </Text>
+    <Text
+      style={
+        {
+          "color": "#000000ff",
+        }
+      }
+    >
+      totalJSHeapSize: undefined bytes
+    </Text>
+    <Text
+      style={
+        {
+          "color": "#000000ff",
+        }
+      }
+    >
+      usedJSHeapSize: undefined bytes
+    </Text>
   </View>
 </View>
 `;
@@ -32095,169 +32056,243 @@ exports[`snapshotAllPages Performance API Examples 1`] = `
 exports[`snapshotAllPages Performance API Examples 2`] = `
 <View
   style={
-    [
-      {
-        "flex": 1,
-      },
-      {
-        "backgroundColor": "#f2f2f7ff",
-      },
-    ]
+    {
+      "padding": 10,
+    }
   }
 >
   <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
     style={
       [
         {
-          "borderRadius": 4,
-          "borderWidth": 0.5,
-          "height": 45,
-          "margin": 10,
-          "marginBottom": 0,
-          "padding": 10,
-        },
-        {
-          "backgroundColor": "#f2f2f7ff",
-          "borderColor": "#3c3c4349",
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
         },
       ]
     }
   >
-    <Text
-      style={
-        [
-          {
-            "fontSize": 19,
-            "fontWeight": "500",
-          },
-          {
-            "color": "#000000ff",
-          },
-        ]
-      }
-    >
-      performance.reactNativeStartupTiming
-    </Text>
-  </View>
-  <View
-    style={
-      {
-        "flex": 1,
-        "rowGap": 30,
-      }
-    }
-  >
     <View
-      style={
-        {
-          "padding": 10,
-        }
-      }
+      style={{}}
     >
       <View
-        accessibilityRole="button"
-        accessibilityState={
-          {
-            "busy": undefined,
-            "checked": undefined,
-            "disabled": undefined,
-            "expanded": undefined,
-            "selected": undefined,
-          }
-        }
-        accessibilityValue={
-          {
-            "max": undefined,
-            "min": undefined,
-            "now": undefined,
-            "text": undefined,
-          }
-        }
-        accessible={true}
-        focusable={true}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        onMouseEnter={[Function]}
-        onMouseLeave={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          [
-            {
-              "backgroundColor": {
-                "windowsbrush": [
-                  "ButtonBackground",
-                ],
-              },
-              "borderBottomWidth": 1.5,
-              "borderColor": {
-                "windowsbrush": [
-                  "ButtonBorderBrush",
-                ],
-              },
-              "borderRadius": 3,
-              "borderWidth": 1,
-            },
-          ]
-        }
+        style={{}}
       >
-        <View
-          style={{}}
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
         >
-          <View
-            style={{}}
-          >
-            <Text
-              style={
-                [
-                  {
-                    "color": {
-                      "windowsbrush": [
-                        "ButtonForeground",
-                      ],
-                    },
-                    "fontSize": 14,
-                    "fontWeight": "400",
-                    "margin": 8,
-                    "textAlign": "center",
-                  },
-                ]
-              }
-            >
-              Click to update React startup timing
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View>
-        <Text>
-          startTime: undefined ms
-        </Text>
-        <Text>
-          initializeRuntimeStart: undefined ms
-        </Text>
-        <Text>
-          executeJavaScriptBundleEntryPointStart: undefined ms
-        </Text>
-        <Text>
-          executeJavaScriptBundleEntryPointEnd: undefined ms
-        </Text>
-        <Text>
-          initializeRuntimeEnd: undefined ms
-        </Text>
-        <Text>
-          endTime: undefined ms
+          Click to update React startup timing
         </Text>
       </View>
     </View>
   </View>
+  <View>
+    <Text
+      style={
+        {
+          "color": "#000000ff",
+        }
+      }
+    >
+      startTime: undefined ms
+    </Text>
+    <Text
+      style={
+        {
+          "color": "#000000ff",
+        }
+      }
+    >
+      initializeRuntimeStart: undefined ms
+    </Text>
+    <Text
+      style={
+        {
+          "color": "#000000ff",
+        }
+      }
+    >
+      executeJavaScriptBundleEntryPointStart: undefined ms
+    </Text>
+    <Text
+      style={
+        {
+          "color": "#000000ff",
+        }
+      }
+    >
+      executeJavaScriptBundleEntryPointEnd: undefined ms
+    </Text>
+    <Text
+      style={
+        {
+          "color": "#000000ff",
+        }
+      }
+    >
+      initializeRuntimeEnd: undefined ms
+    </Text>
+    <Text
+      style={
+        {
+          "color": "#000000ff",
+        }
+      }
+    >
+      endTime: undefined ms
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Performance API Examples 3`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Click to log some marks and measures
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View />
 </View>
 `;
 
@@ -47617,7 +47652,6 @@ exports[`snapshotAllPages ScrollViewAnimated 1`] = `
     horizontal={true}
     onScroll={[Function]}
     scrollEventThrottle={16}
-    style={{}}
   >
     <View>
       <View
@@ -74234,13 +74268,21 @@ exports[`snapshotAllPages TextInput 1`] = `
   accessibilityLabel="I am the accessibility label for text input"
   autoFocus={true}
   style={
-    {
-      "borderColor": "#0f0f0f",
-      "borderWidth": 0.5,
-      "flex": 1,
-      "fontSize": 13,
-      "padding": 4,
-    }
+    [
+      {
+        "backgroundColor": "#ffffffff",
+        "borderColor": "#3c3c432d",
+        "color": "#000000ff",
+      },
+      {
+        "borderWidth": 1,
+        "flexGrow": 1,
+        "flexShrink": 1,
+        "fontSize": 13,
+        "padding": 4,
+      },
+      undefined,
+    ]
   }
 />
 `;
@@ -74260,13 +74302,21 @@ exports[`snapshotAllPages TextInput 2`] = `
     multiline={false}
     onChangeText={[Function]}
     style={
-      {
-        "borderColor": "#0f0f0f",
-        "borderWidth": 0.5,
-        "flex": 1,
-        "fontSize": 13,
-        "padding": 4,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
     }
     testID="rewrite_sp_underscore_input"
     value=""
@@ -74303,13 +74353,21 @@ exports[`snapshotAllPages TextInput 3`] = `
     multiline={false}
     onChangeText={[Function]}
     style={
-      {
-        "borderColor": "#0f0f0f",
-        "borderWidth": 0.5,
-        "flex": 1,
-        "fontSize": 13,
-        "padding": 4,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
     }
     testID="rewrite_no_sp_input"
     value=""
@@ -74331,13 +74389,21 @@ exports[`snapshotAllPages TextInput 4`] = `
     multiline={true}
     onChangeText={[Function]}
     style={
-      {
-        "borderColor": "#0f0f0f",
-        "borderWidth": 0.5,
-        "flex": 1,
-        "fontSize": 13,
-        "padding": 4,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
     }
     testID="rewrite_clear_input"
     value=""
@@ -74461,13 +74527,21 @@ exports[`snapshotAllPages TextInput 5`] = `
       <TextInput
         autoCapitalize="none"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
         testID="capitalize-none"
       />
@@ -74504,13 +74578,21 @@ exports[`snapshotAllPages TextInput 5`] = `
       <TextInput
         autoCapitalize="sentences"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
         testID="capitalize-sentences"
       />
@@ -74547,13 +74629,21 @@ exports[`snapshotAllPages TextInput 5`] = `
       <TextInput
         autoCapitalize="words"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
         testID="capitalize-words"
       />
@@ -74590,13 +74680,21 @@ exports[`snapshotAllPages TextInput 5`] = `
       <TextInput
         autoCapitalize="characters"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
         testID="capitalize-characters"
       />
@@ -74638,13 +74736,21 @@ exports[`snapshotAllPages TextInput 6`] = `
       <TextInput
         autoCorrect={true}
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -74680,13 +74786,21 @@ exports[`snapshotAllPages TextInput 6`] = `
       <TextInput
         autoCorrect={false}
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -74727,13 +74841,21 @@ exports[`snapshotAllPages TextInput 7`] = `
       <TextInput
         keyboardType="default"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -74769,13 +74891,21 @@ exports[`snapshotAllPages TextInput 7`] = `
       <TextInput
         keyboardType="ascii-capable"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -74811,13 +74941,21 @@ exports[`snapshotAllPages TextInput 7`] = `
       <TextInput
         keyboardType="numbers-and-punctuation"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -74853,13 +74991,21 @@ exports[`snapshotAllPages TextInput 7`] = `
       <TextInput
         keyboardType="url"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -74895,13 +75041,21 @@ exports[`snapshotAllPages TextInput 7`] = `
       <TextInput
         keyboardType="number-pad"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -74937,13 +75091,21 @@ exports[`snapshotAllPages TextInput 7`] = `
       <TextInput
         keyboardType="phone-pad"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -74979,13 +75141,21 @@ exports[`snapshotAllPages TextInput 7`] = `
       <TextInput
         keyboardType="name-phone-pad"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75021,13 +75191,21 @@ exports[`snapshotAllPages TextInput 7`] = `
       <TextInput
         keyboardType="email-address"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75063,13 +75241,21 @@ exports[`snapshotAllPages TextInput 7`] = `
       <TextInput
         keyboardType="decimal-pad"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75105,13 +75291,21 @@ exports[`snapshotAllPages TextInput 7`] = `
       <TextInput
         keyboardType="twitter"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75147,13 +75341,21 @@ exports[`snapshotAllPages TextInput 7`] = `
       <TextInput
         keyboardType="web-search"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75189,13 +75391,21 @@ exports[`snapshotAllPages TextInput 7`] = `
       <TextInput
         keyboardType="ascii-capable-number-pad"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75231,13 +75441,21 @@ exports[`snapshotAllPages TextInput 7`] = `
       <TextInput
         keyboardType="numeric"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75278,13 +75496,21 @@ exports[`snapshotAllPages TextInput 8`] = `
       <TextInput
         inputMode="none"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75320,13 +75546,21 @@ exports[`snapshotAllPages TextInput 8`] = `
       <TextInput
         inputMode="text"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75362,13 +75596,21 @@ exports[`snapshotAllPages TextInput 8`] = `
       <TextInput
         inputMode="decimal"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75404,13 +75646,21 @@ exports[`snapshotAllPages TextInput 8`] = `
       <TextInput
         inputMode="numeric"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75446,13 +75696,21 @@ exports[`snapshotAllPages TextInput 8`] = `
       <TextInput
         inputMode="tel"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75488,13 +75746,21 @@ exports[`snapshotAllPages TextInput 8`] = `
       <TextInput
         inputMode="search"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75530,13 +75796,21 @@ exports[`snapshotAllPages TextInput 8`] = `
       <TextInput
         inputMode="email"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75572,13 +75846,21 @@ exports[`snapshotAllPages TextInput 8`] = `
       <TextInput
         inputMode="url"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75594,9 +75876,23 @@ exports[`snapshotAllPages TextInput 9`] = `
     placeholder="blurOnSubmit = false"
     returnKeyType="next"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
   />
   <TextInput
@@ -75606,9 +75902,23 @@ exports[`snapshotAllPages TextInput 9`] = `
     placeholder="blurOnSubmit = false"
     returnKeyType="next"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
   />
   <TextInput
@@ -75618,9 +75928,23 @@ exports[`snapshotAllPages TextInput 9`] = `
     placeholder="blurOnSubmit = false"
     returnKeyType="next"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
   />
   <TextInput
@@ -75629,9 +75953,23 @@ exports[`snapshotAllPages TextInput 9`] = `
     onSubmitEditing={[Function]}
     placeholder="blurOnSubmit = false"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
   />
   <TextInput
@@ -75639,9 +75977,23 @@ exports[`snapshotAllPages TextInput 9`] = `
     placeholder="blurOnSubmit = true"
     returnKeyType="done"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
   />
 </View>
@@ -75680,13 +76032,21 @@ exports[`snapshotAllPages TextInput 10`] = `
       <TextInput
         enterKeyHint="enter"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75722,13 +76082,21 @@ exports[`snapshotAllPages TextInput 10`] = `
       <TextInput
         enterKeyHint="done"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75764,13 +76132,21 @@ exports[`snapshotAllPages TextInput 10`] = `
       <TextInput
         enterKeyHint="go"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75806,13 +76182,21 @@ exports[`snapshotAllPages TextInput 10`] = `
       <TextInput
         enterKeyHint="next"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75848,13 +76232,21 @@ exports[`snapshotAllPages TextInput 10`] = `
       <TextInput
         enterKeyHint="previous"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75890,13 +76282,21 @@ exports[`snapshotAllPages TextInput 10`] = `
       <TextInput
         enterKeyHint="search"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75932,13 +76332,21 @@ exports[`snapshotAllPages TextInput 10`] = `
       <TextInput
         enterKeyHint="send"
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
       />
     </View>
@@ -75951,37 +76359,156 @@ exports[`snapshotAllPages TextInput 11`] = `
   <TextInput
     onSubmitEditing={[Function]}
     placeholder="single line submit"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
     submitBehavior="submit"
   />
   <TextInput
     onSubmitEditing={[Function]}
     placeholder="single line blurAndSubmit"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
     submitBehavior="blurAndSubmit"
   />
   <TextInput
     onSubmitEditing={[Function]}
     placeholder="single line default"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
   />
   <TextInput
     blurOnSubmit={true}
     onSubmitEditing={[Function]}
     placeholder="single line blurOnSubmit true"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
   />
   <TextInput
     blurOnSubmit={false}
     onSubmitEditing={[Function]}
     placeholder="single line blurOnSubmit false"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
   />
   <TextInput
     multiline={true}
     onSubmitEditing={[Function]}
     placeholder="multiline submit"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
     submitBehavior="submit"
   />
   <TextInput
     multiline={true}
     onSubmitEditing={[Function]}
     placeholder="multiline blurAndSubmit"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
     submitBehavior="blurAndSubmit"
   />
   <TextInput
@@ -75989,20 +76516,88 @@ exports[`snapshotAllPages TextInput 11`] = `
     multiline={true}
     onSubmitEditing={[Function]}
     placeholder="multiline blurOnSubmit true"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
   />
   <TextInput
     blurOnSubmit={false}
     multiline={true}
     placeholder="multiline blurOnSubmit false"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
   />
   <TextInput
     multiline={true}
     placeholder="multiline newline"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
     submitBehavior="newline"
   />
   <TextInput
     multiline={true}
     placeholder="multiline default"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
   />
 </View>
 `;
@@ -76022,9 +76617,23 @@ exports[`snapshotAllPages TextInput 12`] = `
     onSubmitEditing={[Function]}
     placeholder="Enter text to see events"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
   />
   <Text
@@ -76062,11 +76671,25 @@ exports[`snapshotAllPages TextInput 13`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontFamily": "sans-serif",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontFamily": "sans-serif",
+          },
+        ],
       ]
     }
   />
@@ -76075,12 +76698,26 @@ exports[`snapshotAllPages TextInput 13`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontFamily": "sans-serif",
-          "fontWeight": "bold",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontFamily": "sans-serif",
+            "fontWeight": "bold",
+          },
+        ],
       ]
     }
   />
@@ -76089,12 +76726,26 @@ exports[`snapshotAllPages TextInput 13`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontFamily": "sans-serif",
-          "fontWeight": "500",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontFamily": "sans-serif",
+            "fontWeight": "500",
+          },
+        ],
       ]
     }
   />
@@ -76103,12 +76754,26 @@ exports[`snapshotAllPages TextInput 13`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontFamily": "sans-serif",
-          "fontStyle": "italic",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontFamily": "sans-serif",
+            "fontStyle": "italic",
+          },
+        ],
       ]
     }
   />
@@ -76117,11 +76782,25 @@ exports[`snapshotAllPages TextInput 13`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontFamily": "serif",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontFamily": "serif",
+          },
+        ],
       ]
     }
   />
@@ -76140,15 +76819,24 @@ exports[`snapshotAllPages TextInput 14`] = `
     multiline={true}
     onChangeText={[Function]}
     style={
-      {
-        "borderColor": "#0f0f0f",
-        "borderWidth": 0.5,
-        "flex": 1,
-        "fontSize": 13,
-        "height": 50,
-        "marginBottom": 4,
-        "padding": 4,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "height": 50,
+          "marginBottom": 4,
+        },
+      ]
     }
     testID="text-input"
   >
@@ -76191,13 +76879,21 @@ exports[`snapshotAllPages TextInput 15`] = `
           }
         }
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
         testID="singleline-text-input"
         value="text selection can be changed"
@@ -76264,15 +76960,24 @@ exports[`snapshotAllPages TextInput 15`] = `
           }
         }
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "height": 50,
-            "marginBottom": 4,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            {
+              "height": 50,
+              "marginBottom": 4,
+            },
+          ]
         }
         testID="multiline-text-input"
         value="multiline text selection
@@ -76338,13 +77043,21 @@ exports[`snapshotAllPages TextInput 16`] = `
         onChangeText={[Function]}
         onSelectionChange={[Function]}
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            undefined,
+          ]
         }
         testID="singlelineImperative-text-input"
         value="text selection can be changed imperatively"
@@ -76405,15 +77118,24 @@ exports[`snapshotAllPages TextInput 16`] = `
         onChangeText={[Function]}
         onSelectionChange={[Function]}
         style={
-          {
-            "borderColor": "#0f0f0f",
-            "borderWidth": 0.5,
-            "flex": 1,
-            "fontSize": 13,
-            "height": 50,
-            "marginBottom": 4,
-            "padding": 4,
-          }
+          [
+            {
+              "backgroundColor": "#ffffffff",
+              "borderColor": "#3c3c432d",
+              "color": "#000000ff",
+            },
+            {
+              "borderWidth": 1,
+              "flexGrow": 1,
+              "flexShrink": 1,
+              "fontSize": 13,
+              "padding": 4,
+            },
+            {
+              "height": 50,
+              "marginBottom": 4,
+            },
+          ]
         }
         testID="multilineImperative-text-input"
         value="multiline text selection
@@ -76471,13 +77193,21 @@ exports[`snapshotAllPages TextInput 17`] = `
   onBlur={[Function]}
   onFocus={[Function]}
   style={
-    {
-      "borderColor": "#0f0f0f",
-      "borderWidth": 0.5,
-      "flex": 1,
-      "fontSize": 13,
-      "padding": 4,
-    }
+    [
+      {
+        "backgroundColor": "#ffffffff",
+        "borderColor": "#3c3c432d",
+        "color": "#000000ff",
+      },
+      {
+        "borderWidth": 1,
+        "flexGrow": 1,
+        "flexShrink": 1,
+        "fontSize": 13,
+        "padding": 4,
+      },
+      undefined,
+    ]
   }
   testID="uncontrolled-textinput"
 />
@@ -76590,9 +77320,14 @@ exports[`snapshotAllPages TextInput 18`] = `
           style={
             [
               {
-                "borderColor": "#0f0f0f",
-                "borderWidth": 0.5,
-                "flex": 1,
+                "backgroundColor": "#ffffffff",
+                "borderColor": "#3c3c432d",
+                "color": "#000000ff",
+              },
+              {
+                "borderWidth": 1,
+                "flexGrow": 1,
+                "flexShrink": 1,
                 "fontSize": 13,
                 "padding": 4,
               },
@@ -76695,9 +77430,14 @@ exports[`snapshotAllPages TextInput 18`] = `
           style={
             [
               {
-                "borderColor": "#0f0f0f",
-                "borderWidth": 0.5,
-                "flex": 1,
+                "backgroundColor": "#ffffffff",
+                "borderColor": "#3c3c432d",
+                "color": "#000000ff",
+              },
+              {
+                "borderWidth": 1,
+                "flexGrow": 1,
+                "flexShrink": 1,
                 "fontSize": 13,
                 "padding": 4,
               },
@@ -76800,9 +77540,14 @@ exports[`snapshotAllPages TextInput 18`] = `
           style={
             [
               {
-                "borderColor": "#0f0f0f",
-                "borderWidth": 0.5,
-                "flex": 1,
+                "backgroundColor": "#ffffffff",
+                "borderColor": "#3c3c432d",
+                "color": "#000000ff",
+              },
+              {
+                "borderWidth": 1,
+                "flexGrow": 1,
+                "flexShrink": 1,
                 "fontSize": 13,
                 "padding": 4,
               },
@@ -76905,9 +77650,14 @@ exports[`snapshotAllPages TextInput 18`] = `
           style={
             [
               {
-                "borderColor": "#0f0f0f",
-                "borderWidth": 0.5,
-                "flex": 1,
+                "backgroundColor": "#ffffffff",
+                "borderColor": "#3c3c432d",
+                "color": "#000000ff",
+              },
+              {
+                "borderWidth": 1,
+                "flexGrow": 1,
+                "flexShrink": 1,
                 "fontSize": 13,
                 "padding": 4,
               },
@@ -77010,9 +77760,14 @@ exports[`snapshotAllPages TextInput 18`] = `
           style={
             [
               {
-                "borderColor": "#0f0f0f",
-                "borderWidth": 0.5,
-                "flex": 1,
+                "backgroundColor": "#ffffffff",
+                "borderColor": "#3c3c432d",
+                "color": "#000000ff",
+              },
+              {
+                "borderWidth": 1,
+                "flexGrow": 1,
+                "flexShrink": 1,
                 "fontSize": 13,
                 "padding": 4,
               },
@@ -77115,9 +77870,14 @@ exports[`snapshotAllPages TextInput 18`] = `
           style={
             [
               {
-                "borderColor": "#0f0f0f",
-                "borderWidth": 0.5,
-                "flex": 1,
+                "backgroundColor": "#ffffffff",
+                "borderColor": "#3c3c432d",
+                "color": "#000000ff",
+              },
+              {
+                "borderWidth": 1,
+                "flexGrow": 1,
+                "flexShrink": 1,
                 "fontSize": 13,
                 "padding": 4,
               },
@@ -77220,9 +77980,14 @@ exports[`snapshotAllPages TextInput 18`] = `
           style={
             [
               {
-                "borderColor": "#0f0f0f",
-                "borderWidth": 0.5,
-                "flex": 1,
+                "backgroundColor": "#ffffffff",
+                "borderColor": "#3c3c432d",
+                "color": "#000000ff",
+              },
+              {
+                "borderWidth": 1,
+                "flexGrow": 1,
+                "flexShrink": 1,
                 "fontSize": 13,
                 "padding": 4,
               },
@@ -77326,9 +78091,14 @@ exports[`snapshotAllPages TextInput 18`] = `
           style={
             [
               {
-                "borderColor": "#0f0f0f",
-                "borderWidth": 0.5,
-                "flex": 1,
+                "backgroundColor": "#ffffffff",
+                "borderColor": "#3c3c432d",
+                "color": "#000000ff",
+              },
+              {
+                "borderWidth": 1,
+                "flexGrow": 1,
+                "flexShrink": 1,
                 "fontSize": 13,
                 "padding": 4,
               },
@@ -77410,9 +78180,14 @@ exports[`snapshotAllPages TextInput 18`] = `
           style={
             [
               {
-                "borderColor": "#0f0f0f",
-                "borderWidth": 0.5,
-                "flex": 1,
+                "backgroundColor": "#ffffffff",
+                "borderColor": "#3c3c432d",
+                "color": "#000000ff",
+              },
+              {
+                "borderWidth": 1,
+                "flexGrow": 1,
+                "flexShrink": 1,
                 "fontSize": 13,
                 "padding": 4,
               },
@@ -77515,9 +78290,14 @@ exports[`snapshotAllPages TextInput 18`] = `
           style={
             [
               {
-                "borderColor": "#0f0f0f",
-                "borderWidth": 0.5,
-                "flex": 1,
+                "backgroundColor": "#ffffffff",
+                "borderColor": "#3c3c432d",
+                "color": "#000000ff",
+              },
+              {
+                "borderWidth": 1,
+                "flexGrow": 1,
+                "flexShrink": 1,
                 "fontSize": 13,
                 "padding": 4,
               },
@@ -77634,8 +78414,22 @@ exports[`snapshotAllPages TextInput 19`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        [
+          {
+            "fontSize": 16,
+          },
+        ],
       ]
     }
     testID="textinput-default-color"
@@ -77645,11 +78439,25 @@ exports[`snapshotAllPages TextInput 19`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "color": "green",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "color": "green",
+          },
+        ],
       ]
     }
     testID="textinput-custom-color"
@@ -77657,9 +78465,23 @@ exports[`snapshotAllPages TextInput 19`] = `
   <TextInput
     placeholder="Default placeholder text color"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-default-placeholder-color"
   />
@@ -77667,27 +78489,69 @@ exports[`snapshotAllPages TextInput 19`] = `
     placeholder="Red placeholder text color"
     placeholderTextColor="red"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-custom-placeholder-color"
   />
   <TextInput
     placeholder="Default underline color"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-default-underline-color"
   />
   <TextInput
     placeholder="Blue underline color"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-custom-underline-color"
     underlineColorAndroid="blue"
@@ -77697,11 +78561,25 @@ exports[`snapshotAllPages TextInput 19`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "backgroundColor": "rgba(100, 100, 100, 0.3)",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "backgroundColor": "rgba(100, 100, 100, 0.3)",
+          },
+        ],
       ]
     }
     testID="textinput-custom-background-color"
@@ -77720,9 +78598,23 @@ exports[`snapshotAllPages TextInput 19`] = `
     defaultValue="Selection Color is red"
     selectionColor="red"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-custom-highlight-color"
   />
@@ -77730,18 +78622,46 @@ exports[`snapshotAllPages TextInput 19`] = `
     defaultValue="Selection handles are red"
     selectionHandleColor="red"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
   />
   <TextInput
     cursorColor="red"
     defaultValue="Cursor Color is red"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
   />
 </View>
@@ -77754,8 +78674,22 @@ exports[`snapshotAllPages TextInput 20`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        [
+          {
+            "fontSize": 16,
+          },
+        ],
       ]
     }
     testID="textinput-weight-default"
@@ -77765,11 +78699,25 @@ exports[`snapshotAllPages TextInput 20`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontWeight": "normal",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontWeight": "normal",
+          },
+        ],
       ]
     }
     testID="textinput-weight-normal"
@@ -77779,11 +78727,25 @@ exports[`snapshotAllPages TextInput 20`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontWeight": "bold",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontWeight": "bold",
+          },
+        ],
       ]
     }
     testID="textinput-weight-bold"
@@ -77793,11 +78755,25 @@ exports[`snapshotAllPages TextInput 20`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontWeight": "900",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontWeight": "900",
+          },
+        ],
       ]
     }
     testID="textinput-weight-900"
@@ -77807,11 +78783,25 @@ exports[`snapshotAllPages TextInput 20`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontWeight": "800",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontWeight": "800",
+          },
+        ],
       ]
     }
     testID="textinput-weight-800"
@@ -77821,11 +78811,25 @@ exports[`snapshotAllPages TextInput 20`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontWeight": "700",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontWeight": "700",
+          },
+        ],
       ]
     }
     testID="textinput-weight-700"
@@ -77835,11 +78839,25 @@ exports[`snapshotAllPages TextInput 20`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontWeight": "600",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontWeight": "600",
+          },
+        ],
       ]
     }
     testID="textinput-weight-600"
@@ -77849,11 +78867,25 @@ exports[`snapshotAllPages TextInput 20`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontWeight": "500",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontWeight": "500",
+          },
+        ],
       ]
     }
     testID="textinput-weight-500"
@@ -77863,11 +78895,25 @@ exports[`snapshotAllPages TextInput 20`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontWeight": "400",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontWeight": "400",
+          },
+        ],
       ]
     }
     testID="textinput-weight-400"
@@ -77877,11 +78923,25 @@ exports[`snapshotAllPages TextInput 20`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontWeight": "300",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontWeight": "300",
+          },
+        ],
       ]
     }
     testID="textinput-weight-300"
@@ -77891,11 +78951,25 @@ exports[`snapshotAllPages TextInput 20`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontWeight": "200",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontWeight": "200",
+          },
+        ],
       ]
     }
     testID="textinput-weight-200"
@@ -77905,11 +78979,25 @@ exports[`snapshotAllPages TextInput 20`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "fontWeight": "100",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "fontWeight": "100",
+          },
+        ],
       ]
     }
     testID="textinput-weight-100"
@@ -77923,8 +79011,22 @@ exports[`snapshotAllPages TextInput 21`] = `
   style={
     [
       {
-        "height": 30,
+        "backgroundColor": "#ffffffff",
+        "borderColor": "#3c3c432d",
+        "color": "#000000ff",
       },
+      {
+        "borderWidth": 1,
+        "flexGrow": 1,
+        "flexShrink": 1,
+        "fontSize": 13,
+        "padding": 4,
+      },
+      [
+        {
+          "height": 30,
+        },
+      ],
     ]
   }
   testID="textinput-theme-padding"
@@ -77938,11 +79040,25 @@ exports[`snapshotAllPages TextInput 22`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "letterSpacing": 0,
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "letterSpacing": 0,
+          },
+        ],
       ]
     }
     testID="textinput-letterspacing-0"
@@ -77952,11 +79068,25 @@ exports[`snapshotAllPages TextInput 22`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "letterSpacing": 2,
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "letterSpacing": 2,
+          },
+        ],
       ]
     }
     testID="textinput-letterspacing-2"
@@ -77966,11 +79096,25 @@ exports[`snapshotAllPages TextInput 22`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "letterSpacing": 9,
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "letterSpacing": 9,
+          },
+        ],
       ]
     }
     testID="textinput-letterspacing-9"
@@ -77980,11 +79124,25 @@ exports[`snapshotAllPages TextInput 22`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "letterSpacing": -1,
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "letterSpacing": -1,
+          },
+        ],
       ]
     }
     testID="textinput-letterspacing--1"
@@ -77998,9 +79156,23 @@ exports[`snapshotAllPages TextInput 23`] = `
     defaultValue="iloveturtles"
     secureTextEntry={true}
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-password"
   />
@@ -78011,11 +79183,25 @@ exports[`snapshotAllPages TextInput 23`] = `
     style={
       [
         {
-          "fontSize": 16,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "color": "red",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+          },
+          {
+            "color": "red",
+          },
+        ],
       ]
     }
     testID="textinput-password-placeholder"
@@ -78028,9 +79214,23 @@ exports[`snapshotAllPages TextInput 24`] = `
   defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
   editable={false}
   style={
-    {
-      "fontSize": 16,
-    }
+    [
+      {
+        "backgroundColor": "#ffffffff",
+        "borderColor": "#3c3c432d",
+        "color": "#000000ff",
+      },
+      {
+        "borderWidth": 1,
+        "flexGrow": 1,
+        "flexShrink": 1,
+        "fontSize": 13,
+        "padding": 4,
+      },
+      {
+        "fontSize": 16,
+      },
+    ]
   }
   testID="textinput-not-editable"
 />
@@ -78046,13 +79246,27 @@ exports[`snapshotAllPages TextInput 25`] = `
     style={
       [
         {
-          "fontSize": 16,
-          "height": 60,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "textAlign": "left",
-          "textAlignVertical": "top",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+            "height": 60,
+          },
+          {
+            "textAlign": "left",
+            "textAlignVertical": "top",
+          },
+        ],
       ]
     }
     testID="textinput-multiline-topleft"
@@ -78065,13 +79279,27 @@ exports[`snapshotAllPages TextInput 25`] = `
     style={
       [
         {
-          "fontSize": 16,
-          "height": 60,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "textAlign": "center",
-          "textAlignVertical": "center",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
+        [
+          {
+            "fontSize": 16,
+            "height": 60,
+          },
+          {
+            "textAlign": "center",
+            "textAlignVertical": "center",
+          },
+        ],
       ]
     }
     testID="textinput-multiline-center"
@@ -78082,16 +79310,30 @@ exports[`snapshotAllPages TextInput 25`] = `
     style={
       [
         {
-          "fontSize": 16,
-          "height": 60,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
         {
-          "color": "blue",
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
         },
-        {
-          "textAlign": "right",
-          "textAlignVertical": "bottom",
-        },
+        [
+          {
+            "fontSize": 16,
+            "height": 60,
+          },
+          {
+            "color": "blue",
+          },
+          {
+            "textAlign": "right",
+            "textAlignVertical": "bottom",
+          },
+        ],
       ]
     }
     testID="textinput-multiline-bottomright"
@@ -78116,13 +79358,21 @@ exports[`snapshotAllPages TextInput 26`] = `
     editable={true}
     placeholder="editable text input using editable prop"
     style={
-      {
-        "borderColor": "#0f0f0f",
-        "borderWidth": 0.5,
-        "flex": 1,
-        "fontSize": 13,
-        "padding": 4,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
     }
     testID="textinput-editable"
   />
@@ -78130,13 +79380,21 @@ exports[`snapshotAllPages TextInput 26`] = `
     editable={false}
     placeholder="uneditable text input using editable prop"
     style={
-      {
-        "borderColor": "#0f0f0f",
-        "borderWidth": 0.5,
-        "flex": 1,
-        "fontSize": 13,
-        "padding": 4,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
     }
     testID="textinput-not-editable2"
   />
@@ -78144,13 +79402,21 @@ exports[`snapshotAllPages TextInput 26`] = `
     placeholder="editable text input using readOnly prop"
     readOnly={false}
     style={
-      {
-        "borderColor": "#0f0f0f",
-        "borderWidth": 0.5,
-        "flex": 1,
-        "fontSize": 13,
-        "padding": 4,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
     }
     testID="textinput-readonly-false"
   />
@@ -78158,13 +79424,21 @@ exports[`snapshotAllPages TextInput 26`] = `
     placeholder="uneditable text input using readOnly prop"
     readOnly={true}
     style={
-      {
-        "borderColor": "#0f0f0f",
-        "borderWidth": 0.5,
-        "flex": 1,
-        "fontSize": 13,
-        "padding": 4,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
     }
     testID="textinput-readyonly"
   />
@@ -78177,21 +79451,89 @@ exports[`snapshotAllPages TextInput 27`] = `
     multiline={true}
     numberOfLines={2}
     placeholder="Two line input using numberOfLines prop"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
   />
   <TextInput
     multiline={true}
     numberOfLines={5}
     placeholder="Five line input using numberOfLines prop"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
   />
   <TextInput
     multiline={true}
     placeholder="Two line input using rows prop"
     rows={2}
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
   />
   <TextInput
     multiline={true}
     placeholder="Five line input using rows prop"
     rows={5}
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
   />
 </View>
 `;
@@ -78245,13 +79587,27 @@ exports[`snapshotAllPages TextInput 28`] = `
       style={
         [
           {
-            "backgroundColor": "#eeeeee",
-            "maxHeight": 400,
-            "minHeight": 20,
+            "backgroundColor": "#ffffffff",
+            "borderColor": "#3c3c432d",
+            "color": "#000000ff",
           },
           {
-            "width": "100%",
+            "borderWidth": 1,
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "fontSize": 13,
+            "padding": 4,
           },
+          [
+            {
+              "backgroundColor": "#eeeeee",
+              "maxHeight": 400,
+              "minHeight": 20,
+            },
+            {
+              "width": "100%",
+            },
+          ],
         ]
       }
       testID="textinput-autogrow"
@@ -78298,13 +79654,21 @@ exports[`snapshotAllPages TextInput 29`] = `
     autoComplete="country"
     placeholder="country"
     style={
-      {
-        "borderColor": "#0f0f0f",
-        "borderWidth": 0.5,
-        "flex": 1,
-        "fontSize": 13,
-        "padding": 4,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
     }
     testID="textinput-autocomplete-country"
   />
@@ -78312,13 +79676,21 @@ exports[`snapshotAllPages TextInput 29`] = `
     autoComplete="postal-address-country"
     placeholder="postal-address-country"
     style={
-      {
-        "borderColor": "#0f0f0f",
-        "borderWidth": 0.5,
-        "flex": 1,
-        "fontSize": 13,
-        "padding": 4,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
     }
     testID="textinput-autocomplete-address-country"
   />
@@ -78326,13 +79698,21 @@ exports[`snapshotAllPages TextInput 29`] = `
     autoComplete="one-time-code"
     placeholder="one-time-code"
     style={
-      {
-        "borderColor": "#0f0f0f",
-        "borderWidth": 0.5,
-        "flex": 1,
-        "fontSize": 13,
-        "padding": 4,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
     }
     testID="textinput-autocomplete-one-time-code"
   />
@@ -78340,15 +79720,44 @@ exports[`snapshotAllPages TextInput 29`] = `
     autoComplete="sms-otp"
     placeholder="sms-otp"
     style={
-      {
-        "borderColor": "#0f0f0f",
-        "borderWidth": 0.5,
-        "flex": 1,
-        "fontSize": 13,
-        "padding": 4,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
     }
     testID="textinput-autocomplete-sms-otp"
+  />
+  <TextInput
+    autoComplete="sms-otp"
+    placeholder="sms-otp"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
   />
 </View>
 `;
@@ -78359,9 +79768,23 @@ exports[`snapshotAllPages TextInput 30`] = `
     placeholder="returnKeyType: none"
     returnKeyType="none"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-return-none"
   />
@@ -78369,9 +79792,23 @@ exports[`snapshotAllPages TextInput 30`] = `
     placeholder="returnKeyType: go"
     returnKeyType="go"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-return-go"
   />
@@ -78379,9 +79816,23 @@ exports[`snapshotAllPages TextInput 30`] = `
     placeholder="returnKeyType: search"
     returnKeyType="search"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-return-search"
   />
@@ -78389,9 +79840,23 @@ exports[`snapshotAllPages TextInput 30`] = `
     placeholder="returnKeyType: send"
     returnKeyType="send"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-return-send"
   />
@@ -78399,9 +79864,23 @@ exports[`snapshotAllPages TextInput 30`] = `
     placeholder="returnKeyType: done"
     returnKeyType="done"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-return-done"
   />
@@ -78409,9 +79888,23 @@ exports[`snapshotAllPages TextInput 30`] = `
     placeholder="returnKeyType: previous"
     returnKeyType="previous"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-return-previous"
   />
@@ -78419,9 +79912,23 @@ exports[`snapshotAllPages TextInput 30`] = `
     placeholder="returnKeyType: next"
     returnKeyType="next"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-return-next"
   />
@@ -78429,9 +79936,23 @@ exports[`snapshotAllPages TextInput 30`] = `
     placeholder="returnKeyLabel: Compile"
     returnKeyLabel="Compile"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-return-Compile"
   />
@@ -78439,9 +79960,23 @@ exports[`snapshotAllPages TextInput 30`] = `
     placeholder="returnKeyLabel: React Native"
     returnKeyLabel="React Native"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-return-React Native"
   />
@@ -78454,9 +79989,23 @@ exports[`snapshotAllPages TextInput 31`] = `
     inlineImageLeft="ic_menu_black_24dp"
     placeholder="This has drawableLeft set"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-inline-images"
   />
@@ -78465,18 +80014,46 @@ exports[`snapshotAllPages TextInput 31`] = `
     inlineImagePadding={30}
     placeholder="This has drawableLeft and drawablePadding set"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-inline-images-2"
   />
   <TextInput
     placeholder="This does not have drawable props set"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-inline-images-3"
   />
@@ -78486,7 +80063,23 @@ exports[`snapshotAllPages TextInput 31`] = `
 exports[`snapshotAllPages TextInput 32`] = `
 <View>
   <TextInput
-    style={null}
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        null,
+      ]
+    }
     testID="textinput-padding"
   />
   <Text
@@ -78509,8 +80102,22 @@ exports[`snapshotAllPages TextInput 33`] = `
     style={
       [
         {
-          "height": 30,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        [
+          {
+            "height": 30,
+          },
+        ],
       ]
     }
     testID="textinput-press"
@@ -78526,9 +80133,23 @@ exports[`snapshotAllPages TextInput 34`] = `
   <TextInput
     clearTextOnSubmit={true}
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-clear-on-submit"
   />
@@ -78538,9 +80159,23 @@ exports[`snapshotAllPages TextInput 34`] = `
   <TextInput
     clearTextOnSubmit={true}
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     submitKeyEvents={
       [
@@ -78559,10 +80194,24 @@ exports[`snapshotAllPages TextInput 34`] = `
     clearTextOnSubmit={true}
     multiline={true}
     style={
-      {
-        "fontSize": 16,
-        "height": 60,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+          "height": 60,
+        },
+      ]
     }
     submitKeyEvents={
       [
@@ -78581,10 +80230,24 @@ exports[`snapshotAllPages TextInput 34`] = `
     clearTextOnSubmit={true}
     multiline={true}
     style={
-      {
-        "fontSize": 16,
-        "height": 60,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+          "height": 60,
+        },
+      ]
     }
     submitKeyEvents={
       [
@@ -78639,8 +80302,22 @@ exports[`snapshotAllPages TextInput 35`] = `
       style={
         [
           {
-            "height": 30,
+            "backgroundColor": "#ffffffff",
+            "borderColor": "#3c3c432d",
+            "color": "#000000ff",
           },
+          {
+            "borderWidth": 1,
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "fontSize": 13,
+            "padding": 4,
+          },
+          [
+            {
+              "height": 30,
+            },
+          ],
         ]
       }
       testID="textinput-propagation"
@@ -78675,8 +80352,22 @@ exports[`snapshotAllPages TextInput 36`] = `
     style={
       [
         {
-          "height": 30,
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        [
+          {
+            "height": 30,
+          },
+        ],
       ]
     }
     testID="textinput-spellcheck"
@@ -78693,9 +80384,23 @@ exports[`snapshotAllPages TextInput 37`] = `
     caretHidden={true}
     placeholder="caretHidden={true}"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-carethidden"
   />
@@ -78711,9 +80416,23 @@ exports[`snapshotAllPages TextInput 38`] = `
     cursorColor="green"
     placeholder="cursorColor={"green"}"
     style={
-      {
-        "fontSize": 16,
-      }
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
     }
     testID="textinput-cursorColor"
   />
@@ -78728,16 +80447,30 @@ exports[`snapshotAllPages TextInput 39`] = `
   <TextInput
     placeholder="shadowColor: purple"
     style={
-      {
-        "fontSize": 16,
-        "shadowColor": "purple",
-        "shadowOffset": {
-          "height": 10,
-          "width": 10,
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
         },
-        "shadowOpacity": 99,
-        "shadowRadius": 20,
-      }
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+          "shadowColor": "purple",
+          "shadowOffset": {
+            "height": 10,
+            "width": 10,
+          },
+          "shadowOpacity": 99,
+          "shadowRadius": 20,
+        },
+      ]
     }
     testID="textinput-shadow"
   />
