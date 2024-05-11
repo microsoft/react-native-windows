@@ -3708,7 +3708,7 @@ exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
         },
         "Offset": [
           78,
-          128,
+          0,
           0,
         ],
         "Opacity": 0,

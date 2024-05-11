@@ -63,8 +63,10 @@ struct ComponentView
   void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
       override;
   facebook::react::Props::Shared props() noexcept override;
-  virtual facebook::react::SharedViewProps viewProps() noexcept {
-    return nullptr;
+  virtual const facebook::react::SharedViewProps &viewProps() const noexcept {
+    static facebook::react::SharedViewProps emptyProps;
+    assert(false);
+    return emptyProps;
   };
   void Theme(const winrt::Microsoft::ReactNative::Composition::Theme &theme) noexcept;
   winrt::Microsoft::ReactNative::Composition::Theme Theme() const noexcept;
@@ -195,8 +197,8 @@ struct ViewComponentView : public ViewComponentViewT<ViewComponentView, Componen
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   std::string DefaultControlType() const noexcept override;
 
-  facebook::react::SharedViewProps viewProps() noexcept override;
-  virtual winrt::Microsoft::ReactNative::ViewProps ViewProps() noexcept;
+  const facebook::react::SharedViewProps &viewProps() const noexcept override;
+  winrt::Microsoft::ReactNative::ViewProps ViewProps() noexcept;
 
   facebook::react::Tag hitTest(
       facebook::react::Point pt,
@@ -207,7 +209,10 @@ struct ViewComponentView : public ViewComponentViewT<ViewComponentView, Componen
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual Visual() const noexcept override;
   void ensureVisual() noexcept;
 
+  static facebook::react::SharedViewProps defaultProps() noexcept;
+
   ViewComponentView(
+      const facebook::react::SharedViewProps &defaultProps,
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext,
@@ -219,6 +224,9 @@ struct ViewComponentView : public ViewComponentViewT<ViewComponentView, Componen
   // Publicly overridable APIs
   virtual winrt::Microsoft::UI::Composition::Visual CreateVisual() noexcept;
   virtual void UpdateLayoutMetrics(const LayoutMetrics &metrics, const LayoutMetrics &oldMetrics) noexcept;
+
+ protected:
+  virtual winrt::Microsoft::ReactNative::ViewProps ViewPropsInner() noexcept;
 
  private:
   facebook::react::SharedViewProps m_props;

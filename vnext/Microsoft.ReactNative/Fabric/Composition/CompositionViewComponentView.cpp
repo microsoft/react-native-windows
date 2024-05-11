@@ -134,7 +134,8 @@ winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext Co
 void ComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  const auto &oldViewProps = *viewProps();
+  const auto &oldViewProps =
+      oldProps ? (*std::static_pointer_cast<const facebook::react::ViewProps>(oldProps)) : (*viewProps());
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(props);
 
   if ((m_flags & ComponentViewFeatures::Background) == ComponentViewFeatures::Background) {
@@ -1455,6 +1456,7 @@ std::string ComponentView::DefaultHelpText() const noexcept {
 ViewComponentView::ViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs &args)
     : ViewComponentView(
+          ViewComponentView::defaultProps(),
           winrt::get_self<
               winrt::Microsoft::ReactNative::Composition::implementation::CreateCompositionComponentViewArgs>(args)
               ->CompositionContext(),
@@ -1463,16 +1465,20 @@ ViewComponentView::ViewComponentView(
           args.Features(),
           true) {}
 
+facebook::react::SharedViewProps ViewComponentView::defaultProps() noexcept {
+  static auto const defaultViewProps = std::make_shared<facebook::react::ViewProps const>();
+  return defaultViewProps;
+}
+
 ViewComponentView::ViewComponentView(
+    const facebook::react::SharedViewProps &defaultProps,
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,
     ComponentViewFeatures flags,
     bool customComponent)
-    : base_type(compContext, tag, reactContext, flags, customComponent) {
-  static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
-  m_props = defaultProps;
-}
+    : base_type(compContext, tag, reactContext, flags, customComponent),
+      m_props(defaultProps ? defaultProps : ViewComponentView::defaultProps()) {}
 
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ViewComponentView::createVisual() noexcept {
   return m_compContext.CreateSpriteVisual();
@@ -1507,7 +1513,8 @@ winrt::Microsoft::ReactNative::ComponentView ViewComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return winrt::make<ViewComponentView>(compContext, tag, reactContext, ComponentViewFeatures::Default, false);
+  return winrt::make<ViewComponentView>(
+      ViewComponentView::defaultProps(), compContext, tag, reactContext, ComponentViewFeatures::Default, false);
 }
 
 void ViewComponentView::MountChildComponentView(
@@ -1521,7 +1528,7 @@ void ViewComponentView::MountChildComponentView(
   // TODO if we get mixed children of composition and non-composition ComponentViews the indexes will get mixed up
   // We could offset the index based on non-composition children in m_children
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
-    m_visual.InsertAt(compositionChild->OuterVisual(), index);
+    Visual().InsertAt(compositionChild->OuterVisual(), index);
   }
 }
 
@@ -1532,27 +1539,27 @@ void ViewComponentView::UnmountChildComponentView(
 
   indexOffsetForBorder(index);
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
-    m_visual.Remove(compositionChild->OuterVisual());
+    Visual().Remove(compositionChild->OuterVisual());
   }
 }
 
 void ViewComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(m_props);
+  const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(oldProps ? oldProps : m_props);
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(props);
 
   ensureVisual();
   if (oldViewProps.opacity != newViewProps.opacity) {
-    m_visual.Opacity(newViewProps.opacity);
+    Visual().Opacity(newViewProps.opacity);
   }
   if (oldViewProps.testId != newViewProps.testId) {
-    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
+    Visual().Comment(winrt::to_hstring(newViewProps.testId));
   }
 
   // update BaseComponentView props
   updateAccessibilityProps(oldViewProps, newViewProps);
-  updateTransformProps(oldViewProps, newViewProps, m_visual);
+  updateTransformProps(oldViewProps, newViewProps, Visual());
   base_type::updateProps(props, oldProps);
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
@@ -1571,7 +1578,7 @@ facebook::react::Tag ViewComponentView::hitTest(
     bool ignorePointerEvents) const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
-  facebook::react::Tag targetTag;
+  facebook::react::Tag targetTag = -1;
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
@@ -1637,7 +1644,7 @@ void ViewComponentView::OnKeyDown(
       (source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) !=
        winrt::Windows::UI::Core::CoreVirtualKeyStates::None);
 
-  if (args.OriginalSource() == Tag()) {
+  if (args.OriginalSource() == Tag() && !args.Handled()) {
     facebook::react::KeyEvent event;
     event.shiftKey = fShift;
     event.ctrlKey = fCtrl;
@@ -1712,16 +1719,20 @@ void ViewComponentView::updateLayoutMetrics(
 }
 
 void ViewComponentView::UpdateLayoutMetrics(const LayoutMetrics &metrics, const LayoutMetrics &oldMetrics) noexcept {
-  m_visual.Size({metrics.Frame.Width * metrics.PointScaleFactor, metrics.Frame.Height * metrics.PointScaleFactor});
+  Visual().Size({metrics.Frame.Width * metrics.PointScaleFactor, metrics.Frame.Height * metrics.PointScaleFactor});
 }
 
 void ViewComponentView::prepareForRecycle() noexcept {}
 
-facebook::react::SharedViewProps ViewComponentView::viewProps() noexcept {
+const facebook::react::SharedViewProps &ViewComponentView::viewProps() const noexcept {
   return m_props;
 }
 
 winrt::Microsoft::ReactNative::ViewProps ViewComponentView::ViewProps() noexcept {
+  return ViewPropsInner();
+}
+
+winrt::Microsoft::ReactNative::ViewProps ViewComponentView::ViewPropsInner() noexcept {
   // If we have AbiViewProps, then we dont need to new up a props wrapper
   if (m_customComponent) {
     const auto &abiViewProps = *std::static_pointer_cast<const ::Microsoft::ReactNative::AbiViewProps>(m_props);
