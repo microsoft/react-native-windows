@@ -25,16 +25,17 @@ public:
   virtual bool enableBackgroundExecutor(jsi::Runtime &rt) = 0;
   virtual bool enableCleanTextInputYogaNode(jsi::Runtime &rt) = 0;
   virtual bool enableCustomDrawOrderFabric(jsi::Runtime &rt) = 0;
-  virtual bool enableFixForClippedSubviewsCrash(jsi::Runtime &rt) = 0;
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
   virtual bool enableMountHooksAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableSpannableBuildingUnification(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
+  virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableModernCDPRegistry(jsi::Runtime &rt) = 0;
   virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
+  virtual bool useStateAlignmentMechanism(jsi::Runtime &rt) = 0;
 
 };
 
@@ -98,14 +99,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableCustomDrawOrderFabric, jsInvoker_, instance_);
     }
-    bool enableFixForClippedSubviewsCrash(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::enableFixForClippedSubviewsCrash) == 1,
-          "Expected enableFixForClippedSubviewsCrash(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::enableFixForClippedSubviewsCrash, jsInvoker_, instance_);
-    }
     bool enableMicrotasks(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableMicrotasks) == 1,
@@ -146,6 +139,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableUIConsistency, jsInvoker_, instance_);
     }
+    bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::forceBatchingMountItemsOnAndroid) == 1,
+          "Expected forceBatchingMountItemsOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::forceBatchingMountItemsOnAndroid, jsInvoker_, instance_);
+    }
     bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::inspectorEnableCxxInspectorPackagerConnection) == 1,
@@ -177,6 +178,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useNativeViewConfigsInBridgelessMode, jsInvoker_, instance_);
+    }
+    bool useStateAlignmentMechanism(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useStateAlignmentMechanism) == 1,
+          "Expected useStateAlignmentMechanism(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useStateAlignmentMechanism, jsInvoker_, instance_);
     }
 
   private:

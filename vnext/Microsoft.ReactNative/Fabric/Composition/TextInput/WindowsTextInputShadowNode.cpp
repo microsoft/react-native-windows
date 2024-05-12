@@ -185,8 +185,7 @@ Size WindowsTextInputShadowNode::measureContent(
           AttributedStringBox{attributedString},
           {}, // TODO getConcreteProps().paragraphAttributes,
           textLayoutContext,
-          layoutConstraints,
-          nullptr)
+          layoutConstraints)
       .size;
 }
 
