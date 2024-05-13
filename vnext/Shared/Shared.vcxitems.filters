@@ -293,9 +293,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerBinding.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerCallInvoker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\Task.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\dom\DOM.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\consistency\LatestShadowTreeRevisionProvider.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\uimanager\consistency\LazyShadowTreeRevisionConsistencyManager.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\CoreFeatures.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\PlatformColorUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewShadowNode.cpp" />

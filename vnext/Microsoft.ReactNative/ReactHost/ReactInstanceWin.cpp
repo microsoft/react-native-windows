@@ -608,8 +608,8 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
               auto timerManager = std::make_shared<facebook::react::TimerManager>(std::move(timerRegistry));
               timerRegistryRaw->setTimerManager(timerManager);
 
-              auto jsErrorHandlingFunc = [this](facebook::react::MapBuffer errorMap) noexcept {
-                OnJSError(std::move(errorMap));
+              auto jsErrorHandlingFunc = [this](const facebook::react::JsErrorHandler::ParsedError &error) noexcept {
+                OnJSError(std::move(error));
               };
 
               if (devSettings->useDirectDebugger) {
@@ -1239,24 +1239,23 @@ void ReactInstanceWin::OnError(const Mso::ErrorCode &errorCode) noexcept {
 }
 
 #ifdef USE_FABRIC
-void ReactInstanceWin::OnJSError(facebook::react::MapBuffer errorMap) noexcept {
+void ReactInstanceWin::OnJSError(const facebook::react::JsErrorHandler::ParsedError &error) noexcept {
   ErrorInfo errorInfo;
-  errorInfo.Message = errorMap.getString(facebook::react::JSErrorHandlerKey::kErrorMessage);
+  errorInfo.Message = error.message;
   auto errorCode = Mso::React::ReactErrorProvider().MakeErrorCode(Mso::React::ReactError{errorInfo.Message.c_str()});
 
-  std::vector<facebook::react::MapBuffer> frames =
-      errorMap.getMapBufferList(facebook::react::JSErrorHandlerKey::kAllStackFrames);
-  for (const facebook::react::MapBuffer &mapBuffer : frames) {
-    errorInfo.Callstack.push_back(
-        {mapBuffer.getString(facebook::react::JSErrorHandlerKey::kFrameFileName),
-         mapBuffer.getString(facebook::react::JSErrorHandlerKey::kFrameMethodName),
-         mapBuffer.getInt(facebook::react::JSErrorHandlerKey::kFrameLineNumber),
-         mapBuffer.getInt(facebook::react::JSErrorHandlerKey::kFrameColumnNumber)});
+  for (const facebook::react::JsErrorHandler::ParsedError::StackFrame &frame : error.frames) {
+    errorInfo.Callstack.push_back({
+      frame.fileName,
+      frame.methodName,
+      frame.lineNumber,
+      frame.columnNumber
+    });
   }
-  errorInfo.Id = errorMap.getInt(facebook::react::JSErrorHandlerKey::kExceptionId);
-  errorInfo.Id = errorMap.getInt(facebook::react::JSErrorHandlerKey::kExceptionId);
 
-  bool isFatal = errorMap.getBool(facebook::react::JSErrorHandlerKey::kIsFatal);
+  errorInfo.Id = error.exceptionId;
+
+  bool isFatal = error.isFatal;
 
   m_state = ReactInstanceState::HasError;
   AbandonJSCallQueue();

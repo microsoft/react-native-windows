@@ -38,8 +38,7 @@ class TextLayoutManager {
       const AttributedStringBox &attributedStringBox,
       const ParagraphAttributes &paragraphAttributes,
       const TextLayoutContext &layoutContext,
-      LayoutConstraints layoutConstraints,
-      std::shared_ptr<void> /* hostTextStorage */) const;
+      LayoutConstraints layoutConstraints) const;
 
   /*
    * Measures lines of `attributedString` using native text rendering
