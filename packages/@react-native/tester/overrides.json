@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.75.0-nightly-20240321-7d180d712",
+  "baseVersion": "0.75.0-nightly-20240406-a05466c5b",
   "overrides": [
     {
       "type": "copy",
@@ -12,7 +12,7 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "4e779d653a3fb4c692026045a003a1716127d4b7",
+      "baseHash": "e30582c7ce0ba5cc7965a1b5ccd7f443692e24e1",
       "issue": 4054
     },
     {
@@ -124,7 +124,7 @@
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseHash": "44a1311b18c59126480e6ddf2e15bc37cec01098",
+      "baseHash": "3cf296dfcc8341700a9aa7664521fe1e419723c9",
       "issue": 4054
     },
     {
@@ -250,7 +250,7 @@
       "type": "copy",
       "directory": "js/examples/Performance",
       "baseDirectory": "packages/rn-tester/js/examples/Performance",
-      "baseHash": "d5feb94a551a591ced92e86c28c01cf99b3021ec",
+      "baseHash": "1cce35ad130644bfb4a42251cc4b8fd44b135ba1",
       "issue": 0
     },
     {
@@ -383,7 +383,7 @@
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "2f5178bf5fa0ce33632b15a5cc0e632aeb281fb2",
+      "baseHash": "50c8f413b673279dfecae9ec44b9f4a881945c0f",
       "issue": 4054
     },
     {
@@ -495,7 +495,7 @@
       "type": "copy",
       "file": "NativeComponentExample/js/MyNativeView.js",
       "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeView.js",
-      "baseHash": "37f9257087d5f4e9ed18566a5f79ecf9ef0a44ec",
+      "baseHash": "2ad7976c764e91346fd87254acaf72f5071674b7",
       "issue": 4054
     },
     {
@@ -523,6 +523,7 @@
       "type": "copy",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
+      "baseVersion": "0.75.0-nightly-20240329-3f8882116",
       "baseHash": "2df1789eee76067765485f86d45809d93a65fc92",
       "issue": 4054
     }

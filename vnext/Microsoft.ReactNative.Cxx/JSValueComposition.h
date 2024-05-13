@@ -17,6 +17,10 @@ inline void WriteValue(IJSValueWriter const &writer, const Color &value) noexcep
   winrt::Microsoft::ReactNative::Color::WriteValue(writer, value);
 }
 
+inline void ReadValue(IJSValueReader const &reader, ImageSource &value) noexcept {
+  value = winrt::Microsoft::ReactNative::ImageSource::ReadValue(reader);
+}
+
 } // namespace winrt::Microsoft::ReactNative
 
 #endif // MICROSOFT_REACTNATIVE_JSVALUECOMPOSITION

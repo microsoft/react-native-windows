@@ -164,7 +164,7 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Show the caret
   BOOL TxShowCaret(BOOL fShow) override {
-    m_outer->ShowCaret(m_outer->m_props->caretHidden ? false : fShow);
+    m_outer->ShowCaret(m_outer->windowsTextInputProps().caretHidden ? false : fShow);
     return true;
   }
 
@@ -304,14 +304,14 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
     switch (nIndex) {
       case COLOR_WINDOWTEXT:
-        if (m_outer->m_props->textAttributes.foregroundColor)
-          return (*m_outer->m_props->textAttributes.foregroundColor).AsColorRefNoAlpha();
+        if (m_outer->windowsTextInputProps().textAttributes.foregroundColor)
+          return (*m_outer->windowsTextInputProps().textAttributes.foregroundColor).AsColorRefNoAlpha();
         // cr = 0x000000FF;
         break;
 
       case COLOR_WINDOW:
-        if (m_outer->m_props->backgroundColor)
-          return (*m_outer->m_props->backgroundColor).AsColorRefNoAlpha();
+        if (m_outer->viewProps()->backgroundColor)
+          return (*m_outer->viewProps()->backgroundColor).AsColorRefNoAlpha();
         break;
         // case COLOR_HIGHLIGHT:
         // cr = RGB(0, 0, 255);
@@ -356,8 +356,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Get the maximum length for the text
   HRESULT TxGetMaxLength(DWORD *plength) override {
-    auto length = m_outer->m_props->maxLength;
-    if (length > static_cast<decltype(m_outer->m_props->maxLength)>(std::numeric_limits<DWORD>::max())) {
+    auto length = m_outer->windowsTextInputProps().maxLength;
+    if (length > static_cast<decltype(m_outer->windowsTextInputProps().maxLength)>(std::numeric_limits<DWORD>::max())) {
       length = std::numeric_limits<DWORD>::max();
     }
     *plength = static_cast<DWORD>(length);
@@ -454,7 +454,7 @@ facebook::react::AttributedString WindowsTextInputComponentView::getAttributedSt
 
   auto childTextAttributes = facebook::react::TextAttributes::defaultTextAttributes();
 
-  childTextAttributes.apply(m_props->textAttributes);
+  childTextAttributes.apply(windowsTextInputProps().textAttributes);
 
   auto attributedString = facebook::react::AttributedString{};
   // auto attachments = facebook::react::BaseTextShadowNode::Attachments{};
@@ -465,7 +465,7 @@ facebook::react::AttributedString WindowsTextInputComponentView::getAttributedSt
   // if (!m_props->text.empty()) {
   if (!text.empty()) {
     auto textAttributes = facebook::react::TextAttributes::defaultTextAttributes();
-    textAttributes.apply(m_props->textAttributes);
+    textAttributes.apply(windowsTextInputProps().textAttributes);
     auto fragment = facebook::react::AttributedString::Fragment{};
     fragment.string = text;
     // fragment.string = m_props->text;
@@ -486,14 +486,12 @@ WindowsTextInputComponentView::WindowsTextInputComponentView(
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : Super(
+          WindowsTextInputComponentView::defaultProps(),
           compContext,
           tag,
           reactContext,
           ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
           false) {
-  static auto const defaultProps = std::make_shared<facebook::react::WindowsTextInputProps const>();
-  m_props = defaultProps;
-
   /*
   m_textChangedRevoker =
       m_element.TextChanged(winrt::auto_revoke, [this](auto sender, xaml::Controls::TextChangedEventArgs args) {
@@ -954,20 +952,16 @@ void WindowsTextInputComponentView::onFocusGained() noexcept {
   }
 }
 
-bool WindowsTextInputComponentView::focusable() const noexcept {
-  return m_props->focusable;
-}
-
 std::string WindowsTextInputComponentView::DefaultControlType() const noexcept {
   return "textinput";
 }
 
 std::string WindowsTextInputComponentView::DefaultAccessibleName() const noexcept {
-  return m_props->placeholder;
+  return windowsTextInputProps().placeholder;
 }
 
 std::string WindowsTextInputComponentView::DefaultHelpText() const noexcept {
-  return m_props->placeholder;
+  return windowsTextInputProps().placeholder;
 }
 
 void WindowsTextInputComponentView::updateCursorColor(
@@ -985,19 +979,13 @@ void WindowsTextInputComponentView::updateCursorColor(
 void WindowsTextInputComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  const auto &oldTextInputProps = *std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(m_props);
+  const auto &oldTextInputProps =
+      *std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(oldProps ? oldProps : viewProps());
   const auto &newTextInputProps = *std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(props);
 
   DWORD propBitsMask = 0;
   DWORD propBits = 0;
 
-  ensureVisual();
-
-  if (oldTextInputProps.testId != newTextInputProps.testId) {
-    m_visual.Comment(winrt::to_hstring(newTextInputProps.testId));
-  }
-  // update BaseComponentView props
-  updateTransformProps(oldTextInputProps, newTextInputProps, m_visual);
   Super::updateProps(props, oldProps);
 
   if (!facebook::react::floatEquality(
@@ -1113,8 +1101,6 @@ void WindowsTextInputComponentView::updateProps(
   }
   */
 
-  m_props = std::static_pointer_cast<facebook::react::WindowsTextInputProps const>(props);
-
   if (propBitsMask != 0) {
     DrawBlock db(*this);
     winrt::check_hresult(m_textServices->OnTxPropertyBitsChange(propBitsMask, propBits));
@@ -1176,10 +1162,6 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
   // Set Position & Size Properties
 
-  if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
-  }
-
   if ((layoutMetrics.pointScaleFactor != m_layoutMetrics.pointScaleFactor)) {
     LRESULT res;
     winrt::check_hresult(m_textServices->TxSendMessage(
@@ -1201,10 +1183,6 @@ void WindowsTextInputComponentView::updateLayoutMetrics(
 
   m_imgWidth = newWidth;
   m_imgHeight = newHeight;
-
-  m_visual.Size(
-      {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
-       layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
 
 // When we are notified by RichEdit that the text changed, we need to notify JS
@@ -1281,13 +1259,16 @@ void WindowsTextInputComponentView::setAcccessiblityValue(std::string &&value) n
 }
 
 bool WindowsTextInputComponentView::getAcccessiblityIsReadOnly() noexcept {
-  return !m_props->editable;
+  return !windowsTextInputProps().editable;
 }
 
-void WindowsTextInputComponentView::prepareForRecycle() noexcept {}
+facebook::react::SharedViewProps WindowsTextInputComponentView::defaultProps() noexcept {
+  static auto const defaultProps = std::make_shared<facebook::react::WindowsTextInputProps const>();
+  return defaultProps;
+}
 
-facebook::react::SharedViewProps WindowsTextInputComponentView::viewProps() noexcept {
-  return m_props;
+const facebook::react::WindowsTextInputProps &WindowsTextInputComponentView::windowsTextInputProps() const noexcept {
+  return *std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(viewProps());
 }
 
 void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
@@ -1310,17 +1291,18 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
   // cfNew.bPitchAndFamily = FF_DONTCARE;
 
   // set font size -- 15 to convert twips to pt
-  float fontSize = m_props->textAttributes.fontSize;
+  const auto &props = windowsTextInputProps();
+  float fontSize = props.textAttributes.fontSize;
   if (std::isnan(fontSize))
     fontSize = facebook::react::TextAttributes::defaultTextAttributes().fontSize;
-  // TODO get fontSize from m_props->textAttributes, or defaultTextAttributes, or fragment?
+  // TODO get fontSize from props.textAttributes, or defaultTextAttributes, or fragment?
   cfNew.dwMask |= CFM_SIZE;
   cfNew.yHeight = static_cast<LONG>(fontSize * 15);
 
   // set bold
   cfNew.dwMask |= CFM_WEIGHT;
-  cfNew.wWeight = m_props->textAttributes.fontWeight ? static_cast<WORD>(*m_props->textAttributes.fontWeight)
-                                                     : DWRITE_FONT_WEIGHT_NORMAL;
+  cfNew.wWeight =
+      props.textAttributes.fontWeight ? static_cast<WORD>(*props.textAttributes.fontWeight) : DWRITE_FONT_WEIGHT_NORMAL;
 
   // set font style
   // cfNew.dwMask |= (CFM_ITALIC | CFM_STRIKEOUT | CFM_UNDERLINE);
@@ -1391,7 +1373,7 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
     m_drawingSurface.HorizontalAlignmentRatio(0.f);
     m_drawingSurface.VerticalAlignmentRatio(0.f);
     m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::None);
-    m_visual.Brush(m_drawingSurface);
+    Visual().as<Experimental::ISpriteVisual>().Brush(m_drawingSurface);
   }
 }
 
@@ -1405,11 +1387,12 @@ winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceho
   winrt::com_ptr<::IDWriteTextLayout> textLayout = nullptr;
   facebook::react::AttributedString attributedString;
   facebook::react::AttributedString::Fragment fragment1;
-  facebook::react::TextAttributes textAttributes = m_props->textAttributes;
-  if (std::isnan(m_props->textAttributes.fontSize)) {
+  const auto &props = windowsTextInputProps();
+  facebook::react::TextAttributes textAttributes = props.textAttributes;
+  if (std::isnan(props.textAttributes.fontSize)) {
     textAttributes.fontSize = 12.0f;
   }
-  fragment1.string = m_props->placeholder;
+  fragment1.string = props.placeholder;
   fragment1.textAttributes = textAttributes;
   attributedString.appendFragment(fragment1);
 
@@ -1460,8 +1443,9 @@ void WindowsTextInputComponentView::DrawText() noexcept {
 
       winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
 
-      if (facebook::react::isColorMeaningful(m_props->backgroundColor)) {
-        auto backgroundColor = theme()->D2DColor(*m_props->backgroundColor);
+      const auto &props = windowsTextInputProps();
+      if (facebook::react::isColorMeaningful(props.backgroundColor)) {
+        auto backgroundColor = theme()->D2DColor(*props.backgroundColor);
         winrt::com_ptr<ID2D1SolidColorBrush> backgroundBrush;
         winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(backgroundColor, backgroundBrush.put()));
         const D2D1_RECT_F fillRect = {
@@ -1477,11 +1461,11 @@ void WindowsTextInputComponentView::DrawText() noexcept {
       winrt::check_hresult(hrDraw);
 
       // draw placeholder text if needed
-      if (!m_props->placeholder.empty() && GetTextFromRichEdit().empty()) {
+      if (!props.placeholder.empty() && GetTextFromRichEdit().empty()) {
         // set brush color
         winrt::com_ptr<ID2D1SolidColorBrush> brush;
-        if (m_props->placeholderTextColor) {
-          auto color = theme()->D2DColor(*m_props->placeholderTextColor);
+        if (props.placeholderTextColor) {
+          auto color = theme()->D2DColor(*props.placeholderTextColor);
           winrt::check_hresult(d2dDeviceContext->CreateSolidColorBrush(color, brush.put()));
         } else {
           winrt::check_hresult(
@@ -1506,63 +1490,27 @@ void WindowsTextInputComponentView::DrawText() noexcept {
   m_needsRedraw = false;
 }
 
-facebook::react::Tag WindowsTextInputComponentView::hitTest(
-    facebook::react::Point pt,
-    facebook::react::Point &localPt,
-    bool ignorePointerEvents) const noexcept {
-  facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
+WindowsTextInputComponentView::createVisual() noexcept {
+  HrEnsureRichEd20Loaded();
+  auto visual = m_compContext.CreateSpriteVisual();
+  m_textHost = winrt::make<CompTextHost>(this);
+  winrt::com_ptr<::IUnknown> spUnk;
+  winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
+  spUnk.as(m_textServices);
 
-  facebook::react::Tag targetTag;
+  m_caretVisual = m_compContext.CreateCaretVisual();
+  visual.InsertAt(m_caretVisual.InnerVisual(), 0);
+  m_caretVisual.IsVisible(false);
 
-  /*
-    if ((m_props.pointerEvents == facebook::react::PointerEventsMode::Auto ||
-        m_props.pointerEvents == facebook::react::PointerEventsMode::BoxNone) && std::any_of(m_children.rbegin(),
-    m_children.rend(), [&targetTag, &ptLocal, &localPt](auto child) { targetTag = static_cast<const
-    ComponentView
-    *>(child)->hitTest(ptLocal, localPt); return targetTag != -1;
-        }))
-      return targetTag;
-      */
-
-  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
-      ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
-      ptLocal.y <= m_layoutMetrics.frame.size.height) {
-    localPt = ptLocal;
-    return Tag();
-  }
-
-  return -1;
-}
-
-void WindowsTextInputComponentView::ensureVisual() noexcept {
-  if (!m_visual) {
-    HrEnsureRichEd20Loaded();
-    m_visual = m_compContext.CreateSpriteVisual();
-    m_textHost = winrt::make<CompTextHost>(this);
-    winrt::com_ptr<::IUnknown> spUnk;
-    winrt::check_hresult(g_pfnCreateTextServices(nullptr, m_textHost.get(), spUnk.put()));
-    spUnk.as(m_textServices);
-    OuterVisual().InsertAt(m_visual, 0);
-  }
-
-  if (!m_caretVisual) {
-    m_caretVisual = m_compContext.CreateCaretVisual();
-    m_visual.InsertAt(m_caretVisual.InnerVisual(), 0);
-    m_caretVisual.IsVisible(false);
-  }
+  return visual;
 }
 
 void WindowsTextInputComponentView::onThemeChanged() noexcept {
-  auto props = std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(m_props);
-  updateCursorColor(props->cursorColor, props->textAttributes.foregroundColor);
+  const auto &props = windowsTextInputProps();
+  updateCursorColor(props.cursorColor, props.textAttributes.foregroundColor);
   DrawText();
   base_type::onThemeChanged();
-}
-
-winrt::Microsoft::ReactNative::Composition::Experimental::IVisual WindowsTextInputComponentView::Visual()
-    const noexcept {
-  return m_visual;
 }
 
 winrt::Microsoft::ReactNative::ComponentView WindowsTextInputComponentView::Create(
