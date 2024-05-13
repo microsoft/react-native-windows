@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "0413 integration",
+  "packageName": "@rnw-scripts/eslint-config",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
