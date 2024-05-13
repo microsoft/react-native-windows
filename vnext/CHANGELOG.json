@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 13 May 2024 15:15:54 GMT",
+      "version": "0.73.13",
+      "tag": "react-native-windows_v0.73.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a1b2139eec4ce5416a6098b737ea2662af3d896f",
+            "comment": "Change Hermes package version to 0.1.21"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Apr 2024 22:42:39 GMT",
       "version": "0.73.12",
       "tag": "react-native-windows_v0.73.12",
