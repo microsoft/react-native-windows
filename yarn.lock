@@ -2631,6 +2631,11 @@
   resolved "https://registry.yarnpkg.com/@react-native/eslint-plugin/-/eslint-plugin-0.75.0-nightly-20240413-1b152f6ec.tgz#3450b2b0091b385f830349bc68c56908fce3b07f"
   integrity sha512-NJX5uFQqtmxDjpcdEVHhPyi/Z/yjRH43xHBqs8Um6jNe6fVnhxv0XLDaugUk4EEGdzJhKwPUPhlzjiJbGdJO9g==
 
+"@react-native/gradle-plugin@0.75.0-nightly-20240413-1b152f6ec":
+  version "0.75.0-nightly-20240413-1b152f6ec"
+  resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.75.0-nightly-20240413-1b152f6ec.tgz#c9067d1d9462a2e6a596ed034f539ddb2ab7713e"
+  integrity sha512-x4GzGBg8Mfmv+L8rKG8lcAh25A1TnGLwTSnooGWi6m5/x1pPi96q/1S3x1E3oe4+uMJqlsU5siMLhSqS8Ad5YA==
+
 "@react-native/js-polyfills@0.75.0-nightly-20240413-1b152f6ec":
   version "0.75.0-nightly-20240413-1b152f6ec"
   resolved "https://registry.yarnpkg.com/@react-native/js-polyfills/-/js-polyfills-0.75.0-nightly-20240413-1b152f6ec.tgz#17a9a3842060e754f90660d101d6d216bcd95e82"
@@ -2672,14 +2677,6 @@
   version "0.75.0-nightly-20240413-1b152f6ec"
   resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.75.0-nightly-20240413-1b152f6ec.tgz#333f565bb8979901e5dfe37cbe1d323546dbcba9"
   integrity sha512-YaPq/9qmrQntKE9UZRy8Z1SiqUyK/qFbvnELiDs1PobjbhMo0XpMqAfLgIPy4FmdCOe3OpUDbz852thEA2ukbA==
-  dependencies:
-    invariant "^2.2.4"
-    nullthrows "^1.1.1"
-
-"@react-native/virtualized-lists@0.75.0-nightly-20240406-a05466c5b":
-  version "0.75.0-nightly-20240406-a05466c5b"
-  resolved "https://registry.yarnpkg.com/@react-native/virtualized-lists/-/virtualized-lists-0.75.0-nightly-20240406-a05466c5b.tgz#1f0ec953614c3604c583d8f45ff594733f64d8f7"
-  integrity sha512-F9cvKb4Hk82R19J8z4XqweTMGzapl6qIfgVL4RdoeUfJ2WByuj9ZSJFOSeUX+fF+J+DTCCSt+TlSbb/89HgAVg==
   dependencies:
     invariant "^2.2.4"
     nullthrows "^1.1.1"
