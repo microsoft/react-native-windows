@@ -247,6 +247,10 @@ void CompositionRootView::ScaleFactor(float value) noexcept {
   }
 }
 
+int64_t CompositionRootView::RootTag() const noexcept {
+  return m_rootTag;
+}
+
 winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader CompositionRootView::Resources() noexcept {
   return m_resources;
 }

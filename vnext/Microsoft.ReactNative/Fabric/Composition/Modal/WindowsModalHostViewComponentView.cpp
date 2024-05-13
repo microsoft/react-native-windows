@@ -23,14 +23,13 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : Super(
+          WindowsModalHostComponentView::defaultProps(),
           compContext,
           tag,
           reactContext,
           ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
           false) {
-  m_props = std::make_shared<facebook::react::ModalHostViewProps const>();
   m_context = reactContext; // save context
-  m_visual = compContext.CreateSpriteVisual();
 }
 
 winrt::Microsoft::ReactNative::ComponentView WindowsModalHostComponentView::Create(
@@ -201,7 +200,8 @@ void WindowsModalHostComponentView::HandleCommand(
 void WindowsModalHostComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  const auto &oldModalProps = *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(m_props);
+  const auto &oldModalProps =
+      *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(oldProps ? oldProps : viewProps());
   const auto &newModalProps = *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(props);
 
   // currently Modal only gets Destroyed by closing the window
@@ -210,20 +210,15 @@ void WindowsModalHostComponentView::updateProps(
     ShowOnUIThread();
   }
 
-  // update BaseComponentView props
-  updateTransformProps(oldModalProps, newModalProps, m_visual);
-  Super::updateProps(props, oldProps);
-  m_props = std::static_pointer_cast<facebook::react::ModalHostViewProps const>(props);
+  base_type::updateProps(props, oldProps);
 }
 
 void WindowsModalHostComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
-  if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
-  }
+  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 
-  // Temparary placeholder for Modal, draws on main hwnd
+  // Temporary placeholder for Modal, draws on main hwnd
   if (m_layoutMetrics.frame.size != layoutMetrics.frame.size ||
       m_layoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor || m_layoutMetrics.frame.size.width == 0) {
     // Always make visual a min size, so that even if its laid out at zero size, its clear an unimplemented view was
@@ -241,9 +236,9 @@ void WindowsModalHostComponentView::updateLayoutMetrics(
     drawingSurface.HorizontalAlignmentRatio(0.f);
     drawingSurface.VerticalAlignmentRatio(0.f);
     drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::None);
-    m_visual.Brush(drawingSurface);
-    m_visual.Size(surfaceSize);
-    m_visual.Offset({
+    Visual().as<Experimental::ISpriteVisual>().Brush(drawingSurface);
+    Visual().Size(surfaceSize);
+    Visual().Offset({
         layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
         layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
         0.0f,
@@ -290,28 +285,18 @@ void WindowsModalHostComponentView::updateLayoutMetrics(
       }
     }
   }
-
-  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 }
 
 void WindowsModalHostComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {}
 
-void WindowsModalHostComponentView::prepareForRecycle() noexcept {}
-
-facebook::react::SharedViewProps WindowsModalHostComponentView::viewProps() noexcept {
-  return m_props;
+facebook::react::SharedViewProps WindowsModalHostComponentView::defaultProps() noexcept {
+  static auto const defaultProps = std::make_shared<facebook::react::ModalHostViewProps const>();
+  return defaultProps;
 }
-
-winrt::Microsoft::ReactNative::Composition::Experimental::IVisual WindowsModalHostComponentView::Visual()
-    const noexcept {
-  return m_visual;
-}
-
-winrt::Microsoft::ReactNative::Composition::Experimental::IVisual WindowsModalHostComponentView::OuterVisual()
-    const noexcept {
-  return m_visual;
+const facebook::react::ModalHostViewProps &WindowsModalHostComponentView::modalHostViewProps() const noexcept {
+  return *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(viewProps());
 }
 
 facebook::react::Tag WindowsModalHostComponentView::hitTest(
@@ -320,8 +305,8 @@ facebook::react::Tag WindowsModalHostComponentView::hitTest(
     bool ignorePointerEvents) const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
-  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
+  if ((ignorePointerEvents || viewProps()->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+       viewProps()->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
       ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
       ptLocal.y <= m_layoutMetrics.frame.size.height) {
     localPt = ptLocal;

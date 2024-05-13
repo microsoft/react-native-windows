@@ -96,6 +96,10 @@ int64_t CompositionRootView::GetTag() const noexcept {
   return 0;
 }
 
+int64_t CompositionRootView::RootTag() const noexcept {
+  return 0;
+}
+
 void CompositionRootView::SetTag(int64_t) noexcept {}
 
 void CompositionRootView::SetWindow(uint64_t) noexcept {}
