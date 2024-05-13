@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Preventing crash when passing null children to view with no-hide-descendents",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
