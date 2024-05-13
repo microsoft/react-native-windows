@@ -140,10 +140,12 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/Performance/PerformanceComparisonExample'),
   },
+  /*
   {
     key: 'OSSLibraryExample',
     module: require('../examples/OSSLibraryExample/OSSLibraryExample'),
   },
+  */
 ];
 
 const APIs: Array<RNTesterModuleInfo> = ([
