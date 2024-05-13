@@ -236,7 +236,7 @@ void InsertSizeValue(
     const winrt::Windows::Data::Json::JsonObject &obj,
     winrt::hstring name,
     winrt::Windows::Foundation::Size value) {
-  auto str =winrt::to_hstring(value.Width) + L", " + winrt::to_hstring(value.Height);
+  auto str = winrt::to_hstring(value.Width) + L", " + winrt::to_hstring(value.Height);
   obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(str));
 }
 
@@ -252,8 +252,7 @@ void InsertFloat3Value(
     const winrt::Windows::Data::Json::JsonObject &obj,
     winrt::hstring name,
     winrt::Windows::Foundation::Numerics::float3 value) {
-  auto str = winrt::to_hstring(value.x) + L", " + winrt::to_hstring(value.y) + L", " +
-      winrt::to_hstring(value.z);
+  auto str = winrt::to_hstring(value.x) + L", " + winrt::to_hstring(value.y) + L", " + winrt::to_hstring(value.z);
   obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(str));
 }
 
