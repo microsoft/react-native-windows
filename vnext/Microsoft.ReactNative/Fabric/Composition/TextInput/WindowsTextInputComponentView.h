@@ -137,6 +137,7 @@ struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTex
   bool m_drawing{false};
   bool m_clearTextOnSubmit{false};
   bool m_multiline{false};
+  bool m_clearTextOnFocus{false};
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
 };
 
