@@ -135,6 +135,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/observers/events/EventPerformanceLogger.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/observers/events/EventPerformanceLogger.cpp",
+      "baseHash": "a61679142fe752b6ca32f16cde1fdd23e64a3b86",
+      "issue": 13231
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/JSRuntimeFactory.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/JSRuntimeFactory.cpp",
       "baseHash": "c77f0b0829b850f8e2f115bfc3440ce94feb207d",
