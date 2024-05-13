@@ -3,24 +3,24 @@
 #pragma once
 
 #ifdef USE_WINUI3
-#include "Composition.MicrosoftCompositionContextHelper.g.h"
+#include "Composition.Experimental.MicrosoftCompositionContextHelper.g.h"
 #endif
-#include "Composition.SystemCompositionContextHelper.g.h"
+#include "Composition.Experimental.SystemCompositionContextHelper.g.h"
 
 #include <d2d1_1.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionHelpers.h"
 
-namespace winrt::Microsoft::ReactNative::Composition {
+namespace winrt::Microsoft::ReactNative::Composition::Experimental {
 #ifdef USE_WINUI3
 using CompositionContextHelper = MicrosoftCompositionContextHelper;
 #else
 using CompositionContextHelper = SystemCompositionContextHelper;
 #endif
-} // namespace winrt::Microsoft::ReactNative::Composition
+} // namespace winrt::Microsoft::ReactNative::Composition::Experimental
 
-namespace winrt::Microsoft::ReactNative::Composition::implementation {
+namespace winrt::Microsoft::ReactNative::Composition::Experimental::implementation {
 
 struct SystemCompositionContextHelper : SystemCompositionContextHelperT<SystemCompositionContextHelper> {
   SystemCompositionContextHelper() = default;
@@ -45,12 +45,14 @@ struct MicrosoftCompositionContextHelper : MicrosoftCompositionContextHelperT<Mi
   static winrt::Microsoft::UI::Composition::DropShadow InnerDropShadow(IDropShadow shadow) noexcept;
   static winrt::Microsoft::UI::Composition::CompositionBrush InnerBrush(IBrush brush) noexcept;
   static winrt::Microsoft::UI::Composition::ICompositionSurface InnerSurface(IDrawingSurfaceBrush surface) noexcept;
+
+  static IBrush WrapBrush(const winrt::Microsoft::UI::Composition::CompositionBrush &brush) noexcept;
 };
 #endif
 
-} // namespace winrt::Microsoft::ReactNative::Composition::implementation
+} // namespace winrt::Microsoft::ReactNative::Composition::Experimental::implementation
 
-namespace winrt::Microsoft::ReactNative::Composition::factory_implementation {
+namespace winrt::Microsoft::ReactNative::Composition::Experimental::factory_implementation {
 
 struct SystemCompositionContextHelper
     : SystemCompositionContextHelperT<SystemCompositionContextHelper, implementation::SystemCompositionContextHelper> {
@@ -62,4 +64,4 @@ struct MicrosoftCompositionContextHelper : MicrosoftCompositionContextHelperT<
                                                implementation::MicrosoftCompositionContextHelper> {};
 #endif
 
-} // namespace winrt::Microsoft::ReactNative::Composition::factory_implementation
+} // namespace winrt::Microsoft::ReactNative::Composition::Experimental::factory_implementation

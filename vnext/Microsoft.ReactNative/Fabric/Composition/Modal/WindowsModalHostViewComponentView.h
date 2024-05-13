@@ -13,11 +13,12 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-struct WindowsModalHostComponentView : WindowsModalHostComponentViewT<WindowsModalHostComponentView, ComponentView> {
-  using Super = WindowsModalHostComponentViewT<WindowsModalHostComponentView, ComponentView>;
+struct WindowsModalHostComponentView
+    : WindowsModalHostComponentViewT<WindowsModalHostComponentView, ViewComponentView> {
+  using Super = WindowsModalHostComponentViewT<WindowsModalHostComponentView, ViewComponentView>;
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
@@ -37,17 +38,15 @@ struct WindowsModalHostComponentView : WindowsModalHostComponentViewT<WindowsMod
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
-  void prepareForRecycle() noexcept override;
-  facebook::react::SharedViewProps viewProps() noexcept override;
+  static facebook::react::SharedViewProps defaultProps() noexcept;
+  const facebook::react::ModalHostViewProps &modalHostViewProps() const noexcept;
   bool focusable() const noexcept override;
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
-  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
-  winrt::Microsoft::ReactNative::Composition::IVisual OuterVisual() const noexcept override;
   virtual std::string DefaultControlType() const noexcept;
 
   WindowsModalHostComponentView(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
@@ -58,8 +57,6 @@ struct WindowsModalHostComponentView : WindowsModalHostComponentViewT<WindowsMod
   static void RegisterWndClass() noexcept;
 
  private:
-  std::shared_ptr<facebook::react::ModalHostViewProps const> m_props;
-  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
   HWND m_hwnd{nullptr};
   winrt::Microsoft::ReactNative::ReactContext m_context;
 };

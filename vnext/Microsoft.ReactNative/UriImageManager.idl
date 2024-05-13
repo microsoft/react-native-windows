@@ -1,0 +1,75 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "IReactContext.idl";
+import "CompositionSwitcher.idl";
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative.Composition
+{
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  DOC_STRING(
+    "Provides information about an image source requested by the application.")
+  runtimeclass ImageSource
+  {
+    Windows.Foundation.Uri Uri { get; };
+    Windows.Foundation.Size Size { get; };
+    Single Scale { get; };
+  };
+
+
+  [webhosthidden]
+  [experimental]
+  interface IUriImageProvider
+  {
+    DOC_STRING(
+      "This should return true if this provider will provide an image for the provided uri.")
+    Boolean CanLoadImageUri(Microsoft.ReactNative.IReactContext context, Windows.Foundation.Uri uri);
+  }
+
+  [webhosthidden]
+  [experimental]
+    DOC_STRING(
+      "This allows applications to provide their own image caching / storage pipelines. Or to generate images on the fly based on uri.")
+  interface IUriImageStreamProvider requires IUriImageProvider
+  {
+    DOC_STRING(
+      "Returns a stream of an image file that can be decoded by Windows Imaging Component - https://learn.microsoft.com/en-us/windows/win32/api/_wic/ ")
+    Windows.Foundation.IAsyncOperation<Windows.Storage.Streams.IRandomAccessStream> GetSourceAsync(Microsoft.ReactNative.IReactContext context, ImageSource imageSource);
+  }
+
+ 
+  [webhosthidden]
+  [experimental]
+  delegate Microsoft.UI.Composition.CompositionBrush UriBrushFactory(Microsoft.ReactNative.IReactContext reactContext, Microsoft.UI.Composition.Compositor compositor);
+
+  [webhosthidden]
+  [experimental]
+  DOC_STRING(
+    "This allows applications to provide their own image rendering pipeline. Or to generate graphics on the fly based on uri.")
+  interface IUriBrushProvider requires IUriImageProvider
+  {
+  DOC_STRING(
+    "This allows applications to provide their own image rendering pipeline. Or to generate graphics on the fly based on uri.")
+    Windows.Foundation.IAsyncOperation<UriBrushFactory> GetSourceAsync(Microsoft.ReactNative.IReactContext context, Microsoft.ReactNative.Composition.ImageSource imageSource);
+  }
+
+  namespace Experimental {
+
+  [webhosthidden]
+  [experimental]
+  delegate Microsoft.ReactNative.Composition.Experimental.IBrush UriBrushFactory(Microsoft.ReactNative.IReactContext reactContext, Microsoft.ReactNative.Composition.Experimental.ICompositionContext compositionContext);
+
+  [webhosthidden]
+  [experimental]
+  DOC_STRING(
+    "This allows applications to provide their own image rendering pipeline. Or to generate graphics on the fly based on uri.")
+  interface IUriBrushProvider requires Microsoft.ReactNative.Composition.IUriImageProvider
+  {
+    Windows.Foundation.IAsyncOperation<UriBrushFactory> GetSourceAsync(Microsoft.ReactNative.IReactContext context, Microsoft.ReactNative.Composition.ImageSource imageSource);
+  }
+  }
+} // namespace Microsoft.ReactNative.Composition

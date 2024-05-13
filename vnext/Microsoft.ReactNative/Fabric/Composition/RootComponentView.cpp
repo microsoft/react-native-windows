@@ -14,10 +14,11 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 RootComponentView::RootComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : base_type(
+          {}, // default viewProps
           compContext,
           tag,
           reactContext,
@@ -34,7 +35,7 @@ RootComponentView::~RootComponentView() {
 }
 
 winrt::Microsoft::ReactNative::ComponentView RootComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<RootComponentView>(compContext, tag, reactContext);
@@ -55,8 +56,12 @@ void RootComponentView::SetFocusedComponent(const winrt::Microsoft::ReactNative:
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_focusedComponent)->onFocusLost();
   }
 
-  if (value)
+  if (value) {
+    if (auto rootView = m_wkRootView.get()) {
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)->TrySetFocus();
+    }
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(value)->onFocusGained();
+  }
 
   m_focusedComponent = value;
 }

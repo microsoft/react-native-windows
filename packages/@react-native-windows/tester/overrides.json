@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240214-b8ad91732",
+  "baseVersion": "0.75.0-nightly-20240406-a05466c5b",
   "overrides": [
     {
       "type": "derived",
@@ -20,6 +20,13 @@
       "baseHash": "fdf533bef0d75f8126faf21186b160ae7616e81f"
     },
     {
+      "type": "patch",
+      "file": "src/js/examples/ActivityIndicator/ActivityIndicatorExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/ActivityIndicator/ActivityIndicatorExample.js",
+      "baseHash": "31eeee8ffdda9f3f235d2d3100ac3641ea4f4e4a",
+      "issue": 12869
+    },
+    {
       "type": "platform",
       "file": "src/js/examples/HTTP/HTTPExample.js"
     },
@@ -29,9 +36,16 @@
     },
     {
       "type": "patch",
+      "file": "src/js/examples/Image/ImageExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
+      "baseHash": "4f4ba1856f82ded3cfad2920145b0ea6eb760eaa",
+      "issue": 12869
+    },
+    {
+      "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
-      "baseHash": "2b48a1872f6861b5fb5300a2407f01100f42e291",
+      "baseHash": "8e13bed9ad7453d52cc46655b4c70d95d773dd16",
       "issue": 6240
     },
     {
@@ -44,7 +58,7 @@
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "0feb796c56462855789816350f23943b5a212b2e",
+      "baseHash": "d5d360fdcb5589de7516aa84a3bd347df49b5b65",
       "issue": 5688
     },
     {

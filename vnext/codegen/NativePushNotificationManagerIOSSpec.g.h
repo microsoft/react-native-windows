@@ -29,8 +29,6 @@ struct PushNotificationManagerIOSSpec_Notification {
     std::optional<double> applicationIconBadgeNumber;
     std::optional<bool> isSilent;
     std::optional<std::string> soundName;
-    std::optional<std::string> alertAction;
-    std::optional<std::string> repeatInterval;
 };
 
 struct PushNotificationManagerIOSSpec_requestPermissions_permission {
@@ -60,8 +58,6 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PushNotificationMan
         {L"applicationIconBadgeNumber", &PushNotificationManagerIOSSpec_Notification::applicationIconBadgeNumber},
         {L"isSilent", &PushNotificationManagerIOSSpec_Notification::isSilent},
         {L"soundName", &PushNotificationManagerIOSSpec_Notification::soundName},
-        {L"alertAction", &PushNotificationManagerIOSSpec_Notification::alertAction},
-        {L"repeatInterval", &PushNotificationManagerIOSSpec_Notification::repeatInterval},
     };
     return fieldMap;
 }

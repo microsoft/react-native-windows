@@ -2,6 +2,81 @@
   "name": "@rnw-scripts/eslint-config",
   "entries": [
     {
+      "date": "Sat, 11 May 2024 05:18:29 GMT",
+      "version": "1.2.15",
+      "tag": "@rnw-scripts/eslint-config_v1.2.15",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "81fbb8ad349a47f89257fe0f7a775f00cfefdd86",
+            "comment": "integrate rn nightly 4/5/2024"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 May 2024 05:18:43 GMT",
+      "version": "1.2.14",
+      "tag": "@rnw-scripts/eslint-config_v1.2.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "b85780ba8a1c0dc0aa82344eddd1a8daeb08e15a",
+            "comment": "integrate react-native-3-21"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 25 Apr 2024 20:12:43 GMT",
+      "version": "1.2.13",
+      "tag": "@rnw-scripts/eslint-config_v1.2.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "2b8821b81ab7ec1e8cc483dcbd9573455b4d5d24",
+            "comment": "Integrate 3/7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Apr 2024 05:18:19 GMT",
+      "version": "1.2.11",
+      "tag": "@rnw-scripts/eslint-config_v1.2.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "d5a93ec84d0466502bc430b8ff818ef3ddee7f7d",
+            "comment": "integrate 2/29"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 30 Mar 2024 05:18:03 GMT",
+      "version": "1.2.10",
+      "tag": "@rnw-scripts/eslint-config_v1.2.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "8cf7376aed600ae9d5a1c83ae60c7c37ff3aa6ba",
+            "comment": "initial 2/21 integrate"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Mar 2024 05:17:00 GMT",
       "version": "1.2.9",
       "tag": "@rnw-scripts/eslint-config_v1.2.9",

@@ -199,6 +199,7 @@ jobs:
                   yarn e2etest
                 displayName: yarn e2etest
                 workingDirectory: packages/e2e-test-app-fabric
+                timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
 
               - script: npx jest --clearCache
                 displayName: clear jest cache

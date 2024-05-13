@@ -11,7 +11,7 @@
 namespace winrt::Microsoft::ReactNative {
 
 // Creates CallInvoker based on JSDispatcher.
-std::shared_ptr<facebook::react::CallInvoker> MakeAbiCallInvoker(IReactDispatcher const &jsDispatcher) noexcept;
+std::shared_ptr<facebook::react::CallInvoker> MakeAbiCallInvoker(IReactContext const &context) noexcept;
 
 template <
     typename TTurboModule,
@@ -23,7 +23,7 @@ void AddTurboModuleProvider(IReactPackageBuilder const &packageBuilder, std::wst
         // We expect the initializer to be called immediately for TurboModules
         moduleBuilder.AddInitializer([&abiTurboModule](IReactContext const &context) mutable {
           TryGetOrCreateContextRuntime(ReactContext{context}); // Ensure the JSI runtime is created.
-          auto callInvoker = MakeAbiCallInvoker(context.JSDispatcher());
+          auto callInvoker = MakeAbiCallInvoker(context);
           auto turboModule = std::make_shared<TTurboModule>(callInvoker);
           abiTurboModule = winrt::make<JsiHostObjectWrapper>(std::move(turboModule));
         });

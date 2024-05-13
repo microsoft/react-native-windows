@@ -35,8 +35,8 @@ class TextLayoutManager {
    * Measures `attributedStringBox` using native text rendering infrastructure.
    */
   TextMeasurement measure(
-      AttributedStringBox attributedStringBox,
-      ParagraphAttributes paragraphAttributes,
+      const AttributedStringBox &attributedStringBox,
+      const ParagraphAttributes &paragraphAttributes,
       const TextLayoutContext &layoutContext,
       LayoutConstraints layoutConstraints,
       std::shared_ptr<void> /* hostTextStorage */) const;
@@ -45,12 +45,14 @@ class TextLayoutManager {
    * Measures lines of `attributedString` using native text rendering
    * infrastructure.
    */
-  LinesMeasurements measureLines(AttributedString attributedString, ParagraphAttributes paragraphAttributes, Size size)
-      const;
+  LinesMeasurements measureLines(
+      const AttributedString &attributedString,
+      const ParagraphAttributes &paragraphAttributes,
+      Size size) const;
 
   std::shared_ptr<void> getHostTextStorage(
-      AttributedString attributedString,
-      ParagraphAttributes paragraphAttributes,
+      const AttributedString &attributedString,
+      const ParagraphAttributes &paragraphAttributes,
       LayoutConstraints layoutConstraints) const;
 
   /**
@@ -59,7 +61,7 @@ class TextLayoutManager {
    */
   TextMeasurement measureCachedSpannableById(
       int64_t cacheId,
-      ParagraphAttributes const &paragraphAttributes,
+      const ParagraphAttributes &paragraphAttributes,
       LayoutConstraints layoutConstraints) const;
 
   /*
@@ -69,15 +71,20 @@ class TextLayoutManager {
   void *getNativeTextLayoutManager() const;
 
   static void GetTextLayout(
-      AttributedStringBox attributedStringBox,
-      ParagraphAttributes paragraphAttributes,
+      const AttributedStringBox &attributedStringBox,
+      const ParagraphAttributes &paragraphAttributes,
       LayoutConstraints layoutConstraints,
       winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept;
 
 #pragma endregion
 
  private:
-  static winrt::hstring GetTransformedText(AttributedStringBox const &attributedStringBox);
+  static winrt::hstring GetTransformedText(const AttributedString &attributedString);
+  static void GetTextLayout(
+      const AttributedString &attributedString,
+      const ParagraphAttributes &paragraphAttributes,
+      Size size,
+      winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept;
 
   ContextContainer::Shared m_contextContainer;
 #pragma warning(push)

@@ -8,9 +8,9 @@
 void* winrt_make_Microsoft_Internal_TestController();
 void* winrt_make_Microsoft_ReactNative_CompositionRootView();
 #ifdef USE_WINUI3
-void *winrt_make_Microsoft_ReactNative_Composition_MicrosoftCompositionContextHelper();
+void *winrt_make_Microsoft_ReactNative_Composition_Experimental_MicrosoftCompositionContextHelper();
 #endif
-void *winrt_make_Microsoft_ReactNative_Composition_SystemCompositionContextHelper();
+void *winrt_make_Microsoft_ReactNative_Composition_Experimental_SystemCompositionContextHelper();
 void *winrt_make_Microsoft_ReactNative_Composition_CompositionUIService();
 void* winrt_make_Microsoft_ReactNative_JsiRuntime();
 void* winrt_make_Microsoft_ReactNative_ReactCoreInjection();
@@ -21,6 +21,7 @@ void* winrt_make_Microsoft_ReactNative_ReactNotificationServiceHelper();
 void* winrt_make_Microsoft_ReactNative_ReactPropertyBagHelper();
 void* winrt_make_Microsoft_ReactNative_ReactViewOptions();
 void* winrt_make_Microsoft_ReactNative_RedBoxHelper();
+void* winrt_make_Microsoft_ReactNative_QuirkSettings();
 void* winrt_make_facebook_react_NativeLogEventSource();
 void* winrt_make_facebook_react_NativeTraceEventSource();
 
@@ -50,12 +51,12 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
       return winrt_make_Microsoft_ReactNative_CompositionRootView();
     }
 #ifdef USE_WINUI3
-    if (requal(name, L"Microsoft.ReactNative.Composition.MicrosoftCompositionContextHelper")) {
-      return winrt_make_Microsoft_ReactNative_Composition_MicrosoftCompositionContextHelper();
+    if (requal(name, L"Microsoft.ReactNative.Composition.Experimental.MicrosoftCompositionContextHelper")) {
+      return winrt_make_Microsoft_ReactNative_Composition_Experimental_MicrosoftCompositionContextHelper();
     }
 #endif
-    if (requal(name, L"Microsoft.ReactNative.Composition.SystemCompositionContextHelper")) {
-      return winrt_make_Microsoft_ReactNative_Composition_SystemCompositionContextHelper();
+    if (requal(name, L"Microsoft.ReactNative.Composition.Experimental.SystemCompositionContextHelper")) {
+      return winrt_make_Microsoft_ReactNative_Composition_Experimental_SystemCompositionContextHelper();
     }
     if (requal(name, L"Microsoft.ReactNative.Composition.CompositionUIService")) {
       return winrt_make_Microsoft_ReactNative_Composition_CompositionUIService();
@@ -103,6 +104,11 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
     if (requal(name, L"Microsoft.ReactNative.RedBoxHelper"))
     {
         return winrt_make_Microsoft_ReactNative_RedBoxHelper();
+    }
+
+    if (requal(name, L"Microsoft.ReactNative.QuirkSettings"))
+    {
+        return winrt_make_Microsoft_ReactNative_QuirkSettings();
     }
 
     if (requal(name, L"facebook.react.NativeLogEventSource"))

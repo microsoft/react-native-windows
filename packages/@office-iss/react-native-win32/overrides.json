@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.74.0-nightly-20240214-b8ad91732",
+  "baseVersion": "0.75.0-nightly-20240406-a05466c5b",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "088893394c0e76f20bdc2f745a6dacba2285e579"
+      "baseHash": "47a3426b7d1053a171e1ee1c56120e0e2f1ce887"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "0c6707a752c0a7bd2b86225e0276c04a0f1c3b70"
+      "baseHash": "dd3b224f82882d17be0a79a368b293c9ac6599a0"
     },
     {
       "type": "platform",
@@ -67,7 +67,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Button.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "8d5fb0563e76b6e9f2ce3532f319041248587b63"
+      "baseHash": "b59e0b119a7a930e835ff3eefa780e757a97b31f"
     },
     {
       "type": "platform",
@@ -112,7 +112,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollView.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "a842009ee0d0d9ee5ee16e88ff25b9a45f38b667"
+      "baseHash": "732f5ccb69ff37895b3da2a160a0a6842a770385"
     },
     {
       "type": "platform",
@@ -122,7 +122,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "0119ddc412dcbacf1074b1d6b13628667578a270"
+      "baseHash": "b1ef5981a6abbb0548fc5fd835ad711c10712d61"
     },
     {
       "type": "patch",
@@ -149,7 +149,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/Touchable.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/Touchable.js",
-      "baseHash": "ddfc674fe37ab886bd73a263786a4049b3cc73ff",
+      "baseHash": "27e19d3bf49ff28629fdad544aad04939c2ce030",
       "issue": 0
     },
     {
@@ -204,7 +204,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "7ab8da32f3f0390cd415db0c2c4127d8b7b930f8"
+      "baseHash": "59baf00fff15e8fefbc0bce732af1c247d4695be"
     },
     {
       "type": "patch",
@@ -244,7 +244,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Image/Image.win32.js",
       "baseFile": "packages/react-native/Libraries/Image/Image.ios.js",
-      "baseHash": "751390bc6d7b721b5101138b682973410216c720",
+      "baseHash": "f3298e1dac3f1cd3d277b15b916753535b677f04",
       "issue": 4320
     },
     {
@@ -323,7 +323,7 @@
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorReactFrames.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js",
-      "baseHash": "04c1210d0198315af8358b22a81dc74dc76ef752"
+      "baseHash": "3a765d2180cca25ed35172ebce8294fc569486aa"
     },
     {
       "type": "derived",
@@ -379,7 +379,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Pressability/Pressability.win32.js",
       "baseFile": "packages/react-native/Libraries/Pressability/Pressability.js",
-      "baseHash": "3b490704a0a3c7f159efe344778cd6217d22d088",
+      "baseHash": "8e70142f3acab570d188c617a1811da11b6e9da4",
       "issue": 6240
     },
     {
@@ -438,7 +438,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "057cf316c2f379cbc97cf1bad76c31e94888246d"
+      "baseHash": "e800e91861873f94be7b43df80fae6f4b62a98e8"
     },
     {
       "type": "derived",
@@ -503,7 +503,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Utilities/Platform.win32.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
-      "baseHash": "3c959f078048e8a9cbd6d0463071c2208597ab8a"
+      "baseHash": "ddd8013d71adc13b3ef3016631012efd096a9518"
     },
     {
       "type": "copy",

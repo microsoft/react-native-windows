@@ -28,6 +28,9 @@ struct CompositionReactViewInstance
 //===========================================================================
 
 CompositionRootView::CompositionRootView() noexcept {}
+CompositionRootView::~CompositionRootView() noexcept {}
+
+CompositionRootView::CompositionRootView(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept {}
 
 ReactNative::IReactViewHost CompositionRootView::ReactViewHost() noexcept {
   return nullptr;
@@ -35,11 +38,20 @@ ReactNative::IReactViewHost CompositionRootView::ReactViewHost() noexcept {
 
 void CompositionRootView::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewHost const &) noexcept {}
 
-winrt::Microsoft::ReactNative::Composition::IVisual CompositionRootView::RootVisual() noexcept {
+winrt::Microsoft::UI::Composition::Visual CompositionRootView::RootVisual() noexcept {
   return nullptr;
 }
 
-void CompositionRootView::RootVisual(winrt::Microsoft::ReactNative::Composition::IVisual const &) noexcept {}
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual CompositionRootView::InternalRootVisual() noexcept {
+  return nullptr;
+}
+
+void CompositionRootView::InternalRootVisual(
+    const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &) noexcept {}
+
+winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() noexcept {
+  return nullptr;
+}
 
 winrt::Windows::Foundation::Size CompositionRootView::Size() noexcept {
   return {};
@@ -58,6 +70,12 @@ winrt::Microsoft::ReactNative::Composition::Theme CompositionRootView::Theme() n
 }
 void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition::Theme &) noexcept {}
 
+winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader CompositionRootView::Resources() noexcept {
+  return nullptr;
+}
+void CompositionRootView::Resources(
+    const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &) noexcept {}
+
 winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
   return nullptr;
 }
@@ -75,6 +93,10 @@ int64_t CompositionRootView::GetActualWidth() const noexcept {
 }
 
 int64_t CompositionRootView::GetTag() const noexcept {
+  return 0;
+}
+
+int64_t CompositionRootView::RootTag() const noexcept {
   return 0;
 }
 
@@ -106,11 +128,11 @@ void CompositionRootView::ShowInstanceError() noexcept {}
 
 void CompositionRootView::ShowInstanceLoading() noexcept {}
 
-Windows::Foundation::Size CompositionRootView::Measure(Windows::Foundation::Size const &) const {
+winrt::Windows::Foundation::Size CompositionRootView::Measure(winrt::Windows::Foundation::Size const &) const {
   return {};
 }
 
-Windows::Foundation::Size CompositionRootView::Arrange(Windows::Foundation::Size) const {
+winrt::Windows::Foundation::Size CompositionRootView::Arrange(winrt::Windows::Foundation::Size) const {
   return {};
 }
 

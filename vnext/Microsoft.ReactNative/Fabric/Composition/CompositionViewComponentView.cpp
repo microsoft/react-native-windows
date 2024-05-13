@@ -6,6 +6,7 @@
 
 #include "CompositionViewComponentView.h"
 
+#include <AutoDraw.h>
 #include <Fabric/AbiState.h>
 #include <Fabric/AbiViewProps.h>
 #include <Fabric/Composition/CompositionRootView.h>
@@ -14,6 +15,7 @@
 #include <Utils/KeyboardUtils.h>
 #include <Utils/ValueUtils.h>
 #include <Views/FrameworkElementTransferProperties.h>
+#include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionContextHelper.h"
 #include "CompositionDynamicAutomationProvider.h"
@@ -31,11 +33,15 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 CreateCompositionComponentViewArgs::CreateCompositionComponentViewArgs(
     const winrt::Microsoft::ReactNative::IReactContext &reactContext,
     facebook::react::Tag tag,
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compositionContext)
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compositionContext)
     : base_type(reactContext, tag), m_compositionContext(compositionContext){};
 
-winrt::Microsoft::ReactNative::Composition::ICompositionContext CreateCompositionComponentViewArgs::CompositionContext()
-    const noexcept {
+winrt::Microsoft::UI::Composition::Compositor CreateCompositionComponentViewArgs::Compositor() const noexcept {
+  return winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(ReactContext().Properties());
+}
+
+winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext
+CreateCompositionComponentViewArgs::CompositionContext() const noexcept {
   return m_compositionContext;
 }
 
@@ -48,10 +54,17 @@ void CreateCompositionComponentViewArgs::Features(ComponentViewFeatures value) n
 }
 
 ComponentView::ComponentView(const winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs &args)
-    : ComponentView(args.CompositionContext(), args.Tag(), args.ReactContext(), args.Features(), true) {}
+    : ComponentView(
+          winrt::get_self<
+              winrt::Microsoft::ReactNative::Composition::implementation::CreateCompositionComponentViewArgs>(args)
+              ->CompositionContext(),
+          args.Tag(),
+          args.ReactContext(),
+          args.Features(),
+          true) {}
 
 ComponentView::ComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,
     ComponentViewFeatures flags,
@@ -74,9 +87,9 @@ facebook::react::Props::Shared ComponentView::props() noexcept {
 void ComponentView::onThemeChanged() noexcept {
   if ((m_flags & ComponentViewFeatures::Background) == ComponentViewFeatures::Background) {
     if (viewProps()->backgroundColor) {
-      Visual().as<ISpriteVisual>().Brush(theme()->Brush(*viewProps()->backgroundColor));
+      Visual().as<Experimental::ISpriteVisual>().Brush(theme()->Brush(*viewProps()->backgroundColor));
     } else {
-      Visual().as<ISpriteVisual>().Brush(nullptr);
+      Visual().as<Experimental::ISpriteVisual>().Brush(nullptr);
     }
   }
 
@@ -108,22 +121,29 @@ winrt::Microsoft::ReactNative::Composition::Theme ComponentView::Theme() const n
   return theme()->get_strong().as<winrt::Microsoft::ReactNative::Composition::Theme>();
 }
 
-winrt::Microsoft::ReactNative::Composition::ICompositionContext ComponentView::CompositionContext() const noexcept {
+winrt::Microsoft::UI::Composition::Compositor ComponentView::Compositor() const noexcept {
+  return winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(
+      m_compContext);
+}
+
+winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext ComponentView::CompositionContext()
+    const noexcept {
   return m_compContext;
 }
 
 void ComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  const auto &oldViewProps = *viewProps();
+  const auto &oldViewProps =
+      oldProps ? (*std::static_pointer_cast<const facebook::react::ViewProps>(oldProps)) : (*viewProps());
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(props);
 
   if ((m_flags & ComponentViewFeatures::Background) == ComponentViewFeatures::Background) {
     if (oldViewProps.backgroundColor != newViewProps.backgroundColor) {
       if (newViewProps.backgroundColor) {
-        Visual().as<ISpriteVisual>().Brush(theme()->Brush(*newViewProps.backgroundColor));
+        Visual().as<Experimental::ISpriteVisual>().Brush(theme()->Brush(*newViewProps.backgroundColor));
       } else {
-        Visual().as<ISpriteVisual>().Brush(nullptr);
+        Visual().as<Experimental::ISpriteVisual>().Brush(nullptr);
       }
     }
   }
@@ -295,15 +315,17 @@ const facebook::react::SharedViewEventEmitter &ComponentView::GetEventEmitter() 
   return m_eventEmitter;
 }
 
-std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, ComponentView::SpecialBorderLayerCount>
+std::array<
+    winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual,
+    ComponentView::SpecialBorderLayerCount>
 ComponentView::FindSpecialBorderLayers() const noexcept {
-  std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, SpecialBorderLayerCount> layers{
+  std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount> layers{
       nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
 
   if (m_numBorderVisuals) {
     for (uint8_t i = 0; i < m_numBorderVisuals; i++) {
       auto visual = Visual().GetAt(i);
-      layers[i] = visual.as<winrt::Microsoft::ReactNative::Composition::ISpriteVisual>();
+      layers[i] = visual.as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>();
     }
   }
 
@@ -328,12 +350,13 @@ struct RoundedPathParameters {
  * right, bottom right, bottom left). "rectPathGeometry" defines the bounding box of the generated shape.
  */
 static winrt::com_ptr<ID2D1PathGeometry> GenerateRoundedRectPathGeometry(
-    winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     const RoundedPathParameters &params,
     const facebook::react::RectangleEdges<float> &rectPathGeometry) noexcept {
   winrt::com_ptr<ID2D1PathGeometry> pathGeometry;
   winrt::com_ptr<ID2D1Factory1> spD2dFactory;
-  compContext.as<::Microsoft::ReactNative::Composition::ICompositionContextInterop>()->D2DFactory(spD2dFactory.put());
+  compContext.as<::Microsoft::ReactNative::Composition::Experimental::ICompositionContextInterop>()->D2DFactory(
+      spD2dFactory.put());
 
   // Create a path geometry.
   HRESULT hr = spD2dFactory->CreatePathGeometry(pathGeometry.put());
@@ -513,7 +536,7 @@ RoundedPathParameters GenerateRoundedPathParameters(
 }
 
 static winrt::com_ptr<ID2D1PathGeometry> GenerateRoundedRectPathGeometry(
-    winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     const facebook::react::RectangleCorners<float> &baseRadius,
     const facebook::react::RectangleEdges<float> &inset,
     const facebook::react::RectangleEdges<float> &rectPathGeometry) noexcept {
@@ -547,37 +570,14 @@ void DrawShape(
   pRT->DrawGeometry(&geometry, brush, strokeWidth, strokeStyle);
 }
 
-struct AutoDrawHelper {
-  AutoDrawHelper(winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionDrawingSurfaceInterop> &surface) {
-    m_surface = surface;
-    m_surface->BeginDraw(m_pRT.put(), &m_offset);
-  }
-
-  ~AutoDrawHelper() {
-    m_surface->EndDraw();
-  }
-
-  const winrt::com_ptr<ID2D1DeviceContext> &GetRenderTarget() const noexcept {
-    return m_pRT;
-  }
-
-  POINT Offset() const noexcept {
-    return m_offset;
-  }
-
- private:
-  winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionDrawingSurfaceInterop> m_surface;
-  POINT m_offset;
-  winrt::com_ptr<ID2D1DeviceContext> m_pRT;
-};
-
 template <typename TShape>
 void SetBorderLayerPropertiesCommon(
     winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
-    winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    winrt::Microsoft::ReactNative::Composition::ISpriteVisual &layer,
+    winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
+    winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual &layer,
     TShape &shape,
-    winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionDrawingSurfaceInterop> &borderTexture,
+    winrt::com_ptr<::Microsoft::ReactNative::Composition::Experimental::ICompositionDrawingSurfaceInterop>
+        &borderTexture,
     const D2D1_RECT_F &textureRect,
     facebook::react::Point anchorPoint,
     facebook::react::Point anchorOffset,
@@ -599,75 +599,69 @@ void SetBorderLayerPropertiesCommon(
 
   layer.Brush(surface);
 
-  AutoDrawHelper autoDraw(borderTexture);
+  POINT offset;
+  ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(
+      surface, 1.0f /* We have already done the dpi scaling */, &offset);
+  if (auto pRT = autoDraw.GetRenderTarget()) {
+    // Clear with transparency
+    pRT->Clear();
 
-  winrt::com_ptr<ID2D1DeviceContext> pRT{autoDraw.GetRenderTarget()};
+    if (!facebook::react::isColorMeaningful(borderColor)) {
+      return;
+    }
 
-  if (!pRT) {
-    return;
+    winrt::com_ptr<ID2D1Factory> spFactory;
+    pRT->GetFactory(spFactory.put());
+    assert(spFactory);
+    if (spFactory == nullptr)
+      return;
+
+    winrt::com_ptr<ID2D1SolidColorBrush> spBorderBrush;
+    pRT->CreateSolidColorBrush(theme->D2DColor(*borderColor), spBorderBrush.put());
+    assert(spBorderBrush);
+    if (spBorderBrush == nullptr)
+      return;
+
+    winrt::com_ptr<ID2D1StrokeStyle> spStrokeStyle;
+
+    enum class BorderStyle { Solid, Dotted, Dashed };
+
+    if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
+      const auto capStyle =
+          borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_CAP_STYLE_FLAT : D2D1_CAP_STYLE_ROUND;
+      const auto strokeStyleProps = D2D1::StrokeStyleProperties(
+          capStyle,
+          capStyle,
+          capStyle,
+          D2D1_LINE_JOIN_MITER,
+          10.0f,
+          borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_DASH_STYLE_DASH : D2D1_DASH_STYLE_DOT,
+          0.0f);
+      spFactory->CreateStrokeStyle(&strokeStyleProps, nullptr, 0, spStrokeStyle.put());
+    }
+    D2D1::Matrix3x2F originalTransform;
+    D2D1::Matrix3x2F translationTransform =
+        D2D1::Matrix3x2F::Translation(-textureRect.left + offset.x, -textureRect.top + offset.y);
+
+    pRT->GetTransform(&originalTransform);
+    translationTransform = originalTransform * translationTransform;
+
+    pRT->SetTransform(translationTransform);
+
+    DrawShape(pRT, shape, spBorderBrush.get(), strokeWidth, spStrokeStyle.get());
+
+    pRT->SetTransform(originalTransform);
   }
-
-  // Clear with transparency
-  pRT->Clear();
-
-  if (!facebook::react::isColorMeaningful(borderColor)) {
-    return;
-  }
-
-  winrt::com_ptr<ID2D1Factory> spFactory;
-  pRT->GetFactory(spFactory.put());
-  assert(spFactory);
-  if (spFactory == nullptr)
-    return;
-
-  winrt::com_ptr<ID2D1SolidColorBrush> spBorderBrush;
-  pRT->CreateSolidColorBrush(theme->D2DColor(*borderColor), spBorderBrush.put());
-  assert(spBorderBrush);
-  if (spBorderBrush == nullptr)
-    return;
-
-  winrt::com_ptr<ID2D1StrokeStyle> spStrokeStyle;
-
-  enum class BorderStyle { Solid, Dotted, Dashed };
-
-  if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
-    const auto capStyle =
-        borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_CAP_STYLE_FLAT : D2D1_CAP_STYLE_ROUND;
-    const auto strokeStyleProps = D2D1::StrokeStyleProperties(
-        capStyle,
-        capStyle,
-        capStyle,
-        D2D1_LINE_JOIN_MITER,
-        10.0f,
-        borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_DASH_STYLE_DASH : D2D1_DASH_STYLE_DOT,
-        0.0f);
-    spFactory->CreateStrokeStyle(&strokeStyleProps, nullptr, 0, spStrokeStyle.put());
-  }
-  D2D1::Matrix3x2F originalTransform;
-  D2D1::Matrix3x2F translationTransform =
-      D2D1::Matrix3x2F::Translation(-textureRect.left + autoDraw.Offset().x, -textureRect.top + autoDraw.Offset().y);
-
-  pRT->GetTransform(&originalTransform);
-  translationTransform = originalTransform * translationTransform;
-
-  float oldDpiX, oldDpiY;
-  pRT->SetTransform(translationTransform);
-  pRT->GetDpi(&oldDpiX, &oldDpiY);
-  pRT->SetDpi(96.0f, 96.0f); // We have already done the dpi scaling...
-
-  DrawShape(pRT.get(), shape, spBorderBrush.get(), strokeWidth, spStrokeStyle.get());
-
-  pRT->SetDpi(oldDpiX, oldDpiY);
-  pRT->SetTransform(originalTransform);
 }
 
 template <typename TShape>
 void SetBorderLayerProperties(
     winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
-    winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    winrt::Microsoft::ReactNative::Composition::ISpriteVisual &layer,
+    winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
+    winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual &layer,
     TShape &shape,
-    winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionDrawingSurfaceInterop> &borderTexture,
+    winrt::com_ptr<::Microsoft::ReactNative::Composition::Experimental::ICompositionDrawingSurfaceInterop>
+        &borderTexture,
     const D2D1_RECT_F &textureRect,
     facebook::react::Point anchorPoint,
     facebook::react::Point anchorOffset,
@@ -700,7 +694,7 @@ void SetBorderLayerProperties(
       layer.Brush(theme->Brush(*borderColor));
 
       winrt::com_ptr<ID2D1Factory1> spD2dFactory;
-      compContext.as<::Microsoft::ReactNative::Composition::ICompositionContextInterop>()->D2DFactory(
+      compContext.as<::Microsoft::ReactNative::Composition::Experimental::ICompositionContextInterop>()->D2DFactory(
           spD2dFactory.put());
 
       winrt::com_ptr<ID2D1TransformedGeometry> transformedShape;
@@ -708,7 +702,8 @@ void SetBorderLayerProperties(
       winrt::check_hresult(
           spD2dFactory->CreateTransformedGeometry(&shape, &translationTransform, transformedShape.put()));
 
-      layer.as<::Microsoft::ReactNative::Composition::IVisualInterop>()->SetClippingPath(transformedShape.get());
+      layer.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
+          transformedShape.get());
     }
     /*
                 else
@@ -731,9 +726,10 @@ const float Bottom = 1.0;
 template <typename TShape>
 void DrawAllBorderLayers(
     winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
-    winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
-    std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, ComponentView::SpecialBorderLayerCount>
-        &spBorderLayers,
+    winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
+    std::array<
+        winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual,
+        ComponentView::SpecialBorderLayerCount> &spBorderLayers,
     TShape &shape,
     const facebook::react::BorderWidths &borderWidths,
     const facebook::react::BorderRadii &borderRadii,
@@ -742,7 +738,7 @@ void DrawAllBorderLayers(
     const facebook::react::BorderColors &borderColors,
     facebook::react::BorderStyle borderStyle) {
   // Now that we've drawn our nice border in one layer, split it into its component layers
-  winrt::com_ptr<::Microsoft::ReactNative::Composition::ICompositionDrawingSurfaceInterop>
+  winrt::com_ptr<::Microsoft::ReactNative::Composition::Experimental::ICompositionDrawingSurfaceInterop>
       spTextures[ComponentView::SpecialBorderLayerCount];
 
   // Set component border properties
@@ -903,7 +899,7 @@ void DrawAllBorderLayers(
 }
 
 winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
-    winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     const facebook::react::RectangleCorners<float> &radius,
     const facebook::react::RectangleEdges<float> &inset,
     const facebook::react::RectangleEdges<float> &thickness,
@@ -956,7 +952,8 @@ winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
 
   ID2D1Geometry *ppGeometries[] = {outerPathGeometry.get(), innerPathGeometry.get()};
   winrt::com_ptr<ID2D1Factory1> spD2dFactory;
-  compContext.as<::Microsoft::ReactNative::Composition::ICompositionContextInterop>()->D2DFactory(spD2dFactory.put());
+  compContext.as<::Microsoft::ReactNative::Composition::Experimental::ICompositionContextInterop>()->D2DFactory(
+      spD2dFactory.put());
 
   winrt::com_ptr<ID2D1GeometryGroup> geometryGroup = nullptr;
   // Create a geometry group.
@@ -1036,7 +1033,8 @@ facebook::react::BorderMetrics resolveAndAlignBorderMetrics(
 
 bool ComponentView::TryUpdateSpecialBorderLayers(
     winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
-    std::array<winrt::Microsoft::ReactNative::Composition::ISpriteVisual, SpecialBorderLayerCount> &spBorderVisuals,
+    std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
+        &spBorderVisuals,
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
   auto borderMetrics = resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
@@ -1150,13 +1148,13 @@ void ComponentView::finalizeBorderUpdates(
   if (!TryUpdateSpecialBorderLayers(theme(), spBorderLayers, layoutMetrics, viewProps)) {
     for (auto &spBorderLayer : spBorderLayers) {
       if (spBorderLayer) {
-        spBorderLayer.as<winrt::Microsoft::ReactNative::Composition::ISpriteVisual>().Brush(nullptr);
+        spBorderLayer.as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Brush(nullptr);
       }
     }
   }
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual ComponentView::OuterVisual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ComponentView::OuterVisual() const noexcept {
   return m_outerVisual ? m_outerVisual : Visual();
 }
 
@@ -1203,29 +1201,29 @@ void ComponentView::applyShadowProps(const facebook::react::ViewProps &viewProps
   shadow.BlurRadius(viewProps.shadowRadius);
   if (viewProps.shadowColor)
     shadow.Color(theme()->Color(*viewProps.shadowColor));
-  Visual().as<winrt::Microsoft::ReactNative::Composition::ISpriteVisual>().Shadow(shadow);
+  Visual().as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Shadow(shadow);
 }
 
 void ComponentView::updateTransformProps(
     const facebook::react::ViewProps &oldViewProps,
     const facebook::react::ViewProps &newViewProps,
-    winrt::Microsoft::ReactNative::Composition::IVisual visual) noexcept {
+    winrt::Microsoft::ReactNative::Composition::Experimental::IVisual visual) noexcept {
   // check for backfaceVisibility prop
   if (oldViewProps.backfaceVisibility != newViewProps.backfaceVisibility) {
     static_assert(
         static_cast<facebook::react::BackfaceVisibility>(
-            winrt::Microsoft::ReactNative::Composition::BackfaceVisibility::Inherit) ==
+            winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility::Inherit) ==
         facebook::react::BackfaceVisibility::Auto);
     static_assert(
         static_cast<facebook::react::BackfaceVisibility>(
-            winrt::Microsoft::ReactNative::Composition::BackfaceVisibility::Visible) ==
+            winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility::Visible) ==
         facebook::react::BackfaceVisibility::Visible);
     static_assert(
         static_cast<facebook::react::BackfaceVisibility>(
-            winrt::Microsoft::ReactNative::Composition::BackfaceVisibility::Hidden) ==
+            winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility::Hidden) ==
         facebook::react::BackfaceVisibility::Hidden);
-    visual.BackfaceVisibility(
-        static_cast<winrt::Microsoft::ReactNative::Composition::BackfaceVisibility>(newViewProps.backfaceVisibility));
+    visual.BackfaceVisibility(static_cast<winrt::Microsoft::ReactNative::Composition::Experimental::BackfaceVisibility>(
+        newViewProps.backfaceVisibility));
   }
 
   // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
@@ -1316,7 +1314,7 @@ void ComponentView::updateBorderLayoutMetrics(
 
   if (borderMetrics.borderRadii.topLeft == 0 && borderMetrics.borderRadii.topRight == 0 &&
       borderMetrics.borderRadii.bottomLeft == 0 && borderMetrics.borderRadii.bottomRight == 0) {
-    Visual().as<::Microsoft::ReactNative::Composition::IVisualInterop>()->SetClippingPath(nullptr);
+    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
   } else {
     winrt::com_ptr<ID2D1PathGeometry> pathGeometry = GenerateRoundedRectPathGeometry(
         m_compContext,
@@ -1327,7 +1325,8 @@ void ComponentView::updateBorderLayoutMetrics(
          layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
          layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 
-    Visual().as<::Microsoft::ReactNative::Composition::IVisualInterop>()->SetClippingPath(pathGeometry.get());
+    Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
+        pathGeometry.get());
   }
 
   if (m_layoutMetrics != layoutMetrics) {
@@ -1359,7 +1358,8 @@ ComponentView::supplementalComponentDescriptorProviders() noexcept {
 comp::CompositionPropertySet ComponentView::EnsureCenterPointPropertySet() noexcept {
   if (m_centerPropSet == nullptr) {
     if (auto compositor =
-            winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerCompositor(m_compContext)) {
+            winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerCompositor(
+                m_compContext)) {
       m_centerPropSet = compositor.CreatePropertySet();
       UpdateCenterPropertySet();
       m_centerPropSet.InsertMatrix4x4(L"transform", winrt::Windows::Foundation::Numerics::float4x4::identity());
@@ -1404,12 +1404,13 @@ void ComponentView::EnsureTransformMatrixFacade() noexcept {
 
   auto centerPointPropSet = EnsureCenterPointPropertySet();
   if (auto compositor =
-          winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerCompositor(m_compContext)) {
+          winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerCompositor(
+              m_compContext)) {
     // TODO cache expression instead of creating new ones all the time
     auto expression = compositor.CreateExpressionAnimation(
         L"Matrix4x4.CreateFromScale(PS.dpiScale3Inv) * Matrix4x4.CreateFromTranslation(PS.translation) * PS.transform * Matrix4x4.CreateFromScale(PS.dpiScale3)");
     expression.SetReferenceParameter(L"PS", centerPointPropSet);
-    winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(OuterVisual())
+    winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(OuterVisual())
         .StartAnimation(L"TransformMatrix", expression);
   }
 }
@@ -1454,21 +1455,38 @@ std::string ComponentView::DefaultHelpText() const noexcept {
 
 ViewComponentView::ViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs &args)
-    : ViewComponentView(args.CompositionContext(), args.Tag(), args.ReactContext(), args.Features(), true) {}
+    : ViewComponentView(
+          ViewComponentView::defaultProps(),
+          winrt::get_self<
+              winrt::Microsoft::ReactNative::Composition::implementation::CreateCompositionComponentViewArgs>(args)
+              ->CompositionContext(),
+          args.Tag(),
+          args.ReactContext(),
+          args.Features(),
+          true) {}
+
+facebook::react::SharedViewProps ViewComponentView::defaultProps() noexcept {
+  static auto const defaultViewProps = std::make_shared<facebook::react::ViewProps const>();
+  return defaultViewProps;
+}
 
 ViewComponentView::ViewComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const facebook::react::SharedViewProps &defaultProps,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,
     ComponentViewFeatures flags,
     bool customComponent)
-    : base_type(compContext, tag, reactContext, flags, customComponent) {
-  static auto const defaultProps = std::make_shared<facebook::react::ViewProps const>();
-  m_props = defaultProps;
+    : base_type(compContext, tag, reactContext, flags, customComponent),
+      m_props(defaultProps ? defaultProps : ViewComponentView::defaultProps()) {}
+
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ViewComponentView::createVisual() noexcept {
+  return m_compContext.CreateSpriteVisual();
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual ViewComponentView::CreateVisual() noexcept {
-  return m_compContext.CreateSpriteVisual();
+winrt::Microsoft::UI::Composition::Visual ViewComponentView::CreateVisual() noexcept {
+  return winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
+      createVisual());
 }
 
 void ViewComponentView::ensureVisual() noexcept {
@@ -1476,19 +1494,27 @@ void ViewComponentView::ensureVisual() noexcept {
     if (m_customComponent) {
       // Review is it expected that I need this cast to call overridden methods?
       winrt::Microsoft::ReactNative::Composition::ViewComponentView outer(*this);
-      m_visual = outer.CreateVisual();
+      winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCreateVisual internalCreateVisual{nullptr};
+      if (outer.try_as(internalCreateVisual)) {
+        m_visual = internalCreateVisual.CreateInternalVisual();
+      } else {
+        m_visual =
+            winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateVisual(
+                outer.CreateVisual());
+      }
     } else {
-      m_visual = CreateVisual();
+      m_visual = createVisual();
     }
     OuterVisual().InsertAt(m_visual, 0);
   }
 }
 
 winrt::Microsoft::ReactNative::ComponentView ViewComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return winrt::make<ViewComponentView>(compContext, tag, reactContext, ComponentViewFeatures::Default, false);
+  return winrt::make<ViewComponentView>(
+      ViewComponentView::defaultProps(), compContext, tag, reactContext, ComponentViewFeatures::Default, false);
 }
 
 void ViewComponentView::MountChildComponentView(
@@ -1502,7 +1528,7 @@ void ViewComponentView::MountChildComponentView(
   // TODO if we get mixed children of composition and non-composition ComponentViews the indexes will get mixed up
   // We could offset the index based on non-composition children in m_children
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
-    m_visual.InsertAt(compositionChild->OuterVisual(), index);
+    Visual().InsertAt(compositionChild->OuterVisual(), index);
   }
 }
 
@@ -1513,27 +1539,27 @@ void ViewComponentView::UnmountChildComponentView(
 
   indexOffsetForBorder(index);
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
-    m_visual.Remove(compositionChild->OuterVisual());
+    Visual().Remove(compositionChild->OuterVisual());
   }
 }
 
 void ViewComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(m_props);
+  const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(oldProps ? oldProps : m_props);
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ViewProps>(props);
 
   ensureVisual();
   if (oldViewProps.opacity != newViewProps.opacity) {
-    m_visual.Opacity(newViewProps.opacity);
+    Visual().Opacity(newViewProps.opacity);
   }
   if (oldViewProps.testId != newViewProps.testId) {
-    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
+    Visual().Comment(winrt::to_hstring(newViewProps.testId));
   }
 
   // update BaseComponentView props
   updateAccessibilityProps(oldViewProps, newViewProps);
-  updateTransformProps(oldViewProps, newViewProps, m_visual);
+  updateTransformProps(oldViewProps, newViewProps, Visual());
   base_type::updateProps(props, oldProps);
 
   m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
@@ -1552,7 +1578,7 @@ facebook::react::Tag ViewComponentView::hitTest(
     bool ignorePointerEvents) const noexcept {
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
-  facebook::react::Tag targetTag;
+  facebook::react::Tag targetTag = -1;
 
   if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
@@ -1570,10 +1596,43 @@ facebook::react::Tag ViewComponentView::hitTest(
   return -1;
 }
 
+inline winrt::Windows::System::VirtualKey GetLeftOrRightModifiedKey(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    winrt::Windows::System::VirtualKey leftKey,
+    winrt::Windows::System::VirtualKey rightKey) {
+  return (source.GetKeyState(leftKey) == winrt::Windows::UI::Core::CoreVirtualKeyStates::Down) ? leftKey : rightKey;
+}
+
+std::string CodeFromVirtualKey(
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+    winrt::Windows::System::VirtualKey virtualKey) {
+  int key = static_cast<int>(virtualKey);
+
+  if (isdigit(key)) {
+    return "Digit" + std::string(1, static_cast<char>(key));
+  } else if (isupper(key)) {
+    return "Key" + std::string(1, static_cast<char>(key));
+  } else {
+    // Override the virtual key if it's modified key of Control, Shift or Menu
+    if (virtualKey == winrt::Windows::System::VirtualKey::Control) {
+      virtualKey = GetLeftOrRightModifiedKey(
+          source, winrt::Windows::System::VirtualKey::LeftControl, winrt::Windows::System::VirtualKey::RightControl);
+    } else if (virtualKey == winrt::Windows::System::VirtualKey::Shift) {
+      virtualKey = GetLeftOrRightModifiedKey(
+          source, winrt::Windows::System::VirtualKey::LeftShift, winrt::Windows::System::VirtualKey::RightShift);
+    } else if (virtualKey == winrt::Windows::System::VirtualKey::Menu) {
+      virtualKey = GetLeftOrRightModifiedKey(
+          source, winrt::Windows::System::VirtualKey::LeftMenu, winrt::Windows::System::VirtualKey::RightMenu);
+    }
+  }
+
+  return ::Microsoft::ReactNative::GetOrUnidentifiedCode(virtualKey);
+}
+
 void ViewComponentView::OnKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  auto eventCode = ::Microsoft::ReactNative::CodeFromVirtualKey(args.Key());
+  auto eventCode = CodeFromVirtualKey(source, args.Key());
   bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) !=
       winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
   bool fAlt = source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) !=
@@ -1585,7 +1644,7 @@ void ViewComponentView::OnKeyDown(
       (source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) !=
        winrt::Windows::UI::Core::CoreVirtualKeyStates::None);
 
-  if (args.OriginalSource() == Tag()) {
+  if (args.OriginalSource() == Tag() && !args.Handled()) {
     facebook::react::KeyEvent event;
     event.shiftKey = fShift;
     event.ctrlKey = fCtrl;
@@ -1612,7 +1671,7 @@ void ViewComponentView::OnKeyDown(
 void ViewComponentView::OnKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  auto eventCode = ::Microsoft::ReactNative::CodeFromVirtualKey(args.Key());
+  auto eventCode = CodeFromVirtualKey(source, args.Key());
   bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) !=
       winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
   bool fAlt = source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) !=
@@ -1660,16 +1719,20 @@ void ViewComponentView::updateLayoutMetrics(
 }
 
 void ViewComponentView::UpdateLayoutMetrics(const LayoutMetrics &metrics, const LayoutMetrics &oldMetrics) noexcept {
-  m_visual.Size({metrics.Frame.Width * metrics.PointScaleFactor, metrics.Frame.Height * metrics.PointScaleFactor});
+  Visual().Size({metrics.Frame.Width * metrics.PointScaleFactor, metrics.Frame.Height * metrics.PointScaleFactor});
 }
 
 void ViewComponentView::prepareForRecycle() noexcept {}
 
-facebook::react::SharedViewProps ViewComponentView::viewProps() noexcept {
+const facebook::react::SharedViewProps &ViewComponentView::viewProps() const noexcept {
   return m_props;
 }
 
 winrt::Microsoft::ReactNative::ViewProps ViewComponentView::ViewProps() noexcept {
+  return ViewPropsInner();
+}
+
+winrt::Microsoft::ReactNative::ViewProps ViewComponentView::ViewPropsInner() noexcept {
   // If we have AbiViewProps, then we dont need to new up a props wrapper
   if (m_customComponent) {
     const auto &abiViewProps = *std::static_pointer_cast<const ::Microsoft::ReactNative::AbiViewProps>(m_props);
@@ -1679,7 +1742,7 @@ winrt::Microsoft::ReactNative::ViewProps ViewComponentView::ViewProps() noexcept
   return winrt::make<winrt::Microsoft::ReactNative::implementation::ViewProps>(m_props);
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual ViewComponentView::Visual() const noexcept {
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ViewComponentView::Visual() const noexcept {
   assert(m_visual);
   return m_visual;
 }

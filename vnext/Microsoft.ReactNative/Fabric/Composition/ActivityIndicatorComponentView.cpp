@@ -14,19 +14,23 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 winrt::Microsoft::ReactNative::ComponentView ActivityIndicatorComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<ActivityIndicatorComponentView>(compContext, tag, reactContext);
 }
 
 ActivityIndicatorComponentView::ActivityIndicatorComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, ComponentViewFeatures::Default, false) {
-  m_props = std::make_shared<facebook::react::ActivityIndicatorViewProps const>();
-}
+    : Super(
+          ActivityIndicatorComponentView::defaultProps(),
+          compContext,
+          tag,
+          reactContext,
+          ComponentViewFeatures::Default,
+          false) {}
 
 void ActivityIndicatorComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
@@ -53,14 +57,11 @@ void ActivityIndicatorComponentView::updateProgressColor(const facebook::react::
 void ActivityIndicatorComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  const auto oldViewProps = std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props);
+  const auto oldViewProps =
+      std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(oldProps ? oldProps : viewProps());
   const auto newViewProps = std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(props);
 
-  ensureVisual();
-
-  if (newViewProps->testId != oldViewProps->testId) {
-    m_visual.Comment(winrt::to_hstring(newViewProps->testId));
-  }
+  Super::updateProps(props, oldProps);
 
   // update color if needed
   if (!oldProps || newViewProps->color != oldViewProps->color) {
@@ -70,10 +71,6 @@ void ActivityIndicatorComponentView::updateProps(
   if (newViewProps->animating != oldViewProps->animating) {
     m_ActivityIndicatorVisual.IsVisible(newViewProps->animating);
   }
-
-  Super::updateProps(props, oldProps);
-
-  m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
 }
 
 void ActivityIndicatorComponentView::FinalizeUpdates(
@@ -81,8 +78,7 @@ void ActivityIndicatorComponentView::FinalizeUpdates(
   static constexpr float radiusSmall = 10.0f;
   static constexpr float radiusLarge = 18.0f;
 
-  if (std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props)->size ==
-      facebook::react::ActivityIndicatorViewSize::Small) {
+  if (activityIndicatorViewProps().size == facebook::react::ActivityIndicatorViewSize::Small) {
     m_ActivityIndicatorVisual.Size(radiusSmall * m_layoutMetrics.pointScaleFactor);
   } else {
     m_ActivityIndicatorVisual.Size(radiusLarge * m_layoutMetrics.pointScaleFactor);
@@ -96,66 +92,35 @@ void ActivityIndicatorComponentView::updateState(
 void ActivityIndicatorComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
-  // Set Position & Size Properties
-  ensureVisual();
-
-  if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
-  }
-
   Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
-  m_visual.Size(
-      {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
-       layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
 
-void ActivityIndicatorComponentView::prepareForRecycle() noexcept {}
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
+ActivityIndicatorComponentView::createVisual() noexcept {
+  auto visual = m_compContext.CreateSpriteVisual();
+  m_ActivityIndicatorVisual = m_compContext.CreateActivityVisual();
 
-facebook::react::SharedViewProps ActivityIndicatorComponentView::viewProps() noexcept {
-  return m_props;
-}
-
-void ActivityIndicatorComponentView::ensureVisual() noexcept {
-  if (!m_visual) {
-    m_visual = m_compContext.CreateSpriteVisual();
-    m_ActivityIndicatorVisual = m_compContext.CreateActivityVisual();
-
-    OuterVisual().InsertAt(m_ActivityIndicatorVisual, 0);
-    OuterVisual().InsertAt(m_visual, 0);
-  }
-}
-
-facebook::react::Tag ActivityIndicatorComponentView::hitTest(
-    facebook::react::Point pt,
-    facebook::react::Point &localPt,
-    bool ignorePointerEvents) const noexcept {
-  facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
-
-  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
-      ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
-      ptLocal.y <= m_layoutMetrics.frame.size.height) {
-    localPt = ptLocal;
-    return Tag();
-  }
-  return -1;
-}
-
-winrt::Microsoft::ReactNative::Composition::IVisual ActivityIndicatorComponentView::Visual() const noexcept {
-  return m_visual;
+  OuterVisual().InsertAt(m_ActivityIndicatorVisual, 0);
+  return visual;
 }
 
 void ActivityIndicatorComponentView::onThemeChanged() noexcept {
-  updateProgressColor(std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(m_props)->color);
+  updateProgressColor(activityIndicatorViewProps().color);
   Super::onThemeChanged();
-}
-
-bool ActivityIndicatorComponentView::focusable() const noexcept {
-  return false;
 }
 
 std::string ActivityIndicatorComponentView::DefaultControlType() const noexcept {
   return "progressbar";
+}
+
+facebook::react::SharedViewProps ActivityIndicatorComponentView::defaultProps() noexcept {
+  static auto const defaultProps = std::make_shared<facebook::react::ActivityIndicatorViewProps const>();
+  return defaultProps;
+}
+
+const facebook::react::ActivityIndicatorViewProps &ActivityIndicatorComponentView::activityIndicatorViewProps()
+    const noexcept {
+  return *std::static_pointer_cast<const facebook::react::ActivityIndicatorViewProps>(viewProps());
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

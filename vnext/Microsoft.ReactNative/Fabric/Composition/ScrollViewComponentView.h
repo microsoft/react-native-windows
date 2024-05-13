@@ -20,7 +20,7 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 struct ScrollBarComponent;
 
-struct ScrollViewComponentView : ScrollViewComponentViewT<ScrollViewComponentView, ComponentView> {
+struct ScrollViewComponentView : ScrollViewComponentViewT<ScrollViewComponentView, ViewComponentView> {
   /*
 struct ScrollInteractionTrackerOwner : public winrt::implements<
                                            ScrollInteractionTrackerOwner,
@@ -51,10 +51,10 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
 };
 
 */
-  using Super = ScrollViewComponentViewT<ScrollViewComponentView, ComponentView>;
+  using Super = ScrollViewComponentViewT<ScrollViewComponentView, ViewComponentView>;
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
@@ -72,7 +72,6 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void prepareForRecycle() noexcept override;
-  facebook::react::SharedViewProps viewProps() noexcept override;
   void OnKeyDown(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
@@ -82,7 +81,6 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   facebook::react::Tag hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents)
       const noexcept override;
   facebook::react::Point getClientOffset() const noexcept override;
-  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
 
   void onThemeChanged() noexcept override;
   void OnPointerReleased(
@@ -100,8 +98,10 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
 
   void scrollTo(winrt::Windows::Foundation::Numerics::float3 offset, bool animate) noexcept;
 
+  static facebook::react::SharedViewProps defaultProps() noexcept;
+
   ScrollViewComponentView(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
@@ -111,9 +111,9 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   bool lineDown(bool animate) noexcept;
   bool lineLeft(bool animate) noexcept;
   bool lineRight(bool animate) noexcept;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual createVisual() noexcept override;
 
  private:
-  void ensureVisual() noexcept;
   void updateContentVisualSize() noexcept;
   bool scrollToEnd(bool animate) noexcept;
   bool scrollToStart(bool animate) noexcept;
@@ -125,14 +125,12 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
   void updateStateWithContentOffset() noexcept;
 
   facebook::react::Size m_contentSize;
-  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::IScrollVisual m_scrollVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual m_scrollVisual{nullptr};
   std::shared_ptr<ScrollBarComponent> m_horizontalScrollbarComponent{nullptr};
   std::shared_ptr<ScrollBarComponent> m_verticalScrollbarComponent{nullptr};
-  winrt::Microsoft::ReactNative::Composition::IScrollVisual::ScrollPositionChanged_revoker
+  winrt::Microsoft::ReactNative::Composition::Experimental::IScrollVisual::ScrollPositionChanged_revoker
       m_scrollPositionChangedRevoker{};
 
-  facebook::react::SharedViewProps m_props;
   float m_zoomFactor{1.0f};
   bool m_isScrollingFromInertia = false;
   bool m_isScrolling = false;

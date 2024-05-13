@@ -1,25 +1,25 @@
 {
-  "baseVersion": "0.74.0-nightly-20240214-b8ad91732",
+  "baseVersion": "0.75.0-nightly-20240406-a05466c5b",
   "overrides": [
     {
       "type": "copy",
       "directory": "js/assets",
       "baseDirectory": "packages/rn-tester/js/assets",
-      "baseHash": "abb5cf85647531d0c8f89c7281c3b6808eec12e8",
+      "baseHash": "414d1c3b1d436448a773bb772f0ec93cf2402055",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "1eda76bc2c7d63409b04b40a47dbe02488e08e45",
+      "baseHash": "e30582c7ce0ba5cc7965a1b5ccd7f443692e24e1",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
-      "baseHash": "bf3ca247de469a20291dac344b4817a363581763",
+      "baseHash": "c3e22748043a47b6947f0fdb6f9374e57112f4de",
       "issue": 4054
     },
     {
@@ -40,7 +40,7 @@
       "type": "copy",
       "directory": "js/examples/Alert",
       "baseDirectory": "packages/rn-tester/js/examples/Alert",
-      "baseHash": "b070f0b2d1a412fe8b070620d082db65dfb7a59b",
+      "baseHash": "5ed9654a15f3a9b536e322433fe350cbe0fa9802",
       "issue": 4054
     },
     {
@@ -61,7 +61,7 @@
       "type": "copy",
       "directory": "js/examples/Appearance",
       "baseDirectory": "packages/rn-tester/js/examples/Appearance",
-      "baseHash": "dc660f8ee6a129b7ed8f4ec7f299ca6c73ac781e",
+      "baseHash": "6e1c89669e9495d50d06e27c6c203012a6c480da",
       "issue": 4054
     },
     {
@@ -124,7 +124,7 @@
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseHash": "44a1311b18c59126480e6ddf2e15bc37cec01098",
+      "baseHash": "3cf296dfcc8341700a9aa7664521fe1e419723c9",
       "issue": 4054
     },
     {
@@ -250,7 +250,7 @@
       "type": "copy",
       "directory": "js/examples/Performance",
       "baseDirectory": "packages/rn-tester/js/examples/Performance",
-      "baseHash": "2cb56896687df27a1f22fad45a2d608167859a61",
+      "baseHash": "1cce35ad130644bfb4a42251cc4b8fd44b135ba1",
       "issue": 0
     },
     {
@@ -264,7 +264,7 @@
       "type": "copy",
       "directory": "js/examples/PlatformColor",
       "baseDirectory": "packages/rn-tester/js/examples/PlatformColor",
-      "baseHash": "083ae8ddb7675a0678a84ade2354921709e0fe29",
+      "baseHash": "359ac542e21946a5bc85aac1153d708fffa9aebd",
       "issue": 4054
     },
     {
@@ -278,7 +278,7 @@
       "type": "copy",
       "directory": "js/examples/Pressable",
       "baseDirectory": "packages/rn-tester/js/examples/Pressable",
-      "baseHash": "aea3af3c27e5db79bb2a92ee6546ee047a83b5b5",
+      "baseHash": "5773550e2dc20f6a1d786d24460267c637deecf2",
       "issue": 4054
     },
     {
@@ -383,7 +383,7 @@
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "2f5178bf5fa0ce33632b15a5cc0e632aeb281fb2",
+      "baseHash": "50c8f413b673279dfecae9ec44b9f4a881945c0f",
       "issue": 4054
     },
     {
@@ -404,7 +404,7 @@
       "type": "copy",
       "directory": "js/examples/Touchable",
       "baseDirectory": "packages/rn-tester/js/examples/Touchable",
-      "baseHash": "cdc451d462449c9b55cae0a7dce5abeef72509d1",
+      "baseHash": "fa97ac7e0abb2dc21087923a3887cbe307b29c5f",
       "issue": 4054
     },
     {
@@ -474,7 +474,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "e15cbd95c6c07cb7cdfdea1baebd192fe7392438",
+      "baseHash": "df33c55275d69437bad7d62806a7fe3b81c19b5b",
       "issue": 4054
     },
     {
@@ -488,14 +488,14 @@
       "type": "copy",
       "directory": "js/utils",
       "baseDirectory": "packages/rn-tester/js/utils",
-      "baseHash": "808ce3514bdbf7b99623d31a786538a3b8c5c346",
+      "baseHash": "df5dbcb578e750a6e9c5ebd11bbda593c12d796b",
       "issue": 4054
     },
     {
       "type": "copy",
       "file": "NativeComponentExample/js/MyNativeView.js",
       "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeView.js",
-      "baseHash": "37f9257087d5f4e9ed18566a5f79ecf9ef0a44ec",
+      "baseHash": "2ad7976c764e91346fd87254acaf72f5071674b7",
       "issue": 4054
     },
     {
@@ -523,7 +523,8 @@
       "type": "copy",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "30849d22dd65d92f54f9e405bd9f26ebe5967f87",
+      "baseVersion": "0.75.0-nightly-20240329-3f8882116",
+      "baseHash": "2df1789eee76067765485f86d45809d93a65fc92",
       "issue": 4054
     }
   ]

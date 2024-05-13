@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <CompositionSwitcher.interop.h>
+#include <CompositionSwitcher.Experimental.interop.h>
 #include <guid/msoGuid.h>
 #include <winrt/Windows.UI.Composition.h>
 

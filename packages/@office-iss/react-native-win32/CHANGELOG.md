@@ -1,8 +1,84 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 23 Mar 2024 05:16:59 GMT and should not be manually modified.
+This log was last generated on Sat, 11 May 2024 05:18:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.245
+
+Sat, 11 May 2024 05:18:28 GMT
+
+### Changes
+
+- integrate rn nightly 4/5/2024 (email not defined)
+- Bump @rnw-scripts/eslint-config to v1.2.15
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.19
+- Bump @rnw-scripts/just-task to v2.3.31
+- Bump react-native-platform-override to v1.9.32
+
+## 0.0.0-canary.244
+
+Thu, 09 May 2024 05:18:43 GMT
+
+### Changes
+
+- integrate react-native-3-21 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.14
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.18
+- Bump @rnw-scripts/just-task to v2.3.30
+- Bump react-native-platform-override to v1.9.31
+
+## 0.0.0-canary.243
+
+Sat, 27 Apr 2024 05:16:25 GMT
+
+### Changes
+
+- Fix PaperUIManager (port from windows) (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.242
+
+Fri, 26 Apr 2024 05:16:49 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.9.30
+
+## 0.0.0-canary.241
+
+Thu, 25 Apr 2024 20:12:41 GMT
+
+### Changes
+
+- Integrate 3/7 (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.13
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.17
+- Bump @rnw-scripts/just-task to v2.3.29
+- Bump react-native-platform-override to v1.9.29
+
+## 0.0.0-canary.240
+
+Wed, 10 Apr 2024 05:18:18 GMT
+
+### Changes
+
+- integrate 2/29 (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.11
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.15
+- Bump @rnw-scripts/just-task to v2.3.27
+- Bump react-native-platform-override to v1.9.27
+
+## 0.0.0-canary.239
+
+Sat, 30 Mar 2024 05:18:03 GMT
+
+### Changes
+
+- initial 2/21 integrate (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.10
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.14
+- Bump @rnw-scripts/just-task to v2.3.26
+- Bump react-native-platform-override to v1.9.26
 
 ## 0.0.0-canary.238
 

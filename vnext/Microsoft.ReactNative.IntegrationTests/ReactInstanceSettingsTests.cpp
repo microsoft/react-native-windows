@@ -4,11 +4,21 @@
 #include "pch.h"
 
 #include <winrt/Microsoft.ReactNative.h>
+
+#ifdef USE_WINUI3
+#include <winrt/Microsoft.UI.Dispatching.h>
+#else
 #include <winrt/Windows.System.h>
+#endif
 
 using namespace winrt;
 using namespace Microsoft::ReactNative;
+
+#ifdef USE_WINUI3
+using namespace Microsoft::UI::Dispatching;
+#else
 using namespace Windows::System;
+#endif
 
 namespace ReactNativeIntegrationTests {
 

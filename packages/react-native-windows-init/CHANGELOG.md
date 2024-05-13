@@ -1,8 +1,77 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Sat, 23 Mar 2024 05:17:01 GMT and should not be manually modified.
+This log was last generated on Sat, 11 May 2024 05:18:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.16
+
+Sat, 11 May 2024 05:18:30 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.43
+- Bump @react-native-windows/telemetry to v0.0.0-canary.94
+- Bump @react-native-windows/cli to v0.0.0-canary.212
+- Bump @rnw-scripts/eslint-config to v1.2.15
+- Bump @rnw-scripts/just-task to v2.3.31
+
+## 1.4.15
+
+Thu, 09 May 2024 05:18:44 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.42
+- Bump @react-native-windows/telemetry to v0.0.0-canary.93
+- Bump @react-native-windows/cli to v0.0.0-canary.211
+- Bump @rnw-scripts/eslint-config to v1.2.14
+- Bump @rnw-scripts/just-task to v2.3.30
+
+## 1.4.14
+
+Fri, 26 Apr 2024 05:16:49 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.210
+
+## 1.4.13
+
+Thu, 25 Apr 2024 20:12:45 GMT
+
+### Patches
+
+- Fix bad version bump (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.41
+- Bump @react-native-windows/telemetry to v0.0.0-canary.92
+- Bump @react-native-windows/cli to v0.0.0-canary.209
+- Bump @rnw-scripts/eslint-config to v1.2.13
+- Bump @rnw-scripts/just-task to v2.3.29
+
+## 1.4.11
+
+Wed, 10 Apr 2024 05:18:19 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.40
+- Bump @react-native-windows/telemetry to v0.0.0-canary.91
+- Bump @react-native-windows/cli to v0.0.0-canary.208
+- Bump @rnw-scripts/eslint-config to v1.2.11
+- Bump @rnw-scripts/just-task to v2.3.27
+
+## 1.4.10
+
+Sat, 30 Mar 2024 05:18:04 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.39
+- Bump @react-native-windows/telemetry to v0.0.0-canary.90
+- Bump @react-native-windows/cli to v0.0.0-canary.207
+- Bump @rnw-scripts/eslint-config to v1.2.10
+- Bump @rnw-scripts/just-task to v2.3.26
 
 ## 1.4.9
 

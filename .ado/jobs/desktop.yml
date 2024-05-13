@@ -19,10 +19,6 @@ parameters:
             BuildConfiguration: Debug
             BuildPlatform: x64
             UseFabric: false
-          - Name: X64DebugFabric
-            BuildConfiguration: Debug
-            BuildPlatform: x64
-            UseFabric: true
           - Name: X64Release
             BuildConfiguration: Release
             BuildPlatform: x64
@@ -31,6 +27,10 @@ parameters:
             BuildConfiguration: Debug
             BuildPlatform: x86
             UseFabric: false
+          - Name: X64DebugFabric
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            UseFabric: true
       - BuildEnvironment: SecurePullRequest
         Matrix:
           - Name: X64DebugFabric
@@ -48,16 +48,20 @@ parameters:
           - Name: X86Debug
             BuildConfiguration: Debug
             BuildPlatform: x86
+          - Name: X86Release
+            BuildConfiguration: Release
+            BuildPlatform: x86
           - Name: Arm64Debug
             BuildConfiguration: Debug
             BuildPlatform: ARM64
           - Name: Arm64Release
             BuildConfiguration: Release
             BuildPlatform: ARM64
-          - Name: X86Release
-            BuildConfiguration: Release
-            BuildPlatform: x86
-          - X86ReleaseFabric:
+          - Name: X64DebugFabric
+            BuildConfiguration: Debug
+            BuildPlatform: x64
+            UseFabric: true
+          - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
             BuildConfiguration: Release
             BuildPlatform: x86
             UseFabric: true
@@ -239,7 +243,9 @@ jobs:
                   SSLCertThumbPrint: $(TestWebsiteCertificateThumbprint)
                   # IIS Website
                   WebsiteName: RNW Test Website
-                  WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\${{ matrix.BuildPlatform }}\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative.Test.Website\Publish
+                  # Hard-coding x64 for publish path.
+                  # Our MSBuild customizations cause dotnet commans to assume the default PlatformTarget
+                  WebsitePhysicalPath: $(Build.SourcesDirectory)\vnext\target\x64\${{ matrix.BuildConfiguration }}\Microsoft.ReactNative.Test.Website\Publish
                   WebsitePhysicalPathAuth: WebsiteUserPassThrough
                   CreateOrUpdateAppPoolForWebsite: false
                   ConfigureAuthenticationForWebsite: false
