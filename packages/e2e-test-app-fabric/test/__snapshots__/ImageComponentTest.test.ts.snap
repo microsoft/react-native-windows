@@ -666,12 +666,12 @@ exports[`Image Tests An Image can be nested inside of a component 1`] = `
       },
       {
         "Offset": "12, 20, 0",
-        "Size": "52, 19",
+        "Size": "52, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "52, 19",
+            "Size": "52, 20",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -1233,7 +1233,7 @@ exports[`Image Tests An Image can have a loading indicator visual 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ads/pics/successstories.png?hash=1715623796856",
+          "Uri": "https://www.facebook.com/ads/pics/successstories.png?hash=1715642204681",
         },
       ],
       "TestId": "image-loading-indicator",
@@ -1289,7 +1289,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1302,7 +1302,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1315,7 +1315,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1328,63 +1328,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
-        "_Props": {},
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
-            },
-          ],
-        },
-      },
-      {
-        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-        "_Props": {
-          "Sources": [
-            {
-              "Scale": 2,
-              "Size": "17, 40",
-              "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1401,7 +1345,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1414,7 +1358,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1427,7 +1371,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1440,7 +1384,63 @@ exports[`Image Tests An Image can have a tint color 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Scale": 2,
+              "Size": "17, 40",
+              "Type": "Local",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -1656,12 +1656,12 @@ exports[`Image Tests An Image can have a tint color 1`] = `
       },
       {
         "Offset": "0, 82, 0",
-        "Size": "916, 20",
+        "Size": "916, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 20",
+            "Size": "916, 19",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -1741,12 +1741,12 @@ exports[`Image Tests An Image can have a tint color 1`] = `
       },
       {
         "Offset": "0, 136, 0",
-        "Size": "916, 19",
+        "Size": "916, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 19",
+            "Size": "916, 20",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2193,7 +2193,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png?platform=windows&hash=c6f5aec4d9e0aa47c0887e4266796224",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_normal@2x.png",
             },
           ],
         },
@@ -2206,7 +2206,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_thumb_selected@2x.png?platform=windows&hash=4b7088ca5499061913e736668940c5bf",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_thumb_selected@2x.png",
             },
           ],
         },
@@ -2219,7 +2219,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_comment_normal@2x.png?platform=windows&hash=a271ab3a3933f61465b85e76ed8e4852",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_comment_normal@2x.png",
             },
           ],
         },
@@ -2232,7 +2232,7 @@ exports[`Image Tests An Image can load a static image 1`] = `
               "Scale": 2,
               "Size": "17, 40",
               "Type": "Local",
-              "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/uie_comment_highlighted@2x.png?platform=windows&hash=99e642a0f019ca4695e8d172530b3c58",
+              "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/uie_comment_highlighted@2x.png",
             },
           ],
         },
@@ -2387,7 +2387,7 @@ exports[`Image Tests An Image component can have a network callback 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/favicon.ico?r=1&t=1715623796709",
+          "Uri": "https://www.facebook.com/favicon.ico?r=1&t=<some_hash_here>",
         },
       ],
       "TestId": "image-network-callback",
@@ -2415,7 +2415,7 @@ exports[`Image Tests An Image component can hve a network callback 2 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/favicon.ico?r=1&t=1715623795000",
+          "Uri": "https://www.facebook.com/favicon.ico?r=1&t=<some_hash_here>",
         },
       ],
       "TestId": "image-network-callback-2",
@@ -2443,7 +2443,7 @@ exports[`Image Tests An Image component can render a blob image 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "blob:6b4e0e49-1e1a-4ce1-9042-bbf4b230f3f0?offset=0&size=5430",
+          "Uri": "blob:6e73307a-0e71-4d13-a03c-c4f3df777245?offset=0&size=5430",
         },
       ],
       "TestId": "image-blob",
@@ -2646,7 +2646,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
   "Visual Tree": {
     "Comment": "image-object-fit",
     "Offset": "0, 0, 0",
-    "Size": "916, 310",
+    "Size": "916, 311",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2803,12 +2803,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "0, 78, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2879,12 +2879,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "100, 78, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2955,12 +2955,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "0, 155, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3031,12 +3031,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "100, 155, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3492,17 +3492,17 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
   "Visual Tree": {
     "Comment": "image-resize-mode",
     "Offset": "0, 0, 0",
-    "Size": "916, 311",
+    "Size": "916, 310",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3573,12 +3573,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "100, 0, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3877,12 +3877,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "0, 155, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3953,12 +3953,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "100, 155, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -4029,12 +4029,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "0, 233, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -4105,12 +4105,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "100, 233, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -4181,12 +4181,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "200, 233, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {

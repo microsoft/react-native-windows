@@ -33,7 +33,7 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
                 {
                   "Size": "111, 72",
                   "Type": "Local",
-                  "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/bottom-nav-apis-icon-light.png?platform=windows&hash=875572ed8afafed87f73c4c597b11835",
+                  "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/bottom-nav-apis-icon-light.png",
                 },
               ],
             },
@@ -2017,7 +2017,7 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
                 {
                   "Size": "66, 72",
                   "Type": "Local",
-                  "Uri": "http://localhost:8081/assets/@@/@react-native-windows/tester/js/assets/bottom-nav-components-icon-dark.png?platform=windows&hash=40b81f6ff9fc225d33fa501761a0cccd",
+                  "Uri": "<localOrBundlerUri>@react-native-windows/tester/js/assets/bottom-nav-components-icon-dark.png",
                 },
               ],
             },
