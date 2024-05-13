@@ -485,10 +485,45 @@
       "issue": 4054
     },
     {
+      "type": "patch",
+      "file": "js/utils/RNTesterList.android.js",
+      "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
+      "baseHash": "c40d0a03a89b9017cbb08a0449d5a0c32cadc5f2",
+      "issue": 13228
+    },
+    {
+      "type": "patch",
+      "file": "js/utils/RNTesterList.ios.js",
+      "baseFile": "packages/rn-tester/js/utils/RNTesterList.ios.js",
+      "baseHash": "39db425962737a74284b382273a83103d1bcaf91",
+      "issue": 13228
+    },
+    {
       "type": "copy",
-      "directory": "js/utils",
-      "baseDirectory": "packages/rn-tester/js/utils",
-      "baseHash": "208e0bcdaae9644fb7cbce06cbe03a45bb45d5f6",
+      "file": "js/utils/RNTesterList.js.flow",
+      "baseFile": "packages/rn-tester/js/utils/RNTesterList.js.flow",
+      "baseHash": "15670e7e3a42f775809785937036f8e1b3aa73fb",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/utils/RNTesterNavigationReducer.js",
+      "baseFile": "packages/rn-tester/js/utils/RNTesterNavigationReducer.js",
+      "baseHash": "cbd55678b272dc752f436064c83bad186d98a4c9",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/utils/testerStateUtils.js",
+      "baseFile": "packages/rn-tester/js/utils/testerStateUtils.js",
+      "baseHash": "149533a2cc8f21215f5c21da1eadbd730b09055f",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
+      "file": "js/utils/useJsStalls.js",
+      "baseFile": "packages/rn-tester/js/utils/useJsStalls.js",
+      "baseHash": "4b8631d7c3e20ca834b81b754a233b82b7d658ca",
       "issue": 4054
     },
     {
@@ -520,11 +555,11 @@
       "issue": 4054
     },
     {
-      "type": "copy",
+      "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
       "baseHash": "e78c05507dd91bfc51dc96445ca9877aefa3c562",
-      "issue": 4054
+      "issue": 13228
     }
   ]
 }
