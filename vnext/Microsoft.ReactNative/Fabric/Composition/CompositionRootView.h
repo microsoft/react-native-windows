@@ -88,6 +88,8 @@ struct CompositionRootView
 
   winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *GetComponentView() noexcept;
 
+  int64_t RootTag() const noexcept;
+
   IInspectable GetUiaProvider() noexcept;
 
   // When driving the rootview without an island
