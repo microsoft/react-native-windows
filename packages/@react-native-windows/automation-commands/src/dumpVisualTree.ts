@@ -58,7 +58,6 @@ export type VisualNode = {
 }
 
 export type VisualTree = {
-  
   "Automation Tree": AutomationNode,
   "Component Tree": ComponentNode,
   "Visual Tree": VisualNode,
@@ -94,21 +93,21 @@ export default async function dumpVisualTree(
     throw new Error(dumpResponse.message);
   }
 
-  const element = dumpResponse.result;
+  const element: UIElement | VisualTree = dumpResponse.result;
 
-  if (opts?.pruneCollapsed !== false) {
+  if ("XamlType" in element && opts?.pruneCollapsed !== false) {
     pruneCollapsedElements(element);
   }
 
-  if (opts?.deterministicOnly !== false) {
+  if ("XamlType" in element && opts?.deterministicOnly !== false) {
     removeNonDeterministicProps(element);
   }
 
-  if (opts?.removeDefaultProps !== false) {
+  if ("XamlType" in element && opts?.removeDefaultProps !== false) {
     removeDefaultProps(element);
   }
 
-  if (opts?.removeGuidsFromImageSources !== false) {
+  if (!("XamlType" in element) && opts?.removeGuidsFromImageSources !== false) {
     removeGuidsFromImageSources(element);
   }
   
