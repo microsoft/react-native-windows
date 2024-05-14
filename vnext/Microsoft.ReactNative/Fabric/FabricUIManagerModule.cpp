@@ -329,8 +329,17 @@ void FabricUIManager::schedulerDidFinishTransaction(
   }
 }
 
+void FabricUIManager::schedulerShouldRenderTransactions(
+  const facebook::react::MountingCoordinator::Shared& mountingCoordinator) {
+  if (m_context.UIDispatcher().HasThreadAccess()) {
+    initiateTransaction(mountingCoordinator);
+  } else {
+    m_context.UIDispatcher().Post(
+        [mountingCoordinator, self = shared_from_this()]() { self->initiateTransaction(mountingCoordinator); });
+  }
+}
+
 void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
-    facebook::react::SurfaceId surfaceId,
     const facebook::react::ShadowNode &shadowView) {
   // iOS does not do this optimization, but Android does.  It maybe that android's allocations are more expensive due to
   // the Java boundary.

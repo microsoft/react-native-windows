@@ -13,11 +13,6 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct AppThemeSpec_AppThemeData {
-    bool isHighContrast;
-    AppThemeSpec_HighContrastColors highContrastColors;
-};
-
 struct AppThemeSpec_HighContrastColors {
     std::string ButtonFaceColor;
     std::string ButtonTextColor;
@@ -29,6 +24,10 @@ struct AppThemeSpec_HighContrastColors {
     std::string WindowTextColor;
 };
 
+struct AppThemeSpec_AppThemeData {
+    bool isHighContrast;
+    AppThemeSpec_HighContrastColors highContrastColors;
+};
 
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AppThemeSpec_AppThemeData*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {

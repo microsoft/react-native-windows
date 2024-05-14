@@ -34,19 +34,19 @@ ImageComponentView::WindowsImageResponseObserver::WindowsImageResponseObserver(I
   m_image.copy_from(&image);
 }
 
-void ImageComponentView::WindowsImageResponseObserver::didReceiveProgress(float progress) const {
+void ImageComponentView::WindowsImageResponseObserver::didReceiveProgress(float progress, int64_t loaded, int64_t total) const {
   // TODO progress?
 }
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveImage(
-    facebook::react::ImageResponse const &imageResponse) const {
+    const facebook::react::ImageResponse &imageResponse) const {
   auto imageResponseImage = std::static_pointer_cast<ImageResponseImage>(imageResponse.getImage());
   m_image->m_reactContext.UIDispatcher().Post(
       [imageResponseImage, image = m_image]() { image->didReceiveImage(imageResponseImage); });
 }
 
-void ImageComponentView::WindowsImageResponseObserver::didReceiveFailure() const {
-  m_image->didReceiveFailureFromObserver();
+void ImageComponentView::WindowsImageResponseObserver::didReceiveFailure(const facebook::react::ImageLoadError &error) const {
+  m_image->didReceiveFailureFromObserver(error);
 }
 
 facebook::react::SharedViewProps ImageComponentView::defaultProps() noexcept {
@@ -92,7 +92,7 @@ void ImageComponentView::didReceiveImage(const std::shared_ptr<ImageResponseImag
 
   auto imageEventEmitter = std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter);
   if (imageEventEmitter) {
-    imageEventEmitter->onLoad();
+    imageEventEmitter->onLoad(m_state->getData().getImageSource());
     imageEventEmitter->onLoadEnd();
   }
 
@@ -107,10 +107,11 @@ void ImageComponentView::didReceiveImage(const std::shared_ptr<ImageResponseImag
   ensureDrawingSurface();
 }
 
-void ImageComponentView::didReceiveFailureFromObserver() noexcept {
+void ImageComponentView::didReceiveFailureFromObserver(const facebook::react::ImageLoadError &error) noexcept {
   auto imageEventEmitter = std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter);
   if (imageEventEmitter) {
-    imageEventEmitter->onError();
+    const facebook::react::ImageErrorInfo &info{};
+    imageEventEmitter->onError(info);
     imageEventEmitter->onLoadEnd();
   }
 }

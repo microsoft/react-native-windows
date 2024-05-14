@@ -13,6 +13,15 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+
+ struct ExceptionsManagerSpec_StackFrame {
+    std::optional<double> column;
+    std::optional<std::string> file;
+    std::optional<double> lineNumber;
+    std::string methodName;
+    std::optional<bool> collapse;
+};
+
 struct ExceptionsManagerSpec_ExceptionData {
     std::string message;
     std::optional<std::string> originalMessage;
@@ -23,15 +32,6 @@ struct ExceptionsManagerSpec_ExceptionData {
     bool isFatal;
     std::optional<::React::JSValue> extraData;
 };
-
-struct ExceptionsManagerSpec_StackFrame {
-    std::optional<double> column;
-    std::optional<std::string> file;
-    std::optional<double> lineNumber;
-    std::string methodName;
-    std::optional<bool> collapse;
-};
-
 
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ExceptionsManagerSpec_ExceptionData*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {

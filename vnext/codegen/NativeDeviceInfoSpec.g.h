@@ -13,18 +13,6 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct DeviceInfoSpec_DeviceInfoConstants {
-    DeviceInfoSpec_DimensionsPayload Dimensions;
-    std::optional<bool> isIPhoneX_deprecated;
-};
-
-struct DeviceInfoSpec_DimensionsPayload {
-    std::optional<DeviceInfoSpec_DisplayMetrics> window;
-    std::optional<DeviceInfoSpec_DisplayMetrics> screen;
-    std::optional<DeviceInfoSpec_DisplayMetricsAndroid> windowPhysicalPixels;
-    std::optional<DeviceInfoSpec_DisplayMetricsAndroid> screenPhysicalPixels;
-};
-
 struct DeviceInfoSpec_DisplayMetrics {
     double width;
     double height;
@@ -40,6 +28,17 @@ struct DeviceInfoSpec_DisplayMetricsAndroid {
     double densityDpi;
 };
 
+struct DeviceInfoSpec_DimensionsPayload {
+    std::optional<DeviceInfoSpec_DisplayMetrics> window;
+    std::optional<DeviceInfoSpec_DisplayMetrics> screen;
+    std::optional<DeviceInfoSpec_DisplayMetricsAndroid> windowPhysicalPixels;
+    std::optional<DeviceInfoSpec_DisplayMetricsAndroid> screenPhysicalPixels;
+};
+
+struct DeviceInfoSpec_DeviceInfoConstants {
+    DeviceInfoSpec_DimensionsPayload Dimensions;
+    std::optional<bool> isIPhoneX_deprecated;
+};
 
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(DeviceInfoSpec_DeviceInfoConstants*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
