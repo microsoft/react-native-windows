@@ -87,14 +87,14 @@ bool RootComponentView::NavigateFocus(const winrt::Microsoft::ReactNative::Focus
 bool RootComponentView::TrySetFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
   auto target = view;
   auto selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(target);
-  if (!selfView->focusable()) {
+  if (selfView && !selfView->focusable()) {
     target = FocusManager::FindFirstFocusableElement(target);
     if (!target)
       return false;
     selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(target);
   }
 
-  if (selfView->rootComponentView() != this)
+  if (selfView && selfView->rootComponentView() != this)
     return false;
 
   auto losingFocusArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::LosingFocusEventArgs>(
