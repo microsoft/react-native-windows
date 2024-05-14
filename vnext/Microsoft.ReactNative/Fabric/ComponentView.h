@@ -87,23 +87,27 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   virtual RECT getClientRect() const noexcept;
   // The offset from this elements parent to its children (accounts for things like scroll position)
   virtual facebook::react::Point getClientOffset() const noexcept;
-  virtual void onLosingFocus(const winrt::Microsoft::ReactNative::LosingFocusEventArgs& args) noexcept;
-  virtual void onGettingFocus(const winrt::Microsoft::ReactNative::GettingFocusEventArgs& args) noexcept;
-  virtual void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs& args) noexcept;
+  virtual void onLosingFocus(const winrt::Microsoft::ReactNative::LosingFocusEventArgs &args) noexcept;
+  virtual void onGettingFocus(const winrt::Microsoft::ReactNative::GettingFocusEventArgs &args) noexcept;
+  virtual void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept;
   virtual void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept;
- 
-  winrt::event_token LosingFocus(winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::LosingFocusEventArgs> const& handler) noexcept;
-  void LosingFocus(winrt::event_token const& token) noexcept;
-  winrt::event_token GettingFocus(winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::GettingFocusEventArgs> const& handler) noexcept;
-  void GettingFocus(winrt::event_token const& token) noexcept;
+
+  winrt::event_token LosingFocus(
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::LosingFocusEventArgs> const
+          &handler) noexcept;
+  void LosingFocus(winrt::event_token const &token) noexcept;
+  winrt::event_token GettingFocus(
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::GettingFocusEventArgs> const
+          &handler) noexcept;
+  void GettingFocus(winrt::event_token const &token) noexcept;
   winrt::event_token LostFocus(
       winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> const
           &handler) noexcept;
-  void LostFocus(winrt::event_token const& token) noexcept;
+  void LostFocus(winrt::event_token const &token) noexcept;
   winrt::event_token GotFocus(
       winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> const
           &handler) noexcept;
-  void GotFocus(winrt::event_token const& token) noexcept;
+  void GotFocus(winrt::event_token const &token) noexcept;
 
   bool TryFocus() noexcept;
 
@@ -175,10 +179,16 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   winrt::Microsoft::ReactNative::ComponentView m_parent{nullptr};
   winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::ComponentView> m_children{
       winrt::single_threaded_vector<winrt::Microsoft::ReactNative::ComponentView>()};
-  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::LosingFocusEventArgs>> m_losingFocusEvent;
-  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::GettingFocusEventArgs>> m_gettingFocusEvent;
-  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs>> m_lostFocusEvent;
-  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs>> m_gotFocusEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::LosingFocusEventArgs>>
+      m_losingFocusEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::GettingFocusEventArgs>>
+      m_gettingFocusEvent;
+  winrt::event<
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs>>
+      m_lostFocusEvent;
+  winrt::event<
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs>>
+      m_gotFocusEvent;
 };
 
 // Run fn on all nodes of the component view tree starting from this one until fn returns true

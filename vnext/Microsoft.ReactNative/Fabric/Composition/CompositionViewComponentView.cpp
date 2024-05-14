@@ -183,7 +183,8 @@ void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentView
   base_type::FinalizeUpdates(updateMask);
 }
 
-void ComponentView::onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs& args) noexcept {
+void ComponentView::onLostFocus(
+    const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   if (args.OriginalSource() == Tag()) {
     m_eventEmitter->onBlur();
     showFocusVisual(false);
@@ -195,7 +196,8 @@ void ComponentView::onLostFocus(const winrt::Microsoft::ReactNative::Composition
   base_type::onLostFocus(args);
 }
 
-void ComponentView::onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs& args) noexcept {
+void ComponentView::onGotFocus(
+    const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   if (args.OriginalSource() == Tag()) {
     m_eventEmitter->onFocus();
     if (m_enableFocusVisual) {

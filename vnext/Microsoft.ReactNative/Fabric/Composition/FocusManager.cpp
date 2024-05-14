@@ -8,21 +8,25 @@
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-LostFocusEventArgs::LostFocusEventArgs(const winrt::Microsoft::ReactNative::ComponentView& originalSource) : m_originalSource(originalSource ? originalSource.Tag() : -1) {}
+LostFocusEventArgs::LostFocusEventArgs(const winrt::Microsoft::ReactNative::ComponentView &originalSource)
+    : m_originalSource(originalSource ? originalSource.Tag() : -1) {}
 int32_t LostFocusEventArgs::OriginalSource() noexcept {
   return m_originalSource;
 }
 
-GotFocusEventArgs::GotFocusEventArgs(const winrt::Microsoft::ReactNative::ComponentView& originalSource) : m_originalSource(originalSource ? originalSource.Tag() : -1) {}
+GotFocusEventArgs::GotFocusEventArgs(const winrt::Microsoft::ReactNative::ComponentView &originalSource)
+    : m_originalSource(originalSource ? originalSource.Tag() : -1) {}
 int32_t GotFocusEventArgs::OriginalSource() noexcept {
   return m_originalSource;
 }
 
 LosingFocusEventArgs::LosingFocusEventArgs(
-    const winrt::Microsoft::ReactNative::ComponentView& originalSource,
+    const winrt::Microsoft::ReactNative::ComponentView &originalSource,
     const winrt::Microsoft::ReactNative::ComponentView &oldFocusedComponent,
     const winrt::Microsoft::ReactNative::ComponentView &newFocusedComponent)
-    : m_originalSource(originalSource ? originalSource.Tag() : -1), m_old(oldFocusedComponent), m_new(newFocusedComponent) {}
+    : m_originalSource(originalSource ? originalSource.Tag() : -1),
+      m_old(oldFocusedComponent),
+      m_new(newFocusedComponent) {}
 
 int32_t LosingFocusEventArgs::OriginalSource() noexcept {
   return m_originalSource;
@@ -44,7 +48,8 @@ void LosingFocusEventArgs::TrySetNewFocusedComponent(
   if (selfView->focusable()) {
     m_new = newFocusedComponent;
   } else {
-    auto target = winrt::Microsoft::ReactNative::Composition::FocusManager::FindFirstFocusableElement(newFocusedComponent);
+    auto target =
+        winrt::Microsoft::ReactNative::Composition::FocusManager::FindFirstFocusableElement(newFocusedComponent);
     if (!target)
       return;
     m_new = target;
@@ -52,10 +57,12 @@ void LosingFocusEventArgs::TrySetNewFocusedComponent(
 }
 
 GettingFocusEventArgs::GettingFocusEventArgs(
-    const winrt::Microsoft::ReactNative::ComponentView& originalSource,
+    const winrt::Microsoft::ReactNative::ComponentView &originalSource,
     const winrt::Microsoft::ReactNative::ComponentView &oldFocusedComponent,
     const winrt::Microsoft::ReactNative::ComponentView &newFocusedComponent)
-    : m_originalSource(originalSource ? originalSource.Tag() : -1), m_old(oldFocusedComponent), m_new(newFocusedComponent) {}
+    : m_originalSource(originalSource ? originalSource.Tag() : -1),
+      m_old(oldFocusedComponent),
+      m_new(newFocusedComponent) {}
 
 int32_t GettingFocusEventArgs::OriginalSource() noexcept {
   return m_originalSource;
@@ -85,7 +92,7 @@ void GettingFocusEventArgs::TrySetNewFocusedComponent(
   }
 }
 
-}
+} // namespace winrt::Microsoft::ReactNative::implementation
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
@@ -116,7 +123,8 @@ winrt::Microsoft::ReactNative::implementation::ComponentView *NavigateFocusHelpe
   return nullptr;
 }
 
-winrt::Microsoft::ReactNative::ComponentView FocusManager::FindFirstFocusableElement(const winrt::Microsoft::ReactNative::ComponentView& searchScope) noexcept {
+winrt::Microsoft::ReactNative::ComponentView FocusManager::FindFirstFocusableElement(
+    const winrt::Microsoft::ReactNative::ComponentView &searchScope) noexcept {
   auto selfSearchScope = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(searchScope);
   auto view = NavigateFocusHelper(*selfSearchScope, winrt::Microsoft::ReactNative::FocusNavigationReason::First);
   if (view) {
@@ -128,7 +136,8 @@ winrt::Microsoft::ReactNative::ComponentView FocusManager::FindFirstFocusableEle
   return nullptr;
 }
 
-winrt::Microsoft::ReactNative::ComponentView FocusManager::FindLastFocusableElement(const winrt::Microsoft::ReactNative::ComponentView& searchScope) noexcept {
+winrt::Microsoft::ReactNative::ComponentView FocusManager::FindLastFocusableElement(
+    const winrt::Microsoft::ReactNative::ComponentView &searchScope) noexcept {
   auto selfSearchScope = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(searchScope);
   auto view = NavigateFocusHelper(*selfSearchScope, winrt::Microsoft::ReactNative::FocusNavigationReason::Last);
   if (view) {

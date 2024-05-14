@@ -929,7 +929,8 @@ void WindowsTextInputComponentView::UnmountChildComponentView(
   base_type::UnmountChildComponentView(childComponentView, index);
 }
 
-void WindowsTextInputComponentView::onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs& args) noexcept {
+void WindowsTextInputComponentView::onLostFocus(
+    const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   Super::onLostFocus(args);
   if (m_textServices) {
     LRESULT lresult;
@@ -939,7 +940,8 @@ void WindowsTextInputComponentView::onLostFocus(const winrt::Microsoft::ReactNat
   m_caretVisual.IsVisible(false);
 }
 
-void WindowsTextInputComponentView::onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs& args) noexcept {
+void WindowsTextInputComponentView::onGotFocus(
+    const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   Super::onGotFocus(args);
   if (m_textServices) {
     LRESULT lresult;

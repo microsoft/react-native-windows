@@ -52,10 +52,8 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
 
   virtual ~RootComponentView();
 
-
   winrt::Microsoft::ReactNative::ComponentView FindFirstFocusableElement() noexcept;
   winrt::Microsoft::ReactNative::ComponentView FindLastFocusableElement() noexcept;
-
 
  private:
   // should this be a ReactTaggedView? - It shouldn't actually matter since if the view is going away it should always

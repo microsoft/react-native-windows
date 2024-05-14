@@ -145,7 +145,7 @@ ComponentView::rootComponentView() noexcept {
 void ComponentView::parent(const winrt::Microsoft::ReactNative::ComponentView &parent) noexcept {
   if (m_parent != parent) {
     auto oldRootView = rootComponentView();
-    m_rootView = nullptr;\
+    m_rootView = nullptr;
     auto oldParent = m_parent;
     m_parent = parent;
     if (!parent) {
@@ -217,65 +217,73 @@ facebook::react::Point ComponentView::getClientOffset() const noexcept {
   return {};
 }
 
-void ComponentView::onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs& args) noexcept {
+void ComponentView::onLostFocus(
+    const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   m_lostFocusEvent(*this, args);
   if (m_parent) {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onLostFocus(args);
   }
 }
 
-void ComponentView::onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs& args) noexcept {
-    m_gotFocusEvent(*this, args);
+void ComponentView::onGotFocus(
+    const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
+  m_gotFocusEvent(*this, args);
   if (m_parent) {
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onGotFocus(args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onGotFocus(args);
   }
 }
 
-void ComponentView::onLosingFocus(const winrt::Microsoft::ReactNative::LosingFocusEventArgs& args) noexcept {
+void ComponentView::onLosingFocus(const winrt::Microsoft::ReactNative::LosingFocusEventArgs &args) noexcept {
   m_losingFocusEvent(*this, args);
   if (m_parent) {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onLosingFocus(args);
   }
 }
 
-void ComponentView::onGettingFocus(const winrt::Microsoft::ReactNative::GettingFocusEventArgs& args) noexcept {
+void ComponentView::onGettingFocus(const winrt::Microsoft::ReactNative::GettingFocusEventArgs &args) noexcept {
   m_gettingFocusEvent(*this, args);
   if (m_parent) {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onGettingFocus(args);
   }
 }
 
-winrt::event_token ComponentView::LosingFocus(winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::LosingFocusEventArgs> const& handler) noexcept {
+winrt::event_token ComponentView::LosingFocus(
+    winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::LosingFocusEventArgs> const
+        &handler) noexcept {
   return m_losingFocusEvent.add(handler);
 }
 
-void ComponentView::LosingFocus(winrt::event_token const& token) noexcept {
+void ComponentView::LosingFocus(winrt::event_token const &token) noexcept {
   m_losingFocusEvent.remove(token);
 }
 
 winrt::event_token ComponentView::GettingFocus(
     winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::GettingFocusEventArgs> const
         &handler) noexcept {
- return m_gettingFocusEvent.add(handler);
+  return m_gettingFocusEvent.add(handler);
 }
 
-void ComponentView::GettingFocus(winrt::event_token const& token) noexcept {
+void ComponentView::GettingFocus(winrt::event_token const &token) noexcept {
   m_gettingFocusEvent.remove(token);
 }
 
-winrt::event_token ComponentView::LostFocus(winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> const& handler) noexcept {
- return m_lostFocusEvent.add(handler);
+winrt::event_token ComponentView::LostFocus(
+    winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> const
+        &handler) noexcept {
+  return m_lostFocusEvent.add(handler);
 }
 
-void ComponentView::LostFocus(winrt::event_token const& token) noexcept {
+void ComponentView::LostFocus(winrt::event_token const &token) noexcept {
   m_lostFocusEvent.remove(token);
 }
 
-winrt::event_token ComponentView::GotFocus(winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> const& handler) noexcept {
- return m_gotFocusEvent.add(handler);
+winrt::event_token ComponentView::GotFocus(
+    winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> const
+        &handler) noexcept {
+  return m_gotFocusEvent.add(handler);
 }
 
-void ComponentView::GotFocus(winrt::event_token const& token) noexcept {
+void ComponentView::GotFocus(winrt::event_token const &token) noexcept {
   m_gotFocusEvent.remove(token);
 }
 

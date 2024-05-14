@@ -75,7 +75,7 @@ struct ComponentView
   void Theme(const winrt::Microsoft::ReactNative::Composition::Theme &theme) noexcept;
   winrt::Microsoft::ReactNative::Composition::Theme Theme() const noexcept;
   void onThemeChanged() noexcept override;
-  void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs& args) noexcept override;
+  void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
   void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
   bool CapturePointer(const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer) noexcept;
   void ReleasePointerCapture(const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer) noexcept;
