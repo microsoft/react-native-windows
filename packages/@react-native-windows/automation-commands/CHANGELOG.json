@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Tue, 14 May 2024 05:17:51 GMT",
+      "version": "0.1.257",
+      "tag": "@react-native-windows/automation-commands_v0.1.257",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "00ad953fd49b74c49b87f8242176ef5cd83b9082",
+            "comment": "Process snapshots so that ImageSource Uri's are consistent"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.155",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 11 May 2024 05:18:30 GMT",
       "version": "0.1.256",
       "tag": "@react-native-windows/automation-commands_v0.1.256",

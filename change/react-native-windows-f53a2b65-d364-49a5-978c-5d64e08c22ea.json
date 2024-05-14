@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Use view() instead of str(), starts_with() instead of _Starts_with()",
-  "packageName": "react-native-windows",
-  "email": "nate@bracy.dev",
-  "dependentChangeType": "patch"
-}

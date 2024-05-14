@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Process snapshots so that ImageSource Uri's are consistent",
-  "packageName": "@react-native-windows/automation-commands",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
