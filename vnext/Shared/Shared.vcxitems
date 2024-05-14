@@ -512,6 +512,7 @@
   </ItemGroup>
   <ItemGroup Condition="'$(UseFabric)' == 'true'">
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\config\ReactNativeConfig.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryReporter.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\AttributedString.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\AttributedStringBox.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\view\BaseViewProps.cpp" DisableSpecificWarnings="4459;4715;%(DisableSpecificWarnings)" />
@@ -540,7 +541,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\ParagraphEventEmitter.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\ParagraphProps.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\ParagraphShadowNode.cpp" DisableSpecificWarnings="4305;%(DisableSpecificWarnings)" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\ParagraphLayoutManager.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\RawTextProps.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\TextShadowNode.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\text\RawTextShadowNode.cpp" />
@@ -559,7 +559,6 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventEmitter.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventListener.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventTarget.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventLogger.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventQueue.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\EventQueueProcessor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\LayoutableShadowNode.cpp" />
@@ -598,6 +597,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\StubView.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\StubViewTree.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\TelemetryController.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\observers\events\EventPerformanceLogger.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\Scheduler.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\SurfaceHandler.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\SurfaceManager.cpp" />

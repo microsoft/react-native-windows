@@ -21,16 +21,17 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{2, L"enableBackgroundExecutor"},
       SyncMethod<bool() noexcept>{3, L"enableCleanTextInputYogaNode"},
       SyncMethod<bool() noexcept>{4, L"enableCustomDrawOrderFabric"},
-      SyncMethod<bool() noexcept>{5, L"enableFixForClippedSubviewsCrash"},
-      SyncMethod<bool() noexcept>{6, L"enableMicrotasks"},
-      SyncMethod<bool() noexcept>{7, L"enableMountHooksAndroid"},
-      SyncMethod<bool() noexcept>{8, L"enableSpannableBuildingUnification"},
-      SyncMethod<bool() noexcept>{9, L"enableSynchronousStateUpdates"},
-      SyncMethod<bool() noexcept>{10, L"enableUIConsistency"},
+      SyncMethod<bool() noexcept>{5, L"enableMicrotasks"},
+      SyncMethod<bool() noexcept>{6, L"enableMountHooksAndroid"},
+      SyncMethod<bool() noexcept>{7, L"enableSpannableBuildingUnification"},
+      SyncMethod<bool() noexcept>{8, L"enableSynchronousStateUpdates"},
+      SyncMethod<bool() noexcept>{9, L"enableUIConsistency"},
+      SyncMethod<bool() noexcept>{10, L"forceBatchingMountItemsOnAndroid"},
       SyncMethod<bool() noexcept>{11, L"inspectorEnableCxxInspectorPackagerConnection"},
       SyncMethod<bool() noexcept>{12, L"inspectorEnableModernCDPRegistry"},
       SyncMethod<bool() noexcept>{13, L"useModernRuntimeScheduler"},
       SyncMethod<bool() noexcept>{14, L"useNativeViewConfigsInBridgelessMode"},
+      SyncMethod<bool() noexcept>{15, L"useStateAlignmentMechanism"},
   };
 
   template <class TModule>
@@ -64,34 +65,34 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(enableCustomDrawOrderFabric) static bool enableCustomDrawOrderFabric() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           5,
-          "enableFixForClippedSubviewsCrash",
-          "    REACT_SYNC_METHOD(enableFixForClippedSubviewsCrash) bool enableFixForClippedSubviewsCrash() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(enableFixForClippedSubviewsCrash) static bool enableFixForClippedSubviewsCrash() noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          6,
           "enableMicrotasks",
           "    REACT_SYNC_METHOD(enableMicrotasks) bool enableMicrotasks() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableMicrotasks) static bool enableMicrotasks() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          7,
+          6,
           "enableMountHooksAndroid",
           "    REACT_SYNC_METHOD(enableMountHooksAndroid) bool enableMountHooksAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableMountHooksAndroid) static bool enableMountHooksAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          8,
+          7,
           "enableSpannableBuildingUnification",
           "    REACT_SYNC_METHOD(enableSpannableBuildingUnification) bool enableSpannableBuildingUnification() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableSpannableBuildingUnification) static bool enableSpannableBuildingUnification() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          9,
+          8,
           "enableSynchronousStateUpdates",
           "    REACT_SYNC_METHOD(enableSynchronousStateUpdates) bool enableSynchronousStateUpdates() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableSynchronousStateUpdates) static bool enableSynchronousStateUpdates() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          10,
+          9,
           "enableUIConsistency",
           "    REACT_SYNC_METHOD(enableUIConsistency) bool enableUIConsistency() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableUIConsistency) static bool enableUIConsistency() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          10,
+          "forceBatchingMountItemsOnAndroid",
+          "    REACT_SYNC_METHOD(forceBatchingMountItemsOnAndroid) bool forceBatchingMountItemsOnAndroid() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(forceBatchingMountItemsOnAndroid) static bool forceBatchingMountItemsOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           11,
           "inspectorEnableCxxInspectorPackagerConnection",
@@ -112,6 +113,11 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "useNativeViewConfigsInBridgelessMode",
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) static bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          15,
+          "useStateAlignmentMechanism",
+          "    REACT_SYNC_METHOD(useStateAlignmentMechanism) bool useStateAlignmentMechanism() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(useStateAlignmentMechanism) static bool useStateAlignmentMechanism() noexcept { /* implementation */ }\n");
   }
 };
 
