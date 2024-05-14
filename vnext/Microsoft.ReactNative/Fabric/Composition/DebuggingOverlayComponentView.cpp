@@ -15,6 +15,7 @@ DebuggingOverlayComponentView::DebuggingOverlayComponentView(
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : base_type(
+          {}, // default ViewProps
           compContext,
           tag,
           reactContext,

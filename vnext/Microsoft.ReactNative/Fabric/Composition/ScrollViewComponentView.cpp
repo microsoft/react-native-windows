@@ -578,19 +578,22 @@ winrt::Microsoft::ReactNative::ComponentView ScrollViewComponentView::Create(
   return winrt::make<ScrollViewComponentView>(compContext, tag, reactContext);
 }
 
+facebook::react::SharedViewProps ScrollViewComponentView::defaultProps() noexcept {
+  static auto const defaultViewProps = std::make_shared<facebook::react::ScrollViewProps const>();
+  return defaultViewProps;
+}
+
 ScrollViewComponentView::ScrollViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : Super(
+          ScrollViewComponentView::defaultProps(),
           compContext,
           tag,
           reactContext,
           ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
           false) {
-  static auto const defaultProps = std::make_shared<facebook::react::ScrollViewProps const>();
-  m_props = defaultProps;
-
   // m_element.Content(m_contentPanel);
 
   /*
@@ -683,7 +686,8 @@ ScrollViewComponentView::ScrollViewComponentView(
 void ScrollViewComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  base_type::MountChildComponentView(childComponentView, index);
+  // Call ComponentView::UnmountChildComponentView instead of base to handle out own Visual hosting
+  ComponentView::MountChildComponentView(childComponentView, index);
 
   ensureVisual();
   m_scrollVisual.InsertAt(
@@ -694,7 +698,8 @@ void ScrollViewComponentView::MountChildComponentView(
 void ScrollViewComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  base_type::UnmountChildComponentView(childComponentView, index);
+  // Call ComponentView::UnmountChildComponentView instead of base to handle out own Visual hosting
+  ComponentView::UnmountChildComponentView(childComponentView, index);
   m_scrollVisual.Remove(childComponentView.as<ComponentView>()->OuterVisual());
 }
 
@@ -710,22 +715,17 @@ void ScrollViewComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(props);
-  const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(m_props);
+  const auto &oldViewProps =
+      *std::static_pointer_cast<const facebook::react::ScrollViewProps>(oldProps ? oldProps : viewProps());
 
   ensureVisual();
 
   if (!oldProps || oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     updateBackgroundColor(newViewProps.backgroundColor);
   }
-  if (oldViewProps.testId != newViewProps.testId) {
-    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
-  }
 
   // update BaseComponentView props
-  updateTransformProps(oldViewProps, newViewProps, m_visual);
-  Super::updateProps(props, oldProps);
-
-  m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
+  base_type::updateProps(props, oldProps);
 }
 
 void ScrollViewComponentView::updateState(
@@ -758,16 +758,9 @@ void ScrollViewComponentView::updateLayoutMetrics(
   // Set Position & Size Properties
   ensureVisual();
 
-  if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
-  }
-
   m_verticalScrollbarComponent->updateLayoutMetrics(layoutMetrics);
   m_horizontalScrollbarComponent->updateLayoutMetrics(layoutMetrics);
-  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
-  m_visual.Size(
-      {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
-       layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+  base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
   m_scrollVisual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
@@ -784,10 +777,6 @@ void ScrollViewComponentView::updateContentVisualSize() noexcept {
 }
 
 void ScrollViewComponentView::prepareForRecycle() noexcept {}
-
-facebook::react::SharedViewProps ScrollViewComponentView::viewProps() noexcept {
-  return m_props;
-}
 
 /*
 ScrollViewComponentView::ScrollInteractionTrackerOwner::ScrollInteractionTrackerOwner(
@@ -835,7 +824,7 @@ void ScrollViewComponentView::OnPointerDown(const winrt::Windows::UI::Input::Poi
 */
 
 void ScrollViewComponentView::onThemeChanged() noexcept {
-  updateBackgroundColor(std::static_pointer_cast<const facebook::react::ScrollViewProps>(m_props)->backgroundColor);
+  updateBackgroundColor(std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->backgroundColor);
   m_verticalScrollbarComponent->OnThemeChanged();
   m_horizontalScrollbarComponent->OnThemeChanged();
   Super::onThemeChanged();
@@ -925,6 +914,8 @@ void ScrollViewComponentView::OnKeyDown(
       args.Handled(lineRight(true));
       break;
   }
+
+  base_type::OnKeyDown(source, args);
 }
 
 bool ScrollViewComponentView::scrollToEnd(bool animate) noexcept {
@@ -1131,37 +1122,35 @@ void ScrollViewComponentView::StartBringIntoView(
   }
 }
 
-void ScrollViewComponentView::ensureVisual() noexcept {
-  if (!m_visual) {
-    m_visual = m_compContext.CreateSpriteVisual();
-    m_scrollVisual = m_compContext.CreateScrollerVisual();
-    m_verticalScrollbarComponent = std::make_shared<ScrollBarComponent>(*this, m_compContext, m_reactContext, true);
-    m_horizontalScrollbarComponent = std::make_shared<ScrollBarComponent>(*this, m_compContext, m_reactContext, false);
-    m_visual.InsertAt(m_scrollVisual, 0);
-    m_visual.InsertAt(m_verticalScrollbarComponent->Visual(), 1);
-    m_visual.InsertAt(m_horizontalScrollbarComponent->Visual(), 2);
-    m_scrollPositionChangedRevoker = m_scrollVisual.ScrollPositionChanged(
-        winrt::auto_revoke,
-        [this](
-            winrt::IInspectable const & /*sender*/,
-            winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
-          updateStateWithContentOffset();
-          auto eventEmitter = GetEventEmitter();
-          if (eventEmitter) {
-            facebook::react::ScrollViewMetrics scrollMetrics;
-            scrollMetrics.containerSize.height = m_layoutMetrics.frame.size.height;
-            scrollMetrics.containerSize.width = m_layoutMetrics.frame.size.width;
-            scrollMetrics.contentOffset.x = args.Position().x / m_layoutMetrics.pointScaleFactor;
-            scrollMetrics.contentOffset.y = args.Position().y / m_layoutMetrics.pointScaleFactor;
-            scrollMetrics.zoomScale = 1.0;
-            scrollMetrics.contentSize.height = std::max(m_contentSize.height, m_layoutMetrics.frame.size.height);
-            scrollMetrics.contentSize.width = std::max(m_contentSize.width, m_layoutMetrics.frame.size.width);
-            std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
-                ->onScroll(scrollMetrics);
-          }
-        });
-    OuterVisual().InsertAt(m_visual, 0);
-  }
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComponentView::createVisual() noexcept {
+  auto visual = m_compContext.CreateSpriteVisual();
+  m_scrollVisual = m_compContext.CreateScrollerVisual();
+  m_verticalScrollbarComponent = std::make_shared<ScrollBarComponent>(*this, m_compContext, m_reactContext, true);
+  m_horizontalScrollbarComponent = std::make_shared<ScrollBarComponent>(*this, m_compContext, m_reactContext, false);
+  visual.InsertAt(m_scrollVisual, 0);
+  visual.InsertAt(m_verticalScrollbarComponent->Visual(), 1);
+  visual.InsertAt(m_horizontalScrollbarComponent->Visual(), 2);
+  m_scrollPositionChangedRevoker = m_scrollVisual.ScrollPositionChanged(
+      winrt::auto_revoke,
+      [this](
+          winrt::IInspectable const & /*sender*/,
+          winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        updateStateWithContentOffset();
+        auto eventEmitter = GetEventEmitter();
+        if (eventEmitter) {
+          facebook::react::ScrollViewMetrics scrollMetrics;
+          scrollMetrics.containerSize.height = m_layoutMetrics.frame.size.height;
+          scrollMetrics.containerSize.width = m_layoutMetrics.frame.size.width;
+          scrollMetrics.contentOffset.x = args.Position().x / m_layoutMetrics.pointScaleFactor;
+          scrollMetrics.contentOffset.y = args.Position().y / m_layoutMetrics.pointScaleFactor;
+          scrollMetrics.zoomScale = 1.0;
+          scrollMetrics.contentSize.height = std::max(m_contentSize.height, m_layoutMetrics.frame.size.height);
+          scrollMetrics.contentSize.width = std::max(m_contentSize.width, m_layoutMetrics.frame.size.width);
+          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+              ->onScroll(scrollMetrics);
+        }
+      });
+  return visual;
 }
 
 facebook::react::Tag ScrollViewComponentView::hitTest(
@@ -1174,19 +1163,19 @@ facebook::react::Tag ScrollViewComponentView::hitTest(
       ptViewport.x + m_scrollVisual.ScrollPosition().x / m_layoutMetrics.pointScaleFactor,
       ptViewport.y + m_scrollVisual.ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
 
-  facebook::react::Tag targetTag;
+  facebook::react::Tag targetTag = -1;
 
-  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
+  if ((ignorePointerEvents || viewProps()->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+       viewProps()->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
       ptViewport.x >= 0 && ptViewport.x <= m_layoutMetrics.frame.size.width && ptViewport.y >= 0 &&
       ptViewport.y <= m_layoutMetrics.frame.size.height) {
-    if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-         m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
+    if ((ignorePointerEvents || viewProps()->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+         viewProps()->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
         anyHitTestHelper(targetTag, ptContent, localPt))
       return targetTag;
 
-    if (ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) {
+    if (ignorePointerEvents || viewProps()->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+        viewProps()->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) {
       return this->Tag();
     }
   }
@@ -1206,10 +1195,6 @@ facebook::react::Point ScrollViewComponentView::getClientOffset() const noexcept
           parentOffset.x,
       m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor - m_scrollVisual.ScrollPosition().y +
           parentOffset.y};
-}
-
-winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComponentView::Visual() const noexcept {
-  return m_visual;
 }
 
 std::string ScrollViewComponentView::DefaultControlType() const noexcept {

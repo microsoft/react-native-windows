@@ -5,24 +5,19 @@ exports[`LegacyTextHitTestTest BidirectionalTextPressable 1`] = `
   "Automation Tree": {
     "AutomationId": "pressed-state",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Pressed: 2 times.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressed-state",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      103,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "103, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -33,24 +28,19 @@ exports[`LegacyTextHitTestTest BidirectionalTextPressableEdgeCaseNotPressable 1`
   "Automation Tree": {
     "AutomationId": "pressed-state",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressed-state",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      103,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "103, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -61,24 +51,19 @@ exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsEdgeCasePressable 1`
   "Automation Tree": {
     "AutomationId": "pressed-state",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressed-state",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      103,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "103, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -89,24 +74,19 @@ exports[`LegacyTextHitTestTest BidirectionalTextSeparateRunsPressable 1`] = `
   "Automation Tree": {
     "AutomationId": "pressed-state",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Pressed: 2 times.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressed-state",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      103,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "103, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -117,24 +97,19 @@ exports[`LegacyTextHitTestTest InsertedVirtualTextPressable 1`] = `
   "Automation Tree": {
     "AutomationId": "pressed-state",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressed-state",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      103,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "103, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -145,24 +120,19 @@ exports[`LegacyTextHitTestTest LTRTextInRTLFlowPressable 1`] = `
   "Automation Tree": {
     "AutomationId": "pressed-state",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressed-state",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      103,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "103, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -173,24 +143,19 @@ exports[`LegacyTextHitTestTest MultilineRTLTextEdgeCaseNotPressable 1`] = `
   "Automation Tree": {
     "AutomationId": "pressed-state",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressed-state",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      103,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "103, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -201,24 +166,19 @@ exports[`LegacyTextHitTestTest MultilineRTLTextPressable 1`] = `
   "Automation Tree": {
     "AutomationId": "pressed-state",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Pressed: 2 times.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressed-state",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      103,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "103, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -229,24 +189,19 @@ exports[`LegacyTextHitTestTest MultilineTextPressable 1`] = `
   "Automation Tree": {
     "AutomationId": "pressed-state",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressed-state",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      103,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "103, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -257,24 +212,19 @@ exports[`LegacyTextHitTestTest RTLTextInRTLFlowPressable 1`] = `
   "Automation Tree": {
     "AutomationId": "pressed-state",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressed-state",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      103,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "103, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -285,24 +235,19 @@ exports[`LegacyTextHitTestTest RTLTextPressable 1`] = `
   "Automation Tree": {
     "AutomationId": "pressed-state",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressed-state",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      103,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "103, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -313,24 +258,19 @@ exports[`LegacyTextHitTestTest TextPressableWithVirtualText 1`] = `
   "Automation Tree": {
     "AutomationId": "pressed-state",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressed-state",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      103,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "103, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -341,24 +281,19 @@ exports[`LegacyTextHitTestTest ToggleVirtualTextPressable 1`] = `
   "Automation Tree": {
     "AutomationId": "pressed-state",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressed-state",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      103,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "103, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -369,24 +304,19 @@ exports[`LegacyTextHitTestTest VirtualTextPressable 1`] = `
   "Automation Tree": {
     "AutomationId": "pressed-state",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressed-state",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      103,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "103, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -397,24 +327,19 @@ exports[`LegacyTextHitTestTest WrappedLTRInRTLFlowEdgeCaseNotPressable 1`] = `
   "Automation Tree": {
     "AutomationId": "pressed-state",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Pressed: 1 times.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressed-state",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressed-state",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      103,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "103, 20",
     "Visual Type": "SpriteVisual",
   },
 }

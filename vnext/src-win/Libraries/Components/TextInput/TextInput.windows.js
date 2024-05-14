@@ -1346,9 +1346,13 @@ function InternalTextInput(props: Props): React.Node {
               );
             }
           },
-          // TODO: Fix this returning true on null === null, when no input is focused
           isFocused(): boolean {
-            return TextInputState.currentlyFocusedInput() === inputRef.current;
+            const currentlyFocusedInput =
+              TextInputState.currentlyFocusedInput();
+            return (
+              currentlyFocusedInput !== null &&
+              currentlyFocusedInput === inputRef.current
+            );
           },
           getNativeRef(): ?React.ElementRef<HostComponent<mixed>> {
             return inputRef.current;
