@@ -587,7 +587,7 @@
     },
     {
       "type": "derived",
-      "file": "src-win/src/private/specs/modules/NativePlatformConstantsWin.js",
+      "file": "src-win/src/private/specs/modules/NativePlatformConstantsWindows.js",
       "baseFile": "packages/react-native/src/private/specs/modules/NativePlatformConstantsAndroid.js",
       "baseHash": "b4a125d9134f33aeaba9e06988e18cbb0b4e9e9c"
     }

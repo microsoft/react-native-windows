@@ -5686,9 +5686,9 @@ struct PlatformConstantsPlatformConstantsWindowsBridging {
   }
 };
 
-class JSI_EXPORT NativePlatformConstantsWinCxxSpecJSI : public TurboModule {
+class JSI_EXPORT NativePlatformConstantsWindowsCxxSpecJSI : public TurboModule {
 protected:
-  NativePlatformConstantsWinCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+  NativePlatformConstantsWindowsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
 public:
   virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
@@ -5696,7 +5696,7 @@ public:
 };
 
 template <typename T>
-class JSI_EXPORT NativePlatformConstantsWinCxxSpec : public TurboModule {
+class JSI_EXPORT NativePlatformConstantsWindowsCxxSpec : public TurboModule {
 public:
   jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
     return delegate_.get(rt, propName);
@@ -5705,15 +5705,15 @@ public:
   static constexpr std::string_view kModuleName = "PlatformConstants";
 
 protected:
-  NativePlatformConstantsWinCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativePlatformConstantsWinCxxSpec::kModuleName}, jsInvoker),
+  NativePlatformConstantsWindowsCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativePlatformConstantsWindowsCxxSpec::kModuleName}, jsInvoker),
       delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
-  class Delegate : public NativePlatformConstantsWinCxxSpecJSI {
+  class Delegate : public NativePlatformConstantsWindowsCxxSpecJSI {
   public:
     Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativePlatformConstantsWinCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
+      NativePlatformConstantsWindowsCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
 
     jsi::Object getConstants(jsi::Runtime &rt) override {
       static_assert(

@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 11 May 2024 05:18:29 GMT and should not be manually modified.
+This log was last generated on Tue, 14 May 2024 05:17:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.815
+
+Tue, 14 May 2024 05:17:51 GMT
+
+### Changes
+
+- Preventing crash when passing null children to view with no-hide-descendents (30809111+acoates-ms@users.noreply.github.com)
+- Expose ImageProps from ImageComponentView's and add ImageSource type (30809111+acoates-ms@users.noreply.github.com)
+- Renames TM spec (ericroz@meta.com)
+- ViewComponentView should be activatable from rn-win32.dll (30809111+acoates-ms@users.noreply.github.com)
+- Use view() instead of str(), starts_with() instead of _Starts_with() (nate@bracy.dev)
 
 ## 0.0.0-canary.814
 
