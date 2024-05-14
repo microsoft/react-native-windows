@@ -1347,8 +1347,12 @@ function InternalTextInput(props: Props): React.Node {
             }
           },
           isFocused(): boolean {
-            const currentlyFocusedInput = TextInputState.currentlyFocusedInput();
-            return currentlyFocusedInput !== null && currentlyFocusedInput === inputRef.current;
+            const currentlyFocusedInput =
+              TextInputState.currentlyFocusedInput();
+            return (
+              currentlyFocusedInput !== null &&
+              currentlyFocusedInput === inputRef.current
+            );
           },
           getNativeRef(): ?React.ElementRef<HostComponent<mixed>> {
             return inputRef.current;
