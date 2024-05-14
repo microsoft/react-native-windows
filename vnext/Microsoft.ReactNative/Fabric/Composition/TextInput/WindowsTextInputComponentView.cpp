@@ -948,7 +948,7 @@ void WindowsTextInputComponentView::onFocusGained() noexcept {
     DrawBlock db(*this);
     m_textServices->TxSendMessage(WM_SETFOCUS, 0, 0, &lresult);
 
-    if (m_clearTextOnFocus) {
+    if (m_props->clearTextOnFocus) {
       m_textServices->TxSetText(L"");
     }
   }
@@ -1044,10 +1044,6 @@ void WindowsTextInputComponentView::updateProps(
 
   if (oldTextInputProps.clearTextOnSubmit != newTextInputProps.clearTextOnSubmit) {
     m_clearTextOnSubmit = newTextInputProps.clearTextOnSubmit;
-  }
-
-  if (oldTextInputProps.clearTextOnFocus != newTextInputProps.clearTextOnFocus) {
-    m_clearTextOnFocus = newTextInputProps.clearTextOnFocus;
   }
 
   if (oldTextInputProps.maxLength != newTextInputProps.maxLength) {
