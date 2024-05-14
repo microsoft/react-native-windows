@@ -18,4 +18,10 @@ winrt::Microsoft::UI::Composition::Compositor CompositionUIService::GetComposito
   return nullptr;
 }
 
+winrt::Microsoft::ReactNative::ComponentView CompositionUIService::ComponentFromReactTag(
+    const winrt::Microsoft::ReactNative::IReactContext &,
+    int64_t) noexcept {
+  return nullptr;
+}
+
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

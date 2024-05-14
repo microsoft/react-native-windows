@@ -14,6 +14,7 @@
 #include <react/renderer/components/image/ImageEventEmitter.h>
 
 #include <AutoDraw.h>
+#include <Fabric/AbiViewProps.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Utils/ImageUtils.h>
 #include <shcore.h>
@@ -48,19 +49,22 @@ void ImageComponentView::WindowsImageResponseObserver::didReceiveFailure() const
   m_image->didReceiveFailureFromObserver();
 }
 
+facebook::react::SharedViewProps ImageComponentView::defaultProps() noexcept {
+  static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
+  return defaultProps;
+}
+
 ImageComponentView::ImageComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : Super(
+          ImageComponentView::defaultProps(),
           compContext,
           tag,
           reactContext,
           ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
-          false) {
-  static auto const defaultProps = std::make_shared<facebook::react::ImageProps const>();
-  m_props = defaultProps;
-}
+          false) {}
 
 void ImageComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
@@ -111,17 +115,16 @@ void ImageComponentView::didReceiveFailureFromObserver() noexcept {
   }
 }
 
+const facebook::react::ImageProps &ImageComponentView::imageProps() const noexcept {
+  return *std::static_pointer_cast<const facebook::react::ImageProps>(viewProps());
+}
+
 void ImageComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
-  const auto &oldImageProps = *std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
+  const auto &oldImageProps =
+      *std::static_pointer_cast<const facebook::react::ImageProps>(oldProps ? oldProps : viewProps());
   const auto &newImageProps = *std::static_pointer_cast<const facebook::react::ImageProps>(props);
-
-  ensureVisual();
-
-  // update BaseComponentView props
-  updateTransformProps(oldImageProps, newImageProps, m_visual);
-  Super::updateProps(props, oldProps);
 
   if (oldImageProps.backgroundColor != newImageProps.backgroundColor ||
       oldImageProps.blurRadius != newImageProps.blurRadius || oldImageProps.tintColor != newImageProps.tintColor ||
@@ -129,14 +132,7 @@ void ImageComponentView::updateProps(
     m_drawingSurface = nullptr; // TODO don't need to recreate the surface just to redraw...
   }
 
-  if (oldImageProps.opacity != newImageProps.opacity) {
-    m_visual.Opacity(newImageProps.opacity);
-  }
-  if (oldImageProps.testId != newImageProps.testId) {
-    m_visual.Comment(winrt::to_hstring(newImageProps.testId));
-  }
-
-  m_props = std::static_pointer_cast<facebook::react::ImageProps const>(props);
+  Super::updateProps(props, oldProps);
 }
 
 void ImageComponentView::updateState(
@@ -182,19 +178,22 @@ void ImageComponentView::setStateAndResubscribeImageResponseObserver(
   }
 }
 
-void ImageComponentView::updateLayoutMetrics(
-    facebook::react::LayoutMetrics const &layoutMetrics,
-    facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
-  // Set Position & Size Properties
+winrt::Microsoft::ReactNative::ImageProps ImageComponentView::ImageProps() noexcept {
+  // We do not currently support custom ImageComponentView's
+  // If we did we would need to create a AbiImageProps and possibly return them here
+  assert(!m_customComponent);
+  return winrt::make<winrt::Microsoft::ReactNative::implementation::ImageProps>(viewProps());
+}
 
-  if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
-  }
+winrt::Microsoft::ReactNative::ImageProps ImageComponentView::ViewProps() noexcept {
+  return ViewPropsInner().as<winrt::Microsoft::ReactNative::ImageProps>();
+}
 
-  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
-  m_visual.Size(
-      {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
-       layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+winrt::Microsoft::ReactNative::ViewProps ImageComponentView::ViewPropsInner() noexcept {
+  // We do not currently support custom ImageComponentView's
+  // If we did we would need to create a AbiImageProps and possibly return them here
+  assert(!m_customComponent);
+  return winrt::make<winrt::Microsoft::ReactNative::implementation::ImageProps>(viewProps());
 }
 
 void ImageComponentView::OnRenderingDeviceLost() noexcept {
@@ -203,7 +202,7 @@ void ImageComponentView::OnRenderingDeviceLost() noexcept {
 }
 
 bool ImageComponentView::themeEffectsImage() const noexcept {
-  return m_props->backgroundColor || isColorMeaningful(m_props->tintColor);
+  return viewProps()->backgroundColor || isColorMeaningful(imageProps().tintColor);
 }
 
 void ImageComponentView::onThemeChanged() noexcept {
@@ -218,7 +217,7 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
   assert(m_reactContext.UIDispatcher().HasThreadAccess());
 
   if (!m_imageResponseImage) {
-    m_visual.Brush(nullptr);
+    Visual().as<Experimental::ISpriteVisual>().Brush(nullptr);
     return;
   }
 
@@ -230,18 +229,18 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
   if (!m_drawingSurface && m_imageResponseImage->m_wicbmp) {
     winrt::Windows::Foundation::Size drawingSurfaceSize{static_cast<float>(width), static_cast<float>(height)};
 
-    const auto imageProps = std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
+    const auto &imgProps = imageProps();
     const auto frame{m_layoutMetrics.getContentFrame().size};
 
-    if (imageProps->resizeMode == facebook::react::ImageResizeMode::Repeat) {
+    if (imgProps.resizeMode == facebook::react::ImageResizeMode::Repeat) {
       drawingSurfaceSize = {
           frame.width * m_layoutMetrics.pointScaleFactor, frame.height * m_layoutMetrics.pointScaleFactor};
-    } else if (imageProps->blurRadius > 0) {
+    } else if (imgProps.blurRadius > 0) {
       // https://learn.microsoft.com/en-us/windows/win32/direct2d/gaussian-blur#output-bitmap
       // The following equation that can be used to compute the output bitmap:
       // Output bitmap growth (X and Y) = (StandardDeviation(DIPs)*3 + StandardDeviation(DIPs)*3)*((User DPI)/96)
       // Where StandardDeviation(DIPs)*3 is equivalent to the blur radius.
-      const auto bmpGrowth{imageProps->blurRadius * 2 * m_layoutMetrics.pointScaleFactor};
+      const auto bmpGrowth{imgProps.blurRadius * 2 * m_layoutMetrics.pointScaleFactor};
       drawingSurfaceSize = {drawingSurfaceSize.Width + bmpGrowth, drawingSurfaceSize.Height + bmpGrowth};
     }
 
@@ -252,7 +251,7 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
 
     DrawImage();
 
-    switch (imageProps->resizeMode) {
+    switch (imgProps.resizeMode) {
       case facebook::react::ImageResizeMode::Stretch:
         m_drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::Fill);
         break;
@@ -281,9 +280,10 @@ void ImageComponentView::ensureDrawingSurface() noexcept {
         assert(false);
     }
 
-    m_visual.Brush(m_drawingSurface);
+    Visual().as<Experimental::ISpriteVisual>().Brush(m_drawingSurface);
   } else if (m_imageResponseImage->m_brushFactory) {
-    m_visual.Brush(m_imageResponseImage->m_brushFactory(m_reactContext.Handle(), m_compContext));
+    Visual().as<Experimental::ISpriteVisual>().Brush(
+        m_imageResponseImage->m_brushFactory(m_reactContext.Handle(), m_compContext));
   }
 }
 
@@ -310,15 +310,15 @@ void ImageComponentView::DrawImage() noexcept {
         d2dDeviceContext->CreateBitmapFromWicBitmap(m_imageResponseImage->m_wicbmp.get(), nullptr, bitmap.put()));
 
     d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
-    if (m_props->backgroundColor) {
-      d2dDeviceContext->Clear(theme()->D2DColor(*m_props->backgroundColor));
+    if (viewProps()->backgroundColor) {
+      d2dDeviceContext->Clear(theme()->D2DColor(*viewProps()->backgroundColor));
     }
 
-    const auto imageProps = std::static_pointer_cast<const facebook::react::ImageProps>(m_props);
+    const auto &imgProps = imageProps();
 
     bool useEffects{
-        imageProps->blurRadius > 0 || isColorMeaningful(imageProps->tintColor) ||
-        imageProps->resizeMode == facebook::react::ImageResizeMode::Repeat};
+        imgProps.blurRadius > 0 || isColorMeaningful(imgProps.tintColor) ||
+        imgProps.resizeMode == facebook::react::ImageResizeMode::Repeat};
 
     if (useEffects) {
       winrt::com_ptr<ID2D1Effect> bitmapEffects;
@@ -326,23 +326,22 @@ void ImageComponentView::DrawImage() noexcept {
       winrt::check_hresult(
           bitmapEffects->SetValue(D2D1_BITMAPSOURCE_PROP_WIC_BITMAP_SOURCE, m_imageResponseImage->m_wicbmp.get()));
 
-      if (imageProps->blurRadius > 0) {
+      if (imgProps.blurRadius > 0) {
         winrt::com_ptr<ID2D1Effect> gaussianBlurEffect;
         winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1GaussianBlur, gaussianBlurEffect.put()));
         // https://learn.microsoft.com/en-us/windows/win32/direct2d/gaussian-blur#effect-properties
         // You can compute the blur radius of the kernel by multiplying the standard deviation by 3 (radius multiplier).
         constexpr float radiusMultiplier = 3;
         winrt::check_hresult(gaussianBlurEffect->SetValue(
-            D2D1_GAUSSIANBLUR_PROP_STANDARD_DEVIATION, (imageProps->blurRadius) / radiusMultiplier));
+            D2D1_GAUSSIANBLUR_PROP_STANDARD_DEVIATION, (imgProps.blurRadius) / radiusMultiplier));
         gaussianBlurEffect->SetInputEffect(0, bitmapEffects.get());
         bitmapEffects.copy_from(gaussianBlurEffect.get());
       }
 
-      if (isColorMeaningful(imageProps->tintColor)) {
+      if (isColorMeaningful(imgProps.tintColor)) {
         winrt::com_ptr<ID2D1Effect> tintColorEffect;
         winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1Flood, tintColorEffect.put()));
-        winrt::check_hresult(
-            tintColorEffect->SetValue(D2D1_FLOOD_PROP_COLOR, theme()->D2DColor(*imageProps->tintColor)));
+        winrt::check_hresult(tintColorEffect->SetValue(D2D1_FLOOD_PROP_COLOR, theme()->D2DColor(*imgProps.tintColor)));
 
         winrt::com_ptr<ID2D1Effect> compositeEffect;
         winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1Composite, compositeEffect.put()));
@@ -353,7 +352,7 @@ void ImageComponentView::DrawImage() noexcept {
         bitmapEffects.copy_from(compositeEffect.get());
       }
 
-      if (imageProps->resizeMode == facebook::react::ImageResizeMode::Repeat) {
+      if (imgProps.resizeMode == facebook::react::ImageResizeMode::Repeat) {
         winrt::com_ptr<ID2D1Effect> borderEffect;
         winrt::check_hresult(d2dDeviceContext->CreateEffect(CLSID_D2D1Border, borderEffect.put()));
         winrt::check_hresult(borderEffect->SetValue(D2D1_BORDER_PROP_EDGE_MODE_X, D2D1_BORDER_EDGE_MODE_WRAP));
@@ -384,51 +383,6 @@ void ImageComponentView::DrawImage() noexcept {
       d2dDeviceContext->DrawBitmap(bitmap.get(), rect);
     }
   }
-}
-
-void ImageComponentView::prepareForRecycle() noexcept {}
-
-facebook::react::SharedViewProps ImageComponentView::viewProps() noexcept {
-  return m_props;
-}
-
-facebook::react::Tag ImageComponentView::hitTest(
-    facebook::react::Point pt,
-    facebook::react::Point &localPt,
-    bool ignorePointerEvents) const noexcept {
-  facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
-
-  facebook::react::Tag targetTag;
-
-  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
-      anyHitTestHelper(targetTag, ptLocal, localPt))
-    return targetTag;
-
-  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
-      ptLocal.x >= 0 && ptLocal.x <= m_layoutMetrics.frame.size.width && ptLocal.y >= 0 &&
-      ptLocal.y <= m_layoutMetrics.frame.size.height) {
-    localPt = ptLocal;
-    return Tag();
-  }
-
-  return -1;
-}
-
-void ImageComponentView::ensureVisual() noexcept {
-  if (!m_visual) {
-    m_visual = m_compContext.CreateSpriteVisual();
-    OuterVisual().InsertAt(m_visual, 0);
-  }
-}
-
-winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ImageComponentView::Visual() const noexcept {
-  return m_visual;
-}
-
-bool ImageComponentView::focusable() const noexcept {
-  return m_props->focusable;
 }
 
 std::string ImageComponentView::DefaultControlType() const noexcept {

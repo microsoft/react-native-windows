@@ -18,6 +18,7 @@ RootComponentView::RootComponentView(
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : base_type(
+          {}, // default viewProps
           compContext,
           tag,
           reactContext,

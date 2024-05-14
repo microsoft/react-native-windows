@@ -99,6 +99,7 @@ namespace Microsoft.ReactNative
     Microsoft.ReactNative.Composition.ICustomResourceLoader Resources;
 
     Microsoft.ReactNative.Composition.Theme Theme { get; };
+    Int64 RootTag { get; };
 
 #ifdef USE_WINUI3
     Microsoft.UI.Content.ContentIsland Island { get; };

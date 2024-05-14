@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import "ReactInstanceSettings.idl";
+import "ComponentView.idl";
 
 #include "DocString.h"
 
@@ -21,6 +22,9 @@ namespace Microsoft.ReactNative.Composition
     DOC_STRING(
       "Gets the Compositor used by this ReactNative instance.")
     static Microsoft.UI.Composition.Compositor GetCompositor(Microsoft.ReactNative.IReactPropertyBag properties);
+
+    DOC_STRING("Gets the ComponentView from a react tag.")
+    static Microsoft.ReactNative.ComponentView ComponentFromReactTag(Microsoft.ReactNative.IReactContext context, Int64 reactTag);
 
   }
 } // namespace Microsoft.ReactNative.Composition

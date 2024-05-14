@@ -1924,15 +1924,15 @@ NativePlatformConstantsIOSCxxSpecJSI::NativePlatformConstantsIOSCxxSpecJSI(std::
   : TurboModule("PlatformConstants", jsInvoker) {
   methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativePlatformConstantsIOSCxxSpecJSI_getConstants};
 }
-static jsi::Value __hostFunction_NativePlatformConstantsWinCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativePlatformConstantsWinCxxSpecJSI *>(&turboModule)->getConstants(
+static jsi::Value __hostFunction_NativePlatformConstantsWindowsCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativePlatformConstantsWindowsCxxSpecJSI *>(&turboModule)->getConstants(
     rt
   );
 }
 
-NativePlatformConstantsWinCxxSpecJSI::NativePlatformConstantsWinCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+NativePlatformConstantsWindowsCxxSpecJSI::NativePlatformConstantsWindowsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("PlatformConstants", jsInvoker) {
-  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativePlatformConstantsWinCxxSpecJSI_getConstants};
+  methodMap_["getConstants"] = MethodMetadata {0, __hostFunction_NativePlatformConstantsWindowsCxxSpecJSI_getConstants};
 }
 static jsi::Value __hostFunction_NativePushNotificationManagerIOSCxxSpecJSI_getConstants(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativePushNotificationManagerIOSCxxSpecJSI *>(&turboModule)->getConstants(

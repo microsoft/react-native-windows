@@ -81,7 +81,7 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   [webhosthidden]
   [default_interface]
-  unsealed runtimeclass SwitchComponentView : ComponentView {
+  unsealed runtimeclass SwitchComponentView : ViewComponentView {
   };
 
   [experimental]
@@ -99,31 +99,32 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   [webhosthidden]
   [default_interface]
-  unsealed runtimeclass ActivityIndicatorComponentView : ComponentView {
+  unsealed runtimeclass ActivityIndicatorComponentView : ViewComponentView {
   };
 
   [experimental]
   [webhosthidden]
   [default_interface]
-  unsealed runtimeclass WindowsModalHostComponentView : ComponentView {
+  unsealed runtimeclass WindowsModalHostComponentView : ViewComponentView {
   };
 
   [experimental]
   [webhosthidden]
   [default_interface]
-  unsealed runtimeclass ImageComponentView : ComponentView {
+  unsealed runtimeclass ImageComponentView : ViewComponentView {
+    Microsoft.ReactNative.ImageProps ViewProps { get; };
   };
 
   [experimental]
   [webhosthidden]
   [default_interface]
-  unsealed runtimeclass ParagraphComponentView : ComponentView {
+  unsealed runtimeclass ParagraphComponentView : ViewComponentView {
   };
 
   [experimental]
   [webhosthidden]
   [default_interface]
-  unsealed runtimeclass ScrollViewComponentView : ComponentView {
+  unsealed runtimeclass ScrollViewComponentView : ViewComponentView {
   };
 
   [experimental]
@@ -135,7 +136,7 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   [webhosthidden]
   [default_interface]
-  unsealed runtimeclass WindowsTextInputComponentView : ComponentView {
+  unsealed runtimeclass WindowsTextInputComponentView : ViewComponentView {
   };
   
 } // namespace Microsoft.ReactNative
