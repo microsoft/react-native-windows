@@ -119,9 +119,11 @@ function removeGuidsFromImageSourcesHelper(node: ComponentNode) {
     node._Props.Sources.forEach((source : any) => {
       if (source.Uri) {
         if (source.Uri.startsWith('blob:')) {
-          source.Uri = source.Uri.replace(/blob:[a-z0-1]+-[a-z0-1]+-[a-z0-1]+-[a-z0-1]+-[a-z0-1]+/, 'blob:<some_guid_here>');
+          source.Uri = source.Uri.replace(/blob:[a-f0-9]+-[a-f0-9]+-[a-f0-9]+-[a-f0-9]+-[a-f0-9]+/, 'blob:<some_guid_here>');
         } else if (source.Uri.startsWith('https://www.facebook.com/favicon.ico?r=1&t=')) {
           source.Uri = 'https://www.facebook.com/favicon.ico?r=1&t=<some_hash_here>';
+        } else if (source.Uri.startsWith('https://www.facebook.com/ads/pics/successstories.png?hash=')) {
+          source.Uri = 'https://www.facebook.com/ads/pics/successstories.png?hash=<some_hash_here>';
         } else {
 
           // When getting files from a prebuilt bundle the uri is going to include a local path, which would make snapshots inconsistent,

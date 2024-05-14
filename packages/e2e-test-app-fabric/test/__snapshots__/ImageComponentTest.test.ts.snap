@@ -1233,7 +1233,7 @@ exports[`Image Tests An Image can have a loading indicator visual 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ads/pics/successstories.png?hash=1715642204681",
+          "Uri": "https://www.facebook.com/ads/pics/successstories.png?hash=<some_hash_here>",
         },
       ],
       "TestId": "image-loading-indicator",
@@ -2443,7 +2443,7 @@ exports[`Image Tests An Image component can render a blob image 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "blob:6e73307a-0e71-4d13-a03c-c4f3df777245?offset=0&size=5430",
+          "Uri": "blob:<some_guid_here>?offset=0&size=5430",
         },
       ],
       "TestId": "image-blob",
