@@ -109,12 +109,6 @@
       "baseHash": "ae5845b576484b3600e395d3b1ee03223530b8f7"
     },
     {
-      "type": "derived",
-      "file": "src-win/Libraries/Components/ScrollView/ScrollView.win32.js",
-      "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "732f5ccb69ff37895b3da2a160a0a6842a770385"
-    },
-    {
       "type": "platform",
       "file": "src-win/Libraries/Components/TextInput/Tests/TextInputTest.tsx"
     },
