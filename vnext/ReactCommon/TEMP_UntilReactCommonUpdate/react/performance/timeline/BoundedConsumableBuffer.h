@@ -237,8 +237,8 @@ class BoundedConsumableBuffer {
 
   // Current "cursor" - positions of the firsst and after last unconsumed
   // element, relative to the starting position:
-  int cursorStart_{0};
-  int cursorEnd_{0};
+  size_t cursorStart_{0};
+  size_t cursorEnd_{0};
 
   // Number of currently unconsumed elements:
   size_t numToConsume_{0}; // [Windows #13231]
