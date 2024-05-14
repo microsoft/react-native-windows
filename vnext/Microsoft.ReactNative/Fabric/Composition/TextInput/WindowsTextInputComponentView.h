@@ -49,8 +49,8 @@ struct WindowsTextInputComponentView
   void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
       override;
   void OnRenderingDeviceLost() noexcept override;
-  void onFocusLost() noexcept override;
-  void onFocusGained() noexcept override;
+  void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs& args) noexcept override;
+  void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs& args) noexcept override;
   std::string DefaultControlType() const noexcept override;
   std::string DefaultAccessibleName() const noexcept override;
   std::string DefaultHelpText() const noexcept override;

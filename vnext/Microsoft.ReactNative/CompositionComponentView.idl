@@ -48,6 +48,7 @@ namespace Microsoft.ReactNative.Composition
     ComponentView(CreateCompositionComponentViewArgs args);
 
     Microsoft.UI.Composition.Compositor Compositor { get; };
+    RootComponentView Root { get; };
     Theme Theme;
     overridable void OnThemeChanged();
     Boolean CapturePointer(Microsoft.ReactNative.Composition.Input.Pointer pointer);
@@ -88,6 +89,7 @@ namespace Microsoft.ReactNative.Composition
   [webhosthidden]
   [default_interface]
   unsealed runtimeclass RootComponentView : ViewComponentView {
+    Microsoft.ReactNative.ComponentView GetFocusedComponent();
   };
   
   [experimental]

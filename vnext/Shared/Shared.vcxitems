@@ -84,6 +84,11 @@
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionUIService.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\FocusManager.cpp">
+      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\FocusManager.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UriImageManager.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\UriImageManager.idl</DependentUpon>
@@ -642,6 +647,7 @@
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ComponentView.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Composition.Input.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionComponentView.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\FocusManager.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionContext.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionHwndHost.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionRootView.idl" />

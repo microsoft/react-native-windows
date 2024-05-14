@@ -143,19 +143,16 @@ ComponentView::rootComponentView() noexcept {
 }
 
 void ComponentView::parent(const winrt::Microsoft::ReactNative::ComponentView &parent) noexcept {
-  if (!parent) {
-    auto root = rootComponentView();
-    winrt::Microsoft::ReactNative::ComponentView view{nullptr};
-    winrt::check_hresult(
-        QueryInterface(winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
-    if (root && root->GetFocusedComponent() == view) {
-      root->SetFocusedComponent(nullptr); // TODO need move focus logic - where should focus go?
-    }
-  }
-
   if (m_parent != parent) {
-    m_rootView = nullptr;
+    auto oldRootView = rootComponentView();
+    m_rootView = nullptr;\
+    auto oldParent = m_parent;
     m_parent = parent;
+    if (!parent) {
+      if (oldRootView && oldRootView->GetFocusedComponent() == *this) {
+        oldRootView->TrySetFocusedComponent(oldParent);
+      }
+    }
     if (parent) {
       theme(winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parent)->theme());
     }
@@ -220,9 +217,75 @@ facebook::react::Point ComponentView::getClientOffset() const noexcept {
   return {};
 }
 
-void ComponentView::onFocusLost() noexcept {}
+void ComponentView::onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs& args) noexcept {
+  m_lostFocusEvent(*this, args);
+  if (m_parent) {
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onLostFocus(args);
+  }
+}
 
-void ComponentView::onFocusGained() noexcept {}
+void ComponentView::onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs& args) noexcept {
+    m_gotFocusEvent(*this, args);
+  if (m_parent) {
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onGotFocus(args);
+  }
+}
+
+void ComponentView::onLosingFocus(const winrt::Microsoft::ReactNative::LosingFocusEventArgs& args) noexcept {
+  m_losingFocusEvent(*this, args);
+  if (m_parent) {
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onLosingFocus(args);
+  }
+}
+
+void ComponentView::onGettingFocus(const winrt::Microsoft::ReactNative::GettingFocusEventArgs& args) noexcept {
+  m_gettingFocusEvent(*this, args);
+  if (m_parent) {
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)->onGettingFocus(args);
+  }
+}
+
+winrt::event_token ComponentView::LosingFocus(winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::LosingFocusEventArgs> const& handler) noexcept {
+  return m_losingFocusEvent.add(handler);
+}
+
+void ComponentView::LosingFocus(winrt::event_token const& token) noexcept {
+  m_losingFocusEvent.remove(token);
+}
+
+winrt::event_token ComponentView::GettingFocus(
+    winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::GettingFocusEventArgs> const
+        &handler) noexcept {
+ return m_gettingFocusEvent.add(handler);
+}
+
+void ComponentView::GettingFocus(winrt::event_token const& token) noexcept {
+  m_gettingFocusEvent.remove(token);
+}
+
+winrt::event_token ComponentView::LostFocus(winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> const& handler) noexcept {
+ return m_lostFocusEvent.add(handler);
+}
+
+void ComponentView::LostFocus(winrt::event_token const& token) noexcept {
+  m_lostFocusEvent.remove(token);
+}
+
+winrt::event_token ComponentView::GotFocus(winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> const& handler) noexcept {
+ return m_gotFocusEvent.add(handler);
+}
+
+void ComponentView::GotFocus(winrt::event_token const& token) noexcept {
+  m_gotFocusEvent.remove(token);
+}
+
+bool ComponentView::TryFocus() noexcept {
+  if (auto root = rootComponentView()) {
+    return root->TrySetFocusedComponent(*get_strong());
+  }
+
+  return false;
+}
 
 void ComponentView::OnPointerEntered(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {}

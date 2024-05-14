@@ -121,6 +121,10 @@ winrt::Microsoft::ReactNative::Composition::Theme ComponentView::Theme() const n
   return theme()->get_strong().as<winrt::Microsoft::ReactNative::Composition::Theme>();
 }
 
+winrt::Microsoft::ReactNative::Composition::RootComponentView ComponentView::Root() noexcept {
+  return *rootComponentView();
+}
+
 winrt::Microsoft::UI::Composition::Compositor ComponentView::Compositor() const noexcept {
   return winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(
       m_compContext);
@@ -179,32 +183,36 @@ void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentView
   base_type::FinalizeUpdates(updateMask);
 }
 
-void ComponentView::onFocusLost() noexcept {
-  m_eventEmitter->onBlur();
-  showFocusVisual(false);
-  if (m_uiaProvider) {
-    winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-        m_uiaProvider, UIA_HasKeyboardFocusPropertyId, true, false);
-  }
-  base_type::onFocusLost();
-}
-
-void ComponentView::onFocusGained() noexcept {
-  m_eventEmitter->onFocus();
-  if (m_enableFocusVisual) {
-    showFocusVisual(true);
-  }
-  if (m_uiaProvider) {
-    auto spProviderSimple = m_uiaProvider.try_as<IRawElementProviderSimple>();
-    if (spProviderSimple != nullptr) {
+void ComponentView::onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs& args) noexcept {
+  if (args.OriginalSource() == Tag()) {
+    m_eventEmitter->onBlur();
+    showFocusVisual(false);
+    if (m_uiaProvider) {
       winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
-          m_uiaProvider, UIA_HasKeyboardFocusPropertyId, false, true);
-      UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_AutomationFocusChangedEventId);
+          m_uiaProvider, UIA_HasKeyboardFocusPropertyId, true, false);
     }
   }
+  base_type::onLostFocus(args);
+}
 
-  StartBringIntoView({});
-  base_type::onFocusGained();
+void ComponentView::onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs& args) noexcept {
+  if (args.OriginalSource() == Tag()) {
+    m_eventEmitter->onFocus();
+    if (m_enableFocusVisual) {
+      showFocusVisual(true);
+    }
+    if (m_uiaProvider) {
+      auto spProviderSimple = m_uiaProvider.try_as<IRawElementProviderSimple>();
+      if (spProviderSimple != nullptr) {
+        winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+            m_uiaProvider, UIA_HasKeyboardFocusPropertyId, false, true);
+        UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_AutomationFocusChangedEventId);
+      }
+    }
+
+    StartBringIntoView({});
+  }
+  base_type::onGotFocus(args);
 }
 
 void ComponentView::StartBringIntoView(
@@ -234,13 +242,13 @@ void ComponentView::HandleCommand(
     const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
   if (commandName == L"focus") {
     if (auto root = rootComponentView()) {
-      root->SetFocusedComponent(*get_strong());
+      root->TrySetFocusedComponent(*get_strong());
     }
     return;
   }
   if (commandName == L"blur") {
     if (auto root = rootComponentView()) {
-      root->SetFocusedComponent(nullptr); // Todo store this component as previously focused element
+      root->TrySetFocusedComponent(nullptr); // Todo store this component as previously focused element
     }
     return;
   }
