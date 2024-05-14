@@ -1,5 +1,5 @@
 {
-  "type": "none",
+  "type": "patch",
   "comment": "fix(TextInput/isFocused): correctly handle null focused input",
   "packageName": "@office-iss/react-native-win32",
   "email": "nate@bracy.dev",
