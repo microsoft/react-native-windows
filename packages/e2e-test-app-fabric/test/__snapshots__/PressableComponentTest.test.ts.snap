@@ -4,80 +4,54 @@ exports[`Pressable Tests Pressables can be disabled, disabled = {false} 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "pressable_disabled_false",
-    "Children": [
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "Enabled Pressable",
       },
     ],
-    "ControlType": 50026,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "",
   },
-  "Visual Tree": {
-    "Children": [
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_disabled_false",
+    },
+    "__Children": [
       {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              112,
-              19,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          402,
-          10,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          112,
-          19,
-        ],
-        "Visual Type": "SpriteVisual",
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
       },
     ],
+  },
+  "Visual Tree": {
     "Comment": "pressable_disabled_false",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      39,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 39",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "402, 10, 0",
+        "Size": "112, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "112, 19",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
   },
 }
 `;
@@ -86,80 +60,58 @@ exports[`Pressable Tests Pressables can be disabled, disabled = {true} 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "pressable_disabled_true",
-    "Children": [
+    "ControlType": 50026,
+    "IsEnabled": false,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "Disabled Pressable",
       },
     ],
-    "ControlType": 50026,
-    "HelpText": "",
-    "IsEnabled": false,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "",
   },
-  "Visual Tree": {
-    "Children": [
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_disabled_true",
+    },
+    "__Children": [
       {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 0.5,
-            "Size": [
-              116,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          400,
-          10,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          116,
-          20,
-        ],
-        "Visual Type": "SpriteVisual",
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {
+          "Opacity": 0.5,
+        },
       },
     ],
+  },
+  "Visual Tree": {
     "Comment": "pressable_disabled_true",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      38,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 38",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "400, 10, 0",
+        "Size": "116, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Opacity": 0.5,
+            "Size": "116, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
   },
 }
 `;
@@ -168,84 +120,58 @@ exports[`Pressable Tests Pressables can change style when pressed 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "style-change-pressable",
-    "Children": [
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "Press Me",
       },
     ],
-    "ControlType": 50026,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "style-change-pressable",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
   },
   "Visual Tree": {
     "Brush": {
       "Brush Type": "ColorBrush",
       "Color": "rgba(255, 255, 255, 255)",
     },
-    "Children": [
+    "Comment": "style-change-pressable",
+    "Offset": "0, 0, 0",
+    "Size": "76, 34",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
       {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              64,
-              22,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          6,
-          6,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          64,
-          22,
-        ],
+        "Offset": "6, 6, 0",
+        "Size": "64, 22",
         "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "64, 22",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
       },
     ],
-    "Comment": "style-change-pressable",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      76,
-      34,
-    ],
-    "Visual Type": "SpriteVisual",
   },
 }
 `;
@@ -255,24 +181,19 @@ exports[`Pressable Tests Pressables can change text on press/rest, state rest 1`
   "Automation Tree": {
     "AutomationId": "one_press_me_button",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Press Me",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "one_press_me_button",
+    },
+  },
   "Visual Tree": {
     "Comment": "one_press_me_button",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      64,
-      22,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "64, 22",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -283,24 +204,19 @@ exports[`Pressable Tests Pressables can change text on press/rest, state rest 2`
   "Automation Tree": {
     "AutomationId": "pressable_press_console",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "onPress",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "pressable_press_console",
+    },
+  },
   "Visual Tree": {
     "Comment": "pressable_press_console",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      854,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "854, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -310,84 +226,58 @@ exports[`Pressable Tests Pressables can have advanced borders 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "pressable_hit_slop_button",
-    "Children": [
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "Press Outside This View",
       },
     ],
-    "ControlType": 50026,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_hit_slop_button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
   },
   "Visual Tree": {
     "Brush": {
       "Brush Type": "ColorBrush",
       "Color": "rgba(255, 0, 0, 255)",
     },
-    "Children": [
+    "Comment": "pressable_hit_slop_button",
+    "Offset": "0, 0, 0",
+    "Size": "146, 18",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
       {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              146,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          0,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          146,
-          20,
-        ],
+        "Offset": "0, 0, 0",
+        "Size": "146, 20",
         "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "146, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
       },
     ],
-    "Comment": "pressable_hit_slop_button",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      146,
-      18,
-    ],
-    "Visual Type": "SpriteVisual",
   },
 }
 `;
@@ -396,80 +286,54 @@ exports[`Pressable Tests Pressables can have delayed event handlers 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "pressable_delay_events_button",
-    "Children": [
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "Press Me",
       },
     ],
-    "ControlType": 50026,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "",
   },
-  "Visual Tree": {
-    "Children": [
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_delay_events_button",
+    },
+    "__Children": [
       {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              56,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          0,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          56,
-          20,
-        ],
-        "Visual Type": "SpriteVisual",
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
       },
     ],
+  },
+  "Visual Tree": {
     "Comment": "pressable_delay_events_button",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      56,
-      18,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "56, 18",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "56, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "56, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
   },
 }
 `;
@@ -478,238 +342,124 @@ exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
 {
   "Automation Tree": {
     "AutomationId": "pressable_delay_events_console",
-    "Children": [
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "pressOut",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "pressIn",
       },
     ],
-    "ControlType": 50026,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
-    "LocalizedControlType": "group",
-    "Name": "",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_delay_events_console",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
   },
   "Visual Tree": {
     "Brush": {
       "Brush Type": "ColorBrush",
       "Color": "rgba(249, 249, 249, 255)",
     },
-    "Children": [
-      {
-        "Offset": [
-          0,
-          0,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          1,
-          1,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": [
-          1,
-          0,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          -2,
-          1,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": [
-          -1,
-          0,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          1,
-          1,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": [
-          -1,
-          1,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          1,
-          -2,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": [
-          -1,
-          -1,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          1,
-          1,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": [
-          1,
-          -1,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          -2,
-          1,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": [
-          0,
-          -1,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          1,
-          1,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": [
-          0,
-          1,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          1,
-          -2,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              874,
-              19,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          11,
-          11,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          874,
-          19,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              874,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          11,
-          29,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          874,
-          20,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-    ],
     "Comment": "pressable_delay_events_console",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      896,
-      120,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "896, 120",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "11, 11, 0",
+        "Size": "874, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 19",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "11, 29, 0",
+        "Size": "874, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
   },
 }
 `;
@@ -718,80 +468,56 @@ exports[`Pressable Tests Pressables can have event handlers 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "pressable_feedback_events_button",
-    "Children": [
+    "ControlType": 50000,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "button",
+    "Name": "pressable feedback events",
+    "__Children": [
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "Press Me",
       },
     ],
-    "ControlType": 50000,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "button",
-    "Name": "pressable feedback events",
   },
-  "Visual Tree": {
-    "Children": [
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "pressable feedback events",
+      "TestId": "pressable_feedback_events_button",
+    },
+    "__Children": [
       {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              56,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          0,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          56,
-          20,
-        ],
-        "Visual Type": "SpriteVisual",
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
       },
     ],
+  },
+  "Visual Tree": {
     "Comment": "pressable_feedback_events_button",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      56,
-      18,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "56, 18",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "56, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "56, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
   },
 }
 `;
@@ -800,338 +526,178 @@ exports[`Pressable Tests Pressables can have event handlers 2`] = `
 {
   "Automation Tree": {
     "AutomationId": "pressable_feedback_events_console",
-    "Children": [
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "pressOut",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "press",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "pressIn",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "hover in",
       },
     ],
-    "ControlType": 50026,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
-    "LocalizedControlType": "group",
-    "Name": "",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_feedback_events_console",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
   },
   "Visual Tree": {
     "Brush": {
       "Brush Type": "ColorBrush",
       "Color": "rgba(249, 249, 249, 255)",
     },
-    "Children": [
-      {
-        "Offset": [
-          0,
-          0,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          1,
-          1,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": [
-          1,
-          0,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          -2,
-          1,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": [
-          -1,
-          0,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          1,
-          1,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": [
-          -1,
-          1,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          1,
-          -2,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": [
-          -1,
-          -1,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          1,
-          1,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": [
-          1,
-          -1,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          -2,
-          1,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": [
-          0,
-          -1,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          1,
-          1,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Offset": [
-          0,
-          1,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          1,
-          -2,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              874,
-              19,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          11,
-          11,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          874,
-          19,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              874,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          11,
-          29,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          874,
-          20,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              874,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          11,
-          48,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          874,
-          20,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              874,
-              19,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          11,
-          66,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          874,
-          19,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-    ],
     "Comment": "pressable_feedback_events_console",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      896,
-      120,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "896, 120",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "11, 11, 0",
+        "Size": "874, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 19",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "11, 29, 0",
+        "Size": "874, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "11, 48, 0",
+        "Size": "874, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "11, 66, 0",
+        "Size": "874, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "874, 19",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
   },
 }
 `;
@@ -1140,84 +706,58 @@ exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "pressable_hit_slop_button",
-    "Children": [
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "Press Outside This View",
       },
     ],
-    "ControlType": 50026,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_hit_slop_button",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
   },
   "Visual Tree": {
     "Brush": {
       "Brush Type": "ColorBrush",
       "Color": "rgba(255, 0, 0, 255)",
     },
-    "Children": [
+    "Comment": "pressable_hit_slop_button",
+    "Offset": "0, 0, 0",
+    "Size": "146, 18",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
       {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              146,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          0,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          146,
-          20,
-        ],
+        "Offset": "0, 0, 0",
+        "Size": "146, 20",
         "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "146, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
       },
     ],
-    "Comment": "pressable_hit_slop_button",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      146,
-      18,
-    ],
-    "Visual Type": "SpriteVisual",
   },
 }
 `;
@@ -1226,624 +766,397 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "opacity_pressable",
-    "Children": [
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
       {
         "AutomationId": "",
         "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "Name": "",
       },
     ],
-    "ControlType": 50026,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
-    "LocalizedControlType": "group",
-    "Name": "",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "opacity_pressable",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.10000000149011612,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.20000000298023224,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.30000001192092896,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.4000000059604645,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.5,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.6000000238418579,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.699999988079071,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.800000011920929,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {
+          "Opacity": 0.8999999761581421,
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+      },
+    ],
   },
   "Visual Tree": {
-    "Children": [
-      {
-        "Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 0,
-            "Size": [
-              50,
-              50,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          0,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          50,
-          50,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 0.10000000149011612,
-            "Size": [
-              50,
-              50,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          50,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          50,
-          50,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 0.20000000298023224,
-            "Size": [
-              50,
-              50,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          100,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          50,
-          50,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 0.30000001192092896,
-            "Size": [
-              50,
-              50,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          150,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          50,
-          50,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 0.4000000059604645,
-            "Size": [
-              50,
-              50,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          200,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          50,
-          50,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 0.5,
-            "Size": [
-              50,
-              50,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          250,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          50,
-          50,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 0.6000000238418579,
-            "Size": [
-              50,
-              50,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          300,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          50,
-          50,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 0.699999988079071,
-            "Size": [
-              50,
-              50,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          350,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          50,
-          50,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 0.800000011920929,
-            "Size": [
-              50,
-              50,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          400,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          50,
-          50,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 0.8999999761581421,
-            "Size": [
-              50,
-              50,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          450,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          50,
-          50,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 0, 255)",
-            },
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              50,
-              50,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          500,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          50,
-          50,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-    ],
     "Comment": "opacity_pressable",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      550,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 550",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 50, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.10000000149011612,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 100, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.20000000298023224,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 150, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.30000001192092896,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 200, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.4000000059604645,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 250, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.5,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 300, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.6000000238418579,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 350, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.699999988079071,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 400, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.800000011920929,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 450, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Opacity": 0.8999999761581421,
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 500, 0",
+        "Size": "50, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Size": "50, 50",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
   },
 }
 `;
@@ -1852,424 +1165,249 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
 {
   "Automation Tree": {
     "AutomationId": "accessible_pressable",
-    "Children": [
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
       {
         "AutomationId": "",
-        "Children": [
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "__Children": [
           {
             "AutomationId": "",
             "ControlType": 50020,
-            "HelpText": "",
-            "IsEnabled": true,
-            "IsKeyboardFocusable": false,
             "LocalizedControlType": "text",
             "Name": "Pressable with accessible=true and focusable=true",
           },
         ],
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "Pressable with accessible=false",
       },
       {
         "AutomationId": "",
-        "Children": [
+        "ControlType": 50026,
+        "LocalizedControlType": "group",
+        "__Children": [
           {
             "AutomationId": "",
             "ControlType": 50020,
-            "HelpText": "",
-            "IsEnabled": true,
-            "IsKeyboardFocusable": false,
             "LocalizedControlType": "text",
             "Name": "Pressable with focusable=false",
           },
         ],
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
-        "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "Pressable with accessible=false and focusable=false",
       },
     ],
-    "ControlType": 50026,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
-    "LocalizedControlType": "group",
-    "Name": "",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "accessible_pressable",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+    ],
   },
   "Visual Tree": {
-    "Children": [
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      916,
-                      20,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  0,
-                  0,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  916,
-                  20,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              916,
-              50,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          0,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          916,
-          50,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      916,
-                      20,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  0,
-                  0,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  916,
-                  20,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              916,
-              50,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          50,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          916,
-          50,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      916,
-                      20,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  0,
-                  0,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  916,
-                  20,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              916,
-              50,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          100,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          916,
-          50,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      916,
-                      20,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  0,
-                  0,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  916,
-                  20,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              916,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          150,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          916,
-          30,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-    ],
     "Comment": "accessible_pressable",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      180,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 180",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "916, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 50",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 50, 0",
+        "Size": "916, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 50",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 100, 0",
+        "Size": "916, 50",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 50",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 150, 0",
+        "Size": "916, 30",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 30",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
   },
 }
 `;
@@ -2278,80 +1416,54 @@ exports[`Pressable Tests Pressables can have tooltips 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "tooltip_pressable",
-    "Children": [
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "__Children": [
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "Pressable with ToolTip "Pressable"",
       },
     ],
-    "ControlType": 50026,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": true,
-    "LocalizedControlType": "group",
-    "Name": "",
   },
-  "Visual Tree": {
-    "Children": [
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "tooltip_pressable",
+    },
+    "__Children": [
       {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              916,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          0,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          916,
-          20,
-        ],
-        "Visual Type": "SpriteVisual",
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
       },
     ],
+  },
+  "Visual Tree": {
     "Comment": "tooltip_pressable",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      18,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 18",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "916, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
   },
 }
 `;
@@ -2360,562 +1472,336 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
 {
   "Automation Tree": {
     "AutomationId": "backface_pressable",
-    "Children": [
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "View #1, front is visible, back is hidden.",
       },
       {
         "AutomationId": "",
-        "Children": [
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "__Children": [
           {
             "AutomationId": "",
             "ControlType": 50020,
-            "HelpText": "",
-            "IsEnabled": true,
-            "IsKeyboardFocusable": false,
             "LocalizedControlType": "text",
             "Name": "Front",
           },
         ],
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
-        "Children": [
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "__Children": [
           {
             "AutomationId": "",
             "ControlType": 50020,
-            "HelpText": "",
-            "IsEnabled": true,
-            "IsKeyboardFocusable": false,
             "LocalizedControlType": "text",
             "Name": "Back (You should not see this)",
           },
         ],
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50020,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "text",
         "Name": "View #2, front is hidden, back is visible.",
       },
       {
         "AutomationId": "",
-        "Children": [
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "__Children": [
           {
             "AutomationId": "",
             "ControlType": 50020,
-            "HelpText": "",
-            "IsEnabled": true,
-            "IsKeyboardFocusable": false,
             "LocalizedControlType": "text",
             "Name": "Front (You should not see this)",
           },
         ],
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
       },
       {
         "AutomationId": "",
-        "Children": [
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "__Children": [
           {
             "AutomationId": "",
             "ControlType": 50020,
-            "HelpText": "",
-            "IsEnabled": true,
-            "IsKeyboardFocusable": false,
             "LocalizedControlType": "text",
             "Name": "Back",
           },
         ],
-        "ControlType": 50026,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "Name": "",
       },
     ],
-    "ControlType": 50026,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
-    "LocalizedControlType": "group",
-    "Name": "",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "backface_pressable",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+    ],
   },
   "Visual Tree": {
-    "Children": [
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              916,
-              30,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          0,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          916,
-          30,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 255, 255)",
-            },
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      34,
-                      20,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  83,
-                  90,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  34,
-                  20,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              200,
-              200,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          358,
-          29,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          200,
-          200,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(255, 0, 0, 255)",
-            },
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      184,
-                      20,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  8,
-                  90,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  184,
-                  20,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              200,
-              200,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          358,
-          29,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          200,
-          200,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              916,
-              39,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          0,
-          228,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          916,
-          39,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(0, 0, 255, 255)",
-            },
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      188,
-                      19,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  6,
-                  90,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  188,
-                  19,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              200,
-              200,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          358,
-          267,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          200,
-          200,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(255, 0, 0, 255)",
-            },
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      30,
-                      19,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      0,
-                      0,
-                    ],
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-                "Offset": [
-                  85,
-                  90,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  30,
-                  19,
-                ],
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              200,
-              200,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          358,
-          267,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          200,
-          200,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-    ],
     "Comment": "backface_pressable",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      468,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 468",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "916, 30",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 30",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "358, 29, 0",
+        "Size": "200, 200",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 255, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Size": "200, 200",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "83, 90, 0",
+                "Size": "34, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "34, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "358, 29, 0",
+        "Size": "200, 200",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(255, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Size": "200, 200",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "8, 90, 0",
+                "Size": "184, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "184, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 228, 0",
+        "Size": "916, 39",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 39",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "358, 267, 0",
+        "Size": "200, 200",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(0, 0, 255, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Size": "200, 200",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "6, 90, 0",
+                "Size": "188, 19",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "188, 19",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "358, 267, 0",
+        "Size": "200, 200",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(255, 0, 0, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Size": "200, 200",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "85, 90, 0",
+                "Size": "30, 19",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "30, 19",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
   },
 }
 `;
@@ -2925,24 +1811,19 @@ exports[`Pressable Tests Text can have pressable behavior 1`] = `
   "Automation Tree": {
     "AutomationId": "tappable_text",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Text has built-in onPress handling",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "tappable_text",
+    },
+  },
   "Visual Tree": {
     "Comment": "tappable_text",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -2953,24 +1834,19 @@ exports[`Pressable Tests Text can have pressable behavior 2`] = `
   "Automation Tree": {
     "AutomationId": "tappable_text_console",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "2x text onPress",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "tappable_text_console",
+    },
+  },
   "Visual Tree": {
     "Comment": "tappable_text_console",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      854,
-      19,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "854, 19",
     "Visual Type": "SpriteVisual",
   },
 }
