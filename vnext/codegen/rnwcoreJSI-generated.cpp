@@ -16,8 +16,23 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_commonT
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_allowCollapsableChildren(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->allowCollapsableChildren(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_androidEnablePendingFabricTransactions(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->androidEnablePendingFabricTransactions(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_batchRenderingUpdatesInEventLoop(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->batchRenderingUpdatesInEventLoop(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->destroyFabricSurfacesInReactInstanceManager(
     rt
   );
 }
@@ -31,23 +46,13 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableC
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableCustomDrawOrderFabric(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableCustomDrawOrderFabric(
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableGranularShadowTreeStateReconciliation(
     rt
   );
 }
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableMicrotasks(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableMicrotasks(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableMountHooksAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableMountHooksAndroid(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableSpannableBuildingUnification(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableSpannableBuildingUnification(
     rt
   );
 }
@@ -76,6 +81,16 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_inspect
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_lazyAnimationCallbacks(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->lazyAnimationCallbacks(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_preventDoubleTextMeasure(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->preventDoubleTextMeasure(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useModernRuntimeScheduler(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useModernRuntimeScheduler(
     rt
@@ -95,18 +110,21 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useStat
 NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("NativeReactNativeFeatureFlagsCxx", jsInvoker) {
   methodMap_["commonTestFlag"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_commonTestFlag};
+  methodMap_["allowCollapsableChildren"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_allowCollapsableChildren};
+  methodMap_["androidEnablePendingFabricTransactions"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_androidEnablePendingFabricTransactions};
   methodMap_["batchRenderingUpdatesInEventLoop"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_batchRenderingUpdatesInEventLoop};
+  methodMap_["destroyFabricSurfacesInReactInstanceManager"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_destroyFabricSurfacesInReactInstanceManager};
   methodMap_["enableBackgroundExecutor"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableBackgroundExecutor};
   methodMap_["enableCleanTextInputYogaNode"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableCleanTextInputYogaNode};
-  methodMap_["enableCustomDrawOrderFabric"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableCustomDrawOrderFabric};
+  methodMap_["enableGranularShadowTreeStateReconciliation"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableGranularShadowTreeStateReconciliation};
   methodMap_["enableMicrotasks"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableMicrotasks};
-  methodMap_["enableMountHooksAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableMountHooksAndroid};
-  methodMap_["enableSpannableBuildingUnification"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableSpannableBuildingUnification};
   methodMap_["enableSynchronousStateUpdates"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableSynchronousStateUpdates};
   methodMap_["enableUIConsistency"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableUIConsistency};
   methodMap_["forceBatchingMountItemsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_forceBatchingMountItemsOnAndroid};
   methodMap_["inspectorEnableCxxInspectorPackagerConnection"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_inspectorEnableCxxInspectorPackagerConnection};
   methodMap_["inspectorEnableModernCDPRegistry"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_inspectorEnableModernCDPRegistry};
+  methodMap_["lazyAnimationCallbacks"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_lazyAnimationCallbacks};
+  methodMap_["preventDoubleTextMeasure"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_preventDoubleTextMeasure};
   methodMap_["useModernRuntimeScheduler"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useModernRuntimeScheduler};
   methodMap_["useNativeViewConfigsInBridgelessMode"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNativeViewConfigsInBridgelessMode};
   methodMap_["useStateAlignmentMechanism"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useStateAlignmentMechanism};
@@ -2666,22 +2684,6 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_sendAccessibilityEven
   );
   return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_showPopupMenu(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->showPopupMenu(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber(),
-    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asObject(rt).asArray(rt),
-    count <= 2 ? throw jsi::JSError(rt, "Expected argument in position 2 to be passed") : args[2].asObject(rt).asFunction(rt),
-    count <= 3 ? throw jsi::JSError(rt, "Expected argument in position 3 to be passed") : args[3].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_dismissPopupMenu(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->dismissPopupMenu(
-    rt
-  );
-  return jsi::Value::undefined();
-}
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_lazilyLoadView(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->lazilyLoadView(
     rt,
@@ -2724,8 +2726,6 @@ NativeUIManagerCxxSpecJSI::NativeUIManagerCxxSpecJSI(std::shared_ptr<CallInvoker
   methodMap_["getDefaultEventTypes"] = MethodMetadata {0, __hostFunction_NativeUIManagerCxxSpecJSI_getDefaultEventTypes};
   methodMap_["setLayoutAnimationEnabledExperimental"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_setLayoutAnimationEnabledExperimental};
   methodMap_["sendAccessibilityEvent"] = MethodMetadata {2, __hostFunction_NativeUIManagerCxxSpecJSI_sendAccessibilityEvent};
-  methodMap_["showPopupMenu"] = MethodMetadata {4, __hostFunction_NativeUIManagerCxxSpecJSI_showPopupMenu};
-  methodMap_["dismissPopupMenu"] = MethodMetadata {0, __hostFunction_NativeUIManagerCxxSpecJSI_dismissPopupMenu};
   methodMap_["lazilyLoadView"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_lazilyLoadView};
   methodMap_["focus"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_focus};
   methodMap_["blur"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_blur};

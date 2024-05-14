@@ -15,11 +15,13 @@ import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
 import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
 
 const Components: Array<RNTesterModuleInfo> = [
-  /*{
+  /*
+  {
     key: 'DrawerLayoutAndroid',
     category: 'UI',
     module: require('../examples/DrawerLayoutAndroid/DrawerLayoutAndroidExample'),
-  },*/
+  },
+  */
   {
     key: 'AccessibilityExampleWin32',
     module: require('../examples-win32/Accessibility/AccessibilityExampleWin32'),
@@ -107,7 +109,9 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'SwipeableCardExample',
     category: 'UI',
     module: require('../examples/SwipeableCardExample/SwipeableCardExample'),
-  }*/ {
+  },
+  */ 
+ {
     key: 'SwitchExample',
     category: 'UI',
     module: require('../examples/Switch/SwitchExample'),
@@ -261,6 +265,18 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/PanResponder/PanResponderExample'),
   },
   {
+    key: 'PixelRatio',
+    category: 'UI',
+    module: require('../examples/PixelRatio/PixelRatioExample'),
+  },
+  /*
+  {
+    key: 'PermissionsExampleAndroid',
+    category: 'Android',
+    module: require('../examples/PermissionsAndroid/PermissionsExample'),
+  },
+  */
+  {
     key: 'PlatformColorExample',
     category: 'UI',
     module: require('../examples/PlatformColor/PlatformColorExample'),
@@ -269,12 +285,14 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'PointerEventsExample',
     category: 'Basic',
     module: require('../examples/PointerEvents/PointerEventsExample'),
-  } /*
+  },
+  /*
   {
     key: 'RTLExample',
     category: 'Basic',
     module: require('../examples/RTL/RTLExample'),
-  }*/,
+  },
+  */
   {
     key: 'ShareExample',
     category: 'Basic',
@@ -294,7 +312,18 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'TransformExample',
     category: 'UI',
     module: require('../examples/Transform/TransformExample'),
-  } /*
+  },
+  {
+    key: 'FilterExample',
+    category: 'UI',
+    module: require('../examples/Filter/FilterExample'),
+  },
+  {
+    key: 'VibrationExample',
+    category: 'Basic',
+    module: require('../examples/Vibration/VibrationExample'),
+  },
+  /*
   {
     key: 'WebSocketExample',
     category: 'Basic',
@@ -305,8 +334,7 @@ const APIs: Array<RNTesterModuleInfo> = ([
     category: 'Basic',
     module: require('../examples/XHR/XHRExample'),
   },
-  {
-  }*/,
+  */
   {
     key: 'TurboModuleExample',
     category: 'Basic',
