@@ -54,8 +54,7 @@ IAsyncOperation<winrt::hstring> getTraceFilePath() noexcept {
                  .count();
 
   os << hermesDataPath.c_str() << L"\\cpu_" << now << L".cpuprofile";
-  // TODO: Use C++ 20 `os.view()` to avoid a copy
-  co_return winrt::hstring(os.str());
+  co_return winrt::hstring(os.view());
 }
 
 } // namespace
