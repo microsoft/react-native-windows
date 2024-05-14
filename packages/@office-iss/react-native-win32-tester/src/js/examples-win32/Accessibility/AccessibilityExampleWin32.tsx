@@ -474,10 +474,27 @@ const AccessibilityInfoExample: React.FunctionComponent<{}> =() => {
   const onClick = React.useCallback(() => {
     AccessibilityInfo.announceForAccessibility('AccessibilityInfo announcement succeeded!');
   }, []);
+
+  const onClickDelayed = React.useCallback(() => {
+    setTimeout(() => {
+      AccessibilityInfo.announceForAccessibilityWithOptions(
+        'AccessibilityInfo announcement succeeded!',
+        { nativeID: 'AnnouncementTarget' });
+      }, 3000);
+  }, []);
+
   return (
-    <View style={styles.box}>
-      <TouchableHighlight onPress={onClick}>
-        <Text>AccessibilityInfo.announceForAccessibility</Text>
+    <View>
+      <TouchableHighlight onPress={onClick} underlayColor={'transparent'}>
+        <ViewWin32 style={styles.box} accessible focusable>
+            <Text>AccessibilityInfo.announceForAccessibility</Text>
+        </ViewWin32>
+      </TouchableHighlight>
+
+      <TouchableHighlight onPress={onClickDelayed} underlayColor={'transparent'}>
+        <ViewWin32 style={styles.box} accessible focusable nativeID={'AnnouncementTarget'}>
+            <Text>AccessibilityInfo.announceForAccessibilityWithOptions</Text>
+        </ViewWin32>
       </TouchableHighlight>
     </View>
   );
