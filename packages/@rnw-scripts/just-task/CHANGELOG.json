@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Wed, 15 May 2024 05:14:54 GMT",
+      "version": "2.3.32",
+      "tag": "@rnw-scripts/just-task_v2.3.32",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/just-task",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.16",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 11 May 2024 05:18:30 GMT",
       "version": "2.3.31",
       "tag": "@rnw-scripts/just-task_v2.3.31",

@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/eslint-config
 
-This log was last generated on Sat, 11 May 2024 05:18:29 GMT and should not be manually modified.
+This log was last generated on Wed, 15 May 2024 05:14:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.16
+
+Wed, 15 May 2024 05:14:53 GMT
+
+### Patches
+
+- 0413 integration (email not defined)
 
 ## 1.2.15
 
