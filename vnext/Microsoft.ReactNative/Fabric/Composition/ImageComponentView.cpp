@@ -34,7 +34,8 @@ ImageComponentView::WindowsImageResponseObserver::WindowsImageResponseObserver(I
   m_image.copy_from(&image);
 }
 
-void ImageComponentView::WindowsImageResponseObserver::didReceiveProgress(float progress, int64_t loaded, int64_t total) const {
+void ImageComponentView::WindowsImageResponseObserver::didReceiveProgress(float progress, int64_t loaded, int64_t total)
+    const {
   // TODO progress?
 }
 
@@ -45,7 +46,8 @@ void ImageComponentView::WindowsImageResponseObserver::didReceiveImage(
       [imageResponseImage, image = m_image]() { image->didReceiveImage(imageResponseImage); });
 }
 
-void ImageComponentView::WindowsImageResponseObserver::didReceiveFailure(const facebook::react::ImageLoadError &error) const {
+void ImageComponentView::WindowsImageResponseObserver::didReceiveFailure(
+    const facebook::react::ImageLoadError &error) const {
   m_image->didReceiveFailureFromObserver(error);
 }
 
