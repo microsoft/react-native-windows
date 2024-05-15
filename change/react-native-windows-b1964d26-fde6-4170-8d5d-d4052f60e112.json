@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Unfork JSRuntimeFactory files and C++20 patches",
+  "packageName": "react-native-windows",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
