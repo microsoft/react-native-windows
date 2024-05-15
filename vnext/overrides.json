@@ -79,52 +79,10 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/JSExecutor.cpp",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/JSExecutor.cpp",
-      "baseHash": "0308ba988c534f4a94fb3f1a2006a5fb8a8b2bc5",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/JSExecutor.h",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/JSExecutor.h",
-      "baseHash": "459d79bc399760546afaf3209c7ec96caeebc449",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/NativeToJsBridge.cpp",
-      "baseFile": "packages/react-native/ReactCommon/cxxreact/NativeToJsBridge.cpp",
-      "baseHash": "f2bb85b79b6e8add5e4604418f953651973011ce",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
       "baseHash": "4cab1f3169cfe38e0bf7933406dd960fda2e5d28",
       "issue": 12210
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/Bridging.h",
-      "baseFile": "packages/react-native/ReactCommon/react/bridging/Bridging.h",
-      "baseHash": "7298e5365811b51bcd892732dcb51110ecbed5ec",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/CallbackWrapper.h",
-      "baseFile": "packages/react-native/ReactCommon/react/bridging/CallbackWrapper.h",
-      "baseHash": "fe297f56ac277e5ff3ebcb284eea1f511b5e2d8e",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModuleUtils.h",
-      "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModuleUtils.h",
-      "baseHash": "ba5efe9ba0db80a3f38c94deb8983420fd82beff",
-      "issue": 12195
     },
     {
       "type": "patch",
@@ -146,27 +104,6 @@
       "baseFile": "packages/react-native/ReactCommon/react/renderer/observers/events/EventPerformanceLogger.cpp",
       "baseHash": "a61679142fe752b6ca32f16cde1fdd23e64a3b86",
       "issue": 13231
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/JSRuntimeFactory.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/runtime/JSRuntimeFactory.cpp",
-      "baseHash": "c77f0b0829b850f8e2f115bfc3440ce94feb207d",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/JSRuntimeFactory.h",
-      "baseFile": "packages/react-native/ReactCommon/react/runtime/JSRuntimeFactory.h",
-      "baseHash": "a3cf8c924d0bd3419943f0e46d603f84eb5b52ab",
-      "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "f41d943bb38db62bf443672a8c44fe6106ced437",
-      "issue": 13172
     },
     {
       "type": "copy",
