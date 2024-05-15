@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Expose CompositionContext from CreateCompositionComponentViewArgs",
+  "comment": "Expose ImageProps from ImageComponentView's and add ImageSource type",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"

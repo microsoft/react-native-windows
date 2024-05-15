@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 10 May 2024 05:18:21 GMT and should not be manually modified.
+This log was last generated on Sat, 11 May 2024 05:18:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.814
+
+Sat, 11 May 2024 05:18:29 GMT
+
+### Changes
+
+- integrate rn nightly 4/5/2024 (email not defined)
+- Expose CompositionContext from CreateCompositionComponentViewArgs (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.212
+- Bump @react-native-windows/codegen to v0.0.0-canary.86
+- Bump @rnw-scripts/eslint-config to v1.2.15
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.19
+- Bump @rnw-scripts/just-task to v2.3.31
+- Bump react-native-platform-override to v1.9.32
 
 ## 0.0.0-canary.813
 

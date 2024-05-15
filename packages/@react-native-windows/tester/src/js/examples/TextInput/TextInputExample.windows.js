@@ -15,9 +15,11 @@ import type {
   RNTesterModuleExample,
 } from '../../types/RNTesterTypes';
 
+import ExampleTextInput from './ExampleTextInput';
+
 const TextInputSharedExamples = require('./TextInputSharedExamples.js');
 const React = require('react');
-const {StyleSheet, Switch, Text, TextInput, View} = require('react-native');
+const {StyleSheet, Switch, Text, View} = require('react-native');
 const {useState} = React;
 
 class ToggleDefaultPaddingExample extends React.Component<
@@ -33,7 +35,7 @@ class ToggleDefaultPaddingExample extends React.Component<
   render(): React.Node {
     return (
       <View>
-        <TextInput
+        <ExampleTextInput
           style={this.state.hasPadding ? {padding: 0} : null}
           testID="textinput-padding"
         />
@@ -107,7 +109,7 @@ class AutogrowingTextInputExample extends React.Component<{...}> {
         {/* $FlowFixMe(>=0.122.0 site=react_native_android_fb) This comment
          * suppresses an error found when Flow v0.122.0 was deployed. To see
          * the error, delete this comment and run Flow. */}
-        <TextInput
+        <ExampleTextInput
           /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
            * found when making Flow check .android.js files. */
           multiline={this.state.multiline}
@@ -149,7 +151,7 @@ class PressInOutEvents extends React.Component<
     return (
       <View>
         <Text>{this.state.text}</Text>
-        <TextInput
+        <ExampleTextInput
           placeholder="Click inside the box to observe events being fired."
           style={[styles.singleLineWithHeightTextInput]}
           onPressIn={() =>
@@ -187,7 +189,7 @@ function PropagationSample() {
           logEvent('outer keyDownCapture ' + event.nativeEvent.code)
         }>
         <Text>some text to focus on</Text>
-        <TextInput
+        <ExampleTextInput
           placeholder="Click inside the box to observe events being fired."
           style={[styles.singleLineWithHeightTextInput]}
           onKeyDown={event =>
@@ -225,7 +227,7 @@ function SpellCheckSample() {
          * found when making Flow check .android.js files. */
         onValueChange={setSpellCheckEnabled}
       />
-      <TextInput
+      <ExampleTextInput
         placeholder="Type text to test spell check functionality."
         style={[styles.singleLineWithHeightTextInput]}
         spellCheck={spellCheckEnabled}
@@ -245,13 +247,6 @@ const styles = StyleSheet.create({
   },
   singleLineWithHeightTextInput: {
     height: 30,
-  },
-  default: {
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#0f0f0f',
-    flex: 1,
-    fontSize: 13,
-    padding: 4,
   },
 });
 
@@ -282,39 +277,39 @@ const examples: Array<RNTesterModuleExample> = [
     render: function (): React.Node {
       return (
         <View>
-          <TextInput
+          <ExampleTextInput
             style={[styles.singleLine]}
             defaultValue="Default color text"
             testID="textinput-default-color"
           />
-          <TextInput
+          <ExampleTextInput
             style={[styles.singleLine, {color: 'green'}]}
             defaultValue="Green Text"
             testID="textinput-custom-color"
           />
-          <TextInput
+          <ExampleTextInput
             placeholder="Default placeholder text color"
             style={styles.singleLine}
             testID="textinput-default-placeholder-color"
           />
-          <TextInput
+          <ExampleTextInput
             placeholder="Red placeholder text color"
             placeholderTextColor="red"
             style={styles.singleLine}
             testID="textinput-custom-placeholder-color"
           />
-          <TextInput
+          <ExampleTextInput
             placeholder="Default underline color"
             style={styles.singleLine}
             testID="textinput-default-underline-color"
           />
-          <TextInput
+          <ExampleTextInput
             placeholder="Blue underline color"
             style={styles.singleLine}
             underlineColorAndroid="blue"
             testID="textinput-custom-underline-color"
           />
-          <TextInput
+          <ExampleTextInput
             defaultValue="Same BackgroundColor as View "
             style={[
               styles.singleLine,
@@ -324,19 +319,19 @@ const examples: Array<RNTesterModuleExample> = [
             <Text style={{backgroundColor: 'rgba(100, 100, 100, 0.3)'}}>
               Darker backgroundColor
             </Text>
-          </TextInput>
-          <TextInput
+          </ExampleTextInput>
+          <ExampleTextInput
             defaultValue="Selection Color is red"
             selectionColor={'red'}
             style={styles.singleLine}
             testID="textinput-custom-highlight-color"
           />
-          <TextInput
+          <ExampleTextInput
             defaultValue="Selection handles are red"
             selectionHandleColor={'red'}
             style={styles.singleLine}
           />
-          <TextInput
+          <ExampleTextInput
             defaultValue="Cursor Color is red"
             cursorColor={'red'}
             style={styles.singleLine}
@@ -350,7 +345,7 @@ const examples: Array<RNTesterModuleExample> = [
     render: function (): React.Node {
       return (
         <View>
-          <TextInput
+          <ExampleTextInput
             defaultValue="Font Weight (default)"
             style={[styles.singleLine]}
             testID="textinput-weight-default"
@@ -368,7 +363,7 @@ const examples: Array<RNTesterModuleExample> = [
             '200',
             '100',
           ].map(fontWeight => (
-            <TextInput
+            <ExampleTextInput
               defaultValue={`Font Weight (${fontWeight})`}
               key={fontWeight}
               style={[styles.singleLine, {fontWeight}]}
@@ -383,7 +378,7 @@ const examples: Array<RNTesterModuleExample> = [
     title: 'Text input, themes and heights',
     render: function (): React.Node {
       return (
-        <TextInput
+        <ExampleTextInput
           placeholder="If you set height, beware of padding set from themes"
           style={[styles.singleLineWithHeightTextInput]}
           testID="textinput-theme-padding"
@@ -396,22 +391,22 @@ const examples: Array<RNTesterModuleExample> = [
     render: function (): React.Node {
       return (
         <View>
-          <TextInput
+          <ExampleTextInput
             style={[styles.singleLine, {letterSpacing: 0}]}
             placeholder="letterSpacing = 0"
             testID="textinput-letterspacing-0"
           />
-          <TextInput
+          <ExampleTextInput
             style={[styles.singleLine, {letterSpacing: 2}]}
             placeholder="letterSpacing = 2"
             testID="textinput-letterspacing-2"
           />
-          <TextInput
+          <ExampleTextInput
             style={[styles.singleLine, {letterSpacing: 9}]}
             placeholder="letterSpacing = 9"
             testID="textinput-letterspacing-9"
           />
-          <TextInput
+          <ExampleTextInput
             style={[styles.singleLine, {letterSpacing: -1}]}
             placeholder="letterSpacing = -1"
             testID="textinput-letterspacing--1"
@@ -425,13 +420,13 @@ const examples: Array<RNTesterModuleExample> = [
     render: function (): React.Node {
       return (
         <View>
-          <TextInput
+          <ExampleTextInput
             defaultValue="iloveturtles"
             secureTextEntry={true}
             style={styles.singleLine}
             testID="textinput-password"
           />
-          <TextInput
+          <ExampleTextInput
             secureTextEntry={true}
             style={[styles.singleLine, {color: 'red'}]}
             placeholder="color is supported too"
@@ -446,7 +441,7 @@ const examples: Array<RNTesterModuleExample> = [
     title: 'Editable',
     render: function (): React.Node {
       return (
-        <TextInput
+        <ExampleTextInput
           defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
           editable={false}
           style={styles.singleLine}
@@ -460,7 +455,7 @@ const examples: Array<RNTesterModuleExample> = [
     render: function (): React.Node {
       return (
         <View>
-          <TextInput
+          <ExampleTextInput
             autoCorrect={true}
             placeholder="multiline, aligned top-left"
             placeholderTextColor="red"
@@ -471,7 +466,7 @@ const examples: Array<RNTesterModuleExample> = [
             ]}
             testID="textinput-multiline-topleft"
           />
-          <TextInput
+          <ExampleTextInput
             autoCorrect={true}
             placeholder="multiline, aligned center"
             placeholderTextColor="green"
@@ -482,7 +477,7 @@ const examples: Array<RNTesterModuleExample> = [
             ]}
             testID="textinput-multiline-center"
           />
-          <TextInput
+          <ExampleTextInput
             autoCorrect={true}
             multiline={true}
             style={[
@@ -494,7 +489,7 @@ const examples: Array<RNTesterModuleExample> = [
             <Text style={styles.multiline}>
               multiline with children, aligned bottom-right
             </Text>
-          </TextInput>
+          </ExampleTextInput>
         </View>
       );
     },
@@ -504,27 +499,23 @@ const examples: Array<RNTesterModuleExample> = [
     render: function (): React.Node {
       return (
         <View>
-          <TextInput
+          <ExampleTextInput
             placeholder="editable text input using editable prop"
-            style={styles.default}
             editable
             testID="textinput-editable"
           />
-          <TextInput
+          <ExampleTextInput
             placeholder="uneditable text input using editable prop"
-            style={styles.default}
             editable={false}
             testID="textinput-not-editable2"
           />
-          <TextInput
+          <ExampleTextInput
             placeholder="editable text input using readOnly prop"
-            style={styles.default}
             readOnly={false}
             testID="textinput-readonly-false"
           />
-          <TextInput
+          <ExampleTextInput
             placeholder="uneditable text input using readOnly prop"
-            style={styles.default}
             readOnly
             testID="textinput-readyonly"
           />
@@ -538,22 +529,22 @@ const examples: Array<RNTesterModuleExample> = [
     render: function (): React.Node {
       return (
         <View>
-          <TextInput
+          <ExampleTextInput
             numberOfLines={2}
             multiline={true}
             placeholder="Two line input using numberOfLines prop"
           />
-          <TextInput
+          <ExampleTextInput
             numberOfLines={5}
             multiline={true}
             placeholder="Five line input using numberOfLines prop"
           />
-          <TextInput
+          <ExampleTextInput
             rows={2}
             multiline={true}
             placeholder="Two line input using rows prop"
           />
-          <TextInput
+          <ExampleTextInput
             rows={5}
             multiline={true}
             placeholder="Five line input using rows prop"
@@ -591,30 +582,31 @@ const examples: Array<RNTesterModuleExample> = [
     render: function (): React.Node {
       return (
         <View>
-          <TextInput
+          <ExampleTextInput
             autoComplete="country"
             placeholder="country"
             style={styles.default}
             testID="textinput-autocomplete-country"
           />
-          <TextInput
+          <ExampleTextInput
             autoComplete="postal-address-country"
             placeholder="postal-address-country"
             style={styles.default}
             testID="textinput-autocomplete-address-country"
           />
-          <TextInput
+          <ExampleTextInput
             autoComplete="one-time-code"
             placeholder="one-time-code"
             style={styles.default}
             testID="textinput-autocomplete-one-time-code"
           />
-          <TextInput
+          <ExampleTextInput
             autoComplete="sms-otp"
             placeholder="sms-otp"
             style={styles.default}
             testID="textinput-autocomplete-sms-otp"
           />
+          <ExampleTextInput autoComplete="sms-otp" placeholder="sms-otp" />
         </View>
       );
     },
@@ -634,7 +626,7 @@ const examples: Array<RNTesterModuleExample> = [
       const returnKeyLabels = ['Compile', 'React Native'];
       const returnKeyExamples = returnKeyTypes.map(type => {
         return (
-          <TextInput
+          <ExampleTextInput
             key={type}
             returnKeyType={type}
             placeholder={'returnKeyType: ' + type}
@@ -645,7 +637,7 @@ const examples: Array<RNTesterModuleExample> = [
       });
       const types = returnKeyLabels.map(type => {
         return (
-          <TextInput
+          <ExampleTextInput
             key={type}
             returnKeyLabel={type}
             placeholder={'returnKeyLabel: ' + type}
@@ -667,20 +659,20 @@ const examples: Array<RNTesterModuleExample> = [
     render: function (): React.Node {
       return (
         <View>
-          <TextInput
+          <ExampleTextInput
             inlineImageLeft="ic_menu_black_24dp"
             placeholder="This has drawableLeft set"
             style={styles.singleLine}
             testID="textinput-inline-images"
           />
-          <TextInput
+          <ExampleTextInput
             inlineImageLeft="ic_menu_black_24dp"
             inlineImagePadding={30}
             placeholder="This has drawableLeft and drawablePadding set"
             style={styles.singleLine}
             testID="textinput-inline-images-2"
           />
-          <TextInput
+          <ExampleTextInput
             placeholder="This does not have drawable props set"
             style={styles.singleLine}
             testID="textinput-inline-images-3"
@@ -708,20 +700,20 @@ const examples: Array<RNTesterModuleExample> = [
       return (
         <View>
           <Text>Default submit key (Enter):</Text>
-          <TextInput
+          <ExampleTextInput
             clearTextOnSubmit
             style={styles.singleLine}
             testID="textinput-clear-on-submit"
           />
           <Text>Custom submit key event (Shift + Enter), single-line:</Text>
-          <TextInput
+          <ExampleTextInput
             clearTextOnSubmit
             style={styles.singleLine}
             submitKeyEvents={[{code: 'Enter', shiftKey: true}]}
             testID="textinput-clear-on-submit-2"
           />
           <Text>Custom submit key event (Shift + Enter), multi-line:</Text>
-          <TextInput
+          <ExampleTextInput
             multiline
             clearTextOnSubmit
             style={styles.multiline}
@@ -729,7 +721,7 @@ const examples: Array<RNTesterModuleExample> = [
             testID="textinput-clear-on-submit-3"
           />
           <Text>Submit with Enter key, return key with Shift + Enter</Text>
-          <TextInput
+          <ExampleTextInput
             multiline
             clearTextOnSubmit
             style={styles.multiline}
@@ -758,7 +750,7 @@ const examples: Array<RNTesterModuleExample> = [
       return (
         <View>
           <Text>CaretHidden</Text>
-          <TextInput
+          <ExampleTextInput
             style={styles.singleLine}
             caretHidden={true}
             placeholder="caretHidden={true}"
@@ -774,7 +766,7 @@ const examples: Array<RNTesterModuleExample> = [
       return (
         <View>
           <Text>Cursorcolor</Text>
-          <TextInput
+          <ExampleTextInput
             style={styles.singleLine}
             cursorColor={'green'}
             placeholder='cursorColor={"green"}'
@@ -790,7 +782,7 @@ const examples: Array<RNTesterModuleExample> = [
       return (
         <View>
           <Text>Shadow</Text>
-          <TextInput
+          <ExampleTextInput
             placeholder="shadowColor: purple"
             testID="textinput-shadow"
             style={{

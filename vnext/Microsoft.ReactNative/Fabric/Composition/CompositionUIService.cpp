@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "CompositionUIService.h"
 #include "Composition.CompositionUIService.g.cpp"
+#include <Fabric/FabricUIManagerModule.h>
 #include <QuirkSettings.h>
 
 #include <ReactPropertyBag.h>
@@ -37,6 +38,17 @@ winrt::Microsoft::UI::Composition::Compositor CompositionUIService::GetComposito
 Experimental::ICompositionContext CompositionUIService::GetCompositionContext(
     const IReactPropertyBag &properties) noexcept {
   return ReactPropertyBag(properties).Get(CompositionContextPropertyId());
+}
+
+winrt::Microsoft::ReactNative::ComponentView CompositionUIService::ComponentFromReactTag(
+    const winrt::Microsoft::ReactNative::IReactContext &context,
+    int64_t reactTag) noexcept {
+  if (std::shared_ptr<::Microsoft::ReactNative::FabricUIManager> fabricuiManager =
+          ::Microsoft::ReactNative::FabricUIManager::FromProperties(ReactPropertyBag(context.Properties()))) {
+    return fabricuiManager->GetViewRegistry().findComponentViewWithTag(static_cast<facebook::react::Tag>(reactTag));
+  }
+
+  return nullptr;
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
