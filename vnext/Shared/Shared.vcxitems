@@ -335,6 +335,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeHost.cpp">
       <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeHost.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeIsland.cpp">
+      <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeIsland.idl</DependentUpon>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\RedBoxHandler.cpp">
       <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\RedBoxHandler.idl</DependentUpon>
     </ClCompile>
@@ -637,6 +640,7 @@
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeHost.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\RedBoxHandler.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Timer.idl" />
+	<Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeIsland.idl" />
   </ItemGroup>
   <ItemGroup Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'">
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ComponentView.idl" />

@@ -310,6 +310,10 @@
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="ReactNativeIsland.h">
+      <DependentUpon>ReactNativeIsland.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="Timer.h">
       <DependentUpon>Timer.idl</DependentUpon>
       <SubType>Code</SubType>

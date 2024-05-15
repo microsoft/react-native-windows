@@ -1,0 +1,29 @@
+
+import "CompositionSwitcher.idl";
+import "CompositionRootView.idl";
+import "ReactNativeHost.idl";
+
+namespace Microsoft.ReactNative
+{
+#ifdef USE_WINUI3
+	runtimeclass ReactNativeIsland
+	{
+		// Create the ReactNativeIsland which sets up the contentIsland and the
+		// CompositionRootView
+		// This Island makes the assumption that we have:
+		// One ReactNativeHost that is mapped to one JSBundle with one JsApp(rootview) in the bundle.
+		static ReactNativeIsland Create(
+			Microsoft.UI.Composition.Compositor compositor,
+			Microsoft.UI.Windowing.AppWindow window,
+			Microsoft.ReactNative.ReactNativeHost host,
+			String mainComponentName);
+
+		// Each RNIsland has one ContentIsland and the ContentIsland is associated to single JsApp.
+		Microsoft.UI.Content.ContentIsland Island{ get; };
+
+		// Updates Root view size with respect to AppWindow size change
+		void UpdateRootViewSizeToAppWindow(
+			Microsoft.UI.Windowing.AppWindow window);
+	}
+#endif
+}

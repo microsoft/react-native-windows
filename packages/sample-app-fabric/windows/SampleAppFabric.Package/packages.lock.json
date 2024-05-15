@@ -9,8 +9,8 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Transitive",
-        "resolved": "0.1.18",
-        "contentHash": "5K8rRihGwIs2XNOTP2Jsw3T6cegxCBQXcpPS4optONU/AmFElGAfnA6XBQJ4UqlCFCl9Nf9zQrgvCUPBWYHiag=="
+        "resolved": "0.1.21",
+        "contentHash": "5njCh+3eXTLOv7+8nOnp6nJ5C0r6it5ze54c0nuWleeDptuK8t3dEDB79XTU4D5DKNvAPlqJpgXRDOak5nYIug=="
       },
       "Microsoft.VCRTForwarders.140": {
         "type": "Transitive",
@@ -51,7 +51,7 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.1.18, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.21, )",
           "Microsoft.WindowsAppSDK": "[1.5.240227000, )",
           "ReactCommon": "[1.0.0, )",
           "boost": "[1.76.0, )"
@@ -67,7 +67,7 @@
       "sampleappfabric": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.JavaScript.Hermes": "[0.1.18, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.21, )",
           "Microsoft.ReactNative": "[1.0.0, )",
           "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
           "Microsoft.WindowsAppSDK": "[1.5.240227000, )",

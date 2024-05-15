@@ -24,21 +24,6 @@ float ScaleFactor(HWND hwnd) noexcept {
   return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
 }
 
-void UpdateRootViewSizeToAppWindow(
-    winrt::Microsoft::ReactNative::CompositionRootView const &rootView,
-    winrt::Microsoft::UI::Windowing::AppWindow const &window) {
-  auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
-  auto scaleFactor = ScaleFactor(hwnd);
-  winrt::Windows::Foundation::Size size{
-      window.ClientSize().Width / scaleFactor, window.ClientSize().Height / scaleFactor};
-  // Do not relayout when minimized
-  if (window.Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>().State() !=
-      winrt::Microsoft::UI::Windowing::OverlappedPresenterState::Minimized) {
-    rootView.Arrange(size);
-    rootView.Size(size);
-  }
-}
-
 // Create and configure the ReactNativeHost
 winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
     HWND hwnd,
@@ -106,19 +91,17 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   // Start the react-native instance, which will create a JavaScript runtime and load the applications bundle
   host.ReloadInstance();
 
-  // Create a RootView which will present a react-native component
-  winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
-  viewOptions.ComponentName(mainComponentName);
-  auto rootView = winrt::Microsoft::ReactNative::CompositionRootView(compositor);
-  rootView.ReactViewHost(winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
+  // Create a ReactNative Island
+  auto reactNativeIsland =
+      winrt::Microsoft::ReactNative::ReactNativeIsland::Create(compositor, window, host, mainComponentName);
 
   // Update the size of the RootView when the AppWindow changes size
-  window.Changed([wkRootView = winrt::make_weak(rootView)](
+  window.Changed([wkreactNativeIsland = winrt::make_weak(reactNativeIsland)](
                      winrt::Microsoft::UI::Windowing::AppWindow const &window,
                      winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const &args) {
     if (args.DidSizeChange() || args.DidVisibilityChange()) {
-      if (auto rootView = wkRootView.get()) {
-        UpdateRootViewSizeToAppWindow(rootView, window);
+      if (auto reactNativeIsland = wkreactNativeIsland.get()) {
+        reactNativeIsland.UpdateRootViewSizeToAppWindow(window);
       }
     }
   });
@@ -137,13 +120,8 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   // DesktopChildSiteBridge create a ContentSite that can host the RootView ContentIsland
   auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(compositor, window.Id());
-  bridge.Connect(rootView.Island());
+  bridge.Connect(reactNativeIsland.Island());
   bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
-
-  rootView.ScaleFactor(scaleFactor);
-
-  // Set the intialSize of the root view
-  UpdateRootViewSizeToAppWindow(rootView, window);
 
   bridge.Show();
 
