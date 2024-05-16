@@ -59,8 +59,11 @@ class HermesJSRuntime : public facebook::react::JSRuntime {
 
   facebook::jsi::Runtime &getRuntime() noexcept override;
 
+  facebook::react::jsinspector_modern::RuntimeTargetDelegate &getRuntimeTargetDelegate() override;
+
  private:
   std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> m_holder;
+  std::optional<facebook::react::jsinspector_modern::FallbackRuntimeTargetDelegate> m_runtimeTargetDelegate;
 };
 
 } // namespace Microsoft::ReactNative

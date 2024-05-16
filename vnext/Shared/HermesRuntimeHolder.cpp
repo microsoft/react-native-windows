@@ -409,4 +409,12 @@ facebook::jsi::Runtime &HermesJSRuntime::getRuntime() noexcept {
   return *m_holder->getRuntime();
 }
 
+facebook::react::jsinspector_modern::RuntimeTargetDelegate &HermesJSRuntime::getRuntimeTargetDelegate() {
+  if (!m_runtimeTargetDelegate) {
+    m_runtimeTargetDelegate.emplace(getRuntime().description());
+  }
+
+  return *m_runtimeTargetDelegate;
+}
+
 } // namespace Microsoft::ReactNative
