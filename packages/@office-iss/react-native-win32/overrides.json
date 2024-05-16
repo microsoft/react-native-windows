@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.72.6",
+  "baseVersion": "0.72.14",
   "overrides": [
     {
       "type": "derived",
@@ -35,7 +35,7 @@
       "type": "derived",
       "file": "src/Libraries/Animated/NativeAnimatedHelper.win32.js",
       "baseFile": "packages/react-native/Libraries/Animated/NativeAnimatedHelper.js",
-      "baseHash": "e0365ebe34de05757962476b84fb581a3c007a19",
+      "baseHash": "ae83fb31990e1d572d743909f5bdd36589c86939",
       "issue": 11041
     },
     {
