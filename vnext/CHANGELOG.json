@@ -2,6 +2,104 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 15 May 2024 05:14:53 GMT",
+      "version": "0.0.0-canary.816",
+      "tag": "react-native-windows_v0.0.0-canary.816",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "1db259b0c8b028fef09bf42351be8917759ecc17",
+            "comment": "0413 integration"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.213",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.87",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.16",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.20",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.32",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.33",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 May 2024 05:17:51 GMT",
+      "version": "0.0.0-canary.815",
+      "tag": "react-native-windows_v0.0.0-canary.815",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f636d2ca557dbb5c3c0c994fa483e598e9869616",
+            "comment": "Preventing crash when passing null children to view with no-hide-descendents"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8f366c58f579842c859e6bd53ae8b2aa05d2b9f7",
+            "comment": "Expose ImageProps from ImageComponentView's and add ImageSource type"
+          },
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "57c79628014dcc5c9cac8eb6da5be34da786e6c2",
+            "comment": "Renames TM spec"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8b365e598f57f588ab8981036a547e916989bced",
+            "comment": "ViewComponentView should be activatable from rn-win32.dll"
+          },
+          {
+            "author": "nate@bracy.dev",
+            "package": "react-native-windows",
+            "commit": "ca565cd0ab1cc9e9fcaaaca39f151ed871690972",
+            "comment": "Use view() instead of str(), starts_with() instead of _Starts_with()"
+          }
+        ],
+        "none": [
+          {
+            "author": "nate@bracy.dev",
+            "package": "react-native-windows",
+            "commit": "e2a0c87c3bdaea7cc7065a0aa9de4f899ad11e82",
+            "comment": "fix(TextInput/isFocused): correctly handle null focused input"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 11 May 2024 05:18:29 GMT",
       "version": "0.0.0-canary.814",
       "tag": "react-native-windows_v0.0.0-canary.814",

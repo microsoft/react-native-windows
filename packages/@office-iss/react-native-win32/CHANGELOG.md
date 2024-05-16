@@ -1,8 +1,21 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Sat, 11 May 2024 05:18:28 GMT and should not be manually modified.
+This log was last generated on Wed, 15 May 2024 05:14:52 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.246
+
+Wed, 15 May 2024 05:14:52 GMT
+
+### Changes
+
+- Remove unneeded scrollview.win32.js override (30809111+acoates-ms@users.noreply.github.com)
+- 0413 integration (email not defined)
+- Bump @rnw-scripts/eslint-config to v1.2.16
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.20
+- Bump @rnw-scripts/just-task to v2.3.32
+- Bump react-native-platform-override to v1.9.33
 
 ## 0.0.0-canary.245
 

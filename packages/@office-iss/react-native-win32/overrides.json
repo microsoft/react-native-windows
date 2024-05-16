@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240406-a05466c5b",
+  "baseVersion": "0.75.0-nightly-20240413-1b152f6ec",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "47a3426b7d1053a171e1ee1c56120e0e2f1ce887"
+      "baseHash": "207887dce4d232e4ded4dbeefe4188766b24144a"
     },
     {
       "type": "derived",
@@ -107,12 +107,6 @@
       "file": "src-win/Libraries/Components/SafeAreaView/SafeAreaView.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/SafeAreaView/SafeAreaView.js",
       "baseHash": "ae5845b576484b3600e395d3b1ee03223530b8f7"
-    },
-    {
-      "type": "derived",
-      "file": "src-win/Libraries/Components/ScrollView/ScrollView.win32.js",
-      "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollView.js",
-      "baseHash": "732f5ccb69ff37895b3da2a160a0a6842a770385"
     },
     {
       "type": "platform",

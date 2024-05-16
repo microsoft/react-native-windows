@@ -10,8 +10,8 @@
 
 namespace Microsoft::ReactNative {
 
-ReactNativeSpecs::PlatformConstantsWinSpec_PlatformConstantsWindows PlatformConstants::GetConstants() noexcept {
-  ReactNativeSpecs::PlatformConstantsWinSpec_PlatformConstantsWindows constants;
+ReactNativeSpecs::PlatformConstantsWindowsSpec_PlatformConstantsWindows PlatformConstants::GetConstants() noexcept {
+  ReactNativeSpecs::PlatformConstantsWindowsSpec_PlatformConstantsWindows constants;
 
   // We don't currently treat Native code differently in a test environment
   constants.isTesting = false;

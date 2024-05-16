@@ -2,6 +2,66 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 15 May 2024 05:14:52 GMT",
+      "version": "0.0.0-canary.246",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.246",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "5f46361c713a6cd19c07d21163af6ae6a056c545",
+            "comment": "Remove unneeded scrollview.win32.js override"
+          },
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "1db259b0c8b028fef09bf42351be8917759ecc17",
+            "comment": "0413 integration"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.16",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.20",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.32",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@office-iss/react-native-win32",
+            "comment": "Bump react-native-platform-override to v1.9.33",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 14 May 2024 05:17:51 GMT",
+      "version": "0.0.0-canary.245",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.245",
+      "comments": {
+        "none": [
+          {
+            "author": "nate@bracy.dev",
+            "package": "@office-iss/react-native-win32",
+            "commit": "e2a0c87c3bdaea7cc7065a0aa9de4f899ad11e82",
+            "comment": "fix(TextInput/isFocused): correctly handle null focused input"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 11 May 2024 05:18:28 GMT",
       "version": "0.0.0-canary.245",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.245",

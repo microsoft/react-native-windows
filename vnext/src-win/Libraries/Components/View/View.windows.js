@@ -175,6 +175,9 @@ const View: React.AbstractComponent<
     // [Windows
     // $FlowFixMe - children typing
     const childrenWithImportantForAccessibility = children => {
+      if (children == null) {
+        return children;
+      }
       const updatedChildren = React.Children.map(children, child => {
         if (React.isValidElement(child)) {
           // $FlowFixMe[incompatible-use]

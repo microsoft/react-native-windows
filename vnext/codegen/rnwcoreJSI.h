@@ -25,16 +25,17 @@ public:
   virtual bool enableBackgroundExecutor(jsi::Runtime &rt) = 0;
   virtual bool enableCleanTextInputYogaNode(jsi::Runtime &rt) = 0;
   virtual bool enableCustomDrawOrderFabric(jsi::Runtime &rt) = 0;
-  virtual bool enableFixForClippedSubviewsCrash(jsi::Runtime &rt) = 0;
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
   virtual bool enableMountHooksAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableSpannableBuildingUnification(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
+  virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableModernCDPRegistry(jsi::Runtime &rt) = 0;
   virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
+  virtual bool useStateAlignmentMechanism(jsi::Runtime &rt) = 0;
 
 };
 
@@ -98,14 +99,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableCustomDrawOrderFabric, jsInvoker_, instance_);
     }
-    bool enableFixForClippedSubviewsCrash(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::enableFixForClippedSubviewsCrash) == 1,
-          "Expected enableFixForClippedSubviewsCrash(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::enableFixForClippedSubviewsCrash, jsInvoker_, instance_);
-    }
     bool enableMicrotasks(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableMicrotasks) == 1,
@@ -146,6 +139,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableUIConsistency, jsInvoker_, instance_);
     }
+    bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::forceBatchingMountItemsOnAndroid) == 1,
+          "Expected forceBatchingMountItemsOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::forceBatchingMountItemsOnAndroid, jsInvoker_, instance_);
+    }
     bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::inspectorEnableCxxInspectorPackagerConnection) == 1,
@@ -177,6 +178,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useNativeViewConfigsInBridgelessMode, jsInvoker_, instance_);
+    }
+    bool useStateAlignmentMechanism(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useStateAlignmentMechanism) == 1,
+          "Expected useStateAlignmentMechanism(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useStateAlignmentMechanism, jsInvoker_, instance_);
     }
 
   private:
@@ -5677,9 +5686,9 @@ struct PlatformConstantsPlatformConstantsWindowsBridging {
   }
 };
 
-class JSI_EXPORT NativePlatformConstantsWinCxxSpecJSI : public TurboModule {
+class JSI_EXPORT NativePlatformConstantsWindowsCxxSpecJSI : public TurboModule {
 protected:
-  NativePlatformConstantsWinCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+  NativePlatformConstantsWindowsCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
 public:
   virtual jsi::Object getConstants(jsi::Runtime &rt) = 0;
@@ -5687,7 +5696,7 @@ public:
 };
 
 template <typename T>
-class JSI_EXPORT NativePlatformConstantsWinCxxSpec : public TurboModule {
+class JSI_EXPORT NativePlatformConstantsWindowsCxxSpec : public TurboModule {
 public:
   jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
     return delegate_.get(rt, propName);
@@ -5696,15 +5705,15 @@ public:
   static constexpr std::string_view kModuleName = "PlatformConstants";
 
 protected:
-  NativePlatformConstantsWinCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativePlatformConstantsWinCxxSpec::kModuleName}, jsInvoker),
+  NativePlatformConstantsWindowsCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativePlatformConstantsWindowsCxxSpec::kModuleName}, jsInvoker),
       delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
 private:
-  class Delegate : public NativePlatformConstantsWinCxxSpecJSI {
+  class Delegate : public NativePlatformConstantsWindowsCxxSpecJSI {
   public:
     Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativePlatformConstantsWinCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
+      NativePlatformConstantsWindowsCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
 
     jsi::Object getConstants(jsi::Runtime &rt) override {
       static_assert(

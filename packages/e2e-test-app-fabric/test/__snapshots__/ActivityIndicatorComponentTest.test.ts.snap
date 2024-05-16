@@ -4,402 +4,206 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors 1`]
 {
   "Automation Tree": {
     "AutomationId": "activity-color",
-    "Children": [
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
       {
         "AutomationId": "",
         "ControlType": 50012,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "progress bar",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50012,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "progress bar",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50012,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "progress bar",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50012,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "progress bar",
-        "Name": "",
       },
     ],
-    "ControlType": 50026,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
-    "LocalizedControlType": "group",
-    "Name": "",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "activity-color",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ActivityIndicatorComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ActivityIndicatorComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ActivityIndicatorComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ActivityIndicatorComponentView",
+        "_Props": {},
+      },
+    ],
   },
   "Visual Tree": {
-    "Children": [
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              20,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      80,
-                      80,
-                    ],
-                    "Visual Type": "Visual",
-                  },
-                ],
-                "Offset": [
-                  0,
-                  0,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  0,
-                  0,
-                ],
-                "Visual Type": "Visual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          111,
-          8,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          20,
-          20,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              20,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      80,
-                      80,
-                    ],
-                    "Visual Type": "Visual",
-                  },
-                ],
-                "Offset": [
-                  0,
-                  0,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  0,
-                  0,
-                ],
-                "Visual Type": "Visual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          336,
-          8,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          20,
-          20,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              20,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      80,
-                      80,
-                    ],
-                    "Visual Type": "Visual",
-                  },
-                ],
-                "Offset": [
-                  0,
-                  0,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  0,
-                  0,
-                ],
-                "Visual Type": "Visual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          561,
-          8,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          20,
-          20,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              20,
-              20,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      80,
-                      80,
-                    ],
-                    "Visual Type": "Visual",
-                  },
-                ],
-                "Offset": [
-                  0,
-                  0,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  0,
-                  0,
-                ],
-                "Visual Type": "Visual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          786,
-          8,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          20,
-          20,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-    ],
     "Comment": "activity-color",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      36,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 36",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "111, 8, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "20, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "Visual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "80, 80",
+                    "Visual Type": "Visual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "336, 8, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "20, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "Visual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "80, 80",
+                    "Visual Type": "Visual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "561, 8, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "20, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "Visual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "80, 80",
+                    "Visual Type": "Visual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "786, 8, 0",
+        "Size": "20, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "20, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "Visual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "80, 80",
+                    "Visual Type": "Visual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
   },
 }
 `;
@@ -408,402 +212,206 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors and
 {
   "Automation Tree": {
     "AutomationId": "activity-large-color",
-    "Children": [
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
       {
         "AutomationId": "",
         "ControlType": 50012,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "progress bar",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50012,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "progress bar",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50012,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "progress bar",
-        "Name": "",
       },
       {
         "AutomationId": "",
         "ControlType": 50012,
-        "HelpText": "",
-        "IsEnabled": true,
-        "IsKeyboardFocusable": false,
         "LocalizedControlType": "progress bar",
-        "Name": "",
       },
     ],
-    "ControlType": 50026,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
-    "LocalizedControlType": "group",
-    "Name": "",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "activity-large-color",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ActivityIndicatorComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ActivityIndicatorComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ActivityIndicatorComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ActivityIndicatorComponentView",
+        "_Props": {},
+      },
+    ],
   },
   "Visual Tree": {
-    "Children": [
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              36,
-              36,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      80,
-                      80,
-                    ],
-                    "Visual Type": "Visual",
-                  },
-                ],
-                "Offset": [
-                  0,
-                  0,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  0,
-                  0,
-                ],
-                "Visual Type": "Visual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          103,
-          8,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          36,
-          36,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              36,
-              36,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      80,
-                      80,
-                    ],
-                    "Visual Type": "Visual",
-                  },
-                ],
-                "Offset": [
-                  0,
-                  0,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  0,
-                  0,
-                ],
-                "Visual Type": "Visual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          328,
-          8,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          36,
-          36,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              36,
-              36,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      80,
-                      80,
-                    ],
-                    "Visual Type": "Visual",
-                  },
-                ],
-                "Offset": [
-                  0,
-                  0,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  0,
-                  0,
-                ],
-                "Visual Type": "Visual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          553,
-          8,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          36,
-          36,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-      {
-        "Children": [
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              36,
-              36,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Children": [
-              {
-                "Children": [
-                  {
-                    "Offset": [
-                      0,
-                      0,
-                      0,
-                    ],
-                    "Opacity": 1,
-                    "Size": [
-                      80,
-                      80,
-                    ],
-                    "Visual Type": "Visual",
-                  },
-                ],
-                "Offset": [
-                  0,
-                  0,
-                  0,
-                ],
-                "Opacity": 1,
-                "Size": [
-                  0,
-                  0,
-                ],
-                "Visual Type": "Visual",
-              },
-            ],
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": [
-              0,
-              0,
-              0,
-            ],
-            "Opacity": 1,
-            "Size": [
-              0,
-              0,
-            ],
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-        "Offset": [
-          778,
-          8,
-          0,
-        ],
-        "Opacity": 1,
-        "Size": [
-          36,
-          36,
-        ],
-        "Visual Type": "SpriteVisual",
-      },
-    ],
     "Comment": "activity-large-color",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      52,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 52",
     "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "103, 8, 0",
+        "Size": "36, 36",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "36, 36",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "Visual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "80, 80",
+                    "Visual Type": "Visual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "328, 8, 0",
+        "Size": "36, 36",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "36, 36",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "Visual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "80, 80",
+                    "Visual Type": "Visual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "553, 8, 0",
+        "Size": "36, 36",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "36, 36",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "Visual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "80, 80",
+                    "Visual Type": "Visual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "778, 8, 0",
+        "Size": "36, 36",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "36, 36",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "0, 0",
+                "Visual Type": "Visual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "80, 80",
+                    "Visual Type": "Visual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
   },
 }
 `;
@@ -813,24 +421,18 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom sizing 1`]
   "Automation Tree": {
     "AutomationId": "activity-size",
     "ControlType": 50012,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "progress bar",
-    "Name": "",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ActivityIndicatorComponentView",
+    "_Props": {
+      "TestId": "activity-size",
+    },
   },
   "Visual Tree": {
     "Comment": "activity-size",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      36,
-      36,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "36, 36",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -841,24 +443,18 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have large sizing 1`] 
   "Automation Tree": {
     "AutomationId": "activity-large",
     "ControlType": 50012,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "progress bar",
-    "Name": "",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ActivityIndicatorComponentView",
+    "_Props": {
+      "TestId": "activity-large",
+    },
   },
   "Visual Tree": {
     "Comment": "activity-large",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      36,
-      36,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "36, 36",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -869,24 +465,18 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have styling 1`] = `
   "Automation Tree": {
     "AutomationId": "activity-gray",
     "ControlType": 50012,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "progress bar",
-    "Name": "",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ActivityIndicatorComponentView",
+    "_Props": {
+      "TestId": "activity-gray",
+    },
   },
   "Visual Tree": {
     "Comment": "activity-gray",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      20,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "20, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -897,24 +487,18 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have toggle animation 
   "Automation Tree": {
     "AutomationId": "activity-toggle",
     "ControlType": 50012,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "progress bar",
-    "Name": "",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ActivityIndicatorComponentView",
+    "_Props": {
+      "TestId": "activity-toggle",
+    },
   },
   "Visual Tree": {
     "Comment": "activity-toggle",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      36,
-      36,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "36, 36",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -925,24 +509,20 @@ exports[`ActivityIndicator Tests An ActivityIndicator can render 1`] = `
   "Automation Tree": {
     "AutomationId": "default_activity_indicator",
     "ControlType": 50012,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "progress bar",
     "Name": "Wait for content to load!",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ActivityIndicatorComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Wait for content to load!",
+      "TestId": "default_activity_indicator",
+    },
+  },
   "Visual Tree": {
     "Comment": "default_activity_indicator",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      20,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "20, 20",
     "Visual Type": "SpriteVisual",
   },
 }

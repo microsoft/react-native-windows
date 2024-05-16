@@ -6408,6 +6408,332 @@ exports[`snapshotAllPages Animated 11`] = `
 </Text>
 `;
 
+exports[`snapshotAllPages Animated 12`] = `
+<View>
+  <TextInput
+    keyboardType="numeric"
+    onChangeText={[Function]}
+    placeholder="Enter value for a"
+    style={
+      {
+        "borderColor": "gray",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "height": 40,
+        "margin": 10,
+        "paddingLeft": 10,
+      }
+    }
+    value="0.4"
+  />
+  <TextInput
+    keyboardType="numeric"
+    onChangeText={[Function]}
+    placeholder="Enter value for b"
+    style={
+      {
+        "borderColor": "gray",
+        "borderRadius": 5,
+        "borderWidth": 1,
+        "height": 40,
+        "margin": 10,
+        "paddingLeft": 10,
+      }
+    }
+    value="0.5"
+  />
+  <View
+    collapsable={false}
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "deepskyblue",
+        "borderColor": "dodgerblue",
+        "borderRadius": 10,
+        "borderWidth": 1,
+        "margin": 20,
+        "opacity": 0.9,
+        "padding": 20,
+      }
+    }
+  >
+    <Text>
+      Change Opacity
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "#d3d3d3",
+          "borderColor": "#696969",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "margin": 5,
+          "padding": 10,
+        },
+        false,
+      ]
+    }
+  >
+    <Text>
+      Add
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "#d3d3d3",
+          "borderColor": "#696969",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "margin": 5,
+          "padding": 10,
+        },
+        false,
+      ]
+    }
+  >
+    <Text>
+      Subtract
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "#d3d3d3",
+          "borderColor": "#696969",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "margin": 5,
+          "padding": 10,
+        },
+        false,
+      ]
+    }
+  >
+    <Text>
+      Multiply
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "#d3d3d3",
+          "borderColor": "#696969",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "margin": 5,
+          "padding": 10,
+        },
+        false,
+      ]
+    }
+  >
+    <Text>
+      Divide
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "#d3d3d3",
+          "borderColor": "#696969",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "margin": 5,
+          "padding": 10,
+        },
+        false,
+      ]
+    }
+  >
+    <Text>
+      Modulo
+    </Text>
+  </View>
+</View>
+`;
+
 exports[`snapshotAllPages AppState 1`] = `<Text />`;
 
 exports[`snapshotAllPages AppState 2`] = `
@@ -11129,6 +11455,7 @@ exports[`snapshotAllPages FlatList 1`] = `
         renderItem={[Function]}
         scrollEventThrottle={0.0001}
         stickyHeaderIndices={[]}
+        style={{}}
         viewabilityConfig={
           {
             "minimumViewTime": 3000,
@@ -32296,6 +32623,100 @@ exports[`snapshotAllPages Performance API Examples 3`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Performance API Examples 4`] = `
+<View
+  style={
+    {
+      "padding": 10,
+    }
+  }
+>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Click to force a slow event (clicked 0 times)
+        </Text>
+      </View>
+    </View>
+  </View>
+  <View />
+</View>
+`;
+
 exports[`snapshotAllPages Performance Comparison Examples 1`] = `
 <View
   style={
@@ -47652,6 +48073,7 @@ exports[`snapshotAllPages ScrollViewAnimated 1`] = `
     horizontal={true}
     onScroll={[Function]}
     scrollEventThrottle={16}
+    style={{}}
   >
     <View>
       <View
