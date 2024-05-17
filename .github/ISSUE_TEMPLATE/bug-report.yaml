@@ -48,6 +48,11 @@ body:
       value: "npx react-native info"
       render: markdown
     id: env
+  - type: textarea
+    attributes:
+      label: Community Modules
+      description: Describe what you community modules you have added to your project.
+    id: modules
   - type: dropdown
     attributes:
       label: Target Platform Version
