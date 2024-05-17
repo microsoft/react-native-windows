@@ -258,12 +258,12 @@ const examples: Array<RNTesterModuleExample> = [
       return (
         <View>
           <Text>Do not clear text on focus:</Text>
-          <TextInput
+          <ExampleTextInput
             style={styles.singleLine}
             testID="clear-text-on-focus-false"
           />
           <Text>Clear text on focus:</Text>
-          <TextInput
+          <ExampleTextInput
             clearTextOnFocus={true}
             style={styles.singleLine}
             testID="clear-text-on-focus-true"
