@@ -945,6 +945,10 @@ void WindowsTextInputComponentView::onFocusGained() noexcept {
     LRESULT lresult;
     DrawBlock db(*this);
     m_textServices->TxSendMessage(WM_SETFOCUS, 0, 0, &lresult);
+
+    if (windowsTextInputProps().clearTextOnFocus) {
+      m_textServices->TxSetText(L"");
+    }
   }
 }
 
