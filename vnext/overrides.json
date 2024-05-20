@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.71.12",
+  "baseVersion": "0.71.19",
   "overrides": [
     {
       "type": "derived",
@@ -112,7 +112,7 @@
       "type": "patch",
       "file": "src/babel-plugin-codegen/package.json",
       "baseFile": "packages/babel-plugin-codegen/package.json",
-      "baseHash": "7713b41f56e7f0b5f1338b996b9643da445942b6",
+      "baseHash": "fbebe3892222dc24bade31dc28c9726c10a603cd",
       "issue": 5430
     },
     {
