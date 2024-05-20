@@ -44,7 +44,7 @@
     "husky": "^4.2.5",
     "react-native-platform-override": "*",
     "unbroken": "1.0.27",
-    "lage": "^2.7.1",
+    "lage": "^2.7.15",
     "lodash": "^4.17.15"
   },
   "resolutions": {

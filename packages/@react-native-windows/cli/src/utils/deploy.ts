@@ -526,5 +526,8 @@ function launchServer(options: RunWindowsOptions, verbose: boolean) {
     stdio: verbose ? 'inherit' : 'ignore',
   };
 
-  spawn('cmd.exe', ['/C', 'start npx react-native start'], opts);
+  spawn('cmd.exe', ['/C', 'start npx react-native start'], {
+    ...opts,
+    shell: true,
+  });
 }

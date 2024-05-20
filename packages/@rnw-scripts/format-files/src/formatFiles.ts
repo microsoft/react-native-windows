@@ -129,6 +129,7 @@ function spawnClangFormat(
       return function (callback) {
         const clangFormatProcess = spawn(nativeBinary, args.concat(chunk), {
           stdio: stdio,
+          shell: true,
         });
         clangFormatProcess.on('close', exit => {
           if (exit !== 0) {

@@ -185,7 +185,10 @@ async function spawnWinAppDriver(
   }
 
   return new Promise((resolve, reject) => {
-    const process = spawn(winappdriverBin, [port.toString()], {stdio: 'pipe'});
+    const process = spawn(winappdriverBin, [port.toString()], {
+      stdio: 'pipe',
+      shell: true,
+    });
 
     process.stdout.on('data', data => {
       const s = data.toString('utf16le');

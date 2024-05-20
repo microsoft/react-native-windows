@@ -94,7 +94,7 @@ export function commandWithProgress(
       spinner.stop();
     }
 
-    const cp = spawn(command, args, spawnOptions);
+    const cp = spawn(command, args, {...spawnOptions, shell: true});
     let firstErrorLine: string | null = null;
     if (!verbose) {
       cp.stdout!.on('data', chunk => {
