@@ -132,6 +132,12 @@ CompositionRootView::CompositionRootView(const winrt::Microsoft::UI::Composition
 #endif
 
 CompositionRootView::~CompositionRootView() noexcept {
+#ifdef USE_WINUI3
+  if (m_island && m_island.IsConnected()) {
+    m_island.AutomationProviderRequested(m_islandAutomationProviderRequestedToken);
+  }
+#endif
+
   if (m_uiDispatcher) {
     assert(m_uiDispatcher.HasThreadAccess());
     UninitRootView();
@@ -193,7 +199,7 @@ void CompositionRootView::RemoveRenderedVisual(
 
 bool CompositionRootView::TrySetFocus() noexcept {
 #ifdef USE_WINUI3
-  if (m_island) {
+  if (m_island && m_island.IsConnected()) {
     auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
     return focusController.TrySetFocus();
   }
@@ -655,20 +661,29 @@ winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() noexc
             rootVisual));
     m_island = winrt::Microsoft::UI::Content::ContentIsland::Create(rootVisual);
 
-    m_island.AutomationProviderRequested(
-        [this](
+    // ContentIsland does not support weak_ref, so we cannot use auto_revoke for these events
+    m_islandAutomationProviderRequestedToken = m_island.AutomationProviderRequested(
+        [weakThis = get_weak()](
             winrt::Microsoft::UI::Content::ContentIsland const &,
             winrt::Microsoft::UI::Content::ContentIslandAutomationProviderRequestedEventArgs const &args) {
-          auto provider = GetUiaProvider();
-          auto pRootProvider =
-              static_cast<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider *>(
-                  provider.as<IRawElementProviderSimple>().get());
-          if (pRootProvider != nullptr) {
-            pRootProvider->SetIsland(m_island);
+          if (auto pThis = weakThis.get()) {
+            auto provider = pThis->GetUiaProvider();
+            auto pRootProvider =
+                static_cast<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider *>(
+                    provider.as<IRawElementProviderSimple>().get());
+            if (pRootProvider != nullptr) {
+              pRootProvider->SetIsland(pThis->m_island);
+            }
+            args.AutomationProvider(std::move(provider));
+            args.Handled(true);
           }
-          args.AutomationProvider(std::move(provider));
-          args.Handled(true);
         });
+
+    m_islandFrameworkClosedToken = m_island.FrameworkClosed([weakThis = get_weak()]() {
+      if (auto pThis = weakThis.get()) {
+        pThis->m_island = nullptr;
+      }
+    });
   }
   return m_island;
 }
