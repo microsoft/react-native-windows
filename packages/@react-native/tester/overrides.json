@@ -262,6 +262,13 @@
     },
     {
       "type": "copy",
+      "directory": "js/examples/PixelRatio",
+      "baseDirectory": "packages/rn-tester/js/examples/PixelRatio",
+      "baseHash": "fce96794101df81b2eeb7a98b21e4a9456c1e437",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
       "directory": "js/examples/PlatformColor",
       "baseDirectory": "packages/rn-tester/js/examples/PlatformColor",
       "baseHash": "359ac542e21946a5bc85aac1153d708fffa9aebd",
