@@ -78831,6 +78831,62 @@ exports[`snapshotAllPages TextInput 18`] = `
 
 exports[`snapshotAllPages TextInput 19`] = `
 <View>
+  <Text>
+    Do not clear text on focus:
+  </Text>
+  <TextInput
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="clear-text-on-focus-false"
+  />
+  <Text>
+    Clear text on focus:
+  </Text>
+  <TextInput
+    clearTextOnFocus={true}
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+    testID="clear-text-on-focus-true"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 20`] = `
+<View>
   <TextInput
     defaultValue="Default color text"
     style={
@@ -79089,7 +79145,7 @@ exports[`snapshotAllPages TextInput 19`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 20`] = `
+exports[`snapshotAllPages TextInput 21`] = `
 <View>
   <TextInput
     defaultValue="Font Weight (default)"
@@ -79427,7 +79483,7 @@ exports[`snapshotAllPages TextInput 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 21`] = `
+exports[`snapshotAllPages TextInput 22`] = `
 <TextInput
   placeholder="If you set height, beware of padding set from themes"
   style={
@@ -79455,7 +79511,7 @@ exports[`snapshotAllPages TextInput 21`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 22`] = `
+exports[`snapshotAllPages TextInput 23`] = `
 <View>
   <TextInput
     placeholder="letterSpacing = 0"
@@ -79572,7 +79628,7 @@ exports[`snapshotAllPages TextInput 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 23`] = `
+exports[`snapshotAllPages TextInput 24`] = `
 <View>
   <TextInput
     defaultValue="iloveturtles"
@@ -79631,7 +79687,7 @@ exports[`snapshotAllPages TextInput 23`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 24`] = `
+exports[`snapshotAllPages TextInput 25`] = `
 <TextInput
   defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
   editable={false}
@@ -79658,7 +79714,7 @@ exports[`snapshotAllPages TextInput 24`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 25`] = `
+exports[`snapshotAllPages TextInput 26`] = `
 <View>
   <TextInput
     autoCorrect={true}
@@ -79774,7 +79830,7 @@ exports[`snapshotAllPages TextInput 25`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 26`] = `
+exports[`snapshotAllPages TextInput 27`] = `
 <View>
   <TextInput
     editable={true}
@@ -79867,7 +79923,7 @@ exports[`snapshotAllPages TextInput 26`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 27`] = `
+exports[`snapshotAllPages TextInput 28`] = `
 <View>
   <TextInput
     multiline={true}
@@ -79960,7 +80016,7 @@ exports[`snapshotAllPages TextInput 27`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 28`] = `
+exports[`snapshotAllPages TextInput 29`] = `
 <View>
   <View>
     <Text>
@@ -80070,7 +80126,7 @@ exports[`snapshotAllPages TextInput 28`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 29`] = `
+exports[`snapshotAllPages TextInput 30`] = `
 <View>
   <TextInput
     autoComplete="country"
@@ -80184,7 +80240,7 @@ exports[`snapshotAllPages TextInput 29`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 30`] = `
+exports[`snapshotAllPages TextInput 31`] = `
 <View>
   <TextInput
     placeholder="returnKeyType: none"
@@ -80405,7 +80461,7 @@ exports[`snapshotAllPages TextInput 30`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 31`] = `
+exports[`snapshotAllPages TextInput 32`] = `
 <View>
   <TextInput
     inlineImageLeft="ic_menu_black_24dp"
@@ -80482,7 +80538,7 @@ exports[`snapshotAllPages TextInput 31`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 32`] = `
+exports[`snapshotAllPages TextInput 33`] = `
 <View>
   <TextInput
     style={
@@ -80512,7 +80568,7 @@ exports[`snapshotAllPages TextInput 32`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 33`] = `
+exports[`snapshotAllPages TextInput 34`] = `
 <View>
   <Text>
     PressIn/PressOut message
@@ -80547,7 +80603,7 @@ exports[`snapshotAllPages TextInput 33`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 34`] = `
+exports[`snapshotAllPages TextInput 35`] = `
 <View>
   <Text>
     Default submit key (Enter):
@@ -80683,7 +80739,7 @@ exports[`snapshotAllPages TextInput 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 35`] = `
+exports[`snapshotAllPages TextInput 36`] = `
 [
   <View
     focusable={true}
@@ -80749,7 +80805,7 @@ exports[`snapshotAllPages TextInput 35`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 36`] = `
+exports[`snapshotAllPages TextInput 37`] = `
 [
   <Text>
     Spell Check Enabled:
@@ -80797,7 +80853,7 @@ exports[`snapshotAllPages TextInput 36`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 37`] = `
+exports[`snapshotAllPages TextInput 38`] = `
 <View>
   <Text>
     CaretHidden
@@ -80829,7 +80885,7 @@ exports[`snapshotAllPages TextInput 37`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 38`] = `
+exports[`snapshotAllPages TextInput 39`] = `
 <View>
   <Text>
     Cursorcolor
@@ -80861,7 +80917,7 @@ exports[`snapshotAllPages TextInput 38`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 39`] = `
+exports[`snapshotAllPages TextInput 40`] = `
 <View>
   <Text>
     Shadow

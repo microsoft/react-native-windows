@@ -253,6 +253,26 @@ const styles = StyleSheet.create({
 const examples: Array<RNTesterModuleExample> = [
   ...TextInputSharedExamples,
   {
+    title: 'Clear text on focus',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Do not clear text on focus:</Text>
+          <ExampleTextInput
+            style={styles.singleLine}
+            testID="clear-text-on-focus-false"
+          />
+          <Text>Clear text on focus:</Text>
+          <ExampleTextInput
+            clearTextOnFocus={true}
+            style={styles.singleLine}
+            testID="clear-text-on-focus-true"
+          />
+        </View>
+      );
+    },
+  },
+  {
     title: 'Colors and text inputs',
     render: function (): React.Node {
       return (

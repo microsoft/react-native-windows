@@ -224,7 +224,7 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
     winrt::Microsoft::ReactNative::ComponentView view{nullptr};
     winrt::check_hresult(
         m_outer->QueryInterface(winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
-    m_outer->rootComponentView()->SetFocusedComponent(view);
+    m_outer->rootComponentView()->TrySetFocusedComponent(view);
     // assert(false);
     // TODO focus
   }
@@ -929,8 +929,9 @@ void WindowsTextInputComponentView::UnmountChildComponentView(
   base_type::UnmountChildComponentView(childComponentView, index);
 }
 
-void WindowsTextInputComponentView::onFocusLost() noexcept {
-  Super::onFocusLost();
+void WindowsTextInputComponentView::onLostFocus(
+    const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
+  Super::onLostFocus(args);
   if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
@@ -939,12 +940,17 @@ void WindowsTextInputComponentView::onFocusLost() noexcept {
   m_caretVisual.IsVisible(false);
 }
 
-void WindowsTextInputComponentView::onFocusGained() noexcept {
-  Super::onFocusGained();
+void WindowsTextInputComponentView::onGotFocus(
+    const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
+  Super::onGotFocus(args);
   if (m_textServices) {
     LRESULT lresult;
     DrawBlock db(*this);
     m_textServices->TxSendMessage(WM_SETFOCUS, 0, 0, &lresult);
+
+    if (windowsTextInputProps().clearTextOnFocus) {
+      m_textServices->TxSetText(L"");
+    }
   }
 }
 

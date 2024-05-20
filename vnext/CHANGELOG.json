@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 18 May 2024 05:15:31 GMT",
+      "version": "0.0.0-canary.816",
+      "tag": "react-native-windows_v0.0.0-canary.816",
+      "comments": {
+        "none": [
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d38ba133a8071939e7fbddc720c15a5d2a4e4a18",
+            "comment": "Implemented clearTextOnFocus and tests"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 15 May 2024 05:14:53 GMT",
       "version": "0.0.0-canary.816",
       "tag": "react-native-windows_v0.0.0-canary.816",
