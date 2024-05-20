@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 06 May 2024 15:17:11 GMT and should not be manually modified.
+This log was last generated on Mon, 20 May 2024 15:16:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.3
+
+Mon, 20 May 2024 15:16:05 GMT
+
+### Patches
+
+- fix(TextInput/isFocused): correctly handle null focused input (nate@bracy.dev)
 
 ## 0.74.2
 

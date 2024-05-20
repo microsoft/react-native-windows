@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 20 May 2024 15:16:05 GMT",
+      "version": "0.74.3",
+      "tag": "@office-iss/react-native-win32_v0.74.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "nate@bracy.dev",
+            "package": "@office-iss/react-native-win32",
+            "commit": "481f89da064d5a33f4b5b79088dc760bd49f6dd2",
+            "comment": "fix(TextInput/isFocused): correctly handle null focused input"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 06 May 2024 15:17:11 GMT",
       "version": "0.74.2",
       "tag": "@office-iss/react-native-win32_v0.74.2",
