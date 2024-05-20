@@ -1,0 +1,7 @@
+{
+  "type": "0.0.0-canary.816",
+  "comment": "Introduce experimental APIs",
+  "packageName": "react-native-windows",
+  "email": "10109130+sharath2727@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
