@@ -29,9 +29,10 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{10, L"forceBatchingMountItemsOnAndroid"},
       SyncMethod<bool() noexcept>{11, L"inspectorEnableCxxInspectorPackagerConnection"},
       SyncMethod<bool() noexcept>{12, L"inspectorEnableModernCDPRegistry"},
-      SyncMethod<bool() noexcept>{13, L"useModernRuntimeScheduler"},
-      SyncMethod<bool() noexcept>{14, L"useNativeViewConfigsInBridgelessMode"},
-      SyncMethod<bool() noexcept>{15, L"useStateAlignmentMechanism"},
+      SyncMethod<bool() noexcept>{13, L"preventDoubleTextMeasure"},
+      SyncMethod<bool() noexcept>{14, L"useModernRuntimeScheduler"},
+      SyncMethod<bool() noexcept>{15, L"useNativeViewConfigsInBridgelessMode"},
+      SyncMethod<bool() noexcept>{16, L"useStateAlignmentMechanism"},
   };
 
   template <class TModule>
@@ -105,16 +106,21 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(inspectorEnableModernCDPRegistry) static bool inspectorEnableModernCDPRegistry() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           13,
+          "preventDoubleTextMeasure",
+          "    REACT_SYNC_METHOD(preventDoubleTextMeasure) bool preventDoubleTextMeasure() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(preventDoubleTextMeasure) static bool preventDoubleTextMeasure() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          14,
           "useModernRuntimeScheduler",
           "    REACT_SYNC_METHOD(useModernRuntimeScheduler) bool useModernRuntimeScheduler() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useModernRuntimeScheduler) static bool useModernRuntimeScheduler() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          14,
+          15,
           "useNativeViewConfigsInBridgelessMode",
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) static bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          15,
+          16,
           "useStateAlignmentMechanism",
           "    REACT_SYNC_METHOD(useStateAlignmentMechanism) bool useStateAlignmentMechanism() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useStateAlignmentMechanism) static bool useStateAlignmentMechanism() noexcept { /* implementation */ }\n");

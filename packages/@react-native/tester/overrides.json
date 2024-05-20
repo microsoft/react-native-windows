@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.75.0-nightly-20240413-1b152f6ec",
+  "baseVersion": "0.75.0-nightly-20240420-03a51da72",
   "overrides": [
     {
       "type": "copy",
@@ -12,14 +12,14 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "e30582c7ce0ba5cc7965a1b5ccd7f443692e24e1",
+      "baseHash": "c451b2c1c49baed92d62937cfa6c9578a946c6f5",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
-      "baseHash": "c3e22748043a47b6947f0fdb6f9374e57112f4de",
+      "baseHash": "a7c60c86d2c129b8956401f9a655643fbbfd0d47",
       "issue": 4054
     },
     {
@@ -47,7 +47,7 @@
       "type": "copy",
       "directory": "js/examples/Animated",
       "baseDirectory": "packages/rn-tester/js/examples/Animated",
-      "baseHash": "c36e4c9d8e937947a40b8ba8c0f267b212feffca",
+      "baseHash": "9c619928fc015d297b782786f44405c1803868e4",
       "issue": 4054
     },
     {
@@ -124,7 +124,7 @@
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseHash": "3cf296dfcc8341700a9aa7664521fe1e419723c9",
+      "baseHash": "3534648810ee7fde6157ba4c8ea0a344236f93b7",
       "issue": 4054
     },
     {
@@ -488,14 +488,14 @@
       "type": "patch",
       "file": "js/utils/RNTesterList.android.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "c40d0a03a89b9017cbb08a0449d5a0c32cadc5f2",
+      "baseHash": "17abcd7c97a27d4d970d27c1449107222ffb6c85",
       "issue": 13228
     },
     {
       "type": "patch",
       "file": "js/utils/RNTesterList.ios.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.ios.js",
-      "baseHash": "39db425962737a74284b382273a83103d1bcaf91",
+      "baseHash": "468e29aa66b33e980efc15bf13d09b164fdec61b",
       "issue": 13228
     },
     {

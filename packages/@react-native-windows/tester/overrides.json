@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240413-1b152f6ec",
+  "baseVersion": "0.75.0-nightly-20240420-03a51da72",
   "overrides": [
     {
       "type": "derived",
@@ -78,7 +78,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "c40d0a03a89b9017cbb08a0449d5a0c32cadc5f2"
+      "baseHash": "17abcd7c97a27d4d970d27c1449107222ffb6c85"
     }
   ]
 }
