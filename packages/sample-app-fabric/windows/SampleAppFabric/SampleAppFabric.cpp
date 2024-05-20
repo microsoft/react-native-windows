@@ -8,6 +8,16 @@
 
 #include "NativeModules.h"
 
+namespace winrt::ReactNative
+{
+    using namespace winrt::Microsoft::ReactNative;
+}
+
+namespace winrt::UI
+{
+    using namespace winrt::Microsoft::UI;
+}
+
 struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
@@ -39,44 +49,17 @@ void UpdateRootViewSizeToAppWindow(
   }
 }
 
-// Create and configure the ReactNativeHost
-winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
-    HWND hwnd,
-    const winrt::Microsoft::UI::Composition::Compositor &compositor) {
-  WCHAR appDirectory[MAX_PATH];
-  GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
-  PathCchRemoveFileSpec(appDirectory, MAX_PATH);
+winrt::ReactNative::ReactApplicationInstanceSettings SetInstanceSettings()
+{
+    WCHAR appDirectory[MAX_PATH];
+    GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
+    PathCchRemoveFileSpec(appDirectory, MAX_PATH);
 
-  auto host = winrt::Microsoft::ReactNative::ReactNativeHost();
+    winrt::ReactNative::ReactApplicationInstanceSettings instanceSettings{
+        std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str()
+    };
 
-  // Include any autolinked modules
-  RegisterAutolinkedNativeModulePackages(host.PackageProviders());
-
-  host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
-
-#if BUNDLE
-  host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
-  host.InstanceSettings().BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
-  host.InstanceSettings().UseFastRefresh(false);
-#else
-  host.InstanceSettings().JavaScriptBundleFile(L"index");
-  host.InstanceSettings().UseFastRefresh(true);
-#endif
-
-#if _DEBUG
-  host.InstanceSettings().UseDirectDebugger(true);
-  host.InstanceSettings().UseDeveloperSupport(true);
-#else
-  host.InstanceSettings().UseDirectDebugger(false);
-  host.InstanceSettings().UseDeveloperSupport(false);
-#endif
-
-  winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
-      host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
-
-  winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(host.InstanceSettings(), compositor);
-
-  return host;
+    return instanceSettings;
 }
 
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
@@ -88,34 +71,44 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   // Create a DispatcherQueue for this thread.  This is needed for Composition, Content, and
   // Input APIs.
-  auto dispatcherQueueController{winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnCurrentThread()};
+  auto dispatcherQueueController{winrt::UI::Dispatching::DispatcherQueueController::CreateOnCurrentThread()};
 
   // Create a Compositor for all Content on this thread.
-  auto compositor{winrt::Microsoft::UI::Composition::Compositor()};
+  auto compositor{winrt::UI::Composition::Compositor()};
 
   // Create a top-level window.
-  auto window = winrt::Microsoft::UI::Windowing::AppWindow::Create();
+  auto window = winrt::UI::Windowing::AppWindow::Create();
   window.Title(windowTitle);
   window.Resize({1000, 1000});
   window.Show();
   auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
   auto scaleFactor = ScaleFactor(hwnd);
 
-  auto host = CreateReactNativeHost(hwnd, compositor);
+  // Settings for the host
+  auto instanceSettings{SetInstanceSettings()};
+
+  // Create a ReactNativeHost component
+  auto reactNativeHost =
+      winrt::ReactNative::ReactNativeWindow::CreateReactNativeHost(instanceSettings, window, compositor);
+
+  // Include any autolinked modules
+  RegisterAutolinkedNativeModulePackages(reactNativeHost.PackageProviders());
+
+  reactNativeHost.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
 
   // Start the react-native instance, which will create a JavaScript runtime and load the applications bundle
-  host.ReloadInstance();
-
+  reactNativeHost.ReloadInstance();
+ 
   // Create a RootView which will present a react-native component
-  winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
-  viewOptions.ComponentName(mainComponentName);
-  auto rootView = winrt::Microsoft::ReactNative::CompositionRootView(compositor);
-  rootView.ReactViewHost(winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
+  auto reactNativeIsland = winrt::ReactNative::ReactNativeWindow::CreateReactNativeIsland(
+      compositor, window, reactNativeHost, mainComponentName);
+
+  auto rootView = reactNativeIsland.RootView();
 
   // Update the size of the RootView when the AppWindow changes size
   window.Changed([wkRootView = winrt::make_weak(rootView)](
-                     winrt::Microsoft::UI::Windowing::AppWindow const &window,
-                     winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const &args) {
+                     winrt::UI::Windowing::AppWindow const &window,
+                     winrt::UI::Windowing::AppWindowChangedEventArgs const &args) {
     if (args.DidSizeChange() || args.DidVisibilityChange()) {
       if (auto rootView = wkRootView.get()) {
         UpdateRootViewSizeToAppWindow(rootView, window);
@@ -125,20 +118,21 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   // Quit application when main window is closed
   window.Destroying(
-      [host](winrt::Microsoft::UI::Windowing::AppWindow const &window, winrt::IInspectable const & /*args*/) {
+      [reactNativeHost](
+          winrt::UI::Windowing::AppWindow const &window, winrt::IInspectable const & /*args*/) {
         // Before we shutdown the application - unload the ReactNativeHost to give the javascript a chance to save any
         // state
-        auto async = host.UnloadInstance();
-        async.Completed([host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+        auto async = reactNativeHost.UnloadInstance();
+        async.Completed([reactNativeHost](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
           assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
-          host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
+          reactNativeHost.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
         });
       });
 
   // DesktopChildSiteBridge create a ContentSite that can host the RootView ContentIsland
-  auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(compositor, window.Id());
+  auto bridge = winrt::UI::Content::DesktopChildSiteBridge::Create(compositor, window.Id());
   bridge.Connect(rootView.Island());
-  bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
+  bridge.ResizePolicy(winrt::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
   rootView.ScaleFactor(scaleFactor);
 

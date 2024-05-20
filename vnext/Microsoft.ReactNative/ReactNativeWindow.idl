@@ -1,0 +1,31 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "ReactNativeHost.idl";
+import "ReactNativeIsland.idl";
+
+namespace Microsoft.ReactNative
+{
+#ifdef USE_WINUI3
+    struct ReactApplicationInstanceSettings
+    {
+        String bundleRootPath;
+    };
+
+    runtimeclass ReactNativeWindow
+    {
+        static Microsoft.ReactNative.ReactNativeHost CreateReactNativeHost(
+            Microsoft.ReactNative.ReactApplicationInstanceSettings settings,
+            Microsoft.UI.Windowing.AppWindow window,
+            Microsoft.UI.Composition.Compositor compositor);
+
+        // Create the ReactNativeIsland which sets up the contentIsland and the CompositionRootView.
+        // One ReactNativeHost that is mapped to one JSBundle with one JsApp(rootview) in the bundle.
+        static Microsoft.ReactNative.ReactNativeIsland CreateReactNativeIsland(
+            Microsoft.UI.Composition.Compositor compositor,
+            Microsoft.UI.Windowing.AppWindow window,
+            Microsoft.ReactNative.ReactNativeHost host,
+            String mainComponentName);
+    }
+#endif
+}

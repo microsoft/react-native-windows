@@ -314,6 +314,14 @@
       <DependentUpon>Timer.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+	<ClInclude Include="ReactNativeIsland.h">
+      <DependentUpon>ReactNativeIsland.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="ReactNativeWindow.h">
+      <DependentUpon>ReactNativeWindow.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="Utils\AccessibilityUtils.h" />
     <ClInclude Include="Utils\Helpers.h" />
     <ClInclude Include="Utils\KeyboardUtils.h" />

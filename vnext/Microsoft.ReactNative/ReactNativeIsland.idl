@@ -1,0 +1,15 @@
+
+import "CompositionSwitcher.idl";
+import "CompositionRootView.idl";
+import "ReactNativeHost.idl";
+
+namespace Microsoft.ReactNative
+{
+#ifdef USE_WINUI3
+	  runtimeclass ReactNativeIsland
+	  {
+		  // Each ReactNativeIsland is associated to single JsApp in a JsBundle.
+      Microsoft.ReactNative.CompositionRootView RootView { get; };
+	  }
+#endif
+}
