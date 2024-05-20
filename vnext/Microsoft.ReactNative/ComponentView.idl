@@ -69,6 +69,26 @@ namespace Microsoft.ReactNative
 
   [experimental]
   [webhosthidden]
+  runtimeclass LosingFocusEventArgs : Microsoft.ReactNative.Composition.Input.RoutedEventArgs {
+    Microsoft.ReactNative.ComponentView NewFocusedComponent { get; };
+    Microsoft.ReactNative.ComponentView OldFocusedComponent { get; };
+
+    void TryCancel();
+    void TrySetNewFocusedComponent(Microsoft.ReactNative.ComponentView component);
+  };
+
+  [experimental]
+  [webhosthidden]
+  runtimeclass GettingFocusEventArgs : Microsoft.ReactNative.Composition.Input.RoutedEventArgs {
+    Microsoft.ReactNative.ComponentView NewFocusedComponent { get; };
+    Microsoft.ReactNative.ComponentView OldFocusedComponent { get; };
+
+    void TryCancel();
+    void TrySetNewFocusedComponent(Microsoft.ReactNative.ComponentView component);
+  };
+
+  [experimental]
+  [webhosthidden]
   unsealed runtimeclass ComponentView {
     ComponentView(CreateComponentViewArgs args);
 
@@ -101,6 +121,12 @@ namespace Microsoft.ReactNative
     overridable void OnPointerExited(Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
     overridable void OnPointerCaptureLost();
 
+    Boolean TryFocus();
+    
+    event Windows.Foundation.EventHandler<LosingFocusEventArgs> LosingFocus;
+    event Windows.Foundation.EventHandler<GettingFocusEventArgs> GettingFocus;
+    event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.RoutedEventArgs> LostFocus;
+    event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.RoutedEventArgs> GotFocus;
   };
 
 } // namespace Microsoft.ReactNative
