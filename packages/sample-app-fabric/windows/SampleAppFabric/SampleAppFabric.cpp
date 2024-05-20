@@ -8,14 +8,12 @@
 
 #include "NativeModules.h"
 
-namespace winrt::ReactNative
-{
-    using namespace winrt::Microsoft::ReactNative;
+namespace winrt::ReactNative {
+using namespace winrt::Microsoft::ReactNative;
 }
 
-namespace winrt::UI
-{
-    using namespace winrt::Microsoft::UI;
+namespace winrt::UI {
+using namespace winrt::Microsoft::UI;
 }
 
 struct CompReactPackageProvider
@@ -49,17 +47,15 @@ void UpdateRootViewSizeToAppWindow(
   }
 }
 
-winrt::ReactNative::ReactApplicationInstanceSettings SetInstanceSettings()
-{
-    WCHAR appDirectory[MAX_PATH];
-    GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
-    PathCchRemoveFileSpec(appDirectory, MAX_PATH);
+winrt::ReactNative::ReactApplicationInstanceSettings SetInstanceSettings() {
+  WCHAR appDirectory[MAX_PATH];
+  GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
+  PathCchRemoveFileSpec(appDirectory, MAX_PATH);
 
-    winrt::ReactNative::ReactApplicationInstanceSettings instanceSettings{
-        std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str()
-    };
+  winrt::ReactNative::ReactApplicationInstanceSettings instanceSettings{
+      std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str()};
 
-    return instanceSettings;
+  return instanceSettings;
 }
 
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
@@ -98,7 +94,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   // Start the react-native instance, which will create a JavaScript runtime and load the applications bundle
   reactNativeHost.ReloadInstance();
- 
+
   // Create a RootView which will present a react-native component
   auto reactNativeIsland = winrt::ReactNative::ReactNativeWindow::CreateReactNativeIsland(
       compositor, window, reactNativeHost, mainComponentName);
@@ -106,20 +102,19 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   auto rootView = reactNativeIsland.RootView();
 
   // Update the size of the RootView when the AppWindow changes size
-  window.Changed([wkRootView = winrt::make_weak(rootView)](
-                     winrt::UI::Windowing::AppWindow const &window,
-                     winrt::UI::Windowing::AppWindowChangedEventArgs const &args) {
-    if (args.DidSizeChange() || args.DidVisibilityChange()) {
-      if (auto rootView = wkRootView.get()) {
-        UpdateRootViewSizeToAppWindow(rootView, window);
-      }
-    }
-  });
+  window.Changed(
+      [wkRootView = winrt::make_weak(rootView)](
+          winrt::UI::Windowing::AppWindow const &window, winrt::UI::Windowing::AppWindowChangedEventArgs const &args) {
+        if (args.DidSizeChange() || args.DidVisibilityChange()) {
+          if (auto rootView = wkRootView.get()) {
+            UpdateRootViewSizeToAppWindow(rootView, window);
+          }
+        }
+      });
 
   // Quit application when main window is closed
   window.Destroying(
-      [reactNativeHost](
-          winrt::UI::Windowing::AppWindow const &window, winrt::IInspectable const & /*args*/) {
+      [reactNativeHost](winrt::UI::Windowing::AppWindow const &window, winrt::IInspectable const & /*args*/) {
         // Before we shutdown the application - unload the ReactNativeHost to give the javascript a chance to save any
         // state
         auto async = reactNativeHost.UnloadInstance();
