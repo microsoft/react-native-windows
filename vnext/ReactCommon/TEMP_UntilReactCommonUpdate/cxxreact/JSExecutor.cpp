@@ -44,6 +44,12 @@ bool JSExecutor::supportsConsole() const {
     return false;
 }
 
+std::unique_ptr<facebook::react::jsinspector_modern::StackTrace> JSExecutor::captureStackTrace(
+    facebook::jsi::Runtime &runtime,
+    size_t framesToSkip) {
+  return nullptr;
+}
+
 std::unique_ptr<jsinspector_modern::RuntimeAgentDelegate>
 JSExecutor::createAgentDelegate(
     jsinspector_modern::FrontendChannel frontendChannel,

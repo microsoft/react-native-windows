@@ -419,6 +419,12 @@ bool HermesJSRuntime::supportsConsole() const {
   return false;
 }
 
+std::unique_ptr<facebook::react::jsinspector_modern::StackTrace> HermesJSRuntime::captureStackTrace(
+    facebook::jsi::Runtime &runtime,
+    size_t framesToSkip) {
+  return nullptr;
+}
+
 std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> HermesJSRuntime::createAgentDelegate(
     facebook::react::jsinspector_modern::FrontendChannel frontendChannel,
     facebook::react::jsinspector_modern::SessionState &sessionState,
