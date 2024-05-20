@@ -69,11 +69,14 @@ struct ComponentView
     assert(false);
     return emptyProps;
   };
+
+  winrt::Microsoft::ReactNative::Composition::RootComponentView Root() noexcept;
+
   void Theme(const winrt::Microsoft::ReactNative::Composition::Theme &theme) noexcept;
   winrt::Microsoft::ReactNative::Composition::Theme Theme() const noexcept;
   void onThemeChanged() noexcept override;
-  void onFocusLost() noexcept override;
-  void onFocusGained() noexcept override;
+  void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
+  void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
   bool CapturePointer(const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer) noexcept;
   void ReleasePointerCapture(const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer) noexcept;
 
@@ -189,6 +192,7 @@ struct ViewComponentView : public ViewComponentViewT<ViewComponentView, Componen
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void prepareForRecycle() noexcept override;
+  bool TryFocus() noexcept;
   bool focusable() const noexcept override;
   void OnKeyDown(
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,

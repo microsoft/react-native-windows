@@ -121,6 +121,8 @@ struct CompositionRootView
 #ifdef USE_WINUI3
   winrt::Microsoft::UI::Composition::Compositor m_compositor{nullptr};
   winrt::Microsoft::UI::Content::ContentIsland m_island{nullptr};
+  winrt::event_token m_islandFrameworkClosedToken;
+  winrt::event_token m_islandAutomationProviderRequestedToken;
 #endif
 
   HWND m_hwnd{0};
