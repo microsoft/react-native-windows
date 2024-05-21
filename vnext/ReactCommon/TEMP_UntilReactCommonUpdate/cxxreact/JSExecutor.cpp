@@ -47,7 +47,7 @@ bool JSExecutor::supportsConsole() const {
 std::unique_ptr<facebook::react::jsinspector_modern::StackTrace> JSExecutor::captureStackTrace(
     facebook::jsi::Runtime &runtime,
     size_t framesToSkip) {
-  return nullptr;
+  return std::make_unique<facebook::react::jsinspector_modern::StackTrace>();
 }
 
 std::unique_ptr<jsinspector_modern::RuntimeAgentDelegate>
