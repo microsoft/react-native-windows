@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 21 May 2024 05:14:34 GMT",
+      "version": "0.0.0-canary.817",
+      "tag": "react-native-windows_v0.0.0-canary.817",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0d5ad19278021da8d3dfba096e8317f069f9eee8",
+            "comment": "[Fabric] Add various native focus APIs"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 18 May 2024 05:15:31 GMT",
       "version": "0.0.0-canary.816",
       "tag": "react-native-windows_v0.0.0-canary.816",
