@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 15 May 2024 05:14:53 GMT and should not be manually modified.
+This log was last generated on Tue, 21 May 2024 05:14:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.817
+
+Tue, 21 May 2024 05:14:34 GMT
+
+### Changes
+
+- [Fabric] Add various native focus APIs (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.816
 
