@@ -88,6 +88,7 @@ void ProcessImageRequestTask(
       return;
     }
 
+    // TODO: #13262 - Pipe through ImageLoadError
     auto error = facebook::react::ImageLoadError(nullptr);
 
     switch (status) {

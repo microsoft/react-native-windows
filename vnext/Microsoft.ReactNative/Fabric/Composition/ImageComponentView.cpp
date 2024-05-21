@@ -112,6 +112,7 @@ void ImageComponentView::didReceiveImage(const std::shared_ptr<ImageResponseImag
 void ImageComponentView::didReceiveFailureFromObserver(const facebook::react::ImageLoadError &error) noexcept {
   auto imageEventEmitter = std::static_pointer_cast<facebook::react::ImageEventEmitter const>(m_eventEmitter);
   if (imageEventEmitter) {
+    // TODO: #13262 - Pipe through ImageErrorInfo
     imageEventEmitter->onError({});
     imageEventEmitter->onLoadEnd();
   }
