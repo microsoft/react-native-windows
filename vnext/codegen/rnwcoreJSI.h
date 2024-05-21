@@ -33,6 +33,7 @@ public:
   virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableModernCDPRegistry(jsi::Runtime &rt) = 0;
+  virtual bool preventDoubleTextMeasure(jsi::Runtime &rt) = 0;
   virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
   virtual bool useStateAlignmentMechanism(jsi::Runtime &rt) = 0;
@@ -162,6 +163,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::inspectorEnableModernCDPRegistry, jsInvoker_, instance_);
+    }
+    bool preventDoubleTextMeasure(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::preventDoubleTextMeasure) == 1,
+          "Expected preventDoubleTextMeasure(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::preventDoubleTextMeasure, jsInvoker_, instance_);
     }
     bool useModernRuntimeScheduler(jsi::Runtime &rt) override {
       static_assert(
@@ -7048,8 +7057,6 @@ public:
   virtual jsi::Array getDefaultEventTypes(jsi::Runtime &rt) = 0;
   virtual void setLayoutAnimationEnabledExperimental(jsi::Runtime &rt, bool enabled) = 0;
   virtual void sendAccessibilityEvent(jsi::Runtime &rt, double reactTag, double eventType) = 0;
-  virtual void showPopupMenu(jsi::Runtime &rt, double reactTag, jsi::Array items, jsi::Function error, jsi::Function success) = 0;
-  virtual void dismissPopupMenu(jsi::Runtime &rt) = 0;
   virtual jsi::Object lazilyLoadView(jsi::Runtime &rt, jsi::String name) = 0;
   virtual void focus(jsi::Runtime &rt, double reactTag) = 0;
   virtual void blur(jsi::Runtime &rt, double reactTag) = 0;
@@ -7227,22 +7234,6 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::sendAccessibilityEvent, jsInvoker_, instance_, std::move(reactTag), std::move(eventType));
-    }
-    void showPopupMenu(jsi::Runtime &rt, double reactTag, jsi::Array items, jsi::Function error, jsi::Function success) override {
-      static_assert(
-          bridging::getParameterCount(&T::showPopupMenu) == 5,
-          "Expected showPopupMenu(...) to have 5 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::showPopupMenu, jsInvoker_, instance_, std::move(reactTag), std::move(items), std::move(error), std::move(success));
-    }
-    void dismissPopupMenu(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::dismissPopupMenu) == 1,
-          "Expected dismissPopupMenu(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::dismissPopupMenu, jsInvoker_, instance_);
     }
     jsi::Object lazilyLoadView(jsi::Runtime &rt, jsi::String name) override {
       static_assert(

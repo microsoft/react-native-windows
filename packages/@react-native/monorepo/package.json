@@ -2,14 +2,7 @@
   "name": "@react-native/monorepo",
   "private": true,
   "version": "1000.0.0",
-  "description": "A framework for building native apps using React",
   "license": "MIT",
-  "repository": "github:facebook/react-native",
-  "types": "types",
-  "jest-junit": {
-    "outputDirectory": "reports/junit",
-    "outputName": "js-test-results.xml"
-  },
   "scripts": {
     "android": "cd packages/rn-tester && npm run android",
     "build-android": "./gradlew :packages:react-native:ReactAndroid:build",
@@ -42,9 +35,6 @@
     "packages/*",
     "tools/*"
   ],
-  "peerDependencies": {
-    "react": "18.2.0"
-  },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/eslint-parser": "^7.20.0",
@@ -55,8 +45,8 @@
     "@definitelytyped/dtslint": "^0.0.127",
     "@jest/create-cache-key-function": "^29.6.3",
     "@pkgjs/parseargs": "^0.11.0",
-    "@react-native/metro-babel-transformer": "0.75.0-nightly-20240413-1b152f6ec",
-    "@react-native/metro-config": "0.75.0-nightly-20240413-1b152f6ec",
+    "@react-native/metro-babel-transformer": "0.75.0-nightly-20240420-03a51da72",
+    "@react-native/metro-config": "0.75.0-nightly-20240420-03a51da72",
     "@tsconfig/node18": "1.0.1",
     "@types/react": "^18.2.6",
     "@typescript-eslint/parser": "^7.1.1",
@@ -83,7 +73,7 @@
     "eslint-plugin-redundant-undefined": "^0.4.0",
     "eslint-plugin-relay": "^1.8.3",
     "flow-api-translator": "0.20.1",
-    "flow-bin": "^0.233.0",
+    "flow-bin": "^0.234.0",
     "glob": "^7.1.1",
     "hermes-eslint": "0.20.0",
     "hermes-transform": "0.20.0",
