@@ -21,15 +21,17 @@ protected:
 
 public:
   virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
+  virtual bool allowCollapsableChildren(jsi::Runtime &rt) = 0;
+  virtual bool androidEnablePendingFabricTransactions(jsi::Runtime &rt) = 0;
   virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
+  virtual bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) = 0;
   virtual bool enableBackgroundExecutor(jsi::Runtime &rt) = 0;
   virtual bool enableCleanTextInputYogaNode(jsi::Runtime &rt) = 0;
-  virtual bool enableCustomDrawOrderFabric(jsi::Runtime &rt) = 0;
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
-  virtual bool enableMountHooksAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableSpannableBuildingUnification(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
+  virtual bool fixMountedFlagAndFixPreallocationClone(jsi::Runtime &rt) = 0;
   virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableModernCDPRegistry(jsi::Runtime &rt) = 0;
@@ -68,6 +70,22 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::commonTestFlag, jsInvoker_, instance_);
     }
+    bool allowCollapsableChildren(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::allowCollapsableChildren) == 1,
+          "Expected allowCollapsableChildren(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::allowCollapsableChildren, jsInvoker_, instance_);
+    }
+    bool androidEnablePendingFabricTransactions(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::androidEnablePendingFabricTransactions) == 1,
+          "Expected androidEnablePendingFabricTransactions(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::androidEnablePendingFabricTransactions, jsInvoker_, instance_);
+    }
     bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::batchRenderingUpdatesInEventLoop) == 1,
@@ -75,6 +93,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::batchRenderingUpdatesInEventLoop, jsInvoker_, instance_);
+    }
+    bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::destroyFabricSurfacesInReactInstanceManager) == 1,
+          "Expected destroyFabricSurfacesInReactInstanceManager(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::destroyFabricSurfacesInReactInstanceManager, jsInvoker_, instance_);
     }
     bool enableBackgroundExecutor(jsi::Runtime &rt) override {
       static_assert(
@@ -92,14 +118,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableCleanTextInputYogaNode, jsInvoker_, instance_);
     }
-    bool enableCustomDrawOrderFabric(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::enableCustomDrawOrderFabric) == 1,
-          "Expected enableCustomDrawOrderFabric(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::enableCustomDrawOrderFabric, jsInvoker_, instance_);
-    }
     bool enableMicrotasks(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableMicrotasks) == 1,
@@ -107,14 +125,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableMicrotasks, jsInvoker_, instance_);
-    }
-    bool enableMountHooksAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::enableMountHooksAndroid) == 1,
-          "Expected enableMountHooksAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::enableMountHooksAndroid, jsInvoker_, instance_);
     }
     bool enableSpannableBuildingUnification(jsi::Runtime &rt) override {
       static_assert(
@@ -139,6 +149,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableUIConsistency, jsInvoker_, instance_);
+    }
+    bool fixMountedFlagAndFixPreallocationClone(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::fixMountedFlagAndFixPreallocationClone) == 1,
+          "Expected fixMountedFlagAndFixPreallocationClone(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::fixMountedFlagAndFixPreallocationClone, jsInvoker_, instance_);
     }
     bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) override {
       static_assert(

@@ -13,19 +13,7 @@
 
 import TextLegend from '../../components/TextLegend';
 import TextAdjustsDynamicLayoutExample from './TextAdjustsDynamicLayoutExample';
-import React from 'react';
-import {
-  LayoutAnimation,
-  Platform,
-  /*Image,*/
-  StyleSheet,
-  Switch,
-  Text,
-  TextInput,
-  TextStyle,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import TextInlineViewsExample from './TextInlineViewsExample';
 
 const RNTesterBlock = require('../../components/RNTesterBlock');
 const RNTesterPage = require('../../components/RNTesterPage');
@@ -1486,19 +1474,22 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
 const examples = [
   {
     title: 'Basic text',
-    render: function (): JSX.Element {
+    name: 'basicText',
+    render: function (): React.Element<typeof TextExample> {
       return <TextExample />;
     },
   },
   {
     platform: 'android',
     title: "Text `alignItems: 'baseline'` style",
+    name: 'alignItemsBaseline',
     render: function (): React.Node {
       return <TextBaseLineLayoutExample />;
     },
   },
   {
     title: 'Selectable Text',
+    name: 'selectableText',
     render: function (): React.Node {
       return (
         <View>
@@ -1509,6 +1500,7 @@ const examples = [
   },
   {
     title: 'Text alignment',
+    name: 'textAlignment',
     render: function (): React.Node {
       return (
         <View>
@@ -1529,6 +1521,7 @@ const examples = [
       );
     },
   },
+  TextInlineViewsExample,
 ];
 
 module.exports = ({
