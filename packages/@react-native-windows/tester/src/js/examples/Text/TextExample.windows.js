@@ -1209,6 +1209,7 @@ const examples = [
       );
     },
   },
+  /*
   {
     title: 'Inline views',
     name: 'inlineViews',
@@ -1223,13 +1224,13 @@ const examples = [
       return <TextInlineView.NestedTexts />;
     },
   },
-  // {
-  //   title: 'Inline image/view clipped by <Text>',
-  //   name: 'inlineViewsClipped',
-  //   render: function (): React.Node {
-  //     return <TextInlineView.ClippedByText />;
-  //   },
-  // },
+  {
+    title: 'Inline image/view clipped by <Text>',
+    name: 'inlineViewsClipped',
+    render: function (): React.Node {
+      return <TextInlineView.ClippedByText />;
+    },
+  },
   {
     title: 'Relayout inline image',
     name: 'relayoutInlineImage',
@@ -1251,6 +1252,7 @@ const examples = [
       return <TextInlineView.ChangeInnerViewSize />;
     },
   },
+  */
   {
     title: 'Text shadow',
     name: 'textShadow',
