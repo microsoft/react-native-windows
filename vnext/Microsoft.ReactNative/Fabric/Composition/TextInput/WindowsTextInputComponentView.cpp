@@ -19,6 +19,7 @@
 #include "WindowsTextInputShadowNode.h"
 #include "WindowsTextInputState.h"
 #include "guid/msoGuid.h"
+#include <cwctype>
 
 #include <unicode.h>
 
@@ -892,7 +893,15 @@ void WindowsTextInputComponentView::OnCharacterReceived(
   }
   emitter->onKeyPress(onKeyPressArgs);
 
-  WPARAM wParam = static_cast<WPARAM>(args.KeyCode());
+  WPARAM wParam;
+
+  // Auto-capitalize the key when applicable
+  if (shouldAutoCapitalize()) {
+    wParam = static_cast<WPARAM>(std::towupper(static_cast<wchar_t>(args.KeyCode())));
+  } else {
+    wParam = static_cast<WPARAM>(args.KeyCode());
+  }
+
   LPARAM lParam = 0;
   lParam = args.KeyStatus().RepeatCount; // bits 0-15
   lParam |= args.KeyStatus().ScanCode << 16; // bits 16-23
@@ -1047,6 +1056,10 @@ void WindowsTextInputComponentView::updateProps(
     m_submitKeyEvents.clear();
   }
 
+  if (oldTextInputProps.autoCapitalize != newTextInputProps.autoCapitalize) {
+    autoCapitalizeOnUpdateProps(newTextInputProps.autoCapitalize);
+  }
+
   /*
   if (oldTextInputProps.textAttributes.foregroundColor != newTextInputProps.textAttributes.foregroundColor) {
     if (newTextInputProps.textAttributes.foregroundColor)
@@ -1087,15 +1100,6 @@ void WindowsTextInputComponentView::updateProps(
       oldTextInputProps.selection.end != newTextInputProps.selection.end) {
     m_element.Select(
         newTextInputProps.selection.start, newTextInputProps.selection.end - newTextInputProps.selection.start);
-  }
-
-  if (oldTextInputProps.autoCapitalize != newTextInputProps.autoCapitalize) {
-    if (newTextInputProps.autoCapitalize == "characters") {
-      m_element.CharacterCasing(xaml::Controls::CharacterCasing::Upper);
-    } else { // anything else turns off autoCap (should be "None" but
-             // we don't support "words"/"sentences" yet)
-      m_element.CharacterCasing(xaml::Controls::CharacterCasing::Normal);
-    }
   }
   */
 
@@ -1518,4 +1522,105 @@ winrt::Microsoft::ReactNative::ComponentView WindowsTextInputComponentView::Crea
   return winrt::make<WindowsTextInputComponentView>(compContext, tag, reactContext);
 }
 
+void WindowsTextInputComponentView::autoCapitalizeOnUpdateProps(const std::string &capitalizationType) noexcept {
+  /*
+    Possible values are:
+     Characters - All characters.
+     Words - First letter of each word.
+     Sentences - First letter of each sentence.
+     None - Do not autocapitalize anything.
+  */
+
+  BSTR bstr = nullptr;
+  winrt::hresult hr = m_textServices->TxGetText(&bstr);
+
+  if (SUCCEEDED(hr)) {
+
+    std::wstring wstrText = std::wstring(bstr, SysStringLen(bstr));
+
+    if (capitalizationType == "characters") {
+      std::transform(wstrText.begin(), wstrText.end(), wstrText.begin(), towupper);
+    } else if (capitalizationType == "words") {
+      bool nextWord = true;
+
+      for (auto &ch : wstrText) {
+        if (std::iswspace(ch)) {
+          nextWord = true;
+        } else if (nextWord) {
+          ch = std::towupper(ch);
+          nextWord = false;
+        }
+      }
+    } else if (capitalizationType == "sentences") { // DOUBLE CHECK THIS LOGIC
+      bool newSentence = true;
+
+      // Patterns to look at to declare newSentence as true: first character, or "? ", or "! ", or ". ".
+      for (auto it = wstrText.begin(); it != wstrText.end(); ++it) {
+        // If we encounter punctuation mark, set flag for new sentence
+        if (*it == L'.' || *it == L'!' || *it == L'?') {
+          newSentence = true;
+        } else if (newSentence && !std::iswspace(*it)) { // If it's the start of a new sentence, capitalize the character  .
+          *it = std::towupper(*it);
+          newSentence = false; // Reset flag after capitalization
+        } // if newSentence is true AND current character is a whitespace, wait for the next character.
+      }
+    }
+
+    m_textServices->TxSetText(wstrText.c_str());
+  }
+
+  SysFreeString(bstr);
+}
+
+// This function determines if the current character to be appended into the TextInput should be capitalized.
+// If autoCapitalizeType == "none" or different from characters/words/sentences, return false.
+// NOTE: TxGetText always returns a '\r' at the end of the string. See comments below for potential implications.
+bool WindowsTextInputComponentView::shouldAutoCapitalize() {
+  std::string_view autoCapitalizeType = windowsTextInputProps().autoCapitalize;
+
+  if (autoCapitalizeType == "characters") {
+    return true;
+  } else if (autoCapitalizeType == "words") {
+    BSTR bstr = nullptr;
+    winrt::hresult hr = m_textServices->TxGetText(&bstr);
+
+    if (SUCCEEDED(hr)) {
+      std::wstring wstrText = std::wstring(bstr, SysStringLen(bstr));
+
+      // If TxGetText() == '\r', then we can consider the string as "empty".
+      // If not "empty", we have to "discard" the '\r' and check if the second-last character is a whitespace.
+      if (wstrText.size() == 1 || (wstrText.size() > 1 && wstrText[wstrText.size() - 2] == ' ')) {
+        return true;
+      }
+    }
+
+    SysFreeString(bstr);
+  } else if (autoCapitalizeType == "sentences") {
+    BSTR bstr = nullptr;
+    winrt::hresult hr = m_textServices->TxGetText(&bstr);
+
+    if (SUCCEEDED(hr)) {
+      std::wstring wstrText = std::wstring(bstr, SysStringLen(bstr));
+
+      // If TxGetText() == '\r', then we can consider the string as "empty".
+      if (wstrText.size() == 1) {
+        return true;
+      } else if (wstrText.size() == 2 && wstrText[0] == ' ') { // If not "empty", we have to "discard" the '\r' and check if the second-last character is a whitespace.
+        return true;
+      } else if (wstrText.size() >= 3) { // Patterns to look at to determine if this is a new sentence: ". " or "! " or "? ", after "discarding" the '\r'.
+        wchar_t secondToLastChar = wstrText[wstrText.size() - 3]; 
+        bool isPunctuationChar = secondToLastChar == '.' || secondToLastChar == '!' || secondToLastChar == '?';
+
+        // If the last character (after "discarding" the '\r') is a space AND the second-to-last character is a punctuation mark, then we want to autocapitalize.
+        if (wstrText[wstrText.size() - 2] == ' ' && isPunctuationChar) {
+          return true;
+        }
+      }
+    }
+
+    SysFreeString(bstr);
+  }
+
+  return false;
+}
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

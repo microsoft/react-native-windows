@@ -114,21 +114,48 @@ describe('TextInput Tests', () => {
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('capitalize-sentences');
     expect(dump).toMatchSnapshot();
-    // Behavior not supported yet.
+    await app.waitUntil(
+      async () => {
+        await component.setValue('hey here is a sentence. one more sentence? yeah one more sentence!');
+        return (await component.getText()) === 'Hey here is a sentence. One more sentence? Yeah one more sentence!';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      });
   });
   test('TextInputs can autocapitalize: Autocapitalize Words', async () => {
     const component = await app.findElementByTestID('capitalize-words');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('capitalize-words');
     expect(dump).toMatchSnapshot();
-    // Behavior not supported yet.
+    await app.waitUntil(
+      async () => {
+        await component.setValue('hi i am autocapitalizing all words.');
+        return (await component.getText()) === 'Hi I Am Autocapitalizing All Words.';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      });
   });
   test('TextInputs can autocapitalize: Autocapitalize Characters', async () => {
     const component = await app.findElementByTestID('capitalize-characters');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('capitalize-characters');
     expect(dump).toMatchSnapshot();
-    // Behavior not supported yet.
+    await app.waitUntil(
+      async () => {
+        await component.setValue('hi i am setting up this whole UPPERCASE sentence.');
+        return (await component.getText()) === 'HI I AM SETTING UP THIS WHOLE UPPERCASE SENTENCE.';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      });
   });
   test('TextInputs can have attributed text', async () => {
     const component = await app.findElementByTestID('text-input');
