@@ -88,6 +88,9 @@ void ProcessImageRequestTask(
       return;
     }
 
+    // TODO: #13262 - Pipe through ImageLoadError
+    auto error = facebook::react::ImageLoadError(nullptr);
+
     switch (status) {
       case winrt::Windows::Foundation::AsyncStatus::Completed: {
         auto imageResponseImage = onSuccess(asyncOp.GetResults());
@@ -95,15 +98,15 @@ void ProcessImageRequestTask(
           observerCoordinator->nativeImageResponseComplete(
               facebook::react::ImageResponse(imageResponseImage, nullptr /*metadata*/));
         else
-          observerCoordinator->nativeImageResponseFailed();
+          observerCoordinator->nativeImageResponseFailed(error);
         break;
       }
       case winrt::Windows::Foundation::AsyncStatus::Canceled: {
-        observerCoordinator->nativeImageResponseFailed();
+        observerCoordinator->nativeImageResponseFailed(error);
         break;
       }
       case winrt::Windows::Foundation::AsyncStatus::Error: {
-        observerCoordinator->nativeImageResponseFailed();
+        observerCoordinator->nativeImageResponseFailed(error);
         break;
       }
       case winrt::Windows::Foundation::AsyncStatus::Started: {

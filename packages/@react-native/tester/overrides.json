@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.75.0-nightly-20240420-03a51da72",
+  "baseVersion": "0.75.0-nightly-20240427-e2ad6696d",
   "overrides": [
     {
       "type": "copy",
@@ -47,7 +47,7 @@
       "type": "copy",
       "directory": "js/examples/Animated",
       "baseDirectory": "packages/rn-tester/js/examples/Animated",
-      "baseHash": "9c619928fc015d297b782786f44405c1803868e4",
+      "baseHash": "944d10c0c84beb8e41a7a7ebebefaf1efbdfafd1",
       "issue": 4054
     },
     {
@@ -383,14 +383,14 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "25bb697973af6e4d86b3ba1f3aa137a2cde27961",
+      "baseHash": "8d0702480f09d4866feef91b42978f40a4b99b55",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "50c8f413b673279dfecae9ec44b9f4a881945c0f",
+      "baseHash": "f56624d359734ab2bc6aca0b74f7246d9a2c202f",
       "issue": 4054
     },
     {
@@ -432,7 +432,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "cf185e50f96b077c59347d44b1c6ef6a10179e5c",
+      "baseHash": "fb59228f6705a8aadc308836b3871adeb004fe1e",
       "issue": 4054
     },
     {
@@ -446,7 +446,7 @@
       "type": "copy",
       "directory": "js/examples/View",
       "baseDirectory": "packages/rn-tester/js/examples/View",
-      "baseHash": "c3c7574b70fc1d02ffbd87c9e6d2208837583353",
+      "baseHash": "0e656ac9160c26456406857c85b5d3a2112859b4",
       "issue": 4054
     },
     {
@@ -481,7 +481,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "df33c55275d69437bad7d62806a7fe3b81c19b5b",
+      "baseHash": "bcfcff7da20638de21c1f3bb3679b30673182f7f",
       "issue": 4054
     },
     {

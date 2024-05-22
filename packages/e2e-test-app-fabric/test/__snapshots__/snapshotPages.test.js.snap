@@ -11630,7 +11630,6 @@ exports[`snapshotAllPages FlatList 1`] = `
         renderItem={[Function]}
         scrollEventThrottle={0.0001}
         stickyHeaderIndices={[]}
-        style={{}}
         viewabilityConfig={
           {
             "minimumViewTime": 3000,
@@ -48636,7 +48635,6 @@ exports[`snapshotAllPages ScrollViewAnimated 1`] = `
     horizontal={true}
     onScroll={[Function]}
     scrollEventThrottle={16}
-    style={{}}
   >
     <View>
       <View
@@ -79882,7 +79880,7 @@ exports[`snapshotAllPages TextInput 21`] = `
             "fontSize": 16,
           },
           {
-            "fontWeight": "800",
+            "fontWeight": 800,
           },
         ],
       ]
@@ -85180,6 +85178,113 @@ exports[`snapshotAllPages View 6`] = `
 
 exports[`snapshotAllPages View 7`] = `
 <View
+  style={
+    {
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+    }
+  }
+  testID="view-test-rounded-borders-percentages"
+>
+  <View
+    style={
+      {
+        "borderRadius": "50%",
+        "borderWidth": 1,
+        "height": 50,
+        "marginRight": 10,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderRadius": "50%",
+        "borderWidth": 10,
+        "height": 50,
+        "marginRight": 10,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderBottomLeftRadius": "100%",
+        "borderBottomRightRadius": "50%",
+        "borderTopLeftRadius": "10%",
+        "borderTopRightRadius": "20%",
+        "borderWidth": 1,
+        "height": 50,
+        "marginRight": 10,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderBottomLeftRadius": "100%",
+        "borderBottomRightRadius": "50%",
+        "borderTopLeftRadius": "10%",
+        "borderTopRightRadius": "20%",
+        "borderWidth": 10,
+        "height": 50,
+        "marginRight": 10,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderLeftWidth": 6,
+        "borderTopLeftRadius": "40%",
+        "borderTopWidth": 6,
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderRightWidth": 6,
+        "borderTopRightRadius": "40%",
+        "borderTopWidth": 6,
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderBottomLeftRadius": "40%",
+        "borderBottomWidth": 6,
+        "borderLeftWidth": 6,
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderBottomRightRadius": "40%",
+        "borderBottomWidth": 6,
+        "borderRightWidth": 6,
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages View 8`] = `
+<View
   accessibilityLabel="Rounded Borders Example"
   accessible={true}
   style={
@@ -85306,7 +85411,7 @@ exports[`snapshotAllPages View 7`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 8`] = `
+exports[`snapshotAllPages View 9`] = `
 <View
   accessibilityLabel="Opacity Example"
   accessible={true}
@@ -85392,7 +85497,7 @@ exports[`snapshotAllPages View 8`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 9`] = `
+exports[`snapshotAllPages View 10`] = `
 <View
   accessibilityState={
     {
@@ -85551,7 +85656,7 @@ exports[`snapshotAllPages View 9`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 10`] = `
+exports[`snapshotAllPages View 11`] = `
 <View
   accessibilityState={
     {
@@ -85694,7 +85799,7 @@ exports[`snapshotAllPages View 10`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 11`] = `
+exports[`snapshotAllPages View 12`] = `
 <View
   style={
     {
@@ -85787,7 +85892,7 @@ exports[`snapshotAllPages View 11`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 12`] = `
+exports[`snapshotAllPages View 13`] = `
 <View
   accessibilityState={
     {
@@ -85889,7 +85994,7 @@ exports[`snapshotAllPages View 12`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 13`] = `
+exports[`snapshotAllPages View 14`] = `
 <View
   accessibilityLabel="Backface Visibility Example"
   accessible={true}
@@ -86007,7 +86112,7 @@ exports[`snapshotAllPages View 13`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 14`] = `
+exports[`snapshotAllPages View 15`] = `
 <View
   accessibilityLabel="Aria-Label Example"
   accessible={true}
@@ -86032,7 +86137,7 @@ exports[`snapshotAllPages View 14`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 15`] = `
+exports[`snapshotAllPages View 16`] = `
 <View
   accessibilityLabel="Flex Gap Example"
   accessible={true}
@@ -86149,7 +86254,7 @@ exports[`snapshotAllPages View 15`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 16`] = `
+exports[`snapshotAllPages View 17`] = `
 <View
   accessible={true}
   style={
@@ -86372,7 +86477,7 @@ exports[`snapshotAllPages View 16`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 17`] = `
+exports[`snapshotAllPages View 18`] = `
 <View
   accessibilityLabel="Logical Border Color Example"
   accessible={true}
@@ -86462,7 +86567,7 @@ exports[`snapshotAllPages View 17`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 18`] = `
+exports[`snapshotAllPages View 19`] = `
 <View
   accessibilityLabel="Layout Conformance Example"
   accessible={true}
@@ -86583,7 +86688,7 @@ exports[`snapshotAllPages View 18`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 19`] = `
+exports[`snapshotAllPages View 20`] = `
 <View
   accessibilityLabel="NativeID Example"
   accessible={true}
@@ -86596,7 +86701,7 @@ exports[`snapshotAllPages View 19`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 20`] = `
+exports[`snapshotAllPages View 21`] = `
 <View
   accessibilityActions={
     [
@@ -86641,7 +86746,7 @@ exports[`snapshotAllPages View 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 21`] = `
+exports[`snapshotAllPages View 22`] = `
 <View
   accessibilityLabel="Shadow Example"
   accessible={true}
@@ -86662,7 +86767,7 @@ exports[`snapshotAllPages View 21`] = `
 />
 `;
 
-exports[`snapshotAllPages View 22`] = `
+exports[`snapshotAllPages View 23`] = `
 <View
   accessibilityLabel="HitSlop Example"
   accessible={true}
@@ -86687,7 +86792,7 @@ exports[`snapshotAllPages View 22`] = `
 />
 `;
 
-exports[`snapshotAllPages View 23`] = `
+exports[`snapshotAllPages View 24`] = `
 <View
   accessibilityLabel="Tooltip Example"
   accessible={true}
