@@ -13,25 +13,25 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct AppStateSpec_AppStateConstants {
-    std::string initialAppState;
-};
-
 struct AppStateSpec_AppState {
     std::string app_state;
 };
 
+struct AppStateSpec_AppStateConstants {
+    std::string initialAppState;
+};
 
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AppStateSpec_AppStateConstants*) noexcept {
-    winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"initialAppState", &AppStateSpec_AppStateConstants::initialAppState},
-    };
-    return fieldMap;
-}
 
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AppStateSpec_AppState*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
         {L"app_state", &AppStateSpec_AppState::app_state},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AppStateSpec_AppStateConstants*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"initialAppState", &AppStateSpec_AppStateConstants::initialAppState},
     };
     return fieldMap;
 }

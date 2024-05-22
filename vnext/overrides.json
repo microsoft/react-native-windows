@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240502-88de74b2d",
+  "baseVersion": "0.75.0-nightly-20240503-1d2221ab4",
   "overrides": [
     {
       "type": "derived",
