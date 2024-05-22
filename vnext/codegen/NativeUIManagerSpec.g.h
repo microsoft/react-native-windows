@@ -34,11 +34,9 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       SyncMethod<std::vector<std::string>() noexcept>{15, L"getDefaultEventTypes"},
       Method<void(bool) noexcept>{16, L"setLayoutAnimationEnabledExperimental"},
       Method<void(double, double) noexcept>{17, L"sendAccessibilityEvent"},
-      Method<void(double, std::vector<std::string>, Callback<::React::JSValue>, Callback<std::string, double>) noexcept>{18, L"showPopupMenu"},
-      Method<void() noexcept>{19, L"dismissPopupMenu"},
-      SyncMethod<::React::JSValue(std::string) noexcept>{20, L"lazilyLoadView"},
-      Method<void(double) noexcept>{21, L"focus"},
-      Method<void(double) noexcept>{22, L"blur"},
+      SyncMethod<::React::JSValue(std::string) noexcept>{18, L"lazilyLoadView"},
+      Method<void(double) noexcept>{19, L"focus"},
+      Method<void(double) noexcept>{20, L"blur"},
   };
 
   template <class TModule>
@@ -137,26 +135,16 @@ struct UIManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_METHOD(sendAccessibilityEvent) static void sendAccessibilityEvent(double reactTag, double eventType) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           18,
-          "showPopupMenu",
-          "    REACT_METHOD(showPopupMenu) void showPopupMenu(double reactTag, std::vector<std::string> const & items, std::function<void(::React::JSValue const &)> const & error, std::function<void(std::string, double)> const & success) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(showPopupMenu) static void showPopupMenu(double reactTag, std::vector<std::string> const & items, std::function<void(::React::JSValue const &)> const & error, std::function<void(std::string, double)> const & success) noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          19,
-          "dismissPopupMenu",
-          "    REACT_METHOD(dismissPopupMenu) void dismissPopupMenu() noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(dismissPopupMenu) static void dismissPopupMenu() noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          20,
           "lazilyLoadView",
           "    REACT_SYNC_METHOD(lazilyLoadView) ::React::JSValue lazilyLoadView(std::string name) noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(lazilyLoadView) static ::React::JSValue lazilyLoadView(std::string name) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          21,
+          19,
           "focus",
           "    REACT_METHOD(focus) void focus(double reactTag) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(focus) static void focus(double reactTag) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          22,
+          20,
           "blur",
           "    REACT_METHOD(blur) void blur(double reactTag) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(blur) static void blur(double reactTag) noexcept { /* implementation */ }\n");

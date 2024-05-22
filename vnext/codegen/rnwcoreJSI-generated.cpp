@@ -76,6 +76,11 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_inspect
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_preventDoubleTextMeasure(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->preventDoubleTextMeasure(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useModernRuntimeScheduler(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useModernRuntimeScheduler(
     rt
@@ -107,6 +112,7 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["forceBatchingMountItemsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_forceBatchingMountItemsOnAndroid};
   methodMap_["inspectorEnableCxxInspectorPackagerConnection"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_inspectorEnableCxxInspectorPackagerConnection};
   methodMap_["inspectorEnableModernCDPRegistry"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_inspectorEnableModernCDPRegistry};
+  methodMap_["preventDoubleTextMeasure"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_preventDoubleTextMeasure};
   methodMap_["useModernRuntimeScheduler"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useModernRuntimeScheduler};
   methodMap_["useNativeViewConfigsInBridgelessMode"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNativeViewConfigsInBridgelessMode};
   methodMap_["useStateAlignmentMechanism"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useStateAlignmentMechanism};
@@ -2666,22 +2672,6 @@ static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_sendAccessibilityEven
   );
   return jsi::Value::undefined();
 }
-static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_showPopupMenu(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->showPopupMenu(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber(),
-    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asObject(rt).asArray(rt),
-    count <= 2 ? throw jsi::JSError(rt, "Expected argument in position 2 to be passed") : args[2].asObject(rt).asFunction(rt),
-    count <= 3 ? throw jsi::JSError(rt, "Expected argument in position 3 to be passed") : args[3].asObject(rt).asFunction(rt)
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_dismissPopupMenu(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->dismissPopupMenu(
-    rt
-  );
-  return jsi::Value::undefined();
-}
 static jsi::Value __hostFunction_NativeUIManagerCxxSpecJSI_lazilyLoadView(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeUIManagerCxxSpecJSI *>(&turboModule)->lazilyLoadView(
     rt,
@@ -2724,8 +2714,6 @@ NativeUIManagerCxxSpecJSI::NativeUIManagerCxxSpecJSI(std::shared_ptr<CallInvoker
   methodMap_["getDefaultEventTypes"] = MethodMetadata {0, __hostFunction_NativeUIManagerCxxSpecJSI_getDefaultEventTypes};
   methodMap_["setLayoutAnimationEnabledExperimental"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_setLayoutAnimationEnabledExperimental};
   methodMap_["sendAccessibilityEvent"] = MethodMetadata {2, __hostFunction_NativeUIManagerCxxSpecJSI_sendAccessibilityEvent};
-  methodMap_["showPopupMenu"] = MethodMetadata {4, __hostFunction_NativeUIManagerCxxSpecJSI_showPopupMenu};
-  methodMap_["dismissPopupMenu"] = MethodMetadata {0, __hostFunction_NativeUIManagerCxxSpecJSI_dismissPopupMenu};
   methodMap_["lazilyLoadView"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_lazilyLoadView};
   methodMap_["focus"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_focus};
   methodMap_["blur"] = MethodMetadata {1, __hostFunction_NativeUIManagerCxxSpecJSI_blur};

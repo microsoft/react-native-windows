@@ -61,6 +61,9 @@ class HermesJSRuntime : public facebook::react::JSRuntime {
   void addConsoleMessage(facebook::jsi::Runtime &runtime, facebook::react::jsinspector_modern::ConsoleMessage message)
       override;
   bool supportsConsole() const override;
+  std::unique_ptr<facebook::react::jsinspector_modern::StackTrace> captureStackTrace(
+      facebook::jsi::Runtime &runtime,
+      size_t framesToSkip = 0) override;
 
   std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> createAgentDelegate(
       facebook::react::jsinspector_modern::FrontendChannel frontendChannel,

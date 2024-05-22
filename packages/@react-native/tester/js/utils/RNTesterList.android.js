@@ -264,6 +264,11 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/PanResponder/PanResponderExample'),
   },
   {
+    key: 'PixelRatio',
+    category: 'UI',
+    module: require('../examples/PixelRatio/PixelRatioExample'),
+  },
+  {
     key: 'PermissionsExampleAndroid',
     category: 'Android',
     module: require('../examples/PermissionsAndroid/PermissionsExample'),
