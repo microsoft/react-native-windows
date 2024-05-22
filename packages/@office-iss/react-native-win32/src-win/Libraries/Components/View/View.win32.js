@@ -245,9 +245,6 @@ const View: React.AbstractComponent<
                   : importantForAccessibility
               }
               nativeID={id ?? nativeID}
-              style={style}
-              // $FlowFixMe[incompatible-type]
-              pointerEvents={newPointerEvents}
               ref={forwardedRef}
               onKeyDown={_keyDown}
               onKeyDownCapture={_keyDownCapture}
