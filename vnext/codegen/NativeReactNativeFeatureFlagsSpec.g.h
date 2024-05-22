@@ -23,18 +23,19 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{4, L"destroyFabricSurfacesInReactInstanceManager"},
       SyncMethod<bool() noexcept>{5, L"enableBackgroundExecutor"},
       SyncMethod<bool() noexcept>{6, L"enableCleanTextInputYogaNode"},
-      SyncMethod<bool() noexcept>{7, L"enableMicrotasks"},
-      SyncMethod<bool() noexcept>{8, L"enableSpannableBuildingUnification"},
+      SyncMethod<bool() noexcept>{7, L"enableGranularShadowTreeStateReconciliation"},
+      SyncMethod<bool() noexcept>{8, L"enableMicrotasks"},
       SyncMethod<bool() noexcept>{9, L"enableSynchronousStateUpdates"},
       SyncMethod<bool() noexcept>{10, L"enableUIConsistency"},
       SyncMethod<bool() noexcept>{11, L"fixMountedFlagAndFixPreallocationClone"},
       SyncMethod<bool() noexcept>{12, L"forceBatchingMountItemsOnAndroid"},
       SyncMethod<bool() noexcept>{13, L"inspectorEnableCxxInspectorPackagerConnection"},
       SyncMethod<bool() noexcept>{14, L"inspectorEnableModernCDPRegistry"},
-      SyncMethod<bool() noexcept>{15, L"preventDoubleTextMeasure"},
-      SyncMethod<bool() noexcept>{16, L"useModernRuntimeScheduler"},
-      SyncMethod<bool() noexcept>{17, L"useNativeViewConfigsInBridgelessMode"},
-      SyncMethod<bool() noexcept>{18, L"useStateAlignmentMechanism"},
+      SyncMethod<bool() noexcept>{15, L"lazyAnimationCallbacks"},
+      SyncMethod<bool() noexcept>{16, L"preventDoubleTextMeasure"},
+      SyncMethod<bool() noexcept>{17, L"useModernRuntimeScheduler"},
+      SyncMethod<bool() noexcept>{18, L"useNativeViewConfigsInBridgelessMode"},
+      SyncMethod<bool() noexcept>{19, L"useStateAlignmentMechanism"},
   };
 
   template <class TModule>
@@ -78,14 +79,14 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(enableCleanTextInputYogaNode) static bool enableCleanTextInputYogaNode() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           7,
+          "enableGranularShadowTreeStateReconciliation",
+          "    REACT_SYNC_METHOD(enableGranularShadowTreeStateReconciliation) bool enableGranularShadowTreeStateReconciliation() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(enableGranularShadowTreeStateReconciliation) static bool enableGranularShadowTreeStateReconciliation() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          8,
           "enableMicrotasks",
           "    REACT_SYNC_METHOD(enableMicrotasks) bool enableMicrotasks() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableMicrotasks) static bool enableMicrotasks() noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          8,
-          "enableSpannableBuildingUnification",
-          "    REACT_SYNC_METHOD(enableSpannableBuildingUnification) bool enableSpannableBuildingUnification() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(enableSpannableBuildingUnification) static bool enableSpannableBuildingUnification() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           9,
           "enableSynchronousStateUpdates",
@@ -118,21 +119,26 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(inspectorEnableModernCDPRegistry) static bool inspectorEnableModernCDPRegistry() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           15,
+          "lazyAnimationCallbacks",
+          "    REACT_SYNC_METHOD(lazyAnimationCallbacks) bool lazyAnimationCallbacks() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(lazyAnimationCallbacks) static bool lazyAnimationCallbacks() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          16,
           "preventDoubleTextMeasure",
           "    REACT_SYNC_METHOD(preventDoubleTextMeasure) bool preventDoubleTextMeasure() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(preventDoubleTextMeasure) static bool preventDoubleTextMeasure() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          16,
+          17,
           "useModernRuntimeScheduler",
           "    REACT_SYNC_METHOD(useModernRuntimeScheduler) bool useModernRuntimeScheduler() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useModernRuntimeScheduler) static bool useModernRuntimeScheduler() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          17,
+          18,
           "useNativeViewConfigsInBridgelessMode",
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) static bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          18,
+          19,
           "useStateAlignmentMechanism",
           "    REACT_SYNC_METHOD(useStateAlignmentMechanism) bool useStateAlignmentMechanism() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useStateAlignmentMechanism) static bool useStateAlignmentMechanism() noexcept { /* implementation */ }\n");

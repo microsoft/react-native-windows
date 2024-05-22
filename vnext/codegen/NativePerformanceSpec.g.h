@@ -13,6 +13,28 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+struct PerformanceSpec_NativeMemoryInfo {
+
+};
+
+struct PerformanceSpec_ReactNativeStartupTiming {
+
+};
+
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PerformanceSpec_NativeMemoryInfo*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PerformanceSpec_ReactNativeStartupTiming*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+
+    };
+    return fieldMap;
+}
 
 struct PerformanceSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{

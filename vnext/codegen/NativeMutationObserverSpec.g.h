@@ -13,12 +13,6 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct MutationObserverSpec_NativeMutationObserverObserveOptions {
-    double mutationObserverId;
-     targetShadowNode;
-    bool subtree;
-};
-
 struct MutationObserverSpec_NativeMutationRecord {
     double mutationObserverId;
      target;
@@ -26,15 +20,12 @@ struct MutationObserverSpec_NativeMutationRecord {
     std::vector<> removedNodes;
 };
 
+struct MutationObserverSpec_NativeMutationObserverObserveOptions {
+    double mutationObserverId;
+     targetShadowNode;
+    bool subtree;
+};
 
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(MutationObserverSpec_NativeMutationObserverObserveOptions*) noexcept {
-    winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"mutationObserverId", &MutationObserverSpec_NativeMutationObserverObserveOptions::mutationObserverId},
-        {L"targetShadowNode", &MutationObserverSpec_NativeMutationObserverObserveOptions::targetShadowNode},
-        {L"subtree", &MutationObserverSpec_NativeMutationObserverObserveOptions::subtree},
-    };
-    return fieldMap;
-}
 
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(MutationObserverSpec_NativeMutationRecord*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
@@ -42,6 +33,15 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(MutationObserverSpe
         {L"target", &MutationObserverSpec_NativeMutationRecord::target},
         {L"addedNodes", &MutationObserverSpec_NativeMutationRecord::addedNodes},
         {L"removedNodes", &MutationObserverSpec_NativeMutationRecord::removedNodes},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(MutationObserverSpec_NativeMutationObserverObserveOptions*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"mutationObserverId", &MutationObserverSpec_NativeMutationObserverObserveOptions::mutationObserverId},
+        {L"targetShadowNode", &MutationObserverSpec_NativeMutationObserverObserveOptions::targetShadowNode},
+        {L"subtree", &MutationObserverSpec_NativeMutationObserverObserveOptions::subtree},
     };
     return fieldMap;
 }

@@ -409,6 +409,7 @@ const validAttributesForEventProps = {
 
   // Pointer events
   onClick: true,
+  onClickCapture: true,
   onPointerUp: true,
   onPointerDown: true,
   onPointerCancel: true,

@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240427-e2ad6696d",
+  "baseVersion": "0.75.0-nightly-20240502-88de74b2d",
   "overrides": [
     {
       "type": "derived",
@@ -180,7 +180,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/View.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "d621a2fb669bbc2fc0657db1233c9a930a073fba"
+      "baseHash": "1905f72f4d202d466ea7d8ed4b36df0845f2c310"
     },
     {
       "type": "derived",
@@ -337,7 +337,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "5fce369e10bcb5b502f8e05bc60668dfc8f7a76b"
+      "baseHash": "2a5e0ee3fed39205087dc49e2a7b180b6438f589"
     },
     {
       "type": "copy",
