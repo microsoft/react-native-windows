@@ -10977,6 +10977,7 @@ exports[`snapshotAllPages FlatList 1`] = `
         ListFooterComponent={[Function]}
         ListHeaderComponent={[Function]}
         accessibilityRole="list"
+        accessible={true}
         collapsable={false}
         contentContainerStyle={
           {
@@ -11631,6 +11632,7 @@ exports[`snapshotAllPages FlatList 1`] = `
         scrollEventThrottle={0.0001}
         stickyHeaderIndices={[]}
         style={{}}
+        testID="flatlist-basic"
         viewabilityConfig={
           {
             "minimumViewTime": 3000,
@@ -12739,6 +12741,7 @@ exports[`snapshotAllPages FlatList 2`] = `
     </View>
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -13297,6 +13300,7 @@ exports[`snapshotAllPages FlatList 3`] = `
     </View>
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -14157,6 +14161,7 @@ exports[`snapshotAllPages FlatList 4`] = `
       </View>
     </View>
     <RCTScrollView
+      accessible={true}
       automaticallyAdjustContentInsets={false}
       contentInset={
         {
@@ -14996,6 +15001,7 @@ exports[`snapshotAllPages FlatList 5`] = `
     </View>
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -15740,6 +15746,7 @@ exports[`snapshotAllPages FlatList 6`] = `
     />
   </View>
   <RCTScrollView
+    accessible={true}
     data={
       [
         "Pizza",
@@ -16479,6 +16486,7 @@ exports[`snapshotAllPages FlatList 7`] = `
 >
   <RCTScrollView
     ItemSeparatorComponent={[Function]}
+    accessible={true}
     data={
       [
         "Pizza",
@@ -17641,6 +17649,7 @@ exports[`snapshotAllPages FlatList 8`] = `
     <RCTScrollView
       ListFooterComponent={[Function]}
       ListHeaderComponent={[Function]}
+      accessible={true}
       data={
         [
           {
@@ -23670,6 +23679,7 @@ exports[`snapshotAllPages FlatList 8`] = `
       renderItem={[Function]}
       scrollEventThrottle={0.0001}
       stickyHeaderIndices={[]}
+      testID="flatlist-multicolumn"
       viewabilityConfigCallbackPairs={
         [
           {
@@ -25617,6 +25627,7 @@ exports[`snapshotAllPages FlatList 8`] = `
 
 exports[`snapshotAllPages FlatList 9`] = `
 <RCTScrollView
+  accessible={true}
   data={
     [
       "Sticky Pizza",
@@ -25657,6 +25668,7 @@ exports[`snapshotAllPages FlatList 9`] = `
       "flex": 1,
     }
   }
+  testID="flatlist-sticky"
   viewabilityConfigCallbackPairs={[]}
 >
   <View>
@@ -26020,6 +26032,7 @@ exports[`snapshotAllPages FlatList 10`] = `
       </Text>
     </Text>
     <RCTScrollView
+      accessible={true}
       data={
         [
           "head",
@@ -26052,6 +26065,7 @@ exports[`snapshotAllPages FlatList 10`] = `
           "borderWidth": 1,
         }
       }
+      testID="flatlist-nested"
       viewabilityConfigCallbackPairs={
         [
           {
