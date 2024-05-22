@@ -19,7 +19,7 @@ struct LinkingManager {
   using ModuleSpec = ReactNativeSpecs::LinkingManagerSpec;
 
   REACT_INIT(Initialize)
-  void Initialize(React::ReactContext const &reactContext) noexcept;
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   REACT_METHOD(canOpenURL)
   static winrt::fire_and_forget canOpenURL(std::wstring url, ::React::ReactPromise<bool> result) noexcept;
@@ -45,7 +45,7 @@ struct LinkingManager {
   void HandleOpenUri(winrt::hstring const &uri) noexcept;
 
   static std::mutex s_mutex;
-  React::ReactContext m_context;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
   static winrt::Windows::Foundation::Uri s_initialUri;
   static std::vector<LinkingManager *> s_linkingModules;
 };

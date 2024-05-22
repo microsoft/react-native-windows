@@ -15,7 +15,7 @@ struct LogBox : public std::enable_shared_from_this<LogBox> {
   using ModuleSpec = ReactNativeSpecs::LogBoxSpec;
 
   REACT_INIT(Initialize)
-  void Initialize(React::ReactContext const &reactContext) noexcept;
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   REACT_METHOD(Show, L"show") void Show() noexcept;
   REACT_METHOD(Hide, L"hide") void Hide() noexcept;
@@ -27,12 +27,12 @@ struct LogBox : public std::enable_shared_from_this<LogBox> {
   void ShowOnUIThread() noexcept;
   void HideOnUIThread() noexcept;
 
-  React::ReactContext m_context;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
 #ifdef USE_FABRIC
   HWND m_hwnd{nullptr};
 #endif // USE_FABRIC
   xaml::Controls::Primitives::Popup m_popup{nullptr};
-  React::ReactRootView m_logBoxContent{nullptr};
+  winrt::Microsoft::ReactNative::ReactRootView m_logBoxContent{nullptr};
   xaml::FrameworkElement::SizeChanged_revoker m_sizeChangedRevoker;
   winrt::event_token m_tokenClosed;
 };
