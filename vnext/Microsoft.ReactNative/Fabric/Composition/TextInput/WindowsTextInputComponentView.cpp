@@ -13,13 +13,13 @@
 #include <unicode.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.h>
+#include <cwctype>
 #include "../CompositionHelpers.h"
 #include "../RootComponentView.h"
 #include "JSValueReader.h"
 #include "WindowsTextInputShadowNode.h"
 #include "WindowsTextInputState.h"
 #include "guid/msoGuid.h"
-#include <cwctype>
 
 #include <unicode.h>
 
@@ -1535,7 +1535,6 @@ void WindowsTextInputComponentView::autoCapitalizeOnUpdateProps(const std::strin
   winrt::hresult hr = m_textServices->TxGetText(&bstr);
 
   if (SUCCEEDED(hr)) {
-
     std::wstring wstrText = std::wstring(bstr, SysStringLen(bstr));
 
     if (capitalizationType == "characters") {
@@ -1559,10 +1558,11 @@ void WindowsTextInputComponentView::autoCapitalizeOnUpdateProps(const std::strin
         // If we encounter punctuation mark, set flag for new sentence
         if (*it == L'.' || *it == L'!' || *it == L'?') {
           newSentence = true;
-        } else if (newSentence && !std::iswspace(*it)) { // If it's the start of a new sentence, capitalize the character  .
+        } else if (newSentence && !std::iswspace(*it)) {
+          // If it's the start of a new sentence, then capitalize.
           *it = std::towupper(*it);
           newSentence = false; // Reset flag after capitalization
-        } // if newSentence is true AND current character is a whitespace, wait for the next character.
+        } // If newSentence is true AND current character is a whitespace, wait for the next character.
       }
     }
 
@@ -1605,13 +1605,16 @@ bool WindowsTextInputComponentView::shouldAutoCapitalize() {
       // If TxGetText() == '\r', then we can consider the string as "empty".
       if (wstrText.size() == 1) {
         return true;
-      } else if (wstrText.size() == 2 && wstrText[0] == ' ') { // If not "empty", we have to "discard" the '\r' and check if the second-last character is a whitespace.
+      } else if (wstrText.size() == 2 && wstrText[0] == ' ') { // If not "empty", we have to "discard" the '\r' and
+                                                               // check if the second-last character is a whitespace.
         return true;
-      } else if (wstrText.size() >= 3) { // Patterns to look at to determine if this is a new sentence: ". " or "! " or "? ", after "discarding" the '\r'.
-        wchar_t secondToLastChar = wstrText[wstrText.size() - 3]; 
+      } else if (wstrText.size() >= 3) { // Patterns to look at to determine if this is a new sentence: ". " or "! " or
+                                         // "? ", after "discarding" the '\r'.
+        wchar_t secondToLastChar = wstrText[wstrText.size() - 3];
         bool isPunctuationChar = secondToLastChar == '.' || secondToLastChar == '!' || secondToLastChar == '?';
 
-        // If the last character (after "discarding" the '\r') is a space AND the second-to-last character is a punctuation mark, then we want to autocapitalize.
+        // If the last character (after "discarding" the '\r') is a space AND the second-to-last character is a
+        // punctuation mark, then we want to autocapitalize.
         if (wstrText[wstrText.size() - 2] == ' ' && isPunctuationChar) {
           return true;
         }
