@@ -2140,7 +2140,13 @@ exports[`snapshotAllPages Animated 1`] = `
         ]
       }
     >
-      <Text>
+      <Text
+        style={
+          {
+            "color": "#3c3c4399",
+          }
+        }
+      >
         Use Native Driver
       </Text>
       <RCTSwitch
@@ -2161,10 +2167,15 @@ exports[`snapshotAllPages Animated 1`] = `
     </View>
     <Text
       style={
-        {
-          "marginBottom": 6,
-          "marginTop": 4,
-        }
+        [
+          {
+            "marginBottom": 6,
+            "marginTop": 4,
+          },
+          {
+            "color": "#3c3c4399",
+          },
+        ]
       }
     >
       Selected Styles
@@ -2217,8 +2228,10 @@ exports[`snapshotAllPages Animated 1`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -2236,7 +2249,7 @@ exports[`snapshotAllPages Animated 1`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -2284,8 +2297,10 @@ exports[`snapshotAllPages Animated 1`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -2303,7 +2318,7 @@ exports[`snapshotAllPages Animated 1`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -2351,8 +2366,10 @@ exports[`snapshotAllPages Animated 1`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -2370,7 +2387,7 @@ exports[`snapshotAllPages Animated 1`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -2418,8 +2435,10 @@ exports[`snapshotAllPages Animated 1`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -2437,7 +2456,7 @@ exports[`snapshotAllPages Animated 1`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -2485,8 +2504,10 @@ exports[`snapshotAllPages Animated 1`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -2504,7 +2525,7 @@ exports[`snapshotAllPages Animated 1`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -2552,8 +2573,10 @@ exports[`snapshotAllPages Animated 1`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -2571,7 +2594,7 @@ exports[`snapshotAllPages Animated 1`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -2619,8 +2642,10 @@ exports[`snapshotAllPages Animated 1`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -2638,7 +2663,7 @@ exports[`snapshotAllPages Animated 1`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -2686,8 +2711,10 @@ exports[`snapshotAllPages Animated 1`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -2705,7 +2732,7 @@ exports[`snapshotAllPages Animated 1`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -2753,8 +2780,10 @@ exports[`snapshotAllPages Animated 1`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -2772,7 +2801,7 @@ exports[`snapshotAllPages Animated 1`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -2820,8 +2849,10 @@ exports[`snapshotAllPages Animated 1`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -2839,7 +2870,7 @@ exports[`snapshotAllPages Animated 1`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -2887,8 +2918,10 @@ exports[`snapshotAllPages Animated 1`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -2906,7 +2939,7 @@ exports[`snapshotAllPages Animated 1`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -2954,8 +2987,10 @@ exports[`snapshotAllPages Animated 1`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -2973,7 +3008,7 @@ exports[`snapshotAllPages Animated 1`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -3055,7 +3090,13 @@ exports[`snapshotAllPages Animated 1`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        {
+          "color": "#3c3c4399",
+        }
+      }
+    >
       Should not crash when transform style key is undefined
     </Text>
     <View
@@ -3098,7 +3139,13 @@ exports[`snapshotAllPages Animated 2`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          {
+            "color": "#3c3c4399",
+          }
+        }
+      >
         Use Native Driver
       </Text>
       <RCTSwitch
@@ -3287,7 +3334,13 @@ exports[`snapshotAllPages Animated 3`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          {
+            "color": "#3c3c4399",
+          }
+        }
+      >
         Use Native Driver
       </Text>
       <RCTSwitch
@@ -3418,7 +3471,13 @@ exports[`snapshotAllPages Animated 4`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          {
+            "color": "#3c3c4399",
+          }
+        }
+      >
         Use Native Driver
       </Text>
       <RCTSwitch
@@ -3495,15 +3554,26 @@ exports[`snapshotAllPages Animated 4`] = `
         >
           <Text
             style={
-              {
-                "fontSize": 18,
-                "fontWeight": "300",
-              }
+              [
+                {
+                  "fontSize": 18,
+                  "fontWeight": "300",
+                },
+                {
+                  "color": "#3c3c4399",
+                },
+              ]
             }
           >
             Parallel
           </Text>
-          <Text>
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
             Starts a number of animations at the same time
           </Text>
           <View
@@ -3789,15 +3859,26 @@ exports[`snapshotAllPages Animated 4`] = `
         >
           <Text
             style={
-              {
-                "fontSize": 18,
-                "fontWeight": "300",
-              }
+              [
+                {
+                  "fontSize": 18,
+                  "fontWeight": "300",
+                },
+                {
+                  "color": "#3c3c4399",
+                },
+              ]
             }
           >
             Sequence
           </Text>
-          <Text>
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
             Starts the animations in order, waiting for each to complete before starting the next
           </Text>
           <View
@@ -4083,15 +4164,26 @@ exports[`snapshotAllPages Animated 4`] = `
         >
           <Text
             style={
-              {
-                "fontSize": 18,
-                "fontWeight": "300",
-              }
+              [
+                {
+                  "fontSize": 18,
+                  "fontWeight": "300",
+                },
+                {
+                  "color": "#3c3c4399",
+                },
+              ]
             }
           >
             Stagger
           </Text>
-          <Text>
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
             Starts animations in order and in parallel, but with successive delays
           </Text>
           <View
@@ -4377,15 +4469,26 @@ exports[`snapshotAllPages Animated 4`] = `
         >
           <Text
             style={
-              {
-                "fontSize": 18,
-                "fontWeight": "300",
-              }
+              [
+                {
+                  "fontSize": 18,
+                  "fontWeight": "300",
+                },
+                {
+                  "color": "#3c3c4399",
+                },
+              ]
             }
           >
             Delay
           </Text>
-          <Text>
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
             Starts an animation after a given delay
           </Text>
           <View
@@ -4686,7 +4789,13 @@ exports[`snapshotAllPages Animated 5`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          {
+            "color": "#3c3c4399",
+          }
+        }
+      >
         Use Native Driver
       </Text>
       <RCTSwitch
@@ -4841,10 +4950,15 @@ exports[`snapshotAllPages Animated 5`] = `
           >
             <Text
               style={
-                {
-                  "fontSize": 18,
-                  "fontWeight": "300",
-                }
+                [
+                  {
+                    "fontSize": 18,
+                    "fontWeight": "300",
+                  },
+                  {
+                    "color": "#3c3c4399",
+                  },
+                ]
               }
             >
               Bounce
@@ -4958,10 +5072,15 @@ exports[`snapshotAllPages Animated 5`] = `
           >
             <Text
               style={
-                {
-                  "fontSize": 18,
-                  "fontWeight": "300",
-                }
+                [
+                  {
+                    "fontSize": 18,
+                    "fontWeight": "300",
+                  },
+                  {
+                    "color": "#3c3c4399",
+                  },
+                ]
               }
             >
               Ease
@@ -5075,10 +5194,15 @@ exports[`snapshotAllPages Animated 5`] = `
           >
             <Text
               style={
-                {
-                  "fontSize": 18,
-                  "fontWeight": "300",
-                }
+                [
+                  {
+                    "fontSize": 18,
+                    "fontWeight": "300",
+                  },
+                  {
+                    "color": "#3c3c4399",
+                  },
+                ]
               }
             >
               Elastic
@@ -5216,10 +5340,15 @@ exports[`snapshotAllPages Animated 5`] = `
           >
             <Text
               style={
-                {
-                  "fontSize": 18,
-                  "fontWeight": "300",
-                }
+                [
+                  {
+                    "fontSize": 18,
+                    "fontWeight": "300",
+                  },
+                  {
+                    "color": "#3c3c4399",
+                  },
+                ]
               }
             >
               Linear
@@ -5333,10 +5462,15 @@ exports[`snapshotAllPages Animated 5`] = `
           >
             <Text
               style={
-                {
-                  "fontSize": 18,
-                  "fontWeight": "300",
-                }
+                [
+                  {
+                    "fontSize": 18,
+                    "fontWeight": "300",
+                  },
+                  {
+                    "color": "#3c3c4399",
+                  },
+                ]
               }
             >
               Quad
@@ -5450,10 +5584,15 @@ exports[`snapshotAllPages Animated 5`] = `
           >
             <Text
               style={
-                {
-                  "fontSize": 18,
-                  "fontWeight": "300",
-                }
+                [
+                  {
+                    "fontSize": 18,
+                    "fontWeight": "300",
+                  },
+                  {
+                    "color": "#3c3c4399",
+                  },
+                ]
               }
             >
               Cubic
@@ -5576,7 +5715,13 @@ exports[`snapshotAllPages Animated 6`] = `
       ]
     }
   >
-    <Text>
+    <Text
+      style={
+        {
+          "color": "#3c3c4399",
+        }
+      }
+    >
       Note you cannot \`useNativeDriver\` for layout properties.
     </Text>
   </View>
@@ -5719,7 +5864,13 @@ exports[`snapshotAllPages Animated 7`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          {
+            "color": "#3c3c4399",
+          }
+        }
+      >
         Use Native Driver
       </Text>
       <RCTSwitch
@@ -5846,7 +5997,13 @@ exports[`snapshotAllPages Animated 8`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          {
+            "color": "#3c3c4399",
+          }
+        }
+      >
         Use Native Driver
       </Text>
       <RCTSwitch
@@ -6169,7 +6326,13 @@ exports[`snapshotAllPages Animated 9`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          {
+            "color": "#3c3c4399",
+          }
+        }
+      >
         Use Native Driver
       </Text>
       <RCTSwitch
@@ -6300,7 +6463,13 @@ exports[`snapshotAllPages Animated 10`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          {
+            "color": "#3c3c4399",
+          }
+        }
+      >
         Use Native Driver
       </Text>
       <RCTSwitch
@@ -6403,7 +6572,13 @@ exports[`snapshotAllPages Animated 10`] = `
 `;
 
 exports[`snapshotAllPages Animated 11`] = `
-<Text>
+<Text
+  style={
+    {
+      "color": "#3c3c4399",
+    }
+  }
+>
   Checkout the Gratuitous Animation App!
 </Text>
 `;
@@ -11455,7 +11630,6 @@ exports[`snapshotAllPages FlatList 1`] = `
         renderItem={[Function]}
         scrollEventThrottle={0.0001}
         stickyHeaderIndices={[]}
-        style={{}}
         viewabilityConfig={
           {
             "minimumViewTime": 3000,
@@ -33689,6 +33863,394 @@ exports[`snapshotAllPages Performance Comparison Examples 6`] = `
 </View>
 `;
 
+exports[`snapshotAllPages PixelRatio 1`] = `
+<View
+  style={
+    {
+      "alignSelf": "center",
+      "flex": 1,
+      "marginVertical": 40,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backfaceVisibility": "hidden",
+        "height": 200,
+        "justifyContent": "center",
+        "width": 200,
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "backgroundColor": {
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
+            },
+            "borderBottomWidth": 1.5,
+            "borderColor": {
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
+            },
+            "borderRadius": 3,
+            "borderWidth": 1,
+          },
+        ]
+      }
+    >
+      <View
+        style={{}}
+      >
+        <View
+          style={{}}
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": {
+                    "windowsbrush": [
+                      "ButtonForeground",
+                    ],
+                  },
+                  "fontSize": 14,
+                  "fontWeight": "400",
+                  "margin": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Get Pixel Density
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages PixelRatio 2`] = `
+<View
+  style={
+    {
+      "alignSelf": "center",
+      "flex": 1,
+      "marginVertical": 40,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backfaceVisibility": "hidden",
+        "height": 200,
+        "justifyContent": "center",
+        "width": 200,
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "backgroundColor": {
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
+            },
+            "borderBottomWidth": 1.5,
+            "borderColor": {
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
+            },
+            "borderRadius": 3,
+            "borderWidth": 1,
+          },
+        ]
+      }
+    >
+      <View
+        style={{}}
+      >
+        <View
+          style={{}}
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": {
+                    "windowsbrush": [
+                      "ButtonForeground",
+                    ],
+                  },
+                  "fontSize": 14,
+                  "fontWeight": "400",
+                  "margin": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Get Font Scale
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages PixelRatio 3`] = `
+<View
+  style={
+    {
+      "alignSelf": "center",
+      "flex": 1,
+      "marginVertical": 40,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backfaceVisibility": "hidden",
+        "height": 200,
+        "justifyContent": "center",
+        "width": 200,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "fontWeight": "bold",
+          }
+        }
+      >
+        Layout Size(dp): 
+      </Text>
+      <TextInput
+        keyboardType="numeric"
+        onChangeText={[Function]}
+        style={
+          {
+            "alignSelf": "center",
+            "borderRadius": 6,
+            "borderWidth": 1,
+            "height": 30,
+            "marginLeft": 14,
+            "paddingHorizontal": 8,
+            "paddingVertical": 0,
+            "width": 200,
+          }
+        }
+        value=""
+      />
+    </View>
+    <View
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+          },
+          {
+            "marginTop": 16,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          {
+            "fontWeight": "bold",
+          }
+        }
+      >
+        Pixel Size: 
+      </Text>
+      <Text>
+        0
+        px
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages PixelRatio 4`] = `
+<View
+  style={
+    {
+      "alignSelf": "center",
+      "flex": 1,
+      "marginVertical": 40,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backfaceVisibility": "hidden",
+        "height": 200,
+        "justifyContent": "center",
+        "width": 200,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "fontWeight": "bold",
+          }
+        }
+      >
+        Layout Size(dp): 
+      </Text>
+      <TextInput
+        keyboardType="numeric"
+        onChangeText={[Function]}
+        style={
+          {
+            "alignSelf": "center",
+            "borderRadius": 6,
+            "borderWidth": 1,
+            "height": 30,
+            "marginLeft": 14,
+            "paddingHorizontal": 8,
+            "paddingVertical": 0,
+            "width": 200,
+          }
+        }
+        value=""
+      />
+    </View>
+    <View
+      style={
+        [
+          {
+            "alignItems": "center",
+            "flexDirection": "row",
+          },
+          {
+            "marginTop": 16,
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          {
+            "fontWeight": "bold",
+          }
+        }
+      >
+        Nearest Layout Size: 
+      </Text>
+      <Text>
+        0
+        dp
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
 exports[`snapshotAllPages PlatformColor 1`] = `
 <View
   style={
@@ -48073,7 +48635,6 @@ exports[`snapshotAllPages ScrollViewAnimated 1`] = `
     horizontal={true}
     onScroll={[Function]}
     scrollEventThrottle={16}
-    style={{}}
   >
     <View>
       <View
@@ -68683,8 +69244,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -68702,7 +69265,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -68750,8 +69313,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -68769,7 +69334,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -68817,8 +69382,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -68839,7 +69406,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -68887,8 +69454,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -68906,7 +69475,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -68954,8 +69523,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -68973,7 +69544,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -69021,8 +69592,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -69040,7 +69613,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -69088,8 +69661,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -69107,7 +69682,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -69155,8 +69730,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -69174,7 +69751,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -69222,8 +69799,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -69241,7 +69820,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -69289,8 +69868,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -69308,7 +69889,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -69356,8 +69937,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -69375,7 +69958,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -69423,8 +70006,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -69442,7 +70027,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -69490,8 +70075,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -69509,7 +70096,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -69557,8 +70144,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -69576,7 +70165,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -69624,8 +70213,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -69643,7 +70234,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -69691,8 +70282,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -69710,7 +70303,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -69758,8 +70351,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -69777,7 +70372,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -69825,8 +70420,10 @@ exports[`snapshotAllPages Text 1`] = `
                     style={
                       [
                         {
+                          "borderColor": "#005dffff",
+                        },
+                        {
                           "alignItems": "center",
-                          "borderColor": "rgba(0,0,0, 0.1)",
                           "borderRadius": 16,
                           "borderWidth": 1,
                           "padding": 6,
@@ -69844,7 +70441,7 @@ exports[`snapshotAllPages Text 1`] = `
                     <Text
                       style={
                         {
-                          "color": "black",
+                          "color": "#3c3c4399",
                         }
                       }
                     >
@@ -69920,8 +70517,10 @@ exports[`snapshotAllPages Text 1`] = `
                   style={
                     [
                       {
+                        "borderColor": "#005dffff",
+                      },
+                      {
                         "alignItems": "center",
-                        "borderColor": "rgba(0,0,0, 0.1)",
                         "borderRadius": 16,
                         "borderWidth": 1,
                         "padding": 6,
@@ -69942,7 +70541,7 @@ exports[`snapshotAllPages Text 1`] = `
                   <Text
                     style={
                       {
-                        "color": "black",
+                        "color": "#3c3c4399",
                       }
                     }
                   >
@@ -69990,8 +70589,10 @@ exports[`snapshotAllPages Text 1`] = `
                   style={
                     [
                       {
+                        "borderColor": "#005dffff",
+                      },
+                      {
                         "alignItems": "center",
-                        "borderColor": "rgba(0,0,0, 0.1)",
                         "borderRadius": 16,
                         "borderWidth": 1,
                         "padding": 6,
@@ -70009,7 +70610,7 @@ exports[`snapshotAllPages Text 1`] = `
                   <Text
                     style={
                       {
-                        "color": "black",
+                        "color": "#3c3c4399",
                       }
                     }
                   >
@@ -70057,8 +70658,10 @@ exports[`snapshotAllPages Text 1`] = `
                   style={
                     [
                       {
+                        "borderColor": "#005dffff",
+                      },
+                      {
                         "alignItems": "center",
-                        "borderColor": "rgba(0,0,0, 0.1)",
                         "borderRadius": 16,
                         "borderWidth": 1,
                         "padding": 6,
@@ -70076,7 +70679,7 @@ exports[`snapshotAllPages Text 1`] = `
                   <Text
                     style={
                       {
-                        "color": "black",
+                        "color": "#3c3c4399",
                       }
                     }
                   >
@@ -79277,7 +79880,7 @@ exports[`snapshotAllPages TextInput 21`] = `
             "fontSize": 16,
           },
           {
-            "fontWeight": "800",
+            "fontWeight": 800,
           },
         ],
       ]
@@ -84575,6 +85178,113 @@ exports[`snapshotAllPages View 6`] = `
 
 exports[`snapshotAllPages View 7`] = `
 <View
+  style={
+    {
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+    }
+  }
+  testID="view-test-rounded-borders-percentages"
+>
+  <View
+    style={
+      {
+        "borderRadius": "50%",
+        "borderWidth": 1,
+        "height": 50,
+        "marginRight": 10,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderRadius": "50%",
+        "borderWidth": 10,
+        "height": 50,
+        "marginRight": 10,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderBottomLeftRadius": "100%",
+        "borderBottomRightRadius": "50%",
+        "borderTopLeftRadius": "10%",
+        "borderTopRightRadius": "20%",
+        "borderWidth": 1,
+        "height": 50,
+        "marginRight": 10,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderBottomLeftRadius": "100%",
+        "borderBottomRightRadius": "50%",
+        "borderTopLeftRadius": "10%",
+        "borderTopRightRadius": "20%",
+        "borderWidth": 10,
+        "height": 50,
+        "marginRight": 10,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderLeftWidth": 6,
+        "borderTopLeftRadius": "40%",
+        "borderTopWidth": 6,
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderRightWidth": 6,
+        "borderTopRightRadius": "40%",
+        "borderTopWidth": 6,
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderBottomLeftRadius": "40%",
+        "borderBottomWidth": 6,
+        "borderLeftWidth": 6,
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderBottomRightRadius": "40%",
+        "borderBottomWidth": 6,
+        "borderRightWidth": 6,
+        "height": 50,
+        "width": 50,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages View 8`] = `
+<View
   accessibilityLabel="Rounded Borders Example"
   accessible={true}
   style={
@@ -84701,7 +85411,7 @@ exports[`snapshotAllPages View 7`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 8`] = `
+exports[`snapshotAllPages View 9`] = `
 <View
   accessibilityLabel="Opacity Example"
   accessible={true}
@@ -84787,7 +85497,7 @@ exports[`snapshotAllPages View 8`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 9`] = `
+exports[`snapshotAllPages View 10`] = `
 <View
   accessibilityState={
     {
@@ -84946,7 +85656,7 @@ exports[`snapshotAllPages View 9`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 10`] = `
+exports[`snapshotAllPages View 11`] = `
 <View
   accessibilityState={
     {
@@ -85089,7 +85799,7 @@ exports[`snapshotAllPages View 10`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 11`] = `
+exports[`snapshotAllPages View 12`] = `
 <View
   style={
     {
@@ -85182,7 +85892,7 @@ exports[`snapshotAllPages View 11`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 12`] = `
+exports[`snapshotAllPages View 13`] = `
 <View
   accessibilityState={
     {
@@ -85284,7 +85994,7 @@ exports[`snapshotAllPages View 12`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 13`] = `
+exports[`snapshotAllPages View 14`] = `
 <View
   accessibilityLabel="Backface Visibility Example"
   accessible={true}
@@ -85402,7 +86112,7 @@ exports[`snapshotAllPages View 13`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 14`] = `
+exports[`snapshotAllPages View 15`] = `
 <View
   accessibilityLabel="Aria-Label Example"
   accessible={true}
@@ -85427,7 +86137,7 @@ exports[`snapshotAllPages View 14`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 15`] = `
+exports[`snapshotAllPages View 16`] = `
 <View
   accessibilityLabel="Flex Gap Example"
   accessible={true}
@@ -85544,7 +86254,7 @@ exports[`snapshotAllPages View 15`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 16`] = `
+exports[`snapshotAllPages View 17`] = `
 <View
   accessible={true}
   style={
@@ -85767,7 +86477,7 @@ exports[`snapshotAllPages View 16`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 17`] = `
+exports[`snapshotAllPages View 18`] = `
 <View
   accessibilityLabel="Logical Border Color Example"
   accessible={true}
@@ -85857,7 +86567,7 @@ exports[`snapshotAllPages View 17`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 18`] = `
+exports[`snapshotAllPages View 19`] = `
 <View
   accessibilityLabel="Layout Conformance Example"
   accessible={true}
@@ -85978,7 +86688,7 @@ exports[`snapshotAllPages View 18`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 19`] = `
+exports[`snapshotAllPages View 20`] = `
 <View
   accessibilityLabel="NativeID Example"
   accessible={true}
@@ -85991,7 +86701,7 @@ exports[`snapshotAllPages View 19`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 20`] = `
+exports[`snapshotAllPages View 21`] = `
 <View
   accessibilityActions={
     [
@@ -86036,7 +86746,7 @@ exports[`snapshotAllPages View 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 21`] = `
+exports[`snapshotAllPages View 22`] = `
 <View
   accessibilityLabel="Shadow Example"
   accessible={true}
@@ -86057,7 +86767,7 @@ exports[`snapshotAllPages View 21`] = `
 />
 `;
 
-exports[`snapshotAllPages View 22`] = `
+exports[`snapshotAllPages View 23`] = `
 <View
   accessibilityLabel="HitSlop Example"
   accessible={true}
@@ -86082,7 +86792,7 @@ exports[`snapshotAllPages View 22`] = `
 />
 `;
 
-exports[`snapshotAllPages View 23`] = `
+exports[`snapshotAllPages View 24`] = `
 <View
   accessibilityLabel="Tooltip Example"
   accessible={true}
@@ -86879,8 +87589,10 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -86898,7 +87610,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -86946,8 +87658,10 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -86965,7 +87679,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -87013,8 +87727,10 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -87032,7 +87748,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -87080,8 +87796,10 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -87102,7 +87820,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -87150,8 +87868,10 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -87169,7 +87889,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -87217,8 +87937,10 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -87236,7 +87958,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -87284,8 +88006,10 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -87303,7 +88027,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -87351,8 +88075,10 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -87370,7 +88096,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -87418,8 +88144,10 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -87437,7 +88165,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -87485,8 +88213,10 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -87504,7 +88234,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -87552,8 +88282,10 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -87571,7 +88303,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >
@@ -87619,8 +88351,10 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           style={
             [
               {
+                "borderColor": "#005dffff",
+              },
+              {
                 "alignItems": "center",
-                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -87638,7 +88372,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
           <Text
             style={
               {
-                "color": "black",
+                "color": "#3c3c4399",
               }
             }
           >

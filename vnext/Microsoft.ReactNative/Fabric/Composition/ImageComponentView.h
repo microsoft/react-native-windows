@@ -70,9 +70,9 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
   struct WindowsImageResponseObserver : facebook::react::ImageResponseObserver {
    public:
     WindowsImageResponseObserver(ImageComponentView &image);
-    void didReceiveProgress(float progress) const override;
-    void didReceiveImage(facebook::react::ImageResponse const &imageResponse) const override;
-    void didReceiveFailure() const override;
+    void didReceiveProgress(float progress, int64_t loaded, int64_t total) const override;
+    void didReceiveImage(const facebook::react::ImageResponse &imageResponse) const override;
+    void didReceiveFailure(const facebook::react::ImageLoadError &error) const override;
 
    private:
     winrt::com_ptr<ImageComponentView> m_image;
@@ -84,7 +84,7 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
   void ImageLoadStart() noexcept;
   void ImageLoaded() noexcept;
   void didReceiveImage(const std::shared_ptr<ImageResponseImage> &wicbmp) noexcept;
-  void didReceiveFailureFromObserver() noexcept;
+  void didReceiveFailureFromObserver(const facebook::react::ImageLoadError &error) noexcept;
   void setStateAndResubscribeImageResponseObserver(
       facebook::react::ImageShadowNode::ConcreteState::Shared const &state) noexcept;
   bool themeEffectsImage() const noexcept;
