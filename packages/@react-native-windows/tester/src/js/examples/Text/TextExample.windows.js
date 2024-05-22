@@ -10,6 +10,7 @@
 
 // This is a port of TextExample.android.js
 // Image inline in Text removed
+// TextInlineViewsExample is commented out
 
 import TextLegend from '../../components/TextLegend';
 import TextAdjustsDynamicLayoutExample from './TextAdjustsDynamicLayoutExample';
@@ -1534,7 +1535,7 @@ const examples = [
       );
     },
   },
-  TextInlineViewsExample,
+  // TextInlineViewsExample,
 ];
 
 module.exports = ({
