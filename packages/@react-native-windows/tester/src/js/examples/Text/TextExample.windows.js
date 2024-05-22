@@ -10,9 +10,11 @@
 
 // This is a port of TextExample.android.js
 // Image inline in Text removed
+// TextInlineViewsExample is commented out
 
 import TextLegend from '../../components/TextLegend';
 import TextAdjustsDynamicLayoutExample from './TextAdjustsDynamicLayoutExample';
+import TextInlineViewsExample from './TextInlineViewsExample';
 import React from 'react';
 import {
   LayoutAnimation,
@@ -1486,19 +1488,22 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
 const examples = [
   {
     title: 'Basic text',
-    render: function (): JSX.Element {
+    name: 'basicText',
+    render: function (): React.Element<typeof TextExample> {
       return <TextExample />;
     },
   },
   {
     platform: 'android',
     title: "Text `alignItems: 'baseline'` style",
+    name: 'alignItemsBaseline',
     render: function (): React.Node {
       return <TextBaseLineLayoutExample />;
     },
   },
   {
     title: 'Selectable Text',
+    name: 'selectableText',
     render: function (): React.Node {
       return (
         <View>
@@ -1509,6 +1514,7 @@ const examples = [
   },
   {
     title: 'Text alignment',
+    name: 'textAlignment',
     render: function (): React.Node {
       return (
         <View>
@@ -1529,6 +1535,7 @@ const examples = [
       );
     },
   },
+  // TextInlineViewsExample,
 ];
 
 module.exports = ({

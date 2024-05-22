@@ -354,7 +354,7 @@ const examples: Array<RNTesterModuleExample> = [
             'normal',
             'bold',
             '900',
-            '800',
+            800,
             '700',
             '600',
             '500',

@@ -1547,6 +1547,12 @@ function InternalTextInput(props: Props): React.Node {
 
   const style = flattenStyle<TextStyleProp>(props.style);
 
+  if (typeof style?.fontWeight === 'number') {
+    // $FlowFixMe[prop-missing]
+    // $FlowFixMe[cannot-write]
+    style.fontWeight = style?.fontWeight.toString();
+  }
+
   if (Platform.OS === 'ios') {
     const RCTTextInputView =
       props.multiline === true
