@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 26 Apr 2024 22:42:37 GMT and should not be manually modified.
+This log was last generated on Thu, 23 May 2024 15:40:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.4
+
+Thu, 23 May 2024 15:40:04 GMT
+
+### Patches
+
+- Fix yarn build with latest Node.js versions (vmorozov@microsoft.com)
 
 ## 0.73.3
 

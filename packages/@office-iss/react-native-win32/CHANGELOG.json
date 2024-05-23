@@ -2,6 +2,27 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 23 May 2024 15:40:04 GMT",
+      "version": "0.73.6",
+      "tag": "@office-iss/react-native-win32_v0.73.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "0e1b8e1d5fec5a25b43234733ebcf621bde8c04e",
+            "comment": "Fix for PaperUIManger"
+          },
+          {
+            "author": "email not defined",
+            "package": "@office-iss/react-native-win32",
+            "commit": "4c08164bf076cae9c341b048fa4bad145a63be08",
+            "comment": "integrate 73.8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 15 May 2024 20:50:52 GMT",
       "version": "0.73.5",
       "tag": "@office-iss/react-native-win32_v0.73.5",

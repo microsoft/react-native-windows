@@ -1,8 +1,17 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 15 May 2024 20:50:52 GMT and should not be manually modified.
+This log was last generated on Thu, 23 May 2024 15:40:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.6
+
+Thu, 23 May 2024 15:40:04 GMT
+
+### Patches
+
+- Fix for PaperUIManger (30809111+acoates-ms@users.noreply.github.com)
+- integrate 73.8 (email not defined)
 
 ## 0.73.5
 
