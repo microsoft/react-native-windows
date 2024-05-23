@@ -27,8 +27,7 @@ struct ImageLoader {
       std::string uri,
       winrt::Microsoft::ReactNative::JSValue &&headers,
       winrt::Microsoft::ReactNative::ReactPromise<
-          Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType>
-          &&result) noexcept;
+          Microsoft::ReactNativeSpecs::ImageLoaderIOSSpec_getSizeWithHeaders_returnType> &&result) noexcept;
 
   REACT_METHOD(prefetchImage)
   void prefetchImage(std::string uri, winrt::Microsoft::ReactNative::ReactPromise<bool> &&result) noexcept;
