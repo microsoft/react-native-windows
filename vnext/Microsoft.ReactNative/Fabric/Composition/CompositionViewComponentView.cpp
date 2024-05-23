@@ -175,6 +175,10 @@ void ComponentView::updateLayoutMetrics(
   base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 }
 
+const facebook::react::LayoutMetrics &ComponentView::layoutMetrics() const noexcept {
+  return m_layoutMetrics;
+}
+
 void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
   if ((m_flags & ComponentViewFeatures::NativeBorder) == ComponentViewFeatures::NativeBorder) {
     finalizeBorderUpdates(m_layoutMetrics, *viewProps());
