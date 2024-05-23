@@ -86,6 +86,10 @@ for (const propName of Object.getOwnPropertyNames(
   // $FlowFixMe
   UIManagerJS[propName] = NativeUIManager[propName];
 }
+for (const propName of Object.getOwnPropertyNames(NativeUIManager)) {
+  // $FlowFixMe
+  UIManagerJS[propName] = NativeUIManager[propName];
+}
 // Windows]
 
 /* $FlowFixMe(>=0.123.0 site=react_native_fb) This comment suppresses an error
