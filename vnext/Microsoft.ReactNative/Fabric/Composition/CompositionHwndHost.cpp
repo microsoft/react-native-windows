@@ -101,8 +101,9 @@ void CompositionHwndHost::UpdateSize() noexcept {
           static_cast<float>(m_width / ScaleFactor()), static_cast<float>(m_height / ScaleFactor())};
       // Do not relayout when minimized
       if (!IsIconic(m_hwnd)) {
-        m_compRootView.Size(size);
-        m_compRootView.Arrange(size);
+        winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+        constraints.MinimumSize = constraints.MaximumSize = size;
+        m_compRootView.Arrange(constraints, {0, 0});
       }
     }
   }
