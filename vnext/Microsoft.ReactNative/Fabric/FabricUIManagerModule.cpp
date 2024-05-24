@@ -356,8 +356,6 @@ void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(const faceboo
   */
 }
 
-void FabricUIManager::schedulerDidRequestUpdateToPreallocatedView(const facebook::react::ShadowNode &shadowView) {}
-
 void FabricUIManager::schedulerDidDispatchCommand(
     facebook::react::ShadowView const &shadowView,
     std::string const &commandName,
