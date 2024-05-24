@@ -223,7 +223,7 @@ function TextLinkifyExample(props: {}): React.Node {
 
 function TextTransformExample(props: {}): React.Node {
   return (
-    <View testID={'text-transform'}>
+    <>
       <Text style={{textTransform: 'uppercase'}}>
         This text should be uppercased.
       </Text>
@@ -294,7 +294,7 @@ function TextTransformExample(props: {}): React.Node {
         }}>
         Works with other text styles
       </Text>
-    </View>
+    </>
   );
 }
 
@@ -953,7 +953,7 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
         {texts}
         {marker}
       </View>
-
+{/* [Windows #12997 - This tests renders <View> nested within <Text> which is not supported yet]
       <Text style={subtitleStyle}>{'Interleaving <View> and <Text>:'}</Text>
       <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
         {marker}
@@ -972,6 +972,7 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
         </Text>
         {marker}
       </View>
+*/}
     </View>
   );
 }
@@ -1297,7 +1298,7 @@ const examples = [
     title: 'Text Transform',
     name: 'textTransform',
     render: function (): React.Node {
-      return <TextTransformExample />;
+      return <TextTransformExample testID={'text-transform'} />;
     },
   },
 /* [Windows
