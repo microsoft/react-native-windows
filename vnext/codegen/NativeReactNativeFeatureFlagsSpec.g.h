@@ -27,15 +27,14 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{8, L"enableMicrotasks"},
       SyncMethod<bool() noexcept>{9, L"enableSynchronousStateUpdates"},
       SyncMethod<bool() noexcept>{10, L"enableUIConsistency"},
-      SyncMethod<bool() noexcept>{11, L"fixMountedFlagAndFixPreallocationClone"},
-      SyncMethod<bool() noexcept>{12, L"forceBatchingMountItemsOnAndroid"},
-      SyncMethod<bool() noexcept>{13, L"inspectorEnableCxxInspectorPackagerConnection"},
-      SyncMethod<bool() noexcept>{14, L"inspectorEnableModernCDPRegistry"},
-      SyncMethod<bool() noexcept>{15, L"lazyAnimationCallbacks"},
-      SyncMethod<bool() noexcept>{16, L"preventDoubleTextMeasure"},
-      SyncMethod<bool() noexcept>{17, L"useModernRuntimeScheduler"},
-      SyncMethod<bool() noexcept>{18, L"useNativeViewConfigsInBridgelessMode"},
-      SyncMethod<bool() noexcept>{19, L"useStateAlignmentMechanism"},
+      SyncMethod<bool() noexcept>{11, L"forceBatchingMountItemsOnAndroid"},
+      SyncMethod<bool() noexcept>{12, L"inspectorEnableCxxInspectorPackagerConnection"},
+      SyncMethod<bool() noexcept>{13, L"inspectorEnableModernCDPRegistry"},
+      SyncMethod<bool() noexcept>{14, L"lazyAnimationCallbacks"},
+      SyncMethod<bool() noexcept>{15, L"preventDoubleTextMeasure"},
+      SyncMethod<bool() noexcept>{16, L"useModernRuntimeScheduler"},
+      SyncMethod<bool() noexcept>{17, L"useNativeViewConfigsInBridgelessMode"},
+      SyncMethod<bool() noexcept>{18, L"useStateAlignmentMechanism"},
   };
 
   template <class TModule>
@@ -99,46 +98,41 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(enableUIConsistency) static bool enableUIConsistency() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           11,
-          "fixMountedFlagAndFixPreallocationClone",
-          "    REACT_SYNC_METHOD(fixMountedFlagAndFixPreallocationClone) bool fixMountedFlagAndFixPreallocationClone() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(fixMountedFlagAndFixPreallocationClone) static bool fixMountedFlagAndFixPreallocationClone() noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          12,
           "forceBatchingMountItemsOnAndroid",
           "    REACT_SYNC_METHOD(forceBatchingMountItemsOnAndroid) bool forceBatchingMountItemsOnAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(forceBatchingMountItemsOnAndroid) static bool forceBatchingMountItemsOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          13,
+          12,
           "inspectorEnableCxxInspectorPackagerConnection",
           "    REACT_SYNC_METHOD(inspectorEnableCxxInspectorPackagerConnection) bool inspectorEnableCxxInspectorPackagerConnection() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(inspectorEnableCxxInspectorPackagerConnection) static bool inspectorEnableCxxInspectorPackagerConnection() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          14,
+          13,
           "inspectorEnableModernCDPRegistry",
           "    REACT_SYNC_METHOD(inspectorEnableModernCDPRegistry) bool inspectorEnableModernCDPRegistry() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(inspectorEnableModernCDPRegistry) static bool inspectorEnableModernCDPRegistry() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          15,
+          14,
           "lazyAnimationCallbacks",
           "    REACT_SYNC_METHOD(lazyAnimationCallbacks) bool lazyAnimationCallbacks() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(lazyAnimationCallbacks) static bool lazyAnimationCallbacks() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          16,
+          15,
           "preventDoubleTextMeasure",
           "    REACT_SYNC_METHOD(preventDoubleTextMeasure) bool preventDoubleTextMeasure() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(preventDoubleTextMeasure) static bool preventDoubleTextMeasure() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          17,
+          16,
           "useModernRuntimeScheduler",
           "    REACT_SYNC_METHOD(useModernRuntimeScheduler) bool useModernRuntimeScheduler() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useModernRuntimeScheduler) static bool useModernRuntimeScheduler() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          18,
+          17,
           "useNativeViewConfigsInBridgelessMode",
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) static bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          19,
+          18,
           "useStateAlignmentMechanism",
           "    REACT_SYNC_METHOD(useStateAlignmentMechanism) bool useStateAlignmentMechanism() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useStateAlignmentMechanism) static bool useStateAlignmentMechanism() noexcept { /* implementation */ }\n");

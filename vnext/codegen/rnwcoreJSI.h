@@ -31,7 +31,6 @@ public:
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
-  virtual bool fixMountedFlagAndFixPreallocationClone(jsi::Runtime &rt) = 0;
   virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableModernCDPRegistry(jsi::Runtime &rt) = 0;
@@ -150,14 +149,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableUIConsistency, jsInvoker_, instance_);
-    }
-    bool fixMountedFlagAndFixPreallocationClone(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::fixMountedFlagAndFixPreallocationClone) == 1,
-          "Expected fixMountedFlagAndFixPreallocationClone(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::fixMountedFlagAndFixPreallocationClone, jsInvoker_, instance_);
     }
     bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) override {
       static_assert(

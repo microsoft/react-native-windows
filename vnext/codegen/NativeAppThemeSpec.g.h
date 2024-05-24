@@ -13,11 +13,6 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct AppThemeSpec_AppThemeData {
-    bool isHighContrast;
-    AppThemeSpec_HighContrastColors highContrastColors;
-};
-
 struct AppThemeSpec_HighContrastColors {
     std::string ButtonFaceColor;
     std::string ButtonTextColor;
@@ -29,14 +24,11 @@ struct AppThemeSpec_HighContrastColors {
     std::string WindowTextColor;
 };
 
+struct AppThemeSpec_AppThemeData {
+    bool isHighContrast;
+    AppThemeSpec_HighContrastColors highContrastColors;
+};
 
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AppThemeSpec_AppThemeData*) noexcept {
-    winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"isHighContrast", &AppThemeSpec_AppThemeData::isHighContrast},
-        {L"highContrastColors", &AppThemeSpec_AppThemeData::highContrastColors},
-    };
-    return fieldMap;
-}
 
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AppThemeSpec_HighContrastColors*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
@@ -48,6 +40,14 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AppThemeSpec_HighCo
         {L"HotlightColor", &AppThemeSpec_HighContrastColors::HotlightColor},
         {L"WindowColor", &AppThemeSpec_HighContrastColors::WindowColor},
         {L"WindowTextColor", &AppThemeSpec_HighContrastColors::WindowTextColor},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(AppThemeSpec_AppThemeData*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"isHighContrast", &AppThemeSpec_AppThemeData::isHighContrast},
+        {L"highContrastColors", &AppThemeSpec_AppThemeData::highContrastColors},
     };
     return fieldMap;
 }

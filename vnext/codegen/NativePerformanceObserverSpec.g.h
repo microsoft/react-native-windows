@@ -13,11 +13,6 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct PerformanceObserverSpec_GetPendingEntriesResult {
-    std::vector<PerformanceObserverSpec_RawPerformanceEntry> entries;
-    double droppedEntriesCount;
-};
-
 struct PerformanceObserverSpec_RawPerformanceEntry {
     std::string name;
     double entryType;
@@ -28,14 +23,11 @@ struct PerformanceObserverSpec_RawPerformanceEntry {
     std::optional<double> interactionId;
 };
 
+struct PerformanceObserverSpec_GetPendingEntriesResult {
+    std::vector<PerformanceObserverSpec_RawPerformanceEntry> entries;
+    double droppedEntriesCount;
+};
 
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PerformanceObserverSpec_GetPendingEntriesResult*) noexcept {
-    winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"entries", &PerformanceObserverSpec_GetPendingEntriesResult::entries},
-        {L"droppedEntriesCount", &PerformanceObserverSpec_GetPendingEntriesResult::droppedEntriesCount},
-    };
-    return fieldMap;
-}
 
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PerformanceObserverSpec_RawPerformanceEntry*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
@@ -46,6 +38,14 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PerformanceObserver
         {L"processingStart", &PerformanceObserverSpec_RawPerformanceEntry::processingStart},
         {L"processingEnd", &PerformanceObserverSpec_RawPerformanceEntry::processingEnd},
         {L"interactionId", &PerformanceObserverSpec_RawPerformanceEntry::interactionId},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PerformanceObserverSpec_GetPendingEntriesResult*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"entries", &PerformanceObserverSpec_GetPendingEntriesResult::entries},
+        {L"droppedEntriesCount", &PerformanceObserverSpec_GetPendingEntriesResult::droppedEntriesCount},
     };
     return fieldMap;
 }

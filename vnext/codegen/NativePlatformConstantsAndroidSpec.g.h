@@ -13,6 +13,13 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+struct PlatformConstantsAndroidSpec_ReactNativeVersionAndroid {
+    double major;
+    double minor;
+    double patch;
+    std::optional<double> prerelease;
+};
+
 struct PlatformConstantsAndroidSpec_PlatformConstantsAndroid {
     bool isTesting;
     std::optional<bool> isDisableAnimations;
@@ -28,13 +35,16 @@ struct PlatformConstantsAndroidSpec_PlatformConstantsAndroid {
     std::string Manufacturer;
 };
 
-struct PlatformConstantsAndroidSpec_ReactNativeVersionAndroid {
-    double major;
-    double minor;
-    double patch;
-    std::optional<double> prerelease;
-};
 
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsAndroidSpec_ReactNativeVersionAndroid*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"major", &PlatformConstantsAndroidSpec_ReactNativeVersionAndroid::major},
+        {L"minor", &PlatformConstantsAndroidSpec_ReactNativeVersionAndroid::minor},
+        {L"patch", &PlatformConstantsAndroidSpec_ReactNativeVersionAndroid::patch},
+        {L"prerelease", &PlatformConstantsAndroidSpec_ReactNativeVersionAndroid::prerelease},
+    };
+    return fieldMap;
+}
 
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsAndroidSpec_PlatformConstantsAndroid*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
@@ -50,16 +60,6 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsAn
         {L"uiMode", &PlatformConstantsAndroidSpec_PlatformConstantsAndroid::uiMode},
         {L"Brand", &PlatformConstantsAndroidSpec_PlatformConstantsAndroid::Brand},
         {L"Manufacturer", &PlatformConstantsAndroidSpec_PlatformConstantsAndroid::Manufacturer},
-    };
-    return fieldMap;
-}
-
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PlatformConstantsAndroidSpec_ReactNativeVersionAndroid*) noexcept {
-    winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"major", &PlatformConstantsAndroidSpec_ReactNativeVersionAndroid::major},
-        {L"minor", &PlatformConstantsAndroidSpec_ReactNativeVersionAndroid::minor},
-        {L"patch", &PlatformConstantsAndroidSpec_ReactNativeVersionAndroid::patch},
-        {L"prerelease", &PlatformConstantsAndroidSpec_ReactNativeVersionAndroid::prerelease},
     };
     return fieldMap;
 }

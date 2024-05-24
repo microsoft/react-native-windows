@@ -306,7 +306,18 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'TransformExample',
     category: 'UI',
     module: require('../examples/Transform/TransformExample'),
-  } /*
+  },
+  {
+    key: 'FilterExample',
+    category: 'UI',
+    module: require('../examples/Filter/FilterExample'),
+  },
+  /*
+  {
+    key: 'VibrationExample',
+    category: 'Basic',
+    module: require('../examples/Vibration/VibrationExample'),
+  },
   {
     key: 'WebSocketExample',
     category: 'Basic',
@@ -317,8 +328,7 @@ const APIs: Array<RNTesterModuleInfo> = ([
     category: 'Basic',
     module: require('../examples/XHR/XHRExample'),
   },
-  {
-  }*/,
+  */,
   {
     key: 'TurboModuleExample',
     category: 'Basic',
