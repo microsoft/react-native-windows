@@ -22,21 +22,11 @@ extern const char WindowsTextInputComponentName[];
 /*
  * `ShadowNode` for <WindowsTextInput> component.
  */
-<<<<<<< Upstream
-class AndroidTextInputShadowNode final
-    : public ConcreteViewShadowNode<
-          AndroidTextInputComponentName,
-          AndroidTextInputProps,
-          AndroidTextInputEventEmitter,
-          AndroidTextInputState,
-          /* usesMapBufferForStateData */ true> {
-=======
 class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
                                              WindowsTextInputComponentName,
                                              WindowsTextInputProps,
                                              WindowsTextInputEventEmitter,
                                              WindowsTextInputState> {
->>>>>>> Override
  public:
   static ShadowNodeTraits BaseTraits() {
     auto traits = ConcreteViewShadowNode::BaseTraits();
