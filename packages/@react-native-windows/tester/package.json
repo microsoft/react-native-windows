@@ -19,7 +19,7 @@
     "@react-native-picker/picker": "2.4.10",
     "react": "18.0.0",
     "react-native": "^0.72.6",
-    "react-native-windows": "0.72.32",
+    "react-native-windows": "0.72.33",
     "react-native-xaml": "^0.0.50"
   },
   "devDependencies": {
@@ -33,7 +33,7 @@
     "just-scripts": "^1.3.3",
     "react-native": "0.72.14",
     "react-native-platform-override": "^1.9.4",
-    "react-native-windows": "0.72.32",
+    "react-native-windows": "0.72.33",
     "typescript": "^4.9.5"
   },
   "engines": {
