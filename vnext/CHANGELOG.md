@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 20 May 2024 15:16:05 GMT and should not be manually modified.
+This log was last generated on Mon, 27 May 2024 15:17:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.6
+
+Mon, 27 May 2024 15:17:03 GMT
+
+### Patches
+
+- [Fabric] Add various native focus APIs (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.5
 

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 27 May 2024 15:17:03 GMT",
+      "version": "0.74.6",
+      "tag": "react-native-windows_v0.74.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c93d7314ed1689c74689990641fbf3c1a54aa8cc",
+            "comment": "[Fabric] Add various native focus APIs"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 20 May 2024 15:16:05 GMT",
       "version": "0.74.5",
       "tag": "react-native-windows_v0.74.5",
