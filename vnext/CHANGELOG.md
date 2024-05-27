@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 13 May 2024 15:14:04 GMT and should not be manually modified.
+This log was last generated on Mon, 27 May 2024 15:13:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.71.47
+
+Mon, 27 May 2024 15:13:39 GMT
+
+### Patches
+
+- integrate react-native 0.71.19 (email not defined)
 
 ## 0.71.46
 

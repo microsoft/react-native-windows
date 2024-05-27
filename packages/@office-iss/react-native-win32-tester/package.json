@@ -16,12 +16,12 @@
     "@typescript-eslint/parser": "^5.30.5"
   },
   "peerDependencies": {
-    "@office-iss/react-native-win32": "0.71.18",
+    "@office-iss/react-native-win32": "0.71.19",
     "react": "18.0.0",
     "react-native": "^0.71.0"
   },
   "devDependencies": {
-    "@office-iss/react-native-win32": "0.71.18",
+    "@office-iss/react-native-win32": "0.71.19",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.1.14",
     "@rnw-scripts/just-task": "2.3.3",
