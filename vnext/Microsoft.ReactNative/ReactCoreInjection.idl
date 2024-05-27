@@ -4,7 +4,6 @@
 import "IReactContext.idl";
 import "ReactNativeHost.idl";
 import "IJSValueReader.idl";
-import "Timer.idl";
 
 #include "DocString.h"
 
@@ -27,10 +26,6 @@ DOC_STRING("Settings per each IReactViewHost associated with an IReactHost insta
       get; set;
     };
   };
-
-  [experimental]
-  [webhosthidden]
-  delegate ITimer TimerFactory();
 
   [experimental]
   [webhosthidden]
@@ -107,9 +102,6 @@ DOC_STRING("Settings per each IReactViewHost associated with an IReactHost insta
       "This must be manually provided to the @ReactInstanceSettings object when using ReactNativeWindows"
       "without XAML for certain APIs work correctly.")
     static void SetTopLevelWindowId(IReactPropertyBag properties, UInt64 windowId);
-
-    DOC_STRING("Sets a factory method for creating custom timers, in environments where system dispatch timers should not be used.")
-    static void SetTimerFactory(IReactPropertyBag properties, TimerFactory timerFactory);
   }
 
 

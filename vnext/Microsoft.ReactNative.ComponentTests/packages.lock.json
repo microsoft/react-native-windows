@@ -21,10 +21,7 @@
         "contentHash": "JBGI0c3WLoU6aYJRy9Qo0MLDQfObEp+d4nrhR95iyzf7+HOgjRunHDp/6eGFREd7xq3OI1mll9ecJrMfzBvlyg=="
       },
       "common": {
-        "type": "Project",
-        "dependencies": {
-          "boost": "[1.76.0, )"
-        }
+        "type": "Project"
       },
       "fmt": {
         "type": "Project"
@@ -32,8 +29,8 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "Fmt": "[1.0.0, )",
-          "boost": "[1.76.0, )"
+          "boost": "[1.76.0, )",
+          "fmt": "[1.0.0, )"
         }
       },
       "reactcommon": {

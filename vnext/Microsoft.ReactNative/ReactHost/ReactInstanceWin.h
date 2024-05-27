@@ -137,6 +137,8 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
     folly::dynamic Args;
   };
 
+  static std::string getApplicationTempFolder();
+
  private: // immutable fields
   const Mso::WeakPtr<IReactHost> m_weakReactHost;
   const ReactOptions m_options;

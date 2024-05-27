@@ -20,11 +20,11 @@ struct DeviceInfoHolder {
   DeviceInfoHolder(const Mso::React::IReactContext &context);
 
   static void SetCallback(
-      const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag,
-      Mso::Functor<void(winrt::Microsoft::ReactNative::JSValueObject &&)> &&callback) noexcept;
+      const React::ReactPropertyBag &propertyBag,
+      Mso::Functor<void(React::JSValueObject &&)> &&callback) noexcept;
   static void InitDeviceInfoHolder(const Mso::React::IReactContext &context) noexcept;
   static ReactNativeSpecs::DeviceInfoSpec_DimensionsPayload GetDimensions(
-      const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag) noexcept;
+      const React::ReactPropertyBag &propertyBag) noexcept;
 
  private:
   ReactNativeSpecs::DeviceInfoSpec_DisplayMetricsAndroid getWindow() noexcept;
@@ -43,7 +43,7 @@ struct DeviceInfoHolder {
 
   winrt::Windows::UI::Core::CoreWindow::SizeChanged_revoker m_sizeChangedRevoker;
   winrt::Windows::Graphics::Display::DisplayInformation::DpiChanged_revoker m_dpiChangedRevoker{};
-  Mso::Functor<void(winrt::Microsoft::ReactNative::JSValueObject &&)> m_notifyCallback;
+  Mso::Functor<void(React::JSValueObject &&)> m_notifyCallback;
   winrt::Microsoft::ReactNative::ReactNotificationSubscription m_wmSubscription{};
   Mso::CntPtr<const Mso::React::IReactContext> m_context{};
 };
@@ -53,7 +53,7 @@ struct DeviceInfo : public std::enable_shared_from_this<DeviceInfo> {
   using ModuleSpec = ReactNativeSpecs::DeviceInfoSpec;
 
   REACT_INIT(Initialize)
-  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+  void Initialize(React::ReactContext const &reactContext) noexcept;
 
   REACT_GET_CONSTANTS(GetConstants)
   ReactNativeSpecs::DeviceInfoSpec_DeviceInfoConstants GetConstants() noexcept;

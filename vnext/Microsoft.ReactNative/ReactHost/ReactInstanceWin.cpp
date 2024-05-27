@@ -2,94 +2,102 @@
 // Licensed under the MIT License.
 
 #include "ReactInstanceWin.h"
+#include "MoveOnCopy.h"
+#include "MsoUtils.h"
 
 #include <AppModelHelpers.h>
-#include <CppRuntimeOptions.h>
-#include <CreateModules.h>
-#include <JSCallInvokerScheduler.h>
-#include <OInstance.h>
-#include <PackagerConnection.h>
-#include <QuirkSettings.h>
-#include <Shared/DevServerHelper.h>
 #include <Threading/MessageDispatchQueue.h>
 #include <Threading/MessageQueueThreadFactory.h>
-#include <TurboModuleManager.h>
-#include <Utils/Helpers.h>
-#include <Views/ViewManager.h>
 #include <appModel.h>
 #include <comUtil/qiCast.h>
+#ifndef CORE_ABI
+#include <LayoutService.h>
+#include <XamlUIService.h>
+#endif
+#include "ReactErrorProvider.h"
+
+#include "Microsoft.ReactNative/IReactNotificationService.h"
+#include "NativeModules.h"
+#include "NativeModulesProvider.h"
+#include "Unicode.h"
+
+#ifdef USE_FABRIC
+#include <Fabric/FabricUIManagerModule.h>
+#include <SchedulerSettings.h>
+#endif
+#include <JSCallInvokerScheduler.h>
+#include <QuirkSettings.h>
+#include <Shared/DevServerHelper.h>
+#include <Views/ViewManager.h>
 #include <dispatchQueue/dispatchQueue.h>
-#include <react/renderer/runtimescheduler/RuntimeScheduler.h>
-#include <react/renderer/runtimescheduler/RuntimeSchedulerCallInvoker.h>
-#include <winrt/Windows.Storage.h>
-#include "BaseScriptStoreImpl.h"
-#include "ChakraRuntimeHolder.h"
-#include "CrashManager.h"
-#include "DevMenu.h"
 #include "DynamicWriter.h"
-#include "HermesRuntimeHolder.h"
+#ifndef CORE_ABI
+#include "ConfigureBundlerDlg.h"
+#endif
+#include "DevMenu.h"
 #include "IReactContext.h"
 #include "IReactDispatcher.h"
-#include "IReactNotificationService.h"
-#include "JsiApi.h"
+#ifndef CORE_ABI
+#include "Modules/AccessibilityInfoModule.h"
+#include "Modules/AlertModule.h"
+#endif
+#if !defined(CORE_ABI) || defined(USE_FABRIC)
+#include "Modules/Animated/NativeAnimatedModule.h"
+#endif
+#ifndef CORE_ABI
+#include "Modules/AppStateModule.h"
+#include "Modules/AppThemeModuleUwp.h"
+#include "Modules/ClipboardModule.h"
+#endif
 #include "Modules/DevSettingsModule.h"
+#ifndef CORE_ABI
+#include "Modules/DeviceInfoModule.h"
+#include "Modules/I18nManagerModule.h"
+#endif
+#if !defined(CORE_ABI) || defined(USE_FABRIC)
+#include <Modules/ImageViewManagerModule.h>
+#endif
+#ifndef CORE_ABI
+#include "Modules/LinkingManagerModule.h"
+#include "Modules/LogBoxModule.h"
+#include "Modules/NativeUIManager.h"
+#include "Modules/PaperUIManagerModule.h"
+#include "Modules/TimingModule.h"
+#else
+#include "Modules/DesktopTimingModule.h"
+#endif
 #include "Modules/ExceptionsManager.h"
 #include "Modules/PlatformConstantsWinModule.h"
 #include "Modules/ReactRootViewTagGenerator.h"
 #include "Modules/SourceCode.h"
 #include "Modules/StatusBarManager.h"
-#include "Modules/Timing.h"
-#include "MoveOnCopy.h"
-#include "MsoUtils.h"
-#include "NativeModules.h"
-#include "NativeModulesProvider.h"
-#include "ReactCoreInjection.h"
-#include "ReactErrorProvider.h"
-#include "RedBox.h"
-#include "Unicode.h"
-
-#ifdef USE_FABRIC
-#include <Fabric/FabricUIManagerModule.h>
-#include <Fabric/ReactNativeConfigProperties.h>
-#include <Fabric/WindowsComponentDescriptorRegistry.h>
-#include <SchedulerSettings.h>
-#include <jserrorhandler/JsErrorHandler.h>
-#include <react/nativemodule/core/ReactCommon/TurboModuleBinding.h>
-#include <react/renderer/componentregistry/componentNameByReactViewName.h>
-#include <react/renderer/componentregistry/native/NativeComponentRegistryBinding.h>
-#include <react/runtime/JSRuntimeFactory.h>
-#include <react/runtime/PlatformTimerRegistry.h>
-#include <react/runtime/TimerManager.h>
-#endif
 
 #ifndef CORE_ABI
-#include <LayoutService.h>
 #include <Utils/UwpPreparedScriptStore.h>
 #include <Utils/UwpScriptStore.h>
-#include <XamlUIService.h>
-#include "ConfigureBundlerDlg.h"
-#include "Modules/AccessibilityInfoModule.h"
-#include "Modules/AlertModule.h"
-#include "Modules/AppStateModule.h"
-#include "Modules/AppThemeModuleUwp.h"
-#include "Modules/ClipboardModule.h"
-#include "Modules/DeviceInfoModule.h"
-#include "Modules/I18nManagerModule.h"
-#include "Modules/LinkingManagerModule.h"
-#include "Modules/LogBoxModule.h"
-#include "Modules/NativeUIManager.h"
-#include "Modules/PaperUIManagerModule.h"
 #endif
 
-#if !defined(CORE_ABI) || defined(USE_FABRIC)
-#include <Modules/ImageViewManagerModule.h>
-#include "Modules/Animated/NativeAnimatedModule.h"
-#endif
+#include "BaseScriptStoreImpl.h"
+#include "HermesRuntimeHolder.h"
 
 #if defined(USE_V8)
+#include <winrt/Windows.Storage.h>
+#include "BaseScriptStoreImpl.h"
 #include "JSI/V8RuntimeHolder.h"
 #include "V8JSIRuntimeHolder.h"
 #endif // USE_V8
+
+#include "RedBox.h"
+
+#include <tuple>
+#include "ChakraRuntimeHolder.h"
+
+#include <CppRuntimeOptions.h>
+#include <CreateModules.h>
+#include <Utils/Helpers.h>
+#include "CrashManager.h"
+#include "JsiApi.h"
+#include "ReactCoreInjection.h"
 
 namespace Microsoft::ReactNative {
 
@@ -106,11 +114,6 @@ std::shared_ptr<facebook::react::IUIManager> CreateUIManager2(
 using namespace winrt::Microsoft::ReactNative;
 
 namespace Mso::React {
-
-std::string getApplicationTempFolder() {
-  auto local = winrt::Windows::Storage::ApplicationData::Current().TemporaryFolder().Path();
-  return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
-}
 
 //=============================================================================================
 // LoadedCallbackGuard ensures that the OnReactInstanceLoaded is always called.
@@ -437,9 +440,11 @@ void ReactInstanceWin::LoadModules(
   registerTurboModule(
       L"LinkingManager",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LinkingManager>());
-#endif
 
   registerTurboModule(L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Timing>());
+#else
+  registerTurboModule(L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::facebook::react::Timing>());
+#endif
 
   registerTurboModule(
       ::Microsoft::React::GetWebSocketTurboModuleName(), ::Microsoft::React::GetWebSocketModuleProvider());
@@ -607,12 +612,18 @@ void ReactInstanceWin::Initialize() noexcept {
             // We need to keep the instance wrapper alive as its destruction shuts down the native queue.
             m_options.TurboModuleProvider->SetReactContext(
                 winrt::make<implementation::ReactContext>(Mso::Copy(m_reactContext)));
-            auto omitNetCxxPropName = ReactPropertyBagHelper::GetName(nullptr, L"OmitNetworkingCxxModules");
-            auto omitNetCxxPropValue = m_options.Properties.Get(omitNetCxxPropName);
-            devSettings->omitNetworkingCxxModules = winrt::unbox_value_or(omitNetCxxPropValue, false);
-            auto useWebSocketTurboModulePropName = ReactPropertyBagHelper::GetName(nullptr, L"UseWebSocketTurboModule");
-            auto useWebSocketTurboModulePropValue = m_options.Properties.Get(useWebSocketTurboModulePropName);
-            devSettings->useWebSocketTurboModule = winrt::unbox_value_or(useWebSocketTurboModulePropValue, false);
+
+            auto getBoolProperty = [properties = ReactPropertyBag{m_options.Properties}](
+                                       const wchar_t *ns, const wchar_t *name, bool defaultValue) noexcept -> bool {
+              ReactPropertyId<bool> propId{ns == nullptr ? ReactPropertyNamespace() : ReactPropertyNamespace(ns), name};
+              std::optional<bool> propValue = properties.Get(propId);
+              return propValue.value_or(defaultValue);
+            };
+
+            devSettings->omitNetworkingCxxModules = getBoolProperty(nullptr, L"OmitNetworkingCxxModules", false);
+            devSettings->useWebSocketTurboModule = getBoolProperty(nullptr, L"UseWebSocketTurboModule", false);
+            devSettings->useTurboModulesOnly = getBoolProperty(L"DevSettings", L"UseTurboModulesOnly", false);
+
             auto bundleRootPath = devSettings->bundleRootPath;
             auto instanceWrapper = facebook::react::CreateReactInstance(
                 std::shared_ptr<facebook::react::Instance>(strongThis->m_instance.Load()),
@@ -1174,6 +1185,11 @@ Mso::CntPtr<IReactInstanceInternal> MakeReactInstance(
     Mso::VoidFunctor &&updateUI) noexcept {
   return Mso::Make<ReactInstanceWin, IReactInstanceInternal>(
       reactHost, std::move(options), std::move(whenCreated), std::move(whenLoaded), std::move(updateUI));
+}
+
+std::string ReactInstanceWin::getApplicationTempFolder() {
+  auto local = winrt::Windows::Storage::ApplicationData::Current().TemporaryFolder().Path();
+  return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
 }
 
 bool ReactInstanceWin::UseWebDebugger() const noexcept {

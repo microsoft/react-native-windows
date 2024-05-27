@@ -21,8 +21,8 @@ class AppThemeHolder {
   static void InitAppThemeHolder(const Mso::React::IReactContext &context) noexcept;
   ReactNativeSpecs::AppThemeSpec_AppThemeData GetConstants() noexcept;
   static void SetCallback(
-      const winrt::Microsoft::ReactNative::ReactPropertyBag &propertyBag,
-      Mso::Functor<void(winrt::Microsoft::ReactNative::JSValueObject &&)> &&callback) noexcept;
+      const React::ReactPropertyBag &propertyBag,
+      Mso::Functor<void(React::JSValueObject &&)> &&callback) noexcept;
 
  private:
   // High Contrast Color helper method
@@ -30,7 +30,7 @@ class AppThemeHolder {
   void NotifyHighContrastChanged() noexcept;
 
   Mso::CntPtr<const Mso::React::IReactContext> m_context;
-  Mso::Functor<void(winrt::Microsoft::ReactNative::JSValueObject &&)> m_notifyCallback;
+  Mso::Functor<void(React::JSValueObject &&)> m_notifyCallback;
   ReactNativeSpecs::AppThemeSpec_AppThemeData m_appThemeData;
   winrt::Windows::UI::ViewManagement::AccessibilitySettings m_accessibilitySettings{};
   winrt::Windows::UI::ViewManagement::AccessibilitySettings::HighContrastChanged_revoker m_highContrastChangedRevoker{};
@@ -46,7 +46,7 @@ struct AppTheme : public std::enable_shared_from_this<AppTheme> {
   ReactNativeSpecs::AppThemeSpec_AppThemeData GetConstants() noexcept;
 
   REACT_INIT(Initialize)
-  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+  void Initialize(React::ReactContext const &reactContext) noexcept;
 
  private:
   winrt::Microsoft::ReactNative::ReactContext m_context;

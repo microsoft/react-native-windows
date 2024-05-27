@@ -12,14 +12,15 @@
 #include <string>
 #include <vector>
 #include "DevSettings.h"
-#include "IDevSupportManager.h"
 #include "IReactRootView.h"
 
 namespace folly {
 struct dynamic;
 }
 
-namespace facebook::react {
+namespace facebook {
+
+namespace react {
 
 class Instance;
 struct InstanceCallback;
@@ -27,7 +28,6 @@ class MessageQueueThread;
 class ModuleRegistry;
 class IUIManager;
 class TurboModuleRegistry;
-class RuntimeScheduler;
 
 struct InstanceWrapper {
   virtual const std::shared_ptr<Instance> &GetInstance() const noexcept = 0;
@@ -78,8 +78,5 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
     std::shared_ptr<MessageQueueThread> nativeQueue,
     std::shared_ptr<DevSettings> devSettings) noexcept;
 
-} // namespace facebook::react
-
-namespace Microsoft::ReactNative {
-const std::shared_ptr<facebook::react::IDevSupportManager> &GetSharedDevManager() noexcept;
-}
+} // namespace react
+} // namespace facebook

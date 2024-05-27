@@ -11,16 +11,18 @@
 
 #include <cxxreact/Instance.h>
 
-namespace Microsoft::ReactNative {
+namespace facebook {
+namespace react {
 
-const std::shared_ptr<facebook::react::IDevSupportManager> &GetSharedDevManager() noexcept {
-  static std::shared_ptr<facebook::react::IDevSupportManager> s_devManager(facebook::react::CreateDevSupportManager());
+namespace {
+
+const std::shared_ptr<IDevSupportManager> &GetSharedDevManager() noexcept {
+  static std::shared_ptr<IDevSupportManager> s_devManager(CreateDevSupportManager());
 
   return s_devManager;
 }
-} // namespace Microsoft::ReactNative
 
-namespace facebook::react {
+} // namespace
 
 std::shared_ptr<InstanceWrapper> CreateReactInstance(
     std::shared_ptr<Instance> &&instance,
@@ -44,7 +46,7 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
       std::move(jsQueue),
       std::move(nativeQueue),
       std::move(devSettings),
-      ::Microsoft::ReactNative::GetSharedDevManager());
+      GetSharedDevManager());
 
   return inner;
 }
@@ -72,7 +74,7 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
       std::move(jsQueue),
       std::move(nativeQueue),
       std::move(devSettings),
-      ::Microsoft::ReactNative::GetSharedDevManager());
+      GetSharedDevManager());
 
   return inner;
 }
@@ -100,9 +102,10 @@ std::shared_ptr<InstanceWrapper> CreateReactInstance(
       std::move(jsQueue),
       std::move(nativeQueue),
       std::move(devSettings),
-      ::Microsoft::ReactNative::GetSharedDevManager());
+      GetSharedDevManager());
 
   return inner;
 }
 
-} // namespace facebook::react
+} // namespace react
+} // namespace facebook

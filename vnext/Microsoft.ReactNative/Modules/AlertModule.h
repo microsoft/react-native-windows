@@ -18,7 +18,7 @@ struct Alert : public std::enable_shared_from_this<Alert> {
   using Constants = ReactNativeSpecs::DialogManagerWindowsSpec_Constants;
 
   REACT_INIT(Initialize)
-  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+  void Initialize(React::ReactContext const &reactContext) noexcept;
 
   REACT_METHOD(showAlert)
   void showAlert(
@@ -30,7 +30,7 @@ struct Alert : public std::enable_shared_from_this<Alert> {
   Constants GetConstants() noexcept;
 
  private:
-  winrt::Microsoft::ReactNative::ReactContext m_context;
+  React::ReactContext m_context;
   Constants m_constants;
 
   struct AlertRequest {

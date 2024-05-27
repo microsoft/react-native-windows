@@ -337,6 +337,11 @@ REACTWINDOWS_API_(bool) IsValidColorValue(const winrt::Microsoft::ReactNative::J
       v.Type() == winrt::Microsoft::ReactNative::JSValueType::Int64;
 }
 
+REACTWINDOWS_API_(winrt::TimeSpan) TimeSpanFromMs(double ms) {
+  std::chrono::milliseconds dur((int64_t)ms);
+  return dur;
+}
+
 bool IsValidOptionalColorValue(const winrt::Microsoft::ReactNative::JSValue &v) {
   return v.Type() == winrt::Microsoft::ReactNative::JSValueType::Null || IsValidColorValue(v);
 }
