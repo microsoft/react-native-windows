@@ -334,7 +334,7 @@ function IncludeFontPaddingExample(props: {}): React.Node {
 
 function FontVariantsExample(props: {}): React.Node {
   return (
-    <View testID="font-variants">
+    <>
       <Text style={{fontVariant: ['small-caps']}}>Small Caps{'\n'}</Text>
       <Text
         style={{
@@ -360,7 +360,7 @@ function FontVariantsExample(props: {}): React.Node {
         1111{'\n'}
         2222{'\n'}
       </Text>
-    </View>
+    </>
   );
 }
 
@@ -689,7 +689,7 @@ function NestedExample(props: {}): React.Node {
 
 function TextAlignExample(props: {}): React.Node {
   return (
-    <View testID={'text-align'}>
+    <>
       <Text>auto (default) - english LTR</Text>
       <Text>أحب اللغة العربية auto (default) - arabic RTL</Text>
       <Text style={{textAlign: 'left'}}>
@@ -710,7 +710,7 @@ function TextAlignExample(props: {}): React.Node {
         as you can see all of the lines except the last one span the available
         width of the parent container.
       </Text>
-    </View>
+    </>
   );
 }
 
@@ -871,13 +871,13 @@ function CustomFontsExample(props: {}): React.Node {
 
 function LineHeightExample(props: {}): React.Node {
   return (
-    <View testID={'text-line-height'}>
+    <>
       <Text style={[{lineHeight: 35}, styles.wrappedText]}>
         Holisticly formulate inexpensive ideas before best-of-breed benefits.{' '}
         <Text style={{fontSize: 20}}>Continually</Text> expedite magnetic
         potentialities rather than client-focused interfaces.
       </Text>
-    </View>
+    </>
   );
 }
 
@@ -974,6 +974,158 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
       </View>
 */}
     </View>
+  );
+}
+
+function TextBorderExample(props: {}): React.Node {
+  return (
+    <>
+      <Text style={styles.borderedTextSimple}>
+        Sample bordered text with default styling.
+      </Text>
+
+      <Text style={styles.borderedText}>
+        Some more bordered text + a tad of CSS.{'\n'}
+        <Text style={{borderColor: 'red', borderWidth: 5}}>
+          1st nested - border specifcied but ignored.{'\n'}
+          <Text style={{borderColor: 'yellow', borderWidth: 4}}>
+            2nd Inside text!
+          </Text>
+        </Text>
+      </Text>
+
+      <Text>
+        This text is{' '}
+        <Text
+          style={{color: 'red', borderWidth: 1, borderColor: 'black'}}>
+          outlined{' '}
+        </Text>
+        and laid out within the normal text run, so will wrap etc as
+        normal text.
+      </Text>
+    </>
+  );
+}
+
+function AdvancedBordersExample(props: {}): React.Node {
+  return (
+    <>
+      <Text
+        style={{
+          borderColor: 'red',
+          borderWidth: 1,
+          borderBottomWidth: 5,
+          borderRightWidth: 10,
+          borderTopWidth: 15,
+          borderLeftWidth: 20,
+          borderBottomRightRadius: 1,
+          borderBottomLeftRadius: 3,
+          borderTopRightRadius: 5,
+          borderTopLeftRadius: 7,
+        }}>
+        This text has customized borders.
+      </Text>
+      <Text
+        style={{
+          borderColor: 'blue',
+          borderWidth: 1,
+          borderBottomWidth: 5,
+          borderEndWidth: 10,
+          borderTopWidth: 15,
+          borderStartWidth: 20,
+          borderBottomEndRadius: 1,
+          borderBottomStartRadius: 3,
+          borderTopEndRadius: 5,
+          borderTopStartRadius: 7,
+        }}>
+        This text has customized borders.
+      </Text>
+      <Text
+        style={{
+          borderColor: 'green',
+          borderWidth: 1,
+          borderRadius: 3,
+        }}>
+        This text has customized borders.
+      </Text>
+    </>
+  );
+}
+
+function TextOpacityExample(props: {}): React.Node {
+  return (
+    <>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.1,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.2,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.3,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.4,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.5,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.6,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.7,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.8,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 0.9,
+        }}>
+        This text has customized opacity.
+      </Text>
+      <Text
+        style={{
+          backgroundColor: 'black',
+          opacity: 1,
+        }}>
+        This text has customized opacity.
+      </Text>
+    </>
   );
 }
 
@@ -1122,7 +1274,7 @@ const examples = [
     title: 'Text Align',
     name: 'textAlign',
     render: function (): React.Node {
-      return <TextAlignExample />;
+      return <TextAlignExample testID={'text-align'}/>;
     },
   },
   {
@@ -1147,7 +1299,7 @@ const examples = [
     title: 'Line Height',
     name: 'lineHeight',
     render: function (): React.Node {
-      return <LineHeightExample />;
+      return <LineHeightExample testID={'text-line-height'} />;
     },
   },
   {
@@ -1175,7 +1327,7 @@ const examples = [
     title: 'backgroundColor attribute',
     name: 'backgroundColorAttribute',
     render: function (): React.Node {
-      return <BackgroundColorExample />;
+      return <BackgroundColorExample testID={'text-background-color'} />;
     },
   },
   {
@@ -1284,7 +1436,7 @@ const examples = [
     title: 'Font variants',
     name: 'fontVariants',
     render: function (): React.Node {
-      return <FontVariantsExample />;
+      return <FontVariantsExample testID={'font-variants'} />;
     },
   },
   {
@@ -1362,6 +1514,56 @@ const examples = [
   },
   // [Windows #12997]
   // TextInlineViewsExample,
+  {
+    title: 'Customized Accessibility',
+    name: 'textAccessibility',
+    render: function (): React.Node {
+      return (
+        <View accessible={true} testID={'text-accessibility'}>
+          <Text
+            nativeID="text-accessibility"
+            accessibilityLabel="This text has customized accessibility"
+            accessibilityHint="Text">
+            This text has customized accessibility.
+          </Text>
+        </View>
+      );
+    }
+  },
+  {
+    title: 'Text with Border',
+    name: 'textBorder',
+    render: function (): React.Node {
+      return <TextBorderExample testID={'text-border'} />;
+    },
+  },
+  {
+    title: 'Text with Advanced Borders',
+    name: 'advancedBorders',
+    render: function (): React.Node {
+      return <AdvancedBordersExample testID={'advanced-borders'} />;
+    },
+  },
+  {
+    title: 'Opacity',
+    name: 'textOpacity',
+    render: function (): React.Node {
+      return <TextOpacityExample testID={'text-opacity'} />
+    }
+  },
+  {
+    title: 'Height and Width',
+    name: 'textDimensions',
+    render: function (): React.Node {
+      return (
+        <View accessible={true} testID="text-height-width">
+          <Text style={{height: 100, width: 100}}>
+            This text has customized dimensions.
+          </Text>
+        </View>
+      );
+    }
+  }
 ];
 
 const styles = StyleSheet.create({
@@ -1379,6 +1581,21 @@ const styles = StyleSheet.create({
   },
   wrappedText: {
     maxWidth: 300,
+  },
+  borderedText: {
+    margin: 100,
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    borderWidth: 3,
+    borderColor: 'green',
+    padding: 30,
+  },
+  borderedTextSimple: {
+    fontSize: 18,
+    borderWidth: 2,
+    borderColor: 'black',
+    width: 400,
   },
 });
 
