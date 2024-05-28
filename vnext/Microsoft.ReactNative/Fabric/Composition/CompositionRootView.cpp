@@ -524,7 +524,7 @@ void CompositionRootView::SizeChanged(winrt::event_token const &token) noexcept 
 }
 
 struct RootViewSizeChangedEventArgs : RootViewSizeChangedEventArgsT<RootViewSizeChangedEventArgs> {
-  RootViewSizeChangedEventArgs(winrt::Windows::Foundation::Size size) : m_size(size) {}
+  RootViewSizeChangedEventArgs(const winrt::Windows::Foundation::Size &size) : m_size(size) {}
   winrt::Windows::Foundation::Size Size() const noexcept {
     return m_size;
   }
