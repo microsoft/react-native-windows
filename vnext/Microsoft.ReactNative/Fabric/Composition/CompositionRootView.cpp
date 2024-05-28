@@ -507,7 +507,7 @@ facebook::react::Size MeasureLoading(const facebook::react::LayoutConstraints &l
       attributedStringBox, {} /*paragraphAttributes*/, layoutConstraints, textLayout);
 
   DWRITE_TEXT_METRICS tm;
-  textLayout->GetMetrics(&tm);
+  winrt::check_hresult(textLayout->GetMetrics(&tm));
 
   return layoutConstraints.clamp(
       {loadingActivityHorizontalOffset * scaleFactor + tm.width, loadingBarHeight * scaleFactor});
