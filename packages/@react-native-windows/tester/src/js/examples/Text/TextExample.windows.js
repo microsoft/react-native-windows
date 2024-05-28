@@ -223,7 +223,7 @@ function TextLinkifyExample(props: {}): React.Node {
 
 function TextTransformExample(props: {}): React.Node {
   return (
-    <>
+    <View testID={'text-transform'}>
       <Text style={{textTransform: 'uppercase'}}>
         This text should be uppercased.
       </Text>
@@ -294,7 +294,7 @@ function TextTransformExample(props: {}): React.Node {
         }}>
         Works with other text styles
       </Text>
-    </>
+    </View>
   );
 }
 
@@ -334,7 +334,7 @@ function IncludeFontPaddingExample(props: {}): React.Node {
 
 function FontVariantsExample(props: {}): React.Node {
   return (
-    <>
+    <View testID={'font-variants'}>
       <Text style={{fontVariant: ['small-caps']}}>Small Caps{'\n'}</Text>
       <Text
         style={{
@@ -360,7 +360,7 @@ function FontVariantsExample(props: {}): React.Node {
         1111{'\n'}
         2222{'\n'}
       </Text>
-    </>
+    </View>
   );
 }
 
@@ -517,7 +517,7 @@ function FontWeightExample(props: {}): React.Node {
 
 function BackgroundColorExample(props: {}): React.Node {
   return (
-    <>
+    <View testID={'text-background-color'}>
       <Text style={{backgroundColor: '#ffaaaa'}}>
         Red background,
         <Text style={{backgroundColor: '#aaaaff'}}>
@@ -542,7 +542,7 @@ function BackgroundColorExample(props: {}): React.Node {
           </Text>
         </Text>
       </Text>
-    </>
+    </View>
   );
 }
 
@@ -689,7 +689,7 @@ function NestedExample(props: {}): React.Node {
 
 function TextAlignExample(props: {}): React.Node {
   return (
-    <>
+    <View testID={'text-align'}>
       <Text>auto (default) - english LTR</Text>
       <Text>أحب اللغة العربية auto (default) - arabic RTL</Text>
       <Text style={{textAlign: 'left'}}>
@@ -710,7 +710,7 @@ function TextAlignExample(props: {}): React.Node {
         as you can see all of the lines except the last one span the available
         width of the parent container.
       </Text>
-    </>
+    </View>
   );
 }
 
@@ -871,13 +871,13 @@ function CustomFontsExample(props: {}): React.Node {
 
 function LineHeightExample(props: {}): React.Node {
   return (
-    <>
+    <View testID={'text-line-height'}>
       <Text style={[{lineHeight: 35}, styles.wrappedText]}>
         Holisticly formulate inexpensive ideas before best-of-breed benefits.{' '}
         <Text style={{fontSize: 20}}>Continually</Text> expedite magnetic
         potentialities rather than client-focused interfaces.
       </Text>
-    </>
+    </View>
   );
 }
 
@@ -979,7 +979,7 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
 
 function TextBorderExample(props: {}): React.Node {
   return (
-    <>
+    <View testID={'text-border'}>
       <Text style={styles.borderedTextSimple}>
         Sample bordered text with default styling.
       </Text>
@@ -1003,13 +1003,13 @@ function TextBorderExample(props: {}): React.Node {
         and laid out within the normal text run, so will wrap etc as
         normal text.
       </Text>
-    </>
+    </View>
   );
 }
 
 function AdvancedBordersExample(props: {}): React.Node {
   return (
-    <>
+    <View testID={'advanced-borders'}>
       <Text
         style={{
           borderColor: 'red',
@@ -1048,13 +1048,13 @@ function AdvancedBordersExample(props: {}): React.Node {
         }}>
         This text has customized borders.
       </Text>
-    </>
+    </View>
   );
 }
 
 function TextOpacityExample(props: {}): React.Node {
   return (
-    <>
+    <View testID={'text-opacity'}>
       <Text
         style={{
           backgroundColor: 'black',
@@ -1125,7 +1125,7 @@ function TextOpacityExample(props: {}): React.Node {
         }}>
         This text has customized opacity.
       </Text>
-    </>
+    </View>
   );
 }
 
@@ -1274,7 +1274,7 @@ const examples = [
     title: 'Text Align',
     name: 'textAlign',
     render: function (): React.Node {
-      return <TextAlignExample testID={'text-align'}/>;
+      return <TextAlignExample />;
     },
   },
   {
@@ -1299,7 +1299,7 @@ const examples = [
     title: 'Line Height',
     name: 'lineHeight',
     render: function (): React.Node {
-      return <LineHeightExample testID={'text-line-height'} />;
+      return <LineHeightExample />;
     },
   },
   {
@@ -1327,7 +1327,7 @@ const examples = [
     title: 'backgroundColor attribute',
     name: 'backgroundColorAttribute',
     render: function (): React.Node {
-      return <BackgroundColorExample testID={'text-background-color'} />;
+      return <BackgroundColorExample />;
     },
   },
   {
@@ -1436,7 +1436,7 @@ const examples = [
     title: 'Font variants',
     name: 'fontVariants',
     render: function (): React.Node {
-      return <FontVariantsExample testID={'font-variants'} />;
+      return <FontVariantsExample />;
     },
   },
   {
@@ -1450,7 +1450,7 @@ const examples = [
     title: 'Text Transform',
     name: 'textTransform',
     render: function (): React.Node {
-      return <TextTransformExample testID={'text-transform'} />;
+      return <TextTransformExample />;
     },
   },
 /* [Windows
@@ -1534,21 +1534,21 @@ const examples = [
     title: 'Text with Border',
     name: 'textBorder',
     render: function (): React.Node {
-      return <TextBorderExample testID={'text-border'} />;
+      return <TextBorderExample />;
     },
   },
   {
     title: 'Text with Advanced Borders',
     name: 'advancedBorders',
     render: function (): React.Node {
-      return <AdvancedBordersExample testID={'advanced-borders'} />;
+      return <AdvancedBordersExample />;
     },
   },
   {
     title: 'Opacity',
     name: 'textOpacity',
     render: function (): React.Node {
-      return <TextOpacityExample testID={'text-opacity'} />
+      return <TextOpacityExample />
     }
   },
   {
