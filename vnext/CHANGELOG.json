@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 28 May 2024 20:21:54 GMT",
+      "version": "0.74.7",
+      "tag": "react-native-windows_v0.74.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "92b63ecf09a8f2c61a3c972e76bfdb535707d87b",
+            "comment": "APIs to enable RootViews that size to content"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 27 May 2024 15:17:03 GMT",
       "version": "0.74.6",
       "tag": "react-native-windows_v0.74.6",

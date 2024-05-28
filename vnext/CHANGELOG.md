@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 27 May 2024 15:17:03 GMT and should not be manually modified.
+This log was last generated on Tue, 28 May 2024 20:21:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.7
+
+Tue, 28 May 2024 20:21:54 GMT
+
+### Patches
+
+- APIs to enable RootViews that size to content (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.6
 
