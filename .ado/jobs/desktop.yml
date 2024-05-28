@@ -39,6 +39,14 @@ parameters:
             BuildConfiguration: Release
             BuildPlatform: ARM64EC
             UseFabric: false
+          - Name: Arm64Debug
+            BuildConfiguration: Debug
+            BuildPlatform: ARM64
+            UseFabric: false
+          - Name: Arm64Release
+            BuildConfiguration: Release
+            BuildPlatform: ARM64
+            UseFabric: false
       - BuildEnvironment: SecurePullRequest
         Matrix:
           - Name: X64DebugFabric
