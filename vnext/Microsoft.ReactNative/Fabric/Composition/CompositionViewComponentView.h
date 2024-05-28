@@ -120,6 +120,8 @@ struct ComponentView
   bool getAcccessiblityIsReadOnly() noexcept override;
   virtual winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept;
 
+  const facebook::react::LayoutMetrics &layoutMetrics() const noexcept;
+
   virtual std::string DefaultControlType() const noexcept;
   virtual std::string DefaultAccessibleName() const noexcept;
   virtual std::string DefaultHelpText() const noexcept;

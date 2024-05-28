@@ -243,7 +243,7 @@ CompositionEventHandler::CompositionEventHandler(
                     : static_cast<facebook::react::Tag>(
                           winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
                               strongRootView)
-                              ->GetTag()),
+                              ->RootTag()),
                 args);
         auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
         onKeyDown(keyboardSource, keyArgs);
@@ -266,7 +266,7 @@ CompositionEventHandler::CompositionEventHandler(
                     : static_cast<facebook::react::Tag>(
                           winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
                               strongRootView)
-                              ->GetTag()),
+                              ->RootTag()),
                 args);
         auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
         onKeyUp(keyboardSource, keyArgs);
@@ -290,7 +290,7 @@ CompositionEventHandler::CompositionEventHandler(
                     : static_cast<facebook::react::Tag>(
                           winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
                               strongRootView)
-                              ->GetTag()),
+                              ->RootTag()),
                 args);
             auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
             onCharacterReceived(keyboardSource, charArgs);
@@ -323,7 +323,7 @@ CompositionEventHandler::~CompositionEventHandler() {
 facebook::react::SurfaceId CompositionEventHandler::SurfaceId() const noexcept {
   if (auto strongRootView = m_wkRootView.get()) {
     return static_cast<facebook::react::SurfaceId>(
-        winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(strongRootView)->GetTag());
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(strongRootView)->RootTag());
   }
   return -1;
 }
@@ -460,7 +460,7 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
                              : static_cast<facebook::react::Tag>(
                                    winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
                                        strongRootView)
-                                       ->GetTag()),
+                                       ->RootTag()),
             msg,
             wParam,
             lParam);
@@ -481,7 +481,7 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
                              : static_cast<facebook::react::Tag>(
                                    winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
                                        strongRootView)
-                                       ->GetTag()),
+                                       ->RootTag()),
             msg,
             wParam,
             lParam);

@@ -12,7 +12,6 @@
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
-#include <ICompositionRootView.h>
 #include <IReactContext.h>
 #include <IReactRootView.h>
 #include <JSI/jsi.h>
@@ -144,6 +143,7 @@ const IComponentViewRegistry &FabricUIManager::GetViewRegistry() const noexcept 
 void FabricUIManager::startSurface(
     const winrt::Microsoft::ReactNative::CompositionRootView &rootView,
     facebook::react::SurfaceId surfaceId,
+    const facebook::react::LayoutConstraints &layoutConstraints,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
   m_surfaceRegistry.insert({surfaceId, {rootView}});
@@ -158,22 +158,16 @@ void FabricUIManager::startSurface(
     root->start(rootView);
   });
 
-  facebook::react::LayoutContext context;
-  facebook::react::LayoutConstraints constraints;
-  context.pointScaleFactor = rootView.ScaleFactor();
-  context.fontSizeMultiplier = rootView.ScaleFactor();
-  constraints.minimumSize.height = rootView.Size().Height;
-  constraints.minimumSize.width = rootView.Size().Width;
-  constraints.maximumSize.height = rootView.Size().Height;
-  constraints.maximumSize.width = rootView.Size().Width;
-  constraints.layoutDirection = facebook::react::LayoutDirection::LeftToRight;
+  facebook::react::LayoutContext layoutContext;
+  layoutContext.pointScaleFactor = rootView.ScaleFactor();
+  layoutContext.fontSizeMultiplier = rootView.ScaleFactor();
 
   m_surfaceManager->startSurface(
       surfaceId,
       moduleName,
       initialProps,
-      constraints, // layout constraints
-      context // layout context
+      layoutConstraints,
+      layoutContext // layout context
   );
 }
 
