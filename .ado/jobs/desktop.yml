@@ -31,6 +31,14 @@ parameters:
             BuildConfiguration: Debug
             BuildPlatform: x64
             UseFabric: true
+          - Name: Arm64ECDebug
+            BuildConfiguration: Debug
+            BuildPlatform: ARM64EC
+            UseFabric: false
+          - Name: Arm64ECRelease
+            BuildConfiguration: Release
+            BuildPlatform: ARM64EC
+            UseFabric: false
       - BuildEnvironment: SecurePullRequest
         Matrix:
           - Name: X64DebugFabric
@@ -57,6 +65,12 @@ parameters:
           - Name: Arm64Release
             BuildConfiguration: Release
             BuildPlatform: ARM64
+          - Name: Arm64ECDebug
+            BuildConfiguration: Debug
+            BuildPlatform: ARM64EC
+          - Name: Arm64ECRelease
+            BuildConfiguration: Release
+            BuildPlatform: ARM64EC
           - Name: X64DebugFabric
             BuildConfiguration: Debug
             BuildPlatform: x64
@@ -170,7 +184,7 @@ jobs:
 
             - template: ../templates/discover-google-test-adapter.yml
 
-            - ${{ if ne(matrix.BuildPlatform, 'ARM64') }}:
+            - ${{ if and(ne(matrix.BuildPlatform, 'ARM64'), ne(matrix.BuildPlatform, 'ARM64EC') )}}:
               - task: VSTest@2
                 displayName: Run Desktop Unit Tests
                 timeoutInMinutes: 5 # Set smaller timeout , due to hangs

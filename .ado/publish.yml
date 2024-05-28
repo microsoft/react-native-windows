@@ -54,6 +54,14 @@ parameters:
       BuildConfiguration: Release
       BuildPlatform: ARM64
       UseFabric: false
+    - Name: ARM64ECDebug
+      BuildConfiguration: Debug
+      BuildPlatform: ARM64EC
+      UseFabric: false
+    - Name: ARM64ECRelease
+      BuildConfiguration: Release
+      BuildPlatform: ARM64EC
+      UseFabric: false
     - Name: X64DebugFabric
       BuildConfiguration: Debug
       BuildPlatform: x64

@@ -23,6 +23,10 @@ parameters:
             BuildPlatform: ARM64
             BuildConfiguration: Debug
             DeployOptions: --no-deploy # We don't have Arm agents
+          - Name: Arm64ECDebug
+            BuildPlatform: ARM64EC
+            BuildConfiguration: Debug
+            DeployOptions: --no-deploy # We don't have Arm agents
           - Name: X64WebDebug
             BuildPlatform: x64
             BuildConfiguration: Debug
