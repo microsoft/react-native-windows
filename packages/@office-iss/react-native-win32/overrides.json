@@ -219,6 +219,13 @@
     },
     {
       "type": "patch",
+      "file": "src-win/Libraries/Core/Devtools/loadBundleFromServer.win32.js",
+      "baseFile": "packages/react-native/Libraries/Core/Devtools/loadBundleFromServer.js",
+      "baseHash": "14662281c97222b45893308b744a7dc7c2000801",
+      "issue": 12704
+    },
+    {
+      "type": "patch",
       "file": "src-win/Libraries/Core/ReactNativeVersionCheck.win32.js",
       "baseFile": "packages/react-native/Libraries/Core/ReactNativeVersionCheck.js",
       "baseHash": "453c4da8036736aefbd950bb7c90603859933f4e",

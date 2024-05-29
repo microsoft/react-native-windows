@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Folly and Fmt CodeQL patches",
+  "packageName": "react-native-windows",
+  "email": "1422161+marlenecota@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
