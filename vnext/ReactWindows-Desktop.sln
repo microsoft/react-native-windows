@@ -8,6 +8,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fmt", "fmt\fmt.vcxproj", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ReactCommon", "ReactCommon\ReactCommon.vcxproj", "{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD}"
 	ProjectSection(ProjectDependencies) = postProject
+		{74085F13-2DDE-45E5-A0CA-927AC9D0B953} = {74085F13-2DDE-45E5-A0CA-927AC9D0B953}
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {A990658C-CE31-4BCC-976F-0FC6B1AF693D}
 	EndProjectSection
 EndProject
@@ -76,6 +77,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop.IntegrationTests", "Desktop.IntegrationTests\React.Windows.Desktop.IntegrationTests.vcxproj", "{E0D269B4-D7F0-4C4E-92CD-B2C06109A2BB}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.IntegrationTests", "IntegrationTests\React.Windows.IntegrationTests.vcxproj", "{700A84FD-F92A-43F1-8D06-B0E0745DF9B5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB} = {88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Chakra", "Chakra\Chakra.vcxitems", "{C38970C0-5FBF-4D69-90D8-CBAC225AE895}"
 EndProject
@@ -88,8 +92,14 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop.ABITests", "Desktop.ABITests\React.Windows.Desktop.ABITests.vcxproj", "{44DCED9B-9C4C-48FE-8545-0930192BBC16}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Test", "Test\React.Windows.Test.vcxproj", "{CD0415C6-D908-4212-9481-49BE41F58D27}"
+	ProjectSection(ProjectDependencies) = postProject
+		{88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB} = {88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "React.Windows.Desktop.Test.DLL", "Desktop.Test.DLL\React.Windows.Desktop.Test.DLL.vcxproj", "{473FE8E8-26DA-4B46-A7B3-7B4A758075D0}"
+	ProjectSection(ProjectDependencies) = postProject
+		{88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB} = {88BAB0FA-E1AC-4DA7-A30C-F91702A8EADB}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Include", "include\Include.vcxitems", "{EF074BA1-2D54-4D49-A28E-5E040B47CD2E}"
 EndProject
