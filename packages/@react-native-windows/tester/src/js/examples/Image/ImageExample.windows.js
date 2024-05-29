@@ -170,7 +170,7 @@ class NetworkImageCallbackExample extends React.Component<
               prefetchTask.then(
                 () => {
                   this._loadEventFired(
-                    `✔ Prefetch OK (+${Date.now() - mountTime}ms)`,
+                    `✔ prefetch OK (+${Date.now() - mountTime}ms)`,
                   );
                   // $FlowFixMe[unused-promise]
                   Image.queryCache([IMAGE_PREFETCH_URL]).then(map => {
@@ -190,7 +190,7 @@ class NetworkImageCallbackExample extends React.Component<
                 },
                 error => {
                   this._loadEventFired(
-                    `✘ Prefetch failed (+${Date.now() - mountTime}ms)`,
+                    `✘ prefetch failed (+${Date.now() - mountTime}ms)`,
                   );
                 },
               );
