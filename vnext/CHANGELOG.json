@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 29 May 2024 18:11:54 GMT",
+      "version": "0.73.15",
+      "tag": "react-native-windows_v0.73.15",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7cb849542746286f1fb7758306cdf152c89db1aa",
+            "comment": "Enable Timer TurboModule for Desktop"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 23 May 2024 15:40:04 GMT",
       "version": "0.73.14",
       "tag": "react-native-windows_v0.73.14",
