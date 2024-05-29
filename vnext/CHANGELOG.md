@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 24 May 2024 05:17:25 GMT and should not be manually modified.
+This log was last generated on Wed, 29 May 2024 05:20:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.821
+
+Wed, 29 May 2024 05:20:02 GMT
+
+### Changes
+
+- APIs to enable RootViews that size to content (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.820
 
