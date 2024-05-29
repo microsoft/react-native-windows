@@ -10,8 +10,6 @@
 
 #ifdef ANDROID
 #include <folly/dynamic.h>
-#include <react/renderer/mapbuffer/MapBuffer.h>
-#include <react/renderer/mapbuffer/MapBufferBuilder.h>
 #endif
 
 namespace facebook::react {
@@ -25,9 +23,6 @@ public:
   folly::dynamic getDynamic() const {
     return {};
   };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
-  };
 #endif
 };
 
@@ -39,9 +34,6 @@ public:
   AndroidDrawerLayoutState(AndroidDrawerLayoutState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
-  };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
   };
 #endif
 };
@@ -55,9 +47,6 @@ public:
   folly::dynamic getDynamic() const {
     return {};
   };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
-  };
 #endif
 };
 
@@ -69,9 +58,6 @@ public:
   AndroidSwipeRefreshLayoutState(AndroidSwipeRefreshLayoutState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
-  };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
   };
 #endif
 };
@@ -85,9 +71,6 @@ public:
   folly::dynamic getDynamic() const {
     return {};
   };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
-  };
 #endif
 };
 
@@ -99,9 +82,6 @@ public:
   PullToRefreshViewState(PullToRefreshViewState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
-  };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
   };
 #endif
 };
@@ -115,9 +95,6 @@ public:
   folly::dynamic getDynamic() const {
     return {};
   };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
-  };
 #endif
 };
 
@@ -129,9 +106,6 @@ public:
   UnimplementedNativeViewState(UnimplementedNativeViewState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
-  };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
   };
 #endif
 };

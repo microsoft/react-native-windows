@@ -248,6 +248,9 @@ const styles = StyleSheet.create({
   singleLineWithHeightTextInput: {
     height: 30,
   },
+  wrappedText: {
+    maxWidth: 300,
+  },
 });
 
 const examples: Array<RNTesterModuleExample> = [
@@ -528,7 +531,7 @@ const examples: Array<RNTesterModuleExample> = [
     platform: 'android',
     render: function (): React.Node {
       return (
-        <View>
+        <View style={styles.wrappedText}>
           <ExampleTextInput
             numberOfLines={2}
             multiline={true}
@@ -557,7 +560,7 @@ const examples: Array<RNTesterModuleExample> = [
     title: 'Auto-expanding',
     render: function (): React.Node {
       return (
-        <View>
+        <View style={styles.wrappedText}>
           <AutogrowingTextInputExample
             enablesReturnKeyAutomatically={true}
             returnKeyType="done"

@@ -4,9 +4,9 @@
     "UAP,Version=v10.0.17763": {
       "Microsoft.JavaScript.Hermes": {
         "type": "Direct",
-        "requested": "[0.1.18, )",
-        "resolved": "0.1.18",
-        "contentHash": "5K8rRihGwIs2XNOTP2Jsw3T6cegxCBQXcpPS4optONU/AmFElGAfnA6XBQJ4UqlCFCl9Nf9zQrgvCUPBWYHiag=="
+        "requested": "[0.1.21, )",
+        "resolved": "0.1.21",
+        "contentHash": "5njCh+3eXTLOv7+8nOnp6nJ5C0r6it5ze54c0nuWleeDptuK8t3dEDB79XTU4D5DKNvAPlqJpgXRDOak5nYIug=="
       },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
@@ -69,7 +69,7 @@
       "Microsoft.NETCore.Platforms": {
         "type": "Transitive",
         "resolved": "2.1.0",
-        "contentHash": "ok+RPAtESz/9MUXeIEz6Lv5XAGQsaNmEYXMsgVALj4D7kqC8gveKWXWXbufLySR2fWrwZf8smyN5RmHu0e4BHA=="
+        "contentHash": "GmkKfoyerqmsHMn7OZj0AKpcBabD+GaafqphvX2Mw406IwiJRy1pKcKqdCfKJfYmkRyJ6+e+RaUylgdJoDa1jQ=="
       },
       "Microsoft.SourceLink.Common": {
         "type": "Transitive",
@@ -193,7 +193,7 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.1.18, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.21, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.UI.Xaml": "[2.8.0, )",
           "ReactCommon": "[1.0.0, )",

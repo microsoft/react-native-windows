@@ -30,8 +30,8 @@
     "eslint": "^8.19.0",
     "just-scripts": "^1.3.2",
     "prettier": "2.8.8",
-    "react": "18.2.0",
-    "react-native": "0.75.0-nightly-20240502-88de74b2d",
+    "react": "18.3.1",
+    "react-native": "0.75.0-nightly-20240511-3f17c8b5f",
     "react-native-windows": "^0.0.0-canary.821",
     "typescript": "5.0.4"
   },

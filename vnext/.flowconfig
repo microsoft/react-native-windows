@@ -90,7 +90,6 @@ flow/
 ../node_modules/.flow/flow-typed/
 
 [options]
-experimental.global_find_ref=true
 enums=true
 casting_syntax=both
 
@@ -147,4 +146,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.235.1
+^0.236.0

@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240502-88de74b2d",
+  "baseVersion": "0.75.0-nightly-20240511-3f17c8b5f",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "7fb09c6da9376ca799b198fecab3baa0ff1378f8"
+      "baseHash": "bd274caf8faae09b1f0513a4086c07b778072e78"
     },
     {
       "type": "derived",
@@ -50,7 +50,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.h",
-      "baseHash": "0257630564d2a8784c39101a4d99ca3b4fe62b26"
+      "baseHash": "96c976d97b9eeb2824270cd558c9e150ae87a6b9"
     },
     {
       "type": "derived",
@@ -325,7 +325,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollViewNativeComponent.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollViewNativeComponent.js",
-      "baseHash": "4b6a972a3a5458a6528d7ea4e67b5f8fd5ac52f2"
+      "baseHash": "fc24774459ca08e1097b2130535e00d4bc6e0d17"
     },
     {
       "type": "derived",
@@ -337,7 +337,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "8bb1dc7825f1994010d4d0ab2d8ed3fbc3d34e5d"
+      "baseHash": "dad569fd3dd81f212afd7b35ffe75108e926eb5e"
     },
     {
       "type": "patch",
@@ -471,7 +471,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "2a5e0ee3fed39205087dc49e2a7b180b6438f589"
+      "baseHash": "d7b9540d5e637cb86b29d119838a4024bfc2b7d6"
     },
     {
       "type": "derived",
