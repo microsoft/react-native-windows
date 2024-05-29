@@ -393,7 +393,7 @@ class MultipleSourcesExample extends React.Component<
                 height: 38,
               },
               {
-                uri: 'https://www.facebook.com/ads/pics/successstories.png',
+                uri: IMAGE2,
                 width: 100,
                 height: 100,
               },
@@ -433,7 +433,7 @@ class LoadingIndicatorSourceExample extends React.Component<
 
   render(): React.Node {
     const loadingImage = {
-      uri: `https://www.facebook.com/ads/pics/successstories.png?hash=${this.state.imageHash}`,
+      uri: `${IMAGE2}?hash=${this.state.imageHash}`,
     };
 
     return (
@@ -535,7 +535,7 @@ class OnLayoutExample extends React.Component<
                 height: 76,
               },
               {
-                uri: 'https://www.facebook.com/ads/pics/successstories.png',
+                uri: IMAGE2,
                 width: 400,
                 height: 400,
               },
@@ -591,7 +591,7 @@ class OnPartialLoadExample extends React.Component<
 }
 
 const fullImage: ImageSource = {
-  uri: 'https://www.facebook.com/ads/pics/successstories.png',
+  uri: IMAGE2,
 };
 const smallImage = {
   uri: IMAGE1,
@@ -841,7 +841,7 @@ exports.examples = [
         <Image
           width={64}
           height={64}
-          srcSet={`https://www.facebook.com/ads/pics/successstories.png 4x, ${IMAGE1} 2x`}
+          srcSet={`${IMAGE2} 4x, ${IMAGE1} 2x`}
           style={styles.base}
           testID="image-srcset"
           accessible
@@ -854,14 +854,7 @@ exports.examples = [
     description: ('If the `source` prop `uri` property is an object URL, ' +
       'then it will be resolved using `BlobProvider` (Android) or `RCTBlobManager` (iOS).': string),
     render: function (): React.Node {
-      return (
-        <BlobImageExample
-          urls={[
-            IMAGE1,
-            'https://www.facebook.com/ads/pics/successstories.png',
-          ]}
-        />
-      );
+      return <BlobImageExample urls={[IMAGE1, IMAGE2]} />
     },
   },
   {
