@@ -28,6 +28,9 @@ void* winrt_make_facebook_react_NativeLogEventSource();
 void* winrt_make_facebook_react_NativeTraceEventSource();
 
 #ifndef USE_FABRIC
+void* winrt_make_Microsoft_ReactNative_CompositionRootView() {
+    winrt::throw_hresult(E_NOTIMPL);
+}
 void* winrt_make_Microsoft_ReactNative_Composition_ViewComponentView() {
     winrt::throw_hresult(E_NOTIMPL);
 }

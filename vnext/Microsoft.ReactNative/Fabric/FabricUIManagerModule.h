@@ -31,6 +31,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   void startSurface(
       const winrt::Microsoft::ReactNative::CompositionRootView &rootView,
       facebook::react::SurfaceId surfaceId,
+      const facebook::react::LayoutConstraints &layoutConstraints,
       const std::string &moduleName,
       const folly::dynamic &initialProps) noexcept;
 

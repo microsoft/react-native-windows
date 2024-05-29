@@ -45,6 +45,20 @@ RootComponentView *RootComponentView::rootComponentView() noexcept {
   return this;
 }
 
+void RootComponentView::updateLayoutMetrics(
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
+  base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
+
+  if (oldLayoutMetrics.frame != layoutMetrics.frame ||
+      oldLayoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor) {
+    if (auto rootView = m_wkRootView.get()) {
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)
+          ->NotifySizeChanged();
+    }
+  }
+}
+
 winrt::Microsoft::ReactNative::ComponentView RootComponentView::GetFocusedComponent() noexcept {
   return m_focusedComponent;
 }

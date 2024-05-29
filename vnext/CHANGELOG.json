@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 29 May 2024 05:20:02 GMT",
+      "version": "0.0.0-canary.821",
+      "tag": "react-native-windows_v0.0.0-canary.821",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b150f8e5bb4178693006bea10b838c565b559011",
+            "comment": "APIs to enable RootViews that size to content"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 May 2024 05:17:25 GMT",
       "version": "0.0.0-canary.820",
       "tag": "react-native-windows_v0.0.0-canary.820",

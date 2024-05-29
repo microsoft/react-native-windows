@@ -4,6 +4,7 @@
 #include "CompositionRootView.h"
 #include "CompositionRootView.g.cpp"
 #include "FocusNavigationRequest.g.cpp"
+#include <RootViewSizeChangedEventArgs.g.h>
 
 #include <AutoDraw.h>
 #include <DynamicWriter.h>
@@ -330,26 +331,6 @@ winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
   return m_uiaProvider;
 }
 
-std::string CompositionRootView::JSComponentName() const noexcept {
-  return to_string(m_reactViewOptions.ComponentName());
-}
-
-int64_t CompositionRootView::GetActualHeight() const noexcept {
-  return static_cast<int64_t>(m_size.Height);
-}
-
-int64_t CompositionRootView::GetActualWidth() const noexcept {
-  return static_cast<int64_t>(m_size.Width);
-}
-
-int64_t CompositionRootView::GetTag() const noexcept {
-  return m_rootTag;
-}
-
-void CompositionRootView::SetTag(int64_t tag) noexcept {
-  m_rootTag = tag;
-}
-
 void CompositionRootView::SetWindow(uint64_t hwnd) noexcept {
   m_hwnd = reinterpret_cast<HWND>(hwnd);
 }
@@ -452,7 +433,7 @@ void CompositionRootView::UninitRootView() noexcept {
 
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()));
-    uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(GetTag()));
+    uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(RootTag()));
 
     // This is needed to ensure that the unmount JS logic is completed before the the instance is shutdown during
     // instance destruction. Aligns with similar code in ReactInstanceWin::DetachRootView for paper Future: Instead this
@@ -493,16 +474,79 @@ void CompositionRootView::ShowInstanceLoaded() noexcept {
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()));
 
-    auto rootTag = ::Microsoft::ReactNative::getNextRootViewTag();
-    SetTag(rootTag);
+    m_rootTag = ::Microsoft::ReactNative::getNextRootViewTag();
     auto initProps = DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps()));
     if (initProps.isNull()) {
       initProps = folly::dynamic::object();
     }
     initProps["concurrentRoot"] = true;
-    uiManager->startSurface(*this, rootTag, JSComponentName(), initProps);
+    uiManager->startSurface(
+        *this,
+        static_cast<facebook::react::SurfaceId>(m_rootTag),
+        m_layoutConstraints,
+        to_string(m_reactViewOptions.ComponentName()),
+        initProps);
 
     m_isJSViewAttached = true;
+  }
+}
+
+facebook::react::AttributedStringBox CreateLoadingAttributedString() noexcept {
+  auto attributedString = facebook::react::AttributedString{};
+  auto fragment = facebook::react::AttributedString::Fragment{};
+  fragment.string = "Loading";
+  fragment.textAttributes.fontSize = loadingBarFontSize;
+  attributedString.appendFragment(fragment);
+  return facebook::react::AttributedStringBox{attributedString};
+}
+
+facebook::react::Size MeasureLoading(const facebook::react::LayoutConstraints &layoutConstraints, float scaleFactor) {
+  auto attributedStringBox = CreateLoadingAttributedString();
+  winrt::com_ptr<::IDWriteTextLayout> textLayout;
+  facebook::react::TextLayoutManager::GetTextLayout(
+      attributedStringBox, {} /*paragraphAttributes*/, layoutConstraints, textLayout);
+
+  DWRITE_TEXT_METRICS tm;
+  winrt::check_hresult(textLayout->GetMetrics(&tm));
+
+  return layoutConstraints.clamp(
+      {loadingActivityHorizontalOffset * scaleFactor + tm.width, loadingBarHeight * scaleFactor});
+}
+
+winrt::event_token CompositionRootView::SizeChanged(
+    winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs> const
+        &handler) noexcept {
+  return m_sizeChangedEvent.add(handler);
+}
+
+void CompositionRootView::SizeChanged(winrt::event_token const &token) noexcept {
+  m_sizeChangedEvent.remove(token);
+}
+
+struct RootViewSizeChangedEventArgs : RootViewSizeChangedEventArgsT<RootViewSizeChangedEventArgs> {
+  RootViewSizeChangedEventArgs(const winrt::Windows::Foundation::Size &size) : m_size(size) {}
+  winrt::Windows::Foundation::Size Size() const noexcept {
+    return m_size;
+  }
+
+ private:
+  const winrt::Windows::Foundation::Size m_size;
+};
+
+void CompositionRootView::NotifySizeChanged() noexcept {
+  auto oldSize = m_size;
+  facebook::react::Size size;
+  auto rootComponentView = GetComponentView();
+  if (rootComponentView) {
+    size = rootComponentView->layoutMetrics().frame.size;
+  } else if (m_loadingVisual) {
+    size = MeasureLoading(m_layoutConstraints, m_scaleFactor);
+  }
+
+  m_size = {size.width, size.height};
+  UpdateRootVisualSize();
+  if (oldSize != m_size) {
+    m_sizeChangedEvent(*this, winrt::make<RootViewSizeChangedEventArgs>(m_size));
   }
 }
 
@@ -514,6 +558,9 @@ Composition::Experimental::IDrawingSurfaceBrush CompositionRootView::CreateLoadi
   auto compContext =
       winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
           m_context.Properties().Handle());
+
+  if (m_size.Height == 0 || m_size.Width == 0)
+    return nullptr;
 
   winrt::Windows::Foundation::Size surfaceSize = {
       m_size.Width * m_scaleFactor, std::min(m_size.Height, loadingBarHeight) * m_scaleFactor};
@@ -532,12 +579,7 @@ Composition::Experimental::IDrawingSurfaceBrush CompositionRootView::CreateLoadi
       constraints.maximumSize.width = std::max(0.0f, m_size.Width - loadingTextHorizontalOffset);
       constraints.maximumSize.height = std::max(0.0f, m_size.Height - loadingBarHeight);
 
-      auto attributedString = facebook::react::AttributedString{};
-      auto fragment = facebook::react::AttributedString::Fragment{};
-      fragment.string = "Loading";
-      fragment.textAttributes.fontSize = loadingBarFontSize;
-      attributedString.appendFragment(fragment);
-      auto attributedStringBox = facebook::react::AttributedStringBox{attributedString};
+      auto attributedStringBox = CreateLoadingAttributedString();
 
       auto textAttributes = facebook::react::TextAttributes{};
       textAttributes.foregroundColor = facebook::react::whiteColor();
@@ -578,10 +620,7 @@ void CompositionRootView::ShowInstanceLoading() noexcept {
       winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
           m_context.Properties().Handle());
 
-  auto drawingSurface = CreateLoadingVisualBrush();
-
   m_loadingVisual = compContext.CreateSpriteVisual();
-  m_loadingVisual.Brush(drawingSurface);
 
   auto foregroundBrush = compContext.CreateColorBrush({255, 255, 255, 255});
 
@@ -589,14 +628,28 @@ void CompositionRootView::ShowInstanceLoading() noexcept {
   m_loadingActivityVisual.Brush(foregroundBrush);
   m_loadingVisual.InsertAt(m_loadingActivityVisual, 0);
 
+  NotifySizeChanged();
   UpdateLoadingVisualSize();
 
   InternalRootVisual().InsertAt(m_loadingVisual, m_hasRenderedVisual ? 1 : 0);
 }
 
+void ApplyConstraints(
+    const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraintsIn,
+    facebook::react::LayoutConstraints &layoutConstraintsOut) noexcept {
+  layoutConstraintsOut.minimumSize = {layoutConstraintsIn.MinimumSize.Width, layoutConstraintsIn.MinimumSize.Height};
+  layoutConstraintsOut.maximumSize = {layoutConstraintsIn.MaximumSize.Width, layoutConstraintsIn.MaximumSize.Height};
+  layoutConstraintsOut.layoutDirection =
+      static_cast<facebook::react::LayoutDirection>(layoutConstraintsIn.LayoutDirection);
+}
+
 winrt::Windows::Foundation::Size CompositionRootView::Measure(
-    winrt::Windows::Foundation::Size const &availableSize) const {
-  winrt::Windows::Foundation::Size size{0.0f, 0.0f};
+    const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
+    const winrt::Windows::Foundation::Point &viewportOffset) const noexcept {
+  facebook::react::Size size{0, 0};
+
+  facebook::react::LayoutConstraints constraints;
+  ApplyConstraints(layoutConstraints, constraints);
 
   if (m_isInitialized && m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
@@ -605,55 +658,39 @@ winrt::Windows::Foundation::Size CompositionRootView::Measure(
       // TODO scaling factor
       context.pointScaleFactor = static_cast<facebook::react::Float>(m_scaleFactor);
       context.fontSizeMultiplier = static_cast<facebook::react::Float>(m_scaleFactor);
+      context.viewportOffset = {viewportOffset.X, viewportOffset.Y};
 
-      facebook::react::LayoutConstraints constraints;
-      // TODO should support MinHeight/MinWidth
-      constraints.minimumSize.height = static_cast<facebook::react::Float>(0.0f);
-      constraints.minimumSize.width = static_cast<facebook::react::Float>(0.0f);
-
-      // TODO should support MaxHeight/MaxWidth props?
-      constraints.minimumSize.height = constraints.maximumSize.height =
-          static_cast<facebook::react::Float>(availableSize.Height);
-      constraints.minimumSize.width = constraints.maximumSize.width =
-          static_cast<facebook::react::Float>(availableSize.Width);
-      // TODO get RTL
-      constraints.layoutDirection = facebook::react::LayoutDirection::LeftToRight;
-
-      auto yogaSize =
-          fabricuiManager->measureSurface(static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
-      return {std::min(yogaSize.width, availableSize.Width), std::min(yogaSize.height, availableSize.Height)};
+      size = fabricuiManager->measureSurface(static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
     }
+  } else if (m_loadingVisual) {
+    size = MeasureLoading(constraints, m_scaleFactor);
   }
 
-  return size;
+  auto clampedSize = constraints.clamp(size);
+  return {clampedSize.width, clampedSize.height};
 }
 
-winrt::Windows::Foundation::Size CompositionRootView::Arrange(winrt::Windows::Foundation::Size finalSize) const {
+void CompositionRootView::Arrange(
+    const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
+    const winrt::Windows::Foundation::Point &viewportOffset) noexcept {
+  ApplyConstraints(layoutConstraints, m_layoutConstraints);
+
   if (m_isInitialized && m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
       facebook::react::LayoutContext context;
       context.pointScaleFactor = static_cast<facebook::react::Float>(m_scaleFactor);
       context.fontSizeMultiplier = static_cast<facebook::react::Float>(m_scaleFactor);
-
-      facebook::react::LayoutConstraints constraints;
-      // TODO should support MinHeight/MinWidth
-      constraints.minimumSize.height = static_cast<facebook::react::Float>(0.0f);
-      constraints.minimumSize.width = static_cast<facebook::react::Float>(0.0f);
-
-      // TODO should support MaxHeight/MaxWidth props?
-      constraints.minimumSize.height = constraints.maximumSize.height =
-          static_cast<facebook::react::Float>(finalSize.Height);
-      constraints.minimumSize.width = constraints.maximumSize.width =
-          static_cast<facebook::react::Float>(finalSize.Width);
-      // TODO get RTL
-      constraints.layoutDirection = facebook::react::LayoutDirection::LeftToRight;
+      context.viewportOffset = {viewportOffset.X, viewportOffset.Y};
 
       fabricuiManager->constraintSurfaceLayout(
-          static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
+          static_cast<facebook::react::SurfaceId>(m_rootTag), m_layoutConstraints, context);
     }
+  } else if (m_loadingVisual) {
+    // TODO: Resize to align loading
+    auto s = m_layoutConstraints.clamp(MeasureLoading(m_layoutConstraints, m_scaleFactor));
+    NotifySizeChanged();
   }
-  return finalSize;
 }
 
 #ifdef USE_WINUI3
