@@ -15,7 +15,7 @@ namespace facebook::react {
 namespace {
 
 struct StrKey {
-  size_t key; // [Windows #13231]
+  size_t key;
   StrKey(std::string_view s) : key(std::hash<std::string_view>{}(s)) {}
 
   bool operator==(const StrKey& rhs) const {
@@ -25,7 +25,7 @@ struct StrKey {
 
 struct StrKeyHash {
   constexpr size_t operator()(const StrKey& strKey) const {
-    return strKey.key; // [Windows #13231]
+    return strKey.key;
   }
 };
 
