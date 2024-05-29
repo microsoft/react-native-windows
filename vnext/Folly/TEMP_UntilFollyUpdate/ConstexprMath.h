@@ -257,6 +257,7 @@ constexpr auto& constexpr_iterated_squares_desc_2_v =
 template <typename T, typename... Ts>
 constexpr T constexpr_max(T a, Ts... ts) {
   T list[] = {ts..., a}; // 0-length arrays are illegal
+  // [Windows #12703 - Fix folly CodeQL issues]
   for (size_t i = 0; i < sizeof...(Ts); ++i) {
     a = list[i] < a ? a : list[i];
   }
@@ -268,6 +269,7 @@ constexpr T constexpr_max(T a, Ts... ts) {
 template <typename T, typename... Ts>
 constexpr T constexpr_min(T a, Ts... ts) {
   T list[] = {ts..., a}; // 0-length arrays are illegal
+  // [Windows #12703 - Fix folly CodeQL issues]
   for (size_t i = 0; i < sizeof...(Ts); ++i) {
     a = list[i] < a ? list[i] : a;
   }
