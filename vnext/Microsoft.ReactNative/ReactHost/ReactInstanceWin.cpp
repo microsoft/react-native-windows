@@ -63,8 +63,14 @@
 #include "Modules/NativeUIManager.h"
 #include "Modules/PaperUIManagerModule.h"
 #include "Modules/TimingModule.h"
+#else
+#include "Modules/DesktopTimingModule.h"
 #endif
+#include "Modules/ExceptionsManager.h"
+#include "Modules/PlatformConstantsWinModule.h"
 #include "Modules/ReactRootViewTagGenerator.h"
+#include "Modules/SourceCode.h"
+#include "Modules/StatusBarManager.h"
 
 #ifndef CORE_ABI
 #include <Utils/UwpPreparedScriptStore.h>
@@ -255,6 +261,7 @@ ReactInstanceWin::ReactInstanceWin(
   m_whenDestroyedResult =
       m_whenDestroyed.AsFuture().Then<Mso::Executors::Inline>([whenLoaded = m_whenLoaded,
                                                                onDestroyed = m_options.OnInstanceDestroyed,
+                                                               // If the ReactHost has been released, this
                                                                // instance might be the only thing keeping
                                                                // the propertyBag alive.
                                                                // We want it to remain alive for the
@@ -316,6 +323,7 @@ void ReactInstanceWin::InstanceCrashHandler(int fileDescriptor) noexcept {
 }
 
 void ReactInstanceWin::LoadModules(
+    const std::shared_ptr<facebook::react::DevSettings> &devSettings,
     const std::shared_ptr<winrt::Microsoft::ReactNative::NativeModulesProvider> &nativeModulesProvider,
     const std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> &turboModulesProvider) noexcept {
   auto registerTurboModule = [this, &nativeModulesProvider, &turboModulesProvider](
@@ -385,6 +393,45 @@ void ReactInstanceWin::LoadModules(
   }
 #endif
 
+  if (devSettings->useTurboModulesOnly) {
+    ::Microsoft::ReactNative::ExceptionsManager::SetRedBoxHander(
+        winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()), m_redboxHandler);
+    registerTurboModule(
+        L"ExceptionsManager",
+        winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ExceptionsManager>());
+
+    registerTurboModule(
+        L"StatusBarManager",
+        winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::StatusBarManager>());
+
+    registerTurboModule(
+        L"PlatformConstants",
+        winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::PlatformConstants>());
+
+    uint32_t hermesBytecodeVersion = 0;
+#if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
+    hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
+#endif
+
+    std::string bundleUrl = (devSettings->useWebDebugger || devSettings->liveReloadCallback)
+        ? facebook::react::DevServerHelper::get_BundleUrl(
+              devSettings->sourceBundleHost,
+              devSettings->sourceBundlePort,
+              devSettings->debugBundlePath,
+              devSettings->platformName,
+              devSettings->bundleAppId,
+              devSettings->devBundle,
+              devSettings->useFastRefresh,
+              devSettings->inlineSourceMap,
+              hermesBytecodeVersion)
+        : devSettings->bundleRootPath;
+    ::Microsoft::ReactNative::SourceCode::SetScriptUrl(
+        winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()), bundleUrl);
+
+    registerTurboModule(
+        L"SourceCode", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SourceCode>());
+  }
+
   registerTurboModule(
       L"DevSettings", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::DevSettings>());
 
@@ -396,8 +443,9 @@ void ReactInstanceWin::LoadModules(
       L"LinkingManager",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LinkingManager>());
 
-  registerTurboModule(
-      L"Timing", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::Timing>());
+  registerTurboModule(L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Timing>());
+#else
+  registerTurboModule(L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::facebook::react::Timing>());
 #endif
 
   registerTurboModule(
@@ -439,13 +487,10 @@ void ReactInstanceWin::Initialize() noexcept {
           winrt::Microsoft::ReactNative::ReactPropertyBag(strongThis->Options().Properties));
       Microsoft::ReactNative::Appearance::InitOnUIThread(strongThis->GetReactContext());
       Microsoft::ReactNative::DeviceInfoHolder::InitDeviceInfoHolder(strongThis->GetReactContext());
-
 #endif // CORE_ABI
 
       strongThis->Queue().Post([this, weakThis]() noexcept {
         if (auto strongThis = weakThis.GetStrongPtr()) {
-          // auto cxxModulesProviders = GetCxxModuleProviders();
-
           auto devSettings = std::make_shared<facebook::react::DevSettings>();
           devSettings->useJITCompilation = m_options.EnableJITCompilation;
           devSettings->sourceBundleHost = SourceBundleHost();
@@ -478,10 +523,21 @@ void ReactInstanceWin::Initialize() noexcept {
             }
           };
 
+          auto getBoolProperty = [properties = ReactPropertyBag{m_options.Properties}](
+                                     const wchar_t *ns, const wchar_t *name, bool defaultValue) noexcept -> bool {
+            ReactPropertyId<bool> propId{ns == nullptr ? ReactPropertyNamespace() : ReactPropertyNamespace(ns), name};
+            std::optional<bool> propValue = properties.Get(propId);
+            return propValue.value_or(defaultValue);
+          };
+
+          devSettings->omitNetworkingCxxModules = getBoolProperty(nullptr, L"OmitNetworkingCxxModules", false);
+          devSettings->useWebSocketTurboModule = getBoolProperty(nullptr, L"UseWebSocketTurboModule", false);
+          devSettings->useTurboModulesOnly = getBoolProperty(L"DevSettings", L"UseTurboModulesOnly", false);
+
           std::vector<facebook::react::NativeModuleDescription> cxxModules;
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
 
-          LoadModules(nmp, m_options.TurboModuleProvider);
+          LoadModules(devSettings, nmp, m_options.TurboModuleProvider);
 
           auto modules = nmp->GetModules(m_reactContext, m_jsMessageThread.Load());
           cxxModules.insert(
@@ -569,12 +625,7 @@ void ReactInstanceWin::Initialize() noexcept {
             // We need to keep the instance wrapper alive as its destruction shuts down the native queue.
             m_options.TurboModuleProvider->SetReactContext(
                 winrt::make<implementation::ReactContext>(Mso::Copy(m_reactContext)));
-            auto omitNetCxxPropName = ReactPropertyBagHelper::GetName(nullptr, L"OmitNetworkingCxxModules");
-            auto omitNetCxxPropValue = m_options.Properties.Get(omitNetCxxPropName);
-            devSettings->omitNetworkingCxxModules = winrt::unbox_value_or(omitNetCxxPropValue, false);
-            auto useWebSocketTurboModulePropName = ReactPropertyBagHelper::GetName(nullptr, L"UseWebSocketTurboModule");
-            auto useWebSocketTurboModulePropValue = m_options.Properties.Get(useWebSocketTurboModulePropName);
-            devSettings->useWebSocketTurboModule = winrt::unbox_value_or(useWebSocketTurboModulePropValue, false);
+
             auto bundleRootPath = devSettings->bundleRootPath;
             auto instanceWrapper = facebook::react::CreateReactInstance(
                 std::shared_ptr<facebook::react::Instance>(strongThis->m_instance.Load()),

@@ -95,6 +95,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
       Mso::Promise<void> &&whenLoaded,
       Mso::VoidFunctor &&updateUI) noexcept;
   void LoadModules(
+      const std::shared_ptr<facebook::react::DevSettings> &devSettings,
       const std::shared_ptr<winrt::Microsoft::ReactNative::NativeModulesProvider> &nativeModulesProvider,
       const std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> &turboModulesProvider) noexcept;
   void Initialize() noexcept override;
