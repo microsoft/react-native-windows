@@ -22,20 +22,12 @@ const {
   View,
 } = require('react-native');
 
-const IMAGE1 =
-  'https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png';
-
-const IMAGE2 =
-  'https://www.facebook.com/ar_effect/external_textures/648609739826677.png';
-
 const base64Icon =
   'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEsAAABLCAQAAACSR7JhAAADtUlEQVR4Ac3YA2Bj6QLH0XPT1Fzbtm29tW3btm3bfLZtv7e2ObZnms7d8Uw098tuetPzrxv8wiISrtVudrG2JXQZ4VOv+qUfmqCGGl1mqLhoA52oZlb0mrjsnhKpgeUNEs91Z0pd1kvihA3ULGVHiQO2narKSHKkEMulm9VgUyE60s1aWoMQUbpZOWE+kaqs4eLEjdIlZTcFZB0ndc1+lhB1lZrIuk5P2aib1NBpZaL+JaOGIt0ls47SKzLC7CqrlGF6RZ09HGoNy1lYl2aRSWL5GuzqWU1KafRdoRp0iOQEiDzgZPnG6DbldcomadViflnl/cL93tOoVbsOLVM2jylvdWjXolWX1hmfZbGR/wjypDjFLSZIRov09BgYmtUqPQPlQrPapecLgTIy0jMgPKtTeob2zWtrGH3xvjUkPCtNg/tm1rjwrMa+mdUkPd3hWbH0jArPGiU9ufCsNNWFZ40wpwn+62/66R2RUtoso1OB34tnLOcy7YB1fUdc9e0q3yru8PGM773vXsuZ5YIZX+5xmHwHGVvlrGPN6ZSiP1smOsMMde40wKv2VmwPPVXNut4sVpUreZiLBHi0qln/VQeI/LTMYXpsJtFiclUN+5HVZazim+Ky+7sAvxWnvjXrJFneVtLWLyPJu9K3cXLWeOlbMTlrIelbMDlrLenrjEQOtIF+fuI9xRp9ZBFp6+b6WT8RrxEpdK64BuvHgDk+vUy+b5hYk6zfyfs051gRoNO1usU12WWRWL73/MMEy9pMi9qIrR4ZpV16Rrvduxazmy1FSvuFXRkqTnE7m2kdb5U8xGjLw/spRr1uTov4uOgQE+0N/DvFrG/Jt7i/FzwxbA9kDanhf2w+t4V97G8lrT7wc08aA2QNUkuTfW/KimT01wdlfK4yEw030VfT0RtZbzjeMprNq8m8tnSTASrTLti64oBNdpmMQm0eEwvfPwRbUBywG5TzjPCsdwk3IeAXjQblLCoXnDVeoAz6SfJNk5TTzytCNZk/POtTSV40NwOFWzw86wNJRpubpXsn60NJFlHeqlYRbslqZm2jnEZ3qcSKgm0kTli3zZVS7y/iivZTweYXJ26Y+RTbV1zh3hYkgyFGSTKPfRVbRqWWVReaxYeSLarYv1Qqsmh1s95S7G+eEWK0f3jYKTbV6bOwepjfhtafsvUsqrQvrGC8YhmnO9cSCk3yuY984F1vesdHYhWJ5FvASlacshUsajFt2mUM9pqzvKGcyNJW0arTKN1GGGzQlH0tXwLDgQTurS8eIQAAAABJRU5ErkJggg==';
-
 const dataImageSvg =
   'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4gPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyOCAyOCIgZmlsbD0ibm9uZSI+PHBhdGggZD0iTTEzLjEyNSAwSDBWMTMuMTI1SDEzLjEyNVYwWiIgZmlsbD0iI0YyNTAyMiI+PC9wYXRoPjxwYXRoIGQ9Ik0yOCAwSDE0Ljg3NVYxMy4xMjVIMjhWMFoiIGZpbGw9IiM3RkJBMDAiPjwvcGF0aD48cGF0aCBkPSJNMTMuMTI1IDE0Ljg3NUgwVjI4SDEzLjEyNVYxNC44NzVaIiBmaWxsPSIjMDBBNEVGIj48L3BhdGg+PHBhdGggZD0iTTI4IDE0Ljg3NUgxNC44NzVWMjhIMjhWMTQuODc1WiIgZmlsbD0iI0ZGQjkwMCI+PC9wYXRoPjwvc3ZnPiA=';
-
-const IMAGE_PREFETCH_URL = `${IMAGE1}?r=1&t=${Date.now()}`;
-
+const IMAGE_PREFETCH_URL =
+  'https://www.facebook.com/favicon.ico?r=1&t=' + Date.now();
 const prefetchTask = Image.prefetch(IMAGE_PREFETCH_URL);
 
 type ImageSource = $ReadOnly<{|
@@ -172,7 +164,7 @@ class NetworkImageCallbackExample extends React.Component<
               prefetchTask.then(
                 () => {
                   this._loadEventFired(
-                    `✔ prefetch OK (+${Date.now() - mountTime}ms)`,
+                    `✔ Prefetch OK (+${Date.now() - mountTime}ms)`,
                   );
                   // $FlowFixMe[unused-promise]
                   Image.queryCache([IMAGE_PREFETCH_URL]).then(map => {
@@ -192,7 +184,7 @@ class NetworkImageCallbackExample extends React.Component<
                 },
                 error => {
                   this._loadEventFired(
-                    `✘ prefetch failed (+${Date.now() - mountTime}ms)`,
+                    `✘ Prefetch failed (+${Date.now() - mountTime}ms)`,
                   );
                 },
               );
@@ -390,12 +382,12 @@ class MultipleSourcesExample extends React.Component<
             style={styles.flex}
             source={[
               {
-                uri: IMAGE1,
+                uri: 'https://www.facebook.com/favicon.ico',
                 width: 38,
                 height: 38,
               },
               {
-                uri: IMAGE2,
+                uri: 'https://www.facebook.com/ads/pics/successstories.png',
                 width: 100,
                 height: 100,
               },
@@ -435,7 +427,7 @@ class LoadingIndicatorSourceExample extends React.Component<
 
   render(): React.Node {
     const loadingImage = {
-      uri: `${IMAGE2}?hash=${this.state.imageHash}`,
+      uri: `https://www.facebook.com/ads/pics/successstories.png?hash=${this.state.imageHash}`,
     };
 
     return (
@@ -454,45 +446,6 @@ class LoadingIndicatorSourceExample extends React.Component<
         />
         <Text>Image Hash: {this.state.imageHash}</Text>
         <Text>Image URI: {loadingImage.uri}</Text>
-      </View>
-    );
-  }
-}
-
-type FadeDurationExampleState = {|
-  imageHash: number,
-|};
-
-type FadeDurationExampleProps = $ReadOnly<{||}>;
-
-class FadeDurationExample extends React.Component<
-  FadeDurationExampleProps,
-  FadeDurationExampleState,
-> {
-  state: FadeDurationExampleState = {
-    imageHash: Date.now(),
-  };
-
-  reloadImage = () => {
-    this.setState({
-      imageHash: Date.now(),
-    });
-  };
-
-  render(): React.Node {
-    const loadingImage = {
-      uri: `${IMAGE2}?hash=${this.state.imageHash}`,
-    };
-
-    return (
-      <View>
-        <View style={styles.spaceBetweenView}>
-          <Text style={styles.touchableText} onPress={this.reloadImage}>
-            Refresh Image
-          </Text>
-        </View>
-        <Image fadeDuration={1500} source={loadingImage} style={styles.base} />
-        <Text>This image will fade in over the time of 1.5s.</Text>
       </View>
     );
   }
@@ -566,17 +519,17 @@ class OnLayoutExample extends React.Component<
             style={styles.flex}
             source={[
               {
-                uri: IMAGE1,
+                uri: 'https://www.facebook.com/favicon.ico',
                 width: 38,
                 height: 38,
               },
               {
-                uri: IMAGE1,
+                uri: 'https://www.facebook.com/favicon.ico',
                 width: 76,
                 height: 76,
               },
               {
-                uri: IMAGE2,
+                uri: 'https://www.facebook.com/ads/pics/successstories.png',
                 width: 400,
                 height: 400,
               },
@@ -632,10 +585,10 @@ class OnPartialLoadExample extends React.Component<
 }
 
 const fullImage: ImageSource = {
-  uri: IMAGE2,
+  uri: 'https://www.facebook.com/ads/pics/successstories.png',
 };
 const smallImage = {
-  uri: IMAGE1,
+  uri: 'https://www.facebook.com/favicon.ico',
 };
 
 const styles = StyleSheet.create({
@@ -882,7 +835,9 @@ exports.examples = [
         <Image
           width={64}
           height={64}
-          srcSet={`${IMAGE2} 4x, ${IMAGE1} 2x`}
+          srcSet={
+            'https://www.facebook.com/ads/pics/successstories.png 4x, https://www.facebook.com/favicon.ico 2x'
+          }
           style={styles.base}
           testID="image-srcset"
           accessible
@@ -895,7 +850,14 @@ exports.examples = [
     description: ('If the `source` prop `uri` property is an object URL, ' +
       'then it will be resolved using `BlobProvider` (Android) or `RCTBlobManager` (iOS).': string),
     render: function (): React.Node {
-      return <BlobImageExample urls={[IMAGE1, IMAGE2]} />;
+      return (
+        <BlobImageExample
+          urls={[
+            'https://www.facebook.com/favicon.ico',
+            'https://www.facebook.com/ads/pics/successstories.png',
+          ]}
+        />
+      );
     },
   },
   {
@@ -932,7 +894,7 @@ exports.examples = [
       return (
         <NetworkImageCallbackExample
           source={{
-            uri: `${IMAGE1}?r=1&t=${Date.now()}`,
+            uri: 'https://www.facebook.com/favicon.ico?r=1&t=' + Date.now(),
           }}
           prefetchedSource={{uri: IMAGE_PREFETCH_URL}}
         />
@@ -945,7 +907,7 @@ exports.examples = [
       return (
         <NetworkImageExample
           source={{
-            uri: IMAGE1 + '_TYPO',
+            uri: 'https://www.facebook.com/favicon_TYPO.ico',
           }}
         />
       );
@@ -957,7 +919,7 @@ exports.examples = [
       return (
         <NetworkImageExample
           source={{
-            uri: `${IMAGE1}?r=1`,
+            uri: 'https://www.facebook.com/favicon.ico?r=1',
           }}
         />
       );
