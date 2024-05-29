@@ -388,7 +388,7 @@ class MultipleSourcesExample extends React.Component<
             style={styles.flex}
             source={[
               {
-                uri: 'https://www.facebook.com/favicon.ico',
+                uri: IMAGE1,
                 width: 38,
                 height: 38,
               },
@@ -525,12 +525,12 @@ class OnLayoutExample extends React.Component<
             style={styles.flex}
             source={[
               {
-                uri: 'https://www.facebook.com/favicon.ico',
+                uri: IMAGE1,
                 width: 38,
                 height: 38,
               },
               {
-                uri: 'https://www.facebook.com/favicon.ico',
+                uri: IMAGE1,
                 width: 76,
                 height: 76,
               },
@@ -594,7 +594,7 @@ const fullImage: ImageSource = {
   uri: 'https://www.facebook.com/ads/pics/successstories.png',
 };
 const smallImage = {
-  uri: 'https://www.facebook.com/favicon.ico',
+  uri: IMAGE1,
 };
 
 const styles = StyleSheet.create({
@@ -841,9 +841,7 @@ exports.examples = [
         <Image
           width={64}
           height={64}
-          srcSet={
-            'https://www.facebook.com/ads/pics/successstories.png 4x, https://www.facebook.com/favicon.ico 2x'
-          }
+          srcSet={`https://www.facebook.com/ads/pics/successstories.png 4x, ${IMAGE1} 2x`}
           style={styles.base}
           testID="image-srcset"
           accessible
@@ -859,7 +857,7 @@ exports.examples = [
       return (
         <BlobImageExample
           urls={[
-            'https://www.facebook.com/favicon.ico',
+            IMAGE1,
             'https://www.facebook.com/ads/pics/successstories.png',
           ]}
         />
@@ -900,7 +898,7 @@ exports.examples = [
       return (
         <NetworkImageCallbackExample
           source={{
-            uri: 'https://www.facebook.com/favicon.ico?r=1&t=' + Date.now(),
+            uri: `${IMAGE1}?r=1&t=${Date.now()}`,
           }}
           prefetchedSource={{uri: IMAGE_PREFETCH_URL}}
         />
@@ -913,7 +911,7 @@ exports.examples = [
       return (
         <NetworkImageExample
           source={{
-            uri: 'https://www.facebook.com/favicon_TYPO.ico',
+            uri: IMAGE1 + '_TYPO',
           }}
         />
       );
@@ -925,7 +923,7 @@ exports.examples = [
       return (
         <NetworkImageExample
           source={{
-            uri: 'https://www.facebook.com/favicon.ico?r=1',
+            uri: `${IMAGE1}?r=1`,
           }}
         />
       );
