@@ -128,13 +128,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/performance/timeline/BoundedConsumableBuffer.h",
-      "baseFile": "packages/react-native/ReactCommon/react/performance/timeline/BoundedConsumableBuffer.h",
-      "baseHash": "4bc874dd3a7be4f4326384b24d1a5c0527403098",
-      "issue": 13231
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/scrollview/ScrollViewProps.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/scrollview/ScrollViewProps.cpp",
       "baseHash": "e4adfb6ee6a9ba5037b2fff3fbc11ed81e157d1b",
