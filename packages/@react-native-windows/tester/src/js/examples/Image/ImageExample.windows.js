@@ -26,7 +26,7 @@ const IMAGE1 =
   'https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png';
 
 const IMAGE2 =
-  // [Windows - this image crashes e2etests]
+  // [Windows #13284 - this image crashes e2etests]
   // 'https://www.facebook.com/ar_effect/external_textures/648609739826677.png';
   'https://www.facebook.com/ads/pics/successstories.png';
 
