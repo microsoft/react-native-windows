@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/eslint-config
 
-This log was last generated on Thu, 23 May 2024 05:17:49 GMT and should not be manually modified.
+This log was last generated on Thu, 30 May 2024 05:18:25 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.19
+
+Thu, 30 May 2024 05:18:25 GMT
+
+### Patches
+
+- RN Integration 05/11 (1422161+marlenecota@users.noreply.github.com)
 
 ## 1.2.18
 
