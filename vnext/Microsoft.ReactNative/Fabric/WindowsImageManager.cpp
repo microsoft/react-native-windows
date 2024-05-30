@@ -199,10 +199,6 @@ ImageResponseOrImageErrorInfo StreamImageResponse::ResolveImage() {
     winrt::check_hresult(
         CreateStreamOverRandomAccessStream(m_stream.as<::IUnknown>().get(), __uuidof(IStream), istream.put_void()));
 
-    char startOfStream[1024];
-    istream->Read(&startOfStream, 1020, nullptr);
-    istream->Seek({0}, STREAM_SEEK_SET, nullptr);
-
     winrt::com_ptr<IWICBitmapDecoder> bitmapDecoder;
     winrt::check_hresult(imagingFactory->CreateDecoderFromStream(
         istream.get(), nullptr, WICDecodeMetadataCacheOnDemand, bitmapDecoder.put()));
