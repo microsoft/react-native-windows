@@ -42,7 +42,7 @@ exports[`Image Tests A network Image example 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/favicon_TYPO.ico",
+          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png_TYPO",
         },
       ],
       "TestId": "image-network",
@@ -727,7 +727,7 @@ exports[`Image Tests An Image can borders 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/favicon.ico",
+          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
         },
       ],
       "TestId": "image-border",
@@ -803,7 +803,7 @@ exports[`Image Tests An Image can have a background color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -814,7 +814,7 @@ exports[`Image Tests An Image can have a background color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -825,7 +825,7 @@ exports[`Image Tests An Image can have a background color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -836,7 +836,7 @@ exports[`Image Tests An Image can have a background color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -1455,7 +1455,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -1466,7 +1466,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -1477,7 +1477,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -1488,7 +1488,7 @@ exports[`Image Tests An Image can have a tint color 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -2077,7 +2077,7 @@ exports[`Image Tests An Image can have multiple sources 1`] = `
         {
           "Size": "38, 38",
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/favicon.ico",
+          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
         },
         {
           "Size": "100, 100",
@@ -2118,7 +2118,7 @@ exports[`Image Tests An Image can have multiple sources through the srcSet prop 
           "Scale": 2,
           "Size": "64, 64",
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/favicon.ico",
+          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
         },
       ],
       "TestId": "image-srcset",
@@ -2147,12 +2147,12 @@ exports[`Image Tests An Image can have onLayout behavior 1`] = `
         {
           "Size": "38, 38",
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/favicon.ico",
+          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
         },
         {
           "Size": "76, 76",
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/favicon.ico",
+          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
         },
         {
           "Size": "400, 400",
@@ -2387,7 +2387,7 @@ exports[`Image Tests An Image component can have a network callback 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/favicon.ico?r=1&t=<some_hash_here>",
+          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1&t=<some_hash_here>",
         },
       ],
       "TestId": "image-network-callback",
@@ -2415,7 +2415,7 @@ exports[`Image Tests An Image component can hve a network callback 2 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/favicon.ico?r=1&t=<some_hash_here>",
+          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1&t=<some_hash_here>",
         },
       ],
       "TestId": "image-network-callback-2",
@@ -2443,7 +2443,7 @@ exports[`Image Tests An Image component can render a blob image 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "blob:<some_guid_here>?offset=0&size=5430",
+          "Uri": "blob:<some_guid_here>?offset=0&size=<size>",
         },
       ],
       "TestId": "image-blob",
@@ -2531,7 +2531,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -2546,7 +2546,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -2561,7 +2561,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -2576,7 +2576,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -2651,12 +2651,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2727,12 +2727,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "100, 0, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2803,12 +2803,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "0, 78, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2879,12 +2879,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "100, 78, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3107,12 +3107,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "0, 233, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3183,12 +3183,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "100, 233, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3347,7 +3347,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -3362,7 +3362,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -3377,7 +3377,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -3392,7 +3392,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -3407,7 +3407,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/favicon.ico",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
             },
           ],
         },
@@ -3649,12 +3649,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "0, 78, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3725,12 +3725,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "100, 78, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3801,12 +3801,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "200, 78, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3877,12 +3877,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "0, 155, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3953,12 +3953,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "100, 155, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {

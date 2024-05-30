@@ -400,6 +400,13 @@
       "baseHash": "50bd550ba0710173ca3533b7b103075ecdda6b56"
     },
     {
+      "type": "patch",
+      "file": "src-win/Libraries/Core/Devtools/loadBundleFromServer.windows.js",
+      "baseFile": "packages/react-native/Libraries/Core/Devtools/loadBundleFromServer.js",
+      "baseHash": "14662281c97222b45893308b744a7dc7c2000801",
+      "issue": 12704
+    },
+    {
       "type": "copy",
       "file": "src-win/Libraries/DevToolsSettings/DevToolsSettingsManager.windows.js",
       "baseFile": "packages/react-native/Libraries/DevToolsSettings/DevToolsSettingsManager.android.js",
