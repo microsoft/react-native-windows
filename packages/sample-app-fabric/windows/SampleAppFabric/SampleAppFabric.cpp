@@ -8,13 +8,15 @@
 
 #include "NativeModules.h"
 
-namespace winrt::ReactNative {
-using namespace winrt::Microsoft::ReactNative;
-}
+namespace winrt::ReactNative
+{
+  using namespace winrt::Microsoft::ReactNative;
+} // namespace winrt::ReactNative
 
-namespace winrt::UI {
-using namespace winrt::Microsoft::UI;
-}
+namespace winrt::UI 
+{
+  using namespace winrt::Microsoft::UI;
+} // namespace winrt::UI
 
 struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
@@ -25,29 +27,33 @@ struct CompReactPackageProvider
 };
 
 // Global Variables:
-constexpr PCWSTR windowTitle = L"sample_app_fabric";
-constexpr PCWSTR mainComponentName = L"sample_app_fabric";
+constexpr PCWSTR windowTitle{L"sample_app_fabric"};
+constexpr PCWSTR mainComponentName{L"sample_app_fabric"};
 
-float ScaleFactor(HWND hwnd) noexcept {
+float ScaleFactor(HWND hwnd) noexcept
+{
   return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
 }
 
 void UpdateRootViewSizeToAppWindow(
-    winrt::Microsoft::ReactNative::CompositionRootView const &rootView,
-    winrt::Microsoft::UI::Windowing::AppWindow const &window) {
+  winrt::Microsoft::ReactNative::CompositionRootView const &rootView,
+  winrt::Microsoft::UI::Windowing::AppWindow const &window)
+{
   auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
   auto scaleFactor = ScaleFactor(hwnd);
   winrt::Windows::Foundation::Size size{
       window.ClientSize().Width / scaleFactor, window.ClientSize().Height / scaleFactor};
   // Do not relayout when minimized
   if (window.Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>().State() !=
-      winrt::Microsoft::UI::Windowing::OverlappedPresenterState::Minimized) {
+      winrt::Microsoft::UI::Windowing::OverlappedPresenterState::Minimized)
+  {
     rootView.Arrange(size);
     rootView.Size(size);
   }
 }
 
-winrt::ReactNative::ReactApplicationInstanceSettings SetInstanceSettings() {
+winrt::ReactNative::ReactApplicationInstanceSettings SetInstanceSettings()
+{
   WCHAR appDirectory[MAX_PATH];
   GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
   PathCchRemoveFileSpec(appDirectory, MAX_PATH);
@@ -73,19 +79,19 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   auto compositor{winrt::UI::Composition::Compositor()};
 
   // Create a top-level window.
-  auto window = winrt::UI::Windowing::AppWindow::Create();
+  auto window{winrt::UI::Windowing::AppWindow::Create()};
   window.Title(windowTitle);
   window.Resize({1000, 1000});
   window.Show();
-  auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
+  auto hwnd{winrt::Microsoft::UI::GetWindowFromWindowId(window.Id())};
   auto scaleFactor = ScaleFactor(hwnd);
 
   // Settings for the host
   auto instanceSettings{SetInstanceSettings()};
 
   // Create a ReactNativeHost component
-  auto reactNativeHost =
-      winrt::ReactNative::ReactNativeWindow::CreateReactNativeHost(instanceSettings, window, compositor);
+  auto reactNativeHost{
+      winrt::ReactNative::ReactNativeApplication::CreateReactNativeHost(instanceSettings, window, compositor)};
 
   // Include any autolinked modules
   RegisterAutolinkedNativeModulePackages(reactNativeHost.PackageProviders());
@@ -96,10 +102,10 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   reactNativeHost.ReloadInstance();
 
   // Create a RootView which will present a react-native component
-  auto reactNativeIsland = winrt::ReactNative::ReactNativeWindow::CreateReactNativeIsland(
-      compositor, window, reactNativeHost, mainComponentName);
+  auto reactNativeIsland {winrt::ReactNative::ReactNativeApplication::CreateReactNativeIsland(
+      compositor, window, reactNativeHost, mainComponentName)};
 
-  auto rootView = reactNativeIsland.RootView();
+  auto rootView{reactNativeIsland.RootView()};
 
   // Update the size of the RootView when the AppWindow changes size
   window.Changed(
@@ -125,8 +131,8 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
       });
 
   // DesktopChildSiteBridge create a ContentSite that can host the RootView ContentIsland
-  auto bridge = winrt::UI::Content::DesktopChildSiteBridge::Create(compositor, window.Id());
-  bridge.Connect(rootView.Island());
+  auto bridge{winrt::UI::Content::DesktopChildSiteBridge::Create(compositor, window.Id())};
+  bridge.Connect(reactNativeIsland.ContentIsland());
   bridge.ResizePolicy(winrt::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
   rootView.ScaleFactor(scaleFactor);

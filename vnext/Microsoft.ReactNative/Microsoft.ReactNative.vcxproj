@@ -318,8 +318,8 @@
       <DependentUpon>ReactNativeIsland.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="ReactNativeWindow.h">
-      <DependentUpon>ReactNativeWindow.idl</DependentUpon>
+    <ClInclude Include="ReactNativeApplication.h">
+      <DependentUpon>ReactNativeApplication.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClInclude Include="Utils\AccessibilityUtils.h" />

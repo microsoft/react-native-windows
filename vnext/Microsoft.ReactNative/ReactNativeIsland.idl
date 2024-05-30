@@ -8,8 +8,10 @@ namespace Microsoft.ReactNative
 #ifdef USE_WINUI3
 	  runtimeclass ReactNativeIsland
 	  {
-		  // Each ReactNativeIsland is associated to single JsApp in a JsBundle.
-      Microsoft.ReactNative.CompositionRootView RootView { get; };
+		// Each ReactNativeIsland is associated to single JsApp in a JsBundle.
+		Microsoft.ReactNative.CompositionRootView RootView { get; };
+
+		Microsoft.UI.Content.ContentIsland ContentIsland{get; };
 	  }
 #endif
 }

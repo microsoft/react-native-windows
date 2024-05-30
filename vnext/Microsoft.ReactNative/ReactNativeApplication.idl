@@ -12,7 +12,7 @@ namespace Microsoft.ReactNative
         String bundleRootPath;
     };
 
-    runtimeclass ReactNativeWindow
+    runtimeclass ReactNativeApplication
     {
         static Microsoft.ReactNative.ReactNativeHost CreateReactNativeHost(
             Microsoft.ReactNative.ReactApplicationInstanceSettings settings,
