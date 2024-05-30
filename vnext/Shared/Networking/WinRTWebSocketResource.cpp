@@ -310,7 +310,7 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
 
       if (FAILED(hr)) {
         // See
-        // https://docs.microsoft.com/uwp/api/windows.networking.sockets.messagewebsocketmessagereceivedeventargs.getdatareader?view=winrt-19041#remarks
+        // https://docs.microsoft.com/uwp/api/windows.networking.sockets.messagewebsocketmessagereceivedeventargs.getdatareader?view=winrt-22000#remarks
         if (hr == WININET_E_CONNECTION_ABORTED) {
           string errorMessage{"[0x80072EFE] Underlying TCP connection suddenly terminated"};
           self->m_errorHandler({errorMessage, ErrorType::Connection});

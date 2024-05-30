@@ -236,7 +236,7 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
 
   BEGIN_TEST_METHOD_ATTRIBUTE(NoCorsForbiddenMethodSucceeds)
     // CONNECT, TRACE, and TRACK methods not supported by Windows.Web.Http
-    // https://docs.microsoft.com/en-us/uwp/api/windows.web.http.httpmethod?view=winrt-19041#properties
+    // https://docs.microsoft.com/en-us/uwp/api/windows.web.http.httpmethod?view=winrt-22000#properties
     TEST_IGNORE()
   END_TEST_METHOD_ATTRIBUTE()
   TEST_METHOD(NoCorsForbiddenMethodSucceeds)
