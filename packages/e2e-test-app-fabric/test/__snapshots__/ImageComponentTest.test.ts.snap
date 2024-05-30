@@ -2387,7 +2387,7 @@ exports[`Image Tests An Image component can have a network callback 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1&t=1717025095331",
+          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1&t=<some_hash_here>",
         },
       ],
       "TestId": "image-network-callback",
@@ -2415,7 +2415,7 @@ exports[`Image Tests An Image component can hve a network callback 2 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1&t=1717025092515",
+          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1&t=<some_hash_here>",
         },
       ],
       "TestId": "image-network-callback-2",
@@ -2443,7 +2443,7 @@ exports[`Image Tests An Image component can render a blob image 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "blob:<some_guid_here>?offset=0&size=44252",
+          "Uri": "blob:<some_guid_here>?offset=0&size=44312",
         },
       ],
       "TestId": "image-blob",
