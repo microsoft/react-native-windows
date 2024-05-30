@@ -19,6 +19,7 @@
         "packages/@react-native-windows/tester",
         "packages/react-native-platform-override/src/e2etest/collateral",
         "vnext/Folly/TEMP_UntilFollyUpdate",
+        "vnext/fmt/TEMP_UntilFmtUpdate",
         "vnext/ReactCommon/TEMP_UntilReactCommonUpdate"
     ],
     "useGitignore": true,

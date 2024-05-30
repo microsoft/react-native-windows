@@ -389,6 +389,18 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/Transform/TransformExample'),
   },
   {
+    key: 'FilterExample',
+    category: 'UI',
+    module: require('../examples/Filter/FilterExample'),
+  },
+  /*
+  {
+    key: 'VibrationExample',
+    category: 'Basic',
+    module: require('../examples/Vibration/VibrationExample'),
+  },
+  */
+  {
     key: 'WebSocketExample',
     category: 'Basic',
     module: require('../examples/WebSocket/WebSocketExample'),
