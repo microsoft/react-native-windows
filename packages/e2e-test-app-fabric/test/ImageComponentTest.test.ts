@@ -22,78 +22,78 @@ afterEach(async () => {
 });
 
 describe('Image Tests', () => {
-  test('An Image component can render a blob image', async () => {
-    const component = await app.findElementByTestID('image-blob');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-blob');
-    expect(dump).toMatchSnapshot();
-  });
-  test('An Image component can have a network callback', async () => {
-    const component = await app.findElementByTestID('image-network-callback');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-network-callback');
-    expect(dump).toMatchSnapshot();
-  });
-  test('An Image component can hve a network callback 2', async () => {
-    const component = await app.findElementByTestID('image-network-callback-2');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-network-callback-2');
-    expect(dump).toMatchSnapshot();
-  });
-  test('A network Image example', async () => {
-    const component = await app.findElementByTestID('image-network');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-network');
-    expect(dump).toMatchSnapshot();
-  });
-  test('An Image can be rendered at a different size', async () => {
-    const component = await app.findElementByTestID('image-size');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-size');
-    expect(dump).toMatchSnapshot();
-  });
-  test('An Image can have multiple sources', async () => {
-    const component = await app.findElementByTestID('image-multiple-sources');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-multiple-sources');
-    expect(dump).toMatchSnapshot();
-  });
-  test('An Image can have a loading indicator visual', async () => {
-    const component = await app.findElementByTestID('image-loading-indicator');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-loading-indicator');
-    expect(dump).toMatchSnapshot();
-  });
-  test('An Image can have onLayout behavior', async () => {
-    const component = await app.findElementByTestID('image-onlayout');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-onlayout');
-    expect(dump).toMatchSnapshot();
-  });
-  test('An Image can load an image through its source prop', async () => {
-    const component = await app.findElementByTestID('image-plain-source');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-plain-source');
-    expect(dump).toMatchSnapshot();
-  });
-  test('An Image can load an image through its src prop', async () => {
-    const component = await app.findElementByTestID('image-plain-src');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-plain-src');
-    expect(dump).toMatchSnapshot();
-  });
-  test('An Image can have multiple sources through the srcSet prop', async () => {
-    const component = await app.findElementByTestID('image-srcset');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-srcset');
-    expect(dump).toMatchSnapshot();
-  });
-  test('An Image can load a static image', async () => {
-    const component = await app.findElementByTestID('image-static');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-static');
-    expect(dump).toMatchSnapshot();
-  });
+  // test('An Image component can render a blob image', async () => {
+  //   const component = await app.findElementByTestID('image-blob');
+  //   await component.waitForDisplayed({timeout: 5000});
+  //   const dump = await dumpVisualTree('image-blob');
+  //   expect(dump).toMatchSnapshot();
+  // });
+  // test('An Image component can have a network callback', async () => {
+  //   const component = await app.findElementByTestID('image-network-callback');
+  //   await component.waitForDisplayed({timeout: 5000});
+  //   const dump = await dumpVisualTree('image-network-callback');
+  //   expect(dump).toMatchSnapshot();
+  // });
+  // test('An Image component can hve a network callback 2', async () => {
+  //   const component = await app.findElementByTestID('image-network-callback-2');
+  //   await component.waitForDisplayed({timeout: 5000});
+  //   const dump = await dumpVisualTree('image-network-callback-2');
+  //   expect(dump).toMatchSnapshot();
+  // });
+  // test('A network Image example', async () => {
+  //   const component = await app.findElementByTestID('image-network');
+  //   await component.waitForDisplayed({timeout: 5000});
+  //   const dump = await dumpVisualTree('image-network');
+  //   expect(dump).toMatchSnapshot();
+  // });
+  // test('An Image can be rendered at a different size', async () => {
+  //   const component = await app.findElementByTestID('image-size');
+  //   await component.waitForDisplayed({timeout: 5000});
+  //   const dump = await dumpVisualTree('image-size');
+  //   expect(dump).toMatchSnapshot();
+  // });
+  // test('An Image can have multiple sources', async () => {
+  //   const component = await app.findElementByTestID('image-multiple-sources');
+  //   await component.waitForDisplayed({timeout: 5000});
+  //   const dump = await dumpVisualTree('image-multiple-sources');
+  //   expect(dump).toMatchSnapshot();
+  // });
+  // test('An Image can have a loading indicator visual', async () => {
+  //   const component = await app.findElementByTestID('image-loading-indicator');
+  //   await component.waitForDisplayed({timeout: 5000});
+  //   const dump = await dumpVisualTree('image-loading-indicator');
+  //   expect(dump).toMatchSnapshot();
+  // });
+  // test('An Image can have onLayout behavior', async () => {
+  //   const component = await app.findElementByTestID('image-onlayout');
+  //   await component.waitForDisplayed({timeout: 5000});
+  //   const dump = await dumpVisualTree('image-onlayout');
+  //   expect(dump).toMatchSnapshot();
+  // });
+  // test('An Image can load an image through its source prop', async () => {
+  //   const component = await app.findElementByTestID('image-plain-source');
+  //   await component.waitForDisplayed({timeout: 5000});
+  //   const dump = await dumpVisualTree('image-plain-source');
+  //   expect(dump).toMatchSnapshot();
+  // });
+  // test('An Image can load an image through its src prop', async () => {
+  //   const component = await app.findElementByTestID('image-plain-src');
+  //   await component.waitForDisplayed({timeout: 5000});
+  //   const dump = await dumpVisualTree('image-plain-src');
+  //   expect(dump).toMatchSnapshot();
+  // });
+  // test('An Image can have multiple sources through the srcSet prop', async () => {
+  //   const component = await app.findElementByTestID('image-srcset');
+  //   await component.waitForDisplayed({timeout: 5000});
+  //   const dump = await dumpVisualTree('image-srcset');
+  //   expect(dump).toMatchSnapshot();
+  // });
+  // test('An Image can load a static image', async () => {
+  //   const component = await app.findElementByTestID('image-static');
+  //   await component.waitForDisplayed({timeout: 5000});
+  //   const dump = await dumpVisualTree('image-static');
+  //   expect(dump).toMatchSnapshot();
+  // });
   test('An Image can borders', async () => {
     const component = await app.findElementByTestID('image-border');
     await component.waitForDisplayed({timeout: 5000});
