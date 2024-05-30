@@ -2443,7 +2443,7 @@ exports[`Image Tests An Image component can render a blob image 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "blob:<some_guid_here>?offset=0&size=44312",
+          "Uri": "blob:<some_guid_here>?offset=0&size=<size>",
         },
       ],
       "TestId": "image-blob",

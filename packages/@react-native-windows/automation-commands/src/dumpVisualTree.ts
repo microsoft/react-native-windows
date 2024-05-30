@@ -120,6 +120,7 @@ function removeGuidsFromImageSourcesHelper(node: ComponentNode) {
       if (source.Uri) {
         if (source.Uri.startsWith('blob:')) {
           source.Uri = source.Uri.replace(/blob:[a-f0-9]+-[a-f0-9]+-[a-f0-9]+-[a-f0-9]+-[a-f0-9]+/, 'blob:<some_guid_here>');
+          source.Uri = source.Uri.replace(/size=\d{5}/, 'size=<size>');
         } else if (source.Uri.startsWith('https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1&t=')) {
           source.Uri = 'https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1&t=<some_hash_here>';
         } else if (source.Uri.startsWith('https://www.facebook.com/ads/pics/successstories.png?hash=')) {
