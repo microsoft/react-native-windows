@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/jest-out-of-tree-resolver",
-  "version": "1.1.21",
+  "version": "1.1.22",
   "license": "MIT",
   "main": "jest-resolver.js",
   "repository": {
@@ -12,7 +12,7 @@
     "resolve": "^1.14.2"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.2.18",
+    "@rnw-scripts/eslint-config": "1.2.19",
     "eslint": "^8.19.0",
     "prettier": "2.8.8"
   },
