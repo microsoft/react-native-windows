@@ -52,43 +52,41 @@ void RegisterCustomComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder
  *
  * This allows applications to provide custom image rendering pipelines.
  */
-struct EllipseImageHandler : winrt::implements<
-                                 EllipseImageHandler,
-                                 winrt::Microsoft::ReactNative::Composition::Experimental::IUriBrushProvider,
-                                 winrt::Microsoft::ReactNative::Composition::IUriImageProvider> {
+struct EllipseImageHandler
+    : winrt::implements<EllipseImageHandler, winrt::Microsoft::ReactNative::Composition::IUriImageProvider> {
   bool CanLoadImageUri(winrt::Microsoft::ReactNative::IReactContext context, winrt::Windows::Foundation::Uri uri) {
     return uri.SchemeName() == L"ellipse";
   }
 
-  winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::Experimental::UriBrushFactory>
-  GetSourceAsync(
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::ImageResponse>
+  GetImageResponseAsync(
       const winrt::Microsoft::ReactNative::IReactContext &context,
       const winrt::Microsoft::ReactNative::Composition::ImageSource &imageSource) {
-    co_return [uri = imageSource.Uri(), size = imageSource.Size(), scale = imageSource.Scale(), context](
-                  const winrt::Microsoft::ReactNative::IReactContext &reactContext,
-                  const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext
-                      &compositionContext) -> winrt::Microsoft::ReactNative::Composition::Experimental::IBrush {
-      auto compositor =
-          winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(
-              compositionContext);
-      auto drawingBrush = compositionContext.CreateDrawingSurfaceBrush(
-          size,
-          winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-          winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
-      POINT pt;
-      Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingBrush, scale, &pt);
-      auto renderTarget = autoDraw.GetRenderTarget();
+    co_return winrt::Microsoft::ReactNative::Composition::Experimental::UriBrushFactoryImageResponse(
+        [uri = imageSource.Uri(), size = imageSource.Size(), scale = imageSource.Scale(), context](
+            const winrt::Microsoft::ReactNative::IReactContext &reactContext,
+            const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compositionContext)
+            -> winrt::Microsoft::ReactNative::Composition::Experimental::IBrush {
+          auto compositor = winrt::Microsoft::ReactNative::Composition::Experimental::
+              MicrosoftCompositionContextHelper::InnerCompositor(compositionContext);
+          auto drawingBrush = compositionContext.CreateDrawingSurfaceBrush(
+              size,
+              winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
+              winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+          POINT pt;
+          Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingBrush, scale, &pt);
+          auto renderTarget = autoDraw.GetRenderTarget();
 
-      winrt::com_ptr<ID2D1SolidColorBrush> brush;
-      renderTarget->CreateSolidColorBrush({1.0f, 0.0f, 0.0f, 1.0f}, brush.put());
-      renderTarget->DrawEllipse(
-          {{(pt.x + size.Width / 2) / scale, (pt.y + size.Height / 2) / scale},
-           (size.Width / 2) / scale,
-           (size.Height / 2) / scale},
-          brush.get());
+          winrt::com_ptr<ID2D1SolidColorBrush> brush;
+          renderTarget->CreateSolidColorBrush({1.0f, 0.0f, 0.0f, 1.0f}, brush.put());
+          renderTarget->DrawEllipse(
+              {{(pt.x + size.Width / 2) / scale, (pt.y + size.Height / 2) / scale},
+               (size.Width / 2) / scale,
+               (size.Height / 2) / scale},
+              brush.get());
 
-      return drawingBrush;
-    };
+          return drawingBrush;
+        });
   }
 };
 

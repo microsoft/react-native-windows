@@ -12,6 +12,7 @@
 #include <Utils/WinRTConversions.h>
 #include <utilities.h>
 #include "IRedirectEventSource.h"
+#include "Networking/NetworkPropertyIds.h"
 #include "OriginPolicyHttpFilter.h"
 #include "RedirectHttpFilter.h"
 
@@ -665,14 +666,12 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
 
   // Register resource as HTTP module proxy.
   if (inspectableProperties) {
-    auto propId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
     auto propBag = ReactPropertyBag{inspectableProperties.try_as<IReactPropertyBag>()};
     auto moduleProxy = weak_ptr<IHttpModuleProxy>{result};
-    propBag.Set(propId, std::move(moduleProxy));
+    propBag.Set(HttpModuleProxyPropertyId(), std::move(moduleProxy));
 
     // #11439 - Best-effort attempt to set up the HTTP handler after an initial call to addNetworkingHandler failed.
-    auto blobRcPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<Networking::IBlobResource>>>{L"Blob.Resource"};
-    if (auto prop = propBag.Get(blobRcPropId)) {
+    if (auto prop = propBag.Get(BlobResourcePropertyId())) {
       if (auto blobRc = prop.Value().lock()) {
         blobRc->AddNetworkingHandler();
       }
