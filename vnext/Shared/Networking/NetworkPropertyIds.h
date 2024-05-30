@@ -16,10 +16,24 @@ namespace Networking {
 struct IBlobResource;
 }
 
-const winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Microsoft::ReactNative::ReactNonAbiValue<std::weak_ptr<IWebSocketModuleContentHandler>>> BlobModuleContentHandlerPropertyId() noexcept;
-const winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Microsoft::ReactNative::ReactNonAbiValue<std::weak_ptr<IBlobPersistor>>> BlobModulePersistorPropertyId() noexcept;
-const winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Microsoft::ReactNative::ReactNonAbiValue<std::weak_ptr<IWebSocketModuleProxy>>> WebSocketModuleProxyPropertyId() noexcept;
-const winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Microsoft::ReactNative::ReactNonAbiValue<std::weak_ptr<IHttpModuleProxy>>> HttpModuleProxyPropertyId() noexcept;
-const winrt::Microsoft::ReactNative::ReactPropertyId<winrt::Microsoft::ReactNative::ReactNonAbiValue<std::weak_ptr<Networking::IBlobResource>>> BlobResourcePropertyId() noexcept;
+const winrt::Microsoft::ReactNative::ReactPropertyId<
+    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::weak_ptr<IWebSocketModuleContentHandler>>>
+BlobModuleContentHandlerPropertyId() noexcept;
 
-}
+const winrt::Microsoft::ReactNative::ReactPropertyId<
+    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::weak_ptr<IBlobPersistor>>>
+BlobModulePersistorPropertyId() noexcept;
+
+const winrt::Microsoft::ReactNative::ReactPropertyId<
+    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::weak_ptr<IWebSocketModuleProxy>>>
+WebSocketModuleProxyPropertyId() noexcept;
+
+const winrt::Microsoft::ReactNative::ReactPropertyId<
+    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::weak_ptr<IHttpModuleProxy>>>
+HttpModuleProxyPropertyId() noexcept;
+
+const winrt::Microsoft::ReactNative::ReactPropertyId<
+    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::weak_ptr<Networking::IBlobResource>>>
+BlobResourcePropertyId() noexcept;
+
+} // namespace Microsoft::React

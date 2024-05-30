@@ -44,13 +44,6 @@ struct ImageResponseOrImageErrorInfo {
   std::shared_ptr<facebook::react::ImageErrorInfo> errorInfo;
 };
 
-/*
-struct __declspec(uuid("9458D0CC-2F07-44A7-AC89-B488AF466FDC")) IResolveImage : public winrt::IUnknown
-{
-  virtual ImageResponseOrImageErrorInfo ResolveImage() = 0;
-};
-*/
-
 struct ImageResponse : ImageResponseT<ImageResponse /*, IResolveImage*/> {
   ImageResponse() noexcept = default;
   virtual ImageResponseOrImageErrorInfo ResolveImage();
