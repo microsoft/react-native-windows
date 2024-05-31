@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update image uris in dumpVisualTree.ts",
-  "packageName": "@react-native-windows/automation-commands",
-  "email": "1422161+marlenecota@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
