@@ -65,7 +65,7 @@ $vsComponents = @('Microsoft.Component.MSBuild',
     'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
     'Microsoft.VisualStudio.ComponentGroup.UWP.Support',
     'Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core',
-    'Microsoft.VisualStudio.Component.Windows10SDK.22000');
+    'Microsoft.VisualStudio.Component.Windows10SDK.22621');
 
 # UWP.VC is not needed to build the projects with msbuild, but the VS IDE requires it.
 if (!($tagsToInclude.Contains('buildLab'))) {
@@ -74,7 +74,7 @@ if (!($tagsToInclude.Contains('buildLab'))) {
 
 # Windows11SDK is only needed for the more experimental composition projects using newer WinAppSDK versions
 if ($tagsToInclude.Contains('rnwDev')) {
-    $vsComponents += 'Microsoft.VisualStudio.Component.Windows11SDK.22000';
+    $vsComponents += 'Microsoft.VisualStudio.Component.Windows11SDK.22621';
 }
 
 $vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',

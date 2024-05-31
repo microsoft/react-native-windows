@@ -445,14 +445,14 @@ void DynamicAutomationPeer::SetValue(double value) {
 
 // Doesn't have a React Native analog.
 // Return default value for XAML Slider.
-// https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.primitives.rangebase.smallchange?view=winrt-22000
+// https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.primitives.rangebase.smallchange?view=winrt-22621
 double DynamicAutomationPeer::SmallChange() {
   return 1;
 }
 
 // Doesn't have a React Native analog.
 // Return default value for XAML Slider.
-// https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.primitives.rangebase.largechange?view=winrt-22000
+// https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.controls.primitives.rangebase.largechange?view=winrt-22621
 double DynamicAutomationPeer::LargeChange() {
   return 10;
 }

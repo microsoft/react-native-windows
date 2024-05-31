@@ -90,8 +90,8 @@ public class TestClass
       // of the unitest runners are allowed to pick up a variable from the build file. And given the many
       // ways one can run inttests, this seemed to be the most reasonable out of a lot of poor options.
       var win10SdkFolder = @"C:\Program Files (x86)\Windows Kits\10";
-#if win10SdkVersion10_0_22000_0
-      var win10SdkVersion = "10.0.22000.0";
+#if win10SdkVersion10_0_22621_0
+      var win10SdkVersion = "10.0.22621.0";
 #else
 #error The Win10 Sdk Version must be updated in code when updated in MSBuild.
 #endif
