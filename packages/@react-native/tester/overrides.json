@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.75.0-nightly-20240514-734ac42d6",
+  "baseVersion": "0.75.0-nightly-20240518-93c079b92",
   "overrides": [
     {
       "type": "copy",
@@ -425,7 +425,7 @@
       "type": "copy",
       "directory": "js/examples/Transform",
       "baseDirectory": "packages/rn-tester/js/examples/Transform",
-      "baseHash": "d2dc7f7cac0ee3c8d8ee4fa29b4b57929c08ee29",
+      "baseHash": "9a8301dcc28c2e9dc124cb1e0ab009b2e40548d8",
       "issue": 4054
     },
     {
