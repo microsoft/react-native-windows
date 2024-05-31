@@ -13,7 +13,7 @@ exports[`Image Tests A network Image example 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png_TYPO",
+          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1",
         },
       ],
       "TestId": "image-network",
@@ -47,7 +47,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -58,7 +58,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -69,7 +69,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -80,7 +80,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -91,7 +91,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -102,7 +102,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -113,7 +113,7 @@ exports[`Image Tests An Image can a border radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -559,7 +559,7 @@ exports[`Image Tests An Image can be added to the accessibility tree 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
         },
       ],
       "TestId": "image-accessible",
@@ -601,7 +601,7 @@ exports[`Image Tests An Image can be nested inside of a component 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -670,7 +670,7 @@ exports[`Image Tests An Image can be rendered at a different size 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
         },
       ],
       "TestId": "image-size",
@@ -982,7 +982,7 @@ exports[`Image Tests An Image can have a can have alt text 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
         },
       ],
       "TestId": "image-alt",
@@ -1016,7 +1016,7 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -1027,7 +1027,7 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -1038,7 +1038,7 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -1049,7 +1049,7 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -1060,7 +1060,7 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -1071,7 +1071,7 @@ exports[`Image Tests An Image can have a custom blur radius 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -1204,7 +1204,7 @@ exports[`Image Tests An Image can have a loading indicator visual 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ads/pics/successstories.png?hash=<some_hash_here>",
+          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png?hash=<some_hash_here>",
         },
       ],
       "TestId": "image-loading-indicator",
@@ -1815,7 +1815,7 @@ exports[`Image Tests An Image can have an accessibilityLabel 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
         },
       ],
       "TestId": "image-accessibilitylabel",
@@ -1849,7 +1849,7 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -1861,7 +1861,7 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -1873,7 +1873,7 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -1885,7 +1885,7 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -1897,7 +1897,7 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -1909,7 +1909,7 @@ exports[`Image Tests An Image can have custom opacity 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -2053,7 +2053,7 @@ exports[`Image Tests An Image can have multiple sources 1`] = `
         {
           "Size": "100, 100",
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
         },
       ],
       "TestId": "image-multiple-sources",
@@ -2083,7 +2083,7 @@ exports[`Image Tests An Image can have multiple sources through the srcSet prop 
           "Scale": 4,
           "Size": "64, 64",
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
         },
         {
           "Scale": 2,
@@ -2128,7 +2128,7 @@ exports[`Image Tests An Image can have onLayout behavior 1`] = `
         {
           "Size": "400, 400",
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
         },
       ],
       "TestId": "image-onlayout",
@@ -2302,7 +2302,7 @@ exports[`Image Tests An Image can load an image through its source prop 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
         },
       ],
       "TestId": "image-plain-source",
@@ -2330,7 +2330,7 @@ exports[`Image Tests An Image can load an image through its src prop 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+          "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
         },
       ],
       "TestId": "image-plain-src",
@@ -2562,7 +2562,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -2577,7 +2577,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -2592,7 +2592,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -2607,7 +2607,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -2622,12 +2622,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2698,12 +2698,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "100, 0, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2774,12 +2774,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "0, 78, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2850,12 +2850,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "100, 78, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3078,12 +3078,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "0, 233, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3154,12 +3154,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "100, 233, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3393,7 +3393,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -3408,7 +3408,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -3423,7 +3423,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -3438,7 +3438,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -3453,7 +3453,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
-              "Uri": "https://www.facebook.com/ads/pics/successstories.png",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
         },
@@ -3620,12 +3620,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "0, 78, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3696,12 +3696,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "100, 78, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3772,12 +3772,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "200, 78, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3848,12 +3848,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "0, 155, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3924,12 +3924,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "100, 155, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
