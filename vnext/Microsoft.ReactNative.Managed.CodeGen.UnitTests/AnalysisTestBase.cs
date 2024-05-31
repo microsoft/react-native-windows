@@ -97,7 +97,7 @@ public class TestClass
 #endif
 
       references.AddRange(new[] {
-        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.AI.MachineLearning.MachineLearningContract\3.0.0.0\Windows.AI.MachineLearning.MachineLearningContract.winmd",
+        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.AI.MachineLearning.MachineLearningContract\5.0.0.0\Windows.AI.MachineLearning.MachineLearningContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.AI.MachineLearning.Preview.MachineLearningPreviewContract\2.0.0.0\Windows.AI.MachineLearning.Preview.MachineLearningPreviewContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.ApplicationModel.Calls.Background.CallsBackgroundContract\2.0.0.0\Windows.ApplicationModel.Calls.Background.CallsBackgroundContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.ApplicationModel.Calls.CallsPhoneContract\5.0.0.0\Windows.ApplicationModel.Calls.CallsPhoneContract.winmd",
