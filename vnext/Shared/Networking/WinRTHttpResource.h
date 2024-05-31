@@ -53,7 +53,7 @@ class WinRTHttpResource : public IHttpResource,
  public:
   WinRTHttpResource() noexcept;
 
-  WinRTHttpResource(const winrt::Windows::Web::Http::IHttpClient& client) noexcept;
+  WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient &&client) noexcept;
 
 #pragma region IWinRTHttpRequestFactory
 

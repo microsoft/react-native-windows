@@ -100,7 +100,7 @@ void AttachMultipartHeaders(IHttpContent content, const JSValueObject &headers) 
 
 #pragma region WinRTHttpResource
 
-WinRTHttpResource::WinRTHttpResource(const IHttpClient &client) noexcept : m_client{std::move(client)} {}
+WinRTHttpResource::WinRTHttpResource(IHttpClient &&client) noexcept : m_client{std::move(client)} {}
 
 WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windows::Web::Http::HttpClient{}) {}
 
@@ -312,7 +312,9 @@ void WinRTHttpResource::SendRequest(
       m_onError(requestId, Utilities::HResultToString(e), false);
     }
   } catch (...) {
-    m_onError(requestId, "Unidentified error sending HTTP request", false);
+    if (m_onError) {
+      m_onError(requestId, "Unidentified error sending HTTP request", false);
+    }
   }
 }
 
@@ -331,7 +333,9 @@ void WinRTHttpResource::AbortRequest(int64_t requestId) noexcept /*override*/ {
   try {
     request.Cancel();
   } catch (hresult_error const &e) {
-    m_onError(requestId, Utilities::HResultToString(e), false);
+    if (m_onError) {
+      m_onError(requestId, Utilities::HResultToString(e), false);
+    }
   }
 }
 
@@ -647,7 +651,20 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
   using namespace winrt::Microsoft::ReactNative;
   using winrt::Windows::Web::Http::HttpClient;
 
-  auto redirFilter = winrt::make<RedirectHttpFilter>();
+  winrt::hstring defaultUserAgent;
+  if (inspectableProperties) {
+    auto propBag = ReactPropertyBag{inspectableProperties.as<IReactPropertyBag>()};
+    if (auto userAgentProp = propBag.Get(DefaultUserAgentPropertyId())) {
+      defaultUserAgent = *userAgentProp;
+    }
+  }
+
+  auto userAgent = GetRuntimeOptionString("Http.UserAgent");
+  if (userAgent.size() > 0) {
+    defaultUserAgent = winrt::to_hstring(userAgent);
+  }
+
+  auto redirFilter = winrt::make<RedirectHttpFilter>(defaultUserAgent);
   HttpClient client;
 
   if (static_cast<OriginPolicy>(GetRuntimeOptionInt("Http.OriginPolicy")) == OriginPolicy::None) {
@@ -660,20 +677,16 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
     client = HttpClient{opFilter};
   }
 
-  auto result = std::make_shared<WinRTHttpResource>(client);
+  auto result = std::make_shared<WinRTHttpResource>(std::move(client));
 
   // Allow redirect filter to create requests based on the resource's state
   redirFilter.as<RedirectHttpFilter>()->SetRequestFactory(weak_ptr<IWinRTHttpRequestFactory>{result});
 
   // Register resource as HTTP module proxy.
   if (inspectableProperties) {
-    auto propBag = ReactPropertyBag{inspectableProperties.try_as<IReactPropertyBag>()};
+    auto propBag = ReactPropertyBag{inspectableProperties.as<IReactPropertyBag>()};
     auto moduleProxy = weak_ptr<IHttpModuleProxy>{result};
     propBag.Set(HttpModuleProxyPropertyId(), std::move(moduleProxy));
-
-    if (auto userAgentProp = propBag.Get(DefaultUserAgentPropertyId())) {
-      client.DefaultRequestHeaders().UserAgent().ParseAdd(*userAgentProp);
-    }
 
     // #11439 - Best-effort attempt to set up the HTTP handler after an initial call to addNetworkingHandler failed.
     if (auto prop = propBag.Get(BlobResourcePropertyId())) {

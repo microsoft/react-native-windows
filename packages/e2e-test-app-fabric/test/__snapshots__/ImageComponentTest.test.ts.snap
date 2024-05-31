@@ -1,34 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Image Tests A legacy local image can still render 1`] = `
-{
-  "Automation Tree": {
-    "AutomationId": "image-legacy",
-    "ControlType": 50006,
-    "LocalizedControlType": "image",
-  },
-  "Component Tree": {
-    "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
-    "_Props": {
-      "Sources": [
-        {
-          "Size": "120, 120",
-          "Type": "Remote",
-          "Uri": "legacy_image",
-        },
-      ],
-      "TestId": "image-legacy",
-    },
-  },
-  "Visual Tree": {
-    "Comment": "image-legacy",
-    "Offset": "0, 0, 0",
-    "Size": "120, 120",
-    "Visual Type": "SpriteVisual",
-  },
-}
-`;
-
 exports[`Image Tests A network Image example 1`] = `
 {
   "Automation Tree": {

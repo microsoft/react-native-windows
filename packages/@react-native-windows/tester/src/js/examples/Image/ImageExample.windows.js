@@ -1463,6 +1463,8 @@ exports.examples = [
       return <MultipleSourcesExample />;
     },
   },
+/*
+  // Windows doesn't support legacy image format.
   {
     title: 'Legacy local image',
     description: ('Images shipped with the native bundle, but not managed ' +
@@ -1477,6 +1479,7 @@ exports.examples = [
       );
     },
   },
+*/
   {
     title: 'Bundled images',
     description: 'Images shipped in a separate native bundle',

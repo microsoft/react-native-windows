@@ -5,6 +5,7 @@
 
 #include "WindowsImageManager.h"
 
+#include <CppRuntimeOptions.h>
 #include <Fabric/Composition/CompositionContextHelper.h>
 #include <Fabric/Composition/ImageResponseImage.h>
 #include <Fabric/Composition/UriImageManager.h>
@@ -31,33 +32,49 @@ WindowsImageManager::WindowsImageManager(winrt::Microsoft::ReactNative::ReactCon
   m_uriImageManager =
       winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager::Get(reactContext.Properties());
 
-  if (auto userAgentProp = reactContext.Properties().Get(::Microsoft::React::DefaultUserAgentPropertyId())) {
-    m_httpClient.DefaultRequestHeaders().UserAgent().ParseAdd(*userAgentProp);
+  // Ideally we'd just set m_httpClient.DefaultRequestHeaders().UserAgent().ParseAdd(m_defaultUserAgent), but when we do
+  // we start hitting E_STATE_CHANGED errors. Which appears to be this issue
+  // https://github.com/MicrosoftDocs/winrt-api/issues/2410 So instead we apply the header to each request
+  auto userAgent = Microsoft::React::GetRuntimeOptionString("Http.UserAgent");
+  if (userAgent.size() > 0) {
+    m_defaultUserAgent = winrt::to_hstring(userAgent);
+  } else if (auto userAgentProp = reactContext.Properties().Get(::Microsoft::React::DefaultUserAgentPropertyId())) {
+    m_defaultUserAgent = *userAgentProp;
   }
 }
 
-winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(
-    const winrt::Windows::Storage::Streams::IRandomAccessStream &results) noexcept {
-  if (!results) {
-    return nullptr;
+std::tuple<
+    winrt::com_ptr<IWICBitmapSource>,
+    winrt::com_ptr<IWICImagingFactory>,
+    std::shared_ptr<facebook::react::ImageErrorInfo>>
+wicBitmapSourceFromStream(const winrt::Windows::Storage::Streams::IRandomAccessStream &stream) noexcept {
+  try {
+    winrt::com_ptr<IWICImagingFactory> imagingFactory;
+    winrt::check_hresult(WICCreateImagingFactory_Proxy(WINCODEC_SDK_VERSION, imagingFactory.put()));
+
+    winrt::com_ptr<IStream> istream;
+    winrt::check_hresult(
+        CreateStreamOverRandomAccessStream(stream.as<IUnknown>().get(), __uuidof(IStream), istream.put_void()));
+
+    winrt::com_ptr<IWICBitmapDecoder> bitmapDecoder;
+    winrt::check_hresult(imagingFactory->CreateDecoderFromStream(
+        istream.get(), nullptr, WICDecodeMetadataCacheOnDemand, bitmapDecoder.put()));
+
+    if (!bitmapDecoder) {
+      auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
+      errorInfo->error = "Failed to decode the image.";
+      return {nullptr, nullptr, errorInfo};
+    }
+
+    winrt::com_ptr<IWICBitmapFrameDecode> decodedFrame;
+    winrt::check_hresult(bitmapDecoder->GetFrame(0, decodedFrame.put()));
+    return {decodedFrame, imagingFactory, nullptr};
+  } catch (winrt::hresult_error const &ex) {
+    auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
+    errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
+    errorInfo->error = ::Microsoft::ReactNative::FormatHResultError(winrt::hresult_error(ex));
+    return {nullptr, nullptr, errorInfo};
   }
-
-  winrt::com_ptr<IWICImagingFactory> imagingFactory;
-  winrt::check_hresult(WICCreateImagingFactory_Proxy(WINCODEC_SDK_VERSION, imagingFactory.put()));
-
-  winrt::com_ptr<IStream> istream;
-  winrt::check_hresult(
-      CreateStreamOverRandomAccessStream(results.as<IUnknown>().get(), __uuidof(IStream), istream.put_void()));
-
-  winrt::com_ptr<IWICBitmapDecoder> bitmapDecoder;
-  if (imagingFactory->CreateDecoderFromStream(
-          istream.get(), nullptr, WICDecodeMetadataCacheOnDemand, bitmapDecoder.put()) < 0) {
-    return nullptr;
-  }
-
-  winrt::com_ptr<IWICBitmapFrameDecode> decodedFrame;
-  winrt::check_hresult(bitmapDecoder->GetFrame(0, decodedFrame.put()));
-  return decodedFrame;
 }
 
 winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::ImageResponse>
@@ -86,6 +103,10 @@ WindowsImageManager::GetImageRandomAccessStreamAsync(ReactImageSource source) co
                             : winrt::Windows::Web::Http::HttpMethod{winrt::to_hstring(source.method)}};
 
   winrt::Windows::Web::Http::HttpRequestMessage request{httpMethod, uri};
+
+  if (!m_defaultUserAgent.empty()) {
+    request.Headers().Append(L"User-Agent", m_defaultUserAgent);
+  }
 
   if (!source.headers.empty()) {
     for (auto &header : source.headers) {
@@ -186,25 +207,15 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 ImageResponseOrImageErrorInfo StreamImageResponse::ResolveImage() {
   ImageResponseOrImageErrorInfo imageOrError;
   try {
-    winrt::com_ptr<IWICImagingFactory> imagingFactory;
-    winrt::check_hresult(WICCreateImagingFactory_Proxy(WINCODEC_SDK_VERSION, imagingFactory.put()));
+    auto result = ::Microsoft::ReactNative::wicBitmapSourceFromStream(m_stream);
 
-    winrt::com_ptr<IStream> istream;
-    winrt::check_hresult(
-        CreateStreamOverRandomAccessStream(m_stream.as<::IUnknown>().get(), __uuidof(IStream), istream.put_void()));
-
-    winrt::com_ptr<IWICBitmapDecoder> bitmapDecoder;
-    winrt::check_hresult(imagingFactory->CreateDecoderFromStream(
-        istream.get(), nullptr, WICDecodeMetadataCacheOnDemand, bitmapDecoder.put()));
-
-    if (!bitmapDecoder) {
-      imageOrError.errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
-      imageOrError.errorInfo->error = "Failed to decode the image.";
+    if (auto errorInfo = std::get<std::shared_ptr<facebook::react::ImageErrorInfo>>(result)) {
+      imageOrError.errorInfo = errorInfo;
       return imageOrError;
     }
 
-    winrt::com_ptr<IWICBitmapFrameDecode> decodedFrame;
-    winrt::check_hresult(bitmapDecoder->GetFrame(0, decodedFrame.put()));
+    auto imagingFactory = std::get<winrt::com_ptr<IWICImagingFactory>>(result);
+    auto decodedFrame = std::get<winrt::com_ptr<IWICBitmapSource>>(result);
 
     winrt::com_ptr<IWICFormatConverter> converter;
     winrt::check_hresult(imagingFactory->CreateFormatConverter(converter.put()));

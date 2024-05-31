@@ -115,6 +115,10 @@ struct WindowData {
 
           host.InstanceSettings().JavaScriptBundleFile(m_bundleFile);
 
+          // Some of the images in RNTester require a user-agent header to properly fetch
+          winrt::Microsoft::ReactNative::Networking::SetDefaultUserAgent(
+              host.InstanceSettings(), L"React Native Windows Playground");
+
           host.InstanceSettings().UseWebDebugger(m_useWebDebugger);
           host.InstanceSettings().UseDirectDebugger(m_useDirectDebugger);
           host.InstanceSettings().BundleRootPath(

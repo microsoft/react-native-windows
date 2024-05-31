@@ -631,6 +631,7 @@
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactPackageProvider.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactPropertyBag.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\JsiApi.idl" />
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Networking.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\QuirkSettings.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactCoreInjection.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactInstanceSettings.idl" />
@@ -651,7 +652,6 @@
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactCompositionViewComponentBuilder.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactPackageBuilderFabric.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\IReactViewComponentBuilder.idl" />
-    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Networking.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Theme.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\UriImageManager.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ViewProps.idl" />

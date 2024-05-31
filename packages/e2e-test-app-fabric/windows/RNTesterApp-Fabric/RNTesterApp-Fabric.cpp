@@ -68,7 +68,7 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
 
   // Some of the images in RNTester require a user-agent header to properly fetch
   winrt::Microsoft::ReactNative::Networking::SetDefaultUserAgent(
-      host.InstanceSettings(), L"React Native Windows Playground");
+      host.InstanceSettings(), L"React Native Windows E2E Test App");
 
   // Include any autolinked modules
   RegisterAutolinkedNativeModulePackages(host.PackageProviders());

@@ -68,6 +68,10 @@ void MainPage::OnLoadClick(
   ReactRootView().ComponentName(mainComponentName);
   ReactRootView().ReactNativeHost(host);
 
+  // Some of the images in RNTester require a user-agent header to properly fetch
+  winrt::Microsoft::ReactNative::Networking::SetDefaultUserAgent(
+      host.InstanceSettings(), L"React Native Windows Playground");
+
   host.InstanceSettings().UseDeveloperSupport(true);
   host.InstanceSettings().UseWebDebugger(x_UseWebDebuggerCheckBox().IsChecked().GetBoolean());
   host.InstanceSettings().UseDirectDebugger(x_UseDirectDebuggerCheckBox().IsChecked().GetBoolean());
