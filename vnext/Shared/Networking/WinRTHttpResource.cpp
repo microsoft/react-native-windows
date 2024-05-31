@@ -5,6 +5,7 @@
 
 #include "WinRTHttpResource.h"
 
+#include "Networking.g.cpp"
 #include <CppRuntimeOptions.h>
 #include <Networking/IBlobResource.h>
 #include <ReactPropertyBag.h>
@@ -99,7 +100,7 @@ void AttachMultipartHeaders(IHttpContent content, const JSValueObject &headers) 
 
 #pragma region WinRTHttpResource
 
-WinRTHttpResource::WinRTHttpResource(IHttpClient &&client) noexcept : m_client{std::move(client)} {}
+WinRTHttpResource::WinRTHttpResource(const IHttpClient &client) noexcept : m_client{std::move(client)} {}
 
 WinRTHttpResource::WinRTHttpResource() noexcept : WinRTHttpResource(winrt::Windows::Web::Http::HttpClient{}) {}
 
@@ -659,7 +660,7 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
     client = HttpClient{opFilter};
   }
 
-  auto result = std::make_shared<WinRTHttpResource>(std::move(client));
+  auto result = std::make_shared<WinRTHttpResource>(client);
 
   // Allow redirect filter to create requests based on the resource's state
   redirFilter.as<RedirectHttpFilter>()->SetRequestFactory(weak_ptr<IWinRTHttpRequestFactory>{result});
@@ -669,6 +670,10 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
     auto propBag = ReactPropertyBag{inspectableProperties.try_as<IReactPropertyBag>()};
     auto moduleProxy = weak_ptr<IHttpModuleProxy>{result};
     propBag.Set(HttpModuleProxyPropertyId(), std::move(moduleProxy));
+
+    if (auto userAgentProp = propBag.Get(DefaultUserAgentPropertyId())) {
+      client.DefaultRequestHeaders().UserAgent().ParseAdd(*userAgentProp);
+    }
 
     // #11439 - Best-effort attempt to set up the HTTP handler after an initial call to addNetworkingHandler failed.
     if (auto prop = propBag.Get(BlobResourcePropertyId())) {
@@ -689,3 +694,14 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
 #pragma endregion IHttpResource
 
 } // namespace Microsoft::React::Networking
+
+namespace winrt::Microsoft::ReactNative::implementation {
+
+void Networking::SetDefaultUserAgent(
+    const winrt::Microsoft::ReactNative::ReactInstanceSettings &settings,
+    const winrt::hstring &userAgent) noexcept {
+  winrt::Microsoft::ReactNative::ReactPropertyBag(settings.Properties())
+      .Set(::Microsoft::React::DefaultUserAgentPropertyId(), userAgent);
+};
+
+} // namespace winrt::Microsoft::ReactNative::implementation

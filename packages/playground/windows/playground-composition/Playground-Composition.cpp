@@ -221,6 +221,10 @@ struct WindowData {
               std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
           host.InstanceSettings().UseDeveloperSupport(true);
 
+          // Some of the images in RNTester require a user-agent header to properly fetch
+          winrt::Microsoft::ReactNative::Networking::SetDefaultUserAgent(
+              host.InstanceSettings(), L"React Native Windows Playground");
+
           // Currently there is only SystemVisualSiteBridge which supports hosing ContentIslands within System
           // Composition So our custom components do not run when running on lifted composition. This can be enabled in
           // lifted once we have a VisualSiteBridge that works in lifted

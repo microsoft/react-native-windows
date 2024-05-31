@@ -5,6 +5,7 @@
 
 #include "IHttpResource.h"
 
+#include "Networking.g.h"
 #include <Modules/IHttpModuleProxy.h>
 #include "IWinRTHttpRequestFactory.h"
 #include "WinRTTypes.h"
@@ -52,7 +53,7 @@ class WinRTHttpResource : public IHttpResource,
  public:
   WinRTHttpResource() noexcept;
 
-  WinRTHttpResource(winrt::Windows::Web::Http::IHttpClient &&client) noexcept;
+  WinRTHttpResource(const winrt::Windows::Web::Http::IHttpClient& client) noexcept;
 
 #pragma region IWinRTHttpRequestFactory
 
@@ -108,3 +109,19 @@ class WinRTHttpResource : public IHttpResource,
 };
 
 } // namespace Microsoft::React::Networking
+
+namespace winrt::Microsoft::ReactNative::implementation {
+
+struct Networking {
+  Networking() = default;
+
+  static void SetDefaultUserAgent(
+      const winrt::Microsoft::ReactNative::ReactInstanceSettings &settings,
+      const winrt::hstring &userAgent) noexcept;
+};
+
+} // namespace winrt::Microsoft::ReactNative::implementation
+
+namespace winrt::Microsoft::ReactNative::factory_implementation {
+struct Networking : NetworkingT<Networking, implementation::Networking> {};
+} // namespace winrt::Microsoft::ReactNative::factory_implementation

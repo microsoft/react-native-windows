@@ -52,4 +52,9 @@ BlobResourcePropertyId() noexcept {
   return prop;
 }
 
+const winrt::Microsoft::ReactNative::ReactPropertyId<winrt::hstring> DefaultUserAgentPropertyId() noexcept {
+  static const winrt::Microsoft::ReactNative::ReactPropertyId<winrt::hstring> prop{L"ReactNative", L"UserAgent"};
+  return prop;
+}
+
 } // namespace Microsoft::React

@@ -8,6 +8,7 @@
 #include <Fabric/Composition/CompositionContextHelper.h>
 #include <Fabric/Composition/ImageResponseImage.h>
 #include <Fabric/Composition/UriImageManager.h>
+#include <Networking/NetworkPropertyIds.h>
 #include <Utils/ImageUtils.h>
 #include <fmt/format.h>
 #include <functional/functor.h>
@@ -30,7 +31,9 @@ WindowsImageManager::WindowsImageManager(winrt::Microsoft::ReactNative::ReactCon
   m_uriImageManager =
       winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager::Get(reactContext.Properties());
 
-  m_httpClient.DefaultRequestHeaders().UserAgent().ParseAdd(L"React Native Windows Application");
+  if (auto userAgentProp = reactContext.Properties().Get(::Microsoft::React::DefaultUserAgentPropertyId())) {
+    m_httpClient.DefaultRequestHeaders().UserAgent().ParseAdd(*userAgentProp);
+  }
 }
 
 winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(

@@ -36,4 +36,6 @@ const winrt::Microsoft::ReactNative::ReactPropertyId<
     winrt::Microsoft::ReactNative::ReactNonAbiValue<std::weak_ptr<Networking::IBlobResource>>>
 BlobResourcePropertyId() noexcept;
 
+const winrt::Microsoft::ReactNative::ReactPropertyId<winrt::hstring> DefaultUserAgentPropertyId() noexcept;
+
 } // namespace Microsoft::React
