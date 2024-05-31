@@ -66,6 +66,11 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableU
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_forceBatchingMountItemsOnAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->forceBatchingMountItemsOnAndroid(
     rt
@@ -88,6 +93,11 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_lazyAni
 }
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_preventDoubleTextMeasure(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->preventDoubleTextMeasure(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_setAndroidLayoutDirection(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->setAndroidLayoutDirection(
     rt
   );
 }
@@ -120,11 +130,13 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["enableMicrotasks"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableMicrotasks};
   methodMap_["enableSynchronousStateUpdates"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableSynchronousStateUpdates};
   methodMap_["enableUIConsistency"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableUIConsistency};
+  methodMap_["fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak};
   methodMap_["forceBatchingMountItemsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_forceBatchingMountItemsOnAndroid};
   methodMap_["inspectorEnableCxxInspectorPackagerConnection"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_inspectorEnableCxxInspectorPackagerConnection};
   methodMap_["inspectorEnableModernCDPRegistry"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_inspectorEnableModernCDPRegistry};
   methodMap_["lazyAnimationCallbacks"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_lazyAnimationCallbacks};
   methodMap_["preventDoubleTextMeasure"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_preventDoubleTextMeasure};
+  methodMap_["setAndroidLayoutDirection"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_setAndroidLayoutDirection};
   methodMap_["useModernRuntimeScheduler"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useModernRuntimeScheduler};
   methodMap_["useNativeViewConfigsInBridgelessMode"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNativeViewConfigsInBridgelessMode};
   methodMap_["useStateAlignmentMechanism"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useStateAlignmentMechanism};
@@ -750,25 +762,6 @@ NativeAnimatedTurboModuleCxxSpecJSI::NativeAnimatedTurboModuleCxxSpecJSI(std::sh
   methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeAnimatedTurboModuleCxxSpecJSI_addListener};
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeAnimatedTurboModuleCxxSpecJSI_removeListeners};
   methodMap_["queueAndExecuteBatchedOperations"] = MethodMetadata {1, __hostFunction_NativeAnimatedTurboModuleCxxSpecJSI_queueAndExecuteBatchedOperations};
-}
-static jsi::Value __hostFunction_NativeAnimationsDebugModuleCxxSpecJSI_startRecordingFps(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAnimationsDebugModuleCxxSpecJSI *>(&turboModule)->startRecordingFps(
-    rt
-  );
-  return jsi::Value::undefined();
-}
-static jsi::Value __hostFunction_NativeAnimationsDebugModuleCxxSpecJSI_stopRecordingFps(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  static_cast<NativeAnimationsDebugModuleCxxSpecJSI *>(&turboModule)->stopRecordingFps(
-    rt,
-    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber()
-  );
-  return jsi::Value::undefined();
-}
-
-NativeAnimationsDebugModuleCxxSpecJSI::NativeAnimationsDebugModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
-  : TurboModule("AnimationsDebugModule", jsInvoker) {
-  methodMap_["startRecordingFps"] = MethodMetadata {0, __hostFunction_NativeAnimationsDebugModuleCxxSpecJSI_startRecordingFps};
-  methodMap_["stopRecordingFps"] = MethodMetadata {1, __hostFunction_NativeAnimationsDebugModuleCxxSpecJSI_stopRecordingFps};
 }
 static jsi::Value __hostFunction_NativeAppearanceCxxSpecJSI_getColorScheme(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   auto result = static_cast<NativeAppearanceCxxSpecJSI *>(&turboModule)->getColorScheme(
