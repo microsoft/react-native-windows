@@ -1176,12 +1176,14 @@ function InternalTextInput(props: Props): React.Node {
         };
 
   const [mostRecentEventCount, setMostRecentEventCount] = useState<number>(0);
-
   const [lastNativeText, setLastNativeText] = useState<?Stringish>(props.value);
   const [lastNativeSelectionState, setLastNativeSelection] = useState<{|
-    selection: ?Selection,
+    selection: Selection,
     mostRecentEventCount: number,
-  |}>({selection, mostRecentEventCount});
+  |}>({
+    selection: {start: -1, end: -1},
+    mostRecentEventCount: mostRecentEventCount,
+  });
 
   const lastNativeSelection = lastNativeSelectionState.selection;
 
@@ -1589,6 +1591,7 @@ function InternalTextInput(props: Props): React.Node {
         onSelectionChange={_onSelectionChange}
         onSelectionChangeShouldSetResponder={emptyFunctionThatReturnsTrue}
         selection={selection}
+        selectionColor={selectionColor}
         style={StyleSheet.compose(
           useMultilineDefaultStyle ? styles.multilineDefault : null,
           style,

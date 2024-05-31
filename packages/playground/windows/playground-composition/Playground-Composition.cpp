@@ -128,6 +128,7 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   bool m_useLiftedComposition{true};
+  bool m_sizeToContent{false};
   winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget m_target{nullptr};
   LONG m_height{0};
   LONG m_width{0};
@@ -195,6 +196,11 @@ struct WindowData {
     return winrt::Microsoft::UI::GetWindowIdFromWindow(childHwnd);
   }
 
+  void ApplyConstraintsForContentSizedWindow(winrt::Microsoft::ReactNative::LayoutConstraints &constraints) {
+    constraints.MinimumSize = {300, 300};
+    constraints.MaximumSize = {1000, 1000};
+  }
+
   LRESULT OnCommand(HWND hwnd, int id, HWND /* hwndCtl*/, UINT) {
     switch (id) {
       case IDM_OPENJSFILE: {
@@ -254,7 +260,35 @@ struct WindowData {
               bridge.Show();
 
               m_compRootView.ScaleFactor(ScaleFactor(hwnd));
-              m_compRootView.Size({m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)});
+              winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+              constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::LeftToRight;
+              constraints.MaximumSize =
+                  constraints.MinimumSize = {m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
+
+              if (m_sizeToContent) {
+                ApplyConstraintsForContentSizedWindow(constraints);
+
+                // Disable user sizing of the hwnd
+                ::SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SIZEBOX);
+                m_compRootView.SizeChanged(
+                    [hwnd](auto sender, const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
+                      RECT rcClient, rcWindow;
+                      GetClientRect(hwnd, &rcClient);
+                      GetWindowRect(hwnd, &rcWindow);
+
+                      SetWindowPos(
+                          hwnd,
+                          nullptr,
+                          0,
+                          0,
+                          static_cast<int>(args.Size().Width) + rcClient.left - rcClient.right + rcWindow.right -
+                              rcWindow.left,
+                          static_cast<int>(args.Size().Height) + rcClient.top - rcClient.bottom + rcWindow.bottom -
+                              rcWindow.top,
+                          SWP_DEFERERASE | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+                    });
+              }
+              m_compRootView.Arrange(constraints, {0, 0});
 
               bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
@@ -291,7 +325,10 @@ struct WindowData {
                   .InternalRootVisual(winrt::Microsoft::ReactNative::Composition::Experimental::
                                           SystemCompositionContextHelper::CreateVisual(root));
               m_compRootView.ScaleFactor(ScaleFactor(hwnd));
-              m_compRootView.Size({m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)});
+              winrt::Microsoft::ReactNative::LayoutConstraints contraints;
+              contraints.MaximumSize =
+                  contraints.MinimumSize = {m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
+              m_compRootView.Arrange(contraints, {0, 0});
             }
           }
 
@@ -353,8 +390,13 @@ struct WindowData {
         if (m_compRootView) {
           winrt::Windows::Foundation::Size size{m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
           if (!IsIconic(hwnd)) {
-            m_compRootView.Arrange(size);
-            m_compRootView.Size(size);
+            winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+            constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::LeftToRight;
+            constraints.MinimumSize = constraints.MaximumSize = size;
+            if (m_sizeToContent) {
+              ApplyConstraintsForContentSizedWindow(constraints);
+            }
+            m_compRootView.Arrange(constraints, {0, 0});
           }
         }
       }
@@ -449,6 +491,7 @@ struct WindowData {
         CheckDlgButton(hwnd, IDC_FASTREFRESH, boolToCheck(self->InstanceSettings().UseFastRefresh()));
         CheckDlgButton(hwnd, IDC_DIRECTDEBUGGER, boolToCheck(self->InstanceSettings().UseDirectDebugger()));
         CheckDlgButton(hwnd, IDC_BREAKONNEXTLINE, boolToCheck(self->InstanceSettings().DebuggerBreakOnNextLine()));
+        CheckDlgButton(hwnd, IDC_SIZETOCONTENT, boolToCheck(self->m_sizeToContent));
 
         auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);
         SetWindowTextW(portEditControl, std::to_wstring(self->InstanceSettings().DebuggerPort()).c_str());
@@ -472,6 +515,7 @@ struct WindowData {
             self->InstanceSettings().UseDirectDebugger(IsDlgButtonChecked(hwnd, IDC_DIRECTDEBUGGER) == BST_CHECKED);
             self->InstanceSettings().DebuggerBreakOnNextLine(
                 IsDlgButtonChecked(hwnd, IDC_BREAKONNEXTLINE) == BST_CHECKED);
+            self->m_sizeToContent = (IsDlgButtonChecked(hwnd, IDC_SIZETOCONTENT) == BST_CHECKED);
 
             WCHAR buffer[6] = {};
             auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);

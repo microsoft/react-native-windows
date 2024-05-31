@@ -5,6 +5,7 @@ import "IJSValueWriter.idl";
 import "ReactCoreInjection.idl";
 import "ReactNativeHost.idl";
 import "Theme.idl";
+import "IReactViewComponentBuilder.idl";
 #include "NamespaceRedirect.h"
 #include "DocString.h"
 
@@ -64,6 +65,13 @@ namespace Microsoft.ReactNative
   [default_interface]
   [webhosthidden]
   [experimental]
+  runtimeclass RootViewSizeChangedEventArgs {
+    Windows.Foundation.Size Size { get; };
+  }
+
+  [default_interface]
+  [webhosthidden]
+  [experimental]
   DOC_STRING("A windows composition component that hosts React Native UI elements.")
   runtimeclass CompositionRootView
   {
@@ -82,7 +90,7 @@ namespace Microsoft.ReactNative
     DOC_STRING("The RootVisual associated with the @CompositionRootView. It must be set to show any React UI elements.")
     Microsoft.UI.Composition.Visual RootVisual { get; };
 
-    Windows.Foundation.Size Size {get; set; };
+    Windows.Foundation.Size Size { get; };
 
     DOC_STRING("ScaleFactor for this windows (DPI/96)")
     Single ScaleFactor {get; set;};
@@ -90,8 +98,8 @@ namespace Microsoft.ReactNative
     DOC_STRING("Move focus to this @CompositionRootView")
     FocusNavigationResult NavigateFocus(FocusNavigationRequest request);
 
-    Windows.Foundation.Size Measure(Windows.Foundation.Size availableSize);
-    Windows.Foundation.Size Arrange(Windows.Foundation.Size availableSize);
+    Windows.Foundation.Size Measure(LayoutConstraints layoutConstraints, Windows.Foundation.Point viewportOffset);
+    void Arrange(LayoutConstraints layoutConstraints, Windows.Foundation.Point viewportOffset);
 
     Object GetUiaProvider();
 
@@ -104,6 +112,8 @@ namespace Microsoft.ReactNative
 #ifdef USE_WINUI3
     Microsoft.UI.Content.ContentIsland Island { get; };
 #endif
+
+    event Windows.Foundation.EventHandler<RootViewSizeChangedEventArgs> SizeChanged;
   }
 
 } // namespace Microsoft.ReactNative

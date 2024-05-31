@@ -2,6 +2,78 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 30 May 2024 05:18:26 GMT",
+      "version": "0.0.0-canary.822",
+      "tag": "react-native-windows_v0.0.0-canary.822",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "1422161+marlenecota@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1304e2f0aa0f074550f4a10de439188749590547",
+            "comment": "RN Integration 05/11"
+          },
+          {
+            "author": "1422161+marlenecota@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b06795ef7c683825358c8150adb2107a816d98ac",
+            "comment": "Folly and Fmt CodeQL patches"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.216",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.90",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.19",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.23",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.35",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.36",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 May 2024 05:20:02 GMT",
+      "version": "0.0.0-canary.821",
+      "tag": "react-native-windows_v0.0.0-canary.821",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b150f8e5bb4178693006bea10b838c565b559011",
+            "comment": "APIs to enable RootViews that size to content"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 24 May 2024 05:17:25 GMT",
       "version": "0.0.0-canary.820",
       "tag": "react-native-windows_v0.0.0-canary.820",

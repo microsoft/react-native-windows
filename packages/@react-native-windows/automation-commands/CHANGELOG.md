@@ -1,8 +1,34 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Fri, 24 May 2024 05:17:26 GMT and should not be manually modified.
+This log was last generated on Fri, 31 May 2024 05:16:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.265
+
+Fri, 31 May 2024 05:16:40 GMT
+
+### Patches
+
+- Update image uris in dumpVisualTree.ts (1422161+marlenecota@users.noreply.github.com)
+
+## 0.1.264
+
+Thu, 30 May 2024 05:18:26 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.162
+- Bump @rnw-scripts/eslint-config to v1.2.19
+- Bump @rnw-scripts/just-task to v2.3.35
+
+## 0.1.263
+
+Wed, 29 May 2024 05:20:02 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.161
 
 ## 0.1.262
 
