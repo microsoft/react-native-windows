@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Upgrade to Windows SDK 10.0.22000.0",
+  "packageName": "@react-native-windows/cli",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
