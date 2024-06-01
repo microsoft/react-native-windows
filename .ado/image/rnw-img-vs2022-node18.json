@@ -26,7 +26,7 @@
         {
             "name": "windows-visualstudio-bootstrapper",
             "parameters": {
-                "Workloads": "--add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NativeDesktop --add Microsoft.VisualStudio.Workload.Universal --add Microsoft.Component.MSBuild --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.ComponentGroup.UWP.Support --add Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core --add Microsoft.VisualStudio.Component.Windows10SDK.22621 --add Microsoft.VisualStudio.ComponentGroup.UWP.VC --includeRecommended --includeOptional",
+                "Workloads": "--add Microsoft.VisualStudio.Workload.ManagedDesktop --add Microsoft.VisualStudio.Workload.NativeDesktop --add Microsoft.VisualStudio.Workload.Universal --add Microsoft.Component.MSBuild --add Microsoft.VisualStudio.Component.VC.Tools.x86.x64 --add Microsoft.VisualStudio.ComponentGroup.UWP.Support --add Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core --add Microsoft.VisualStudio.Component.Windows11SDK.22621 --add Microsoft.VisualStudio.ComponentGroup.UWP.VC --includeRecommended --includeOptional",
                 "SKU": "Enterprise",
                 "VSBootstrapperURL": "https://aka.ms/vs/17/release/vs_Enterprise.exe"
             }
