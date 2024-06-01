@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240511-3f17c8b5f",
+  "baseVersion": "0.75.0-nightly-20240518-93c079b92",
   "overrides": [
     {
       "type": "derived",
@@ -56,7 +56,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputState.cpp",
-      "baseHash": "fbfa1d27ab326c8af8453d9c52f3233b9a01ed98"
+      "baseHash": "3a170d866220fe9cbec2fa65ccb4a17023a3d51a"
     },
     {
       "type": "derived",
@@ -130,7 +130,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/performance/timeline/BoundedConsumableBuffer.h",
       "baseFile": "packages/react-native/ReactCommon/react/performance/timeline/BoundedConsumableBuffer.h",
-      "baseHash": "61bf443c25bc587c1ae9738f905f1554e406efb0",
+      "baseHash": "4bc874dd3a7be4f4326384b24d1a5c0527403098",
       "issue": 13231
     },
     {
@@ -139,13 +139,6 @@
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/scrollview/ScrollViewProps.cpp",
       "baseHash": "e4adfb6ee6a9ba5037b2fff3fbc11ed81e157d1b",
       "issue": 12879
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/observers/events/EventPerformanceLogger.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/observers/events/EventPerformanceLogger.cpp",
-      "baseHash": "a61679142fe752b6ca32f16cde1fdd23e64a3b86",
-      "issue": 13231
     },
     {
       "type": "patch",
