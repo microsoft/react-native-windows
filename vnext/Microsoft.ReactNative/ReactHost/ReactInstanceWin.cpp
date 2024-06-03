@@ -1319,7 +1319,7 @@ void ReactInstanceWin::DrainJSCallQueue() noexcept {
 
 #ifdef USE_FABRIC
     if (m_bridgelessReactInstance) {
-      m_bridgelessReactInstance->callFunctionOnModule(entry.ModuleName, entry.MethodName, entry.Args);
+      m_bridgelessReactInstance->callFunctionOnModule(entry.ModuleName, entry.MethodName, std::move(entry.Args));
     } else
 #endif
         if (auto instance = m_instance.LoadWithLock()) {
