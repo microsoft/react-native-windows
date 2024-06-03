@@ -5,7 +5,7 @@
 
 #include "WinRTHttpResource.h"
 
-#include "Networking.g.cpp"
+#include "HttpSettings.g.cpp"
 #include <CppRuntimeOptions.h>
 #include <Networking/IBlobResource.h>
 #include <ReactPropertyBag.h>

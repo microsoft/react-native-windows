@@ -5,7 +5,7 @@
 
 #include "IHttpResource.h"
 
-#include "Networking.g.h"
+#include "HttpSettings.g.h"
 #include <Modules/IHttpModuleProxy.h>
 #include "IWinRTHttpRequestFactory.h"
 #include "WinRTTypes.h"
