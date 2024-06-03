@@ -31,11 +31,13 @@ public:
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
+  virtual bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(jsi::Runtime &rt) = 0;
   virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableModernCDPRegistry(jsi::Runtime &rt) = 0;
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
   virtual bool preventDoubleTextMeasure(jsi::Runtime &rt) = 0;
+  virtual bool setAndroidLayoutDirection(jsi::Runtime &rt) = 0;
   virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
   virtual bool useStateAlignmentMechanism(jsi::Runtime &rt) = 0;
@@ -150,6 +152,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableUIConsistency, jsInvoker_, instance_);
     }
+    bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak) == 1,
+          "Expected fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak, jsInvoker_, instance_);
+    }
     bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::forceBatchingMountItemsOnAndroid) == 1,
@@ -189,6 +199,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::preventDoubleTextMeasure, jsInvoker_, instance_);
+    }
+    bool setAndroidLayoutDirection(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::setAndroidLayoutDirection) == 1,
+          "Expected setAndroidLayoutDirection(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::setAndroidLayoutDirection, jsInvoker_, instance_);
     }
     bool useModernRuntimeScheduler(jsi::Runtime &rt) override {
       static_assert(
@@ -1382,61 +1400,6 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::queueAndExecuteBatchedOperations, jsInvoker_, instance_, std::move(operationsAndArgs));
-    }
-
-  private:
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  class JSI_EXPORT NativeAnimationsDebugModuleCxxSpecJSI : public TurboModule {
-protected:
-  NativeAnimationsDebugModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void startRecordingFps(jsi::Runtime &rt) = 0;
-  virtual void stopRecordingFps(jsi::Runtime &rt, double animationStopTimeMs) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeAnimationsDebugModuleCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "AnimationsDebugModule";
-
-protected:
-  NativeAnimationsDebugModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeAnimationsDebugModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-private:
-  class Delegate : public NativeAnimationsDebugModuleCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeAnimationsDebugModuleCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
-
-    void startRecordingFps(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::startRecordingFps) == 1,
-          "Expected startRecordingFps(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::startRecordingFps, jsInvoker_, instance_);
-    }
-    void stopRecordingFps(jsi::Runtime &rt, double animationStopTimeMs) override {
-      static_assert(
-          bridging::getParameterCount(&T::stopRecordingFps) == 2,
-          "Expected stopRecordingFps(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::stopRecordingFps, jsInvoker_, instance_, std::move(animationStopTimeMs));
     }
 
   private:

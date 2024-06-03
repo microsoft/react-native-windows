@@ -2,6 +2,48 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Sat, 01 Jun 2024 05:21:31 GMT",
+      "version": "0.1.266",
+      "tag": "@react-native-windows/automation-commands_v0.1.266",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.163",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.20",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.36",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 31 May 2024 05:16:40 GMT",
+      "version": "0.1.265",
+      "tag": "@react-native-windows/automation-commands_v0.1.265",
+      "comments": {
+        "patch": [
+          {
+            "author": "1422161+marlenecota@users.noreply.github.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "760654ca7132a70ea906c1f7ec993c0f963ca82c",
+            "comment": "Update image uris in dumpVisualTree.ts"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 May 2024 05:18:26 GMT",
       "version": "0.1.264",
       "tag": "@react-native-windows/automation-commands_v0.1.264",

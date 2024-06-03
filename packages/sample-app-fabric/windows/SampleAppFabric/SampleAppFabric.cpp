@@ -34,8 +34,9 @@ void UpdateRootViewSizeToAppWindow(
   // Do not relayout when minimized
   if (window.Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>().State() !=
       winrt::Microsoft::UI::Windowing::OverlappedPresenterState::Minimized) {
-    rootView.Arrange(size);
-    rootView.Size(size);
+    winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+    constraints.MaximumSize = constraints.MinimumSize = size;
+    rootView.Arrange(constraints, {0, 0});
   }
 }
 

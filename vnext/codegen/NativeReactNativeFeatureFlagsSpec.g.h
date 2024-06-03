@@ -27,14 +27,16 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{8, L"enableMicrotasks"},
       SyncMethod<bool() noexcept>{9, L"enableSynchronousStateUpdates"},
       SyncMethod<bool() noexcept>{10, L"enableUIConsistency"},
-      SyncMethod<bool() noexcept>{11, L"forceBatchingMountItemsOnAndroid"},
-      SyncMethod<bool() noexcept>{12, L"inspectorEnableCxxInspectorPackagerConnection"},
-      SyncMethod<bool() noexcept>{13, L"inspectorEnableModernCDPRegistry"},
-      SyncMethod<bool() noexcept>{14, L"lazyAnimationCallbacks"},
-      SyncMethod<bool() noexcept>{15, L"preventDoubleTextMeasure"},
-      SyncMethod<bool() noexcept>{16, L"useModernRuntimeScheduler"},
-      SyncMethod<bool() noexcept>{17, L"useNativeViewConfigsInBridgelessMode"},
-      SyncMethod<bool() noexcept>{18, L"useStateAlignmentMechanism"},
+      SyncMethod<bool() noexcept>{11, L"fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak"},
+      SyncMethod<bool() noexcept>{12, L"forceBatchingMountItemsOnAndroid"},
+      SyncMethod<bool() noexcept>{13, L"inspectorEnableCxxInspectorPackagerConnection"},
+      SyncMethod<bool() noexcept>{14, L"inspectorEnableModernCDPRegistry"},
+      SyncMethod<bool() noexcept>{15, L"lazyAnimationCallbacks"},
+      SyncMethod<bool() noexcept>{16, L"preventDoubleTextMeasure"},
+      SyncMethod<bool() noexcept>{17, L"setAndroidLayoutDirection"},
+      SyncMethod<bool() noexcept>{18, L"useModernRuntimeScheduler"},
+      SyncMethod<bool() noexcept>{19, L"useNativeViewConfigsInBridgelessMode"},
+      SyncMethod<bool() noexcept>{20, L"useStateAlignmentMechanism"},
   };
 
   template <class TModule>
@@ -98,41 +100,51 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(enableUIConsistency) static bool enableUIConsistency() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           11,
+          "fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak",
+          "    REACT_SYNC_METHOD(fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak) bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak) static bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          12,
           "forceBatchingMountItemsOnAndroid",
           "    REACT_SYNC_METHOD(forceBatchingMountItemsOnAndroid) bool forceBatchingMountItemsOnAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(forceBatchingMountItemsOnAndroid) static bool forceBatchingMountItemsOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          12,
+          13,
           "inspectorEnableCxxInspectorPackagerConnection",
           "    REACT_SYNC_METHOD(inspectorEnableCxxInspectorPackagerConnection) bool inspectorEnableCxxInspectorPackagerConnection() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(inspectorEnableCxxInspectorPackagerConnection) static bool inspectorEnableCxxInspectorPackagerConnection() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          13,
+          14,
           "inspectorEnableModernCDPRegistry",
           "    REACT_SYNC_METHOD(inspectorEnableModernCDPRegistry) bool inspectorEnableModernCDPRegistry() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(inspectorEnableModernCDPRegistry) static bool inspectorEnableModernCDPRegistry() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          14,
+          15,
           "lazyAnimationCallbacks",
           "    REACT_SYNC_METHOD(lazyAnimationCallbacks) bool lazyAnimationCallbacks() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(lazyAnimationCallbacks) static bool lazyAnimationCallbacks() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          15,
+          16,
           "preventDoubleTextMeasure",
           "    REACT_SYNC_METHOD(preventDoubleTextMeasure) bool preventDoubleTextMeasure() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(preventDoubleTextMeasure) static bool preventDoubleTextMeasure() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          16,
+          17,
+          "setAndroidLayoutDirection",
+          "    REACT_SYNC_METHOD(setAndroidLayoutDirection) bool setAndroidLayoutDirection() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(setAndroidLayoutDirection) static bool setAndroidLayoutDirection() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          18,
           "useModernRuntimeScheduler",
           "    REACT_SYNC_METHOD(useModernRuntimeScheduler) bool useModernRuntimeScheduler() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useModernRuntimeScheduler) static bool useModernRuntimeScheduler() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          17,
+          19,
           "useNativeViewConfigsInBridgelessMode",
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) static bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          18,
+          20,
           "useStateAlignmentMechanism",
           "    REACT_SYNC_METHOD(useStateAlignmentMechanism) bool useStateAlignmentMechanism() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useStateAlignmentMechanism) static bool useStateAlignmentMechanism() noexcept { /* implementation */ }\n");
