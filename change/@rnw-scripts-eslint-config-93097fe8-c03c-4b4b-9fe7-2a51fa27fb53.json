@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "Integrate 5/22",
+  "comment": "Integrate 5/25",
   "packageName": "@rnw-scripts/eslint-config",
   "email": "34109996+chiaramooney@users.noreply.github.com",
   "dependentChangeType": "patch"
