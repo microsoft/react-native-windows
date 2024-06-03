@@ -828,6 +828,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\HttpSettings.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueReader.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueWriter.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactContext.idl" />

@@ -9,11 +9,11 @@ namespace Microsoft.ReactNative
 {
   [webhosthidden]
   DOC_STRING(
-    "Provides access to networking functionality. ")
-  runtimeclass Networking
+    "Provides settings for Http functionality. ")
+  runtimeclass HttpSettings
   {
     DOC_STRING(
-      "Configures the react instance to use a user-agent header by default on network requests.")
+      "Configures the react instance to use a user-agent header by default on http requests.")
     static void SetDefaultUserAgent(Microsoft.ReactNative.ReactInstanceSettings settings, String userAgent);
   }
 } // namespace Microsoft.ReactNative

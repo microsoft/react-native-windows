@@ -620,6 +620,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\native\NativeComponentRegistryBinding.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\HttpSettings.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueReader.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueWriter.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactContext.idl" />
@@ -631,7 +632,6 @@
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactPackageProvider.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactPropertyBag.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\JsiApi.idl" />
-    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Networking.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\QuirkSettings.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactCoreInjection.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactInstanceSettings.idl" />

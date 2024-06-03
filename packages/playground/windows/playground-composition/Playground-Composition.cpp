@@ -222,7 +222,7 @@ struct WindowData {
           host.InstanceSettings().UseDeveloperSupport(true);
 
           // Some of the images in RNTester require a user-agent header to properly fetch
-          winrt::Microsoft::ReactNative::Networking::SetDefaultUserAgent(
+          winrt::Microsoft::ReactNative::HttpSettings::SetDefaultUserAgent(
               host.InstanceSettings(), L"React Native Windows Playground");
 
           // Currently there is only SystemVisualSiteBridge which supports hosing ContentIslands within System

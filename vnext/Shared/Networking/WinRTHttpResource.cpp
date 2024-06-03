@@ -710,7 +710,7 @@ void WinRTHttpResource::AddResponseHandler(shared_ptr<IResponseHandler> response
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-void Networking::SetDefaultUserAgent(
+void HttpSettings::SetDefaultUserAgent(
     const winrt::Microsoft::ReactNative::ReactInstanceSettings &settings,
     const winrt::hstring &userAgent) noexcept {
   winrt::Microsoft::ReactNative::ReactPropertyBag(settings.Properties())

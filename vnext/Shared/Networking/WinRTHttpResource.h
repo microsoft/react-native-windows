@@ -112,8 +112,8 @@ class WinRTHttpResource : public IHttpResource,
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-struct Networking {
-  Networking() = default;
+struct HttpSettings {
+  HttpSettings() = default;
 
   static void SetDefaultUserAgent(
       const winrt::Microsoft::ReactNative::ReactInstanceSettings &settings,
@@ -123,5 +123,5 @@ struct Networking {
 } // namespace winrt::Microsoft::ReactNative::implementation
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {
-struct Networking : NetworkingT<Networking, implementation::Networking> {};
+struct HttpSettings : HttpSettingsT<HttpSettings, implementation::HttpSettings> {};
 } // namespace winrt::Microsoft::ReactNative::factory_implementation
