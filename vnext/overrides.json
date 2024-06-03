@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240518-93c079b92",
+  "baseVersion": "0.75.0-nightly-20240525-840c31c3a",
   "overrides": [
     {
       "type": "derived",
@@ -95,7 +95,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/NativeToJsBridge.cpp",
       "baseFile": "packages/react-native/ReactCommon/cxxreact/NativeToJsBridge.cpp",
-      "baseHash": "f2bb85b79b6e8add5e4604418f953651973011ce",
+      "baseHash": "a3a8c88dc1fd1202db586ccbc0e46501cd6cb0eb",
       "issue": 13172
     },
     {
@@ -158,7 +158,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "f41d943bb38db62bf443672a8c44fe6106ced437",
+      "baseHash": "c7a0decdba82a2c225cd593ce193bc074d4e2043",
       "issue": 13172
     },
     {
@@ -306,7 +306,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "63cc0b16c930ef07a0570d1b8e4abc51a77d06dc"
+      "baseHash": "77ec40a2f6a75280b170fe839813d8712c90fbfb"
     },
     {
       "type": "patch",
