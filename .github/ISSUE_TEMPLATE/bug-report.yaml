@@ -51,7 +51,7 @@ body:
   - type: textarea
     attributes:
       label: Community Modules
-      description: Describe what you community modules you have added to your project.
+      description: Describe what you community modules you have added to your project. Not sure? Look at your app's `package.json` and share what's in the "dependencies" section.
     id: modules
   - type: dropdown
     attributes:
