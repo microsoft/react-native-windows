@@ -43,11 +43,8 @@ WindowsImageManager::WindowsImageManager(winrt::Microsoft::ReactNative::ReactCon
   }
 }
 
-std::tuple<
-    winrt::com_ptr<IWICBitmapSource>,
-    winrt::com_ptr<IWICImagingFactory>,
-    std::shared_ptr<facebook::react::ImageErrorInfo>>
-wicBitmapSourceFromStream(const winrt::Windows::Storage::Streams::IRandomAccessStream &stream) noexcept {
+std::tuple<winrt::com_ptr<IWICBitmapSource>, winrt::com_ptr<IWICImagingFactory>, std::string> wicBitmapSourceFromStream(
+    const winrt::Windows::Storage::Streams::IRandomAccessStream &stream) noexcept {
   try {
     winrt::com_ptr<IWICImagingFactory> imagingFactory;
     winrt::check_hresult(WICCreateImagingFactory_Proxy(WINCODEC_SDK_VERSION, imagingFactory.put()));
@@ -61,19 +58,14 @@ wicBitmapSourceFromStream(const winrt::Windows::Storage::Streams::IRandomAccessS
         istream.get(), nullptr, WICDecodeMetadataCacheOnDemand, bitmapDecoder.put()));
 
     if (!bitmapDecoder) {
-      auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
-      errorInfo->error = "Failed to decode the image.";
-      return {nullptr, nullptr, errorInfo};
+      return {nullptr, nullptr, "Failed to decode the image."};
     }
 
     winrt::com_ptr<IWICBitmapFrameDecode> decodedFrame;
     winrt::check_hresult(bitmapDecoder->GetFrame(0, decodedFrame.put()));
     return {decodedFrame, imagingFactory, nullptr};
   } catch (winrt::hresult_error const &ex) {
-    auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
-    errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
-    errorInfo->error = ::Microsoft::ReactNative::FormatHResultError(winrt::hresult_error(ex));
-    return {nullptr, nullptr, errorInfo};
+    return {nullptr, nullptr, ::Microsoft::ReactNative::FormatHResultError(winrt::hresult_error(ex))};
   }
 }
 
@@ -174,20 +166,16 @@ facebook::react::ImageRequest WindowsImageManager::requestImage(
           observerCoordinator->nativeImageResponseComplete(
               facebook::react::ImageResponse(imageResultOrError.image, nullptr /*metadata*/));
         } else {
-          observerCoordinator->nativeImageResponseFailed(facebook::react::ImageLoadError(imageResultOrError.errorInfo));
+          observerCoordinator->nativeImageResponseFailed();
         }
         break;
       }
       case winrt::Windows::Foundation::AsyncStatus::Canceled: {
-        auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
-        errorInfo->error = FormatHResultError(winrt::hresult_error(asyncOp.ErrorCode()));
-        observerCoordinator->nativeImageResponseFailed(facebook::react::ImageLoadError(errorInfo));
+        observerCoordinator->nativeImageResponseFailed();
         break;
       }
       case winrt::Windows::Foundation::AsyncStatus::Error: {
-        auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
-        errorInfo->error = FormatHResultError(winrt::hresult_error(asyncOp.ErrorCode()));
-        observerCoordinator->nativeImageResponseFailed(facebook::react::ImageLoadError(errorInfo));
+        observerCoordinator->nativeImageResponseFailed();
         break;
       }
       case winrt::Windows::Foundation::AsyncStatus::Started: {
@@ -209,7 +197,8 @@ ImageResponseOrImageErrorInfo StreamImageResponse::ResolveImage() {
   try {
     auto result = ::Microsoft::ReactNative::wicBitmapSourceFromStream(m_stream);
 
-    if (auto errorInfo = std::get<std::shared_ptr<facebook::react::ImageErrorInfo>>(result)) {
+    auto &errorInfo = std::get<std::string>(result);
+    if (!errorInfo.empty()) {
       imageOrError.errorInfo = errorInfo;
       return imageOrError;
     }
@@ -233,8 +222,7 @@ ImageResponseOrImageErrorInfo StreamImageResponse::ResolveImage() {
     winrt::check_hresult(imagingFactory->CreateBitmapFromSource(
         converter.get(), WICBitmapCacheOnLoad, imageOrError.image->m_wicbmp.put()));
   } catch (winrt::hresult_error const &ex) {
-    imageOrError.errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
-    imageOrError.errorInfo->error = ::Microsoft::ReactNative::FormatHResultError(winrt::hresult_error(ex));
+    imageOrError.errorInfo = ::Microsoft::ReactNative::FormatHResultError(winrt::hresult_error(ex));
   }
   return imageOrError;
 }

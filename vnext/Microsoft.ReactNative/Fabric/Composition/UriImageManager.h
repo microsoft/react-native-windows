@@ -41,7 +41,7 @@ winrt::Microsoft::ReactNative::Composition::ImageSource MakeImageSource(
 
 struct ImageResponseOrImageErrorInfo {
   std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::ImageResponseImage> image;
-  std::shared_ptr<facebook::react::ImageErrorInfo> errorInfo;
+  std::string errorInfo;
 };
 
 struct ImageResponse : ImageResponseT<ImageResponse /*, IResolveImage*/> {

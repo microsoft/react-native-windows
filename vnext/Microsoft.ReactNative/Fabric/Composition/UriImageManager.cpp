@@ -285,15 +285,9 @@ ImageResponseOrImageErrorInfo ImageResponse::ResolveImage() {
 
 ImageResponseOrImageErrorInfo ImageFailedResponse::ResolveImage() {
   ImageResponseOrImageErrorInfo imageOrError;
-  imageOrError.errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
-  imageOrError.errorInfo->responseCode = static_cast<int>(m_statusCode);
-  imageOrError.errorInfo->error = winrt::to_string(m_errorMessage);
-  if (imageOrError.errorInfo->error.empty()) {
-    imageOrError.errorInfo->error = "Failed to load image.";
-  }
-  for (auto &&[header, value] : m_responseHeaders) {
-    imageOrError.errorInfo->httpResponseHeaders.push_back(
-        std::make_pair<std::string, std::string>(winrt::to_string(header), winrt::to_string(value)));
+  imageOrError.errorInfo = winrt::to_string(m_errorMessage);
+  if (imageOrError.errorInfo.empty()) {
+    imageOrError.errorInfo = "Failed to load image.";
   }
   return imageOrError;
 }

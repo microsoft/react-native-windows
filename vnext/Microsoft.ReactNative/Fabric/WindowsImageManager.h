@@ -30,10 +30,7 @@ struct WindowsImageManager {
   std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager> m_uriImageManager;
 };
 
-std::tuple<
-    winrt::com_ptr<IWICBitmapSource>,
-    winrt::com_ptr<IWICImagingFactory>,
-    std::shared_ptr<facebook::react::ImageErrorInfo>>
-wicBitmapSourceFromStream(const winrt::Windows::Storage::Streams::IRandomAccessStream &stream) noexcept;
+std::tuple<winrt::com_ptr<IWICBitmapSource>, winrt::com_ptr<IWICImagingFactory>, std::string> wicBitmapSourceFromStream(
+    const winrt::Windows::Storage::Streams::IRandomAccessStream &stream) noexcept;
 
 } // namespace Microsoft::ReactNative
