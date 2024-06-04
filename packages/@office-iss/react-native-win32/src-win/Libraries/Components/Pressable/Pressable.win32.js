@@ -242,13 +242,16 @@ type Props = $ReadOnly<{|
   'aria-label'?: ?string,
 |}>;
 
+type Instance = React.ElementRef<typeof View>;
+
 /**
  * Component used to build display components that should respond to whether the
  * component is currently pressed or not.
  */
-/* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
- * LTI update could not be added via codemod */
-function Pressable(props: Props, forwardedRef): React.Node {
+function Pressable(
+  props: Props,
+  forwardedRef: React.RefSetter<Instance>,
+): React.Node {
   const {
     accessible,
     accessibilityState,
@@ -290,12 +293,15 @@ function Pressable(props: Props, forwardedRef): React.Node {
     ...restProps
   } = props;
 
-  const viewRef = useRef<React.ElementRef<typeof View> | null>(null);
+  const viewRef = useRef<Instance | null>(null);
   const mergedRef = useMergeRefs(forwardedRef, viewRef);
 
   const android_rippleConfig = useAndroidRippleForView(android_ripple, viewRef);
 
   const [pressed, setPressed] = usePressState(testOnly_pressed === true);
+
+  const shouldUpdatePressed =
+    typeof children === 'function' || typeof style === 'function';
 
   let _accessibilityState = {
     busy: ariaBusy ?? accessibilityState?.busy,
@@ -354,7 +360,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
         if (android_rippleConfig != null) {
           android_rippleConfig.onPressIn(event);
         }
-        setPressed(true);
+        shouldUpdatePressed && setPressed(true);
         if (onPressIn != null) {
           onPressIn(event);
         }
@@ -364,7 +370,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
         if (android_rippleConfig != null) {
           android_rippleConfig.onPressOut(event);
         }
-        setPressed(false);
+        shouldUpdatePressed && setPressed(false);
         if (onPressOut != null) {
           onPressOut(event);
         }
@@ -399,6 +405,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
       // Windows]
       pressRetentionOffset,
       setPressed,
+      shouldUpdatePressed,
       unstable_pressDelay,
     ],
   );
