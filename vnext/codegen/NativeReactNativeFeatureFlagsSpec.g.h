@@ -18,7 +18,7 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
   static constexpr auto methods = std::tuple{
       SyncMethod<bool() noexcept>{0, L"commonTestFlag"},
       SyncMethod<bool() noexcept>{1, L"allowCollapsableChildren"},
-      SyncMethod<bool() noexcept>{2, L"androidEnablePendingFabricTransactions"},
+      SyncMethod<bool() noexcept>{2, L"allowRecursiveCommitsWithSynchronousMountOnAndroid"},
       SyncMethod<bool() noexcept>{3, L"batchRenderingUpdatesInEventLoop"},
       SyncMethod<bool() noexcept>{4, L"destroyFabricSurfacesInReactInstanceManager"},
       SyncMethod<bool() noexcept>{5, L"enableBackgroundExecutor"},
@@ -29,8 +29,8 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{10, L"enableUIConsistency"},
       SyncMethod<bool() noexcept>{11, L"fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak"},
       SyncMethod<bool() noexcept>{12, L"forceBatchingMountItemsOnAndroid"},
-      SyncMethod<bool() noexcept>{13, L"inspectorEnableCxxInspectorPackagerConnection"},
-      SyncMethod<bool() noexcept>{14, L"inspectorEnableModernCDPRegistry"},
+      SyncMethod<bool() noexcept>{13, L"fuseboxEnabledDebug"},
+      SyncMethod<bool() noexcept>{14, L"fuseboxEnabledRelease"},
       SyncMethod<bool() noexcept>{15, L"lazyAnimationCallbacks"},
       SyncMethod<bool() noexcept>{16, L"preventDoubleTextMeasure"},
       SyncMethod<bool() noexcept>{17, L"setAndroidLayoutDirection"},
@@ -55,9 +55,9 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(allowCollapsableChildren) static bool allowCollapsableChildren() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
-          "androidEnablePendingFabricTransactions",
-          "    REACT_SYNC_METHOD(androidEnablePendingFabricTransactions) bool androidEnablePendingFabricTransactions() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(androidEnablePendingFabricTransactions) static bool androidEnablePendingFabricTransactions() noexcept { /* implementation */ }\n");
+          "allowRecursiveCommitsWithSynchronousMountOnAndroid",
+          "    REACT_SYNC_METHOD(allowRecursiveCommitsWithSynchronousMountOnAndroid) bool allowRecursiveCommitsWithSynchronousMountOnAndroid() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(allowRecursiveCommitsWithSynchronousMountOnAndroid) static bool allowRecursiveCommitsWithSynchronousMountOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "batchRenderingUpdatesInEventLoop",
@@ -110,14 +110,14 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(forceBatchingMountItemsOnAndroid) static bool forceBatchingMountItemsOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           13,
-          "inspectorEnableCxxInspectorPackagerConnection",
-          "    REACT_SYNC_METHOD(inspectorEnableCxxInspectorPackagerConnection) bool inspectorEnableCxxInspectorPackagerConnection() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(inspectorEnableCxxInspectorPackagerConnection) static bool inspectorEnableCxxInspectorPackagerConnection() noexcept { /* implementation */ }\n");
+          "fuseboxEnabledDebug",
+          "    REACT_SYNC_METHOD(fuseboxEnabledDebug) bool fuseboxEnabledDebug() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(fuseboxEnabledDebug) static bool fuseboxEnabledDebug() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           14,
-          "inspectorEnableModernCDPRegistry",
-          "    REACT_SYNC_METHOD(inspectorEnableModernCDPRegistry) bool inspectorEnableModernCDPRegistry() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(inspectorEnableModernCDPRegistry) static bool inspectorEnableModernCDPRegistry() noexcept { /* implementation */ }\n");
+          "fuseboxEnabledRelease",
+          "    REACT_SYNC_METHOD(fuseboxEnabledRelease) bool fuseboxEnabledRelease() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(fuseboxEnabledRelease) static bool fuseboxEnabledRelease() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           15,
           "lazyAnimationCallbacks",

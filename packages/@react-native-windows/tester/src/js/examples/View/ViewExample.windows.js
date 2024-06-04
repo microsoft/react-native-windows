@@ -1040,19 +1040,19 @@ export default ({
       name: 'insets',
       render(): React.Node {
         return (
-          <View testID="view-test-insets" style={{rowGap: 10}} accessible>
-            <View style={{position: 'relative', height: 50, borderWidth: 1}}>
+          <View testID="view-test-insets" style={{rowGap: 5}}>
+            <View style={{position: 'relative', height: 40, borderWidth: 1}}>
               <View
                 style={{
                   backgroundColor: '#527FE4',
                   padding: 5,
                   position: 'absolute',
-                  inset: 10,
+                  inset: 5,
                 }}>
-                <Text style={{fontSize: 11}}>inset 10</Text>
+                <Text style={{fontSize: 11}}>inset 5</Text>
               </View>
             </View>
-            <View style={{position: 'relative', height: 50, borderWidth: 1}}>
+            <View style={{position: 'relative', height: 40, borderWidth: 1}}>
               <View
                 style={{
                   backgroundColor: '#527FE4',
@@ -1063,7 +1063,7 @@ export default ({
                 <Text style={{fontSize: 11}}>insetBlock 5</Text>
               </View>
             </View>
-            <View style={{position: 'relative', height: 50, borderWidth: 1}}>
+            <View style={{position: 'relative', height: 40, borderWidth: 1}}>
               <View
                 style={{
                   backgroundColor: '#527FE4',
@@ -1074,7 +1074,7 @@ export default ({
                 <Text style={{fontSize: 11}}>insetBlockEnd 5</Text>
               </View>
             </View>
-            <View style={{position: 'relative', height: 50, borderWidth: 1}}>
+            <View style={{position: 'relative', height: 40, borderWidth: 1}}>
               <View
                 style={{
                   backgroundColor: '#527FE4',
@@ -1085,7 +1085,7 @@ export default ({
                 <Text style={{fontSize: 11}}>insetBlockStart 5</Text>
               </View>
             </View>
-            <View style={{position: 'relative', height: 50, borderWidth: 1}}>
+            <View style={{position: 'relative', height: 40, borderWidth: 1}}>
               <View
                 style={{
                   backgroundColor: '#527FE4',
@@ -1096,7 +1096,7 @@ export default ({
                 <Text style={{fontSize: 11}}>insetInline 5</Text>
               </View>
             </View>
-            <View style={{position: 'relative', height: 50, borderWidth: 1}}>
+            <View style={{position: 'relative', height: 40, borderWidth: 1}}>
               <View
                 style={{
                   backgroundColor: '#527FE4',
@@ -1107,7 +1107,7 @@ export default ({
                 <Text style={{fontSize: 11}}>insetInlineEnd 5</Text>
               </View>
             </View>
-            <View style={{position: 'relative', height: 50, borderWidth: 1}}>
+            <View style={{position: 'relative', height: 40, borderWidth: 1}}>
               <View
                 style={{
                   backgroundColor: '#527FE4',
