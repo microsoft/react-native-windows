@@ -147,7 +147,7 @@ void BatchingEventEmitter::OnFrameUI() noexcept {
   });
 
   // Don't leave the callback continuously registered as it can waste power.
-  // See https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.compositiontarget.rendering?view=winrt-19041
+  // See https://docs.microsoft.com/en-us/uwp/api/windows.ui.xaml.media.compositiontarget.rendering?view=winrt-22621
   m_renderingRevoker.revoke();
 }
 
