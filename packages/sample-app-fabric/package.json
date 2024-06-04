@@ -8,7 +8,8 @@
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch",
     "windows": "react-native run-windows",
-    "test": "rnw-scripts test"
+    "test": "rnw-scripts test",
+    "bundle": "rnw-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppFabric/Bundle/index.windows.bundle --assets-dest windows/SampleAppFabric/Bundle"
   },
   "dependencies": {
     "@types/react": "^18.2.6",

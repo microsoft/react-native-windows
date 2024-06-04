@@ -128,7 +128,7 @@ jobs:
                 buildLogDirectory: ${{ variables['BuildLogDirectory'] }}
                 workingDirectory: packages/sample-app-fabric
 
-            - script: yarn bundle-cpp --verbose
+            - script: yarn bundle --verbose
               displayName: Create SampleAppFabric bundle
               workingDirectory: packages\sample-app-fabric
 
