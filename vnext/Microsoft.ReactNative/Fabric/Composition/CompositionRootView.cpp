@@ -685,13 +685,21 @@ void CompositionRootView::Arrange(
 }
 
 #ifdef USE_WINUI3
-winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() noexcept {
+winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() {
   if (!m_compositor) {
     return nullptr;
   }
 
   if (!m_island) {
-    auto rootVisual = m_compositor.CreateSpriteVisual();
+    winrt::Microsoft::UI::Composition::SpriteVisual rootVisual{nullptr};
+    try {
+      rootVisual = m_compositor.CreateSpriteVisual();
+    } catch (const winrt::hresult_error &e) {
+      // If the compositor has been shutdown, then we shouldn't attempt to initialize the island
+      if (e.code() == RO_E_CLOSED)
+        return nullptr;
+      throw e;
+    }
 
     InternalRootVisual(
         winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateVisual(
