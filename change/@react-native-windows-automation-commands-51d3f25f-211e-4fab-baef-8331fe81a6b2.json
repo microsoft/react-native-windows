@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update dumpVisualTree to replace hash on RNTester image",
-  "packageName": "@react-native-windows/automation-commands",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
