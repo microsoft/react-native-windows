@@ -1040,7 +1040,7 @@ export default ({
       name: 'insets',
       render(): React.Node {
         return (
-          <View testID="view-test-insets" style={{rowGap: 5}}>
+          <View testID="view-test-insets" style={{rowGap: 5}} accessible>
             <View style={{position: 'relative', height: 40, borderWidth: 1}}>
               <View
                 style={{
