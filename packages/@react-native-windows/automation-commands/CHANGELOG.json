@@ -2,6 +2,39 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Tue, 04 Jun 2024 05:18:35 GMT",
+      "version": "0.1.267",
+      "tag": "@react-native-windows/automation-commands_v0.1.267",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/automation-commands",
+            "commit": "adc4d096eb726f8ed50106a3c1c997b692e3a123",
+            "comment": "Update dumpVisualTree to replace hash on RNTester image"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.164",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.21",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.37",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 01 Jun 2024 05:21:31 GMT",
       "version": "0.1.266",
       "tag": "@react-native-windows/automation-commands_v0.1.266",

@@ -5,6 +5,7 @@
 
 #include "IHttpResource.h"
 
+#include "HttpSettings.g.h"
 #include <Modules/IHttpModuleProxy.h>
 #include "IWinRTHttpRequestFactory.h"
 #include "WinRTTypes.h"
@@ -108,3 +109,19 @@ class WinRTHttpResource : public IHttpResource,
 };
 
 } // namespace Microsoft::React::Networking
+
+namespace winrt::Microsoft::ReactNative::implementation {
+
+struct HttpSettings {
+  HttpSettings() = default;
+
+  static void SetDefaultUserAgent(
+      const winrt::Microsoft::ReactNative::ReactInstanceSettings &settings,
+      const winrt::hstring &userAgent) noexcept;
+};
+
+} // namespace winrt::Microsoft::ReactNative::implementation
+
+namespace winrt::Microsoft::ReactNative::factory_implementation {
+struct HttpSettings : HttpSettingsT<HttpSettings, implementation::HttpSettings> {};
+} // namespace winrt::Microsoft::ReactNative::factory_implementation

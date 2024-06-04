@@ -58,6 +58,7 @@ body:
         - "10.0.19041"
         - "10.0.22000"
         - "10.0.22321"
+        - "10.0.22621"
     id: sdk
   - type: dropdown
     attributes:
@@ -102,4 +103,4 @@ body:
         You may provide a screenshot of the application if you think it is relevant to your bug report.
         [Here are some tips for providing a minimal example](https://stackoverflow.com/help/mcve).
     id: code
-    
+

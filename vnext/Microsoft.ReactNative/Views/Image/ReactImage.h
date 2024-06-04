@@ -9,6 +9,7 @@
 #include <UI.Xaml.Controls.h>
 
 #include <JSValue.h>
+#include <React.h>
 #include <Utils/ImageUtils.h>
 #include <folly/dynamic.h>
 
@@ -17,10 +18,10 @@ namespace Microsoft::ReactNative {
 struct ReactImage : xaml::Controls::GridT<ReactImage> {
   using Super = xaml::Controls::GridT<ReactImage>;
 
-  ReactImage() = default;
+  ReactImage(const Mso::React::IReactContext &context);
 
  public:
-  static winrt::com_ptr<ReactImage> Create();
+  static winrt::com_ptr<ReactImage> Create(const Mso::React::IReactContext &context);
 
   // Overrides
   winrt::Windows::Foundation::Size ArrangeOverride(winrt::Windows::Foundation::Size finalSize);
@@ -59,6 +60,7 @@ struct ReactImage : xaml::Controls::GridT<ReactImage> {
   double GetHeight();
 
   bool m_useCompositionBrush{false};
+  Mso::CntPtr<const Mso::React::IReactContext> m_reactContext;
   float m_blurRadius{0};
   int m_imageSourceId{0};
   ReactImageSource m_imageSource;

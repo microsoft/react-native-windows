@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Integrate 5/25",
+  "comment": "Upgrade to Windows SDK 10.0.22621.0",
   "packageName": "react-native-windows",
-  "email": "34109996+chiaramooney@users.noreply.github.com",
+  "email": "julio.rocha@microsoft.com",
   "dependentChangeType": "patch"
 }

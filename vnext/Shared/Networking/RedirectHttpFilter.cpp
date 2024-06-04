@@ -42,10 +42,12 @@ namespace Microsoft::React::Networking {
 RedirectHttpFilter::RedirectHttpFilter(
     size_t maxRedirects,
     IHttpFilter &&innerFilter,
-    IHttpFilter &&innerFilterWithNoCredentials) noexcept
+    IHttpFilter &&innerFilterWithNoCredentials,
+    winrt::hstring defaultUserAgent) noexcept
     : m_maximumRedirects{maxRedirects},
       m_innerFilter{std::move(innerFilter)},
-      m_innerFilterWithNoCredentials{std::move(innerFilterWithNoCredentials)} {
+      m_innerFilterWithNoCredentials{std::move(innerFilterWithNoCredentials)},
+      m_defaultUserAgent(defaultUserAgent) {
   // Prevent automatic redirections.
   if (auto baseFilter = m_innerFilter.try_as<IHttpBaseProtocolFilter>()) {
     baseFilter.AllowAutoRedirect(false);
@@ -57,13 +59,21 @@ RedirectHttpFilter::RedirectHttpFilter(
   }
 }
 
-RedirectHttpFilter::RedirectHttpFilter(IHttpFilter &&innerFilter, IHttpFilter &&innerFilterWithNoCredentials) noexcept
-    : RedirectHttpFilter(DefaultMaxRedirects, std::move(innerFilter), std::move(innerFilterWithNoCredentials)) {}
+RedirectHttpFilter::RedirectHttpFilter(
+    IHttpFilter &&innerFilter,
+    IHttpFilter &&innerFilterWithNoCredentials,
+    winrt::hstring defaultUserAgent) noexcept
+    : RedirectHttpFilter(
+          DefaultMaxRedirects,
+          std::move(innerFilter),
+          std::move(innerFilterWithNoCredentials),
+          defaultUserAgent) {}
 
-RedirectHttpFilter::RedirectHttpFilter() noexcept
+RedirectHttpFilter::RedirectHttpFilter(winrt::hstring defaultUserAgent) noexcept
     : RedirectHttpFilter(
           winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{},
-          winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
+          winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{},
+          defaultUserAgent) {}
 
 void RedirectHttpFilter::SetRequestFactory(std::weak_ptr<IWinRTHttpRequestFactory> factory) noexcept {
   m_requestFactory = factory;
@@ -215,9 +225,8 @@ ResponseOperation RedirectHttpFilter::SendRequestAsync(HttpRequestMessage const 
   do {
     // Set User-Agent
     // See https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
-    auto userAgent = GetRuntimeOptionString("Http.UserAgent");
-    if (userAgent.size() > 0) {
-      coRequest.Headers().Append(L"User-Agent", winrt::to_hstring(userAgent));
+    if (!m_defaultUserAgent.empty()) {
+      coRequest.Headers().Append(L"User-Agent", m_defaultUserAgent);
     }
 
     // Send subsequent requests through the filter that doesn't have the credentials included in the first request
