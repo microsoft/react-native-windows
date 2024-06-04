@@ -20,27 +20,33 @@ namespace Microsoft.ReactNative.Composition
     Single Scale { get; };
   };
 
-
   [webhosthidden]
   [experimental]
-  interface IUriImageProvider
+  [default_interface]
+  unsealed runtimeclass ImageResponse
   {
-    DOC_STRING(
-      "This should return true if this provider will provide an image for the provided uri.")
-    Boolean CanLoadImageUri(Microsoft.ReactNative.IReactContext context, Windows.Foundation.Uri uri);
   }
 
   [webhosthidden]
   [experimental]
-    DOC_STRING(
-      "This allows applications to provide their own image caching / storage pipelines. Or to generate images on the fly based on uri.")
-  interface IUriImageStreamProvider requires IUriImageProvider
+  [default_interface]
+   DOC_STRING(
+    "Use this as a return value from @IUriImageProvider.GetImageResponseAsync to provide information about why the image load failed.")
+  runtimeclass ImageFailedResponse : ImageResponse
   {
-    DOC_STRING(
-      "Returns a stream of an image file that can be decoded by Windows Imaging Component - https://learn.microsoft.com/en-us/windows/win32/api/_wic/ ")
-    Windows.Foundation.IAsyncOperation<Windows.Storage.Streams.IRandomAccessStream> GetSourceAsync(Microsoft.ReactNative.IReactContext context, ImageSource imageSource);
+    ImageFailedResponse(String errorMessage);
+    ImageFailedResponse(String errorMessage, Windows.Web.Http.HttpStatusCode responseCode, Windows.Web.Http.Headers.HttpResponseHeaderCollection responseHeaders);
   }
 
+  [webhosthidden]
+  [experimental]
+  [default_interface]
+  runtimeclass StreamImageResponse : ImageResponse
+  {
+   DOC_STRING(
+    "Takes a stream of an image file that can be decoded by Windows Imaging Component - https://learn.microsoft.com/en-us/windows/win32/api/_wic/ ")
+    StreamImageResponse(Windows.Storage.Streams.IRandomAccessStream stream);
+  }
  
   [webhosthidden]
   [experimental]
@@ -48,13 +54,12 @@ namespace Microsoft.ReactNative.Composition
 
   [webhosthidden]
   [experimental]
+  [default_interface]
   DOC_STRING(
     "This allows applications to provide their own image rendering pipeline. Or to generate graphics on the fly based on uri.")
-  interface IUriBrushProvider requires IUriImageProvider
+  runtimeclass UriBrushFactoryImageResponse : ImageResponse
   {
-  DOC_STRING(
-    "This allows applications to provide their own image rendering pipeline. Or to generate graphics on the fly based on uri.")
-    Windows.Foundation.IAsyncOperation<UriBrushFactory> GetSourceAsync(Microsoft.ReactNative.IReactContext context, Microsoft.ReactNative.Composition.ImageSource imageSource);
+    UriBrushFactoryImageResponse(UriBrushFactory factory);
   }
 
   namespace Experimental {
@@ -65,11 +70,24 @@ namespace Microsoft.ReactNative.Composition
 
   [webhosthidden]
   [experimental]
+  [default_interface]
   DOC_STRING(
     "This allows applications to provide their own image rendering pipeline. Or to generate graphics on the fly based on uri.")
-  interface IUriBrushProvider requires Microsoft.ReactNative.Composition.IUriImageProvider
+  runtimeclass UriBrushFactoryImageResponse : Microsoft.ReactNative.Composition.ImageResponse
   {
-    Windows.Foundation.IAsyncOperation<UriBrushFactory> GetSourceAsync(Microsoft.ReactNative.IReactContext context, Microsoft.ReactNative.Composition.ImageSource imageSource);
+    UriBrushFactoryImageResponse(UriBrushFactory factory);
   }
+  } // namespace Experimental
+
+  [webhosthidden]
+  [experimental]
+    DOC_STRING(
+      "This allows applications to provide their own image caching / storage pipelines. Or to generate images on the fly based on uri.")
+  interface IUriImageProvider
+  {
+    DOC_STRING(
+      "This should return true if this provider will provide an image for the provided uri.")
+    Boolean CanLoadImageUri(Microsoft.ReactNative.IReactContext context, Windows.Foundation.Uri uri);
+    Windows.Foundation.IAsyncOperation<ImageResponse> GetImageResponseAsync(Microsoft.ReactNative.IReactContext context, ImageSource imageSource);
   }
 } // namespace Microsoft.ReactNative.Composition

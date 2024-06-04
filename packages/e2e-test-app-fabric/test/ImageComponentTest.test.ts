@@ -142,12 +142,6 @@ describe('Image Tests', () => {
     const dump = await dumpVisualTree('image-resize-mode');
     expect(dump).toMatchSnapshot();
   });
-  test('A legacy local image can still render', async () => {
-    const component = await app.findElementByTestID('image-legacy');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-legacy');
-    expect(dump).toMatchSnapshot();
-  });
   test('An Image can have a custom blur radius', async () => {
     const component = await app.findElementByTestID('image-blur-radius');
     await component.waitForDisplayed({timeout: 5000});
