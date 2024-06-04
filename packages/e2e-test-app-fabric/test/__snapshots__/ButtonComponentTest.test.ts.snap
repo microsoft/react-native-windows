@@ -6,7 +6,6 @@ exports[`Button Tests Buttons can be disabled 1`] = `
     "AutomationId": "disabled_button",
     "ControlType": 50000,
     "IsEnabled": false,
-    "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "Name": "Press to submit your application!",
     "__Children": [
@@ -449,7 +448,6 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
     "AutomationId": "accessibilityState_button",
     "ControlType": 50000,
     "IsEnabled": false,
-    "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "Name": "Press to submit your application!",
     "__Children": [

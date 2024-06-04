@@ -7447,6 +7447,103 @@ exports[`snapshotAllPages Border 19`] = `
 />
 `;
 
+exports[`snapshotAllPages Border 20`] = `
+<View
+  style={
+    [
+      {
+        "height": 100,
+        "width": 100,
+      },
+      {
+        "borderWidth": 10,
+        "overflow": "visible",
+      },
+    ]
+  }
+  testID="border-test-child-no-clipping"
+>
+  <Image
+    source={
+      {
+        "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+      }
+    }
+    style={
+      {
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages Border 21`] = `
+<View
+  style={
+    [
+      {
+        "height": 100,
+        "width": 100,
+      },
+      {
+        "borderWidth": 10,
+        "overflow": "hidden",
+      },
+    ]
+  }
+  testID="border-test-child-clipping"
+>
+  <Image
+    source={
+      {
+        "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+      }
+    }
+    style={
+      {
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages Border 22`] = `
+<View
+  style={
+    [
+      {
+        "height": 100,
+        "width": 100,
+      },
+      {
+        "borderRadius": 30,
+        "borderWidth": 10,
+        "overflow": "hidden",
+      },
+    ]
+  }
+  testID="border-test-child-clipping-radius"
+>
+  <Image
+    source={
+      {
+        "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+      }
+    }
+    style={
+      {
+        "height": 100,
+        "width": 100,
+      }
+    }
+  />
+</View>
+`;
+
 exports[`snapshotAllPages Button 1`] = `
 <View
   accessibilityLabel="Press to submit your application!"
@@ -8134,7 +8231,7 @@ exports[`snapshotAllPages Button 5`] = `
   }
   accessible={true}
   disabled={true}
-  focusable={true}
+  focusable={false}
   onBlur={[Function]}
   onClick={[Function]}
   onFocus={[Function]}
@@ -8343,7 +8440,7 @@ exports[`snapshotAllPages Button 7`] = `
   }
   accessible={true}
   disabled={true}
-  focusable={true}
+  focusable={false}
   onBlur={[Function]}
   onClick={[Function]}
   onFocus={[Function]}
@@ -42535,10 +42632,15 @@ exports[`snapshotAllPages ScrollView 1`] = `
     onScrollToTop={[Function]}
     scrollEventThrottle={200}
     style={
-      {
-        "backgroundColor": "#eeeeee",
-        "height": 300,
-      }
+      [
+        {
+          "backgroundColor": "#eeeeee",
+          "height": 300,
+        },
+        {
+          "height": 200,
+        },
+      ]
     }
     testID="scroll_vertical"
   >
@@ -46212,170 +46314,6 @@ exports[`snapshotAllPages ScrollView 10`] = `
       }
     }
   >
-    <RCTScrollView
-      nestedScrollEnabled={true}
-      showsVerticalScrollIndicator={false}
-      stickyHeaderIndices={
-        [
-          0,
-        ]
-      }
-      style={
-        {
-          "flex": 1,
-        }
-      }
-      testID="scroll_pressable_sticky_header"
-    >
-      <View>
-        <View
-          style={
-            {
-              "backgroundColor": "blue",
-              "height": 100,
-              "margin": 10,
-              "width": 500,
-            }
-          }
-        >
-          <View
-            accessibilityState={
-              {
-                "busy": undefined,
-                "checked": undefined,
-                "disabled": undefined,
-                "expanded": undefined,
-                "selected": undefined,
-              }
-            }
-            accessibilityValue={
-              {
-                "max": undefined,
-                "min": undefined,
-                "now": undefined,
-                "text": undefined,
-              }
-            }
-            accessible={true}
-            disabled={false}
-            focusable={true}
-            onBlur={[Function]}
-            onClick={[Function]}
-            onFocus={[Function]}
-            onKeyDown={[Function]}
-            onKeyUp={[Function]}
-            onMouseEnter={[Function]}
-            onMouseLeave={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              {
-                "flex": 1,
-              }
-            }
-            testID="pressable_header"
-          >
-            <Text>
-              Press to change color
-            </Text>
-          </View>
-        </View>
-        <View
-          style={
-            {
-              "backgroundColor": "red",
-              "height": 100,
-              "margin": 10,
-              "width": 500,
-            }
-          }
-        />
-        <View
-          style={
-            {
-              "backgroundColor": "red",
-              "height": 100,
-              "margin": 10,
-              "width": 500,
-            }
-          }
-        />
-        <View
-          style={
-            {
-              "backgroundColor": "red",
-              "height": 100,
-              "margin": 10,
-              "width": 500,
-            }
-          }
-        />
-        <View
-          style={
-            {
-              "backgroundColor": "red",
-              "height": 100,
-              "margin": 10,
-              "width": 500,
-            }
-          }
-        />
-        <View
-          style={
-            {
-              "backgroundColor": "red",
-              "height": 100,
-              "margin": 10,
-              "width": 500,
-            }
-          }
-        />
-        <View
-          style={
-            {
-              "backgroundColor": "red",
-              "height": 100,
-              "margin": 10,
-              "width": 500,
-            }
-          }
-        />
-        <View
-          style={
-            {
-              "backgroundColor": "red",
-              "height": 100,
-              "margin": 10,
-              "width": 500,
-            }
-          }
-        />
-        <View
-          style={
-            {
-              "backgroundColor": "red",
-              "height": 100,
-              "margin": 10,
-              "width": 500,
-            }
-          }
-        />
-        <View
-          style={
-            {
-              "backgroundColor": "red",
-              "height": 100,
-              "margin": 10,
-              "width": 500,
-            }
-          }
-        />
-      </View>
-    </RCTScrollView>
     <View>
       <View
         accessibilityRole="button"
@@ -46544,6 +46482,170 @@ exports[`snapshotAllPages ScrollView 10`] = `
         </View>
       </View>
     </View>
+    <RCTScrollView
+      nestedScrollEnabled={true}
+      showsVerticalScrollIndicator={false}
+      stickyHeaderIndices={
+        [
+          0,
+        ]
+      }
+      style={
+        {
+          "flex": 1,
+        }
+      }
+      testID="scroll_pressable_sticky_header"
+    >
+      <View>
+        <View
+          style={
+            {
+              "backgroundColor": "blue",
+              "height": 100,
+              "margin": 10,
+              "width": 500,
+            }
+          }
+        >
+          <View
+            accessibilityState={
+              {
+                "busy": undefined,
+                "checked": undefined,
+                "disabled": undefined,
+                "expanded": undefined,
+                "selected": undefined,
+              }
+            }
+            accessibilityValue={
+              {
+                "max": undefined,
+                "min": undefined,
+                "now": undefined,
+                "text": undefined,
+              }
+            }
+            accessible={true}
+            disabled={false}
+            focusable={true}
+            onBlur={[Function]}
+            onClick={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onKeyUp={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              {
+                "flex": 1,
+              }
+            }
+            testID="pressable_header"
+          >
+            <Text>
+              Press to change color
+            </Text>
+          </View>
+        </View>
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "height": 100,
+              "margin": 10,
+              "width": 500,
+            }
+          }
+        />
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "height": 100,
+              "margin": 10,
+              "width": 500,
+            }
+          }
+        />
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "height": 100,
+              "margin": 10,
+              "width": 500,
+            }
+          }
+        />
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "height": 100,
+              "margin": 10,
+              "width": 500,
+            }
+          }
+        />
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "height": 100,
+              "margin": 10,
+              "width": 500,
+            }
+          }
+        />
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "height": 100,
+              "margin": 10,
+              "width": 500,
+            }
+          }
+        />
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "height": 100,
+              "margin": 10,
+              "width": 500,
+            }
+          }
+        />
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "height": 100,
+              "margin": 10,
+              "width": 500,
+            }
+          }
+        />
+        <View
+          style={
+            {
+              "backgroundColor": "red",
+              "height": 100,
+              "margin": 10,
+              "width": 500,
+            }
+          }
+        />
+      </View>
+    </RCTScrollView>
   </View>
 </View>
 `;
@@ -50099,6 +50201,487 @@ exports[`snapshotAllPages ScrollView 20`] = `
     </View>
   </View>
 </View>
+`;
+
+exports[`snapshotAllPages ScrollView 21`] = `
+<RCTScrollView
+  nestedScrollEnabled={true}
+  style={
+    [
+      {
+        "backgroundColor": "#eeeeee",
+        "height": 300,
+      },
+      {
+        "borderColor": "red",
+        "borderRadius": 100,
+        "borderWidth": 5,
+        "height": 200,
+      },
+    ]
+  }
+  testID="clipping_example_vertical"
+>
+  <View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 0
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 1
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 2
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 3
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 4
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 5
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 6
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 7
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 8
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 9
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 10
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 11
+      </Text>
+    </View>
+  </View>
+</RCTScrollView>
+`;
+
+exports[`snapshotAllPages ScrollView 22`] = `
+<RCTScrollView
+  horizontal={true}
+  nestedScrollEnabled={true}
+  style={
+    [
+      {
+        "backgroundColor": "#eeeeee",
+        "height": 300,
+      },
+      {
+        "borderColor": "red",
+        "borderRadius": 100,
+        "borderWidth": 5,
+        "height": 200,
+      },
+    ]
+  }
+  testID="clipping_example_horizontal"
+>
+  <View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 0
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 1
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 2
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 3
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 4
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 5
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 6
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 7
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 8
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 9
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 10
+      </Text>
+    </View>
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "#cccccc",
+            "borderRadius": 3,
+            "margin": 5,
+            "minWidth": 96,
+            "padding": 5,
+          },
+          undefined,
+        ]
+      }
+    >
+      <Text>
+        Item 11
+      </Text>
+    </View>
+  </View>
+</RCTScrollView>
 `;
 
 exports[`snapshotAllPages ScrollViewAnimated 1`] = `
@@ -73631,6 +74214,26 @@ exports[`snapshotAllPages Text 38`] = `
 `;
 
 exports[`snapshotAllPages Text 39`] = `
+<View>
+  <Text
+    style={
+      {
+        "borderColor": "red",
+        "borderRadius": 50,
+        "borderWidth": 5,
+        "fontSize": 16,
+        "overflow": "hidden",
+        "padding": 0,
+      }
+    }
+    testID="text-clipping"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages Text 40`] = `
 <View
   accessible={true}
   testID="text-accessibility"
@@ -73645,7 +74248,7 @@ exports[`snapshotAllPages Text 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 40`] = `
+exports[`snapshotAllPages Text 41`] = `
 <View
   testID="text-border"
 >
@@ -73720,7 +74323,7 @@ exports[`snapshotAllPages Text 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 41`] = `
+exports[`snapshotAllPages Text 42`] = `
 <View
   testID="advanced-borders"
 >
@@ -73774,7 +74377,7 @@ exports[`snapshotAllPages Text 41`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 42`] = `
+exports[`snapshotAllPages Text 43`] = `
 <View
   testID="text-opacity"
 >
@@ -73881,7 +74484,7 @@ exports[`snapshotAllPages Text 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 43`] = `
+exports[`snapshotAllPages Text 44`] = `
 <View
   accessible={true}
   testID="text-height-width"
@@ -78100,6 +78703,41 @@ exports[`snapshotAllPages TextInput 19`] = `
 
 exports[`snapshotAllPages TextInput 20`] = `
 <View>
+  <TextInput
+    multiline={true}
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "borderColor": "red",
+          "borderRadius": 50,
+          "borderWidth": 5,
+          "fontSize": 16,
+          "overflow": "hidden",
+          "padding": 0,
+        },
+      ]
+    }
+    testID="textinput-clipping"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  </TextInput>
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 21`] = `
+<View>
   <Text>
     Do not clear text on focus:
   </Text>
@@ -78154,7 +78792,7 @@ exports[`snapshotAllPages TextInput 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 21`] = `
+exports[`snapshotAllPages TextInput 22`] = `
 <View>
   <TextInput
     defaultValue="Default color text"
@@ -78414,7 +79052,7 @@ exports[`snapshotAllPages TextInput 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 22`] = `
+exports[`snapshotAllPages TextInput 23`] = `
 <View>
   <TextInput
     defaultValue="Font Weight (default)"
@@ -78752,7 +79390,7 @@ exports[`snapshotAllPages TextInput 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 23`] = `
+exports[`snapshotAllPages TextInput 24`] = `
 <TextInput
   placeholder="If you set height, beware of padding set from themes"
   style={
@@ -78780,7 +79418,7 @@ exports[`snapshotAllPages TextInput 23`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 24`] = `
+exports[`snapshotAllPages TextInput 25`] = `
 <View>
   <TextInput
     placeholder="letterSpacing = 0"
@@ -78897,7 +79535,7 @@ exports[`snapshotAllPages TextInput 24`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 25`] = `
+exports[`snapshotAllPages TextInput 26`] = `
 <View>
   <TextInput
     defaultValue="iloveturtles"
@@ -78956,7 +79594,7 @@ exports[`snapshotAllPages TextInput 25`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 26`] = `
+exports[`snapshotAllPages TextInput 27`] = `
 <TextInput
   defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
   editable={false}
@@ -78983,7 +79621,7 @@ exports[`snapshotAllPages TextInput 26`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 27`] = `
+exports[`snapshotAllPages TextInput 28`] = `
 <View>
   <TextInput
     autoCorrect={true}
@@ -79099,7 +79737,7 @@ exports[`snapshotAllPages TextInput 27`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 28`] = `
+exports[`snapshotAllPages TextInput 29`] = `
 <View>
   <TextInput
     editable={true}
@@ -79192,7 +79830,7 @@ exports[`snapshotAllPages TextInput 28`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 29`] = `
+exports[`snapshotAllPages TextInput 30`] = `
 <View
   style={
     {
@@ -79291,7 +79929,7 @@ exports[`snapshotAllPages TextInput 29`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 30`] = `
+exports[`snapshotAllPages TextInput 31`] = `
 <View
   style={
     {
@@ -79407,7 +80045,7 @@ exports[`snapshotAllPages TextInput 30`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 31`] = `
+exports[`snapshotAllPages TextInput 32`] = `
 <View>
   <TextInput
     autoComplete="country"
@@ -79521,7 +80159,7 @@ exports[`snapshotAllPages TextInput 31`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 32`] = `
+exports[`snapshotAllPages TextInput 33`] = `
 <View>
   <TextInput
     placeholder="returnKeyType: none"
@@ -79742,7 +80380,7 @@ exports[`snapshotAllPages TextInput 32`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 33`] = `
+exports[`snapshotAllPages TextInput 34`] = `
 <View>
   <TextInput
     inlineImageLeft="ic_menu_black_24dp"
@@ -79819,7 +80457,7 @@ exports[`snapshotAllPages TextInput 33`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 34`] = `
+exports[`snapshotAllPages TextInput 35`] = `
 <View>
   <TextInput
     style={
@@ -79849,7 +80487,7 @@ exports[`snapshotAllPages TextInput 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 35`] = `
+exports[`snapshotAllPages TextInput 36`] = `
 <View>
   <Text>
     PressIn/PressOut message
@@ -79884,7 +80522,7 @@ exports[`snapshotAllPages TextInput 35`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 36`] = `
+exports[`snapshotAllPages TextInput 37`] = `
 <View>
   <Text>
     Default submit key (Enter):
@@ -80020,7 +80658,7 @@ exports[`snapshotAllPages TextInput 36`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 37`] = `
+exports[`snapshotAllPages TextInput 38`] = `
 [
   <View
     focusable={true}
@@ -80086,7 +80724,7 @@ exports[`snapshotAllPages TextInput 37`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 38`] = `
+exports[`snapshotAllPages TextInput 39`] = `
 [
   <Text>
     Spell Check Enabled:
@@ -80134,7 +80772,7 @@ exports[`snapshotAllPages TextInput 38`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 39`] = `
+exports[`snapshotAllPages TextInput 40`] = `
 <View>
   <Text>
     CaretHidden
@@ -80166,7 +80804,7 @@ exports[`snapshotAllPages TextInput 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 40`] = `
+exports[`snapshotAllPages TextInput 41`] = `
 <View>
   <Text>
     Cursorcolor
@@ -80198,7 +80836,7 @@ exports[`snapshotAllPages TextInput 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 41`] = `
+exports[`snapshotAllPages TextInput 42`] = `
 <View>
   <Text>
     Shadow
@@ -82842,7 +83480,7 @@ exports[`snapshotAllPages Touchable* and onPress 14`] = `
     }
     accessible={true}
     disabled={true}
-    focusable={true}
+    focusable={false}
     onBlur={[Function]}
     onClick={[Function]}
     onFocus={[Function]}
@@ -82936,7 +83574,7 @@ exports[`snapshotAllPages Touchable* and onPress 14`] = `
       }
     }
     accessible={true}
-    focusable={true}
+    focusable={false}
     onClick={[Function]}
     onKeyDown={[Function]}
     onKeyUp={[Function]}
@@ -84934,10 +85572,9 @@ exports[`snapshotAllPages View 16`] = `
 
 exports[`snapshotAllPages View 17`] = `
 <View
-  accessible={true}
   style={
     {
-      "rowGap": 10,
+      "rowGap": 5,
     }
   }
   testID="view-test-insets"
@@ -84946,7 +85583,7 @@ exports[`snapshotAllPages View 17`] = `
     style={
       {
         "borderWidth": 1,
-        "height": 50,
+        "height": 40,
         "position": "relative",
       }
     }
@@ -84955,7 +85592,7 @@ exports[`snapshotAllPages View 17`] = `
       style={
         {
           "backgroundColor": "#527FE4",
-          "inset": 10,
+          "inset": 5,
           "padding": 5,
           "position": "absolute",
         }
@@ -84968,7 +85605,7 @@ exports[`snapshotAllPages View 17`] = `
           }
         }
       >
-        inset 10
+        inset 5
       </Text>
     </View>
   </View>
@@ -84976,7 +85613,7 @@ exports[`snapshotAllPages View 17`] = `
     style={
       {
         "borderWidth": 1,
-        "height": 50,
+        "height": 40,
         "position": "relative",
       }
     }
@@ -85006,7 +85643,7 @@ exports[`snapshotAllPages View 17`] = `
     style={
       {
         "borderWidth": 1,
-        "height": 50,
+        "height": 40,
         "position": "relative",
       }
     }
@@ -85036,7 +85673,7 @@ exports[`snapshotAllPages View 17`] = `
     style={
       {
         "borderWidth": 1,
-        "height": 50,
+        "height": 40,
         "position": "relative",
       }
     }
@@ -85066,7 +85703,7 @@ exports[`snapshotAllPages View 17`] = `
     style={
       {
         "borderWidth": 1,
-        "height": 50,
+        "height": 40,
         "position": "relative",
       }
     }
@@ -85096,7 +85733,7 @@ exports[`snapshotAllPages View 17`] = `
     style={
       {
         "borderWidth": 1,
-        "height": 50,
+        "height": 40,
         "position": "relative",
       }
     }
@@ -85126,7 +85763,7 @@ exports[`snapshotAllPages View 17`] = `
     style={
       {
         "borderWidth": 1,
-        "height": 50,
+        "height": 40,
         "position": "relative",
       }
     }
