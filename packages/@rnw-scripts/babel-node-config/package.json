@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/babel-node-config",
-  "version": "2.3.1",
+  "version": "2.3.2",
   "license": "MIT",
   "main": "babel.config.js",
   "repository": {
@@ -16,7 +16,7 @@
     "@babel/preset-typescript": "^7.21.0",
     "@types/node": "^18.0.0",
     "eslint": "^8.19.0",
-    "prettier": "^2.4.1"
+    "prettier": "2.8.8"
   },
   "peerDependencies": {
     "@babel/core": "^7.22.0",

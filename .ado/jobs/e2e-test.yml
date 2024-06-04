@@ -5,6 +5,7 @@ parameters:
     default : PullRequest
     values:
       - PullRequest
+      - SecurePullRequest
       - Continuous
   - name: AgentPool
     type: object
@@ -188,7 +189,6 @@ jobs:
                   buildConfiguration: Release
                   buildPlatform: ${{ matrix.BuildPlatform }}
                   buildLogDirectory: $(BuildLogDirectory)
-                  deployOption: '--no-deploy'
                   workingDirectory: packages/e2e-test-app-fabric
 
               - script: |
@@ -196,11 +196,10 @@ jobs:
                 displayName: Set StartedFabricTests
 
               - script: |
-                  set E2ETestFabricBuildConfiguration=${{ matrix.BuildConfiguration }}
-                  set E2ETestFabricBuildPlatform=${{ matrix.BuildPlatform }}
                   yarn e2etest
                 displayName: yarn e2etest
                 workingDirectory: packages/e2e-test-app-fabric
+                timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
 
               - script: npx jest --clearCache
                 displayName: clear jest cache
@@ -211,6 +210,7 @@ jobs:
                 displayName: Update snapshots
                 workingDirectory: packages/e2e-test-app-fabric
                 condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
+                timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
 
               - task: PowerShell@2
                 displayName: Stop tracing

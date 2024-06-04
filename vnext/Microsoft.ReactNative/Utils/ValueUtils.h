@@ -54,9 +54,6 @@ REACTWINDOWS_API_(bool) IsValidColorValue(const folly::dynamic &d);
 REACTWINDOWS_API_(bool)
 IsValidColorValue(const winrt::Microsoft::ReactNative::JSValue &v);
 
-REACTWINDOWS_API_(winrt::Windows::Foundation::TimeSpan)
-TimeSpanFromMs(double ms);
-
 winrt::Windows::UI::Color ColorFromNumber(DWORD argb) noexcept;
 
 bool IsValidOptionalColorValue(const winrt::Microsoft::ReactNative::JSValue &v);

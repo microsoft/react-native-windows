@@ -5,10 +5,9 @@
 #define WINRT_LEAN_AND_MEAN 1
 
 #include <windows.h>
-
-#pragma push_macro("GetCurrentTime")
+// When WINAPI_FAMILY is DESKTOP_APP, windows.h creates a macro for GetCurrentTime, which conflicts with other headers
 #undef GetCurrentTime
-
+#include <pathcch.h>
 #include <unknwn.h>
 
 #include <CppWinRTIncludes.h>
@@ -17,4 +16,3 @@
 // #include <winrt/ReactNativePicker.h>
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Foundation.h>
-#pragma pop_macro("GetCurrentTime")

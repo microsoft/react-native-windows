@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <react/renderer/components/rnwcore/EventEmitters.h>
+#include <react/components/rnwcore/EventEmitters.h>
 #include <unordered_map>
 #include "WindowsTextInputEventEmitter.h"
 #include "WindowsTextInputProps.h"
@@ -30,7 +30,6 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
  public:
   static ShadowNodeTraits BaseTraits() {
     auto traits = ConcreteViewShadowNode::BaseTraits();
-    traits.set(ShadowNodeTraits::Trait::TextKind);
     traits.set(ShadowNodeTraits::Trait::LeafYogaNode);
     return traits;
   }

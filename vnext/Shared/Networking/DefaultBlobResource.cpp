@@ -5,6 +5,8 @@
 
 #include <Modules/IHttpModuleProxy.h>
 #include <Modules/IWebSocketModuleProxy.h>
+#include <utilities.h>
+#include "NetworkPropertyIds.h"
 
 // Boost Libraries
 #include <boost/uuid/uuid_io.hpp>
@@ -62,13 +64,9 @@ DefaultBlobResource::DefaultBlobResource(
   auto requestBodyHandler = std::make_shared<BlobModuleRequestBodyHandler>(blobPersistor);
   auto responseHandler = std::make_shared<BlobModuleResponseHandler>(blobPersistor);
 
-  auto contentHandlerPropId =
-      ReactPropertyId<ReactNonAbiValue<weak_ptr<IWebSocketModuleContentHandler>>>{L"BlobModule.ContentHandler"};
-  propBag.Set(contentHandlerPropId, weak_ptr<IWebSocketModuleContentHandler>{contentHandler});
+  propBag.Set(BlobModuleContentHandlerPropertyId(), weak_ptr<IWebSocketModuleContentHandler>{contentHandler});
 
-  auto blobPersistorPropId = ReactPropertyId<ReactNonAbiValue<weak_ptr<IBlobPersistor>>>{L"Blob.Persistor"};
-  ;
-  propBag.Set(blobPersistorPropId, weak_ptr<IBlobPersistor>{blobPersistor});
+  propBag.Set(BlobModulePersistorPropertyId(), weak_ptr<IBlobPersistor>{blobPersistor});
 
   auto result = std::make_shared<DefaultBlobResource>(
       blobPersistor, contentHandler, requestBodyHandler, responseHandler, propBag);
@@ -78,10 +76,8 @@ DefaultBlobResource::DefaultBlobResource(
 
 void DefaultBlobResource::SendOverSocket(string &&blobId, int64_t offset, int64_t size, int64_t socketId) noexcept
 /*override*/ {
-  auto propId =
-      msrn::ReactPropertyId<msrn::ReactNonAbiValue<weak_ptr<IWebSocketModuleProxy>>>{L"WebSocketModule.Proxy"};
   shared_ptr<IWebSocketModuleProxy> wsProxy;
-  if (auto prop = m_propertyBag.Get(propId)) {
+  if (auto prop = m_propertyBag.Get(WebSocketModuleProxyPropertyId())) {
     wsProxy = prop.Value().lock();
   }
   if (!wsProxy) {
@@ -95,11 +91,9 @@ void DefaultBlobResource::SendOverSocket(string &&blobId, int64_t offset, int64_
     return m_callbacks.OnError(e.what());
   }
 
-  auto buffer = CryptographicBuffer::CreateFromByteArray(data);
-  auto base64Hstring = CryptographicBuffer::EncodeToBase64String(std::move(buffer));
-  auto base64String = winrt::to_string(base64Hstring);
-
-  wsProxy->SendBinary(std::move(base64String), socketId);
+  auto chars = reinterpret_cast<const char *>(data.data());
+  auto view = std::string_view(chars, data.size());
+  wsProxy->SendBinary(Utilities::EncodeBase64(view), socketId);
 }
 
 void DefaultBlobResource::CreateFromParts(msrn::JSValueArray &&parts, string &&blobId) noexcept /*override*/ {
@@ -138,10 +132,8 @@ void DefaultBlobResource::Release(string &&blobId) noexcept /*override*/ {
 }
 
 void DefaultBlobResource::AddNetworkingHandler() noexcept /*override*/ {
-  auto propId = msrn::ReactPropertyId<msrn::ReactNonAbiValue<weak_ptr<IHttpModuleProxy>>>{L"HttpModule.Proxy"};
-
   bool handlerAdded = false;
-  if (auto prop = m_propertyBag.Get(propId)) {
+  if (auto prop = m_propertyBag.Get(HttpModuleProxyPropertyId())) {
     if (auto httpHandler = prop.Value().lock()) {
       httpHandler->AddRequestBodyHandler(m_requestBodyHandler);
       httpHandler->AddResponseHandler(m_responseHandler);
@@ -153,8 +145,7 @@ void DefaultBlobResource::AddNetworkingHandler() noexcept /*override*/ {
   // Best-effort approach to set up the request/response handlers by exposing this interface to dependents
   // (i.e. IHttpResource).
   if (!handlerAdded) {
-    auto propId = msrn::ReactPropertyId<msrn::ReactNonAbiValue<weak_ptr<IBlobResource>>>{L"Blob.Resource"};
-    m_propertyBag.Set(propId, weak_ptr<IBlobResource>(shared_from_this()));
+    m_propertyBag.Set(BlobResourcePropertyId(), weak_ptr<IBlobResource>(shared_from_this()));
   }
 }
 

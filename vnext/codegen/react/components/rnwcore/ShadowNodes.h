@@ -10,14 +10,13 @@
 
 #pragma once
 
-#include <react/renderer/components/rnwcore/EventEmitters.h>
-#include <react/renderer/components/rnwcore/Props.h>
-#include <react/renderer/components/rnwcore/States.h>
+#include "EventEmitters.h"
+#include "Props.h"
+#include "States.h"
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <jsi/jsi.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 JSI_EXPORT extern const char ActivityIndicatorViewComponentName[];
 
@@ -41,6 +40,17 @@ using AndroidDrawerLayoutShadowNode = ConcreteViewShadowNode<
     AndroidDrawerLayoutEventEmitter,
     AndroidDrawerLayoutState>;
 
+JSI_EXPORT extern const char AndroidHorizontalScrollContentViewComponentName[];
+
+/*
+ * `ShadowNode` for <AndroidHorizontalScrollContentView> component.
+ */
+using AndroidHorizontalScrollContentViewShadowNode = ConcreteViewShadowNode<
+    AndroidHorizontalScrollContentViewComponentName,
+    AndroidHorizontalScrollContentViewProps,
+    AndroidHorizontalScrollContentViewEventEmitter,
+    AndroidHorizontalScrollContentViewState>;
+
 JSI_EXPORT extern const char AndroidSwipeRefreshLayoutComponentName[];
 
 /*
@@ -51,6 +61,17 @@ using AndroidSwipeRefreshLayoutShadowNode = ConcreteViewShadowNode<
     AndroidSwipeRefreshLayoutProps,
     AndroidSwipeRefreshLayoutEventEmitter,
     AndroidSwipeRefreshLayoutState>;
+
+JSI_EXPORT extern const char DebuggingOverlayComponentName[];
+
+/*
+ * `ShadowNode` for <DebuggingOverlay> component.
+ */
+using DebuggingOverlayShadowNode = ConcreteViewShadowNode<
+    DebuggingOverlayComponentName,
+    DebuggingOverlayProps,
+    DebuggingOverlayEventEmitter,
+    DebuggingOverlayState>;
 
 JSI_EXPORT extern const char PullToRefreshViewComponentName[];
 
@@ -63,17 +84,6 @@ using PullToRefreshViewShadowNode = ConcreteViewShadowNode<
     PullToRefreshViewEventEmitter,
     PullToRefreshViewState>;
 
-JSI_EXPORT extern const char AndroidHorizontalScrollContentViewComponentName[];
-
-/*
- * `ShadowNode` for <AndroidHorizontalScrollContentView> component.
- */
-using AndroidHorizontalScrollContentViewShadowNode = ConcreteViewShadowNode<
-    AndroidHorizontalScrollContentViewComponentName,
-    AndroidHorizontalScrollContentViewProps,
-    AndroidHorizontalScrollContentViewEventEmitter,
-    AndroidHorizontalScrollContentViewState>;
-
 JSI_EXPORT extern const char SwitchComponentName[];
 
 /*
@@ -84,17 +94,6 @@ using SwitchShadowNode = ConcreteViewShadowNode<
     SwitchProps,
     SwitchEventEmitter,
     SwitchState>;
-
-JSI_EXPORT extern const char TraceUpdateOverlayComponentName[];
-
-/*
- * `ShadowNode` for <TraceUpdateOverlay> component.
- */
-using TraceUpdateOverlayShadowNode = ConcreteViewShadowNode<
-    TraceUpdateOverlayComponentName,
-    TraceUpdateOverlayProps,
-    TraceUpdateOverlayEventEmitter,
-    TraceUpdateOverlayState>;
 
 JSI_EXPORT extern const char UnimplementedNativeViewComponentName[];
 
@@ -107,5 +106,4 @@ using UnimplementedNativeViewShadowNode = ConcreteViewShadowNode<
     UnimplementedNativeViewEventEmitter,
     UnimplementedNativeViewState>;
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

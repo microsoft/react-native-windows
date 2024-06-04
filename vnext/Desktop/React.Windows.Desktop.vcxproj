@@ -53,6 +53,7 @@
     <V8AppPlatform>win32</V8AppPlatform>
     <HermesCompileRtti>false</HermesCompileRtti>
     <IncludeFabricInterface Condition="'$(IncludeFabricInterface)' == ''">true</IncludeFabricInterface>
+    <UseWinUI3 Condition="'$(UseWinUI3)' == ''">true</UseWinUI3>
   </PropertyGroup>
   <PropertyGroup Label="Permissive">
     <ENABLEPermissive>true</ENABLEPermissive>
@@ -113,13 +114,14 @@
         "$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactHost";
         "$(ReactNativeWindowsDir)Microsoft.ReactNative\Views";
         "$(ReactNativeWindowsDir)codegen";
+        "$(ReactNativeWindowsDir)codegen\react\components\rnwcore";
         $(ReactNativeDir)\ReactCommon\react\renderer\graphics\platform\cxx;
         %(AdditionalIncludeDirectories);
       </AdditionalIncludeDirectories>
-      <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj</AdditionalOptions>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:strictStrings /bigobj /await</AdditionalOptions>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
-      <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug' OR '$(UseFabric)' == 'true'">true</RuntimeTypeInfo>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
     </ClCompile>
     <Link>

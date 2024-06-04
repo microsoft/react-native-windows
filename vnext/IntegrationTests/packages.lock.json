@@ -9,7 +9,10 @@
         "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
       },
       "common": {
-        "type": "Project"
+        "type": "Project",
+        "dependencies": {
+          "boost": "[1.76.0, )"
+        }
       },
       "fmt": {
         "type": "Project"

@@ -337,7 +337,9 @@ void UISchedulerWinRT<TDispatcherTraits>::Shutdown() noexcept {
 template <typename TDispatcherTraits>
 void UISchedulerWinRT<TDispatcherTraits>::AwaitTermination() noexcept {
   Shutdown();
-  m_terminationEvent.Wait();
+  if (m_threadId != std::this_thread::get_id()) {
+    m_terminationEvent.Wait();
+  }
 }
 
 template <typename TDispatcherTraits>
@@ -411,7 +413,7 @@ void UISchedulerWinRT<TDispatcherTraits>::CleanupContext::CheckTermination() noe
 }
 
 //=============================================================================
-// DispatchQueueStatic::MakeCurrentThreadUIScheduler implementation
+// DispatchQueueStatic::GetCurrentUIThreadQueue implementation
 //=============================================================================
 
 DispatchQueue DispatchQueueStatic::GetCurrentUIThreadQueue() noexcept {

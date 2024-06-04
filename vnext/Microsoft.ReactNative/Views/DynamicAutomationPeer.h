@@ -72,6 +72,11 @@ struct DynamicAutomationPeer : DynamicAutomationPeerT<DynamicAutomationPeer> {
  private:
   winrt::hstring GetContentName() const;
   winrt::Microsoft::ReactNative::AccessibilityRoles GetAccessibilityRole() const;
+  winrt::Microsoft::ReactNative::AriaRole GetAriaRole() const;
+
+  std::optional<xaml::Automation::Peers::AutomationControlType> GetAutomationControlTypeFromAriaRole() const;
+  xaml::Automation::Peers::AutomationControlType GetAutomationControlTypeFromAccessibilityRole() const;
+
   bool HasAccessibilityState(winrt::Microsoft::ReactNative::AccessibilityStates state) const;
   bool HasAccessibilityValue(winrt::Microsoft::ReactNative::AccessibilityValue value) const;
   double GetAccessibilityValueRange(winrt::Microsoft::ReactNative::AccessibilityValue value) const;

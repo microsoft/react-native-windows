@@ -3,7 +3,7 @@
 
 #pragma once
 
-#include <react/renderer/components/rnwcore/Props.h>
+#include <react/components/rnwcore/Props.h>
 #include <react/renderer/components/text/BaseTextProps.h>
 #include <react/renderer/core/propsConversions.h>
 
@@ -33,10 +33,10 @@ static inline std::string toString(const CompWindowsTextInputSelectionStruct &va
 }
 
 struct CompWindowsTextInputSubmitKeyEventsStruct {
-  bool altKey;
-  bool ctrlKey;
-  bool metaKey;
-  bool shiftKey;
+  bool altKey{false};
+  bool ctrlKey{false};
+  bool metaKey{false};
+  bool shiftKey{false};
   std::string code;
 };
 

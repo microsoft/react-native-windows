@@ -181,10 +181,11 @@ void PropsAnimatedNode::StartAnimations() {
             view.m_element.RotationAxis(m_rotationAxis);
 #ifdef USE_FABRIC
           } else {
-            auto visual = winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(
-                view.m_componentView
-                    .as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>()
-                    ->Visual());
+            auto visual =
+                winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(
+                    view.m_componentView
+                        .as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()
+                        ->Visual());
             visual.RotationAxis(m_rotationAxis);
 #endif
           }
@@ -395,10 +396,9 @@ void PropsAnimatedNode::StartAnimation(
 #ifdef USE_FABRIC
   } else if (view.m_componentView) {
     auto baseComponentView =
-        view.m_componentView
-            .as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>();
-    auto visual =
-        winrt::Microsoft::ReactNative::Composition::CompositionContextHelper::InnerVisual(baseComponentView->Visual());
+        view.m_componentView.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+    auto visual = winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(
+        baseComponentView->Visual());
     if (visual) {
       auto targetProp = animation.Target();
       if (targetProp == L"Rotation") {
@@ -426,8 +426,7 @@ comp::CompositionPropertySet PropsAnimatedNode::EnsureCenterPointPropertySet(con
 #endif
 #ifdef USE_FABRIC
   if (view.m_componentView) {
-    return view.m_componentView
-        .as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>()
+    return view.m_componentView.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()
         ->EnsureCenterPointPropertySet();
   }
 #endif

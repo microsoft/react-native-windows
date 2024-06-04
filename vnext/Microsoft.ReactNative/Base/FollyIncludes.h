@@ -12,12 +12,12 @@
 
 #pragma warning(push)
 #pragma warning(disable : 4324) // 'folly::max_align_t': structure was padded due to alignment specifier
-#include <folly/lang/align.h>
+#include <folly/lang/Align.h>
 #pragma warning(pop)
 
 #pragma warning(push)
 #pragma warning(disable : 4127) // conditional expression is constant
-#include <folly/container/detail/f14table.h>
+#include <folly/container/detail/F14Table.h>
 #pragma warning(pop)
 
 #include <folly/Memory.h>

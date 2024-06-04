@@ -4,6 +4,7 @@ parameters:
     default: PullRequest
     values:
       - PullRequest
+      - SecurePullRequest
       - Continuous
   - name: AgentPool
     type: object
@@ -22,6 +23,11 @@ parameters:
             configuration: Debug
             platform: x86
             additionalRunArguments: --no-autolink
+          - Name: FabricArm64Release
+            template: cpp-app
+            configuration: Release
+            platform: ARM64
+            additionalRunArguments: --no-autolink --no-deploy
           - Name: FabricLibX64Release
             template: cpp-lib
             configuration: Release
@@ -32,6 +38,18 @@ parameters:
             configuration: Debug
             platform: x86
             additionalRunArguments:
+          - Name: FabricLibArm64Release
+            template: cpp-lib
+            configuration: Release
+            platform: ARM64
+            additionalRunArguments: --no-deploy
+      - BuildEnvironment: SecurePullRequest
+        Matrix:
+          - Name: FabricX64Release
+            template: cpp-app
+            configuration: Release
+            platform: x64
+            additionalRunArguments: --no-autolink
       - BuildEnvironment: Continuous
         Matrix:
           - Name: FabricX64Debug
@@ -53,7 +71,16 @@ parameters:
             template: cpp-app
             configuration: Release
             platform: x86
-            additionalRunArguments: --no-autolink
+          - Name: FabricArm64Debug
+            template: cpp-app
+            configuration: Debug
+            platform: ARM64
+            additionalRunArguments: --no-autolink --no-deploy
+          - Name: FabricArm64Release
+            template: cpp-app
+            configuration: Release
+            platform: ARM64
+            additionalRunArguments: --no-autolink --no-deploy
           - Name: FabricLibX64Debug
             template: cpp-lib
             configuration: Debug
@@ -61,7 +88,7 @@ parameters:
             additionalRunArguments:
           - Name: FabricLibX64Release
             template: cpp-lib
-            configuration: ReleaseLib
+            configuration: Release
             platform: x64
             additionalRunArguments:
           - Name: FabricLibX86Debug
@@ -74,6 +101,16 @@ parameters:
             configuration: Release
             platform: x86
             additionalRunArguments:
+          - Name: FabricLibArm64Debug
+            template: cpp-lib
+            configuration: Debug
+            platform: ARM64
+            additionalRunArguments: --no-deploy
+          - Name: FabricLibArm64Release
+            template: cpp-lib
+            configuration: Release
+            platform: ARM64
+            additionalRunArguments: --no-deploy
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:

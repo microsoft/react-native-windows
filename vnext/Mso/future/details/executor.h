@@ -86,7 +86,7 @@ struct DefaultThenArgValidator {
   static auto CheckArgs() -> decltype(CheckArgs0(std::declval<TCallback>(), 0, 0, 0, 0));
 
   template <class TCallback>
-  constexpr static const CallbackArgKind GetArgKind() noexcept {
+  constexpr static CallbackArgKind GetArgKind() noexcept {
     static_assert(
         decltype(CheckArgs<TCallback>())::value != CallbackArgKind::Invalid,
         "Callback valid parameters: T&&, const T&, T, Maybe<T>&&, or Maybe<T>&.");

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import "ViewProps.idl";
+import "ComponentView.idl";
 
 #include "DocString.h"
 
@@ -14,21 +15,6 @@ namespace Microsoft.ReactNative
     Undefined = 0,
     LeftToRight = 1,
     RightToLeft = 2,
-  };
-
-  [webhosthidden]
-  [experimental]
-  enum EventPriority
-  {
-    SynchronousUnbatched,
-    SynchronousBatched,
-    AsynchronousUnbatched,
-    AsynchronousBatched,
-
-    Sync = SynchronousUnbatched,
-    Work = SynchronousBatched,
-    Interactive = AsynchronousUnbatched,
-    Deferred = AsynchronousBatched
   };
 
   [webhosthidden]
@@ -53,10 +39,6 @@ namespace Microsoft.ReactNative
   delegate IComponentProps ViewPropsFactory(ViewProps props);
 
   [experimental]
-  DOC_STRING("A delegate that updates the state for an instance of a ViewComponent. See @IReactViewComponentBuilder.SetStateUpdater")
-  delegate void StateUpdater(Object componentHandle, IComponentState state);
-
-  [experimental]
   delegate Windows.Foundation.Size MeasureContentHandler(ShadowNode shadowNode, LayoutContext layoutContext, LayoutConstraints layoutConstraints);
 
   [experimental]
@@ -69,27 +51,18 @@ namespace Microsoft.ReactNative
   delegate void ViewShadowNodeCloner(ShadowNode shadowNode, ShadowNode sourceShadowNode);
 
   [experimental]
-  delegate Object InitialStateDataFactory(Microsoft.ReactNative.IComponentProps props);
+  delegate Object InitialStateDataFactory(IComponentProps props);
 
   [experimental]
-  delegate Object StateUpdateMutation(Object props);
-
-
-  [webhosthidden]
-  [experimental]
-  interface IComponentState 
-  {
-    Object Data { get; };
-    void UpdateState(Object data);
-    void UpdateStateWithPriority(Object data, EventPriority priority);
-    void UpdateStateWithMutation(StateUpdateMutation mutation);
-    void UpdateStateWithMutationAndPriority(StateUpdateMutation mutation, EventPriority priority);
-  };
+  DOC_STRING("Provides a factory method to create an instance of a ComponentView. See @IReactViewComponentBuilder.SetCreateView")
+  delegate ComponentView ComponentViewFactory(CreateComponentViewArgs args);
 
   [webhosthidden]
   [experimental]
   interface IReactViewComponentBuilder
   {
+    void SetCreateComponentView(ComponentViewFactory impl);
+
     DOC_STRING("Create an implementation of your custom Props type that will be passed to your components @Composition.ICompositionViewComponent.UpdateProps method.")
     void SetCreateProps(ViewPropsFactory impl);
 
@@ -98,10 +71,6 @@ namespace Microsoft.ReactNative
     void SetInitialStateDataFactory(InitialStateDataFactory impl);
     void SetMeasureContentHandler(MeasureContentHandler impl);
     void SetLayoutHandler(LayoutHandler impl);
-
-    DOC_STRING("Called whenever the state changes.")
-    // (Object handle, IComponentState state) => void
-    void SetStateUpdater(StateUpdater impl);
   };
 
 

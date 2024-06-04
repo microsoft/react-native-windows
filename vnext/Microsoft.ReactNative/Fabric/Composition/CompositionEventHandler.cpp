@@ -82,15 +82,14 @@ facebook::react::SharedEventEmitter EventEmitterForComponent(
 
   auto descriptor = registry.componentViewDescriptorWithTag(tag);
   auto view = descriptor.view;
-  auto viewComponent =
-      descriptor.view.as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>();
+  auto viewComponent = descriptor.view.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
   auto emitter = viewComponent->GetEventEmitter();
   if (emitter)
     return emitter;
 
   for (auto it = view.Parent(); it; it = it.Parent()) {
-    auto emitter = it.as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>()
-                       ->GetEventEmitter();
+    auto emitter =
+        it.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()->GetEventEmitter();
     if (emitter)
       return emitter;
   }
@@ -153,55 +152,78 @@ struct CompositionInputKeyboardSource : winrt::implements<
 CompositionEventHandler::CompositionEventHandler(
     const winrt::Microsoft::ReactNative::ReactContext &context,
     const winrt::Microsoft::ReactNative::CompositionRootView &CompositionRootView)
-    : m_context(context) {
-  m_compRootView = CompositionRootView;
-
+    : m_context(context), m_wkRootView(CompositionRootView) {
 #ifdef USE_WINUI3
-  if (auto island = m_compRootView.Island()) {
+  if (auto island = CompositionRootView.Island()) {
     auto pointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(island);
 
     m_pointerPressedToken =
         pointerSource.PointerPressed([this](
                                          winrt::Microsoft::UI::Input::InputPointerSource const &,
                                          winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
-          if (SurfaceId() == -1)
-            return;
+          if (auto strongRootView = m_wkRootView.get()) {
+            if (SurfaceId() == -1)
+              return;
 
-          auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-              args.CurrentPoint());
-          onPointerPressed(pp, args.KeyModifiers());
+            auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+                args.CurrentPoint(), strongRootView.ScaleFactor());
+            onPointerPressed(pp, args.KeyModifiers());
+          }
         });
 
     m_pointerReleasedToken =
         pointerSource.PointerReleased([this](
                                           winrt::Microsoft::UI::Input::InputPointerSource const &,
                                           winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
-          if (SurfaceId() == -1)
-            return;
+          if (auto strongRootView = m_wkRootView.get()) {
+            if (SurfaceId() == -1)
+              return;
 
-          auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-              args.CurrentPoint());
-          onPointerReleased(pp, args.KeyModifiers());
+            auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+                args.CurrentPoint(), strongRootView.ScaleFactor());
+            onPointerReleased(pp, args.KeyModifiers());
+          }
         });
 
     m_pointerMovedToken = pointerSource.PointerMoved([this](
                                                          winrt::Microsoft::UI::Input::InputPointerSource const &,
                                                          winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
-      auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          args.CurrentPoint());
-      onPointerMoved(pp, args.KeyModifiers());
+      if (auto strongRootView = m_wkRootView.get()) {
+        if (SurfaceId() == -1)
+          return;
+
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            args.CurrentPoint(), strongRootView.ScaleFactor());
+        onPointerMoved(pp, args.KeyModifiers());
+      }
     });
+
+    m_pointerCaptureLostToken =
+        pointerSource.PointerCaptureLost([this](
+                                             winrt::Microsoft::UI::Input::InputPointerSource const &,
+                                             winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
+          if (auto strongRootView = m_wkRootView.get()) {
+            if (SurfaceId() == -1)
+              return;
+
+            auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+                args.CurrentPoint(), strongRootView.ScaleFactor());
+            onPointerCaptureLost(pp, args.KeyModifiers());
+          }
+        });
 
     m_pointerWheelChangedToken =
         pointerSource.PointerWheelChanged([this](
                                               winrt::Microsoft::UI::Input::InputPointerSource const &,
                                               winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
-          if (SurfaceId() == -1)
-            return;
+          if (auto strongRootView = m_wkRootView.get()) {
+            if (SurfaceId() == -1)
+              return;
 
-          auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-              args.CurrentPoint());
-          onPointerWheelChanged(pp, args.KeyModifiers());
+            auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+                args.CurrentPoint(), strongRootView.ScaleFactor());
+            onPointerWheelChanged(pp, args.KeyModifiers());
+          }
         });
 
     auto keyboardSource = winrt::Microsoft::UI::Input::InputKeyboardSource::GetForIsland(island);
@@ -209,61 +231,71 @@ CompositionEventHandler::CompositionEventHandler(
     m_keyDownToken = keyboardSource.KeyDown([this](
                                                 winrt::Microsoft::UI::Input::InputKeyboardSource const &source,
                                                 winrt::Microsoft::UI::Input::KeyEventArgs const &args) {
-      if (SurfaceId() == -1)
-        return;
+      if (auto strongRootView = m_wkRootView.get()) {
+        if (SurfaceId() == -1)
+          return;
 
-      auto focusedComponent = RootComponentView().GetFocusedComponent();
-      auto keyArgs = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
-          focusedComponent
-              ? focusedComponent.Tag()
-              : static_cast<facebook::react::Tag>(
-                    winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(m_compRootView)
-                        ->GetTag()),
-          args);
-      auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
-      onKeyDown(keyboardSource, keyArgs);
-      winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
+        auto focusedComponent = RootComponentView().GetFocusedComponent();
+        auto keyArgs =
+            winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
+                focusedComponent
+                    ? focusedComponent.Tag()
+                    : static_cast<facebook::react::Tag>(
+                          winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
+                              strongRootView)
+                              ->RootTag()),
+                args);
+        auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
+        onKeyDown(keyboardSource, keyArgs);
+        winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
+      }
     });
 
     m_keyUpToken = keyboardSource.KeyUp([this](
                                             winrt::Microsoft::UI::Input::InputKeyboardSource const &source,
                                             winrt::Microsoft::UI::Input::KeyEventArgs const &args) {
-      if (SurfaceId() == -1)
-        return;
+      if (auto strongRootView = m_wkRootView.get()) {
+        if (SurfaceId() == -1)
+          return;
 
-      auto focusedComponent = RootComponentView().GetFocusedComponent();
-      auto keyArgs = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
-          focusedComponent
-              ? focusedComponent.Tag()
-              : static_cast<facebook::react::Tag>(
-                    winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(m_compRootView)
-                        ->GetTag()),
-          args);
-      auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
-      onKeyUp(keyboardSource, keyArgs);
-      winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
+        auto focusedComponent = RootComponentView().GetFocusedComponent();
+        auto keyArgs =
+            winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
+                focusedComponent
+                    ? focusedComponent.Tag()
+                    : static_cast<facebook::react::Tag>(
+                          winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
+                              strongRootView)
+                              ->RootTag()),
+                args);
+        auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
+        onKeyUp(keyboardSource, keyArgs);
+        winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
+      }
     });
 
     m_characterReceivedToken =
         keyboardSource.CharacterReceived([this](
                                              winrt::Microsoft::UI::Input::InputKeyboardSource const &source,
                                              winrt::Microsoft::UI::Input::CharacterReceivedEventArgs const &args) {
-          if (SurfaceId() == -1)
-            return;
+          if (auto strongRootView = m_wkRootView.get()) {
+            if (SurfaceId() == -1)
+              return;
 
-          auto focusedComponent = RootComponentView().GetFocusedComponent();
-          auto charArgs = winrt::make<
-              winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
-              focusedComponent
-                  ? focusedComponent.Tag()
-                  : static_cast<facebook::react::Tag>(
-                        winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
-                            m_compRootView)
-                            ->GetTag()),
-              args);
-          auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
-          onCharacterReceived(keyboardSource, charArgs);
-          winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
+            auto focusedComponent = RootComponentView().GetFocusedComponent();
+            auto charArgs = winrt::make<
+                winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
+                focusedComponent
+                    ? focusedComponent.Tag()
+                    : static_cast<facebook::react::Tag>(
+                          winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
+                              strongRootView)
+                              ->RootTag()),
+                args);
+            auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
+            onCharacterReceived(keyboardSource, charArgs);
+            winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
+          }
         });
   }
 #endif
@@ -271,27 +303,33 @@ CompositionEventHandler::CompositionEventHandler(
 
 CompositionEventHandler::~CompositionEventHandler() {
 #ifdef USE_WINUI3
-  if (auto island = m_compRootView.Island()) {
-    auto pointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(island);
-    pointerSource.PointerPressed(m_pointerPressedToken);
-    pointerSource.PointerReleased(m_pointerReleasedToken);
-    pointerSource.PointerMoved(m_pointerMovedToken);
-    pointerSource.PointerWheelChanged(m_pointerWheelChangedToken);
-    auto keyboardSource = winrt::Microsoft::UI::Input::InputKeyboardSource::GetForIsland(island);
-    keyboardSource.KeyDown(m_keyDownToken);
-    keyboardSource.KeyUp(m_keyUpToken);
-    keyboardSource.CharacterReceived(m_characterReceivedToken);
+  if (auto strongRootView = m_wkRootView.get()) {
+    if (auto island = strongRootView.Island()) {
+      auto pointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(island);
+      pointerSource.PointerPressed(m_pointerPressedToken);
+      pointerSource.PointerReleased(m_pointerReleasedToken);
+      pointerSource.PointerMoved(m_pointerMovedToken);
+      pointerSource.PointerCaptureLost(m_pointerCaptureLostToken);
+      pointerSource.PointerWheelChanged(m_pointerWheelChangedToken);
+      auto keyboardSource = winrt::Microsoft::UI::Input::InputKeyboardSource::GetForIsland(island);
+      keyboardSource.KeyDown(m_keyDownToken);
+      keyboardSource.KeyUp(m_keyUpToken);
+      keyboardSource.CharacterReceived(m_characterReceivedToken);
+    }
   }
 #endif
 }
 
-facebook::react::SurfaceId CompositionEventHandler::SurfaceId() noexcept {
-  return static_cast<facebook::react::SurfaceId>(
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(m_compRootView)->GetTag());
+facebook::react::SurfaceId CompositionEventHandler::SurfaceId() const noexcept {
+  if (auto strongRootView = m_wkRootView.get()) {
+    return static_cast<facebook::react::SurfaceId>(
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(strongRootView)->RootTag());
+  }
+  return -1;
 }
 
 winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView &
-CompositionEventHandler::RootComponentView() noexcept {
+CompositionEventHandler::RootComponentView() const noexcept {
   auto rootComponentViewDescriptor = (::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties()))
                                          ->GetViewRegistry()
                                          .componentViewDescriptorWithTag(SurfaceId());
@@ -314,12 +352,11 @@ void CompositionEventHandler::onPointerWheelChanged(
     if (tag == -1)
       return;
 
-    auto targetComponentView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(
-        fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view);
+    auto targetComponentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view;
     auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
-        tag, pointerPoint, keyModifiers);
+        m_context, tag, pointerPoint, keyModifiers);
 
-    targetComponentView->onPointerWheelChanged(args);
+    targetComponentView.OnPointerWheelChanged(args);
   }
 }
 
@@ -358,80 +395,104 @@ winrt::Windows::System::VirtualKeyModifiers GetKeyModifiers(uint64_t wParam) {
 int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   switch (msg) {
     case WM_LBUTTONDOWN: {
-      auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          hwnd, msg, wParam, lParam, m_compRootView.ScaleFactor());
-      onPointerPressed(pp, GetKeyModifiers(wParam));
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerPressed(pp, GetKeyModifiers(wParam));
+      }
       return 0;
     }
     case WM_POINTERDOWN: {
-      auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          hwnd, msg, wParam, lParam, m_compRootView.ScaleFactor());
-      onPointerPressed(pp, GetKeyModifiers(wParam));
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerPressed(pp, GetKeyModifiers(wParam));
+      }
       return 0;
     }
     case WM_LBUTTONUP: {
-      auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          hwnd, msg, wParam, lParam, m_compRootView.ScaleFactor());
-      onPointerReleased(pp, GetKeyModifiers(wParam));
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerReleased(pp, GetKeyModifiers(wParam));
+      }
       return 0;
     }
     case WM_POINTERUP: {
-      auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          hwnd, msg, wParam, lParam, m_compRootView.ScaleFactor());
-      onPointerReleased(pp, GetKeyModifiers(wParam));
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerReleased(pp, GetKeyModifiers(wParam));
+      }
       return 0;
     }
     case WM_MOUSEMOVE: {
-      auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          hwnd, msg, wParam, lParam, m_compRootView.ScaleFactor());
-      onPointerMoved(pp, GetKeyModifiers(wParam));
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerMoved(pp, GetKeyModifiers(wParam));
+      }
+      return 0;
+    }
+    case WM_CAPTURECHANGED: {
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerCaptureLost(pp, winrt::Windows::System::VirtualKeyModifiers::None);
+      }
       return 0;
     }
     case WM_MOUSEWHEEL: {
-      auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
-          hwnd, msg, wParam, lParam, m_compRootView.ScaleFactor());
-      onPointerWheelChanged(pp, GetKeyModifiers(wParam));
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
+            hwnd, msg, wParam, lParam, strongRootView.ScaleFactor());
+        onPointerWheelChanged(pp, GetKeyModifiers(wParam));
+      }
       break;
     }
     case WM_CHAR:
     case WM_SYSCHAR: {
-      auto focusedComponent = RootComponentView().GetFocusedComponent();
-      auto args = winrt::make<
-          winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
-          focusedComponent
-              ? focusedComponent.Tag()
-              : static_cast<facebook::react::Tag>(
-                    winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(m_compRootView)
-                        ->GetTag()),
-          msg,
-          wParam,
-          lParam);
-      auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
-      onCharacterReceived(keyboardSource, args);
-      winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto focusedComponent = RootComponentView().GetFocusedComponent();
+        auto args = winrt::make<
+            winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
+            focusedComponent ? focusedComponent.Tag()
+                             : static_cast<facebook::react::Tag>(
+                                   winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
+                                       strongRootView)
+                                       ->RootTag()),
+            msg,
+            wParam,
+            lParam);
+        auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
+        onCharacterReceived(keyboardSource, args);
+        winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
+      }
       break;
     }
     case WM_KEYDOWN:
     case WM_KEYUP:
     case WM_SYSKEYDOWN:
     case WM_SYSKEYUP: {
-      auto focusedComponent = RootComponentView().GetFocusedComponent();
-      auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
-          focusedComponent
-              ? focusedComponent.Tag()
-              : static_cast<facebook::react::Tag>(
-                    winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(m_compRootView)
-                        ->GetTag()),
-          msg,
-          wParam,
-          lParam);
-      auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
-      if (msg == WM_KEYDOWN || msg == WM_SYSKEYDOWN) {
-        onKeyDown(keyboardSource, args);
-      } else {
-        onKeyUp(keyboardSource, args);
+      if (auto strongRootView = m_wkRootView.get()) {
+        auto focusedComponent = RootComponentView().GetFocusedComponent();
+        auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
+            focusedComponent ? focusedComponent.Tag()
+                             : static_cast<facebook::react::Tag>(
+                                   winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
+                                       strongRootView)
+                                       ->RootTag()),
+            msg,
+            wParam,
+            lParam);
+        auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
+        if (msg == WM_KEYDOWN || msg == WM_SYSKEYDOWN) {
+          onKeyDown(keyboardSource, args);
+        } else {
+          onKeyUp(keyboardSource, args);
+        }
+        winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
       }
-      winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
       break;
     }
   }
@@ -443,8 +504,7 @@ void CompositionEventHandler::onKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)
-        ->onKeyDown(source, args);
+    focusedComponent.OnKeyDown(source, args);
 
     if (args.Handled())
       return;
@@ -476,8 +536,7 @@ void CompositionEventHandler::onKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)
-        ->onKeyUp(source, args);
+    focusedComponent.OnKeyUp(source, args);
 
     if (args.Handled())
       return;
@@ -488,8 +547,7 @@ void CompositionEventHandler::onCharacterReceived(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
   if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)
-        ->onCharacterReceived(source, args);
+    focusedComponent.OnCharacterReceived(source, args);
 
     if (args.Handled())
       return;
@@ -557,9 +615,9 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
 
   // We only want to emit events to JS if there is a view that is currently listening to said event
   // so we only send those event to the JS side if the element which has been entered is itself listening,
-  // or if one of its parents is listening in case those listeners care about the capturing phase. Adding the ability
-  // for native to distinguish between capturing listeners and not could be an optimization to further reduce the
-  // number of events we send to JS
+  // or if one of its parents is listening in case those listeners care about the capturing phase. Adding the
+  // ability for native to distinguish between capturing listeners and not could be an optimization to further
+  // reduce the number of events we send to JS
   bool hasParentEnterListener = false;
   bool emittedNativeEnteredEvent = false;
 
@@ -572,9 +630,13 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
          IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerEnter) ||
          IsViewListeningToEvent(componentView, facebook::react::WindowsViewEvents::Offset::MouseEnter));
 
-    if ((shouldEmitEvent || !emittedNativeEnteredEvent) &&
-        std::find(currentlyHoveredViews.begin(), currentlyHoveredViews.end(), componentView) ==
-            currentlyHoveredViews.end()) {
+    if (std::find(currentlyHoveredViews.begin(), currentlyHoveredViews.end(), componentView) ==
+        currentlyHoveredViews.end()) {
+      auto args =
+          winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
+              m_context, componentView.Tag(), pointerPoint, keyModifiers);
+      componentView.OnPointerEntered(args);
+
       if (shouldEmitEvent) {
         const auto eventEmitter =
             winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentView)
@@ -585,14 +647,6 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
             eventEmitter->onMouseEnter(event);
           }
         }
-      }
-      if (!emittedNativeEnteredEvent) {
-        emittedNativeEnteredEvent = true;
-        auto args =
-            winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
-                componentView.Tag(), pointerPoint, keyModifiers);
-        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentView)
-            ->onPointerEntered(args);
       }
     }
 
@@ -622,8 +676,10 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
   // so we first iterate from the root to the target, collecting the views which need events fired for, of which
   // we reverse iterate (now from target to root), actually emitting the events.
   std::vector<winrt::Microsoft::ReactNative::ComponentView>
-      viewsToEmitLeaveEventsTo; // NSMutableOrderedSet<UIView *> *viewsToEmitLeaveEventsTo =
-                                // [NSMutableOrderedSet orderedSet];
+      viewsToEmitJSLeaveEventsTo; // NSMutableOrderedSet<UIView *> *viewsToEmitLeaveEventsTo =
+                                  // [NSMutableOrderedSet orderedSet];
+
+  std::vector<winrt::Microsoft::ReactNative::ComponentView> viewsToEmitLeaveEventsTo;
 
   winrt::Microsoft::ReactNative::ComponentView viewToEmitNativeExitedEvent{nullptr};
 
@@ -634,35 +690,35 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
                             //  {
     auto componentView = *itComponentView;
 
-    bool shouldEmitEvent = componentView != nullptr &&
+    bool shouldEmitJSEvent = componentView != nullptr &&
         (hasParentLeaveListener ||
          IsViewListeningToEvent(componentView, facebook::react::ViewEvents::Offset::PointerLeave) ||
          IsViewListeningToEvent(componentView, facebook::react::WindowsViewEvents::Offset::MouseLeave));
 
-    if ((shouldEmitEvent || !viewToEmitNativeExitedEvent) &&
-        std::find(eventPathViews.begin(), eventPathViews.end(), componentView) == eventPathViews.end()) {
-      if (shouldEmitEvent) {
-        viewsToEmitLeaveEventsTo.push_back(componentView);
+    if (std::find(eventPathViews.begin(), eventPathViews.end(), componentView) == eventPathViews.end()) {
+      if (shouldEmitJSEvent) {
+        viewsToEmitJSLeaveEventsTo.push_back(componentView);
       }
-      if (!viewToEmitNativeExitedEvent) {
-        viewToEmitNativeExitedEvent = componentView;
-      }
+      viewsToEmitLeaveEventsTo.push_back(componentView);
     }
 
-    if (shouldEmitEvent && !hasParentLeaveListener) {
+    if (shouldEmitJSEvent && !hasParentLeaveListener) {
       hasParentLeaveListener = true;
     }
   }
 
-  if (viewToEmitNativeExitedEvent) {
+  for (auto itComponentView = viewsToEmitLeaveEventsTo.rbegin(); itComponentView != viewsToEmitLeaveEventsTo.rend();
+       itComponentView++) {
+    auto componentView = *itComponentView;
+
     auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
-        viewToEmitNativeExitedEvent.Tag(), pointerPoint, keyModifiers);
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(viewToEmitNativeExitedEvent)
-        ->onPointerExited(args);
+        m_context, componentView.Tag(), pointerPoint, keyModifiers);
+    componentView.OnPointerExited(args);
   }
 
-  for (auto itComponentView = viewsToEmitLeaveEventsTo.rbegin(); itComponentView != viewsToEmitLeaveEventsTo.rend();
-       itComponentView++) { //  for (UIView *componentView in [viewsToEmitLeaveEventsTo reverseObjectEnumerator]) {
+  for (auto itComponentView = viewsToEmitJSLeaveEventsTo.rbegin(); itComponentView != viewsToEmitJSLeaveEventsTo.rend();
+       itComponentView++) { //  for (UIView *componentView in [viewsToEmitJSLeaveEventsTo
+                            //  reverseObjectEnumerator]) {
     auto componentView = *itComponentView;
 
     const auto eventEmitter =
@@ -740,6 +796,51 @@ facebook::react::PointerEvent CreatePointerEventFromIncompleteHoverData(
   return pointerEvent;
 }
 
+void CompositionEventHandler::getTargetPointerArgs(
+    const std::shared_ptr<FabricUIManager> &fabricuiManager,
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+    facebook::react::Tag &tag,
+    facebook::react::Point &ptScaled,
+    facebook::react::Point &ptLocal) const noexcept {
+  int pointerId = pointerPoint.PointerId();
+  auto position = pointerPoint.Position();
+  tag = -1;
+
+  ptScaled = {position.X, position.Y};
+  if (std::find(m_capturedPointers.begin(), m_capturedPointers.end(), pointerId) != m_capturedPointers.end()) {
+    assert(m_pointerCapturingComponentTag != -1);
+    tag = m_pointerCapturingComponentTag;
+
+    auto targetComponentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view;
+    auto clientRect = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
+                          ->getClientRect();
+    if (auto strongRootView = m_wkRootView.get()) {
+      ptLocal.x = ptScaled.x - (clientRect.left / strongRootView.ScaleFactor());
+      ptLocal.y = ptScaled.y - (clientRect.top / strongRootView.ScaleFactor());
+    }
+  } else {
+    tag = RootComponentView().hitTest(ptScaled, ptLocal);
+  }
+}
+
+void CompositionEventHandler::onPointerCaptureLost(
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
+    winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
+  if (SurfaceId() == -1)
+    return;
+
+  if (m_pointerCapturingComponentTag) {
+    // copy array to avoid iterator being invalidated during deletion
+    std::vector<PointerId> capturedPointers = m_capturedPointers;
+
+    for (auto pointerId : capturedPointers) {
+      releasePointerCapture(pointerId, m_pointerCapturingComponentTag);
+    }
+
+    m_pointerCapturingComponentTag = -1;
+  }
+}
+
 void CompositionEventHandler::onPointerMoved(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
     winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
@@ -752,20 +853,18 @@ void CompositionEventHandler::onPointerMoved(
 
   if (std::shared_ptr<FabricUIManager> fabricuiManager =
           ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
-    facebook::react::Point ptLocal;
-
-    facebook::react::Point ptScaled = {position.X, position.Y};
-    auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
+    facebook::react::Tag tag = -1;
+    facebook::react::Point ptLocal, ptScaled;
+    getTargetPointerArgs(fabricuiManager, pointerPoint, tag, ptScaled, ptLocal);
 
     if (tag == -1)
       return;
 
     auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
-        tag, pointerPoint, keyModifiers);
+        m_context, tag, pointerPoint, keyModifiers);
     auto targetComponentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view;
 
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
-        ->onPointerMoved(args);
+    targetComponentView.OnPointerMoved(args);
 
     auto targetView = FindClosestFabricManagedTouchableView(
         fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view);
@@ -805,24 +904,21 @@ void CompositionEventHandler::onPointerPressed(
     return;
   }
 
-  auto position = pointerPoint.Position();
   const auto eventType = TouchEventType::Start;
 
   if (std::shared_ptr<FabricUIManager> fabricuiManager =
           ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
-    facebook::react::Point ptLocal;
-
-    facebook::react::Point ptScaled = {position.X, position.Y};
-    auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
+    facebook::react::Tag tag = -1;
+    facebook::react::Point ptLocal, ptScaled;
+    getTargetPointerArgs(fabricuiManager, pointerPoint, tag, ptScaled, ptLocal);
 
     if (tag == -1)
       return;
 
     auto targetComponentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view;
     auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
-        tag, pointerPoint, keyModifiers);
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
-        ->onPointerPressed(args);
+        m_context, tag, pointerPoint, keyModifiers);
+    targetComponentView.OnPointerPressed(args);
 
     ActiveTouch activeTouch{0};
     activeTouch.touchType = UITouchType::Mouse;
@@ -870,29 +966,79 @@ void CompositionEventHandler::onPointerReleased(
     return;
   }
 
-  auto position = pointerPoint.Position();
-
   if (std::shared_ptr<FabricUIManager> fabricuiManager =
           ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
-    facebook::react::Point ptLocal;
-
-    facebook::react::Point ptScaled = {position.X, position.Y};
-    auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
+    facebook::react::Tag tag = -1;
+    facebook::react::Point ptLocal, ptScaled;
+    getTargetPointerArgs(fabricuiManager, pointerPoint, tag, ptScaled, ptLocal);
 
     if (tag == -1)
       return;
 
-    auto targetComponentView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(
-        fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view);
+    auto targetComponentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view;
     auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
-        tag, pointerPoint, keyModifiers);
+        m_context, tag, pointerPoint, keyModifiers);
 
-    targetComponentView->onPointerReleased(args);
+    targetComponentView.OnPointerReleased(args);
 
     UpdateActiveTouch(activeTouch->second, ptScaled, ptLocal);
     DispatchTouchEvent(TouchEventType::End, pointerId, pointerPoint, keyModifiers);
     m_activeTouches.erase(pointerId);
   }
+}
+
+bool CompositionEventHandler::CapturePointer(
+    const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
+    facebook::react::Tag tag) noexcept {
+  if (m_pointerCapturingComponentTag != -1) {
+    m_capturedPointers.clear();
+
+    if (std::shared_ptr<FabricUIManager> fabricuiManager =
+            ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
+      auto targetComponentView =
+          fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_pointerCapturingComponentTag).view;
+
+      targetComponentView.OnPointerCaptureLost();
+    }
+  }
+
+  m_pointerCapturingComponentTag = tag;
+  m_capturedPointers.push_back(pointer.PointerId());
+  return true;
+}
+
+bool CompositionEventHandler::ReleasePointerCapture(
+    const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
+    facebook::react::Tag tag) noexcept {
+  return releasePointerCapture(static_cast<PointerId>(pointer.PointerId()), tag);
+}
+
+// Returns if pointer capture should be removed entirely
+bool CompositionEventHandler::releasePointerCapture(PointerId pointerId, facebook::react::Tag tag) noexcept {
+  bool result = false;
+
+  if (m_pointerCapturingComponentTag == tag) {
+    auto it = std::find(m_capturedPointers.begin(), m_capturedPointers.end(), pointerId);
+    if (it == m_capturedPointers.end()) {
+      return false;
+    }
+    m_capturedPointers.erase(it);
+
+    if (std::shared_ptr<FabricUIManager> fabricuiManager =
+            ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties())) {
+      auto targetComponentView =
+          fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_pointerCapturingComponentTag).view;
+
+      targetComponentView.OnPointerCaptureLost();
+    }
+
+    if (m_capturedPointers.size() == 0) {
+      m_pointerCapturingComponentTag = -1;
+      return true;
+    }
+  }
+
+  return false;
 }
 
 // defines button payload, follows https://developer.mozilla.org/docs/Web/API/MouseEvent/button
@@ -1008,8 +1154,10 @@ void CompositionEventHandler::DispatchTouchEvent(
       const auto &viewRegistry = fabricuiManager->GetViewRegistry();
       facebook::react::Point ptLocal;
       auto targetTag = RootComponentView().hitTest(pointerEvent.clientPoint, ptLocal);
-      auto targetComponentViewDescriptor = viewRegistry.componentViewDescriptorWithTag(targetTag);
-      targetView = FindClosestFabricManagedTouchableView(targetComponentViewDescriptor.view);
+      if (targetTag != -1) {
+        auto targetComponentViewDescriptor = viewRegistry.componentViewDescriptorWithTag(targetTag);
+        targetView = FindClosestFabricManagedTouchableView(targetComponentViewDescriptor.view);
+      }
     }
 
     auto handler = [&activeTouch, eventType, &pointerEvent](

@@ -41,6 +41,7 @@ parameters:
     default: PullRequest
     values: 
      - PullRequest
+     - SecurePullRequest
      - Continuous
 
 steps:
@@ -72,6 +73,21 @@ steps:
       displayName: Init new app project
       workingDirectory: $(Agent.BuildDirectory)
 
+    - script: |
+        call yarn install
+      displayName: pre-windows yarn install
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+      env:
+        YARN_ENABLE_IMMUTABLE_INSTALLS: false
+
+    - script: |
+        call yarn config set npmRegistryServer http://localhost:4873
+        call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
+      displayName: yarn config verdaccio
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+      env:
+        YARN_ENABLE_IMMUTABLE_INSTALLS: false
+
   - ${{ if eq(parameters.projectType, 'lib') }}:
     - script: |
         npx --yes create-react-native-module@0.20.2 --package-name "testcli" testcli
@@ -97,6 +113,7 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)\testcli
       env:
         npm_config_registry: http://localhost:4873
+        YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
   - ${{ if eq(parameters.useNuget, false) }}:
     - script: |
@@ -105,6 +122,14 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)\testcli
       env:
         npm_config_registry: http://localhost:4873
+        YARN_ENABLE_IMMUTABLE_INSTALLS: false
+  
+  - script: |
+      call yarn install
+    displayName: post-windows yarn install
+    workingDirectory: $(Agent.BuildDirectory)\testcli
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
   
   - template:  set-experimental-feature.yml
     parameters:

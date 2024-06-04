@@ -13,29 +13,16 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct ImageLoaderAndroidSpec_getSize_returnType {
-    double width;
-    double height;
-};
-
-struct ImageLoaderAndroidSpec_getSizeWithHeaders_returnType {
+struct ImageLoaderAndroidSpec_ImageSize {
     double width;
     double height;
 };
 
 
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ImageLoaderAndroidSpec_getSize_returnType*) noexcept {
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ImageLoaderAndroidSpec_ImageSize*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"width", &ImageLoaderAndroidSpec_getSize_returnType::width},
-        {L"height", &ImageLoaderAndroidSpec_getSize_returnType::height},
-    };
-    return fieldMap;
-}
-
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ImageLoaderAndroidSpec_getSizeWithHeaders_returnType*) noexcept {
-    winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"width", &ImageLoaderAndroidSpec_getSizeWithHeaders_returnType::width},
-        {L"height", &ImageLoaderAndroidSpec_getSizeWithHeaders_returnType::height},
+        {L"width", &ImageLoaderAndroidSpec_ImageSize::width},
+        {L"height", &ImageLoaderAndroidSpec_ImageSize::height},
     };
     return fieldMap;
 }
@@ -43,8 +30,8 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ImageLoaderAndroidS
 struct ImageLoaderAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
   static constexpr auto methods = std::tuple{
       Method<void(double) noexcept>{0, L"abortRequest"},
-      Method<void(std::string, Promise<ImageLoaderAndroidSpec_getSize_returnType>) noexcept>{1, L"getSize"},
-      Method<void(std::string, ::React::JSValue, Promise<ImageLoaderAndroidSpec_getSizeWithHeaders_returnType>) noexcept>{2, L"getSizeWithHeaders"},
+      Method<void(std::string, Promise<ImageLoaderAndroidSpec_ImageSize>) noexcept>{1, L"getSize"},
+      Method<void(std::string, ::React::JSValue, Promise<ImageLoaderAndroidSpec_ImageSize>) noexcept>{2, L"getSizeWithHeaders"},
       Method<void(std::string, double, Promise<bool>) noexcept>{3, L"prefetchImage"},
       Method<void(std::vector<std::string>, Promise<::React::JSValue>) noexcept>{4, L"queryCache"},
   };
@@ -61,13 +48,13 @@ struct ImageLoaderAndroidSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
     REACT_SHOW_METHOD_SPEC_ERRORS(
           1,
           "getSize",
-          "    REACT_METHOD(getSize) void getSize(std::string uri, ::React::ReactPromise<ImageLoaderAndroidSpec_getSize_returnType> &&result) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(getSize) static void getSize(std::string uri, ::React::ReactPromise<ImageLoaderAndroidSpec_getSize_returnType> &&result) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(getSize) void getSize(std::string uri, ::React::ReactPromise<ImageLoaderAndroidSpec_ImageSize> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getSize) static void getSize(std::string uri, ::React::ReactPromise<ImageLoaderAndroidSpec_ImageSize> &&result) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           2,
           "getSizeWithHeaders",
-          "    REACT_METHOD(getSizeWithHeaders) void getSizeWithHeaders(std::string uri, ::React::JSValue && headers, ::React::ReactPromise<ImageLoaderAndroidSpec_getSizeWithHeaders_returnType> &&result) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(getSizeWithHeaders) static void getSizeWithHeaders(std::string uri, ::React::JSValue && headers, ::React::ReactPromise<ImageLoaderAndroidSpec_getSizeWithHeaders_returnType> &&result) noexcept { /* implementation */ }\n");
+          "    REACT_METHOD(getSizeWithHeaders) void getSizeWithHeaders(std::string uri, ::React::JSValue && headers, ::React::ReactPromise<ImageLoaderAndroidSpec_ImageSize> &&result) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(getSizeWithHeaders) static void getSizeWithHeaders(std::string uri, ::React::JSValue && headers, ::React::ReactPromise<ImageLoaderAndroidSpec_ImageSize> &&result) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
           "prefetchImage",

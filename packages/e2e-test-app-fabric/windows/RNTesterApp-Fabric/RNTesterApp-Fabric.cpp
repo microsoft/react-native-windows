@@ -5,34 +5,31 @@
 #include "RNTesterApp-Fabric.h"
 
 #include <UIAutomation.h>
-#include <winrt/Microsoft.ReactNative.Composition.h>
-#include <winrt/Microsoft.ReactNative.h>
-#include <winrt/Microsoft.UI.Composition.h>
-#include <winrt/Microsoft.UI.Content.h>
-#include <winrt/Microsoft.UI.Dispatching.h>
-#include <winrt/Microsoft.UI.Windowing.h>
-#include <winrt/Microsoft.UI.interop.h>
 #include <winrt/Windows.Data.Json.h>
-#include <winrt/Windows.Foundation.h>
 #include "winrt/AutomationChannel.h"
 
-#include <NativeModules.h>
+#include "AutolinkedNativeModules.g.h"
 
-struct RNTesterAppReactPackageProvider
-    : winrt::implements<RNTesterAppReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
+#include "NativeModules.h"
+
+struct CompReactPackageProvider
+    : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
     AddAttributedModules(packageBuilder, true);
   }
 };
 
-constexpr PCWSTR appName = L"RNTesterApp";
+// Global Variables:
+constexpr PCWSTR windowTitle = L"RNTesterApp-Fabric";
+constexpr PCWSTR mainComponentName = L"RNTesterApp";
 
 // Keep track of errors and warnings to be able to report them to automation
 std::vector<std::string> g_Errors;
 std::vector<std::string> g_Warnings;
 HWND global_hwnd;
 winrt::Microsoft::ReactNative::CompositionRootView *global_rootView{nullptr};
+winrt::Microsoft::ReactNative::IReactContext global_reactContext{nullptr};
 
 // Forward declarations of functions included in this code module:
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload);
@@ -50,34 +47,55 @@ void UpdateRootViewSizeToAppWindow(
   auto scaleFactor = ScaleFactor(hwnd);
   winrt::Windows::Foundation::Size size{
       window.ClientSize().Width / scaleFactor, window.ClientSize().Height / scaleFactor};
-  rootView.Arrange(size);
-  rootView.Size(size);
+  // Do not relayout when minimized
+  if (window.Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>().State() !=
+      winrt::Microsoft::UI::Windowing::OverlappedPresenterState::Minimized) {
+    winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+    constraints.MaximumSize = constraints.MinimumSize = size;
+    rootView.Arrange(constraints, {0, 0});
+  }
 }
 
 // Create and configure the ReactNativeHost
 winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
     HWND hwnd,
     const winrt::Microsoft::UI::Composition::Compositor &compositor) {
-  WCHAR workingDir[MAX_PATH];
-  GetCurrentDirectory(MAX_PATH, workingDir);
+  WCHAR appDirectory[MAX_PATH];
+  GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
+  PathCchRemoveFileSpec(appDirectory, MAX_PATH);
 
   auto host = winrt::Microsoft::ReactNative::ReactNativeHost();
-  // Disable until we have a 3rd party story for custom components
-  // RegisterAutolinkedNativeModulePackages(host.PackageProviders()); // Includes any
-  // autolinked modules
-  host.PackageProviders().Append(winrt::make<RNTesterAppReactPackageProvider>());
-  host.PackageProviders().Append(winrt::AutomationChannel::ReactPackageProvider());
 
+  // Some of the images in RNTester require a user-agent header to properly fetch
+  winrt::Microsoft::ReactNative::HttpSettings::SetDefaultUserAgent(
+      host.InstanceSettings(), L"React Native Windows E2E Test App");
+
+  // Include any autolinked modules
+  RegisterAutolinkedNativeModulePackages(host.PackageProviders());
+
+  host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
+
+#if BUNDLE
   host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
-  host.InstanceSettings().DebugBundlePath(L"index");
-
-  host.InstanceSettings().BundleRootPath(std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
-  host.InstanceSettings().DebuggerBreakOnNextLine(false);
-#if _DEBUG
-  host.InstanceSettings().UseDirectDebugger(true);
+  host.InstanceSettings().BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
+  host.InstanceSettings().UseFastRefresh(false);
+#else
+  host.InstanceSettings().JavaScriptBundleFile(L"index");
   host.InstanceSettings().UseFastRefresh(true);
 #endif
+
+#if _DEBUG
+  host.InstanceSettings().UseDirectDebugger(true);
   host.InstanceSettings().UseDeveloperSupport(true);
+#else
+  host.InstanceSettings().UseDirectDebugger(false);
+  host.InstanceSettings().UseDeveloperSupport(false);
+#endif
+
+  host.InstanceSettings().InstanceLoaded(
+      [](auto sender, const winrt::Microsoft::ReactNative::InstanceLoadedEventArgs &args) {
+        global_reactContext = args.Context();
+      });
 
   // Test App hooks into JS console.log implementation to record errors/warnings
   host.InstanceSettings().NativeLogger([](winrt::Microsoft::ReactNative::LogLevel level, winrt::hstring message) {
@@ -92,11 +110,7 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
   winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
       host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
-  // By using the MicrosoftCompositionContextHelper here, React Native Windows will use Lifted Visuals for its
-  // tree.
-  winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
-      host.InstanceSettings().Properties(),
-      winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::CreateContext(compositor));
+  winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(host.InstanceSettings(), compositor);
 
   return host;
 }
@@ -117,7 +131,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   // Create a top-level window.
   auto window = winrt::Microsoft::UI::Windowing::AppWindow::Create();
-  window.Title(appName);
+  window.Title(windowTitle);
   window.Resize({1000, 1000});
   window.Show();
   auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
@@ -131,7 +145,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   // Create a RootView which will present a react-native component
   winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
-  viewOptions.ComponentName(appName);
+  viewOptions.ComponentName(mainComponentName);
   auto rootView = winrt::Microsoft::ReactNative::CompositionRootView(compositor);
   rootView.ReactViewHost(winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
 
@@ -163,8 +177,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   bridge.Connect(rootView.Island());
   bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
-  auto invScale = 1.0f / scaleFactor;
-  rootView.RootVisual().Scale({invScale, invScale, invScale});
   rootView.ScaleFactor(scaleFactor);
 
   // Set the intialSize of the root view
@@ -194,6 +206,59 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   // Destroy all Composition objects
   compositor.Close();
   compositor = nullptr;
+}
+
+void InsertStringValueIfNotEmpty(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    winrt::hstring value) {
+  if (!value.empty()) {
+    obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(value));
+  }
+}
+
+void InsertNumberValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    float value,
+    float defaultValue = 0.0f) {
+  if (value != defaultValue) {
+    obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateNumberValue(value));
+  }
+}
+
+void InsertBooleanValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    bool value,
+    bool defaultValue = false) {
+  if (value != defaultValue) {
+    obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateBooleanValue(value));
+  }
+}
+
+void InsertSizeValue(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    winrt::Windows::Foundation::Size value) {
+  auto str = winrt::to_hstring(value.Width) + L", " + winrt::to_hstring(value.Height);
+  obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(str));
+}
+
+void InsertFloat2Value(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    winrt::Windows::Foundation::Numerics::float2 value) {
+  auto str = winrt::to_hstring(value.x) + L", " + winrt::to_hstring(value.y);
+  obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(str));
+}
+
+void InsertFloat3Value(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    winrt::Windows::Foundation::Numerics::float3 value) {
+  auto str = winrt::to_hstring(value.x) + L", " + winrt::to_hstring(value.y) + L", " + winrt::to_hstring(value.z);
+  obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(str));
 }
 
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload) {
@@ -237,12 +302,12 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   pTarget->get_CurrentName(&name);
   result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
   result.Insert(L"ControlType", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(controlType));
-  result.Insert(L"HelpText", winrt::Windows::Data::Json::JsonValue::CreateStringValue(helpText));
-  result.Insert(L"IsEnabled", winrt::Windows::Data::Json::JsonValue::CreateBooleanValue(isEnabled));
-  result.Insert(L"IsKeyboardFocusable", winrt::Windows::Data::Json::JsonValue::CreateBooleanValue(isKeyboardFocusable));
+  InsertStringValueIfNotEmpty(result, L"HelpText", helpText);
+  InsertBooleanValueIfNotDefault(result, L"IsEnabled", isEnabled, true);
+  InsertBooleanValueIfNotDefault(result, L"IsKeyboardFocusable", isKeyboardFocusable);
   result.Insert(
       L"LocalizedControlType", winrt::Windows::Data::Json::JsonValue::CreateStringValue(localizedControlType));
-  result.Insert(L"Name", winrt::Windows::Data::Json::JsonValue::CreateStringValue(name));
+  InsertStringValueIfNotEmpty(result, L"Name", name);
 
   IUIAutomationElement *pChild;
   IUIAutomationElement *pSibling;
@@ -255,7 +320,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
     pSibling = nullptr;
   }
   if (children.Size() > 0) {
-    result.Insert(L"Children", children);
+    result.Insert(L"__Children", children);
   }
   return result;
 }
@@ -298,19 +363,10 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeHelper(winrt::Windows::Data::J
 
 winrt::Windows::Data::Json::JsonObject PrintVisualTree(winrt::Microsoft::UI::Composition::Visual node) {
   winrt::Windows::Data::Json::JsonObject result;
-  if (!node.Comment().empty()) {
-    result.Insert(L"Comment", winrt::Windows::Data::Json::JsonValue::CreateStringValue(node.Comment()));
-  }
-  winrt::Windows::Data::Json::JsonArray visualSize;
-  visualSize.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Size().x));
-  visualSize.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Size().y));
-  result.Insert(L"Size", visualSize);
-  winrt::Windows::Data::Json::JsonArray visualOffset;
-  visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().x));
-  visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().y));
-  visualOffset.Append(winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Offset().z));
-  result.Insert(L"Offset", visualOffset);
-  result.Insert(L"Opacity", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(node.Opacity()));
+  InsertStringValueIfNotEmpty(result, L"Comment", node.Comment());
+  InsertFloat2Value(result, L"Size", node.Size());
+  InsertFloat3Value(result, L"Offset", node.Offset());
+  InsertNumberValueIfNotDefault(result, L"Opacity", node.Opacity(), 1.0f);
   auto spriteVisual = node.try_as<winrt::Microsoft::UI::Composition::SpriteVisual>();
   if (spriteVisual) {
     result.Insert(L"Visual Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"SpriteVisual"));
@@ -338,7 +394,6 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTreeRecurse(
     winrt::hstring accessibilityId,
     boolean targetNodeHit) {
   winrt::Windows::Data::Json::JsonObject result;
-  boolean targetNodeFound = false;
   if (targetNodeHit) {
     result = PrintVisualTree(node);
   }
@@ -351,7 +406,6 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTreeRecurse(
   winrt::Windows::Data::Json::JsonArray children;
   for (auto childVisual : nodeChildren) {
     if (!targetNodeHit && childVisual.Comment() == accessibilityId) {
-      targetNodeFound = true;
       result = DumpVisualTreeRecurse(childVisual, accessibilityId, true);
       break;
     } else if (targetNodeHit) {
@@ -365,7 +419,85 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTreeRecurse(
     }
   }
   if (targetNodeHit && children.Size() > 0) {
-    result.Insert(L"Children", children);
+    result.Insert(L"__Children", children);
+  }
+  return result;
+}
+
+winrt::Windows::Data::Json::JsonObject PrintNativeComponentTree(winrt::Microsoft::ReactNative::ComponentView node) {
+  winrt::Windows::Data::Json::JsonObject result;
+
+  result.Insert(L"Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(winrt::get_class_name(node)));
+
+  if (auto viewComponent = node.try_as<winrt::Microsoft::ReactNative::Composition::ViewComponentView>()) {
+    winrt::Windows::Data::Json::JsonObject props;
+
+    auto viewProps = viewComponent.ViewProps();
+    InsertNumberValueIfNotDefault(props, L"Opacity", viewProps.Opacity(), 1.0f);
+    InsertStringValueIfNotEmpty(props, L"TestId", viewProps.TestId());
+    InsertStringValueIfNotEmpty(props, L"AccessibilityLabel", viewProps.AccessibilityLabel());
+    if (auto imageComponent = node.try_as<winrt::Microsoft::ReactNative::Composition::ImageComponentView>()) {
+      winrt::Windows::Data::Json::JsonArray sources;
+      auto imageProps = viewProps.as<winrt::Microsoft::ReactNative::ImageProps>();
+      if (imageProps.Sources().Size() != 0) {
+        for (auto imageSource : imageProps.Sources()) {
+          winrt::Windows::Data::Json::JsonObject source;
+          InsertStringValueIfNotEmpty(source, L"Uri", imageSource.Uri());
+          if (imageSource.Size().Width || imageSource.Size().Height) {
+            InsertSizeValue(source, L"Size", imageSource.Size());
+          }
+          InsertNumberValueIfNotDefault(source, L"Scale", imageSource.Scale(), 1.0f);
+          InsertStringValueIfNotEmpty(source, L"Bundle", imageSource.Bundle());
+          switch (imageSource.Type()) {
+            case winrt::Microsoft::ReactNative::ImageSourceType::Invalid:
+              source.Insert(L"Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Invalid"));
+              break;
+            case winrt::Microsoft::ReactNative::ImageSourceType::Local:
+              source.Insert(L"Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Local"));
+              break;
+            case winrt::Microsoft::ReactNative::ImageSourceType::Remote:
+              source.Insert(L"Type", winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Remote"));
+              break;
+          }
+          sources.Append(source);
+        }
+        props.Insert(L"Sources", sources);
+      }
+    }
+    result.Insert(L"_Props", props);
+  }
+  return result;
+}
+
+winrt::Windows::Data::Json::JsonObject DumpNativeComponentTreeRecurse(
+    winrt::Microsoft::ReactNative::ComponentView node,
+    winrt::hstring accessibilityId,
+    boolean targetNodeHit) {
+  winrt::Windows::Data::Json::JsonObject result;
+  if (targetNodeHit) {
+    result = PrintNativeComponentTree(node);
+  }
+
+  auto nodeChildren = node.Children();
+  winrt::Windows::Data::Json::JsonArray children;
+  for (auto childNode : nodeChildren) {
+    auto childNodeAsViewComponent = childNode.try_as<winrt::Microsoft::ReactNative::Composition::ViewComponentView>();
+    if (!targetNodeHit && childNodeAsViewComponent &&
+        childNodeAsViewComponent.ViewProps().TestId() == accessibilityId) {
+      result = DumpNativeComponentTreeRecurse(childNode, accessibilityId, true);
+      break;
+    } else if (targetNodeHit) {
+      children.Append(DumpNativeComponentTreeRecurse(childNode, accessibilityId, targetNodeHit));
+    } else if (!targetNodeHit) {
+      auto subtree = DumpNativeComponentTreeRecurse(childNode, accessibilityId, targetNodeHit);
+      if (subtree.Size() > 0) {
+        result = subtree;
+        break;
+      }
+    }
+  }
+  if (targetNodeHit && children.Size() > 0) {
+    result.Insert(L"__Children", children);
   }
   return result;
 }
@@ -373,9 +505,20 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTreeRecurse(
 winrt::Windows::Data::Json::JsonObject DumpVisualTreeHelper(winrt::Windows::Data::Json::JsonObject payloadObj) {
   auto accessibilityId = payloadObj.GetNamedString(L"accessibilityId");
   winrt::Windows::Data::Json::JsonObject visualTree;
-  auto root = winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::InnerVisual(
-      global_rootView->RootVisual());
+  auto root = global_rootView->RootVisual();
   visualTree = DumpVisualTreeRecurse(root, accessibilityId, false);
+  return visualTree;
+}
+
+winrt::Windows::Data::Json::JsonObject DumpNativeComponentTreeHelper(
+    winrt::Windows::Data::Json::JsonObject payloadObj) {
+  auto accessibilityId = payloadObj.GetNamedString(L"accessibilityId");
+  winrt::Windows::Data::Json::JsonObject visualTree;
+  auto rootTag = global_rootView->RootTag();
+  if (auto root = winrt::Microsoft::ReactNative::Composition::CompositionUIService::ComponentFromReactTag(
+          global_reactContext, rootTag)) {
+    visualTree = DumpNativeComponentTreeRecurse(root, accessibilityId, false);
+  }
   return visualTree;
 }
 
@@ -384,6 +527,7 @@ winrt::Windows::Data::Json::JsonObject DumpVisualTree(winrt::Windows::Data::Json
   winrt::Windows::Data::Json::JsonObject result;
   result.Insert(L"Automation Tree", DumpUIATreeHelper(payloadObj));
   result.Insert(L"Visual Tree", DumpVisualTreeHelper(payloadObj));
+  result.Insert(L"Component Tree", DumpNativeComponentTreeHelper(payloadObj));
   return result;
 }
 

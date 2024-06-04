@@ -19,7 +19,8 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Configuration">
-    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+    <PlatformToolset Condition="'$(PlatformToolset)' == ''">$(DefaultPlatformToolset)</PlatformToolset>
+    <PreferredToolArchitecture Condition="'$(PreferredToolArchitecture)' == ''">x64</PreferredToolArchitecture>
     <GenerateProjectSpecificOutputFolder>false</GenerateProjectSpecificOutputFolder>
     <CharacterSet>Unicode</CharacterSet>
     <EnableWinRtLeanAndMean Condition="'$(EnableWinRtLeanAndMean)' == ''">true</EnableWinRtLeanAndMean>
@@ -64,7 +65,7 @@
       <PreprocessorDefinitions Condition="'$(EnableDevServerHBCBundles)'=='true'">ENABLE_DEVSERVER_HBCBUNDLES;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseV8)'=='true'">USE_V8;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(UseFabric)'=='true'">USE_FABRIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PreprocessorDefinitions>JSI_VERSION=10;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>JSI_VERSION=11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
   </ItemDefinitionGroup>
 
@@ -88,7 +89,7 @@
   </ImportGroup>
 
   <PropertyGroup>
-    <CppStandard Condition="'$(CppStandard)'==''">stdcpp17</CppStandard>
+    <CppStandard Condition="'$(CppStandard)'==''">stdcpp20</CppStandard>
   </PropertyGroup>
 
   <ItemDefinitionGroup>

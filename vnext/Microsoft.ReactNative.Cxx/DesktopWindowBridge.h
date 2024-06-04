@@ -13,6 +13,8 @@
 
 #include <winrt/Microsoft.ReactNative.h>
 
+#include "CppWinRTIncludes.h"
+
 namespace winrt::Microsoft::ReactNative {
 
 namespace details {
@@ -94,7 +96,12 @@ __declspec(selectany) std::unordered_map<std::wstring, IndirectLibrary> indirect
 template <typename TFn, typename... TArgs>
 auto CallIndirect(const wchar_t *dllName, const char *fnName, TArgs &&...args) noexcept {
   if (details::indirectLibraries.count(dllName) == 0) {
+#ifdef CPPWINRT_USE_LOADLIBRARYEXW
+    details::indirectLibraries.emplace(
+        dllName, WINRT_IMPL_LoadLibraryExW(dllName, nullptr, 0x00001000 /* LOAD_LIBRARY_SEARCH_DEFAULT_DIRS */));
+#else
     details::indirectLibraries.emplace(dllName, WINRT_IMPL_LoadLibraryW(dllName));
+#endif
   }
   auto &library = details::indirectLibraries[dllName];
   auto pfn = reinterpret_cast<TFn>(WINRT_IMPL_GetProcAddress(library.get(), fnName));

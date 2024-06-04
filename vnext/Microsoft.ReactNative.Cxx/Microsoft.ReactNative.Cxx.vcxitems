@@ -18,7 +18,7 @@
     <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\react\bridging</Bridging_SourcePath>
     <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\CallbackWrapper.h')">$(MSBuildThisFileDirectory)ReactCommon</Bridging_SourcePath>
 
-    <NodeApiJsiCommitHash>53b897b03c1c7e57c3372acc6234447a44e150d6</NodeApiJsiCommitHash>
+    <NodeApiJsiCommitHash>83cfef428a97627c9185c73da097e42742de56eb</NodeApiJsiCommitHash>
     <NodeApiJsiLocal Condition="Exists('$(MSBuildThisFileDirectory)NodeApiJsiRuntime.cpp')">true</NodeApiJsiLocal>
     <NodeApiJsiDir Condition="'$(NodeApiJsiDir)' == '' AND '$(NodeApiJsiLocal)' == 'true'">$(MSBuildThisFileDirectory)</NodeApiJsiDir>
     <NodeApiJsiDir Condition="'$(NodeApiJsiDir)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\..\..\node_modules\.node-api-jsi\node-api-jsi-$(NodeApiJsiCommitHash)\</NodeApiJsiDir>
@@ -39,7 +39,7 @@
         $(NodeApiJsiSrcDir);
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>JSI_VERSION=10;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>JSI_VERSION=11;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Midl>
       <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -52,7 +52,6 @@
     <ClInclude Include="$(JSI_SourcePath)\jsi\instrumentation.h" />
     <ClInclude Include="$(JSI_SourcePath)\jsi\jsi-inl.h" />
     <ClInclude Include="$(JSI_SourcePath)\jsi\jsi.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)CoreApp.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)DesktopWindowBridge.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\LongLivedJsiValue.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)TurboModuleProvider.h" />

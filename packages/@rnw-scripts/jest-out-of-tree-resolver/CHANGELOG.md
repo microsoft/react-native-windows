@@ -1,8 +1,137 @@
 # Change Log - @rnw-scripts/jest-out-of-tree-resolver
 
-This log was last generated on Sat, 21 Oct 2023 05:16:09 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Jun 2024 05:18:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.24
+
+Tue, 04 Jun 2024 05:18:35 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.21
+
+## 1.1.23
+
+Sat, 01 Jun 2024 05:21:31 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.20
+
+## 1.1.22
+
+Thu, 30 May 2024 05:18:26 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.19
+
+## 1.1.21
+
+Thu, 23 May 2024 05:17:50 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.18
+
+## 1.1.20
+
+Wed, 22 May 2024 05:18:18 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.17
+
+## 1.1.19
+
+Wed, 15 May 2024 05:14:54 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.16
+
+## 1.1.18
+
+Sat, 11 May 2024 05:18:30 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.15
+
+## 1.1.17
+
+Thu, 09 May 2024 05:18:44 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.14
+
+## 1.1.16
+
+Thu, 25 Apr 2024 20:12:45 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.13
+
+## 1.1.14
+
+Wed, 10 Apr 2024 05:18:19 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.11
+
+## 1.1.13
+
+Sat, 30 Mar 2024 05:18:04 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.10
+
+## 1.1.12
+
+Sat, 23 Mar 2024 05:17:01 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.9
+
+## 1.1.11
+
+Thu, 07 Mar 2024 06:16:48 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.8
+
+## 1.1.10
+
+Fri, 01 Mar 2024 06:18:16 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.7
+
+## 1.1.9
+
+Tue, 27 Feb 2024 06:18:03 GMT
+
+### Patches
+
+- Update rn-integrate script to more aggressively update align dependencies (30809111+acoates-ms@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.6
+
+## 1.1.8
+
+Wed, 14 Feb 2024 06:16:55 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.5
 
 ## 1.1.7
 

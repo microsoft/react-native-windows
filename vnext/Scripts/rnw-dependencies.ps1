@@ -72,6 +72,11 @@ if (!($tagsToInclude.Contains('buildLab'))) {
     $vsComponents += 'Microsoft.VisualStudio.ComponentGroup.UWP.VC';
 }
 
+# Windows11SDK is only needed for the more experimental composition projects using newer WinAppSDK versions
+if ($tagsToInclude.Contains('rnwDev')) {
+    $vsComponents += 'Microsoft.VisualStudio.Component.Windows11SDK.22000';
+}
+
 $vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',
     'Microsoft.VisualStudio.Workload.NativeDesktop',
     'Microsoft.VisualStudio.Workload.Universal');
@@ -80,7 +85,7 @@ $vsAll = ($vsComponents + $vsWorkloads);
 
 # The minimum VS version to check for
 # Note: For install to work, whatever min version you specify here must be met by the current package available on winget.
-$vsver = "17.3";
+$vsver = "17.9";
 
 # The exact .NET SDK version to check for
 $dotnetver = "6.0";
@@ -235,8 +240,9 @@ function CheckNode {
     try {
         $nodeVersion = (Get-Command node -ErrorAction Stop).Version;
         Write-Verbose "Node version found: $nodeVersion";
-        $v = $nodeVersion.Major;
-        return ($v -ge 18) -and (($v % 2) -eq 0);
+        $major = $nodeVersion.Major;
+        $minor = $nodeVersion.Minor;
+        return ($major -ge 18) -and ($minor -ge 18);
     } catch { Write-Debug $_ }
 
     Write-Verbose "Node not found.";
@@ -432,10 +438,10 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::Node;
-        Name = 'Node.js (LTS, >= 18.0)';
+        Name = 'Node.js (LTS, >= 18.18)';
         Tags = @('appDev');
         Valid = { CheckNode; }
-        Install = { WinGetInstall OpenJS.NodeJS.LTS };
+        Install = { WinGetInstall OpenJS.NodeJS.LTS "18.18.0" };
         HasVerboseOutput = $true;
     },
     @{
@@ -528,12 +534,18 @@ function EnsureWinGetForInstall {
 
 function WinGetInstall {
     param(
-        [string]$wingetPackage
+        [string]$wingetPackage,
+        [string]$packageVersion = ""
     )
 
     EnsureWinGetForInstall;
-    Write-Verbose "Executing `winget install `"$wingetPackage`"";
-    & winget install "$wingetPackage" --accept-source-agreements --accept-package-agreements
+    if ($packageVersion -ne "") {
+        Write-Verbose "Executing `winget install `"$wingetPackage`" --version `"$packageVersion`"";
+        & winget install "$wingetPackage" --version "$packageVersion" --accept-source-agreements --accept-package-agreements
+    } else {
+        Write-Verbose "Executing `winget install `"$wingetPackage`"";
+        & winget install "$wingetPackage" --accept-source-agreements --accept-package-agreements
+    }
  }
  
 function IsElevated {

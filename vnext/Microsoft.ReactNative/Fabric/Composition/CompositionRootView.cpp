@@ -4,7 +4,9 @@
 #include "CompositionRootView.h"
 #include "CompositionRootView.g.cpp"
 #include "FocusNavigationRequest.g.cpp"
+#include <RootViewSizeChangedEventArgs.g.h>
 
+#include <AutoDraw.h>
 #include <DynamicWriter.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <IReactInstance.h>
@@ -14,22 +16,34 @@
 #include <ReactPropertyBag.h>
 #include <Utils/Helpers.h>
 #include <dispatchQueue/dispatchQueue.h>
+#include <eventWaitHandle/eventWaitHandle.h>
+#include <react/renderer/attributedstring/AttributedStringBox.h>
 #include <react/renderer/core/LayoutConstraints.h>
 #include <react/renderer/core/LayoutContext.h>
+#include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.UI.Core.h>
 #include "CompositionContextHelper.h"
 #include "CompositionHelpers.h"
 #include "CompositionRootAutomationProvider.h"
+#include "CompositionUIService.h"
 #include "ReactNativeHost.h"
 #include "RootComponentView.h"
+#include "TextDrawing.h"
 
 #ifdef USE_WINUI3
 #include <winrt/Microsoft.UI.Content.h>
+#include <winrt/Microsoft.UI.Input.h>
 #endif
 
 namespace winrt::Microsoft::ReactNative::implementation {
+
+constexpr float loadingActivitySize = 12.0f;
+constexpr float loadingActivityHorizontalOffset = 16.0f;
+constexpr float loadingBarHeight = 36.0f;
+constexpr float loadingBarFontSize = 20.0f;
+constexpr float loadingTextHorizontalOffset = 48.0f;
 
 //! This class ensures that we access ReactRootView from UI thread.
 struct CompositionReactViewInstance
@@ -64,21 +78,28 @@ void CompositionReactViewInstance::InitRootView(
                        .Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
                        .try_as<IReactDispatcher>();
 
-  PostInUIQueue([context{std::move(context)}, viewOptions{std::move(viewOptions)}](
-                    winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionRootView>
-                        &rootControl) mutable noexcept {
+  assert(m_uiDispatcher.HasThreadAccess());
+  if (auto rootControl = m_weakRootControl.get()) {
     rootControl->InitRootView(std::move(context), std::move(viewOptions));
-  });
+  }
 }
 
 void CompositionReactViewInstance::UpdateRootView() noexcept {
-  PostInUIQueue([](winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionRootView>
-                       &rootControl) mutable noexcept { rootControl->UpdateRootView(); });
+  assert(m_uiDispatcher.HasThreadAccess());
+  if (auto rootControl = m_weakRootControl.get()) {
+    rootControl->UpdateRootView();
+  }
 }
 
 void CompositionReactViewInstance::UninitRootView() noexcept {
-  PostInUIQueue([](winrt::com_ptr<winrt::Microsoft::ReactNative::implementation::CompositionRootView>
-                       &rootControl) mutable noexcept { rootControl->UninitRootView(); });
+  // m_uiDispatcher will not be initialized if InitRootView has not been run in which case we do not need to run
+  // UninitRootView
+  if (m_uiDispatcher) {
+    assert(m_uiDispatcher.HasThreadAccess());
+    if (auto rootControl = m_weakRootControl.get()) {
+      rootControl->UninitRootView();
+    }
+  }
 }
 
 //===========================================================================
@@ -107,9 +128,22 @@ inline Mso::Future<void> CompositionReactViewInstance::PostInUIQueue(TAction &&a
 CompositionRootView::CompositionRootView() noexcept {}
 
 #ifdef USE_WINUI3
-CompositionRootView::CompositionRootView(winrt::Microsoft::UI::Composition::Compositor compositor) noexcept
+CompositionRootView::CompositionRootView(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept
     : m_compositor(compositor) {}
 #endif
+
+CompositionRootView::~CompositionRootView() noexcept {
+#ifdef USE_WINUI3
+  if (m_island && m_island.IsConnected()) {
+    m_island.AutomationProviderRequested(m_islandAutomationProviderRequestedToken);
+  }
+#endif
+
+  if (m_uiDispatcher) {
+    assert(m_uiDispatcher.HasThreadAccess());
+    UninitRootView();
+  }
+}
 
 ReactNative::IReactViewHost CompositionRootView::ReactViewHost() noexcept {
   return m_reactViewHost;
@@ -132,15 +166,46 @@ void CompositionRootView::ReactViewHost(winrt::Microsoft::ReactNative::IReactVie
   }
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual CompositionRootView::RootVisual() noexcept {
+winrt::Microsoft::UI::Composition::Visual CompositionRootView::RootVisual() noexcept {
+  return winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
+      m_rootVisual);
+}
+
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual CompositionRootView::InternalRootVisual() noexcept {
   return m_rootVisual;
 }
 
-void CompositionRootView::RootVisual(winrt::Microsoft::ReactNative::Composition::IVisual const &value) noexcept {
+void CompositionRootView::InternalRootVisual(
+    winrt::Microsoft::ReactNative::Composition::Experimental::IVisual const &value) noexcept {
   if (m_rootVisual != value) {
     assert(!m_rootVisual);
     m_rootVisual = value;
+    UpdateRootVisualSize();
   }
+}
+
+void CompositionRootView::AddRenderedVisual(
+    const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept {
+  assert(!m_hasRenderedVisual);
+  InternalRootVisual().InsertAt(visual, 0);
+  m_hasRenderedVisual = true;
+}
+
+void CompositionRootView::RemoveRenderedVisual(
+    const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept {
+  assert(m_hasRenderedVisual);
+  InternalRootVisual().Remove(visual);
+  m_hasRenderedVisual = false;
+}
+
+bool CompositionRootView::TrySetFocus() noexcept {
+#ifdef USE_WINUI3
+  if (m_island && m_island.IsConnected()) {
+    auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
+    return focusController.TrySetFocus();
+  }
+#endif
+  return false;
 }
 
 winrt::Windows::Foundation::Size CompositionRootView::Size() noexcept {
@@ -149,6 +214,28 @@ winrt::Windows::Foundation::Size CompositionRootView::Size() noexcept {
 
 void CompositionRootView::Size(winrt::Windows::Foundation::Size value) noexcept {
   m_size = value;
+  UpdateRootVisualSize();
+}
+
+void CompositionRootView::UpdateRootVisualSize() noexcept {
+  if (m_rootVisual)
+    m_rootVisual.Size({m_size.Width * m_scaleFactor, m_size.Height * m_scaleFactor});
+
+  UpdateLoadingVisualSize();
+}
+
+void CompositionRootView::UpdateLoadingVisualSize() noexcept {
+  if (m_loadingVisual) {
+    auto drawingSurface = CreateLoadingVisualBrush();
+    m_loadingVisual.Brush(drawingSurface);
+    m_loadingVisual.Offset({0.0f, -(loadingBarHeight * m_scaleFactor / 2.0f), 0.0f}, {0.0f, 0.5f, 0.0f});
+    m_loadingVisual.Size({m_size.Width * m_scaleFactor, loadingBarHeight * m_scaleFactor});
+    m_loadingActivityVisual.Size(loadingActivitySize * m_scaleFactor);
+    const float loadingActivityVerticalOffset = ((loadingBarHeight - (loadingActivitySize * 2)) * m_scaleFactor) / 2;
+
+    m_loadingActivityVisual.Offset(
+        {loadingActivityHorizontalOffset * m_scaleFactor, loadingActivityVerticalOffset, 0.0f});
+  }
 }
 
 float CompositionRootView::ScaleFactor() noexcept {
@@ -156,32 +243,47 @@ float CompositionRootView::ScaleFactor() noexcept {
 }
 
 void CompositionRootView::ScaleFactor(float value) noexcept {
-  m_scaleFactor = value;
+  if (m_scaleFactor != value) {
+    m_scaleFactor = value;
+    // Lifted ContentIslands apply a scale that we need to reverse
+    if (auto rootView = RootVisual()) {
+      auto invScale = 1.0f / value;
+      rootView.Scale({invScale, invScale, invScale});
+    }
+    UpdateRootVisualSize();
+  }
+}
+
+int64_t CompositionRootView::RootTag() const noexcept {
+  return m_rootTag;
+}
+
+winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader CompositionRootView::Resources() noexcept {
+  return m_resources;
+}
+
+void CompositionRootView::Resources(
+    const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &resources) noexcept {
+  m_resources = resources;
+
+  if (m_context && m_theme) {
+    Theme(winrt::make<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(m_context, m_resources));
+  }
 }
 
 winrt::Microsoft::ReactNative::Composition::Theme CompositionRootView::Theme() noexcept {
   if (!m_theme) {
-    Theme(winrt::Microsoft::ReactNative::Composition::Theme::GetDefaultTheme(m_context.Handle()));
-    m_themeChangedSubscription = m_context.Notifications().Subscribe(
-        winrt::Microsoft::ReactNative::ReactNotificationId<void>(
-            winrt::Microsoft::ReactNative::Composition::Theme::ThemeChangedEventName()),
-        m_context.UIDispatcher(),
-        [wkThis = get_weak()](
-            IInspectable const & /*sender*/,
-            winrt::Microsoft::ReactNative::ReactNotificationArgs<void> const & /*args*/) {
-          auto pThis = wkThis.get();
-          pThis->Theme(winrt::Microsoft::ReactNative::Composition::Theme::GetDefaultTheme(pThis->m_context.Handle()));
-        });
+    assert(m_context);
+    if (m_resources) {
+      Theme(winrt::make<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(m_context, m_resources));
+    } else {
+      Theme(winrt::Microsoft::ReactNative::Composition::Theme::GetDefaultTheme(m_context.Handle()));
+    }
   }
   return m_theme;
 }
 
 void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept {
-  if (m_themeChangedSubscription) {
-    m_themeChangedSubscription.Unsubscribe();
-    m_themeChangedSubscription = nullptr;
-  }
-
   if (value == m_theme)
     return;
 
@@ -189,20 +291,22 @@ void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition
 
   m_themeChangedRevoker = m_theme.ThemeChanged(
       winrt::auto_revoke,
-      [this](
+      [wkThis = get_weak()](
           const winrt::Windows::Foundation::IInspectable & /*sender*/,
           const winrt::Windows::Foundation::IInspectable & /*args*/) {
-        if (auto rootView = GetComponentView()) {
-          Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> fn =
-              [](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
-                winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->onThemeChanged();
-                return false;
-              };
+        if (auto strongThis = wkThis.get()) {
+          if (auto rootView = strongThis->GetComponentView()) {
+            Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> fn =
+                [](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+                  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->onThemeChanged();
+                  return false;
+                };
 
-          winrt::Microsoft::ReactNative::ComponentView view{nullptr};
-          winrt::check_hresult(rootView->QueryInterface(
-              winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
-          walkTree(view, true, fn);
+            winrt::Microsoft::ReactNative::ComponentView view{nullptr};
+            winrt::check_hresult(rootView->QueryInterface(
+                winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
+            walkTree(view, true, fn);
+          }
         }
       });
 
@@ -227,30 +331,6 @@ winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
   return m_uiaProvider;
 }
 
-winrt::Microsoft::ReactNative::Composition::IVisual CompositionRootView::GetVisual() const noexcept {
-  return m_rootVisual;
-}
-
-std::string CompositionRootView::JSComponentName() const noexcept {
-  return to_string(m_reactViewOptions.ComponentName());
-}
-
-int64_t CompositionRootView::GetActualHeight() const noexcept {
-  return static_cast<int64_t>(m_size.Height);
-}
-
-int64_t CompositionRootView::GetActualWidth() const noexcept {
-  return static_cast<int64_t>(m_size.Width);
-}
-
-int64_t CompositionRootView::GetTag() const noexcept {
-  return m_rootTag;
-}
-
-void CompositionRootView::SetTag(int64_t tag) noexcept {
-  m_rootTag = tag;
-}
-
 void CompositionRootView::SetWindow(uint64_t hwnd) noexcept {
   m_hwnd = reinterpret_cast<HWND>(hwnd);
 }
@@ -271,6 +351,27 @@ int64_t CompositionRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t 
   return 0;
 }
 
+bool CompositionRootView::CapturePointer(
+    const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
+    facebook::react::Tag tag) noexcept {
+  if (m_hwnd) {
+    SetCapture(m_hwnd);
+  }
+  return m_CompositionEventHandler->CapturePointer(pointer, tag);
+}
+
+void CompositionRootView::ReleasePointerCapture(
+    const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
+    facebook::react::Tag tag) noexcept {
+  if (m_CompositionEventHandler->ReleasePointerCapture(pointer, tag)) {
+    if (m_hwnd) {
+      if (m_hwnd == GetCapture()) {
+        ReleaseCapture();
+      }
+    }
+  }
+}
+
 void CompositionRootView::InitRootView(
     winrt::Microsoft::ReactNative::IReactContext &&context,
     winrt::Microsoft::ReactNative::ReactViewOptions &&viewOptions) noexcept {
@@ -284,13 +385,8 @@ void CompositionRootView::InitRootView(
   }
 
   m_context = winrt::Microsoft::ReactNative::ReactContext(std::move(context));
-
-  winrt::Microsoft::ReactNative::CompositionRootView compositionRootView;
-  get_strong().as(compositionRootView);
-
   m_reactViewOptions = std::move(viewOptions);
-  m_CompositionEventHandler =
-      std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, compositionRootView);
+  m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this);
 
   UpdateRootViewInternal();
 
@@ -319,6 +415,13 @@ void CompositionRootView::UpdateRootViewInternal() noexcept {
   }
 }
 
+struct AutoMRE {
+  ~AutoMRE() {
+    mre.Set();
+  }
+  Mso::ManualResetEvent mre;
+};
+
 void CompositionRootView::UninitRootView() noexcept {
   if (!m_isInitialized) {
     return;
@@ -330,9 +433,16 @@ void CompositionRootView::UninitRootView() noexcept {
 
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()));
-    uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(GetTag()));
+    uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(RootTag()));
 
-    m_context.CallJSFunction(L"ReactFabric", L"unmountComponentAtNode", GetTag());
+    // This is needed to ensure that the unmount JS logic is completed before the the instance is shutdown during
+    // instance destruction. Aligns with similar code in ReactInstanceWin::DetachRootView for paper Future: Instead this
+    // method should return a Promise, which should be resolved when the JS logic is complete.
+    // The task will auto set the event on destruction to ensure that the event is set if the JS Queue has already been
+    // shutdown
+    Mso::ManualResetEvent mre;
+    m_context.JSDispatcher().Post([autoMRE = std::make_unique<AutoMRE>(AutoMRE{mre})]() {});
+    mre.Wait();
 
     // Paper version gives the JS thread time to finish executing - Is this needed?
     // m_jsMessageThread.Load()->runOnQueueSync([]() {});
@@ -345,7 +455,15 @@ void CompositionRootView::UninitRootView() noexcept {
   m_isInitialized = false;
 }
 
-void CompositionRootView::ClearLoadingUI() noexcept {}
+void CompositionRootView::ClearLoadingUI() noexcept {
+  if (!m_loadingVisual)
+    return;
+
+  InternalRootVisual().Remove(m_loadingVisual);
+
+  m_loadingVisual = nullptr;
+  m_loadingActivityVisual = nullptr;
+}
 
 void CompositionRootView::EnsureLoadingUI() noexcept {}
 
@@ -356,31 +474,182 @@ void CompositionRootView::ShowInstanceLoaded() noexcept {
     auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()));
 
-    auto rootTag = ::Microsoft::ReactNative::getNextRootViewTag();
-    SetTag(rootTag);
+    m_rootTag = ::Microsoft::ReactNative::getNextRootViewTag();
     auto initProps = DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps()));
     if (initProps.isNull()) {
       initProps = folly::dynamic::object();
     }
     initProps["concurrentRoot"] = true;
-    uiManager->startSurface(*this, rootTag, JSComponentName(), initProps);
+    uiManager->startSurface(
+        *this,
+        static_cast<facebook::react::SurfaceId>(m_rootTag),
+        m_layoutConstraints,
+        to_string(m_reactViewOptions.ComponentName()),
+        initProps);
 
     m_isJSViewAttached = true;
   }
 }
 
-void CompositionRootView::ShowInstanceError() noexcept {}
+facebook::react::AttributedStringBox CreateLoadingAttributedString() noexcept {
+  auto attributedString = facebook::react::AttributedString{};
+  auto fragment = facebook::react::AttributedString::Fragment{};
+  fragment.string = "Loading";
+  fragment.textAttributes.fontSize = loadingBarFontSize;
+  attributedString.appendFragment(fragment);
+  return facebook::react::AttributedStringBox{attributedString};
+}
+
+facebook::react::Size MeasureLoading(const facebook::react::LayoutConstraints &layoutConstraints, float scaleFactor) {
+  auto attributedStringBox = CreateLoadingAttributedString();
+  winrt::com_ptr<::IDWriteTextLayout> textLayout;
+  facebook::react::TextLayoutManager::GetTextLayout(
+      attributedStringBox, {} /*paragraphAttributes*/, layoutConstraints, textLayout);
+
+  DWRITE_TEXT_METRICS tm;
+  winrt::check_hresult(textLayout->GetMetrics(&tm));
+
+  return layoutConstraints.clamp(
+      {loadingActivityHorizontalOffset * scaleFactor + tm.width, loadingBarHeight * scaleFactor});
+}
+
+winrt::event_token CompositionRootView::SizeChanged(
+    winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs> const
+        &handler) noexcept {
+  return m_sizeChangedEvent.add(handler);
+}
+
+void CompositionRootView::SizeChanged(winrt::event_token const &token) noexcept {
+  m_sizeChangedEvent.remove(token);
+}
+
+struct RootViewSizeChangedEventArgs : RootViewSizeChangedEventArgsT<RootViewSizeChangedEventArgs> {
+  RootViewSizeChangedEventArgs(const winrt::Windows::Foundation::Size &size) : m_size(size) {}
+  winrt::Windows::Foundation::Size Size() const noexcept {
+    return m_size;
+  }
+
+ private:
+  const winrt::Windows::Foundation::Size m_size;
+};
+
+void CompositionRootView::NotifySizeChanged() noexcept {
+  auto oldSize = m_size;
+  facebook::react::Size size;
+  auto rootComponentView = GetComponentView();
+  if (rootComponentView) {
+    size = rootComponentView->layoutMetrics().frame.size;
+  } else if (m_loadingVisual) {
+    size = MeasureLoading(m_layoutConstraints, m_scaleFactor);
+  }
+
+  m_size = {size.width, size.height};
+  UpdateRootVisualSize();
+  if (oldSize != m_size) {
+    m_sizeChangedEvent(*this, winrt::make<RootViewSizeChangedEventArgs>(m_size));
+  }
+}
+
+void CompositionRootView::ShowInstanceError() noexcept {
+  ClearLoadingUI();
+}
+
+Composition::Experimental::IDrawingSurfaceBrush CompositionRootView::CreateLoadingVisualBrush() noexcept {
+  auto compContext =
+      winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
+          m_context.Properties().Handle());
+
+  if (m_size.Height == 0 || m_size.Width == 0)
+    return nullptr;
+
+  winrt::Windows::Foundation::Size surfaceSize = {
+      m_size.Width * m_scaleFactor, std::min(m_size.Height, loadingBarHeight) * m_scaleFactor};
+  auto drawingSurface = compContext.CreateDrawingSurfaceBrush(
+      surfaceSize,
+      winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
+      winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+
+  POINT offset;
+  {
+    ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, m_scaleFactor, &offset);
+    if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
+      d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Green));
+
+      facebook::react::LayoutConstraints constraints;
+      constraints.maximumSize.width = std::max(0.0f, m_size.Width - loadingTextHorizontalOffset);
+      constraints.maximumSize.height = std::max(0.0f, m_size.Height - loadingBarHeight);
+
+      auto attributedStringBox = CreateLoadingAttributedString();
+
+      auto textAttributes = facebook::react::TextAttributes{};
+      textAttributes.foregroundColor = facebook::react::whiteColor();
+
+      winrt::com_ptr<::IDWriteTextLayout> textLayout;
+      facebook::react::TextLayoutManager::GetTextLayout(
+          attributedStringBox, {} /*paragraphAttributes*/, constraints, textLayout);
+
+      DWRITE_TEXT_METRICS tm;
+      textLayout->GetMetrics(&tm);
+      const float textVerticalOffsetWithinLoadingBar = ((loadingBarHeight - tm.height) * m_scaleFactor) / 2;
+
+      auto theme = winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(Theme());
+
+      Composition::RenderText(
+          *d2dDeviceContext,
+          *textLayout,
+          attributedStringBox.getValue(),
+          textAttributes,
+          {static_cast<float>(offset.x + (loadingTextHorizontalOffset * m_scaleFactor)),
+           static_cast<float>(offset.y + textVerticalOffsetWithinLoadingBar)},
+          m_scaleFactor,
+          *theme);
+    }
+  }
+
+  return drawingSurface;
+}
 
 void CompositionRootView::ShowInstanceLoading() noexcept {
   if (!Mso::React::ReactOptions::UseDeveloperSupport(m_context.Properties().Handle()))
     return;
 
-  // TODO: Show loading UI here
+  if (m_loadingVisual)
+    return;
+
+  auto compContext =
+      winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
+          m_context.Properties().Handle());
+
+  m_loadingVisual = compContext.CreateSpriteVisual();
+
+  auto foregroundBrush = compContext.CreateColorBrush({255, 255, 255, 255});
+
+  m_loadingActivityVisual = compContext.CreateActivityVisual();
+  m_loadingActivityVisual.Brush(foregroundBrush);
+  m_loadingVisual.InsertAt(m_loadingActivityVisual, 0);
+
+  NotifySizeChanged();
+  UpdateLoadingVisualSize();
+
+  InternalRootVisual().InsertAt(m_loadingVisual, m_hasRenderedVisual ? 1 : 0);
+}
+
+void ApplyConstraints(
+    const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraintsIn,
+    facebook::react::LayoutConstraints &layoutConstraintsOut) noexcept {
+  layoutConstraintsOut.minimumSize = {layoutConstraintsIn.MinimumSize.Width, layoutConstraintsIn.MinimumSize.Height};
+  layoutConstraintsOut.maximumSize = {layoutConstraintsIn.MaximumSize.Width, layoutConstraintsIn.MaximumSize.Height};
+  layoutConstraintsOut.layoutDirection =
+      static_cast<facebook::react::LayoutDirection>(layoutConstraintsIn.LayoutDirection);
 }
 
 winrt::Windows::Foundation::Size CompositionRootView::Measure(
-    winrt::Windows::Foundation::Size const &availableSize) const {
-  winrt::Windows::Foundation::Size size{0.0f, 0.0f};
+    const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
+    const winrt::Windows::Foundation::Point &viewportOffset) const noexcept {
+  facebook::react::Size size{0, 0};
+
+  facebook::react::LayoutConstraints constraints;
+  ApplyConstraints(layoutConstraints, constraints);
 
   if (m_isInitialized && m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
@@ -389,84 +658,86 @@ winrt::Windows::Foundation::Size CompositionRootView::Measure(
       // TODO scaling factor
       context.pointScaleFactor = static_cast<facebook::react::Float>(m_scaleFactor);
       context.fontSizeMultiplier = static_cast<facebook::react::Float>(m_scaleFactor);
+      context.viewportOffset = {viewportOffset.X, viewportOffset.Y};
 
-      facebook::react::LayoutConstraints constraints;
-      // TODO should support MinHeight/MinWidth
-      constraints.minimumSize.height = static_cast<facebook::react::Float>(0.0f);
-      constraints.minimumSize.width = static_cast<facebook::react::Float>(0.0f);
-
-      // TODO should support MaxHeight/MaxWidth props?
-      constraints.minimumSize.height = constraints.maximumSize.height =
-          static_cast<facebook::react::Float>(availableSize.Height);
-      constraints.minimumSize.width = constraints.maximumSize.width =
-          static_cast<facebook::react::Float>(availableSize.Width);
-      // TODO get RTL
-      constraints.layoutDirection = facebook::react::LayoutDirection::LeftToRight;
-
-      auto yogaSize =
-          fabricuiManager->measureSurface(static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
-      return {std::min(yogaSize.width, availableSize.Width), std::min(yogaSize.height, availableSize.Height)};
+      size = fabricuiManager->measureSurface(static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
     }
+  } else if (m_loadingVisual) {
+    size = MeasureLoading(constraints, m_scaleFactor);
   }
 
-  return size;
+  auto clampedSize = constraints.clamp(size);
+  return {clampedSize.width, clampedSize.height};
 }
 
-winrt::Windows::Foundation::Size CompositionRootView::Arrange(winrt::Windows::Foundation::Size finalSize) const {
+void CompositionRootView::Arrange(
+    const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
+    const winrt::Windows::Foundation::Point &viewportOffset) noexcept {
+  ApplyConstraints(layoutConstraints, m_layoutConstraints);
+
   if (m_isInitialized && m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
       facebook::react::LayoutContext context;
       context.pointScaleFactor = static_cast<facebook::react::Float>(m_scaleFactor);
       context.fontSizeMultiplier = static_cast<facebook::react::Float>(m_scaleFactor);
-
-      facebook::react::LayoutConstraints constraints;
-      // TODO should support MinHeight/MinWidth
-      constraints.minimumSize.height = static_cast<facebook::react::Float>(0.0f);
-      constraints.minimumSize.width = static_cast<facebook::react::Float>(0.0f);
-
-      // TODO should support MaxHeight/MaxWidth props?
-      constraints.minimumSize.height = constraints.maximumSize.height =
-          static_cast<facebook::react::Float>(finalSize.Height);
-      constraints.minimumSize.width = constraints.maximumSize.width =
-          static_cast<facebook::react::Float>(finalSize.Width);
-      // TODO get RTL
-      constraints.layoutDirection = facebook::react::LayoutDirection::LeftToRight;
+      context.viewportOffset = {viewportOffset.X, viewportOffset.Y};
 
       fabricuiManager->constraintSurfaceLayout(
-          static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
+          static_cast<facebook::react::SurfaceId>(m_rootTag), m_layoutConstraints, context);
     }
+  } else if (m_loadingVisual) {
+    // TODO: Resize to align loading
+    auto s = m_layoutConstraints.clamp(MeasureLoading(m_layoutConstraints, m_scaleFactor));
+    NotifySizeChanged();
   }
-  return finalSize;
 }
 
 #ifdef USE_WINUI3
-winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() noexcept {
+winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() {
   if (!m_compositor) {
     return nullptr;
   }
 
   if (!m_island) {
-    auto rootVisual = m_compositor.CreateSpriteVisual();
-    rootVisual.RelativeSizeAdjustment({1, 1});
+    winrt::Microsoft::UI::Composition::SpriteVisual rootVisual{nullptr};
+    try {
+      rootVisual = m_compositor.CreateSpriteVisual();
+    } catch (const winrt::hresult_error &e) {
+      // If the compositor has been shutdown, then we shouldn't attempt to initialize the island
+      if (e.code() == RO_E_CLOSED)
+        return nullptr;
+      throw e;
+    }
 
-    RootVisual(winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::CreateVisual(rootVisual));
+    InternalRootVisual(
+        winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateVisual(
+            rootVisual));
     m_island = winrt::Microsoft::UI::Content::ContentIsland::Create(rootVisual);
 
-    m_island.AutomationProviderRequested(
-        [this](
+    // ContentIsland does not support weak_ref, so we cannot use auto_revoke for these events
+    m_islandAutomationProviderRequestedToken = m_island.AutomationProviderRequested(
+        [weakThis = get_weak()](
             winrt::Microsoft::UI::Content::ContentIsland const &,
             winrt::Microsoft::UI::Content::ContentIslandAutomationProviderRequestedEventArgs const &args) {
-          auto provider = GetUiaProvider();
-          auto pRootProvider =
-              static_cast<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider *>(
-                  provider.as<IRawElementProviderSimple>().get());
-          if (pRootProvider != nullptr) {
-            pRootProvider->SetIsland(m_island);
+          if (auto pThis = weakThis.get()) {
+            auto provider = pThis->GetUiaProvider();
+            auto pRootProvider =
+                static_cast<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider *>(
+                    provider.as<IRawElementProviderSimple>().get());
+            if (pRootProvider != nullptr) {
+              pRootProvider->SetIsland(pThis->m_island);
+            }
+            args.AutomationProvider(std::move(provider));
+            args.Handled(true);
           }
-          args.AutomationProvider(std::move(provider));
-          args.Handled(true);
         });
+
+    m_islandFrameworkClosedToken = m_island.FrameworkClosed([weakThis = get_weak()]() {
+      if (auto pThis = weakThis.get()) {
+        pThis->m_island = nullptr;
+      }
+    });
   }
   return m_island;
 }

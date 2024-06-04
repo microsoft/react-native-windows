@@ -61,24 +61,6 @@ function Start-Packager {
 	return Start-Npm -WorkingDirectory $ReactNativeLocation -NoNewWindow:$NoNewWindow -NpmPath $NpmPath
 }
 
-function Start-WebSocketServer {
-	param (
-		[Parameter(Mandatory=$true)]
-		[ValidateScript({Test-Path $_})]
-		[string] $ReactNativeLocation,
-
-		[switch] $NoNewWindow,
-
-		[Parameter(Mandatory=$true)]
-		[ValidateScript({Test-Path $_})]
-		[string] $NodePath
-	)
-
-	return Start-Node	-ScriptPath $ReactNativeLocation\IntegrationTests\websocket_integration_test_server.js `
-						-NoNewWindow:$NoNewWindow `
-						-NodePath $NodePath
-}
-
 function Find-Packager {
 	try {
 		return Get-Process -Id (Get-NetTCPConnection -ErrorAction Ignore -LocalPort 8081).OwningProcess
@@ -88,20 +70,12 @@ function Find-Packager {
 	}
 }
 
-function Find-WebSocketServer {
+function Find-TestWebsiteServer {
 	try {
-		return Get-Process -Id (Get-NetTCPConnection -ErrorAction Ignore -LocalPort 5555).OwningProcess
+		return Get-Process -id (Get-NetTCPConnection -ErrorAction Ignore -LocalPort 5555).OwningProcess
 	}
 	catch {
 		return $null
-	}
-}
-
-function Stop-WebSocketServer {
-	$proc = Find-WebSocketServer
-
-	if ($proc) {
-		Stop-Process $proc
 	}
 }
 

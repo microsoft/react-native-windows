@@ -1,6 +1,7 @@
 URL not found https://docs.github.com/pull-requests/collaborating-with-pull-requests/getting-started/about-collaborative-development-models#fork-and-pull-model while parsing CONTRIBUTING.md (HTTP 403)
 URL not found https://docs.github.com/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks while parsing CONTRIBUTING.md (HTTP 403)
 URL not found https://docs.github.com/get-started/quickstart while parsing CONTRIBUTING.md (HTTP 403)
+File not found edge:/inspect while parsing packages/playground/README_composition.md
 !**/node_modules
 !vnext/packages
 !vnext/ReactCopies
@@ -10,6 +11,7 @@ URL not found https://docs.github.com/get-started/quickstart while parsing CONTR
 !packages/e2e-test-app/node_modules
 !packages/e2e-test-app-fabric/node_modules
 !packages/sample-apps/node_modules
+!packages/sample-app-fabric/node_modules
 !packages/playground/node_modules
 !packages/@react-native-windows/codegen/node_modules
 !packages/react-native-windows-init/node_modules
@@ -21,3 +23,4 @@ URL not found https://docs.github.com/get-started/quickstart while parsing CONTR
 !packages/@rnw-scripts/format-files/node_modules
 !packages/@rnw-scripts/promote-release/node_modules
 !.github/ISSUE_TEMPLATE
+!.github/security.md

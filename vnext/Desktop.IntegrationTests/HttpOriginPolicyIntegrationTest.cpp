@@ -743,6 +743,46 @@ TEST_CLASS(HttpOriginPolicyIntegrationTest)
     TestOriginPolicy(serverArgs, clientArgs, s_shouldFail);
   } // FullCors304ForSimpleGetFails
 
+  TEST_METHOD(OfficeDev_OfficeJS_4144)
+  {
+    SetRuntimeOptionString("Http.GlobalOrigin", "http://orig.in");
+    SetRuntimeOptionInt("Http.OriginPolicy", static_cast<int32_t>(OriginPolicy::CrossOriginResourceSharing));
+
+    ClientParams clientArgs(http::verb::get, {} /*headers*/);
+    auto resource = IHttpResource::Make();
+    resource->SetOnResponse([&clientArgs](int64_t, IHttpResource::Response&& res)
+    {
+      clientArgs.Response = std::move(res);
+    });
+    resource->SetOnData([&clientArgs](int64_t, string&& content)
+    {
+      clientArgs.ResponseContent = std::move(content);
+      clientArgs.ContentPromise.set_value();
+    });
+    resource->SetOnError([&clientArgs](int64_t, string&& message, bool)
+    {
+      clientArgs.ErrorMessage = std::move(message);
+      clientArgs.ContentPromise.set_value();
+    });
+
+    resource->SendRequest(
+      string { http::to_string(clientArgs.Method).data() },
+      string { "http://localhost:5555/officedev/office-js/issues/4144"},
+      0,                          /*requestId*/
+      std::move(clientArgs.RequestHeaders),
+      { { "string", "" } },       /*data*/
+      "text",
+      false,                      /*useIncrementalUpdates*/
+      0,                          /*timeout*/
+      clientArgs.WithCredentials, /*withCredentials*/
+      [](int64_t) {}              /*reactCallback*/
+    );
+
+    clientArgs.ContentPromise.get_future().wait();
+
+    Assert::AreEqual({}, clientArgs.ErrorMessage);
+  }
+
   TEST_METHOD(FullCorsPreflightSucceeds)
   {
     ServerParams serverArgs(s_port);

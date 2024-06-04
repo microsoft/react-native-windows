@@ -62,6 +62,12 @@ namespace Microsoft.ReactNative.Composition.Input
       XButton2Released,
   };
 
+  runtimeclass Pointer
+  {
+    PointerDeviceType PointerDeviceType { get; };
+    UInt32 PointerId{ get; };
+  };
+
   runtimeclass PointerPointProperties
   {
     Windows.Foundation.Rect ContactRect { get; };
@@ -96,13 +102,14 @@ namespace Microsoft.ReactNative.Composition.Input
     Windows.Foundation.Point Position { get; };
     PointerPointProperties Properties{ get; };
     UInt64 Timestamp { get; };
-    PointerPoint GetTransformedPoint(
-        IPointerPointTransform transform);
+    PointerPoint GetOffsetPoint(
+        Windows.Foundation.Point offset);
   };
 
   runtimeclass PointerRoutedEventArgs : RoutedEventArgs
   {
     PointerPoint GetCurrentPoint(Int32 tag);
+    Pointer Pointer { get; };
     Boolean Handled;
     Windows.System.VirtualKeyModifiers KeyModifiers { get; };
   };

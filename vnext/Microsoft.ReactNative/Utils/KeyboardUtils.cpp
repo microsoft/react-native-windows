@@ -348,6 +348,14 @@ static const std::string GetOrUnidentified(
   return "Unidentified";
 }
 
+const std::string GetOrUnidentifiedCode(winrt::Windows::System::VirtualKey virtualKey) {
+  return GetOrUnidentified(virtualKey, g_virtualKeyToCode);
+}
+
+const std::string GetOrUnidentifiedKey(winrt::Windows::System::VirtualKey virtualKey) {
+  return GetOrUnidentified(virtualKey, g_virtualKeyToKey);
+}
+
 std::string FromVirtualKey(winrt::Windows::System::VirtualKey virtualKey, bool fShift, bool fCaps) {
   int vk = static_cast<int>(virtualKey);
 
@@ -362,7 +370,7 @@ std::string FromVirtualKey(winrt::Windows::System::VirtualKey virtualKey, bool f
     return std::string{c};
   }
 
-  return GetOrUnidentified(virtualKey, g_virtualKeyToKey);
+  return GetOrUnidentifiedKey(virtualKey);
 }
 
 bool IsModifiedKeyPressed(winrt::CoreWindow const &coreWindow, winrt::Windows::System::VirtualKey virtualKey) {
@@ -410,7 +418,7 @@ std::string CodeFromVirtualKey(winrt::Windows::System::VirtualKey virtualKey) {
     }
   }
 
-  return GetOrUnidentified(virtualKey, g_virtualKeyToCode);
+  return GetOrUnidentifiedCode(virtualKey);
 }
 
 } // namespace Microsoft::ReactNative

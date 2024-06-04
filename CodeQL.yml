@@ -1,0 +1,44 @@
+# This file is used to configure CodeQL alerts.
+# See https://eng.ms/docs/cloud-ai-platform/devdiv/one-engineering-system-1es/1es-docs/codeql/configuring-codeql3000-ado-pipelines#excluding-external-libraries-test-files-generated-files-docs
+
+path_classifiers:
+  library:
+    - "**/vnext/ReactCommon"
+  template:
+    - "**/vnext/template"
+    - "**/vnext/templates"
+  test:
+    # Explicitly include jest test paths
+    - "**/__flowtests__"
+    - "**/__tests__"
+    - "**/src/e2etest"
+    - "**/src/test"
+    # Explicitly include test projects
+    - "**/packages/@office-iss/react-native-win32-tester"
+    - "**/packages/@react-native/tester"
+    - "**/packages/@react-native-windows/tester"
+    - "**/packages/debug-test"
+    - "**/packages/e2e-test-app"
+    - "**/packages/e2e-test-app-fabric"
+    - "**/packages/integration-test-app"
+    - "**/packages/playground"
+    - "**/packages/sample-apps"
+    - "**/packages/sample-app-fabric"
+    - "**/vnext/Desktop.ABITests"
+    - "**/vnext/Desktop.IntegrationTests"
+    - "**/vnext/Desktop.Test.DLL"
+    - "**/vnext/Desktop.UnitTests"
+    - "**/vnext/Microsoft.ReactNative.ComponentTests"
+    - "**/vnext/Microsoft.ReactNative.Cxx.UnitTests"
+    - "**/vnext/Microsoft.ReactNative.IntegrationTests"
+    - "**/vnext/Microsoft.ReactNative.Managed.CodeGen.UnitTests"
+    - "**/vnext/Microsoft.ReactNative.Managed.UnitTests"
+    - "**/vnext/Mso.UnitTests"
+    - "**/vnext/ReactCommon.UnitTests"
+    - "**/vnext/Test"
+    # Other explicit test includes
+    - "**/packages/@office-iss/react-native-win32/IntegrationTests"
+    - "**/packages/@office-iss/react-native-win32/src-win/IntegrationTests"
+    - "**/vnext/IntegrationTests"
+    - "**/vnext/ReactCopies/IntegrationTests"
+    - "**/vnext/src-win/IntegrationTests"

@@ -1,0 +1,93 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "IReactContext.idl";
+import "CompositionSwitcher.idl";
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative.Composition
+{
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  DOC_STRING(
+    "Provides information about an image source requested by the application.")
+  runtimeclass ImageSource
+  {
+    Windows.Foundation.Uri Uri { get; };
+    Windows.Foundation.Size Size { get; };
+    Single Scale { get; };
+  };
+
+  [webhosthidden]
+  [experimental]
+  [default_interface]
+  unsealed runtimeclass ImageResponse
+  {
+  }
+
+  [webhosthidden]
+  [experimental]
+  [default_interface]
+   DOC_STRING(
+    "Use this as a return value from @IUriImageProvider.GetImageResponseAsync to provide information about why the image load failed.")
+  runtimeclass ImageFailedResponse : ImageResponse
+  {
+    ImageFailedResponse(String errorMessage);
+    ImageFailedResponse(String errorMessage, Windows.Web.Http.HttpStatusCode responseCode, Windows.Web.Http.Headers.HttpResponseHeaderCollection responseHeaders);
+  }
+
+  [webhosthidden]
+  [experimental]
+  [default_interface]
+  runtimeclass StreamImageResponse : ImageResponse
+  {
+   DOC_STRING(
+    "Takes a stream of an image file that can be decoded by Windows Imaging Component - https://learn.microsoft.com/en-us/windows/win32/api/_wic/ ")
+    StreamImageResponse(Windows.Storage.Streams.IRandomAccessStream stream);
+  }
+ 
+  [webhosthidden]
+  [experimental]
+  delegate Microsoft.UI.Composition.CompositionBrush UriBrushFactory(Microsoft.ReactNative.IReactContext reactContext, Microsoft.UI.Composition.Compositor compositor);
+
+  [webhosthidden]
+  [experimental]
+  [default_interface]
+  DOC_STRING(
+    "This allows applications to provide their own image rendering pipeline. Or to generate graphics on the fly based on uri.")
+  runtimeclass UriBrushFactoryImageResponse : ImageResponse
+  {
+    UriBrushFactoryImageResponse(UriBrushFactory factory);
+  }
+
+  namespace Experimental {
+
+  [webhosthidden]
+  [experimental]
+  delegate Microsoft.ReactNative.Composition.Experimental.IBrush UriBrushFactory(Microsoft.ReactNative.IReactContext reactContext, Microsoft.ReactNative.Composition.Experimental.ICompositionContext compositionContext);
+
+  [webhosthidden]
+  [experimental]
+  [default_interface]
+  DOC_STRING(
+    "This allows applications to provide their own image rendering pipeline. Or to generate graphics on the fly based on uri.")
+  runtimeclass UriBrushFactoryImageResponse : Microsoft.ReactNative.Composition.ImageResponse
+  {
+    UriBrushFactoryImageResponse(UriBrushFactory factory);
+  }
+  } // namespace Experimental
+
+  [webhosthidden]
+  [experimental]
+    DOC_STRING(
+      "This allows applications to provide their own image caching / storage pipelines. Or to generate images on the fly based on uri.")
+  interface IUriImageProvider
+  {
+    DOC_STRING(
+      "This should return true if this provider will provide an image for the provided uri.")
+    Boolean CanLoadImageUri(Microsoft.ReactNative.IReactContext context, Windows.Foundation.Uri uri);
+    Windows.Foundation.IAsyncOperation<ImageResponse> GetImageResponseAsync(Microsoft.ReactNative.IReactContext context, ImageSource imageSource);
+  }
+} // namespace Microsoft.ReactNative.Composition

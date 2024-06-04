@@ -69,14 +69,49 @@ interface AliasCodeMap {
   [name: string]: AliasCode;
 }
 
+function getArrayTypeName(
+  type: Nullable<NativeModuleBaseTypeAnnotation>): string {
+    if (type.type === 'ArrayTypeAnnotation' && type.elementType?.type === 'TypeAliasTypeAnnotation') {
+      return  type.elementType.name;
+    }
+
+    return '';
+}
+
+function checkTypes(
+  aliases: AliasMap,
+  type: NativeModuleObjectTypeAnnotation,
+  aliasOrder: string[]): void {
+    for (const prop of type.properties) {
+      const propType = prop.typeAnnotation;
+      let propName = '';
+
+      if (propType.type === 'TypeAliasTypeAnnotation') {
+        propName = propType.name;
+      }
+
+      if (propType.type === 'ArrayTypeAnnotation') {
+        propName = getArrayTypeName(propType);
+      }
+
+      if (propName !== '' && !aliasOrder.includes(prop.name) && !aliases.jobs.includes(propName)) {
+        aliases.jobs.push(propName);
+      }
+    }
+}
+
 function generateSingleAlias(
   aliases: AliasMap,
   aliasName: string,
   aliasCode: AliasCodeMap,
   options: CppCodegenOptions,
+  aliasOrder: string[],
 ): void {
   const aliasCppName = getAliasCppName(aliasName);
   const aliasType = <NativeModuleObjectTypeAnnotation>aliases.types[aliasName];
+
+  checkTypes(aliases, aliasType, aliasOrder);
+
   const definition = `
 struct ${aliasCppName} {
 ${translateObjectMembersDefinition(
@@ -114,7 +149,7 @@ function generateNestedAliasesInCorrectOrder(
     // generate a new struct and all fields will be examined
     // new anonymous objects could be found
     // they will be stored in aliases.jobs
-    generateSingleAlias(aliases, aliasName, aliasCode, options);
+    generateSingleAlias(aliases, aliasName, aliasCode, options, aliasOrder);
     // nested C++ structs must be put before the current C++ struct
     // as they will be used in the current C++ struct
     // the order will be perfectly and easily ensured by doing this recursively
@@ -126,7 +161,9 @@ function generateNestedAliasesInCorrectOrder(
     );
     // all referenced C++ structs are generated
     // put the current one following them
-    aliasOrder.push(aliasName);
+    if (!aliasOrder.includes(aliasName)) {
+      aliasOrder.push(aliasName);
+    }
   }
 }
 

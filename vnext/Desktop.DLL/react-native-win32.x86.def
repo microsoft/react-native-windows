@@ -31,6 +31,7 @@ EXPORTS
 ?moduleNames@ModuleRegistry@react@facebook@@QAE?AV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@XZ
 ?at@dynamic@folly@@QGBEABU12@V?$Range@PBD@2@@Z
 ?atImpl@dynamic@folly@@AGBEABU12@ABU12@@Z
+?getRuntimeExecutor@Instance@react@facebook@@QAE?AV?$function@$$A6GX$$QAV?$function@$$A6GXAAVRuntime@jsi@facebook@@@Z@std@@@Z@std@@XZ
 ?callJSFunction@Instance@react@facebook@@QAEX$$QAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@0$$QAUdynamic@folly@@@Z
 ?createI18nModule@windows@react@@YG?AV?$unique_ptr@VCxxModule@module@xplat@facebook@@U?$default_delete@VCxxModule@module@xplat@facebook@@@std@@@std@@V?$unique_ptr@UII18nModule@windows@react@@U?$default_delete@UII18nModule@windows@react@@@std@@@4@@Z
 ??$to_ascii_size_route@$09@detail@folly@@YGI_K@Z
@@ -59,9 +60,10 @@ EXPORTS
 ?MakeJSQueueThread@ReactNative@Microsoft@@YG?AV?$shared_ptr@VMessageQueueThread@react@facebook@@@std@@XZ
 ?Hash128@SpookyHashV2@hash@folly@@SGXPBXIPA_K1@Z
 ?assertionFailure@detail@folly@@YGXPBD00I0H@Z
-??1Instance@react@facebook@@QAE@XZ
-?invokeAsync@JSCallInvoker@Instance@react@facebook@@UAEX$$QAV?$function@$$A6GXXZ@std@@@Z
-?invokeSync@JSCallInvoker@Instance@react@facebook@@UAEX$$QAV?$function@$$A6GXXZ@std@@@Z
+??1Instance@react@facebook@@UAE@XZ
+??1InstanceTargetDelegate@jsinspector_modern@react@facebook@@UAE@XZ
+?invokeAsync@JSCallInvoker@Instance@react@facebook@@UAEX$$QAV?$function@$$A6GXAAVRuntime@jsi@facebook@@@Z@std@@@Z
+?invokeSync@JSCallInvoker@Instance@react@facebook@@UAEX$$QAV?$function@$$A6GXAAVRuntime@jsi@facebook@@@Z@std@@@Z
 
 MicrosoftReactSetRuntimeOptionBool
 MicrosoftReactSetRuntimeOptionInt
@@ -78,6 +80,7 @@ _YGConfigGetUseWebDefaults@4
 _YGConfigIsExperimentalFeatureEnabled@8
 _YGConfigNew@0
 _YGConfigSetContext@8
+_YGConfigSetErrata@8
 _YGConfigSetExperimentalFeatureEnabled@12
 _YGConfigSetLogger@8
 _YGConfigSetPointScaleFactor@8
@@ -125,7 +128,6 @@ _YGNodeSetContext@8
 _YGNodeSetHasNewLayout@8
 _YGNodeSetMeasureFunc@8
 _YGNodeSetNodeType@8
-_YGNodeSetPrintFunc@8
 _YGNodeStyleGetAlignContent@4
 _YGNodeStyleGetAlignItems@4
 _YGNodeStyleGetAlignSelf@4
@@ -194,7 +196,6 @@ _YGNodeStyleSetWidthPercent@8
 _YGNodeTypeToString@4
 _YGOverflowToString@4
 _YGPositionTypeToString@4
-_YGPrintOptionsToString@4
 _YGUnitToString@4
 _YGWrapToString@4
 

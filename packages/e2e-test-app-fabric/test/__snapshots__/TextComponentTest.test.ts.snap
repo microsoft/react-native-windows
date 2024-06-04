@@ -5,24 +5,19 @@ exports[`Text Tests Padding can be added to Text 1`] = `
   "Automation Tree": {
     "AutomationId": "text-padding",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "This text is indented by 10px padding on all sides.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-padding",
+    },
+  },
   "Visual Tree": {
     "Comment": "text-padding",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      39,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 39",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -33,24 +28,19 @@ exports[`Text Tests Text can be restricted to one line 1`] = `
   "Automation Tree": {
     "AutomationId": "text-one-line",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
-    "Name": "Maximum of one line no matter now much I write here. If I keep writing it'll just truncate after one line. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.",
+    "Name": "Maximum of one line no matter now much I write here. If I keep writing it'll just truncate after one line",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-one-line",
+    },
   },
   "Visual Tree": {
     "Comment": "text-one-line",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      19,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "300, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -61,24 +51,19 @@ exports[`Text Tests Text can be selectable 1`] = `
   "Automation Tree": {
     "AutomationId": "text-selectable",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "This text is selectable if you click-and-hold, and will offer the native Android selection menus.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-selectable",
+    },
+  },
   "Visual Tree": {
     "Comment": "text-selectable",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      19,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 19",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -89,24 +74,19 @@ exports[`Text Tests Text can have a color 1`] = `
   "Automation Tree": {
     "AutomationId": "text-color",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Red color",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-color",
+    },
+  },
   "Visual Tree": {
     "Comment": "text-color",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      19,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -117,24 +97,19 @@ exports[`Text Tests Text can have a customized selection color 1`] = `
   "Automation Tree": {
     "AutomationId": "text-selection-color",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "This text will have a orange highlight on selection.",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-selection-color",
+    },
+  },
   "Visual Tree": {
     "Comment": "text-selection-color",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -145,24 +120,19 @@ exports[`Text Tests Text can have a size 1`] = `
   "Automation Tree": {
     "AutomationId": "text-size",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Size 23",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-size",
+    },
+  },
   "Visual Tree": {
     "Comment": "text-size",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      32,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 31",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -173,24 +143,19 @@ exports[`Text Tests Text can have an outer color 1`] = `
   "Automation Tree": {
     "AutomationId": "text-outer-color",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "(Normal text,(R)red(G)green(B)blue(C)cyan(M)magenta(Y)yellow(K)black(and bold(and tiny bold italic blue(and tiny normal blue))))",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-outer-color",
+    },
+  },
   "Visual Tree": {
     "Comment": "text-outer-color",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      19,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -201,24 +166,19 @@ exports[`Text Tests Text can have decoration lines: Solid Line Through 1`] = `
   "Automation Tree": {
     "AutomationId": "text-decoration-solid-linethru",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Solid line-through",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-decoration-solid-linethru",
+    },
+  },
   "Visual Tree": {
     "Comment": "text-decoration-solid-linethru",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      20,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 19",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -229,24 +189,19 @@ exports[`Text Tests Text can have decoration lines: Underline 1`] = `
   "Automation Tree": {
     "AutomationId": "text-decoration-underline",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Solid underline",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-decoration-underline",
+    },
+  },
   "Visual Tree": {
     "Comment": "text-decoration-underline",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      19,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -257,24 +212,19 @@ exports[`Text Tests Text can have shadows 1`] = `
   "Automation Tree": {
     "AutomationId": "text-shadow",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
     "Name": "Demo text shadow",
   },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-shadow",
+    },
+  },
   "Visual Tree": {
     "Comment": "text-shadow",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      28,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "916, 28",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -285,24 +235,19 @@ exports[`Text Tests Text can wrap 1`] = `
   "Automation Tree": {
     "AutomationId": "text-wrap",
     "ControlType": 50020,
-    "HelpText": "",
-    "IsEnabled": true,
-    "IsKeyboardFocusable": false,
     "LocalizedControlType": "text",
-    "Name": "The text should wrap if it goes on multiple lines. See, this is going to the next line. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed dapibus felis eget augue condimentum suscipit. Suspendisse hendrerit, libero aliquet malesuada tempor, urna nibh consectetur tellus, vitae efficitur quam erat non mi. Maecenas vitae eros sit amet quam vestibulum porta sed sit amet tellus. Fusce quis lectus congue, fringilla arcu id, luctus urna. Cras sagittis ornare mauris sit amet dictum. Vestibulum feugiat laoreet fringilla. Vivamus ac diam vehicula felis venenatis sagittis vitae ultrices elit. Curabitur libero augue, laoreet quis orci vitae, congue euismod massa. Aenean nec odio sed urna vehicula fermentum non a magna. Quisque ut commodo neque, eget eleifend odio. Sed sit amet lacinia sem. Suspendisse in metus in purus scelerisque vestibulum. Nam metus dui, efficitur nec metus non, tincidunt pharetra sapien. Praesent id convallis metus, ut malesuada arcu. Quisque quam libero, pharetra eu tellus ac, aliquam fringilla erat. Quisque tempus in lorem ac suscipit.",
+    "Name": "The text should wrap if it goes on multiple lines. See, this is going to the next line.",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+    "_Props": {
+      "TestId": "text-wrap",
+    },
   },
   "Visual Tree": {
     "Comment": "text-wrap",
-    "Offset": [
-      0,
-      0,
-      0,
-    ],
-    "Opacity": 1,
-    "Size": [
-      916,
-      150,
-    ],
+    "Offset": "0, 0, 0",
+    "Size": "300, 38",
     "Visual Type": "SpriteVisual",
   },
 }

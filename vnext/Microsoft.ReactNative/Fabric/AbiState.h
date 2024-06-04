@@ -23,13 +23,7 @@ struct AbiComponentState : winrt::implements<AbiComponentState, winrt::Microsoft
 
   winrt::Windows::Foundation::IInspectable Data() noexcept;
   void UpdateState(const winrt::Windows::Foundation::IInspectable &data) noexcept;
-  void UpdateStateWithPriority(
-      const winrt::Windows::Foundation::IInspectable &data,
-      winrt::Microsoft::ReactNative::EventPriority priority) noexcept;
   void UpdateStateWithMutation(const winrt::Microsoft::ReactNative::StateUpdateMutation &mutation) noexcept;
-  void UpdateStateWithMutationAndPriority(
-      const winrt::Microsoft::ReactNative::StateUpdateMutation &mutation,
-      winrt::Microsoft::ReactNative::EventPriority priority) noexcept;
 
  private:
   std::shared_ptr<facebook::react::ConcreteState<AbiStateData> const> m_state;

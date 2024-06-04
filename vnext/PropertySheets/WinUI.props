@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="WinUI3 versioning">
+
+    <!-- 
+      Internal versions are located at: https://microsoft.visualstudio.com/DefaultCollection/ProjectReunion/_artifacts/feed/Project.Reunion.nuget.internal/NuGet/Microsoft.WindowsAppSDK/versions
+      For local testing of internal versions, modify the WinUI3Version, and comment out the addition nuget source in NuGet.Config
+    -->
     <!-- This value is also used by the CLI, see /packages/@react-native-windows/generate-windows -->
-    <WinUI3Version Condition="'$(WinUI3Version)'==''">1.4.230913002</WinUI3Version>
+    <WinUI3Version Condition="'$(WinUI3Version)'=='' AND '$(UseExperimentalWinUI3)'=='true'">1.5.240124002-experimental2</WinUI3Version>
+    <WinUI3Version Condition="'$(WinUI3Version)'==''">1.5.240227000</WinUI3Version>
   </PropertyGroup>
 
   <PropertyGroup Label="WinUI2x versioning">
@@ -36,10 +42,12 @@
     <!-- Enlighten C++ code about WinUI3 -->
     <ClCompile>
       <PreprocessorDefinitions>USE_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(UseExperimentalWinUI3)'=='true'">USE_EXPERIMENTAL_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <!-- Enlighten IDL interfaces about WinUI3 -->
     <Midl>
       <PreprocessorDefinitions>USE_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(UseExperimentalWinUI3)'=='true'">USE_EXPERIMENTAL_WINUI3;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
   </ItemDefinitionGroup>
 

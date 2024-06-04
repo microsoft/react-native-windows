@@ -23,6 +23,7 @@ function makeMetroConfig(customConfig = {}) {
         // busy or locked for files produced by MSBuild
         /.*\/build\/.*/,
         /.*\/target\/.*/,
+        /.*\/\.vs\/.*/,
         /.*\.tlog/,
       ]),
     },

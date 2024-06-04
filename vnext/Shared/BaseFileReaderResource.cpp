@@ -3,10 +3,7 @@
 
 #include "BaseFileReaderResource.h"
 
-// Boost Library
-#include <boost/archive/iterators/base64_from_binary.hpp>
-#include <boost/archive/iterators/ostream_iterator.hpp>
-#include <boost/archive/iterators/transform_width.hpp>
+#include <utilities.h>
 
 // Windows API
 #include <winrt/base.h>
@@ -73,18 +70,9 @@ void BaseFileReaderResource::ReadAsDataUrl(
   result += type;
   result += ";base64,";
 
-  // https://www.boost.org/doc/libs/1_76_0/libs/serialization/doc/dataflow.html
-  using namespace boost::archive::iterators;
-  typedef base64_from_binary<transform_width<const char *, 6, 8>> encode_base64;
-  std::ostringstream oss;
-  std::copy(encode_base64(bytes.cbegin()), encode_base64(bytes.cend()), ostream_iterator<char>(oss));
-  result += oss.str();
-
-  // https://unix.stackexchange.com/questions/631501
-  auto padLength = 4 - (oss.tellp() % 4);
-  for (auto i = 0; i < padLength; ++i) {
-    result += '=';
-  }
+  auto chars = reinterpret_cast<const char *>(bytes.data());
+  auto view = std::string_view(chars, bytes.size());
+  result += Utilities::EncodeBase64(view);
 
   resolver(std::move(result));
 }

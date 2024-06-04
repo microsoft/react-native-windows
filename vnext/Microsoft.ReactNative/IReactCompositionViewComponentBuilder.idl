@@ -8,97 +8,21 @@ import "IJSValueReader.idl";
 import "IReactContext.idl";
 import "IReactViewComponentBuilder.idl";
 import "ViewProps.idl";
+import "ComponentView.idl";
+import "CompositionComponentView.idl";
 
 namespace Microsoft.ReactNative.Composition
 {
-  [webhosthidden]
   [experimental]
-  struct LayoutMetrics {
-    Windows.Foundation.Rect Frame;
-    Single PointScaleFactor;
-  };
-
-  [experimental]
-  DOC_STRING("Provides a factory method to create an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetCreateView")
-  delegate Object CompositionComponentFactory(Microsoft.ReactNative.IReactContext reactContext, ICompositionContext context);
-
-  // TODO should make an event args, with a handled bit instead of return value
-  [experimental]
-  DOC_STRING("A delegate that handles commands for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetCommandHandler")
-  delegate Boolean CommandHandler(Object componentHandle, String commandName, Microsoft.ReactNative.IJSValueReader args);
-
-  [experimental]
-  DOC_STRING("A delegate that updates the properties for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetPropsUpdater")
-  delegate void PropsUpdater(Object componentHandle, Microsoft.ReactNative.IComponentProps props);
-
-  [experimental]
-  DOC_STRING("A delegate that updates the @LayoutMetrics for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetLayoutMetricsUpdater")
-  delegate void LayoutMetricsUpdater(Object componentHandle, LayoutMetrics metrics);
-
-  [experimental]
-  DOC_STRING("A delegate that finalizes the updates for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetUpdateFinalizer")
-  delegate void UpdateFinalizer(Object componentHandle);
-
-  [experimental]
-  DOC_STRING("A delegate that creates the @IVisual for an instance of a ViewComponent. See @IReactCompositionViewComponentBuilder.SetVisualCreator")
-  delegate IVisual VisualCreator(Object componentHandle);
-
-  [experimental]
-  delegate void KeyHandler(Object componentHandle, Microsoft.ReactNative.Composition.Input.KeyboardSource source, Microsoft.ReactNative.Composition.Input.KeyRoutedEventArgs args);
-
-  [experimental]
-  delegate void CharacterReceivedHandler(Object componentHandle, Microsoft.ReactNative.Composition.Input.KeyboardSource source, Microsoft.ReactNative.Composition.Input.CharacterReceivedRoutedEventArgs args);
-
-  [experimental]
-  delegate void PointerHandler(Object componentHandle, Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
+  DOC_STRING("Provides a factory method to create an instance of a ViewComponentView. See @IReactCompositionViewComponentBuilder.SetCreateViewComponentView")
+  delegate Microsoft.ReactNative.Composition.ViewComponentView CompositionViewComponentViewFactory(CreateCompositionComponentViewArgs args);
 
   [webhosthidden]
   [experimental]
   DOC_STRING(".")
   interface IReactCompositionViewComponentBuilder
   {
-    // (ICompositionContext) => Handle
-    void SetCreateView(CompositionComponentFactory impl);
-
-    DOC_STRING("Called when a command is run against this component.  If the command is handled this function should return true.")
-    // (Object handle, String commandName, Microsoft.ReactNative.IJSValueReader args) => bool
-    void SetCommandHandler(CommandHandler commandHandler);
-
-    // TODO -void UpdateEventEmitter(IEventEmitter emitter);
-
-    DOC_STRING("Called whenever the properties change.")
-    // (Object handle, Microsoft.ReactNative.IComponentProps props) => void
-    void SetPropsUpdater(PropsUpdater impl);
-
-    DOC_STRING("Called whenever the layout metrics change.")
-    // (Object handle, LayoutMetrics metrics) => void
-    void SetLayoutMetricsUpdater(LayoutMetricsUpdater impl);
-
-    // TODO - void UpdateState(...);
-
-    DOC_STRING("Called on any update, after props, layout, and state have been updated.")
-    // (Object handle) => void
-    void SetUpdateFinalizer(UpdateFinalizer impl);
-
-    DOC_STRING("This visual will be added to the visual tree, and should be used to display this component.")
-    // (Object handle) => IVisual
-    void SetVisualCreator(VisualCreator impl);
-
-    DOC_STRING("Used to handle key down events when this component is focused, or if a child component did not handle the key down")
-    void SetKeyDownHandler(KeyHandler impl);
-
-    DOC_STRING("Used to handle key up events when this component is focused, or if a child component did not handle the key up")
-    void SetKeyUpHandler(KeyHandler impl);
-
-    void SetCharacterReceivedHandler(CharacterReceivedHandler impl);
-
-    void SetPointerPressedHandler(PointerHandler impl);
-    void SetPointerReleasedHandler(PointerHandler impl);
-    void SetPointerMovedHandler(PointerHandler impl);
-    void SetPointerWheelChangedHandler(PointerHandler impl);
-    void SetPointerEnteredHandler(PointerHandler impl);
-    void SetPointerExitedHandler(PointerHandler impl);
-
+    void SetCreateViewComponentView(CompositionViewComponentViewFactory impl);
   };
 
 } // namespace Microsoft.ReactNative

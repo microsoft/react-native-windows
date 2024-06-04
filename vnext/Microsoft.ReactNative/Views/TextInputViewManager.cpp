@@ -319,7 +319,7 @@ void TextInputShadowNode::registerEvents() {
       }
     }
 
-    auto contentElement = control.GetTemplateChild(L"ContentElement");
+    auto contentElement = control.as<xaml::Controls::IControlProtected>().GetTemplateChild(L"ContentElement");
     auto textBoxView = contentElement.as<xaml::Controls::ScrollViewer>();
     if (textBoxView) {
       m_scrollViewerViewChangingRevoker = textBoxView.ViewChanging(
@@ -674,11 +674,6 @@ void TextInputShadowNode::updateProperties(winrt::Microsoft::ReactNative::JSValu
             xaml::Controls::ScrollViewer::SetVerticalScrollMode(textBox, scrollMode);
             xaml::Controls::ScrollViewer::SetHorizontalScrollMode(textBox, scrollMode);
           }
-        } else if (propertyName == "selection") {
-          if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Object) {
-            auto selection = json_type_traits<Selection>::parseJson(propertyValue);
-            SetSelection(selection.start, selection.end);
-          }
         } else if (propertyName == "spellCheck") {
           if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::Boolean)
             textBox.IsSpellCheckEnabled(propertyValue.AsBoolean());
@@ -840,7 +835,6 @@ void TextInputViewManager::GetNativeProps(const winrt::Microsoft::ReactNative::I
   React::WriteProperty(writer, L"placeholderTextColor", L"Color");
   React::WriteProperty(writer, L"scrollEnabled", L"boolean");
   React::WriteProperty(writer, L"cursorColor", L"Color");
-  React::WriteProperty(writer, L"selection", L"Map");
   React::WriteProperty(writer, L"selectionColor", L"Color");
   React::WriteProperty(writer, L"selectTextOnFocus", L"boolean");
   React::WriteProperty(writer, L"spellCheck", L"boolean");

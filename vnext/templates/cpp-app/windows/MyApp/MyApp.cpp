@@ -20,9 +20,6 @@ struct CompReactPackageProvider
 constexpr PCWSTR windowTitle = L"{{ mainComponentName }}";
 constexpr PCWSTR mainComponentName = L"{{ mainComponentName }}";
 
-HWND global_hwnd;
-winrt::Microsoft::ReactNative::CompositionRootView *global_rootView{nullptr};
-
 float ScaleFactor(HWND hwnd) noexcept {
   return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
 }
@@ -34,16 +31,22 @@ void UpdateRootViewSizeToAppWindow(
   auto scaleFactor = ScaleFactor(hwnd);
   winrt::Windows::Foundation::Size size{
       window.ClientSize().Width / scaleFactor, window.ClientSize().Height / scaleFactor};
-  rootView.Arrange(size);
-  rootView.Size(size);
+  // Do not relayout when minimized
+  if (window.Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>().State() !=
+      winrt::Microsoft::UI::Windowing::OverlappedPresenterState::Minimized) {
+    winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+    constraints.MaximumSize = constraints.MinimumSize = size;
+    rootView.Arrange(constraints, {0,0});
+  }
 }
 
 // Create and configure the ReactNativeHost
 winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
     HWND hwnd,
     const winrt::Microsoft::UI::Composition::Compositor &compositor) {
-  WCHAR workingDir[MAX_PATH];
-  GetCurrentDirectory(MAX_PATH, workingDir);
+  WCHAR appDirectory[MAX_PATH];
+  GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
+  PathCchRemoveFileSpec(appDirectory, MAX_PATH);
 
   auto host = winrt::Microsoft::ReactNative::ReactNativeHost();
 
@@ -52,25 +55,28 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
 
   host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
 
+#if BUNDLE
   host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
-  host.InstanceSettings().DebugBundlePath(L"index");
-
-  host.InstanceSettings().BundleRootPath(std::wstring(L"file:").append(workingDir).append(L"\\Bundle\\").c_str());
-  host.InstanceSettings().DebuggerBreakOnNextLine(false);
-#if _DEBUG
-  host.InstanceSettings().UseDirectDebugger(true);
+  host.InstanceSettings().BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
+  host.InstanceSettings().UseFastRefresh(false);
+#else
+  host.InstanceSettings().JavaScriptBundleFile(L"index");
   host.InstanceSettings().UseFastRefresh(true);
 #endif
+
+#if _DEBUG
+  host.InstanceSettings().UseDirectDebugger(true);
   host.InstanceSettings().UseDeveloperSupport(true);
+#else
+  host.InstanceSettings().UseDirectDebugger(false);
+  host.InstanceSettings().UseDeveloperSupport(false);
+#endif
 
   winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
       host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
-  // By using the MicrosoftCompositionContextHelper here, React Native Windows will use Lifted Visuals for its
-  // tree.
-  winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositionContext(
-      host.InstanceSettings().Properties(),
-      winrt::Microsoft::ReactNative::Composition::MicrosoftCompositionContextHelper::CreateContext(compositor));
+  winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(
+      host.InstanceSettings(), compositor);
 
   return host;
 }
@@ -95,7 +101,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   window.Resize({1000, 1000});
   window.Show();
   auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
-  global_hwnd = hwnd;
   auto scaleFactor = ScaleFactor(hwnd);
 
   auto host = CreateReactNativeHost(hwnd, compositor);
@@ -137,8 +142,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   bridge.Connect(rootView.Island());
   bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
-  auto invScale = 1.0f / scaleFactor;
-  rootView.RootVisual().Scale({invScale, invScale, invScale});
   rootView.ScaleFactor(scaleFactor);
 
   // Set the intialSize of the root view

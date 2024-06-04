@@ -8,7 +8,7 @@
 #include <Views/ViewManagerBase.h>
 
 #include <folly/dynamic.h>
-#include <yoga/yoga.h>
+#include <yoga/Yoga.h>
 
 #include <ReactHost/React.h>
 #include <ReactRootView.h>
@@ -118,7 +118,7 @@ class NativeUIManager final : public INativeUIManager {
 
   std::unordered_map<int64_t, YogaNodePtr> m_tagsToYogaNodes;
   std::unordered_map<int64_t, std::unique_ptr<YogaContext>> m_tagsToYogaContext;
-  std::vector<xaml::FrameworkElement::SizeChanged_revoker> m_sizeChangedVector;
+  std::unordered_map<int64_t, xaml::FrameworkElement::SizeChanged_revoker> m_sizeChangedMap;
   std::vector<std::function<void()>> m_batchCompletedCallbacks;
   std::vector<int64_t> m_extraLayoutNodes;
 

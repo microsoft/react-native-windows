@@ -4,7 +4,7 @@
 #include "NamespaceRedirect.h"
 #include "DocString.h"
 
-namespace Microsoft.ReactNative.Composition
+namespace Microsoft.ReactNative.Composition.Experimental
 {
   enum CompositionStretch
   {
@@ -19,6 +19,15 @@ namespace Microsoft.ReactNative.Composition
     Inherit,
     Visible,
     Hidden
+  };
+  
+  enum AnimationClass
+  {
+    None = 0,
+    ScrollBar,
+    ScrollBarThumbHorizontal,
+    ScrollBarThumbVertical,
+    SwitchThumb,
   };
 
   [webhosthidden]
@@ -64,6 +73,7 @@ namespace Microsoft.ReactNative.Composition
     void RelativeSizeWithOffset(Windows.Foundation.Numerics.Vector2 size, Windows.Foundation.Numerics.Vector2 relativeSizeAdjustment);
     BackfaceVisibility BackfaceVisibility{ get; set; };
     String Comment { get; set; };
+    void AnimationClass(AnimationClass value);
   }
 
   [webhosthidden]
@@ -72,6 +82,16 @@ namespace Microsoft.ReactNative.Composition
   {
     void Brush(IBrush brush);
     void Shadow(IDropShadow shadow);
+  }
+
+  [webhosthidden]
+  [experimental]
+  interface IRoundedRectangleVisual requires IVisual
+  {
+    void Brush(IBrush brush);
+    void CornerRadius(Windows.Foundation.Numerics.Vector2 value);
+    void StrokeBrush(IBrush brush);
+    void StrokeThickness(Single value);
   }
 
   [webhosthidden]
@@ -97,6 +117,7 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   interface IActivityVisual requires IVisual
   {
+    void Size(Single value);
     void Brush(IBrush brush);
   }
 
@@ -107,18 +128,6 @@ namespace Microsoft.ReactNative.Composition
     IVisual InnerVisual { get; };
     void Size(Windows.Foundation.Numerics.Vector2 size);
     void Position(Windows.Foundation.Numerics.Vector2 position);
-    Boolean IsVisible { get; set; };
-    void Brush(IBrush brush);
-  }
-
-  [webhosthidden]
-  [experimental]
-  interface ISwitchThumbVisual
-  {
-    IVisual InnerVisual { get; };
-    Windows.Foundation.Numerics.Vector2 Size{ get; set; };
-    Windows.Foundation.Numerics.Vector2 Position{ get; set; };
-    void AnimatePosition(Windows.Foundation.Numerics.Vector2 position);
     Boolean IsVisible { get; set; };
     void Brush(IBrush brush);
   }
@@ -138,9 +147,9 @@ namespace Microsoft.ReactNative.Composition
   {
     ISpriteVisual CreateSpriteVisual();
     IScrollVisual CreateScrollerVisual();
+    IRoundedRectangleVisual CreateRoundedRectangleVisual();
     IActivityVisual CreateActivityVisual();
     ICaretVisual CreateCaretVisual();
-    ISwitchThumbVisual CreateSwitchThumbVisual();
     IFocusVisual CreateFocusVisual();
     IDropShadow CreateDropShadow();
     IBrush CreateColorBrush(Windows.UI.Color color);
@@ -152,4 +161,4 @@ namespace Microsoft.ReactNative.Composition
     // event Windows.Foundation.EventHandler<RenderingDeviceReplacedArgs> RenderingDeviceReplaced;
   }
 
-} // namespace Microsoft.ReactNative.Composition
+} // namespace Microsoft.ReactNative.Composition.Experimental

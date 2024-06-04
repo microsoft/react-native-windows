@@ -16,13 +16,13 @@
     -->
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">false</EnableSourceLink>
     <!-- When bumping the Folly version, be sure to bump the git hash of that version's commit and build Folly.vcxproj (to update its cgmanifest.json) too. -->
-    <FollyVersion>2023.10.16.00</FollyVersion>
-    <FollyCommitHash>3da4d3ccc4ea69bc10800754816e339d912736bd</FollyCommitHash>
+    <FollyVersion>2023.11.06.00</FollyVersion>
+    <FollyCommitHash>d62707bf4dc8c58bcc317260611b8cbe25c7f444</FollyCommitHash>
     <!-- When bumping the fmt version, be sure to bump the git hash of that version's commit and build fmt.vcxproj (to update its cgmanifest.json) too. -->
     <FmtVersion>10.1.0</FmtVersion>
     <FmtCommitHash>ca2e3685b160617d3d95fcd9e789c4e06ca88</FmtCommitHash>
     <!-- Commit hash for https://github.com/microsoft/node-api-jsi code. -->
-    <NodeApiJsiCommitHash>53b897b03c1c7e57c3372acc6234447a44e150d6</NodeApiJsiCommitHash>
+    <NodeApiJsiCommitHash>83cfef428a97627c9185c73da097e42742de56eb</NodeApiJsiCommitHash>
   </PropertyGroup>
 
   <!--
@@ -30,7 +30,7 @@
     [MSBuild]::NormalizeDirectory on relative paths since cwd is not always correct. This logic should prefer to operate
     on full paths and avoid extra normalization.
   -->
-  <PropertyGroup>
+  <PropertyGroup Label="NodeNativeDeps" Condition="'$(IgnoreNodeNativeDeps)' != 'true'">
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$(MSBuildThisFileDirectory)</ReactNativeWindowsDir>
 
     <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native\package.json'))\node_modules\react-native\</ReactNativeDir>

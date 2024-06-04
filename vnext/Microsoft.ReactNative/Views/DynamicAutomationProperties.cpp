@@ -48,6 +48,26 @@ winrt::Microsoft::ReactNative::AccessibilityRoles DynamicAutomationProperties::G
       element.GetValue(AccessibilityRoleProperty()));
 }
 
+xaml::DependencyProperty DynamicAutomationProperties::AriaRoleProperty() {
+  static xaml::DependencyProperty s_ariaRoleProperty = xaml::DependencyProperty::RegisterAttached(
+      L"AriaRole",
+      winrt::xaml_typename<winrt::Microsoft::ReactNative::AriaRole>(),
+      dynamicAutomationTypeName,
+      winrt::PropertyMetadata(winrt::box_value(winrt::Microsoft::ReactNative::AriaRole::Unknown)));
+
+  return s_ariaRoleProperty;
+}
+
+void DynamicAutomationProperties::SetAriaRole(
+    xaml::UIElement const &element,
+    winrt::Microsoft::ReactNative::AriaRole const &value) {
+  element.SetValue(AriaRoleProperty(), winrt::box_value<Microsoft::ReactNative::AriaRole>(value));
+}
+
+winrt::Microsoft::ReactNative::AriaRole DynamicAutomationProperties::GetAriaRole(xaml::UIElement const &element) {
+  return winrt::unbox_value<winrt::Microsoft::ReactNative::AriaRole>(element.GetValue(AriaRoleProperty()));
+}
+
 xaml::DependencyProperty DynamicAutomationProperties::AccessibilityStateSelectedProperty() {
   static xaml::DependencyProperty s_AccessibilityStateSelectedProperty = xaml::DependencyProperty::RegisterAttached(
       L"AccessibilityStateSelected",

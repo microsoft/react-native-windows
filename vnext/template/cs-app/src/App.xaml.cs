@@ -11,17 +11,17 @@ namespace {{ namespace }}
         {
 #if BUNDLE
             JavaScriptBundleFile = "index.windows";
-            InstanceSettings.UseWebDebugger = false;
             InstanceSettings.UseFastRefresh = false;
 #else
             JavaScriptBundleFile = "index";
-            InstanceSettings.UseWebDebugger = true;
             InstanceSettings.UseFastRefresh = true;
 #endif
 
 #if DEBUG
+            InstanceSettings.UseDirectDebugger = true;
             InstanceSettings.UseDeveloperSupport = true;
 #else
+            InstanceSettings.UseDirectDebugger = false;
             InstanceSettings.UseDeveloperSupport = false;
 #endif
 

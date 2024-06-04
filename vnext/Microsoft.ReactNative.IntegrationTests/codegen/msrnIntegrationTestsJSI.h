@@ -12,8 +12,7 @@
 #include <ReactCommon/TurboModule.h>
 #include <react/bridging/Bridging.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 
   class JSI_EXPORT NativeMySimpleTurboModuleCxxCxxSpecJSI : public TurboModule {
@@ -197,5 +196,4 @@ private:
   Delegate delegate_;
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react

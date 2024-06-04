@@ -10,17 +10,6 @@
 // https://jestjs.io/docs/en/configuration.html
 
 const assetTransform = 'react-native-windows/jest/assetFileTransformer.js';
-const reactNativeTransform = './custom-transformer.js';
-const defaultTransform = [
-  'babel-jest',
-  require('@rnw-scripts/babel-node-config'),
-];
-
-const platformDir =
-  (process.env.E2ETestFabricBuildPlatform === 'x86'
-    ? ''
-    : (process.env.E2ETestFabricBuildPlatform ?? 'x64') + '\\') +
-  (process.env.E2ETestFabricBuildConfiguration ?? 'Release');
 
 module.exports = {
   preset: '@rnx-kit/jest-preset',
@@ -42,11 +31,11 @@ module.exports = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '^.+\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$': assetTransform,
-    'node_modules\\\\@?react-native\\\\.*': reactNativeTransform,
-    '@react-native-windows\\\\tester\\\\.*': reactNativeTransform,
-    'vnext\\\\.*': reactNativeTransform,
-    '^.+\\.[jt]sx?$': defaultTransform,
+    '\\.(bmp|gif|jpg|jpeg|mp4|png|psd|svg|webp)$': assetTransform,
+    'node_modules\\\\@?react-native\\\\.*': 'babel-jest',
+    '@react-native-windows\\\\tester\\\\.*': 'babel-jest',
+    'vnext\\\\.*': 'babel-jest',
+    '\\.[jt]sx?$': 'babel-jest',
   },
 
   //snapshotResolver: 'react-native-windows/jest-snapshot-resolver.js',
@@ -66,8 +55,9 @@ module.exports = {
   setupFilesAfterEnv: ['react-native-windows/jest/setup', './jest.setup.js'],
 
   testEnvironmentOptions: {
-    app: `windows\\${platformDir}\\RNTesterApp-Fabric\\RNTesterApp-Fabric.exe`,
-    appWorkingDir: `windows\\${platformDir}\\RNTesterApp-Fabric`,
+    app: 'RNTesterApp-Fabric', // Both the app package to launch and the window to attach to
+    useRootSession: true, // Required for packages WinAppSDK apps
+    rootLaunchApp: true, // Disable to test an already running app instance
     enableAutomationChannel: true,
     /* // Enable for more detailed logging
     webdriverOptions: {

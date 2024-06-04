@@ -120,6 +120,11 @@ export default class Bootstrap extends React.Component<{}, any> {
             maxLength={10}
             keyboardType="numeric"
           />
+          <TextInput
+            style={styles.input}
+            clearTextOnFocus={true}
+            placeholder={'Clear text on focus'}
+          />
           <Button
             title={
               this.state.passwordHidden

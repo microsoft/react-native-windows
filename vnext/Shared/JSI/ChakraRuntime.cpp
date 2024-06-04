@@ -9,6 +9,7 @@
 
 #include <cxxreact/MessageQueueThread.h>
 
+#include <strsafe.h>
 #include <cstring>
 #include <limits>
 #include <mutex>
@@ -678,6 +679,10 @@ bool ChakraRuntime::instanceOf(const facebook::jsi::Object &obj, const facebook:
   return InstanceOf(GetJsRef(obj), GetJsRef(func));
 }
 
+void ChakraRuntime::setExternalMemoryPressure(const facebook::jsi::Object & /*obj*/, size_t /*amount*/) {
+  // TODO: implement
+}
+
 #pragma endregion Functions_inherited_from_Runtime
 
 // Sets variable in the constructor and then restores its value in the destructor.
@@ -721,8 +726,37 @@ void ChakraRuntime::RewriteErrorMessage(JsValueRef jsError) {
     JsGetAndClearException(&ignoreJSError);
   } else if (GetValueType(message) == JsValueType::JsString) {
     // JSI unit tests expect V8 or JSC like message for stack overflow.
-    if (StringToPointer(message) == L"Out of stack space") {
+    std::wstring_view errorMessage = StringToPointer(message);
+    if (errorMessage == L"Out of stack space") {
       SetProperty(jsError, m_propertyId.message, PointerToString(L"RangeError : Maximum call stack size exceeded"));
+    } else if (errorMessage == L"Syntax error") {
+      JsValueRef result;
+      JsPropertyIdRef property;
+
+      JsGetPropertyIdFromName(L"line", &property);
+      if (JsGetProperty(jsError, property, &result) != JsNoError) {
+        // If the 'line' property getter throws, clear the exception and ignore it.
+        JsValueRef ignoreJSError{JS_INVALID_REFERENCE};
+        JsGetAndClearException(&ignoreJSError);
+        return;
+      }
+
+      // Line numbers start from zero
+      const int32_t line = NumberToInt(result) + 1;
+      wchar_t buf[1024] = {};
+
+      JsGetPropertyIdFromName(L"column", &property);
+      if (JsGetProperty(jsError, property, &result) != JsNoError) {
+        // If the 'column' property getter throws, clear the exception and ignore it.
+        JsValueRef ignoreJSError{JS_INVALID_REFERENCE};
+        JsGetAndClearException(&ignoreJSError);
+        StringCchPrintf(buf, std::size(buf), L"Syntax error at line %i", line);
+      } else {
+        const int32_t column = NumberToInt(result);
+        StringCchPrintf(buf, std::size(buf), L"Syntax error at line %i column %i", line, column);
+      }
+
+      SetProperty(jsError, m_propertyId.message, PointerToString(buf));
     }
   }
 }

@@ -23,6 +23,7 @@
 #define IDC_THEME 109
 #define IDC_THEMELABEL 110
 #define IDC_JSENGINELABEL 111
+#define IDC_SIZETOCONTENT 112
 #define IDI_ICON1 1008
 
 // Next default values for new objects

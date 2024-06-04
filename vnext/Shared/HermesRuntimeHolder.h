@@ -8,6 +8,7 @@
 #include <ReactPropertyBag.h>
 #include <cxxreact/MessageQueueThread.h>
 #include <hermes/hermes_api.h>
+#include <react/runtime/JSRuntimeFactory.h>
 
 namespace Microsoft::ReactNative {
 
@@ -50,6 +51,29 @@ class HermesRuntimeHolder : public Microsoft::JSI::RuntimeHolderLazyInit {
   std::weak_ptr<facebook::react::DevSettings> m_weakDevSettings;
   std::shared_ptr<facebook::react::MessageQueueThread> m_jsQueue;
   std::shared_ptr<facebook::jsi::PreparedScriptStore> m_preparedScriptStore;
+};
+
+class HermesJSRuntime : public facebook::react::JSRuntime {
+ public:
+  HermesJSRuntime(std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> hermesRuntimeHolder);
+
+  facebook::jsi::Runtime &getRuntime() noexcept override;
+  void addConsoleMessage(facebook::jsi::Runtime &runtime, facebook::react::jsinspector_modern::ConsoleMessage message)
+      override;
+  bool supportsConsole() const override;
+  std::unique_ptr<facebook::react::jsinspector_modern::StackTrace> captureStackTrace(
+      facebook::jsi::Runtime &runtime,
+      size_t framesToSkip = 0) override;
+
+  std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate> createAgentDelegate(
+      facebook::react::jsinspector_modern::FrontendChannel frontendChannel,
+      facebook::react::jsinspector_modern::SessionState &sessionState,
+      std::unique_ptr<facebook::react::jsinspector_modern::RuntimeAgentDelegate::ExportedState> previouslyExportedState,
+      const facebook::react::jsinspector_modern::ExecutionContextDescription &executionContextDescription,
+      facebook::react::RuntimeExecutor runtimeExecutor) override;
+
+ private:
+  std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> m_holder;
 };
 
 } // namespace Microsoft::ReactNative

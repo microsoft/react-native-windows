@@ -3,9 +3,11 @@
 
 #pragma once
 
+#include <folly/dynamic.h>
 #include <react/renderer/attributedstring/AttributedString.h>
 #include <react/renderer/attributedstring/ParagraphAttributes.h>
 #include <react/renderer/mapbuffer/MapBuffer.h>
+#include <react/renderer/mapbuffer/MapBufferBuilder.h>
 #include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 
 namespace facebook::react {

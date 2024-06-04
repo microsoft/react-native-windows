@@ -30,8 +30,13 @@ struct WindowsComponentDescriptorRegistry {
   static std::shared_ptr<WindowsComponentDescriptorRegistry> FromProperties(
       const winrt::Microsoft::ReactNative::ReactPropertyBag &props) noexcept;
 
+  bool hasComponentProvider(const std::string &name) noexcept;
+
  private:
+  void add(const facebook::react::ComponentDescriptorProvider &provider) noexcept;
+
   std::vector<std::shared_ptr<const std::string>> m_descriptorFlavors;
+  std::vector<std::string> m_componentNames;
   std::shared_ptr<facebook::react::ComponentDescriptorProviderRegistry> m_componentDescriptorRegistry;
 
   std::map<std::shared_ptr<const std::string>, winrt::Microsoft::ReactNative::IReactViewComponentBuilder const>

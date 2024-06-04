@@ -88,6 +88,9 @@ void ReadValue(IJSValueReader const &reader, /*out*/ JSValueArray &value) noexce
 template <class T, std::enable_if_t<!std::is_void_v<decltype(GetStructInfo(static_cast<T *>(nullptr)))>, int> = 1>
 void ReadValue(IJSValueReader const &reader, /*out*/ T &value) noexcept;
 
+template <class T, std::enable_if_t<!std::is_void_v<decltype(GetStructInfo(static_cast<T *>(nullptr)))>, int> = 1>
+bool ReadProp(uint32_t hash, const winrt::hstring &propName, IJSValueReader const &reader, /*out*/ T &value) noexcept;
+
 bool SkipArrayToEnd(IJSValueReader const &reader) noexcept;
 template <class... TArgs>
 void ReadArgs(IJSValueReader const &reader, /*out*/ TArgs &...args) noexcept;
@@ -419,6 +422,22 @@ inline void ReadValue(IJSValueReader const &reader, /*out*/ T &value) noexcept {
         SkipValue<JSValue>(reader); // Skip this property
       }
     }
+  }
+}
+
+template <class T, std::enable_if_t<!std::is_void_v<decltype(GetStructInfo(static_cast<T *>(nullptr)))>, int>>
+inline bool ReadProp(
+    uint32_t /*hash*/,
+    const winrt::hstring &propertyName,
+    IJSValueReader const &reader,
+    /*out*/ T &value) noexcept {
+  const auto &fieldMap = StructInfo<T>::GetFieldMap();
+  auto it = fieldMap.find(std::wstring_view(propertyName));
+  if (it != fieldMap.end()) {
+    it->second.ReadField(reader, &value);
+    return true;
+  } else {
+    return false;
   }
 }
 

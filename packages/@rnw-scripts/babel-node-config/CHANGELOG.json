@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/babel-node-config",
   "entries": [
     {
+      "date": "Tue, 27 Feb 2024 06:18:01 GMT",
+      "version": "2.3.2",
+      "tag": "@rnw-scripts/babel-node-config_v2.3.2",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@rnw-scripts/babel-node-config",
+            "commit": "74032cf2ec8ba36b7977ef4be1259cba3ece7d2e",
+            "comment": "Update rn-integrate script to more aggressively update align dependencies"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 14 Jul 2023 05:17:06 GMT",
       "tag": "@rnw-scripts/babel-node-config_v2.3.1",
       "version": "2.3.1",

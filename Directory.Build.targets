@@ -35,7 +35,7 @@
       >
       <Output TaskParameter="ExitCode" ItemName="_ReactNativeYarnExitCode"/>
     </Exec>
-    
+
     <Message Text="yarn install: Succeeded" Condition="'%(_ReactNativeYarnExitCode.Identity)' == '0'" Importance="High" />
     <Message Text="yarn install: Failed" Condition="'%(_ReactNativeYarnExitCode.Identity)' != '0'" Importance="High" />
 
@@ -91,8 +91,10 @@
         VCTargetsPath;
         UserRootDir;
         ProjectHome;
+        BaseIntermediateOutputPath;
         IntermediateOutputPath;
         OutputPath;
+        OS;
       " />
       <_VarsCustom Include="
         RootDir;

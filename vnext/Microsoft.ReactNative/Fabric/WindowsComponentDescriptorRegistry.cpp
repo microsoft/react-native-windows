@@ -4,6 +4,7 @@
 
 #include "WindowsComponentDescriptorRegistry.h"
 
+#include <Fabric/AbiComponentDescriptor.h>
 #include <Fabric/AbiViewComponentDescriptor.h>
 #include <Fabric/Composition/Modal/WindowsModalHostViewComponentDescriptor.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h>
@@ -32,26 +33,27 @@ WindowsComponentDescriptorRegistryProperty() noexcept {
 
 WindowsComponentDescriptorRegistry::WindowsComponentDescriptorRegistry()
     : m_componentDescriptorRegistry(std::make_shared<facebook::react::ComponentDescriptorProviderRegistry>()) {
-  m_componentDescriptorRegistry->add(facebook::react::concreteComponentDescriptorProvider<
-                                     facebook::react::ActivityIndicatorViewComponentDescriptor>());
-  m_componentDescriptorRegistry->add(
-      facebook::react::concreteComponentDescriptorProvider<facebook::react::ImageComponentDescriptor>());
-  m_componentDescriptorRegistry->add(
-      facebook::react::concreteComponentDescriptorProvider<facebook::react::WindowsModalHostViewComponentDescriptor>());
-  m_componentDescriptorRegistry->add(
-      facebook::react::concreteComponentDescriptorProvider<facebook::react::ParagraphComponentDescriptor>());
-  m_componentDescriptorRegistry->add(
-      facebook::react::concreteComponentDescriptorProvider<facebook::react::RawTextComponentDescriptor>());
-  m_componentDescriptorRegistry->add(
-      facebook::react::concreteComponentDescriptorProvider<facebook::react::ScrollViewComponentDescriptor>());
-  m_componentDescriptorRegistry->add(
-      facebook::react::concreteComponentDescriptorProvider<facebook::react::SwitchComponentDescriptor>());
-  m_componentDescriptorRegistry->add(
-      facebook::react::concreteComponentDescriptorProvider<facebook::react::TextComponentDescriptor>());
-  m_componentDescriptorRegistry->add(
-      facebook::react::concreteComponentDescriptorProvider<facebook::react::ViewComponentDescriptor>());
-  m_componentDescriptorRegistry->add(
-      facebook::react::concreteComponentDescriptorProvider<facebook::react::WindowsTextInputComponentDescriptor>());
+  add(facebook::react::concreteComponentDescriptorProvider<
+      facebook::react::ActivityIndicatorViewComponentDescriptor>());
+  add(facebook::react::concreteComponentDescriptorProvider<facebook::react::DebuggingOverlayComponentDescriptor>());
+  add(facebook::react::concreteComponentDescriptorProvider<facebook::react::ImageComponentDescriptor>());
+  add(facebook::react::concreteComponentDescriptorProvider<facebook::react::WindowsModalHostViewComponentDescriptor>());
+  add(facebook::react::concreteComponentDescriptorProvider<facebook::react::ParagraphComponentDescriptor>());
+  add(facebook::react::concreteComponentDescriptorProvider<facebook::react::RawTextComponentDescriptor>());
+  add(facebook::react::concreteComponentDescriptorProvider<facebook::react::ScrollViewComponentDescriptor>());
+  add(facebook::react::concreteComponentDescriptorProvider<facebook::react::SwitchComponentDescriptor>());
+  add(facebook::react::concreteComponentDescriptorProvider<facebook::react::TextComponentDescriptor>());
+  add(facebook::react::concreteComponentDescriptorProvider<facebook::react::ViewComponentDescriptor>());
+  add(facebook::react::concreteComponentDescriptorProvider<facebook::react::WindowsTextInputComponentDescriptor>());
+}
+
+void WindowsComponentDescriptorRegistry::add(const facebook::react::ComponentDescriptorProvider &provider) noexcept {
+  m_componentNames.push_back(provider.name);
+  m_componentDescriptorRegistry->add(provider);
+}
+
+bool WindowsComponentDescriptorRegistry::hasComponentProvider(const std::string &name) noexcept {
+  return std::find(m_componentNames.begin(), m_componentNames.end(), name) != m_componentNames.end();
 }
 
 void WindowsComponentDescriptorRegistry::Add(
@@ -60,16 +62,21 @@ void WindowsComponentDescriptorRegistry::Add(
   auto builder = winrt::make<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>();
   provider(builder);
 
+  m_componentNames.push_back(winrt::to_string(componentName));
   m_descriptorFlavors.emplace_back(std::make_shared<std::string>(winrt::to_string(componentName)));
   auto handle = reinterpret_cast<facebook::react::ComponentHandle>(
       facebook::react::ComponentName(m_descriptorFlavors.back()->c_str()));
   m_builderByName.emplace(m_descriptorFlavors.back(), builder);
   m_builderByHandle.emplace(handle, builder);
+
   m_componentDescriptorRegistry->add(
       {handle,
        m_descriptorFlavors.back()->c_str(),
        std::static_pointer_cast<void const>(m_descriptorFlavors.back()),
-       &facebook::react::concreteComponentDescriptorConstructor<AbiViewComponentDescriptor>});
+       winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(builder)
+               ->IsViewComponent()
+           ? &facebook::react::concreteComponentDescriptorConstructor<AbiViewComponentDescriptor>
+           : &facebook::react::concreteComponentDescriptorConstructor<AbiComponentDescriptor>});
 }
 
 winrt::Microsoft::ReactNative::IReactViewComponentBuilder WindowsComponentDescriptorRegistry::GetDescriptor(

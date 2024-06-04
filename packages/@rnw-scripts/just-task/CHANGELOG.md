@@ -1,8 +1,156 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Sat, 21 Oct 2023 05:16:09 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Jun 2024 05:18:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 2.3.37
+
+Tue, 04 Jun 2024 05:18:35 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.21
+
+## 2.3.36
+
+Sat, 01 Jun 2024 05:21:31 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.20
+
+## 2.3.35
+
+Thu, 30 May 2024 05:18:26 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.19
+
+## 2.3.34
+
+Thu, 23 May 2024 05:17:50 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.18
+
+## 2.3.33
+
+Wed, 22 May 2024 05:18:18 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.17
+
+## 2.3.32
+
+Wed, 15 May 2024 05:14:54 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.16
+
+## 2.3.31
+
+Sat, 11 May 2024 05:18:30 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.15
+
+## 2.3.30
+
+Thu, 09 May 2024 05:18:44 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.14
+
+## 2.3.29
+
+Thu, 25 Apr 2024 20:12:45 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.13
+
+## 2.3.27
+
+Wed, 10 Apr 2024 05:18:19 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.11
+
+## 2.3.26
+
+Sat, 30 Mar 2024 05:18:04 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.10
+
+## 2.3.25
+
+Sat, 23 Mar 2024 05:17:01 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.9
+
+## 2.3.24
+
+Thu, 07 Mar 2024 06:16:48 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.8
+
+## 2.3.23
+
+Fri, 01 Mar 2024 06:18:15 GMT
+
+### Patches
+
+- Integrate 1/22 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.7
+
+## 2.3.22
+
+Tue, 27 Feb 2024 06:18:06 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-e2e-config to v1.4.8
+- Bump @rnw-scripts/jest-unittest-config to v1.5.8
+- Bump @rnw-scripts/eslint-config to v1.2.6
+
+## 2.3.21
+
+Sat, 24 Feb 2024 06:17:16 GMT
+
+### Patches
+
+- Migrate src directory to src-win (34109996+chiaramooney@users.noreply.github.com)
+
+## 2.3.20
+
+Thu, 15 Feb 2024 06:18:15 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-e2e-config to v1.4.7
+
+## 2.3.19
+
+Wed, 14 Feb 2024 06:16:55 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-unittest-config to v1.5.7
+- Bump @rnw-scripts/eslint-config to v1.2.5
 
 ## 2.3.18
 

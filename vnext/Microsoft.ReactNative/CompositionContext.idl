@@ -5,17 +5,17 @@
 #include "DocString.h"
 import "CompositionSwitcher.idl";
 
-namespace Microsoft.ReactNative.Composition
+namespace Microsoft.ReactNative.Composition.Experimental
 {
   [webhosthidden]
   [default_interface]
   [experimental]
-  DOC_STRING("A helper static class for to create a @ICompositionContext based on Windows.Composition Visuals.  And to access the underlying Windows.Composition objects from the abstraction.")
-  static runtimeclass WindowsCompositionContextHelper
+  DOC_STRING("A helper static class to create a @ICompositionContext based on Windows.Composition Visuals. This is not for general consumption and is expected to be removed in a future release.")
+  static runtimeclass SystemCompositionContextHelper
   {
     DOC_STRING(
       "Creates a @ICompositionContext from a Compositor")
-    static ICompositionContext CreateContext(Windows.UI.Composition.Compositor compositor);
+    static Microsoft.ReactNative.Composition.Experimental.ICompositionContext CreateContext(Windows.UI.Composition.Compositor compositor);
 
     DOC_STRING(
       "Creates a @IVisual from a Visual")
@@ -32,12 +32,12 @@ namespace Microsoft.ReactNative.Composition
   [webhosthidden]
   [default_interface]
   [experimental]
-  DOC_STRING("A helper static class for to create a @ICompositionContext based on Microsoft.Composition Visuals.  And to access the underlying Microsoft.Composition objects from the abstraction.")
+  DOC_STRING("A helper static class to create a @ICompositionContext based on Microsoft.Composition Visuals. Generally it should not be required to call this directly. Instead you should call @CompositionUIService.SetCompositor. This is not for general consumption and is expected to be removed in a future release.")
   static runtimeclass MicrosoftCompositionContextHelper
   {
     DOC_STRING(
       "Creates a @ICompositionContext from a Compositor")
-    static ICompositionContext CreateContext(Microsoft.UI.Composition.Compositor compositor);
+    static Microsoft.ReactNative.Composition.Experimental.ICompositionContext CreateContext(Microsoft.UI.Composition.Compositor compositor);
 
     DOC_STRING(
       "Creates a @IVisual from a Visual")

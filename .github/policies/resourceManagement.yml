@@ -8,7 +8,7 @@ where:
 configuration:
   resourceManagementConfiguration:
     scheduledSearches:
-    - description: 
+    - description: Close stale issues waiting for author feedback for too long after being warned
       frequencies:
       - hourly:
           hour: 3
@@ -23,7 +23,7 @@ configuration:
           days: 7
       actions:
       - closeIssue
-    - description: 
+    - description: Mark issues waiting for author feedback for too long as stale and give warning
       frequencies:
       - hourly:
           hour: 3
@@ -41,7 +41,7 @@ configuration:
           label: no-recent-activity
       - addReply:
           reply: This issue has been automatically marked as stale because it has been marked as requiring author feedback but has not had any activity for **7 days**. It will be closed if no further activity occurs **within 7 days of this comment**.
-    - description: 
+    - description: Close issues marked as duplicates with no further activity
       frequencies:
       - hourly:
           hour: 3
@@ -56,7 +56,7 @@ configuration:
       - addReply:
           reply: This issue has been marked as duplicate and has not had any activity for **1 day**. It will be closed for housekeeping purposes.
       - closeIssue
-    - description: 
+    - description: Close stale PRs waiting for author feedback for too long after being warned
       frequencies:
       - hourly:
           hour: 3
@@ -71,7 +71,7 @@ configuration:
           days: 7
       actions:
       - closeIssue
-    - description: 
+    - description: Mark PRs waiting for author feedback for too long as stale and give warning
       frequencies:
       - hourly:
           hour: 3
@@ -89,7 +89,7 @@ configuration:
           label: no-recent-activity
       - addReply:
           reply: This pull request has been automatically marked as stale because it has been marked as requiring author feedback but has not had any activity for **7 days**. It will be closed if no further activity occurs **within 7 days of this comment**.
-    - description: 
+    - description: Close issues opened against the deprecated vCurrent version of RNW
       frequencies:
       - hourly:
           hour: 6
@@ -103,7 +103,7 @@ configuration:
       - addReply:
           reply: We are not investing in new features or lower priority bug fixes on the C# implementation of React Native for Windows (previously known as "vCurrent"). All investment moving forward is in the C++ infrastructure (previously known as "vNext") and that is the only option as of 0.61 (and was the default as of 0.60). If this issue is still relevant on the modern implementation please open a new issue. If this issue is of significant severity for a vCurrent app and vNext is not an option, re-open with justification.
       - closeIssue
-    - description: 
+    - description: Close issues opened against the deprecated WPF version of RNW
       frequencies:
       - hourly:
           hour: 6
@@ -117,7 +117,7 @@ configuration:
       - addReply:
           reply: We are not investing in new features or lower priority bug fixes for the WPF implementation of React Native for Windows. All investment is now in UWP XAML. If this issue is still relevant on the UWP XAML implementation please open a new issue. If this issue is of significant severity for a WPF app and UWP XAML is not an option, re-open with justification.
       - closeIssue
-    - description: 
+    - description: Mark issues that were triaged without adding a milestone as invalid triage
       frequencies:
       - daily:
           time: 13:0
@@ -136,7 +136,7 @@ configuration:
       actions:
       - addLabel:
           label: Invalid Triage
-    - description: 
+    - description: Mark issues that were triaged without bug/enhancement/question as invalid triage
       frequencies:
       - daily:
           time: 13:0
@@ -161,15 +161,16 @@ configuration:
       - addLabel:
           label: Invalid Triage
     eventResponderTasks:
-    - if:
+    - description: Mark new issues as needing triage
+      if:
       - payloadType: Issues
       - isAction:
           action: Opened
       then:
       - addLabel:
           label: 'Needs: Triage :mag:'
-      description: 
-    - if:
+    - description: Mark issues as needing our attention when the author responds to our feedback request
+      if:
       - payloadType: Issue_Comment
       - isAction:
           action: Created
@@ -182,8 +183,8 @@ configuration:
           label: 'Needs: Attention :wave:'
       - removeLabel:
           label: 'Needs: Author Feedback'
-      description: 
-    - if:
+    - description: Remove stale label when an issue is closed
+      if:
       - payloadType: Issues
       - not:
           isAction:
@@ -193,8 +194,8 @@ configuration:
       then:
       - removeLabel:
           label: no-recent-activity
-      description: 
-    - if:
+    - description: Mark a PR as requiring author feedback when changes are requested by a reviewer
+      if:
       - payloadType: Pull_Request_Review
       - isAction:
           action: Submitted
@@ -203,8 +204,8 @@ configuration:
       then:
       - addLabel:
           label: 'Needs: Author Feedback'
-      description: 
-    - if:
+    - description: Remove request for author feedback when a PR closes
+      if:
       - payloadType: Pull_Request
       - isActivitySender:
           issueAuthor: True
@@ -216,8 +217,8 @@ configuration:
       then:
       - removeLabel:
           label: 'Needs: Author Feedback'
-      description: 
-    - if:
+    - description: Remove stale label when a PR closes
+      if:
       - payloadType: Pull_Request
       - not:
           isAction:
@@ -227,38 +228,38 @@ configuration:
       then:
       - removeLabel:
           label: no-recent-activity
-      description: 
-    - if:
+    - description: Enable auto-merge for a PR when the AutoMerge label is added
+      if:
       - payloadType: Pull_Request
       - hasLabel:
           label: AutoMerge
       then:
       - enableAutoMerge:
           mergeMethod: Squash
-      description: 
-    - if:
+    - description: Disable auto-merge for a PR when the AutoMerge label is removed
+      if:
       - payloadType: Pull_Request
       - labelRemoved:
           label: AutoMerge
       then:
       - disableAutoMerge
-      description: 
-    - if:
+    - description: Add a CodeFlow link when a PR is opened
+      if:
       - payloadType: Pull_Request
       - isAction:
           action: Opened
       then:
       - addCodeFlowLink
-      description: 
-    - if:
+    - description: Remove stale label when an issue gets a new comment
+      if:
       - payloadType: Issue_Comment
       - hasLabel:
           label: no-recent-activity
       then:
       - removeLabel:
           label: no-recent-activity
-      description: 
-    - if:
+    - description: Remove request for author feedback when an issue gets a new comment from the author
+      if:
       - payloadType: Issue_Comment
       - isActivitySender:
           issueAuthor: True
@@ -267,8 +268,8 @@ configuration:
       then:
       - removeLabel:
           label: 'Needs: Author Feedback'
-      description: 
-    - if:
+    - description: Remove request for author feedback when a PR gets a new comment from the author
+      if:
       - payloadType: Pull_Request_Review
       - isActivitySender:
           issueAuthor: True
@@ -277,24 +278,16 @@ configuration:
       then:
       - removeLabel:
           label: 'Needs: Author Feedback'
-      description: 
-    - if:
-      - payloadType: Issue_Comment
-      - hasLabel:
-          label: no-recent-activity
-      then:
-      - removeLabel:
-          label: no-recent-activity
-      description: 
-    - if:
+    - description: Remove stale label when a PR gets a new review
+      if:
       - payloadType: Pull_Request_Review
       - hasLabel:
           label: no-recent-activity
       then:
       - removeLabel:
           label: no-recent-activity
-      description: 
-    - if:
+    - description: Mark new issues as coming from Xbox when the author is from Xbox
+      if:
       - payloadType: Issues
       - isAction:
           action: Opened
@@ -314,8 +307,8 @@ configuration:
       then:
       - addLabel:
           label: 'Partner: Xbox'
-      description: 
-    - if:
+    - description: Mark new issues as coming from Stream when the author is from Stream
+      if:
       - payloadType: Issues
       - isAction:
           action: Opened
@@ -329,8 +322,8 @@ configuration:
       then:
       - addLabel:
           label: 'Partner: Stream'
-      description: 
-    - if:
+    - description: Request an issue author provide environment info when requested
+      if:
       - payloadType: Issues
       - labelAdded:
           label: 'Needs: Environment Info'
@@ -364,8 +357,8 @@ configuration:
           label: 'Needs: Author Feedback'
       - removeLabel:
           label: 'Needs: Triage :mag:'
-      description: 
-    - if:
+    - description: Mark new issues as coming from Facebook when the author is from Facebook
+      if:
       - payloadType: Issues
       - isAction:
           action: Opened
@@ -397,8 +390,8 @@ configuration:
       then:
       - addLabel:
           label: 'Partner: Facebook'
-      description: 
-    - if:
+    - description: Request an issue author verifies their issue on the latest version when requested
+      if:
       - payloadType: Issues
       - labelAdded:
           label: 'Needs: Verify on Latest Version'
@@ -412,8 +405,8 @@ configuration:
           label: 'Needs: Author Feedback'
       - removeLabel:
           label: 'Needs: Triage :mag:'
-      description: 
-    - if:
+    - description: Sync certain labels between PRs and the issues they close
+      if:
       - payloadType: Pull_Request
       then:
       - labelSync:
@@ -424,8 +417,12 @@ configuration:
           pattern: Breaking Change
       - labelSync:
           pattern: Backport
-      description: 
-    - if:
+      - labelSync:
+          pattern: 'Parity:'
+      - labelSync:
+          pattern: Architecture
+    - description: Close issues resolved as being better served by Stack Overflow
+      if:
       - payloadType: Issues
       - labelAdded:
           label: 'Resolution: For StackOverflow'
@@ -434,8 +431,8 @@ configuration:
       - addReply:
           reply: We use github to track issues exclusive to React Native for Windows. This issue seems to pertain to something outside of that scope. Please try asking over on [Stack Overflow](https://stackoverflow.com/questions/tagged/uwp) as it is better suited for general Windows platform questions.
       - closeIssue
-      description: 
-    - if:
+    - description: Mark new issues as coming from 3P when the author is from 3P
+      if:
       - payloadType: Issues
       - isAction:
           action: Opened
@@ -446,8 +443,8 @@ configuration:
       then:
       - addLabel:
           label: 'Partner: 3P'
-      description: 
-    - if:
+    - description: Remove labels to get our attention when an issue is closed
+      if:
       - payloadType: Issues
       - isAction:
           action: Closed
@@ -456,8 +453,8 @@ configuration:
           label: 'Needs: Triage :mag:'
       - removeLabel:
           label: 'Needs: Attention :wave:'
-      description: 
-    - if:
+    - description: Mark new issues as coming from Office when the author is from Office
+      if:
       - payloadType: Issues
       - isAction:
           action: Opened
@@ -468,8 +465,8 @@ configuration:
       then:
       - addLabel:
           label: 'Partner: Office'
-      description: 
-    - if:
+    - description: Mark new issues as coming from Microsoft when the author is from Microsoft
+      if:
       - payloadType: Issues
       - isAction:
           action: Opened
@@ -480,8 +477,8 @@ configuration:
       then:
       - addLabel:
           label: 'Partner: Microsoft'
-      description: 
-    - if:
+    - description: "Close issues resolved as won't fix"
+      if:
       - payloadType: Issues
       - labelAdded:
           label: "Resolution: Won't Fix"
@@ -489,6 +486,41 @@ configuration:
       - addReply:
           reply: There is no immediate intention to take a fix for this issue. In an intent to create clear expectations, the issue has been closed. The issue still exists and may be referred to and commented on. If additional justification is made, it may be reactivated in the future.
       - closeIssue
-      description: 
+    - description: Mark items labeled with new architecture Areas as New Architecture
+      if:
+      - or:
+        - payloadType: Issues
+        - payloadType: Pull_Request
+      - not:
+          hasLabel:
+            label: 'New Architecture'
+      - or:
+        - labelAdded:
+              label: 'Area: Fabric'
+        - labelAdded:
+              label: 'Area: Component Views'
+        - labelAdded:
+              label: 'Area: Turbo Modules'
+      then:
+      - addLabel:
+          label: 'New Architecture'
+    - description: Mark items labeled with old architecture Areas as Old Architecture
+      if:
+      - or:
+        - payloadType: Issues
+        - payloadType: Pull_Request
+      - not:
+          hasLabel:
+            label: 'Old Architecture'
+      - or:
+        - labelAdded:
+              label: 'Area: Paper'
+        - labelAdded:
+              label: 'Area: View Managers'
+        - labelAdded:
+              label: 'Area: Native Modules'
+      then:
+      - addLabel:
+          label: 'Old Architecture'
 onFailure: 
 onSuccess: 

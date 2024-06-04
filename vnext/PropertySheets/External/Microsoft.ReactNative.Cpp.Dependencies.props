@@ -11,7 +11,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup Label="CppWinRT">
-    <CppWinRTVersion Condition="'$(CppWinRTVersion)' == '' Or $([MSBuild]::VersionLessThan('$(CppWinRTVersion)', '2.0.211028.7'))">2.0.211028.7</CppWinRTVersion>
+    <CppWinRTVersion Condition="'$(CppWinRTVersion)' == '' Or $([MSBuild]::VersionLessThan('$(CppWinRTVersion)', '2.0.230706.1'))">2.0.230706.1</CppWinRTVersion>
   </PropertyGroup>
 
   <ItemDefinitionGroup Label="CppWinRT">

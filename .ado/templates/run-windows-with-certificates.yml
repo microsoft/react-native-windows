@@ -4,6 +4,7 @@ parameters:
     default: PullRequest
     values:
       - PullRequest
+      - SecurePullRequest
       - Continuous
   - name: certificateName
     type: string
@@ -44,7 +45,7 @@ steps:
       displayName: run-windows (Debug)
       workingDirectory: ${{ parameters.workingDirectory }}
 
-  - ${{ if and(eq(parameters.buildConfiguration, 'Release'), eq(parameters.buildEnvironment, 'PullRequest')) }}:
+  - ${{ if and(eq(parameters.buildConfiguration, 'Release'), endsWith(parameters.buildEnvironment, 'PullRequest')) }}:
     - script: >
         yarn react-native run-windows
         --arch ${{ parameters.buildPlatform }}

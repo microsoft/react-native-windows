@@ -69,7 +69,9 @@ export class TextInputTestPage extends React.Component<
           placeholder="autoCapitalize"
           autoCapitalize="characters"
         />
-        <Text testID="textinput-log">{this.state.log}</Text>
+        <Text testID="textinput-log" accessible={true}>
+          {this.state.log}
+        </Text>
       </View>
     );
   }

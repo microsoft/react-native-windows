@@ -33,7 +33,7 @@ struct AccessibilityInfo : public std::enable_shared_from_this<AccessibilityInfo
   void isAccessibilityServiceEnabled(std::function<void(bool)> const &onSuccess) noexcept;
 
  private:
-  React::ReactContext m_context;
+  winrt::Microsoft::ReactNative::ReactContext m_context;
 };
 
 } // namespace Microsoft::ReactNative

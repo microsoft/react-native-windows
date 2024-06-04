@@ -242,8 +242,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  auto compositionView =
-      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>();
+  auto compositionView = strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
   if (compositionView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
@@ -287,7 +286,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_IsEnabledPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal = !props->accessibilityState->disabled ? VARIANT_TRUE : VARIANT_FALSE;
+      pRetVal->boolVal =
+          !(props->accessibilityState && props->accessibilityState->disabled) ? VARIANT_TRUE : VARIANT_FALSE;
       break;
     }
     case UIA_IsContentElementPropertyId: {
@@ -302,7 +302,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     }
     case UIA_IsOffscreenPropertyId: {
       pRetVal->vt = VT_BOOL;
-      pRetVal->boolVal = (baseView->getClipState() == ClipState::FullyClipped) ? VARIANT_TRUE : VARIANT_FALSE;
+      pRetVal->boolVal = (compositionView->getClipState() == ClipState::FullyClipped) ? VARIANT_TRUE : VARIANT_FALSE;
     }
     case UIA_HelpTextPropertyId: {
       pRetVal->vt = VT_BSTR;
@@ -334,8 +334,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Invoke() {
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  auto baseView =
-      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::CompositionBaseComponentView>();
+  auto baseView = strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
   if (baseView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 

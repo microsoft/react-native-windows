@@ -2,6 +2,252 @@
   "name": "@rnw-scripts/eslint-config",
   "entries": [
     {
+      "date": "Tue, 04 Jun 2024 05:18:35 GMT",
+      "version": "1.2.21",
+      "tag": "@rnw-scripts/eslint-config_v1.2.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "1d9616305b90f5165ab84bfb04072add2bd30b34",
+            "comment": "Integrate 5/25"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 01 Jun 2024 05:21:30 GMT",
+      "version": "1.2.20",
+      "tag": "@rnw-scripts/eslint-config_v1.2.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "c0976782a5e566800ad95b4d90e76cef7d3ff044",
+            "comment": "Integrate 5/14"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 30 May 2024 05:18:25 GMT",
+      "version": "1.2.19",
+      "tag": "@rnw-scripts/eslint-config_v1.2.19",
+      "comments": {
+        "patch": [
+          {
+            "author": "1422161+marlenecota@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "1304e2f0aa0f074550f4a10de439188749590547",
+            "comment": "RN Integration 05/11"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 May 2024 05:17:49 GMT",
+      "version": "1.2.18",
+      "tag": "@rnw-scripts/eslint-config_v1.2.18",
+      "comments": {
+        "patch": [
+          {
+            "author": "1422161+marlenecota@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "3d221a9e154753fce6c1d22bdf6f2e17d6bc41b5",
+            "comment": "RN Integration 04/27"
+          },
+          {
+            "author": "1422161+marlenecota@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "9a5ddf602612fcbe088fafbaa80993d7b9f9aace",
+            "comment": "RN Integration 05/02"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 22 May 2024 05:18:17 GMT",
+      "version": "1.2.17",
+      "tag": "@rnw-scripts/eslint-config_v1.2.17",
+      "comments": {
+        "patch": [
+          {
+            "author": "1422161+marlenecota@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "ef55e6fc47b9adc83afc6ddcae92d7461013512b",
+            "comment": "RN Integration 04/20"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 15 May 2024 05:14:53 GMT",
+      "version": "1.2.16",
+      "tag": "@rnw-scripts/eslint-config_v1.2.16",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "1db259b0c8b028fef09bf42351be8917759ecc17",
+            "comment": "0413 integration"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 11 May 2024 05:18:29 GMT",
+      "version": "1.2.15",
+      "tag": "@rnw-scripts/eslint-config_v1.2.15",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "81fbb8ad349a47f89257fe0f7a775f00cfefdd86",
+            "comment": "integrate rn nightly 4/5/2024"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 09 May 2024 05:18:43 GMT",
+      "version": "1.2.14",
+      "tag": "@rnw-scripts/eslint-config_v1.2.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "b85780ba8a1c0dc0aa82344eddd1a8daeb08e15a",
+            "comment": "integrate react-native-3-21"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 25 Apr 2024 20:12:43 GMT",
+      "version": "1.2.13",
+      "tag": "@rnw-scripts/eslint-config_v1.2.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "2b8821b81ab7ec1e8cc483dcbd9573455b4d5d24",
+            "comment": "Integrate 3/7"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Apr 2024 05:18:19 GMT",
+      "version": "1.2.11",
+      "tag": "@rnw-scripts/eslint-config_v1.2.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "d5a93ec84d0466502bc430b8ff818ef3ddee7f7d",
+            "comment": "integrate 2/29"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 30 Mar 2024 05:18:03 GMT",
+      "version": "1.2.10",
+      "tag": "@rnw-scripts/eslint-config_v1.2.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "8cf7376aed600ae9d5a1c83ae60c7c37ff3aa6ba",
+            "comment": "initial 2/21 integrate"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 23 Mar 2024 05:17:00 GMT",
+      "version": "1.2.9",
+      "tag": "@rnw-scripts/eslint-config_v1.2.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "84cddad0a2d829ff3cb8ebc02f27af863ff63edd",
+            "comment": "Integrate 2/1"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 Mar 2024 06:16:47 GMT",
+      "version": "1.2.8",
+      "tag": "@rnw-scripts/eslint-config_v1.2.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "8f4fb70927ba3cb6825fe736403c9cf006f7908b",
+            "comment": "Integrate 1/26"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 01 Mar 2024 06:18:15 GMT",
+      "version": "1.2.7",
+      "tag": "@rnw-scripts/eslint-config_v1.2.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "1a0c17613198fb64aca1c1c25c9e3e86b2b24e79",
+            "comment": "Integrate 1/22"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 27 Feb 2024 06:18:02 GMT",
+      "version": "1.2.6",
+      "tag": "@rnw-scripts/eslint-config_v1.2.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "74032cf2ec8ba36b7977ef4be1259cba3ece7d2e",
+            "comment": "Update rn-integrate script to more aggressively update align dependencies"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Feb 2024 06:16:54 GMT",
+      "version": "1.2.5",
+      "tag": "@rnw-scripts/eslint-config_v1.2.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "2cd4937023a0f1f31350717589c298dbbd12853a",
+            "comment": "Bump Babel Versions"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 21 Oct 2023 05:16:08 GMT",
       "version": "1.2.4",
       "tag": "@rnw-scripts/eslint-config_v1.2.4",

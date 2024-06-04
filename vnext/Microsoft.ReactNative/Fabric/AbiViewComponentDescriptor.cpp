@@ -8,6 +8,7 @@
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
 #include <ReactContext.h>
 #include <react/renderer/components/view/ViewPropsInterpolation.h>
+#include <type_traits>
 #include "DynamicReader.h"
 
 namespace Microsoft::ReactNative {
@@ -78,7 +79,7 @@ void AbiViewComponentDescriptor::appendChild(
 facebook::react::Props::Shared AbiViewComponentDescriptor::cloneProps(
     const facebook::react::PropsParserContext &context,
     const facebook::react::Props::Shared &props,
-    const facebook::react::RawProps &rawProps) const {
+    facebook::react::RawProps rawProps) const {
   // Optimization:
   // Quite often nodes are constructed with default/empty props: the base
   // `props` object is `null` (there no base because it's not cloning) and the
@@ -88,13 +89,18 @@ facebook::react::Props::Shared AbiViewComponentDescriptor::cloneProps(
     return ShadowNodeT::defaultSharedProps();
   }
 
-  rawProps.parse(rawPropsParser_, context);
+  if constexpr (facebook::react::RawPropsFilterable<ShadowNodeT>) {
+    ShadowNodeT::filterRawProps(rawProps);
+  }
+
+  rawProps.parse(rawPropsParser_);
 
   // Call old-style constructor
   // auto shadowNodeProps = std::make_shared<ShadowNodeT::Props>(context, rawProps, props);
   auto shadowNodeProps = std::make_shared<AbiViewProps>(
       context, props ? static_cast<AbiViewProps const &>(*props) : *ShadowNodeT::defaultSharedProps(), rawProps);
-  auto viewProps = winrt::make<winrt::Microsoft::ReactNative::implementation::UserViewProps>(shadowNodeProps);
+  auto viewProps =
+      winrt::make<winrt::Microsoft::ReactNative::implementation::ViewProps>(shadowNodeProps, false /*holdRef*/);
   auto userProps =
       winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
           ->CreateProps(viewProps);
@@ -150,16 +156,10 @@ facebook::react::State::Shared AbiViewComponentDescriptor::createState(
 
 facebook::react::ShadowNodeFamily::Shared AbiViewComponentDescriptor::createFamily(
     facebook::react::ShadowNodeFamilyFragment const &fragment) const {
+  auto eventEmitter = std::make_shared<const ConcreteEventEmitter>(
+      std::make_shared<facebook::react::EventTarget>(fragment.instanceHandle), eventDispatcher_);
   return std::make_shared<facebook::react::ShadowNodeFamily>(
-      facebook::react::ShadowNodeFamilyFragment{fragment.tag, fragment.surfaceId, fragment.instanceHandle},
-      eventDispatcher_,
-      *this);
-}
-
-facebook::react::SharedEventEmitter AbiViewComponentDescriptor::createEventEmitter(
-    facebook::react::InstanceHandle::Shared const &instanceHandle) const {
-  return std::make_shared<ConcreteEventEmitter const>(
-      std::make_shared<facebook::react::EventTarget>(instanceHandle), eventDispatcher_);
+      fragment, std::move(eventEmitter), eventDispatcher_, *this);
 }
 
 /*

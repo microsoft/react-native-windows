@@ -73,6 +73,143 @@ using namespace Microsoft::JSI;
 using std::make_shared;
 using winrt::Microsoft::ReactNative::ReactPropertyBagHelper;
 
+namespace Microsoft::ReactNative {
+
+// Note: Based on
+// https://github.com/facebook/react-native/blob/24d91268b64c7abbd4b26547ffcc663dc90ec5e7/ReactCommon/cxxreact/Instance.cpp#L112
+bool isHBCBundle(const std::string &bundle) {
+  static uint32_t constexpr HBCBundleMagicNumber = 0xffe7c3c3;
+
+  // Note:: Directly access the pointer to avoid copy/length-check. It matters as this string contains the bundle which
+  // can be potentially huge.
+  // https://herbsutter.com/2008/04/07/cringe-not-vectors-are-guaranteed-to-be-contiguous/#comment-483
+  auto header = reinterpret_cast<const facebook::react::BundleHeader *>(&bundle[0]);
+  if (HBCBundleMagicNumber == header->magic32.value) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+void LoadRemoteUrlScript(
+    std::shared_ptr<facebook::react::DevSettings> devSettings,
+    std::shared_ptr<facebook::react::IDevSupportManager> devManager,
+    std::string &&jsBundleRelativePath,
+    std::function<void(std::unique_ptr<const facebook::react::JSBigStdString> script, const std::string &sourceURL)>
+        fnLoadScriptCallback) noexcept {
+  // First attempt to get download the Js locally, to catch any bundling
+  // errors before attempting to load the actual script.
+
+  uint32_t hermesBytecodeVersion = 0;
+#if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
+  hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
+#endif
+
+  auto [jsBundleString, success] = GetJavaScriptFromServer(
+      devSettings->sourceBundleHost,
+      devSettings->sourceBundlePort,
+      devSettings->debugBundlePath.empty() ? jsBundleRelativePath : devSettings->debugBundlePath,
+      devSettings->platformName,
+      devSettings->bundleAppId,
+      devSettings->devBundle,
+      devSettings->useFastRefresh,
+      devSettings->inlineSourceMap,
+      hermesBytecodeVersion);
+
+  if (!success) {
+    devManager->UpdateBundleStatus(false, -1);
+    devSettings->errorCallback(jsBundleString);
+    return;
+  }
+
+  int64_t currentTimeInMilliSeconds =
+      std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())
+          .count();
+  devManager->UpdateBundleStatus(true, currentTimeInMilliSeconds);
+
+  auto bundleUrl = facebook::react::DevServerHelper::get_BundleUrl(
+      devSettings->sourceBundleHost,
+      devSettings->sourceBundlePort,
+      devSettings->debugBundlePath.empty() ? jsBundleRelativePath : devSettings->debugBundlePath,
+      devSettings->platformName,
+      devSettings->bundleAppId,
+      devSettings->devBundle,
+      devSettings->useFastRefresh,
+      devSettings->inlineSourceMap,
+      hermesBytecodeVersion);
+
+  // This code is based on the HBC Bundle integration on Android
+  // Ref:
+  // https://github.com/facebook/react-native/blob/24d91268b64c7abbd4b26547ffcc663dc90ec5e7/ReactAndroid/src/main/jni/react/jni/CatalystInstanceImpl.cpp#L231
+  if (isHBCBundle(jsBundleString)) {
+    auto script = std::make_unique<facebook::react::JSBigStdString>(jsBundleString, false);
+    const char *buffer = script->c_str();
+    uint32_t bufferLength = (uint32_t)script->size();
+
+    // Please refer the code here for details on the file format:
+    // https://github.com/facebook/metro/blob/b1bacf52070be62872d6bd3420f37a4405ed34e6/packages/metro/src/lib/bundleToBytecode.js#L29
+    // Essentially, there is an 8 byte long file header with 4 bytes of a magic number followed by 4 bytes to encode
+    // the number of modules.The module buffers follows, each one starts with 4 byte header which encodes module
+    // length.A properly formatted HBCB should have at least 8 bytes..
+    uint32_t offset = 8;
+#define __SAFEADD__(s1, s2, t)             \
+  if (!msl::utilities::SafeAdd(s1, s2, t)) \
+    break;
+    while (offset < bufferLength) {
+      uint32_t segment;
+      __SAFEADD__(offset, 4, segment)
+      uint32_t moduleLength = (bufferLength < segment) ? 0 : *(((uint32_t *)buffer) + offset / 4);
+
+      // Early break if the module length is computed as 0.. as the segment start may be overflowing the buffer.
+      if (moduleLength == 0)
+        break;
+
+      uint32_t segmentEnd;
+      __SAFEADD__(moduleLength, segment, segmentEnd)
+      // Early break if the segment overflows beyond the buffer. This is unlikely for a properly formatted
+      // HBCB though.
+      if (segmentEnd > bufferLength)
+        break;
+
+      fnLoadScriptCallback(
+          std::make_unique<const facebook::react::JSBigStdString>(std::string(buffer + segment, buffer + segmentEnd)),
+          bundleUrl);
+
+      // Aligned at 4 byte boundary.
+      offset += ((moduleLength + 3) & ~3) + 4;
+    }
+#undef __SAFEADD__
+  } else {
+    // Remote debug executor loads script from a Uri, rather than taking the actual bundle string
+    fnLoadScriptCallback(
+        std::make_unique<const facebook::react::JSBigStdString>(
+            devSettings->useWebDebugger ? bundleUrl : jsBundleString),
+        bundleUrl);
+  }
+}
+
+std::unique_ptr<const facebook::react::JSBigString> JsBigStringFromPath(
+    std::shared_ptr<facebook::react::DevSettings> devSettings,
+    const std::string &jsBundleRelativePath) noexcept {
+#if (defined(_MSC_VER) && !defined(WINRT))
+  std::wstring bundlePath = (fs::u8path(devSettings->bundleRootPath) / jsBundleRelativePath).wstring();
+  return facebook::react::FileMappingBigString::fromPath(bundlePath);
+#else
+  std::wstring bundlePath;
+  if (devSettings->bundleRootPath.starts_with("resource://")) {
+    auto uri = winrt::Windows::Foundation::Uri(
+        winrt::to_hstring(devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
+    bundlePath = uri.ToString();
+  } else {
+    bundlePath = (fs::u8path(devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).wstring();
+  }
+
+  return std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);
+#endif
+}
+
+} // namespace Microsoft::ReactNative
+
 namespace facebook {
 namespace react {
 
@@ -279,6 +416,8 @@ InstanceImpl::InstanceImpl(
       assert(m_devSettings->jsiEngineOverride == JSIEngineOverride::Default);
       jsef = std::make_shared<OJSIExecutorFactory>(
           m_devSettings->jsiRuntimeHolder, m_devSettings->loggingCallback, !m_devSettings->useFastRefresh);
+    } else if (m_devSettings->jsExecutorFactoryDelegate != nullptr) {
+      jsef = m_devSettings->jsExecutorFactoryDelegate(m_innerInstance->getJSCallInvoker());
     } else {
       assert(m_devSettings->jsiEngineOverride != JSIEngineOverride::Default);
       switch (m_devSettings->jsiEngineOverride) {
@@ -386,10 +525,7 @@ InstanceImpl::InstanceImpl(
       };
 
       TurboModuleBinding::install(
-          *runtimeHolder->getRuntime(),
-          std::function(binding),
-          TurboModuleBindingMode::HostObject,
-          longLivedObjectCollection);
+          *runtimeHolder->getRuntime(), std::function(binding), nullptr, longLivedObjectCollection);
 
       // init TurboModule
       for (const auto &moduleName : turboModuleManager->getEagerInitModuleNames()) {
@@ -424,133 +560,20 @@ void InstanceImpl::loadBundleSync(std::string &&jsBundleRelativePath) {
   loadBundleInternal(std::move(jsBundleRelativePath), /*synchronously:*/ true);
 }
 
-// Note: Based on
-// https://github.com/facebook/react-native/blob/24d91268b64c7abbd4b26547ffcc663dc90ec5e7/ReactCommon/cxxreact/Instance.cpp#L112
-bool isHBCBundle(const std::string &bundle) {
-  static uint32_t constexpr HBCBundleMagicNumber = 0xffe7c3c3;
-
-  // Note:: Directly access the pointer to avoid copy/length-check. It matters as this string contains the bundle which
-  // can be potentially huge.
-  // https://herbsutter.com/2008/04/07/cringe-not-vectors-are-guaranteed-to-be-contiguous/#comment-483
-  auto header = reinterpret_cast<const BundleHeader *>(&bundle[0]);
-  if (HBCBundleMagicNumber == header->magic32.value) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
 void InstanceImpl::loadBundleInternal(std::string &&jsBundleRelativePath, bool synchronously) {
   try {
     if (m_devSettings->useWebDebugger || m_devSettings->liveReloadCallback != nullptr ||
         m_devSettings->useFastRefresh) {
-      // First attempt to get download the Js locally, to catch any bundling
-      // errors before attempting to load the actual script.
+      Microsoft::ReactNative::LoadRemoteUrlScript(
+          m_devSettings,
+          m_devManager,
+          std::move(jsBundleRelativePath),
+          [=](std::unique_ptr<const JSBigStdString> script, const std::string &sourceURL) {
+            m_innerInstance->loadScriptFromString(std::move(script), sourceURL, false);
+          });
 
-      uint32_t hermesBytecodeVersion = 0;
-#if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
-      hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
-#endif
-
-      auto [jsBundleString, success] = Microsoft::ReactNative::GetJavaScriptFromServer(
-          m_devSettings->sourceBundleHost,
-          m_devSettings->sourceBundlePort,
-          m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
-          m_devSettings->platformName,
-          m_devSettings->bundleAppId,
-          m_devSettings->devBundle,
-          m_devSettings->useFastRefresh,
-          m_devSettings->inlineSourceMap,
-          hermesBytecodeVersion);
-
-      if (!success) {
-        m_devManager->UpdateBundleStatus(false, -1);
-        m_devSettings->errorCallback(jsBundleString);
-        return;
-      }
-
-      int64_t currentTimeInMilliSeconds =
-          std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch())
-              .count();
-      m_devManager->UpdateBundleStatus(true, currentTimeInMilliSeconds);
-
-      auto bundleUrl = DevServerHelper::get_BundleUrl(
-          m_devSettings->sourceBundleHost,
-          m_devSettings->sourceBundlePort,
-          m_devSettings->debugBundlePath.empty() ? jsBundleRelativePath : m_devSettings->debugBundlePath,
-          m_devSettings->platformName,
-          m_devSettings->bundleAppId,
-          m_devSettings->devBundle,
-          m_devSettings->useFastRefresh,
-          m_devSettings->inlineSourceMap,
-          hermesBytecodeVersion);
-
-      // This code is based on the HBC Bundle integration on Android
-      // Ref:
-      // https://github.com/facebook/react-native/blob/24d91268b64c7abbd4b26547ffcc663dc90ec5e7/ReactAndroid/src/main/jni/react/jni/CatalystInstanceImpl.cpp#L231
-      if (isHBCBundle(jsBundleString)) {
-        auto script = std::make_unique<JSBigStdString>(jsBundleString, false);
-        const char *buffer = script->c_str();
-        uint32_t bufferLength = (uint32_t)script->size();
-
-        // Please refer the code here for details on the file format:
-        // https://github.com/facebook/metro/blob/b1bacf52070be62872d6bd3420f37a4405ed34e6/packages/metro/src/lib/bundleToBytecode.js#L29
-        // Essentially, there is an 8 byte long file header with 4 bytes of a magic number followed by 4 bytes to encode
-        // the number of modules.The module buffers follows, each one starts with 4 byte header which encodes module
-        // length.A properly formatted HBCB should have at least 8 bytes..
-        uint32_t offset = 8;
-#define __SAFEADD__(s1, s2, t)             \
-  if (!msl::utilities::SafeAdd(s1, s2, t)) \
-    break;
-        while (offset < bufferLength) {
-          uint32_t segment;
-          __SAFEADD__(offset, 4, segment)
-          uint32_t moduleLength = (bufferLength < segment) ? 0 : *(((uint32_t *)buffer) + offset / 4);
-
-          // Early break if the module length is computed as 0.. as the segment start may be overflowing the buffer.
-          if (moduleLength == 0)
-            break;
-
-          uint32_t segmentEnd;
-          __SAFEADD__(moduleLength, segment, segmentEnd)
-          // Early break if the segment overflows beyond the buffer. This is unlikely for a properly formatted
-          // HBCB though.
-          if (segmentEnd > bufferLength)
-            break;
-
-          m_innerInstance->loadScriptFromString(
-              std::make_unique<const JSBigStdString>(std::string(buffer + segment, buffer + segmentEnd)),
-              bundleUrl,
-              false);
-
-          // Aligned at 4 byte boundary.
-          offset += ((moduleLength + 3) & ~3) + 4;
-        }
-#undef __SAFEADD__
-      } else {
-        // Remote debug executor loads script from a Uri, rather than taking the actual bundle string
-        m_innerInstance->loadScriptFromString(
-            std::make_unique<const JSBigStdString>(m_devSettings->useWebDebugger ? bundleUrl : jsBundleString),
-            bundleUrl,
-            synchronously);
-      }
     } else {
-#if (defined(_MSC_VER) && !defined(WINRT))
-      std::wstring bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / jsBundleRelativePath).wstring();
-      auto bundleString = FileMappingBigString::fromPath(bundlePath);
-#else
-      std::wstring bundlePath;
-      // TODO: Replace call to private string function with C++ 20 `starts_with`
-      if (m_devSettings->bundleRootPath._Starts_with("resource://")) {
-        auto uri = winrt::Windows::Foundation::Uri(
-            winrt::to_hstring(m_devSettings->bundleRootPath), winrt::to_hstring(jsBundleRelativePath));
-        bundlePath = uri.ToString();
-      } else {
-        bundlePath = (fs::u8path(m_devSettings->bundleRootPath) / (jsBundleRelativePath + ".bundle")).wstring();
-      }
-
-      auto bundleString = std::make_unique<::Microsoft::ReactNative::StorageFileBigString>(bundlePath);
-#endif
+      auto bundleString = Microsoft::ReactNative::JsBigStringFromPath(m_devSettings, jsBundleRelativePath);
       m_innerInstance->loadScriptFromString(std::move(bundleString), std::move(jsBundleRelativePath), synchronously);
     }
   } catch (const std::exception &e) {

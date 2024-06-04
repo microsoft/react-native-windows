@@ -56,6 +56,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     // TODO: Mock Control()
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return DoNothingAsync(); };
     mws->Mocks.Close = [](uint16_t, const hstring &) {};
+    mws->Mocks.SetRequestHeader = [](const hstring &, const hstring &) {};
 
     // Test APIs
     auto rc = make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{});
@@ -81,6 +82,7 @@ TEST_CLASS (WinRTWebSocketResourceUnitTest) {
     auto mws{imws.as<MockMessageWebSocket>()};
     mws->Mocks.ConnectAsync = [](const Uri &) -> IAsyncAction { return ThrowAsync(); };
     mws->Mocks.Close = [](uint16_t, const hstring &) {};
+    mws->Mocks.SetRequestHeader = [](const hstring &, const hstring &) {};
 
     // Test APIs
     auto rc = make_shared<WinRTWebSocketResource>(std::move(imws), MockDataWriter{}, CertExceptions{});

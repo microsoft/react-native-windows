@@ -10,10 +10,10 @@
 #include <react/renderer/components/scrollview/ScrollViewShadowNode.h>
 #pragma warning(pop)
 
-#include <Fabric/Composition/AbiCompositionViewComponentView.h>
 #include <Fabric/Composition/ActivityIndicatorComponentView.h>
 #include <Fabric/Composition/CompositionHelpers.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
+#include <Fabric/Composition/DebuggingOverlayComponentView.h>
 #include <Fabric/Composition/ImageComponentView.h>
 #include <Fabric/Composition/Modal/WindowsModalHostViewComponentView.h>
 #include <Fabric/Composition/Modal/WindowsModalHostViewShadowNode.h>
@@ -42,13 +42,13 @@ void ComponentViewRegistry::Initialize(winrt::Microsoft::ReactNative::ReactConte
 ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithComponentHandle(
     facebook::react::ComponentHandle componentHandle,
     facebook::react::Tag tag,
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext) noexcept {
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext) noexcept {
   // TODO implement recycled components like core does
 
   winrt::Microsoft::ReactNative::ComponentView view{nullptr};
 
   if (componentHandle == facebook::react::ViewShadowNode::Handle()) {
-    view = winrt::Microsoft::ReactNative::Composition::implementation::CompositionViewComponentView::Create(
+    view = winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView::Create(
         compContext, tag, m_context);
   } else if (componentHandle == facebook::react::ParagraphShadowNode::Handle()) {
     view = winrt::Microsoft::ReactNative::Composition::implementation::ParagraphComponentView::Create(
@@ -78,19 +78,20 @@ ComponentViewDescriptor const &ComponentViewRegistry::dequeueComponentViewWithCo
       componentHandle == facebook::react::RawTextShadowNode::Handle() ||
       componentHandle == facebook::react::TextShadowNode::Handle()) {
     // Review - Why do we get asked for ComponentViews for Text/RawText... do these get used?
-    view = winrt::Microsoft::ReactNative::Composition::implementation::CompositionViewComponentView::Create(
+    view = winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView::Create(
         compContext, tag, m_context);
   } else if (componentHandle == facebook::react::UnimplementedNativeViewShadowNode::Handle()) {
     view = winrt::Microsoft::ReactNative::Composition::implementation::UnimplementedNativeViewComponentView::Create(
         compContext, tag, m_context);
+  } else if (componentHandle == facebook::react::DebuggingOverlayShadowNode::Handle()) {
+    view = winrt::Microsoft::ReactNative::Composition::implementation::DebuggingOverlayComponentView::Create(
+        compContext, tag, m_context);
   } else {
     auto descriptor =
         WindowsComponentDescriptorRegistry::FromProperties(m_context.Properties())->GetDescriptor(componentHandle);
-    view = winrt::Microsoft::ReactNative::Composition::implementation::AbiCompositionViewComponentView::Create(
-        m_context.Handle(),
-        compContext,
-        tag,
-        descriptor.as<winrt::Microsoft::ReactNative::IReactViewComponentBuilder>());
+    view = winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(
+               descriptor.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>())
+               ->CreateView(m_context.Handle(), tag, compContext);
   }
 
   auto it = m_registry.insert({tag, ComponentViewDescriptor{view}});

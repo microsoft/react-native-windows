@@ -49,12 +49,12 @@ Copy-Item -Force -Recurse -Path $ReactWindowsRoot\codegen -Destination $TargetRo
 Copy-Item -Force -Recurse -Path $ReactCommonOverrideRoot\* -Destination $ReactNativeRoot\ReactCommon\
 
 # Microsoft.ReactNative.CXX project JSI files
-Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\jsi\jsi\decorator.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
-Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\jsi\jsi\instrumentation.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
-Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\jsi\jsi\jsi.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
-Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\jsi\jsi\jsi.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
-Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\jsi\jsi\jsi-inl.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
-Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\jsi\jsi\threadsafe.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
+Copy-Item -Force -Path $NodeApiJsiRoot\jsi\jsi\decorator.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
+Copy-Item -Force -Path $NodeApiJsiRoot\jsi\jsi\instrumentation.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
+Copy-Item -Force -Path $NodeApiJsiRoot\jsi\jsi\jsi.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
+Copy-Item -Force -Path $NodeApiJsiRoot\jsi\jsi\jsi.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
+Copy-Item -Force -Path $NodeApiJsiRoot\jsi\jsi\jsi-inl.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
+Copy-Item -Force -Path $NodeApiJsiRoot\jsi\jsi\threadsafe.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\jsi\
 
 # Microsoft.ReactNative.CXX project Node-API files
 New-Item $TargetRoot\Microsoft.ReactNative.Cxx\node-api -ItemType Directory -Force

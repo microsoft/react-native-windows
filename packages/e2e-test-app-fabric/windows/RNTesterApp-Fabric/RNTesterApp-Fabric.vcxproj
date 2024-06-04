@@ -2,8 +2,8 @@
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
   <PropertyGroup Label="Globals">
-      <CppWinRTOptimized>true</CppWinRTOptimized>
-      <MinimalCoreWin>true</MinimalCoreWin>
+    <CppWinRTOptimized>true</CppWinRTOptimized>
+    <MinimalCoreWin>true</MinimalCoreWin>
     <ProjectGuid>{3719BE61-52D1-4F42-8A4C-E575BA16E65F}</ProjectGuid>
     <ProjectName>RNTesterApp-Fabric</ProjectName>
     <Keyword>Win32Proj</Keyword>
@@ -13,18 +13,8 @@
     <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <AppxPackage>false</AppxPackage>
   </PropertyGroup>
-  <PropertyGroup Label="FromWinUI3_VSIX" Condition="'$(UseWinUI3)'=='true'">
-    <AppContainerApplication>false</AppContainerApplication>
-    <ApplicationType>Windows Store</ApplicationType>
-    <ApplicationTypeRevision>10.0</ApplicationTypeRevision>
-    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
-    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
-    <WindowsPackageType>None</WindowsPackageType>
-  </PropertyGroup>
   <PropertyGroup Label="ReactNativeWindowsProps">
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
-    <!-- https://github.com/microsoft/react-native-windows/issues/8591 -->
-    <RunAutolinkCheck>false</RunAutolinkCheck>
   </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.WindowsSdk.Default.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -45,13 +35,15 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
-    <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
-  </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
@@ -109,16 +101,20 @@
   <ItemGroup>
     <ClInclude Include="RNTesterApp-Fabric.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="AutolinkedNativeModules.g.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RNTesterApp-Fabric.cpp" />
+    <ClCompile Include="AutolinkedNativeModules.g.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|ARM64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|ARM64'">Create</PrecompiledHeader>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -135,6 +131,8 @@
   <ImportGroup Label="ReactNativeWindowsTargets">
     <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Composition.CppApp.targets" Condition="Exists('$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Composition.CppApp.targets')" />
   </ImportGroup>
+  <ItemGroup>
+  </ItemGroup>
   <Target Name="EnsureReactNativeWindowsTargets" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references targets in your node_modules\react-native-windows folder. The missing file is {0}.</ErrorText>
