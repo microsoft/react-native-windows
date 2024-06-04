@@ -85572,6 +85572,7 @@ exports[`snapshotAllPages View 16`] = `
 
 exports[`snapshotAllPages View 17`] = `
 <View
+  accessible={true}
   style={
     {
       "rowGap": 5,
