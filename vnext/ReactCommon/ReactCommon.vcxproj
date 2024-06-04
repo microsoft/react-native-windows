@@ -61,6 +61,9 @@
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>
+        $(ReactNativeDir)\ReactCommon;
+        $(ReactNativeDir)\ReactCommon\react;
+        $(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon;
         $(ReactNativeDir)\ReactCommon\jsi;
         $(FmtDir)\include;
         $(ReactNativeWindowsDir)stubs;
@@ -147,7 +150,6 @@
     <ClCompile Include="$(YogaDir)\yoga\config\Config.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\debug\AssertFatal.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\debug\Log.cpp" />
-    <ClCompile Include="$(YogaDir)\yoga\debug\NodeToString.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\node\LayoutResults.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\node\Node.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\Sealable.cpp" />

@@ -160,7 +160,6 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="$(Bridging_SourcePath)\CallbackWrapper.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)CoreApp.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\LongLivedJsiValue.h">
       <Filter>TurboModule</Filter>
     </ClInclude>

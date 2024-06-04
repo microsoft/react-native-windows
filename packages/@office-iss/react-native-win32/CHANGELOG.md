@@ -1,8 +1,262 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Thu, 08 Feb 2024 06:13:51 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Jun 2024 05:18:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.251
+
+Tue, 04 Jun 2024 05:18:34 GMT
+
+### Changes
+
+- Integrate 5/25 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.21
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.25
+- Bump @rnw-scripts/just-task to v2.3.37
+- Bump react-native-platform-override to v1.9.38
+
+## 0.0.0-canary.250
+
+Sat, 01 Jun 2024 05:21:30 GMT
+
+### Changes
+
+- Integrate 5/14 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.20
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.24
+- Bump @rnw-scripts/just-task to v2.3.36
+- Bump react-native-platform-override to v1.9.37
+
+## 0.0.0-canary.249
+
+Thu, 30 May 2024 05:18:25 GMT
+
+### Changes
+
+- RN Integration 05/11 (1422161+marlenecota@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.19
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.23
+- Bump @rnw-scripts/just-task to v2.3.35
+- Bump react-native-platform-override to v1.9.36
+
+## 0.0.0-canary.248
+
+Thu, 23 May 2024 05:17:48 GMT
+
+### Changes
+
+- RN Integration 04/27 (1422161+marlenecota@users.noreply.github.com)
+- RN Integration 05/02 (1422161+marlenecota@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.18
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.22
+- Bump @rnw-scripts/just-task to v2.3.34
+- Bump react-native-platform-override to v1.9.35
+
+## 0.0.0-canary.247
+
+Wed, 22 May 2024 05:18:16 GMT
+
+### Changes
+
+- RN Integration 04/20 (1422161+marlenecota@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.17
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.21
+- Bump @rnw-scripts/just-task to v2.3.33
+- Bump react-native-platform-override to v1.9.34
+
+## 0.0.0-canary.246
+
+Wed, 15 May 2024 05:14:52 GMT
+
+### Changes
+
+- Remove unneeded scrollview.win32.js override (30809111+acoates-ms@users.noreply.github.com)
+- 0413 integration (email not defined)
+- Bump @rnw-scripts/eslint-config to v1.2.16
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.20
+- Bump @rnw-scripts/just-task to v2.3.32
+- Bump react-native-platform-override to v1.9.33
+
+## 0.0.0-canary.245
+
+Sat, 11 May 2024 05:18:28 GMT
+
+### Changes
+
+- integrate rn nightly 4/5/2024 (email not defined)
+- Bump @rnw-scripts/eslint-config to v1.2.15
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.19
+- Bump @rnw-scripts/just-task to v2.3.31
+- Bump react-native-platform-override to v1.9.32
+
+## 0.0.0-canary.244
+
+Thu, 09 May 2024 05:18:43 GMT
+
+### Changes
+
+- integrate react-native-3-21 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.14
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.18
+- Bump @rnw-scripts/just-task to v2.3.30
+- Bump react-native-platform-override to v1.9.31
+
+## 0.0.0-canary.243
+
+Sat, 27 Apr 2024 05:16:25 GMT
+
+### Changes
+
+- Fix PaperUIManager (port from windows) (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.242
+
+Fri, 26 Apr 2024 05:16:49 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.9.30
+
+## 0.0.0-canary.241
+
+Thu, 25 Apr 2024 20:12:41 GMT
+
+### Changes
+
+- Integrate 3/7 (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.13
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.17
+- Bump @rnw-scripts/just-task to v2.3.29
+- Bump react-native-platform-override to v1.9.29
+
+## 0.0.0-canary.240
+
+Wed, 10 Apr 2024 05:18:18 GMT
+
+### Changes
+
+- integrate 2/29 (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.11
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.15
+- Bump @rnw-scripts/just-task to v2.3.27
+- Bump react-native-platform-override to v1.9.27
+
+## 0.0.0-canary.239
+
+Sat, 30 Mar 2024 05:18:03 GMT
+
+### Changes
+
+- initial 2/21 integrate (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.10
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.14
+- Bump @rnw-scripts/just-task to v2.3.26
+- Bump react-native-platform-override to v1.9.26
+
+## 0.0.0-canary.238
+
+Sat, 23 Mar 2024 05:16:59 GMT
+
+### Changes
+
+- Integrate 2/1 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.9
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.13
+- Bump @rnw-scripts/just-task to v2.3.25
+- Bump react-native-platform-override to v1.9.25
+
+## 0.0.0-canary.237
+
+Wed, 20 Mar 2024 05:16:36 GMT
+
+### Changes
+
+- TextProps from rn-win32 should export win32 specific properties (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.236
+
+Thu, 07 Mar 2024 06:16:46 GMT
+
+### Changes
+
+- Integrate 1/26 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.8
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.12
+- Bump @rnw-scripts/just-task to v2.3.24
+- Bump react-native-platform-override to v1.9.24
+
+## 0.0.0-canary.235
+
+Fri, 01 Mar 2024 06:18:14 GMT
+
+### Changes
+
+- Integrate 1/22 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.7
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.11
+- Bump @rnw-scripts/just-task to v2.3.23
+- Bump react-native-platform-override to v1.9.23
+
+## 0.0.0-canary.234
+
+Tue, 27 Feb 2024 06:17:57 GMT
+
+### Changes
+
+- Update rn-integrate script to more aggressively update align dependencies (30809111+acoates-ms@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.6
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.10
+- Bump @rnw-scripts/just-task to v2.3.22
+- Bump react-native-platform-override to v1.9.22
+
+## 0.0.0-canary.233
+
+Sat, 24 Feb 2024 06:17:16 GMT
+
+### Changes
+
+- Migrate src directory to src-win (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.9
+- Bump @rnw-scripts/just-task to v2.3.21
+- Bump react-native-platform-override to v1.9.21
+
+## 0.0.0-canary.232
+
+Thu, 15 Feb 2024 06:18:14 GMT
+
+### Changes
+
+- Integrate 1/9 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/just-task to v2.3.20
+- Bump react-native-platform-override to v1.9.20
+
+## 0.0.0-canary.231
+
+Wed, 14 Feb 2024 06:16:54 GMT
+
+### Changes
+
+- Bump @rnw-scripts/eslint-config to v1.2.5
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.8
+- Bump @rnw-scripts/just-task to v2.3.19
+- Bump react-native-platform-override to v1.9.19
+
+## 0.0.0-canary.230
+
+Tue, 13 Feb 2024 06:14:03 GMT
+
+### Changes
+
+- Integrate 1/8 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.229
+
+Fri, 09 Feb 2024 21:11:18 GMT
+
+### Changes
+
+- Bump react-native-platform-override to v1.9.18
 
 ## 0.0.0-canary.228
 

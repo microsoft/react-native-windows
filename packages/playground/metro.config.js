@@ -33,10 +33,10 @@ function isRelativeImport(filePath) {
 function devResolve(packageName, originDir, moduleName) {
   const originDirSrc = originDir.replace(
     devPackages[packageName],
-    path.join(devPackages[packageName], 'src'),
+    path.join(devPackages[packageName], 'src-win'),
   );
 
-  // redirect the resolution to src if an appropriate file exists there
+  // redirect the resolution to src-win if an appropriate file exists there
   const extensions = [
     '',
     '.windows.tsx',
@@ -49,9 +49,9 @@ function devResolve(packageName, originDir, moduleName) {
     '.js',
   ];
 
-  // For each potential extension we need to check for the file in either src and root
+  // For each potential extension we need to check for the file in either src-win and root
   for (const extension of extensions) {
-    // Start with the src folder
+    // Start with the src-win folder
     let potentialSrcModuleName = path.resolve(originDirSrc, moduleName);
     if (fs.existsSync(potentialSrcModuleName) &&
         fs.statSync(potentialSrcModuleName).isDirectory()) {
@@ -79,9 +79,9 @@ function devResolve(packageName, originDir, moduleName) {
 
 /**
  * Allows the usage of live reload in packages in our repo which merges
- * Windows-specific over core. These normally work by copying from the "src"
+ * Windows-specific over core. These normally work by copying from the "src-win"
  * subdirectory to package root during build time, but this resolver will
- * instead prefer the copy in "src" to avoid the need to build.
+ * instead prefer the copy in "src-win" to avoid the need to build.
  */
 function devResolveRequest(
   context,
@@ -127,7 +127,7 @@ function tryResolveDevRelativeImport(
       isRelativeImport(moduleName) &&
       originModulePath.startsWith(packagePath)
     ) {
-      const packageSrcPath = path.join(packagePath, 'src');
+      const packageSrcPath = path.join(packagePath, 'src-win');
       const originPathWithoutSrc = originModulePath.replace(
         packageSrcPath,
         packagePath,

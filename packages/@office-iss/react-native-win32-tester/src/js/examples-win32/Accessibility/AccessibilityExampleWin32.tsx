@@ -10,7 +10,7 @@ import {
   ListRenderItemInfo,
 } from 'react-native';
 import { ViewWin32 } from '@office-iss/react-native-win32';
-import { IHandledKeyboardEvent, Pressable, TextWin32 } from '@office-iss/react-native-win32';
+import { IHandledKeyboardEvent, Pressable } from '@office-iss/react-native-win32';
 
 const styles = StyleSheet.create({
   border: {
@@ -135,14 +135,14 @@ class ButtonExample extends React.Component<{}, IFocusableComponentState & IExpa
 const HeadingLevelExample: React.FunctionComponent = () => {
   return (
     <ViewWin32>
-      <TextWin32 accessible accessibilityRole="header" accessibilityLevel={1} style={styles.heading}>Paragraph Title</TextWin32>
-      <TextWin32>The above heading level should be heading level 1.</TextWin32>
-      <TextWin32 accessible accessibilityRole="header" style={styles.heading}>Second Paragraph Title</TextWin32>
-      <TextWin32>The above heading has no level set. It should default to heading level 2.</TextWin32>
-      <TextWin32 accessible accessibilityLevel={1} style={styles.heading}>Third Paragraph Title</TextWin32>
-      <TextWin32>The above heading does not use the "header" role but has a level set. Since the "header" role 
+      <Text accessible accessibilityRole="header" accessibilityLevel={1} style={styles.heading}>Paragraph Title</Text>
+      <Text>The above heading level should be heading level 1.</Text>
+      <Text accessible accessibilityRole="header" style={styles.heading}>Second Paragraph Title</Text>
+      <Text>The above heading has no level set. It should default to heading level 2.</Text>
+      <Text accessible accessibilityLevel={1} style={styles.heading}>Third Paragraph Title</Text>
+      <Text>The above heading does not use the "header" role but has a level set. Since the "header" role 
         is not set, the heading level should be set to none and it will not be read as a header.
-      </TextWin32>
+      </Text>
     </ViewWin32>
   );
 };
@@ -244,7 +244,7 @@ const SelectionItemComponent: React.FunctionComponent<ISelectionItemComponentPro
         onAccessibilityAction={_onAccessibilityAction}
         onAccessibilityTap={_onPress}
       >
-        <TextWin32>{props.value.toString()}</TextWin32>
+        <Text>{props.value.toString()}</Text>
       </ViewWin32>
     </Pressable>
   );
@@ -372,7 +372,7 @@ const SingleSelectionItemComponent: React.FunctionComponent<ISelectionItemCompon
           (props.isSelected) ? {backgroundColor: props.color} : {},
           (hasFocus) ? styles.border : {}]}
       >
-        <TextWin32>{props.value.toString()}</TextWin32>
+        <Text>{props.value.toString()}</Text>
       </ViewWin32>
   );
 

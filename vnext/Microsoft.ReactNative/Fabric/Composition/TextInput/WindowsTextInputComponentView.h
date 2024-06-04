@@ -20,19 +20,20 @@
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 struct CompTextHost;
 
-struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTextInputComponentView, ComponentView> {
+struct WindowsTextInputComponentView
+    : WindowsTextInputComponentViewT<WindowsTextInputComponentView, ViewComponentView> {
   friend CompTextHost;
 
-  using Super = WindowsTextInputComponentViewT<WindowsTextInputComponentView, ComponentView>;
+  using Super = WindowsTextInputComponentViewT<WindowsTextInputComponentView, ViewComponentView>;
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
-  void mountChildComponentView(
+  void MountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
-  void unmountChildComponentView(
+  void UnmountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
@@ -43,19 +44,13 @@ struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTex
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept override;
-  void prepareForRecycle() noexcept override;
-  facebook::react::SharedViewProps viewProps() noexcept override;
+  static facebook::react::SharedViewProps defaultProps() noexcept;
+  const facebook::react::WindowsTextInputProps &windowsTextInputProps() const noexcept;
   void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
       override;
-  facebook::react::Tag hitTest(
-      facebook::react::Point pt,
-      facebook::react::Point &localPt,
-      bool ignorePointerEvents = false) const noexcept override;
   void OnRenderingDeviceLost() noexcept override;
-  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept override;
-  void onFocusLost() noexcept override;
-  void onFocusGained() noexcept override;
-  bool focusable() const noexcept override;
+  void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
+  void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
   std::string DefaultControlType() const noexcept override;
   std::string DefaultAccessibleName() const noexcept override;
   std::string DefaultHelpText() const noexcept override;
@@ -83,9 +78,11 @@ struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTex
   bool getAcccessiblityIsReadOnly() noexcept override;
 
   WindowsTextInputComponentView(
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual createVisual() noexcept;
 
  private:
   struct DrawBlock {
@@ -95,7 +92,6 @@ struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTex
   };
 
   facebook::react::AttributedString getAttributedString() const;
-  void ensureVisual() noexcept;
   void ensureDrawingSurface() noexcept;
   void DrawText() noexcept;
   void ShowCaret(bool show) noexcept;
@@ -109,11 +105,13 @@ struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTex
   void updateCursorColor(
       const facebook::react::SharedColor &cursorColor,
       const facebook::react::SharedColor &foregroundColor) noexcept;
+  bool ShouldSubmit(
+      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
+      const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
-  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::ICaretVisual m_caretVisual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_drawingSurface{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface{nullptr};
 
   // Used by ITextHost impl
   CHARFORMAT2W m_cf;
@@ -122,7 +120,6 @@ struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTex
   winrt::com_ptr<ITextHost> m_textHost;
   winrt::com_ptr<ITextServices2> m_textServices;
   unsigned int m_imgWidth{0}, m_imgHeight{0};
-  std::shared_ptr<facebook::react::WindowsTextInputProps const> m_props;
   std::shared_ptr<facebook::react::WindowsTextInputShadowNode::ConcreteState const> m_state;
   RECT m_rcClient;
   int64_t m_mostRecentEventCount{0};
@@ -132,6 +129,9 @@ struct WindowsTextInputComponentView : WindowsTextInputComponentViewT<WindowsTex
   int m_cDrawBlock{0};
   bool m_needsRedraw{false};
   bool m_drawing{false};
+  bool m_clearTextOnSubmit{false};
+  bool m_multiline{false};
+  std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

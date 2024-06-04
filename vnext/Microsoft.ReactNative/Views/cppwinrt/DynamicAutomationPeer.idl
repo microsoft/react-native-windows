@@ -36,11 +36,82 @@ namespace Microsoft.ReactNative
     Tab,
     TabList,
     Timer,
-    ToggleButton, 
+    ToggleButton,
     ToolBar,
     List, // RNW extension
     ListItem, // RNW extension
     Unknown, // Catch-all
+    CountRoles
+  };
+
+  enum AriaRole
+  {
+    Unknown = 0, // Catch-all
+    Alert,
+    AlertDialog,
+    Application,
+    Article,
+    Banner,
+    Button,
+    Cell,
+    CheckBox,
+    ColumnHeader,
+    ComboBox,
+    Complementary,
+    ContentInfo,
+    Definition,
+    Dialog,
+    Directory,
+    Document,
+    Feed,
+    Figure,
+    Form,
+    Grid,
+    Group,
+    Heading,
+    Img,
+    Link,
+    List,
+    ListItem,
+    Log,
+    Main,
+    Marquee,
+    Math,
+    Menu,
+    MenuBar,
+    MenuItem,
+    Meter,
+    Navigation,
+    None,
+    Note,
+    Option,
+    Presentation,
+    ProgressBar,
+    Radio,
+    RadioGroup,
+    Region,
+    Row,
+    RowGroup,
+    RowHeader,
+    ScrollBar,
+    SearchBox,
+    Separator,
+    Slider,
+    SpinButton,
+    Status,
+    Summary,
+    Switch,
+    Tab,
+    Table,
+    TabList,
+    TabPanel,
+    Term,
+    Timer,
+    ToolBar,
+    ToolTip,
+    Tree,
+    TreeGrid,
+    TreeItem,
     CountRoles
   };
 
@@ -82,6 +153,10 @@ namespace Microsoft.ReactNative
     static XAML_NAMESPACE.DependencyProperty AccessibilityRoleProperty { get; };
     static void SetAccessibilityRole(XAML_NAMESPACE.UIElement element, AccessibilityRoles value);
     static AccessibilityRoles GetAccessibilityRole(XAML_NAMESPACE.UIElement element);
+
+    static XAML_NAMESPACE.DependencyProperty AriaRoleProperty { get; };
+    static void SetAriaRole(XAML_NAMESPACE.UIElement element, AriaRole value);
+    static AriaRole GetAriaRole(XAML_NAMESPACE.UIElement element);
 
     static XAML_NAMESPACE.DependencyProperty AccessibilityStateSelectedProperty { get; };
     static void SetAccessibilityStateSelected(XAML_NAMESPACE.UIElement element, Boolean value);
@@ -138,7 +213,7 @@ namespace Microsoft.ReactNative
     XAML_NAMESPACE.Automation.Peers.FrameworkElementAutomationPeer,
     XAML_NAMESPACE.Automation.Provider.IInvokeProvider,
     XAML_NAMESPACE.Automation.Provider.ISelectionProvider,
-    XAML_NAMESPACE.Automation.Provider.ISelectionItemProvider, 
+    XAML_NAMESPACE.Automation.Provider.ISelectionItemProvider,
     XAML_NAMESPACE.Automation.Provider.IToggleProvider,
     XAML_NAMESPACE.Automation.Provider.IExpandCollapseProvider,
     XAML_NAMESPACE.Automation.Provider.IRangeValueProvider

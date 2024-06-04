@@ -6,24 +6,32 @@
 
 #include "UnimplementedNativeViewComponentView.h"
 
+#include <AutoDraw.h>
 #include <Fabric/DWriteHelpers.h>
-#include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include "Unicode.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 UnimplementedNativeViewComponentView::UnimplementedNativeViewComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : base_type(compContext, tag, reactContext, false) {
+    : base_type(
+          {}, // default ViewProps
+          compContext,
+          tag,
+          reactContext,
+          ComponentViewFeatures::Default &
+              ~(ComponentViewFeatures::Background | ComponentViewFeatures::ShadowProps |
+                ComponentViewFeatures::NativeBorder),
+          false) {
   m_labelVisual = compContext.CreateSpriteVisual();
   OuterVisual().InsertAt(m_labelVisual, 1);
 }
 
 winrt::Microsoft::ReactNative::ComponentView UnimplementedNativeViewComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<UnimplementedNativeViewComponentView>(compContext, tag, reactContext);
@@ -58,7 +66,7 @@ void UnimplementedNativeViewComponentView::updateLayoutMetrics(
 
     drawingSurface.HorizontalAlignmentRatio(0.f);
     drawingSurface.VerticalAlignmentRatio(0.f);
-    drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
+    drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::None);
     m_labelVisual.Brush(drawingSurface);
     m_labelVisual.Size(surfaceSize);
     m_labelVisual.Offset({
@@ -69,14 +77,11 @@ void UnimplementedNativeViewComponentView::updateLayoutMetrics(
 
     POINT offset;
     {
-      ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, &offset);
+      ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(
+          drawingSurface, m_layoutMetrics.pointScaleFactor, &offset);
       if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
         d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Red, 0.3f));
         assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
-        const auto dpi = m_layoutMetrics.pointScaleFactor * 96.0f;
-        float oldDpiX, oldDpiY;
-        d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-        d2dDeviceContext->SetDpi(dpi, dpi);
 
         float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
         float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);

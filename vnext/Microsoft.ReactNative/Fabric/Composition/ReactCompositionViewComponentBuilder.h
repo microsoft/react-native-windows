@@ -3,6 +3,7 @@
 // Licensed under the MIT License.
 
 #include <react/renderer/core/ReactPrimitives.h>
+#include "winrt/Microsoft.ReactNative.Composition.Experimental.h"
 #include "winrt/Microsoft.ReactNative.Composition.h"
 #include "winrt/Microsoft.ReactNative.h"
 
@@ -15,6 +16,7 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   ReactCompositionViewComponentBuilder() noexcept;
 
  public: // IReactViewComponentBuilder
+  void SetCreateComponentView(ComponentViewFactory impl) noexcept;
   void SetCreateProps(ViewPropsFactory impl) noexcept;
 
   // (Object handle, Microsoft.ReactNative.IComponentState state) => void
@@ -27,8 +29,7 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   void SetLayoutHandler(LayoutHandler impl) noexcept;
 
  public: // Composition::IReactCompositionViewComponentBuilder
-  // (ICompositionContext) => ComponentView
-  void SetCreateComponentView(CompositionComponentFactory impl) noexcept;
+  void SetCreateViewComponentView(CompositionViewComponentViewFactory impl) noexcept;
 
  public:
   IComponentProps CreateProps(ViewProps props) noexcept;
@@ -38,9 +39,12 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
       winrt::Microsoft::ReactNative::IComponentProps props) noexcept;
   MeasureContentHandler MeasureContentHandler() const noexcept;
   LayoutHandler LayoutHandler() const noexcept;
+  bool IsViewComponent() const noexcept;
 
-  winrt::Microsoft::ReactNative::ComponentView
-  CreateView(const IReactContext &reactContext, facebook::react::Tag tag, const ICompositionContext &context) noexcept;
+  winrt::Microsoft::ReactNative::ComponentView CreateView(
+      const IReactContext &reactContext,
+      facebook::react::Tag tag,
+      const Experimental::ICompositionContext &context) noexcept;
 
  private:
   ViewPropsFactory m_propsFactory;
@@ -50,7 +54,8 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   winrt::Microsoft::ReactNative::MeasureContentHandler m_measureContent;
   winrt::Microsoft::ReactNative::LayoutHandler m_layoutHandler;
 
-  CompositionComponentFactory m_createView;
+  ComponentViewFactory m_createComponentView{nullptr};
+  CompositionViewComponentViewFactory m_createView{nullptr};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition

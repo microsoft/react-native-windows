@@ -16,9 +16,9 @@
 
 #include <windows.ui.composition.interop.h>
 
+#include <AutoDraw.h>
 #include <Fabric/DWriteHelpers.h>
 #include <unicode.h>
-#include "Composition/AutoDraw.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include "JSValueReader.h"
 #include "RootComponentView.h"
@@ -39,7 +39,7 @@ enum class ScrollbarHitRegion : int {
 struct ScrollBarComponent {
   ScrollBarComponent(
       const winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView &outer,
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext,
       bool vertical)
       : m_outer(outer), m_compContext(compContext), m_reactContext(reactContext), m_vertical(vertical) {
@@ -54,12 +54,14 @@ struct ScrollBarComponent {
     m_rootVisual.InsertAt(m_arrowVisualLast, 2);
     m_rootVisual.InsertAt(m_thumbVisual, 3);
 
-    m_trackVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBar);
-    m_arrowVisualFirst.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBar);
-    m_arrowVisualLast.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBar);
+    m_trackVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::ScrollBar);
+    m_arrowVisualFirst.AnimationClass(
+        winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::ScrollBar);
+    m_arrowVisualLast.AnimationClass(
+        winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::ScrollBar);
     m_thumbVisual.AnimationClass(
-        vertical ? winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbVertical
-                 : winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbHorizontal);
+        vertical ? winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::ScrollBarThumbVertical
+                 : winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::ScrollBarThumbHorizontal);
 
     updateShy(true);
     onScaleChanged();
@@ -70,7 +72,9 @@ struct ScrollBarComponent {
     updateHighlight(ScrollbarHitRegion::ArrowFirst);
     updateHighlight(ScrollbarHitRegion::ArrowLast);
     updateHighlight(ScrollbarHitRegion::Thumb);
-    m_trackVisual.Brush(m_outer.Theme().PlatformBrush(L"ScrollBarTrackFill"));
+    m_trackVisual.Brush(
+        winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(m_outer.Theme())
+            ->InternalPlatformBrush(L"ScrollBarTrackFill"));
   }
 
   void ContentSize(winrt::Windows::Foundation::Size contentSize) noexcept {
@@ -283,7 +287,7 @@ struct ScrollBarComponent {
     }
   }
 
-  winrt::Microsoft::ReactNative::Composition::IVisual Visual() const noexcept {
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual Visual() const noexcept {
     return m_rootVisual;
   }
 
@@ -307,8 +311,9 @@ struct ScrollBarComponent {
   void stopTrackingThumb() noexcept {
     m_nTrackInputOffset = -1;
     m_thumbVisual.AnimationClass(
-        m_vertical ? winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbVertical
-                   : winrt::Microsoft::ReactNative::Composition::AnimationClass::ScrollBarThumbHorizontal);
+        m_vertical
+            ? winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::ScrollBarThumbVertical
+            : winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::ScrollBarThumbHorizontal);
   }
 
   void handleMoveThumb(const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) {
@@ -365,7 +370,7 @@ struct ScrollBarComponent {
         case ScrollbarHitRegion::Thumb: {
           m_outer.CapturePointer(args.Pointer());
           m_nTrackInputOffset = static_cast<int>((m_vertical ? pos.Y : pos.X) * m_scaleFactor) - m_thumbPos;
-          m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::AnimationClass::None);
+          m_thumbVisual.AnimationClass(winrt::Microsoft::ReactNative::Composition::Experimental::AnimationClass::None);
           handleMoveThumb(args);
         }
       }
@@ -460,14 +465,10 @@ struct ScrollBarComponent {
 
     POINT offset;
     {
-      ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, &offset);
+      ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingSurface, m_scaleFactor, &offset);
       if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
         d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Black, 0.0f));
         assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
-        const auto dpi = m_scaleFactor * 96.0f;
-        float oldDpiX, oldDpiY;
-        d2dDeviceContext->GetDpi(&oldDpiX, &oldDpiY);
-        d2dDeviceContext->SetDpi(dpi, dpi);
 
         // Create a solid color brush for the text. A more sophisticated application might want
         // to cache and reuse a brush across all text elements instead, taking care to recreate
@@ -502,15 +503,12 @@ struct ScrollBarComponent {
             spTextLayout.get(),
             brush.get(),
             D2D1_DRAW_TEXT_OPTIONS_ENABLE_COLOR_FONT);
-
-        // restore dpi to old state
-        d2dDeviceContext->SetDpi(oldDpiX, oldDpiY);
       }
     }
     if (drawingSurface) {
       drawingSurface.HorizontalAlignmentRatio(0.0f);
       drawingSurface.VerticalAlignmentRatio(0.0f);
-      drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::CompositionStretch::None);
+      drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::None);
     }
 
     auto &arrowVisual = (region == ScrollbarHitRegion::ArrowFirst) ? m_arrowVisualFirst : m_arrowVisualLast;
@@ -530,11 +528,13 @@ struct ScrollBarComponent {
         if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(
                  winrt::get_self<ScrollViewComponentView>(m_outer)->viewProps())
                  ->scrollEnabled) {
-          m_thumbVisual.Brush(m_outer.Theme().PlatformBrush(L"ScrollBarThumbFillDisabled"));
+          m_thumbVisual.Brush(
+              winrt::get_self<Theme>(m_outer.Theme())->InternalPlatformBrush(L"ScrollBarThumbFillDisabled"));
         } else if (m_highlightedRegion == region) {
-          m_thumbVisual.Brush(m_outer.Theme().PlatformBrush(L"ScrollBarThumbFillPointerOver"));
+          m_thumbVisual.Brush(
+              winrt::get_self<Theme>(m_outer.Theme())->InternalPlatformBrush(L"ScrollBarThumbFillPointerOver"));
         } else {
-          m_thumbVisual.Brush(m_outer.Theme().PlatformBrush(L"ScrollBarThumbFill"));
+          m_thumbVisual.Brush(winrt::get_self<Theme>(m_outer.Theme())->InternalPlatformBrush(L"ScrollBarThumbFill"));
         }
       }
     }
@@ -542,7 +542,7 @@ struct ScrollBarComponent {
 
  private:
   winrt::Microsoft::ReactNative::Composition::ScrollViewComponentView m_outer;
-  winrt::Microsoft::ReactNative::Composition::ICompositionContext m_compContext;
+  winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compContext;
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   const bool m_vertical;
   bool m_visible{false};
@@ -562,30 +562,38 @@ struct ScrollBarComponent {
   winrt::Windows::Foundation::Numerics::float3 m_offset{0};
   winrt::Windows::Foundation::Size m_contentSize{0, 0};
   winrt::Windows::Foundation::Size m_size{0, 0};
-  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_rootVisual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::IRoundedRectangleVisual m_thumbVisual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_arrowVisualFirst{nullptr};
-  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_arrowVisualLast{nullptr};
-  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_arrowFirstDrawingSurface{nullptr};
-  winrt::Microsoft::ReactNative::Composition::IDrawingSurfaceBrush m_arrowLastDrawingSurface{nullptr};
-  winrt::Microsoft::ReactNative::Composition::IRoundedRectangleVisual m_trackVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual m_rootVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IRoundedRectangleVisual m_thumbVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual m_arrowVisualFirst{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual m_arrowVisualLast{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_arrowFirstDrawingSurface{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_arrowLastDrawingSurface{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IRoundedRectangleVisual m_trackVisual{nullptr};
 };
 
 winrt::Microsoft::ReactNative::ComponentView ScrollViewComponentView::Create(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<ScrollViewComponentView>(compContext, tag, reactContext);
 }
 
+facebook::react::SharedViewProps ScrollViewComponentView::defaultProps() noexcept {
+  static auto const defaultViewProps = std::make_shared<facebook::react::ScrollViewProps const>();
+  return defaultViewProps;
+}
+
 ScrollViewComponentView::ScrollViewComponentView(
-    const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext, CompositionComponentViewFeatures::Default, false) {
-  static auto const defaultProps = std::make_shared<facebook::react::ScrollViewProps const>();
-  m_props = defaultProps;
-
+    : Super(
+          ScrollViewComponentView::defaultProps(),
+          compContext,
+          tag,
+          reactContext,
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
+          false) {
   // m_element.Content(m_contentPanel);
 
   /*
@@ -675,26 +683,24 @@ ScrollViewComponentView::ScrollViewComponentView(
         */
 }
 
-void ScrollViewComponentView::mountChildComponentView(
+void ScrollViewComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
+  // Call ComponentView::UnmountChildComponentView instead of base to handle out own Visual hosting
+  ComponentView::MountChildComponentView(childComponentView, index);
+
   ensureVisual();
-
-  m_children.InsertAt(index, childComponentView);
-  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(*this);
-
   m_scrollVisual.InsertAt(
       childComponentView.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()->OuterVisual(),
       index);
 }
 
-void ScrollViewComponentView::unmountChildComponentView(
+void ScrollViewComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  m_children.RemoveAt(index);
-
+  // Call ComponentView::UnmountChildComponentView instead of base to handle out own Visual hosting
+  ComponentView::UnmountChildComponentView(childComponentView, index);
   m_scrollVisual.Remove(childComponentView.as<ComponentView>()->OuterVisual());
-  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(nullptr);
 }
 
 void ScrollViewComponentView::updateBackgroundColor(const facebook::react::SharedColor &color) noexcept {
@@ -709,22 +715,17 @@ void ScrollViewComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
   const auto &newViewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(props);
-  const auto &oldViewProps = *std::static_pointer_cast<const facebook::react::ScrollViewProps>(m_props);
+  const auto &oldViewProps =
+      *std::static_pointer_cast<const facebook::react::ScrollViewProps>(oldProps ? oldProps : viewProps());
 
   ensureVisual();
 
   if (!oldProps || oldViewProps.backgroundColor != newViewProps.backgroundColor) {
     updateBackgroundColor(newViewProps.backgroundColor);
   }
-  if (oldViewProps.testId != newViewProps.testId) {
-    m_visual.Comment(winrt::to_hstring(newViewProps.testId));
-  }
 
   // update BaseComponentView props
-  updateTransformProps(oldViewProps, newViewProps, m_visual);
-  Super::updateProps(props, oldProps);
-
-  m_props = std::static_pointer_cast<facebook::react::ViewProps const>(props);
+  base_type::updateProps(props, oldProps);
 }
 
 void ScrollViewComponentView::updateState(
@@ -757,16 +758,9 @@ void ScrollViewComponentView::updateLayoutMetrics(
   // Set Position & Size Properties
   ensureVisual();
 
-  if ((layoutMetrics.displayType != m_layoutMetrics.displayType)) {
-    OuterVisual().IsVisible(layoutMetrics.displayType != facebook::react::DisplayType::None);
-  }
-
   m_verticalScrollbarComponent->updateLayoutMetrics(layoutMetrics);
   m_horizontalScrollbarComponent->updateLayoutMetrics(layoutMetrics);
-  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
-  m_visual.Size(
-      {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
-       layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+  base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
   m_scrollVisual.Size(
       {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
        layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
@@ -783,10 +777,6 @@ void ScrollViewComponentView::updateContentVisualSize() noexcept {
 }
 
 void ScrollViewComponentView::prepareForRecycle() noexcept {}
-
-facebook::react::SharedViewProps ScrollViewComponentView::viewProps() noexcept {
-  return m_props;
-}
 
 /*
 ScrollViewComponentView::ScrollInteractionTrackerOwner::ScrollInteractionTrackerOwner(
@@ -834,7 +824,7 @@ void ScrollViewComponentView::OnPointerDown(const winrt::Windows::UI::Input::Poi
 */
 
 void ScrollViewComponentView::onThemeChanged() noexcept {
-  updateBackgroundColor(std::static_pointer_cast<const facebook::react::ScrollViewProps>(m_props)->backgroundColor);
+  updateBackgroundColor(std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->backgroundColor);
   m_verticalScrollbarComponent->OnThemeChanged();
   m_horizontalScrollbarComponent->OnThemeChanged();
   Super::onThemeChanged();
@@ -865,6 +855,7 @@ void ScrollViewComponentView::OnPointerWheelChanged(
       }
     }
   }
+  Super::OnPointerWheelChanged(args);
 }
 
 void ScrollViewComponentView::OnPointerPressed(
@@ -923,6 +914,8 @@ void ScrollViewComponentView::OnKeyDown(
       args.Handled(lineRight(true));
       break;
   }
+
+  base_type::OnKeyDown(source, args);
 }
 
 bool ScrollViewComponentView::scrollToEnd(bool animate) noexcept {
@@ -1129,37 +1122,35 @@ void ScrollViewComponentView::StartBringIntoView(
   }
 }
 
-void ScrollViewComponentView::ensureVisual() noexcept {
-  if (!m_visual) {
-    m_visual = m_compContext.CreateSpriteVisual();
-    m_scrollVisual = m_compContext.CreateScrollerVisual();
-    m_verticalScrollbarComponent = std::make_shared<ScrollBarComponent>(*this, m_compContext, m_reactContext, true);
-    m_horizontalScrollbarComponent = std::make_shared<ScrollBarComponent>(*this, m_compContext, m_reactContext, false);
-    m_visual.InsertAt(m_scrollVisual, 0);
-    m_visual.InsertAt(m_verticalScrollbarComponent->Visual(), 1);
-    m_visual.InsertAt(m_horizontalScrollbarComponent->Visual(), 2);
-    m_scrollPositionChangedRevoker = m_scrollVisual.ScrollPositionChanged(
-        winrt::auto_revoke,
-        [this](
-            winrt::IInspectable const & /*sender*/,
-            winrt::Microsoft::ReactNative::Composition::IScrollPositionChangedArgs const &args) {
-          updateStateWithContentOffset();
-          auto eventEmitter = GetEventEmitter();
-          if (eventEmitter) {
-            facebook::react::ScrollViewMetrics scrollMetrics;
-            scrollMetrics.containerSize.height = m_layoutMetrics.frame.size.height;
-            scrollMetrics.containerSize.width = m_layoutMetrics.frame.size.width;
-            scrollMetrics.contentOffset.x = args.Position().x / m_layoutMetrics.pointScaleFactor;
-            scrollMetrics.contentOffset.y = args.Position().y / m_layoutMetrics.pointScaleFactor;
-            scrollMetrics.zoomScale = 1.0;
-            scrollMetrics.contentSize.height = std::max(m_contentSize.height, m_layoutMetrics.frame.size.height);
-            scrollMetrics.contentSize.width = std::max(m_contentSize.width, m_layoutMetrics.frame.size.width);
-            std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
-                ->onScroll(scrollMetrics);
-          }
-        });
-    OuterVisual().InsertAt(m_visual, 0);
-  }
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ScrollViewComponentView::createVisual() noexcept {
+  auto visual = m_compContext.CreateSpriteVisual();
+  m_scrollVisual = m_compContext.CreateScrollerVisual();
+  m_verticalScrollbarComponent = std::make_shared<ScrollBarComponent>(*this, m_compContext, m_reactContext, true);
+  m_horizontalScrollbarComponent = std::make_shared<ScrollBarComponent>(*this, m_compContext, m_reactContext, false);
+  visual.InsertAt(m_scrollVisual, 0);
+  visual.InsertAt(m_verticalScrollbarComponent->Visual(), 1);
+  visual.InsertAt(m_horizontalScrollbarComponent->Visual(), 2);
+  m_scrollPositionChangedRevoker = m_scrollVisual.ScrollPositionChanged(
+      winrt::auto_revoke,
+      [this](
+          winrt::IInspectable const & /*sender*/,
+          winrt::Microsoft::ReactNative::Composition::Experimental::IScrollPositionChangedArgs const &args) {
+        updateStateWithContentOffset();
+        auto eventEmitter = GetEventEmitter();
+        if (eventEmitter) {
+          facebook::react::ScrollViewEventEmitter::Metrics scrollMetrics;
+          scrollMetrics.containerSize.height = m_layoutMetrics.frame.size.height;
+          scrollMetrics.containerSize.width = m_layoutMetrics.frame.size.width;
+          scrollMetrics.contentOffset.x = args.Position().x / m_layoutMetrics.pointScaleFactor;
+          scrollMetrics.contentOffset.y = args.Position().y / m_layoutMetrics.pointScaleFactor;
+          scrollMetrics.zoomScale = 1.0;
+          scrollMetrics.contentSize.height = std::max(m_contentSize.height, m_layoutMetrics.frame.size.height);
+          scrollMetrics.contentSize.width = std::max(m_contentSize.width, m_layoutMetrics.frame.size.width);
+          std::static_pointer_cast<facebook::react::ScrollViewEventEmitter const>(eventEmitter)
+              ->onScroll(scrollMetrics);
+        }
+      });
+  return visual;
 }
 
 facebook::react::Tag ScrollViewComponentView::hitTest(
@@ -1172,19 +1163,19 @@ facebook::react::Tag ScrollViewComponentView::hitTest(
       ptViewport.x + m_scrollVisual.ScrollPosition().x / m_layoutMetrics.pointScaleFactor,
       ptViewport.y + m_scrollVisual.ScrollPosition().y / m_layoutMetrics.pointScaleFactor};
 
-  facebook::react::Tag targetTag;
+  facebook::react::Tag targetTag = -1;
 
-  if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-       m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
+  if ((ignorePointerEvents || viewProps()->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+       viewProps()->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) &&
       ptViewport.x >= 0 && ptViewport.x <= m_layoutMetrics.frame.size.width && ptViewport.y >= 0 &&
       ptViewport.y <= m_layoutMetrics.frame.size.height) {
-    if ((ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-         m_props->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
+    if ((ignorePointerEvents || viewProps()->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+         viewProps()->pointerEvents == facebook::react::PointerEventsMode::BoxNone) &&
         anyHitTestHelper(targetTag, ptContent, localPt))
       return targetTag;
 
-    if (ignorePointerEvents || m_props->pointerEvents == facebook::react::PointerEventsMode::Auto ||
-        m_props->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) {
+    if (ignorePointerEvents || viewProps()->pointerEvents == facebook::react::PointerEventsMode::Auto ||
+        viewProps()->pointerEvents == facebook::react::PointerEventsMode::BoxOnly) {
       return this->Tag();
     }
   }
@@ -1204,10 +1195,6 @@ facebook::react::Point ScrollViewComponentView::getClientOffset() const noexcept
           parentOffset.x,
       m_layoutMetrics.frame.origin.y * m_layoutMetrics.pointScaleFactor - m_scrollVisual.ScrollPosition().y +
           parentOffset.y};
-}
-
-winrt::Microsoft::ReactNative::Composition::IVisual ScrollViewComponentView::Visual() const noexcept {
-  return m_visual;
 }
 
 std::string ScrollViewComponentView::DefaultControlType() const noexcept {

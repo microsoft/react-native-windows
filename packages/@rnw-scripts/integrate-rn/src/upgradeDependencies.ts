@@ -58,7 +58,9 @@ const OUT_OF_TREE_PLATFORMS = [
 export default async function upgradeDependencies(
   newReactNativeVersion: string,
 ) {
-  const reactNativeDiff = await upgradeReactNative(newReactNativeVersion);
+  const {reactNativeDiff, templateDiff} = await upgradeReactNative(
+    newReactNativeVersion,
+  );
   const repoConfigDiff = await upgradeRepoConfig(newReactNativeVersion);
   const localPackages = (await enumerateRepoPackages()).map(pkg => ({
     ...extractPackageDeps(pkg.json),
@@ -68,6 +70,7 @@ export default async function upgradeDependencies(
   const newDeps = calcPackageDependencies(
     newReactNativeVersion,
     reactNativeDiff,
+    templateDiff,
     repoConfigDiff,
     localPackages,
   );
@@ -110,7 +113,7 @@ export default async function upgradeDependencies(
  */
 async function upgradeReactNative(
   newReactNativeVersion: string,
-): Promise<PackageDiff> {
+): Promise<{reactNativeDiff: PackageDiff; templateDiff: PackageDiff}> {
   const platformPackages = await enumerateRepoPackages(async pkg =>
     OUT_OF_TREE_PLATFORMS.includes(pkg.json.name),
   );
@@ -123,6 +126,10 @@ async function upgradeReactNative(
 
   const findRnOpts = {searchPath: platformPackages[0].path};
   const origJson = (await findPackage('react-native', findRnOpts))!.json;
+  const origTemplateJson = (await findPackage(
+    'react-native/template',
+    findRnOpts,
+  ))!.json;
 
   for (const pkg of await enumerateRepoPackages()) {
     if (pkg.json.dependencies && pkg.json.dependencies['react-native']) {
@@ -150,8 +157,15 @@ async function upgradeReactNative(
 
   await runCommand('yarn install');
   const newJson = (await findPackage('react-native', findRnOpts))!.json;
+  const newTemplateJson = (await findPackage(
+    'react-native/template',
+    findRnOpts,
+  ))!.json;
 
-  return extractPackageDiff(origJson, newJson);
+  return {
+    reactNativeDiff: extractPackageDiff(origJson, newJson),
+    templateDiff: extractPackageDiff(origTemplateJson, newTemplateJson),
+  };
 }
 
 /**
@@ -177,6 +191,18 @@ async function upgradeRepoConfig(
   }
 
   const newPackage = (await findRepoPackage('@react-native/monorepo'))!;
+
+  if (newReactNativeVersion.includes('nightly')) {
+    // Daily builds of RN do not update the dependencies wihtin the monorepo package, so any internal package dependencies need to be bumped manually here
+    const internalDevDependencies: Record<string, string> = {};
+    Object.getOwnPropertyNames(newPackage.json.devDependencies)
+      .filter(prop => prop.startsWith('@react-native'))
+      .forEach(prop => {
+        internalDevDependencies[prop] = newReactNativeVersion;
+      });
+    await newPackage.mergeProps({devDependencies: internalDevDependencies});
+  }
+
   return extractPackageDiff(origPackage.json, newPackage.json);
 }
 
@@ -216,6 +242,7 @@ function extractPackageDeps(json: any): PackageDeps {
 export function calcPackageDependencies(
   newReactNativeVersion: string,
   reactNativePackageDiff: PackageDiff,
+  templateDiff: PackageDiff,
   repoConfigPackageDiff: PackageDiff,
   localPackages: LocalPackageDeps[],
 ): LocalPackageDeps[] {
@@ -238,11 +265,23 @@ export function calcPackageDependencies(
       newPackage,
       reactNativePackageDiff.newPackage,
     );
-    syncDevDependencies(
+    syncDependencies(
       newPackage,
       repoConfigPackageDiff,
       reactNativePackageDiff,
+      templateDiff,
+      'devDependencies',
     );
+    if (newPackage.packageName.startsWith('@rnw-scripts')) {
+      // For internal scripts - bump dependencies to align with core as much as possible
+      syncDependencies(
+        newPackage,
+        repoConfigPackageDiff,
+        reactNativePackageDiff,
+        templateDiff,
+        'dependencies',
+      );
+    }
 
     if (newPackage.dependencies) {
       newPackage.dependencies = sortByKeys(newPackage.dependencies);
@@ -310,19 +349,25 @@ function syncReactNativeDependencies(
  * Updates devDependencies of all packages to align with those used in the RN
  * core monorepo where newer.
  */
-function syncDevDependencies(
+function syncDependencies(
   pkg: LocalPackageDeps,
   repoConfigPackageDiff: PackageDiff,
   reactNativePackageDiff: PackageDiff,
+  templateDiff: PackageDiff,
+  dependencyType: 'devDependencies' | 'dependencies',
 ) {
   // We don't need all of the dev dependencies from the RN repo in our
   // packages. We instead just make sure to update our own dev dependencies if
   // the RN repo has the same package of a newer version
 
-  const devDependencies = Object.entries(pkg.devDependencies || {});
+  const devDependencies = Object.entries(pkg[dependencyType] || {});
   const newRNDevDevDeps =
-    reactNativePackageDiff.newPackage.devDependencies || {};
+    reactNativePackageDiff.newPackage[dependencyType] || {};
   const newRepoConfigDeps = repoConfigPackageDiff.newPackage.dependencies || {};
+  const newTemplateDeps = {
+    ...templateDiff.newPackage.dependencies,
+    ...templateDiff.newPackage.devDependencies,
+  };
 
   for (const [dependency, version] of devDependencies) {
     if (pkg.outOfTreePlatform && newRNDevDevDeps.hasOwnProperty(dependency)) {
@@ -330,18 +375,30 @@ function syncDevDependencies(
         semver.gt(
           semver.minVersion(newRNDevDevDeps[dependency])!,
           semver.minVersion(version)!,
-        )
+        ) ||
+        newRNDevDevDeps[dependency].includes('nightly')
       ) {
-        pkg.devDependencies![dependency] = newRNDevDevDeps[dependency];
+        pkg[dependencyType]![dependency] = newRNDevDevDeps[dependency];
       }
     } else if (newRepoConfigDeps.hasOwnProperty(dependency)) {
       if (
         semver.gt(
           semver.minVersion(newRepoConfigDeps[dependency])!,
           semver.minVersion(version)!,
-        )
+        ) ||
+        newRepoConfigDeps[dependency].includes('nightly')
       ) {
-        pkg.devDependencies![dependency] = newRepoConfigDeps[dependency];
+        pkg[dependencyType]![dependency] = newRepoConfigDeps[dependency];
+      }
+    } else if (newTemplateDeps.hasOwnProperty(dependency)) {
+      if (
+        semver.gt(
+          semver.minVersion(newTemplateDeps[dependency])!,
+          semver.minVersion(version)!,
+        ) ||
+        newTemplateDeps[dependency].includes('nightly')
+      ) {
+        pkg[dependencyType]![dependency] = newTemplateDeps[dependency];
       }
     }
   }
@@ -436,7 +493,10 @@ function bumpSemver(origVersion: string, newVersion: string): string {
     throw new Error(`Unable to bump complicated semver '${origVersion}'`);
   }
 
-  if (origVersion.startsWith(`~`) || origVersion.startsWith('^')) {
+  if (
+    (origVersion.startsWith(`~`) || origVersion.startsWith('^')) &&
+    !(newVersion.startsWith(`~`) || newVersion.startsWith('^'))
+  ) {
     return `${origVersion[0]}${newVersion}`;
   } else {
     return newVersion;

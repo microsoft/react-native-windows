@@ -85,7 +85,7 @@ $vsAll = ($vsComponents + $vsWorkloads);
 
 # The minimum VS version to check for
 # Note: For install to work, whatever min version you specify here must be met by the current package available on winget.
-$vsver = "17.3";
+$vsver = "17.9";
 
 # The exact .NET SDK version to check for
 $dotnetver = "6.0";
@@ -240,8 +240,9 @@ function CheckNode {
     try {
         $nodeVersion = (Get-Command node -ErrorAction Stop).Version;
         Write-Verbose "Node version found: $nodeVersion";
-        $v = $nodeVersion.Major;
-        return ($v -ge 18) -and (($v % 2) -eq 0);
+        $major = $nodeVersion.Major;
+        $minor = $nodeVersion.Minor;
+        return ($major -ge 18) -and ($minor -ge 18);
     } catch { Write-Debug $_ }
 
     Write-Verbose "Node not found.";
@@ -437,10 +438,10 @@ $requirements = @(
     },
     @{
         Id=[CheckId]::Node;
-        Name = 'Node.js (LTS, >= 18.0)';
+        Name = 'Node.js (LTS, >= 18.18)';
         Tags = @('appDev');
         Valid = { CheckNode; }
-        Install = { WinGetInstall OpenJS.NodeJS.LTS "18.16.1" };
+        Install = { WinGetInstall OpenJS.NodeJS.LTS "18.18.0" };
         HasVerboseOutput = $true;
     },
     @{

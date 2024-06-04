@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import "ViewProps.idl";
+import "ComponentView.idl";
 
 #include "DocString.h"
 
@@ -50,13 +51,18 @@ namespace Microsoft.ReactNative
   delegate void ViewShadowNodeCloner(ShadowNode shadowNode, ShadowNode sourceShadowNode);
 
   [experimental]
-  delegate Object InitialStateDataFactory(Microsoft.ReactNative.IComponentProps props);
+  delegate Object InitialStateDataFactory(IComponentProps props);
 
+  [experimental]
+  DOC_STRING("Provides a factory method to create an instance of a ComponentView. See @IReactViewComponentBuilder.SetCreateView")
+  delegate ComponentView ComponentViewFactory(CreateComponentViewArgs args);
 
   [webhosthidden]
   [experimental]
   interface IReactViewComponentBuilder
   {
+    void SetCreateComponentView(ComponentViewFactory impl);
+
     DOC_STRING("Create an implementation of your custom Props type that will be passed to your components @Composition.ICompositionViewComponent.UpdateProps method.")
     void SetCreateProps(ViewPropsFactory impl);
 

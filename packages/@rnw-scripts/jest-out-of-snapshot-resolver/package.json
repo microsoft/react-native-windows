@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/jest-out-of-tree-snapshot-resolver",
-  "version": "1.1.7",
+  "version": "1.1.25",
   "license": "MIT",
   "main": "jest-snapshot-resolver.js",
   "repository": {
@@ -9,9 +9,9 @@
     "directory": "packages/@rnw-scripts/jest-out-of-snapshot-resolver"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.2.4",
+    "@rnw-scripts/eslint-config": "1.2.21",
     "eslint": "^8.19.0",
-    "prettier": "^2.4.1"
+    "prettier": "2.8.8"
   },
   "engines": {
     "node": ">= 18"

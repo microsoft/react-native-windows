@@ -25,9 +25,9 @@
       },
       "Microsoft.Windows.CppWinRT": {
         "type": "Direct",
-        "requested": "[2.0.211028.7, )",
-        "resolved": "2.0.211028.7",
-        "contentHash": "JBGI0c3WLoU6aYJRy9Qo0MLDQfObEp+d4nrhR95iyzf7+HOgjRunHDp/6eGFREd7xq3OI1mll9ecJrMfzBvlyg=="
+        "requested": "[2.0.230706.1, )",
+        "resolved": "2.0.230706.1",
+        "contentHash": "l0D7oCw/5X+xIKHqZTi62TtV+1qeSz7KVluNFdrJ9hXsst4ghvqQ/Yhura7JqRdZWBXAuDS0G0KwALptdoxweQ=="
       },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
@@ -166,7 +166,10 @@
         "contentHash": "qF6RRZKaflI+LR1YODNyWYjq5YoX8IJ2wx5y8O+AW2xO+1t/Q6Mm+jQ38zJbWnmXbrcOqUYofn7Y3/KC6lTLBQ=="
       },
       "common": {
-        "type": "Project"
+        "type": "Project",
+        "dependencies": {
+          "boost": "[1.76.0, )"
+        }
       },
       "fmt": {
         "type": "Project"
@@ -174,8 +177,8 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "Fmt": "[1.0.0, )",
-          "boost": "[1.76.0, )"
+          "boost": "[1.76.0, )",
+          "fmt": "[1.0.0, )"
         }
       },
       "microsoft.reactnative": {

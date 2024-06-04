@@ -79,6 +79,16 @@ describe('TextInput Tests', () => {
     );
     expect(await component.getText()).toBe('HelloWorld');
     await clear.click();
+    await app.waitUntil(
+      async () => {
+        return (await component.getText()) === '';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Clicking clear button should clear text.`,
+      },
+    );
     expect(await component.getText()).toBe('');
   });
   test('TextInputs can autocapitalize: Autocapitalize Turned Off', async () => {
@@ -264,6 +274,28 @@ describe('TextInput Tests', () => {
       'textinput-clear-on-submit',
     );
     await component.waitForDisplayed({timeout: 5000});
+    await app.waitUntil(
+      async () => {
+        await component.setValue('Hello World');
+        return (await component.getText()) === 'Hello World';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
+    await app.waitUntil(
+      async () => {
+        await component.setValue('\uE007');
+        return (await component.getText()) === '';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
     const dump = await dumpVisualTree('textinput-clear-on-submit');
     expect(dump).toMatchSnapshot();
   });
@@ -283,13 +315,97 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('textinput-clear-on-submit-3');
     expect(dump).toMatchSnapshot();
   });
-  test('TextInputs can submit with custom key', async () => {
+  test('TextInputs can submit with custom key, multilined and submit with enter', async () => {
     const component = await app.findElementByTestID(
       'textinput-clear-on-submit-4',
     );
     await component.waitForDisplayed({timeout: 5000});
+    await app.waitUntil(
+      async () => {
+        await component.setValue('Hello World');
+        return (await component.getText()) === 'Hello World';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
+    await app.waitUntil(
+      async () => {
+        await component.setValue('\uE007');
+        return (await component.getText()) === '';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
     const dump = await dumpVisualTree('textinput-clear-on-submit-4');
     expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs can keep text on focus', async () => {
+    const componentFocusFalse = await app.findElementByTestID(
+      'clear-text-on-focus-false',
+    );
+
+    await componentFocusFalse.waitForDisplayed({timeout: 5000});
+    await app.waitUntil(
+      async () => {
+        await componentFocusFalse.setValue('Hello World');
+        return (await componentFocusFalse.getText()) === 'Hello World';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
+    
+    // Click on another textInput to move focus away from the one tested (clearTextOnFocus={false})
+    const componentFocusTrue = await app.findElementByTestID(
+      'clear-text-on-focus-true',
+    );
+    await componentFocusTrue.waitForDisplayed({timeout: 5000});
+    await componentFocusTrue.click();
+
+    // Then click on the tested component
+    await componentFocusFalse.click();
+
+    // Verify the textInput contents are still the same after regaining focus
+    expect(await componentFocusFalse.getText()).toBe('Hello World');
+  });
+  test('TextInputs can clear text on focus', async () => {
+    const componentFocusTrue = await app.findElementByTestID(
+      'clear-text-on-focus-true',
+    );
+
+    await componentFocusTrue.waitForDisplayed({timeout: 5000});
+    await app.waitUntil(
+      async () => {
+        await componentFocusTrue.setValue('Hello World');
+        return (await componentFocusTrue.getText()) === 'Hello World';
+      },
+      {
+        interval: 1500,
+        timeout: 5000,
+        timeoutMsg: `Unable to enter correct text.`,
+      },
+    );
+    
+    // Click on another textInput to move focus away from the one tested (clearTextOnFocus={true})
+    const componentFocusFalse = await app.findElementByTestID(
+      'clear-text-on-focus-false',
+    );
+    await componentFocusFalse.waitForDisplayed({timeout: 5000});
+    await componentFocusFalse.click();
+
+    // Then click on the tested component
+    await componentFocusTrue.click();
+  
+    // Verify the textInput contents are cleared after regaining focus
+    expect(await componentFocusTrue.getText()).toBe('');
   });
   test('TextInputs can have inline images', async () => {
     const component = await app.findElementByTestID('textinput-inline-images');

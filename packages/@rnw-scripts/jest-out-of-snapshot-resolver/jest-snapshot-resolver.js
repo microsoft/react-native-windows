@@ -22,12 +22,12 @@ exports.createSnapshotResolver = dirname => {
           testDir.startsWith(dirname) &&
           ['/', '\\'].includes(testDir[dirname.length])
         ) {
-          testSrcDir = testDir.replace(dirname, path.join(dirname, 'src'));
+          testSrcDir = testDir.replace(dirname, path.join(dirname, 'src-win'));
         } else {
           testSrcDir = testDir;
         }
       } else {
-        testSrcDir = path.join('src', testDir);
+        testSrcDir = path.join('src-win', testDir);
       }
 
       const testFile = path.basename(testPath);
@@ -40,7 +40,7 @@ exports.createSnapshotResolver = dirname => {
 
     resolveTestPath: (snapshotFilePath, snapshotExtension) =>
       snapshotFilePath
-        .replace('src' + path.sep, '')
+        .replace('src-win' + path.sep, '')
         .replace('__snapshots__' + path.sep, '')
         .slice(0, -snapshotExtension.length),
 

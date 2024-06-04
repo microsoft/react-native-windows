@@ -96,6 +96,7 @@ msrn::IReactPackageBuilder TestController::CreateReactPackageBuilder() {
       turboModulesProvider,
 #ifdef USE_FABRIC
       std::shared_ptr<::Microsoft::ReactNative::WindowsComponentDescriptorRegistry>{},
+      std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager>{},
 #endif
       true);
 }

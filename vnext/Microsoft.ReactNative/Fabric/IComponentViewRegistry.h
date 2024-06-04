@@ -22,7 +22,7 @@ struct IComponentViewRegistry {
   virtual ComponentViewDescriptor const &dequeueComponentViewWithComponentHandle(
       facebook::react::ComponentHandle componentHandle,
       facebook::react::Tag tag,
-      const winrt::Microsoft::ReactNative::Composition::ICompositionContext &compContext) noexcept = 0;
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext) noexcept = 0;
   virtual ComponentViewDescriptor const &componentViewDescriptorWithTag(facebook::react::Tag tag) const noexcept = 0;
   virtual winrt::Microsoft::ReactNative::ComponentView findComponentViewWithTag(
       facebook::react::Tag tag) const noexcept = 0;

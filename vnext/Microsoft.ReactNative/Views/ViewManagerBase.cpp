@@ -141,6 +141,14 @@ void ViewManagerBase::GetNativeProps(const winrt::Microsoft::ReactNative::IJSVal
   React::WriteProperty(writer, L"onGotPointerCapture", L"function");
   React::WriteProperty(writer, L"onLostPointerCapture", L"function");
   React::WriteProperty(writer, L"onClick", L"function");
+
+  // Windows specific events
+  React::WriteProperty(writer, L"onFocus", L"function");
+  React::WriteProperty(writer, L"onBlur", L"function");
+  React::WriteProperty(writer, L"onKeyUp", L"function");
+  React::WriteProperty(writer, L"onKeyDown", L"function");
+  React::WriteProperty(writer, L"onMouseEnter", L"function");
+  React::WriteProperty(writer, L"onMouseLeave", L"function");
 }
 
 void ViewManagerBase::GetConstants(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const {

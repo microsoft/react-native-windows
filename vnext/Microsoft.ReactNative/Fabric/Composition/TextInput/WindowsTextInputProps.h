@@ -33,10 +33,10 @@ static inline std::string toString(const CompWindowsTextInputSelectionStruct &va
 }
 
 struct CompWindowsTextInputSubmitKeyEventsStruct {
-  bool altKey;
-  bool ctrlKey;
-  bool metaKey;
-  bool shiftKey;
+  bool altKey{false};
+  bool ctrlKey{false};
+  bool metaKey{false};
+  bool shiftKey{false};
   std::string code;
 };
 

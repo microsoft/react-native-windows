@@ -7,50 +7,18 @@
 #include <react/debug/react_native_assert.h>
 #include <react/renderer/core/LayoutConstraints.h>
 #include <react/renderer/core/LayoutContext.h>
-#include <react/renderer/core/TraitCast.h>
 #include <react/renderer/core/conversions.h>
 
 #include <utility>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
-ShadowNode::ShadowNode(facebook::react::ShadowNode::Shared shadowNode) noexcept : m_shadowNode(shadowNode) {}
-
-void ShadowNode::EnsureUnsealed() noexcept {
-  m_shadowNode->ensureUnsealed();
-}
-
-winrt::IInspectable ShadowNode::Tag() const noexcept {
-  return m_tag;
-}
-
-void ShadowNode::Tag(winrt::IInspectable tag) noexcept {
-  m_tag = tag;
-}
-
-winrt::IInspectable ShadowNode::StateData() const noexcept {
-  auto state = m_shadowNode->getState();
-  react_native_assert(state && "State must not be `nullptr`.");
-  auto abiStateData =
-      static_cast<const facebook::react::ConcreteState<::Microsoft::ReactNative::AbiStateData> *>(state.get())
-          ->getData();
-  return abiStateData.userdata;
-}
-
-void ShadowNode::StateData(winrt::IInspectable tag) noexcept {
-  m_shadowNode->ensureUnsealed();
-
-  auto &state = const_cast<facebook::react::State::Shared &>(m_shadowNode->getState());
-  state = std::make_shared<const facebook::react::ConcreteState<::Microsoft::ReactNative::AbiStateData>>(
-      std::make_shared<const ::Microsoft::ReactNative::AbiStateData>(tag), *state);
-}
-
 YogaLayoutableShadowNode::YogaLayoutableShadowNode(facebook::react::ShadowNode::Shared shadowNode) noexcept
     : base_type(shadowNode) {}
 
 void YogaLayoutableShadowNode::Layout(winrt::Microsoft::ReactNative::LayoutContext layoutContext) noexcept {
   std::const_pointer_cast<facebook::react::YogaLayoutableShadowNode>(
-      facebook::react::traitCast<facebook::react::YogaLayoutableShadowNode>(m_shadowNode))
+      std::dynamic_pointer_cast<const facebook::react::YogaLayoutableShadowNode>(m_shadowNode))
       ->facebook::react::YogaLayoutableShadowNode::layout(
           winrt::get_self<winrt::Microsoft::ReactNative::implementation::LayoutContext>(layoutContext)
               ->m_layoutContext);

@@ -1,8 +1,137 @@
 # Change Log - @rnw-scripts/eslint-config
 
-This log was last generated on Sat, 21 Oct 2023 05:16:08 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Jun 2024 05:18:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.21
+
+Tue, 04 Jun 2024 05:18:35 GMT
+
+### Patches
+
+- Integrate 5/25 (34109996+chiaramooney@users.noreply.github.com)
+
+## 1.2.20
+
+Sat, 01 Jun 2024 05:21:30 GMT
+
+### Patches
+
+- Integrate 5/14 (34109996+chiaramooney@users.noreply.github.com)
+
+## 1.2.19
+
+Thu, 30 May 2024 05:18:25 GMT
+
+### Patches
+
+- RN Integration 05/11 (1422161+marlenecota@users.noreply.github.com)
+
+## 1.2.18
+
+Thu, 23 May 2024 05:17:49 GMT
+
+### Patches
+
+- RN Integration 04/27 (1422161+marlenecota@users.noreply.github.com)
+- RN Integration 05/02 (1422161+marlenecota@users.noreply.github.com)
+
+## 1.2.17
+
+Wed, 22 May 2024 05:18:17 GMT
+
+### Patches
+
+- RN Integration 04/20 (1422161+marlenecota@users.noreply.github.com)
+
+## 1.2.16
+
+Wed, 15 May 2024 05:14:53 GMT
+
+### Patches
+
+- 0413 integration (email not defined)
+
+## 1.2.15
+
+Sat, 11 May 2024 05:18:29 GMT
+
+### Patches
+
+- integrate rn nightly 4/5/2024 (email not defined)
+
+## 1.2.14
+
+Thu, 09 May 2024 05:18:43 GMT
+
+### Patches
+
+- integrate react-native-3-21 (tatianakapos@microsoft.com)
+
+## 1.2.13
+
+Thu, 25 Apr 2024 20:12:43 GMT
+
+### Patches
+
+- Integrate 3/7 (yajurgrover24@gmail.com)
+
+## 1.2.11
+
+Wed, 10 Apr 2024 05:18:19 GMT
+
+### Patches
+
+- integrate 2/29 (yajurgrover24@gmail.com)
+
+## 1.2.10
+
+Sat, 30 Mar 2024 05:18:03 GMT
+
+### Patches
+
+- initial 2/21 integrate (yajurgrover24@gmail.com)
+
+## 1.2.9
+
+Sat, 23 Mar 2024 05:17:00 GMT
+
+### Patches
+
+- Integrate 2/1 (34109996+chiaramooney@users.noreply.github.com)
+
+## 1.2.8
+
+Thu, 07 Mar 2024 06:16:47 GMT
+
+### Patches
+
+- Integrate 1/26 (34109996+chiaramooney@users.noreply.github.com)
+
+## 1.2.7
+
+Fri, 01 Mar 2024 06:18:15 GMT
+
+### Patches
+
+- Integrate 1/22 (34109996+chiaramooney@users.noreply.github.com)
+
+## 1.2.6
+
+Tue, 27 Feb 2024 06:18:02 GMT
+
+### Patches
+
+- Update rn-integrate script to more aggressively update align dependencies (30809111+acoates-ms@users.noreply.github.com)
+
+## 1.2.5
+
+Wed, 14 Feb 2024 06:16:54 GMT
+
+### Patches
+
+- Bump Babel Versions (34109996+chiaramooney@users.noreply.github.com)
 
 ## 1.2.4
 

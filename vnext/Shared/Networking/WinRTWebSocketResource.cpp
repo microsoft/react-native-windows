@@ -19,9 +19,6 @@
 #include <winrt/Windows.Foundation.Collections.h>
 #include <winrt/Windows.Security.Cryptography.h>
 
-// Standard Library
-#include <sstream>
-
 using Microsoft::Common::Utilities::CheckedReinterpretCast;
 
 using std::function;
@@ -67,9 +64,9 @@ auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
 
     void await_resume() const noexcept {}
 
-    void await_suspend(std::experimental::coroutine_handle<> resume) noexcept {
+    void await_suspend(winrt::impl::coroutine_handle<> resume) noexcept {
       m_callback = [context = resume.address()]() noexcept {
-        std::experimental::coroutine_handle<>::from_address(context)();
+        winrt::impl::coroutine_handle<>::from_address(context)();
       };
       m_queue.Post(std::move(m_callback));
     }

@@ -16,9 +16,9 @@
 #include <winrt/Microsoft.UI.interop.h>
 #endif
 
-#include "YogaXamlPanel.h"
-
 #include "App.CustomComponent.g.h"
+#include <NativeModules.h>
+#include "YogaXamlPanel.h"
 
 namespace winrt::PlaygroundApp::implementation {
 
@@ -26,20 +26,16 @@ namespace winrt::PlaygroundApp::implementation {
  * Custom Properties can be passed from JS to this native component
  * This struct will eventually be codegen'd from the JS spec file
  */
+REACT_STRUCT(CustomXamlComponentProps)
 struct CustomXamlComponentProps
     : winrt::implements<CustomXamlComponentProps, winrt::Microsoft::ReactNative::IComponentProps> {
   CustomXamlComponentProps(winrt::Microsoft::ReactNative::ViewProps props) : m_props(props) {}
 
   void SetProp(uint32_t hash, winrt::hstring propName, winrt::Microsoft::ReactNative::IJSValueReader value) noexcept {
-    if (propName == L"label") {
-      if (!value) {
-        label.clear();
-      } else {
-        label = value.GetString();
-      }
-    }
+    winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
   }
 
+  REACT_FIELD(label);
   winrt::hstring label;
   winrt::Microsoft::ReactNative::ViewProps m_props;
 };
@@ -55,7 +51,11 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
   CustomComponent(
       bool nativeLayout,
       const winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs &args)
-      : base_type(args), m_nativeLayout(nativeLayout) {}
+      : base_type(args),
+        m_nativeLayout(nativeLayout),
+        m_compContext(
+            args.as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCreateComponentViewArgs>()
+                .CompositionContext()) {}
 
   ~CustomComponent() {
 #ifdef USE_EXPERIMENTAL_WINUI3
@@ -71,19 +71,22 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
     base_type::HandleCommand(commandName, args);
   }
 
-  void UpdateProps(const winrt::Microsoft::ReactNative::IComponentProps &props) {
+  void UpdateProps(
+      const winrt::Microsoft::ReactNative::IComponentProps &props,
+      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) {
     auto myProps = props.as<CustomXamlComponentProps>();
-
+#ifdef USE_EXPERIMENTAL_WINUI3
     m_buttonLabelTextBlock.Text(myProps->label);
+#endif
   }
   void UpdateState(const winrt::Microsoft::ReactNative::IComponentState &state) {
     m_state = state;
   }
 
-  void UpdateLayoutMetrics(const winrt::Microsoft::ReactNative::LayoutMetrics &layoutMetrics) {
-    m_visual.Size(
-        {layoutMetrics.Frame.Width * layoutMetrics.PointScaleFactor,
-         layoutMetrics.Frame.Height * layoutMetrics.PointScaleFactor});
+  void UpdateLayoutMetrics(
+      const winrt::Microsoft::ReactNative::LayoutMetrics &layoutMetrics,
+      const winrt::Microsoft::ReactNative::LayoutMetrics &oldLayoutMetrics) {
+    base_type::UpdateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 #ifdef USE_EXPERIMENTAL_WINUI3
     auto site = m_siteBridge.Site();
     auto siteWindow = site.Environment();
@@ -101,31 +104,37 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
     base_type::FinalizeUpdates(updateMask);
   }
 
-  winrt::Microsoft::ReactNative::Composition::IVisual CreateVisual() noexcept {
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual CreateInternalVisual() noexcept {
 #ifdef USE_EXPERIMENTAL_WINUI3
+    auto systemCompContext =
+        m_compContext
+            .try_as<winrt::Microsoft::ReactNative::Composition::Experimental::SystemCompositionContextHelper>();
+    if (systemCompContext) {
+      m_xamlIsland = winrt::Microsoft::UI::Xaml::XamlIsland{};
+      m_xamlIsland.Content(CreateXamlButtonContent());
 
-    m_xamlIsland = winrt::Microsoft::UI::Xaml::XamlIsland{};
-    m_xamlIsland.Content(CreateXamlButtonContent());
-
-    m_contentIsland = m_xamlIsland.ContentIsland();
+      m_contentIsland = m_xamlIsland.ContentIsland();
+    }
 #endif
 
-    m_visual = CompositionContext().CreateSpriteVisual();
-    // m_visual.Brush(CompositionContext().CreateColorBrush({255, 255, 0, 255}));
+    m_visual = m_compContext.CreateSpriteVisual();
+    // m_visual.Brush(m_compContext.CreateColorBrush({255, 255, 0, 255}));
 #ifdef USE_EXPERIMENTAL_WINUI3
 
-    auto parentSystemVisual =
-        winrt::Microsoft::ReactNative::Composition::WindowsCompositionContextHelper::InnerVisual(m_visual)
-            .as<winrt::Windows::UI::Composition::ContainerVisual>();
+    if (systemCompContext) {
+      auto hwnd = reinterpret_cast<HWND>(
+          winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(ReactContext().Properties()));
 
-    auto hwnd = reinterpret_cast<HWND>(
-        winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(ReactContext().Properties()));
+      auto containerVisual =
+          winrt::Microsoft::ReactNative::Composition::Experimental::SystemCompositionContextHelper::InnerVisual(
+              m_visual)
+              .as<winrt::Windows::UI::Composition::ContainerVisual>();
+      m_siteBridge = winrt::Microsoft::UI::Content::SystemVisualSiteBridge::Create(
+          m_contentIsland.Compositor(), containerVisual, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
+      m_siteBridge.Connect(m_contentIsland);
 
-    m_siteBridge = winrt::Microsoft::UI::Content::SystemVisualSiteBridge::Create(
-        m_contentIsland.Compositor(), parentSystemVisual, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
-    m_siteBridge.Connect(m_contentIsland);
-
-    auto rootXamlVisualSize = m_contentIsland.Root().Size();
+      auto rootXamlVisualSize = m_contentIsland.Root().Size();
+    }
 #endif
 
     return m_visual;
@@ -170,9 +179,10 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
 
  private:
   const bool m_nativeLayout;
+  winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compContext;
   winrt::Microsoft::UI::Xaml::Controls::TextBlock m_buttonLabelTextBlock{nullptr};
   winrt::Microsoft::ReactNative::IComponentState m_state;
-  winrt::Microsoft::ReactNative::Composition::ISpriteVisual m_visual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_visual;
 #ifdef USE_EXPERIMENTAL_WINUI3
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
   winrt::Microsoft::UI::Content::ContentIsland m_contentIsland{nullptr};
@@ -189,7 +199,7 @@ static void RegisterViewComponent(winrt::Microsoft::ReactNative::IReactPackageBu
         });
         auto compBuilder =
             builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
-        compBuilder.SetCreateComponentView(
+        compBuilder.SetCreateViewComponentView(
             [](const winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs &args) noexcept {
               return winrt::make<CustomComponent>(true, args);
             });
@@ -229,7 +239,7 @@ static void RegisterViewComponent(winrt::Microsoft::ReactNative::IReactPackageBu
         });
         auto compBuilder =
             builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
-        compBuilder.SetCreateComponentView(
+        compBuilder.SetCreateViewComponentView(
             [](const winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs &args) noexcept {
               return winrt::make<CustomComponent>(false, args);
             });

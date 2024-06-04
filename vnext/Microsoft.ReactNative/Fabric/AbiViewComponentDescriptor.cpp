@@ -8,6 +8,7 @@
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
 #include <ReactContext.h>
 #include <react/renderer/components/view/ViewPropsInterpolation.h>
+#include <type_traits>
 #include "DynamicReader.h"
 
 namespace Microsoft::ReactNative {
@@ -88,10 +89,8 @@ facebook::react::Props::Shared AbiViewComponentDescriptor::cloneProps(
     return ShadowNodeT::defaultSharedProps();
   }
 
-  if (facebook::react::CoreFeatures::excludeYogaFromRawProps) {
-    if (ShadowNodeT::IdentifierTrait() == facebook::react::ShadowNodeTraits::Trait::YogaLayoutableKind) {
-      rawProps.filterYogaStylePropsInDynamicConversion();
-    }
+  if constexpr (facebook::react::RawPropsFilterable<ShadowNodeT>) {
+    ShadowNodeT::filterRawProps(rawProps);
   }
 
   rawProps.parse(rawPropsParser_);
@@ -100,7 +99,8 @@ facebook::react::Props::Shared AbiViewComponentDescriptor::cloneProps(
   // auto shadowNodeProps = std::make_shared<ShadowNodeT::Props>(context, rawProps, props);
   auto shadowNodeProps = std::make_shared<AbiViewProps>(
       context, props ? static_cast<AbiViewProps const &>(*props) : *ShadowNodeT::defaultSharedProps(), rawProps);
-  auto viewProps = winrt::make<winrt::Microsoft::ReactNative::implementation::UserViewProps>(shadowNodeProps);
+  auto viewProps =
+      winrt::make<winrt::Microsoft::ReactNative::implementation::ViewProps>(shadowNodeProps, false /*holdRef*/);
   auto userProps =
       winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
           ->CreateProps(viewProps);

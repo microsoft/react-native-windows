@@ -46,8 +46,15 @@ LayoutHandler ReactCompositionViewComponentBuilder::LayoutHandler() const noexce
   return m_layoutHandler;
 }
 
-void ReactCompositionViewComponentBuilder::SetCreateComponentView(CompositionComponentFactory impl) noexcept {
+void ReactCompositionViewComponentBuilder::SetCreateComponentView(ComponentViewFactory impl) noexcept {
+  m_createComponentView = impl;
+  assert(!m_createView); // Only SetCreateComponentView OR SetCreateViewComponentView should be called
+}
+
+void ReactCompositionViewComponentBuilder::SetCreateViewComponentView(
+    CompositionViewComponentViewFactory impl) noexcept {
   m_createView = impl;
+  assert(!m_createComponentView); // Only SetCreateComponentView OR SetCreateViewComponentView should be called
 }
 // (Object handle, Microsoft.ReactNative.IComponentState state) => void
 // void ReactCompositionViewComponentBuilder::SetStateUpdater(StateUpdater impl) noexcept {
@@ -89,9 +96,19 @@ void ReactCompositionViewComponentBuilder::SetLayoutHandler(
 winrt::Microsoft::ReactNative::ComponentView ReactCompositionViewComponentBuilder::CreateView(
     const IReactContext &reactContext,
     int32_t tag,
-    const ICompositionContext &context) noexcept {
-  auto args = winrt::make<implementation::CreateCompositionComponentViewArgs>(reactContext, tag, context);
-  return m_createView(args);
+    const Experimental::ICompositionContext &context) noexcept {
+  if (m_createView) {
+    auto args = winrt::make<implementation::CreateCompositionComponentViewArgs>(reactContext, tag, context);
+    return m_createView(args);
+  } else {
+    assert(m_createComponentView);
+    auto args = winrt::make<winrt::Microsoft::ReactNative::implementation::CreateComponentViewArgs>(reactContext, tag);
+    return m_createComponentView(args);
+  }
+}
+
+bool ReactCompositionViewComponentBuilder::IsViewComponent() const noexcept {
+  return m_createView != nullptr;
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition

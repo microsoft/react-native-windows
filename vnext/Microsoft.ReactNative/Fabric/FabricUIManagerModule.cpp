@@ -12,7 +12,6 @@
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
-#include <ICompositionRootView.h>
 #include <IReactContext.h>
 #include <IReactRootView.h>
 #include <JSI/jsi.h>
@@ -63,7 +62,7 @@ FabricUIManager::~FabricUIManager() {
 
 void FabricUIManager::installFabricUIManager() noexcept {
   std::shared_ptr<const facebook::react::ReactNativeConfig> config =
-      std::make_shared<const ReactNativeConfigProperties>(m_context);
+      std::make_shared<const ReactNativeConfigProperties>(m_context.Properties());
 
   std::lock_guard<std::mutex> schedulerLock(m_schedulerMutex);
 
@@ -72,26 +71,16 @@ void FabricUIManager::installFabricUIManager() noexcept {
   // This allows access to our ReactContext from the contextContainer thats passed around the fabric codebase
   contextContainer->insert("MSRN.ReactContext", m_context);
 
-  auto runtimeExecutor = SchedulerSettings::GetRuntimeExecutor(m_context.Properties());
+  facebook::react::RuntimeExecutor runtimeExecutor;
   auto toolbox = facebook::react::SchedulerToolbox{};
 
   if (auto runtimeScheduler = SchedulerSettings::RuntimeSchedulerFromProperties(m_context.Properties())) {
     contextContainer->insert("RuntimeScheduler", runtimeScheduler);
-    facebook::react::EventBeat::Factory synchronousBeatFactory =
-        [runtimeExecutor, context = m_context, runtimeScheduler](
-            facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
-          return std::make_unique<SynchronousEventBeat>(ownerBox, context, runtimeExecutor, runtimeScheduler);
-        };
-    toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
     runtimeExecutor = [runtimeScheduler](std::function<void(facebook::jsi::Runtime & runtime)> &&callback) {
       runtimeScheduler->scheduleWork(std::move(callback));
     };
   } else {
-    facebook::react::EventBeat::Factory synchronousBeatFactory =
-        [runtimeExecutor, context = m_context](facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
-          return std::make_unique<AsynchronousEventBeat>(ownerBox, context, runtimeExecutor);
-        };
-    toolbox.synchronousEventBeatFactory = synchronousBeatFactory;
+    runtimeExecutor = SchedulerSettings::GetRuntimeExecutor(m_context.Properties());
   }
 
   facebook::react::EventBeat::Factory asynchronousBeatFactory =
@@ -142,9 +131,10 @@ const IComponentViewRegistry &FabricUIManager::GetViewRegistry() const noexcept 
 void FabricUIManager::startSurface(
     const winrt::Microsoft::ReactNative::CompositionRootView &rootView,
     facebook::react::SurfaceId surfaceId,
+    const facebook::react::LayoutConstraints &layoutConstraints,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
-  m_surfaceRegistry.insert({surfaceId, {rootView.RootVisual(), rootView}});
+  m_surfaceRegistry.insert({surfaceId, {rootView}});
 
   m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId, rootView]() {
     auto &rootComponentViewDescriptor = self->m_registry.dequeueComponentViewWithComponentHandle(
@@ -153,26 +143,19 @@ void FabricUIManager::startSurface(
     auto root = rootComponentViewDescriptor.view
                     .as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
     root->theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(rootView.Theme()));
-
-    self->m_surfaceRegistry.at(surfaceId).rootVisual.InsertAt(root->OuterVisual(), 0);
+    root->start(rootView);
   });
 
-  facebook::react::LayoutContext context;
-  facebook::react::LayoutConstraints constraints;
-  context.pointScaleFactor = rootView.ScaleFactor();
-  context.fontSizeMultiplier = rootView.ScaleFactor();
-  constraints.minimumSize.height = rootView.Size().Height;
-  constraints.minimumSize.width = rootView.Size().Width;
-  constraints.maximumSize.height = rootView.Size().Height;
-  constraints.maximumSize.width = rootView.Size().Width;
-  constraints.layoutDirection = facebook::react::LayoutDirection::LeftToRight;
+  facebook::react::LayoutContext layoutContext;
+  layoutContext.pointScaleFactor = rootView.ScaleFactor();
+  layoutContext.fontSizeMultiplier = rootView.ScaleFactor();
 
   m_surfaceManager->startSurface(
       surfaceId,
       moduleName,
       initialProps,
-      constraints, // layout constraints
-      context // layout context
+      layoutConstraints,
+      layoutContext // layout context
   );
 }
 
@@ -240,8 +223,7 @@ void FabricUIManager::RCTPerformMountInstructions(
         newChildComponentView->updateLayoutMetrics(newChildShadowView.layoutMetrics, oldChildShadowView.layoutMetrics);
         newChildViewDescriptor.view.FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask::All);
 
-        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
-            ->mountChildComponentView(*newChildComponentView, mutation.index);
+        parentViewDescriptor.view.MountChildComponentView(*newChildComponentView, mutation.index);
         break;
       }
 
@@ -250,11 +232,7 @@ void FabricUIManager::RCTPerformMountInstructions(
         auto &parentShadowView = mutation.parentShadowView;
         auto &oldChildViewDescriptor = m_registry.componentViewDescriptorWithTag(oldChildShadowView.tag);
         auto &parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentShadowView.tag);
-        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
-            ->unmountChildComponentView(
-                *winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(
-                    oldChildViewDescriptor.view),
-                mutation.index);
+        parentViewDescriptor.view.UnmountChildComponentView(oldChildViewDescriptor.view, mutation.index);
         break;
       }
 
@@ -345,9 +323,17 @@ void FabricUIManager::schedulerDidFinishTransaction(
   }
 }
 
-void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
-    facebook::react::SurfaceId surfaceId,
-    const facebook::react::ShadowNode &shadowView) {
+void FabricUIManager::schedulerShouldRenderTransactions(
+    const facebook::react::MountingCoordinator::Shared &mountingCoordinator) {
+  if (m_context.UIDispatcher().HasThreadAccess()) {
+    initiateTransaction(mountingCoordinator);
+  } else {
+    m_context.UIDispatcher().Post(
+        [mountingCoordinator, self = shared_from_this()]() { self->initiateTransaction(mountingCoordinator); });
+  }
+}
+
+void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(const facebook::react::ShadowNode &shadowView) {
   // iOS does not do this optimization, but Android does.  It maybe that android's allocations are more expensive due to
   // the Java boundary.
   // TODO: We should do some perf tests to see if this is worth doing.

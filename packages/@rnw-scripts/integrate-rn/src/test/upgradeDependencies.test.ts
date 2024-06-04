@@ -76,6 +76,11 @@ const rnDiff: PackageDiff = {
   newPackage: newerReactNative,
 };
 
+const rnTemplateDiffEmpty: PackageDiff = {
+  oldPackage: {packageName: 'HelloWorld'},
+  newPackage: {packageName: 'HelloWorld'},
+};
+
 const olderRepoConfig: PackageDeps = {
   packageName: '@react-native/repo-config',
   dependencies: {
@@ -120,7 +125,13 @@ const repoConfigDiff: PackageDiff = {
 };
 
 test('No Local Packages', () => {
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, []);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [],
+  );
   expect(deps.length).toEqual(0);
 });
 
@@ -131,9 +142,13 @@ test('Out-of-tree platform (Same Packages)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -159,6 +174,7 @@ test('Out-of-tree platform (Removed dependencies)', () => {
   const deps = calcPackageDependencies(
     '0.63.0',
     rnRemovedDiff,
+    rnTemplateDiffEmpty,
     repoConfigDiff,
     [outOfTreeDeps],
   );
@@ -187,6 +203,7 @@ test('Out-of-tree platform (Removed all peerDependencies)', () => {
   const deps = calcPackageDependencies(
     '0.63.0',
     rnRemovedDiff,
+    rnTemplateDiffEmpty,
     repoConfigDiff,
     [outOfTreeDeps],
   );
@@ -208,9 +225,13 @@ test('Out-of-tree platform (No dependencies group)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -230,9 +251,13 @@ test('Out-of-tree platform (No peerDependencies group)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -252,9 +277,13 @@ test('Out-of-tree platform (No devDependencies group)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -277,9 +306,13 @@ test('Out-of-tree platform (Additional dependencies)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -306,9 +339,13 @@ test('Out-of-tree platform (Additional peerDependencies)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -336,9 +373,13 @@ test('Out-of-tree platform (Missing dependencies)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -364,9 +405,13 @@ test('Out-of-tree platform (Missing peerDependencies)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -392,9 +437,13 @@ test('Out-of-tree platform (No shared devDependencies)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -420,9 +469,13 @@ test('Out-of-tree platform (Newer devDependencies)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -448,9 +501,13 @@ test('Out-of-tree platform (repo-config devDependencies)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -486,10 +543,13 @@ test('Out-of-tree platform (Multiple)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    outOfTreeDeps1,
-    outOfTreeDeps2,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps1, outOfTreeDeps2],
+  );
 
   expect(deps.length).toEqual(2);
   expect(deps[0]).toEqual({
@@ -525,9 +585,13 @@ test('Out-of-tree platform (RN peerDependency satisfied)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.5', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.5',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -554,9 +618,13 @@ test('Out-of-tree platform (RN peerDependency prerelease to prerelease)', () => 
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.0-rc.1', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0-rc.1',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -583,9 +651,13 @@ test('Out-of-tree platform (RN peerDependency prerelease to release)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -612,9 +684,13 @@ test('Out-of-tree platform (RN peerDependency version unsatisfied)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.5', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.5',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -641,9 +717,13 @@ test('Out-of-tree platform (RN peerDependency range unsatisfied)', () => {
     outOfTreePlatform: true,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -670,9 +750,13 @@ test('RN consumer (No updates)', () => {
     outOfTreePlatform: false,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    consumerDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [consumerDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual(consumerDeps);
@@ -691,9 +775,13 @@ test('RN consumer (Bump RN range)', () => {
     outOfTreePlatform: false,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    consumerDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [consumerDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -719,9 +807,13 @@ test('RN consumer (Bump RN version)', () => {
     outOfTreePlatform: false,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    consumerDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [consumerDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -746,9 +838,13 @@ test('RN consumer (Fix missing/unsatisfied peerDependency)', () => {
     outOfTreePlatform: false,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    consumerDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [consumerDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -772,9 +868,13 @@ test('RN consumer (Fix old/unsatisfied peerDependency)', () => {
     outOfTreePlatform: false,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    consumerDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [consumerDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -803,9 +903,13 @@ test('RN consumer (Newer repo-config devDependency)', () => {
     outOfTreePlatform: false,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    consumerDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [consumerDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -827,9 +931,13 @@ test('Generic package (No updates)', () => {
     outOfTreePlatform: false,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    genericDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [genericDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual(genericDeps);
@@ -849,9 +957,13 @@ test('Generic package (Newer repo-config devDependency)', () => {
     outOfTreePlatform: false,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    genericDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [genericDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual({
@@ -873,9 +985,13 @@ test('RN library (Wildcard peer dependency unchanged)', () => {
     outOfTreePlatform: false,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    libraryDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [libraryDeps],
+  );
 
   expect(deps.length).toEqual(1);
   expect(deps[0]).toEqual(libraryDeps);
@@ -913,11 +1029,13 @@ test('Mixed types', () => {
     outOfTreePlatform: false,
   };
 
-  const deps = calcPackageDependencies('0.63.0', rnDiff, repoConfigDiff, [
-    outOfTreeDeps,
-    consumerDeps,
-    genericDeps,
-  ]);
+  const deps = calcPackageDependencies(
+    '0.63.0',
+    rnDiff,
+    rnTemplateDiffEmpty,
+    repoConfigDiff,
+    [outOfTreeDeps, consumerDeps, genericDeps],
+  );
 
   expect(deps.length).toEqual(3);
   expect(deps[0]).toEqual({

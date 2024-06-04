@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <JSI/ScriptStore.h>
+#include <tuple>
 #include "IReactDispatcher.h"
 #include "IReactInstanceInternal.h"
 #include "MsoReactContext.h"
@@ -16,7 +18,9 @@
 #include <Views/ExpressionAnimationStore.h>
 #endif
 
-#include <tuple>
+#ifdef USE_FABRIC
+#include <react/runtime/ReactInstance.h>
+#endif
 
 namespace winrt::Microsoft::ReactNative {
 class NativeModulesProvider;
@@ -95,6 +99,7 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
       Mso::Promise<void> &&whenLoaded,
       Mso::VoidFunctor &&updateUI) noexcept;
   void LoadModules(
+      const std::shared_ptr<facebook::react::DevSettings> &devSettings,
       const std::shared_ptr<winrt::Microsoft::ReactNative::NativeModulesProvider> &nativeModulesProvider,
       const std::shared_ptr<winrt::Microsoft::ReactNative::TurboModulesProvider> &turboModulesProvider) noexcept;
   void Initialize() noexcept override;
@@ -105,9 +110,25 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   void InitJSMessageThread() noexcept;
   void InitNativeMessageThread() noexcept;
   void InitUIMessageThread() noexcept;
+  void SetupHMRClient() noexcept;
 #ifndef CORE_ABI
   void InitUIManager() noexcept;
 #endif
+
+#ifdef USE_FABRIC
+  void InitializeBridgeless() noexcept;
+  void LoadJSBundlesBridgeless(std::shared_ptr<facebook::react::DevSettings> devSettings) noexcept;
+#endif
+
+  void InitializeWithBridge() noexcept;
+  void InitUIQueue() noexcept;
+  void InitDevMenu() noexcept;
+  void InitUIDependentCalls() noexcept;
+  void FireInstanceCreatedCallback() noexcept;
+
+  std::shared_ptr<facebook::react::DevSettings> CreateDevSettings() noexcept;
+  std::unique_ptr<facebook::jsi::PreparedScriptStore> CreateHermesPreparedScriptStore() noexcept;
+
   std::string GetBytecodeFileName() noexcept;
   std::function<void()> GetLiveReloadCallback() noexcept;
   std::function<void(std::string)> GetErrorCallback() noexcept;
@@ -115,9 +136,13 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   std::shared_ptr<Mso::React::IRedBoxHandler> GetRedBoxHandler() noexcept;
   std::function<void()> GetWaitingForDebuggerCallback() noexcept;
   std::function<void()> GetDebuggerAttachCallback() noexcept;
+  bool IsBridgeless() noexcept;
 
   void OnError(const Mso::ErrorCode &errorcode) noexcept;
   void OnErrorWithMessage(const std::string &errorMessage) noexcept;
+#ifdef USE_FABRIC
+  void OnJSError(const facebook::react::JsErrorHandler::ParsedError &error) noexcept;
+#endif
   void OnLiveReload() noexcept;
   void OnWaitingForDebugger() noexcept;
   void OnDebuggerAttach() noexcept;
@@ -135,8 +160,6 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
     std::string MethodName;
     folly::dynamic Args;
   };
-
-  static std::string getApplicationTempFolder();
 
  private: // immutable fields
   const Mso::WeakPtr<IReactHost> m_weakReactHost;
@@ -162,8 +185,8 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
  private: // fields controlled by mutex
   mutable std::mutex m_mutex;
 
+  // !Bridgeless
   const Mso::ActiveReadableField<Mso::DispatchQueue> m_jsDispatchQueue{Queue(), m_mutex};
-
   const Mso::ActiveReadableField<std::shared_ptr<facebook::react::MessageQueueThread>> m_jsMessageThread{
       Queue(),
       m_mutex};
@@ -173,19 +196,23 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   const Mso::ActiveReadableField<std::shared_ptr<facebook::react::MessageQueueThread>> m_uiMessageThread{
       Queue(),
       m_mutex};
-
   const Mso::ActiveReadableField<std::shared_ptr<facebook::react::InstanceWrapper>> m_instanceWrapper{Queue(), m_mutex};
   const Mso::ActiveReadableField<std::shared_ptr<facebook::react::Instance>> m_instance{Queue(), m_mutex};
+  std::deque<JSCallEntry> m_jsCallQueue;
+  winrt::Microsoft::ReactNative::JsiRuntime m_jsiRuntime{nullptr};
+  std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> m_jsiRuntimeHolder;
+
+#ifdef USE_FABRIC
+  // Bridgeless
+  std::unique_ptr<facebook::react::ReactInstance> m_bridgelessReactInstance;
+#endif
+
   std::atomic<ReactInstanceState> m_state{ReactInstanceState::Loading};
 
   std::shared_ptr<facebook::react::MessageQueueThread> m_batchingUIThread;
 
   std::shared_ptr<IRedBoxHandler> m_redboxHandler;
   Mso::CntPtr<Mso::React::IDispatchQueue2> m_uiQueue;
-  std::deque<JSCallEntry> m_jsCallQueue;
-
-  std::shared_ptr<Microsoft::JSI::RuntimeHolderLazyInit> m_jsiRuntimeHolder;
-  winrt::Microsoft::ReactNative::JsiRuntime m_jsiRuntime{nullptr};
 
   static std::mutex s_registryMutex; // protects access to s_instanceRegistry
   static std::vector<ReactInstanceWin *> s_instanceRegistry;

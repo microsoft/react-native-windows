@@ -4,6 +4,7 @@ parameters:
     default: PullRequest
     values:
       - PullRequest
+      - SecurePullRequest
       - Continuous
   - name: AgentPool
     type: object
@@ -42,6 +43,13 @@ parameters:
             configuration: Release
             platform: ARM64
             additionalRunArguments: --no-deploy
+      - BuildEnvironment: SecurePullRequest
+        Matrix:
+          - Name: FabricX64Release
+            template: cpp-app
+            configuration: Release
+            platform: x64
+            additionalRunArguments: --no-autolink
       - BuildEnvironment: Continuous
         Matrix:
           - Name: FabricX64Debug

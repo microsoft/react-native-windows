@@ -20,21 +20,6 @@ namespace Microsoft.ReactNative
   [experimental]
   delegate Object StateUpdateMutation(Object props);
 
-  [webhosthidden]
-  [experimental]
-  enum EventPriority
-  {
-    SynchronousUnbatched,
-    SynchronousBatched,
-    AsynchronousUnbatched,
-    AsynchronousBatched,
-
-    Sync = SynchronousUnbatched,
-    Work = SynchronousBatched,
-    Interactive = AsynchronousUnbatched,
-    Deferred = AsynchronousBatched
-  };
-
   [flags]
   [webhosthidden]
   [experimental]
@@ -55,9 +40,7 @@ namespace Microsoft.ReactNative
   {
     Object Data { get; };
     void UpdateState(Object data);
-    void UpdateStateWithPriority(Object data, EventPriority priority);
     void UpdateStateWithMutation(StateUpdateMutation mutation);
-    void UpdateStateWithMutationAndPriority(StateUpdateMutation mutation, EventPriority priority);
   };
 
   [experimental]
@@ -65,6 +48,26 @@ namespace Microsoft.ReactNative
   unsealed runtimeclass CreateComponentViewArgs {
     Int32 Tag {get;};
     IReactContext ReactContext { get;};
+  };
+
+  [experimental]
+  [webhosthidden]
+  runtimeclass LosingFocusEventArgs : Microsoft.ReactNative.Composition.Input.RoutedEventArgs {
+    Microsoft.ReactNative.ComponentView NewFocusedComponent { get; };
+    Microsoft.ReactNative.ComponentView OldFocusedComponent { get; };
+
+    void TryCancel();
+    void TrySetNewFocusedComponent(Microsoft.ReactNative.ComponentView component);
+  };
+
+  [experimental]
+  [webhosthidden]
+  runtimeclass GettingFocusEventArgs : Microsoft.ReactNative.Composition.Input.RoutedEventArgs {
+    Microsoft.ReactNative.ComponentView NewFocusedComponent { get; };
+    Microsoft.ReactNative.ComponentView OldFocusedComponent { get; };
+
+    void TryCancel();
+    void TrySetNewFocusedComponent(Microsoft.ReactNative.ComponentView component);
   };
 
   [experimental]
@@ -77,10 +80,12 @@ namespace Microsoft.ReactNative
     IVectorView<ComponentView> Children { get; };
     IReactContext ReactContext { get;};
 
+    overridable void MountChildComponentView(ComponentView childComponentView, UInt32 index);
+    overridable void UnmountChildComponentView(ComponentView childComponentView, UInt32 index);
     overridable void HandleCommand(String commandName, IJSValueReader args);
-    overridable void UpdateProps(IComponentProps props);
+    overridable void UpdateProps(IComponentProps props, IComponentProps oldProps);
     overridable void UpdateState(IComponentState state);
-    overridable void UpdateLayoutMetrics(LayoutMetrics metrics);
+    overridable void UpdateLayoutMetrics(LayoutMetrics metrics, LayoutMetrics oldMetrics);
     overridable void FinalizeUpdates(ComponentViewUpdateMask updateMask);
 
     DOC_STRING("Used to handle key down events when this component is focused, or if a child component did not handle the key down")
@@ -99,6 +104,12 @@ namespace Microsoft.ReactNative
     overridable void OnPointerExited(Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
     overridable void OnPointerCaptureLost();
 
+    Boolean TryFocus();
+    
+    event Windows.Foundation.EventHandler<LosingFocusEventArgs> LosingFocus;
+    event Windows.Foundation.EventHandler<GettingFocusEventArgs> GettingFocus;
+    event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.RoutedEventArgs> LostFocus;
+    event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.RoutedEventArgs> GotFocus;
   };
 
 } // namespace Microsoft.ReactNative

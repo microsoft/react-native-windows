@@ -19,14 +19,14 @@ const rnCopiesDir = path.join(
 exports.copyTask = baseDir => {
   const reactNative = (...files) => files.map(f => path.join(rnDir, f));
   const reactCopies = (...files) => files.map(f => path.join(rnCopiesDir, f));
-  const src = (...files) => files.map(f => path.join(baseDir, 'src', f));
+  const src = (...files) => files.map(f => path.join(baseDir, 'src-win', f));
   const base = file => path.join(baseDir, file);
 
   return series(
     exports.cleanTask(baseDir),
 
     // For the TS compiler to be able to reference the files and create
-    // correct output the imported .d.ts files must be within our src dir
+    // correct output the imported .d.ts files must be within our src-win dir
     copyTask({
       paths: reactNative('types/**/*.d.ts'),
       dest: base('types'),
@@ -47,7 +47,10 @@ exports.copyTask = baseDir => {
       paths: reactNative('Libraries/**/*.+(d.ts|js|jsx|png|gif|jpg|html)'),
       dest: base('Libraries'),
     }),
-
+    copyTask({
+      paths: reactNative('src/**/*.+(d.ts|js|jsx|png|gif|jpg|html)'),
+      dest: base('src'),
+    }),
     copyTask({
       paths: reactNative('index.js', 'interface.js', 'rn-get-polyfills.js'),
       dest: base('.'),
@@ -82,10 +85,11 @@ exports.cleanTask = baseDir => {
       }),
 
       base('Libraries'),
+      base('src'),
       base('index.js'),
       base('interface.js'),
       base('rn-get-polyfills.js'),
-      base('src/rntypes'),
+      base('src-win/rntypes'),
       base('types'),
 
       // Remove TS compiled gunk in our root

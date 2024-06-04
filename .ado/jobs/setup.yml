@@ -3,6 +3,7 @@ parameters:
     type: string
     values:
       - PullRequest
+      - SecurePullRequest
       - Continuous
 
 jobs:
@@ -35,7 +36,7 @@ jobs:
           $beachballErrors | ForEach { Write-Host "##vso[task.logissue type=warning]POSSIBLE $_" }
         displayName: Warn for possible invalid change files
 
-      - ${{ if eq(parameters.buildEnvironment, 'PullRequest') }}:
+      - ${{ if endsWith(parameters.buildEnvironment, 'PullRequest') }}:
         - script: npx beachball check --branch origin/$(BeachBallBranchName) --verbose --changehint "##vso[task.logissue type=error]Run \"yarn change\" from root of repo to generate a change file."
           displayName: Check for change files
 

@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 #pragma once
+#include <ReactContext.h>
 #include <winrt/Windows.Storage.Streams.h>
 #include <string>
 
@@ -23,9 +24,10 @@ struct ReactImageSource {
 };
 
 winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IRandomAccessStream>
-GetImageMemoryStreamAsync(ReactImageSource source);
+GetImageMemoryStreamAsync(winrt::Microsoft::ReactNative::IReactPropertyBag properties, ReactImageSource source);
 
 winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IRandomAccessStream> GetImageStreamAsync(
+    winrt::Microsoft::ReactNative::IReactPropertyBag properties,
     ReactImageSource source);
 
 winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IRandomAccessStream>

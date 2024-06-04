@@ -10,26 +10,9 @@
 
 #ifdef ANDROID
 #include <folly/dynamic.h>
-#include <react/renderer/mapbuffer/MapBuffer.h>
-#include <react/renderer/mapbuffer/MapBufferBuilder.h>
 #endif
 
 namespace facebook::react {
-
-class DebuggingOverlayState {
-public:
-  DebuggingOverlayState() = default;
-
-#ifdef ANDROID
-  DebuggingOverlayState(DebuggingOverlayState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
-  };
-#endif
-};
 
 class ActivityIndicatorViewState {
 public:
@@ -39,9 +22,6 @@ public:
   ActivityIndicatorViewState(ActivityIndicatorViewState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
-  };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
   };
 #endif
 };
@@ -55,8 +35,17 @@ public:
   folly::dynamic getDynamic() const {
     return {};
   };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
+#endif
+};
+
+class AndroidHorizontalScrollContentViewState {
+public:
+  AndroidHorizontalScrollContentViewState() = default;
+
+#ifdef ANDROID
+  AndroidHorizontalScrollContentViewState(AndroidHorizontalScrollContentViewState const &previousState, folly::dynamic data){};
+  folly::dynamic getDynamic() const {
+    return {};
   };
 #endif
 };
@@ -70,8 +59,17 @@ public:
   folly::dynamic getDynamic() const {
     return {};
   };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
+#endif
+};
+
+class DebuggingOverlayState {
+public:
+  DebuggingOverlayState() = default;
+
+#ifdef ANDROID
+  DebuggingOverlayState(DebuggingOverlayState const &previousState, folly::dynamic data){};
+  folly::dynamic getDynamic() const {
+    return {};
   };
 #endif
 };
@@ -85,24 +83,6 @@ public:
   folly::dynamic getDynamic() const {
     return {};
   };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
-  };
-#endif
-};
-
-class AndroidHorizontalScrollContentViewState {
-public:
-  AndroidHorizontalScrollContentViewState() = default;
-
-#ifdef ANDROID
-  AndroidHorizontalScrollContentViewState(AndroidHorizontalScrollContentViewState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
-  };
 #endif
 };
 
@@ -115,9 +95,6 @@ public:
   folly::dynamic getDynamic() const {
     return {};
   };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
-  };
 #endif
 };
 
@@ -129,9 +106,6 @@ public:
   UnimplementedNativeViewState(UnimplementedNativeViewState const &previousState, folly::dynamic data){};
   folly::dynamic getDynamic() const {
     return {};
-  };
-  MapBuffer getMapBuffer() const {
-    return MapBufferBuilder::EMPTY();
   };
 #endif
 };

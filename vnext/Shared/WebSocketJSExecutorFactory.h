@@ -5,6 +5,7 @@
 
 #include <cxxreact/JSExecutor.h>
 #include "DevServerHelper.h"
+#include "IDevSupportManager.h"
 
 namespace facebook {
 namespace react {

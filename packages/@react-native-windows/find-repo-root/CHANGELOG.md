@@ -1,8 +1,196 @@
 # Change Log - @react-native-windows/find-repo-root
 
-This log was last generated on Sat, 21 Oct 2023 05:16:09 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Jun 2024 05:18:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.78
+
+Tue, 04 Jun 2024 05:18:35 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.49
+- Bump @rnw-scripts/eslint-config to v1.2.21
+- Bump @rnw-scripts/just-task to v2.3.37
+
+## 0.0.0-canary.77
+
+Sat, 01 Jun 2024 05:21:31 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.48
+- Bump @rnw-scripts/eslint-config to v1.2.20
+- Bump @rnw-scripts/just-task to v2.3.36
+
+## 0.0.0-canary.76
+
+Thu, 30 May 2024 05:18:26 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.47
+- Bump @rnw-scripts/eslint-config to v1.2.19
+- Bump @rnw-scripts/just-task to v2.3.35
+
+## 0.0.0-canary.75
+
+Thu, 23 May 2024 05:17:50 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.46
+- Bump @rnw-scripts/eslint-config to v1.2.18
+- Bump @rnw-scripts/just-task to v2.3.34
+
+## 0.0.0-canary.74
+
+Wed, 22 May 2024 05:18:18 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.45
+- Bump @rnw-scripts/eslint-config to v1.2.17
+- Bump @rnw-scripts/just-task to v2.3.33
+
+## 0.0.0-canary.73
+
+Wed, 15 May 2024 05:14:54 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.44
+- Bump @rnw-scripts/eslint-config to v1.2.16
+- Bump @rnw-scripts/just-task to v2.3.32
+
+## 0.0.0-canary.72
+
+Sat, 11 May 2024 05:18:30 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.43
+- Bump @rnw-scripts/eslint-config to v1.2.15
+- Bump @rnw-scripts/just-task to v2.3.31
+
+## 0.0.0-canary.71
+
+Thu, 09 May 2024 05:18:44 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.42
+- Bump @rnw-scripts/eslint-config to v1.2.14
+- Bump @rnw-scripts/just-task to v2.3.30
+
+## 0.0.0-canary.70
+
+Thu, 25 Apr 2024 20:12:42 GMT
+
+### Changes
+
+- Fix bad version bump (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.41
+- Bump @rnw-scripts/eslint-config to v1.2.13
+- Bump @rnw-scripts/just-task to v2.3.29
+
+## 0.0.0-canary.69
+
+Wed, 10 Apr 2024 05:18:19 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.40
+- Bump @rnw-scripts/eslint-config to v1.2.11
+- Bump @rnw-scripts/just-task to v2.3.27
+
+## 0.0.0-canary.68
+
+Sat, 30 Mar 2024 05:18:04 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.39
+- Bump @rnw-scripts/eslint-config to v1.2.10
+- Bump @rnw-scripts/just-task to v2.3.26
+
+## 0.0.0-canary.67
+
+Sat, 23 Mar 2024 05:17:01 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.38
+- Bump @rnw-scripts/eslint-config to v1.2.9
+- Bump @rnw-scripts/just-task to v2.3.25
+
+## 0.0.0-canary.66
+
+Thu, 07 Mar 2024 06:16:48 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.37
+- Bump @rnw-scripts/eslint-config to v1.2.8
+- Bump @rnw-scripts/just-task to v2.3.24
+
+## 0.0.0-canary.65
+
+Fri, 01 Mar 2024 06:18:16 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.36
+- Bump @rnw-scripts/eslint-config to v1.2.7
+- Bump @rnw-scripts/just-task to v2.3.23
+
+## 0.0.0-canary.64
+
+Tue, 27 Feb 2024 06:17:59 GMT
+
+### Changes
+
+- Update rn-integrate script to more aggressively update align dependencies (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.35
+- Bump @rnw-scripts/eslint-config to v1.2.6
+- Bump @rnw-scripts/just-task to v2.3.22
+
+## 0.0.0-canary.63
+
+Sat, 24 Feb 2024 06:17:17 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.34
+- Bump @rnw-scripts/just-task to v2.3.21
+
+## 0.0.0-canary.62
+
+Thu, 15 Feb 2024 06:18:15 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.33
+- Bump @rnw-scripts/just-task to v2.3.20
+
+## 0.0.0-canary.61
+
+Wed, 14 Feb 2024 06:16:55 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.32
+- Bump @rnw-scripts/eslint-config to v1.2.5
+- Bump @rnw-scripts/just-task to v2.3.19
+
+## 0.0.0-canary.60
+
+Fri, 09 Feb 2024 21:11:18 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.31
 
 ## 0.0.0-canary.59
 

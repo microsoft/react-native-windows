@@ -148,6 +148,12 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'Basic',
     module: require('../examples/Performance/PerformanceComparisonExample'),
   },
+  /*
+  {
+    key: 'OSSLibraryExample',
+    module: require('../examples/OSSLibraryExample/OSSLibraryExample'),
+  },
+  */
 ];
 
 const APIs: Array<RNTesterModuleInfo> = ([
@@ -255,6 +261,18 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/PanResponder/PanResponderExample'),
   },
   {
+    key: 'PixelRatio',
+    category: 'UI',
+    module: require('../examples/PixelRatio/PixelRatioExample'),
+  },
+  /*
+  {
+    key: 'PermissionsExampleAndroid',
+    category: 'Android',
+    module: require('../examples/PermissionsAndroid/PermissionsExample'),
+  },
+  */
+  {
     key: 'PlatformColorExample',
     category: 'UI',
     module: require('../examples/PlatformColor/PlatformColorExample'),
@@ -288,7 +306,18 @@ const APIs: Array<RNTesterModuleInfo> = ([
     key: 'TransformExample',
     category: 'UI',
     module: require('../examples/Transform/TransformExample'),
-  } /*
+  },
+  {
+    key: 'FilterExample',
+    category: 'UI',
+    module: require('../examples/Filter/FilterExample'),
+  },
+  /*
+  {
+    key: 'VibrationExample',
+    category: 'Basic',
+    module: require('../examples/Vibration/VibrationExample'),
+  },
   {
     key: 'WebSocketExample',
     category: 'Basic',
@@ -299,8 +328,7 @@ const APIs: Array<RNTesterModuleInfo> = ([
     category: 'Basic',
     module: require('../examples/XHR/XHRExample'),
   },
-  {
-  }*/,
+  */,
   {
     key: 'TurboModuleExample',
     category: 'Basic',

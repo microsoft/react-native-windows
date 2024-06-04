@@ -12,9 +12,9 @@
 #define WINRT_LEAN_AND_MEAN 1
 
 // Windows Header Files
-#include <unknwn.h>
 #include <windows.h>
 #undef GetCurrentTime
+#include <unknwn.h>
 
 // WinRT Header Files
 #include <winrt/base.h>

@@ -11,7 +11,7 @@ const pkgJson = JSON.parse(fs.readFileSync(pkgJsonPath, "utf8"));
 const commitId = child_process.execSync(`git rev-list HEAD -n 1`).toString().trim();
 
 const buildEnvironment = process.argv[2];
-let isPr = buildEnvironment === "PullRequest";
+let isPr = buildEnvironment.endsWith("PullRequest");
 let isCi = buildEnvironment === "Continuous"
 if (!isPr && !isCi) {
   throw new Error("Must pass argument indicating if this is for a 'PullRequest' or 'Continuous");

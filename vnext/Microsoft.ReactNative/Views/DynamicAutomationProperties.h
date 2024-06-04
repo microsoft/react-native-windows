@@ -26,6 +26,10 @@ struct DynamicAutomationProperties : DynamicAutomationPropertiesT<DynamicAutomat
       winrt::Microsoft::ReactNative::AccessibilityRoles const &value);
   static AccessibilityRoles GetAccessibilityRole(xaml::UIElement const &element);
 
+  static xaml::DependencyProperty AriaRoleProperty();
+  static void SetAriaRole(xaml::UIElement const &element, winrt::Microsoft::ReactNative::AriaRole const &value);
+  static AriaRole GetAriaRole(xaml::UIElement const &element);
+
   static xaml::DependencyProperty AccessibilityStateSelectedProperty();
   static void SetAccessibilityStateSelected(xaml::UIElement const &element, bool value);
   static bool GetAccessibilityStateSelected(xaml::UIElement const &element);

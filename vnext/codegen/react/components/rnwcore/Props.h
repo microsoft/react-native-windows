@@ -17,150 +17,6 @@
 
 namespace facebook::react {
 
-class DebuggingOverlayProps final : public ViewProps {
- public:
-  DebuggingOverlayProps() = default;
-  DebuggingOverlayProps(const PropsParserContext& context, const DebuggingOverlayProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  
-};
-
-enum class ModalHostViewAnimationType { None, Slide, Fade };
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ModalHostViewAnimationType &result) {
-  auto string = (std::string)value;
-  if (string == "none") { result = ModalHostViewAnimationType::None; return; }
-  if (string == "slide") { result = ModalHostViewAnimationType::Slide; return; }
-  if (string == "fade") { result = ModalHostViewAnimationType::Fade; return; }
-  abort();
-}
-
-static inline std::string toString(const ModalHostViewAnimationType &value) {
-  switch (value) {
-    case ModalHostViewAnimationType::None: return "none";
-    case ModalHostViewAnimationType::Slide: return "slide";
-    case ModalHostViewAnimationType::Fade: return "fade";
-  }
-}
-enum class ModalHostViewPresentationStyle { FullScreen, PageSheet, FormSheet, OverFullScreen };
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ModalHostViewPresentationStyle &result) {
-  auto string = (std::string)value;
-  if (string == "fullScreen") { result = ModalHostViewPresentationStyle::FullScreen; return; }
-  if (string == "pageSheet") { result = ModalHostViewPresentationStyle::PageSheet; return; }
-  if (string == "formSheet") { result = ModalHostViewPresentationStyle::FormSheet; return; }
-  if (string == "overFullScreen") { result = ModalHostViewPresentationStyle::OverFullScreen; return; }
-  abort();
-}
-
-static inline std::string toString(const ModalHostViewPresentationStyle &value) {
-  switch (value) {
-    case ModalHostViewPresentationStyle::FullScreen: return "fullScreen";
-    case ModalHostViewPresentationStyle::PageSheet: return "pageSheet";
-    case ModalHostViewPresentationStyle::FormSheet: return "formSheet";
-    case ModalHostViewPresentationStyle::OverFullScreen: return "overFullScreen";
-  }
-}
-using ModalHostViewSupportedOrientationsMask = uint32_t;
-
-enum class ModalHostViewSupportedOrientations: ModalHostViewSupportedOrientationsMask {
-  Portrait = 1 << 0,
-  PortraitUpsideDown = 1 << 1,
-  Landscape = 1 << 2,
-  LandscapeLeft = 1 << 3,
-  LandscapeRight = 1 << 4
-};
-
-constexpr bool operator&(
-  ModalHostViewSupportedOrientationsMask const lhs,
-  enum ModalHostViewSupportedOrientations const rhs) {
-  return lhs & static_cast<ModalHostViewSupportedOrientationsMask>(rhs);
-}
-
-constexpr ModalHostViewSupportedOrientationsMask operator|(
-  ModalHostViewSupportedOrientationsMask const lhs,
-  enum ModalHostViewSupportedOrientations const rhs) {
-  return lhs | static_cast<ModalHostViewSupportedOrientationsMask>(rhs);
-}
-
-constexpr void operator|=(
-  ModalHostViewSupportedOrientationsMask &lhs,
-  enum ModalHostViewSupportedOrientations const rhs) {
-  lhs = lhs | static_cast<ModalHostViewSupportedOrientationsMask>(rhs);
-}
-
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ModalHostViewSupportedOrientationsMask &result) {
-  auto items = std::vector<std::string>{value};
-  for (const auto &item : items) {
-    if (item == "portrait") {
-      result |= ModalHostViewSupportedOrientations::Portrait;
-      continue;
-    }
-    if (item == "portrait-upside-down") {
-      result |= ModalHostViewSupportedOrientations::PortraitUpsideDown;
-      continue;
-    }
-    if (item == "landscape") {
-      result |= ModalHostViewSupportedOrientations::Landscape;
-      continue;
-    }
-    if (item == "landscape-left") {
-      result |= ModalHostViewSupportedOrientations::LandscapeLeft;
-      continue;
-    }
-    if (item == "landscape-right") {
-      result |= ModalHostViewSupportedOrientations::LandscapeRight;
-      continue;
-    }
-    abort();
-  }
-}
-
-static inline std::string toString(const ModalHostViewSupportedOrientationsMask &value) {
-    auto result = std::string{};
-    auto separator = std::string{", "};
-
-    if (value & ModalHostViewSupportedOrientations::Portrait) {
-      result += "portrait" + separator;
-    }
-    if (value & ModalHostViewSupportedOrientations::PortraitUpsideDown) {
-      result += "portrait-upside-down" + separator;
-    }
-    if (value & ModalHostViewSupportedOrientations::Landscape) {
-      result += "landscape" + separator;
-    }
-    if (value & ModalHostViewSupportedOrientations::LandscapeLeft) {
-      result += "landscape-left" + separator;
-    }
-    if (value & ModalHostViewSupportedOrientations::LandscapeRight) {
-      result += "landscape-right" + separator;
-    }
-    if (!result.empty()) {
-      result.erase(result.length() - separator.length());
-    }
-    return result;
-}
-
-class ModalHostViewProps final : public ViewProps {
- public:
-  ModalHostViewProps() = default;
-  ModalHostViewProps(const PropsParserContext& context, const ModalHostViewProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  ModalHostViewAnimationType animationType{ModalHostViewAnimationType::None};
-  ModalHostViewPresentationStyle presentationStyle{ModalHostViewPresentationStyle::FullScreen};
-  bool transparent{false};
-  bool statusBarTranslucent{false};
-  bool hardwareAccelerated{false};
-  bool visible{false};
-  bool animated{false};
-  ModalHostViewSupportedOrientationsMask supportedOrientations{static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)};
-  int identifier{0};
-};
-
 enum class ActivityIndicatorViewSize { Small, Large };
 
 static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ActivityIndicatorViewSize &result) {
@@ -253,69 +109,14 @@ class AndroidDrawerLayoutProps final : public ViewProps {
   SharedColor statusBarBackgroundColor{};
 };
 
-class RCTFlyoutProps final : public ViewProps {
+class AndroidHorizontalScrollContentViewProps final : public ViewProps {
  public:
-  RCTFlyoutProps() = default;
-  RCTFlyoutProps(const PropsParserContext& context, const RCTFlyoutProps &sourceProps, const RawProps &rawProps);
+  AndroidHorizontalScrollContentViewProps() = default;
+  AndroidHorizontalScrollContentViewProps(const PropsParserContext& context, const AndroidHorizontalScrollContentViewProps &sourceProps, const RawProps &rawProps);
 
 #pragma mark - Props
 
-  double horizontalOffset{0.0};
-  bool isLightDismissEnabled{false};
-  bool autoFocus{false};
-  bool shouldConstrainToRootBounds{false};
-  bool isOverlayEnabled{false};
-  bool isOpen{false};
-  std::string placement{};
-  std::string showMode{};
-  int target{0};
-  double verticalOffset{0.0};
-};
-
-class PLYIconProps final : public ViewProps {
- public:
-  PLYIconProps() = default;
-  PLYIconProps(const PropsParserContext& context, const PLYIconProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  SharedColor color{};
-  double emSize{0.0};
-  std::string fontUri{};
-  std::string glyph{};
-  bool colorEnabled{false};
-};
-
-class RCTPopupProps final : public ViewProps {
- public:
-  RCTPopupProps() = default;
-  RCTPopupProps(const PropsParserContext& context, const RCTPopupProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  bool isOpen{false};
-  bool isLightDismissEnabled{false};
-  bool autoFocus{false};
-  double horizontalOffset{0.0};
-  double verticalOffset{0.0};
-  int target{0};
-  std::string testID{};
-};
-
-class AndroidProgressBarProps final : public ViewProps {
- public:
-  AndroidProgressBarProps() = default;
-  AndroidProgressBarProps(const PropsParserContext& context, const AndroidProgressBarProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  std::string styleAttr{};
-  std::string typeAttr{};
-  bool indeterminate{false};
-  double progress{0.0};
-  bool animating{true};
-  SharedColor color{};
-  std::string testID{""};
+  bool removeClippedSubviews{false};
 };
 
 enum class AndroidSwipeRefreshLayoutSize { Default, Large };
@@ -349,40 +150,6 @@ class AndroidSwipeRefreshLayoutProps final : public ViewProps {
   bool refreshing{false};
 };
 
-class PullToRefreshViewProps final : public ViewProps {
- public:
-  PullToRefreshViewProps() = default;
-  PullToRefreshViewProps(const PropsParserContext& context, const PullToRefreshViewProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  SharedColor tintColor{};
-  SharedColor titleColor{};
-  std::string title{};
-  Float progressViewOffset{0.0};
-  bool refreshing{false};
-};
-
-class SafeAreaViewProps final : public ViewProps {
- public:
-  SafeAreaViewProps() = default;
-  SafeAreaViewProps(const PropsParserContext& context, const SafeAreaViewProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  
-};
-
-class AndroidHorizontalScrollContentViewProps final : public ViewProps {
- public:
-  AndroidHorizontalScrollContentViewProps() = default;
-  AndroidHorizontalScrollContentViewProps(const PropsParserContext& context, const AndroidHorizontalScrollContentViewProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  bool removeClippedSubviews{false};
-};
-
 class AndroidSwitchProps final : public ViewProps {
  public:
   AndroidSwitchProps() = default;
@@ -401,6 +168,204 @@ class AndroidSwitchProps final : public ViewProps {
   SharedColor trackTintColor{};
 };
 
+class DebuggingOverlayProps final : public ViewProps {
+ public:
+  DebuggingOverlayProps() = default;
+  DebuggingOverlayProps(const PropsParserContext& context, const DebuggingOverlayProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  
+};
+
+class AndroidProgressBarProps final : public ViewProps {
+ public:
+  AndroidProgressBarProps() = default;
+  AndroidProgressBarProps(const PropsParserContext& context, const AndroidProgressBarProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  std::string styleAttr{};
+  std::string typeAttr{};
+  bool indeterminate{false};
+  double progress{0.0};
+  bool animating{true};
+  SharedColor color{};
+  std::string testID{""};
+};
+
+class PullToRefreshViewProps final : public ViewProps {
+ public:
+  PullToRefreshViewProps() = default;
+  PullToRefreshViewProps(const PropsParserContext& context, const PullToRefreshViewProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  SharedColor tintColor{};
+  SharedColor titleColor{};
+  std::string title{};
+  Float progressViewOffset{0.0};
+  bool refreshing{false};
+};
+
+class InputAccessoryProps final : public ViewProps {
+ public:
+  InputAccessoryProps() = default;
+  InputAccessoryProps(const PropsParserContext& context, const InputAccessoryProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  SharedColor backgroundColor{};
+};
+
+enum class ModalHostViewAnimationType { None, Slide, Fade };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ModalHostViewAnimationType &result) {
+  auto string = (std::string)value;
+  if (string == "none") { result = ModalHostViewAnimationType::None; return; }
+  if (string == "slide") { result = ModalHostViewAnimationType::Slide; return; }
+  if (string == "fade") { result = ModalHostViewAnimationType::Fade; return; }
+  abort();
+}
+
+static inline std::string toString(const ModalHostViewAnimationType &value) {
+  switch (value) {
+    case ModalHostViewAnimationType::None: return "none";
+    case ModalHostViewAnimationType::Slide: return "slide";
+    case ModalHostViewAnimationType::Fade: return "fade";
+  }
+}
+enum class ModalHostViewPresentationStyle { FullScreen, PageSheet, FormSheet, OverFullScreen };
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ModalHostViewPresentationStyle &result) {
+  auto string = (std::string)value;
+  if (string == "fullScreen") { result = ModalHostViewPresentationStyle::FullScreen; return; }
+  if (string == "pageSheet") { result = ModalHostViewPresentationStyle::PageSheet; return; }
+  if (string == "formSheet") { result = ModalHostViewPresentationStyle::FormSheet; return; }
+  if (string == "overFullScreen") { result = ModalHostViewPresentationStyle::OverFullScreen; return; }
+  abort();
+}
+
+static inline std::string toString(const ModalHostViewPresentationStyle &value) {
+  switch (value) {
+    case ModalHostViewPresentationStyle::FullScreen: return "fullScreen";
+    case ModalHostViewPresentationStyle::PageSheet: return "pageSheet";
+    case ModalHostViewPresentationStyle::FormSheet: return "formSheet";
+    case ModalHostViewPresentationStyle::OverFullScreen: return "overFullScreen";
+  }
+}
+using ModalHostViewSupportedOrientationsMask = uint32_t;
+
+struct ModalHostViewSupportedOrientationsMaskWrapped {
+  ModalHostViewSupportedOrientationsMask value;
+};
+
+enum class ModalHostViewSupportedOrientations: ModalHostViewSupportedOrientationsMask {
+  Portrait = 1 << 0,
+  PortraitUpsideDown = 1 << 1,
+  Landscape = 1 << 2,
+  LandscapeLeft = 1 << 3,
+  LandscapeRight = 1 << 4
+};
+
+constexpr bool operator&(
+  ModalHostViewSupportedOrientationsMask const lhs,
+  enum ModalHostViewSupportedOrientations const rhs) {
+  return lhs & static_cast<ModalHostViewSupportedOrientationsMask>(rhs);
+}
+
+constexpr ModalHostViewSupportedOrientationsMask operator|(
+  ModalHostViewSupportedOrientationsMask const lhs,
+  enum ModalHostViewSupportedOrientations const rhs) {
+  return lhs | static_cast<ModalHostViewSupportedOrientationsMask>(rhs);
+}
+
+constexpr void operator|=(
+  ModalHostViewSupportedOrientationsMask &lhs,
+  enum ModalHostViewSupportedOrientations const rhs) {
+  lhs = lhs | static_cast<ModalHostViewSupportedOrientationsMask>(rhs);
+}
+
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ModalHostViewSupportedOrientationsMaskWrapped &wrapped) {
+  auto items = std::vector<std::string>{value};
+  for (const auto &item : items) {
+    if (item == "portrait") {
+      wrapped.value |= ModalHostViewSupportedOrientations::Portrait;
+      continue;
+    }
+    if (item == "portrait-upside-down") {
+      wrapped.value |= ModalHostViewSupportedOrientations::PortraitUpsideDown;
+      continue;
+    }
+    if (item == "landscape") {
+      wrapped.value |= ModalHostViewSupportedOrientations::Landscape;
+      continue;
+    }
+    if (item == "landscape-left") {
+      wrapped.value |= ModalHostViewSupportedOrientations::LandscapeLeft;
+      continue;
+    }
+    if (item == "landscape-right") {
+      wrapped.value |= ModalHostViewSupportedOrientations::LandscapeRight;
+      continue;
+    }
+    abort();
+  }
+}
+
+static inline std::string toString(const ModalHostViewSupportedOrientationsMaskWrapped &wrapped) {
+    auto result = std::string{};
+    auto separator = std::string{", "};
+
+    if (wrapped.value & ModalHostViewSupportedOrientations::Portrait) {
+      result += "portrait" + separator;
+    }
+    if (wrapped.value & ModalHostViewSupportedOrientations::PortraitUpsideDown) {
+      result += "portrait-upside-down" + separator;
+    }
+    if (wrapped.value & ModalHostViewSupportedOrientations::Landscape) {
+      result += "landscape" + separator;
+    }
+    if (wrapped.value & ModalHostViewSupportedOrientations::LandscapeLeft) {
+      result += "landscape-left" + separator;
+    }
+    if (wrapped.value & ModalHostViewSupportedOrientations::LandscapeRight) {
+      result += "landscape-right" + separator;
+    }
+    if (!result.empty()) {
+      result.erase(result.length() - separator.length());
+    }
+    return result;
+}
+
+class ModalHostViewProps final : public ViewProps {
+ public:
+  ModalHostViewProps() = default;
+  ModalHostViewProps(const PropsParserContext& context, const ModalHostViewProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  ModalHostViewAnimationType animationType{ModalHostViewAnimationType::None};
+  ModalHostViewPresentationStyle presentationStyle{ModalHostViewPresentationStyle::FullScreen};
+  bool transparent{false};
+  bool statusBarTranslucent{false};
+  bool hardwareAccelerated{false};
+  bool visible{false};
+  bool animated{false};
+  ModalHostViewSupportedOrientationsMask supportedOrientations{static_cast<ModalHostViewSupportedOrientationsMask>(ModalHostViewSupportedOrientations::Portrait)};
+  int identifier{0};
+};
+
+class SafeAreaViewProps final : public ViewProps {
+ public:
+  SafeAreaViewProps() = default;
+  SafeAreaViewProps(const PropsParserContext& context, const SafeAreaViewProps &sourceProps, const RawProps &rawProps);
+
+#pragma mark - Props
+
+  
+};
+
 class SwitchProps final : public ViewProps {
  public:
   SwitchProps() = default;
@@ -416,16 +381,6 @@ class SwitchProps final : public ViewProps {
   SharedColor thumbColor{};
   SharedColor trackColorForFalse{};
   SharedColor trackColorForTrue{};
-};
-
-class InputAccessoryProps final : public ViewProps {
- public:
-  InputAccessoryProps() = default;
-  InputAccessoryProps(const PropsParserContext& context, const InputAccessoryProps &sourceProps, const RawProps &rawProps);
-
-#pragma mark - Props
-
-  SharedColor backgroundColor{};
 };
 
 class UnimplementedNativeViewProps final : public ViewProps {

@@ -13,16 +13,21 @@
 
 // Windows Header Files
 #include <windows.h>
-
-#pragma push_macro("GetCurrentTime")
 #undef GetCurrentTime
+#include <pathcch.h>
+#include <unknwn.h>
 
-// Playground pch.h
+// WinRT Header Files
+#include <winrt/base.h>
+
 #include <CppWinRTIncludes.h>
+#include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.ReactNative.h>
-#include <winrt/Windows.Foundation.Collections.h>
-#include <winrt/Windows.Foundation.h>
-#pragma pop_macro("GetCurrentTime")
+#include <winrt/Microsoft.UI.Composition.h>
+#include <winrt/Microsoft.UI.Content.h>
+#include <winrt/Microsoft.UI.Dispatching.h>
+#include <winrt/Microsoft.UI.Windowing.h>
+#include <winrt/Microsoft.UI.interop.h>
 
 // C RunTime Header Files
 #include <malloc.h>
@@ -30,6 +35,6 @@
 #include <stdlib.h>
 #include <tchar.h>
 
-// reference additional headers your program requires here
-#include <unknwn.h>
-#include <winrt/base.h>
+// Reference additional headers your project requires here
+#include <winrt/Windows.Foundation.Collections.h>
+#include <winrt/Windows.Foundation.h>

@@ -51,8 +51,3 @@ using namespace Windows::Foundation::Collections;
 #define _QUOTE(x) L#x
 #define QUOTE(x) _QUOTE(x)
 #define XAML_NAMESPACE_STR QUOTE(XAML_NAMESPACE)
-
-#ifdef CPPWINRT_USE_LOADLIBRARYEXW
-#define WINRT_IMPL_LoadLibraryW(name) \
-  WINRT_IMPL_LoadLibraryExW(name, nullptr, 0x00001000 /* LOAD_LIBRARY_SEARCH_DEFAULT_DIRS */)
-#endif

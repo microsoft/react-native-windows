@@ -30,16 +30,15 @@ param (
 
 	[switch] $NoRun,
 
-	[switch] $UseNodeWsServer,
-
 	[switch] $List,
 
-	[System.IO.FileInfo] $VsTest =	"${env:ProgramFiles}\Microsoft Visual Studio\2022\Enterprise\" +
-						"Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe",
+	[System.IO.FileInfo] $VsTest =
+		"$(& "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe" -latest -property installationPath)\" +
+		"Common7\IDE\CommonExtensions\Microsoft\TestWindow\vstest.console.exe",
 
 	[System.IO.DirectoryInfo] $ReactNativeLocation = "$($PSScriptRoot | Split-Path)",
 
-	[System.IO.FileInfo] $NodePath = (Get-Command node.exe).Definition,
+	[System.IO.FileInfo] $DotNetPath = (Get-Command dotnet.exe).Definition,
 
 	[System.IO.FileInfo] $NpmPath = (Get-Command npm.cmd).Definition
 )
@@ -59,9 +58,7 @@ if ($List) {
 # Ensure test services are online.
 if (! $NoServers) {
 	$packager = Find-Packager
-	if ($UseNodeWsServer.IsPresent) {
-		$wsServer = Find-WebSocketServer
-	}
+	$webSite = Find-TestWebsiteServer
 	$notFound = $false
 
 	if (!$packager) {
@@ -72,16 +69,25 @@ if (! $NoServers) {
 		Write-Host 'Found Packager.'
 	}
 
-	if (!$wsServer -and $UseNodeWsServer.IsPresent) {
-		Write-Warning 'WebSocket server not found. Attempting to start...'
-		Start-WebSocketServer -ReactNativeLocation $ReactNativeLocation -NodePath $NodePath
+	if (!$webSite) {
+		Start-Process `
+			-FilePath $DotNetPath `
+			-PassThru `
+			-ArgumentList `
+				run,
+				--project,
+				$ReactNativeLocation\TestWebSite\Microsoft.ReactNative.Test.Website.csproj
+
 		$notFound = $true
-	} elseif ($UseNodeWsServer.IsPresent) {
-		Write-Host 'Found WebSocket server.'
+	} else {
+		Write-Host 'Found Test Website Server'
 	}
 
 	if ($Preload -and $notFound) {
 		Start-Sleep -Seconds $Delay
+
+		# Ensure test website responds to default HTTP GET request.
+		Invoke-WebRequest -Uri 'http://localhost:5555'
 
 		# Preload the RNTesterApp integration bundle for better performance in integration tests.
 		Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:8081/IntegrationTests/IntegrationTestsApp.bundle?platform=windows&dev=true" | Out-Null
@@ -92,8 +98,9 @@ if ($NoRun) {
 	Exit
 }
 
+$filter = ''
 if ($Include.Count) {
-	$filter = "(FullyQualifiedName~" + ($Include -join ')&(FullyQualifiedName~') + ")"
+	$filter += "(FullyQualifiedName~" + ($Include -join ')&(FullyQualifiedName~') + ")"
 }
 
 if ($Exclude.Count) {
@@ -101,4 +108,8 @@ if ($Exclude.Count) {
 }
 
 # Run Integration Test assemblies.
-& $VsTest $Assemblies --InIsolation --Platform:$Platform ('', "--TestCaseFilter:$filter")[$filter.Length -gt 0]
+if ($filter.Length -gt 0) {
+	& $VsTest $Assemblies --InIsolation --Platform:$Platform "--TestCaseFilter:$filter"
+} else {
+	& $VsTest $Assemblies --InIsolation --Platform:$Platform
+}

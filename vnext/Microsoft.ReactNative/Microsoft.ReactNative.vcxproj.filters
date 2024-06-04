@@ -291,7 +291,6 @@
     <ClCompile Include="ReactPointerEventArgs.cpp" />
     <ClCompile Include="Views\FrameworkElementTransferProperties.cpp" />
     <ClCompile Include="Views\ReactViewInstance.cpp" />
-    <ClCompile Include="CoreApp.cpp" />
     <ClCompile Include="Utils\KeyboardUtils.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -773,6 +772,5 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="DevMenuControl.xaml" />
-    <Page Include="CoreAppPage.xaml" />
   </ItemGroup>
 </Project>

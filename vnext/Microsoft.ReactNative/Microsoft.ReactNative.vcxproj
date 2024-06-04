@@ -90,7 +90,7 @@
   <ItemDefinitionGroup>
     <ClCompile>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug'">true</RuntimeTypeInfo>
+      <RuntimeTypeInfo Condition="'$(Configuration)'=='Debug' OR '$(UseFabric)' == 'true'">true</RuntimeTypeInfo>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <PrecompiledHeaderOutputFile>$(IntDir)pch.pch</PrecompiledHeaderOutputFile>
       <ForcedIncludeFiles>pch.h</ForcedIncludeFiles>
@@ -188,10 +188,6 @@
     <ClInclude Include="ABIViewManager.h" />
     <ClInclude Include="Base\CxxReactIncludes.h" />
     <ClInclude Include="Base\FollyIncludes.h" />
-    <ClInclude Include="CoreAppPage.h">
-      <DependentUpon>CoreAppPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="ReactHost\JSCallInvokerScheduler.h" />
     <ClInclude Include="Utils\ShadowNodeTypeUtils.h" />
     <ClInclude Include="Utils\BatchingEventEmitter.h" />
@@ -314,6 +310,10 @@
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="Timer.h">
+      <DependentUpon>Timer.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="Utils\AccessibilityUtils.h" />
     <ClInclude Include="Utils\Helpers.h" />
     <ClInclude Include="Utils\KeyboardUtils.h" />
@@ -423,11 +423,6 @@
     <ClCompile Include="ABICxxModule.cpp" />
     <ClCompile Include="ABIViewManager.cpp" />
     <ClCompile Include="Base\CoreUIManagers.cpp" />
-    <ClCompile Include="CoreAppPage.cpp">
-      <DependentUpon>CoreAppPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="CoreApp.cpp" />
     <ClCompile Include="Utils\BatchingEventEmitter.cpp" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
     <ClCompile Include="DevMenuControl.cpp">
@@ -470,7 +465,6 @@
     <ClCompile Include="Modules\LinkingManagerModule.cpp" />
     <ClCompile Include="Modules\LogBoxModule.cpp" />
     <ClCompile Include="Modules\NativeUIManager.cpp" />
-    <ClCompile Include="Modules\TimingModule.cpp" />
     <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="ReactPointerEventArgs.cpp">
       <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
@@ -562,10 +556,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="CoreAppPage.idl">
-      <DependentUpon>CoreAppPage.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Midl>
     <Midl Include="DesktopWindowMessage.idl" />
     <Midl Include="DevMenuControl.idl">
       <DependentUpon>DevMenuControl.xaml</DependentUpon>
@@ -629,9 +619,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="CoreAppPage.xaml">
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="DevMenuControl.xaml">
       <SubType>Designer</SubType>
     </Page>

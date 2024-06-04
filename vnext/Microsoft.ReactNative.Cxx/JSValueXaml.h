@@ -14,7 +14,7 @@ inline void ReadValue(JSValue const &jsValue, xaml::Media::Brush &value) noexcep
   value = XamlHelper::BrushFrom([&jsValue](IJSValueWriter const &writer) noexcept { jsValue.WriteTo(writer); });
 }
 
-inline void ReadValue(JSValue const &jsValue, Windows::UI::Color &value) noexcept {
+inline void ReadValue(JSValue const &jsValue, winrt::Windows::UI::Color &value) noexcept {
   value = XamlHelper::ColorFrom([&jsValue](IJSValueWriter const &writer) noexcept { jsValue.WriteTo(writer); });
 }
 #endif

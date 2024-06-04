@@ -14,7 +14,6 @@
 <PROJECT_ROOT>/Libraries/Components/Button.js
 <PROJECT_ROOT>/Libraries/Components/Pressable/Pressable.js
 <PROJECT_ROOT>/Libraries/Components/SafeAreaView/SafeAreaView.js
-<PROJECT_ROOT>/Libraries/Components/ScrollView/ScrollView.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInput.js
 <PROJECT_ROOT>/Libraries/Components/TextInput/TextInputState.js
 <PROJECT_ROOT>/Libraries/Components/Touchable/Touchable.js
@@ -56,7 +55,8 @@
 .*/node_modules/playground/.*
 
 ; Ignore templates for 'react-native init'
-<PROJECT_ROOT>/template/.*
+<PROJECT_ROOT>/packages/react-native/template/.*
+<PROJECT_ROOT>/packages/react-native/sdks/.*
 
 ; Ignore the Dangerfile
 <PROJECT_ROOT>/packages/react-native-bots/dangerfile.js
@@ -64,8 +64,11 @@
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
 
-; Ignore the src folder - flow files are combined with ones from react-native into the root Libraries folder
-.*/react-native-win32/src/.*
+; Ignore the src-win folder - flow files are combined with ones from react-native into the root Libraries folder
+.*/react-native-win32/src-win/.*
+
+; Ignore the private __tests__ (until this is fixed: https://github.com/facebook/react-native/issues/43242)
+.*/react-native-win32/src/private/.*/__tests__/.*
 
 ; Ignore files with flow typing issues #9223
 .*/react-native-win32/Libraries/Core/ReactNativeVersionCheck.js
@@ -93,7 +96,6 @@ flow/
 ../../../node_modules/.flow/flow-typed/
 
 [options]
-experimental.global_find_ref=true
 enums=true
 casting_syntax=both
 
@@ -151,4 +153,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.225.1
+^0.236.0

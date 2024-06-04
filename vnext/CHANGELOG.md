@@ -1,8 +1,623 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 08 Feb 2024 06:13:52 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Jun 2024 05:18:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.824
+
+Tue, 04 Jun 2024 05:18:35 GMT
+
+### Changes
+
+- Integrate 5/25 (34109996+chiaramooney@users.noreply.github.com)
+- [Fabric] Support blob: images, and provide better image.onError callbacks (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.218
+- Bump @react-native-windows/codegen to v0.0.0-canary.92
+- Bump @rnw-scripts/eslint-config to v1.2.21
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.25
+- Bump @rnw-scripts/just-task to v2.3.37
+- Bump react-native-platform-override to v1.9.38
+
+## 0.0.0-canary.823
+
+Sat, 01 Jun 2024 05:21:30 GMT
+
+### Changes
+
+- Integrate 5/14 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.217
+- Bump @react-native-windows/codegen to v0.0.0-canary.91
+- Bump @rnw-scripts/eslint-config to v1.2.20
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.24
+- Bump @rnw-scripts/just-task to v2.3.36
+- Bump react-native-platform-override to v1.9.37
+
+## 0.0.0-canary.822
+
+Thu, 30 May 2024 05:18:26 GMT
+
+### Changes
+
+- RN Integration 05/11 (1422161+marlenecota@users.noreply.github.com)
+- Folly and Fmt CodeQL patches (1422161+marlenecota@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.216
+- Bump @react-native-windows/codegen to v0.0.0-canary.90
+- Bump @rnw-scripts/eslint-config to v1.2.19
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.23
+- Bump @rnw-scripts/just-task to v2.3.35
+- Bump react-native-platform-override to v1.9.36
+
+## 0.0.0-canary.821
+
+Wed, 29 May 2024 05:20:02 GMT
+
+### Changes
+
+- APIs to enable RootViews that size to content (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.820
+
+Fri, 24 May 2024 05:17:25 GMT
+
+### Changes
+
+- remove flatlist fork (email not defined)
+
+## 0.0.0-canary.819
+
+Thu, 23 May 2024 05:17:50 GMT
+
+### Changes
+
+- RN Integration 05/02 (1422161+marlenecota@users.noreply.github.com)
+- RN Integration 04/27 (1422161+marlenecota@users.noreply.github.com)
+- Fork Folly files to patch CodeQL warnings (1422161+marlenecota@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.215
+- Bump @react-native-windows/codegen to v0.0.0-canary.89
+- Bump @rnw-scripts/eslint-config to v1.2.18
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.22
+- Bump @rnw-scripts/just-task to v2.3.34
+- Bump react-native-platform-override to v1.9.35
+
+## 0.0.0-canary.818
+
+Wed, 22 May 2024 05:18:17 GMT
+
+### Changes
+
+- RN Integration 04/20 (1422161+marlenecota@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.214
+- Bump @react-native-windows/codegen to v0.0.0-canary.88
+- Bump @rnw-scripts/eslint-config to v1.2.17
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.21
+- Bump @rnw-scripts/just-task to v2.3.33
+- Bump react-native-platform-override to v1.9.34
+
+## 0.0.0-canary.817
+
+Tue, 21 May 2024 05:14:34 GMT
+
+### Changes
+
+- [Fabric] Add various native focus APIs (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.816
+
+Wed, 15 May 2024 05:14:53 GMT
+
+### Changes
+
+- 0413 integration (email not defined)
+- Bump @react-native-windows/cli to v0.0.0-canary.213
+- Bump @react-native-windows/codegen to v0.0.0-canary.87
+- Bump @rnw-scripts/eslint-config to v1.2.16
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.20
+- Bump @rnw-scripts/just-task to v2.3.32
+- Bump react-native-platform-override to v1.9.33
+
+## 0.0.0-canary.815
+
+Tue, 14 May 2024 05:17:51 GMT
+
+### Changes
+
+- Preventing crash when passing null children to view with no-hide-descendents (30809111+acoates-ms@users.noreply.github.com)
+- Expose ImageProps from ImageComponentView's and add ImageSource type (30809111+acoates-ms@users.noreply.github.com)
+- Renames TM spec (ericroz@meta.com)
+- ViewComponentView should be activatable from rn-win32.dll (30809111+acoates-ms@users.noreply.github.com)
+- Use view() instead of str(), starts_with() instead of _Starts_with() (nate@bracy.dev)
+
+## 0.0.0-canary.814
+
+Sat, 11 May 2024 05:18:29 GMT
+
+### Changes
+
+- integrate rn nightly 4/5/2024 (email not defined)
+- Expose CompositionContext from CreateCompositionComponentViewArgs (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.212
+- Bump @react-native-windows/codegen to v0.0.0-canary.86
+- Bump @rnw-scripts/eslint-config to v1.2.15
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.19
+- Bump @rnw-scripts/just-task to v2.3.31
+- Bump react-native-platform-override to v1.9.32
+
+## 0.0.0-canary.813
+
+Fri, 10 May 2024 05:18:21 GMT
+
+### Changes
+
+- Change Hermes package version to 0.1.21 (vmorozov@microsoft.com)
+
+## 0.0.0-canary.812
+
+Thu, 09 May 2024 05:18:44 GMT
+
+### Changes
+
+- Move UriHandler registration to PackageProvider (30809111+acoates-ms@users.noreply.github.com)
+- integrate react-native-3-21 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.211
+- Bump @react-native-windows/codegen to v0.0.0-canary.85
+- Bump @rnw-scripts/eslint-config to v1.2.14
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.18
+- Bump @rnw-scripts/just-task to v2.3.30
+- Bump react-native-platform-override to v1.9.31
+
+## 0.0.0-canary.811
+
+Tue, 07 May 2024 05:15:36 GMT
+
+### Changes
+
+- [Fabric] Add support for data: images (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.810
+
+Sat, 04 May 2024 05:18:09 GMT
+
+### Changes
+
+- [cpp-lib] Fix typo in metro.config.js (email not defined)
+- Add ability to provide custom image uri handlers (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.809
+
+Wed, 01 May 2024 05:15:55 GMT
+
+### Changes
+
+- Rework custom resources API (30809111+acoates-ms@users.noreply.github.com)
+- Fix a reference cycle between CompositionRootView and CompositionEventHandler (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.808
+
+Tue, 30 Apr 2024 05:15:58 GMT
+
+### Changes
+
+- Ensure D2D device context is not used outside Begin/End draw (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.807
+
+Sat, 27 Apr 2024 05:16:26 GMT
+
+### Changes
+
+- Dont use CoreWindow to determine key state (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.806
+
+Fri, 26 Apr 2024 05:16:48 GMT
+
+### Changes
+
+- CodeQL fixes (email not defined)
+- Bump @react-native-windows/cli to v0.0.0-canary.210
+- Bump react-native-platform-override to v1.9.30
+
+## 0.0.0-canary.805
+
+Thu, 25 Apr 2024 20:12:44 GMT
+
+### Changes
+
+- Handle dpi during drawing more consistently (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 3/7 (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.209
+- Bump @react-native-windows/codegen to v0.0.0-canary.84
+- Bump @rnw-scripts/eslint-config to v1.2.13
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.17
+- Bump @rnw-scripts/just-task to v2.3.29
+- Bump react-native-platform-override to v1.9.29
+
+## 0.0.0-canary.804
+
+Wed, 24 Apr 2024 05:15:12 GMT
+
+### Changes
+
+- Move CompositionSwitcher to Experimental namespace (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.803
+
+Tue, 23 Apr 2024 05:15:26 GMT
+
+### Changes
+
+- Package Playground Composition (jthysell@microsoft.com)
+
+## 0.0.0-canary.802
+
+Wed, 17 Apr 2024 05:14:47 GMT
+
+### Changes
+
+- Handling for long asset paths (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.801
+
+Wed, 10 Apr 2024 05:18:19 GMT
+
+### Changes
+
+- Partial implementation of TextLayoutManager::measureLines (30809111+acoates-ms@users.noreply.github.com)
+- integrate 2/29 (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.208
+- Bump @react-native-windows/codegen to v0.0.0-canary.83
+- Bump @rnw-scripts/eslint-config to v1.2.11
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.15
+- Bump @rnw-scripts/just-task to v2.3.27
+- Bump react-native-platform-override to v1.9.27
+
+## 0.0.0-canary.800
+
+Tue, 09 Apr 2024 05:15:27 GMT
+
+### Changes
+
+- Rework EventPhase type to avoid using TS enum (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.799
+
+Sat, 06 Apr 2024 05:16:35 GMT
+
+### Changes
+
+- Fix Microsoft.ReactNative.IntegrationTests to run with Fabric (jthysell@microsoft.com)
+
+## 0.0.0-canary.798
+
+Wed, 03 Apr 2024 05:15:20 GMT
+
+### Changes
+
+- fix OnSelectionChanged running multiple times (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.797
+
+Tue, 02 Apr 2024 17:57:27 GMT
+
+### Changes
+
+- Add builds and nugets for MS.RN Fabric (jthysell@microsoft.com)
+
+## 0.0.0-canary.796
+
+Sat, 30 Mar 2024 05:18:04 GMT
+
+### Changes
+
+- initial 2/21 integrate (yajurgrover24@gmail.com)
+- Remove unnecessary imports from Timer.idl (ericroz@meta.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.207
+- Bump @react-native-windows/codegen to v0.0.0-canary.82
+- Bump @rnw-scripts/eslint-config to v1.2.10
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.14
+- Bump @rnw-scripts/just-task to v2.3.26
+- Bump react-native-platform-override to v1.9.26
+
+## 0.0.0-canary.795
+
+Fri, 29 Mar 2024 05:15:22 GMT
+
+### Changes
+
+- Clang portable header fix (ericroz@meta.com)
+- Release render target before calling enddraw (30809111+acoates-ms@users.noreply.github.com)
+- Remove previous SizeChanged event listener when reloading the app (ericroz@meta.com)
+- Use std:: coroutines for compatibility with C++20 and Clang 17 (ericroz@meta.com)
+- Support WinAppSDK + cppwinrt 2.240111.5 (erozell@outlook.com)
+
+## 0.0.0-canary.794
+
+Wed, 27 Mar 2024 05:17:31 GMT
+
+### Changes
+
+- [Fabric] Fix hang on shutdown when JS instance failed to start (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.793
+
+Sat, 23 Mar 2024 05:17:00 GMT
+
+### Changes
+
+- Extract RenderText into helper function (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 2/1 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.206
+- Bump @react-native-windows/codegen to v0.0.0-canary.81
+- Bump @rnw-scripts/eslint-config to v1.2.9
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.13
+- Bump @rnw-scripts/just-task to v2.3.25
+- Bump react-native-platform-override to v1.9.25
+
+## 0.0.0-canary.792
+
+Fri, 22 Mar 2024 05:15:47 GMT
+
+### Changes
+
+- Enable custom timer factory to be provided (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Update ActivityIndicator to newer visuals (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.791
+
+Thu, 21 Mar 2024 05:14:45 GMT
+
+### Changes
+
+- Implement test website (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.790
+
+Wed, 20 Mar 2024 05:16:36 GMT
+
+### Changes
+
+- Bump Microsoft.Windows.CppWinRT to 2.0.230706.1 (jthysell@microsoft.com)
+
+## 0.0.0-canary.789
+
+Tue, 19 Mar 2024 05:17:45 GMT
+
+### Changes
+
+- Ensure Hermes Inspector in bridgeless (30809111+acoates-ms@users.noreply.github.com)
+- Bump WindowsAppSDK version to 1.5.240227000 (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.205
+
+## 0.0.0-canary.788
+
+Wed, 13 Mar 2024 05:14:11 GMT
+
+### Changes
+
+- Minor clean up for headers for Office consumption (30809111+acoates-ms@users.noreply.github.com)
+- Make HTTP origin value an instance member (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.787
+
+Tue, 12 Mar 2024 05:15:10 GMT
+
+### Changes
+
+- [Fabric] Implement LoadingUI and DebuggingOverlay (30809111+acoates-ms@users.noreply.github.com)
+- Rename WindowsCompositionContextHelper -> SystemCompositionContextHelper (30809111+acoates-ms@users.noreply.github.com)
+- Adds ARIA role support to Paper UIManager (erozell@outlook.com)
+- Add UIBatchingQueue to bridgeless mode (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.786
+
+Sat, 09 Mar 2024 06:16:03 GMT
+
+### Changes
+
+- Remove unused globals from Fabric template (4123478+tido64@users.noreply.github.com)
+
+## 0.0.0-canary.785
+
+Fri, 08 Mar 2024 06:15:54 GMT
+
+### Changes
+
+- proper disabled prop fix (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.784
+
+Thu, 07 Mar 2024 06:16:47 GMT
+
+### Changes
+
+- Better align native and JS view configs (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 1/26 (34109996+chiaramooney@users.noreply.github.com)
+- Adds option to set Non-ABI Runtime instance (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.204
+- Bump @react-native-windows/codegen to v0.0.0-canary.80
+- Bump @rnw-scripts/eslint-config to v1.2.8
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.12
+- Bump @rnw-scripts/just-task to v2.3.24
+- Bump react-native-platform-override to v1.9.24
+
+## 0.0.0-canary.783
+
+Wed, 06 Mar 2024 06:16:51 GMT
+
+### Changes
+
+- Enable bridgeless by default for fabric apps (30809111+acoates-ms@users.noreply.github.com)
+- Enable bridgeless by default for fabric apps (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.782
+
+Tue, 05 Mar 2024 06:16:50 GMT
+
+### Changes
+
+- Export getRuntimeExecutor for internal usage (30809111+acoates-ms@users.noreply.github.com)
+- Omit trailing slash in Origin header (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.781
+
+Sat, 02 Mar 2024 06:15:01 GMT
+
+### Changes
+
+- Add experimental Bridgeless mode (30809111+acoates-ms@users.noreply.github.com)
+- add window to Modal (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.780
+
+Fri, 01 Mar 2024 06:18:16 GMT
+
+### Changes
+
+- Integrate 1/22 (34109996+chiaramooney@users.noreply.github.com)
+- add fabric onKeyPress to textinput (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.203
+- Bump @react-native-windows/codegen to v0.0.0-canary.79
+- Bump @rnw-scripts/eslint-config to v1.2.7
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.11
+- Bump @rnw-scripts/just-task to v2.3.23
+- Bump react-native-platform-override to v1.9.23
+
+## 0.0.0-canary.779
+
+Thu, 29 Feb 2024 06:26:00 GMT
+
+### Changes
+
+- Add packaging to e2e-test-app-fabric (jthysell@microsoft.com)
+- Remove TurboModuleBinding fork (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.778
+
+Tue, 27 Feb 2024 06:18:05 GMT
+
+### Changes
+
+- [Fabric] Add AbiShadowNode for non View custom components (30809111+acoates-ms@users.noreply.github.com)
+- Update rn-integrate script to more aggressively update align dependencies (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.202
+- Bump @react-native-windows/codegen to v0.0.0-canary.78
+- Bump @rnw-scripts/eslint-config to v1.2.6
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.10
+- Bump @rnw-scripts/just-task to v2.3.22
+- Bump react-native-platform-override to v1.9.22
+
+## 0.0.0-canary.777
+
+Sat, 24 Feb 2024 06:17:17 GMT
+
+### Changes
+
+- Migrate src directory to src-win (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.201
+- Bump @react-native-windows/codegen to v0.0.0-canary.77
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.9
+- Bump @rnw-scripts/just-task to v2.3.21
+- Bump react-native-platform-override to v1.9.21
+
+## 0.0.0-canary.776
+
+Fri, 23 Feb 2024 06:16:34 GMT
+
+### Changes
+
+- Fix loading images from `file://` URIs (jthysell@microsoft.com)
+- Fix issue with new arch cpp-app apps not finding the bundle in release builds (jthysell@microsoft.com)
+
+## 0.0.0-canary.775
+
+Thu, 22 Feb 2024 06:16:36 GMT
+
+### Changes
+
+- Update WinAppSDK versions to latest public builds (jthysell@microsoft.com)
+- Updated min VS version in dependency script (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.200
+
+## 0.0.0-canary.774
+
+Wed, 21 Feb 2024 06:17:46 GMT
+
+### Changes
+
+- sumbitkeyevents working with shift (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.773
+
+Fri, 16 Feb 2024 06:16:12 GMT
+
+### Changes
+
+- Fix UIScheduler deadlock on shutdown (vmorozov@microsoft.com)
+
+## 0.0.0-canary.772
+
+Thu, 15 Feb 2024 06:18:14 GMT
+
+### Changes
+
+- Integrate 1/9 (34109996+chiaramooney@users.noreply.github.com)
+- Deprecate and remove CoreApp experiment (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.199
+- Bump @react-native-windows/codegen to v0.0.0-canary.76
+- Bump @rnw-scripts/just-task to v2.3.20
+- Bump react-native-platform-override to v1.9.20
+
+## 0.0.0-canary.771
+
+Wed, 14 Feb 2024 06:16:55 GMT
+
+### Changes
+
+- [Fabric] LogBox crashes when running lifted composition (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Expose (un)MountChildComponentView to 3P components (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.198
+- Bump @react-native-windows/codegen to v0.0.0-canary.75
+- Bump @rnw-scripts/eslint-config to v1.2.5
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.8
+- Bump @rnw-scripts/just-task to v2.3.19
+- Bump react-native-platform-override to v1.9.19
+
+## 0.0.0-canary.770
+
+Tue, 13 Feb 2024 06:14:03 GMT
+
+### Changes
+
+- Add Playground Composition CI Builds with UseExperimentalWinUI3 enabled (jthysell@microsoft.com)
+- Integrate 1/8 (34109996+chiaramooney@users.noreply.github.com)
+- Deprecated Web Debugging (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.769
+
+Sat, 10 Feb 2024 06:14:25 GMT
+
+### Changes
+
+- Add missing sstream includes (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.768
+
+Fri, 09 Feb 2024 21:11:18 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.197
+- Bump @react-native-windows/codegen to v0.0.0-canary.74
+- Bump react-native-platform-override to v1.9.18
+
+## 0.0.0-canary.767
+
+Fri, 09 Feb 2024 06:14:32 GMT
+
+### Changes
+
+- Fix Base64 encoding padding (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.766
 

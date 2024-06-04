@@ -1,8 +1,25 @@
 # Change Log - @rnw-scripts/jest-debug-config
 
-This log was last generated on Fri, 14 Jul 2023 05:17:07 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Feb 2024 06:18:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.5.8
+
+Tue, 27 Feb 2024 06:18:02 GMT
+
+### Patches
+
+- Update rn-integrate script to more aggressively update align dependencies (30809111+acoates-ms@users.noreply.github.com)
+- Bump @rnw-scripts/babel-node-config to v2.3.2
+
+## 1.5.7
+
+Wed, 14 Feb 2024 06:16:54 GMT
+
+### Patches
+
+- Bump Babel Versions (34109996+chiaramooney@users.noreply.github.com)
 
 ## 1.5.6
 

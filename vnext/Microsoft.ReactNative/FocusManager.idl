@@ -1,0 +1,22 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "ComponentView.idl";
+#include "DocString.h"
+
+namespace Microsoft.ReactNative.Composition
+{
+
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  runtimeclass FocusManager
+  {
+    DOC_STRING("Retrieves the first component that can receive focus based on the specified scope.")
+    static Microsoft.ReactNative.ComponentView FindFirstFocusableElement(Microsoft.ReactNative.ComponentView searchScope);
+
+    DOC_STRING("Retrieves the last component that can receive focus based on the specified scope.")
+    static Microsoft.ReactNative.ComponentView FindLastFocusableElement(Microsoft.ReactNative.ComponentView searchScope);
+  }
+
+} // namespace Microsoft.ReactNative.Composition

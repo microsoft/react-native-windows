@@ -4,7 +4,8 @@
 
 #pragma once
 
-#include <Composition/CompositionSwitcher.interop.h>
+#include <CompositionSwitcher.Experimental.interop.h>
+#include <guid/msoGuid.h>
 #include <winrt/Windows.UI.Composition.h>
 
 namespace Microsoft::ReactNative {

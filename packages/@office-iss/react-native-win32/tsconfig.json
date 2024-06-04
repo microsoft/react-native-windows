@@ -3,7 +3,7 @@
   "compilerOptions": {
     "baseUrl": ".",
     "outDir": ".",
-    "rootDir": "src",
+    "rootDir": "src-win",
     "moduleSuffixes": [".win32", ".native", ""],
     // Not clean
     "strict": false,
@@ -11,6 +11,6 @@
       "react-native": ["."] // this mapping is relative to "baseUrl"
     }
   },
-  "include": ["src"],
+  "include": ["src-win"],
   "exclude": ["node_modules", "dist", "lib"]
 }

@@ -13,12 +13,6 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct PushNotificationManagerIOSSpec_Permissions {
-    bool alert;
-    bool badge;
-    bool sound;
-};
-
 struct PushNotificationManagerIOSSpec_Notification {
     std::optional<std::string> alertTitle;
     std::optional<std::string> alertBody;
@@ -29,8 +23,12 @@ struct PushNotificationManagerIOSSpec_Notification {
     std::optional<double> applicationIconBadgeNumber;
     std::optional<bool> isSilent;
     std::optional<std::string> soundName;
-    std::optional<std::string> alertAction;
-    std::optional<std::string> repeatInterval;
+};
+
+struct PushNotificationManagerIOSSpec_Permissions {
+    bool alert;
+    bool badge;
+    bool sound;
 };
 
 struct PushNotificationManagerIOSSpec_requestPermissions_permission {
@@ -39,15 +37,6 @@ struct PushNotificationManagerIOSSpec_requestPermissions_permission {
     bool sound;
 };
 
-
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PushNotificationManagerIOSSpec_Permissions*) noexcept {
-    winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"alert", &PushNotificationManagerIOSSpec_Permissions::alert},
-        {L"badge", &PushNotificationManagerIOSSpec_Permissions::badge},
-        {L"sound", &PushNotificationManagerIOSSpec_Permissions::sound},
-    };
-    return fieldMap;
-}
 
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PushNotificationManagerIOSSpec_Notification*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
@@ -60,8 +49,15 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PushNotificationMan
         {L"applicationIconBadgeNumber", &PushNotificationManagerIOSSpec_Notification::applicationIconBadgeNumber},
         {L"isSilent", &PushNotificationManagerIOSSpec_Notification::isSilent},
         {L"soundName", &PushNotificationManagerIOSSpec_Notification::soundName},
-        {L"alertAction", &PushNotificationManagerIOSSpec_Notification::alertAction},
-        {L"repeatInterval", &PushNotificationManagerIOSSpec_Notification::repeatInterval},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(PushNotificationManagerIOSSpec_Permissions*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"alert", &PushNotificationManagerIOSSpec_Permissions::alert},
+        {L"badge", &PushNotificationManagerIOSSpec_Permissions::badge},
+        {L"sound", &PushNotificationManagerIOSSpec_Permissions::sound},
     };
     return fieldMap;
 }

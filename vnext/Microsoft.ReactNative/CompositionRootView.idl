@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import "CompositionContext.idl";
 import "IJSValueWriter.idl";
 import "ReactCoreInjection.idl";
 import "ReactNativeHost.idl";
 import "Theme.idl";
+import "IReactViewComponentBuilder.idl";
 #include "NamespaceRedirect.h"
 #include "DocString.h"
 
@@ -41,6 +41,34 @@ namespace Microsoft.ReactNative
     Boolean WasFocusMoved {get;};
   };
 
+  namespace Composition.Experimental {
+  [webhosthidden]
+  [experimental]
+  DOC_STRING("Custom ViewComponents need to implement this interface to be able to provide a custom"
+  " visual using the composition context that allows custom compositors.  This is only required for"
+  " custom components that need to support running in RNW instances with custom compositors.  Most"
+  " custom components can just override CreateVisual on ViewComponentView. This interface will be removed"
+  " in future versions")
+  interface IInternalCompositionRootView
+  {
+    DOC_STRING("The RootVisual associated with the @CompositionRootView. It must be set to show any React UI elements.")
+    Microsoft.ReactNative.Composition.Experimental.IVisual InternalRootVisual { get; set; };
+    
+    DOC_STRING("Hosting Window that input is coming from. Only required when not using ContentIslands")
+    void SetWindow(UInt64 hwnd);
+
+    DOC_STRING("Forward input to the RootView. Only required when not using ContentIslands")
+    Int64 SendMessage(UInt32 Msg, UInt64 WParam, Int64 LParam);
+  }
+  }
+
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  runtimeclass RootViewSizeChangedEventArgs {
+    Windows.Foundation.Size Size { get; };
+  }
+
   [default_interface]
   [webhosthidden]
   [experimental]
@@ -60,9 +88,9 @@ namespace Microsoft.ReactNative
     IReactViewHost ReactViewHost { get; set; };
 
     DOC_STRING("The RootVisual associated with the @CompositionRootView. It must be set to show any React UI elements.")
-    Microsoft.ReactNative.Composition.IVisual RootVisual { get; set; };
+    Microsoft.UI.Composition.Visual RootVisual { get; };
 
-    Windows.Foundation.Size Size {get; set; };
+    Windows.Foundation.Size Size { get; };
 
     DOC_STRING("ScaleFactor for this windows (DPI/96)")
     Single ScaleFactor {get; set;};
@@ -70,23 +98,22 @@ namespace Microsoft.ReactNative
     DOC_STRING("Move focus to this @CompositionRootView")
     FocusNavigationResult NavigateFocus(FocusNavigationRequest request);
 
-    Windows.Foundation.Size Measure(Windows.Foundation.Size availableSize);
-    Windows.Foundation.Size Arrange(Windows.Foundation.Size availableSize);
-
-    DOC_STRING("Hosting Window that input is coming from. Only required when not using ContentIslands")
-    void SetWindow(UInt64 hwnd);
-
-    DOC_STRING("Forward input to the RootView. Only required when not using ContentIslands")
-    Int64 SendMessage(UInt32 Msg, UInt64 WParam, Int64 LParam);
+    Windows.Foundation.Size Measure(LayoutConstraints layoutConstraints, Windows.Foundation.Point viewportOffset);
+    void Arrange(LayoutConstraints layoutConstraints, Windows.Foundation.Point viewportOffset);
 
     Object GetUiaProvider();
 
-    DOC_STRING("Theme used for Platform colors within this RootView")
-    Microsoft.ReactNative.Composition.Theme Theme;
+    DOC_STRING("Provides resources used for Platform colors within this RootView")
+    Microsoft.ReactNative.Composition.ICustomResourceLoader Resources;
+
+    Microsoft.ReactNative.Composition.Theme Theme { get; };
+    Int64 RootTag { get; };
 
 #ifdef USE_WINUI3
     Microsoft.UI.Content.ContentIsland Island { get; };
 #endif
+
+    event Windows.Foundation.EventHandler<RootViewSizeChangedEventArgs> SizeChanged;
   }
 
 } // namespace Microsoft.ReactNative

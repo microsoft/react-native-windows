@@ -18,6 +18,7 @@
 #include <regex>
 
 using std::set;
+using std::string;
 using std::wstring;
 
 using winrt::hresult_error;
@@ -114,15 +115,6 @@ bool OriginPolicyHttpFilter::CaseInsensitiveComparer::operator()(const wstring &
 /*static*/ set<const wchar_t *, OriginPolicyHttpFilter::CaseInsensitiveComparer>
     OriginPolicyHttpFilter::s_corsForbiddenRequestHeaderNamePrefixes = {L"Proxy-", L"Sec-"};
 
-/*static*/ Uri OriginPolicyHttpFilter::s_origin{nullptr};
-
-/*static*/ void OriginPolicyHttpFilter::SetStaticOrigin(std::string &&url) {
-  if (!url.empty())
-    s_origin = Uri{to_hstring(url)};
-  else
-    s_origin = nullptr;
-}
-
 /*static*/ bool OriginPolicyHttpFilter::IsSameOrigin(Uri const &u1, Uri const &u2) noexcept {
   return (u1 && u2) && u1.SchemeName() == u2.SchemeName() && u1.Host() == u2.Host() && u1.Port() == u2.Port();
 }
@@ -160,8 +152,16 @@ bool OriginPolicyHttpFilter::CaseInsensitiveComparer::operator()(const wstring &
   return s_simpleCorsMethods.find(request.Method().ToString().c_str()) != s_simpleCorsMethods.cend();
 }
 
-/*static*/ Uri OriginPolicyHttpFilter::GetOrigin(Uri const &uri) noexcept {
-  return Uri{uri.SchemeName() + L"://" + uri.Host() + L":" + to_hstring(uri.Port())};
+/*static*/ const hstring OriginPolicyHttpFilter::GetOrigin(Uri const &uri) noexcept {
+  auto const &scheme = uri.SchemeName();
+  auto port = uri.Port();
+
+  hstring result = scheme + L"://" + uri.Host();
+  if (!(port == 80 && scheme == L"http") && !(port == 443 && scheme == L"https")) {
+    result = result + L":" + to_hstring(port);
+  }
+
+  return result;
 }
 
 /*static*/ bool OriginPolicyHttpFilter::AreSafeRequestHeaders(
@@ -379,10 +379,14 @@ bool OriginPolicyHttpFilter::CaseInsensitiveComparer::operator()(const wstring &
   }
 }
 
-OriginPolicyHttpFilter::OriginPolicyHttpFilter(IHttpFilter const &innerFilter) : m_innerFilter{innerFilter} {}
+OriginPolicyHttpFilter::OriginPolicyHttpFilter(string &&origin, IHttpFilter const &innerFilter)
+    : m_origin{nullptr}, m_innerFilter{innerFilter} {
+  if (!origin.empty())
+    m_origin = Uri{to_hstring(origin)};
+}
 
-OriginPolicyHttpFilter::OriginPolicyHttpFilter()
-    : OriginPolicyHttpFilter(winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
+OriginPolicyHttpFilter::OriginPolicyHttpFilter(string &&origin)
+    : OriginPolicyHttpFilter(std::move(origin), winrt::Windows::Web::Http::Filters::HttpBaseProtocolFilter{}) {}
 
 OriginPolicy OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &request) {
   auto effectiveOriginPolicy =
@@ -392,17 +396,17 @@ OriginPolicy OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &r
       return effectiveOriginPolicy;
 
     case OriginPolicy::SameOrigin:
-      if (!IsSameOrigin(s_origin, request.RequestUri()))
+      if (!IsSameOrigin(m_origin, request.RequestUri()))
         throw hresult_error{E_INVALIDARG, L"SOP (same-origin policy) is enforced"};
       break;
 
     case OriginPolicy::SimpleCrossOriginResourceSharing:
       // Check for disallowed mixed content
       if (GetRuntimeOptionBool("Http.BlockMixedContentSimpleCors") &&
-          s_origin.SchemeName() != request.RequestUri().SchemeName())
+          m_origin.SchemeName() != request.RequestUri().SchemeName())
         throw hresult_error{E_INVALIDARG, L"The origin and request URLs must have the same scheme"};
 
-      if (IsSameOrigin(s_origin, request.RequestUri()))
+      if (IsSameOrigin(m_origin, request.RequestUri()))
         // Same origin. Therefore, skip Cross-Origin handling.
         effectiveOriginPolicy = OriginPolicy::SameOrigin;
       else if (!IsSimpleCorsRequest(request))
@@ -418,7 +422,7 @@ OriginPolicy OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &r
       // Example: On the Edge browser, an XHR request with the "Host" header set gets rejected as unsafe.
       // https://fetch.spec.whatwg.org/#forbidden-header-name
 
-      if (s_origin.SchemeName() != request.RequestUri().SchemeName())
+      if (m_origin.SchemeName() != request.RequestUri().SchemeName())
         throw hresult_error{E_INVALIDARG, L"The origin and request URLs must have the same scheme"};
 
       if (!AreSafeRequestHeaders(request.Headers()))
@@ -427,7 +431,7 @@ OriginPolicy OriginPolicyHttpFilter::ValidateRequest(HttpRequestMessage const &r
       if (s_forbiddenMethods.find(request.Method().ToString().c_str()) != s_forbiddenMethods.cend())
         throw hresult_error{E_INVALIDARG, L"Request method not allowed in cross-origin resource sharing"};
 
-      if (IsSameOrigin(s_origin, request.RequestUri()))
+      if (IsSameOrigin(m_origin, request.RequestUri()))
         effectiveOriginPolicy = OriginPolicy::SameOrigin;
       else if (IsSimpleCorsRequest(request))
         effectiveOriginPolicy = OriginPolicy::SimpleCrossOriginResourceSharing;
@@ -464,7 +468,7 @@ void OriginPolicyHttpFilter::ValidateAllowOrigin(
   // 4.10.4 - Mismatched allow origin
   auto taintedOriginProp = props.TryLookup(L"TaintedOrigin");
   auto taintedOrigin = taintedOriginProp && winrt::unbox_value<bool>(taintedOriginProp);
-  auto origin = taintedOrigin ? nullptr : s_origin;
+  auto origin = taintedOrigin ? nullptr : m_origin;
   if (allowedOrigin.empty() || !IsSameOrigin(origin, Uri{allowedOrigin})) {
     hstring errorMessage;
     if (allowedOrigin.empty())
@@ -595,7 +599,7 @@ void OriginPolicyHttpFilter::ValidateResponse(HttpResponseMessage const &respons
       bool originAllowed = false;
       for (const auto &header : response.Headers()) {
         if (boost::iequals(header.Key(), L"Access-Control-Allow-Origin")) {
-          originAllowed |= L"*" == header.Value() || s_origin == Uri{header.Value()};
+          originAllowed |= L"*" == header.Value() || m_origin == Uri{header.Value()};
         }
       }
 
@@ -683,7 +687,7 @@ ResponseOperation OriginPolicyHttpFilter::SendPreflightAsync(HttpRequestMessage 
   }
 
   preflightRequest.Headers().Insert(L"Access-Control-Request-Headers", headerNames);
-  preflightRequest.Headers().Insert(L"Origin", s_origin.AbsoluteCanonicalUri());
+  preflightRequest.Headers().Insert(L"Origin", GetOrigin(m_origin));
   preflightRequest.Headers().Insert(L"Sec-Fetch-Mode", L"CORS");
 
   co_return {co_await m_innerFilter.SendRequestAsync(preflightRequest)};
@@ -700,7 +704,7 @@ bool OriginPolicyHttpFilter::OnRedirecting(
   // origin=http://a.com. Since the origin matches the URL, the request is authorized at http://a.com, but it actually
   // allows http://b.com to bypass the CORS check at http://a.com since the redirected URL is from http://b.com.
   if (!IsSameOrigin(response.Headers().Location(), request.RequestUri()) &&
-      !IsSameOrigin(s_origin, request.RequestUri())) {
+      !IsSameOrigin(m_origin, request.RequestUri())) {
     // By masking the origin field in the request header, we make it impossible for the server to set a single value for
     // the access-control-allow-origin header. It means, the only way to support redirect is that server allows access
     // from all sites through wildcard.
@@ -732,7 +736,7 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
   // Allow only HTTP or HTTPS schemes
   if (GetRuntimeOptionBool("Http.StrictScheme") && coRequest.RequestUri().SchemeName() != L"https" &&
       coRequest.RequestUri().SchemeName() != L"http")
-    throw hresult_error{E_INVALIDARG, L"Invalid URL scheme: [" + s_origin.SchemeName() + L"]"};
+    throw hresult_error{E_INVALIDARG, L"Invalid URL scheme: [" + m_origin.SchemeName() + L"]"};
 
   if (!GetRuntimeOptionBool("Http.OmitCredentials")) {
     coRequest.Properties().Lookup(L"RequestArgs").as<RequestArgs>()->WithCredentials = false;
@@ -769,7 +773,7 @@ ResponseOperation OriginPolicyHttpFilter::SendRequestAsync(HttpRequestMessage co
 
     if (originPolicy == OriginPolicy::SimpleCrossOriginResourceSharing ||
         originPolicy == OriginPolicy::CrossOriginResourceSharing) {
-      coRequest.Headers().Insert(L"Origin", s_origin.AbsoluteCanonicalUri());
+      coRequest.Headers().Insert(L"Origin", GetOrigin(m_origin));
     }
 
     auto response = co_await m_innerFilter.SendRequestAsync(coRequest);

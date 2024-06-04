@@ -9,13 +9,13 @@
 namespace Microsoft::ReactNative {
 
 ReactNativeConfigProperties::ReactNativeConfigProperties(
-    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : m_context(reactContext) {}
+    winrt::Microsoft::ReactNative::ReactPropertyBag const &properties)
+    : m_properties(properties) {}
 
 ReactNativeConfigProperties::~ReactNativeConfigProperties() {}
 
 bool ReactNativeConfigProperties::getBool(const std::string &param) const {
-  auto value = m_context.Properties().Handle().Get(winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+  auto value = m_properties.Handle().Get(winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
       winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(winrt::hstring(L"ReactNativeConfig")),
       winrt::hstring(Common::Unicode::Utf8ToUtf16(param))));
 
@@ -23,7 +23,7 @@ bool ReactNativeConfigProperties::getBool(const std::string &param) const {
 }
 
 std::string ReactNativeConfigProperties::getString(const std::string &param) const {
-  auto value = m_context.Properties().Handle().Get(winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+  auto value = m_properties.Handle().Get(winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
       winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(winrt::hstring(L"ReactNativeConfig")),
       winrt::hstring(Common::Unicode::Utf8ToUtf16(param))));
 
@@ -35,7 +35,7 @@ std::string ReactNativeConfigProperties::getString(const std::string &param) con
 }
 
 int64_t ReactNativeConfigProperties::getInt64(const std::string &param) const {
-  auto value = m_context.Properties().Handle().Get(winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+  auto value = m_properties.Handle().Get(winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
       winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(winrt::hstring(L"ReactNativeConfig")),
       winrt::hstring(Common::Unicode::Utf8ToUtf16(param))));
 
@@ -43,7 +43,7 @@ int64_t ReactNativeConfigProperties::getInt64(const std::string &param) const {
 }
 
 double ReactNativeConfigProperties::getDouble(const std::string &param) const {
-  auto value = m_context.Properties().Handle().Get(winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
+  auto value = m_properties.Handle().Get(winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetName(
       winrt::Microsoft::ReactNative::ReactPropertyBagHelper::GetNamespace(winrt::hstring(L"ReactNativeConfig")),
       winrt::hstring(Common::Unicode::Utf8ToUtf16(param))));
 

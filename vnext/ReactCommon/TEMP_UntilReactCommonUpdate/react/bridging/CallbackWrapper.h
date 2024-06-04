@@ -19,12 +19,11 @@ namespace react {
 class CallbackWrapper : public LongLivedObject {
  private:
   CallbackWrapper(
-      jsi::Function &&callback,
-      jsi::Runtime &runtime,
+      jsi::Function&& callback,
+      jsi::Runtime& runtime,
       std::shared_ptr<CallInvoker> jsInvoker)
-      : longLivedObjectCollection_(),
+      : LongLivedObject(runtime),
         callback_(std::move(callback)),
-        runtime_(runtime),
         jsInvoker_(std::move(jsInvoker)) {}
 
   CallbackWrapper(
@@ -32,9 +31,8 @@ class CallbackWrapper : public LongLivedObject {
       jsi::Function &&callback,
       jsi::Runtime &runtime,
       std::shared_ptr<CallInvoker> jsInvoker)
-      : longLivedObjectCollection_(longLivedObjectCollection),
+      : LongLivedObject(runtime),
         callback_(std::move(callback)),
-        runtime_(runtime),
         jsInvoker_(std::move(jsInvoker)) {}
 
   // Use a weak_ptr to avoid a retain cycle: LongLivedObjectCollection owns all
@@ -42,7 +40,6 @@ class CallbackWrapper : public LongLivedObject {
   // LongLivedObjectCollection.
   std::weak_ptr<LongLivedObjectCollection> longLivedObjectCollection_;
   jsi::Function callback_;
-  jsi::Runtime &runtime_;
   std::shared_ptr<CallInvoker> jsInvoker_;
 
  public:
@@ -50,9 +47,9 @@ class CallbackWrapper : public LongLivedObject {
       jsi::Function &&callback,
       jsi::Runtime &runtime,
       std::shared_ptr<CallInvoker> jsInvoker) {
-    auto wrapper = std::shared_ptr<CallbackWrapper>(
-        new CallbackWrapper(std::move(callback), runtime, jsInvoker));
-    LongLivedObjectCollection::get().add(wrapper);
+    auto wrapper = std::shared_ptr<CallbackWrapper>(new CallbackWrapper(
+        std::move(callback), runtime, std::move(jsInvoker)));
+    LongLivedObjectCollection::get(runtime).add(wrapper);
     return wrapper;
   }
 

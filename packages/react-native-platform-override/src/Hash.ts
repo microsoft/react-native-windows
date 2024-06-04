@@ -51,7 +51,7 @@ export class Hasher {
   private readonly hashOpts: HashOpts;
 
   constructor(hashOpts?: HashOpts) {
-    this.hash = crypto.createHash('sha1');
+    this.hash = crypto.createHash('sha1'); // CodeQL [js/weak-hashes] Hash is used for file name mapping as a convenience. Decryption does not leave any data vulnerable.
     this.hashOpts = hashOpts || {};
   }
 

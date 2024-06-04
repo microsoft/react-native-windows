@@ -12,6 +12,7 @@
 #include <winrt/Windows.Web.Http.Headers.h>
 #include <winrt/Windows.Web.Http.h>
 
+#include <Networking/NetworkPropertyIds.h>
 #include <Views/DynamicAutomationPeer.h>
 #include "Unicode.h"
 #include "XamlView.h"
@@ -32,8 +33,10 @@ using Microsoft::Common::Unicode::Utf8ToUtf16;
 
 namespace Microsoft::ReactNative {
 
-/*static*/ winrt::com_ptr<ReactImage> ReactImage::Create() {
-  auto reactImage = winrt::make_self<ReactImage>();
+ReactImage::ReactImage(const Mso::React::IReactContext &context) : m_reactContext(&context) {}
+
+/*static*/ winrt::com_ptr<ReactImage> ReactImage::Create(const Mso::React::IReactContext &context) {
+  auto reactImage = winrt::make_self<ReactImage>(context);
   // Grid inherits the layout direction from parent and mirrors the background image in RTL mode.
   // Forcing the container to LTR mode to avoid the unexpected mirroring behavior.
   reactImage->FlowDirection(xaml::FlowDirection::LeftToRight);
@@ -162,7 +165,12 @@ void ReactImage::Source(ReactImageSource source) {
     winrt::hstring scheme{uri ? uri.SchemeName() : L""};
     winrt::hstring ext{uri ? uri.Extension() : L""};
 
-    if (((scheme == L"http") || (scheme == L"https")) && !source.headers.empty()) {
+    // Xaml default image handling can handle http/https uris.  However it will not use the specified headers in its
+    // request. If this image is using custom headers, or if we have a custom user-agent, then we have to download the
+    // image manually.
+    bool customUserAgent = !!winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties())
+                                 .Get(Microsoft::React::DefaultUserAgentPropertyId());
+    if (((scheme == L"http") || (scheme == L"https")) && (customUserAgent || !source.headers.empty())) {
       source.sourceType = ImageSourceType::Download;
     } else if (scheme == L"data") {
       source.sourceType = ImageSourceType::InlineData;
@@ -237,7 +245,8 @@ winrt::fire_and_forget ReactImage::SetBackground(bool fireLoadEndEvent) {
 
   try {
     if (fromStream) {
-      memoryStream = co_await GetImageMemoryStreamAsync(source);
+      auto properties = m_reactContext->Properties();
+      memoryStream = co_await GetImageMemoryStreamAsync(properties, source);
 
       // Fire failed load event if we're not loading from URI and the memory stream is null.
       if (!memoryStream) {
