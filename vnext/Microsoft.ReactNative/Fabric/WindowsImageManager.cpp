@@ -63,7 +63,7 @@ std::tuple<winrt::com_ptr<IWICBitmapSource>, winrt::com_ptr<IWICImagingFactory>,
 
     winrt::com_ptr<IWICBitmapFrameDecode> decodedFrame;
     winrt::check_hresult(bitmapDecoder->GetFrame(0, decodedFrame.put()));
-    return {decodedFrame, imagingFactory, nullptr};
+    return {decodedFrame, imagingFactory, {}};
   } catch (winrt::hresult_error const &ex) {
     return {nullptr, nullptr, ::Microsoft::ReactNative::FormatHResultError(winrt::hresult_error(ex))};
   }
