@@ -5,9 +5,8 @@
  * @ts-check
  */
 
-const {task, series, parallel} = require('just-scripts');
+const {task} = require('just-scripts');
 const fs = require('fs');
-const {execSync} = require('child_process');
 
 // Use the shared base configuration
 require('@rnw-scripts/just-task');
