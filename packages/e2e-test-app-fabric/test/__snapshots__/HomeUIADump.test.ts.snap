@@ -2560,12 +2560,12 @@ exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
     "__Children": [
       {
         "Offset": "15, 12, 0",
-        "Size": "157, 28",
+        "Size": "157, 27",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "157, 28",
+            "Size": "157, 27",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2594,12 +2594,12 @@ exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
       },
       {
         "Offset": "15, 69, 0",
-        "Size": "65, 19",
+        "Size": "65, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "65, 19",
+            "Size": "65, 20",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2611,12 +2611,12 @@ exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
       },
       {
         "Offset": "853, 69, 0",
-        "Size": "22, 19",
+        "Size": "22, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22, 19",
+            "Size": "22, 20",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2628,12 +2628,12 @@ exports[`Home UIA Tree Dump Cxx TurboModule 1`] = `
       },
       {
         "Offset": "901, 69, 0",
-        "Size": "52, 19",
+        "Size": "52, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "52, 19",
+            "Size": "52, 20",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3586,6 +3586,176 @@ exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "128, 28",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "15, 43, 0",
+        "Size": "938, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "938, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "15, 69, 0",
+        "Size": "65, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "65, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "853, 69, 0",
+        "Size": "22, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "22, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "901, 69, 0",
+        "Size": "52, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "52, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`Home UIA Tree Dump Filter 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "Filter",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "Filter A set of graphical effects that can be applied to a view.",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Filter",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "A set of graphical effects that can be applied to a view.",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "UI",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "iOS",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Android",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Filter A set of graphical effects that can be applied to a view.",
+      "TestId": "Filter",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Comment": "Filter",
+    "Offset": "0, 0, 0",
+    "Size": "968, 100",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "15, 12, 0",
+        "Size": "44, 27",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "44, 27",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -5484,12 +5654,12 @@ exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
       },
       {
         "Offset": "15, 69, 0",
-        "Size": "65, 19",
+        "Size": "65, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "65, 19",
+            "Size": "65, 20",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -5501,12 +5671,12 @@ exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
       },
       {
         "Offset": "853, 69, 0",
-        "Size": "22, 19",
+        "Size": "22, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22, 19",
+            "Size": "22, 20",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -5518,12 +5688,12 @@ exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
       },
       {
         "Offset": "901, 69, 0",
-        "Size": "52, 19",
+        "Size": "52, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "52, 19",
+            "Size": "52, 20",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -7655,7 +7825,7 @@ exports[`Home UIA Tree Dump Performance API Examples 1`] = `
     },
     "Comment": "Performance API Examples",
     "Offset": "0, 0, 0",
-    "Size": "968, 99",
+    "Size": "968, 100",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -7694,12 +7864,12 @@ exports[`Home UIA Tree Dump Performance API Examples 1`] = `
       },
       {
         "Offset": "15, 69, 0",
-        "Size": "65, 20",
+        "Size": "65, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "65, 20",
+            "Size": "65, 19",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -7711,12 +7881,12 @@ exports[`Home UIA Tree Dump Performance API Examples 1`] = `
       },
       {
         "Offset": "853, 69, 0",
-        "Size": "22, 20",
+        "Size": "22, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22, 20",
+            "Size": "22, 19",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -7728,12 +7898,12 @@ exports[`Home UIA Tree Dump Performance API Examples 1`] = `
       },
       {
         "Offset": "901, 69, 0",
-        "Size": "52, 20",
+        "Size": "52, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "52, 20",
+            "Size": "52, 19",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -7836,6 +8006,176 @@ exports[`Home UIA Tree Dump Performance Comparison Examples 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "312, 28",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "15, 43, 0",
+        "Size": "938, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "938, 20",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "15, 69, 0",
+        "Size": "65, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "65, 19",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "853, 69, 0",
+        "Size": "22, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "22, 19",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "901, 69, 0",
+        "Size": "52, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "52, 19",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`Home UIA Tree Dump PixelRatio 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "PixelRatio",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "PixelRatio Gives access to device's pixel density and font scale",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "PixelRatio",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Gives access to device's pixel density and font scale",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "UI",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "iOS",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Android",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "PixelRatio Gives access to device's pixel density and font scale",
+      "TestId": "PixelRatio",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Comment": "PixelRatio",
+    "Offset": "0, 0, 0",
+    "Size": "968, 99",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "15, 12, 0",
+        "Size": "87, 28",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "87, 28",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -8034,12 +8374,12 @@ exports[`Home UIA Tree Dump PlatformColor 1`] = `
       },
       {
         "Offset": "15, 69, 0",
-        "Size": "65, 19",
+        "Size": "65, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "65, 19",
+            "Size": "65, 20",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -8051,12 +8391,12 @@ exports[`Home UIA Tree Dump PlatformColor 1`] = `
       },
       {
         "Offset": "853, 69, 0",
-        "Size": "22, 19",
+        "Size": "22, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22, 19",
+            "Size": "22, 20",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -8068,12 +8408,12 @@ exports[`Home UIA Tree Dump PlatformColor 1`] = `
       },
       {
         "Offset": "901, 69, 0",
-        "Size": "52, 19",
+        "Size": "52, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "52, 19",
+            "Size": "52, 20",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -8170,12 +8510,12 @@ exports[`Home UIA Tree Dump Pointer Events 1`] = `
     "__Children": [
       {
         "Offset": "15, 12, 0",
-        "Size": "125, 28",
+        "Size": "125, 27",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "125, 28",
+            "Size": "125, 27",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -8675,17 +9015,17 @@ exports[`Home UIA Tree Dump RTLExample 1`] = `
     },
     "Comment": "RTLExample",
     "Offset": "0, 0, 0",
-    "Size": "968, 99",
+    "Size": "968, 100",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "15, 12, 0",
-        "Size": "105, 27",
+        "Size": "105, 28",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "105, 27",
+            "Size": "105, 28",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -8714,12 +9054,12 @@ exports[`Home UIA Tree Dump RTLExample 1`] = `
       },
       {
         "Offset": "15, 69, 0",
-        "Size": "65, 20",
+        "Size": "65, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "65, 20",
+            "Size": "65, 19",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -8731,12 +9071,12 @@ exports[`Home UIA Tree Dump RTLExample 1`] = `
       },
       {
         "Offset": "853, 69, 0",
-        "Size": "22, 20",
+        "Size": "22, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22, 20",
+            "Size": "22, 19",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -8748,12 +9088,12 @@ exports[`Home UIA Tree Dump RTLExample 1`] = `
       },
       {
         "Offset": "901, 69, 0",
-        "Size": "52, 20",
+        "Size": "52, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "52, 20",
+            "Size": "52, 19",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -9634,7 +9974,7 @@ exports[`Home UIA Tree Dump Share 1`] = `
     },
     "Comment": "Share",
     "Offset": "0, 0, 0",
-    "Size": "968, 100",
+    "Size": "968, 99",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -10693,12 +11033,12 @@ exports[`Home UIA Tree Dump Timers 1`] = `
       },
       {
         "Offset": "15, 69, 0",
-        "Size": "65, 19",
+        "Size": "65, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "65, 19",
+            "Size": "65, 20",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -10710,12 +11050,12 @@ exports[`Home UIA Tree Dump Timers 1`] = `
       },
       {
         "Offset": "853, 69, 0",
-        "Size": "22, 19",
+        "Size": "22, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22, 19",
+            "Size": "22, 20",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -10727,12 +11067,12 @@ exports[`Home UIA Tree Dump Timers 1`] = `
       },
       {
         "Offset": "901, 69, 0",
-        "Size": "52, 19",
+        "Size": "52, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "52, 19",
+            "Size": "52, 20",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -11169,12 +11509,12 @@ exports[`Home UIA Tree Dump Transforms 1`] = `
     "__Children": [
       {
         "Offset": "15, 12, 0",
-        "Size": "97, 28",
+        "Size": "97, 27",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "97, 28",
+            "Size": "97, 27",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -11504,17 +11844,17 @@ exports[`Home UIA Tree Dump TurboModule 1`] = `
     },
     "Comment": "TurboModule",
     "Offset": "0, 0, 0",
-    "Size": "968, 100",
+    "Size": "968, 99",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "15, 12, 0",
-        "Size": "121, 27",
+        "Size": "121, 28",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "121, 27",
+            "Size": "121, 28",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -11543,12 +11883,12 @@ exports[`Home UIA Tree Dump TurboModule 1`] = `
       },
       {
         "Offset": "15, 69, 0",
-        "Size": "65, 20",
+        "Size": "65, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "65, 20",
+            "Size": "65, 19",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -11560,12 +11900,12 @@ exports[`Home UIA Tree Dump TurboModule 1`] = `
       },
       {
         "Offset": "853, 69, 0",
-        "Size": "22, 20",
+        "Size": "22, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22, 20",
+            "Size": "22, 19",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -11577,12 +11917,12 @@ exports[`Home UIA Tree Dump TurboModule 1`] = `
       },
       {
         "Offset": "901, 69, 0",
-        "Size": "52, 20",
+        "Size": "52, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "52, 20",
+            "Size": "52, 19",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -11849,12 +12189,12 @@ exports[`Home UIA Tree Dump WebSocket 1`] = `
     "__Children": [
       {
         "Offset": "15, 12, 0",
-        "Size": "99, 27",
+        "Size": "99, 28",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "99, 27",
+            "Size": "99, 28",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -11883,12 +12223,12 @@ exports[`Home UIA Tree Dump WebSocket 1`] = `
       },
       {
         "Offset": "15, 69, 0",
-        "Size": "65, 20",
+        "Size": "65, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "65, 20",
+            "Size": "65, 19",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -11900,12 +12240,12 @@ exports[`Home UIA Tree Dump WebSocket 1`] = `
       },
       {
         "Offset": "853, 69, 0",
-        "Size": "22, 20",
+        "Size": "22, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "22, 20",
+            "Size": "22, 19",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -11917,12 +12257,12 @@ exports[`Home UIA Tree Dump WebSocket 1`] = `
       },
       {
         "Offset": "901, 69, 0",
-        "Size": "52, 20",
+        "Size": "52, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "52, 20",
+            "Size": "52, 19",
             "Visual Type": "SpriteVisual",
           },
           {

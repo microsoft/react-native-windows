@@ -13,12 +13,6 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
-struct IntersectionObserverSpec_NativeIntersectionObserverObserveOptions {
-    double intersectionObserverId;
-     targetShadowNode;
-    std::vector<double> thresholds;
-};
-
 struct IntersectionObserverSpec_NativeIntersectionObserverEntry {
     double intersectionObserverId;
      targetInstanceHandle;
@@ -29,15 +23,12 @@ struct IntersectionObserverSpec_NativeIntersectionObserverEntry {
     double time;
 };
 
+struct IntersectionObserverSpec_NativeIntersectionObserverObserveOptions {
+    double intersectionObserverId;
+     targetShadowNode;
+    std::vector<double> thresholds;
+};
 
-inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(IntersectionObserverSpec_NativeIntersectionObserverObserveOptions*) noexcept {
-    winrt::Microsoft::ReactNative::FieldMap fieldMap {
-        {L"intersectionObserverId", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::intersectionObserverId},
-        {L"targetShadowNode", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::targetShadowNode},
-        {L"thresholds", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::thresholds},
-    };
-    return fieldMap;
-}
 
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(IntersectionObserverSpec_NativeIntersectionObserverEntry*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {
@@ -48,6 +39,15 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(IntersectionObserve
         {L"intersectionRect", &IntersectionObserverSpec_NativeIntersectionObserverEntry::intersectionRect},
         {L"isIntersectingAboveThresholds", &IntersectionObserverSpec_NativeIntersectionObserverEntry::isIntersectingAboveThresholds},
         {L"time", &IntersectionObserverSpec_NativeIntersectionObserverEntry::time},
+    };
+    return fieldMap;
+}
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(IntersectionObserverSpec_NativeIntersectionObserverObserveOptions*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"intersectionObserverId", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::intersectionObserverId},
+        {L"targetShadowNode", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::targetShadowNode},
+        {L"thresholds", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::thresholds},
     };
     return fieldMap;
 }

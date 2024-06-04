@@ -248,10 +248,33 @@ const styles = StyleSheet.create({
   singleLineWithHeightTextInput: {
     height: 30,
   },
+  wrappedText: {
+    maxWidth: 300,
+  },
 });
 
 const examples: Array<RNTesterModuleExample> = [
   ...TextInputSharedExamples,
+  {
+    title: 'Clear text on focus',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text>Do not clear text on focus:</Text>
+          <ExampleTextInput
+            style={styles.singleLine}
+            testID="clear-text-on-focus-false"
+          />
+          <Text>Clear text on focus:</Text>
+          <ExampleTextInput
+            clearTextOnFocus={true}
+            style={styles.singleLine}
+            testID="clear-text-on-focus-true"
+          />
+        </View>
+      );
+    },
+  },
   {
     title: 'Colors and text inputs',
     render: function (): React.Node {
@@ -334,7 +357,7 @@ const examples: Array<RNTesterModuleExample> = [
             'normal',
             'bold',
             '900',
-            '800',
+            800,
             '700',
             '600',
             '500',
@@ -508,7 +531,7 @@ const examples: Array<RNTesterModuleExample> = [
     platform: 'android',
     render: function (): React.Node {
       return (
-        <View>
+        <View style={styles.wrappedText}>
           <ExampleTextInput
             numberOfLines={2}
             multiline={true}
@@ -537,7 +560,7 @@ const examples: Array<RNTesterModuleExample> = [
     title: 'Auto-expanding',
     render: function (): React.Node {
       return (
-        <View>
+        <View style={styles.wrappedText}>
           <AutogrowingTextInputExample
             enablesReturnKeyAutomatically={true}
             returnKeyType="done"

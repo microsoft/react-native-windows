@@ -26,7 +26,7 @@ const headerTemplate = `/*
  */
 #pragma once`;
 
-const specTemplate = `::_MODULE_CUSTPM_TYPES_REFLECTION_::
+const specTemplate = `::_MODULE_CUSTOM_TYPES_REFLECTION_::
 struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
 ::_MODULE_MEMBERS_TUPLES_::
 
@@ -46,7 +46,7 @@ ${headerTemplate}
 #include <vector>
 
 namespace ::_NAMESPACE_:: {
-::_MODULE_CUSTPM_TYPES_::
+::_MODULE_CUSTOM_TYPES_::
 } // namespace ::_NAMESPACE_::
 `;
 
@@ -71,7 +71,7 @@ ${headerTemplate}
 #include <tuple>
 
 namespace ::_NAMESPACE_:: {
-::_MODULE_CUSTPM_TYPES_::
+::_MODULE_CUSTOM_TYPES_::
 ${specTemplate}
 };
 
@@ -147,8 +147,8 @@ ${errors}`;
 
         const replaceContent = function (template: string): string {
           return template
-            .replace(/::_MODULE_CUSTPM_TYPES_::/g, customTypes)
-            .replace(/::_MODULE_CUSTPM_TYPES_REFLECTION_::/g, customReflection)
+            .replace(/::_MODULE_CUSTOM_TYPES_::/g, customTypes)
+            .replace(/::_MODULE_CUSTOM_TYPES_REFLECTION_::/g, customReflection)
             .replace(/::_MODULE_MEMBERS_TUPLES_::/g, tuples.substring(1))
             .replace(/::_MODULE_MEMBERS_CHECKS_::/g, checks.substring(1))
             .replace(/::_MODULE_MEMBERS_ERRORS_::/g, errors)

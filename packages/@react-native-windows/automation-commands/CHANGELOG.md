@@ -1,8 +1,91 @@
 # Change Log - @react-native-windows/automation-commands
 
-This log was last generated on Wed, 15 May 2024 05:14:54 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Jun 2024 05:18:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.1.267
+
+Tue, 04 Jun 2024 05:18:35 GMT
+
+### Patches
+
+- Update dumpVisualTree to replace hash on RNTester image (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/automation-channel to v0.12.164
+- Bump @rnw-scripts/eslint-config to v1.2.21
+- Bump @rnw-scripts/just-task to v2.3.37
+
+## 0.1.266
+
+Sat, 01 Jun 2024 05:21:31 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.163
+- Bump @rnw-scripts/eslint-config to v1.2.20
+- Bump @rnw-scripts/just-task to v2.3.36
+
+## 0.1.265
+
+Fri, 31 May 2024 05:16:40 GMT
+
+### Patches
+
+- Update image uris in dumpVisualTree.ts (1422161+marlenecota@users.noreply.github.com)
+
+## 0.1.264
+
+Thu, 30 May 2024 05:18:26 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.162
+- Bump @rnw-scripts/eslint-config to v1.2.19
+- Bump @rnw-scripts/just-task to v2.3.35
+
+## 0.1.263
+
+Wed, 29 May 2024 05:20:02 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.161
+
+## 0.1.262
+
+Fri, 24 May 2024 05:17:26 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.160
+
+## 0.1.261
+
+Thu, 23 May 2024 05:17:50 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.159
+- Bump @rnw-scripts/eslint-config to v1.2.18
+- Bump @rnw-scripts/just-task to v2.3.34
+
+## 0.1.260
+
+Wed, 22 May 2024 05:18:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.158
+- Bump @rnw-scripts/eslint-config to v1.2.17
+- Bump @rnw-scripts/just-task to v2.3.33
+
+## 0.1.259
+
+Tue, 21 May 2024 05:14:34 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.157
 
 ## 0.1.258
 

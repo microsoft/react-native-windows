@@ -45,7 +45,21 @@ RootComponentView *RootComponentView::rootComponentView() noexcept {
   return this;
 }
 
-winrt::Microsoft::ReactNative::ComponentView &RootComponentView::GetFocusedComponent() noexcept {
+void RootComponentView::updateLayoutMetrics(
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
+  base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
+
+  if (oldLayoutMetrics.frame != layoutMetrics.frame ||
+      oldLayoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor) {
+    if (auto rootView = m_wkRootView.get()) {
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)
+          ->NotifySizeChanged();
+    }
+  }
+}
+
+winrt::Microsoft::ReactNative::ComponentView RootComponentView::GetFocusedComponent() noexcept {
   return m_focusedComponent;
 }
 void RootComponentView::SetFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &value) noexcept {
@@ -53,44 +67,20 @@ void RootComponentView::SetFocusedComponent(const winrt::Microsoft::ReactNative:
     return;
 
   if (m_focusedComponent) {
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_focusedComponent)->onFocusLost();
+    auto args = winrt::make<winrt::Microsoft::ReactNative::implementation::LostFocusEventArgs>(m_focusedComponent);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_focusedComponent)
+        ->onLostFocus(args);
   }
 
   if (value) {
     if (auto rootView = m_wkRootView.get()) {
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)->TrySetFocus();
     }
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(value)->onFocusGained();
+    auto args = winrt::make<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>(value);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(value)->onGotFocus(args);
   }
 
   m_focusedComponent = value;
-}
-
-winrt::Microsoft::ReactNative::implementation::ComponentView *NavigateFocusHelper(
-    winrt::Microsoft::ReactNative::implementation::ComponentView &view,
-    winrt::Microsoft::ReactNative::FocusNavigationReason reason) {
-  if (reason == winrt::Microsoft::ReactNative::FocusNavigationReason::First) {
-    if (view.focusable()) {
-      return &view;
-    }
-  }
-  winrt::Microsoft::ReactNative::implementation::ComponentView *toFocus = nullptr;
-
-  Mso::Functor<bool(::winrt::Microsoft::ReactNative::implementation::ComponentView & v)> fn =
-      [reason, &toFocus](::winrt::Microsoft::ReactNative::implementation::ComponentView &v) noexcept
-      -> bool { return (toFocus = NavigateFocusHelper(v, reason)); };
-
-  if (view.runOnChildren(reason == winrt::Microsoft::ReactNative::FocusNavigationReason::First, fn)) {
-    return toFocus;
-  }
-
-  if (reason == winrt::Microsoft::ReactNative::FocusNavigationReason::Last) {
-    if (view.focusable()) {
-      return &view;
-    }
-  }
-
-  return nullptr;
 }
 
 bool RootComponentView::NavigateFocus(const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept {
@@ -99,23 +89,47 @@ bool RootComponentView::NavigateFocus(const winrt::Microsoft::ReactNative::Focus
     return m_focusedComponent != nullptr;
   }
 
-  auto view = NavigateFocusHelper(*this, request.Reason());
+  auto view = (request.Reason() == winrt::Microsoft::ReactNative::FocusNavigationReason::First)
+      ? FocusManager::FindFirstFocusableElement(*this)
+      : FocusManager::FindLastFocusableElement(*this);
   if (view) {
-    winrt::Microsoft::ReactNative::ComponentView component{nullptr};
-    winrt::check_hresult(view->QueryInterface(
-        winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(component)));
-    SetFocusedComponent(component);
+    TrySetFocusedComponent(view);
   }
   return view != nullptr;
 }
 
 bool RootComponentView::TrySetFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
-  auto selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view);
-  if (selfView->focusable()) {
-    selfView->rootComponentView()->SetFocusedComponent(view);
-    return true;
+  auto target = view;
+  auto selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(target);
+  if (selfView && !selfView->focusable()) {
+    target = FocusManager::FindFirstFocusableElement(target);
+    if (!target)
+      return false;
+    selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(target);
   }
-  return false;
+
+  if (selfView && selfView->rootComponentView() != this)
+    return false;
+
+  auto losingFocusArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::LosingFocusEventArgs>(
+      target, m_focusedComponent, target);
+  if (m_focusedComponent) {
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_focusedComponent)
+        ->onLosingFocus(losingFocusArgs);
+  }
+
+  if (losingFocusArgs.NewFocusedComponent()) {
+    auto gettingFocusArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::GettingFocusEventArgs>(
+        target, m_focusedComponent, losingFocusArgs.NewFocusedComponent());
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(losingFocusArgs.NewFocusedComponent())
+        ->onGettingFocus(gettingFocusArgs);
+
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(losingFocusArgs.NewFocusedComponent())
+        ->rootComponentView()
+        ->SetFocusedComponent(gettingFocusArgs.NewFocusedComponent());
+  }
+
+  return true;
 }
 
 bool RootComponentView::TryMoveFocus(bool next) noexcept {

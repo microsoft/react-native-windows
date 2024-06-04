@@ -13,6 +13,7 @@ void *winrt_make_Microsoft_ReactNative_Composition_Experimental_MicrosoftComposi
 void *winrt_make_Microsoft_ReactNative_Composition_Experimental_SystemCompositionContextHelper();
 void *winrt_make_Microsoft_ReactNative_Composition_CompositionUIService();
 void* winrt_make_Microsoft_ReactNative_Composition_ViewComponentView();
+void *winrt_make_Microsoft_ReactNative_Composition_FocusManager();
 void* winrt_make_Microsoft_ReactNative_JsiRuntime();
 void* winrt_make_Microsoft_ReactNative_ReactCoreInjection();
 void* winrt_make_Microsoft_ReactNative_ReactDispatcherHelper();
@@ -27,7 +28,13 @@ void* winrt_make_facebook_react_NativeLogEventSource();
 void* winrt_make_facebook_react_NativeTraceEventSource();
 
 #ifndef USE_FABRIC
+void* winrt_make_Microsoft_ReactNative_CompositionRootView() {
+    winrt::throw_hresult(E_NOTIMPL);
+}
 void* winrt_make_Microsoft_ReactNative_Composition_ViewComponentView() {
+    winrt::throw_hresult(E_NOTIMPL);
+}
+void *winrt_make_Microsoft_ReactNative_Composition_FocusManager() {
     winrt::throw_hresult(E_NOTIMPL);
 }
 #endif
@@ -67,6 +74,9 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
     }
     if (requal(name, L"Microsoft.ReactNative.Composition.CompositionUIService")) {
       return winrt_make_Microsoft_ReactNative_Composition_CompositionUIService();
+    }
+    if (requal(name, L"Microsoft.ReactNative.Composition.FocusManager")) {
+      return winrt_make_Microsoft_ReactNative_Composition_FocusManager();
     }
     if (requal(name, L"Microsoft.ReactNative.Composition.ViewComponentView")) {
       return winrt_make_Microsoft_ReactNative_Composition_ViewComponentView();

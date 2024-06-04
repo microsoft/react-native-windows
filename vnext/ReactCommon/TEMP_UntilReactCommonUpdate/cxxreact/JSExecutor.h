@@ -16,6 +16,7 @@
 #include <jsinspector-modern/FallbackRuntimeAgentDelegate.h>
 #include <jsinspector-modern/ReactCdp.h>
 #include <jsinspector-modern/ConsoleMessage.h>
+#include <jsinspector-modern/StackTrace.h>
 
 #ifndef RN_EXPORT
 #define RN_EXPORT __attribute__((visibility("default")))
@@ -145,6 +146,22 @@ class RN_EXPORT JSExecutor : public jsinspector_modern::RuntimeTargetDelegate {
   virtual void addConsoleMessage(jsi::Runtime& runtime, jsinspector_modern::ConsoleMessage message);
 
   virtual bool supportsConsole() const;
+
+  /**
+   * \returns an opaque representation of a stack trace. This may be passed back
+   * to the `RuntimeTargetDelegate` as part of `addConsoleMessage` or other APIs
+   * that report stack traces.
+   * \param framesToSkip The number of call frames to skip. The first call frame
+   * is the topmost (current) frame on the Runtime's call stack, which will
+   * typically be the (native) JSI HostFunction that called this method.
+   * \note The method is called on the JS thread, and receives a valid reference
+   * to the current \c jsi::Runtime. The callee MAY use its own intrinsic
+   * Runtime reference, if it has one, without checking it for equivalence with
+   * the one provided here.
+   */
+  std::unique_ptr<jsinspector_modern::StackTrace> captureStackTrace(
+      jsi::Runtime& runtime,
+      size_t framesToSkip = 0) override;
 
   /**
    * Create a RuntimeAgentDelegate that can be used to debug the JS VM instance.

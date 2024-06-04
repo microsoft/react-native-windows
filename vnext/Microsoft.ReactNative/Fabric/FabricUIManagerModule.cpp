@@ -12,7 +12,6 @@
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
-#include <ICompositionRootView.h>
 #include <IReactContext.h>
 #include <IReactRootView.h>
 #include <JSI/jsi.h>
@@ -132,6 +131,7 @@ const IComponentViewRegistry &FabricUIManager::GetViewRegistry() const noexcept 
 void FabricUIManager::startSurface(
     const winrt::Microsoft::ReactNative::CompositionRootView &rootView,
     facebook::react::SurfaceId surfaceId,
+    const facebook::react::LayoutConstraints &layoutConstraints,
     const std::string &moduleName,
     const folly::dynamic &initialProps) noexcept {
   m_surfaceRegistry.insert({surfaceId, {rootView}});
@@ -146,22 +146,16 @@ void FabricUIManager::startSurface(
     root->start(rootView);
   });
 
-  facebook::react::LayoutContext context;
-  facebook::react::LayoutConstraints constraints;
-  context.pointScaleFactor = rootView.ScaleFactor();
-  context.fontSizeMultiplier = rootView.ScaleFactor();
-  constraints.minimumSize.height = rootView.Size().Height;
-  constraints.minimumSize.width = rootView.Size().Width;
-  constraints.maximumSize.height = rootView.Size().Height;
-  constraints.maximumSize.width = rootView.Size().Width;
-  constraints.layoutDirection = facebook::react::LayoutDirection::LeftToRight;
+  facebook::react::LayoutContext layoutContext;
+  layoutContext.pointScaleFactor = rootView.ScaleFactor();
+  layoutContext.fontSizeMultiplier = rootView.ScaleFactor();
 
   m_surfaceManager->startSurface(
       surfaceId,
       moduleName,
       initialProps,
-      constraints, // layout constraints
-      context // layout context
+      layoutConstraints,
+      layoutContext // layout context
   );
 }
 
@@ -329,9 +323,17 @@ void FabricUIManager::schedulerDidFinishTransaction(
   }
 }
 
-void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
-    facebook::react::SurfaceId surfaceId,
-    const facebook::react::ShadowNode &shadowView) {
+void FabricUIManager::schedulerShouldRenderTransactions(
+    const facebook::react::MountingCoordinator::Shared &mountingCoordinator) {
+  if (m_context.UIDispatcher().HasThreadAccess()) {
+    initiateTransaction(mountingCoordinator);
+  } else {
+    m_context.UIDispatcher().Post(
+        [mountingCoordinator, self = shared_from_this()]() { self->initiateTransaction(mountingCoordinator); });
+  }
+}
+
+void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(const facebook::react::ShadowNode &shadowView) {
   // iOS does not do this optimization, but Android does.  It maybe that android's allocations are more expensive due to
   // the Java boundary.
   // TODO: We should do some perf tests to see if this is worth doing.

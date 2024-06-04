@@ -69,11 +69,6 @@
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionRootView.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionRootView_emptyimpl.cpp">
-      <ExcludedFromBuild Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' != 'true'">true</ExcludedFromBuild>
-      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionRootView.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionUIService.idl</DependentUpon>
@@ -82,6 +77,11 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\CompositionUIService_emptyimpl.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' != 'true'">true</ExcludedFromBuild>
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionUIService.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\FocusManager.cpp">
+      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\FocusManager.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UriImageManager.cpp">
@@ -251,6 +251,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\StatusBarManagerModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Modules\WebSocketModule.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\DefaultBlobResource.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)Networking\NetworkPropertyIds.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\OriginPolicyHttpFilter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\RedirectHttpFilter.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\WinRTHttpResource.cpp" />
@@ -522,6 +523,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\ComponentDescriptorProviderRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\ComponentDescriptorRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\componentNameByReactViewName.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageComponentDescriptor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageEventEmitter.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageProps.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\image\ImageShadowNode.cpp" />
@@ -593,10 +595,8 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\ShadowTreeRegistry.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\ShadowView.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\ShadowViewMutation.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\Stubs.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\StubView.cpp" />
-    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\StubViewTree.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\TelemetryController.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mounting\updateMountedFlag.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\observers\events\EventPerformanceLogger.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\Scheduler.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\scheduler\SurfaceHandler.cpp" />
@@ -620,6 +620,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\native\NativeComponentRegistryBinding.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\HttpSettings.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueReader.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IJSValueWriter.idl" />
     <Midl Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\IReactContext.idl" />
@@ -642,6 +643,7 @@
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\ComponentView.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\Composition.Input.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionComponentView.idl" />
+    <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\FocusManager.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionContext.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionHwndHost.idl" />
     <Midl Condition="'$(UseFabric)' == 'true' OR '$(IncludeFabricInterface)' == 'true'" Include="$(ReactNativeWindowsDir)Microsoft.ReactNative\CompositionRootView.idl" />

@@ -1,8 +1,88 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Wed, 15 May 2024 05:14:53 GMT and should not be manually modified.
+This log was last generated on Tue, 04 Jun 2024 05:18:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.164
+
+Tue, 04 Jun 2024 05:18:34 GMT
+
+### Patches
+
+- Integrate 5/25 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.21
+- Bump @rnw-scripts/just-task to v2.3.37
+- Bump react-native-windows to v0.0.0-canary.824
+
+## 0.12.163
+
+Sat, 01 Jun 2024 05:21:30 GMT
+
+### Patches
+
+- Integrate 5/14 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.20
+- Bump @rnw-scripts/just-task to v2.3.36
+- Bump react-native-windows to v0.0.0-canary.823
+
+## 0.12.162
+
+Thu, 30 May 2024 05:18:25 GMT
+
+### Patches
+
+- RN Integration 05/11 (1422161+marlenecota@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.19
+- Bump @rnw-scripts/just-task to v2.3.35
+- Bump react-native-windows to v0.0.0-canary.822
+
+## 0.12.161
+
+Wed, 29 May 2024 05:20:02 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.821
+
+## 0.12.160
+
+Fri, 24 May 2024 05:17:26 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.820
+
+## 0.12.159
+
+Thu, 23 May 2024 05:17:49 GMT
+
+### Patches
+
+- RN Integration 05/02 (1422161+marlenecota@users.noreply.github.com)
+- RN Integration 04/27 (1422161+marlenecota@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.18
+- Bump @rnw-scripts/just-task to v2.3.34
+- Bump react-native-windows to v0.0.0-canary.819
+
+## 0.12.158
+
+Wed, 22 May 2024 05:18:17 GMT
+
+### Patches
+
+- RN Integration 04/20 (1422161+marlenecota@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.17
+- Bump @rnw-scripts/just-task to v2.3.33
+- Bump react-native-windows to v0.0.0-canary.818
+
+## 0.12.157
+
+Tue, 21 May 2024 05:14:34 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.817
 
 ## 0.12.156
 

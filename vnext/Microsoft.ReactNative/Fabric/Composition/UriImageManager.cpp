@@ -5,11 +5,19 @@
 #include "UriImageManager.h"
 
 #include "Composition.ImageSource.g.h"
+#include <Composition.Experimental.UriBrushFactoryImageResponse.g.cpp>
+#include <Composition.ImageFailedResponse.g.cpp>
+#include <Composition.ImageResponse.g.cpp>
+#include <Composition.StreamImageResponse.g.cpp>
+#include <Composition.UriBrushFactoryImageResponse.g.cpp>
 #include <AutoDraw.h>
+#include <IBlobPersistor.h>
+#include <Networking/NetworkPropertyIds.h>
 #include <ReactPropertyBag.h>
 #include <d2d1_3.h>
 #include <shcore.h>
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
+#include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Windows.Security.Cryptography.h>
 #include <winrt/Windows.Storage.Streams.h>
 
@@ -54,16 +62,14 @@ winrt::Microsoft::ReactNative::Composition::ImageSource MakeImageSource(
  *   />
  *
  */
-struct SvgDataImageHandler : winrt::implements<
-                                 SvgDataImageHandler,
-                                 winrt::Microsoft::ReactNative::Composition::Experimental::IUriBrushProvider,
-                                 winrt::Microsoft::ReactNative::Composition::IUriImageProvider> {
+struct SvgDataImageHandler
+    : winrt::implements<SvgDataImageHandler, winrt::Microsoft::ReactNative::Composition::IUriImageProvider> {
   bool CanLoadImageUri(winrt::Microsoft::ReactNative::IReactContext context, winrt::Windows::Foundation::Uri uri) {
     return uri.SchemeName() == L"data" && std::wstring_view(uri.Path()).starts_with(L"image/svg+xml;base64,");
   }
 
-  winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::Experimental::UriBrushFactory>
-  GetSourceAsync(
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::ImageResponse>
+  GetImageResponseAsync(
       const winrt::Microsoft::ReactNative::IReactContext &context,
       const winrt::Microsoft::ReactNative::Composition::ImageSource &imageSource) {
     auto path = winrt::to_string(imageSource.Uri().Path());
@@ -85,7 +91,7 @@ struct SvgDataImageHandler : winrt::implements<
       co_await memoryStream.WriteAsync(buffer);
       memoryStream.Seek(0);
 
-      co_return
+      co_return winrt::Microsoft::ReactNative::Composition::Experimental::UriBrushFactoryImageResponse(
           [memoryStream, size, scale](
               const winrt::Microsoft::ReactNative::IReactContext &reactContext,
               const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compositionContext)
@@ -126,12 +132,13 @@ struct SvgDataImageHandler : winrt::implements<
             renderTarget->SetTransform(originalTransform);
 
             return drawingBrush;
-          };
+          });
 
-    } catch (winrt::hresult_error const &) {
+    } catch (winrt::hresult_error const &ex) {
+      co_return winrt::Microsoft::ReactNative::Composition::ImageFailedResponse(ex.message());
     }
 
-    co_return nullptr;
+    winrt::throw_hresult(E_UNEXPECTED);
   }
 };
 
@@ -145,15 +152,14 @@ struct SvgDataImageHandler : winrt::implements<
  *   />
  *
  */
-struct DataImageHandler : winrt::implements<
-                              DataImageHandler,
-                              winrt::Microsoft::ReactNative::Composition::IUriImageStreamProvider,
-                              winrt::Microsoft::ReactNative::Composition::IUriImageProvider> {
+struct DataImageHandler
+    : winrt::implements<DataImageHandler, winrt::Microsoft::ReactNative::Composition::IUriImageProvider> {
   bool CanLoadImageUri(winrt::Microsoft::ReactNative::IReactContext context, winrt::Windows::Foundation::Uri uri) {
     return uri.SchemeName() == L"data";
   }
 
-  winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IRandomAccessStream> GetSourceAsync(
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::ImageResponse>
+  GetImageResponseAsync(
       const winrt::Microsoft::ReactNative::IReactContext &context,
       const winrt::Microsoft::ReactNative::Composition::ImageSource &imageSource) {
     auto path = winrt::to_string(imageSource.Uri().Path());
@@ -173,12 +179,57 @@ struct DataImageHandler : winrt::implements<
       co_await memoryStream.WriteAsync(buffer);
       memoryStream.Seek(0);
 
-      co_return memoryStream;
+      co_return winrt::Microsoft::ReactNative::Composition::StreamImageResponse(memoryStream);
     } catch (winrt::hresult_error const &) {
       // Base64 decode failed
+      co_return winrt::Microsoft::ReactNative::Composition::ImageFailedResponse(
+          L"Invalid base64 encoding in inline image data");
     }
 
-    co_return nullptr;
+    winrt::throw_hresult(E_UNEXPECTED);
+  }
+};
+
+/**
+ * This ImageHandler will handle uri loading data from blobs
+ *
+ *   <Image
+ *      style={{width: 400, height: 200}}
+ *      source={{uri:'blob:<guid>?offset=<offset>&size=<size>'}}
+ *   />
+ *
+ */
+struct BlobImageHandler
+    : winrt::implements<BlobImageHandler, winrt::Microsoft::ReactNative::Composition::IUriImageProvider> {
+  bool CanLoadImageUri(winrt::Microsoft::ReactNative::IReactContext context, winrt::Windows::Foundation::Uri uri) {
+    return uri.SchemeName() == L"blob";
+  }
+
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::ImageResponse>
+  GetImageResponseAsync(
+      const winrt::Microsoft::ReactNative::IReactContext &context,
+      const winrt::Microsoft::ReactNative::Composition::ImageSource &imageSource) {
+    if (auto prop = winrt::Microsoft::ReactNative::ReactPropertyBag(context.Properties())
+                        .Get(::Microsoft::React::BlobModulePersistorPropertyId())) {
+      auto weakBlobPersistor = prop.Value();
+      if (auto persistor = weakBlobPersistor.lock()) {
+        auto queryParsed = imageSource.Uri().QueryParsed();
+        auto guid = winrt::to_string(imageSource.Uri().Path());
+        int64_t offset = _atoi64(winrt::to_string(queryParsed.GetFirstValueByName(L"offset")).c_str());
+        int64_t size = _atoi64(winrt::to_string(queryParsed.GetFirstValueByName(L"size")).c_str());
+
+        auto arr = persistor->ResolveMessage(std::move(guid), offset, size);
+        winrt::Windows::Storage::Streams::InMemoryRandomAccessStream memoryStream;
+        winrt::Windows::Storage::Streams::DataWriter dataWriter{memoryStream};
+        dataWriter.WriteBytes(arr);
+        co_await dataWriter.StoreAsync();
+        memoryStream.Seek(0);
+
+        co_return winrt::Microsoft::ReactNative::Composition::StreamImageResponse(memoryStream.CloneStream());
+      }
+    }
+
+    co_return winrt::Microsoft::ReactNative::Composition::ImageFailedResponse(L"Failed to load image from blob");
   }
 };
 
@@ -191,6 +242,7 @@ static const ReactPropertyId<ReactNonAbiValue<std::shared_ptr<UriImageManager>>>
 UriImageManager::UriImageManager() {
   m_providers.push_back(winrt::make<SvgDataImageHandler>());
   m_providers.push_back(winrt::make<DataImageHandler>());
+  m_providers.push_back(winrt::make<BlobImageHandler>());
 }
 
 void UriImageManager::Install(
@@ -225,6 +277,25 @@ IUriImageProvider UriImageManager::TryGetUriImageProvider(
   }
 
   return nullptr;
+}
+
+ImageResponseOrImageErrorInfo ImageResponse::ResolveImage() {
+  winrt::throw_hresult(E_NOTIMPL);
+}
+
+ImageResponseOrImageErrorInfo ImageFailedResponse::ResolveImage() {
+  ImageResponseOrImageErrorInfo imageOrError;
+  imageOrError.errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
+  imageOrError.errorInfo->responseCode = static_cast<int>(m_statusCode);
+  imageOrError.errorInfo->error = winrt::to_string(m_errorMessage);
+  if (imageOrError.errorInfo->error.empty()) {
+    imageOrError.errorInfo->error = "Failed to load image.";
+  }
+  for (auto &&[header, value] : m_responseHeaders) {
+    imageOrError.errorInfo->httpResponseHeaders.push_back(
+        std::make_pair<std::string, std::string>(winrt::to_string(header), winrt::to_string(value)));
+  }
+  return imageOrError;
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

@@ -8,6 +8,7 @@
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 
 #include "CompositionViewComponentView.h"
+#include "FocusManager.h"
 #include "Theme.h"
 
 #include "Composition.RootComponentView.g.h"
@@ -25,7 +26,7 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
-  winrt::Microsoft::ReactNative::ComponentView &GetFocusedComponent() noexcept;
+  winrt::Microsoft::ReactNative::ComponentView GetFocusedComponent() noexcept;
   void SetFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &value) noexcept;
   bool TrySetFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept;
 
@@ -42,6 +43,10 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   HRESULT GetFragmentRoot(IRawElementProviderFragmentRoot **pRetVal) noexcept;
   winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept override;
 
+  void updateLayoutMetrics(
+      facebook::react::LayoutMetrics const &layoutMetrics,
+      facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
+
   winrt::IInspectable UiaProviderFromPoint(const POINT &ptPixels) noexcept;
 
   RootComponentView(
@@ -50,6 +55,9 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   virtual ~RootComponentView();
+
+  winrt::Microsoft::ReactNative::ComponentView FindFirstFocusableElement() noexcept;
+  winrt::Microsoft::ReactNative::ComponentView FindLastFocusableElement() noexcept;
 
  private:
   // should this be a ReactTaggedView? - It shouldn't actually matter since if the view is going away it should always

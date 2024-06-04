@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240413-1b152f6ec",
+  "baseVersion": "0.75.0-nightly-20240525-840c31c3a",
   "overrides": [
     {
       "type": "derived",
@@ -38,7 +38,7 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "4f4ba1856f82ded3cfad2920145b0ea6eb760eaa",
+      "baseHash": "1aba10f5b2956a53348264be92ce2314d1515d28",
       "issue": 12869
     },
     {
@@ -52,20 +52,20 @@
       "type": "derived",
       "file": "src/js/examples/Text/TextExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextExample.android.js",
-      "baseHash": "9cb2d3e8b597365523aab44fd22ef0341f0627a0"
+      "baseHash": "cf55d20080c44192b53bffc62e8e693aec186da3"
     },
     {
       "type": "patch",
       "file": "src/js/examples/TextInput/TextInputExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
-      "baseHash": "d5d360fdcb5589de7516aa84a3bd347df49b5b65",
+      "baseHash": "c4d61d6e76488c48b8256e6abc9bb38ef8e54c44",
       "issue": 5688
     },
     {
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "e31526a7ff0ae0a0642d274c1fd93b21c8749c39"
+      "baseHash": "4b003d2910ab99422a9d426eb37351f24af1a7d9"
     },
     {
       "type": "copy",
@@ -78,7 +78,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "c40d0a03a89b9017cbb08a0449d5a0c32cadc5f2"
+      "baseHash": "31470c217dc6b4b68de65fc0be1c072c0790cd56"
     }
   ]
 }

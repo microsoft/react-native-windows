@@ -55,7 +55,8 @@
 .*/node_modules/playground/.*
 
 ; Ignore templates for 'react-native init'
-<PROJECT_ROOT>/template/.*
+<PROJECT_ROOT>/packages/react-native/template/.*
+<PROJECT_ROOT>/packages/react-native/sdks/.*
 
 ; Ignore the Dangerfile
 <PROJECT_ROOT>/packages/react-native-bots/dangerfile.js
@@ -95,7 +96,6 @@ flow/
 ../../../node_modules/.flow/flow-typed/
 
 [options]
-experimental.global_find_ref=true
 enums=true
 casting_syntax=both
 
@@ -153,4 +153,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.233.0
+^0.236.0
