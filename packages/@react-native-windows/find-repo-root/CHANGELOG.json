@@ -2,6 +2,60 @@
   "name": "@react-native-windows/find-repo-root",
   "entries": [
     {
+      "date": "Tue, 04 Jun 2024 05:18:35 GMT",
+      "version": "0.0.0-canary.78",
+      "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.78",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.49",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.21",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.37",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 01 Jun 2024 05:21:31 GMT",
+      "version": "0.0.0-canary.77",
+      "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.77",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.48",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.20",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.36",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 30 May 2024 05:18:26 GMT",
       "version": "0.0.0-canary.76",
       "tag": "@react-native-windows/find-repo-root_v0.0.0-canary.76",

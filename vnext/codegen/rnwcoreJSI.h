@@ -31,11 +31,13 @@ public:
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
+  virtual bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(jsi::Runtime &rt) = 0;
   virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) = 0;
   virtual bool inspectorEnableModernCDPRegistry(jsi::Runtime &rt) = 0;
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
   virtual bool preventDoubleTextMeasure(jsi::Runtime &rt) = 0;
+  virtual bool setAndroidLayoutDirection(jsi::Runtime &rt) = 0;
   virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
   virtual bool useStateAlignmentMechanism(jsi::Runtime &rt) = 0;
@@ -150,6 +152,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableUIConsistency, jsInvoker_, instance_);
     }
+    bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak) == 1,
+          "Expected fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak, jsInvoker_, instance_);
+    }
     bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::forceBatchingMountItemsOnAndroid) == 1,
@@ -189,6 +199,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::preventDoubleTextMeasure, jsInvoker_, instance_);
+    }
+    bool setAndroidLayoutDirection(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::setAndroidLayoutDirection) == 1,
+          "Expected setAndroidLayoutDirection(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::setAndroidLayoutDirection, jsInvoker_, instance_);
     }
     bool useModernRuntimeScheduler(jsi::Runtime &rt) override {
       static_assert(
@@ -524,10 +542,10 @@ private:
 
 
   
-#pragma mark - AlertManagerArgs
+#pragma mark - NativeAlertManagerArgs
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9>
-struct AlertManagerArgs {
+struct NativeAlertManagerArgs {
   P0 title;
   P1 message;
   P2 buttons;
@@ -538,13 +556,13 @@ struct AlertManagerArgs {
   P7 preferredButtonKey;
   P8 keyboardType;
   P9 userInterfaceStyle;
-  bool operator==(const AlertManagerArgs &other) const {
+  bool operator==(const NativeAlertManagerArgs &other) const {
     return title == other.title && message == other.message && buttons == other.buttons && type == other.type && defaultValue == other.defaultValue && cancelButtonKey == other.cancelButtonKey && destructiveButtonKey == other.destructiveButtonKey && preferredButtonKey == other.preferredButtonKey && keyboardType == other.keyboardType && userInterfaceStyle == other.userInterfaceStyle;
   }
 };
 
 template <typename T>
-struct AlertManagerArgsBridging {
+struct NativeAlertManagerArgsBridging {
   static T types;
 
   static T fromJs(
@@ -1392,61 +1410,6 @@ private:
 };
 
 
-  class JSI_EXPORT NativeAnimationsDebugModuleCxxSpecJSI : public TurboModule {
-protected:
-  NativeAnimationsDebugModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void startRecordingFps(jsi::Runtime &rt) = 0;
-  virtual void stopRecordingFps(jsi::Runtime &rt, double animationStopTimeMs) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeAnimationsDebugModuleCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "AnimationsDebugModule";
-
-protected:
-  NativeAnimationsDebugModuleCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeAnimationsDebugModuleCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-private:
-  class Delegate : public NativeAnimationsDebugModuleCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeAnimationsDebugModuleCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {}
-
-    void startRecordingFps(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::startRecordingFps) == 1,
-          "Expected startRecordingFps(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::startRecordingFps, jsInvoker_, instance_);
-    }
-    void stopRecordingFps(jsi::Runtime &rt, double animationStopTimeMs) override {
-      static_assert(
-          bridging::getParameterCount(&T::stopRecordingFps) == 2,
-          "Expected stopRecordingFps(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::stopRecordingFps, jsInvoker_, instance_, std::move(animationStopTimeMs));
-    }
-
-  private:
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
   class JSI_EXPORT NativeAppearanceCxxSpecJSI : public TurboModule {
 protected:
   NativeAppearanceCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -1521,18 +1484,18 @@ private:
 
 
   
-#pragma mark - AppStateAppState
+#pragma mark - NativeAppStateAppState
 
 template <typename P0>
-struct AppStateAppState {
+struct NativeAppStateAppState {
   P0 app_state;
-  bool operator==(const AppStateAppState &other) const {
+  bool operator==(const NativeAppStateAppState &other) const {
     return app_state == other.app_state;
   }
 };
 
 template <typename T>
-struct AppStateAppStateBridging {
+struct NativeAppStateAppStateBridging {
   static T types;
 
   static T fromJs(
@@ -1562,18 +1525,18 @@ struct AppStateAppStateBridging {
 
 
 
-#pragma mark - AppStateAppStateConstants
+#pragma mark - NativeAppStateAppStateConstants
 
 template <typename P0>
-struct AppStateAppStateConstants {
+struct NativeAppStateAppStateConstants {
   P0 initialAppState;
-  bool operator==(const AppStateAppStateConstants &other) const {
+  bool operator==(const NativeAppStateAppStateConstants &other) const {
     return initialAppState == other.initialAppState;
   }
 };
 
 template <typename T>
-struct AppStateAppStateConstantsBridging {
+struct NativeAppStateAppStateConstantsBridging {
   static T types;
 
   static T fromJs(
@@ -1675,19 +1638,19 @@ private:
 
 
   
-#pragma mark - AppThemeAppThemeData
+#pragma mark - NativeAppThemeAppThemeData
 
 template <typename P0, typename P1>
-struct AppThemeAppThemeData {
+struct NativeAppThemeAppThemeData {
   P0 isHighContrast;
   P1 highContrastColors;
-  bool operator==(const AppThemeAppThemeData &other) const {
+  bool operator==(const NativeAppThemeAppThemeData &other) const {
     return isHighContrast == other.isHighContrast && highContrastColors == other.highContrastColors;
   }
 };
 
 template <typename T>
-struct AppThemeAppThemeDataBridging {
+struct NativeAppThemeAppThemeDataBridging {
   static T types;
 
   static T fromJs(
@@ -1723,10 +1686,10 @@ struct AppThemeAppThemeDataBridging {
 
 
 
-#pragma mark - AppThemeHighContrastColors
+#pragma mark - NativeAppThemeHighContrastColors
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
-struct AppThemeHighContrastColors {
+struct NativeAppThemeHighContrastColors {
   P0 ButtonFaceColor;
   P1 ButtonTextColor;
   P2 GrayTextColor;
@@ -1735,13 +1698,13 @@ struct AppThemeHighContrastColors {
   P5 HotlightColor;
   P6 WindowColor;
   P7 WindowTextColor;
-  bool operator==(const AppThemeHighContrastColors &other) const {
+  bool operator==(const NativeAppThemeHighContrastColors &other) const {
     return ButtonFaceColor == other.ButtonFaceColor && ButtonTextColor == other.ButtonTextColor && GrayTextColor == other.GrayTextColor && HighlightColor == other.HighlightColor && HighlightTextColor == other.HighlightTextColor && HotlightColor == other.HotlightColor && WindowColor == other.WindowColor && WindowTextColor == other.WindowTextColor;
   }
 };
 
 template <typename T>
-struct AppThemeHighContrastColorsBridging {
+struct NativeAppThemeHighContrastColorsBridging {
   static T types;
 
   static T fromJs(
@@ -1858,19 +1821,19 @@ private:
 
 
   
-#pragma mark - BlobModuleConstants
+#pragma mark - NativeBlobModuleConstants
 
 template <typename P0, typename P1>
-struct BlobModuleConstants {
+struct NativeBlobModuleConstants {
   P0 BLOB_URI_SCHEME;
   P1 BLOB_URI_HOST;
-  bool operator==(const BlobModuleConstants &other) const {
+  bool operator==(const NativeBlobModuleConstants &other) const {
     return BLOB_URI_SCHEME == other.BLOB_URI_SCHEME && BLOB_URI_HOST == other.BLOB_URI_HOST;
   }
 };
 
 template <typename T>
-struct BlobModuleConstantsBridging {
+struct NativeBlobModuleConstantsBridging {
   static T types;
 
   static T fromJs(
@@ -2170,19 +2133,19 @@ private:
 
 
   
-#pragma mark - DeviceInfoDeviceInfoConstants
+#pragma mark - NativeDeviceInfoDeviceInfoConstants
 
 template <typename P0, typename P1>
-struct DeviceInfoDeviceInfoConstants {
+struct NativeDeviceInfoDeviceInfoConstants {
   P0 Dimensions;
   P1 isIPhoneX_deprecated;
-  bool operator==(const DeviceInfoDeviceInfoConstants &other) const {
+  bool operator==(const NativeDeviceInfoDeviceInfoConstants &other) const {
     return Dimensions == other.Dimensions && isIPhoneX_deprecated == other.isIPhoneX_deprecated;
   }
 };
 
 template <typename T>
-struct DeviceInfoDeviceInfoConstantsBridging {
+struct NativeDeviceInfoDeviceInfoConstantsBridging {
   static T types;
 
   static T fromJs(
@@ -2220,21 +2183,21 @@ struct DeviceInfoDeviceInfoConstantsBridging {
 
 
 
-#pragma mark - DeviceInfoDimensionsPayload
+#pragma mark - NativeDeviceInfoDimensionsPayload
 
 template <typename P0, typename P1, typename P2, typename P3>
-struct DeviceInfoDimensionsPayload {
+struct NativeDeviceInfoDimensionsPayload {
   P0 window;
   P1 screen;
   P2 windowPhysicalPixels;
   P3 screenPhysicalPixels;
-  bool operator==(const DeviceInfoDimensionsPayload &other) const {
+  bool operator==(const NativeDeviceInfoDimensionsPayload &other) const {
     return window == other.window && screen == other.screen && windowPhysicalPixels == other.windowPhysicalPixels && screenPhysicalPixels == other.screenPhysicalPixels;
   }
 };
 
 template <typename T>
-struct DeviceInfoDimensionsPayloadBridging {
+struct NativeDeviceInfoDimensionsPayloadBridging {
   static T types;
 
   static T fromJs(
@@ -2290,21 +2253,21 @@ struct DeviceInfoDimensionsPayloadBridging {
 
 
 
-#pragma mark - DeviceInfoDisplayMetrics
+#pragma mark - NativeDeviceInfoDisplayMetrics
 
 template <typename P0, typename P1, typename P2, typename P3>
-struct DeviceInfoDisplayMetrics {
+struct NativeDeviceInfoDisplayMetrics {
   P0 width;
   P1 height;
   P2 scale;
   P3 fontScale;
-  bool operator==(const DeviceInfoDisplayMetrics &other) const {
+  bool operator==(const NativeDeviceInfoDisplayMetrics &other) const {
     return width == other.width && height == other.height && scale == other.scale && fontScale == other.fontScale;
   }
 };
 
 template <typename T>
-struct DeviceInfoDisplayMetricsBridging {
+struct NativeDeviceInfoDisplayMetricsBridging {
   static T types;
 
   static T fromJs(
@@ -2352,22 +2315,22 @@ struct DeviceInfoDisplayMetricsBridging {
 
 
 
-#pragma mark - DeviceInfoDisplayMetricsAndroid
+#pragma mark - NativeDeviceInfoDisplayMetricsAndroid
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4>
-struct DeviceInfoDisplayMetricsAndroid {
+struct NativeDeviceInfoDisplayMetricsAndroid {
   P0 width;
   P1 height;
   P2 scale;
   P3 fontScale;
   P4 densityDpi;
-  bool operator==(const DeviceInfoDisplayMetricsAndroid &other) const {
+  bool operator==(const NativeDeviceInfoDisplayMetricsAndroid &other) const {
     return width == other.width && height == other.height && scale == other.scale && fontScale == other.fontScale && densityDpi == other.densityDpi;
   }
 };
 
 template <typename T>
-struct DeviceInfoDisplayMetricsAndroidBridging {
+struct NativeDeviceInfoDisplayMetricsAndroidBridging {
   static T types;
 
   static T fromJs(
@@ -2812,10 +2775,10 @@ private:
 
 
   
-#pragma mark - DialogManagerAndroidDialogOptions
+#pragma mark - NativeDialogManagerAndroidDialogOptions
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
-struct DialogManagerAndroidDialogOptions {
+struct NativeDialogManagerAndroidDialogOptions {
   P0 title;
   P1 message;
   P2 buttonPositive;
@@ -2823,13 +2786,13 @@ struct DialogManagerAndroidDialogOptions {
   P4 buttonNeutral;
   P5 items;
   P6 cancelable;
-  bool operator==(const DialogManagerAndroidDialogOptions &other) const {
+  bool operator==(const NativeDialogManagerAndroidDialogOptions &other) const {
     return title == other.title && message == other.message && buttonPositive == other.buttonPositive && buttonNegative == other.buttonNegative && buttonNeutral == other.buttonNeutral && items == other.items && cancelable == other.cancelable;
   }
 };
 
 template <typename T>
-struct DialogManagerAndroidDialogOptionsBridging {
+struct NativeDialogManagerAndroidDialogOptionsBridging {
   static T types;
 
   static T fromJs(
@@ -2963,10 +2926,10 @@ private:
 
 
   
-#pragma mark - AlertDialogOptions
+#pragma mark - NativeDialogManagerWindowsDialogOptions
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
-struct AlertDialogOptions {
+struct NativeDialogManagerWindowsDialogOptions {
   P0 title;
   P1 message;
   P2 buttonPositive;
@@ -2976,13 +2939,13 @@ struct AlertDialogOptions {
   P6 cancelable;
   P7 defaultButton;
   P8 rootTag;
-  bool operator==(const AlertDialogOptions &other) const {
+  bool operator==(const NativeDialogManagerWindowsDialogOptions &other) const {
     return title == other.title && message == other.message && buttonPositive == other.buttonPositive && buttonNegative == other.buttonNegative && buttonNeutral == other.buttonNeutral && items == other.items && cancelable == other.cancelable && defaultButton == other.defaultButton && rootTag == other.rootTag;
   }
 };
 
 template <typename T>
-struct AlertDialogOptionsBridging {
+struct NativeDialogManagerWindowsDialogOptionsBridging {
   static T types;
 
   static T fromJs(
@@ -3132,10 +3095,10 @@ private:
 
 
   
-#pragma mark - ExceptionsManagerExceptionData
+#pragma mark - NativeExceptionsManagerExceptionData
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
-struct ExceptionsManagerExceptionData {
+struct NativeExceptionsManagerExceptionData {
   P0 message;
   P1 originalMessage;
   P2 name;
@@ -3144,13 +3107,13 @@ struct ExceptionsManagerExceptionData {
   P5 id;
   P6 isFatal;
   P7 extraData;
-  bool operator==(const ExceptionsManagerExceptionData &other) const {
+  bool operator==(const NativeExceptionsManagerExceptionData &other) const {
     return message == other.message && originalMessage == other.originalMessage && name == other.name && componentStack == other.componentStack && stack == other.stack && id == other.id && isFatal == other.isFatal && extraData == other.extraData;
   }
 };
 
 template <typename T>
-struct ExceptionsManagerExceptionDataBridging {
+struct NativeExceptionsManagerExceptionDataBridging {
   static T types;
 
   static T fromJs(
@@ -3224,22 +3187,22 @@ struct ExceptionsManagerExceptionDataBridging {
 
 
 
-#pragma mark - ExceptionsManagerStackFrame
+#pragma mark - NativeExceptionsManagerStackFrame
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4>
-struct ExceptionsManagerStackFrame {
+struct NativeExceptionsManagerStackFrame {
   P0 column;
   P1 file;
   P2 lineNumber;
   P3 methodName;
   P4 collapse;
-  bool operator==(const ExceptionsManagerStackFrame &other) const {
+  bool operator==(const NativeExceptionsManagerStackFrame &other) const {
     return column == other.column && file == other.file && lineNumber == other.lineNumber && methodName == other.methodName && collapse == other.collapse;
   }
 };
 
 template <typename T>
-struct ExceptionsManagerStackFrameBridging {
+struct NativeExceptionsManagerStackFrameBridging {
   static T types;
 
   static T fromJs(
@@ -3559,20 +3522,20 @@ private:
 
 
   
-#pragma mark - I18nManagerI18nManagerConstants
+#pragma mark - NativeI18nManagerI18nManagerConstants
 
 template <typename P0, typename P1, typename P2>
-struct I18nManagerI18nManagerConstants {
+struct NativeI18nManagerI18nManagerConstants {
   P0 doLeftAndRightSwapInRTL;
   P1 isRTL;
   P2 localeIdentifier;
-  bool operator==(const I18nManagerI18nManagerConstants &other) const {
+  bool operator==(const NativeI18nManagerI18nManagerConstants &other) const {
     return doLeftAndRightSwapInRTL == other.doLeftAndRightSwapInRTL && isRTL == other.isRTL && localeIdentifier == other.localeIdentifier;
   }
 };
 
 template <typename T>
-struct I18nManagerI18nManagerConstantsBridging {
+struct NativeI18nManagerI18nManagerConstantsBridging {
   static T types;
 
   static T fromJs(
@@ -3688,22 +3651,22 @@ private:
 
 
   
-#pragma mark - ImageEditingManagerOptions
+#pragma mark - NativeImageEditorOptions
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4>
-struct ImageEditingManagerOptions {
+struct NativeImageEditorOptions {
   P0 offset;
   P1 size;
   P2 displaySize;
   P3 resizeMode;
   P4 allowExternalStorage;
-  bool operator==(const ImageEditingManagerOptions &other) const {
+  bool operator==(const NativeImageEditorOptions &other) const {
     return offset == other.offset && size == other.size && displaySize == other.displaySize && resizeMode == other.resizeMode && allowExternalStorage == other.allowExternalStorage;
   }
 };
 
 template <typename T>
-struct ImageEditingManagerOptionsBridging {
+struct NativeImageEditorOptionsBridging {
   static T types;
 
   static T fromJs(
@@ -3817,19 +3780,19 @@ private:
 
 
   
-#pragma mark - ImageLoaderImageSize
+#pragma mark - NativeImageLoaderAndroidImageSize
 
 template <typename P0, typename P1>
-struct ImageLoaderImageSize {
+struct NativeImageLoaderAndroidImageSize {
   P0 width;
   P1 height;
-  bool operator==(const ImageLoaderImageSize &other) const {
+  bool operator==(const NativeImageLoaderAndroidImageSize &other) const {
     return width == other.width && height == other.height;
   }
 };
 
 template <typename T>
-struct ImageLoaderImageSizeBridging {
+struct NativeImageLoaderAndroidImageSizeBridging {
   static T types;
 
   static T fromJs(
@@ -4265,10 +4228,10 @@ private:
 
 
   
-#pragma mark - NativeIntersectionObserverCxxNativeIntersectionObserverEntry
+#pragma mark - NativeIntersectionObserverNativeIntersectionObserverEntry
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
-struct NativeIntersectionObserverCxxNativeIntersectionObserverEntry {
+struct NativeIntersectionObserverNativeIntersectionObserverEntry {
   P0 intersectionObserverId;
   P1 targetInstanceHandle;
   P2 targetRect;
@@ -4276,13 +4239,13 @@ struct NativeIntersectionObserverCxxNativeIntersectionObserverEntry {
   P4 intersectionRect;
   P5 isIntersectingAboveThresholds;
   P6 time;
-  bool operator==(const NativeIntersectionObserverCxxNativeIntersectionObserverEntry &other) const {
+  bool operator==(const NativeIntersectionObserverNativeIntersectionObserverEntry &other) const {
     return intersectionObserverId == other.intersectionObserverId && targetInstanceHandle == other.targetInstanceHandle && targetRect == other.targetRect && rootRect == other.rootRect && intersectionRect == other.intersectionRect && isIntersectingAboveThresholds == other.isIntersectingAboveThresholds && time == other.time;
   }
 };
 
 template <typename T>
-struct NativeIntersectionObserverCxxNativeIntersectionObserverEntryBridging {
+struct NativeIntersectionObserverNativeIntersectionObserverEntryBridging {
   static T types;
 
   static T fromJs(
@@ -4348,20 +4311,20 @@ struct NativeIntersectionObserverCxxNativeIntersectionObserverEntryBridging {
 
 
 
-#pragma mark - NativeIntersectionObserverCxxNativeIntersectionObserverObserveOptions
+#pragma mark - NativeIntersectionObserverNativeIntersectionObserverObserveOptions
 
 template <typename P0, typename P1, typename P2>
-struct NativeIntersectionObserverCxxNativeIntersectionObserverObserveOptions {
+struct NativeIntersectionObserverNativeIntersectionObserverObserveOptions {
   P0 intersectionObserverId;
   P1 targetShadowNode;
   P2 thresholds;
-  bool operator==(const NativeIntersectionObserverCxxNativeIntersectionObserverObserveOptions &other) const {
+  bool operator==(const NativeIntersectionObserverNativeIntersectionObserverObserveOptions &other) const {
     return intersectionObserverId == other.intersectionObserverId && targetShadowNode == other.targetShadowNode && thresholds == other.thresholds;
   }
 };
 
 template <typename T>
-struct NativeIntersectionObserverCxxNativeIntersectionObserverObserveOptionsBridging {
+struct NativeIntersectionObserverNativeIntersectionObserverObserveOptionsBridging {
   static T types;
 
   static T fromJs(
@@ -4832,20 +4795,20 @@ private:
 
 
   
-#pragma mark - NativeMutationObserverCxxNativeMutationObserverObserveOptions
+#pragma mark - NativeMutationObserverNativeMutationObserverObserveOptions
 
 template <typename P0, typename P1, typename P2>
-struct NativeMutationObserverCxxNativeMutationObserverObserveOptions {
+struct NativeMutationObserverNativeMutationObserverObserveOptions {
   P0 mutationObserverId;
   P1 targetShadowNode;
   P2 subtree;
-  bool operator==(const NativeMutationObserverCxxNativeMutationObserverObserveOptions &other) const {
+  bool operator==(const NativeMutationObserverNativeMutationObserverObserveOptions &other) const {
     return mutationObserverId == other.mutationObserverId && targetShadowNode == other.targetShadowNode && subtree == other.subtree;
   }
 };
 
 template <typename T>
-struct NativeMutationObserverCxxNativeMutationObserverObserveOptionsBridging {
+struct NativeMutationObserverNativeMutationObserverObserveOptionsBridging {
   static T types;
 
   static T fromJs(
@@ -4887,21 +4850,21 @@ struct NativeMutationObserverCxxNativeMutationObserverObserveOptionsBridging {
 
 
 
-#pragma mark - NativeMutationObserverCxxNativeMutationRecord
+#pragma mark - NativeMutationObserverNativeMutationRecord
 
 template <typename P0, typename P1, typename P2, typename P3>
-struct NativeMutationObserverCxxNativeMutationRecord {
+struct NativeMutationObserverNativeMutationRecord {
   P0 mutationObserverId;
   P1 target;
   P2 addedNodes;
   P3 removedNodes;
-  bool operator==(const NativeMutationObserverCxxNativeMutationRecord &other) const {
+  bool operator==(const NativeMutationObserverNativeMutationRecord &other) const {
     return mutationObserverId == other.mutationObserverId && target == other.target && addedNodes == other.addedNodes && removedNodes == other.removedNodes;
   }
 };
 
 template <typename T>
-struct NativeMutationObserverCxxNativeMutationRecordBridging {
+struct NativeMutationObserverNativeMutationRecordBridging {
   static T types;
 
   static T fromJs(
@@ -5267,10 +5230,10 @@ private:
 
 
   
-#pragma mark - PlatformConstantsPlatformConstantsAndroid
+#pragma mark - NativePlatformConstantsAndroidPlatformConstantsAndroid
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8, typename P9, typename P10, typename P11>
-struct PlatformConstantsPlatformConstantsAndroid {
+struct NativePlatformConstantsAndroidPlatformConstantsAndroid {
   P0 isTesting;
   P1 isDisableAnimations;
   P2 reactNativeVersion;
@@ -5283,13 +5246,13 @@ struct PlatformConstantsPlatformConstantsAndroid {
   P9 uiMode;
   P10 Brand;
   P11 Manufacturer;
-  bool operator==(const PlatformConstantsPlatformConstantsAndroid &other) const {
+  bool operator==(const NativePlatformConstantsAndroidPlatformConstantsAndroid &other) const {
     return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && Version == other.Version && Release == other.Release && Serial == other.Serial && Fingerprint == other.Fingerprint && Model == other.Model && ServerHost == other.ServerHost && uiMode == other.uiMode && Brand == other.Brand && Manufacturer == other.Manufacturer;
   }
 };
 
 template <typename T>
-struct PlatformConstantsPlatformConstantsAndroidBridging {
+struct NativePlatformConstantsAndroidPlatformConstantsAndroidBridging {
   static T types;
 
   static T fromJs(
@@ -5389,21 +5352,21 @@ struct PlatformConstantsPlatformConstantsAndroidBridging {
 
 
 
-#pragma mark - PlatformConstantsReactNativeVersionAndroid
+#pragma mark - NativePlatformConstantsAndroidReactNativeVersionAndroid
 
 template <typename P0, typename P1, typename P2, typename P3>
-struct PlatformConstantsReactNativeVersionAndroid {
+struct NativePlatformConstantsAndroidReactNativeVersionAndroid {
   P0 major;
   P1 minor;
   P2 patch;
   P3 prerelease;
-  bool operator==(const PlatformConstantsReactNativeVersionAndroid &other) const {
+  bool operator==(const NativePlatformConstantsAndroidReactNativeVersionAndroid &other) const {
     return major == other.major && minor == other.minor && patch == other.patch && prerelease == other.prerelease;
   }
 };
 
 template <typename T>
-struct PlatformConstantsReactNativeVersionAndroidBridging {
+struct NativePlatformConstantsAndroidReactNativeVersionAndroidBridging {
   static T types;
 
   static T fromJs(
@@ -5505,10 +5468,10 @@ private:
 
 
   
-#pragma mark - PlatformConstantsPlatformConstantsIOS
+#pragma mark - NativePlatformConstantsIOSPlatformConstantsIOS
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7>
-struct PlatformConstantsPlatformConstantsIOS {
+struct NativePlatformConstantsIOSPlatformConstantsIOS {
   P0 isTesting;
   P1 isDisableAnimations;
   P2 reactNativeVersion;
@@ -5517,13 +5480,13 @@ struct PlatformConstantsPlatformConstantsIOS {
   P5 systemName;
   P6 interfaceIdiom;
   P7 isMacCatalyst;
-  bool operator==(const PlatformConstantsPlatformConstantsIOS &other) const {
+  bool operator==(const NativePlatformConstantsIOSPlatformConstantsIOS &other) const {
     return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && forceTouchAvailable == other.forceTouchAvailable && osVersion == other.osVersion && systemName == other.systemName && interfaceIdiom == other.interfaceIdiom && isMacCatalyst == other.isMacCatalyst;
   }
 };
 
 template <typename T>
-struct PlatformConstantsPlatformConstantsIOSBridging {
+struct NativePlatformConstantsIOSPlatformConstantsIOSBridging {
   static T types;
 
   static T fromJs(
@@ -5644,22 +5607,22 @@ private:
 
 
   
-#pragma mark - PlatformConstantsPlatformConstantsWindows
+#pragma mark - NativePlatformConstantsWindowsPlatformConstantsWindows
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4>
-struct PlatformConstantsPlatformConstantsWindows {
+struct NativePlatformConstantsWindowsPlatformConstantsWindows {
   P0 isTesting;
   P1 isDisableAnimations;
   P2 reactNativeVersion;
   P3 reactNativeWindowsVersion;
   P4 osVersion;
-  bool operator==(const PlatformConstantsPlatformConstantsWindows &other) const {
+  bool operator==(const NativePlatformConstantsWindowsPlatformConstantsWindows &other) const {
     return isTesting == other.isTesting && isDisableAnimations == other.isDisableAnimations && reactNativeVersion == other.reactNativeVersion && reactNativeWindowsVersion == other.reactNativeWindowsVersion && osVersion == other.osVersion;
   }
 };
 
 template <typename T>
-struct PlatformConstantsPlatformConstantsWindowsBridging {
+struct NativePlatformConstantsWindowsPlatformConstantsWindowsBridging {
   static T types;
 
   static T fromJs(
@@ -5760,10 +5723,10 @@ private:
 
 
   
-#pragma mark - PushNotificationManagerNotification
+#pragma mark - NativePushNotificationManagerIOSNotification
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6, typename P7, typename P8>
-struct PushNotificationManagerNotification {
+struct NativePushNotificationManagerIOSNotification {
   P0 alertTitle;
   P1 alertBody;
   P2 userInfo;
@@ -5773,13 +5736,13 @@ struct PushNotificationManagerNotification {
   P6 applicationIconBadgeNumber;
   P7 isSilent;
   P8 soundName;
-  bool operator==(const PushNotificationManagerNotification &other) const {
+  bool operator==(const NativePushNotificationManagerIOSNotification &other) const {
     return alertTitle == other.alertTitle && alertBody == other.alertBody && userInfo == other.userInfo && category == other.category && fireDate == other.fireDate && fireIntervalSeconds == other.fireIntervalSeconds && applicationIconBadgeNumber == other.applicationIconBadgeNumber && isSilent == other.isSilent && soundName == other.soundName;
   }
 };
 
 template <typename T>
-struct PushNotificationManagerNotificationBridging {
+struct NativePushNotificationManagerIOSNotificationBridging {
   static T types;
 
   static T fromJs(
@@ -5875,20 +5838,20 @@ struct PushNotificationManagerNotificationBridging {
 
 
 
-#pragma mark - PushNotificationManagerPermissions
+#pragma mark - NativePushNotificationManagerIOSPermissions
 
 template <typename P0, typename P1, typename P2>
-struct PushNotificationManagerPermissions {
+struct NativePushNotificationManagerIOSPermissions {
   P0 alert;
   P1 badge;
   P2 sound;
-  bool operator==(const PushNotificationManagerPermissions &other) const {
+  bool operator==(const NativePushNotificationManagerIOSPermissions &other) const {
     return alert == other.alert && badge == other.badge && sound == other.sound;
   }
 };
 
 template <typename T>
-struct PushNotificationManagerPermissionsBridging {
+struct NativePushNotificationManagerIOSPermissionsBridging {
   static T types;
 
   static T fromJs(
@@ -6191,27 +6154,27 @@ private:
 };
 
 
-#pragma mark - SampleTurboModuleEnumInt
+#pragma mark - NativeSampleTurboModuleEnumInt
 
-enum class SampleTurboModuleEnumInt { A, B };
+enum class NativeSampleTurboModuleEnumInt { A, B };
 
 template <>
-struct Bridging<SampleTurboModuleEnumInt> {
-  static SampleTurboModuleEnumInt fromJs(jsi::Runtime &rt, const jsi::Value &rawValue) {
+struct Bridging<NativeSampleTurboModuleEnumInt> {
+  static NativeSampleTurboModuleEnumInt fromJs(jsi::Runtime &rt, const jsi::Value &rawValue) {
     double value = (double)rawValue.asNumber();
     if (value == 23) {
-      return SampleTurboModuleEnumInt::A;
+      return NativeSampleTurboModuleEnumInt::A;
     } else if (value == 42) {
-      return SampleTurboModuleEnumInt::B;
+      return NativeSampleTurboModuleEnumInt::B;
     } else {
       throw jsi::JSError(rt, "No appropriate enum member found for value");
     }
   }
 
-  static jsi::Value toJs(jsi::Runtime &rt, SampleTurboModuleEnumInt value) {
-    if (value == SampleTurboModuleEnumInt::A) {
+  static jsi::Value toJs(jsi::Runtime &rt, NativeSampleTurboModuleEnumInt value) {
+    if (value == NativeSampleTurboModuleEnumInt::A) {
       return bridging::toJs(rt, 23);
-    } else if (value == SampleTurboModuleEnumInt::B) {
+    } else if (value == NativeSampleTurboModuleEnumInt::B) {
       return bridging::toJs(rt, 42);
     } else {
       throw jsi::JSError(rt, "No appropriate enum member found for enum value");
@@ -6647,18 +6610,18 @@ private:
 
 
   
-#pragma mark - SourceCodeSourceCodeConstants
+#pragma mark - NativeSourceCodeSourceCodeConstants
 
 template <typename P0>
-struct SourceCodeSourceCodeConstants {
+struct NativeSourceCodeSourceCodeConstants {
   P0 scriptURL;
-  bool operator==(const SourceCodeSourceCodeConstants &other) const {
+  bool operator==(const NativeSourceCodeSourceCodeConstants &other) const {
     return scriptURL == other.scriptURL;
   }
 };
 
 template <typename T>
-struct SourceCodeSourceCodeConstantsBridging {
+struct NativeSourceCodeSourceCodeConstantsBridging {
   static T types;
 
   static T fromJs(
@@ -7589,19 +7552,19 @@ private:
 
 
   
-#pragma mark - NativePerformanceObserverCxxGetPendingEntriesResult
+#pragma mark - NativePerformanceObserverGetPendingEntriesResult
 
 template <typename P0, typename P1>
-struct NativePerformanceObserverCxxGetPendingEntriesResult {
+struct NativePerformanceObserverGetPendingEntriesResult {
   P0 entries;
   P1 droppedEntriesCount;
-  bool operator==(const NativePerformanceObserverCxxGetPendingEntriesResult &other) const {
+  bool operator==(const NativePerformanceObserverGetPendingEntriesResult &other) const {
     return entries == other.entries && droppedEntriesCount == other.droppedEntriesCount;
   }
 };
 
 template <typename T>
-struct NativePerformanceObserverCxxGetPendingEntriesResultBridging {
+struct NativePerformanceObserverGetPendingEntriesResultBridging {
   static T types;
 
   static T fromJs(
@@ -7637,10 +7600,10 @@ struct NativePerformanceObserverCxxGetPendingEntriesResultBridging {
 
 
 
-#pragma mark - NativePerformanceObserverCxxRawPerformanceEntry
+#pragma mark - NativePerformanceObserverRawPerformanceEntry
 
 template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
-struct NativePerformanceObserverCxxRawPerformanceEntry {
+struct NativePerformanceObserverRawPerformanceEntry {
   P0 name;
   P1 entryType;
   P2 startTime;
@@ -7648,13 +7611,13 @@ struct NativePerformanceObserverCxxRawPerformanceEntry {
   P4 processingStart;
   P5 processingEnd;
   P6 interactionId;
-  bool operator==(const NativePerformanceObserverCxxRawPerformanceEntry &other) const {
+  bool operator==(const NativePerformanceObserverRawPerformanceEntry &other) const {
     return name == other.name && entryType == other.entryType && startTime == other.startTime && duration == other.duration && processingStart == other.processingStart && processingEnd == other.processingEnd && interactionId == other.interactionId;
   }
 };
 
 template <typename T>
-struct NativePerformanceObserverCxxRawPerformanceEntryBridging {
+struct NativePerformanceObserverRawPerformanceEntryBridging {
   static T types;
 
   static T fromJs(

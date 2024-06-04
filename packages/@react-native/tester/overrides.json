@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.75.0-nightly-20240511-3f17c8b5f",
+  "baseVersion": "0.75.0-nightly-20240525-840c31c3a",
   "overrides": [
     {
       "type": "copy",
@@ -12,7 +12,7 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "c451b2c1c49baed92d62937cfa6c9578a946c6f5",
+      "baseHash": "a2d6d9c49a72bcfab8fc6369ae6dc9b7a2201680",
       "issue": 4054
     },
     {
@@ -250,7 +250,7 @@
       "type": "copy",
       "directory": "js/examples/PanResponder",
       "baseDirectory": "packages/rn-tester/js/examples/PanResponder",
-      "baseHash": "9dab73cbcbf669bb814618f6b4bff28f48a2fbdd",
+      "baseHash": "8d610dcf6db911f4a5c88f4e09104e1f49e14089",
       "issue": 4054
     },
     {
@@ -334,7 +334,7 @@
       "type": "copy",
       "directory": "js/examples/ScrollView",
       "baseDirectory": "packages/rn-tester/js/examples/ScrollView",
-      "baseHash": "f55ab1b6798964fb0505070889df0e4c45fae3a1",
+      "baseHash": "a27e8dd775a55a1179ccc7744564de3534d29b94",
       "issue": 4054
     },
     {
@@ -390,14 +390,14 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "87a89ad1453bf3d9515e89a72a96b0533f5ce29d",
+      "baseHash": "f2aa4d0bca7017eafcb2235b77993c938155fa7c",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "2a8091d8e88691880b2b7007bce1dfb296770f95",
+      "baseHash": "96f13a981501e6e737835f322fc96c418ef77e51",
       "issue": 4054
     },
     {
@@ -425,7 +425,7 @@
       "type": "copy",
       "directory": "js/examples/Transform",
       "baseDirectory": "packages/rn-tester/js/examples/Transform",
-      "baseHash": "d2dc7f7cac0ee3c8d8ee4fa29b4b57929c08ee29",
+      "baseHash": "9a8301dcc28c2e9dc124cb1e0ab009b2e40548d8",
       "issue": 4054
     },
     {
@@ -439,7 +439,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "65f835078b8a09f0359cde0d71c7d06a81a14587",
+      "baseHash": "fbf739a33d1b97600fda0a31796e9d3e91767607",
       "issue": 4054
     },
     {
@@ -488,7 +488,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "bcfcff7da20638de21c1f3bb3679b30673182f7f",
+      "baseHash": "ebbd53fdd004279e9c1632c543b56d7ed47b054d",
       "issue": 4054
     },
     {

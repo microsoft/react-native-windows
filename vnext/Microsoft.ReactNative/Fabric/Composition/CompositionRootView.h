@@ -48,7 +48,7 @@ struct CompositionRootView
 
 #ifdef USE_WINUI3
   CompositionRootView(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept;
-  winrt::Microsoft::UI::Content::ContentIsland Island() noexcept;
+  winrt::Microsoft::UI::Content::ContentIsland Island();
 #endif
 
   // property ReactViewHost
