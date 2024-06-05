@@ -14,6 +14,7 @@
 #include <Views/Image/ReactImage.h>
 #include <cxxreact/JsArgumentHelpers.h>
 #ifdef USE_FABRIC
+#include <Fabric/WindowsImageManager.h>
 #include <Utils/Helpers.h>
 #include <wincodec.h>
 #include "XamlUtils.h"
@@ -29,12 +30,8 @@ using namespace xaml::Media::Imaging;
 
 namespace Microsoft::ReactNative {
 
-#ifdef USE_FABRIC
-winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(
-    const winrt::Windows::Storage::Streams::IRandomAccessStream &results) noexcept;
-#endif // USE_FABRIC
-
 winrt::fire_and_forget GetImageSizeAsync(
+    const winrt::Microsoft::ReactNative::IReactPropertyBag &properties,
     std::string uriString,
     winrt::Microsoft::ReactNative::JSValue &&headers,
     Mso::Functor<void(int32_t width, int32_t height)> successCallback,
@@ -62,7 +59,7 @@ winrt::fire_and_forget GetImageSizeAsync(
 
     winrt::IRandomAccessStream memoryStream;
     if (needsDownload) {
-      memoryStream = co_await GetImageStreamAsync(source);
+      memoryStream = co_await GetImageStreamAsync(properties, source);
     } else if (inlineData) {
       memoryStream = co_await GetImageInlineDataAsync(source);
     }
@@ -80,11 +77,16 @@ winrt::fire_and_forget GetImageSizeAsync(
       }
 #ifdef USE_FABRIC
     } else {
-      UINT width, height;
-      auto wicBmpSource = wicBitmapSourceFromStream(memoryStream);
-      if (SUCCEEDED(wicBmpSource->GetSize(&width, &height))) {
-        successCallback(width, height);
-        succeeded = true;
+      auto result = wicBitmapSourceFromStream(memoryStream);
+      auto &errorInfo = std::get<std::string>(result);
+      if (errorInfo.empty()) {
+        auto imagingFactory = std::get<winrt::com_ptr<IWICImagingFactory>>(result);
+        auto wicBmpSource = std::get<winrt::com_ptr<IWICBitmapSource>>(result);
+        UINT width, height;
+        if (SUCCEEDED(wicBmpSource->GetSize(&width, &height))) {
+          successCallback(width, height);
+          succeeded = true;
+        }
       }
     }
 #endif // USE_FABRIC
@@ -105,6 +107,7 @@ void ImageLoader::getSize(std::string uri, React::ReactPromise<std::vector<doubl
   m_context.UIDispatcher().Post(
       [context = m_context, uri = std::move(uri), result = std::move(result)]() mutable noexcept {
         GetImageSizeAsync(
+            context.Properties().Handle(),
             std::move(uri),
             {},
             [result, context](double width, double height) noexcept {
@@ -133,6 +136,7 @@ void ImageLoader::getSizeWithHeaders(
                                  headers = std::move(headers),
                                  result = std::move(result)]() mutable noexcept {
     GetImageSizeAsync(
+        context.Properties().Handle(),
         std::move(uri),
         std::move(headers),
         [result, context](double width, double height) noexcept {

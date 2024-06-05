@@ -39,7 +39,7 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
   }
 
   TEST_METHOD(QueryInterfacesSucceeds) {
-    auto filter = winrt::make<RedirectHttpFilter>();
+    auto filter = winrt::make<RedirectHttpFilter>(winrt::hstring{});
 
     auto iFilter = filter.try_as<IHttpFilter>();
     Assert::IsFalse(iFilter == nullptr);
@@ -82,7 +82,7 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
       co_return response;
     };
 
-    auto filter = winrt::make<RedirectHttpFilter>(std::move(mockFilter1), std::move(mockFilter2));
+    auto filter = winrt::make<RedirectHttpFilter>(std::move(mockFilter1), std::move(mockFilter2), winrt::hstring{});
     auto client = HttpClient{filter};
     auto request = HttpRequestMessage{HttpMethod::Get(), Uri{url1}};
     auto sendOp = client.SendRequestAsync(request);
@@ -118,7 +118,7 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
       co_return response;
     };
 
-    auto filter = winrt::make<RedirectHttpFilter>(std::move(mockFilter1), std::move(mockFilter2));
+    auto filter = winrt::make<RedirectHttpFilter>(std::move(mockFilter1), std::move(mockFilter2), winrt::hstring{});
     // Disable automatic redirect
     filter.try_as<IHttpBaseProtocolFilter>().AllowAutoRedirect(false);
 
@@ -176,7 +176,8 @@ TEST_CLASS (RedirectHttpFilterUnitTest) {
       co_return response;
     };
 
-    auto filter = winrt::make<RedirectHttpFilter>(maxRedirects, std::move(mockFilter1), std::move(mockFilter2));
+    auto filter =
+        winrt::make<RedirectHttpFilter>(maxRedirects, std::move(mockFilter1), std::move(mockFilter2), winrt::hstring{});
     auto client = HttpClient{filter};
     auto request = HttpRequestMessage{HttpMethod::Get(), Uri{url1}};
     ResponseOperation sendOp = nullptr;

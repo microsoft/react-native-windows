@@ -1411,7 +1411,7 @@ winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceho
 
 void WindowsTextInputComponentView::DrawText() noexcept {
   m_needsRedraw = true;
-  if (m_cDrawBlock || theme()->IsEmpty()) {
+  if (m_cDrawBlock || theme()->IsEmpty() || !m_textServices) {
     return;
   }
 

@@ -1,0 +1,19 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+import "ReactInstanceSettings.idl";
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative
+{
+  [webhosthidden]
+  DOC_STRING(
+    "Provides settings for Http functionality. ")
+  runtimeclass HttpSettings
+  {
+    DOC_STRING(
+      "Configures the react instance to use a user-agent header by default on http requests.")
+    static void SetDefaultUserAgent(Microsoft.ReactNative.ReactInstanceSettings settings, String userAgent);
+  }
+} // namespace Microsoft.ReactNative

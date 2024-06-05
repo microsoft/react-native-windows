@@ -5,6 +5,7 @@
 
 #include <CreateModules.h>
 #include <ReactPropertyBag.h>
+#include "Networking/NetworkPropertyIds.h"
 
 // React Native
 #include <cxxreact/JsArgumentHelpers.h>
@@ -113,9 +114,8 @@ std::vector<module::CxxModule::Method> FileReaderModule::getMethods() {
 #pragma region FileReaderTurboModule
 
 void FileReaderTurboModule::Initialize(msrn::ReactContext const &reactContext) noexcept {
-  auto propId = msrn::ReactPropertyId<msrn::ReactNonAbiValue<weak_ptr<IBlobPersistor>>>{L"Blob.Persistor"};
   auto props = reactContext.Properties();
-  auto prop = props.Get(propId);
+  auto prop = props.Get(BlobModulePersistorPropertyId());
   m_resource = IFileReaderResource::Make(prop.Value());
 }
 
@@ -195,10 +195,9 @@ void FileReaderTurboModule::ReadAsText(
 
 /*extern*/ std::unique_ptr<module::CxxModule> CreateFileReaderModule(
     IInspectable const &inspectableProperties) noexcept {
-  auto propId = msrn::ReactPropertyId<msrn::ReactNonAbiValue<weak_ptr<IBlobPersistor>>>{L"Blob.Persistor"};
   auto propBag = msrn::ReactPropertyBag{inspectableProperties.try_as<msrn::IReactPropertyBag>()};
 
-  if (auto prop = propBag.Get(propId)) {
+  if (auto prop = propBag.Get(BlobModulePersistorPropertyId())) {
     auto weakBlobPersistor = prop.Value();
 
     return std::make_unique<FileReaderModule>(weakBlobPersistor);
