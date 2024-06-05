@@ -1114,7 +1114,9 @@ module.exports = ([
               overflow: 'hidden',
               fontSize: 16,
             }}
-            value={"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."}/>
+            >
+                <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
+            </ExampleTextInput>
         </View>
       );
     },
