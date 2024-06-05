@@ -2795,9 +2795,9 @@
   integrity sha512-/kMtl05I+xlaYHXsftv5gSHl7LPwh1m6Ttd24+NGHoqQwD0MMF6VJ2dVu8vUUrF4PArxAb2V6YoJQRJAQGB54Q==
 
 "@rnx-kit/cli@^0.16.10":
-  version "0.16.26"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-0.16.26.tgz#47f192d207a8f4337d5e50ce1fec19606d17f499"
-  integrity sha512-EeJRkrCMmwLeayESG6ozoNfqCzeyqAP4DO444SPt6Q8cwDPJagVDOUc/11BAo+TE3onCQhMjMjeckxv0UWrXJA==
+  version "0.16.27"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-0.16.27.tgz#0a9450f5331ba596fd8ba7c264a32516675361a0"
+  integrity sha512-RP0zjHQE2xu8wKqPTSuPewLFsC9fNRRD74j5coaVB5CnNNba8PRzj3OqIvWymLOIkk4pOlea1Sss5bqeeCJsqw==
   dependencies:
     "@rnx-kit/align-deps" "^2.4.3"
     "@rnx-kit/config" "^0.6.6"
