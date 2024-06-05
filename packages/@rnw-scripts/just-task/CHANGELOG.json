@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/just-task",
   "entries": [
     {
+      "date": "Wed, 05 Jun 2024 05:18:09 GMT",
+      "version": "2.3.38",
+      "tag": "@rnw-scripts/just-task_v2.3.38",
+      "comments": {
+        "patch": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "@rnw-scripts/just-task",
+            "commit": "ee76145dbcf05a84555c99cc693b564d11503ba3",
+            "comment": "Use prettier-plugin-hermes-parser to match upstream settings"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Jun 2024 05:18:35 GMT",
       "version": "2.3.37",
       "tag": "@rnw-scripts/just-task_v2.3.37",
