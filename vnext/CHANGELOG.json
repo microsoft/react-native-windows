@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 05 Jun 2024 05:18:10 GMT",
+      "version": "0.0.0-canary.825",
+      "tag": "react-native-windows_v0.0.0-canary.825",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "ericroz@meta.com",
+            "package": "react-native-windows",
+            "commit": "dd25531fa68b04c3b1db70827fdc18e5bb0121ba",
+            "comment": "Sorts imports and fixes modernizes types for Flyout component"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "25be51926cd9cb2a2032ce4da47f3a78e2aec54c",
+            "comment": "Upgrade to Windows SDK 10.0.22621.0"
+          },
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "ee76145dbcf05a84555c99cc693b564d11503ba3",
+            "comment": "Use prettier-plugin-hermes-parser to match upstream settings"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.219",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.93",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.38",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.39",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Jun 2024 05:18:35 GMT",
       "version": "0.0.0-canary.824",
       "tag": "react-native-windows_v0.0.0-canary.824",

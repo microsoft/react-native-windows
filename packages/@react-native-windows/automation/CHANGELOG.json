@@ -2,6 +2,33 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Wed, 05 Jun 2024 05:18:11 GMT",
+      "version": "0.3.247",
+      "tag": "@react-native-windows/automation_v0.3.247",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.165",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.50",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.38",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Jun 2024 05:18:35 GMT",
       "version": "0.3.246",
       "tag": "@react-native-windows/automation_v0.3.246",

@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/take-screenshot",
   "entries": [
     {
+      "date": "Wed, 05 Jun 2024 05:18:11 GMT",
+      "version": "1.1.45",
+      "tag": "@rnw-scripts/take-screenshot_v1.1.45",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.50",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.38",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 04 Jun 2024 05:18:35 GMT",
       "version": "1.1.44",
       "tag": "@rnw-scripts/take-screenshot_v1.1.44",

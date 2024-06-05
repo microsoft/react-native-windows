@@ -1,8 +1,18 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Tue, 04 Jun 2024 05:18:34 GMT and should not be manually modified.
+This log was last generated on Wed, 05 Jun 2024 05:18:09 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.252
+
+Wed, 05 Jun 2024 05:18:09 GMT
+
+### Changes
+
+- Use prettier-plugin-hermes-parser to match upstream settings (email not defined)
+- Bump @rnw-scripts/just-task to v2.3.38
+- Bump react-native-platform-override to v1.9.39
 
 ## 0.0.0-canary.251
 

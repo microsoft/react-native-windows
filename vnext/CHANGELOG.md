@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 04 Jun 2024 05:18:35 GMT and should not be manually modified.
+This log was last generated on Wed, 05 Jun 2024 05:18:10 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.825
+
+Wed, 05 Jun 2024 05:18:10 GMT
+
+### Changes
+
+- Sorts imports and fixes modernizes types for Flyout component (ericroz@meta.com)
+- Upgrade to Windows SDK 10.0.22621.0 (julio.rocha@microsoft.com)
+- Use prettier-plugin-hermes-parser to match upstream settings (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.219
+- Bump @react-native-windows/codegen to v0.0.0-canary.93
+- Bump @rnw-scripts/just-task to v2.3.38
+- Bump react-native-platform-override to v1.9.39
 
 ## 0.0.0-canary.824
 

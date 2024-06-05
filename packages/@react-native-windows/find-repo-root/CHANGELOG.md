@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/find-repo-root
 
-This log was last generated on Tue, 04 Jun 2024 05:18:35 GMT and should not be manually modified.
+This log was last generated on Wed, 05 Jun 2024 05:18:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.79
+
+Wed, 05 Jun 2024 05:18:11 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.50
+- Bump @rnw-scripts/just-task to v2.3.38
 
 ## 0.0.0-canary.78
 

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Use prettier-plugin-hermes-parser to match upstream settings",
-  "packageName": "@rnw-scripts/just-task",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}

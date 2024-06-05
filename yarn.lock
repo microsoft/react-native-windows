@@ -2795,9 +2795,9 @@
   integrity sha512-/kMtl05I+xlaYHXsftv5gSHl7LPwh1m6Ttd24+NGHoqQwD0MMF6VJ2dVu8vUUrF4PArxAb2V6YoJQRJAQGB54Q==
 
 "@rnx-kit/cli@^0.16.10":
-  version "0.16.26"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-0.16.26.tgz#47f192d207a8f4337d5e50ce1fec19606d17f499"
-  integrity sha512-EeJRkrCMmwLeayESG6ozoNfqCzeyqAP4DO444SPt6Q8cwDPJagVDOUc/11BAo+TE3onCQhMjMjeckxv0UWrXJA==
+  version "0.16.27"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-0.16.27.tgz#0a9450f5331ba596fd8ba7c264a32516675361a0"
+  integrity sha512-RP0zjHQE2xu8wKqPTSuPewLFsC9fNRRD74j5coaVB5CnNNba8PRzj3OqIvWymLOIkk4pOlea1Sss5bqeeCJsqw==
   dependencies:
     "@rnx-kit/align-deps" "^2.4.3"
     "@rnx-kit/config" "^0.6.6"
@@ -3122,9 +3122,9 @@
   integrity sha512-xFdR6tkm0MWvBfO8xXCSsinYxHcqkQUlcHeSpMC2ukzOb6lwQAfDmW+Qt0AvlGd8HpsS28qKsB+oPeJn9I39jg==
 
 "@types/envinfo@^7.8.1":
-  version "7.8.3"
-  resolved "https://registry.yarnpkg.com/@types/envinfo/-/envinfo-7.8.3.tgz#6fccc3425e300ee377aad15423e555dc6fc12fa1"
-  integrity sha512-qzV1XMjmzgmndci6L5HlzExf4w9A5jQPNpW/t4sSljErKbS8y6231ToHO9ir2Xjf+2zG1C540+Wmh0zpUsGu0A==
+  version "7.8.4"
+  resolved "https://registry.yarnpkg.com/@types/envinfo/-/envinfo-7.8.4.tgz#f13ec1050b8e260d6d7c149ba5b99f65d2b74058"
+  integrity sha512-K5WaRgSlqjc408IyPbxOFnz7rVG9E8ELhj7XR3Ncui15EgeyIXTcCfmwrRnU4uEOCJQhzZRAQurYznEEc1dD2g==
 
 "@types/find-up@^4.0.0":
   version "4.0.0"

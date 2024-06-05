@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation-channel",
-  "version": "0.12.164",
+  "version": "0.12.165",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.21",
-    "@rnw-scripts/just-task": "2.3.37",
+    "@rnw-scripts/just-task": "2.3.38",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/find-up": "^4.0.0",
     "@types/node": "^18.0.0",
@@ -32,7 +32,7 @@
     "prettier": "2.8.8",
     "react": "18.3.1",
     "react-native": "0.75.0-nightly-20240525-840c31c3a",
-    "react-native-windows": "^0.0.0-canary.824",
+    "react-native-windows": "^0.0.0-canary.825",
     "typescript": "5.0.4"
   },
   "files": [

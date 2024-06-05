@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "AsynchronousEventBeat can get locked where it will not beat anymore",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
