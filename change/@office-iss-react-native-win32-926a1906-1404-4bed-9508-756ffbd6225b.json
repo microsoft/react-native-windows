@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "Integrate 5/14",
+  "comment": "Use prettier-plugin-hermes-parser to match upstream settings",
   "packageName": "@office-iss/react-native-win32",
-  "email": "34109996+chiaramooney@users.noreply.github.com",
+  "email": "email not defined",
   "dependentChangeType": "patch"
 }

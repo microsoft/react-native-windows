@@ -5,114 +5,131 @@
 
 #include "WindowsImageManager.h"
 
+#include <CppRuntimeOptions.h>
 #include <Fabric/Composition/CompositionContextHelper.h>
 #include <Fabric/Composition/ImageResponseImage.h>
 #include <Fabric/Composition/UriImageManager.h>
+#include <Networking/NetworkPropertyIds.h>
 #include <Utils/ImageUtils.h>
+#include <fmt/format.h>
 #include <functional/functor.h>
 #include <shcore.h>
 #include <wincodec.h>
+#include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Windows.Web.Http.Headers.h>
+#include <winrt/Windows.Web.Http.h>
 
 extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICImagingFactory **ppIWICImagingFactory);
 
 namespace Microsoft::ReactNative {
 
+std::string FormatHResultError(winrt::hresult_error const &ex) {
+  return fmt::format("[0x{:0>8x}] {}", static_cast<uint32_t>(ex.code()), winrt::to_string(ex.message()));
+}
+
 WindowsImageManager::WindowsImageManager(winrt::Microsoft::ReactNative::ReactContext reactContext)
     : m_reactContext(reactContext) {
   m_uriImageManager =
       winrt::Microsoft::ReactNative::Composition::implementation::UriImageManager::Get(reactContext.Properties());
+
+  // Ideally we'd just set m_httpClient.DefaultRequestHeaders().UserAgent().ParseAdd(m_defaultUserAgent), but when we do
+  // we start hitting E_STATE_CHANGED errors. Which appears to be this issue
+  // https://github.com/MicrosoftDocs/winrt-api/issues/2410 So instead we apply the header to each request
+  auto userAgent = Microsoft::React::GetRuntimeOptionString("Http.UserAgent");
+  if (userAgent.size() > 0) {
+    m_defaultUserAgent = winrt::to_hstring(userAgent);
+  } else if (auto userAgentProp = reactContext.Properties().Get(::Microsoft::React::DefaultUserAgentPropertyId())) {
+    m_defaultUserAgent = *userAgentProp;
+  }
 }
 
-winrt::com_ptr<IWICBitmapSource> wicBitmapSourceFromStream(
-    const winrt::Windows::Storage::Streams::IRandomAccessStream &results) noexcept {
-  if (!results) {
-    return nullptr;
-  }
+std::tuple<
+    winrt::com_ptr<IWICBitmapSource>,
+    winrt::com_ptr<IWICImagingFactory>,
+    std::shared_ptr<facebook::react::ImageErrorInfo>>
+wicBitmapSourceFromStream(const winrt::Windows::Storage::Streams::IRandomAccessStream &stream) noexcept {
+  try {
+    winrt::com_ptr<IWICImagingFactory> imagingFactory;
+    winrt::check_hresult(WICCreateImagingFactory_Proxy(WINCODEC_SDK_VERSION, imagingFactory.put()));
 
-  winrt::com_ptr<IWICImagingFactory> imagingFactory;
-  winrt::check_hresult(WICCreateImagingFactory_Proxy(WINCODEC_SDK_VERSION, imagingFactory.put()));
+    winrt::com_ptr<IStream> istream;
+    winrt::check_hresult(
+        CreateStreamOverRandomAccessStream(stream.as<IUnknown>().get(), __uuidof(IStream), istream.put_void()));
 
-  winrt::com_ptr<IStream> istream;
-  winrt::check_hresult(
-      CreateStreamOverRandomAccessStream(results.as<IUnknown>().get(), __uuidof(IStream), istream.put_void()));
+    winrt::com_ptr<IWICBitmapDecoder> bitmapDecoder;
+    winrt::check_hresult(imagingFactory->CreateDecoderFromStream(
+        istream.get(), nullptr, WICDecodeMetadataCacheOnDemand, bitmapDecoder.put()));
 
-  winrt::com_ptr<IWICBitmapDecoder> bitmapDecoder;
-  if (imagingFactory->CreateDecoderFromStream(
-          istream.get(), nullptr, WICDecodeMetadataCacheOnDemand, bitmapDecoder.put()) < 0) {
-    return nullptr;
-  }
-
-  winrt::com_ptr<IWICBitmapFrameDecode> decodedFrame;
-  winrt::check_hresult(bitmapDecoder->GetFrame(0, decodedFrame.put()));
-  return decodedFrame;
-}
-
-std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::ImageResponseImage> generateBitmap(
-    const winrt::Windows::Storage::Streams::IRandomAccessStream &results) noexcept {
-  winrt::com_ptr<IWICBitmapSource> decodedFrame = wicBitmapSourceFromStream(results);
-
-  if (!decodedFrame) {
-    return nullptr;
-  }
-
-  winrt::com_ptr<IWICImagingFactory> imagingFactory;
-  winrt::check_hresult(WICCreateImagingFactory_Proxy(WINCODEC_SDK_VERSION, imagingFactory.put()));
-  winrt::com_ptr<IWICFormatConverter> converter;
-  winrt::check_hresult(imagingFactory->CreateFormatConverter(converter.put()));
-
-  winrt::check_hresult(converter->Initialize(
-      decodedFrame.get(),
-      GUID_WICPixelFormat32bppPBGRA,
-      WICBitmapDitherTypeNone,
-      nullptr,
-      0.0f,
-      WICBitmapPaletteTypeMedianCut));
-
-  winrt::com_ptr<IWICBitmap> wicbmp;
-  winrt::check_hresult(imagingFactory->CreateBitmapFromSource(converter.get(), WICBitmapCacheOnLoad, wicbmp.put()));
-
-  auto image = std::make_shared<winrt::Microsoft::ReactNative::Composition::implementation::ImageResponseImage>();
-  image->m_wicbmp = wicbmp;
-  return image;
-}
-
-template <typename T>
-void ProcessImageRequestTask(
-    std::weak_ptr<const facebook::react::ImageResponseObserverCoordinator> &weakObserverCoordinator,
-    const winrt::Windows::Foundation::IAsyncOperation<T> &task,
-    Mso::Functor<std::shared_ptr<winrt::Microsoft::ReactNative::Composition::implementation::ImageResponseImage>(
-        const T &result)> &&onSuccess) {
-  task.Completed([weakObserverCoordinator, onSuccess = std::move(onSuccess)](auto asyncOp, auto status) {
-    auto observerCoordinator = weakObserverCoordinator.lock();
-    if (!observerCoordinator) {
-      return;
+    if (!bitmapDecoder) {
+      auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
+      errorInfo->error = "Failed to decode the image.";
+      return {nullptr, nullptr, errorInfo};
     }
 
-    // TODO: #13262 - Pipe through ImageLoadError
-    auto error = facebook::react::ImageLoadError(nullptr);
+    winrt::com_ptr<IWICBitmapFrameDecode> decodedFrame;
+    winrt::check_hresult(bitmapDecoder->GetFrame(0, decodedFrame.put()));
+    return {decodedFrame, imagingFactory, nullptr};
+  } catch (winrt::hresult_error const &ex) {
+    auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
+    errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
+    errorInfo->error = ::Microsoft::ReactNative::FormatHResultError(winrt::hresult_error(ex));
+    return {nullptr, nullptr, errorInfo};
+  }
+}
 
-    switch (status) {
-      case winrt::Windows::Foundation::AsyncStatus::Completed: {
-        auto imageResponseImage = onSuccess(asyncOp.GetResults());
-        if (imageResponseImage)
-          observerCoordinator->nativeImageResponseComplete(
-              facebook::react::ImageResponse(imageResponseImage, nullptr /*metadata*/));
-        else
-          observerCoordinator->nativeImageResponseFailed(error);
-        break;
-      }
-      case winrt::Windows::Foundation::AsyncStatus::Canceled: {
-        observerCoordinator->nativeImageResponseFailed(error);
-        break;
-      }
-      case winrt::Windows::Foundation::AsyncStatus::Error: {
-        observerCoordinator->nativeImageResponseFailed(error);
-        break;
-      }
-      case winrt::Windows::Foundation::AsyncStatus::Started: {
+winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::ImageResponse>
+WindowsImageManager::GetImageRandomAccessStreamAsync(ReactImageSource source) const {
+  co_await winrt::resume_background();
+
+  winrt::Windows::Foundation::Uri uri(winrt::to_hstring(source.uri));
+  bool isFile = (uri.SchemeName() == L"file");
+  bool isAppx = (uri.SchemeName() == L"ms-appx");
+
+  if (isFile || isAppx) {
+    winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::StorageFile> getFileSync{nullptr};
+
+    if (isFile) {
+      getFileSync = winrt::Windows::Storage::StorageFile::GetFileFromPathAsync(uri.AbsoluteCanonicalUri());
+    } else {
+      getFileSync = winrt::Windows::Storage::StorageFile::GetFileFromApplicationUriAsync(uri);
+    }
+
+    winrt::Windows::Storage::StorageFile file(co_await getFileSync);
+    co_return winrt::Microsoft::ReactNative::Composition::StreamImageResponse(co_await file.OpenReadAsync());
+  }
+
+  auto httpMethod{
+      source.method.empty() ? winrt::Windows::Web::Http::HttpMethod::Get()
+                            : winrt::Windows::Web::Http::HttpMethod{winrt::to_hstring(source.method)}};
+
+  winrt::Windows::Web::Http::HttpRequestMessage request{httpMethod, uri};
+
+  if (!m_defaultUserAgent.empty()) {
+    request.Headers().Append(L"User-Agent", m_defaultUserAgent);
+  }
+
+  if (!source.headers.empty()) {
+    for (auto &header : source.headers) {
+      if (_stricmp(header.first.c_str(), "authorization") == 0) {
+        request.Headers().TryAppendWithoutValidation(winrt::to_hstring(header.first), winrt::to_hstring(header.second));
+      } else {
+        request.Headers().Append(winrt::to_hstring(header.first), winrt::to_hstring(header.second));
       }
     }
-  });
+  }
+
+  winrt::Windows::Web::Http::HttpResponseMessage response(co_await m_httpClient.SendRequestAsync(request));
+
+  if (!response.IsSuccessStatusCode()) {
+    co_return winrt::Microsoft::ReactNative::Composition::ImageFailedResponse(
+        response.ReasonPhrase(), response.StatusCode(), response.Headers());
+  }
+
+  winrt::Windows::Storage::Streams::InMemoryRandomAccessStream memoryStream;
+  co_await response.Content().WriteToStreamAsync(memoryStream);
+  memoryStream.Seek(0);
+
+  co_return winrt::Microsoft::ReactNative::Composition::StreamImageResponse(memoryStream.CloneStream());
 }
 
 facebook::react::ImageRequest WindowsImageManager::requestImage(
@@ -126,51 +143,11 @@ facebook::react::ImageRequest WindowsImageManager::requestImage(
   auto rnImageSource = winrt::Microsoft::ReactNative::Composition::implementation::MakeImageSource(imageSource);
   auto provider = m_uriImageManager->TryGetUriImageProvider(m_reactContext.Handle(), rnImageSource);
 
-  if (auto bProvider = provider.try_as<winrt::Microsoft::ReactNative::Composition::IUriBrushProvider>()) {
-    ProcessImageRequestTask<winrt::Microsoft::ReactNative::Composition::UriBrushFactory>(
-        weakObserverCoordinator,
-        bProvider.GetSourceAsync(m_reactContext.Handle(), rnImageSource),
-        [](const winrt::Microsoft::ReactNative::Composition::UriBrushFactory &factory) noexcept {
-          auto image =
-              std::make_shared<winrt::Microsoft::ReactNative::Composition::implementation::ImageResponseImage>();
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::ImageResponse>
+      imageResponseTask{nullptr};
 
-          // Wrap the UriBrushFactory to provide the internal CompositionContext types
-          image->m_brushFactory =
-              [factory](
-                  const winrt::Microsoft::ReactNative::IReactContext &context,
-                  const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext
-                      &compositionContext) {
-                auto compositor = winrt::Microsoft::ReactNative::Composition::Experimental::
-                    MicrosoftCompositionContextHelper::InnerCompositor(compositionContext);
-                auto brush = factory(context, compositor);
-                return winrt::Microsoft::ReactNative::Composition::Experimental::implementation::
-                    MicrosoftCompositionContextHelper::WrapBrush(brush);
-              };
-          return image;
-        });
-
-    return imageRequest;
-  }
-
-  if (auto brushProvider =
-          provider.try_as<winrt::Microsoft::ReactNative::Composition::Experimental::IUriBrushProvider>()) {
-    ProcessImageRequestTask<winrt::Microsoft::ReactNative::Composition::Experimental::UriBrushFactory>(
-        weakObserverCoordinator,
-        brushProvider.GetSourceAsync(m_reactContext.Handle(), rnImageSource),
-        [](const winrt::Microsoft::ReactNative::Composition::Experimental::UriBrushFactory &factory) noexcept {
-          auto image =
-              std::make_shared<winrt::Microsoft::ReactNative::Composition::implementation::ImageResponseImage>();
-          image->m_brushFactory = factory;
-          return image;
-        });
-
-    return imageRequest;
-  };
-
-  winrt::Windows::Foundation::IAsyncOperation<winrt::Windows::Storage::Streams::IRandomAccessStream> task;
-  if (auto imageStreamProvider =
-          provider.try_as<winrt::Microsoft::ReactNative::Composition::IUriImageStreamProvider>()) {
-    task = imageStreamProvider.GetSourceAsync(m_reactContext.Handle(), rnImageSource);
+  if (provider) {
+    imageResponseTask = provider.GetImageResponseAsync(m_reactContext.Handle(), rnImageSource);
   } else {
     ReactImageSource source;
     source.uri = imageSource.uri;
@@ -178,18 +155,122 @@ facebook::react::ImageRequest WindowsImageManager::requestImage(
     source.width = imageSource.size.width;
     source.sourceType = ImageSourceType::Download;
 
-    task = GetImageStreamAsync(source);
+    imageResponseTask = GetImageRandomAccessStreamAsync(source);
   }
 
-  // TODO progress? - Can we register for progress off the download task?
-  // observerCoordinator->nativeImageResponseProgress((float)progress / (float)total);
+  imageResponseTask.Completed([weakObserverCoordinator](auto asyncOp, auto status) {
+    auto observerCoordinator = weakObserverCoordinator.lock();
+    if (!observerCoordinator) {
+      return;
+    }
 
-  ProcessImageRequestTask<winrt::Windows::Storage::Streams::IRandomAccessStream>(
-      weakObserverCoordinator, task, [](const winrt::Windows::Storage::Streams::IRandomAccessStream &stream) {
-        return generateBitmap(stream);
-      });
-
+    switch (status) {
+      case winrt::Windows::Foundation::AsyncStatus::Completed: {
+        auto imageResponse = asyncOp.GetResults();
+        auto selfImageResponse =
+            winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::ImageResponse>(imageResponse);
+        auto imageResultOrError = selfImageResponse->ResolveImage();
+        if (imageResultOrError.image) {
+          observerCoordinator->nativeImageResponseComplete(
+              facebook::react::ImageResponse(imageResultOrError.image, nullptr /*metadata*/));
+        } else {
+          observerCoordinator->nativeImageResponseFailed(facebook::react::ImageLoadError(imageResultOrError.errorInfo));
+        }
+        break;
+      }
+      case winrt::Windows::Foundation::AsyncStatus::Canceled: {
+        auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
+        errorInfo->error = FormatHResultError(winrt::hresult_error(asyncOp.ErrorCode()));
+        observerCoordinator->nativeImageResponseFailed(facebook::react::ImageLoadError(errorInfo));
+        break;
+      }
+      case winrt::Windows::Foundation::AsyncStatus::Error: {
+        auto errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
+        errorInfo->error = FormatHResultError(winrt::hresult_error(asyncOp.ErrorCode()));
+        observerCoordinator->nativeImageResponseFailed(facebook::react::ImageLoadError(errorInfo));
+        break;
+      }
+      case winrt::Windows::Foundation::AsyncStatus::Started: {
+        // TODO progress? - Can we register for progress off the download task?
+        // observerCoordinator->nativeImageResponseProgress(0.0/*progress*/, 0/*completed*/, 0/*total*/);
+        break;
+      }
+    }
+  });
   return imageRequest;
 }
 
 } // namespace Microsoft::ReactNative
+
+namespace winrt::Microsoft::ReactNative::Composition::implementation {
+
+ImageResponseOrImageErrorInfo StreamImageResponse::ResolveImage() {
+  ImageResponseOrImageErrorInfo imageOrError;
+  try {
+    auto result = ::Microsoft::ReactNative::wicBitmapSourceFromStream(m_stream);
+
+    if (auto errorInfo = std::get<std::shared_ptr<facebook::react::ImageErrorInfo>>(result)) {
+      imageOrError.errorInfo = errorInfo;
+      return imageOrError;
+    }
+
+    auto imagingFactory = std::get<winrt::com_ptr<IWICImagingFactory>>(result);
+    auto decodedFrame = std::get<winrt::com_ptr<IWICBitmapSource>>(result);
+
+    winrt::com_ptr<IWICFormatConverter> converter;
+    winrt::check_hresult(imagingFactory->CreateFormatConverter(converter.put()));
+
+    winrt::check_hresult(converter->Initialize(
+        decodedFrame.get(),
+        GUID_WICPixelFormat32bppPBGRA,
+        WICBitmapDitherTypeNone,
+        nullptr,
+        0.0f,
+        WICBitmapPaletteTypeMedianCut));
+
+    imageOrError.image =
+        std::make_shared<winrt::Microsoft::ReactNative::Composition::implementation::ImageResponseImage>();
+    winrt::check_hresult(imagingFactory->CreateBitmapFromSource(
+        converter.get(), WICBitmapCacheOnLoad, imageOrError.image->m_wicbmp.put()));
+  } catch (winrt::hresult_error const &ex) {
+    imageOrError.errorInfo = std::make_shared<facebook::react::ImageErrorInfo>();
+    imageOrError.errorInfo->error = ::Microsoft::ReactNative::FormatHResultError(winrt::hresult_error(ex));
+  }
+  return imageOrError;
+}
+
+ImageResponseOrImageErrorInfo UriBrushFactoryImageResponse::ResolveImage() {
+  ImageResponseOrImageErrorInfo imageOrError;
+  imageOrError.image =
+      std::make_shared<winrt::Microsoft::ReactNative::Composition::implementation::ImageResponseImage>();
+
+  // Wrap the UriBrushFactory to provide the internal CompositionContext types
+  imageOrError.image
+      ->m_brushFactory = [factory = m_factory](
+                             const winrt::Microsoft::ReactNative::IReactContext &context,
+                             const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext
+                                 &compositionContext) {
+    auto compositor =
+        winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(
+            compositionContext);
+    auto brush = factory(context, compositor);
+    return winrt::Microsoft::ReactNative::Composition::Experimental::implementation::MicrosoftCompositionContextHelper::
+        WrapBrush(brush);
+  };
+  return imageOrError;
+}
+
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation
+
+namespace winrt::Microsoft::ReactNative::Composition::Experimental::implementation {
+
+winrt::Microsoft::ReactNative::Composition::implementation::ImageResponseOrImageErrorInfo
+UriBrushFactoryImageResponse::ResolveImage() {
+  winrt::Microsoft::ReactNative::Composition::implementation::ImageResponseOrImageErrorInfo imageOrError;
+  imageOrError.image =
+      std::make_shared<winrt::Microsoft::ReactNative::Composition::implementation::ImageResponseImage>();
+  imageOrError.image->m_brushFactory = m_factory;
+  return imageOrError;
+}
+
+} // namespace winrt::Microsoft::ReactNative::Composition::Experimental::implementation

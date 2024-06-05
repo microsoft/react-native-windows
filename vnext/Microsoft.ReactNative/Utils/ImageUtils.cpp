@@ -4,6 +4,8 @@
 #include "pch.h"
 #include "ImageUtils.h"
 
+#include <CppRuntimeOptions.h>
+#include <Networking/NetworkPropertyIds.h>
 #include <Shared/cdebug.h>
 #include <Utils/CppWinrtLessExceptions.h>
 #include <windows.Web.Http.h>
@@ -19,7 +21,9 @@ using namespace Windows::Web::Http;
 
 namespace Microsoft::ReactNative {
 
-winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageStreamAsync(ReactImageSource source) {
+winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageStreamAsync(
+    winrt::Microsoft::ReactNative::IReactPropertyBag properties,
+    ReactImageSource source) {
   try {
     co_await winrt::resume_background();
 
@@ -65,6 +69,19 @@ winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageStreamAsync(ReactImag
         source.method.empty() ? winrt::HttpMethod::Get() : winrt::HttpMethod{winrt::to_hstring(source.method)}};
 
     winrt::HttpRequestMessage request{httpMethod, uri};
+
+    // Ideally we'd just set m_httpClient.DefaultRequestHeaders().UserAgent().ParseAdd(m_defaultUserAgent), but when we
+    // do we start hitting E_STATE_CHANGED errors. Which appears to be this issue
+    // https://github.com/MicrosoftDocs/winrt-api/issues/2410 So instead we apply the header to each request
+    auto userAgent = Microsoft::React::GetRuntimeOptionString("Http.UserAgent");
+    if (userAgent.size() > 0) {
+      request.Headers().Append(L"User-Agent", winrt::to_hstring(userAgent));
+    } else {
+      if (auto userAgentProp = winrt::Microsoft::ReactNative::ReactPropertyBag(properties)
+                                   .Get(::Microsoft::React::DefaultUserAgentPropertyId())) {
+        request.Headers().Append(L"User-Agent", winrt::to_hstring(*userAgentProp));
+      }
+    }
 
     if (!source.headers.empty()) {
       for (auto &header : source.headers) {
@@ -161,10 +178,12 @@ winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageInlineDataAsync(React
   co_return nullptr;
 }
 
-winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageMemoryStreamAsync(ReactImageSource source) {
+winrt::IAsyncOperation<winrt::IRandomAccessStream> GetImageMemoryStreamAsync(
+    winrt::Microsoft::ReactNative::IReactPropertyBag properties,
+    ReactImageSource source) {
   switch (source.sourceType) {
     case ImageSourceType::Download:
-      co_return co_await GetImageStreamAsync(source);
+      co_return co_await GetImageStreamAsync(properties, source);
     case ImageSourceType::InlineData:
       co_return co_await GetImageInlineDataAsync(source);
     default: // ImageSourceType::Uri

@@ -212,6 +212,8 @@ TEST_CLASS (HttpResourceIntegrationTest) {
     string error;
     IHttpResource::Response response;
 
+    MicrosoftReactSetRuntimeOptionString("Http.UserAgent", "React Native Windows");
+
     auto resource = IHttpResource::Make();
     resource->SetOnResponse([&rcPromise, &response](int64_t, IHttpResource::Response callbackResponse) {
       response = callbackResponse;
@@ -221,8 +223,6 @@ TEST_CLASS (HttpResourceIntegrationTest) {
       error = std::move(message);
       rcPromise.set_value();
     });
-
-    MicrosoftReactSetRuntimeOptionString("Http.UserAgent", "React Native Windows");
 
     //clang-format off
     resource->SendRequest(

@@ -31,18 +31,21 @@ class RedirectHttpFilter : public winrt::implements<
   winrt::com_ptr<Microsoft::React::Networking::IRedirectEventSource> m_redirEventSrc;
   bool m_allowAutoRedirect{true};
   size_t m_maximumRedirects;
+  winrt::hstring m_defaultUserAgent;
 
  public:
   RedirectHttpFilter(
       size_t maxRedirects,
       winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter,
-      winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilterWithNoCredentials) noexcept;
+      winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilterWithNoCredentials,
+      winrt::hstring defaultUserAgent) noexcept;
 
   RedirectHttpFilter(
       winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilter,
-      winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilterWithNoCredentials) noexcept;
+      winrt::Windows::Web::Http::Filters::IHttpFilter &&innerFilterWithNoCredentials,
+      winrt::hstring defaultUserAgent) noexcept;
 
-  RedirectHttpFilter() noexcept;
+  RedirectHttpFilter(winrt::hstring defaultUserAgent) noexcept;
 
   void SetRequestFactory(std::weak_ptr<IWinRTHttpRequestFactory> factory) noexcept;
 

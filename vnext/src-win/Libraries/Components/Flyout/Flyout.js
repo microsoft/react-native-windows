@@ -3,14 +3,13 @@
  * Licensed under the MIT License.
  * @format
  */
-'use strict';
 
-import * as React from 'react';
+import type {ViewProps} from 'react-native';
 
 import FlyoutNativeComponent from './FlyoutNativeComponent';
-import type {ViewProps} from '../View/ViewPropTypes';
-import {findNodeHandle} from '../../ReactNative/RendererProxy';
-import StyleSheet from '../../StyleSheet/StyleSheet';
+import * as React from 'react';
+import StyleSheet from 'react-native';
+import {findNodeHandle} from 'react-native';
 
 type Placement =
   | 'top'
@@ -33,7 +32,7 @@ type ShowMode =
   | 'transient'
   | 'transient-with-dismiss-on-pointer-move-away';
 
-type Props = $ReadOnly<{|
+type Props = $ReadOnly<{
   ...ViewProps,
 
   // Props
@@ -55,7 +54,7 @@ type Props = $ReadOnly<{|
   verticalOffset?: number,
 
   // Events
-|}>;
+}>;
 
 const styles = StyleSheet.create({
   rctFlyout: {
@@ -63,10 +62,10 @@ const styles = StyleSheet.create({
   },
 });
 
-type State = $ReadOnly<{|
+type State = $ReadOnly<{
   target?: number | null,
   targetRef?: React.ReactNode,
-|}>;
+}>;
 
 /**
  * Renders a flyout component.
@@ -91,9 +90,10 @@ export class Flyout extends React.Component<Props, State> {
     return prevState;
   }
 
+  state = {target: undefined, targetRef: null};
+
   constructor(props: Props) {
     super(props);
-    this.state = {target: undefined, targetRef: null};
   }
 
   render(): React.Node {
