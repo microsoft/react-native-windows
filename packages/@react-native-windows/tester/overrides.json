@@ -63,6 +63,13 @@
     },
     {
       "type": "patch",
+      "file": "src/js/examples/TextInput/TextInputSharedExamples.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputSharedExamples.js",
+      "baseHash": "55efb5c3f34963215650859b8a1bf3cbb5fc6f54",
+      "issue": 13303
+    },
+    {
+      "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
       "baseHash": "5bb19a8c2b266305bd7bd6c97e304160dba12fb4"
