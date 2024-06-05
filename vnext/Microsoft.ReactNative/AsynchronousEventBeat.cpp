@@ -30,8 +30,7 @@ void AsynchronousEventBeat::induce() const {
 }
 
 void AsynchronousEventBeat::request() const {
-  bool alreadyRequested = isRequested_;
-  EventBeat::request();
+  bool alreadyRequested = isRequested_.exchange(true);
   if (!alreadyRequested) {
     if (m_context.UIDispatcher().HasThreadAccess()) {
       induce();
