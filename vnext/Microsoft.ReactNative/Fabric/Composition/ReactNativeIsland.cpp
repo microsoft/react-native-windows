@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 #include "pch.h"
 #include "ReactNativeIsland.h"
-#include "ReactNativeIsland.g.cpp"
 #include "FocusNavigationRequest.g.cpp"
+#include "ReactNativeIsland.g.cpp"
 #include <RootViewSizeChangedEventArgs.g.h>
 
 #include <AutoDraw.h>

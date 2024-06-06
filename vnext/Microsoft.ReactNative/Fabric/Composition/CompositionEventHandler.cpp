@@ -14,8 +14,8 @@
 #include <windowsx.h>
 #include <winrt/Windows.UI.Input.h>
 #include "Composition.Input.h"
-#include "ReactNativeIsland.h"
 #include "CompositionViewComponentView.h"
+#include "ReactNativeIsland.h"
 #include "RootComponentView.h"
 
 #ifdef USE_WINUI3
@@ -456,11 +456,11 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
         auto focusedComponent = RootComponentView().GetFocusedComponent();
         auto args = winrt::make<
             winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
-            focusedComponent ? focusedComponent.Tag()
-                             : static_cast<facebook::react::Tag>(
-                                   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(
-                                       strongRootView)
-                                       ->RootTag()),
+            focusedComponent
+                ? focusedComponent.Tag()
+                : static_cast<facebook::react::Tag>(
+                      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(strongRootView)
+                          ->RootTag()),
             msg,
             wParam,
             lParam);
@@ -477,11 +477,11 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
       if (auto strongRootView = m_wkRootView.get()) {
         auto focusedComponent = RootComponentView().GetFocusedComponent();
         auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
-            focusedComponent ? focusedComponent.Tag()
-                             : static_cast<facebook::react::Tag>(
-                                   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(
-                                       strongRootView)
-                                       ->RootTag()),
+            focusedComponent
+                ? focusedComponent.Tag()
+                : static_cast<facebook::react::Tag>(
+                      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(strongRootView)
+                          ->RootTag()),
             msg,
             wParam,
             lParam);

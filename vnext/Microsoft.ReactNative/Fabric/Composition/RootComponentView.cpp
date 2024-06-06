@@ -53,8 +53,7 @@ void RootComponentView::updateLayoutMetrics(
   if (oldLayoutMetrics.frame != layoutMetrics.frame ||
       oldLayoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor) {
     if (auto rootView = m_wkRootView.get()) {
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)
-          ->NotifySizeChanged();
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->NotifySizeChanged();
     }
   }
 }
