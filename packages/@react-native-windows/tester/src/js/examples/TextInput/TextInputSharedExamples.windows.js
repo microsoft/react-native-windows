@@ -1097,7 +1097,7 @@ module.exports = ([
       );
     },
   },
-  /*{
+  {
     title: 'Clipping',
     name: 'clipping',
     render: function (): React.Node {
@@ -1115,10 +1115,10 @@ module.exports = ([
               fontSize: 16,
             }}
             >
-                <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
+              <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
             </ExampleTextInput>
         </View>
       );
     },
-  },*/
+  },
 ]: Array<RNTesterModuleExample>);

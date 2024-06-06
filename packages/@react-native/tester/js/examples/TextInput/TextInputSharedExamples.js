@@ -1097,7 +1097,7 @@ module.exports = ([
       );
     },
   },
-  /*{
+  {
     title: 'Clipping',
     name: 'clipping',
     render: function (): React.Node {
@@ -1120,5 +1120,5 @@ module.exports = ([
         </View>
       );
     },
-  },*/
+  },
 ]: Array<RNTesterModuleExample>);
