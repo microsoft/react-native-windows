@@ -31,7 +31,7 @@ class CompositionEventHandler {
  public:
   CompositionEventHandler(
       const winrt::Microsoft::ReactNative::ReactContext &context,
-      const winrt::Microsoft::ReactNative::CompositionRootView &CompositionRootView);
+      const winrt::Microsoft::ReactNative::ReactNativeIsland &ReactNativeIsland);
   virtual ~CompositionEventHandler();
 
   int64_t SendMessage(HWND hwnd, uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
@@ -154,7 +154,7 @@ class CompositionEventHandler {
   PointerId m_touchId = 0;
 
   std::map<PointerId, std::vector<ReactTaggedView>> m_currentlyHoveredViewsPerPointer;
-  winrt::weak_ref<winrt::Microsoft::ReactNative::CompositionRootView> m_wkRootView;
+  winrt::weak_ref<winrt::Microsoft::ReactNative::ReactNativeIsland> m_wkRootView;
   winrt::Microsoft::ReactNative::ReactContext m_context;
 
   facebook::react::Tag m_pointerCapturingComponentTag{-1}; // Component that has captured input

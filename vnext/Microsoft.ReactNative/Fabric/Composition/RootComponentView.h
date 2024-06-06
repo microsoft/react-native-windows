@@ -38,7 +38,7 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
 
   // Index that visuals can be inserted into OuterVisual for debugging UI
   uint32_t overlayIndex() noexcept;
-  void start(const winrt::Microsoft::ReactNative::CompositionRootView &rootView) noexcept;
+  void start(const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept;
 
   HRESULT GetFragmentRoot(IRawElementProviderFragmentRoot **pRetVal) noexcept;
   winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept override;
@@ -64,7 +64,7 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   // be clearing its focus But being a reactTaggedView might make it easier to identify cases where that isn't
   // happening.
   winrt::Microsoft::ReactNative::ComponentView m_focusedComponent{nullptr};
-  winrt::weak_ref<winrt::Microsoft::ReactNative::CompositionRootView> m_wkRootView{nullptr};
+  winrt::weak_ref<winrt::Microsoft::ReactNative::ReactNativeIsland> m_wkRootView{nullptr};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
