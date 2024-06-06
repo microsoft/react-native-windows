@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 06 Jun 2024 05:17:00 GMT",
+      "version": "0.0.0-canary.826",
+      "tag": "react-native-windows_v0.0.0-canary.826",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "fefc8353e36dd237ade80eedafcbc95fb1baf55d",
+            "comment": "AsynchronousEventBeat can get locked where it will not beat anymore"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Jun 2024 05:18:10 GMT",
       "version": "0.0.0-canary.825",
       "tag": "react-native-windows_v0.0.0-canary.825",

@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 05 Jun 2024 05:18:10 GMT and should not be manually modified.
+This log was last generated on Thu, 06 Jun 2024 05:17:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.826
+
+Thu, 06 Jun 2024 05:17:00 GMT
+
+### Changes
+
+- AsynchronousEventBeat can get locked where it will not beat anymore (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.825
 
