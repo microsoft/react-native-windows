@@ -1,8 +1,128 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 15 May 2024 05:14:53 GMT and should not be manually modified.
+This log was last generated on Thu, 06 Jun 2024 05:17:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.826
+
+Thu, 06 Jun 2024 05:17:00 GMT
+
+### Changes
+
+- AsynchronousEventBeat can get locked where it will not beat anymore (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.825
+
+Wed, 05 Jun 2024 05:18:10 GMT
+
+### Changes
+
+- Sorts imports and fixes modernizes types for Flyout component (ericroz@meta.com)
+- Upgrade to Windows SDK 10.0.22621.0 (julio.rocha@microsoft.com)
+- Use prettier-plugin-hermes-parser to match upstream settings (erozell@outlook.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.219
+- Bump @react-native-windows/codegen to v0.0.0-canary.93
+- Bump @rnw-scripts/just-task to v2.3.38
+- Bump react-native-platform-override to v1.9.39
+
+## 0.0.0-canary.824
+
+Tue, 04 Jun 2024 05:18:35 GMT
+
+### Changes
+
+- Integrate 5/25 (34109996+chiaramooney@users.noreply.github.com)
+- [Fabric] Support blob: images, and provide better image.onError callbacks (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.218
+- Bump @react-native-windows/codegen to v0.0.0-canary.92
+- Bump @rnw-scripts/eslint-config to v1.2.21
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.25
+- Bump @rnw-scripts/just-task to v2.3.37
+- Bump react-native-platform-override to v1.9.38
+
+## 0.0.0-canary.823
+
+Sat, 01 Jun 2024 05:21:30 GMT
+
+### Changes
+
+- Integrate 5/14 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.217
+- Bump @react-native-windows/codegen to v0.0.0-canary.91
+- Bump @rnw-scripts/eslint-config to v1.2.20
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.24
+- Bump @rnw-scripts/just-task to v2.3.36
+- Bump react-native-platform-override to v1.9.37
+
+## 0.0.0-canary.822
+
+Thu, 30 May 2024 05:18:26 GMT
+
+### Changes
+
+- RN Integration 05/11 (1422161+marlenecota@users.noreply.github.com)
+- Folly and Fmt CodeQL patches (1422161+marlenecota@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.216
+- Bump @react-native-windows/codegen to v0.0.0-canary.90
+- Bump @rnw-scripts/eslint-config to v1.2.19
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.23
+- Bump @rnw-scripts/just-task to v2.3.35
+- Bump react-native-platform-override to v1.9.36
+
+## 0.0.0-canary.821
+
+Wed, 29 May 2024 05:20:02 GMT
+
+### Changes
+
+- APIs to enable RootViews that size to content (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.820
+
+Fri, 24 May 2024 05:17:25 GMT
+
+### Changes
+
+- remove flatlist fork (email not defined)
+
+## 0.0.0-canary.819
+
+Thu, 23 May 2024 05:17:50 GMT
+
+### Changes
+
+- RN Integration 05/02 (1422161+marlenecota@users.noreply.github.com)
+- RN Integration 04/27 (1422161+marlenecota@users.noreply.github.com)
+- Fork Folly files to patch CodeQL warnings (1422161+marlenecota@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.215
+- Bump @react-native-windows/codegen to v0.0.0-canary.89
+- Bump @rnw-scripts/eslint-config to v1.2.18
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.22
+- Bump @rnw-scripts/just-task to v2.3.34
+- Bump react-native-platform-override to v1.9.35
+
+## 0.0.0-canary.818
+
+Wed, 22 May 2024 05:18:17 GMT
+
+### Changes
+
+- RN Integration 04/20 (1422161+marlenecota@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.214
+- Bump @react-native-windows/codegen to v0.0.0-canary.88
+- Bump @rnw-scripts/eslint-config to v1.2.17
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.21
+- Bump @rnw-scripts/just-task to v2.3.33
+- Bump react-native-platform-override to v1.9.34
+
+## 0.0.0-canary.817
+
+Tue, 21 May 2024 05:14:34 GMT
+
+### Changes
+
+- [Fabric] Add various native focus APIs (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.816
 

@@ -1,8 +1,79 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Wed, 15 May 2024 05:14:54 GMT and should not be manually modified.
+This log was last generated on Wed, 05 Jun 2024 05:18:11 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.23
+
+Wed, 05 Jun 2024 05:18:11 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.50
+- Bump @react-native-windows/telemetry to v0.0.0-canary.101
+- Bump @react-native-windows/cli to v0.0.0-canary.219
+- Bump @rnw-scripts/just-task to v2.3.38
+
+## 1.4.22
+
+Tue, 04 Jun 2024 05:18:35 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.49
+- Bump @react-native-windows/telemetry to v0.0.0-canary.100
+- Bump @react-native-windows/cli to v0.0.0-canary.218
+- Bump @rnw-scripts/eslint-config to v1.2.21
+- Bump @rnw-scripts/just-task to v2.3.37
+
+## 1.4.21
+
+Sat, 01 Jun 2024 05:21:31 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.48
+- Bump @react-native-windows/telemetry to v0.0.0-canary.99
+- Bump @react-native-windows/cli to v0.0.0-canary.217
+- Bump @rnw-scripts/eslint-config to v1.2.20
+- Bump @rnw-scripts/just-task to v2.3.36
+
+## 1.4.20
+
+Thu, 30 May 2024 05:18:26 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.47
+- Bump @react-native-windows/telemetry to v0.0.0-canary.98
+- Bump @react-native-windows/cli to v0.0.0-canary.216
+- Bump @rnw-scripts/eslint-config to v1.2.19
+- Bump @rnw-scripts/just-task to v2.3.35
+
+## 1.4.19
+
+Thu, 23 May 2024 05:17:50 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.46
+- Bump @react-native-windows/telemetry to v0.0.0-canary.97
+- Bump @react-native-windows/cli to v0.0.0-canary.215
+- Bump @rnw-scripts/eslint-config to v1.2.18
+- Bump @rnw-scripts/just-task to v2.3.34
+
+## 1.4.18
+
+Wed, 22 May 2024 05:18:18 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.45
+- Bump @react-native-windows/telemetry to v0.0.0-canary.96
+- Bump @react-native-windows/cli to v0.0.0-canary.214
+- Bump @rnw-scripts/eslint-config to v1.2.17
+- Bump @rnw-scripts/just-task to v2.3.33
 
 ## 1.4.17
 

@@ -90,17 +90,17 @@ public class TestClass
       // of the unitest runners are allowed to pick up a variable from the build file. And given the many
       // ways one can run inttests, this seemed to be the most reasonable out of a lot of poor options.
       var win10SdkFolder = @"C:\Program Files (x86)\Windows Kits\10";
-#if win10SdkVersion10_0_19041_0
-      var win10SdkVersion = "10.0.19041.0";
+#if win10SdkVersion10_0_22621_0
+      var win10SdkVersion = "10.0.22621.0";
 #else
 #error The Win10 Sdk Version must be updated in code when updated in MSBuild.
 #endif
 
       references.AddRange(new[] {
-        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.AI.MachineLearning.MachineLearningContract\3.0.0.0\Windows.AI.MachineLearning.MachineLearningContract.winmd",
+        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.AI.MachineLearning.MachineLearningContract\5.0.0.0\Windows.AI.MachineLearning.MachineLearningContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.AI.MachineLearning.Preview.MachineLearningPreviewContract\2.0.0.0\Windows.AI.MachineLearning.Preview.MachineLearningPreviewContract.winmd",
-        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.ApplicationModel.Calls.Background.CallsBackgroundContract\2.0.0.0\Windows.ApplicationModel.Calls.Background.CallsBackgroundContract.winmd",
-        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.ApplicationModel.Calls.CallsPhoneContract\5.0.0.0\Windows.ApplicationModel.Calls.CallsPhoneContract.winmd",
+        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.ApplicationModel.Calls.Background.CallsBackgroundContract\4.0.0.0\Windows.ApplicationModel.Calls.Background.CallsBackgroundContract.winmd",
+        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.ApplicationModel.Calls.CallsPhoneContract\7.0.0.0\Windows.ApplicationModel.Calls.CallsPhoneContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.ApplicationModel.Calls.CallsVoipContract\4.0.0.0\Windows.ApplicationModel.Calls.CallsVoipContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.ApplicationModel.CommunicationBlocking.CommunicationBlockingContract\2.0.0.0\Windows.ApplicationModel.CommunicationBlocking.CommunicationBlockingContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.ApplicationModel.SocialInfo.SocialInfoContract\2.0.0.0\Windows.ApplicationModel.SocialInfo.SocialInfoContract.winmd",
@@ -111,7 +111,7 @@ public class TestClass
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Devices.SmartCards.SmartCardBackgroundTriggerContract\3.0.0.0\Windows.Devices.SmartCards.SmartCardBackgroundTriggerContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Devices.SmartCards.SmartCardEmulatorContract\6.0.0.0\Windows.Devices.SmartCards.SmartCardEmulatorContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Foundation.FoundationContract\4.0.0.0\Windows.Foundation.FoundationContract.winmd",
-        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Foundation.UniversalApiContract\10.0.0.0\Windows.Foundation.UniversalApiContract.winmd",
+        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Foundation.UniversalApiContract\15.0.0.0\Windows.Foundation.UniversalApiContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Gaming.XboxLive.StorageApiContract\1.0.0.0\Windows.Gaming.XboxLive.StorageApiContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Graphics.Printing3D.Printing3DContract\4.0.0.0\Windows.Graphics.Printing3D.Printing3DContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.Networking.Connectivity.WwanContract\2.0.0.0\Windows.Networking.Connectivity.WwanContract.winmd",
@@ -125,7 +125,7 @@ public class TestClass
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.System.Profile.SystemManufacturers.SystemManufacturersContract\3.0.0.0\Windows.System.Profile.SystemManufacturers.SystemManufacturersContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.System.SystemManagementContract\7.0.0.0\Windows.System.SystemManagementContract.winmd",
         $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.UI.ViewManagement.ViewManagementViewScalingContract\1.0.0.0\Windows.UI.ViewManagement.ViewManagementViewScalingContract.winmd",
-        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.UI.Xaml.Core.Direct.XamlDirectContract\2.0.0.0\Windows.UI.Xaml.Core.Direct.XamlDirectContract.winmd",
+        $@"{win10SdkFolder}\References\{win10SdkVersion}\Windows.UI.Xaml.Core.Direct.XamlDirectContract\5.0.0.0\Windows.UI.Xaml.Core.Direct.XamlDirectContract.winmd",
         $@"{win10SdkFolder}\UnionMetadata\{win10SdkVersion}\Facade\Windows.winmd"
       });
 

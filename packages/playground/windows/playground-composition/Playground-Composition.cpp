@@ -52,43 +52,41 @@ void RegisterCustomComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder
  *
  * This allows applications to provide custom image rendering pipelines.
  */
-struct EllipseImageHandler : winrt::implements<
-                                 EllipseImageHandler,
-                                 winrt::Microsoft::ReactNative::Composition::Experimental::IUriBrushProvider,
-                                 winrt::Microsoft::ReactNative::Composition::IUriImageProvider> {
+struct EllipseImageHandler
+    : winrt::implements<EllipseImageHandler, winrt::Microsoft::ReactNative::Composition::IUriImageProvider> {
   bool CanLoadImageUri(winrt::Microsoft::ReactNative::IReactContext context, winrt::Windows::Foundation::Uri uri) {
     return uri.SchemeName() == L"ellipse";
   }
 
-  winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::Experimental::UriBrushFactory>
-  GetSourceAsync(
+  winrt::Windows::Foundation::IAsyncOperation<winrt::Microsoft::ReactNative::Composition::ImageResponse>
+  GetImageResponseAsync(
       const winrt::Microsoft::ReactNative::IReactContext &context,
       const winrt::Microsoft::ReactNative::Composition::ImageSource &imageSource) {
-    co_return [uri = imageSource.Uri(), size = imageSource.Size(), scale = imageSource.Scale(), context](
-                  const winrt::Microsoft::ReactNative::IReactContext &reactContext,
-                  const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext
-                      &compositionContext) -> winrt::Microsoft::ReactNative::Composition::Experimental::IBrush {
-      auto compositor =
-          winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(
-              compositionContext);
-      auto drawingBrush = compositionContext.CreateDrawingSurfaceBrush(
-          size,
-          winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-          winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
-      POINT pt;
-      Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingBrush, scale, &pt);
-      auto renderTarget = autoDraw.GetRenderTarget();
+    co_return winrt::Microsoft::ReactNative::Composition::Experimental::UriBrushFactoryImageResponse(
+        [uri = imageSource.Uri(), size = imageSource.Size(), scale = imageSource.Scale(), context](
+            const winrt::Microsoft::ReactNative::IReactContext &reactContext,
+            const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compositionContext)
+            -> winrt::Microsoft::ReactNative::Composition::Experimental::IBrush {
+          auto compositor = winrt::Microsoft::ReactNative::Composition::Experimental::
+              MicrosoftCompositionContextHelper::InnerCompositor(compositionContext);
+          auto drawingBrush = compositionContext.CreateDrawingSurfaceBrush(
+              size,
+              winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
+              winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
+          POINT pt;
+          Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(drawingBrush, scale, &pt);
+          auto renderTarget = autoDraw.GetRenderTarget();
 
-      winrt::com_ptr<ID2D1SolidColorBrush> brush;
-      renderTarget->CreateSolidColorBrush({1.0f, 0.0f, 0.0f, 1.0f}, brush.put());
-      renderTarget->DrawEllipse(
-          {{(pt.x + size.Width / 2) / scale, (pt.y + size.Height / 2) / scale},
-           (size.Width / 2) / scale,
-           (size.Height / 2) / scale},
-          brush.get());
+          winrt::com_ptr<ID2D1SolidColorBrush> brush;
+          renderTarget->CreateSolidColorBrush({1.0f, 0.0f, 0.0f, 1.0f}, brush.put());
+          renderTarget->DrawEllipse(
+              {{(pt.x + size.Width / 2) / scale, (pt.y + size.Height / 2) / scale},
+               (size.Width / 2) / scale,
+               (size.Height / 2) / scale},
+              brush.get());
 
-      return drawingBrush;
-    };
+          return drawingBrush;
+        });
   }
 };
 
@@ -128,6 +126,7 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   bool m_useLiftedComposition{true};
+  bool m_sizeToContent{false};
   winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget m_target{nullptr};
   LONG m_height{0};
   LONG m_width{0};
@@ -195,6 +194,11 @@ struct WindowData {
     return winrt::Microsoft::UI::GetWindowIdFromWindow(childHwnd);
   }
 
+  void ApplyConstraintsForContentSizedWindow(winrt::Microsoft::ReactNative::LayoutConstraints &constraints) {
+    constraints.MinimumSize = {300, 300};
+    constraints.MaximumSize = {1000, 1000};
+  }
+
   LRESULT OnCommand(HWND hwnd, int id, HWND /* hwndCtl*/, UINT) {
     switch (id) {
       case IDM_OPENJSFILE: {
@@ -216,6 +220,10 @@ struct WindowData {
           host.InstanceSettings().BundleRootPath(
               std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
           host.InstanceSettings().UseDeveloperSupport(true);
+
+          // Some of the images in RNTester require a user-agent header to properly fetch
+          winrt::Microsoft::ReactNative::HttpSettings::SetDefaultUserAgent(
+              host.InstanceSettings(), L"React Native Windows Playground");
 
           // Currently there is only SystemVisualSiteBridge which supports hosing ContentIslands within System
           // Composition So our custom components do not run when running on lifted composition. This can be enabled in
@@ -254,7 +262,35 @@ struct WindowData {
               bridge.Show();
 
               m_compRootView.ScaleFactor(ScaleFactor(hwnd));
-              m_compRootView.Size({m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)});
+              winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+              constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::LeftToRight;
+              constraints.MaximumSize =
+                  constraints.MinimumSize = {m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
+
+              if (m_sizeToContent) {
+                ApplyConstraintsForContentSizedWindow(constraints);
+
+                // Disable user sizing of the hwnd
+                ::SetWindowLong(hwnd, GWL_STYLE, GetWindowLong(hwnd, GWL_STYLE) & ~WS_SIZEBOX);
+                m_compRootView.SizeChanged(
+                    [hwnd](auto sender, const winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs &args) {
+                      RECT rcClient, rcWindow;
+                      GetClientRect(hwnd, &rcClient);
+                      GetWindowRect(hwnd, &rcWindow);
+
+                      SetWindowPos(
+                          hwnd,
+                          nullptr,
+                          0,
+                          0,
+                          static_cast<int>(args.Size().Width) + rcClient.left - rcClient.right + rcWindow.right -
+                              rcWindow.left,
+                          static_cast<int>(args.Size().Height) + rcClient.top - rcClient.bottom + rcWindow.bottom -
+                              rcWindow.top,
+                          SWP_DEFERERASE | SWP_NOACTIVATE | SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+                    });
+              }
+              m_compRootView.Arrange(constraints, {0, 0});
 
               bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
@@ -291,7 +327,10 @@ struct WindowData {
                   .InternalRootVisual(winrt::Microsoft::ReactNative::Composition::Experimental::
                                           SystemCompositionContextHelper::CreateVisual(root));
               m_compRootView.ScaleFactor(ScaleFactor(hwnd));
-              m_compRootView.Size({m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)});
+              winrt::Microsoft::ReactNative::LayoutConstraints contraints;
+              contraints.MaximumSize =
+                  contraints.MinimumSize = {m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
+              m_compRootView.Arrange(contraints, {0, 0});
             }
           }
 
@@ -353,8 +392,13 @@ struct WindowData {
         if (m_compRootView) {
           winrt::Windows::Foundation::Size size{m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
           if (!IsIconic(hwnd)) {
-            m_compRootView.Arrange(size);
-            m_compRootView.Size(size);
+            winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+            constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::LeftToRight;
+            constraints.MinimumSize = constraints.MaximumSize = size;
+            if (m_sizeToContent) {
+              ApplyConstraintsForContentSizedWindow(constraints);
+            }
+            m_compRootView.Arrange(constraints, {0, 0});
           }
         }
       }
@@ -449,6 +493,7 @@ struct WindowData {
         CheckDlgButton(hwnd, IDC_FASTREFRESH, boolToCheck(self->InstanceSettings().UseFastRefresh()));
         CheckDlgButton(hwnd, IDC_DIRECTDEBUGGER, boolToCheck(self->InstanceSettings().UseDirectDebugger()));
         CheckDlgButton(hwnd, IDC_BREAKONNEXTLINE, boolToCheck(self->InstanceSettings().DebuggerBreakOnNextLine()));
+        CheckDlgButton(hwnd, IDC_SIZETOCONTENT, boolToCheck(self->m_sizeToContent));
 
         auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);
         SetWindowTextW(portEditControl, std::to_wstring(self->InstanceSettings().DebuggerPort()).c_str());
@@ -472,6 +517,7 @@ struct WindowData {
             self->InstanceSettings().UseDirectDebugger(IsDlgButtonChecked(hwnd, IDC_DIRECTDEBUGGER) == BST_CHECKED);
             self->InstanceSettings().DebuggerBreakOnNextLine(
                 IsDlgButtonChecked(hwnd, IDC_BREAKONNEXTLINE) == BST_CHECKED);
+            self->m_sizeToContent = (IsDlgButtonChecked(hwnd, IDC_SIZETOCONTENT) == BST_CHECKED);
 
             WCHAR buffer[6] = {};
             auto portEditControl = GetDlgItem(hwnd, IDC_DEBUGGERPORT);

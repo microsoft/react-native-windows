@@ -43,6 +43,10 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   HRESULT GetFragmentRoot(IRawElementProviderFragmentRoot **pRetVal) noexcept;
   winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept override;
 
+  void updateLayoutMetrics(
+      facebook::react::LayoutMetrics const &layoutMetrics,
+      facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
+
   winrt::IInspectable UiaProviderFromPoint(const POINT &ptPixels) noexcept;
 
   RootComponentView(

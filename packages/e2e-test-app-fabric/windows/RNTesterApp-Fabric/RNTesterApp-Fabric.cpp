@@ -50,8 +50,9 @@ void UpdateRootViewSizeToAppWindow(
   // Do not relayout when minimized
   if (window.Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>().State() !=
       winrt::Microsoft::UI::Windowing::OverlappedPresenterState::Minimized) {
-    rootView.Arrange(size);
-    rootView.Size(size);
+    winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+    constraints.MaximumSize = constraints.MinimumSize = size;
+    rootView.Arrange(constraints, {0, 0});
   }
 }
 
@@ -64,6 +65,10 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
   PathCchRemoveFileSpec(appDirectory, MAX_PATH);
 
   auto host = winrt::Microsoft::ReactNative::ReactNativeHost();
+
+  // Some of the images in RNTester require a user-agent header to properly fetch
+  winrt::Microsoft::ReactNative::HttpSettings::SetDefaultUserAgent(
+      host.InstanceSettings(), L"React Native Windows E2E Test App");
 
   // Include any autolinked modules
   RegisterAutolinkedNativeModulePackages(host.PackageProviders());

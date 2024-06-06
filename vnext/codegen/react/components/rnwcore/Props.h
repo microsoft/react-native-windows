@@ -256,6 +256,10 @@ static inline std::string toString(const ModalHostViewPresentationStyle &value) 
 }
 using ModalHostViewSupportedOrientationsMask = uint32_t;
 
+struct ModalHostViewSupportedOrientationsMaskWrapped {
+  ModalHostViewSupportedOrientationsMask value;
+};
+
 enum class ModalHostViewSupportedOrientations: ModalHostViewSupportedOrientationsMask {
   Portrait = 1 << 0,
   PortraitUpsideDown = 1 << 1,
@@ -282,50 +286,50 @@ constexpr void operator|=(
   lhs = lhs | static_cast<ModalHostViewSupportedOrientationsMask>(rhs);
 }
 
-static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ModalHostViewSupportedOrientationsMask &result) {
+static inline void fromRawValue(const PropsParserContext& context, const RawValue &value, ModalHostViewSupportedOrientationsMaskWrapped &wrapped) {
   auto items = std::vector<std::string>{value};
   for (const auto &item : items) {
     if (item == "portrait") {
-      result |= ModalHostViewSupportedOrientations::Portrait;
+      wrapped.value |= ModalHostViewSupportedOrientations::Portrait;
       continue;
     }
     if (item == "portrait-upside-down") {
-      result |= ModalHostViewSupportedOrientations::PortraitUpsideDown;
+      wrapped.value |= ModalHostViewSupportedOrientations::PortraitUpsideDown;
       continue;
     }
     if (item == "landscape") {
-      result |= ModalHostViewSupportedOrientations::Landscape;
+      wrapped.value |= ModalHostViewSupportedOrientations::Landscape;
       continue;
     }
     if (item == "landscape-left") {
-      result |= ModalHostViewSupportedOrientations::LandscapeLeft;
+      wrapped.value |= ModalHostViewSupportedOrientations::LandscapeLeft;
       continue;
     }
     if (item == "landscape-right") {
-      result |= ModalHostViewSupportedOrientations::LandscapeRight;
+      wrapped.value |= ModalHostViewSupportedOrientations::LandscapeRight;
       continue;
     }
     abort();
   }
 }
 
-static inline std::string toString(const ModalHostViewSupportedOrientationsMask &value) {
+static inline std::string toString(const ModalHostViewSupportedOrientationsMaskWrapped &wrapped) {
     auto result = std::string{};
     auto separator = std::string{", "};
 
-    if (value & ModalHostViewSupportedOrientations::Portrait) {
+    if (wrapped.value & ModalHostViewSupportedOrientations::Portrait) {
       result += "portrait" + separator;
     }
-    if (value & ModalHostViewSupportedOrientations::PortraitUpsideDown) {
+    if (wrapped.value & ModalHostViewSupportedOrientations::PortraitUpsideDown) {
       result += "portrait-upside-down" + separator;
     }
-    if (value & ModalHostViewSupportedOrientations::Landscape) {
+    if (wrapped.value & ModalHostViewSupportedOrientations::Landscape) {
       result += "landscape" + separator;
     }
-    if (value & ModalHostViewSupportedOrientations::LandscapeLeft) {
+    if (wrapped.value & ModalHostViewSupportedOrientations::LandscapeLeft) {
       result += "landscape-left" + separator;
     }
-    if (value & ModalHostViewSupportedOrientations::LandscapeRight) {
+    if (wrapped.value & ModalHostViewSupportedOrientations::LandscapeRight) {
       result += "landscape-right" + separator;
     }
     if (!result.empty()) {
