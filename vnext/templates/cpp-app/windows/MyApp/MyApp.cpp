@@ -25,7 +25,7 @@ float ScaleFactor(HWND hwnd) noexcept {
 }
 
 void UpdateRootViewSizeToAppWindow(
-    winrt::Microsoft::ReactNative::CompositionRootView const &rootView,
+    winrt::Microsoft::ReactNative::ReactNativeIsland const &rootView,
     winrt::Microsoft::UI::Windowing::AppWindow const &window) {
   auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
   auto scaleFactor = ScaleFactor(hwnd);
@@ -111,7 +111,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   // Create a RootView which will present a react-native component
   winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
   viewOptions.ComponentName(mainComponentName);
-  auto rootView = winrt::Microsoft::ReactNative::CompositionRootView(compositor);
+  auto rootView = winrt::Microsoft::ReactNative::ReactNativeIsland(compositor);
   rootView.ReactViewHost(winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
 
   // Update the size of the RootView when the AppWindow changes size
