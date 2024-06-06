@@ -70,6 +70,13 @@
     },
     {
       "type": "patch",
+      "file": "src/js/examples/TurboModule/SampleTurboModuleExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
+      "baseHash": "6e532e2e2fab2fd61b864f6ebe64d7725061043d",
+      "issue": 0
+    },
+    {
+      "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
       "baseHash": "5bb19a8c2b266305bd7bd6c97e304160dba12fb4"

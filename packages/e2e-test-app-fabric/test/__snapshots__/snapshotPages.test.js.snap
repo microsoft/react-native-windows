@@ -78731,7 +78731,9 @@ exports[`snapshotAllPages TextInput 20`] = `
     }
     testID="textinput-clipping"
   >
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    <Text>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+    </Text>
   </TextInput>
 </View>
 `;
