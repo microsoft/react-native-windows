@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "[Fabric] Touch pointer moved was being reported to richedit as a pointerup",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
