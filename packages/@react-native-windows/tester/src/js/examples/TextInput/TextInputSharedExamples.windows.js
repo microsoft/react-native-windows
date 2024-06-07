@@ -1097,6 +1097,7 @@ module.exports = ([
       );
     },
   },
+  // // [Windows #13303 - Text must be in <Text> Control] 
   {
     title: 'Clipping',
     name: 'clipping',
@@ -1113,10 +1114,10 @@ module.exports = ([
               borderWidth: 5,
               overflow: 'hidden',
               fontSize: 16,
-            }}>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua.
-          </ExampleTextInput>
+            }}
+            >
+              <Text>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Text>
+            </ExampleTextInput>
         </View>
       );
     },

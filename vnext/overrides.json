@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240525-840c31c3a",
+  "baseVersion": "0.75.0-nightly-20240531-c046198cc",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "bd274caf8faae09b1f0513a4086c07b778072e78"
+      "baseHash": "90a91757cbe47cee770a082dc1effe1ed8908744"
     },
     {
       "type": "derived",
@@ -355,19 +355,19 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableHighlight.js",
-      "baseHash": "9d57e5e91830560775ab1b1cc0836bd35de10281"
+      "baseHash": "93b82dba785d9c2799e59e8aa4dc886d5d474a5f"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "164afe5ce3379b2ae08164a2c6f90e6f705be769"
+      "baseHash": "453a8e280be0833d0470e6645db217a108710036"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseHash": "98e8e444c40dc5e010af9d22a7cff24f314cff35"
+      "baseHash": "7a586bfae7efe89e4e7e09dddbd99af59b2744b7"
     },
     {
       "type": "patch",

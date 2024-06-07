@@ -211,6 +211,8 @@ class SampleTurboModuleExample extends React.Component<{||}, State> {
       );
     }
 
+    /*
+    [Windows - Android Only Example
     // Lazily load the module
     NativeSampleTurboModule.getConstants();
     if (global.__SampleTurboModuleJSIBindings !== 'Hello JSI!') {
@@ -218,6 +220,8 @@ class SampleTurboModuleExample extends React.Component<{||}, State> {
         'The JSI bindings for SampleTurboModule are not installed.',
       );
     }
+    Windows]
+    */
   }
 
   render(): React.Node {

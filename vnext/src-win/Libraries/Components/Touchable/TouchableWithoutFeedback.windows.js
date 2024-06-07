@@ -236,7 +236,10 @@ const TouchableWithoutFeedback: React.AbstractComponent<
             disabled: props.disabled,
           }
         : _accessibilityState,
-    focusable: props.focusable !== false && props.onPress !== undefined,
+    focusable:
+      props.focusable !== false &&
+      props.onPress !== undefined &&
+      !props.disabled,
 
     accessibilityElementsHidden:
       props['aria-hidden'] ?? props.accessibilityElementsHidden,
