@@ -211,7 +211,8 @@ class SampleTurboModuleExample extends React.Component<{||}, State> {
       );
     }
 
-    /*[Windows - Android Only Example
+    /*
+    [Windows - Android Only Example
     // Lazily load the module
     NativeSampleTurboModule.getConstants();
     if (global.__SampleTurboModuleJSIBindings !== 'Hello JSI!') {
