@@ -1097,6 +1097,7 @@ module.exports = ([
       );
     },
   },
+  // // [Windows #13303 - Text must be in <Text> Control] 
   {
     title: 'Clipping',
     name: 'clipping',
