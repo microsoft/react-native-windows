@@ -8,12 +8,12 @@
 #include <winrt/Microsoft.UI.Input.h>
 #endif
 
-#include <Fabric/Composition/CompositionRootView.h>
+#include <Fabric/Composition/ReactNativeIsland.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
 
 CompositionRootAutomationProvider::CompositionRootAutomationProvider(
-    const winrt::Microsoft::ReactNative::CompositionRootView &rootView) noexcept
+    const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept
     : m_wkRootView{rootView} {}
 
 // Implementations should return NULL for a top-level element that is hosted in a window. Other elements should return
@@ -170,7 +170,7 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_ProviderOptions(Provide
 winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
 CompositionRootAutomationProvider::rootComponentView() noexcept {
   if (auto rootView = m_wkRootView.get()) {
-    auto innerRootView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView);
+    auto innerRootView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView);
     if (auto view = innerRootView->GetComponentView()) {
       return view;
     }

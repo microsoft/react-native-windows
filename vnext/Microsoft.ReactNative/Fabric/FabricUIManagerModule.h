@@ -29,7 +29,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
   void startSurface(
-      const winrt::Microsoft::ReactNative::CompositionRootView &rootView,
+      const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView,
       facebook::react::SurfaceId surfaceId,
       const facebook::react::LayoutConstraints &layoutConstraints,
       const std::string &moduleName,
@@ -49,7 +49,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
 
   const IComponentViewRegistry &GetViewRegistry() const noexcept;
 
-  winrt::Microsoft::ReactNative::CompositionRootView GetCompositionRootView(
+  winrt::Microsoft::ReactNative::ReactNativeIsland GetReactNativeIsland(
       facebook::react::SurfaceId surfaceId) const noexcept;
 
  private:
@@ -73,7 +73,7 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
 
   ComponentViewRegistry m_registry;
   struct SurfaceInfo {
-    winrt::weak_ref<winrt::Microsoft::ReactNative::CompositionRootView> wkRootView{nullptr};
+    winrt::weak_ref<winrt::Microsoft::ReactNative::ReactNativeIsland> wkRootView{nullptr};
   };
 
   std::unordered_map<facebook::react::SurfaceId, SurfaceInfo> m_surfaceRegistry;

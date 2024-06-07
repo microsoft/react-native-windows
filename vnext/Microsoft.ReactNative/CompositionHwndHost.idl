@@ -4,7 +4,7 @@
 import "IJSValueWriter.idl";
 import "ReactCoreInjection.idl";
 import "ReactNativeHost.idl";
-import "CompositionRootView.idl";
+import "ReactNativeIsland.idl";
 #include "NamespaceRedirect.h"
 #include "DocString.h"
 
