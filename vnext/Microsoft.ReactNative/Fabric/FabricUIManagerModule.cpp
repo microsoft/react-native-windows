@@ -129,7 +129,7 @@ const IComponentViewRegistry &FabricUIManager::GetViewRegistry() const noexcept 
 }
 
 void FabricUIManager::startSurface(
-    const winrt::Microsoft::ReactNative::CompositionRootView &rootView,
+    const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView,
     facebook::react::SurfaceId surfaceId,
     const facebook::react::LayoutConstraints &layoutConstraints,
     const std::string &moduleName,
@@ -163,7 +163,7 @@ void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept
   m_surfaceManager->stopSurface(surfaceId);
 }
 
-winrt::Microsoft::ReactNative::CompositionRootView FabricUIManager::GetCompositionRootView(
+winrt::Microsoft::ReactNative::ReactNativeIsland FabricUIManager::GetReactNativeIsland(
     facebook::react::SurfaceId surfaceId) const noexcept {
   return m_surfaceRegistry.at(surfaceId).wkRootView.get();
 }

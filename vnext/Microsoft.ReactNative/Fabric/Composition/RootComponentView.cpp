@@ -8,7 +8,7 @@
 
 #include <Fabric/FabricUIManagerModule.h>
 #include "CompositionRootAutomationProvider.h"
-#include "CompositionRootView.h"
+#include "ReactNativeIsland.h"
 #include "Theme.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
@@ -29,7 +29,7 @@ RootComponentView::RootComponentView(
 
 RootComponentView::~RootComponentView() {
   if (auto rootView = m_wkRootView.get()) {
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)->RemoveRenderedVisual(
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->RemoveRenderedVisual(
         OuterVisual());
   }
 }
@@ -53,8 +53,7 @@ void RootComponentView::updateLayoutMetrics(
   if (oldLayoutMetrics.frame != layoutMetrics.frame ||
       oldLayoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor) {
     if (auto rootView = m_wkRootView.get()) {
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)
-          ->NotifySizeChanged();
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->NotifySizeChanged();
     }
   }
 }
@@ -74,7 +73,7 @@ void RootComponentView::SetFocusedComponent(const winrt::Microsoft::ReactNative:
 
   if (value) {
     if (auto rootView = m_wkRootView.get()) {
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)->TrySetFocus();
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->TrySetFocus();
     }
     auto args = winrt::make<winrt::Microsoft::ReactNative::implementation::GotFocusEventArgs>(value);
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(value)->onGotFocus(args);
@@ -162,7 +161,7 @@ HRESULT RootComponentView::GetFragmentRoot(IRawElementProviderFragmentRoot **pRe
   if (uiManager == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  auto rootView = uiManager->GetCompositionRootView(Tag());
+  auto rootView{uiManager->GetReactNativeIsland(Tag())};
   if (!rootView) {
     return UIA_E_ELEMENTNOTAVAILABLE;
   }
@@ -179,8 +178,8 @@ uint32_t RootComponentView::overlayIndex() noexcept {
   return 1;
 }
 
-void RootComponentView::start(const winrt::Microsoft::ReactNative::CompositionRootView &rootView) noexcept {
-  winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)->AddRenderedVisual(
+void RootComponentView::start(const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept {
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->AddRenderedVisual(
       OuterVisual());
   m_wkRootView = rootView;
 }

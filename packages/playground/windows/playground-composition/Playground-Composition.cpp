@@ -122,7 +122,7 @@ struct WindowData {
   static constexpr uint16_t defaultDebuggerPort = 9229;
 
   std::wstring m_bundleFile;
-  winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};
+  winrt::Microsoft::ReactNative::ReactNativeIsland m_compRootView{nullptr};
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   bool m_useLiftedComposition{true};
@@ -240,9 +240,9 @@ struct WindowData {
 
           if (!m_compRootView) {
             if (windowData->m_useLiftedComposition) {
-              m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView(g_liftedCompositor);
+              m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland(g_liftedCompositor);
             } else {
-              m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView();
+              m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland();
             }
 
             if (windowData->m_useLiftedComposition) {

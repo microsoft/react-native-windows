@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 06 Jun 2024 05:17:00 GMT and should not be manually modified.
+This log was last generated on Fri, 07 Jun 2024 05:16:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.827
+
+Fri, 07 Jun 2024 05:16:19 GMT
+
+### Changes
+
+- Rename CompositionRootView to ReactNativeIsland (10109130+sharath2727@users.noreply.github.com)
 
 ## 0.0.0-canary.826
 

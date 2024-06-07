@@ -23,19 +23,19 @@ namespace Microsoft.ReactNative
   [default_interface]
   [webhosthidden]
   [experimental]
-  DOC_STRING("Argument type for @CompositionRootView.NavigateFocus.")
+  DOC_STRING("Argument type for @ReactNativeIsland.NavigateFocus.")
   runtimeclass FocusNavigationRequest {
     DOC_STRING("Creates new instance of @FocusNavigationRequest")
         FocusNavigationRequest(FocusNavigationReason reason);
 
-    DOC_STRING("The reason the @CompositionRootView is getting focus.")
+    DOC_STRING("The reason the @ReactNativeIsland is getting focus.")
     FocusNavigationReason Reason {get;set;};
   };
 
   [default_interface]
   [webhosthidden]
   [experimental]
-  DOC_STRING("Provides result from a @CompositionRootView.NavigateFocus method call.")
+  DOC_STRING("Provides result from a @ReactNativeIsland.NavigateFocus method call.")
   runtimeclass FocusNavigationResult {
     DOC_STRING("Gets a value that indicates whether the focus successfully moved.")
     Boolean WasFocusMoved {get;};
@@ -51,7 +51,7 @@ namespace Microsoft.ReactNative
   " in future versions")
   interface IInternalCompositionRootView
   {
-    DOC_STRING("The RootVisual associated with the @CompositionRootView. It must be set to show any React UI elements.")
+    DOC_STRING("The RootVisual associated with the @ReactNativeIsland. It must be set to show any React UI elements.")
     Microsoft.ReactNative.Composition.Experimental.IVisual InternalRootVisual { get; set; };
     
     DOC_STRING("Hosting Window that input is coming from. Only required when not using ContentIslands")
@@ -73,13 +73,13 @@ namespace Microsoft.ReactNative
   [webhosthidden]
   [experimental]
   DOC_STRING("A windows composition component that hosts React Native UI elements.")
-  runtimeclass CompositionRootView
+  runtimeclass ReactNativeIsland
   {
-    DOC_STRING("Creates a new instance of @CompositionRootView.")
-    CompositionRootView();
+    DOC_STRING("Creates a new instance of @ReactNativeIsland.")
+    ReactNativeIsland();
 
 #ifdef USE_WINUI3
-    CompositionRootView(Microsoft.UI.Composition.Compositor compositor);
+    ReactNativeIsland(Microsoft.UI.Composition.Compositor compositor);
 #endif
 
     DOC_STRING(
@@ -87,7 +87,7 @@ namespace Microsoft.ReactNative
       "It must be set to show any React UI elements.")
     IReactViewHost ReactViewHost { get; set; };
 
-    DOC_STRING("The RootVisual associated with the @CompositionRootView. It must be set to show any React UI elements.")
+    DOC_STRING("The RootVisual associated with the @ReactNativeIsland. It must be set to show any React UI elements.")
     Microsoft.UI.Composition.Visual RootVisual { get; };
 
     Windows.Foundation.Size Size { get; };
@@ -95,7 +95,7 @@ namespace Microsoft.ReactNative
     DOC_STRING("ScaleFactor for this windows (DPI/96)")
     Single ScaleFactor {get; set;};
 
-    DOC_STRING("Move focus to this @CompositionRootView")
+    DOC_STRING("Move focus to this @ReactNativeIsland")
     FocusNavigationResult NavigateFocus(FocusNavigationRequest request);
 
     Windows.Foundation.Size Measure(LayoutConstraints layoutConstraints, Windows.Foundation.Point viewportOffset);

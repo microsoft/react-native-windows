@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 #pragma once
 
-#include "CompositionRootView.g.h"
+#include "ReactNativeIsland.g.h"
 #include <FocusNavigationRequest.g.h>
 #include <FocusNavigationResult.g.h>
 
@@ -41,13 +41,13 @@ struct FocusNavigationResult : FocusNavigationResultT<FocusNavigationResult> {
   const bool m_wasFocusMoved;
 };
 
-struct CompositionRootView
-    : CompositionRootViewT<CompositionRootView, Composition::Experimental::IInternalCompositionRootView> {
-  CompositionRootView() noexcept;
-  ~CompositionRootView() noexcept;
+struct ReactNativeIsland
+    : ReactNativeIslandT<ReactNativeIsland, Composition::Experimental::IInternalCompositionRootView> {
+  ReactNativeIsland() noexcept;
+  ~ReactNativeIsland() noexcept;
 
 #ifdef USE_WINUI3
-  CompositionRootView(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept;
+  ReactNativeIsland(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept;
   winrt::Microsoft::UI::Content::ContentIsland Island();
 #endif
 
@@ -165,7 +165,7 @@ struct CompositionRootView
 } // namespace winrt::Microsoft::ReactNative::implementation
 
 namespace winrt::Microsoft::ReactNative::factory_implementation {
-struct CompositionRootView : CompositionRootViewT<CompositionRootView, implementation::CompositionRootView> {};
+struct ReactNativeIsland : ReactNativeIslandT<ReactNativeIsland, implementation::ReactNativeIsland> {};
 struct FocusNavigationRequest
     : FocusNavigationRequestT<FocusNavigationRequest, implementation::FocusNavigationRequest> {};
 } // namespace winrt::Microsoft::ReactNative::factory_implementation

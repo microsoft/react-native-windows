@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 07 Jun 2024 05:16:19 GMT",
+      "version": "0.0.0-canary.827",
+      "tag": "react-native-windows_v0.0.0-canary.827",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "af10f995954d1ccc08be931e93afa11bc97e8258",
+            "comment": "Rename CompositionRootView to ReactNativeIsland"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 06 Jun 2024 05:17:00 GMT",
       "version": "0.0.0-canary.826",
       "tag": "react-native-windows_v0.0.0-canary.826",

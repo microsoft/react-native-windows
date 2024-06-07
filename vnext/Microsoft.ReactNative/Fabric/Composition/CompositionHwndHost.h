@@ -33,7 +33,7 @@ struct CompositionHwndHost : CompositionHwndHostT<CompositionHwndHost> {
   float ScaleFactor() noexcept;
 
   HWND m_hwnd;
-  winrt::Microsoft::ReactNative::CompositionRootView m_compRootView{nullptr};
+  winrt::Microsoft::ReactNative::ReactNativeIsland m_compRootView{nullptr};
   LONG m_height{0};
   LONG m_width{0};
 
