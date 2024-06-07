@@ -2649,17 +2649,17 @@
     invariant "^2.2.4"
     nullthrows "^1.1.1"
 
-"@rnx-kit/align-deps@^2.4.3":
-  version "2.4.3"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/align-deps/-/align-deps-2.4.3.tgz#5fe8a2e3e938a8e398af8f33c2337e46166602b5"
-  integrity sha512-/kMtl05I+xlaYHXsftv5gSHl7LPwh1m6Ttd24+NGHoqQwD0MMF6VJ2dVu8vUUrF4PArxAb2V6YoJQRJAQGB54Q==
+"@rnx-kit/align-deps@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/align-deps/-/align-deps-2.5.0.tgz#0d5ab083621554779650dfc002a11ab60f2f2896"
+  integrity sha512-ED73J3MPcHQ5GIkXgz67rg+VyxQN8dh50OEiahqpuTFt5YQVmxcUtj2wcLQb3ntOxebcOr91YBrCSXno/W2PEA==
 
 "@rnx-kit/cli@^0.16.10":
-  version "0.16.27"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-0.16.27.tgz#0a9450f5331ba596fd8ba7c264a32516675361a0"
-  integrity sha512-RP0zjHQE2xu8wKqPTSuPewLFsC9fNRRD74j5coaVB5CnNNba8PRzj3OqIvWymLOIkk4pOlea1Sss5bqeeCJsqw==
+  version "0.16.28"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/cli/-/cli-0.16.28.tgz#19aa61a264c00e9b6480bf725d69d727a7dc3341"
+  integrity sha512-wNYeKL1ywgvOSND1rYWwezJ72L0xncnnU5G3+mMbHlAgeebyi61K0yeffHVpQXUOWpLI1IWeDTPVm6iAbRH+jw==
   dependencies:
-    "@rnx-kit/align-deps" "^2.4.3"
+    "@rnx-kit/align-deps" "^2.5.0"
     "@rnx-kit/config" "^0.6.6"
     "@rnx-kit/console" "^1.1.0"
     "@rnx-kit/metro-plugin-cyclic-dependencies-detector" "^1.1.1"
