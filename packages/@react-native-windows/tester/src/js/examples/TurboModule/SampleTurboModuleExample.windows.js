@@ -220,7 +220,8 @@ class SampleTurboModuleExample extends React.Component<{||}, State> {
         'The JSI bindings for SampleTurboModule are not installed.',
       );
     }
-    Windows] */
+    Windows]
+    */
   }
 
   render(): React.Node {
