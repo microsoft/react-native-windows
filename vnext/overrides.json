@@ -544,7 +544,7 @@
       "type": "patch",
       "file": "src-win/Libraries/ReactNative/AppRegistry.js",
       "baseFile": "packages/react-native/Libraries/ReactNative/AppRegistry.js",
-      "baseHash": "20428e0f40e52503d15235134432782c1692afed",
+      "baseHash": "9e873b1ef697564f2fb35ad90fa148c3f032b21d",
       "issue": 13314
     },
     {
