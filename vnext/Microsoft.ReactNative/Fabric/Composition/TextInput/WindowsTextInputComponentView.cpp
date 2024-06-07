@@ -736,7 +736,7 @@ void WindowsTextInputComponentView::OnPointerMoved(
     msg = WM_MOUSEMOVE;
     wParam = PointerRoutedEventArgsToMouseWParam(args);
   } else {
-    msg = WM_POINTERUP;
+    msg = WM_POINTERUPDATE;
     wParam = PointerPointToPointerWParam(pp);
   }
 
