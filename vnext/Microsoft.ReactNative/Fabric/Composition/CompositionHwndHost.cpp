@@ -16,7 +16,7 @@
 
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #include "CompositionRootAutomationProvider.h"
-#include "CompositionRootView.h"
+#include "ReactNativeIsland.h"
 
 #if USE_WINUI3
 #include <winrt/Microsoft.UI.Content.h>
@@ -39,7 +39,7 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
   if (auto liftedCompositor =
           winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(
               compositionContext)) {
-    m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView(liftedCompositor);
+    m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland(liftedCompositor);
 
     auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
         liftedCompositor, winrt::Microsoft::UI::GetWindowIdFromWindow(m_hwnd));
@@ -52,7 +52,7 @@ void CompositionHwndHost::Initialize(uint64_t hwnd) noexcept {
     m_compRootView.ScaleFactor(ScaleFactor());
     bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
   } else {
-    m_compRootView = winrt::Microsoft::ReactNative::CompositionRootView();
+    m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland();
     m_compRootView.as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>()
         .SetWindow(reinterpret_cast<uint64_t>(m_hwnd));
 
@@ -149,7 +149,7 @@ void CompositionHwndHost::ReactViewHost(ReactNative::IReactViewHost const &value
 }
 
 IInspectable CompositionHwndHost::UiaProvider() noexcept {
-  auto compRootView = winrt::get_self<implementation::CompositionRootView>(m_compRootView);
+  auto compRootView = winrt::get_self<implementation::ReactNativeIsland>(m_compRootView);
   auto provider = compRootView->GetUiaProvider();
   auto pRootProvider = static_cast<CompositionRootAutomationProvider *>(provider.as<IRawElementProviderSimple>().get());
   if (pRootProvider != nullptr) {

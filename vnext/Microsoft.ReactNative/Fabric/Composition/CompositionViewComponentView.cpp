@@ -9,7 +9,7 @@
 #include <AutoDraw.h>
 #include <Fabric/AbiState.h>
 #include <Fabric/AbiViewProps.h>
-#include <Fabric/Composition/CompositionRootView.h>
+#include <Fabric/Composition/ReactNativeIsland.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <UI.Xaml.Controls.h>
 #include <Utils/KeyboardUtils.h>
@@ -270,12 +270,12 @@ bool ComponentView::CapturePointer(const winrt::Microsoft::ReactNative::Composit
   if (!root)
     return false;
 
-  auto rootView = uiManager->GetCompositionRootView(root->Tag());
+  auto rootView{uiManager->GetReactNativeIsland(root->Tag())};
   if (!rootView) {
     return false;
   }
 
-  return winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)->CapturePointer(
+  return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->CapturePointer(
       pointer, static_cast<facebook::react::Tag>(Tag()));
 }
 
@@ -289,12 +289,12 @@ void ComponentView::ReleasePointerCapture(
   if (!root)
     return;
 
-  auto rootView = uiManager->GetCompositionRootView(root->Tag());
+  auto rootView{uiManager->GetReactNativeIsland(root->Tag())};
   if (!rootView) {
     return;
   }
 
-  return winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(rootView)
+  return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)
       ->ReleasePointerCapture(pointer, static_cast<facebook::react::Tag>(Tag()));
 }
 

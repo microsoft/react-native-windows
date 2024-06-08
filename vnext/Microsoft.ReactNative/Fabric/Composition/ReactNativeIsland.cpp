@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 #include "pch.h"
-#include "CompositionRootView.h"
-#include "CompositionRootView.g.cpp"
+#include "ReactNativeIsland.h"
 #include "FocusNavigationRequest.g.cpp"
+#include "ReactNativeIsland.g.cpp"
 #include <RootViewSizeChangedEventArgs.g.h>
 
 #include <AutoDraw.h>
@@ -49,7 +49,7 @@ constexpr float loadingTextHorizontalOffset = 48.0f;
 struct CompositionReactViewInstance
     : public winrt::implements<CompositionReactViewInstance, winrt::Microsoft::ReactNative::IReactViewInstance> {
   CompositionReactViewInstance(
-      winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompositionRootView> &&weakRootControl) noexcept;
+      winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland> &&weakRootControl) noexcept;
 
   void InitRootView(
       winrt::Microsoft::ReactNative::IReactContext context,
@@ -63,12 +63,12 @@ struct CompositionReactViewInstance
   Mso::Future<void> PostInUIQueue(TAction &&action) noexcept;
 
  private:
-  winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompositionRootView> m_weakRootControl;
+  winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland> m_weakRootControl;
   IReactDispatcher m_uiDispatcher{nullptr};
 };
 
 CompositionReactViewInstance::CompositionReactViewInstance(
-    winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::CompositionRootView> &&weakRootControl) noexcept
+    winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland> &&weakRootControl) noexcept
     : m_weakRootControl{std::move(weakRootControl)} {}
 
 void CompositionReactViewInstance::InitRootView(
@@ -125,14 +125,14 @@ inline Mso::Future<void> CompositionReactViewInstance::PostInUIQueue(TAction &&a
   return promise.AsFuture();
 }
 
-CompositionRootView::CompositionRootView() noexcept {}
+ReactNativeIsland::ReactNativeIsland() noexcept {}
 
 #ifdef USE_WINUI3
-CompositionRootView::CompositionRootView(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept
+ReactNativeIsland::ReactNativeIsland(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept
     : m_compositor(compositor) {}
 #endif
 
-CompositionRootView::~CompositionRootView() noexcept {
+ReactNativeIsland::~ReactNativeIsland() noexcept {
 #ifdef USE_WINUI3
   if (m_island && m_island.IsConnected()) {
     m_island.AutomationProviderRequested(m_islandAutomationProviderRequestedToken);
@@ -145,11 +145,11 @@ CompositionRootView::~CompositionRootView() noexcept {
   }
 }
 
-ReactNative::IReactViewHost CompositionRootView::ReactViewHost() noexcept {
+ReactNative::IReactViewHost ReactNativeIsland::ReactViewHost() noexcept {
   return m_reactViewHost;
 }
 
-void CompositionRootView::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewHost const &value) noexcept {
+void ReactNativeIsland::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewHost const &value) noexcept {
   if (m_reactViewHost == value) {
     return;
   }
@@ -166,16 +166,16 @@ void CompositionRootView::ReactViewHost(winrt::Microsoft::ReactNative::IReactVie
   }
 }
 
-winrt::Microsoft::UI::Composition::Visual CompositionRootView::RootVisual() noexcept {
+winrt::Microsoft::UI::Composition::Visual ReactNativeIsland::RootVisual() noexcept {
   return winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
       m_rootVisual);
 }
 
-winrt::Microsoft::ReactNative::Composition::Experimental::IVisual CompositionRootView::InternalRootVisual() noexcept {
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ReactNativeIsland::InternalRootVisual() noexcept {
   return m_rootVisual;
 }
 
-void CompositionRootView::InternalRootVisual(
+void ReactNativeIsland::InternalRootVisual(
     winrt::Microsoft::ReactNative::Composition::Experimental::IVisual const &value) noexcept {
   if (m_rootVisual != value) {
     assert(!m_rootVisual);
@@ -184,21 +184,21 @@ void CompositionRootView::InternalRootVisual(
   }
 }
 
-void CompositionRootView::AddRenderedVisual(
+void ReactNativeIsland::AddRenderedVisual(
     const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept {
   assert(!m_hasRenderedVisual);
   InternalRootVisual().InsertAt(visual, 0);
   m_hasRenderedVisual = true;
 }
 
-void CompositionRootView::RemoveRenderedVisual(
+void ReactNativeIsland::RemoveRenderedVisual(
     const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept {
   assert(m_hasRenderedVisual);
   InternalRootVisual().Remove(visual);
   m_hasRenderedVisual = false;
 }
 
-bool CompositionRootView::TrySetFocus() noexcept {
+bool ReactNativeIsland::TrySetFocus() noexcept {
 #ifdef USE_WINUI3
   if (m_island && m_island.IsConnected()) {
     auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
@@ -208,23 +208,23 @@ bool CompositionRootView::TrySetFocus() noexcept {
   return false;
 }
 
-winrt::Windows::Foundation::Size CompositionRootView::Size() noexcept {
+winrt::Windows::Foundation::Size ReactNativeIsland::Size() noexcept {
   return m_size;
 }
 
-void CompositionRootView::Size(winrt::Windows::Foundation::Size value) noexcept {
+void ReactNativeIsland::Size(winrt::Windows::Foundation::Size value) noexcept {
   m_size = value;
   UpdateRootVisualSize();
 }
 
-void CompositionRootView::UpdateRootVisualSize() noexcept {
+void ReactNativeIsland::UpdateRootVisualSize() noexcept {
   if (m_rootVisual)
     m_rootVisual.Size({m_size.Width * m_scaleFactor, m_size.Height * m_scaleFactor});
 
   UpdateLoadingVisualSize();
 }
 
-void CompositionRootView::UpdateLoadingVisualSize() noexcept {
+void ReactNativeIsland::UpdateLoadingVisualSize() noexcept {
   if (m_loadingVisual) {
     auto drawingSurface = CreateLoadingVisualBrush();
     m_loadingVisual.Brush(drawingSurface);
@@ -238,11 +238,11 @@ void CompositionRootView::UpdateLoadingVisualSize() noexcept {
   }
 }
 
-float CompositionRootView::ScaleFactor() noexcept {
+float ReactNativeIsland::ScaleFactor() noexcept {
   return m_scaleFactor;
 }
 
-void CompositionRootView::ScaleFactor(float value) noexcept {
+void ReactNativeIsland::ScaleFactor(float value) noexcept {
   if (m_scaleFactor != value) {
     m_scaleFactor = value;
     // Lifted ContentIslands apply a scale that we need to reverse
@@ -254,15 +254,15 @@ void CompositionRootView::ScaleFactor(float value) noexcept {
   }
 }
 
-int64_t CompositionRootView::RootTag() const noexcept {
+int64_t ReactNativeIsland::RootTag() const noexcept {
   return m_rootTag;
 }
 
-winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader CompositionRootView::Resources() noexcept {
+winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader ReactNativeIsland::Resources() noexcept {
   return m_resources;
 }
 
-void CompositionRootView::Resources(
+void ReactNativeIsland::Resources(
     const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &resources) noexcept {
   m_resources = resources;
 
@@ -271,7 +271,7 @@ void CompositionRootView::Resources(
   }
 }
 
-winrt::Microsoft::ReactNative::Composition::Theme CompositionRootView::Theme() noexcept {
+winrt::Microsoft::ReactNative::Composition::Theme ReactNativeIsland::Theme() noexcept {
   if (!m_theme) {
     assert(m_context);
     if (m_resources) {
@@ -283,7 +283,7 @@ winrt::Microsoft::ReactNative::Composition::Theme CompositionRootView::Theme() n
   return m_theme;
 }
 
-void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept {
+void ReactNativeIsland::Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept {
   if (value == m_theme)
     return;
 
@@ -315,7 +315,7 @@ void CompositionRootView::Theme(const winrt::Microsoft::ReactNative::Composition
   }
 }
 
-winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
+winrt::IInspectable ReactNativeIsland::GetUiaProvider() noexcept {
   if (m_uiaProvider == nullptr) {
     m_uiaProvider =
         winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(*this);
@@ -331,11 +331,11 @@ winrt::IInspectable CompositionRootView::GetUiaProvider() noexcept {
   return m_uiaProvider;
 }
 
-void CompositionRootView::SetWindow(uint64_t hwnd) noexcept {
+void ReactNativeIsland::SetWindow(uint64_t hwnd) noexcept {
   m_hwnd = reinterpret_cast<HWND>(hwnd);
 }
 
-int64_t CompositionRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
+int64_t ReactNativeIsland::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
   if (m_rootTag == -1)
     return 0;
 
@@ -351,7 +351,7 @@ int64_t CompositionRootView::SendMessage(uint32_t msg, uint64_t wParam, int64_t 
   return 0;
 }
 
-bool CompositionRootView::CapturePointer(
+bool ReactNativeIsland::CapturePointer(
     const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
     facebook::react::Tag tag) noexcept {
   if (m_hwnd) {
@@ -360,7 +360,7 @@ bool CompositionRootView::CapturePointer(
   return m_CompositionEventHandler->CapturePointer(pointer, tag);
 }
 
-void CompositionRootView::ReleasePointerCapture(
+void ReactNativeIsland::ReleasePointerCapture(
     const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
     facebook::react::Tag tag) noexcept {
   if (m_CompositionEventHandler->ReleasePointerCapture(pointer, tag)) {
@@ -372,7 +372,7 @@ void CompositionRootView::ReleasePointerCapture(
   }
 }
 
-void CompositionRootView::InitRootView(
+void ReactNativeIsland::InitRootView(
     winrt::Microsoft::ReactNative::IReactContext &&context,
     winrt::Microsoft::ReactNative::ReactViewOptions &&viewOptions) noexcept {
   m_uiDispatcher = context.Properties()
@@ -393,13 +393,13 @@ void CompositionRootView::InitRootView(
   m_isInitialized = true;
 }
 
-void CompositionRootView::UpdateRootView() noexcept {
+void ReactNativeIsland::UpdateRootView() noexcept {
   VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
   VerifyElseCrash(m_isInitialized);
   UpdateRootViewInternal();
 }
 
-void CompositionRootView::UpdateRootViewInternal() noexcept {
+void ReactNativeIsland::UpdateRootViewInternal() noexcept {
   switch (m_context.Handle().LoadingState()) {
     case winrt::Microsoft::ReactNative::LoadingState::Loading:
       ShowInstanceLoading();
@@ -422,7 +422,7 @@ struct AutoMRE {
   Mso::ManualResetEvent mre;
 };
 
-void CompositionRootView::UninitRootView() noexcept {
+void ReactNativeIsland::UninitRootView() noexcept {
   if (!m_isInitialized) {
     return;
   }
@@ -455,7 +455,7 @@ void CompositionRootView::UninitRootView() noexcept {
   m_isInitialized = false;
 }
 
-void CompositionRootView::ClearLoadingUI() noexcept {
+void ReactNativeIsland::ClearLoadingUI() noexcept {
   if (!m_loadingVisual)
     return;
 
@@ -465,9 +465,9 @@ void CompositionRootView::ClearLoadingUI() noexcept {
   m_loadingActivityVisual = nullptr;
 }
 
-void CompositionRootView::EnsureLoadingUI() noexcept {}
+void ReactNativeIsland::EnsureLoadingUI() noexcept {}
 
-void CompositionRootView::ShowInstanceLoaded() noexcept {
+void ReactNativeIsland::ShowInstanceLoaded() noexcept {
   if (m_rootVisual) {
     ClearLoadingUI();
 
@@ -513,13 +513,13 @@ facebook::react::Size MeasureLoading(const facebook::react::LayoutConstraints &l
       {loadingActivityHorizontalOffset * scaleFactor + tm.width, loadingBarHeight * scaleFactor});
 }
 
-winrt::event_token CompositionRootView::SizeChanged(
+winrt::event_token ReactNativeIsland::SizeChanged(
     winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs> const
         &handler) noexcept {
   return m_sizeChangedEvent.add(handler);
 }
 
-void CompositionRootView::SizeChanged(winrt::event_token const &token) noexcept {
+void ReactNativeIsland::SizeChanged(winrt::event_token const &token) noexcept {
   m_sizeChangedEvent.remove(token);
 }
 
@@ -533,7 +533,7 @@ struct RootViewSizeChangedEventArgs : RootViewSizeChangedEventArgsT<RootViewSize
   const winrt::Windows::Foundation::Size m_size;
 };
 
-void CompositionRootView::NotifySizeChanged() noexcept {
+void ReactNativeIsland::NotifySizeChanged() noexcept {
   auto oldSize = m_size;
   facebook::react::Size size;
   auto rootComponentView = GetComponentView();
@@ -550,11 +550,11 @@ void CompositionRootView::NotifySizeChanged() noexcept {
   }
 }
 
-void CompositionRootView::ShowInstanceError() noexcept {
+void ReactNativeIsland::ShowInstanceError() noexcept {
   ClearLoadingUI();
 }
 
-Composition::Experimental::IDrawingSurfaceBrush CompositionRootView::CreateLoadingVisualBrush() noexcept {
+Composition::Experimental::IDrawingSurfaceBrush ReactNativeIsland::CreateLoadingVisualBrush() noexcept {
   auto compContext =
       winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
           m_context.Properties().Handle());
@@ -609,7 +609,7 @@ Composition::Experimental::IDrawingSurfaceBrush CompositionRootView::CreateLoadi
   return drawingSurface;
 }
 
-void CompositionRootView::ShowInstanceLoading() noexcept {
+void ReactNativeIsland::ShowInstanceLoading() noexcept {
   if (!Mso::React::ReactOptions::UseDeveloperSupport(m_context.Properties().Handle()))
     return;
 
@@ -643,7 +643,7 @@ void ApplyConstraints(
       static_cast<facebook::react::LayoutDirection>(layoutConstraintsIn.LayoutDirection);
 }
 
-winrt::Windows::Foundation::Size CompositionRootView::Measure(
+winrt::Windows::Foundation::Size ReactNativeIsland::Measure(
     const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
     const winrt::Windows::Foundation::Point &viewportOffset) const noexcept {
   facebook::react::Size size{0, 0};
@@ -670,7 +670,7 @@ winrt::Windows::Foundation::Size CompositionRootView::Measure(
   return {clampedSize.width, clampedSize.height};
 }
 
-void CompositionRootView::Arrange(
+void ReactNativeIsland::Arrange(
     const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
     const winrt::Windows::Foundation::Point &viewportOffset) noexcept {
   ApplyConstraints(layoutConstraints, m_layoutConstraints);
@@ -694,7 +694,7 @@ void CompositionRootView::Arrange(
 }
 
 #ifdef USE_WINUI3
-winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() {
+winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
   if (!m_compositor) {
     return nullptr;
   }
@@ -744,7 +744,7 @@ winrt::Microsoft::UI::Content::ContentIsland CompositionRootView::Island() {
 #endif
 
 winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
-CompositionRootView::GetComponentView() noexcept {
+ReactNativeIsland::GetComponentView() noexcept {
   if (!m_context || m_context.Handle().LoadingState() != winrt::Microsoft::ReactNative::LoadingState::Loaded ||
       m_rootTag == -1)
     return nullptr;
@@ -760,7 +760,7 @@ CompositionRootView::GetComponentView() noexcept {
   return nullptr;
 }
 
-winrt::Microsoft::ReactNative::FocusNavigationResult CompositionRootView::NavigateFocus(
+winrt::Microsoft::ReactNative::FocusNavigationResult ReactNativeIsland::NavigateFocus(
     const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept {
   if (auto view = GetComponentView()) {
     return winrt::make<winrt::Microsoft::ReactNative::implementation::FocusNavigationResult>(
