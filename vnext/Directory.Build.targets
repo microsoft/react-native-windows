@@ -21,4 +21,8 @@
     <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackagesConfig;RestorePackagesConfig=true;RestoreUseStaticGraphEvaluation=false" />
   </Target>
 
+  <PropertyGroup>
+    <Ixp-Platform Condition="'$(Platform)' == 'ARM64EC'">win10-x64</Ixp-Platform>
+    <_WindowsAppSDKFoundationPlatform Condition="'$(Platform)' == 'ARM64EC'">x64</_WindowsAppSDKFoundationPlatform>
+  </PropertyGroup>
 </Project>
