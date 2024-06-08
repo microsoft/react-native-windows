@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 07 Jun 2024 05:16:19 GMT and should not be manually modified.
+This log was last generated on Sat, 08 Jun 2024 05:17:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.828
+
+Sat, 08 Jun 2024 05:17:57 GMT
+
+### Changes
+
+- [Fabric] Touch pointer moved was being reported to richedit as a pointerup (30809111+acoates-ms@users.noreply.github.com)
+- Add ability to override the ViewStyle of the root View component (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 5/31 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.220
+- Bump @react-native-windows/codegen to v0.0.0-canary.94
+- Bump @rnw-scripts/eslint-config to v1.2.22
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.26
+- Bump @rnw-scripts/just-task to v2.3.39
+- Bump react-native-platform-override to v1.9.40
 
 ## 0.0.0-canary.827
 
