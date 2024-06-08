@@ -21,8 +21,9 @@
     <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackagesConfig;RestorePackagesConfig=true;RestoreUseStaticGraphEvaluation=false" />
   </Target>
 
-  <PropertyGroup>
+  <PropertyGroup Label="WindowsAppSDKOverrides">
     <Ixp-Platform Condition="'$(Platform)' == 'ARM64EC'">win10-x64</Ixp-Platform>
     <_WindowsAppSDKFoundationPlatform Condition="'$(Platform)' == 'ARM64EC'">x64</_WindowsAppSDKFoundationPlatform>
+    <_MrtCoreRuntimeIdentifier Condition="'$(Platform)' == 'ARM64EC'">x64</_MrtCoreRuntimeIdentifier>
   </PropertyGroup>
 </Project>
