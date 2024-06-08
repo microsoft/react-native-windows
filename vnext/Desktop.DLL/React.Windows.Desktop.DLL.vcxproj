@@ -106,6 +106,12 @@
         WindowsApp_downlevel.lib;
         %(AdditionalDependencies)
       </AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Platform)' == 'ARM64EC'">
+        %(AdditionalDependencies);
+        Bcrypt.lib;
+        Chakrart.lib;
+        Pathcch.lib
+      </AdditionalDependencies>
       <DelayLoadDLLs>Chakra.dll;%(DelayLoadDLLs)</DelayLoadDLLs>
     </Link>
     <Link Condition="'$(UseFabric)' == 'true'">
