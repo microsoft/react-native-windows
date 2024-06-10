@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Rename CompositionRootView to ReactNativeIsland",
-  "packageName": "react-native-windows",
-  "email": "10109130+sharath2727@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

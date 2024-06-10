@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 10 Jun 2024 15:19:54 GMT",
+      "version": "0.74.8",
+      "tag": "react-native-windows_v0.74.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1ed0cd45769137d90ed15ab815ecb6f1b98cd18a",
+            "comment": "[Fabric] Touch pointer moved was being reported to richedit as a pointerup"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1ed0cd45769137d90ed15ab815ecb6f1b98cd18a",
+            "comment": "Add ability to override the ViewStyle of the root View component"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1ed0cd45769137d90ed15ab815ecb6f1b98cd18a",
+            "comment": "Rename CompositionRootView to ReactNativeIsland"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "72a42e8a3c5000cf78f452102dfdd32d8f57ae78",
+            "comment": "[Fabric] Support blob: images, and provide better image.onError callbacks"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "4c3a35533eff1914497e88434a5b61588f15024d",
+            "comment": "AsynchronousEventBeat can get locked where it will not beat anymore"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 28 May 2024 20:21:54 GMT",
       "version": "0.74.7",
       "tag": "react-native-windows_v0.74.7",

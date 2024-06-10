@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 28 May 2024 20:21:54 GMT and should not be manually modified.
+This log was last generated on Mon, 10 Jun 2024 15:19:54 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.8
+
+Mon, 10 Jun 2024 15:19:54 GMT
+
+### Patches
+
+- [Fabric] Touch pointer moved was being reported to richedit as a pointerup (30809111+acoates-ms@users.noreply.github.com)
+- Add ability to override the ViewStyle of the root View component (30809111+acoates-ms@users.noreply.github.com)
+- Rename CompositionRootView to ReactNativeIsland (10109130+sharath2727@users.noreply.github.com)
+- [Fabric] Support blob: images, and provide better image.onError callbacks (30809111+acoates-ms@users.noreply.github.com)
+- AsynchronousEventBeat can get locked where it will not beat anymore (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.7
 
