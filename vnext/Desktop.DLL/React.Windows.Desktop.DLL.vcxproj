@@ -32,6 +32,7 @@
     <TargetName>react-native-win32</TargetName>
     <UseV8>true</UseV8>
     <V8AppPlatform>win32</V8AppPlatform>
+    <WindowsTargetPlatformVersion>10.0.22621.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(ReactNativeWindowsDir)PropertySheets\React.Cpp.props" />
