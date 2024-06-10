@@ -173,7 +173,6 @@
   <ItemGroup>
     <PackageReference Include="boost" Version="1.76.0.0" />
     <PackageReference Include="Microsoft.JavaScript.Hermes" Version="$(HermesVersion)" />
-    <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" Condition="'$(Platform)' != 'ARM64EC'" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
   </ItemGroup>
   <Choose>
