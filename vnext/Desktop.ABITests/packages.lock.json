@@ -26,8 +26,8 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Transitive",
-        "resolved": "0.1.18",
-        "contentHash": "5K8rRihGwIs2XNOTP2Jsw3T6cegxCBQXcpPS4optONU/AmFElGAfnA6XBQJ4UqlCFCl9Nf9zQrgvCUPBWYHiag=="
+        "resolved": "0.1.21",
+        "contentHash": "5njCh+3eXTLOv7+8nOnp6nJ5C0r6it5ze54c0nuWleeDptuK8t3dEDB79XTU4D5DKNvAPlqJpgXRDOak5nYIug=="
       },
       "Microsoft.SourceLink.Common": {
         "type": "Transitive",
@@ -43,15 +43,23 @@
           "Microsoft.SourceLink.Common": "1.1.1"
         }
       },
+      "Microsoft.Windows.SDK.BuildTools": {
+        "type": "Transitive",
+        "resolved": "10.0.22621.756",
+        "contentHash": "7ZL2sFSioYm1Ry067Kw1hg0SCcW5kuVezC2SwjGbcPE61Nn+gTbH86T73G3LcEOVj0S3IZzNuE/29gZvOLS7VA=="
+      },
+      "Microsoft.WindowsAppSDK": {
+        "type": "Transitive",
+        "resolved": "1.5.240227000",
+        "contentHash": "6rESOsREi8534J7IDpNfFYPvxQaSleXKt4A7ZYPeQyckNMQ0o1W0jZ420bJbEMz9Cw/S/8IbpPftLLZ9w/GTCQ==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756"
+        }
+      },
       "ReactNative.V8Jsi.Windows": {
         "type": "Transitive",
         "resolved": "0.71.8",
         "contentHash": "ksHjshj05AMAQ/v7Wet5Dwcwn9Up2BTOIrTv1yEW7+D23FQX0yILW5Zw0bmlWtV8MEtdY611z+06U3Xvu2ygSA=="
-      },
-      "ReactWindows.OpenSSL.StdCall.Static": {
-        "type": "Transitive",
-        "resolved": "1.0.2-p.5",
-        "contentHash": "1tAtFgtbVpI/JgRIxy9j30R/W6B1zi9dYt0o5QwAk5V3X2mo9xrrHcbXlbczKQIftYoNHe0Mfq9ExIu9A1Cs0g=="
       },
       "common": {
         "type": "Project",
@@ -81,22 +89,21 @@
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
           "FollyWin32": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.1.18, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.21, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
+          "Microsoft.WindowsAppSDK": "[1.5.240227000, )",
           "ReactCommon": "[1.0.0, )",
           "ReactNative.V8Jsi.Windows": "[0.71.8, )",
-          "ReactWindows.OpenSSL.StdCall.Static": "[1.0.2-p.5, )",
           "boost": "[1.76.0, )"
         }
       },
       "react.windows.desktop.dll": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.JavaScript.Hermes": "[0.1.18, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.21, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "React.Windows.Desktop": "[1.0.0, )",
           "ReactNative.V8Jsi.Windows": "[0.71.8, )",
-          "ReactWindows.OpenSSL.StdCall.Static": "[1.0.2-p.5, )",
           "boost": "[1.76.0, )"
         }
       },
@@ -108,9 +115,45 @@
         }
       }
     },
-    "native,Version=v0.0/win": {},
-    "native,Version=v0.0/win-arm64": {},
-    "native,Version=v0.0/win-x64": {},
-    "native,Version=v0.0/win-x86": {}
+    "native,Version=v0.0/win": {
+      "Microsoft.WindowsAppSDK": {
+        "type": "Transitive",
+        "resolved": "1.5.240227000",
+        "contentHash": "6rESOsREi8534J7IDpNfFYPvxQaSleXKt4A7ZYPeQyckNMQ0o1W0jZ420bJbEMz9Cw/S/8IbpPftLLZ9w/GTCQ==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756"
+        }
+      }
+    },
+    "native,Version=v0.0/win-arm64": {
+      "Microsoft.WindowsAppSDK": {
+        "type": "Transitive",
+        "resolved": "1.5.240227000",
+        "contentHash": "6rESOsREi8534J7IDpNfFYPvxQaSleXKt4A7ZYPeQyckNMQ0o1W0jZ420bJbEMz9Cw/S/8IbpPftLLZ9w/GTCQ==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756"
+        }
+      }
+    },
+    "native,Version=v0.0/win-x64": {
+      "Microsoft.WindowsAppSDK": {
+        "type": "Transitive",
+        "resolved": "1.5.240227000",
+        "contentHash": "6rESOsREi8534J7IDpNfFYPvxQaSleXKt4A7ZYPeQyckNMQ0o1W0jZ420bJbEMz9Cw/S/8IbpPftLLZ9w/GTCQ==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756"
+        }
+      }
+    },
+    "native,Version=v0.0/win-x86": {
+      "Microsoft.WindowsAppSDK": {
+        "type": "Transitive",
+        "resolved": "1.5.240227000",
+        "contentHash": "6rESOsREi8534J7IDpNfFYPvxQaSleXKt4A7ZYPeQyckNMQ0o1W0jZ420bJbEMz9Cw/S/8IbpPftLLZ9w/GTCQ==",
+        "dependencies": {
+          "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756"
+        }
+      }
+    }
   }
 }
