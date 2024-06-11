@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 08 Jun 2024 05:17:57 GMT and should not be manually modified.
+This log was last generated on Tue, 11 Jun 2024 05:17:19 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.829
+
+Tue, 11 Jun 2024 05:17:19 GMT
+
+### Changes
+
+- Remove OpenSSL from Desktop LIB and DLL (julio.rocha@microsoft.com)
+- Port Desktop DLL to ARM64EC (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.828
 
