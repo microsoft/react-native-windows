@@ -340,13 +340,13 @@ jobs:
               configuration: Release
             - platform: x86
               configuration: Release
-            - platform: ARM64
+            - platform: ARM64EC
               configuration: Release
             - platform: x64
               configuration: Debug
             - platform: x86
               configuration: Debug
-            - platform: ARM64
+            - platform: ARM64EC
               configuration: Debug
 
       - template: templates/prep-and-pack-nuget.yml
@@ -363,13 +363,13 @@ jobs:
               configuration: Release
             - platform: x86
               configuration: Release
-            # - platform: ARM64
+            # - platform: ARM64EC
             #   configuration: Release
             - platform: x64
               configuration: Debug
             - platform: x86
               configuration: Debug
-            # - platform: ARM64
+            # - platform: ARM64EC
             #   configuration: Debug
 
       - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
