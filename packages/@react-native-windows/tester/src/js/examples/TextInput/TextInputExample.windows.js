@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
 });
 
 const examples: Array<RNTesterModuleExample> = [
-  ...TextInputSharedExamples,
+  ...TextInputSharedExamples.filter(example => example.name !== 'clipping'), // [Windows #13303 - Text must be in <Text> Control]
   {
     title: 'Clear text on focus',
     render: function (): React.Node {
