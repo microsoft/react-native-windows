@@ -55,7 +55,6 @@ namespace Microsoft.ReactNative
 
         void Destroy();
 
-        // Check on this again
         static ReactNativeAppWindow GetFromWindowId(
             Microsoft.UI.WindowId windowId);
 
