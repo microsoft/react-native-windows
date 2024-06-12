@@ -1,0 +1,111 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative
+{
+    [experimental]
+    DOC_STRING(
+        "A container for managing content of an application. It is wrapper for Microsoft.UI.Windowing.AppWindow."
+        "Additionally, it extends the AppWindow functionality to manage ReactNativeHost.")
+    runtimeclass ReactNativeAppWindow
+    {
+        Windows.Graphics.SizeInt32 ClientSize { get; };
+
+        Microsoft.UI.Dispatching.DispatcherQueue DispatcherQueue { get; };
+
+        Microsoft.UI.WindowId Id { get; };
+
+        Boolean IsShownInSwitchers;
+
+        Boolean IsVisible { get; };
+
+        Microsoft.UI.WindowId OwnerWindowId { get; };
+
+        Windows.Graphics.PointInt32 Position { get; };
+
+        Microsoft.UI.Windowing.AppWindowPresenter Presenter { get; };
+
+        Windows.Graphics.SizeInt32 Size { get; };
+
+        String Title;
+
+        Microsoft.UI.Windowing.AppWindowTitleBar TitleBar { get; };
+
+        void AssociateWithDispatcherQueue(
+            Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue);
+
+        static ReactNativeAppWindow Create();
+
+        [method_name("CreateWithPresenter")]
+        static ReactNativeAppWindow Create(
+            Microsoft.UI.Windowing.AppWindowPresenter appWindowPresenter);
+
+        [method_name("CreateWithPresenterAndOwner")]
+        static ReactNativeAppWindow Create(
+            Microsoft.UI.Windowing.AppWindowPresenter appWindowPresenter,
+            Microsoft.UI.WindowId ownerWindowId);
+
+        [method_name("CreateWithDispatcherQueue")]
+        static ReactNativeAppWindow Create(
+            Microsoft.UI.Windowing.AppWindowPresenter appWindowPresenter,
+            Microsoft.UI.WindowId ownerWindowId,
+            Microsoft.UI.Dispatching.DispatcherQueue dispatcherQueue);
+
+        void Destroy();
+
+        // Check on this again
+        static ReactNativeAppWindow GetFromWindowId(
+            Microsoft.UI.WindowId windowId);
+
+        void Hide();
+
+        void Move(Windows.Graphics.PointInt32 position);
+
+        void MoveAndResize(Windows.Graphics.RectInt32 rect);
+
+        [method_name("MoveAndResizeRelativeToDisplayArea")]
+        void MoveAndResize(
+            Windows.Graphics.RectInt32 rect,
+            Microsoft.UI.Windowing.DisplayArea displayarea);
+
+        void MoveInZOrderAtBottom();
+
+        void MoveInZOrderAtTop();
+
+        void MoveInZOrderBelow(
+                Microsoft.UI.WindowId windowId);
+
+        void Resize(Windows.Graphics.SizeInt32 size);
+
+        void ResizeClient(Windows.Graphics.SizeInt32 size);
+
+        [default_overload]
+        void SetIcon(String iconPath);
+
+        [method_name("SetIconWithIconId")]
+        void SetIcon(Microsoft.UI.IconId iconId);
+
+        [default_overload]
+        void SetPresenter(
+            Microsoft.UI.Windowing.AppWindowPresenter appWindowPresenter);
+
+        [method_name("SetPresenterByKind")]
+        void SetPresenter(
+            Microsoft.UI.Windowing.AppWindowPresenterKind appWindowPresenterKind);
+
+        void Show();
+
+        [method_name("ShowWithActivation")]
+        void Show(Boolean activateWindow);
+
+        void ShowOnceWithRequestedStartupState();
+
+        event Windows.Foundation.TypedEventHandler<ReactNativeAppWindow, Microsoft.UI.Windowing.AppWindowChangedEventArgs> Changed;
+
+        event Windows.Foundation.TypedEventHandler<ReactNativeAppWindow, Microsoft.UI.Windowing.AppWindowClosingEventArgs> Closing;
+
+        event Windows.Foundation.TypedEventHandler<ReactNativeAppWindow, Object> Destroying;
+    }
+} // namespace Microsoft.ReactNative
