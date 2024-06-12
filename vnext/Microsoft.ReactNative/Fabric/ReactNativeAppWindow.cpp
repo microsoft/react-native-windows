@@ -10,6 +10,19 @@ namespace winrt::Microsoft::ReactNative::implementation
     ReactNativeAppWindow::ReactNativeAppWindow(winrt::Microsoft::UI::Windowing::AppWindow const& appWindow)
     {
         m_appWindow = appWindow;
+
+        // Adding the event handler to the AppWindow
+        m_appWindowChangedToken = m_appWindow.Changed({ this, &ReactNativeAppWindow::OnAppWindowChanged });
+        m_appWindowClosingToken = m_appWindow.Closing({ this, &ReactNativeAppWindow::OnAppWindowClosing });
+        m_appWindowDestroyingToken = m_appWindow.Destroying({ this, &ReactNativeAppWindow::OnAppWindowDestroying });
+    }
+
+    ReactNativeAppWindow::~ReactNativeAppWindow()
+    {
+        // Removing the event handler tokens from AppWindow
+        m_appWindow.Changed(m_appWindowChangedToken);
+        m_appWindow.Closing(m_appWindowClosingToken);
+        m_appWindow.Destroying(m_appWindowDestroyingToken);
     }
 
     winrt::Microsoft::ReactNative::ReactNativeAppWindow ReactNativeAppWindow::Create()
@@ -203,36 +216,48 @@ namespace winrt::Microsoft::ReactNative::implementation
         m_appWindow.ShowOnceWithRequestedStartupState();
     }
 
+    void ReactNativeAppWindow::OnAppWindowChanged(winrt::Microsoft::UI::Windowing::AppWindow const& sender, winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const& args)
+    {
+        m_reactNativeChangedEventHandler(*this, args);
+    }
+
     winrt::event_token ReactNativeAppWindow::Changed(winrt::Windows::Foundation::TypedEventHandler<winrt::Microsoft::ReactNative::ReactNativeAppWindow, winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs> const& handler)
     {
-        // TO BE IMPLEMENTED
-        throw hresult_not_implemented();
+        return m_reactNativeChangedEventHandler.add(handler);
     }
 
     void ReactNativeAppWindow::Changed(winrt::event_token const& token) noexcept
     {
-        // TO BE IMPLEMENTED
+        m_reactNativeChangedEventHandler.remove(token);
+    }
+
+    void ReactNativeAppWindow::OnAppWindowClosing(winrt::Microsoft::UI::Windowing::AppWindow const& sender, winrt::Microsoft::UI::Windowing::AppWindowClosingEventArgs const& args)
+    {
+        m_reactNativeClosingEventHandler(*this, args);
     }
 
     winrt::event_token ReactNativeAppWindow::Closing(winrt::Windows::Foundation::TypedEventHandler<winrt::Microsoft::ReactNative::ReactNativeAppWindow, winrt::Microsoft::UI::Windowing::AppWindowClosingEventArgs> const& handler)
     {
-        // TO BE IMPLEMENTED
-        throw hresult_not_implemented();
+        return m_reactNativeClosingEventHandler.add(handler);
     }
 
     void ReactNativeAppWindow::Closing(winrt::event_token const& token) noexcept
     {
-        // TO BE IMPLEMENTED
+        m_reactNativeClosingEventHandler.remove(token);
+    }
+
+    void ReactNativeAppWindow::OnAppWindowDestroying(winrt::Microsoft::UI::Windowing::AppWindow const& sender, winrt::Windows::Foundation::IInspectable const& args)
+    {
+        m_reactNativeDestroyingEventHandler(*this, args);
     }
 
     winrt::event_token ReactNativeAppWindow::Destroying(winrt::Windows::Foundation::TypedEventHandler<winrt::Microsoft::ReactNative::ReactNativeAppWindow, winrt::Windows::Foundation::IInspectable> const& handler)
     {
-        // TO BE IMPLEMENTED
-        throw hresult_not_implemented();
+        return m_reactNativeDestroyingEventHandler.add(handler);
     }
 
     void ReactNativeAppWindow::Destroying(winrt::event_token const& token) noexcept
     {
-        // TO BE IMPLEMENTED
+        m_reactNativeDestroyingEventHandler.remove(token);
     }
 }

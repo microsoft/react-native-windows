@@ -12,6 +12,9 @@ namespace winrt::Microsoft::ReactNative::implementation
         ReactNativeAppWindow() = default;
         ReactNativeAppWindow(winrt::Microsoft::UI::Windowing::AppWindow const& appWindow);
 
+        //Destructors
+        ~ReactNativeAppWindow();
+
         // Properties
         winrt::Windows::Graphics::SizeInt32 ClientSize();
         winrt::Microsoft::UI::Dispatching::DispatcherQueue DispatcherQueue();
@@ -52,16 +55,31 @@ namespace winrt::Microsoft::ReactNative::implementation
         void Show(bool activateWindow);
         void ShowOnceWithRequestedStartupState();
 
-        // Events
+        // Events and EventHandlers
+        void OnAppWindowChanged(winrt::Microsoft::UI::Windowing::AppWindow const& sender, winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const& args);
         winrt::event_token Changed(winrt::Windows::Foundation::TypedEventHandler<winrt::Microsoft::ReactNative::ReactNativeAppWindow, winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs> const& handler);
         void Changed(winrt::event_token const& token) noexcept;
+
+        void OnAppWindowClosing(winrt::Microsoft::UI::Windowing::AppWindow const& sender, winrt::Microsoft::UI::Windowing::AppWindowClosingEventArgs const& args);
         winrt::event_token Closing(winrt::Windows::Foundation::TypedEventHandler<winrt::Microsoft::ReactNative::ReactNativeAppWindow, winrt::Microsoft::UI::Windowing::AppWindowClosingEventArgs> const& handler);
         void Closing(winrt::event_token const& token) noexcept;
+
+        void OnAppWindowDestroying(winrt::Microsoft::UI::Windowing::AppWindow const& sender, winrt::Windows::Foundation::IInspectable const& args);
         winrt::event_token Destroying(winrt::Windows::Foundation::TypedEventHandler<winrt::Microsoft::ReactNative::ReactNativeAppWindow, winrt::Windows::Foundation::IInspectable> const& handler);
         void Destroying(winrt::event_token const& token) noexcept;
 
     private:
         winrt::Microsoft::UI::Windowing::AppWindow m_appWindow{nullptr};
+        winrt::event_token m_appWindowChangedToken;
+        winrt::event_token m_appWindowClosingToken;
+        winrt::event_token m_appWindowDestroyingToken;
+
+        winrt::event<
+           winrt::Windows::Foundation::TypedEventHandler<winrt::Microsoft::ReactNative::ReactNativeAppWindow, winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs>> m_reactNativeChangedEventHandler;
+        winrt::event<
+           winrt::Windows::Foundation::TypedEventHandler<winrt::Microsoft::ReactNative::ReactNativeAppWindow, winrt::Microsoft::UI::Windowing::AppWindowClosingEventArgs>> m_reactNativeClosingEventHandler;
+        winrt::event<
+           winrt::Windows::Foundation::TypedEventHandler<winrt::Microsoft::ReactNative::ReactNativeAppWindow, winrt::Windows::Foundation::IInspectable>> m_reactNativeDestroyingEventHandler;
     };
 }
 namespace winrt::Microsoft::ReactNative::factory_implementation
