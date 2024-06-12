@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 #pragma once
 #include "ReactNativeAppWindow.g.h"
 
@@ -5,15 +8,11 @@ namespace winrt::Microsoft::ReactNative::implementation
 {
     struct ReactNativeAppWindow : ReactNativeAppWindowT<ReactNativeAppWindow>
     {
+        // Constructors
         ReactNativeAppWindow() = default;
-
         ReactNativeAppWindow(winrt::Microsoft::UI::Windowing::AppWindow const& appWindow);
 
-        static winrt::Microsoft::ReactNative::ReactNativeAppWindow Create();
-        static winrt::Microsoft::ReactNative::ReactNativeAppWindow Create(winrt::Microsoft::UI::Windowing::AppWindowPresenter const& appWindowPresenter);
-        static winrt::Microsoft::ReactNative::ReactNativeAppWindow Create(winrt::Microsoft::UI::Windowing::AppWindowPresenter const& appWindowPresenter, winrt::Microsoft::UI::WindowId const& ownerWindowId);
-        static winrt::Microsoft::ReactNative::ReactNativeAppWindow Create(winrt::Microsoft::UI::Windowing::AppWindowPresenter const& appWindowPresenter, winrt::Microsoft::UI::WindowId const& ownerWindowId, winrt::Microsoft::UI::Dispatching::DispatcherQueue const& dispatcherQueue);
-        static winrt::Microsoft::ReactNative::ReactNativeAppWindow GetFromWindowId(winrt::Microsoft::UI::WindowId const& windowId);
+        // Properties
         winrt::Windows::Graphics::SizeInt32 ClientSize();
         winrt::Microsoft::UI::Dispatching::DispatcherQueue DispatcherQueue();
         winrt::Microsoft::UI::WindowId Id();
@@ -27,7 +26,14 @@ namespace winrt::Microsoft::ReactNative::implementation
         hstring Title();
         void Title(hstring const& value);
         winrt::Microsoft::UI::Windowing::AppWindowTitleBar TitleBar();
+
+        // Methods
         void AssociateWithDispatcherQueue(winrt::Microsoft::UI::Dispatching::DispatcherQueue const& dispatcherQueue);
+        static winrt::Microsoft::ReactNative::ReactNativeAppWindow Create();
+        static winrt::Microsoft::ReactNative::ReactNativeAppWindow Create(winrt::Microsoft::UI::Windowing::AppWindowPresenter const& appWindowPresenter);
+        static winrt::Microsoft::ReactNative::ReactNativeAppWindow Create(winrt::Microsoft::UI::Windowing::AppWindowPresenter const& appWindowPresenter, winrt::Microsoft::UI::WindowId const& ownerWindowId);
+        static winrt::Microsoft::ReactNative::ReactNativeAppWindow Create(winrt::Microsoft::UI::Windowing::AppWindowPresenter const& appWindowPresenter, winrt::Microsoft::UI::WindowId const& ownerWindowId, winrt::Microsoft::UI::Dispatching::DispatcherQueue const& dispatcherQueue);
+        static winrt::Microsoft::ReactNative::ReactNativeAppWindow GetFromWindowId(winrt::Microsoft::UI::WindowId const& windowId);
         void Destroy();
         void Hide();
         void Move(winrt::Windows::Graphics::PointInt32 const& position);
@@ -45,6 +51,8 @@ namespace winrt::Microsoft::ReactNative::implementation
         void Show();
         void Show(bool activateWindow);
         void ShowOnceWithRequestedStartupState();
+
+        // Events
         winrt::event_token Changed(winrt::Windows::Foundation::TypedEventHandler<winrt::Microsoft::ReactNative::ReactNativeAppWindow, winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs> const& handler);
         void Changed(winrt::event_token const& token) noexcept;
         winrt::event_token Closing(winrt::Windows::Foundation::TypedEventHandler<winrt::Microsoft::ReactNative::ReactNativeAppWindow, winrt::Microsoft::UI::Windowing::AppWindowClosingEventArgs> const& handler);
