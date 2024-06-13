@@ -1615,7 +1615,7 @@ bool WindowsTextInputComponentView::shouldAutoCapitalize() {
 
       if (pos == 0) { // Cursor is pointing at the start of the string.
         return true;
-      } else if (textServicesString.find_first_not_of((' ', 0 /* start */, pos /* end */) == pos)) { 
+      } else if (std::all_of(textServicesString.begin(), textServicesString.begin() + pos, [](char c) { return std::isspace(c); })) { 
         // Check if characters to the left of pos are all whitespace.
         return true;
       } else if (pos >= 2) {
