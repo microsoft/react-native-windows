@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix `codegen-windows` being run from the wrong directory",
+  "packageName": "react-native-windows",
+  "email": "4123478+tido64@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
