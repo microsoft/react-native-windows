@@ -109,6 +109,11 @@ struct WindowsTextInputComponentView
       const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
 
+  void autoCapitalizeOnUpdateProps(
+      const std::string &previousCapitalizationType,
+      const std::string &newcapitalizationType) noexcept;
+  bool shouldAutoCapitalize();
+
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface{nullptr};
