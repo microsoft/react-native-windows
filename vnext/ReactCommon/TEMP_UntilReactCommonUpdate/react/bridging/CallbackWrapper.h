@@ -8,12 +8,14 @@
 #pragma once
 
 #include <jsi/jsi.h>
-#include <LongLivedObject.h>
 
 #include <memory>
 
-namespace facebook {
-namespace react {
+#include <react/bridging/LongLivedObject.h>
+
+namespace facebook::react {
+
+class CallInvoker;
 
 // Helper for passing jsi::Function arg to other methods.
 class CallbackWrapper : public LongLivedObject {
@@ -96,5 +98,4 @@ class CallbackWrapper : public LongLivedObject {
   }
 };
 
-} // namespace react
-} // namespace facebook
+} // namespace facebook::react
