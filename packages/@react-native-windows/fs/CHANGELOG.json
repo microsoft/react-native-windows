@@ -2,6 +2,48 @@
   "name": "@react-native-windows/fs",
   "entries": [
     {
+      "date": "Wed, 12 Jun 2024 05:16:24 GMT",
+      "version": "0.0.0-canary.52",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.52",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/fs",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.23",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/fs",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.40",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 08 Jun 2024 05:17:57 GMT",
+      "version": "0.0.0-canary.51",
+      "tag": "@react-native-windows/fs_v0.0.0-canary.51",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/fs",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.22",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/fs",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.39",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Jun 2024 05:18:11 GMT",
       "version": "0.0.0-canary.50",
       "tag": "@react-native-windows/fs_v0.0.0-canary.50",

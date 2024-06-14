@@ -46,13 +46,13 @@ parameters:
       BuildConfiguration: Release
       BuildPlatform: x86
       UseFabric: false
-    - Name: ARM64Debug
+    - Name: ARM64ECDebug
       BuildConfiguration: Debug
-      BuildPlatform: ARM64
+      BuildPlatform: ARM64EC
       UseFabric: false
-    - Name: ARM64Release
+    - Name: ARM64ECRelease
       BuildConfiguration: Release
-      BuildPlatform: ARM64
+      BuildPlatform: ARM64EC
       UseFabric: false
     - Name: X64DebugFabric
       BuildConfiguration: Debug
@@ -184,7 +184,7 @@ extends:
               persistCredentials: false # We're going to use rnbot's git creds to publish
 
           - powershell: gci env:/BUILD_*
-            displayName: Show build information  
+            displayName: Show build information
 
           - template: .ado/templates/prepare-js-env.yml@self
 
@@ -444,7 +444,7 @@ extends:
                 - platform: x86
                   configuration: Release
                 - platform: ARM64
-                  configuration: Release  
+                  configuration: Release
                 - platform: x64
                   configuration: Debug
                 - platform: x86
@@ -470,7 +470,7 @@ extends:
                 - platform: x86
                   configuration: Release
                 - platform: ARM64
-                  configuration: Release  
+                  configuration: Release
                 - platform: x64
                   configuration: Debug
                 - platform: x86
@@ -492,13 +492,13 @@ extends:
                   configuration: Release
                 - platform: x86
                   configuration: Release
-                - platform: ARM64
+                - platform: ARM64EC
                   configuration: Release
                 - platform: x64
                   configuration: Debug
                 - platform: x86
                   configuration: Debug
-                - platform: ARM64
+                - platform: ARM64EC
                   configuration: Debug
 
           - template: .ado/templates/prep-and-pack-nuget.yml@self
@@ -515,13 +515,13 @@ extends:
                   configuration: Release
                 - platform: x86
                   configuration: Release
-                # - platform: ARM64
+                # - platform: ARM64EC
                 #   configuration: Release
                 - platform: x64
                   configuration: Debug
                 - platform: x86
                   configuration: Debug
-                # - platform: ARM64
+                # - platform: ARM64EC
                 #   configuration: Debug
 
           templateContext:

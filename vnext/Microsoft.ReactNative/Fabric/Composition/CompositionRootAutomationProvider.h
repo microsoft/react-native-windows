@@ -6,7 +6,7 @@
 #include <inspectable.h>
 
 namespace winrt::Microsoft::ReactNative::implementation {
-struct CompositionRootView;
+struct ReactNativeIsland;
 
 class CompositionRootAutomationProvider : public winrt::implements<
                                               CompositionRootAutomationProvider,
@@ -39,7 +39,7 @@ class CompositionRootAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall AdviseEventAdded(EVENTID idEvent, SAFEARRAY *psaProperties) override;
   virtual HRESULT __stdcall AdviseEventRemoved(EVENTID idEvent, SAFEARRAY *psaProperties) override;
 
-  CompositionRootAutomationProvider(const winrt::Microsoft::ReactNative::CompositionRootView &rootView) noexcept;
+  CompositionRootAutomationProvider(const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept;
 
   void SetHwnd(HWND hwnd) noexcept;
 #ifdef USE_WINUI3
@@ -72,7 +72,7 @@ class CompositionRootAutomationProvider : public winrt::implements<
   // practice ATs tend to only listen to a dozen or so props and events, so std::vector is likely better than maps.
   std::vector<AdvisedEvent> m_advisedEvents{};
   std::vector<AdvisedEvent> m_advisedProperties{};
-  winrt::weak_ref<winrt::Microsoft::ReactNative::CompositionRootView> m_wkRootView;
+  winrt::weak_ref<winrt::Microsoft::ReactNative::ReactNativeIsland> m_wkRootView;
   HWND m_hwnd{nullptr};
 #ifdef USE_WINUI3
   winrt::Microsoft::UI::Content::ContentIsland m_island{nullptr};

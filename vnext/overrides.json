@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240525-840c31c3a",
+  "baseVersion": "0.75.0-nightly-20240610-ced076210",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "bd274caf8faae09b1f0513a4086c07b778072e78"
+      "baseHash": "0a0c16d79748a5e84407a57c772c3508160134ae"
     },
     {
       "type": "derived",
@@ -125,13 +125,6 @@
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModuleUtils.h",
       "baseHash": "ba5efe9ba0db80a3f38c94deb8983420fd82beff",
       "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/performance/timeline/BoundedConsumableBuffer.h",
-      "baseFile": "packages/react-native/ReactCommon/react/performance/timeline/BoundedConsumableBuffer.h",
-      "baseHash": "4bc874dd3a7be4f4326384b24d1a5c0527403098",
-      "issue": 13231
     },
     {
       "type": "patch",
@@ -342,7 +335,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/WindowsTextInputNativeComponent.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/AndroidTextInputNativeComponent.js",
-      "baseHash": "d46d046c289717a85a927af7fc362873395f9f17"
+      "baseHash": "3c7663b85d918f6da7f7e769bec85aed9f8c62b1"
     },
     {
       "type": "patch",
@@ -355,19 +348,19 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableHighlight.js",
-      "baseHash": "9d57e5e91830560775ab1b1cc0836bd35de10281"
+      "baseHash": "93b82dba785d9c2799e59e8aa4dc886d5d474a5f"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "164afe5ce3379b2ae08164a2c6f90e6f705be769"
+      "baseHash": "453a8e280be0833d0470e6645db217a108710036"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableWithoutFeedback.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableWithoutFeedback.js",
-      "baseHash": "98e8e444c40dc5e010af9d22a7cff24f314cff35"
+      "baseHash": "7a586bfae7efe89e4e7e09dddbd99af59b2744b7"
     },
     {
       "type": "patch",
@@ -517,9 +510,37 @@
     },
     {
       "type": "patch",
+      "file": "src-win/Libraries/ReactNative/AppContainer.js",
+      "baseFile": "packages/react-native/Libraries/ReactNative/AppContainer.js",
+      "baseHash": "547149b6581de22ddf68f91e58294703a71b118d",
+      "issue": 13314
+    },
+    {
+      "type": "patch",
+      "file": "src-win/Libraries/ReactNative/AppRegistry.d.ts",
+      "baseFile": "packages/react-native/Libraries/ReactNative/AppRegistry.d.ts",
+      "baseHash": "ec4dce37a05e1d0ef00f40b6549cdb277ad3a227",
+      "issue": 13314
+    },
+    {
+      "type": "patch",
+      "file": "src-win/Libraries/ReactNative/AppRegistry.js",
+      "baseFile": "packages/react-native/Libraries/ReactNative/AppRegistry.js",
+      "baseHash": "80a5455a014ab826cc21b9e8efe1dbe7c29b5f44",
+      "issue": 13314
+    },
+    {
+      "type": "patch",
       "file": "src-win/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "packages/react-native/Libraries/ReactNative/PaperUIManager.js",
       "baseHash": "5421778518fbd545ba3896bdfb1fb4f829d016fd"
+    },
+    {
+      "type": "patch",
+      "file": "src-win/Libraries/ReactNative/renderApplication.js",
+      "baseFile": "packages/react-native/Libraries/ReactNative/renderApplication.js",
+      "baseHash": "14b60713c380bbedeb9cdf0811708fd5f5fe49c2",
+      "issue": 13314
     },
     {
       "type": "platform",

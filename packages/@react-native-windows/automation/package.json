@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation",
-  "version": "0.3.248",
+  "version": "0.3.252",
   "description": "UI Automation Suite for React Native Windows Applications",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -18,8 +18,8 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.12.166",
-    "@react-native-windows/fs": "^0.0.0-canary.50",
+    "@react-native-windows/automation-channel": "^0.12.170",
+    "@react-native-windows/fs": "^0.0.0-canary.52",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.57.1",
     "chalk": "^4.1.2",
@@ -30,8 +30,8 @@
     "@jest/create-cache-key-function": "^29.2.1",
     "@jest/environment": "^29.3.0",
     "@jest/types": "^29.2.1",
-    "@rnw-scripts/eslint-config": "1.2.21",
-    "@rnw-scripts/just-task": "2.3.38",
+    "@rnw-scripts/eslint-config": "1.2.23",
+    "@rnw-scripts/just-task": "2.3.40",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/jest": "^29.2.2",
     "@types/node": "^18.0.0",

@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.75.0-nightly-20240525-840c31c3a",
+  "baseVersion": "0.75.0-nightly-20240610-ced076210",
   "overrides": [
     {
       "type": "copy",
@@ -75,7 +75,7 @@
       "type": "copy",
       "directory": "js/examples/Border",
       "baseDirectory": "packages/rn-tester/js/examples/Border",
-      "baseHash": "0c679ef3826c0503f5898fee2e7668ab5855e1d1",
+      "baseHash": "3085b427fa88d48f308386b7dddcfce147e59ea5",
       "issue": 4054
     },
     {
@@ -334,7 +334,7 @@
       "type": "copy",
       "directory": "js/examples/ScrollView",
       "baseDirectory": "packages/rn-tester/js/examples/ScrollView",
-      "baseHash": "a27e8dd775a55a1179ccc7744564de3534d29b94",
+      "baseHash": "4718f5c7992e684343bab6c56b32948ea41abbd9",
       "issue": 4054
     },
     {
@@ -390,14 +390,14 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "f2aa4d0bca7017eafcb2235b77993c938155fa7c",
+      "baseHash": "ab862a63c50985ac4437c31f716fa1ac68ca3159",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "96f13a981501e6e737835f322fc96c418ef77e51",
+      "baseHash": "62cd021ab9b568495fa6703606c075319a5eec8d",
       "issue": 4054
     },
     {
@@ -439,7 +439,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "fbf739a33d1b97600fda0a31796e9d3e91767607",
+      "baseHash": "e2215ae502885922490c0d4b348f22c18357309d",
       "issue": 4054
     },
     {
@@ -453,7 +453,7 @@
       "type": "copy",
       "directory": "js/examples/View",
       "baseDirectory": "packages/rn-tester/js/examples/View",
-      "baseHash": "507af281836b463e6a5decbf115666e26834a0e8",
+      "baseHash": "583d4293248765e78ee150f71bf3bcfdf3361440",
       "issue": 4054
     },
     {

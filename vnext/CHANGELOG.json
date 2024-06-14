@@ -2,6 +2,156 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 12 Jun 2024 05:16:24 GMT",
+      "version": "0.0.0-canary.830",
+      "tag": "react-native-windows_v0.0.0-canary.830",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "e2cced2ede4941e8ebcdb49feb9ded55a3ff5237",
+            "comment": "Integrate 6/10"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.221",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.95",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.23",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.27",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.40",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.41",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 11 Jun 2024 05:17:19 GMT",
+      "version": "0.0.0-canary.829",
+      "tag": "react-native-windows_v0.0.0-canary.829",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "53fe43a72a173e8d564318fa5d1ff526dcd5b567",
+            "comment": "Remove OpenSSL from Desktop LIB and DLL"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5a2f8d99413cba2d40b0cc07c36ba4d8674eb62e",
+            "comment": "Port Desktop DLL to ARM64EC"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 08 Jun 2024 05:17:57 GMT",
+      "version": "0.0.0-canary.828",
+      "tag": "react-native-windows_v0.0.0-canary.828",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "71feab2dd56e3526fa85d7cc6d85e0ce807036ff",
+            "comment": "[Fabric] Touch pointer moved was being reported to richedit as a pointerup"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "947c7bb373c34a23285f4fbac17f026e4768af97",
+            "comment": "Add ability to override the ViewStyle of the root View component"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d42a78eeeb8b25ea0b4c054c48ee0891bc16d8b8",
+            "comment": "Integrate 5/31"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.220",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.94",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.22",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.26",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.39",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.40",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 07 Jun 2024 05:16:19 GMT",
+      "version": "0.0.0-canary.827",
+      "tag": "react-native-windows_v0.0.0-canary.827",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "af10f995954d1ccc08be931e93afa11bc97e8258",
+            "comment": "Rename CompositionRootView to ReactNativeIsland"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 06 Jun 2024 05:17:00 GMT",
       "version": "0.0.0-canary.826",
       "tag": "react-native-windows_v0.0.0-canary.826",

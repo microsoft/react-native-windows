@@ -10,9 +10,9 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Direct",
-        "requested": "[0.1.18, )",
-        "resolved": "0.1.18",
-        "contentHash": "5K8rRihGwIs2XNOTP2Jsw3T6cegxCBQXcpPS4optONU/AmFElGAfnA6XBQJ4UqlCFCl9Nf9zQrgvCUPBWYHiag=="
+        "requested": "[0.1.21, )",
+        "resolved": "0.1.21",
+        "contentHash": "5njCh+3eXTLOv7+8nOnp6nJ5C0r6it5ze54c0nuWleeDptuK8t3dEDB79XTU4D5DKNvAPlqJpgXRDOak5nYIug=="
       },
       "Microsoft.VCRTForwarders.140": {
         "type": "Direct",
@@ -78,8 +78,8 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.76.0, )",
-          "fmt": "[1.0.0, )"
+          "Fmt": "[1.0.0, )",
+          "boost": "[1.76.0, )"
         }
       },
       "microsoft.reactnative": {
@@ -87,7 +87,7 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.1.18, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.21, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.WindowsAppSDK": "[1.5.240227000, )",
           "ReactCommon": "[1.0.0, )",

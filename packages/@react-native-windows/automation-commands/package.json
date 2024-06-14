@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/automation-commands",
-  "version": "0.1.269",
+  "version": "0.1.273",
   "description": "Allows controlling your react-native-windows application",
   "main": "lib-commonjs/index.js",
   "license": "MIT",
@@ -18,14 +18,14 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/automation-channel": "^0.12.166",
+    "@react-native-windows/automation-channel": "^0.12.170",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.57.1"
   },
   "devDependencies": {
     "@jest/types": "^29.2.1",
-    "@rnw-scripts/eslint-config": "1.2.21",
-    "@rnw-scripts/just-task": "2.3.38",
+    "@rnw-scripts/eslint-config": "1.2.23",
+    "@rnw-scripts/just-task": "2.3.40",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/jest": "^29.2.2",
     "@types/node": "^18.0.0",

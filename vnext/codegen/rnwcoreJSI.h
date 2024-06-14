@@ -22,7 +22,7 @@ protected:
 public:
   virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
   virtual bool allowCollapsableChildren(jsi::Runtime &rt) = 0;
-  virtual bool androidEnablePendingFabricTransactions(jsi::Runtime &rt) = 0;
+  virtual bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
   virtual bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) = 0;
   virtual bool enableBackgroundExecutor(jsi::Runtime &rt) = 0;
@@ -33,13 +33,16 @@ public:
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
   virtual bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(jsi::Runtime &rt) = 0;
   virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
-  virtual bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) = 0;
-  virtual bool inspectorEnableModernCDPRegistry(jsi::Runtime &rt) = 0;
+  virtual bool fuseboxEnabledDebug(jsi::Runtime &rt) = 0;
+  virtual bool fuseboxEnabledRelease(jsi::Runtime &rt) = 0;
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
   virtual bool preventDoubleTextMeasure(jsi::Runtime &rt) = 0;
   virtual bool setAndroidLayoutDirection(jsi::Runtime &rt) = 0;
+  virtual bool useImmediateExecutorInAndroidBridgeless(jsi::Runtime &rt) = 0;
   virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
+  virtual bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) = 0;
+  virtual bool useRuntimeShadowNodeReferenceUpdateOnLayout(jsi::Runtime &rt) = 0;
   virtual bool useStateAlignmentMechanism(jsi::Runtime &rt) = 0;
 
 };
@@ -80,13 +83,13 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::allowCollapsableChildren, jsInvoker_, instance_);
     }
-    bool androidEnablePendingFabricTransactions(jsi::Runtime &rt) override {
+    bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::androidEnablePendingFabricTransactions) == 1,
-          "Expected androidEnablePendingFabricTransactions(...) to have 1 parameters");
+          bridging::getParameterCount(&T::allowRecursiveCommitsWithSynchronousMountOnAndroid) == 1,
+          "Expected allowRecursiveCommitsWithSynchronousMountOnAndroid(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::androidEnablePendingFabricTransactions, jsInvoker_, instance_);
+          rt, &T::allowRecursiveCommitsWithSynchronousMountOnAndroid, jsInvoker_, instance_);
     }
     bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) override {
       static_assert(
@@ -168,21 +171,21 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::forceBatchingMountItemsOnAndroid, jsInvoker_, instance_);
     }
-    bool inspectorEnableCxxInspectorPackagerConnection(jsi::Runtime &rt) override {
+    bool fuseboxEnabledDebug(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::inspectorEnableCxxInspectorPackagerConnection) == 1,
-          "Expected inspectorEnableCxxInspectorPackagerConnection(...) to have 1 parameters");
+          bridging::getParameterCount(&T::fuseboxEnabledDebug) == 1,
+          "Expected fuseboxEnabledDebug(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::inspectorEnableCxxInspectorPackagerConnection, jsInvoker_, instance_);
+          rt, &T::fuseboxEnabledDebug, jsInvoker_, instance_);
     }
-    bool inspectorEnableModernCDPRegistry(jsi::Runtime &rt) override {
+    bool fuseboxEnabledRelease(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::inspectorEnableModernCDPRegistry) == 1,
-          "Expected inspectorEnableModernCDPRegistry(...) to have 1 parameters");
+          bridging::getParameterCount(&T::fuseboxEnabledRelease) == 1,
+          "Expected fuseboxEnabledRelease(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::inspectorEnableModernCDPRegistry, jsInvoker_, instance_);
+          rt, &T::fuseboxEnabledRelease, jsInvoker_, instance_);
     }
     bool lazyAnimationCallbacks(jsi::Runtime &rt) override {
       static_assert(
@@ -208,6 +211,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::setAndroidLayoutDirection, jsInvoker_, instance_);
     }
+    bool useImmediateExecutorInAndroidBridgeless(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useImmediateExecutorInAndroidBridgeless) == 1,
+          "Expected useImmediateExecutorInAndroidBridgeless(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useImmediateExecutorInAndroidBridgeless, jsInvoker_, instance_);
+    }
     bool useModernRuntimeScheduler(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::useModernRuntimeScheduler) == 1,
@@ -223,6 +234,22 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useNativeViewConfigsInBridgelessMode, jsInvoker_, instance_);
+    }
+    bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useRuntimeShadowNodeReferenceUpdate) == 1,
+          "Expected useRuntimeShadowNodeReferenceUpdate(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useRuntimeShadowNodeReferenceUpdate, jsInvoker_, instance_);
+    }
+    bool useRuntimeShadowNodeReferenceUpdateOnLayout(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useRuntimeShadowNodeReferenceUpdateOnLayout) == 1,
+          "Expected useRuntimeShadowNodeReferenceUpdateOnLayout(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useRuntimeShadowNodeReferenceUpdateOnLayout, jsInvoker_, instance_);
     }
     bool useStateAlignmentMechanism(jsi::Runtime &rt) override {
       static_assert(

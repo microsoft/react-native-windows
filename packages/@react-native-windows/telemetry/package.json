@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/telemetry",
-  "version": "0.0.0-canary.101",
+  "version": "0.0.0-canary.103",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "typings": "lib-commonjs/index.d.ts",
@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@azure/core-auth": "1.5.0",
-    "@react-native-windows/fs": "0.0.0-canary.50",
+    "@react-native-windows/fs": "0.0.0-canary.52",
     "@xmldom/xmldom": "^0.7.7",
     "applicationinsights": "2.9.1",
     "ci-info": "^3.2.0",
@@ -29,9 +29,9 @@
     "xpath": "^0.0.27"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.2.21",
+    "@rnw-scripts/eslint-config": "1.2.23",
     "@rnw-scripts/jest-unittest-config": "1.5.8",
-    "@rnw-scripts/just-task": "2.3.38",
+    "@rnw-scripts/just-task": "2.3.40",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/envinfo": "^7.8.1",
     "@types/jest": "^29.2.2",

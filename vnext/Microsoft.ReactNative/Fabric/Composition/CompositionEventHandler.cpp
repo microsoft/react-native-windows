@@ -14,8 +14,8 @@
 #include <windowsx.h>
 #include <winrt/Windows.UI.Input.h>
 #include "Composition.Input.h"
-#include "CompositionRootView.h"
 #include "CompositionViewComponentView.h"
+#include "ReactNativeIsland.h"
 #include "RootComponentView.h"
 
 #ifdef USE_WINUI3
@@ -151,10 +151,10 @@ struct CompositionInputKeyboardSource : winrt::implements<
 
 CompositionEventHandler::CompositionEventHandler(
     const winrt::Microsoft::ReactNative::ReactContext &context,
-    const winrt::Microsoft::ReactNative::CompositionRootView &CompositionRootView)
-    : m_context(context), m_wkRootView(CompositionRootView) {
+    const winrt::Microsoft::ReactNative::ReactNativeIsland &reactNativeIsland)
+    : m_context(context), m_wkRootView(reactNativeIsland) {
 #ifdef USE_WINUI3
-  if (auto island = CompositionRootView.Island()) {
+  if (auto island = reactNativeIsland.Island()) {
     auto pointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(island);
 
     m_pointerPressedToken =
@@ -241,7 +241,7 @@ CompositionEventHandler::CompositionEventHandler(
                 focusedComponent
                     ? focusedComponent.Tag()
                     : static_cast<facebook::react::Tag>(
-                          winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
+                          winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(
                               strongRootView)
                               ->RootTag()),
                 args);
@@ -264,7 +264,7 @@ CompositionEventHandler::CompositionEventHandler(
                 focusedComponent
                     ? focusedComponent.Tag()
                     : static_cast<facebook::react::Tag>(
-                          winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
+                          winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(
                               strongRootView)
                               ->RootTag()),
                 args);
@@ -288,7 +288,7 @@ CompositionEventHandler::CompositionEventHandler(
                 focusedComponent
                     ? focusedComponent.Tag()
                     : static_cast<facebook::react::Tag>(
-                          winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
+                          winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(
                               strongRootView)
                               ->RootTag()),
                 args);
@@ -323,7 +323,7 @@ CompositionEventHandler::~CompositionEventHandler() {
 facebook::react::SurfaceId CompositionEventHandler::SurfaceId() const noexcept {
   if (auto strongRootView = m_wkRootView.get()) {
     return static_cast<facebook::react::SurfaceId>(
-        winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(strongRootView)->RootTag());
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(strongRootView)->RootTag());
   }
   return -1;
 }
@@ -456,11 +456,11 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
         auto focusedComponent = RootComponentView().GetFocusedComponent();
         auto args = winrt::make<
             winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
-            focusedComponent ? focusedComponent.Tag()
-                             : static_cast<facebook::react::Tag>(
-                                   winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
-                                       strongRootView)
-                                       ->RootTag()),
+            focusedComponent
+                ? focusedComponent.Tag()
+                : static_cast<facebook::react::Tag>(
+                      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(strongRootView)
+                          ->RootTag()),
             msg,
             wParam,
             lParam);
@@ -477,11 +477,11 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
       if (auto strongRootView = m_wkRootView.get()) {
         auto focusedComponent = RootComponentView().GetFocusedComponent();
         auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
-            focusedComponent ? focusedComponent.Tag()
-                             : static_cast<facebook::react::Tag>(
-                                   winrt::get_self<winrt::Microsoft::ReactNative::implementation::CompositionRootView>(
-                                       strongRootView)
-                                       ->RootTag()),
+            focusedComponent
+                ? focusedComponent.Tag()
+                : static_cast<facebook::react::Tag>(
+                      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(strongRootView)
+                          ->RootTag()),
             msg,
             wParam,
             lParam);
