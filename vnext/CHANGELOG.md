@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 10 Jun 2024 15:19:54 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Jun 2024 15:43:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.9
+
+Mon, 17 Jun 2024 15:43:53 GMT
+
+### Patches
+
+- Upgrade Desktop solution/projects to Win SDK 10.0.22621.0 (julio.rocha@microsoft.com)
 
 ## 0.74.8
 

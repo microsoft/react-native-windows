@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 17 Jun 2024 15:43:53 GMT",
+      "version": "0.74.9",
+      "tag": "react-native-windows_v0.74.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9efa2f6851a90be02d599f18a224bf6c89032409",
+            "comment": "Upgrade Desktop solution/projects to Win SDK 10.0.22621.0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 10 Jun 2024 15:19:54 GMT",
       "version": "0.74.8",
       "tag": "react-native-windows_v0.74.8",
