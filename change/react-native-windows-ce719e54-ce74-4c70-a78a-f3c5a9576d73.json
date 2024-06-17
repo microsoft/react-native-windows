@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update new arch app template to use prebuilt RNW NuGets",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
