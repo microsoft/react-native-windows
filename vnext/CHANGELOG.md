@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 27 May 2024 15:14:13 GMT and should not be manually modified.
+This log was last generated on Mon, 17 Jun 2024 15:14:06 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.34
+
+Mon, 17 Jun 2024 15:14:06 GMT
+
+### Patches
+
+- Change Hermes package version to 0.1.21 (vmorozov@microsoft.com)
 
 ## 0.72.33
 
