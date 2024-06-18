@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Enable devMode with react-native init-windows old/* templates",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
