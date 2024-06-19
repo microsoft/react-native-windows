@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 12 Jun 2024 05:16:24 GMT and should not be manually modified.
+This log was last generated on Wed, 19 Jun 2024 05:14:43 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.831
+
+Wed, 19 Jun 2024 05:14:43 GMT
+
+### Changes
+
+- Enable devMode with react-native init-windows old/* templates (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.222
 
 ## 0.0.0-canary.830
 

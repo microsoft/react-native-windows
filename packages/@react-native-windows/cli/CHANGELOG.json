@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Wed, 19 Jun 2024 05:14:43 GMT",
+      "version": "0.0.0-canary.222",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.222",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "813ba195184977425b27e83156d36d1f152dab17",
+            "comment": "Enable devMode with react-native init-windows old/* templates"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Jun 2024 05:16:24 GMT",
       "version": "0.0.0-canary.221",
       "tag": "@react-native-windows/cli_v0.0.0-canary.221",
