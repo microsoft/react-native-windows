@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix bug with specifying min VS versions for run-windows",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
