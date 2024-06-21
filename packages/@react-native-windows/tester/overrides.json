@@ -63,13 +63,6 @@
     },
     {
       "type": "patch",
-      "file": "src/js/examples/TextInput/TextInputSharedExamples.windows.js",
-      "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputSharedExamples.js",
-      "baseHash": "55efb5c3f34963215650859b8a1bf3cbb5fc6f54",
-      "issue": 13303
-    },
-    {
-      "type": "patch",
       "file": "src/js/examples/TurboModule/SampleTurboModuleExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
       "baseHash": "6e532e2e2fab2fd61b864f6ebe64d7725061043d",
