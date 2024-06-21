@@ -326,11 +326,13 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\SchedulerSettings.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeAppBuilder.h">
+      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
       <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeAppBuilder.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-	<ClInclude Include="ReactInstanceSettingsBuilder.h">
-      <DependentUpon>ReactNativeAppBuilder.idl</DependentUpon>
+	<ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactInstanceSettingsBuilder.h">
+     <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+      <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeAppBuilder.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\DynamicReader.cpp">
