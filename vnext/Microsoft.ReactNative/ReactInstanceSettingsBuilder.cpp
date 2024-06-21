@@ -20,13 +20,13 @@ winrt::ReactNative::ReactInstanceSettings ReactInstanceSettingsBuilder::ReactIns
   return m_reactInstanceSettings;
 }
 
-winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::UseDirectDebugger(bool const& state) {
+winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::UseDirectDebugger(bool const &state) {
   m_reactInstanceSettings.UseDirectDebugger(state);
 
   return *this;
 }
 
-winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::UseDeveloperSupport(bool const& state) {
+winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::UseDeveloperSupport(bool const &state) {
   m_reactInstanceSettings.UseDeveloperSupport(state);
 
   return *this;
@@ -38,7 +38,8 @@ winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::B
   return *this;
 }
 
-winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::JavaScriptBundleFile(hstring const &file) {
+winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::JavaScriptBundleFile(
+    hstring const &file) {
   m_reactInstanceSettings.JavaScriptBundleFile(file.c_str());
 
   return *this;
