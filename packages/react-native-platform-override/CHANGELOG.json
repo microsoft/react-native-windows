@@ -2,6 +2,21 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Fri, 21 Jun 2024 05:17:50 GMT",
+      "version": "1.9.42",
+      "tag": "react-native-platform-override_v1.9.42",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-platform-override",
+            "commit": "3c44fd269a53388e245877711637edda0522e4f3",
+            "comment": "SFI: Component Governance fixes 6/19/24"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Jun 2024 05:16:24 GMT",
       "version": "1.9.41",
       "tag": "react-native-platform-override_v1.9.41",
