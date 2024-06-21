@@ -520,9 +520,9 @@ $requirements = @(
 
 function InstallWinGet {
     Write-Verbose "Updating WinGet version...";
-    Invoke-WebRequest -Uri https://aka.ms/getwinget -OutFile winget.msixbundle;
-    Add-AppPackage -ForceApplicationShutdown .\winget.msixbundle;
-    del .\winget.msixbundle;
+    Invoke-WebRequest -Uri https://aka.ms/getwinget -OutFile "$env:TEMP\winget.msixbundle";
+    Add-AppPackage -ForceApplicationShutdown $env:TEMP\winget.msixbundle;
+    Remove-Item $env:TEMP\winget.msixbundle;
 }
 
 function EnsureWinGetForInstall {
