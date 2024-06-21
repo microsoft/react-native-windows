@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[0.74] Fix bug with specifying min VS versions for run-windows",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
