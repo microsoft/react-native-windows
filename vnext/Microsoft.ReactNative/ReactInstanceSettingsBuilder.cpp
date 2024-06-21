@@ -14,35 +14,37 @@ using namespace winrt::Microsoft::UI;
 namespace winrt::Microsoft::ReactNative::implementation {
 ReactInstanceSettingsBuilder::ReactInstanceSettingsBuilder() {
   m_reactInstanceSettings = winrt::make<winrt::ReactNative::implementation::ReactInstanceSettings>();
-
-#if _DEBUG
-  m_reactInstanceSettings.UseDirectDebugger(true);
-  m_reactInstanceSettings.UseDeveloperSupport(true);
-#else
-  m_reactInstanceSettings.UseDirectDebugger(false);
-  m_reactInstanceSettings.UseDeveloperSupport(false);
-#endif
 }
 
 winrt::ReactNative::ReactInstanceSettings ReactInstanceSettingsBuilder::ReactInstanceSettings() {
   return m_reactInstanceSettings;
 }
 
-winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::SetBundleRootPath(hstring const &path) {
-#if BUNDLE
-  m_reactInstanceSettings.BundleRootPath(path.c_str());
-#endif
+winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::UseDirectDebugger(bool const& state) {
+  m_reactInstanceSettings.UseDirectDebugger(state);
+
   return *this;
 }
 
-winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::SetJavaScriptBundleFile(
-    hstring const &file) {
+winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::UseDeveloperSupport(bool const& state) {
+  m_reactInstanceSettings.UseDeveloperSupport(state);
+
+  return *this;
+}
+
+winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::BundleRootPath(hstring const &path) {
+  m_reactInstanceSettings.BundleRootPath(path.c_str());
+
+  return *this;
+}
+
+winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::JavaScriptBundleFile(hstring const &file) {
   m_reactInstanceSettings.JavaScriptBundleFile(file.c_str());
 
   return *this;
 }
 
-winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::SetUseFastRefresh(bool const &state) {
+winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::UseFastRefresh(bool const &state) {
   m_reactInstanceSettings.UseFastRefresh(state);
 
   return *this;

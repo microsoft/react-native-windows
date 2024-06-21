@@ -310,14 +310,6 @@
       <DependentUpon>ReactNativeHost.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-	<ClInclude Include="ReactNativeAppBuilder.h">
-      <DependentUpon>ReactNativeAppBuilder.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-	<ClInclude Include="ReactInstanceSettingsBuilder.h">
-      <DependentUpon>ReactNativeAppBuilder.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <DependentUpon>Timer.idl</DependentUpon>
       <SubType>Code</SubType>

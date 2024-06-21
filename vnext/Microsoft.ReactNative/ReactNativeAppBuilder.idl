@@ -17,11 +17,15 @@ namespace Microsoft.ReactNative
         ReactInstanceSettings ReactInstanceSettings {get;};
 
         // Set Methods
-        ReactInstanceSettingsBuilder SetBundleRootPath(String path);
+        ReactInstanceSettingsBuilder UseDirectDebugger(Boolean state);
 
-        ReactInstanceSettingsBuilder SetJavaScriptBundleFile(String file);
+        ReactInstanceSettingsBuilder UseDeveloperSupport(Boolean state);
+    
+        ReactInstanceSettingsBuilder BundleRootPath(String path);
 
-        ReactInstanceSettingsBuilder SetUseFastRefresh(Boolean state);
+        ReactInstanceSettingsBuilder JavaScriptBundleFile(String file);
+
+        ReactInstanceSettingsBuilder UseFastRefresh(Boolean state);
     }
 
     [experimental]

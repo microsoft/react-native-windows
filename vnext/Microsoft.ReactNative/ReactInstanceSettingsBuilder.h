@@ -6,9 +6,11 @@ struct ReactInstanceSettingsBuilder : ReactInstanceSettingsBuilderT<ReactInstanc
   ReactInstanceSettingsBuilder();
 
   winrt::Microsoft::ReactNative::ReactInstanceSettings ReactInstanceSettings();
-  winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder SetBundleRootPath(hstring const &path);
-  winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder SetJavaScriptBundleFile(hstring const &file);
-  winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder SetUseFastRefresh(bool const &state);
+  winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder UseDirectDebugger(bool const& state);
+  winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder UseDeveloperSupport(bool const& state);
+  winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder BundleRootPath(hstring const &path);
+  winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder JavaScriptBundleFile(hstring const &file);
+  winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder UseFastRefresh(bool const &state);
 
  private:
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_reactInstanceSettings{nullptr};
