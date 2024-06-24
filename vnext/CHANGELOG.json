@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 22 Jun 2024 05:15:16 GMT",
+      "version": "0.0.0-canary.833",
+      "tag": "react-native-windows_v0.0.0-canary.833",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0e276da7b09c77e46d341b3102247279009290f2",
+            "comment": "Default Switch Should Be Accessible"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.224",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Jun 2024 05:17:50 GMT",
       "version": "0.0.0-canary.832",
       "tag": "react-native-windows_v0.0.0-canary.832",

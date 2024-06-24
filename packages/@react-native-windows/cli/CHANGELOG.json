@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 22 Jun 2024 05:15:16 GMT",
+      "version": "0.0.0-canary.224",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.224",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "68144e7b0d24ce17431584ea69b14ea9867fb5df",
+            "comment": "Fix bug with specifying min VS versions for run-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Jun 2024 05:17:50 GMT",
       "version": "0.0.0-canary.223",
       "tag": "@react-native-windows/cli_v0.0.0-canary.223",

@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 21 Jun 2024 05:17:50 GMT and should not be manually modified.
+This log was last generated on Sat, 22 Jun 2024 05:15:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.224
+
+Sat, 22 Jun 2024 05:15:16 GMT
+
+### Changes
+
+- Fix bug with specifying min VS versions for run-windows (jthysell@microsoft.com)
 
 ## 0.0.0-canary.223
 
