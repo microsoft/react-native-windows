@@ -2451,12 +2451,70 @@
   resolved "https://registry.yarnpkg.com/@react-native/assets/-/assets-1.0.0.tgz#c6f9bf63d274bafc8e970628de24986b30a55c8e"
   integrity sha512-KrwSpS1tKI70wuKl68DwJZYEvXktDHdZMG0k2AXD/rJVSlB23/X2CB2cutVR0HwNMJIal9HOUOBB2rVfa6UGtQ==
 
+"@react-native/babel-plugin-codegen@0.75.0-nightly-20240610-ced076210":
+  version "0.75.0-nightly-20240610-ced076210"
+  resolved "https://registry.yarnpkg.com/@react-native/babel-plugin-codegen/-/babel-plugin-codegen-0.75.0-nightly-20240610-ced076210.tgz#050f012634001064a8c5c5669ca029439e8859d9"
+  integrity sha512-dgNC7rMC5RKlO5SW5H02iPKNE4QUgaG/JQS4yb3F/KVunU8Up/QGEnNWFGgc5mhuXsPuWAtuiaWUaGSGedYrHA==
+  dependencies:
+    "@react-native/codegen" "0.75.0-nightly-20240610-ced076210"
+
 "@react-native/babel-plugin-codegen@0.75.0-nightly-20240613-f7aea0c8e":
   version "0.75.0-nightly-20240613-f7aea0c8e"
   resolved "https://registry.yarnpkg.com/@react-native/babel-plugin-codegen/-/babel-plugin-codegen-0.75.0-nightly-20240613-f7aea0c8e.tgz#57172196d18d379cf1d5f409107be73416fb23c5"
   integrity sha512-QL6vlZcEYVTz4uonnqif8zcyD6H/RYlSvOZ+iKn/HNAH2TSwyH89eiaGkEAkg5eCY2GjlH/iBESjfd9JlOmgkQ==
   dependencies:
     "@react-native/codegen" "0.75.0-nightly-20240613-f7aea0c8e"
+
+"@react-native/babel-preset@0.75.0-nightly-20240610-ced076210":
+  version "0.75.0-nightly-20240610-ced076210"
+  resolved "https://registry.yarnpkg.com/@react-native/babel-preset/-/babel-preset-0.75.0-nightly-20240610-ced076210.tgz#5ff2538998b1aa0d4f08fd800a537435b7cb85e5"
+  integrity sha512-1DEUQY5+QeS8fZquC3eKgJupKq3FUSbXKz1ETtKYnjO0MGj9Xmxs8JhXuuBoq7uENCk7gWgYF/BWPKtV/2MSrQ==
+  dependencies:
+    "@babel/core" "^7.20.0"
+    "@babel/plugin-proposal-export-default-from" "^7.0.0"
+    "@babel/plugin-syntax-dynamic-import" "^7.8.0"
+    "@babel/plugin-syntax-export-default-from" "^7.0.0"
+    "@babel/plugin-syntax-flow" "^7.18.0"
+    "@babel/plugin-syntax-nullish-coalescing-operator" "^7.0.0"
+    "@babel/plugin-syntax-optional-chaining" "^7.0.0"
+    "@babel/plugin-transform-arrow-functions" "^7.0.0"
+    "@babel/plugin-transform-async-generator-functions" "^7.24.3"
+    "@babel/plugin-transform-async-to-generator" "^7.20.0"
+    "@babel/plugin-transform-block-scoping" "^7.0.0"
+    "@babel/plugin-transform-class-properties" "^7.24.1"
+    "@babel/plugin-transform-classes" "^7.0.0"
+    "@babel/plugin-transform-computed-properties" "^7.0.0"
+    "@babel/plugin-transform-destructuring" "^7.20.0"
+    "@babel/plugin-transform-flow-strip-types" "^7.20.0"
+    "@babel/plugin-transform-for-of" "^7.0.0"
+    "@babel/plugin-transform-function-name" "^7.0.0"
+    "@babel/plugin-transform-literals" "^7.0.0"
+    "@babel/plugin-transform-logical-assignment-operators" "^7.24.1"
+    "@babel/plugin-transform-modules-commonjs" "^7.0.0"
+    "@babel/plugin-transform-named-capturing-groups-regex" "^7.0.0"
+    "@babel/plugin-transform-nullish-coalescing-operator" "^7.24.1"
+    "@babel/plugin-transform-numeric-separator" "^7.24.1"
+    "@babel/plugin-transform-object-rest-spread" "^7.24.5"
+    "@babel/plugin-transform-optional-catch-binding" "^7.24.1"
+    "@babel/plugin-transform-optional-chaining" "^7.24.5"
+    "@babel/plugin-transform-parameters" "^7.0.0"
+    "@babel/plugin-transform-private-methods" "^7.22.5"
+    "@babel/plugin-transform-private-property-in-object" "^7.22.11"
+    "@babel/plugin-transform-react-display-name" "^7.0.0"
+    "@babel/plugin-transform-react-jsx" "^7.0.0"
+    "@babel/plugin-transform-react-jsx-self" "^7.0.0"
+    "@babel/plugin-transform-react-jsx-source" "^7.0.0"
+    "@babel/plugin-transform-regenerator" "^7.20.0"
+    "@babel/plugin-transform-runtime" "^7.0.0"
+    "@babel/plugin-transform-shorthand-properties" "^7.0.0"
+    "@babel/plugin-transform-spread" "^7.0.0"
+    "@babel/plugin-transform-sticky-regex" "^7.0.0"
+    "@babel/plugin-transform-typescript" "^7.5.0"
+    "@babel/plugin-transform-unicode-regex" "^7.0.0"
+    "@babel/template" "^7.0.0"
+    "@react-native/babel-plugin-codegen" "0.75.0-nightly-20240610-ced076210"
+    babel-plugin-transform-flow-enums "^0.0.2"
+    react-refresh "^0.14.0"
 
 "@react-native/babel-preset@0.75.0-nightly-20240613-f7aea0c8e":
   version "0.75.0-nightly-20240613-f7aea0c8e"
@@ -2508,6 +2566,19 @@
     "@react-native/babel-plugin-codegen" "0.75.0-nightly-20240613-f7aea0c8e"
     babel-plugin-transform-flow-enums "^0.0.2"
     react-refresh "^0.14.0"
+
+"@react-native/codegen@0.75.0-nightly-20240610-ced076210":
+  version "0.75.0-nightly-20240610-ced076210"
+  resolved "https://registry.yarnpkg.com/@react-native/codegen/-/codegen-0.75.0-nightly-20240610-ced076210.tgz#2d91855c8c4167089d02ef5fc8f064937af14b49"
+  integrity sha512-6Iytpq0zE9M9s+A9euK2N0VW1s6W3Ft7tPirfQprEUXZ3xSClFX/etCBRwzmw0ZOxqkY3BAxugzHntj9UF8Vew==
+  dependencies:
+    "@babel/parser" "^7.20.0"
+    glob "^7.1.1"
+    hermes-parser "0.22.0"
+    invariant "^2.2.4"
+    jscodeshift "^0.14.0"
+    mkdirp "^0.5.1"
+    nullthrows "^1.1.1"
 
 "@react-native/codegen@0.75.0-nightly-20240613-f7aea0c8e":
   version "0.75.0-nightly-20240613-f7aea0c8e"
@@ -2591,10 +2662,25 @@
   resolved "https://registry.yarnpkg.com/@react-native/gradle-plugin/-/gradle-plugin-0.75.0-nightly-20240613-f7aea0c8e.tgz#eb05f811da1209b1dafbfdd579b407a117b89a97"
   integrity sha512-dfRlALXxoSvxzcw2E5EtoqSsu+UGAxmy9O7HPTHNcEK/wXlB3thkfXN1MuexYVHQY8zn10whSJRBpxE5ZmxNIg==
 
+"@react-native/js-polyfills@0.75.0-nightly-20240610-ced076210":
+  version "0.75.0-nightly-20240610-ced076210"
+  resolved "https://registry.yarnpkg.com/@react-native/js-polyfills/-/js-polyfills-0.75.0-nightly-20240610-ced076210.tgz#0745be0b8d024dbbc8371f9862f2ab446328a576"
+  integrity sha512-/3k9zF0uVBieTxsxk0EfjT/U4p9GnyeQmpkaszgB89E8c/BbJDj6lxDYBNVnMhBh6CXtzjtvmRKMPGgWPPKuqw==
+
 "@react-native/js-polyfills@0.75.0-nightly-20240613-f7aea0c8e":
   version "0.75.0-nightly-20240613-f7aea0c8e"
   resolved "https://registry.yarnpkg.com/@react-native/js-polyfills/-/js-polyfills-0.75.0-nightly-20240613-f7aea0c8e.tgz#94dcac9b5c9cf3b0a7469c0689db93e5a9a82cda"
   integrity sha512-8SyIu7CjUG7RK0OJCh5iHQHRpUeaQwEZbE+KRmO9cqAnunBdryKMdInG9HnuFLztB69ZoUHxC6QA6xNg1wWnEg==
+
+"@react-native/metro-babel-transformer@0.75.0-nightly-20240610-ced076210":
+  version "0.75.0-nightly-20240610-ced076210"
+  resolved "https://registry.yarnpkg.com/@react-native/metro-babel-transformer/-/metro-babel-transformer-0.75.0-nightly-20240610-ced076210.tgz#3deee51f665f5a17113d4aa4e488e65e1fecbd60"
+  integrity sha512-qB2+ALG9574mE0E9t+fQUKAxQ5nQGXEZKh4xWwId+GzgVybEN0FJcJpDRl0CcM3+XaVnQIf+hoGm04fgB7MRqg==
+  dependencies:
+    "@babel/core" "^7.20.0"
+    "@react-native/babel-preset" "0.75.0-nightly-20240610-ced076210"
+    hermes-parser "0.22.0"
+    nullthrows "^1.1.1"
 
 "@react-native/metro-babel-transformer@0.75.0-nightly-20240613-f7aea0c8e":
   version "0.75.0-nightly-20240613-f7aea0c8e"
@@ -2605,6 +2691,16 @@
     "@react-native/babel-preset" "0.75.0-nightly-20240613-f7aea0c8e"
     hermes-parser "0.22.0"
     nullthrows "^1.1.1"
+
+"@react-native/metro-config@0.75.0-nightly-20240610-ced076210":
+  version "0.75.0-nightly-20240610-ced076210"
+  resolved "https://registry.yarnpkg.com/@react-native/metro-config/-/metro-config-0.75.0-nightly-20240610-ced076210.tgz#4dc1fc1a91d75af6ec9ac8763663b8b5291534e1"
+  integrity sha512-1ejJtuR31eyGNy/YbN0Y2FB4eZIKVb7Wq4oTEla9iUcqyNaWtgs/zokg5nwL6DpHuE9Rv0f/q1GqsTV/Xo8Lkg==
+  dependencies:
+    "@react-native/js-polyfills" "0.75.0-nightly-20240610-ced076210"
+    "@react-native/metro-babel-transformer" "0.75.0-nightly-20240610-ced076210"
+    metro-config "^0.80.3"
+    metro-runtime "^0.80.3"
 
 "@react-native/metro-config@0.75.0-nightly-20240613-f7aea0c8e":
   version "0.75.0-nightly-20240613-f7aea0c8e"
