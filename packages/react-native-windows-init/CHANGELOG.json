@@ -2,6 +2,51 @@
   "name": "react-native-windows-init",
   "entries": [
     {
+      "date": "Sat, 22 Jun 2024 05:15:16 GMT",
+      "version": "1.4.28",
+      "tag": "react-native-windows-init_v1.4.28",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.224",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Jun 2024 05:17:50 GMT",
+      "version": "1.4.27",
+      "tag": "react-native-windows-init_v1.4.27",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.223",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Jun 2024 05:14:44 GMT",
+      "version": "1.4.26",
+      "tag": "react-native-windows-init_v1.4.26",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows-init",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.222",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Jun 2024 05:16:24 GMT",
       "version": "1.4.25",
       "tag": "react-native-windows-init_v1.4.25",

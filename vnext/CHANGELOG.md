@@ -1,8 +1,36 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 12 Jun 2024 05:16:24 GMT and should not be manually modified.
+This log was last generated on Sat, 22 Jun 2024 05:15:16 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.833
+
+Sat, 22 Jun 2024 05:15:16 GMT
+
+### Changes
+
+- Default Switch Should Be Accessible (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.224
+
+## 0.0.0-canary.832
+
+Fri, 21 Jun 2024 05:17:50 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.223
+- Bump @react-native-windows/codegen to v0.0.0-canary.96
+- Bump react-native-platform-override to v1.9.42
+
+## 0.0.0-canary.831
+
+Wed, 19 Jun 2024 05:14:43 GMT
+
+### Changes
+
+- Enable devMode with react-native init-windows old/* templates (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.222
 
 ## 0.0.0-canary.830
 
