@@ -62,13 +62,11 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
   auto scaleFactor = ScaleFactor(hwnd);
 
-  auto reactInstanceSettingsBuilder{
-      winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder()
-      .JavaScriptBundleFile(L"index")
-      .UseFastRefresh(true)
-      .UseDirectDebugger(false)
-      .UseDeveloperSupport(false)
-  };
+  auto reactInstanceSettingsBuilder{winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder()
+                                        .JavaScriptBundleFile(L"index")
+                                        .UseFastRefresh(true)
+                                        .UseDirectDebugger(false)
+                                        .UseDeveloperSupport(false)};
 
   auto packageProviders{winrt::single_threaded_vector<winrt::Microsoft::ReactNative::IReactPackageProvider>()};
 
@@ -77,13 +75,11 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   packageProviders.Append(winrt::make<CompReactPackageProvider>());
 
   // Initialize and Manage the ReactNativeHost
-  auto reactNativeAppBuilder{
-      winrt::Microsoft::ReactNative::ReactNativeAppBuilder()
-      .AddPackageProviders(packageProviders)
-      .SetReactInstanceSettings(reactInstanceSettingsBuilder.ReactInstanceSettings())
-      .SetAppWindow(window)
-      .SetCompositor(compositor)
-  };
+  auto reactNativeAppBuilder{winrt::Microsoft::ReactNative::ReactNativeAppBuilder()
+                                 .AddPackageProviders(packageProviders)
+                                 .SetReactInstanceSettings(reactInstanceSettingsBuilder.ReactInstanceSettings())
+                                 .SetAppWindow(window)
+                                 .SetCompositor(compositor)};
 
   // Start the react-native instance by creating a javascript runtime and load the bundle.
   auto host{reactNativeAppBuilder.Start()};
