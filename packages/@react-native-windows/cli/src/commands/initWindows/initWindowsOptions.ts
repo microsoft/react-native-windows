@@ -28,13 +28,13 @@ export const initOptions: CommandOption[] = [
   {
     name: '--name [string]',
     description:
-      'The native project name. Defaults to the name property iin app.json or package.json',
+      'The native project name. Defaults to the name property in app.json or package.json',
     default: undefined,
   },
   {
     name: '--namespace [string]',
     description:
-      "The native project namespace. This should be expressed using dots as separators. i.e. 'Level1.Level2.Level3'. The generator will apply the correct syntax for the target language.",
+      "The native project namespace, expressed using dots as separators, i.e. 'Level1.Level2.Level3'. Defaults to the same as name",
     default: undefined,
   },
   {
