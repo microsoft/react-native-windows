@@ -40,46 +40,6 @@ void UpdateRootViewSizeToAppWindow(
   }
 }
 
-// Create and configure the ReactNativeHost
-winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
-    HWND hwnd,
-    const winrt::Microsoft::UI::Composition::Compositor &compositor) {
-  WCHAR appDirectory[MAX_PATH];
-  GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
-  PathCchRemoveFileSpec(appDirectory, MAX_PATH);
-
-  auto host = winrt::Microsoft::ReactNative::ReactNativeHost();
-
-  // Include any autolinked modules
-  RegisterAutolinkedNativeModulePackages(host.PackageProviders());
-
-  host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
-
-#if BUNDLE
-  host.InstanceSettings().JavaScriptBundleFile(L"index.windows");
-  host.InstanceSettings().BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str());
-  host.InstanceSettings().UseFastRefresh(false);
-#else
-  host.InstanceSettings().JavaScriptBundleFile(L"index");
-  host.InstanceSettings().UseFastRefresh(true);
-#endif
-
-#if _DEBUG
-  host.InstanceSettings().UseDirectDebugger(true);
-  host.InstanceSettings().UseDeveloperSupport(true);
-#else
-  host.InstanceSettings().UseDirectDebugger(false);
-  host.InstanceSettings().UseDeveloperSupport(false);
-#endif
-
-  winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
-      host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
-
-  winrt::Microsoft::ReactNative::Composition::CompositionUIService::SetCompositor(host.InstanceSettings(), compositor);
-
-  return host;
-}
-
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
   // Initialize WinRT.
   winrt::init_apartment(winrt::apartment_type::single_threaded);
@@ -102,10 +62,31 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
   auto scaleFactor = ScaleFactor(hwnd);
 
-  auto host = CreateReactNativeHost(hwnd, compositor);
+  auto reactInstanceSettingsBuilder{
+      winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder()
+      .JavaScriptBundleFile(L"index")
+      .UseFastRefresh(true)
+      .UseDirectDebugger(false)
+      .UseDeveloperSupport(false)
+  };
 
-  // Start the react-native instance, which will create a JavaScript runtime and load the applications bundle
-  host.ReloadInstance();
+  auto packageProviders{winrt::single_threaded_vector<winrt::Microsoft::ReactNative::IReactPackageProvider>()};
+
+  RegisterAutolinkedNativeModulePackages(packageProviders);
+
+  packageProviders.Append(winrt::make<CompReactPackageProvider>());
+
+  // Initialize and Manage the ReactNativeHost
+  auto reactNativeAppBuilder{
+      winrt::Microsoft::ReactNative::ReactNativeAppBuilder()
+      .AddPackageProviders(packageProviders)
+      .SetReactInstanceSettings(reactInstanceSettingsBuilder.ReactInstanceSettings())
+      .SetAppWindow(window)
+      .SetCompositor(compositor)
+  };
+
+  // Start the react-native instance by creating a javascript runtime and load the bundle.
+  auto host{reactNativeAppBuilder.Start()};
 
   // Create a RootView which will present a react-native component
   winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
