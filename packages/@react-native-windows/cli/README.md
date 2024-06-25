@@ -24,7 +24,7 @@ Here are the options that `react-native autolink-windows` takes:
 | `--sln`               | string     | Override the app solution file determined by 'react-native config', i.e. `windows\myApp.sln` |
 | `--proj`              | string     | Override the app project file determined by 'react-native config', i.e. `windows\myApp\myApp.vcxproj` |
 | `--no-telemetry`      | boolean    | Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI |
-| `-h`, `--help`        | boolean    | display help for command                         |
+| `-h`, `--help`        | boolean    | Display help for command                         |
 
 ## `codegen-windows`
 
@@ -44,7 +44,7 @@ Here are the options that `react-native codegen-windows` takes:
 | `--logging`           | boolean    | Verbose output logging                           |
 | `--check`             | boolean    | Only check whether any codegen files need to change |
 | `--no-telemetry`      | boolean    | Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI |
-| `-h`, `--help`        | boolean    | display help for command                         |
+| `-h`, `--help`        | boolean    | Display help for command                         |
 
 ## `init-windows`
 
@@ -65,9 +65,9 @@ Here are the options that `react-native init-windows` takes:
 | `--template`          | string     | Specify the template to use                      |
 | `--name`              | string     | The native project name. Defaults to the name property in `app.json` or `package.json` |
 | `--namespace`         | string     | The native project namespace, expressed using dots as separators, i.e. `Level1.Level2.Level3`. Defaults to the same as name |
-| `--overwrite`         | boolean    | Overwrite and existing files without prompting  |
+| `--overwrite`         | boolean    | Overwrite any existing files without prompting  |
 | `--no-telemetry`      | boolean    | Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI |
-| `-h`, `--help`        | boolean    | display help for command                         |
+| `-h`, `--help`        | boolean    | Display help for command                         |
 
 ## `run-windows`
 
@@ -87,7 +87,7 @@ Here are the options that `react-native run-windows` takes:
 | Option                | Input Type | Description                                      |
 |-----------------------|------------|--------------------------------------------------|
 | `--release`           | boolean    | Specifies a Release build                        |
-| `--root`              | string     | Override the root directory for the windows build which contains the windows folder (default: `E:\\test63`) |
+| `--root`              | string     | Override the root directory for the project which contains the `windows` folder |
 | `--arch`              | string     | The build architecture, i.e. `ARM64`, `x86`, `x64`. Defaults to system architecture |
 | `--singleproc`        | boolean    | Disables multi-proc build                        |
 | `--emulator`          | boolean    | Deploys the app to an emulator                   |
@@ -101,7 +101,7 @@ Here are the options that `react-native run-windows` takes:
 | `--no-autolink`       | boolean    | Do not run autolinking                           |
 | `--no-build`          | boolean    | Do not build the solution                        |
 | `--no-deploy`         | boolean    | Do not deploy the app                            |
-| `--deploy-from-layout`| boolean    | Force deploy from layout, even in release builds |
+| `--deploy-from-layout`| boolean    | Force deploy from layout even in Release builds |
 | `--sln`               | string     | Override the app solution file determined by 'react-native config', i.e. `windows\myApp.sln` |
 | `--proj`              | string     | Override the app project file determined by 'react-native config', i.e. `windows\myApp\myApp.vcxproj` |
 | `--msbuildprops`      | string     | Comma separated props to pass to MSBuild, i.e. `prop1=value1,prop2=value2` |
@@ -109,7 +109,7 @@ Here are the options that `react-native run-windows` takes:
 | `--info`              | boolean    | Dump environment information                     |
 | `--direct-debugging`  | number     | Enable direct debugging on specified port        |
 | `--no-telemetry`      | boolean    | Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI |
-| `-h`, `--help`        | boolean    | display help for command                         |
+| `-h`, `--help`        | boolean    | Display help for command                         |
 
 ## Data Collection
 The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. You may turn off the telemetry as described in the repository. There are also some features in the software that may enable you and Microsoft to collect data from users of your applications. If you use these features, you must comply with applicable law, including providing appropriate notices to users of your applications together with a copy of Microsoft's privacy statement. Our privacy statement is located at https://go.microsoft.com/fwlink/?LinkID=824704. You can learn more about data collection and use in the help documentation and our privacy statement. Your use of the software operates as your consent to these practices.

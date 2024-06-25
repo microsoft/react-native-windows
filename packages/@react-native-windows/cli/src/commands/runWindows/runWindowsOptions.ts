@@ -66,7 +66,7 @@ export const runWindowsOptions: CommandOption[] = [
   {
     name: '--root [string]',
     description:
-      'Override the root directory for the windows build which contains the windows folder',
+      'Override the root directory for the project which contains the windows folder',
     default: config => config.root,
   },
   {
@@ -126,7 +126,7 @@ export const runWindowsOptions: CommandOption[] = [
   },
   {
     name: '--deploy-from-layout',
-    description: 'Force deploy from layout, even in release builds',
+    description: 'Force deploy from layout even in Release builds',
   },
   {
     name: '--sln [string]',

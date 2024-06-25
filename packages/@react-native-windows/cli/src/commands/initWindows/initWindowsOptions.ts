@@ -34,7 +34,7 @@ export const initOptions: CommandOption[] = [
   {
     name: '--namespace [string]',
     description:
-      "The native project namespace, expressed using dots as separators, i.e. 'Level1.Level2.Level3'. Defaults to the same as name",
+      "The native project namespace expressed using dots as separators, i.e. 'Level1.Level2.Level3'. Defaults to the same as name",
     default: undefined,
   },
   {
