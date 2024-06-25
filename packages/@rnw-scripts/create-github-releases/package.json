@@ -19,8 +19,8 @@
   },
   "dependencies": {
     "@octokit/rest": "^18.5.3",
-    "@react-native-windows/find-repo-root": "^0.0.0-canary.81",
-    "@react-native-windows/fs": "^0.0.0-canary.52",
+    "@react-native-windows/find-repo-root": "0.75.0-preview.0",
+    "@react-native-windows/fs": "0.75.0-preview.0",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.57.1",
     "chalk": "^4.1.0",
@@ -51,5 +51,6 @@
   ],
   "engines": {
     "node": ">= 18"
-  }
+  },
+  "private": true
 }

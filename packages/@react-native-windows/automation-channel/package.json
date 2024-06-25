@@ -32,7 +32,7 @@
     "prettier": "2.8.8",
     "react": "18.3.1",
     "react-native": "0.75.0-nightly-20240610-ced076210",
-    "react-native-windows": "^0.0.0-canary.834",
+    "react-native-windows": "0.75.0-preview.0",
     "typescript": "5.0.4"
   },
   "files": [
@@ -41,5 +41,6 @@
   ],
   "engines": {
     "node": ">= 18"
-  }
+  },
+  "private": true
 }
