@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 22 Jun 2024 05:15:16 GMT and should not be manually modified.
+This log was last generated on Tue, 25 Jun 2024 05:16:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.834
+
+Tue, 25 Jun 2024 05:16:02 GMT
+
+### Changes
+
+- Fix Dependency Script (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.833
 
