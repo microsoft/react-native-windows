@@ -4,7 +4,7 @@ CLI to build and run React Native for Windows apps.
 
 ## `autolink-windows`
 
-`autolink-windows` is the CLI command provided by `@react-native-windows/cli` which is used to "autolink" the native code and build systems for a React Native for Windows app with any native community modules it uses.
+`autolink-windows` is the CLI command provided by `@react-native-windows/cli` which is used to link the native code and build systems for a React Native for Windows app with any native community modules it uses.
 
 **Note:** Autolinking runs automatically as part of running the `run-windows` CLI command, unless the `--no-autolink` argument is used.
 
@@ -64,7 +64,7 @@ Here are the options that `react-native init-windows` takes:
 | `--logging`           | boolean    | Verbose output logging                           |
 | `--template`          | string     | Specify the template to use                      |
 | `--name`              | string     | The native project name. Defaults to the name property in `app.json` or `package.json` |
-| `--namespace`         | string     | The native project namespace, expressed using dots as separators, i.e. 'Level1.Level2.Level3'. Defaults to the same as name |
+| `--namespace`         | string     | The native project namespace, expressed using dots as separators, i.e. `Level1.Level2.Level3`. Defaults to the same as name |
 | `--overwrite`         | boolean    | Overwrite and existing files without prompting  |
 | `--no-telemetry`      | boolean    | Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI |
 | `-h`, `--help`        | boolean    | display help for command                         |
