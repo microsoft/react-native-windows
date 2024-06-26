@@ -68,24 +68,28 @@
 <ul>
 <li>Checkout code and setup the environment</li>
 </ul>
-<pre><code class="hljs css language-yaml">    <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v2</span>
-      <span class="hljs-attr">name:</span> <span class="hljs-string">Checkout</span> <span class="hljs-string">Code</span>
+<pre><code class="hljs css language-yaml">    <span class="hljs-attr">name:</span> <span class="hljs-string">Windows</span> <span class="hljs-string">CI</span>
+    <span class="hljs-attr">on:</span> <span class="hljs-string">[pull_request]</span>
 
-    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Setup</span> <span class="hljs-string">Node.js</span>
-      <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-node@v1</span>
-      <span class="hljs-attr">with:</span>
-        <span class="hljs-attr">node-version:</span> <span class="hljs-string">'14'</span>
+    <span class="hljs-attr">jobs:</span>
+      <span class="hljs-attr">run-windows-tests:</span>
+        <span class="hljs-attr">name:</span> <span class="hljs-string">Build</span> <span class="hljs-string">&amp;</span> <span class="hljs-string">run</span> <span class="hljs-string">tests</span>
+        <span class="hljs-attr">runs-on:</span> <span class="hljs-string">windows-2022</span>
 
-    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Setup</span> <span class="hljs-string">MSBuild</span>
-      <span class="hljs-attr">uses:</span> <span class="hljs-string">microsoft/setup-msbuild@v1.0.2</span>
-      <span class="hljs-attr">with:</span>
-        <span class="hljs-attr">vs-version:</span> <span class="hljs-number">16.8</span>
+        <span class="hljs-attr">steps:</span>
+          <span class="hljs-bullet">-</span> <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/checkout@v2</span>
+            <span class="hljs-attr">name:</span> <span class="hljs-string">Checkout</span> <span class="hljs-string">Code</span>
 
-    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Install</span> <span class="hljs-string">node</span> <span class="hljs-string">modules</span>
-      <span class="hljs-attr">run:</span> <span class="hljs-string">yarn</span> <span class="hljs-string">--frozen-lockfile</span>
+          <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Setup</span> <span class="hljs-string">Node.js</span>
+            <span class="hljs-attr">uses:</span> <span class="hljs-string">actions/setup-node@v1</span>
+            <span class="hljs-attr">with:</span>
+              <span class="hljs-attr">node-version:</span> <span class="hljs-string">'^18'</span>
 
-    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">yarn</span> <span class="hljs-string">build</span>
-      <span class="hljs-attr">run:</span>  <span class="hljs-string">yarn</span> <span class="hljs-string">build</span>
+          <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Setup</span> <span class="hljs-string">MSBuild</span>
+            <span class="hljs-attr">uses:</span> <span class="hljs-string">microsoft/setup-msbuild@v2</span>
+
+          <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Install</span> <span class="hljs-string">node</span> <span class="hljs-string">modules</span>
+            <span class="hljs-attr">run:</span> <span class="hljs-string">yarn</span> <span class="hljs-string">--frozen-lockfile</span>
 </code></pre>
 <ul>
 <li>Build and run the project</li>
@@ -93,7 +97,7 @@
 <pre><code class="hljs css language-yaml">    <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">Run</span> <span class="hljs-string">Windows</span> <span class="hljs-string">x64</span> <span class="hljs-string">release</span>
       <span class="hljs-attr">run:</span> <span class="hljs-string">npx</span> <span class="hljs-string">react-native</span> <span class="hljs-string">run-windows</span> <span class="hljs-string">--arch</span> <span class="hljs-string">x64</span> <span class="hljs-string">--release</span> <span class="hljs-string">--logging</span>
 </code></pre>
-<p>Check out the full <a href="https://github.com/react-native-webview/react-native-webview/blob/v11.17.2/.github/workflows/windows-ci.yml"><code>react-native-webview</code> example</a> as well as their <a href="https://github.blog/2019-08-08-github-actions-now-supports-ci-cd/">official example</a> for more info.</p>
+<p>Check out the full <a href="https://github.com/react-native-webview/react-native-webview/blob/master/.github/workflows/windows-ci.yml"><code>react-native-webview</code> example</a> as well as their <a href="https://github.blog/2019-08-08-github-actions-now-supports-ci-cd/">official example</a> for more info.</p>
 <p>Save the YAML file to <code>.github\workflows\</code> and then commit. To learn more about YAML syntax, see <a href="https://docs.github.com/actions/using-workflows/workflow-syntax-for-github-actions">Workflow syntax for GitHub Actions</a>.</p>
 <blockquote>
 <p>GitHub Actions should be enabled by default, if it's not enabled for some reason you can go to Settings-&gt;Actions tab of the repo to enable it (requires owner access).</p>
