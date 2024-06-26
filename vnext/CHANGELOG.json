@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 26 Jun 2024 05:15:03 GMT",
+      "version": "0.0.0-canary.835",
+      "tag": "react-native-windows_v0.0.0-canary.835",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c56788cfd7198ad07baa97664c8c0db461384551",
+            "comment": "Introduce ReactNativeAppBuilder.idl"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 25 Jun 2024 05:16:02 GMT",
       "version": "0.0.0-canary.834",
       "tag": "react-native-windows_v0.0.0-canary.834",
