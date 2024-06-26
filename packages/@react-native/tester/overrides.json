@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.75.0-nightly-20240610-ced076210",
+  "baseVersion": "0.75.0-rc.1",
   "overrides": [
     {
       "type": "copy",
@@ -12,21 +12,21 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "a2d6d9c49a72bcfab8fc6369ae6dc9b7a2201680",
+      "baseHash": "f612b3f9d2488a8c06d491e09fb79f3c508c19ff",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
-      "baseHash": "a7c60c86d2c129b8956401f9a655643fbbfd0d47",
+      "baseHash": "202c0403c5421448660ea8eefce2d08d4050fb0f",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/ActionSheetIOS",
       "baseDirectory": "packages/rn-tester/js/examples/ActionSheetIOS",
-      "baseHash": "72a48941ddf9da8fb5d2da51f6e5ea68c8769315",
+      "baseHash": "9e96e8232483b57cf3c6288618be416cbee67661",
       "issue": 4054
     },
     {
@@ -40,7 +40,7 @@
       "type": "copy",
       "directory": "js/examples/Alert",
       "baseDirectory": "packages/rn-tester/js/examples/Alert",
-      "baseHash": "5ed9654a15f3a9b536e322433fe350cbe0fa9802",
+      "baseHash": "7022b11445f0946d27d3051739f4b4fd1fba5bc8",
       "issue": 4054
     },
     {
@@ -159,7 +159,7 @@
       "type": "copy",
       "directory": "js/examples/IntersectionObserver",
       "baseDirectory": "packages/rn-tester/js/examples/IntersectionObserver",
-      "baseHash": "97f8ed74ee8f49af0dded316ef7f090e7edf1239",
+      "baseHash": "ace636ea59030d802cee26ba49d7417f8ee3630e",
       "issue": 4054
     },
     {
@@ -404,7 +404,7 @@
       "type": "copy",
       "directory": "js/examples/Timer",
       "baseDirectory": "packages/rn-tester/js/examples/Timer",
-      "baseHash": "3dc4f038350bc33606e7de919f317997e2166f75",
+      "baseHash": "6368c65721027c9cc3174c846bbd084ad3dc4f9c",
       "issue": 4054
     },
     {
@@ -439,7 +439,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "e2215ae502885922490c0d4b348f22c18357309d",
+      "baseHash": "e1c96c62512355c0b4701d9c0028ae18ac6b66ed",
       "issue": 4054
     },
     {
@@ -467,7 +467,7 @@
       "type": "copy",
       "directory": "js/examples/XHR",
       "baseDirectory": "packages/rn-tester/js/examples/XHR",
-      "baseHash": "b7de8fa8fdd431bda468acd429914d5891aca0a7",
+      "baseHash": "b7dfda5f6ff304b4760e3eaa3db8d50ba2eee18f",
       "issue": 4054
     },
     {
@@ -488,7 +488,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "ebbd53fdd004279e9c1632c543b56d7ed47b054d",
+      "baseHash": "f5b1087641ab83ad690a8bf4a8e0b9fed858a428",
       "issue": 4054
     },
     {
@@ -558,7 +558,7 @@
       "type": "copy",
       "file": "NativeCxxModuleExample/NativeCxxModuleExample.js",
       "baseFile": "packages/rn-tester/NativeCxxModuleExample/NativeCxxModuleExample.js",
-      "baseHash": "3ce701f721ee1b78e40264e01c65d9a07d8d7e8a",
+      "baseHash": "35a65a1f771a16b96641d0a54bc0021fbce586ad",
       "issue": 4054
     },
     {
@@ -572,7 +572,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "cfd0d876dfb0c2c3bb7e4d96eea50613d4486288",
+      "baseHash": "0726bd3b0fbc908b1766983badcf1f17a9e6d51d",
       "issue": 13228
     }
   ]

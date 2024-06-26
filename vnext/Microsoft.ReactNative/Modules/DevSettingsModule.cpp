@@ -50,6 +50,10 @@ void DevSettings::toggleElementInspector() noexcept {
       "RCTDeviceEventEmitter", "emit", folly::dynamic::array("toggleElementInspector", nullptr));
 }
 
+void DevSettings::openDebugger() noexcept {
+  assert(false);
+}
+
 void DevSettings::addMenuItem(std::string title) noexcept {
   assert(false);
 }

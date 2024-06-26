@@ -324,6 +324,8 @@
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\bridging\CallbackWrapper.h">
       <Filter>react\bridging</Filter>
+    </ClInclude><ClInclude Include="$(ReactNativeDir)\ReactCommon\react\bridging\EventEmitter.h">
+      <Filter>react\bridging</Filter>
     </ClInclude>
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorInterfaces.h" />
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Legacy.h" />

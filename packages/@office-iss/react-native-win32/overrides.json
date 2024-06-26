@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240610-ced076210",
+  "baseVersion": "0.75.0-rc.1",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "0a0c16d79748a5e84407a57c772c3508160134ae"
+      "baseHash": "75582b181be0cd6790f7c021bfafb761dfc42381"
     },
     {
       "type": "derived",
@@ -192,7 +192,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/View/ViewAccessibility.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewAccessibility.js",
-      "baseHash": "d12245b45ccdc5f473ba9484b5ec994cb45dae75"
+      "baseHash": "7ac427e8b7a78a8e938ce1b383ec6e911a6fa3b5"
     },
     {
       "type": "derived",
@@ -317,7 +317,7 @@
       "type": "patch",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorHeader.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorHeader.js",
-      "baseHash": "1a12281b1cfab7352fcfeb5984f0ed3c83c04660",
+      "baseHash": "e85290422895e30d58e2d804f11e73407a743282",
       "issue": 7952
     },
     {
@@ -439,20 +439,20 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "e800e91861873f94be7b43df80fae6f4b62a98e8"
+      "baseHash": "71c24366f3f0baa9a48ba34c08b255483bf77553"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextNativeComponent.js",
-      "baseHash": "abcdb74e2fe1e491baaefdd0ba6369199b8032d0",
+      "baseHash": "9f7ea4e5225a06e1ec3bb46a2f4bc9f72bf46873",
       "issue": 7074
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Text/TextProps.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextProps.js",
-      "baseHash": "7ecbe61c439e5c6f79fe5ae262f063060fa6a24f"
+      "baseHash": "8e56a028dee989ebb8b06f4c01a1d038f074597d"
     },
     {
       "type": "patch",
