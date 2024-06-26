@@ -576,7 +576,6 @@ const styles = StyleSheet.create({
   },
   buttonPressed: {
     borderColor: PlatformColor('ButtonBorderBrushPressed'),
-    borderBottomWidth: 1.5,
   },
   // Windows]
 });
