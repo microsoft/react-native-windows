@@ -4,7 +4,7 @@ CLI to build and run React Native for Windows apps.
 
 ## `autolink-windows`
 
-`autolink-windows` is the CLI command provided by `@react-native-windows/cli` which is used to link the native code and build systems for a React Native for Windows app with any native community modules it uses.
+The `autolink-windows` CLI command is used to link the native code and build systems for a React Native for Windows app with any native community modules it uses.
 
 **Note:** Autolinking runs automatically as part of running the `run-windows` CLI command, unless the `--no-autolink` argument is used.
 
@@ -28,7 +28,7 @@ Here are the options that `react-native autolink-windows` takes:
 
 ## `codegen-windows`
 
-`codegen-windows` is the CLI command provided by `@react-native-windows/cli` which is used to generate some necessary Windows-specific native code for native modules.
+The `codegen-windows` CLI command is used to generate some necessary Windows-specific native code for native modules.
 
 ### Usage
 Runs Windows-specific codegen for native modules.
@@ -48,7 +48,7 @@ Here are the options that `react-native codegen-windows` takes:
 
 ## `init-windows`
 
-`init-windows` is the CLI command provided by `@react-native-windows/cli` which is used to initialize a new React Native for Windows project inside an existing React Native project. 
+The `init-windows` CLI command is used to initialize a new React Native for Windows project inside an existing React Native project. 
 
 ### Usage
 Initializes a new RNW project from a given template.
@@ -71,7 +71,7 @@ Here are the options that `react-native init-windows` takes:
 
 ## `run-windows`
 
-`run-windows` is the CLI command provided by `@react-native-windows/cli` which is used to build and run React Native for Windows apps. 
+The `run-windows` CLI command is used to build and run React Native for Windows apps. 
 
 ### Usage
 Builds your RNW app and starts it on a connected Windows desktop, emulator or device.
