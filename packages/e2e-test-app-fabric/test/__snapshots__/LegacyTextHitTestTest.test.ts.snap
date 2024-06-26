@@ -278,12 +278,7 @@ exports[`LegacyTextHitTestTest TextPressableWithVirtualText 1`] = `
 
 exports[`LegacyTextHitTestTest ToggleVirtualTextPressable 1`] = `
 {
-  "Automation Tree": {
-    "AutomationId": "pressed-state",
-    "ControlType": 50020,
-    "LocalizedControlType": "text",
-    "Name": "Pressed: 1 times.",
-  },
+  "Automation Tree": {},
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
     "_Props": {
