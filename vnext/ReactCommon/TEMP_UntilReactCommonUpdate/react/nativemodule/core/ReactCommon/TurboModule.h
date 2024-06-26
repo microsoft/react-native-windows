@@ -14,7 +14,7 @@
 #include <jsi/jsi.h>
 
 #include <ReactCommon/CallInvoker.h>
-#include <EventEmitter.h>
+#include <EventEmitter.h> // [Windows]
 
 namespace facebook::react {
 
