@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <react/bridging/LongLivedObject.h>
+#include <LongLivedObject.h> // [Windows #13391]
 
 namespace facebook::react {
 

@@ -11,10 +11,9 @@
 #include <string>
 
 #include <jsi/jsi.h>
-#include <react/bridging/CallbackWrapper.h>
-#include <react/bridging/LongLivedObject.h>
+#include <LongLivedObject.h> // [Windows #13391]
 
-#include <CallbackWrapper.h> // [Windows]
+#include <CallbackWrapper.h> // [Windows #13391]
 
 namespace facebook::react {
 

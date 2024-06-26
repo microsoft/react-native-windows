@@ -160,6 +160,10 @@
       <Filter>UI</Filter>
     </ClInclude>
     <ClInclude Include="$(Bridging_SourcePath)\CallbackWrapper.h" />
+    <ClInclude Include="$(Bridging_SourcePath)\EventEmitter.h" />
+    <ClInclude Include="$(Bridging_SourcePath)\Function.h" />
+    <ClInclude Include="$(Bridging_SourcePath)\Base.h" />
+    <ClInclude Include="$(Bridging_SourcePath)\Convert.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)JSI\LongLivedJsiValue.h">
       <Filter>TurboModule</Filter>
     </ClInclude>
