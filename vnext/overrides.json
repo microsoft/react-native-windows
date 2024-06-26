@@ -127,14 +127,14 @@
       "issue": 12195
     },
     {
-      "type": "patch",
+      "type": "copy",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/Convert.h",
       "baseFile": "packages/react-native/ReactCommon/react/bridging/Convert.h",
       "baseHash": "dd7973a16878a953fd70d51e8f5cf8b6130b3f8a",
       "issue": 13391
     },
     {
-      "type": "copy",
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/EventEmitter.h",
       "baseFile": "packages/react-native/ReactCommon/react/bridging/EventEmitter.h",
       "baseHash": "49b637948a5ae388b07b6af92f7331d741c07986",
