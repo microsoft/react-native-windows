@@ -16,10 +16,10 @@ NOTE: Use ALL CAPS for excluded terms below else it will silently ignore them. A
 	</Exclusion>
 	<!-- Each of these file types will be completely skipped for the entire scan -->
 	<Exclusion Type="FileType">
-		.BUNDLE|.KEYSTORE
+		.BUNDLE
 	</Exclusion>
 	<!-- The specified file names will be skipped during the scan regardless which folder they are in -->
 	<Exclusion Type="FileName">
-		POLICHECKEXCLUSIONS.XML|DEBUG.KEYSTORE
+		POLICHECKEXCLUSIONS.XML
 	</Exclusion>
 </PoliCheckExclusions>
