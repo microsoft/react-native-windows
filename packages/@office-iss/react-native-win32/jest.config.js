@@ -1,4 +1,5 @@
-module.exports = require('@rnx-kit/jest-preset')("win32", {
+module.exports = ("win32", {
+  preset: '@rnx-kit/jest-preset',
   verbose: true,
   snapshotResolver: './jest-snapshot-resolver.js',
   transform: {
