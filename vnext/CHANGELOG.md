@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 26 Jun 2024 05:15:03 GMT and should not be manually modified.
+This log was last generated on Thu, 27 Jun 2024 05:20:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.836
+
+Thu, 27 Jun 2024 05:20:59 GMT
+
+### Changes
+
+- Fix incorrect loading of shared.vcxitems (10109130+sharath2727@users.noreply.github.com)
 
 ## 0.0.0-canary.835
 
