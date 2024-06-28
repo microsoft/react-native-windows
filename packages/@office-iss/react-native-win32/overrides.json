@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240616-2f8d4f0c2",
+  "baseVersion": "0.75.0-nightly-20240617-9435097b1",
   "overrides": [
     {
       "type": "derived",
@@ -317,7 +317,7 @@
       "type": "patch",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorHeader.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorHeader.js",
-      "baseHash": "1a12281b1cfab7352fcfeb5984f0ed3c83c04660",
+      "baseHash": "e85290422895e30d58e2d804f11e73407a743282",
       "issue": 7952
     },
     {

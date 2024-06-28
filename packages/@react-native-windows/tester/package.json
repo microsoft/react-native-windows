@@ -18,7 +18,7 @@
   "peerDependencies": {
     "@react-native-picker/picker": "2.4.10",
     "react": "18.0.0",
-    "react-native": "0.75.0-nightly-20240616-2f8d4f0c2",
+    "react-native": "0.75.0-nightly-20240617-9435097b1",
     "react-native-windows": "^0.0.0-canary.837",
     "react-native-xaml": "^0.0.78"
   },
@@ -31,7 +31,7 @@
     "@types/node": "^18.0.0",
     "eslint": "^8.19.0",
     "just-scripts": "^1.3.3",
-    "react-native": "0.75.0-nightly-20240616-2f8d4f0c2",
+    "react-native": "0.75.0-nightly-20240617-9435097b1",
     "react-native-platform-override": "^1.9.42",
     "react-native-windows": "^0.0.0-canary.837",
     "typescript": "5.0.4"

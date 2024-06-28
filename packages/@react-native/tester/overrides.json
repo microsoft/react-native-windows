@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.75.0-nightly-20240616-2f8d4f0c2",
+  "baseVersion": "0.75.0-nightly-20240617-9435097b1",
   "overrides": [
     {
       "type": "copy",
@@ -473,6 +473,7 @@
       "type": "copy",
       "directory": "js/examples/XHR",
       "baseDirectory": "packages/rn-tester/js/examples/XHR",
+      "baseVersion": "0.75.0-nightly-20240616-2f8d4f0c2",
       "baseHash": "b7dfda5f6ff304b4760e3eaa3db8d50ba2eee18f",
       "issue": 4054
     },
