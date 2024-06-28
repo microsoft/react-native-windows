@@ -17,13 +17,13 @@
     "@typescript-eslint/parser": "^5.57.1",
     "react": "18.3.1",
     "react-native": "0.75.0-nightly-20240613-f7aea0c8e",
-    "react-native-windows": "^0.0.0-canary.836"
+    "react-native-windows": "^0.0.0-canary.837"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/eslint-parser": "^7.20.0",
     "@babel/runtime": "^7.20.0",
-    "@react-native-windows/cli": "0.0.0-canary.224",
+    "@react-native-windows/cli": "0.0.0-canary.225",
     "@react-native-windows/codegen": "0.0.0-canary.96",
     "@react-native/metro-config": "0.75.0-nightly-20240613-f7aea0c8e",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
