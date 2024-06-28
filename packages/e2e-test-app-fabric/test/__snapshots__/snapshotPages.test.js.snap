@@ -69888,6 +69888,7 @@ exports[`snapshotAllPages Switch 7`] = `
 
 exports[`snapshotAllPages Switch 8`] = `
 <View
+  accessible={true}
   testID="accessibility-switch"
 >
   <View
