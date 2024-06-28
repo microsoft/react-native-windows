@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240617-9435097b1",
+  "baseVersion": "0.75.0-nightly-20240618-5df5ed1a8",
   "overrides": [
     {
       "type": "derived",
@@ -550,7 +550,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.windows.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "d8d0d43eb6a7667ff2233e53dedba5fd0dbb9dac"
+      "baseHash": "71c24366f3f0baa9a48ba34c08b255483bf77553"
     },
     {
       "type": "derived",

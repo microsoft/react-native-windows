@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240617-9435097b1",
+  "baseVersion": "0.75.0-nightly-20240618-5df5ed1a8",
   "overrides": [
     {
       "type": "derived",
@@ -439,13 +439,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "d8d0d43eb6a7667ff2233e53dedba5fd0dbb9dac"
+      "baseHash": "71c24366f3f0baa9a48ba34c08b255483bf77553"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextNativeComponent.js",
-      "baseHash": "9f7ea4e5225a06e1ec3bb46a2f4bc9f72bf46873",
+      "baseHash": "1b2e6301edc13f3a91e47b9befe8a47a12e6ad39",
       "issue": 7074
     },
     {
