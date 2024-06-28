@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.75.0-nightly-20240614-8b53d41a8",
+  "baseVersion": "0.75.0-nightly-20240616-2f8d4f0c2",
   "overrides": [
     {
       "type": "copy",
@@ -20,6 +20,7 @@
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
+      "baseVersion": "0.75.0-nightly-20240614-8b53d41a8",
       "baseHash": "202c0403c5421448660ea8eefce2d08d4050fb0f",
       "issue": 4054
     },
@@ -27,6 +28,7 @@
       "type": "copy",
       "directory": "js/examples/ActionSheetIOS",
       "baseDirectory": "packages/rn-tester/js/examples/ActionSheetIOS",
+      "baseVersion": "0.75.0-nightly-20240614-8b53d41a8",
       "baseHash": "9e96e8232483b57cf3c6288618be416cbee67661",
       "issue": 4054
     },
@@ -41,6 +43,7 @@
       "type": "copy",
       "directory": "js/examples/Alert",
       "baseDirectory": "packages/rn-tester/js/examples/Alert",
+      "baseVersion": "0.75.0-nightly-20240614-8b53d41a8",
       "baseHash": "7022b11445f0946d27d3051739f4b4fd1fba5bc8",
       "issue": 4054
     },
@@ -470,7 +473,7 @@
       "type": "copy",
       "directory": "js/examples/XHR",
       "baseDirectory": "packages/rn-tester/js/examples/XHR",
-      "baseHash": "b7de8fa8fdd431bda468acd429914d5891aca0a7",
+      "baseHash": "b7dfda5f6ff304b4760e3eaa3db8d50ba2eee18f",
       "issue": 4054
     },
     {
