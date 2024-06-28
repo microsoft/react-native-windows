@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "integrate 2f8d4f0c2",
+  "packageName": "@react-native-windows/codegen",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
