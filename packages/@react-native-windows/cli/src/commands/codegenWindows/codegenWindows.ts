@@ -315,7 +315,7 @@ export async function codegenWindowsInternal(
  */
 export const codegenCommand: Command = {
   name: 'codegen-windows',
-  description: 'Runs Windows-specific codegen',
+  description: 'Runs Windows-specific codegen for native modules',
   func: codegenWindows,
   options: codegenOptions,
 };
