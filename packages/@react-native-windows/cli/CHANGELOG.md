@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 22 Jun 2024 05:15:16 GMT and should not be manually modified.
+This log was last generated on Fri, 28 Jun 2024 05:15:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.225
+
+Fri, 28 Jun 2024 05:15:51 GMT
+
+### Changes
+
+- Fixed typos and improved uniformity of RNW CLI command help (jthysell@microsoft.com)
 
 ## 0.0.0-canary.224
 
