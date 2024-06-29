@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 29 Jun 2024 05:17:15 GMT",
+      "version": "0.0.0-canary.838",
+      "tag": "react-native-windows_v0.0.0-canary.838",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "681982778c1980c0f50037a1ccd72e07bd3b15c1",
+            "comment": "Keep borderBottomWidth same before and after pressed"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 28 Jun 2024 05:15:52 GMT",
       "version": "0.0.0-canary.837",
       "tag": "react-native-windows_v0.0.0-canary.837",
