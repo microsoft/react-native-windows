@@ -150,8 +150,8 @@ export type AccessibilityState = {
   disabled?: ?boolean,
   selected?: ?boolean,
   checked?: ?boolean | 'mixed',
-  busy?: boolean,
-  expanded?: boolean,
+  busy?: ?boolean,
+  expanded?: ?boolean,
   multiselectable?: boolean, // Win32
   required?: boolean, // Win32
   ...

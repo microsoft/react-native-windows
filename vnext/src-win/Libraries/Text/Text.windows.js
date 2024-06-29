@@ -324,7 +324,7 @@ const Text: React.AbstractComponent<
       />
     );
   } else {
-    let styleProps: ViewStyleProp = (restProps.style: any);
+    let styleProps: ViewStyleProp = (style: any);
     if (
       styleProps &&
       styleProps.borderColor &&
@@ -381,7 +381,7 @@ const Text: React.AbstractComponent<
         ...rest
       } = textStyleProps != null ? textStyleProps : {};
 
-      let {style, ...textPropsLessStyle} = props;
+      let {...textPropsLessStyle} = props;
       return (
         <View style={styleProps}>
           <TextAncestor.Provider value={true}>
@@ -392,12 +392,8 @@ const Text: React.AbstractComponent<
               accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
               accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
               accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
-              accessibilityState={nativeTextAccessibilityState}
-              accessible={
-                accessible == null && Platform.OS === 'android'
-                  ? _hasOnPressOrOnLongPress
-                  : _accessible
-              }
+              accessibilityState={_accessibilityState}
+              accessible={_accessible}
               allowFontScaling={allowFontScaling !== false}
               disabled={_disabled}
               ellipsizeMode={ellipsizeMode ?? 'tail'}
@@ -406,7 +402,7 @@ const Text: React.AbstractComponent<
               numberOfLines={numberOfLines}
               ref={forwardedRef}
               selectable={_selectable}
-              selectionColor={selectionColor}
+              selectionColor={_selectionColor}
               style={((rest: any): TextStyleProp)}
             />
           </TextAncestor.Provider>
@@ -422,12 +418,8 @@ const Text: React.AbstractComponent<
             accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
             accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
             accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
-            accessibilityState={nativeTextAccessibilityState}
-            accessible={
-              accessible == null && Platform.OS === 'android'
-                ? _hasOnPressOrOnLongPress
-                : _accessible
-            }
+            accessibilityState={_accessibilityState}
+            accessible={_accessible}
             allowFontScaling={allowFontScaling !== false}
             disabled={_disabled}
             ellipsizeMode={ellipsizeMode ?? 'tail'}
@@ -436,7 +428,7 @@ const Text: React.AbstractComponent<
             numberOfLines={numberOfLines}
             ref={forwardedRef}
             selectable={_selectable}
-            selectionColor={selectionColor}
+            selectionColor={_selectionColor}
             style={style}
           />
         </TextAncestor.Provider>
