@@ -155,6 +155,36 @@
       "issue": 13172
     },
     {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/algorithm/CalculateLayout.cpp",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/algorithm/CalculateLayout.cpp",
+      "baseHash": "f62011b604d7aa876759a314fa1506dbf07dda9d"
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/config/Config.cpp",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/config/Config.cpp",
+      "baseHash": "9a2e3f6760cd31f262a78cb7e8d7b53fed03827a"
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/config/Config.h",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/config/Config.h",
+      "baseHash": "a55ea630b87572d727830c24d64ccffabccafc8e"
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/LayoutResults.cpp",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/LayoutResults.cpp",
+      "baseHash": "3e5bbf4d0a41f9b3baf94ec544574b6d94fdd4fd"
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/LayoutResults.h",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/LayoutResults.h",
+      "baseHash": "e6be6681fc1427c12d2e89da13cfe1984dffd714"
+    },
+    {
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "packages/rn-tester/IntegrationTests",
