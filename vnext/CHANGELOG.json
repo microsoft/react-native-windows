@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 29 Jun 2024 05:17:15 GMT",
+      "version": "0.0.0-canary.838",
+      "tag": "react-native-windows_v0.0.0-canary.838",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "681982778c1980c0f50037a1ccd72e07bd3b15c1",
+            "comment": "Keep borderBottomWidth same before and after pressed"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 28 Jun 2024 05:15:52 GMT",
+      "version": "0.0.0-canary.837",
+      "tag": "react-native-windows_v0.0.0-canary.837",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.225",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 27 Jun 2024 05:20:59 GMT",
+      "version": "0.0.0-canary.836",
+      "tag": "react-native-windows_v0.0.0-canary.836",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d96a0a78f004a554334e3a74229391e724e842ce",
+            "comment": "Fix incorrect loading of shared.vcxitems"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 26 Jun 2024 05:15:03 GMT",
       "version": "0.0.0-canary.835",
       "tag": "react-native-windows_v0.0.0-canary.835",

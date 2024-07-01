@@ -396,7 +396,7 @@ runWindows({
 export const runWindowsCommand: Command = {
   name: 'run-windows',
   description:
-    'Builds your app and starts it on a connected Windows desktop, emulator or device',
+    'Builds your RNW app and starts it on a connected Windows desktop, emulator or device',
   func: runWindows,
   options: runWindowsOptions,
 };
