@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 21 Jun 2024 05:17:50 GMT",
+      "version": "0.0.0-canary.96",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.96",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "3c44fd269a53388e245877711637edda0522e4f3",
+            "comment": "SFI: Component Governance fixes 6/19/24"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Jun 2024 05:16:24 GMT",
       "version": "0.0.0-canary.95",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.95",

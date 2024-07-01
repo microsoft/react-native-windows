@@ -2,6 +2,150 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 29 Jun 2024 05:17:15 GMT",
+      "version": "0.0.0-canary.838",
+      "tag": "react-native-windows_v0.0.0-canary.838",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "681982778c1980c0f50037a1ccd72e07bd3b15c1",
+            "comment": "Keep borderBottomWidth same before and after pressed"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 28 Jun 2024 05:15:52 GMT",
+      "version": "0.0.0-canary.837",
+      "tag": "react-native-windows_v0.0.0-canary.837",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.225",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 27 Jun 2024 05:20:59 GMT",
+      "version": "0.0.0-canary.836",
+      "tag": "react-native-windows_v0.0.0-canary.836",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d96a0a78f004a554334e3a74229391e724e842ce",
+            "comment": "Fix incorrect loading of shared.vcxitems"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 26 Jun 2024 05:15:03 GMT",
+      "version": "0.0.0-canary.835",
+      "tag": "react-native-windows_v0.0.0-canary.835",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c56788cfd7198ad07baa97664c8c0db461384551",
+            "comment": "Introduce ReactNativeAppBuilder.idl"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 25 Jun 2024 05:16:02 GMT",
+      "version": "0.0.0-canary.834",
+      "tag": "react-native-windows_v0.0.0-canary.834",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "08b765626a31b699452d96ff8335e85c4b883fee",
+            "comment": "Fix Dependency Script"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 22 Jun 2024 05:15:16 GMT",
+      "version": "0.0.0-canary.833",
+      "tag": "react-native-windows_v0.0.0-canary.833",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "0e276da7b09c77e46d341b3102247279009290f2",
+            "comment": "Default Switch Should Be Accessible"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.224",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 21 Jun 2024 05:17:50 GMT",
+      "version": "0.0.0-canary.832",
+      "tag": "react-native-windows_v0.0.0-canary.832",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.223",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.96",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.42",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 19 Jun 2024 05:14:43 GMT",
+      "version": "0.0.0-canary.831",
+      "tag": "react-native-windows_v0.0.0-canary.831",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "813ba195184977425b27e83156d36d1f152dab17",
+            "comment": "Enable devMode with react-native init-windows old/* templates"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.222",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Jun 2024 05:16:24 GMT",
       "version": "0.0.0-canary.830",
       "tag": "react-native-windows_v0.0.0-canary.830",
