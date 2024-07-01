@@ -66,22 +66,23 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
   PathCchRemoveFileSpec(appDirectory, MAX_PATH);
 
-  auto reactInstanceSettingsBuilder{winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder()
+  auto reactInstanceSettingsBuilder {
+    winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder()
 #if BUNDLE
-      .JavaScriptBundleFile(L"index.windows")
-      .BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str())
-      .UseFastRefresh(false)
+        .JavaScriptBundleFile(L"index.windows")
+        .BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str())
+        .UseFastRefresh(false)
 #else
-      .JavaScriptBundleFile(L"index")
-      .UseFastRefresh(true)
+        .JavaScriptBundleFile(L"index")
+        .UseFastRefresh(true)
 #endif
 
 #if _DEBUG
-       .UseDirectDebugger(true)
-       .UseDeveloperSupport(true)
+        .UseDirectDebugger(true)
+        .UseDeveloperSupport(true)
 #else
-      .UseDirectDebugger(false)
-      .UseDeveloperSupport(false)
+        .UseDirectDebugger(false)
+        .UseDeveloperSupport(false)
 #endif
   };
 
