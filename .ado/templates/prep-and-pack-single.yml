@@ -52,10 +52,15 @@ steps:
       workingDirectory: $(System.DefaultWorkingDirectory)/ReactWindows
 
   - ${{ if eq(parameters.codesignBinaries, true) }}:
-    - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@2
+    - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@5
       displayName: '${{ parameters.outputPackage }} CodeSign Binaries'
       inputs:
-        ConnectedServiceName: ReactNativeSigning
+        ConnectedServiceName: 'ESRP-CodeSigning-Federated-Auth' 
+        AppRegistrationClientId: 'd95a8439-53e3-4426-a77c-fb6247a72b6a' 
+        AppRegistrationTenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47' 
+        AuthAKVName: 'rnw-keyvault' 
+        AuthCertName: 'React-Native-ESRP-App-Authentication' 
+        AuthSignCertName: 'React-Native-PRSS-Authentication'
         FolderPath: $(System.DefaultWorkingDirectory)/ReactWindows
         # Recursively finds files matching these patterns:
         ${{ if ne(parameters.binariesToSign, '') }}:
@@ -105,7 +110,12 @@ steps:
     - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@2
       displayName: '${{ parameters.outputPackage }} CodeSign NuGet'
       inputs:
-        ConnectedServiceName: ReactNativeSigning
+        ConnectedServiceName: 'ESRP-CodeSigning-Federated-Auth' 
+        AppRegistrationClientId: 'd95a8439-53e3-4426-a77c-fb6247a72b6a' 
+        AppRegistrationTenantId: '72f988bf-86f1-41af-91ab-2d7cd011db47' 
+        AuthAKVName: 'rnw-keyvault' 
+        AuthCertName: 'React-Native-ESRP-App-Authentication' 
+        AuthSignCertName: 'React-Native-PRSS-Authentication'
         FolderPath: $(System.DefaultWorkingDirectory)/NugetRootFinal
         Pattern: |
           **/${{ parameters.outputPackage }}.${{ parameters.packageVersion }}.nupkg
