@@ -13,7 +13,7 @@ exports[`Image Tests A network Image example 1`] = `
       "Sources": [
         {
           "Type": "Remote",
-          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png_TYPO",
+          "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png?r=1",
         },
       ],
       "TestId": "image-network",
