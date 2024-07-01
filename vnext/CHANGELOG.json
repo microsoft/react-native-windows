@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 01 Jul 2024 15:16:14 GMT",
+      "tag": "react-native-windows_v0.72.35",
+      "version": "0.72.35",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.72.6",
+            "commit": "33f629c56cdba3e5cc84b38191fcbcaf34be4438"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.72.4",
+            "commit": "33f629c56cdba3e5cc84b38191fcbcaf34be4438"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 17 Jun 2024 15:14:06 GMT",
       "tag": "react-native-windows_v0.72.34",
       "version": "0.72.34",

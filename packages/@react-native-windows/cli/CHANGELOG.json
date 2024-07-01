@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 01 Jul 2024 15:16:13 GMT",
+      "tag": "@react-native-windows/cli_v0.72.6",
+      "version": "0.72.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "33f629c56cdba3e5cc84b38191fcbcaf34be4438",
+            "comment": "SFI: Component Governance fixes 6/19/24"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.72.4",
+            "commit": "33f629c56cdba3e5cc84b38191fcbcaf34be4438"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jan 2024 23:56:36 GMT",
       "tag": "@react-native-windows/cli_v0.72.5",
       "version": "0.72.5",

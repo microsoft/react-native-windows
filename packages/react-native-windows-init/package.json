@@ -37,7 +37,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@react-native-windows/cli": "0.72.5",
+    "@react-native-windows/cli": "0.72.6",
     "@rnw-scripts/eslint-config": "1.1.15",
     "@rnw-scripts/jest-unittest-config": "1.5.1",
     "@rnw-scripts/just-task": "2.3.6",
