@@ -62,11 +62,28 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
   auto scaleFactor = ScaleFactor(hwnd);
 
+  WCHAR appDirectory[MAX_PATH];
+  GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
+  PathCchRemoveFileSpec(appDirectory, MAX_PATH);
+
   auto reactInstanceSettingsBuilder{winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder()
-                                        .JavaScriptBundleFile(L"index")
-                                        .UseFastRefresh(true)
-                                        .UseDirectDebugger(false)
-                                        .UseDeveloperSupport(false)};
+#if BUNDLE
+      .JavaScriptBundleFile(L"index.windows")
+      .BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str())
+      .UseFastRefresh(false)
+#else
+      .JavaScriptBundleFile(L"index")
+      .UseFastRefresh(true)
+#endif
+
+#if _DEBUG
+       .UseDirectDebugger(true)
+       .UseDeveloperSupport(true)
+#else
+      .UseDirectDebugger(false)
+      .UseDeveloperSupport(false)
+#endif
+  };
 
   auto packageProviders{winrt::single_threaded_vector<winrt::Microsoft::ReactNative::IReactPackageProvider>()};
 
