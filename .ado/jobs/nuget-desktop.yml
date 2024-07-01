@@ -17,19 +17,20 @@ jobs:
       dependsOn:
         - DesktopX64Release
         - DesktopX86Debug
-  
+        - DesktopARM64ECRelease
+
       pool: ${{ parameters.AgentPool.Small }}
       timeoutInMinutes: 30 # how long to run the job before automatically cancelling
       cancelTimeoutInMinutes: 5 # how much time to give 'run always even if cancelled tasks' before killing them
       steps:
         - template: ../templates/checkout-shallow.yml
-  
+
         - template: ../templates/yarn-install.yml
-  
+
         - task: NuGetToolInstaller@1
           inputs:
             versionSpec: ">=5.8.0"
-  
+
         - template: ../templates/prep-and-pack-nuget.yml
           parameters:
             artifactName: Desktop
@@ -39,3 +40,5 @@ jobs:
                 configuration: Release
               - platform: x86
                 configuration: Debug
+              - platform: ARM64EC
+                configuration: Release
