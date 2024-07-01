@@ -117,16 +117,10 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsiexecutor\jsireact\JSINativeModules.cpp">
       <Filter>jsiexecutor\jsireact</Filter>
     </ClCompile>
-    <ClCompile Include="$(YogaDir)\yoga\Utils.cpp">
-      <Filter>yoga</Filter>
-    </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\YGConfig.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\YGEnums.cpp">
-      <Filter>yoga</Filter>
-    </ClCompile>
-    <ClCompile Include="$(YogaDir)\yoga\YGLayout.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\YGNode.cpp">
@@ -136,9 +130,6 @@
       <Filter>yoga</Filter>
     </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\YGNodeStyle.cpp">
-      <Filter>yoga</Filter>
-    </ClCompile>
-    <ClCompile Include="$(YogaDir)\yoga\YGNodePrint.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\YGPixelGrid.cpp">
@@ -154,9 +145,6 @@
       <Filter>yoga</Filter>
     </ClCompile>
     <ClCompile Include="$(YogaDir)\yoga\YGValue.cpp">
-      <Filter>yoga</Filter>
-    </ClCompile>
-    <ClCompile Include="$(YogaDir)\yoga\log.cpp">
       <Filter>yoga</Filter>
     </ClCompile>
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleBinding.cpp">
@@ -208,6 +196,18 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\TransactionTelemetry.cpp">
       <Filter>react\renderer\telemetry</Filter>
     </ClCompile>
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorInterfaces.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\algorithm\AbsoluteLayout.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\algorithm\Baseline.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\algorithm\Cache.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\algorithm\CalculateLayout.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\algorithm\FlexLine.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\algorithm\PixelGrid.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\config\Config.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\debug\AssertFatal.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\debug\Log.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\node\LayoutResults.cpp" />
+    <ClCompile Include="$(YogaDir)\yoga\node\Node.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\stubs\sys\mman.h">
@@ -325,5 +325,9 @@
     <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\bridging\CallbackWrapper.h">
       <Filter>react\bridging</Filter>
     </ClInclude>
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\InspectorInterfaces.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Legacy.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeScheduler_Modern.h" />
+    <ClInclude Include="$(ReactNativeDir)\ReactCommon\react\renderer\core\PropsParserContext.h" />
   </ItemGroup>
 </Project>

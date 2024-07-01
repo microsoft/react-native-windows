@@ -8,6 +8,7 @@ parameters:
     #  - x86
     #  - x64
     #  - ARM64
+    #  - ARM64EC
   - name: configuration
     type: string
     # Publish still using runtime matrix

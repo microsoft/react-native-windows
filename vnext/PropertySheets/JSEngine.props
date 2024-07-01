@@ -14,12 +14,14 @@
     <HermesNoLink Condition="'$(HermesNoLink)' == '' and '$(Configuration)' == 'Release' and '$(EnableHermesInspectorInReleaseFlavor)' != 'true'">true</HermesNoLink>
     <!-- Use Hermes bytecode bundles provided by metro hermes compiler when available -->
     <EnableDevServerHBCBundles Condition="'$(EnableDevServerHBCBundles)' == ''">false</EnableDevServerHBCBundles>
+    <HermesPlatform Condition="'$(Platform)' == 'ARM64EC'">x64</HermesPlatform>
 
     <UseV8 Condition="'$(UseV8)' == ''">false</UseV8>
     <V8Version Condition="'$(V8Version)' == ''">0.71.8</V8Version>
     <V8PackageName>ReactNative.V8Jsi.Windows</V8PackageName>
     <V8PackageName Condition="'$(V8AppPlatform)' != 'win32'">$(V8PackageName).UWP</V8PackageName>
     <V8Package>$(NuGetPackageRoot)\$(V8PackageName).$(V8Version)</V8Package>
+    <V8Platform Condition="'$(Platform)' == 'ARM64EC'">x64</V8Platform>
   </PropertyGroup>
 
 </Project>

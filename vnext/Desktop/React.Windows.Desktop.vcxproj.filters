@@ -33,42 +33,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <Midl Include="..\Microsoft.ReactNative\IJSValueReader.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IJSValueWriter.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IReactContext.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IReactDispatcher.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IReactModuleBuilder.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IReactNotificationService.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IReactPackageBuilder.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IReactPackageProvider.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IReactPropertyBag.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\ReactInstanceSettings.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\ReactNativeHost.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\RedBoxHandler.idl">
-      <Filter>ABI</Filter>
-    </Midl>
     <Midl Include="ABI\MessageQueue.idl">
       <Filter>ABI</Filter>
     </Midl>
@@ -81,29 +45,11 @@
     <Midl Include="ABI\TestController.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="..\Microsoft.ReactNative\IReactNonAbiValue.idl">
-      <Filter>ABI</Filter>
-    </Midl>
-    <Midl Include="..\Microsoft.ReactNative\JsiApi.idl">
-      <Filter>ABI</Filter>
-    </Midl>
     <Midl Include="..\Microsoft.ReactNative\IViewManagerCore.idl">
       <Filter>ABI</Filter>
     </Midl>
-    <Midl Include="..\Microsoft.ReactNative\ReactCoreInjection.idl" />
-    <Midl Include="..\Microsoft.ReactNative\QuirkSettings.idl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Microsoft.ReactNative\IReactDispatcher.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\IReactNotificationService.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\IReactPropertyBag.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\AsyncActionQueue.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSBundle_Win32.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoUtils.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\MsoReactContext.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactHost.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactInstanceSettings.cpp" />
     <ClCompile Include="ABI\MessageQueueShim.cpp">
       <Filter>ABI</Filter>
     </ClCompile>
@@ -131,31 +77,10 @@
     <ClCompile Include="WebSocketResourceFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\NativeModulesProvider.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\TurboModulesProvider.cpp" />
     <ClCompile Include="..\Microsoft.ReactNative\ABICxxModule.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\DynamicReader.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\DynamicWriter.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\IReactContext.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\IReactModuleBuilder.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\JsiReader.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\JsiWriter.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactPackageBuilder.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\RedBox.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorFrameInfo.cpp">
-      <Filter>ABI</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\RedBoxErrorInfo.cpp">
-      <Filter>ABI</Filter>
-    </ClCompile>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Microsoft.ReactNative\Modules\DevSettingsModule.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\JSCallInvokerScheduler.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactErrorProvider.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\ReactHost\ReactInstanceWin.cpp" />
-    <ClCompile Include="..\Microsoft.ReactNative\RedBoxHandler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ABI\MessageQueueShim.h">
