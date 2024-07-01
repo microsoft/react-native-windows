@@ -147,13 +147,13 @@ export type AccessibilityActionEvent = SyntheticEvent<
 >;
 
 export type AccessibilityState = {
-  disabled?: boolean,
-  selected?: boolean,
+  disabled?: ?boolean,
+  selected?: ?boolean,
   checked?: ?boolean | 'mixed',
-  busy?: boolean,
-  expanded?: boolean,
-  multiselectable?: boolean, // Win32
-  required?: boolean, // Win32
+  busy?: ?boolean,
+  expanded?: ?boolean,
+  multiselectable?: ?boolean, // Win32
+  required?: ?boolean, // Win32
   ...
 };
 

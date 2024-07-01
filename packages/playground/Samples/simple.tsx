@@ -3,19 +3,35 @@
  * Licensed under the MIT License.
  * @format
  */
-import React from 'react';
-import {AppRegistry, View} from 'react-native';
+import React, {useState} from 'react';
+import {AppRegistry, Pressable, Text, View} from 'react-native';
 
-export default class Bootstrap extends React.Component {
-  render() {
-    return (
-      <View
-        accessible={true}
-        style={{borderRadius: 30, width: 60, height: 60, margin: 10}}>
-        <View style={{backgroundColor: 'magenta', width: 60, height: 60}} />
-      </View>
-    );
+export const Bootstrap: React.FunctionComponent<{}> = () => {
+  const [timesPressed, setTimesPressed] = useState(0);
+
+  let textLog = '';
+  if (timesPressed > 1) {
+    textLog = timesPressed + 'x onPress';
+  } else if (timesPressed > 0) {
+    textLog = 'onPress';
   }
-}
+
+  return (
+    <>
+      <View>
+        <Pressable
+          accessibilityRole="button"
+          onPressOut={() => {
+            setTimesPressed(current => current + 1);
+          }}>
+          <Text>Press Me</Text>
+        </Pressable>
+      </View>
+      <View>
+        <Text>{textLog}</Text>
+      </View>
+    </>
+  );
+};
 
 AppRegistry.registerComponent('Bootstrap', () => Bootstrap);

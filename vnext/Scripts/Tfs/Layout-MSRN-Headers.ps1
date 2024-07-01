@@ -82,6 +82,10 @@ Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\callinvoker\ReactCommon\Sche
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\CallbackWrapper.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\LongLivedObject.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\LongLivedObject.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\EventEmitter.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Function.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Base.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
+Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\bridging\Convert.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\TurboModule.h -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\
 Copy-Item -Force -Path $ReactNativeRoot\ReactCommon\react\nativemodule\core\ReactCommon\TurboModuleUtils.cpp -Destination $TargetRoot\Microsoft.ReactNative.Cxx\ReactCommon\

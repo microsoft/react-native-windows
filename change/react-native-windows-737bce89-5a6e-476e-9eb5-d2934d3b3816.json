@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Integrate 6/13",
+  "packageName": "react-native-windows",
+  "email": "yajurgrover24@gmail.com",
+  "dependentChangeType": "patch"
+}

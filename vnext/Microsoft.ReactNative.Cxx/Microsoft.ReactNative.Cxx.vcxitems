@@ -60,6 +60,10 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)XamlUtils.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\LongLivedObject.h" />
     <ClInclude Include="$(Bridging_SourcePath)\CallbackWrapper.h" />
+    <ClInclude Include="$(Bridging_SourcePath)\EventEmitter.h" />
+    <ClInclude Include="$(Bridging_SourcePath)\Function.h" />
+    <ClInclude Include="$(Bridging_SourcePath)\Base.h" />
+    <ClInclude Include="$(Bridging_SourcePath)\Convert.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.h" />
     <ClInclude Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)CppWinRTIncludes.h" />
