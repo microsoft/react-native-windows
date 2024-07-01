@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Mon, 01 Jul 2024 15:16:24 GMT",
+      "version": "0.74.1",
+      "tag": "@react-native-windows/codegen_v0.74.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "fc2ac82646c52bbbfc2dba9add62dc14796f06f1",
+            "comment": "SFI: Component Governance fixes 6/19/24"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 27 Apr 2024 21:16:06 GMT",
       "version": "0.74.0",
       "tag": "@react-native-windows/codegen_v0.74.0",

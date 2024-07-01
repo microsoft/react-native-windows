@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 27 Apr 2024 21:16:06 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Jul 2024 15:16:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.1
+
+Mon, 01 Jul 2024 15:16:24 GMT
+
+### Patches
+
+- Fix bug with specifying min VS versions for run-windows (jthysell@microsoft.com)
+- Bump @react-native-windows/codegen to v0.74.1
 
 ## 0.74.0
 

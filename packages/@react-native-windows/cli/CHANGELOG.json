@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 01 Jul 2024 15:16:24 GMT",
+      "version": "0.74.1",
+      "tag": "@react-native-windows/cli_v0.74.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "a5366162f661f3aeed72eba646c9629754ba7e1b",
+            "comment": "Fix bug with specifying min VS versions for run-windows"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.74.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 27 Apr 2024 21:16:06 GMT",
       "version": "0.74.0",
       "tag": "@react-native-windows/cli_v0.74.0",
