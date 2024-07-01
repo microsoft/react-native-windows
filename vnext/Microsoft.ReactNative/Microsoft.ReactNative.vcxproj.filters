@@ -39,6 +39,9 @@
     <ClCompile Include="Modules\Animated\CalculatedAnimationDriver.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
+    <ClCompile Include="Modules\Animated\ColorAnimatedNode.cpp">
+      <Filter>Modules\Animated</Filter>
+    </ClCompile>
     <ClCompile Include="Modules\Animated\DecayAnimationDriver.cpp">
       <Filter>Modules\Animated</Filter>
     </ClCompile>
@@ -381,6 +384,9 @@
       <Filter>Modules\Animated</Filter>
     </ClInclude>
     <ClInclude Include="Modules\Animated\CalculatedAnimationDriver.h">
+      <Filter>Modules\Animated</Filter>
+    </ClInclude>
+    <ClInclude Include="Modules\Animated\ColorAnimatedNode.h">
       <Filter>Modules\Animated</Filter>
     </ClInclude>
     <ClInclude Include="Modules\Animated\DecayAnimationDriver.h">
