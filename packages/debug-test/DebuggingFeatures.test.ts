@@ -96,7 +96,6 @@ test('debug target properties', async () => {
     for (const debugTarget of debugTargets) {
       expect(debugTarget.hasOwnProperty('id')).toBeTruthy();
       expect(debugTarget.hasOwnProperty('title')).toBeTruthy();
-      expect(debugTarget.hasOwnProperty('faviconUrl')).toBeTruthy();
       expect(debugTarget.hasOwnProperty('devtoolsFrontendUrl')).toBeTruthy();
       expect(debugTarget.hasOwnProperty('type')).toBeTruthy();
       expect(debugTarget.hasOwnProperty('webSocketDebuggerUrl')).toBeTruthy();

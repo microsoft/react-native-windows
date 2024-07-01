@@ -287,7 +287,7 @@ class AccessibilitySwitchExample extends React.Component<
 
   render(): React.Node {
     return (
-      <View testID="accessibility-switch">
+      <View testID="accessibility-switch" accessible>
         <ExampleRow>
           <Switch
             accessibilityLabel="This is a Switch"
