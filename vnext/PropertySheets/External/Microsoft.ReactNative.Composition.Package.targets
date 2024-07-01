@@ -14,5 +14,9 @@
     <!-- Needed for ucrtbased.dll when running a debug build. -->
     <SDKReference Include="Microsoft.VCLibs, Version=14.0" Condition="'$(Configuration)' == 'Debug'" />
   </ItemGroup>
+
+  <ItemGroup Condition="'$(UseExperimentalNuget)' == 'true'">
+    <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(OverrideWinUIPackage)'!='true'" />
+  </ItemGroup>
   
 </Project>
