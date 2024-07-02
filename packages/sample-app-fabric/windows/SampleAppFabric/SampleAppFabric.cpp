@@ -66,17 +66,18 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
   PathCchRemoveFileSpec(appDirectory, MAX_PATH);
 
+  // DebugBundlePath is used when loading from a bundle server such as metro. If this parameter
+  // is not provided fallback to a combination of JavaScriptBundleFile and BundleRootPath
   auto reactInstanceSettingsBuilder {
     winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder()
-#if BUNDLE
+        .DebugBundlePath(L"index")
         .JavaScriptBundleFile(L"index.windows")
-        .BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str())
+        .BundleRootPath(appDirectory)
+#if BUNDLE
         .UseFastRefresh(false)
 #else
-        .JavaScriptBundleFile(L"index")
         .UseFastRefresh(true)
 #endif
-
 #if _DEBUG
         .UseDirectDebugger(true)
         .UseDeveloperSupport(true)
