@@ -21,7 +21,7 @@ bool LayoutResults::operator==(LayoutResults layout) const {
       direction() == layout.direction() &&
       hadOverflow() == layout.hadOverflow() &&
       lastOwnerDirection == layout.lastOwnerDirection &&
-      configVersion == layout.configVersion &&
+      configVersion == layout.configVersion && // [Windows #13409]
       nextCachedMeasurementsIndex == layout.nextCachedMeasurementsIndex &&
       cachedLayout == layout.cachedLayout &&
       computedFlexBasis == layout.computedFlexBasis;
