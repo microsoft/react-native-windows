@@ -165,7 +165,8 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/config/Config.cpp",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/config/Config.cpp",
-      "baseHash": "9a2e3f6760cd31f262a78cb7e8d7b53fed03827a"
+      "baseHash": "9a2e3f6760cd31f262a78cb7e8d7b53fed03827a",
+      "issue": 13409
     },
     {
       "type": "patch",
