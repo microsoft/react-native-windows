@@ -190,6 +190,13 @@
       "issue": 13409
     },
     {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/Node.cpp",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/Node.cpp",
+      "baseHash": "c5f3ccecb3abf75e1028486772b0278e7299ee47",
+      "issue": 13409
+    },
+    {
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "packages/rn-tester/IntegrationTests",
