@@ -172,7 +172,8 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/config/Config.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/config/Config.h",
-      "baseHash": "a55ea630b87572d727830c24d64ccffabccafc8e"
+      "baseHash": "a55ea630b87572d727830c24d64ccffabccafc8e",
+      "issue": 13409
     },
     {
       "type": "patch",
