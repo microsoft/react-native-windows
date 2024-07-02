@@ -53,7 +53,7 @@ class YG_EXPORT Config : public ::YGConfig {
   void setContext(void* context);
   void* getContext() const;
 
-  uint32_t getVersion() const noexcept;
+  uint32_t getVersion() const noexcept; // [Windows #13409]
 
   void setLogger(YGLogger logger);
   void log(
