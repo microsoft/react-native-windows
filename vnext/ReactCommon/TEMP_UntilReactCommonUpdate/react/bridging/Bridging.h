@@ -13,6 +13,7 @@
 #include <react/bridging/Class.h>
 // #include <react/bridging/Dynamic.h> // Line causes Error C1083 Cannot open include file: 'double-conversion/double-conversion.h' #11644
 #include <react/bridging/Error.h>
+#include <react/bridging/EventEmitter.h>
 #include <react/bridging/Function.h>
 #include <react/bridging/Number.h>
 #include <react/bridging/Object.h>

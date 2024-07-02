@@ -24,6 +24,7 @@ struct DevSettings {
   REACT_METHOD(setIsDebuggingRemotely) void setIsDebuggingRemotely(bool isDebuggingRemotelyEnabled) noexcept;
   REACT_METHOD(setProfilingEnabled) void setProfilingEnabled(bool isProfilingEnabled) noexcept;
   REACT_METHOD(toggleElementInspector) void toggleElementInspector() noexcept;
+  REACT_METHOD(openDebugger) void openDebugger() noexcept;
   REACT_METHOD(addMenuItem) void addMenuItem(std::string title) noexcept;
   REACT_METHOD(setIsShakeToShowDevMenuEnabled) void setIsShakeToShowDevMenuEnabled(bool enabled) noexcept;
 

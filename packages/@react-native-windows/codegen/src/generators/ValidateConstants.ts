@@ -13,7 +13,7 @@ export function generateValidateConstants(
   nativeModule: NativeModuleSchema,
   aliases: AliasMap,
 ): [string, string] | undefined {
-  const candidates = nativeModule.spec.properties.filter(
+  const candidates = nativeModule.spec.methods.filter(
     prop => prop.name === 'getConstants',
   );
   if (candidates.length === 0) {

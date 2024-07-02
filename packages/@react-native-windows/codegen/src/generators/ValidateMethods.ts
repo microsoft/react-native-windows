@@ -87,13 +87,13 @@ function translatePossibleMethodSignatures(
 }
 
 function renderProperties(
-  properties: ReadonlyArray<NativeModulePropertyShape>,
+  methods: ReadonlyArray<NativeModulePropertyShape>,
   aliases: AliasMap,
   tuple: boolean,
   options: CppCodegenOptions,
 ): string {
   // TODO: generate code for constants
-  return properties
+  return methods
     .filter(prop => prop.name !== 'getConstants')
     .map((prop, index) => {
       // TODO: prop.optional === true
@@ -160,15 +160,15 @@ export function generateValidateMethods(
   aliases: AliasMap,
   options: CppCodegenOptions,
 ): [string, string] {
-  const properties = nativeModule.spec.properties;
+  const methods = nativeModule.spec.methods;
   const traversedProperties = renderProperties(
-    properties,
+    methods,
     aliases,
     false,
     options,
   );
   const traversedPropertyTuples = renderProperties(
-    properties,
+    methods,
     aliases,
     true,
     options,

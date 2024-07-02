@@ -127,7 +127,7 @@ async function upgradeReactNative(
   const findRnOpts = {searchPath: platformPackages[0].path};
   const origJson = (await findPackage('react-native', findRnOpts))!.json;
   const origTemplateJson = (await findPackage(
-    'react-native/template',
+    '@react-native-community/template',
     findRnOpts,
   ))!.json;
 
@@ -158,7 +158,7 @@ async function upgradeReactNative(
   await runCommand('yarn install');
   const newJson = (await findPackage('react-native', findRnOpts))!.json;
   const newTemplateJson = (await findPackage(
-    'react-native/template',
+    '@react-native-community/template',
     findRnOpts,
   ))!.json;
 

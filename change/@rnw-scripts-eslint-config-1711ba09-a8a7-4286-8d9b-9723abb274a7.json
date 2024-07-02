@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "integrate f7aea0c8e",
+  "packageName": "@rnw-scripts/eslint-config",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
