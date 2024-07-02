@@ -186,7 +186,8 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/LayoutResults.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/LayoutResults.h",
-      "baseHash": "e6be6681fc1427c12d2e89da13cfe1984dffd714"
+      "baseHash": "e6be6681fc1427c12d2e89da13cfe1984dffd714",
+      "issue": 13409
     },
     {
       "type": "copy",
