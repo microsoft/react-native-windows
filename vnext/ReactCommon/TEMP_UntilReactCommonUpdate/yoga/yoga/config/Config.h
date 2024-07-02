@@ -74,7 +74,7 @@ class YG_EXPORT Config : public ::YGConfig {
 
   bool useWebDefaults_ : 1 = false;
 
-  uint32_t version_ = 0;
+  uint32_t version_ = 0; // [Windows #13409]
   ExperimentalFeatureSet experimentalFeatures_{};
   Errata errata_ = Errata::None;
   float pointScaleFactor_ = 1.0f;
