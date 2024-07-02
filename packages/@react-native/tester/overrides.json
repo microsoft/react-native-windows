@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.75.0-nightly-20240618-5df5ed1a8",
+  "baseVersion": "0.75.0-rc.0",
   "overrides": [
     {
       "type": "copy",
@@ -409,6 +409,7 @@
       "type": "copy",
       "directory": "js/examples/Timer",
       "baseDirectory": "packages/rn-tester/js/examples/Timer",
+      "baseVersion": "0.75.0-nightly-20240618-5df5ed1a8",
       "baseHash": "6368c65721027c9cc3174c846bbd084ad3dc4f9c",
       "issue": 4054
     },
@@ -579,7 +580,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "1ae462bf0c4108bda00c00adaf4d13ef30ea9d8a",
+      "baseHash": "41546049dfd50ca0ffa52bf1c141e5d43d2e3da6",
       "issue": 13228
     }
   ]

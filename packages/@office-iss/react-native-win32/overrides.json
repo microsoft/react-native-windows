@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240618-5df5ed1a8",
+  "baseVersion": "0.75.0-rc.0",
   "overrides": [
     {
       "type": "derived",
@@ -445,7 +445,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextNativeComponent.js",
-      "baseHash": "1b2e6301edc13f3a91e47b9befe8a47a12e6ad39",
+      "baseHash": "9f7ea4e5225a06e1ec3bb46a2f4bc9f72bf46873",
       "issue": 7074
     },
     {
