@@ -297,7 +297,7 @@ const Text: React.AbstractComponent<
     ios: accessible !== false,
     android:
       accessible == null ? onPress != null || onLongPress != null : accessible,
-    default: accessible,
+    default: accessible !== false,
   });
 
   return (
