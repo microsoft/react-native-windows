@@ -93,6 +93,7 @@ void* Config::getContext() const {
   return context_;
 }
 
+// [Windows #13409]
 uint32_t Config::getVersion() const noexcept {
   return version_;
 }
