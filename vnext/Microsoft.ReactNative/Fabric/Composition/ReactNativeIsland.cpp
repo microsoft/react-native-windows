@@ -125,6 +125,15 @@ inline Mso::Future<void> CompositionReactViewInstance::PostInUIQueue(TAction &&a
   return promise.AsFuture();
 }
 
+void ApplyConstraints(
+    const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraintsIn,
+    facebook::react::LayoutConstraints &layoutConstraintsOut) noexcept {
+  layoutConstraintsOut.minimumSize = {layoutConstraintsIn.MinimumSize.Width, layoutConstraintsIn.MinimumSize.Height};
+  layoutConstraintsOut.maximumSize = {layoutConstraintsIn.MaximumSize.Width, layoutConstraintsIn.MaximumSize.Height};
+  layoutConstraintsOut.layoutDirection =
+      static_cast<facebook::react::LayoutDirection>(layoutConstraintsIn.LayoutDirection);
+}
+
 ReactNativeIsland::ReactNativeIsland() noexcept {}
 
 #ifdef USE_WINUI3
@@ -136,6 +145,7 @@ ReactNativeIsland::~ReactNativeIsland() noexcept {
 #ifdef USE_WINUI3
   if (m_island && m_island.IsConnected()) {
     m_island.AutomationProviderRequested(m_islandAutomationProviderRequestedToken);
+    m_island.StateChanged(m_islandStateChangedToken);
   }
 #endif
 
@@ -251,6 +261,7 @@ void ReactNativeIsland::ScaleFactor(float value) noexcept {
       rootView.Scale({invScale, invScale, invScale});
     }
     UpdateRootVisualSize();
+    Arrange(m_layoutConstraints, m_viewportOffset);
   }
 }
 
@@ -471,10 +482,14 @@ void ReactNativeIsland::ShowInstanceLoaded() noexcept {
       initProps = folly::dynamic::object();
     }
     initProps["concurrentRoot"] = true;
+
+    facebook::react::LayoutConstraints fbLayoutConstraints;
+    ApplyConstraints(m_layoutConstraints, fbLayoutConstraints);
+
     uiManager->startSurface(
         *this,
         static_cast<facebook::react::SurfaceId>(m_rootTag),
-        m_layoutConstraints,
+        fbLayoutConstraints,
         to_string(m_reactViewOptions.ComponentName()),
         initProps);
 
@@ -491,16 +506,21 @@ facebook::react::AttributedStringBox CreateLoadingAttributedString() noexcept {
   return facebook::react::AttributedStringBox{attributedString};
 }
 
-facebook::react::Size MeasureLoading(const facebook::react::LayoutConstraints &layoutConstraints, float scaleFactor) {
+facebook::react::Size MeasureLoading(
+    const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
+    float scaleFactor) {
+  facebook::react::LayoutConstraints fbLayoutConstraints;
+  ApplyConstraints(layoutConstraints, fbLayoutConstraints);
+
   auto attributedStringBox = CreateLoadingAttributedString();
   winrt::com_ptr<::IDWriteTextLayout> textLayout;
   facebook::react::TextLayoutManager::GetTextLayout(
-      attributedStringBox, {} /*paragraphAttributes*/, layoutConstraints, textLayout);
+      attributedStringBox, {} /*paragraphAttributes*/, fbLayoutConstraints, textLayout);
 
   DWRITE_TEXT_METRICS tm;
   textLayout->GetMetrics(&tm);
 
-  return layoutConstraints.clamp(
+  return fbLayoutConstraints.clamp(
       {loadingActivityHorizontalOffset * scaleFactor + tm.width, loadingBarHeight * scaleFactor});
 }
 
@@ -625,15 +645,6 @@ void ReactNativeIsland::ShowInstanceLoading() noexcept {
   InternalRootVisual().InsertAt(m_loadingVisual, m_hasRenderedVisual ? 1 : 0);
 }
 
-void ApplyConstraints(
-    const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraintsIn,
-    facebook::react::LayoutConstraints &layoutConstraintsOut) noexcept {
-  layoutConstraintsOut.minimumSize = {layoutConstraintsIn.MinimumSize.Width, layoutConstraintsIn.MinimumSize.Height};
-  layoutConstraintsOut.maximumSize = {layoutConstraintsIn.MaximumSize.Width, layoutConstraintsIn.MaximumSize.Height};
-  layoutConstraintsOut.layoutDirection =
-      static_cast<facebook::react::LayoutDirection>(layoutConstraintsIn.LayoutDirection);
-}
-
 winrt::Windows::Foundation::Size ReactNativeIsland::Measure(
     const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
     const winrt::Windows::Foundation::Point &viewportOffset) const noexcept {
@@ -654,7 +665,7 @@ winrt::Windows::Foundation::Size ReactNativeIsland::Measure(
       size = fabricuiManager->measureSurface(static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
     }
   } else if (m_loadingVisual) {
-    size = MeasureLoading(constraints, m_scaleFactor);
+    size = MeasureLoading(layoutConstraints, m_scaleFactor);
   }
 
   auto clampedSize = constraints.clamp(size);
@@ -664,7 +675,10 @@ winrt::Windows::Foundation::Size ReactNativeIsland::Measure(
 void ReactNativeIsland::Arrange(
     const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
     const winrt::Windows::Foundation::Point &viewportOffset) noexcept {
-  ApplyConstraints(layoutConstraints, m_layoutConstraints);
+  m_layoutConstraints = layoutConstraints;
+  m_viewportOffset = viewportOffset;
+  facebook::react::LayoutConstraints fbLayoutConstraints;
+  ApplyConstraints(layoutConstraints, fbLayoutConstraints);
 
   if (m_isInitialized && m_rootTag != -1) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
@@ -675,11 +689,11 @@ void ReactNativeIsland::Arrange(
       context.viewportOffset = {viewportOffset.X, viewportOffset.Y};
 
       fabricuiManager->constraintSurfaceLayout(
-          static_cast<facebook::react::SurfaceId>(m_rootTag), m_layoutConstraints, context);
+          static_cast<facebook::react::SurfaceId>(m_rootTag), fbLayoutConstraints, context);
     }
   } else if (m_loadingVisual) {
     // TODO: Resize to align loading
-    auto s = m_layoutConstraints.clamp(MeasureLoading(m_layoutConstraints, m_scaleFactor));
+    auto s = fbLayoutConstraints.clamp(MeasureLoading(layoutConstraints, m_scaleFactor));
     NotifySizeChanged();
   }
 }
@@ -729,6 +743,17 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
         pThis->m_island = nullptr;
       }
     });
+
+    m_islandStateChangedToken =
+        m_island.StateChanged([weakThis = get_weak()](
+                                  winrt::Microsoft::UI::Content::ContentIsland const &island,
+                                  winrt::Microsoft::UI::Content::ContentIslandStateChangedEventArgs const &args) {
+          if (auto pThis = weakThis.get()) {
+            if (args.DidRasterizationScaleChange()) {
+              pThis->ScaleFactor(island.RasterizationScale());
+            }
+          }
+        });
   }
   return m_island;
 }
