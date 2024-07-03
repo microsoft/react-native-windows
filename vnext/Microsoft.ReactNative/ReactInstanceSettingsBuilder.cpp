@@ -33,7 +33,13 @@ winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::U
 }
 
 winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::BundleRootPath(hstring const &path) {
-  m_reactInstanceSettings.BundleRootPath(path.c_str());
+  m_reactInstanceSettings.BundleRootPath(std::wstring(L"file://").append(path.c_str()).append(L"\\Bundle\\").c_str());
+
+  return *this;
+}
+
+winrt::ReactNative::ReactInstanceSettingsBuilder ReactInstanceSettingsBuilder::DebugBundlePath(hstring const &path) {
+  m_reactInstanceSettings.DebugBundlePath(path.c_str());
 
   return *this;
 }
