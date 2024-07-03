@@ -23,6 +23,8 @@ namespace Microsoft.ReactNative
     
         ReactInstanceSettingsBuilder BundleRootPath(String path);
 
+        ReactInstanceSettingsBuilder DebugBundlePath(String path);
+
         ReactInstanceSettingsBuilder JavaScriptBundleFile(String file);
 
         ReactInstanceSettingsBuilder UseFastRefresh(Boolean state);
