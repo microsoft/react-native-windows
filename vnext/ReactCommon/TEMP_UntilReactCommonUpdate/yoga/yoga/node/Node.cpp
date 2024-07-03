@@ -10,7 +10,6 @@
 #include <iostream>
 
 #include <yoga/debug/AssertFatal.h>
-#include <yoga/debug/Log.h>
 #include <yoga/node/Node.h>
 #include <yoga/numeric/Comparison.h>
 
@@ -27,54 +26,35 @@ Node::Node(const yoga::Config* config) : config_{config} {
   }
 }
 
-Node::Node(Node&& node) noexcept
-    : hasNewLayout_(node.hasNewLayout_),
-      isReferenceBaseline_(node.isReferenceBaseline_),
-      isDirty_(node.isDirty_),
-      alwaysFormsContainingBlock_(node.alwaysFormsContainingBlock_),
-      nodeType_(node.nodeType_),
-      context_(node.context_),
-      measureFunc_(node.measureFunc_),
-      baselineFunc_(node.baselineFunc_),
-      dirtiedFunc_(node.dirtiedFunc_),
-      style_(std::move(node.style_)),
-      layout_(node.layout_),
-      lineIndex_(node.lineIndex_),
-      owner_(node.owner_),
-      children_(std::move(node.children_)),
-      config_(node.config_),
-      resolvedDimensions_(node.resolvedDimensions_) {
+Node::Node(Node&& node) {
+  hasNewLayout_ = node.hasNewLayout_;
+  isReferenceBaseline_ = node.isReferenceBaseline_;
+  isDirty_ = node.isDirty_;
+  alwaysFormsContainingBlock_ = node.alwaysFormsContainingBlock_;
+  nodeType_ = node.nodeType_;
+  context_ = node.context_;
+  measureFunc_ = node.measureFunc_;
+  baselineFunc_ = node.baselineFunc_;
+  dirtiedFunc_ = node.dirtiedFunc_;
+  style_ = node.style_;
+  layout_ = node.layout_;
+  lineIndex_ = node.lineIndex_;
+  owner_ = node.owner_;
+  children_ = std::move(node.children_);
+  config_ = node.config_;
+  resolvedDimensions_ = node.resolvedDimensions_;
   for (auto c : children_) {
     c->setOwner(this);
   }
 }
 
 YGSize Node::measure(
-    float availableWidth,
+    float width,
     MeasureMode widthMode,
-    float availableHeight,
+    float height,
     MeasureMode heightMode) {
-  const auto size = measureFunc_(
-      this,
-      availableWidth,
-      unscopedEnum(widthMode),
-      availableHeight,
-      unscopedEnum(heightMode));
-
-  if (yoga::isUndefined(size.height) || size.height < 0 ||
-      yoga::isUndefined(size.width) || size.width < 0) {
-    yoga::log(
-        this,
-        LogLevel::Warn,
-        "Measure function returned an invalid dimension to Yoga: [width=%f, height=%f]",
-        size.width,
-        size.height);
-    return {
-        .width = maxOrDefined(0.0f, size.width),
-        .height = maxOrDefined(0.0f, size.height)};
-  }
-
-  return size;
+  return measureFunc_(
+      this, width, unscopedEnum(widthMode), height, unscopedEnum(heightMode));
 }
 
 float Node::baseline(float width, float height) const {
@@ -103,7 +83,7 @@ void Node::setMeasureFunc(YGMeasureFunc measureFunc) {
   } else {
     yoga::assertFatalWithNode(
         this,
-        children_.empty(),
+        children_.size() == 0,
         "Cannot set measure function: Nodes with measure functions cannot have "
         "children.");
     // TODO: t18095186 Move nodeType to opt-in function and mark appropriate
@@ -146,17 +126,18 @@ void Node::setConfig(yoga::Config* config) {
 }
 
 void Node::setDirty(bool isDirty) {
-  if (static_cast<int>(isDirty) == isDirty_) {
+  if (isDirty == isDirty_) {
     return;
   }
   isDirty_ = isDirty;
-  if (isDirty && (dirtiedFunc_ != nullptr)) {
+  if (isDirty && dirtiedFunc_) {
     dirtiedFunc_(this);
   }
 }
 
 bool Node::removeChild(Node* child) {
-  auto p = std::find(children_.begin(), children_.end(), child);
+  std::vector<Node*>::iterator p =
+      std::find(children_.begin(), children_.end(), child);
   if (p != children_.end()) {
     children_.erase(p);
     return true;
@@ -330,7 +311,7 @@ void Node::markDirtyAndPropagate() {
   if (!isDirty_) {
     setDirty(true);
     setLayoutComputedFlexBasis(FloatOptional());
-    if (owner_ != nullptr) {
+    if (owner_) {
       owner_->markDirtyAndPropagate();
     }
   }
@@ -374,7 +355,7 @@ bool Node::isNodeFlexible() {
 void Node::reset() {
   yoga::assertFatalWithNode(
       this,
-      children_.empty(),
+      children_.size() == 0,
       "Cannot reset a node which still has children attached");
   yoga::assertFatalWithNode(
       this, owner_ == nullptr, "Cannot reset a node still attached to a owner");

@@ -32,7 +32,7 @@ bool configUpdateInvalidatesLayout(
 
 class YG_EXPORT Config : public ::YGConfig {
  public:
-  explicit Config(YGLogger logger) : logger_{logger} {}
+  Config(YGLogger logger);
 
   void setUseWebDefaults(bool useWebDefaults);
   bool useWebDefaults() const;
@@ -69,8 +69,8 @@ class YG_EXPORT Config : public ::YGConfig {
   static const Config& getDefault();
 
  private:
-  YGCloneNodeFunc cloneNodeCallback_{nullptr};
-  YGLogger logger_{};
+  YGCloneNodeFunc cloneNodeCallback_;
+  YGLogger logger_;
 
   bool useWebDefaults_ : 1 = false;
 
