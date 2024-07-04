@@ -5,6 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+ // [Windows #13391]
+
 #pragma once
 
 #include <jsi/jsi.h>
