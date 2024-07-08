@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 04 Jul 2024 05:15:29 GMT",
+      "version": "0.0.0-canary.839",
+      "tag": "react-native-windows_v0.0.0-canary.839",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e54e289ca6bf816711d7a7720ed5791286db9fbd",
+            "comment": "Update SampleAppFabric to use ReactNativeAppBuilder"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2d4203831ab6d64c0e781e1a5361b545dae15aed",
+            "comment": "[Fabric] Handle scalefactor changes"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1dd738c47411d9babe3bb822c19e4d0d023d8efe",
+            "comment": "Patch yoga to handle dynamic scale changes"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 29 Jun 2024 05:17:15 GMT",
       "version": "0.0.0-canary.838",
       "tag": "react-native-windows_v0.0.0-canary.838",
