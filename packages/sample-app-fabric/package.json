@@ -33,7 +33,7 @@
     "@rnw-scripts/just-task": "2.3.40",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnw-scripts/ts-config": "2.0.5",
-    "@rnx-kit/jest-preset": "^0.1.16",
+    "@rnx-kit/jest-preset": "^0.1.17",
     "@types/react": "^18.2.6",
     "@types/react-test-renderer": "^18.0.0",
     "babel-jest": "^29.6.3",

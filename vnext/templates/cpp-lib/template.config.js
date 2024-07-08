@@ -212,7 +212,7 @@ async function postInstall(config = {}, options = {}) {
         'react-native-windows': rnwVersion,
       },
       devDependencies: {
-        '@rnx-kit/jest-preset': '^0.1.16',
+        '@rnx-kit/jest-preset': '^0.1.17',
       },
     });
 

@@ -77,7 +77,7 @@
     "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.1.27",
     "@rnw-scripts/just-task": "2.3.40",
     "@rnw-scripts/metro-dev-config": "0.0.0",
-    "@rnx-kit/jest-preset": "^0.1.0",
+    "@rnx-kit/jest-preset": "^0.1.17",
     "@types/node": "^18.0.0",
     "@types/prop-types": "15.7.1",
     "@types/react": "^18.2.6",
