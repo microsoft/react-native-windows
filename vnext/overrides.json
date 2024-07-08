@@ -127,7 +127,7 @@
       "issue": 12195
     },
     {
-      "type": "copy",
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/Convert.h",
       "baseFile": "packages/react-native/ReactCommon/react/bridging/Convert.h",
       "baseHash": "dd7973a16878a953fd70d51e8f5cf8b6130b3f8a",
