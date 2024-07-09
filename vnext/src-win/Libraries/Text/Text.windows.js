@@ -381,7 +381,7 @@ const Text: React.AbstractComponent<
         ...rest
       } = textStyleProps != null ? textStyleProps : {};
 
-      let {...textPropsLessStyle} = props;
+      let {style, ...textPropsLessStyle} = props;
       return (
         <View style={styleProps}>
           <TextAncestor.Provider value={true}>
@@ -429,7 +429,7 @@ const Text: React.AbstractComponent<
             ref={forwardedRef}
             selectable={_selectable}
             selectionColor={_selectionColor}
-            style={style}
+            style={processedStyle}
           />
         </TextAncestor.Provider>
       );

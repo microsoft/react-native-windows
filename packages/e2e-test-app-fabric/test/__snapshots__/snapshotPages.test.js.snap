@@ -1654,9 +1654,14 @@ exports[`snapshotAllPages Alerts 8`] = `
   >
     <Text
       style={
-        {
-          "fontWeight": "bold",
-        }
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          {
+            "fontWeight": "bold",
+          },
+        ]
       }
     >
       Prompt value:
@@ -86796,6 +86801,35 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
     />
   </View>
   <View
+    style={
+      {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "paddingVertical": 8,
+      }
+    }
+  >
+    <Text>
+      transfer-encoding: chunked
+    </Text>
+    <RCTSwitch
+      accessibilityRole="switch"
+      accessible={true}
+      focusable={true}
+      onChange={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "height": 31,
+          "width": 51,
+        }
+      }
+      value={false}
+    />
+  </View>
+  <View
     accessibilityValue={
       {
         "max": undefined,
@@ -86835,7 +86869,7 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
       }
     >
       <Text>
-        Download 7MB Text File
+        Download 19KB pdf File
       </Text>
     </View>
   </View>

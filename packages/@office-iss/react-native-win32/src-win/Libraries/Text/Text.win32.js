@@ -322,7 +322,7 @@ const Text: React.AbstractComponent<
       ref={forwardedRef}
       selectable={_selectable}
       selectionColor={_selectionColor}
-      style={style}
+      style={processedStyle}
     />
   ) : (
     <TextAncestor.Provider value={true}>
