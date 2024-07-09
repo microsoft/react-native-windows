@@ -705,7 +705,8 @@ void SetBorderLayerProperties(
     // if (VisualVersion::IsUseWinCompClippingRegionEnabled())
     {
       layer.Offset({anchorOffset.x, anchorOffset.y, 0}, {anchorPoint.x, anchorPoint.y, 0});
-      layer.RelativeSizeWithOffset({ textureRect.right - textureRect.left, textureRect.bottom - textureRect.top }, { 0.0f, 0.0f });
+      layer.RelativeSizeWithOffset(
+          {textureRect.right - textureRect.left, textureRect.bottom - textureRect.top}, {0.0f, 0.0f});
 
       layer.Brush(theme->Brush(*borderColor));
 
