@@ -403,6 +403,7 @@ const Text: React.AbstractComponent<
       );
     }
   }
+  // [Windows #5740]
 });
 
 Text.displayName = 'Text';
