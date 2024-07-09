@@ -290,6 +290,7 @@ const Text: React.AbstractComponent<
         style={processedStyle}
       />
     );
+  // [Windows] Following else statement forked due to PR #5740
   } else {
     let styleProps: ViewStyleProp = (restProps.style: any);
     if (
