@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Bump JSI_VERSION to 12",
+  "packageName": "react-native-windows",
+  "email": "1422161+marlenecota@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
