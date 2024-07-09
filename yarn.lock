@@ -2680,9 +2680,9 @@
   integrity sha512-N+zFhTSXroiK4eL26vs61Pmtl7wzTPAKLd4JKw9/fk5cNAHUscCXF/uclzuYN61Ye5AwygIvcwbm9wv4Jfa92A==
 
 "@rnx-kit/jest-preset@^0.1.0", "@rnx-kit/jest-preset@^0.1.16":
-  version "0.1.16"
-  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.16.tgz#e520c6cbd656aacdca29199ce9738f3b9568aa6f"
-  integrity sha512-ExcFYpM2Sjyf7ht0b7rNrsx72Dm5qDoK+5/bjSdCYjoCb4X3OKSdoOkqDAtQHT/2KC+OUPziJaNoDY5Zpq96lw==
+  version "0.1.17"
+  resolved "https://registry.yarnpkg.com/@rnx-kit/jest-preset/-/jest-preset-0.1.17.tgz#aba8a049a5c7e157ad82ad005515c7fd230df1e8"
+  integrity sha512-tAL838G8B6to52R1QMcNyTnBc6oRNpX14QvuBl/v63n1YjwA6iybOkFortRA+tJVX81WiUV754m2Yp3d4S8iEA==
   dependencies:
     "@babel/core" "^7.0.0"
     "@babel/preset-env" "^7.0.0"
@@ -6670,9 +6670,9 @@ form-data@~2.3.2:
     mime-types "^2.1.12"
 
 fp-ts@^2.5.0:
-  version "2.16.7"
-  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.16.7.tgz#c9095992069d4026a9de4abfa1321c5e55422b76"
-  integrity sha512-Xiux+4mHHPj32/mrqN3XIIqEKk/MousgoC2FIaCwehpPjBI4oDrLvQEyQ/2T1sbTe0s/YIQqF98z+uHJLVoS9Q==
+  version "2.16.8"
+  resolved "https://registry.yarnpkg.com/fp-ts/-/fp-ts-2.16.8.tgz#dfa1ea1c967ac6794c43ce877aeb8ed76f5e0df7"
+  integrity sha512-nmDtNqmMZkOxu0M5hkrS9YA15/KPkYkILb6Axg9XBAoUoYEtzg+LFmVWqZrl9FNttsW0qIUpx9RCA9INbv+Bxw==
 
 fresh@0.5.2:
   version "0.5.2"
@@ -12368,9 +12368,9 @@ write-file-atomic@^4.0.2:
     signal-exit "^3.0.7"
 
 ws@8.16.0, ws@^7.2.3, ws@^8.17.1:
-  version "8.17.1"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-8.17.1.tgz#9293da530bb548febc95371d90f9c878727d919b"
-  integrity sha512-6XQFvXTkbfUOZOKKILFG1PDK2NDQs4azKQl26T0YS5CxqWLgXajbPZ+h4gZekJyRqFU8pvnbAbbs/3TgRPy+GQ==
+  version "8.18.0"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-8.18.0.tgz#0d7505a6eafe2b0e712d232b42279f53bc289bbc"
+  integrity sha512-8VbfWfHLbbwu3+N6OKsOMpBdT4kXPDDB9cJk2bJ6mh9ucxdlnNvH1e+roYkKmN9Nxw2yjz7VzeO9oOz2zJ04Pw==
 
 ws@^5.2.4:
   version "5.2.4"
