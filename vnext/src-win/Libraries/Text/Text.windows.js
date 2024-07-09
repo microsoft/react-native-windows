@@ -355,16 +355,12 @@ const Text: React.AbstractComponent<
             <NativeText
               {...textPropsLessStyle}
               {...eventHandlersForText}
-              accessibilityLabel={ariaLabel ?? accessibilityLabel}
+              accessibilityLabel={_accessibilityLabel}
               accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
               accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
               accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
-              accessibilityState={nativeTextAccessibilityState}
-              accessible={
-                accessible == null && Platform.OS === 'android'
-                  ? _hasOnPressOrOnLongPress
-                  : _accessible
-              }
+              accessibilityState={_accessibilityState}
+              accessible={_accessible}
               allowFontScaling={allowFontScaling !== false}
               disabled={_disabled}
               ellipsizeMode={ellipsizeMode ?? 'tail'}
