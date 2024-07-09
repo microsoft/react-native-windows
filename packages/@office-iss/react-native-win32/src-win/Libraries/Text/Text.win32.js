@@ -270,6 +270,12 @@ const Text: React.AbstractComponent<
         {...eventHandlersForText}
         accessibilityLabel={_accessibilityLabel}
         accessibilityState={_accessibilityState}
+        accessibilityControls={ariaControls ?? accessibilityControls} // Win32
+        accessibilityDescribedBy={ariaDescribedBy ?? accessibilityDescribedBy} // Win32
+        accessibilityDescription={ariaDescription ?? accessibilityDescription} // Win32
+        accessibilityLevel={ariaLevel ?? accessibilityLevel} // Win32
+        accessibilityPositionInSet={ariaPosinset ?? accessibilityPositionInSet} // Win32
+        accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Win32
         isHighlighted={isHighlighted}
         isPressable={isPressable}
         nativeID={_nativeID}
