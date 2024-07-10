@@ -52,8 +52,10 @@ const Text: React.AbstractComponent<
     'aria-setsize': ariaSetsize, // Windows
     'aria-selected': ariaSelected,
     ellipsizeMode,
+    disabled,
     id,
     nativeID,
+    numberOfLines,
     onLongPress,
     onPress,
     onPressIn,
@@ -65,7 +67,10 @@ const Text: React.AbstractComponent<
     onResponderTerminationRequest,
     onStartShouldSetResponder,
     pressRetentionOffset,
+    selectable,
+    selectionColor,
     suppressHighlighting,
+    style,
     ...restProps
   } = props;
 
@@ -102,7 +107,7 @@ const Text: React.AbstractComponent<
   }
 
   const _accessibilityStateDisabled = _accessibilityState?.disabled;
-  const _disabled = restProps.disabled ?? _accessibilityStateDisabled;
+  const _disabled = disabled ?? _accessibilityStateDisabled;
 
   const isPressable =
     (onPress != null ||
@@ -205,29 +210,26 @@ const Text: React.AbstractComponent<
   );
 
   // TODO: Move this processing to the view configuration.
-  const selectionColor =
-    restProps.selectionColor == null
-      ? null
-      : processColor(restProps.selectionColor);
+  const _selectionColor =
+    selectionColor == null ? null : processColor(selectionColor);
 
-  let style = restProps.style;
+  let _style = style;
   if (__DEV__) {
     if (PressabilityDebug.isEnabled() && onPress != null) {
-      style = [restProps.style, {color: 'magenta'}];
+      _style = [style, {color: 'magenta'}];
     }
   }
 
-  let numberOfLines = restProps.numberOfLines;
-  if (numberOfLines != null && !(numberOfLines >= 0)) {
+  let _numberOfLines = numberOfLines;
+  if (_numberOfLines != null && !(_numberOfLines >= 0)) {
     console.error(
-      `'numberOfLines' in <Text> must be a non-negative number, received: ${numberOfLines}. The value will be set to 0.`,
+      `'numberOfLines' in <Text> must be a non-negative number, received: ${_numberOfLines}. The value will be set to 0.`,
     );
-    numberOfLines = 0;
+    _numberOfLines = 0;
   }
 
-  let _selectable = restProps.selectable;
-
-  const processedStyle = flattenStyle(style);
+  let _selectable = selectable;
+  const processedStyle = flattenStyle(_style);
   if (processedStyle != null) {
     if (typeof processedStyle.fontWeight === 'number') {
       // $FlowFixMe[cannot-write]
@@ -283,10 +285,10 @@ const Text: React.AbstractComponent<
         isHighlighted={isHighlighted}
         isPressable={isPressable}
         nativeID={_nativeID}
-        numberOfLines={numberOfLines}
+        numberOfLines={_numberOfLines}
         ref={forwardedRef}
         selectable={_selectable}
-        selectionColor={selectionColor}
+        selectionColor={_selectionColor}
         style={processedStyle}
       />
     );
