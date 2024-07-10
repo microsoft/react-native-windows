@@ -925,7 +925,7 @@ void ScrollViewComponentView::OnKeyDown(
 
 bool ScrollViewComponentView::scrollToEnd(bool animate) noexcept {
   if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
-    return true;
+    return false;
   }
 
   if ((((m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor) -
@@ -941,7 +941,7 @@ bool ScrollViewComponentView::scrollToEnd(bool animate) noexcept {
 
 bool ScrollViewComponentView::scrollToStart(bool animate) noexcept {
   if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
-    return true;
+    return false;
   }
 
   m_scrollVisual.TryUpdatePosition({0.0f, 0.0f, 0.0f}, animate);
@@ -974,7 +974,7 @@ bool ScrollViewComponentView::lineRight(bool animate) noexcept {
 
 bool ScrollViewComponentView::scrollDown(float delta, bool animate) noexcept {
   if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
-    return true;
+    return false;
   }
 
   if (((m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor) -
@@ -989,7 +989,7 @@ bool ScrollViewComponentView::scrollDown(float delta, bool animate) noexcept {
 
 bool ScrollViewComponentView::scrollUp(float delta, bool animate) noexcept {
   if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
-    return true;
+    return false;
   }
 
   if (m_scrollVisual.ScrollPosition().y <= 0.0f) {
@@ -1002,7 +1002,7 @@ bool ScrollViewComponentView::scrollUp(float delta, bool animate) noexcept {
 
 bool ScrollViewComponentView::scrollLeft(float delta, bool animate) noexcept {
   if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
-    return true;
+    return false;
   }
 
   if (m_scrollVisual.ScrollPosition().x <= 0.0f) {
@@ -1015,7 +1015,7 @@ bool ScrollViewComponentView::scrollLeft(float delta, bool animate) noexcept {
 
 bool ScrollViewComponentView::scrollRight(float delta, bool animate) noexcept {
   if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
-    return true;
+    return false;
   }
 
   if (((m_contentSize.width - m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor) -
