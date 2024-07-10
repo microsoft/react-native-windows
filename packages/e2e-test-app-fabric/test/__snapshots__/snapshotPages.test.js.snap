@@ -1654,9 +1654,14 @@ exports[`snapshotAllPages Alerts 8`] = `
   >
     <Text
       style={
-        {
-          "fontWeight": "bold",
-        }
+        [
+          {
+            "color": "#3c3c4399",
+          },
+          {
+            "fontWeight": "bold",
+          },
+        ]
       }
     >
       Prompt value:

@@ -294,7 +294,7 @@ const Text: React.AbstractComponent<
     );
   // [Windows] Following else statement forked due to PR #5740
   } else {
-    let styleProps: ViewStyleProp = (restProps.style: any);
+    let styleProps: ViewStyleProp = (style: any);
     if (
       styleProps &&
       styleProps.borderColor &&

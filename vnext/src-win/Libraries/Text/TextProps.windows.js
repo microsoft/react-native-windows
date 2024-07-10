@@ -24,6 +24,7 @@ import type {
   PressEvent,
   TextLayoutEvent,
 } from '../Types/CoreEventTypes';
+import type {NativeColorValue} from '../StyleSheet/StyleSheet';
 import type {Node} from 'react';
 
 export type PressRetentionOffset = $ReadOnly<{
@@ -219,7 +220,7 @@ export type TextProps = $ReadOnly<{
    *
    * See https://reactnative.dev/docs/text#selectioncolor
    */
-  selectionColor?: ?string,
+  selectionColor?: ?(number | NativeColorValue),
 
   dataDetectorType?: ?('phoneNumber' | 'link' | 'email' | 'none' | 'all'),
 
