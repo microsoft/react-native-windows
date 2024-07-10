@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update Desktop NUSPEC to use ARM64EC",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
