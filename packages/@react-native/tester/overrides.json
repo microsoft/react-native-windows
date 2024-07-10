@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.75.0-nightly-20240610-ced076210",
+  "baseVersion": "0.75.0-nightly-20240613-f7aea0c8e",
   "overrides": [
     {
       "type": "copy",
@@ -12,7 +12,7 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "a2d6d9c49a72bcfab8fc6369ae6dc9b7a2201680",
+      "baseHash": "f612b3f9d2488a8c06d491e09fb79f3c508c19ff",
       "issue": 4054
     },
     {
@@ -159,7 +159,7 @@
       "type": "copy",
       "directory": "js/examples/IntersectionObserver",
       "baseDirectory": "packages/rn-tester/js/examples/IntersectionObserver",
-      "baseHash": "97f8ed74ee8f49af0dded316ef7f090e7edf1239",
+      "baseHash": "ace636ea59030d802cee26ba49d7417f8ee3630e",
       "issue": 4054
     },
     {
@@ -439,7 +439,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "e2215ae502885922490c0d4b348f22c18357309d",
+      "baseHash": "e1c96c62512355c0b4701d9c0028ae18ac6b66ed",
       "issue": 4054
     },
     {
@@ -488,7 +488,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "ebbd53fdd004279e9c1632c543b56d7ed47b054d",
+      "baseHash": "f5b1087641ab83ad690a8bf4a8e0b9fed858a428",
       "issue": 4054
     },
     {
@@ -558,7 +558,7 @@
       "type": "copy",
       "file": "NativeCxxModuleExample/NativeCxxModuleExample.js",
       "baseFile": "packages/rn-tester/NativeCxxModuleExample/NativeCxxModuleExample.js",
-      "baseHash": "3ce701f721ee1b78e40264e01c65d9a07d8d7e8a",
+      "baseHash": "35a65a1f771a16b96641d0a54bc0021fbce586ad",
       "issue": 4054
     },
     {
