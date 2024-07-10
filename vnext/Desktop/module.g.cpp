@@ -31,6 +31,15 @@ void* winrt_make_facebook_react_NativeLogEventSource();
 void* winrt_make_facebook_react_NativeTraceEventSource();
 
 #ifndef USE_FABRIC
+void *winrt_make_Microsoft_ReactNative_Composition_ImageFailedResponse() {
+    winrt::throw_hresult(E_NOTIMPL);
+}
+void *winrt_make_Microsoft_ReactNative_Composition_StreamImageResponse() {
+    winrt::throw_hresult(E_NOTIMPL);
+}
+void *winrt_make_Microsoft_ReactNative_Composition_Experimental_UriBrushFactoryImageResponse() {
+    winrt::throw_hresult(E_NOTIMPL);
+}
 void* winrt_make_Microsoft_ReactNative_ReactNativeIsland() {
     winrt::throw_hresult(E_NOTIMPL);
 }
