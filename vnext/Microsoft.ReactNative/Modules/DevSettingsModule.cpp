@@ -54,6 +54,10 @@ void DevSettings::addMenuItem(std::string title) noexcept {
   assert(false);
 }
 
+void DevSettings::openDebugger() noexcept {
+  // placeholder
+}
+
 void DevSettings::setIsShakeToShowDevMenuEnabled(bool enabled) noexcept {
   assert(false);
 }

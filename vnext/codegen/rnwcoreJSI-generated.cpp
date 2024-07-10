@@ -1101,6 +1101,12 @@ static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_addMenuItem(jsi::Ru
   );
   return jsi::Value::undefined();
 }
+static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_openDebugger(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->openDebugger(
+    rt
+  );
+  return jsi::Value::undefined();
+}
 static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->addListener(
     rt,
@@ -1133,6 +1139,7 @@ NativeDevSettingsCxxSpecJSI::NativeDevSettingsCxxSpecJSI(std::shared_ptr<CallInv
   methodMap_["setProfilingEnabled"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_setProfilingEnabled};
   methodMap_["toggleElementInspector"] = MethodMetadata {0, __hostFunction_NativeDevSettingsCxxSpecJSI_toggleElementInspector};
   methodMap_["addMenuItem"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_addMenuItem};
+  methodMap_["openDebugger"] = MethodMetadata {0, __hostFunction_NativeDevSettingsCxxSpecJSI_openDebugger};
   methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_addListener};
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_removeListeners};
   methodMap_["setIsShakeToShowDevMenuEnabled"] = MethodMetadata {1, __hostFunction_NativeDevSettingsCxxSpecJSI_setIsShakeToShowDevMenuEnabled};

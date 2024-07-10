@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.75.0-nightly-20240613-f7aea0c8e",
+  "baseVersion": "0.75.0-nightly-20240614-8b53d41a8",
   "overrides": [
     {
       "type": "copy",
@@ -19,14 +19,14 @@
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
-      "baseHash": "a7c60c86d2c129b8956401f9a655643fbbfd0d47",
+      "baseHash": "202c0403c5421448660ea8eefce2d08d4050fb0f",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/ActionSheetIOS",
       "baseDirectory": "packages/rn-tester/js/examples/ActionSheetIOS",
-      "baseHash": "72a48941ddf9da8fb5d2da51f6e5ea68c8769315",
+      "baseHash": "9e96e8232483b57cf3c6288618be416cbee67661",
       "issue": 4054
     },
     {
@@ -40,7 +40,7 @@
       "type": "copy",
       "directory": "js/examples/Alert",
       "baseDirectory": "packages/rn-tester/js/examples/Alert",
-      "baseHash": "5ed9654a15f3a9b536e322433fe350cbe0fa9802",
+      "baseHash": "7022b11445f0946d27d3051739f4b4fd1fba5bc8",
       "issue": 4054
     },
     {

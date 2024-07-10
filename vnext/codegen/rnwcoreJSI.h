@@ -2673,6 +2673,7 @@ public:
   virtual void setProfilingEnabled(jsi::Runtime &rt, bool isProfilingEnabled) = 0;
   virtual void toggleElementInspector(jsi::Runtime &rt) = 0;
   virtual void addMenuItem(jsi::Runtime &rt, jsi::String title) = 0;
+  virtual void openDebugger(jsi::Runtime &rt) = 0;
   virtual void addListener(jsi::Runtime &rt, jsi::String eventName) = 0;
   virtual void removeListeners(jsi::Runtime &rt, double count) = 0;
   virtual void setIsShakeToShowDevMenuEnabled(jsi::Runtime &rt, bool enabled) = 0;
@@ -2765,6 +2766,14 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::addMenuItem, jsInvoker_, instance_, std::move(title));
+    }
+    void openDebugger(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::openDebugger) == 1,
+          "Expected openDebugger(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::openDebugger, jsInvoker_, instance_);
     }
     void addListener(jsi::Runtime &rt, jsi::String eventName) override {
       static_assert(
