@@ -8,6 +8,9 @@
 void* winrt_make_Microsoft_Internal_TestController();
 void* winrt_make_Microsoft_ReactNative_ReactNativeIsland();
 #ifdef USE_WINUI3
+void *winrt_make_Microsoft_ReactNative_Composition_ImageFailedResponse();
+void *winrt_make_Microsoft_ReactNative_Composition_StreamImageResponse();
+void *winrt_make_Microsoft_ReactNative_Composition_Experimental_UriBrushFactoryImageResponse();
 void *winrt_make_Microsoft_ReactNative_Composition_Experimental_MicrosoftCompositionContextHelper();
 #endif
 void *winrt_make_Microsoft_ReactNative_Composition_Experimental_SystemCompositionContextHelper();
@@ -65,6 +68,15 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
       return winrt_make_Microsoft_ReactNative_ReactNativeIsland();
     }
 #ifdef USE_WINUI3
+    if (requal(name, L"Microsoft.ReactNative.Composition.ImageFailedResponse")) {
+      return winrt_make_Microsoft_ReactNative_Composition_ImageFailedResponse();
+    }
+    if (requal(name, L"Microsoft.ReactNative.Composition.StreamImageResponse")) {
+      return winrt_make_Microsoft_ReactNative_Composition_StreamImageResponse();
+    }
+    if (requal(name, L"Microsoft.ReactNative.Composition.Experimental.UriBrushFactoryImageResponse")) {
+      return winrt_make_Microsoft_ReactNative_Composition_Experimental_UriBrushFactoryImageResponse();
+    }
     if (requal(name, L"Microsoft.ReactNative.Composition.Experimental.MicrosoftCompositionContextHelper")) {
       return winrt_make_Microsoft_ReactNative_Composition_Experimental_MicrosoftCompositionContextHelper();
     }
