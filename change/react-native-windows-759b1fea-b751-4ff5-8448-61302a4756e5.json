@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Add image response APIs to win32 exports",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
