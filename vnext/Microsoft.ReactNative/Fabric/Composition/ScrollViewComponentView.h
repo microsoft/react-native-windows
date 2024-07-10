@@ -105,11 +105,6 @@ struct ScrollInteractionTrackerOwner : public winrt::implements<
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
-  void ScrollEnabled(bool status)
-  {
-    m_scrollVisual.ScrollEnabled(status);
-  }
-
   bool pageUp(bool animate) noexcept;
   bool pageDown(bool animate) noexcept;
   bool lineUp(bool animate) noexcept;

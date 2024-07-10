@@ -795,15 +795,11 @@ struct CompScrollerVisual : winrt::implements<
     m_visual.Brush(TTypeRedirects::CompositionContextHelper::InnerBrush(brush));
   }
 
-  void ScrollEnabled(bool isScrollEnabled)
-  {
-    if (isScrollEnabled)
-    {
+  void ScrollEnabled(bool isScrollEnabled) noexcept {
+    if (isScrollEnabled) {
       m_visualInteractionSource.ManipulationRedirectionMode(
           TTypeRedirects::VisualInteractionSourceRedirectionMode::CapableTouchpadAndPointerWheel);
-    }
-    else
-    {
+    } else {
       m_visualInteractionSource.ManipulationRedirectionMode(
           TTypeRedirects::VisualInteractionSourceRedirectionMode::Off);
     }

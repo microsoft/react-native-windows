@@ -73,11 +73,6 @@ struct ScrollBarComponent {
     updateHighlight(ScrollbarHitRegion::ArrowLast);
     updateHighlight(ScrollbarHitRegion::Thumb);
 
-    winrt::get_self<ScrollViewComponentView>(m_outer)->ScrollEnabled(
-        std::static_pointer_cast<const facebook::react::ScrollViewProps>(
-            winrt::get_self<ScrollViewComponentView>(m_outer)->viewProps())
-            ->scrollEnabled);
-
     m_trackVisual.Brush(
         winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(m_outer.Theme())
             ->InternalPlatformBrush(L"ScrollBarTrackFill"));
@@ -730,6 +725,10 @@ void ScrollViewComponentView::updateProps(
     updateBackgroundColor(newViewProps.backgroundColor);
   }
 
+  if (!oldProps || oldViewProps.scrollEnabled != newViewProps.scrollEnabled) {
+    m_scrollVisual.ScrollEnabled(newViewProps.scrollEnabled);
+  }
+
   // update BaseComponentView props
   base_type::updateProps(props, oldProps);
 }
@@ -974,8 +973,7 @@ bool ScrollViewComponentView::lineRight(bool animate) noexcept {
 }
 
 bool ScrollViewComponentView::scrollDown(float delta, bool animate) noexcept {
-  if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled)
-  {
+  if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
     return true;
   }
 
@@ -1132,8 +1130,7 @@ void ScrollViewComponentView::StartBringIntoView(
     scrollToHorizontal = options.TargetRect->getMidX() - (viewerWidth * options.HorizontalAlignmentRatio);
   }
 
-  if (needsScroll && std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled)
-  {
+  if (needsScroll && std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
     m_scrollVisual.TryUpdatePosition(
         {static_cast<float>(scrollToHorizontal), static_cast<float>(scrollToVertical), 0.0f}, options.AnimationDesired);
   }
