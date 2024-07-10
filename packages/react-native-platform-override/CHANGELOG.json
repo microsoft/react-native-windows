@@ -2,6 +2,39 @@
   "name": "react-native-platform-override",
   "entries": [
     {
+      "date": "Wed, 10 Jul 2024 05:15:30 GMT",
+      "version": "1.9.43",
+      "tag": "react-native-platform-override_v1.9.43",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.53",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.79",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.24",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-platform-override",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.41",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 21 Jun 2024 05:17:50 GMT",
       "version": "1.9.42",
       "tag": "react-native-platform-override_v1.9.42",

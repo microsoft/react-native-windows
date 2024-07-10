@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 04 Jul 2024 05:15:29 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Jul 2024 05:15:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.840
+
+Wed, 10 Jul 2024 05:15:29 GMT
+
+### Changes
+
+- Handle changes to borderradius (30809111+acoates-ms@users.noreply.github.com)
+- Update Desktop NUSPEC to use ARM64EC (julio.rocha@microsoft.com)
+- Integrate 6/13 (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.226
+- Bump @react-native-windows/codegen to v0.0.0-canary.97
+- Bump @rnw-scripts/eslint-config to v1.2.24
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.28
+- Bump @rnw-scripts/just-task to v2.3.41
+- Bump react-native-platform-override to v1.9.43
 
 ## 0.0.0-canary.839
 
