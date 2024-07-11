@@ -54,6 +54,7 @@ void DevSettings::addMenuItem(std::string title) noexcept {
   assert(false);
 }
 
+// TODO: implement openDebugger() #13437
 void DevSettings::openDebugger() noexcept {
   // placeholder
 }
