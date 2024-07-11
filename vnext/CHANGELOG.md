@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 10 Jul 2024 05:15:29 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Jul 2024 05:15:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.841
+
+Thu, 11 Jul 2024 05:15:32 GMT
+
+### Changes
+
+- Add image response APIs to win32 exports (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.840
 

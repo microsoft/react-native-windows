@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 11 Jul 2024 05:15:32 GMT",
+      "version": "0.0.0-canary.841",
+      "tag": "react-native-windows_v0.0.0-canary.841",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a96adfa4f9d469f66ac21c582bdab246ddc869ba",
+            "comment": "Add image response APIs to win32 exports"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jul 2024 05:15:29 GMT",
       "version": "0.0.0-canary.840",
       "tag": "react-native-windows_v0.0.0-canary.840",
