@@ -1105,7 +1105,6 @@ static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_openDebugger(jsi::R
   static_cast<NativeDevSettingsCxxSpecJSI *>(&turboModule)->openDebugger(
     rt
   );
-  // TODO: implement openDebugger() #13437
   return jsi::Value::undefined();
 }
 static jsi::Value __hostFunction_NativeDevSettingsCxxSpecJSI_addListener(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
