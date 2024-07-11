@@ -65,10 +65,10 @@ struct ScrollBarComponent {
 
     updateShy(true);
     onScaleChanged();
-    OnThemeChanged();
+    UpdateColorForScrollBarRegions();
   }
 
-  void OnThemeChanged() noexcept {
+  void UpdateColorForScrollBarRegions() noexcept {
     updateHighlight(ScrollbarHitRegion::ArrowFirst);
     updateHighlight(ScrollbarHitRegion::ArrowLast);
     updateHighlight(ScrollbarHitRegion::Thumb);
@@ -732,8 +732,8 @@ void ScrollViewComponentView::updateProps(
   // to avoid scrollbarcomponents reading outdated scrollEnabled value.
   if (!oldProps || oldViewProps.scrollEnabled != newViewProps.scrollEnabled) {
     m_scrollVisual.ScrollEnabled(newViewProps.scrollEnabled);
-    m_horizontalScrollbarComponent->OnThemeChanged();
-    m_verticalScrollbarComponent->OnThemeChanged();
+    m_horizontalScrollbarComponent->UpdateColorForScrollBarRegions();
+    m_verticalScrollbarComponent->UpdateColorForScrollBarRegions();
   }
 }
 
@@ -834,8 +834,8 @@ void ScrollViewComponentView::OnPointerDown(const winrt::Windows::UI::Input::Poi
 
 void ScrollViewComponentView::onThemeChanged() noexcept {
   updateBackgroundColor(std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->backgroundColor);
-  m_verticalScrollbarComponent->OnThemeChanged();
-  m_horizontalScrollbarComponent->OnThemeChanged();
+  m_verticalScrollbarComponent->UpdateColorForScrollBarRegions();
+  m_horizontalScrollbarComponent->UpdateColorForScrollBarRegions();
   Super::onThemeChanged();
 }
 
