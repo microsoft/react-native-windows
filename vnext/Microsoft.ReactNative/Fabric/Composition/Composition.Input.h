@@ -31,14 +31,14 @@ struct KeyRoutedEventArgs : winrt::implements<
   bool Handled() noexcept;
   void Handled(bool value) noexcept;
   winrt::Windows::System::VirtualKey Key() noexcept;
-  winrt::Windows::UI::Core::CorePhysicalKeyStatus KeyStatus() noexcept;
+  winrt::Microsoft::UI::Input::PhysicalKeyStatus KeyStatus() noexcept;
   winrt::Windows::System::VirtualKey OriginalKey() noexcept;
 
  private:
   facebook::react::Tag m_tag{-1};
   bool m_handled{false};
   winrt::Windows::System::VirtualKey m_key;
-  winrt::Windows::UI::Core::CorePhysicalKeyStatus m_keyStatus;
+  winrt::Microsoft::UI::Input::PhysicalKeyStatus m_keyStatus;
 };
 
 struct CharacterReceivedRoutedEventArgs
@@ -57,13 +57,13 @@ struct CharacterReceivedRoutedEventArgs
   bool Handled() noexcept;
   void Handled(bool value) noexcept;
   int32_t KeyCode() noexcept;
-  winrt::Windows::UI::Core::CorePhysicalKeyStatus KeyStatus() noexcept;
+  winrt::Microsoft::UI::Input::PhysicalKeyStatus KeyStatus() noexcept;
 
  private:
   facebook::react::Tag m_tag{-1};
   bool m_handled{false};
   int32_t m_keycode;
-  winrt::Windows::UI::Core::CorePhysicalKeyStatus m_keyStatus;
+  winrt::Microsoft::UI::Input::PhysicalKeyStatus m_keyStatus;
 };
 
 struct Pointer : PointerT<Pointer> {
