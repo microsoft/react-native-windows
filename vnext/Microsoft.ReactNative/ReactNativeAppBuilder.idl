@@ -1,0 +1,49 @@
+
+import "ReactNativeHost.idl";
+import "ReactInstanceSettings.idl";
+import "IReactPackageProvider.idl";
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative
+{
+    [experimental]
+    DOC_STRING("This is the builder for creating ReactInstanceSettings.")
+    runtimeclass ReactInstanceSettingsBuilder
+    {
+        ReactInstanceSettingsBuilder();
+
+        // Properties
+        ReactInstanceSettings ReactInstanceSettings {get;};
+
+        // Set Methods
+        ReactInstanceSettingsBuilder UseDirectDebugger(Boolean state);
+
+        ReactInstanceSettingsBuilder UseDeveloperSupport(Boolean state);
+    
+        ReactInstanceSettingsBuilder BundleRootPath(String path);
+
+        ReactInstanceSettingsBuilder DebugBundlePath(String path);
+
+        ReactInstanceSettingsBuilder JavaScriptBundleFile(String file);
+
+        ReactInstanceSettingsBuilder UseFastRefresh(Boolean state);
+    }
+
+    [experimental]
+    DOC_STRING("ReactNativeAppBuilder initializes and manages the ReactNativeHost component for a Win32 Fabric Application.")
+    runtimeclass ReactNativeAppBuilder
+    {
+        ReactNativeAppBuilder();
+
+        ReactNativeAppBuilder AddPackageProviders(Windows.Foundation.Collections.IVector<Microsoft.ReactNative.IReactPackageProvider> packageProviders);
+
+        ReactNativeAppBuilder SetReactInstanceSettings(ReactInstanceSettings settings);
+
+        ReactNativeAppBuilder SetCompositor(Microsoft.UI.Composition.Compositor compositor);
+
+        ReactNativeAppBuilder SetAppWindow(Microsoft.UI.Windowing.AppWindow appWindow);
+
+        ReactNativeHost Start();
+    }
+}

@@ -82,10 +82,10 @@ export function enumerateVsInstalls(opts: {
 
     if (minVersionSemVer) {
       minVersion = minVersionSemVer.toString();
-      maxVersion = (minVersionSemVer.major + 1).toFixed(1);
+      maxVersion = `${(minVersionSemVer.major + 1)}.0`;
     } else if (!Number.isNaN(minVersionNum)) {
-      minVersion = minVersionNum.toFixed(1);
-      maxVersion = (Math.floor(minVersionNum) + 1).toFixed(1);
+      minVersion = Number.isInteger(minVersionNum) ? `${minVersionNum}.0` : minVersionNum.toString();
+      maxVersion = `${(Math.floor(minVersionNum) + 1)}.0`;
     } else {
       // Unable to parse minVersion and determine maxVersion,
       // caller will throw error that version couldn't be found.

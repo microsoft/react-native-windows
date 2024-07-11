@@ -58,9 +58,10 @@
     "strip-ansi": "^6.0.1",
     "**/parse-url/normalize-url": "^4.5.1",
     "**/@react-native/monorepo/node_modules/jest-junit": "^13.0.0",
-    "**/@react-native/monorepo/node_modules/ws": "^6.2.2",
-    "**/@react-native/tester/ws": "^6.2.2",
-    "**/detox/ws": "^5.2.3",
+    "**/@react-native/monorepo/node_modules/ws": "^6.2.3",
+    "**/@react-native/tester/ws": "^6.2.3",
+    "**/webdriverio/**/puppeteer-core/ws": "^8.17.1",
+    "**/detox/ws": "^5.2.4",
     "xml2js": "^0.5.0",
     "z-schema": "^5.0.2"
   },

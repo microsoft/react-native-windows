@@ -36,7 +36,7 @@ class CompositionEventHandler {
 
   int64_t SendMessage(HWND hwnd, uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   void RemoveTouchHandlers();
-  winrt::Windows::UI::Core::CoreVirtualKeyStates GetKeyState(winrt::Windows::System::VirtualKey key) noexcept;
+  winrt::Microsoft::UI::Input::VirtualKeyStates GetKeyState(winrt::Windows::System::VirtualKey key) noexcept;
 
   bool CapturePointer(
       const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,

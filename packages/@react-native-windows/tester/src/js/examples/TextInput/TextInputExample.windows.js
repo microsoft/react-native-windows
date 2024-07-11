@@ -17,7 +17,7 @@ import type {
 
 import ExampleTextInput from './ExampleTextInput';
 
-const TextInputSharedExamples = require('./TextInputSharedExamples.windows.js');
+const TextInputSharedExamples = require('./TextInputSharedExamples.js');
 const React = require('react');
 const {StyleSheet, Switch, Text, View} = require('react-native');
 const {useState} = React;
@@ -254,7 +254,7 @@ const styles = StyleSheet.create({
 });
 
 const examples: Array<RNTesterModuleExample> = [
-  ...TextInputSharedExamples,
+  ...TextInputSharedExamples.filter(example => example.name !== 'clipping'), // [Windows #13303 - Text must be in <Text> Control]
   {
     title: 'Clear text on focus',
     render: function (): React.Node {

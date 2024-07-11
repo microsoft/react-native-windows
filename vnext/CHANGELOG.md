@@ -1,8 +1,110 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 12 Jun 2024 05:16:24 GMT and should not be manually modified.
+This log was last generated on Thu, 11 Jul 2024 05:15:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.841
+
+Thu, 11 Jul 2024 05:15:32 GMT
+
+### Changes
+
+- Add image response APIs to win32 exports (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.840
+
+Wed, 10 Jul 2024 05:15:29 GMT
+
+### Changes
+
+- Handle changes to borderradius (30809111+acoates-ms@users.noreply.github.com)
+- Update Desktop NUSPEC to use ARM64EC (julio.rocha@microsoft.com)
+- Integrate 6/13 (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.226
+- Bump @react-native-windows/codegen to v0.0.0-canary.97
+- Bump @rnw-scripts/eslint-config to v1.2.24
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.28
+- Bump @rnw-scripts/just-task to v2.3.41
+- Bump react-native-platform-override to v1.9.43
+
+## 0.0.0-canary.839
+
+Thu, 04 Jul 2024 05:15:29 GMT
+
+### Changes
+
+- Update SampleAppFabric to use ReactNativeAppBuilder (10109130+sharath2727@users.noreply.github.com)
+- [Fabric] Handle scalefactor changes (30809111+acoates-ms@users.noreply.github.com)
+- Patch yoga to handle dynamic scale changes (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.838
+
+Sat, 29 Jun 2024 05:17:15 GMT
+
+### Changes
+
+- Keep borderBottomWidth same before and after pressed (10109130+sharath2727@users.noreply.github.com)
+
+## 0.0.0-canary.837
+
+Fri, 28 Jun 2024 05:15:52 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.225
+
+## 0.0.0-canary.836
+
+Thu, 27 Jun 2024 05:20:59 GMT
+
+### Changes
+
+- Fix incorrect loading of shared.vcxitems (10109130+sharath2727@users.noreply.github.com)
+
+## 0.0.0-canary.835
+
+Wed, 26 Jun 2024 05:15:03 GMT
+
+### Changes
+
+- Introduce ReactNativeAppBuilder.idl (10109130+sharath2727@users.noreply.github.com)
+
+## 0.0.0-canary.834
+
+Tue, 25 Jun 2024 05:16:02 GMT
+
+### Changes
+
+- Fix Dependency Script (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.833
+
+Sat, 22 Jun 2024 05:15:16 GMT
+
+### Changes
+
+- Default Switch Should Be Accessible (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.224
+
+## 0.0.0-canary.832
+
+Fri, 21 Jun 2024 05:17:50 GMT
+
+### Changes
+
+- Bump @react-native-windows/cli to v0.0.0-canary.223
+- Bump @react-native-windows/codegen to v0.0.0-canary.96
+- Bump react-native-platform-override to v1.9.42
+
+## 0.0.0-canary.831
+
+Wed, 19 Jun 2024 05:14:43 GMT
+
+### Changes
+
+- Enable devMode with react-native init-windows old/* templates (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.222
 
 ## 0.0.0-canary.830
 

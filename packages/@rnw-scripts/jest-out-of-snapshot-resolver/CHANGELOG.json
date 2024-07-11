@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/jest-out-of-tree-snapshot-resolver",
   "entries": [
     {
+      "date": "Wed, 10 Jul 2024 05:15:30 GMT",
+      "version": "1.1.28",
+      "tag": "@rnw-scripts/jest-out-of-tree-snapshot-resolver_v1.1.28",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/jest-out-of-tree-snapshot-resolver",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.24",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 12 Jun 2024 05:16:24 GMT",
       "version": "1.1.27",
       "tag": "@rnw-scripts/jest-out-of-tree-snapshot-resolver_v1.1.27",

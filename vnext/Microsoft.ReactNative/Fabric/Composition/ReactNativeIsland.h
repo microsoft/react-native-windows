@@ -125,6 +125,7 @@ struct ReactNativeIsland
   winrt::Microsoft::UI::Content::ContentIsland m_island{nullptr};
   winrt::event_token m_islandFrameworkClosedToken;
   winrt::event_token m_islandAutomationProviderRequestedToken;
+  winrt::event_token m_islandStateChangedToken;
 #endif
 
   HWND m_hwnd{0};
@@ -147,7 +148,8 @@ struct ReactNativeIsland
   winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader m_resources{nullptr};
   winrt::Microsoft::ReactNative::Composition::Theme m_theme{nullptr};
   winrt::Microsoft::ReactNative::Composition::Theme::ThemeChanged_revoker m_themeChangedRevoker;
-  facebook::react::LayoutConstraints m_layoutConstraints;
+  winrt::Microsoft::ReactNative::LayoutConstraints m_layoutConstraints;
+  winrt::Windows::Foundation::Point m_viewportOffset{0, 0};
   winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs>>
       m_sizeChangedEvent;
 

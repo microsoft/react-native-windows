@@ -323,7 +323,7 @@ export async function initWindowsInternal(
  */
 export const initCommand: Command = {
   name: 'init-windows',
-  description: 'Initializes a new RNW project from a given template.',
+  description: 'Initializes a new RNW project from a given template',
   func: initWindows,
   options: initOptions,
 };

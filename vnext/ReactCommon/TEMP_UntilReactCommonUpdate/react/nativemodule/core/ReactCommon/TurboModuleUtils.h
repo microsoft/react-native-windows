@@ -11,9 +11,9 @@
 #include <string>
 
 #include <jsi/jsi.h>
+#include <LongLivedObject.h> // [Windows #13391]
 
-#include <ReactCommon/CallInvoker.h>
-#include <CallbackWrapper.h> // [Windows]
+#include <CallbackWrapper.h> // [Windows #13391]
 
 namespace facebook::react {
 

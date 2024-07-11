@@ -106,6 +106,7 @@ namespace Microsoft.ReactNative.Composition.Experimental
   interface IScrollVisual requires IVisual
   {
     void Brush(IBrush brush);
+    void ScrollEnabled(Boolean isScrollEnabled);
     event Windows.Foundation.EventHandler<IScrollPositionChangedArgs> ScrollPositionChanged;
     void ContentSize(Windows.Foundation.Numerics.Vector2 size);
     Windows.Foundation.Numerics.Vector3 ScrollPosition { get; };

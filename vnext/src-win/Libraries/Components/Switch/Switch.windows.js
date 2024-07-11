@@ -139,6 +139,7 @@ const SwitchWithForwardedRef: React.AbstractComponent<
   const {
     disabled,
     focusable, // [Windows]
+    accessible, // [Windows]
     ios_backgroundColor,
     onChange,
     onValueChange,
@@ -244,6 +245,7 @@ const SwitchWithForwardedRef: React.AbstractComponent<
         {...restProps}
         {...platformProps}
         focusable={focusable === undefined ? true : focusable} // [Windows]
+        accessible={accessible === undefined ? true : accessible} // [Windows]
         accessibilityRole={props.accessibilityRole ?? 'switch'}
         onChange={handleChange}
         onResponderTerminationRequest={returnsFalse}

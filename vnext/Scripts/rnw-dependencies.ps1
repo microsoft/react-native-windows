@@ -1,3 +1,4 @@
+
 # Troubleshoot RNW dependencies
 param(
     [switch]$Install = $false,
@@ -78,6 +79,9 @@ $vsWorkloads = @('Microsoft.VisualStudio.Workload.ManagedDesktop',
     'Microsoft.VisualStudio.Workload.Universal');
 
 $vsAll = ($vsComponents + $vsWorkloads);
+
+# The minimum winget version to check for
+$wingetver = "1.7.11261";
 
 # The minimum VS version to check for
 # Note: For install to work, whatever min version you specify here must be met by the current package available on winget.
@@ -238,7 +242,7 @@ function CheckNode {
         Write-Verbose "Node version found: $nodeVersion";
         $major = $nodeVersion.Major;
         $minor = $nodeVersion.Minor;
-        return ($major -ge 18) -and ($minor -ge 18);
+        return ($major -gt 18) -or (($major -eq 18) -and ($minor -ge 18));
     } catch { Write-Debug $_ }
 
     Write-Verbose "Node not found.";
@@ -514,18 +518,30 @@ $requirements = @(
     }
 );
 
+function InstallWinGet {
+    Write-Verbose "Updating WinGet version...";
+    Invoke-WebRequest -Uri https://aka.ms/getwinget -OutFile "$env:TEMP\winget.msixbundle";
+    Add-AppPackage -ForceApplicationShutdown $env:TEMP\winget.msixbundle;
+    Remove-Item $env:TEMP\winget.msixbundle;
+}
+
 function EnsureWinGetForInstall {
     Write-Verbose "Checking for WinGet...";
     try {
         # Check if winget.exe is in PATH
         if (Get-Command "winget.exe" -CommandType Application -ErrorAction Ignore) {
             Write-Verbose "WinGet found in PATH.";
-            return;
+            Write-Verbose "Validating WinGet version...";
+            $wingetverfound = & winget -v;
+            if ([System.Version]$wingetverfound.Substring(1) -ge [System.Version]$wingetver ){
+                Write-Verbose "WinGet version found: $wingetverfound";
+                return;
+            }
         }
+        InstallWinGet;
+        $installedwingetver = & winget -v;
+        Write-Verbose "WinGet version installed: $installedwingetver";
     } catch { Write-Debug $_ }
-
-    Write-Host "WinGet is required to install dependencies. See https://learn.microsoft.com/en-us/windows/package-manager/winget/ for more information.";
-    throw "WinGet needed to install.";
 }
 
 function WinGetInstall {

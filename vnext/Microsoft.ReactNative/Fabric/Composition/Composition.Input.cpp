@@ -68,7 +68,7 @@ winrt::Windows::System::VirtualKey KeyRoutedEventArgs::Key() noexcept {
   return m_key;
 }
 
-winrt::Windows::UI::Core::CorePhysicalKeyStatus KeyRoutedEventArgs::KeyStatus() noexcept {
+winrt::Microsoft::UI::Input::PhysicalKeyStatus KeyRoutedEventArgs::KeyStatus() noexcept {
   return m_keyStatus;
 }
 
@@ -118,7 +118,7 @@ void CharacterReceivedRoutedEventArgs::Handled(bool value) noexcept {
 int32_t CharacterReceivedRoutedEventArgs::KeyCode() noexcept {
   return m_keycode;
 }
-winrt::Windows::UI::Core::CorePhysicalKeyStatus CharacterReceivedRoutedEventArgs::KeyStatus() noexcept {
+winrt::Microsoft::UI::Input::PhysicalKeyStatus CharacterReceivedRoutedEventArgs::KeyStatus() noexcept {
   return m_keyStatus;
 }
 

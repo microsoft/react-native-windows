@@ -5,7 +5,7 @@
  * @format
  */
 
-import minimatch from 'minimatch';
+import { Minimatch } from 'minimatch';
 
 import FileRepository, {
   ReactFileRepository,
@@ -44,7 +44,7 @@ export default class MockFileRepository implements FileRepository {
   }
 
   async listFiles(globs: string[] = ['**']): Promise<string[]> {
-    const parsedGlobs = globs.map(g => new minimatch.Minimatch(g, {dot: true}));
+    const parsedGlobs = globs.map(g => new Minimatch(g, {dot: true}));
     const includeGlobs = parsedGlobs.filter(m => !m.negate);
     const excludeGlobs = parsedGlobs.filter(m => m.negate);
 

@@ -1012,7 +1012,7 @@ export async function autolinkWindowsInternal(
  */
 export const autolinkCommand: Command = {
   name: 'autolink-windows',
-  description: 'Runs Windows-specific autolinking',
+  description: 'Runs Windows-specific autolinking for your RNW project',
   func: autolinkWindows,
   options: autolinkOptions,
 };

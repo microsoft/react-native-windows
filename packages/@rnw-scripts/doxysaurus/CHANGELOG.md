@@ -1,8 +1,18 @@
 # Change Log - @rnw-scripts/doxysaurus
 
-This log was last generated on Wed, 12 Jun 2024 05:16:24 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Jul 2024 05:15:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.4.42
+
+Wed, 10 Jul 2024 05:15:30 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.53
+- Bump @rnw-scripts/eslint-config to v1.2.24
+- Bump @rnw-scripts/just-task to v2.3.41
 
 ## 0.4.41
 
