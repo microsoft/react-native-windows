@@ -100,7 +100,7 @@ const Text: React.AbstractComponent<
         disabled: ariaDisabled ?? _accessibilityState.disabled,
         expanded: ariaExpanded ?? _accessibilityState.expanded,
         multiselectable:
-        ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
+          ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
         required: ariaRequired ?? accessibilityState?.required, // Win32
         selected: ariaSelected ?? _accessibilityState.selected,
       };
@@ -110,6 +110,8 @@ const Text: React.AbstractComponent<
         checked: ariaChecked,
         disabled: ariaDisabled,
         expanded: ariaExpanded,
+        multiselectable: ariaMultiselectable,  // Win32,
+        required: ariaRequired,  // Win32
         selected: ariaSelected,
       };
     }
@@ -272,6 +274,12 @@ const Text: React.AbstractComponent<
         {...eventHandlersForText}
         accessibilityLabel={_accessibilityLabel}
         accessibilityState={_accessibilityState}
+        accessibilityControls={ariaControls ?? accessibilityControls} // Win32
+        accessibilityDescribedBy={ariaDescribedBy ?? accessibilityDescribedBy} // Win32
+        accessibilityDescription={ariaDescription ?? accessibilityDescription} // Win32
+        accessibilityLevel={ariaLevel ?? accessibilityLevel} // Win32
+        accessibilityPositionInSet={ariaPosinset ?? accessibilityPositionInSet} // Win32
+        accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Win32
         isHighlighted={isHighlighted}
         isPressable={isPressable}
         nativeID={_nativeID}
@@ -303,41 +311,20 @@ const Text: React.AbstractComponent<
     default: accessible !== false,
   });
 
-  return hasTextAncestor ? (
-    <NativeVirtualText
-      {...restProps}
-      {...eventHandlersForText}
-      accessibilityControls={ariaControls ?? accessibilityControls} // Win32
-      accessibilityDescribedBy={ariaDescribedBy ?? accessibilityDescribedBy} // Win32
-      accessibilityDescription={ariaDescription ?? accessibilityDescription} // Win32
-      accessibilityLabel={_accessibilityLabel}
-      accessibilityLevel={ariaLevel ?? accessibilityLevel} // Win32
-      accessibilityPositionInSet={ariaPosinset ?? accessibilityPositionInSet} // Win32
-      accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Win32
-      accessibilityState={_accessibilityState}
-      isHighlighted={isHighlighted}
-      isPressable={isPressable}
-      nativeID={id ?? nativeID}
-      numberOfLines={numberOfLines}
-      ref={forwardedRef}
-      selectable={_selectable}
-      selectionColor={_selectionColor}
-      style={processedStyle}
-    />
-  ) : (
+  return (
     <TextAncestor.Provider value={true}>
       <NativeText
         {...restProps}
         {...eventHandlersForText}
+        accessibilityLabel={_accessibilityLabel}
+        accessibilityState={_accessibilityState}
+        accessible={_accessible}
         accessibilityControls={ariaControls ?? accessibilityControls} // Win32
         accessibilityDescribedBy={ariaDescribedBy ?? accessibilityDescribedBy} // Win32
         accessibilityDescription={ariaDescription ?? accessibilityDescription} // Win32
-        accessibilityLabel={_accessibilityLabel}
         accessibilityLevel={ariaLevel ?? accessibilityLevel} // Win32
         accessibilityPositionInSet={ariaPosinset ?? accessibilityPositionInSet} // Win32
         accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Win32
-        accessibilityState={_accessibilityState}
-        accessible={_accessible}
         allowFontScaling={allowFontScaling !== false}
         disabled={_disabled}
         ellipsizeMode={ellipsizeMode ?? 'tail'}

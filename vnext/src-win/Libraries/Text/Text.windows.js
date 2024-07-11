@@ -260,27 +260,6 @@ const Text: React.AbstractComponent<
 
   const _nativeID = id ?? nativeID;
 
-  const hasTextAncestor = useContext(TextAncestor);
-  if (hasTextAncestor) {
-    return (
-      <NativeVirtualText
-        {...restProps}
-        {...eventHandlersForText}
-        accessibilityLabel={_accessibilityLabel}
-        accessibilityState={_accessibilityState}
-        isHighlighted={isHighlighted}
-        isPressable={isPressable}
-        nativeID={_nativeID}
-        numberOfLines={_numberOfLines}
-        ref={forwardedRef}
-        selectable={_selectable}
-        selectionColor={_selectionColor}
-        style={processedStyle}
-        disabled={disabled}
-      />
-    );
-  }
-
   // If the disabled prop and accessibilityState.disabled are out of sync but not both in
   // falsy states we need to update the accessibilityState object to use the disabled prop.
   if (
@@ -296,33 +275,31 @@ const Text: React.AbstractComponent<
     ios: accessible !== false,
     android:
       accessible == null ? onPress != null || onLongPress != null : accessible,
-      default: accessible !== false,
+    default: accessible !== false,
   });
 
+  const hasTextAncestor = useContext(TextAncestor);
   if (hasTextAncestor) {
     return (
       <NativeVirtualText
         {...restProps}
         {...eventHandlersForText}
         accessibilityLabel={_accessibilityLabel}
+        accessibilityState={_accessibilityState}
         accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
         accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
         accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
-        accessibilityState={_accessibilityState}
-        accessible={_accessible}
-        allowFontScaling={allowFontScaling !== false}
-        disabled={_disabled}
-        ellipsizeMode={ellipsizeMode ?? 'tail'}
         isHighlighted={isHighlighted}
+        isPressable={isPressable}
         nativeID={_nativeID}
         numberOfLines={_numberOfLines}
-        isPressable={isPressable}
         ref={forwardedRef}
         selectable={_selectable}
         selectionColor={_selectionColor}
         style={processedStyle}
       />
     );
+  // [Windows] Following else statement forked due to PR #5740
   } else {
     let styleProps: ViewStyleProp = (style: any);
     if (
@@ -388,7 +365,7 @@ const Text: React.AbstractComponent<
             <NativeText
               {...textPropsLessStyle}
               {...eventHandlersForText}
-              accessibilityLabel={ariaLabel ?? accessibilityLabel}
+              accessibilityLabel={_accessibilityLabel}
               accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
               accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
               accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
@@ -414,7 +391,7 @@ const Text: React.AbstractComponent<
           <NativeText
             {...restProps}
             {...eventHandlersForText}
-            accessibilityLabel={ariaLabel ?? accessibilityLabel}
+            accessibilityLabel={_accessibilityLabel}
             accessibilityLevel={ariaLevel ?? accessibilityLevel} // Windows
             accessibilityPosInSet={ariaPosinset ?? accessibilityPosInSet} // Windows
             accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Windows
@@ -424,7 +401,7 @@ const Text: React.AbstractComponent<
             disabled={_disabled}
             ellipsizeMode={ellipsizeMode ?? 'tail'}
             isHighlighted={isHighlighted}
-            nativeID={id ?? nativeID}
+            nativeID={_nativeID}
             numberOfLines={numberOfLines}
             ref={forwardedRef}
             selectable={_selectable}
@@ -435,6 +412,7 @@ const Text: React.AbstractComponent<
       );
     }
   }
+  // [Windows #5740]
 });
 
 Text.displayName = 'Text';
