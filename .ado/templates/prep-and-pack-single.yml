@@ -107,7 +107,7 @@ steps:
       buildProperties: version=${{ parameters.packageVersion }};id=${{ parameters.outputPackage }};${{ parameters.buildProperties }}
 
   - ${{ if eq(parameters.codesignNuget, true) }}:
-    - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@2
+    - task: SFP.build-tasks.custom-build-task-1.EsrpCodeSigning@5
       displayName: '${{ parameters.outputPackage }} CodeSign NuGet'
       inputs:
         ConnectedServiceName: 'ESRP-CodeSigning-Federated-Auth' 
