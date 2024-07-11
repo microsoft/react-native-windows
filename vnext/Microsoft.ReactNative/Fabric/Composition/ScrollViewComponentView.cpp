@@ -725,12 +725,16 @@ void ScrollViewComponentView::updateProps(
     updateBackgroundColor(newViewProps.backgroundColor);
   }
 
-  if (!oldProps || oldViewProps.scrollEnabled != newViewProps.scrollEnabled) {
-    m_scrollVisual.ScrollEnabled(newViewProps.scrollEnabled);
-  }
-
   // update BaseComponentView props
   base_type::updateProps(props, oldProps);
+
+  // Update the color only after updating the m_props in BaseComponentView
+  // to avoid scrollbarcomponents reading outdated scrollEnabled value.
+  if (!oldProps || oldViewProps.scrollEnabled != newViewProps.scrollEnabled) {
+    m_scrollVisual.ScrollEnabled(newViewProps.scrollEnabled);
+    m_horizontalScrollbarComponent->OnThemeChanged();
+    m_verticalScrollbarComponent->OnThemeChanged();
+  }
 }
 
 void ScrollViewComponentView::updateState(
