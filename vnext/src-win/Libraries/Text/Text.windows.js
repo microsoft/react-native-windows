@@ -369,10 +369,10 @@ const Text: React.AbstractComponent<
               ellipsizeMode={ellipsizeMode ?? 'tail'}
               isHighlighted={isHighlighted}
               nativeID={id ?? nativeID}
-              numberOfLines={numberOfLines}
+              numberOfLines={_numberOfLines}
               ref={forwardedRef}
               selectable={_selectable}
-              selectionColor={selectionColor}
+              selectionColor={_selectionColor}
               style={((rest: any): TextStyleProp)}
             />
           </TextAncestor.Provider>
@@ -395,10 +395,10 @@ const Text: React.AbstractComponent<
             ellipsizeMode={ellipsizeMode ?? 'tail'}
             isHighlighted={isHighlighted}
             nativeID={_nativeID}
-            numberOfLines={numberOfLines}
+            numberOfLines={_numberOfLines}
             ref={forwardedRef}
             selectable={_selectable}
-            selectionColor={selectionColor}
+            selectionColor={_selectionColor}
             style={style}
           />
         </TextAncestor.Provider>
