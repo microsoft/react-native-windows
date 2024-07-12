@@ -40,7 +40,7 @@ steps:
 
   - ${{ if endsWith(parameters.template, '-app') }}:
     - script: |
-        npx --yes react-native@$(reactNativeDevDependency) init testcli --template react-native@$(reactNativeDevDependency)
+        npx --yes react-native@$(reactNativeDevDependency) init testcli --template @react-native-community/template@$(reactNativeDevDependency)
       displayName: Init new app project with react-native init
       workingDirectory: $(Agent.BuildDirectory)
 
