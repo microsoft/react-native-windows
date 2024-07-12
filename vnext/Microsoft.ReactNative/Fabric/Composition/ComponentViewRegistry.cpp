@@ -120,7 +120,8 @@ void ComponentViewRegistry::enqueueComponentViewWithComponentHandle(
     ComponentViewDescriptor componentViewDescriptor) noexcept {
   assert(m_registry.find(tag) != m_registry.end());
 
-  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentViewDescriptor.view)->prepareForRecycle();
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentViewDescriptor.view)
+      ->prepareForRecycle();
 
   m_registry.erase(tag);
 }
