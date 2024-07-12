@@ -372,7 +372,7 @@ const Text: React.AbstractComponent<
               numberOfLines={numberOfLines}
               ref={forwardedRef}
               selectable={_selectable}
-              selectionColor={selectionColor}
+              selectionColor={_selectionColor}
               style={((rest: any): TextStyleProp)}
             />
           </TextAncestor.Provider>
