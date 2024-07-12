@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.75.0-nightly-20240614-8b53d41a8",
+  "baseVersion": "0.75.0-nightly-20240618-5df5ed1a8",
   "overrides": [
     {
       "type": "copy",
@@ -404,7 +404,7 @@
       "type": "copy",
       "directory": "js/examples/Timer",
       "baseDirectory": "packages/rn-tester/js/examples/Timer",
-      "baseHash": "3dc4f038350bc33606e7de919f317997e2166f75",
+      "baseHash": "6368c65721027c9cc3174c846bbd084ad3dc4f9c",
       "issue": 4054
     },
     {
@@ -467,7 +467,7 @@
       "type": "copy",
       "directory": "js/examples/XHR",
       "baseDirectory": "packages/rn-tester/js/examples/XHR",
-      "baseHash": "b7de8fa8fdd431bda468acd429914d5891aca0a7",
+      "baseHash": "b7dfda5f6ff304b4760e3eaa3db8d50ba2eee18f",
       "issue": 4054
     },
     {
@@ -572,7 +572,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "cfd0d876dfb0c2c3bb7e4d96eea50613d4486288",
+      "baseHash": "1ae462bf0c4108bda00c00adaf4d13ef30ea9d8a",
       "issue": 13228
     }
   ]

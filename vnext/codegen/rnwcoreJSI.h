@@ -7702,6 +7702,155 @@ private:
 };
 
 
+  
+#pragma mark - NativeIdleCallbacksIdleDeadline
+
+template <typename P0, typename P1>
+struct NativeIdleCallbacksIdleDeadline {
+  P0 didTimeout;
+  P1 timeRemaining;
+  bool operator==(const NativeIdleCallbacksIdleDeadline &other) const {
+    return didTimeout == other.didTimeout && timeRemaining == other.timeRemaining;
+  }
+};
+
+template <typename T>
+struct NativeIdleCallbacksIdleDeadlineBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.didTimeout)>(rt, value.getProperty(rt, "didTimeout"), jsInvoker),
+      bridging::fromJs<decltype(types.timeRemaining)>(rt, value.getProperty(rt, "timeRemaining"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static bool didTimeoutToJs(jsi::Runtime &rt, decltype(types.didTimeout) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Function timeRemainingToJs(jsi::Runtime &rt, decltype(types.timeRemaining) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "didTimeout", bridging::toJs(rt, value.didTimeout, jsInvoker));
+    result.setProperty(rt, "timeRemaining", bridging::toJs(rt, value.timeRemaining, jsInvoker));
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeIdleCallbacksRequestIdleCallbackOptions
+
+template <typename P0>
+struct NativeIdleCallbacksRequestIdleCallbackOptions {
+  P0 timeout;
+  bool operator==(const NativeIdleCallbacksRequestIdleCallbackOptions &other) const {
+    return timeout == other.timeout;
+  }
+};
+
+template <typename T>
+struct NativeIdleCallbacksRequestIdleCallbackOptionsBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.timeout)>(rt, value.getProperty(rt, "timeout"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double timeoutToJs(jsi::Runtime &rt, decltype(types.timeout) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.timeout) {
+      result.setProperty(rt, "timeout", bridging::toJs(rt, value.timeout.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+class JSI_EXPORT NativeIdleCallbacksCxxSpecJSI : public TurboModule {
+protected:
+  NativeIdleCallbacksCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual jsi::Value requestIdleCallback(jsi::Runtime &rt, jsi::Function callback, std::optional<jsi::Object> options) = 0;
+  virtual void cancelIdleCallback(jsi::Runtime &rt, jsi::Value handle) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeIdleCallbacksCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+  static constexpr std::string_view kModuleName = "NativeIdleCallbacksCxx";
+
+protected:
+  NativeIdleCallbacksCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeIdleCallbacksCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeIdleCallbacksCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeIdleCallbacksCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    jsi::Value requestIdleCallback(jsi::Runtime &rt, jsi::Function callback, std::optional<jsi::Object> options) override {
+      static_assert(
+          bridging::getParameterCount(&T::requestIdleCallback) == 3,
+          "Expected requestIdleCallback(...) to have 3 parameters");
+
+      return bridging::callFromJs<jsi::Value>(
+          rt, &T::requestIdleCallback, jsInvoker_, instance_, std::move(callback), std::move(options));
+    }
+    void cancelIdleCallback(jsi::Runtime &rt, jsi::Value handle) override {
+      static_assert(
+          bridging::getParameterCount(&T::cancelIdleCallback) == 2,
+          "Expected cancelIdleCallback(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::cancelIdleCallback, jsInvoker_, instance_, std::move(handle));
+    }
+
+  private:
+    friend class NativeIdleCallbacksCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
   class JSI_EXPORT NativeMicrotasksCxxSpecJSI : public TurboModule {
 protected:
   NativeMicrotasksCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);

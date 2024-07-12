@@ -2849,6 +2849,26 @@ NativeWebSocketModuleCxxSpecJSI::NativeWebSocketModuleCxxSpecJSI(std::shared_ptr
   methodMap_["addListener"] = MethodMetadata {1, __hostFunction_NativeWebSocketModuleCxxSpecJSI_addListener};
   methodMap_["removeListeners"] = MethodMetadata {1, __hostFunction_NativeWebSocketModuleCxxSpecJSI_removeListeners};
 }
+static jsi::Value __hostFunction_NativeIdleCallbacksCxxSpecJSI_requestIdleCallback(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeIdleCallbacksCxxSpecJSI *>(&turboModule)->requestIdleCallback(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt).asFunction(rt),
+    count <= 1 || args[1].isUndefined() ? std::nullopt : std::make_optional(args[1].asObject(rt))
+  );
+}
+static jsi::Value __hostFunction_NativeIdleCallbacksCxxSpecJSI_cancelIdleCallback(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeIdleCallbacksCxxSpecJSI *>(&turboModule)->cancelIdleCallback(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : jsi::Value(rt, args[0])
+  );
+  return jsi::Value::undefined();
+}
+
+NativeIdleCallbacksCxxSpecJSI::NativeIdleCallbacksCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("NativeIdleCallbacksCxx", jsInvoker) {
+  methodMap_["requestIdleCallback"] = MethodMetadata {2, __hostFunction_NativeIdleCallbacksCxxSpecJSI_requestIdleCallback};
+  methodMap_["cancelIdleCallback"] = MethodMetadata {1, __hostFunction_NativeIdleCallbacksCxxSpecJSI_cancelIdleCallback};
+}
 static jsi::Value __hostFunction_NativeMicrotasksCxxSpecJSI_queueMicrotask(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeMicrotasksCxxSpecJSI *>(&turboModule)->queueMicrotask(
     rt,
