@@ -200,20 +200,21 @@ void FabricUIManager::RCTPerformMountInstructions(
       }
 
       case facebook::react::ShadowViewMutation::Delete: {
-#ifdef DEBUG
+// #define DETECT_COMPONENT_OUTLIVE_DELETE_MUTATION
+#ifdef DETECT_COMPONENT_OUTLIVE_DELETE_MUTATION
         winrt::weak_ref<winrt::Microsoft::ReactNative::ComponentView> wkView;
 #endif
         {
           auto &oldChildShadowView = mutation.oldChildShadowView;
           auto &oldChildViewDescriptor = m_registry.componentViewDescriptorWithTag(oldChildShadowView.tag);
           // observerCoordinator.unregisterViewComponentDescriptor(oldChildViewDescriptor, surfaceId);
-#ifdef DEBUG
+#ifdef DETECT_COMPONENT_OUTLIVE_DELETE_MUTATION
           wkView = winrt::make_weak(oldChildViewDescriptor.view);
 #endif
           m_registry.enqueueComponentViewWithComponentHandle(
               oldChildShadowView.componentHandle, oldChildShadowView.tag, oldChildViewDescriptor);
         }
-#ifdef DEBUG
+#ifdef DETECT_COMPONENT_OUTLIVE_DELETE_MUTATION
         // After handling a delete mutation, nothing should be holding on to the view.  If there is thats an indication
         // of a leak, or at least something holding on to a view longer than it should
         assert(!wkView.get());
