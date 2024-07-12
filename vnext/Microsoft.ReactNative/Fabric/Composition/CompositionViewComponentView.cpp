@@ -16,6 +16,7 @@
 #include <Utils/ValueUtils.h>
 #include <Views/FrameworkElementTransferProperties.h>
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
+#include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionContextHelper.h"
 #include "CompositionDynamicAutomationProvider.h"
@@ -1617,7 +1618,10 @@ inline winrt::Windows::System::VirtualKey GetLeftOrRightModifiedKey(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     winrt::Windows::System::VirtualKey leftKey,
     winrt::Windows::System::VirtualKey rightKey) {
-  return (source.GetKeyState(leftKey) == winrt::Windows::UI::Core::CoreVirtualKeyStates::Down) ? leftKey : rightKey;
+  return ((source.GetKeyState(leftKey) & winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
+          winrt::Microsoft::UI::Input::VirtualKeyStates::Down)
+      ? leftKey
+      : rightKey;
 }
 
 std::string CodeFromVirtualKey(
@@ -1650,16 +1654,20 @@ void ViewComponentView::OnKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   auto eventCode = CodeFromVirtualKey(source, args.Key());
-  bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) !=
-      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
-  bool fAlt = source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) !=
-      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
-  bool fCtrl = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) !=
-      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
-  bool fMeta = (source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) !=
-                winrt::Windows::UI::Core::CoreVirtualKeyStates::None) ||
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) !=
-       winrt::Windows::UI::Core::CoreVirtualKeyStates::None);
+  bool fShift =
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+  bool fAlt =
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+  bool fCtrl =
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+  bool fMeta =
+      ((source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
+        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ||
+      ((source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
+        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down);
 
   if (args.OriginalSource() == Tag() && !args.Handled()) {
     facebook::react::KeyEvent event;
@@ -1668,7 +1676,12 @@ void ViewComponentView::OnKeyDown(
     event.altKey = fAlt;
     event.metaKey = fMeta;
 
-    event.key = ::Microsoft::ReactNative::FromVirtualKey(args.Key(), event.shiftKey, !!(GetKeyState(VK_CAPITAL) & 1));
+    event.key = ::Microsoft::ReactNative::FromVirtualKey(
+        args.Key(),
+        event.shiftKey,
+        !!((source.GetKeyState(winrt::Windows::System::VirtualKey::CapitalLock) &
+            winrt::Microsoft::UI::Input::VirtualKeyStates::Locked) ==
+           winrt::Microsoft::UI::Input::VirtualKeyStates::Locked));
     event.code = eventCode;
     m_eventEmitter->onKeyDown(event);
   }
@@ -1689,16 +1702,20 @@ void ViewComponentView::OnKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   auto eventCode = CodeFromVirtualKey(source, args.Key());
-  bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) !=
-      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
-  bool fAlt = source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) !=
-      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
-  bool fCtrl = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) !=
-      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
-  bool fMeta = (source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) !=
-                winrt::Windows::UI::Core::CoreVirtualKeyStates::None) ||
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) !=
-       winrt::Windows::UI::Core::CoreVirtualKeyStates::None);
+  bool fShift =
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+  bool fAlt =
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+  bool fCtrl =
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+  bool fMeta =
+      ((source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
+        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ||
+      ((source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
+        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down);
 
   if (args.OriginalSource() == Tag()) {
     facebook::react::KeyEvent event;
@@ -1707,7 +1724,12 @@ void ViewComponentView::OnKeyUp(
     event.altKey = fAlt;
     event.metaKey = fMeta;
 
-    event.key = ::Microsoft::ReactNative::FromVirtualKey(args.Key(), event.shiftKey, !!(GetKeyState(VK_CAPITAL) & 1));
+    event.key = ::Microsoft::ReactNative::FromVirtualKey(
+        args.Key(),
+        event.shiftKey,
+        !!((source.GetKeyState(winrt::Windows::System::VirtualKey::CapitalLock) &
+            winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
+           winrt::Microsoft::UI::Input::VirtualKeyStates::Down));
     event.code = eventCode;
     m_eventEmitter->onKeyUp(event);
   }

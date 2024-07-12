@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 12 Jul 2024 05:15:36 GMT",
+      "version": "0.0.0-canary.842",
+      "tag": "react-native-windows_v0.0.0-canary.842",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e1685da8923359b915e34062b7e3a43e10b2bed6",
+            "comment": "[Fabric] Move to WinAppSDK types for KeyStatus, and ensure usages account for locked flag"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b36f585978e2bad2de285671f2a1f3a211151098",
+            "comment": "Fix scrollview"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 Jul 2024 05:15:32 GMT",
       "version": "0.0.0-canary.841",
       "tag": "react-native-windows_v0.0.0-canary.841",

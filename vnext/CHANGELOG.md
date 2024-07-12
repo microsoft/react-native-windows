@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 11 Jul 2024 05:15:32 GMT and should not be manually modified.
+This log was last generated on Fri, 12 Jul 2024 05:15:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.842
+
+Fri, 12 Jul 2024 05:15:36 GMT
+
+### Changes
+
+- [Fabric] Move to WinAppSDK types for KeyStatus, and ensure usages account for locked flag (30809111+acoates-ms@users.noreply.github.com)
+- Fix scrollview (10109130+sharath2727@users.noreply.github.com)
 
 ## 0.0.0-canary.841
 
