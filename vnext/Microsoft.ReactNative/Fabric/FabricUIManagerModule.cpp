@@ -214,8 +214,8 @@ void FabricUIManager::RCTPerformMountInstructions(
               oldChildShadowView.componentHandle, oldChildShadowView.tag, oldChildViewDescriptor);
         }
 #ifdef DEBUG
-        // After handling a delete mutation, nothing should be holding on to the view.  If there is thats an indication of a leak,
-        // or at least something holding on to a view longer than it should
+        // After handling a delete mutation, nothing should be holding on to the view.  If there is thats an indication
+        // of a leak, or at least something holding on to a view longer than it should
         assert(!wkView.get());
 #endif
         break;
