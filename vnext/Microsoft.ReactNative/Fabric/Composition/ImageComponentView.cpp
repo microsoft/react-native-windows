@@ -43,8 +43,11 @@ void ImageComponentView::WindowsImageResponseObserver::didReceiveImage(
     facebook::react::ImageResponse const &imageResponse) const {
   if (auto imgComponentView{m_wkImage.get()}) {
     auto imageResponseImage = std::static_pointer_cast<ImageResponseImage>(imageResponse.getImage());
-    imgComponentView->m_reactContext.UIDispatcher().Post(
-        [imageResponseImage, imgComponentView]() { imgComponentView->didReceiveImage(imageResponseImage); });
+    imgComponentView->m_reactContext.UIDispatcher().Post([imageResponseImage, wkImage = m_wkImage]() {
+      if (auto image{m_wkImage.get()}) {
+        image->didReceiveImage(imageResponseImage);
+      }
+    });
   }
 }
 
