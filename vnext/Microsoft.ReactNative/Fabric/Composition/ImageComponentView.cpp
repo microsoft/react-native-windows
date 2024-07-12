@@ -182,6 +182,10 @@ void ImageComponentView::setStateAndResubscribeImageResponseObserver(
   }
 }
 
+void ImageComponentView::prepareForRecycle() noexcept {
+  setStateAndResubscribeImageResponseObserver(nullptr);
+}
+
 winrt::Microsoft::ReactNative::ImageProps ImageComponentView::ImageProps() noexcept {
   // We do not currently support custom ImageComponentView's
   // If we did we would need to create a AbiImageProps and possibly return them here

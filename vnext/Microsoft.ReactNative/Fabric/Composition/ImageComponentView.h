@@ -47,6 +47,7 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
       override;
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept
       override;
+  void prepareForRecycle() noexcept override;
   void OnRenderingDeviceLost() noexcept override;
   void onThemeChanged() noexcept override;
 
