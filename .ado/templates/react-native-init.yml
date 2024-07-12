@@ -69,7 +69,7 @@ steps:
 
   - ${{ if eq(parameters.projectType, 'app') }}:
     - script: |
-        npx --yes react-native@$(reactNativeDevDependency) init testcli --template @react-native-community/template@$(reactNativeDevDependency)
+        npx --yes react-native@$(reactNativeDevDependency) init testcli --template @react-native-community/template@next
       displayName: Init new app project
       workingDirectory: $(Agent.BuildDirectory)
 
