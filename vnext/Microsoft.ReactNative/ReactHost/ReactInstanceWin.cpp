@@ -337,7 +337,7 @@ void ReactInstanceWin::LoadModules(
   };
 
 #ifdef USE_FABRIC
-  if (!m_options.UseWebDebugger()) {
+  if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
     registerTurboModule(
         L"FabricUIManagerBinding",
         winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
@@ -602,7 +602,8 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
 
             m_jsMessageThread.Load()->runOnQueueSync([&]() {
               ::SetThreadDescription(GetCurrentThread(), L"React-Native JavaScript Thread");
-              auto timerRegistry = ::Microsoft::ReactNative::TimerRegistry::CreateTimerRegistry(m_options.Properties);
+              auto timerRegistry =
+                  ::Microsoft::ReactNative::TimerRegistry::CreateTimerRegistry(m_reactContext->Properties());
               auto timerRegistryRaw = timerRegistry.get();
 
               auto timerManager = std::make_shared<facebook::react::TimerManager>(std::move(timerRegistry));
