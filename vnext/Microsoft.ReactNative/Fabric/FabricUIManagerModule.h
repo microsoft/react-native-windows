@@ -52,6 +52,8 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
   winrt::Microsoft::ReactNative::ReactNativeIsland GetReactNativeIsland(
       facebook::react::SurfaceId surfaceId) const noexcept;
 
+  static winrt::Microsoft::ReactNative::ReactNotificationId<facebook::react::SurfaceId> NotifyMountedId() noexcept;
+
  private:
   void installFabricUIManager() noexcept;
   void initiateTransaction(facebook::react::MountingCoordinator::Shared mountingCoordinator);
