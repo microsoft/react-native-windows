@@ -194,7 +194,17 @@ void FabricUIManager::constraintSurfaceLayout(
   m_surfaceManager->constraintSurfaceLayout(surfaceId, layoutConstraints, layoutContext);
 }
 
-void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept {}
+winrt::Microsoft::ReactNative::ReactNotificationId<facebook::react::SurfaceId>
+FabricUIManager::NotifyMountedId() noexcept {
+  return {L"ReactNative.Fabric", L"Mounted"};
+}
+
+void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept {
+  m_context.UIDispatcher().Post([context = m_context, self = shared_from_this(), surfaceId]() {
+    self->m_scheduler->reportMount(surfaceId);
+    context.Notifications().SendNotification(NotifyMountedId(), surfaceId);
+  });
+}
 
 void FabricUIManager::RCTPerformMountInstructions(
     facebook::react::ShadowViewMutationList const &mutations,
