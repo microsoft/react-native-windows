@@ -170,7 +170,7 @@ struct ComponentView
   void UpdateCenterPropertySet() noexcept;
   void FinalizeTransform(
       facebook::react::LayoutMetrics const &layoutMetrics,
-      const facebook::react::ViewProps &viewProps);
+      const facebook::react::ViewProps &viewProps) noexcept;
 
   bool m_FinalizeTransform{false};
   ComponentViewFeatures m_flags;

@@ -182,7 +182,7 @@ const facebook::react::LayoutMetrics &ComponentView::layoutMetrics() const noexc
 
 void ComponentView::FinalizeTransform(
     facebook::react::LayoutMetrics const &layoutMetrics,
-    const facebook::react::ViewProps &viewProps) {
+    const facebook::react::ViewProps &viewProps) noexcept {
   const auto resolveTransformMatrix = viewProps.resolveTransform(layoutMetrics);
   winrt::Windows::Foundation::Numerics::float4x4 transformMatrix;
   transformMatrix.m11 = resolveTransformMatrix.matrix[0];
