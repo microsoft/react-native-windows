@@ -105,7 +105,7 @@ type Win32Platform = {
       major: number,
       minor: number,
       patch: number,
-      prerelease: ?string | number,
+      prerelease: ?string,
     |},
     systemName: string,
     isMacCatalyst?: boolean,
