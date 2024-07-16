@@ -194,7 +194,17 @@ void FabricUIManager::constraintSurfaceLayout(
   m_surfaceManager->constraintSurfaceLayout(surfaceId, layoutConstraints, layoutContext);
 }
 
-void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept {}
+winrt::Microsoft::ReactNative::ReactNotificationId<facebook::react::SurfaceId>
+FabricUIManager::NotifyMountedId() noexcept {
+  return {L"ReactNative.Fabric", L"Mounted"};
+}
+
+void FabricUIManager::didMountComponentsWithRootTag(facebook::react::SurfaceId surfaceId) noexcept {
+  m_context.UIDispatcher().Post([context = m_context, self = shared_from_this(), surfaceId]() {
+    self->m_scheduler->reportMount(surfaceId);
+    context.Notifications().SendNotification(NotifyMountedId(), surfaceId);
+  });
+}
 
 void FabricUIManager::RCTPerformMountInstructions(
     facebook::react::ShadowViewMutationList const &mutations,
@@ -212,11 +222,25 @@ void FabricUIManager::RCTPerformMountInstructions(
       }
 
       case facebook::react::ShadowViewMutation::Delete: {
-        auto &oldChildShadowView = mutation.oldChildShadowView;
-        auto &oldChildViewDescriptor = m_registry.componentViewDescriptorWithTag(oldChildShadowView.tag);
-        // observerCoordinator.unregisterViewComponentDescriptor(oldChildViewDescriptor, surfaceId);
-        m_registry.enqueueComponentViewWithComponentHandle(
-            oldChildShadowView.componentHandle, oldChildShadowView.tag, oldChildViewDescriptor);
+// #define DETECT_COMPONENT_OUTLIVE_DELETE_MUTATION
+#ifdef DETECT_COMPONENT_OUTLIVE_DELETE_MUTATION
+        winrt::weak_ref<winrt::Microsoft::ReactNative::ComponentView> wkView;
+#endif
+        {
+          auto &oldChildShadowView = mutation.oldChildShadowView;
+          auto &oldChildViewDescriptor = m_registry.componentViewDescriptorWithTag(oldChildShadowView.tag);
+          // observerCoordinator.unregisterViewComponentDescriptor(oldChildViewDescriptor, surfaceId);
+#ifdef DETECT_COMPONENT_OUTLIVE_DELETE_MUTATION
+          wkView = winrt::make_weak(oldChildViewDescriptor.view);
+#endif
+          m_registry.enqueueComponentViewWithComponentHandle(
+              oldChildShadowView.componentHandle, oldChildShadowView.tag, oldChildViewDescriptor);
+        }
+#ifdef DETECT_COMPONENT_OUTLIVE_DELETE_MUTATION
+        // After handling a delete mutation, nothing should be holding on to the view.  If there is thats an indication
+        // of a leak, or at least something holding on to a view longer than it should
+        assert(!wkView.get());
+#endif
         break;
       }
 

@@ -16,6 +16,7 @@
 #include <Utils/ValueUtils.h>
 #include <Views/FrameworkElementTransferProperties.h>
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
+#include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionContextHelper.h"
 #include "CompositionDynamicAutomationProvider.h"
@@ -179,9 +180,44 @@ const facebook::react::LayoutMetrics &ComponentView::layoutMetrics() const noexc
   return m_layoutMetrics;
 }
 
+void ComponentView::FinalizeTransform(
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    const facebook::react::ViewProps &viewProps) noexcept {
+  const auto resolveTransformMatrix = viewProps.resolveTransform(layoutMetrics);
+  winrt::Windows::Foundation::Numerics::float4x4 transformMatrix;
+  transformMatrix.m11 = resolveTransformMatrix.matrix[0];
+  transformMatrix.m12 = resolveTransformMatrix.matrix[1];
+  transformMatrix.m13 = resolveTransformMatrix.matrix[2];
+  transformMatrix.m14 = resolveTransformMatrix.matrix[3];
+  transformMatrix.m21 = resolveTransformMatrix.matrix[4];
+  transformMatrix.m22 = resolveTransformMatrix.matrix[5];
+  transformMatrix.m23 = resolveTransformMatrix.matrix[6];
+  transformMatrix.m24 = resolveTransformMatrix.matrix[7];
+  transformMatrix.m31 = resolveTransformMatrix.matrix[8];
+  transformMatrix.m32 = resolveTransformMatrix.matrix[9];
+  transformMatrix.m33 = resolveTransformMatrix.matrix[10];
+  transformMatrix.m34 = resolveTransformMatrix.matrix[11];
+  transformMatrix.m41 = resolveTransformMatrix.matrix[12];
+  transformMatrix.m42 = resolveTransformMatrix.matrix[13];
+  transformMatrix.m43 = resolveTransformMatrix.matrix[14];
+  transformMatrix.m44 = resolveTransformMatrix.matrix[15];
+
+  auto centerPointPropSet = EnsureCenterPointPropertySet();
+  if (centerPointPropSet) {
+    centerPointPropSet.InsertMatrix4x4(L"transform", transformMatrix);
+  }
+
+  EnsureTransformMatrixFacade();
+  m_FinalizeTransform = false;
+}
+
 void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
   if ((m_flags & ComponentViewFeatures::NativeBorder) == ComponentViewFeatures::NativeBorder) {
     finalizeBorderUpdates(m_layoutMetrics, *viewProps());
+  }
+
+  if (m_FinalizeTransform) {
+    FinalizeTransform(m_layoutMetrics, *viewProps());
   }
 
   base_type::FinalizeUpdates(updateMask);
@@ -1245,30 +1281,7 @@ void ComponentView::updateTransformProps(
 
   // Transform - TODO doesn't handle multiple of the same kind of transform -- Doesn't handle hittesting updates
   if (oldViewProps.transform != newViewProps.transform) {
-    winrt::Windows::Foundation::Numerics::float4x4 transformMatrix;
-    transformMatrix.m11 = newViewProps.transform.matrix[0];
-    transformMatrix.m12 = newViewProps.transform.matrix[1];
-    transformMatrix.m13 = newViewProps.transform.matrix[2];
-    transformMatrix.m14 = newViewProps.transform.matrix[3];
-    transformMatrix.m21 = newViewProps.transform.matrix[4];
-    transformMatrix.m22 = newViewProps.transform.matrix[5];
-    transformMatrix.m23 = newViewProps.transform.matrix[6];
-    transformMatrix.m24 = newViewProps.transform.matrix[7];
-    transformMatrix.m31 = newViewProps.transform.matrix[8];
-    transformMatrix.m32 = newViewProps.transform.matrix[9];
-    transformMatrix.m33 = newViewProps.transform.matrix[10];
-    transformMatrix.m34 = newViewProps.transform.matrix[11];
-    transformMatrix.m41 = newViewProps.transform.matrix[12];
-    transformMatrix.m42 = newViewProps.transform.matrix[13];
-    transformMatrix.m43 = newViewProps.transform.matrix[14];
-    transformMatrix.m44 = newViewProps.transform.matrix[15];
-
-    auto centerPointPropSet = EnsureCenterPointPropertySet();
-    if (centerPointPropSet) {
-      centerPointPropSet.InsertMatrix4x4(L"transform", transformMatrix);
-    }
-
-    EnsureTransformMatrixFacade();
+    m_FinalizeTransform = true;
   }
 }
 
@@ -1617,7 +1630,10 @@ inline winrt::Windows::System::VirtualKey GetLeftOrRightModifiedKey(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     winrt::Windows::System::VirtualKey leftKey,
     winrt::Windows::System::VirtualKey rightKey) {
-  return (source.GetKeyState(leftKey) == winrt::Windows::UI::Core::CoreVirtualKeyStates::Down) ? leftKey : rightKey;
+  return ((source.GetKeyState(leftKey) & winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
+          winrt::Microsoft::UI::Input::VirtualKeyStates::Down)
+      ? leftKey
+      : rightKey;
 }
 
 std::string CodeFromVirtualKey(
@@ -1650,16 +1666,20 @@ void ViewComponentView::OnKeyDown(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   auto eventCode = CodeFromVirtualKey(source, args.Key());
-  bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) !=
-      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
-  bool fAlt = source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) !=
-      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
-  bool fCtrl = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) !=
-      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
-  bool fMeta = (source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) !=
-                winrt::Windows::UI::Core::CoreVirtualKeyStates::None) ||
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) !=
-       winrt::Windows::UI::Core::CoreVirtualKeyStates::None);
+  bool fShift =
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+  bool fAlt =
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+  bool fCtrl =
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+  bool fMeta =
+      ((source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
+        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ||
+      ((source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
+        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down);
 
   if (args.OriginalSource() == Tag() && !args.Handled()) {
     facebook::react::KeyEvent event;
@@ -1668,7 +1688,12 @@ void ViewComponentView::OnKeyDown(
     event.altKey = fAlt;
     event.metaKey = fMeta;
 
-    event.key = ::Microsoft::ReactNative::FromVirtualKey(args.Key(), event.shiftKey, !!(GetKeyState(VK_CAPITAL) & 1));
+    event.key = ::Microsoft::ReactNative::FromVirtualKey(
+        args.Key(),
+        event.shiftKey,
+        !!((source.GetKeyState(winrt::Windows::System::VirtualKey::CapitalLock) &
+            winrt::Microsoft::UI::Input::VirtualKeyStates::Locked) ==
+           winrt::Microsoft::UI::Input::VirtualKeyStates::Locked));
     event.code = eventCode;
     m_eventEmitter->onKeyDown(event);
   }
@@ -1689,16 +1714,20 @@ void ViewComponentView::OnKeyUp(
     const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   auto eventCode = CodeFromVirtualKey(source, args.Key());
-  bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) !=
-      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
-  bool fAlt = source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) !=
-      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
-  bool fCtrl = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) !=
-      winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
-  bool fMeta = (source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) !=
-                winrt::Windows::UI::Core::CoreVirtualKeyStates::None) ||
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) !=
-       winrt::Windows::UI::Core::CoreVirtualKeyStates::None);
+  bool fShift =
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+  bool fAlt =
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+  bool fCtrl =
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+  bool fMeta =
+      ((source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
+        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ||
+      ((source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
+        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down);
 
   if (args.OriginalSource() == Tag()) {
     facebook::react::KeyEvent event;
@@ -1707,7 +1736,12 @@ void ViewComponentView::OnKeyUp(
     event.altKey = fAlt;
     event.metaKey = fMeta;
 
-    event.key = ::Microsoft::ReactNative::FromVirtualKey(args.Key(), event.shiftKey, !!(GetKeyState(VK_CAPITAL) & 1));
+    event.key = ::Microsoft::ReactNative::FromVirtualKey(
+        args.Key(),
+        event.shiftKey,
+        !!((source.GetKeyState(winrt::Windows::System::VirtualKey::CapitalLock) &
+            winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
+           winrt::Microsoft::UI::Input::VirtualKeyStates::Down));
     event.code = eventCode;
     m_eventEmitter->onKeyUp(event);
   }

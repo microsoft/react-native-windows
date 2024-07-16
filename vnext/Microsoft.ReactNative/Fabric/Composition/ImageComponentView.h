@@ -47,6 +47,7 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
       override;
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept
       override;
+  void prepareForRecycle() noexcept override;
   void OnRenderingDeviceLost() noexcept override;
   void onThemeChanged() noexcept override;
 
@@ -69,13 +70,14 @@ struct ImageComponentView : ImageComponentViewT<ImageComponentView, ViewComponen
  private:
   struct WindowsImageResponseObserver : facebook::react::ImageResponseObserver {
    public:
-    WindowsImageResponseObserver(ImageComponentView &image);
+    WindowsImageResponseObserver(
+        winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::implementation::ImageComponentView> wkImage);
     void didReceiveProgress(float progress) const override;
     void didReceiveImage(facebook::react::ImageResponse const &imageResponse) const override;
     void didReceiveFailure() const override;
 
    private:
-    winrt::com_ptr<ImageComponentView> m_image;
+    winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::implementation::ImageComponentView> m_wkImage;
   };
 
   void ensureDrawingSurface() noexcept;
