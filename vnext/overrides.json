@@ -587,37 +587,9 @@
     },
     {
       "type": "patch",
-      "file": "src-win/Libraries/ReactNative/AppContainer.js",
-      "baseFile": "packages/react-native/Libraries/ReactNative/AppContainer.js",
-      "baseHash": "547149b6581de22ddf68f91e58294703a71b118d",
-      "issue": 13314
-    },
-    {
-      "type": "patch",
-      "file": "src-win/Libraries/ReactNative/AppRegistry.d.ts",
-      "baseFile": "packages/react-native/Libraries/ReactNative/AppRegistry.d.ts",
-      "baseHash": "ec4dce37a05e1d0ef00f40b6549cdb277ad3a227",
-      "issue": 13314
-    },
-    {
-      "type": "patch",
-      "file": "src-win/Libraries/ReactNative/AppRegistry.js",
-      "baseFile": "packages/react-native/Libraries/ReactNative/AppRegistry.js",
-      "baseHash": "80a5455a014ab826cc21b9e8efe1dbe7c29b5f44",
-      "issue": 13314
-    },
-    {
-      "type": "patch",
       "file": "src-win/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "packages/react-native/Libraries/ReactNative/PaperUIManager.js",
       "baseHash": "5421778518fbd545ba3896bdfb1fb4f829d016fd"
-    },
-    {
-      "type": "patch",
-      "file": "src-win/Libraries/ReactNative/renderApplication.js",
-      "baseFile": "packages/react-native/Libraries/ReactNative/renderApplication.js",
-      "baseHash": "14b60713c380bbedeb9cdf0811708fd5f5fe49c2",
-      "issue": 13314
     },
     {
       "type": "platform",
