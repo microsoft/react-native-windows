@@ -294,6 +294,7 @@ const Text: React.AbstractComponent<
   } else {
     let styleProps: ViewStyleProp = (restProps.style: any);
     if (
+      global.RN$Bridgeless !== true && // [Windows] Fabric text handles borders, but on paper we need to wrap it in an extra view
       styleProps &&
       styleProps.borderColor &&
       (styleProps.borderWidth ||
