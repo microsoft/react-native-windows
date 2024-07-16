@@ -172,7 +172,7 @@ struct ComponentView
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps);
 
-  bool m_transform{false};
+  bool m_FinalizeTransform{false};
   ComponentViewFeatures m_flags;
   void showFocusVisual(bool show) noexcept;
   winrt::Microsoft::ReactNative::Composition::Experimental::IFocusVisual m_focusVisual{nullptr};
