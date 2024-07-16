@@ -3056,9 +3056,9 @@
     "@types/node" "*"
 
 "@types/lodash@^4.14.168":
-  version "4.17.6"
-  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.17.6.tgz#193ced6a40c8006cfc1ca3f4553444fb38f0e543"
-  integrity sha512-OpXEVoCKSS3lQqjx9GGGOapBeuW5eUboYHRlHP9urXPX25IKZ6AnP5ZRxtVf63iieUbsHxLn8NQ5Nlftc6yzAA==
+  version "4.17.7"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.17.7.tgz#2f776bcb53adc9e13b2c0dfd493dfcbd7de43612"
+  integrity sha512-8wTvZawATi/lsmNu10/j2hk1KEP0IvjubqPE3cu1Xz7xfXXt5oCq3SNUz4fMIP4XGF9Ky+Ue2tBA3hcS7LSBlA==
 
 "@types/minimatch@*":
   version "5.1.2"
