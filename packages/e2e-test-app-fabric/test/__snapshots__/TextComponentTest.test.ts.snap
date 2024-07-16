@@ -236,7 +236,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                   "Color": "rgba(255, 0, 0, 255)",
                 },
                 "Offset": "-10, 20, 0",
-                "Size": "10, 13",
+                "Size": "10, 14",
                 "Visual Type": "SpriteVisual",
               },
               {
