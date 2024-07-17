@@ -20,6 +20,7 @@ struct CompReactPackageProvider
 constexpr PCWSTR windowTitle = L"sample_app_fabric";
 constexpr PCWSTR mainComponentName = L"sample_app_fabric";
 
+// Scaling factor for the window's content based on the DPI of the display where the window is located.
 float ScaleFactor(HWND hwnd) noexcept {
   return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
 }
@@ -50,9 +51,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   // Create a DispatcherQueue for this thread.  This is needed for Composition, Content, and
   // Input APIs.
   auto dispatcherQueueController{winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnCurrentThread()};
-
-  // Create a Compositor for all Content on this thread.
-  auto compositor{winrt::Microsoft::UI::Composition::Compositor()};
 
   // Create a top-level window.
   auto window = winrt::Microsoft::UI::Windowing::AppWindow::Create();
@@ -90,27 +88,25 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   auto packageProviders{winrt::single_threaded_vector<winrt::Microsoft::ReactNative::IReactPackageProvider>()};
 
   RegisterAutolinkedNativeModulePackages(packageProviders);
-
   packageProviders.Append(winrt::make<CompReactPackageProvider>());
+
+  winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
+  viewOptions.ComponentName(mainComponentName);
 
   // Initialize and Manage the ReactNativeHost
   auto reactNativeAppBuilder{winrt::Microsoft::ReactNative::ReactNativeAppBuilder()
                                  .AddPackageProviders(packageProviders)
                                  .SetReactInstanceSettings(reactInstanceSettingsBuilder.ReactInstanceSettings())
                                  .SetAppWindow(window)
-                                 .SetCompositor(compositor)};
+                                 .SetReactViewOptions(viewOptions)};
 
   // Start the react-native instance by creating a javascript runtime and load the bundle.
   auto host{reactNativeAppBuilder.Start()};
 
-  // Create a RootView which will present a react-native component
-  winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
-  viewOptions.ComponentName(mainComponentName);
-  auto rootView = winrt::Microsoft::ReactNative::ReactNativeIsland(compositor);
-  rootView.ReactViewHost(winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
+  auto reactNativeIsland{reactNativeAppBuilder.ReactNativeIsland()};
 
   // Update the size of the RootView when the AppWindow changes size
-  window.Changed([wkRootView = winrt::make_weak(rootView)](
+  window.Changed([wkRootView = winrt::make_weak(reactNativeIsland)](
                      winrt::Microsoft::UI::Windowing::AppWindow const &window,
                      winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const &args) {
     if (args.DidSizeChange() || args.DidVisibilityChange()) {
@@ -132,15 +128,13 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
         });
       });
 
-  // DesktopChildSiteBridge create a ContentSite that can host the RootView ContentIsland
-  auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(compositor, window.Id());
-  bridge.Connect(rootView.Island());
-  bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
+  // DesktopChildSiteBridge associated with a ContentIsland
+  auto bridge = reactNativeAppBuilder.DesktopChildSiteBridge();
 
-  rootView.ScaleFactor(scaleFactor);
+  reactNativeIsland.ScaleFactor(scaleFactor);
 
   // Set the intialSize of the root view
-  UpdateRootViewSizeToAppWindow(rootView, window);
+  UpdateRootViewSizeToAppWindow(reactNativeIsland, window);
 
   bridge.Show();
 
@@ -150,11 +144,4 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   // Rundown the DispatcherQueue. This drains the queue and raises events to let components
   // know the message loop has finished.
   dispatcherQueueController.ShutdownQueue();
-
-  bridge.Close();
-  bridge = nullptr;
-
-  // Destroy all Composition objects
-  compositor.Close();
-  compositor = nullptr;
 }

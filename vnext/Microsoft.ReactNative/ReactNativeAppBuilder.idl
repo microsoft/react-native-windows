@@ -1,5 +1,6 @@
 
 import "ReactNativeHost.idl";
+import "ReactNativeIsland.idl";
 import "ReactInstanceSettings.idl";
 import "IReactPackageProvider.idl";
 
@@ -16,7 +17,7 @@ namespace Microsoft.ReactNative
         // Properties
         ReactInstanceSettings ReactInstanceSettings {get;};
 
-        // Set Methods
+        // Methods
         ReactInstanceSettingsBuilder UseDirectDebugger(Boolean state);
 
         ReactInstanceSettingsBuilder UseDeveloperSupport(Boolean state);
@@ -36,6 +37,12 @@ namespace Microsoft.ReactNative
     {
         ReactNativeAppBuilder();
 
+        // Properties
+        ReactNativeIsland ReactNativeIsland {get;};
+
+        Microsoft.UI.Content.DesktopChildSiteBridge DesktopChildSiteBridge {get;};
+
+        // Methods
         ReactNativeAppBuilder AddPackageProviders(Windows.Foundation.Collections.IVector<Microsoft.ReactNative.IReactPackageProvider> packageProviders);
 
         ReactNativeAppBuilder SetReactInstanceSettings(ReactInstanceSettings settings);
@@ -43,6 +50,8 @@ namespace Microsoft.ReactNative
         ReactNativeAppBuilder SetCompositor(Microsoft.UI.Composition.Compositor compositor);
 
         ReactNativeAppBuilder SetAppWindow(Microsoft.UI.Windowing.AppWindow appWindow);
+
+        ReactNativeAppBuilder SetReactViewOptions(Microsoft.ReactNative.ReactViewOptions reactViewOptions);
 
         ReactNativeHost Start();
     }
