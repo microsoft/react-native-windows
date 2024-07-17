@@ -99,4 +99,16 @@ describe('Text Tests', () => {
     const dump = await dumpVisualTree('text-shadow');
     expect(dump).toMatchSnapshot();
   });
+  test('Text can have borders', async () => {
+    const component = await app.findElementByTestID('text-border');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('text-border');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Text can have advanced borders', async () => {
+    const component = await app.findElementByTestID('advanced-borders');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('advanced-borders');
+    expect(dump).toMatchSnapshot();
+  });
 });

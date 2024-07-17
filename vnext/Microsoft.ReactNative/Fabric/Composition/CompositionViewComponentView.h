@@ -168,7 +168,11 @@ struct ComponentView
   std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
   FindSpecialBorderLayers() const noexcept;
   void UpdateCenterPropertySet() noexcept;
+  void FinalizeTransform(
+      facebook::react::LayoutMetrics const &layoutMetrics,
+      const facebook::react::ViewProps &viewProps) noexcept;
 
+  bool m_FinalizeTransform{false};
   ComponentViewFeatures m_flags;
   void showFocusVisual(bool show) noexcept;
   winrt::Microsoft::ReactNative::Composition::Experimental::IFocusVisual m_focusVisual{nullptr};

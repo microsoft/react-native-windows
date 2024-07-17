@@ -382,7 +382,10 @@ void WinRTWebSocketResource::Connect(string &&url, const Protocols &protocols, c
         scheme = L"https";
       }
 
-      auto origin = winrt::hstring{scheme + L"://" + host + L":" + winrt::to_hstring(port)};
+      // Only add a port if a port is defined
+      winrt::hstring originPort = port != 0 ? L":" + winrt::to_hstring(port) : L"";
+      auto origin = winrt::hstring{scheme + L"://" + host + originPort};
+
       m_socket.SetRequestHeader(L"Origin", std::move(origin));
     }
 
