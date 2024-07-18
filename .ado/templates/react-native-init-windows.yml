@@ -124,16 +124,16 @@ steps:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
   
   - ${{ if or(endsWith(parameters.template, '-app'), and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old')))) }}:
-  - powershell: |
-      $path = (Get-ChildItem -Filter "Package.appxmanifest" -File -Recurse).FullName;
-      [xml] $manifest = Get-Content $path
-      $manifest.Package.Identity.Name = 'ReactNative.InitTest'
-      $manifest.Save("$path")
-    displayName: Set AppX package name to "ReactNative.InitTest"
-    ${{ if and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old'))) }}:
-      workingDirectory: $(Agent.BuildDirectory)\testcli\example\windows
-    ${{ else }}:
-      workingDirectory: $(Agent.BuildDirectory)\testcli\windows
+    - powershell: |
+        $path = (Get-ChildItem -Filter "Package.appxmanifest" -File -Recurse).FullName;
+        [xml] $manifest = Get-Content $path
+        $manifest.Package.Identity.Name = 'ReactNative.InitTest'
+        $manifest.Save("$path")
+      displayName: Set AppX package name to "ReactNative.InitTest"
+      ${{ if and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old'))) }}:
+        workingDirectory: $(Agent.BuildDirectory)\testcli\example\windows
+      ${{ else }}:
+        workingDirectory: $(Agent.BuildDirectory)\testcli\windows
 
   # End npm test server
   - template: verdaccio-stop.yml
