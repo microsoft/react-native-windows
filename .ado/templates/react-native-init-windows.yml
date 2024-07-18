@@ -77,13 +77,6 @@ steps:
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
-  - ${{ if eq(parameters.UseChakra, true) }}:
-    - template:  set-experimental-feature.yml
-      parameters:
-        package: ..\testcli
-        feature: UseHermes
-        value: ${{ not(parameters.UseChakra) }}
-
   - script: |
       call yarn config set npmRegistryServer http://localhost:4873
       call yarn config set unsafeHttpWhitelist --json "[\"localhost\"]"
@@ -122,7 +115,14 @@ steps:
     workingDirectory: $(Agent.BuildDirectory)\testcli
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
-  
+
+  - ${{ if eq(parameters.UseChakra, true) }}:
+    - template:  set-experimental-feature.yml
+      parameters:
+        package: ..\testcli
+        feature: UseHermes
+        value: ${{ not(parameters.UseChakra) }}
+
   - ${{ if or(endsWith(parameters.template, '-app'), and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old')))) }}:
     - powershell: |
         $path = (Get-ChildItem -Filter "Package.appxmanifest" -File -Recurse).FullName;
