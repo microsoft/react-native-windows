@@ -93,7 +93,7 @@ steps:
       env:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
-  - ${{ if and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old'))) }}:
+  - ${{ if endsWith(parameters.template, '-lib') }}:
     - script: |
         call yarn add react-native-windows@$(npmVersion) --dev
         call yarn add react-native-windows@* --peer
