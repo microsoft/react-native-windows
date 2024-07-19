@@ -2,6 +2,144 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 18 Jul 2024 05:15:23 GMT",
+      "version": "0.0.0-canary.843",
+      "tag": "react-native-windows_v0.0.0-canary.843",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a10a861854885ce338f4e4296d02661af512763d",
+            "comment": "[Fabric] call reportMount to implement UIManagerMountHook support"
+          },
+          {
+            "author": "sawalker@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "63d919e36e0d6ad93f1e772df53a1e7c1a5aa1da",
+            "comment": "Updating native WebSocket header logic to match RN"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "44090cbcd2d93bc3a68e518ae92a471f5ad09579",
+            "comment": "[Fabric] Text renders borders twice"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ee9cb5f47a21f0928841562fa521025727e01d1b",
+            "comment": "Resolve transform before animation"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "244d85aa9705ad11f50b887afeda77312837dd58",
+            "comment": "[Fabric] Fix image component reference cycle"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 Jul 2024 05:15:36 GMT",
+      "version": "0.0.0-canary.842",
+      "tag": "react-native-windows_v0.0.0-canary.842",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e1685da8923359b915e34062b7e3a43e10b2bed6",
+            "comment": "[Fabric] Move to WinAppSDK types for KeyStatus, and ensure usages account for locked flag"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b36f585978e2bad2de285671f2a1f3a211151098",
+            "comment": "Fix scrollview"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 11 Jul 2024 05:15:32 GMT",
+      "version": "0.0.0-canary.841",
+      "tag": "react-native-windows_v0.0.0-canary.841",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a96adfa4f9d469f66ac21c582bdab246ddc869ba",
+            "comment": "Add image response APIs to win32 exports"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Jul 2024 05:15:29 GMT",
+      "version": "0.0.0-canary.840",
+      "tag": "react-native-windows_v0.0.0-canary.840",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "34dc401fdd2514574d5734d796d27d1530af59bb",
+            "comment": "Handle changes to borderradius"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "56ba478b409b3b95171afc8de5f84f03d6520efa",
+            "comment": "Update Desktop NUSPEC to use ARM64EC"
+          },
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "8a91af57691e38ed9ee537ec5a7aaa74f8bae1eb",
+            "comment": "Integrate 6/13"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.226",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.97",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.24",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.28",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.41",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.43",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Jul 2024 05:15:29 GMT",
       "version": "0.0.0-canary.839",
       "tag": "react-native-windows_v0.0.0-canary.839",

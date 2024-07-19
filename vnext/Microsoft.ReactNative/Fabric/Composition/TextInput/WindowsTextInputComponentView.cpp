@@ -11,6 +11,7 @@
 #include <Utils/ValueUtils.h>
 #include <tom.h>
 #include <unicode.h>
+#include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.h>
 #include <cwctype>
@@ -757,8 +758,8 @@ void WindowsTextInputComponentView::OnKeyDown(
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
   // behavior We do forward Ctrl+Tab to the textinput.
   if (args.Key() != winrt::Windows::System::VirtualKey::Tab ||
-      source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
-          winrt::Windows::UI::Core::CoreVirtualKeyStates::Down) {
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) {
     WPARAM wParam = static_cast<WPARAM>(args.Key());
     LPARAM lParam = 0;
     lParam = args.KeyStatus().RepeatCount; // bits 0-15
@@ -787,8 +788,8 @@ void WindowsTextInputComponentView::OnKeyUp(
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
   // behavior We do forward Ctrl+Tab to the textinput.
   if (args.Key() != winrt::Windows::System::VirtualKey::Tab ||
-      source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
-          winrt::Windows::UI::Core::CoreVirtualKeyStates::Down) {
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) {
     WPARAM wParam = static_cast<WPARAM>(args.Key());
     LPARAM lParam = 1;
     lParam = args.KeyStatus().RepeatCount; // bits 0-15
@@ -826,16 +827,21 @@ bool WindowsTextInputComponentView::ShouldSubmit(
       // If 'submitKeyEvents' are supplied, use them to determine whether to emit onSubmitEditing' for either
       // single-line or multi-line TextInput
       if (args.KeyCode() == '\r') {
-        bool shiftDown = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) ==
-            winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
-        bool ctrlDown = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
-            winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
-        bool altDown = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
-            winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
-        bool metaDown = source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) ==
-                winrt::Windows::UI::Core::CoreVirtualKeyStates::Down ||
-            source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) ==
-                winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+        bool shiftDown = (source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
+                          winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
+            winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+        bool ctrlDown = (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+                         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
+            winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+        bool altDown = (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+                        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
+            winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+        bool metaDown = (source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
+                         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
+                winrt::Microsoft::UI::Input::VirtualKeyStates::Down ||
+            (source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
+             winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
+                winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
         return (submitKeyEvent.shiftKey && shiftDown) || (submitKeyEvent.ctrlKey && ctrlDown) ||
             (submitKeyEvent.altKey && altDown) || (submitKeyEvent.metaKey && metaDown) ||
             (!submitKeyEvent.shiftKey && !submitKeyEvent.altKey && !submitKeyEvent.metaKey && !submitKeyEvent.altKey &&
@@ -856,8 +862,8 @@ void WindowsTextInputComponentView::OnCharacterReceived(
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
   // behavior We do forward Ctrl+Tab to the textinput.
   if ((args.KeyCode() == '\t') &&
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) !=
-       winrt::Windows::UI::Core::CoreVirtualKeyStates::Down)) {
+      ((source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) != winrt::Microsoft::UI::Input::VirtualKeyStates::Down)) {
     return;
   }
 

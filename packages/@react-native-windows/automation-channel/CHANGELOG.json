@@ -2,6 +2,84 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Thu, 18 Jul 2024 05:15:24 GMT",
+      "version": "0.12.183",
+      "tag": "@react-native-windows/automation-channel_v0.12.183",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.843",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 12 Jul 2024 05:15:36 GMT",
+      "version": "0.12.182",
+      "tag": "@react-native-windows/automation-channel_v0.12.182",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.842",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 11 Jul 2024 05:15:32 GMT",
+      "version": "0.12.181",
+      "tag": "@react-native-windows/automation-channel_v0.12.181",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.841",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 10 Jul 2024 05:15:29 GMT",
+      "version": "0.12.180",
+      "tag": "@react-native-windows/automation-channel_v0.12.180",
+      "comments": {
+        "patch": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "8a91af57691e38ed9ee537ec5a7aaa74f8bae1eb",
+            "comment": "Integrate 6/13"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.24",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.41",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.840",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 04 Jul 2024 05:15:30 GMT",
       "version": "0.12.179",
       "tag": "@react-native-windows/automation-channel_v0.12.179",

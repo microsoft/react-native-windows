@@ -65,13 +65,14 @@ struct ScrollBarComponent {
 
     updateShy(true);
     onScaleChanged();
-    OnThemeChanged();
+    UpdateColorForScrollBarRegions();
   }
 
-  void OnThemeChanged() noexcept {
+  void UpdateColorForScrollBarRegions() noexcept {
     updateHighlight(ScrollbarHitRegion::ArrowFirst);
     updateHighlight(ScrollbarHitRegion::ArrowLast);
     updateHighlight(ScrollbarHitRegion::Thumb);
+
     m_trackVisual.Brush(
         winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(m_outer.Theme())
             ->InternalPlatformBrush(L"ScrollBarTrackFill"));
@@ -726,6 +727,14 @@ void ScrollViewComponentView::updateProps(
 
   // update BaseComponentView props
   base_type::updateProps(props, oldProps);
+
+  // Update the color only after updating the m_props in BaseComponentView
+  // to avoid scrollbarcomponents reading outdated scrollEnabled value.
+  if (!oldProps || oldViewProps.scrollEnabled != newViewProps.scrollEnabled) {
+    m_scrollVisual.ScrollEnabled(newViewProps.scrollEnabled);
+    m_horizontalScrollbarComponent->UpdateColorForScrollBarRegions();
+    m_verticalScrollbarComponent->UpdateColorForScrollBarRegions();
+  }
 }
 
 void ScrollViewComponentView::updateState(
@@ -825,8 +834,8 @@ void ScrollViewComponentView::OnPointerDown(const winrt::Windows::UI::Input::Poi
 
 void ScrollViewComponentView::onThemeChanged() noexcept {
   updateBackgroundColor(std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->backgroundColor);
-  m_verticalScrollbarComponent->OnThemeChanged();
-  m_horizontalScrollbarComponent->OnThemeChanged();
+  m_verticalScrollbarComponent->UpdateColorForScrollBarRegions();
+  m_horizontalScrollbarComponent->UpdateColorForScrollBarRegions();
   Super::onThemeChanged();
 }
 
@@ -919,6 +928,10 @@ void ScrollViewComponentView::OnKeyDown(
 }
 
 bool ScrollViewComponentView::scrollToEnd(bool animate) noexcept {
+  if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
+    return false;
+  }
+
   if ((((m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor) -
        m_scrollVisual.ScrollPosition().y) < 1.0f) {
     return false;
@@ -931,6 +944,10 @@ bool ScrollViewComponentView::scrollToEnd(bool animate) noexcept {
 }
 
 bool ScrollViewComponentView::scrollToStart(bool animate) noexcept {
+  if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
+    return false;
+  }
+
   m_scrollVisual.TryUpdatePosition({0.0f, 0.0f, 0.0f}, animate);
   return true;
 }
@@ -960,6 +977,10 @@ bool ScrollViewComponentView::lineRight(bool animate) noexcept {
 }
 
 bool ScrollViewComponentView::scrollDown(float delta, bool animate) noexcept {
+  if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
+    return false;
+  }
+
   if (((m_contentSize.height - m_layoutMetrics.frame.size.height) * m_layoutMetrics.pointScaleFactor) -
           m_scrollVisual.ScrollPosition().y <
       1.0f) {
@@ -971,6 +992,10 @@ bool ScrollViewComponentView::scrollDown(float delta, bool animate) noexcept {
 }
 
 bool ScrollViewComponentView::scrollUp(float delta, bool animate) noexcept {
+  if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
+    return false;
+  }
+
   if (m_scrollVisual.ScrollPosition().y <= 0.0f) {
     return false;
   }
@@ -980,6 +1005,10 @@ bool ScrollViewComponentView::scrollUp(float delta, bool animate) noexcept {
 }
 
 bool ScrollViewComponentView::scrollLeft(float delta, bool animate) noexcept {
+  if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
+    return false;
+  }
+
   if (m_scrollVisual.ScrollPosition().x <= 0.0f) {
     return false;
   }
@@ -989,6 +1018,10 @@ bool ScrollViewComponentView::scrollLeft(float delta, bool animate) noexcept {
 }
 
 bool ScrollViewComponentView::scrollRight(float delta, bool animate) noexcept {
+  if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
+    return false;
+  }
+
   if (((m_contentSize.width - m_layoutMetrics.frame.size.width) * m_layoutMetrics.pointScaleFactor) -
           m_scrollVisual.ScrollPosition().x <
       1.0f) {
@@ -1025,6 +1058,10 @@ void ScrollViewComponentView::HandleCommand(
 }
 
 void ScrollViewComponentView::scrollTo(winrt::Windows::Foundation::Numerics::float3 offset, bool animate) noexcept {
+  if (!std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
+    return;
+  }
+
   m_scrollVisual.TryUpdatePosition(offset, animate);
 }
 
@@ -1097,7 +1134,7 @@ void ScrollViewComponentView::StartBringIntoView(
     scrollToHorizontal = options.TargetRect->getMidX() - (viewerWidth * options.HorizontalAlignmentRatio);
   }
 
-  if (needsScroll) {
+  if (needsScroll && std::static_pointer_cast<const facebook::react::ScrollViewProps>(viewProps())->scrollEnabled) {
     m_scrollVisual.TryUpdatePosition(
         {static_cast<float>(scrollToHorizontal), static_cast<float>(scrollToVertical), 0.0f}, options.AnimationDesired);
   }

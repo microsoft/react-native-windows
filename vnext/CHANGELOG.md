@@ -1,8 +1,53 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 04 Jul 2024 05:15:29 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Jul 2024 05:15:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.843
+
+Thu, 18 Jul 2024 05:15:23 GMT
+
+### Changes
+
+- [Fabric] call reportMount to implement UIManagerMountHook support (30809111+acoates-ms@users.noreply.github.com)
+- Updating native WebSocket header logic to match RN (sawalker@microsoft.com)
+- [Fabric] Text renders borders twice (30809111+acoates-ms@users.noreply.github.com)
+- Resolve transform before animation (10109130+sharath2727@users.noreply.github.com)
+- [Fabric] Fix image component reference cycle (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.842
+
+Fri, 12 Jul 2024 05:15:36 GMT
+
+### Changes
+
+- [Fabric] Move to WinAppSDK types for KeyStatus, and ensure usages account for locked flag (30809111+acoates-ms@users.noreply.github.com)
+- Fix scrollview (10109130+sharath2727@users.noreply.github.com)
+
+## 0.0.0-canary.841
+
+Thu, 11 Jul 2024 05:15:32 GMT
+
+### Changes
+
+- Add image response APIs to win32 exports (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.840
+
+Wed, 10 Jul 2024 05:15:29 GMT
+
+### Changes
+
+- Handle changes to borderradius (30809111+acoates-ms@users.noreply.github.com)
+- Update Desktop NUSPEC to use ARM64EC (julio.rocha@microsoft.com)
+- Integrate 6/13 (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.226
+- Bump @react-native-windows/codegen to v0.0.0-canary.97
+- Bump @rnw-scripts/eslint-config to v1.2.24
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.28
+- Bump @rnw-scripts/just-task to v2.3.41
+- Bump react-native-platform-override to v1.9.43
 
 ## 0.0.0-canary.839
 
