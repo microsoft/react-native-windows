@@ -113,8 +113,7 @@ describe('TextInput Tests', () => {
     );
     expect(await component.getText()).toBe('hello world');
   });
-  // Comment out once the sentences mode has been implemented.
-  /*test('TextInputs can autocapitalize: Autocapitalize Sentences', async () => {
+  test('TextInputs can autocapitalize: Autocapitalize Sentences', async () => {
     const component = await app.findElementByTestID('capitalize-sentences');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('capitalize-sentences');
@@ -133,9 +132,8 @@ describe('TextInput Tests', () => {
         timeout: 5000,
         timeoutMsg: `Unable to enter correct text.`,
       });
-  });*/
-  // Comment out once the words mode has been implemented.
-  /*test('TextInputs can autocapitalize: Autocapitalize Words', async () => {
+  });
+  test('TextInputs can autocapitalize: Autocapitalize Words', async () => {
     const component = await app.findElementByTestID('capitalize-words');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('capitalize-words');
@@ -154,12 +152,16 @@ describe('TextInput Tests', () => {
         timeout: 5000,
         timeoutMsg: `Unable to enter correct text.`,
       });
-  });*/
+  });
   test('TextInputs can autocapitalize: Autocapitalize Characters', async () => {
     const component = await app.findElementByTestID('capitalize-characters');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('capitalize-characters');
     expect(dump).toMatchSnapshot();
+    
+    // Test behavior when text is set from JS
+    // Comment for now, the returned text is in lowercase, even though the UI shows it is all capitalized.
+    // expect(await component.getText()).toBe('INITIAL TEXT IS CAPITALIZED');
 
     await app.waitUntil(
       async () => {

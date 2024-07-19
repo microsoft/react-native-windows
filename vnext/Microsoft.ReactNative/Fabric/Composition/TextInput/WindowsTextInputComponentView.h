@@ -112,6 +112,7 @@ struct WindowsTextInputComponentView
   void autoCapitalizeOnUpdateProps(
       const std::string &previousCapitalizationType,
       const std::string &newcapitalizationType) noexcept;
+  bool shouldAutoCapitalize();
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};

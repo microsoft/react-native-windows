@@ -895,7 +895,14 @@ void WindowsTextInputComponentView::OnCharacterReceived(
   }
   emitter->onKeyPress(onKeyPressArgs);
 
-  WPARAM wParam = static_cast<WPARAM>(args.KeyCode());
+  WPARAM wParam;
+
+  // Auto-capitalize when character is alphabetic AND current string index qualifies for capitalization.
+  if (std::isalpha(args.KeyCode()) && shouldAutoCapitalize()) {
+    wParam = static_cast<WPARAM>(std::towupper(static_cast<wchar_t>(args.KeyCode())));
+  } else {
+    wParam = static_cast<WPARAM>(args.KeyCode());
+  }
 
   LPARAM lParam = 0;
   lParam = args.KeyStatus().RepeatCount; // bits 0-15
@@ -1051,6 +1058,7 @@ void WindowsTextInputComponentView::updateProps(
     m_submitKeyEvents.clear();
   }
 
+  // Modify this structure, let autoCapitalizeOnUpdateProps take all the stuff
   if (oldTextInputProps.autoCapitalize != newTextInputProps.autoCapitalize) {
     autoCapitalizeOnUpdateProps(oldTextInputProps.autoCapitalize, newTextInputProps.autoCapitalize);
   }
@@ -1526,7 +1534,7 @@ winrt::Microsoft::ReactNative::ComponentView WindowsTextInputComponentView::Crea
   return winrt::make<WindowsTextInputComponentView>(compContext, tag, reactContext);
 }
 
-// This function assumes that previous and new capitalization types are different.
+// This functions assumes that previous and new capitalization types are different.
 void WindowsTextInputComponentView::autoCapitalizeOnUpdateProps(
     const std::string &previousCapitalizationType,
     const std::string &newCapitalizationType) noexcept {
@@ -1536,8 +1544,6 @@ void WindowsTextInputComponentView::autoCapitalizeOnUpdateProps(
      Words - First letter of each word.
      Sentences - First letter of each sentence.
      None - Do not autocapitalize anything.
-
-     For now, only characters and none are supported.
   */
 
   if (previousCapitalizationType == "characters") {
@@ -1548,7 +1554,85 @@ void WindowsTextInputComponentView::autoCapitalizeOnUpdateProps(
   if (newCapitalizationType == "characters") {
     winrt::check_hresult(m_textServices->TxSendMessage(
         EM_SETEDITSTYLE, SES_UPPERCASE /* enable */, SES_UPPERCASE /* flag affected */, nullptr /* LRESULT */));
+  } else if (newCapitalizationType == "words" || newCapitalizationType == "sentences") {
+    // Cast text services to text document to get an ITextRange object
+    winrt::com_ptr<ITextDocument> textDocument;
+    winrt::check_hresult(m_textServices->QueryInterface(textDocument.put()));
+
+    // tomForward is a constant that indicates the end of the text range.
+    winrt::com_ptr<ITextRange> textRange;
+    winrt::check_hresult(textDocument->Range(0 /* start of string */, tomForward, textRange.put()));
+
+    if (newCapitalizationType == "words") {
+      winrt::check_hresult(textRange->ChangeCase(tomTitleCase));
+    } else if (newCapitalizationType == "sentences") {
+      winrt::check_hresult(textRange->ChangeCase(tomSentenceCase));
+    }
   }
+}
+
+bool WindowsTextInputComponentView::shouldAutoCapitalize() {
+  std::string_view autoCapitalizeType = windowsTextInputProps().autoCapitalize;
+
+  // Characters scenario is already handled by RichEdit, return false to avoid taking any further action.
+  if (autoCapitalizeType == "characters") {
+    return false;
+  } else if (autoCapitalizeType == "words") {
+    auto textServicesString = GetTextFromRichEdit();
+
+    if (textServicesString.empty()) {
+      return true;
+    }
+
+    winrt::com_ptr<ITextDocument> textDocument;
+    winrt::check_hresult(m_textServices->QueryInterface(textDocument.put()));
+
+    winrt::com_ptr<ITextSelection> textSelection;
+    winrt::check_hresult(textDocument->GetSelection(textSelection.put()));
+
+    long pos = 0; // Retrieve the current string index where cursor is sitting.
+    winrt::check_hresult(textSelection->GetStart(&pos));
+
+    if (pos == 0) { // Cursor is pointing at the start of the string.
+      return true;
+    } else if (std::isspace(textServicesString[pos - 1])) { // Previous character is a whitespace.
+      return true;
+    }
+  } else if (autoCapitalizeType == "sentences") {
+    auto textServicesString = GetTextFromRichEdit();
+
+    if (textServicesString.empty()) {
+      return true;
+    } else {
+      winrt::com_ptr<ITextDocument> textDocument;
+      winrt::check_hresult(m_textServices->QueryInterface(textDocument.put()));
+
+      winrt::com_ptr<ITextSelection> textSelection;
+      winrt::check_hresult(textDocument->GetSelection(textSelection.put()));
+
+      long pos = 0; // Retrieve the current string index where cursor is sitting.
+      winrt::check_hresult(textSelection->GetStart(&pos));
+
+      if (pos == 0) { // Cursor is pointing at the start of the string.
+        return true;
+      } else if (std::all_of(textServicesString.begin(), textServicesString.begin() + pos, [](char c) { return std::isspace(c); })) { 
+        // Check if characters to the left of pos are all whitespace.
+        return true;
+      } else if (pos >= 2) {
+        // Check for some punctuation mark patterns.
+        auto secondToLastChar = textServicesString[pos - 2];
+        bool isPunctuationMarkChar = secondToLastChar == '.' || secondToLastChar == '!' || secondToLastChar == '?';
+
+        // If the last character is a space AND the second-to-last character is a
+        // punctuation mark, then we want to capitalize.
+        if (isPunctuationMarkChar && std::isspace(textServicesString[pos - 1])) {
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
