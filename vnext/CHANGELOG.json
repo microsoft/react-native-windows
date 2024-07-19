@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 18 Jul 2024 05:15:23 GMT",
+      "version": "0.0.0-canary.843",
+      "tag": "react-native-windows_v0.0.0-canary.843",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a10a861854885ce338f4e4296d02661af512763d",
+            "comment": "[Fabric] call reportMount to implement UIManagerMountHook support"
+          },
+          {
+            "author": "sawalker@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "63d919e36e0d6ad93f1e772df53a1e7c1a5aa1da",
+            "comment": "Updating native WebSocket header logic to match RN"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "44090cbcd2d93bc3a68e518ae92a471f5ad09579",
+            "comment": "[Fabric] Text renders borders twice"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ee9cb5f47a21f0928841562fa521025727e01d1b",
+            "comment": "Resolve transform before animation"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "244d85aa9705ad11f50b887afeda77312837dd58",
+            "comment": "[Fabric] Fix image component reference cycle"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 12 Jul 2024 05:15:36 GMT",
       "version": "0.0.0-canary.842",
       "tag": "react-native-windows_v0.0.0-canary.842",

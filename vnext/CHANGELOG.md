@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 12 Jul 2024 05:15:36 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Jul 2024 05:15:23 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.843
+
+Thu, 18 Jul 2024 05:15:23 GMT
+
+### Changes
+
+- [Fabric] call reportMount to implement UIManagerMountHook support (30809111+acoates-ms@users.noreply.github.com)
+- Updating native WebSocket header logic to match RN (sawalker@microsoft.com)
+- [Fabric] Text renders borders twice (30809111+acoates-ms@users.noreply.github.com)
+- Resolve transform before animation (10109130+sharath2727@users.noreply.github.com)
+- [Fabric] Fix image component reference cycle (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.842
 
