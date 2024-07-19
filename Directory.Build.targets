@@ -76,6 +76,7 @@
         PlatformToolset;
         SolutionPath;
         SolutionDir;
+        SolutionName;
         IntDir;
         OutDir;
         TargetDir;
