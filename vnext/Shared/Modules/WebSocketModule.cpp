@@ -416,9 +416,8 @@ void WebSocketTurboModule::Connect(
   auto &optHeaders = options.headers;
   if (optHeaders.has_value()) {
     auto &headersVal = optHeaders.value();
-    for (const auto &headerVal : headersVal.AsArray()) {
+    for (const auto &entry : headersVal.AsObject()) {
       // Each header JSValueObject should only contain one key-value pair
-      const auto &entry = *headerVal.AsObject().cbegin();
       rcOptions.emplace(winrt::to_hstring(entry.first), entry.second.AsString());
     }
   }
