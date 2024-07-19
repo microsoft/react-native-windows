@@ -67,7 +67,8 @@ $vsComponents = @('Microsoft.Component.MSBuild',
     'Microsoft.VisualStudio.Component.VC.Tools.x86.x64',
     'Microsoft.VisualStudio.ComponentGroup.UWP.Support',
     'Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Core',
-    'Microsoft.VisualStudio.Component.Windows10SDK.19041');
+    'Microsoft.VisualStudio.Component.Windows10SDK.19041',
+    'Microsoft.VisualStudio.Component.Windows11SDK.22621');
 
 # UWP.VC is not needed to build the projects with msbuild, but the VS IDE requires it.
 if (!($tagsToInclude.Contains('buildLab'))) {
@@ -123,7 +124,7 @@ function Get-VSPathPropertyForEachInstall {
         [String[]]$paths = ($output | Where-Object { (Test-Path $_) });
         return $paths;
     }
-    
+
     return $null;
 }
 
@@ -183,33 +184,33 @@ function GetVSChannelAndProduct {
     param(
         [string]$VsWhere
     )
-    
-    if ($VsWhere -ne $null) {
+
+    if ($VsWhere) {
         $channelId = & $VsWhere -version $vsver -property channelId;
         $productId = & $VsWhere -version $vsver -property productId;
-        
+
         # Channel/product not found, check one more time for pre-release
         if (($channelId -eq $null) -or ($productId -eq $null)) {
             $channelId = & $VsWhere -version $vsver -property channelId -prerelease;
             $productId = & $VsWhere -version $vsver -property productId -prerelease;
         }
-        
+
         return $channelId, $productId;
     }
-    
+
     return $null, $null;
 }
 
 function InstallVS {
     $vsWhere = Get-VSWhere;
-    
+
     $channelId, $productId = GetVSChannelAndProduct -VsWhere $vsWhere
 
     if (($vsWhere -eq $null) -or ($channelId -eq $null) -or ($productId -eq $null)) {
         # No VSWhere / VS_Installer, try to install
 
         EnsureChocoForInstall;
-        
+
         if ($Enterprise) {
             # The CI machines need the enterprise version of VS as that is what is hardcoded in all the scripts
             ChocoInstall visualstudio2022enterprise;
@@ -221,7 +222,7 @@ function InstallVS {
 
         $channelId, $productId = GetVSChannelAndProduct -VsWhere $vsWhere
     }
-    
+
     # Final check before attempting install
     if (($vsWhere -eq $null) -or ($channelId -eq $null) -or ($productId -eq $null)) {
         throw "Unable to find or install a compatible version of Visual Studio >= ($vsver).";
@@ -329,7 +330,7 @@ function InstallCppWinRT_VSIX {
     $url = "https://marketplace.visualstudio.com/_apis/public/gallery/publishers/CppWinRTTeam/vsextensions/cppwinrt101804264/2.0.210304.5/vspackage";
     Write-Verbose "Downloading CppWinRT VSIX from $url";
     Invoke-WebRequest -UseBasicParsing $url -OutFile $env:TEMP\Microsoft.Windows.CppWinRT.vsix;
-    
+
     $vsWhere = Get-VSWhere;
     if ($vsWhere -eq $null) {
         return;
