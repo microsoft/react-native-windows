@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Upgrade to Windows SDK 10.0.22621.0 (#13287)",
+  "packageName": "@react-native-windows/cli",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
