@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Remove OpenSSL from Desktop LIB and DLL",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}

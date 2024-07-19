@@ -1,8 +1,53 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Sat, 08 Jun 2024 05:17:57 GMT and should not be manually modified.
+This log was last generated on Fri, 28 Jun 2024 05:15:51 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.225
+
+Fri, 28 Jun 2024 05:15:51 GMT
+
+### Changes
+
+- Fixed typos and improved uniformity of RNW CLI command help (jthysell@microsoft.com)
+
+## 0.0.0-canary.224
+
+Sat, 22 Jun 2024 05:15:16 GMT
+
+### Changes
+
+- Fix bug with specifying min VS versions for run-windows (jthysell@microsoft.com)
+
+## 0.0.0-canary.223
+
+Fri, 21 Jun 2024 05:17:50 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.96
+
+## 0.0.0-canary.222
+
+Wed, 19 Jun 2024 05:14:43 GMT
+
+### Changes
+
+- Enable devMode with react-native init-windows old/* templates (jthysell@microsoft.com)
+
+## 0.0.0-canary.221
+
+Wed, 12 Jun 2024 05:16:24 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.95
+- Bump @react-native-windows/fs to v0.0.0-canary.52
+- Bump @react-native-windows/package-utils to v0.0.0-canary.78
+- Bump @react-native-windows/telemetry to v0.0.0-canary.103
+- Bump @rnw-scripts/eslint-config to v1.2.23
+- Bump @rnw-scripts/just-task to v2.3.40
 
 ## 0.0.0-canary.220
 

@@ -27,6 +27,12 @@ parameters:
             BuildConfiguration: Debug
             BuildPlatform: x86
             UseFabric: false
+          - Name: ARM64ECDebug
+            BuildConfiguration: Debug
+            BuildPlatform: ARM64EC
+          - Name: ARM64ECRelease
+            BuildConfiguration: Release
+            BuildPlatform: ARM64EC
           - Name: X64DebugFabric
             BuildConfiguration: Debug
             BuildPlatform: x64
@@ -51,12 +57,12 @@ parameters:
           - Name: X86Release
             BuildConfiguration: Release
             BuildPlatform: x86
-          - Name: Arm64Debug
+          - Name: ARM64ECDebug
             BuildConfiguration: Debug
-            BuildPlatform: ARM64
-          - Name: Arm64Release
+            BuildPlatform: ARM64EC
+          - Name: ARM64ECRelease
             BuildConfiguration: Release
-            BuildPlatform: ARM64
+            BuildPlatform: ARM64EC
           - Name: X64DebugFabric
             BuildConfiguration: Debug
             BuildPlatform: x64
@@ -170,7 +176,7 @@ jobs:
 
             - template: ../templates/discover-google-test-adapter.yml
 
-            - ${{ if ne(matrix.BuildPlatform, 'ARM64') }}:
+            - ${{ if ne(matrix.BuildPlatform, 'ARM64EC') }}:
               - task: VSTest@2
                 displayName: Run Desktop Unit Tests
                 timeoutInMinutes: 5 # Set smaller timeout , due to hangs
@@ -192,7 +198,7 @@ jobs:
                   failOnMinTestsNotRun: true
 
               # Suspected debug assert in TestRunner hanging tests randomly. Run only on Release for now.
-            - ${{ if and(eq(matrix.BuildConfiguration, 'Release'), ne(variables['Desktop.IntegrationTests.SkipRNTester'], true), ne(matrix.BuildPlatform, 'ARM64')) }}:
+            - ${{ if and(eq(matrix.BuildConfiguration, 'Release'), ne(variables['Desktop.IntegrationTests.SkipRNTester'], true), ne(matrix.BuildPlatform, 'ARM64EC')) }}:
               - task: PowerShell@2
                 displayName: Set up test servers
                 inputs:

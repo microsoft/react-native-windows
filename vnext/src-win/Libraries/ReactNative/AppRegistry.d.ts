@@ -57,6 +57,10 @@ export namespace AppRegistry {
     provider: WrapperComponentProvider,
   ): void;
 
+  export function setRootViewStyleProvider(
+    provider: RootViewStyleProvider,
+  ): void;
+
   export function registerConfig(config: AppConfig[]): void;
 
   export function setRootViewStyleProvider(

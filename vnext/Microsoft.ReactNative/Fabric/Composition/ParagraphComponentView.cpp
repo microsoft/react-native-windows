@@ -83,6 +83,16 @@ void ParagraphComponentView::updateState(
   m_textLayout = nullptr;
 }
 
+void ParagraphComponentView::updateLayoutMetrics(
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
+  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
+
+  if (layoutMetrics.pointScaleFactor != oldLayoutMetrics.pointScaleFactor) {
+    m_textLayout = nullptr;
+  }
+}
+
 void ParagraphComponentView::FinalizeUpdates(
     winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
   ensureVisual();

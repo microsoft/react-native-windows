@@ -38,8 +38,11 @@ public:
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
   virtual bool preventDoubleTextMeasure(jsi::Runtime &rt) = 0;
   virtual bool setAndroidLayoutDirection(jsi::Runtime &rt) = 0;
+  virtual bool useImmediateExecutorInAndroidBridgeless(jsi::Runtime &rt) = 0;
   virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
+  virtual bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) = 0;
+  virtual bool useRuntimeShadowNodeReferenceUpdateOnLayout(jsi::Runtime &rt) = 0;
   virtual bool useStateAlignmentMechanism(jsi::Runtime &rt) = 0;
 
 };
@@ -208,6 +211,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::setAndroidLayoutDirection, jsInvoker_, instance_);
     }
+    bool useImmediateExecutorInAndroidBridgeless(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useImmediateExecutorInAndroidBridgeless) == 1,
+          "Expected useImmediateExecutorInAndroidBridgeless(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useImmediateExecutorInAndroidBridgeless, jsInvoker_, instance_);
+    }
     bool useModernRuntimeScheduler(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::useModernRuntimeScheduler) == 1,
@@ -223,6 +234,22 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useNativeViewConfigsInBridgelessMode, jsInvoker_, instance_);
+    }
+    bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useRuntimeShadowNodeReferenceUpdate) == 1,
+          "Expected useRuntimeShadowNodeReferenceUpdate(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useRuntimeShadowNodeReferenceUpdate, jsInvoker_, instance_);
+    }
+    bool useRuntimeShadowNodeReferenceUpdateOnLayout(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useRuntimeShadowNodeReferenceUpdateOnLayout) == 1,
+          "Expected useRuntimeShadowNodeReferenceUpdateOnLayout(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useRuntimeShadowNodeReferenceUpdateOnLayout, jsInvoker_, instance_);
     }
     bool useStateAlignmentMechanism(jsi::Runtime &rt) override {
       static_assert(

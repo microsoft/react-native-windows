@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240531-c046198cc",
+  "baseVersion": "0.75.0-nightly-20240610-ced076210",
   "overrides": [
     {
       "type": "derived",
@@ -60,13 +60,6 @@
       "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputExample.android.js",
       "baseHash": "c4d61d6e76488c48b8256e6abc9bb38ef8e54c44",
       "issue": 5688
-    },
-    {
-      "type": "patch",
-      "file": "src/js/examples/TextInput/TextInputSharedExamples.windows.js",
-      "baseFile": "packages/rn-tester/js/examples/TextInput/TextInputSharedExamples.js",
-      "baseHash": "55efb5c3f34963215650859b8a1bf3cbb5fc6f54",
-      "issue": 13303
     },
     {
       "type": "patch",
