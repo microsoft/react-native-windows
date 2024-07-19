@@ -56,10 +56,6 @@ parameters:
           - Name: X86Release
             BuildConfiguration: Release
             BuildPlatform: x86
-          - Name: X64DebugFabric
-            BuildConfiguration: Debug
-            BuildPlatform: x64
-            UseFabric: true
           - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
             BuildConfiguration: Release
             BuildPlatform: x86
