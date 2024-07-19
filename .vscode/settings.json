@@ -62,7 +62,7 @@
   "clang-format.executable": "${workspaceRoot}/vnext/node_modules/.bin/clang-format",
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
+    "source.fixAll.eslint": true
   },
   "dotnet.defaultSolution": "disable"
 }
