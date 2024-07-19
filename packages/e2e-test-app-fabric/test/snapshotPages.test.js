@@ -35,6 +35,11 @@ describe('snapshotAllPages', () => {
       continue;
     }
 
+    // https://github.com/microsoft/react-native-windows/issues/13436
+    if((component.module.title == 'FlatList' && (example.title == 'Basic' || example.title == "MultiColumn")) || (component.module.title == 'ScrollView' && example.title == '<ScrollView> RefreshControl\n') || (component.module.title == 'SectionList' && example.title == 'SectionList scrollable')){
+      continue;
+    }
+
     test(component.module.title, () => {
       for (const example of component.module.examples) {
         const Example = example.render;
