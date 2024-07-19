@@ -2,6 +2,81 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 10 Jul 2024 21:00:36 GMT",
+      "version": "0.74.11",
+      "tag": "react-native-windows_v0.74.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "71a102ac500541f38b7b8bf3b919c5cc8f3494a6",
+            "comment": "Handle changes to borderradius"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "71a102ac500541f38b7b8bf3b919c5cc8f3494a6",
+            "comment": "Add image response APIs to win32 exports"
+          },
+          {
+            "author": "1422161+marlenecota@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d3c8e762a7b2be2c699d7a2c14e4da06501c352f",
+            "comment": "Integrate 0.74.3"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "735e222d1a22a096b34e991eea2c2733e6667fbc",
+            "comment": "[Fabric] Handle scalefactor changes"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "735e222d1a22a096b34e991eea2c2733e6667fbc",
+            "comment": "Patch yoga to handle dynamic scale changes"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 01 Jul 2024 15:16:25 GMT",
+      "version": "0.74.10",
+      "tag": "react-native-windows_v0.74.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.74.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.74.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 17 Jun 2024 15:43:53 GMT",
+      "version": "0.74.9",
+      "tag": "react-native-windows_v0.74.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9efa2f6851a90be02d599f18a224bf6c89032409",
+            "comment": "Upgrade Desktop solution/projects to Win SDK 10.0.22621.0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 10 Jun 2024 15:19:54 GMT",
       "version": "0.74.8",
       "tag": "react-native-windows_v0.74.8",

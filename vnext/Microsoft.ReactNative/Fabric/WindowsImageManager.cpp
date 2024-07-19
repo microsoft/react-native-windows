@@ -87,6 +87,11 @@ WindowsImageManager::GetImageRandomAccessStreamAsync(ReactImageSource source) co
     }
 
     winrt::Windows::Storage::StorageFile file(co_await getFileSync);
+
+    if (!file) {
+      co_return winrt::Microsoft::ReactNative::Composition::ImageFailedResponse(L"Failed to get file.");
+    }
+
     co_return winrt::Microsoft::ReactNative::Composition::StreamImageResponse(co_await file.OpenReadAsync());
   }
 

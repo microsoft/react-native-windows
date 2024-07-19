@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.74.1",
+  "baseVersion": "0.74.3",
   "overrides": [
     {
       "type": "derived",
@@ -148,9 +148,44 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/config/Config.cpp",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/config/Config.cpp",
+      "baseHash": "a4d3ef6e1713ff9d7eefefdce3012a4e258ab15f",
+      "issue": 13409
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/config/Config.h",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/config/Config.h",
+      "baseHash": "8582e6255871f242a2cc861a4cacb473b85495c4",
+      "issue": 13409
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/enums/ExperimentalFeature.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/enums/ExperimentalFeature.h",
       "baseHash": "f3f2a93e7d8f76eb24543eb3cbdf70d9d573447e"
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/LayoutResults.cpp",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/LayoutResults.cpp",
+      "baseHash": "3e5bbf4d0a41f9b3baf94ec544574b6d94fdd4fd",
+      "issue": 13409
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/LayoutResults.h",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/LayoutResults.h",
+      "baseHash": "e6be6681fc1427c12d2e89da13cfe1984dffd714",
+      "issue": 13409
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/Node.cpp",
+      "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/Node.cpp",
+      "baseHash": "093742ef44dff5b3168bf9ef22cff29c1af19ce6",
+      "issue": 13409
     },
     {
       "type": "patch",
@@ -327,7 +362,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "0119ddc412dcbacf1074b1d6b13628667578a270"
+      "baseHash": "3676702ffe4830f11e49c67067d7fe18d9c731cb"
     },
     {
       "type": "patch",

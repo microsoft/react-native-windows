@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/codegen",
-  "version": "0.74.0",
+  "version": "0.74.1",
   "description": "Generators for react-native-codegen targeting react-native-windows",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -24,7 +24,7 @@
   "dependencies": {
     "@react-native-windows/fs": "0.74.0",
     "chalk": "^4.1.0",
-    "globby": "^11.0.4",
+    "globby": "^11.1.0",
     "mustache": "^4.0.1",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"

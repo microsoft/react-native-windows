@@ -1,8 +1,37 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 10 Jun 2024 15:19:54 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Jul 2024 21:00:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.11
+
+Wed, 10 Jul 2024 21:00:36 GMT
+
+### Patches
+
+- Handle changes to borderradius (30809111+acoates-ms@users.noreply.github.com)
+- Add image response APIs to win32 exports (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 0.74.3 (1422161+marlenecota@users.noreply.github.com)
+- [Fabric] Handle scalefactor changes (30809111+acoates-ms@users.noreply.github.com)
+- Patch yoga to handle dynamic scale changes (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.74.10
+
+Mon, 01 Jul 2024 15:16:25 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.74.1
+- Bump @react-native-windows/codegen to v0.74.1
+
+## 0.74.9
+
+Mon, 17 Jun 2024 15:43:53 GMT
+
+### Patches
+
+- Upgrade Desktop solution/projects to Win SDK 10.0.22621.0 (julio.rocha@microsoft.com)
 
 ## 0.74.8
 
