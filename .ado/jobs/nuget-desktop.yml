@@ -9,6 +9,7 @@ jobs:
     dependsOn:
       - DesktopX64Release
       - DesktopX86Debug
+      - DesktopARM64ECRelease
 
     pool: ${{ parameters.AgentPool.Small }}
     timeoutInMinutes: 30 # how long to run the job before automatically cancelling
@@ -31,3 +32,5 @@ jobs:
               configuration: Release
             - platform: x86
               configuration: Debug
+            - platform: ARM64EC
+              configuration: Release
