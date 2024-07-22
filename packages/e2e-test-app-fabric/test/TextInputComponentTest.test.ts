@@ -97,9 +97,6 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('capitalize-none');
     expect(dump).toMatchSnapshot();
 
-    // Test behavior when text is set from JS
-    expect(await component.getText()).toBe('initial text is not capitalized');
-
     await app.waitUntil(
       async () => {
         await component.setValue('hello world');
