@@ -120,7 +120,7 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('capitalize-sentences');
     expect(dump).toMatchSnapshot();
 
-    // Test behavior when text is set from JS
+    // Test behavior when text is set from JS - Requires change in RN Core repo to avoid override issues
     expect(await component.getText()).toBe('initial text is not capitalized');
 
     await app.waitUntil(
@@ -141,7 +141,7 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('capitalize-words');
     expect(dump).toMatchSnapshot();
 
-    // Test behavior when text is set from JS
+    // Test behavior when text is set from JS - Requires change in RN Core repo to avoid override issues
     expect(await component.getText()).toBe('initial text is not capitalized');
     
     await app.waitUntil(

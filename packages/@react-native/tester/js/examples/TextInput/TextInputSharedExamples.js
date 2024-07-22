@@ -852,29 +852,23 @@ module.exports = ([
       return (
         <View>
           <WithLabel label="none">
-            <ExampleTextInput
-                testID="capitalize-none"
-                defaultValue="initial text is not capitalized"
-                autoCapitalize="none" />
+            <ExampleTextInput testID="capitalize-none" autoCapitalize="none" />
           </WithLabel>
           <WithLabel label="sentences">
             <ExampleTextInput
               testID="capitalize-sentences"
-              defaultValue="initial text is not capitalized"
               autoCapitalize="sentences"
             />
           </WithLabel>
           <WithLabel label="words">
             <ExampleTextInput
               testID="capitalize-words"
-              defaultValue="initial text is not capitalized"
               autoCapitalize="words"
             />
           </WithLabel>
           <WithLabel label="characters">
             <ExampleTextInput
               testID="capitalize-characters"
-              defaultValue="initial text is capitalized"
               autoCapitalize="characters"
             />
           </WithLabel>
