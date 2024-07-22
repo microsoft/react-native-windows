@@ -147,7 +147,7 @@ ${type.properties
 function tryGetConstantType(
   nativeModule: NativeModuleSchema,
 ): NativeModuleObjectTypeAnnotation | undefined {
-  const candidates = nativeModule.spec.properties.filter(
+  const candidates = nativeModule.spec.methods.filter(
     prop => prop.name === 'getConstants',
   );
   if (candidates.length === 0) {
@@ -224,7 +224,7 @@ export function generateTypeScript(
           ? ''
           : `  getConstants(): ${translateType(constantType)}`;
 
-      const methods = nativeModule.spec.properties.filter(
+      const methods = nativeModule.spec.methods.filter(
         prop => prop.name !== 'getConstants',
       );
       const membersCode = methods.map(translateMethod).join('');
