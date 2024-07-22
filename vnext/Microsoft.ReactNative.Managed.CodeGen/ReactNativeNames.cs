@@ -87,10 +87,13 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     public static readonly SyntaxToken Arg5LocalName = Identifier("arg5");
     public static readonly SyntaxToken Arg6LocalName = Identifier("arg6");
     public static readonly SyntaxToken Arg7LocalName = Identifier("arg7");
+    public static readonly SyntaxToken Arg8LocalName = Identifier("arg8");
+    public static readonly SyntaxToken Arg9LocalName = Identifier("arg9");
 
     public static readonly SyntaxToken[] ArgLocalNames = new SyntaxToken[] {
       Arg0LocalName, Arg1LocalName, Arg2LocalName, Arg3LocalName,
-      Arg4LocalName, Arg5LocalName, Arg6LocalName, Arg7LocalName
+      Arg4LocalName, Arg5LocalName, Arg6LocalName, Arg7LocalName,
+      Arg8LocalName, Arg9LocalName
     };
 
     public static readonly SyntaxToken Value0LocalName = Identifier("value0");
@@ -101,10 +104,13 @@ namespace Microsoft.ReactNative.Managed.CodeGen
     public static readonly SyntaxToken Value5LocalName = Identifier("value5");
     public static readonly SyntaxToken Value6LocalName = Identifier("value6");
     public static readonly SyntaxToken Value7LocalName = Identifier("value7");
+    public static readonly SyntaxToken Value8LocalName = Identifier("value8");
+    public static readonly SyntaxToken Value9LocalName = Identifier("value9");
 
     public static readonly SyntaxToken[] ValueLocalNames = new SyntaxToken[] {
       Value0LocalName, Value1LocalName, Value2LocalName, Value3LocalName,
-      Value4LocalName, Value5LocalName, Value6LocalName, Value7LocalName
+      Value4LocalName, Value5LocalName, Value6LocalName, Value7LocalName,
+      Value8LocalName, Value9LocalName
     };
   }
 }

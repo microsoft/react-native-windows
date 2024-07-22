@@ -50,9 +50,9 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
     }
 
     [TestMethod]
-    public void EightParamReturnInt()
+    public void TenParamReturnInt()
     {
-      TestMethod("public int Method(int a, string b, int c, string d, double e, string f, int g, double h) { return 42; }", ReactMethod.MethodReturnStyle.ReturnValue);
+      TestMethod("public int Method(int a, string b, int c, string d, double e, string f, int g, double h, string i, int j) { return 42; }", ReactMethod.MethodReturnStyle.ReturnValue);
     }
 
     [TestMethod]
