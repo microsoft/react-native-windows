@@ -40,17 +40,21 @@ steps:
 
   - ${{ if endsWith(parameters.template, '-app') }}:
     - script: |
-        npx --yes react-native@$(reactNativeDevDependency) init testcli --template react-native@$(reactNativeDevDependency)
+        # Change version of @react-native-community/template from 'next' to 'reactNativeDevDependency' - Windows #13446
+        npx --yes react-native@$(reactNativeDevDependency) init testcli --template @react-native-community/template@next
       displayName: Init new app project with react-native init
       workingDirectory: $(Agent.BuildDirectory)
 
   - ${{ if endsWith(parameters.template, '-lib') }}:
     - script: |
-        npx --yes create-react-native-library@latest --slug testcli --description testcli --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages java-objc --type module-new --react-native-version $(reactNativeDevDependency) --example vanilla testcli
+        # Change version of react-native from 'next' to 'reactNativeDevDependency' - Windows #13446
+        npx --yes create-react-native-library@latest --slug testcli --description testcli --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages java-objc --type module-new --react-native-version next --example vanilla testcli
       displayName: Init new lib project with create-react-native-library
       workingDirectory: $(Agent.BuildDirectory)
 
   - script: |
+      # Once version of react-native is reverted from 'next' to 'reactNativeDevDependency', remove 'yarn upgrade' command - Windows #13446
+      call yarn upgrade react-native@$(reactNativeDevDependency)
       call yarn install
     displayName: pre-windows yarn install
     workingDirectory: $(Agent.BuildDirectory)\testcli
