@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 22 Jul 2024 15:21:31 GMT",
+      "version": "0.75.0-preview.2",
+      "tag": "react-native-windows_v0.75.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "f174c5eb91069cd2903f518fb0b326b86927e1e7",
+            "comment": "Update Desktop NUSPEC to use ARM64EC (#13335)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Jul 2024 16:52:22 GMT",
       "version": "0.75.0-preview.1",
       "tag": "react-native-windows_v0.75.0-preview.1",
