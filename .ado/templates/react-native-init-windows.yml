@@ -99,7 +99,6 @@ steps:
   - ${{ if endsWith(parameters.template, '-lib') }}:
     - script: |
         call yarn add react-native-windows@$(npmVersion) --dev
-# call yarn add react-native-windows@* --peer
       displayName: yarn add react-native-windows dev/peer
       workingDirectory: $(Agent.BuildDirectory)\testcli
       env:
