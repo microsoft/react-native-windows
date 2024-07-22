@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 22 Jul 2024 15:12:53 GMT",
+      "version": "0.73.17",
+      "tag": "react-native-windows_v0.73.17",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0c34c3ba4d01c15bc226502f5596cfa9804f440b",
+            "comment": "Port Desktop DLL to ARM64EC (#13320)"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "be4fbd8d8b3905d9d3f1d2d3f8b8f29328b4d43c",
+            "comment": "Upgrade Desktop solution/projects to Win SDK 10.0.22621.0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Jul 2024 15:14:51 GMT",
       "version": "0.73.16",
       "tag": "react-native-windows_v0.73.16",
