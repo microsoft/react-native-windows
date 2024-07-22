@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 10 Jul 2024 21:00:36 GMT and should not be manually modified.
+This log was last generated on Mon, 22 Jul 2024 15:14:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.12
+
+Mon, 22 Jul 2024 15:14:15 GMT
+
+### Patches
+
+- Port Desktop DLL to ARM64EC (#13320) (julio.rocha@microsoft.com)
+- [Fabric] call reportMount to implement UIManagerMountHook support (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Move to WinAppSDK types for KeyStatus, and ensure usages account for locked flag (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Text renders borders twice (30809111+acoates-ms@users.noreply.github.com)
+- Fix scrollview (10109130+sharath2727@users.noreply.github.com)
+- Resolve transform before animation (10109130+sharath2727@users.noreply.github.com)
+- [Fabric] Fix image component reference cycle (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.11
 

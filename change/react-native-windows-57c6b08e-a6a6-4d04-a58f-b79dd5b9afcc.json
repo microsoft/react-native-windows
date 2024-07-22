@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[Fabric] Move to WinAppSDK types for KeyStatus, and ensure usages account for locked flag",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

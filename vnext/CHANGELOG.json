@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 22 Jul 2024 15:14:15 GMT",
+      "version": "0.74.12",
+      "tag": "react-native-windows_v0.74.12",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "696f0bbbb4ba8dde034eb8d55d5c9ae57325ae2f",
+            "comment": "Port Desktop DLL to ARM64EC (#13320)"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7d828ea41484ae37c7fc4a0c991c0aa29a1c3876",
+            "comment": "[Fabric] call reportMount to implement UIManagerMountHook support"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7d828ea41484ae37c7fc4a0c991c0aa29a1c3876",
+            "comment": "[Fabric] Move to WinAppSDK types for KeyStatus, and ensure usages account for locked flag"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7d828ea41484ae37c7fc4a0c991c0aa29a1c3876",
+            "comment": "[Fabric] Text renders borders twice"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7d828ea41484ae37c7fc4a0c991c0aa29a1c3876",
+            "comment": "Fix scrollview"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7d828ea41484ae37c7fc4a0c991c0aa29a1c3876",
+            "comment": "Resolve transform before animation"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7d828ea41484ae37c7fc4a0c991c0aa29a1c3876",
+            "comment": "[Fabric] Fix image component reference cycle"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jul 2024 21:00:36 GMT",
       "version": "0.74.11",
       "tag": "react-native-windows_v0.74.11",

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Resolve transform before animation",
-  "packageName": "react-native-windows",
-  "email": "10109130+sharath2727@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Port Desktop DLL to ARM64EC (#13320)",
-  "packageName": "react-native-windows",
-  "email": "julio.rocha@microsoft.com",
-  "dependentChangeType": "patch"
-}
