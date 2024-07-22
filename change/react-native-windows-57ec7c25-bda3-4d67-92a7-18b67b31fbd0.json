@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Updating native WebSocket header logic to match RN",
-  "packageName": "react-native-windows",
-  "email": "sawalker@microsoft.com",
-  "dependentChangeType": "patch"
-}
