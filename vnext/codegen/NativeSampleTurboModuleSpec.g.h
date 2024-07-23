@@ -13,12 +13,27 @@
 
 namespace Microsoft::ReactNativeSpecs {
 
+struct SampleTurboModuleSpec_ObjectStruct {
+    double a;
+    std::string b;
+    std::optional<std::string> c;
+};
+
 struct SampleTurboModuleSpec_Constants {
     bool const1;
     double const2;
     std::string const3;
 };
 
+
+inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(SampleTurboModuleSpec_ObjectStruct*) noexcept {
+    winrt::Microsoft::ReactNative::FieldMap fieldMap {
+        {L"a", &SampleTurboModuleSpec_ObjectStruct::a},
+        {L"b", &SampleTurboModuleSpec_ObjectStruct::b},
+        {L"c", &SampleTurboModuleSpec_ObjectStruct::c},
+    };
+    return fieldMap;
+}
 
 inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(SampleTurboModuleSpec_Constants*) noexcept {
     winrt::Microsoft::ReactNative::FieldMap fieldMap {

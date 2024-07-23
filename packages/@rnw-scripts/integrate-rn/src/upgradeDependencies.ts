@@ -104,6 +104,7 @@ export default async function upgradeDependencies(
     }),
   );
 
+  console.log('\nupgrading dependencies')
   await runCommand('yarn install');
 }
 
@@ -155,6 +156,7 @@ async function upgradeReactNative(
     }
   }
 
+  console.log('\n upgrading react-native')
   await runCommand('yarn install');
   const newJson = (await findPackage('react-native', findRnOpts))!.json;
   const newTemplateJson = (await findPackage(
