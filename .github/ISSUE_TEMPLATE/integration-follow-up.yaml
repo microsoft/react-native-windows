@@ -1,0 +1,86 @@
+name: Intergration Follow-up Report
+description: File a integration follow-up issue
+title: Describe the problem
+labels: [Integration Follow-up]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Your issue will be triaged by the RNW team according to [this process](https://github.com/microsoft/react-native-windows/wiki/Triage-Process).
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Problem Description
+      description: This form is for errors that come up from integrations from Meta. Please enter a description of the issue. 
+    id: description
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Link to the integration where the error originated
+    id: integration
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Link to commit
+      description: Please link the specific commit from upstream that introduced the issue. If the exact commit is unknown, provide the range of commits brought in from the integration.
+    id: commit
+  - type: textarea
+    attributes:
+      label: Forked files
+      description: If any files were forked from upstream, list them below and ensure that any Windows-specific changes in those files are enclosed in [Windows] comments."
+      placeholder: |
+        1.
+        2.
+    id: files
+  - type: textarea
+    attributes:
+      label: Upstream PR
+      description: If an upstream PR has already been made, please link it and add the date the fork can be removed.
+    id: upstream
+  - type: textarea
+    validations:
+      required: true
+    attributes:
+      label: Steps To Reproduce
+      description: Provide a detailed list of steps that reproduce the issue.
+      placeholder: |
+        1.
+        2.
+    id: steps
+  - type: textarea
+    attributes:
+      label: Expected Results
+      description: Describe what you expected to happen.
+    id: expected
+  - type: dropdown
+    attributes:
+      label: Target Device(s)
+      description: What device(s) are you targeting?
+      multiple: true
+      options:
+        - "Desktop"
+        - "Xbox"
+        - "HoloLens"
+    id: device
+  - type: dropdown
+    attributes:
+      label: Visual Studio Version
+      description: Which version of Visual Studio are you using?
+      options:
+        - "Visual Studio 2017"
+        - "Visual Studio 2019"
+        - "Visual Studio 2022"
+    id: vs
+  - type: dropdown
+    attributes:
+      label: Build Configuration
+      description: Which build configuration are you running?
+      options:
+        - "Debug"
+        - "DebugBundle"
+        - "Release"
+        - "ReleaseBundle"
+    id: config
