@@ -109,11 +109,6 @@ const Text: React.AbstractComponent<
   const _accessibilityStateDisabled = _accessibilityState?.disabled;
   const _disabled = disabled ?? _accessibilityStateDisabled;
 
-  const nativeTextAccessibilityState =
-    _disabled !== _accessibilityState?.disabled
-      ? {..._accessibilityState, disabled: _disabled}
-      : _accessibilityState;
-
   const isPressable =
     (onPress != null ||
       onLongPress != null ||
@@ -375,12 +370,12 @@ const Text: React.AbstractComponent<
               disabled={_disabled}
               ellipsizeMode={ellipsizeMode ?? 'tail'}
               isHighlighted={isHighlighted}
-              nativeID={id ?? nativeID}
-              numberOfLines={numberOfLines}
+              nativeID={_nativeID}
+              numberOfLines={_numberOfLines}
               ref={forwardedRef}
               selectable={_selectable}
               selectionColor={_selectionColor}
-              style={((rest: any): TextStyleProp)}
+              style={processedStyle}
             />
           </TextAncestor.Provider>
         </View>
@@ -402,7 +397,7 @@ const Text: React.AbstractComponent<
             ellipsizeMode={ellipsizeMode ?? 'tail'}
             isHighlighted={isHighlighted}
             nativeID={_nativeID}
-            numberOfLines={numberOfLines}
+            numberOfLines={_numberOfLines}
             ref={forwardedRef}
             selectable={_selectable}
             selectionColor={_selectionColor}

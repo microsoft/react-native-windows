@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-rc.3",
+  "baseVersion": "0.75.0-rc.5",
   "overrides": [
     {
       "type": "derived",
@@ -498,13 +498,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Utilities/Platform.flow.win32.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.flow.js",
-      "baseHash": "d07d4656dc872e92e873bcce248262132085bd99"
+      "baseHash": "f38efa527b9426ae0178bb2336be2e93af0392ba"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Utilities/Platform.win32.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
-      "baseHash": "ddd8013d71adc13b3ef3016631012efd096a9518"
+      "baseHash": "33f07d6fddb5290d05c8d4cc490312e3af88c70b"
     },
     {
       "type": "copy",
@@ -528,7 +528,7 @@
       "type": "derived",
       "file": "src-win/src/private/specs/modules/NativePlatformConstantsWin.js",
       "baseFile": "packages/react-native/src/private/specs/modules/NativePlatformConstantsAndroid.js",
-      "baseHash": "b4a125d9134f33aeaba9e06988e18cbb0b4e9e9c"
+      "baseHash": "fa0f34a2de33b641bd63863629087644796d8b59"
     }
   ]
 }
