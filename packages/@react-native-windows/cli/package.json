@@ -34,7 +34,6 @@
     "semver": "^7.3.2",
     "shelljs": "^0.8.4",
     "username": "^5.1.0",
-    "uuid": "^3.3.2",
     "xml-formatter": "^2.4.0",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.27"
@@ -55,7 +54,6 @@
     "@types/prompts": "2.0.10",
     "@types/semver": "^7.3.3",
     "@types/shelljs": "^0.8.8",
-    "@types/uuid": "^8.3.0",
     "@types/xml-parser": "^1.2.29",
     "@types/xmldom": "^0.1.30",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
