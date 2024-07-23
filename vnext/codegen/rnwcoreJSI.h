@@ -5602,7 +5602,7 @@ struct NativePlatformConstantsAndroidReactNativeVersionAndroidBridging {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<double> prereleaseToJs(jsi::Runtime &rt, decltype(types.prerelease) value) {
+  static std::optional<jsi::String> prereleaseToJs(jsi::Runtime &rt, decltype(types.prerelease) value) {
     return bridging::toJs(rt, value);
   }
 #endif
