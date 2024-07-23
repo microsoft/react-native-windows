@@ -12,7 +12,7 @@ body:
       required: true
     attributes:
       label: Problem Description
-      description: This form is for errors that come up from integrations from Meta. Please enter a description of the issue. 
+      description: This form is for reporting errors arising from Meta integrations. Please provide a detailed description of the issue and any relevant information that may assist in debugging.
     id: description
   - type: textarea
     validations:
@@ -40,31 +40,6 @@ body:
       label: Upstream PR
       description: If an upstream PR has already been made, please link it and add the date the fork can be removed.
     id: upstream
-  - type: textarea
-    validations:
-      required: true
-    attributes:
-      label: Steps To Reproduce
-      description: Provide a detailed list of steps that reproduce the issue.
-      placeholder: |
-        1.
-        2.
-    id: steps
-  - type: textarea
-    attributes:
-      label: Expected Results
-      description: Describe what you expected to happen.
-    id: expected
-  - type: dropdown
-    attributes:
-      label: Target Device(s)
-      description: What device(s) are you targeting?
-      multiple: true
-      options:
-        - "Desktop"
-        - "Xbox"
-        - "HoloLens"
-    id: device
   - type: dropdown
     attributes:
       label: Visual Studio Version
