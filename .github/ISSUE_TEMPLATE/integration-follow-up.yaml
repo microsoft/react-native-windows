@@ -1,5 +1,5 @@
 name: Integration Follow-up Report
-description: File a integration follow-up issue
+description: File an integration follow-up issue
 title: Describe the problem
 labels: [Integration Follow-up]
 body:
