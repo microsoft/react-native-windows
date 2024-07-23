@@ -6,8 +6,24 @@ import "IReactPackageProvider.idl";
 
 #include "DocString.h"
 
-namespace Microsoft.ReactNative
-{
+namespace Microsoft.ReactNative {
+
+     [experimental]
+     runtimeclass ReactNativeWin32App {
+        // Properties
+        Microsoft.UI.Windowing.AppWindow AppWindow {get;};
+
+        Microsoft.UI.Composition.Compositor Compositor {get;};
+
+        Microsoft.UI.Content.DesktopChildSiteBridge DesktopChildSiteBridge {get;};
+
+        ReactNativeHost ReactNativeHost {get;};
+
+        ReactNativeIsland ReactNativeIsland {get;};
+
+        void Start();
+     }
+
     [experimental]
     DOC_STRING("This is the builder for creating ReactInstanceSettings.")
     runtimeclass ReactInstanceSettingsBuilder
@@ -37,11 +53,6 @@ namespace Microsoft.ReactNative
     {
         ReactNativeAppBuilder();
 
-        // Properties
-        ReactNativeIsland ReactNativeIsland {get;};
-
-        Microsoft.UI.Content.DesktopChildSiteBridge DesktopChildSiteBridge {get;};
-
         // Methods
         ReactNativeAppBuilder AddPackageProviders(Windows.Foundation.Collections.IVector<Microsoft.ReactNative.IReactPackageProvider> packageProviders);
 
@@ -53,6 +64,6 @@ namespace Microsoft.ReactNative
 
         ReactNativeAppBuilder SetReactViewOptions(Microsoft.ReactNative.ReactViewOptions reactViewOptions);
 
-        ReactNativeHost Start();
+        ReactNativeWin32App Build();
     }
 }

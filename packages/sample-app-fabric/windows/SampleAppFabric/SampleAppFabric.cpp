@@ -50,7 +50,8 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   // Create a DispatcherQueue for this thread.  This is needed for Composition, Content, and
   // Input APIs.
-  auto dispatcherQueueController{winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnCurrentThread()};
+  auto dispatcherQueueController =
+      winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnCurrentThread();
 
   // Create a top-level window.
   auto window = winrt::Microsoft::UI::Windowing::AppWindow::Create();
@@ -101,9 +102,9 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
                                  .SetReactViewOptions(viewOptions)};
 
   // Start the react-native instance by creating a javascript runtime and load the bundle.
-  auto host{reactNativeAppBuilder.Start()};
+  auto reactNativeWin32App{reactNativeAppBuilder.Build()};
 
-  auto reactNativeIsland{reactNativeAppBuilder.ReactNativeIsland()};
+  auto reactNativeIsland{reactNativeWin32App.ReactNativeIsland()};
 
   // Update the size of the RootView when the AppWindow changes size
   window.Changed([wkRootView = winrt::make_weak(reactNativeIsland)](
@@ -115,6 +116,8 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
       }
     }
   });
+
+  auto host{reactNativeWin32App.ReactNativeHost()};
 
   // Quit application when main window is closed
   window.Destroying(
@@ -129,14 +132,14 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
       });
 
   // DesktopChildSiteBridge associated with a ContentIsland
-  auto bridge = reactNativeAppBuilder.DesktopChildSiteBridge();
+  auto bridge = reactNativeWin32App.DesktopChildSiteBridge();
 
   reactNativeIsland.ScaleFactor(scaleFactor);
 
   // Set the intialSize of the root view
   UpdateRootViewSizeToAppWindow(reactNativeIsland, window);
 
-  bridge.Show();
+  reactNativeWin32App.Start();
 
   // Run the main application event loop
   dispatcherQueueController.DispatcherQueue().RunEventLoop();

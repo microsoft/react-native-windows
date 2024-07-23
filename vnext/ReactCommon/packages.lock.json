@@ -14,8 +14,8 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.76.0, )",
-          "fmt": "[1.0.0, )"
+          "Fmt": "[1.0.0, )",
+          "boost": "[1.76.0, )"
         }
       }
     },
