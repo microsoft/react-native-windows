@@ -4,7 +4,8 @@
  * @format
  */
 
-import * as appInsights from 'applicationinsights';
+import * as coreOneDS from '@microsoft/1ds-core-js';
+import * as postOneDS from '@microsoft/1ds-post-js';
 
 import * as basePropUtils from './utils/basePropUtils';
 import * as versionUtils from './utils/versionUtils';
@@ -35,8 +36,8 @@ interface CommandInfo {
   endInfo?: CommandEndInfo;
 }
 
-// This is our key with the AI backend
-const RNWSetupString = '795006ca-cf54-40ee-8bc6-03deb91401c3';
+// 1DS instrumentation key
+const RNW_1DS_INSTURMENTATION_KEY = "49ff6d3ef12f4578a7b75a2573d9dba8-026332b2-2d50-452f-ad0d-50f921c97a9d-7145"
 
 // Environment variable to override the default setup string
 const ENV_SETUP_OVERRIDE = 'RNW_TELEMETRY_SETUP';
@@ -76,30 +77,41 @@ export const NuGetPackagesWeTrack: string[] = [
  * The Telemetry class is responsible for reporting telemetry for RNW CLI.
  */
 export class Telemetry {
-  protected static client?: appInsights.TelemetryClient = undefined;
+  protected static appInsightsCore?: coreOneDS.AppInsightsCore = undefined;
+
   protected static options: TelemetryOptions = {
-    setupString: Telemetry.getDefaultSetupString(), // We default to our AI key, but callers can easily override it in setup
+    setupString: Telemetry.getDefaultSetupString(), // We default to our 1DS instrumentation key, but callers can easily override it in setup.
     preserveErrorMessages: false,
     populateNpmPackageVersions: true,
   };
 
-  protected static isTest: boolean = basePropUtils.isCliTest();
+  protected static isTestEnvironment: boolean = basePropUtils.isCliTest();
+
   protected static commandInfo: CommandInfo = {};
+
+  // Stores the version of a list of packages used by the RNW app project.
   protected static versionsProp: Record<string, string> = {};
+
   protected static projectProp?:
     | projectUtils.AppProjectInfo
     | projectUtils.DependencyProjectInfo = undefined;
 
+  // Store "Common Properties", which will be logged for all telemetry events.
+  // Unlike AppInsights, 1DS does not provide an API to store such properties.
+  protected static commonProperties: {
+    [key: string]: string
+  };
+
   protected static getDefaultSetupString(): string {
     // Enable overriding the default setup string via an environment variable
-    return process.env[ENV_SETUP_OVERRIDE] ?? RNWSetupString;
+    return process.env[ENV_SETUP_OVERRIDE] ?? RNW_1DS_INSTURMENTATION_KEY;
   }
 
   protected static reset(): void {
     // Reset client
-    if (Telemetry.client) {
-      Telemetry.client.flush();
-      Telemetry.client = undefined;
+    if (Telemetry.appInsightsCore) {
+      Telemetry.appInsightsCore.flush();
+      Telemetry.appInsightsCore = undefined;
     }
 
     // Reset local members
@@ -114,7 +126,7 @@ export class Telemetry {
   }
 
   static isEnabled(): boolean {
-    return Telemetry.client !== undefined;
+    return Telemetry.appInsightsCore !== undefined;
   }
 
   static getSessionId(): string {
@@ -123,13 +135,13 @@ export class Telemetry {
 
   /** Sets up the Telemetry static to be used elsewhere. */
   static async setup(options?: Partial<TelemetryOptions>) {
-    if (Telemetry.client) {
+    if (Telemetry.appInsightsCore) {
       // Bail since we've already setup
       return;
     }
 
     // Bail if we're in CI and not capturing CI
-    if (!this.isTest && basePropUtils.isCI() && !basePropUtils.captureCI()) {
+    if (!this.isTestEnvironment && basePropUtils.isCI() && !basePropUtils.captureCI()) {
       return;
     }
 
@@ -139,148 +151,64 @@ export class Telemetry {
     Telemetry.setupClient();
 
     await Telemetry.setupBaseProperties();
-
-    Telemetry.setupTelemetryProcessors();
   }
 
-  /** Sets up Telemetry.client. */
+  /** Sets up Telemetry.appInsightsCore. */
   private static setupClient() {
-    appInsights.Configuration.setInternalLogging(false, false);
+    // appInsights.Configuration.setInternalLogging(false, false);
 
-    Telemetry.client = new appInsights.TelemetryClient(
-      Telemetry.options.setupString,
-    );
-
-    // Allow overriding the proxy server via an environment variable
-    const proxyServer = process.env[ENV_PROXY_OVERRIDE];
-    if (proxyServer) {
-      Telemetry.client.config.proxyHttpUrl = proxyServer;
-      Telemetry.client.config.proxyHttpsUrl = proxyServer;
+    const config: coreOneDS.IExtendedConfiguration = {
+      instrumentationKey: RNW_1DS_INSTURMENTATION_KEY,
+      extensions: [],
+      extensionConfig: []
     }
-
-    Telemetry.client.config.disableAppInsights = Telemetry.isTest;
-    Telemetry.client.config.disableStatsbeat = true;
-
-    // Despite trying to disable the statsbeat, it might still be running: https://github.com/microsoft/ApplicationInsights-node.js/issues/943
-    // So we want to disable it, and despite the method's typing, getStatsbeat() _can_ return undefined
-
-    Telemetry.client.getStatsbeat()?.enable(false);
-
-    Telemetry.client.channel.setUseDiskRetryCaching(!Telemetry.isTest);
+  
+    Telemetry.appInsightsCore = new coreOneDS.AppInsightsCore();
+    Telemetry.appInsightsCore.initialize(config, [] /* extensions */);
   }
 
   /** Sets up any base properties that all telemetry events require. */
   private static async setupBaseProperties() {
-    Telemetry.client!.commonProperties.deviceId =
+    Telemetry.commonProperties.deviceId =
       await basePropUtils.deviceId();
-    Telemetry.client!.commonProperties.deviceArchitecture =
+    Telemetry.commonProperties.deviceArchitecture =
       basePropUtils.deviceArchitecture();
-    Telemetry.client!.commonProperties.nodeArchitecture =
+    Telemetry.commonProperties.nodeArchitecture =
       basePropUtils.nodeArchitecture();
-    Telemetry.client!.commonProperties.devicePlatform =
+    Telemetry.commonProperties.devicePlatform =
       basePropUtils.devicePlatform();
-    Telemetry.client!.commonProperties.deviceLocale =
+    Telemetry.commonProperties.deviceLocale =
       await basePropUtils.deviceLocale();
-    Telemetry.client!.commonProperties.deviceNumCPUs = basePropUtils
+    Telemetry.commonProperties.deviceNumCPUs = basePropUtils
       .deviceNumCPUs()
       .toString();
-    Telemetry.client!.commonProperties.deviceTotalMemory = basePropUtils
+    Telemetry.commonProperties.deviceTotalMemory = basePropUtils
       .deviceTotalMemory()
       .toString();
-    Telemetry.client!.commonProperties.deviceDiskFreeSpace = basePropUtils
+    Telemetry.commonProperties.deviceDiskFreeSpace = basePropUtils
       .deviceDiskFreeSpace()
       .toString();
-    Telemetry.client!.commonProperties.ciCaptured = basePropUtils
+    Telemetry.commonProperties.ciCaptured = basePropUtils
       .captureCI()
       .toString();
-    Telemetry.client!.commonProperties.ciType = basePropUtils.ciType();
-    Telemetry.client!.commonProperties.isMsftInternal = basePropUtils
+    Telemetry.commonProperties.ciType = basePropUtils.ciType();
+    Telemetry.commonProperties.isMsftInternal = basePropUtils
       .isMsftInternal()
       .toString();
-    Telemetry.client!.commonProperties.sampleRate = basePropUtils
+    Telemetry.commonProperties.sampleRate = basePropUtils
       .sampleRate()
       .toString();
-    Telemetry.client!.commonProperties.isTest = Telemetry.isTest.toString();
-    Telemetry.client!.commonProperties.sessionId = Telemetry.getSessionId();
+    Telemetry.commonProperties.isTest = Telemetry.isTestEnvironment.toString();
+    Telemetry.commonProperties.sessionId = Telemetry.getSessionId();
 
-    Telemetry.client!.config.samplingPercentage = basePropUtils.sampleRate();
+    // NOTE: Temporarily store sampleRate into CommonProperties
+    //Telemetry.config.samplingPercentage = basePropUtils.sampleRate();
+    Telemetry.commonProperties.samplingPercentage = basePropUtils.sampleRate().toString();
 
     await Telemetry.populateToolsVersions();
     if (Telemetry.options.populateNpmPackageVersions) {
       await Telemetry.populateNpmPackageVersions();
     }
-  }
-
-  /** Sets up any telemetry processors. */
-  private static setupTelemetryProcessors() {
-    Telemetry.client!.addTelemetryProcessor(Telemetry.basicTelemetryProcessor);
-    Telemetry.client!.addTelemetryProcessor(Telemetry.errorTelemetryProcessor);
-  }
-
-  /**
-   * Performs the processing necessary (mostly PII sanitization) for all events.
-   * @param envelope The ApplicationInsights event envelope.
-   * @param _contextObjects An optional context object.
-   * @returns Whether to kee
-   */
-  private static basicTelemetryProcessor(
-    envelope: appInsights.Contracts.EnvelopeTelemetry,
-    _contextObjects?: {
-      [name: string]: any;
-    },
-  ): boolean {
-    delete envelope.tags['ai.cloud.roleInstance'];
-
-    // Filter out "legacy" events from older stable branches
-    const properties = envelope.data.baseData?.properties;
-    if (
-      properties?.eventName &&
-      EventNamesWeTrack.includes(properties.eventName)
-    ) {
-      return true;
-    }
-
-    return false;
-  }
-
-  /**
-   * Performs the processing necessary (mostly PII sanitization) for error events.
-   * @param envelope
-   * @param _contextObjects
-   * @returns
-   */
-  private static errorTelemetryProcessor(
-    envelope: appInsights.Contracts.EnvelopeTelemetry,
-    _contextObjects?: {
-      [name: string]: any;
-    },
-  ): boolean {
-    if (envelope.data.baseType === 'ExceptionData') {
-      const data = envelope.data.baseData;
-      if (data?.exceptions) {
-        for (const exception of data.exceptions) {
-          for (const frame of exception.parsedStack) {
-            errorUtils.sanitizeErrorStackFrame(frame);
-          }
-
-          // Exception message must never be blank, or AI will reject it
-          exception.message = exception.message || '[None]';
-
-          // CodedError has non-PII information in its 'type' member, plus optionally some more info in its 'data'.
-          // The message may contain PII information. This can be sanitized, but for now delete it.
-          // Note that the type of data.exceptions[0] is always going to be ExceptionDetails. It is not the original thrown exception.
-          // https://github.com/microsoft/ApplicationInsights-node.js/issues/707
-          if (Telemetry.options.preserveErrorMessages) {
-            exception.message = errorUtils.sanitizeErrorMessage(
-              exception.message,
-            );
-          } else {
-            exception.message = '[Removed]';
-          }
-        }
-      }
-    }
-    return true;
   }
 
   /** Tries to update the version of the named package/tool by calling getValue(). */
@@ -360,7 +288,7 @@ export class Telemetry {
   static setProjectInfo(
     info: projectUtils.AppProjectInfo | projectUtils.DependencyProjectInfo,
   ) {
-    if (!Telemetry.client) {
+    if (!Telemetry.appInsightsCore) {
       return;
     }
 
@@ -368,10 +296,11 @@ export class Telemetry {
   }
 
   static startCommand(info: CommandStartInfo) {
-    if (!Telemetry.client) {
+    if (!Telemetry.appInsightsCore) {
       return;
     }
 
+    // startCommand() was called before invoking endCommand(), bail out.
     if (Telemetry.commandInfo.startInfo) {
       return;
     }
@@ -380,14 +309,15 @@ export class Telemetry {
     Telemetry.commandInfo.startInfo = info;
 
     // Set common command props
-    Telemetry.client!.commonProperties.commandName = info.commandName;
+    Telemetry.commonProperties.commandName = info.commandName;
   }
 
   static endCommand(info: CommandEndInfo, extraProps?: Record<string, any>) {
-    if (!Telemetry.client) {
+    if (!Telemetry.appInsightsCore) {
       return;
     }
 
+    // startCommand() wasn't called, bail out.
     if (!Telemetry.commandInfo.startInfo) {
       return;
     }
@@ -398,64 +328,86 @@ export class Telemetry {
     Telemetry.trackCommandEvent(extraProps);
   }
 
+  private static trackEvent(telemetryItem: coreOneDS.ITelemetryItem) {
+    // Populate Part A
+    telemetryItem.ver = "4.0";
+    telemetryItem.time = new Date().toISOString();
+    telemetryItem.iKey = RNW_1DS_INSTURMENTATION_KEY; // Is this needed?
+
+    // Populate Part A extensions
+    telemetryItem.ext = {
+      device: {
+        id: this.commonProperties.deviceId,
+        deviceArchitecture: this.commonProperties.deviceArchitecture
+        // ...
+      }
+    };
+
+    // Set project and versions props, belonging to Part B.
+    telemetryItem.baseData = {
+      project: Telemetry.projectProp,
+      versions: Telemetry.versionsProp
+    };
+    
+    // Send and post the telemetry event!
+    Telemetry.appInsightsCore!.track(telemetryItem);
+    Telemetry.appInsightsCore!.flush();
+  }
+
   private static trackCommandEvent(extraProps?: Record<string, any>) {
-    const props: Record<string, any> = {
-      eventName: CommandEventName,
+    var telemetryItem: coreOneDS.ITelemetryItem = {name: CommandEventName};
+
+    // Set command data, which belongs to Part C.
+    telemetryItem.data = {
+      command: {
+        options: Telemetry.commandInfo.startInfo?.options,
+        defaultOptions: Telemetry.commandInfo.startInfo?.defaultOptions,
+        args: Telemetry.commandInfo.startInfo?.args,
+        durationInSecs:
+          (Telemetry.commandInfo.endTime! - Telemetry.commandInfo.startTime!) /
+          1000,
+        resultCode: Telemetry.commandInfo.endInfo?.resultCode,
+      },
     };
 
-    // Set command props
-    props.command = {
-      options: Telemetry.commandInfo.startInfo?.options,
-      defaultOptions: Telemetry.commandInfo.startInfo?.defaultOptions,
-      args: Telemetry.commandInfo.startInfo?.args,
-      durationInSecs:
-        (Telemetry.commandInfo.endTime! - Telemetry.commandInfo.startTime!) /
-        1000,
-      resultCode: Telemetry.commandInfo.endInfo?.resultCode,
-    };
-
-    // Set remaining common props
-    props.project = Telemetry.projectProp;
-    props.versions = Telemetry.versionsProp;
-
-    // Set extra props
-    props.extraProps = {};
-    Object.assign(props.extraProps, extraProps);
-
+    // Set extra props to "additionalData", temporary name
+    telemetryItem.data.additionalData = {};
+    Object.assign(telemetryItem.data.additionalData, extraProps);
+  
     // Fire event
-    Telemetry.client!.trackEvent({name: props.eventName, properties: props});
-    Telemetry.client!.flush();
+    Telemetry.trackEvent(telemetryItem);
   }
 
   static trackException(error: Error, extraProps?: Record<string, any>) {
-    if (!Telemetry.client) {
+    if (!Telemetry.appInsightsCore) {
       return;
     }
 
-    const props: Record<string, any> = {
-      eventName: CodedErrorEventName,
-    };
+    var telemetryItem: coreOneDS.ITelemetryItem = {name: CodedErrorEventName};
 
-    // Save off CodedError info
+    // Save off CodedError info in Part C.
     const codedError =
       error instanceof errorUtils.CodedError
         ? (error as errorUtils.CodedError)
         : null;
-    props.codedError = {
+
+    telemetryItem.data = {
+      codedError: {
       type: codedError?.type ?? 'Unknown',
       data: codedError?.data ?? {},
+      }
     };
 
     // Copy msBuildErrorMessages into the codedError.data object
     if ((error as any).msBuildErrorMessages) {
       // Always grab MSBuild error codes if possible
-      props.codedError.data.msBuildErrors = (error as any).msBuildErrorMessages
+      telemetryItem.data.codedError.data.msBuildErrors = (error as any).msBuildErrorMessages
         .map(errorUtils.tryGetErrorCode)
         .filter((msg: string | undefined) => msg);
 
       // Grab sanitized MSBuild error messages if we're preserving them
       if (Telemetry.options.preserveErrorMessages) {
-        props.codedError.data.msBuildErrorMessages = (
+        telemetryItem.data.codedError.data.msBuildErrorMessages = (
           error as any
         ).msBuildErrorMessages
           .map(errorUtils.sanitizeErrorMessage)
@@ -467,23 +419,10 @@ export class Telemetry {
     const syscallExceptionFieldsToCopy = ['errno', 'syscall', 'code'];
     for (const f of syscallExceptionFieldsToCopy) {
       if ((error as any)[f]) {
-        props.codedError.data[f] = (error as any)[f];
+        telemetryItem.data.codedError.data[f] = (error as any)[f];
       }
     }
 
-    // Set remaining common props
-    props.project = Telemetry.projectProp;
-    props.versions = Telemetry.versionsProp;
-
-    // Set extra props
-    props.extraProps = {};
-    Object.assign(props.extraProps, extraProps);
-
-    // Fire event
-    Telemetry.client!.trackException({
-      exception: error,
-      properties: props,
-    });
-    Telemetry.client!.flush();
+    Telemetry.trackEvent(telemetryItem);
   }
 }
