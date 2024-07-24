@@ -1,6 +1,5 @@
 name: Integration Follow-up Report
 description: File an integration follow-up issue
-title: Describe the problem
 labels: [Integration Follow-up]
 body:
   - type: markdown
@@ -42,17 +41,8 @@ body:
     id: upstream
   - type: dropdown
     attributes:
-      label: Visual Studio Version
-      description: Which version of Visual Studio are you using?
-      options:
-        - "Visual Studio 2017"
-        - "Visual Studio 2019"
-        - "Visual Studio 2022"
-    id: vs
-  - type: dropdown
-    attributes:
       label: Build Configuration
-      description: Which build configuration are you running?
+      description: Which build configuration were you running?
       options:
         - "Debug"
         - "DebugBundle"
