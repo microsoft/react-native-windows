@@ -2,6 +2,27 @@
   "name": "@rnw-scripts/jest-out-of-tree-snapshot-resolver",
   "entries": [
     {
+      "date": "Wed, 24 Jul 2024 05:24:32 GMT",
+      "version": "1.1.29",
+      "tag": "@rnw-scripts/jest-out-of-tree-snapshot-resolver_v1.1.29",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/jest-out-of-tree-snapshot-resolver",
+            "commit": "7b187af8b17b433ac02a8aff0051684924da4217",
+            "comment": "integrate 0.75.0-nightly-20240618-5df5ed1a8"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/jest-out-of-tree-snapshot-resolver",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.25",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jul 2024 05:15:30 GMT",
       "version": "1.1.28",
       "tag": "@rnw-scripts/jest-out-of-tree-snapshot-resolver_v1.1.28",
