@@ -5,7 +5,10 @@
  */
 
 import * as coreOneDS from '@microsoft/1ds-core-js';
-import * as postOneDS from '@microsoft/1ds-post-js';
+
+// Post 1DS seems to provide configuration settings to post events
+// https://microsoft.github.io/ApplicationInsights-JS/webSdk/1ds-post-js/interfaces/IChannelConfiguration.html
+// import * as postOneDS from '@microsoft/1ds-post-js';
 
 import * as basePropUtils from './utils/basePropUtils';
 import * as versionUtils from './utils/versionUtils';
@@ -157,14 +160,19 @@ export class Telemetry {
   private static setupClient() {
     // appInsights.Configuration.setInternalLogging(false, false);
 
-    const config: coreOneDS.IExtendedConfiguration = {
-      instrumentationKey: RNW_1DS_INSTURMENTATION_KEY,
+    const coreConfig: coreOneDS.IExtendedConfiguration = {
+      instrumentationKey: process.env[ENV_SETUP_OVERRIDE] ?? RNW_1DS_INSTURMENTATION_KEY,
       extensions: [],
       extensionConfig: []
     }
+
+    // Allow overriding the endpoint URL via an environment variable.
+    if (process.env[ENV_PROXY_OVERRIDE] !== undefined) {
+      coreConfig.endpointUrl = process.env[ENV_PROXY_OVERRIDE];
+    }
   
     Telemetry.appInsightsCore = new coreOneDS.AppInsightsCore();
-    Telemetry.appInsightsCore.initialize(config, [] /* extensions */);
+    Telemetry.appInsightsCore.initialize(coreConfig, [] /* extensions */);
   }
 
   /** Sets up any base properties that all telemetry events require. */
@@ -217,7 +225,7 @@ export class Telemetry {
     getValue: () => Promise<string | null>,
     forceRefresh?: boolean,
   ): Promise<boolean> {
-    if (!Telemetry.client) {
+    if (!Telemetry.appInsightsCore) {
       return true;
     }
 
@@ -334,21 +342,32 @@ export class Telemetry {
     telemetryItem.time = new Date().toISOString();
     telemetryItem.iKey = RNW_1DS_INSTURMENTATION_KEY; // Is this needed?
 
-    // Populate Part A extensions
-    telemetryItem.ext = {
-      device: {
-        id: this.commonProperties.deviceId,
-        deviceArchitecture: this.commonProperties.deviceArchitecture
-        // ...
-      }
-    };
-
-    // Set project and versions props, belonging to Part B.
+    // Populate "common" properties into Part B, since most of them
+    // don't adhere to the Part A extensions.
     telemetryItem.baseData = {
+      common: {
+        device: {
+          id: Telemetry.commonProperties.deviceId,
+          architecture: Telemetry.commonProperties.deviceArchitecture,
+          platform: Telemetry.commonProperties.devicePlatform,
+          locale: Telemetry.commonProperties.deviceLocale,
+          numCPUs: Telemetry.commonProperties.numCPUs,
+          totalMemory: Telemetry.commonProperties.totalMemory,
+          diskFreeSpace: Telemetry.commonProperties.deviceDiskFreeSpace
+        },
+        nodeArchitecture: Telemetry.commonProperties.nodeArchitecture,
+        ciCaptured: Telemetry.commonProperties.ciCaptured,
+        ciType: Telemetry.commonProperties.ciType,
+        isMsftInternal: Telemetry.commonProperties.isMsftInternal,
+        sampleRate: Telemetry.commonProperties.sampleRate,
+        isCliTest: Telemetry.commonProperties.isTest,
+        sessionId: Telemetry.commonProperties.sessionId
+      },
+      // Set project and versions props, belonging to Part B.
       project: Telemetry.projectProp,
       versions: Telemetry.versionsProp
     };
-    
+
     // Send and post the telemetry event!
     Telemetry.appInsightsCore!.track(telemetryItem);
     Telemetry.appInsightsCore!.flush();
