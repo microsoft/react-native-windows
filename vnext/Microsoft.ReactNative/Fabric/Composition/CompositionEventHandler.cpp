@@ -101,9 +101,9 @@ struct CompositionKeyboardSource
     : winrt::implements<CompositionKeyboardSource, winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource> {
   CompositionKeyboardSource(CompositionEventHandler *outer) : m_outer(outer) {}
 
-  winrt::Windows::UI::Core::CoreVirtualKeyStates GetKeyState(winrt::Windows::System::VirtualKey key) noexcept {
+  winrt::Microsoft::UI::Input::VirtualKeyStates GetKeyState(winrt::Windows::System::VirtualKey key) noexcept {
     if (!m_outer)
-      return winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+      return winrt::Microsoft::UI::Input::VirtualKeyStates::None;
     return m_outer->GetKeyState(key);
   }
 
@@ -121,23 +121,11 @@ struct CompositionInputKeyboardSource : winrt::implements<
                                             winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource> {
   CompositionInputKeyboardSource(winrt::Microsoft::UI::Input::InputKeyboardSource source) : m_source(source) {}
 
-  winrt::Windows::UI::Core::CoreVirtualKeyStates GetKeyState(winrt::Windows::System::VirtualKey key) noexcept {
+  winrt::Microsoft::UI::Input::VirtualKeyStates GetKeyState(winrt::Windows::System::VirtualKey key) noexcept {
     if (!m_source)
-      return winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+      return winrt::Microsoft::UI::Input::VirtualKeyStates::None;
 
-    static_assert(
-        static_cast<winrt::Windows::UI::Core::CoreVirtualKeyStates>(
-            winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
-        winrt::Windows::UI::Core::CoreVirtualKeyStates::Down);
-    static_assert(
-        static_cast<winrt::Windows::UI::Core::CoreVirtualKeyStates>(
-            winrt::Microsoft::UI::Input::VirtualKeyStates::Locked) ==
-        winrt::Windows::UI::Core::CoreVirtualKeyStates::Locked);
-    static_assert(
-        static_cast<winrt::Windows::UI::Core::CoreVirtualKeyStates>(
-            winrt::Microsoft::UI::Input::VirtualKeyStates::None) ==
-        winrt::Windows::UI::Core::CoreVirtualKeyStates::None);
-    return static_cast<winrt::Windows::UI::Core::CoreVirtualKeyStates>(m_source.GetKeyState(key));
+    return m_source.GetKeyState(key);
   }
 
   void Disconnect() noexcept {
@@ -360,16 +348,15 @@ void CompositionEventHandler::onPointerWheelChanged(
   }
 }
 
-winrt::Windows::UI::Core::CoreVirtualKeyStates CompositionEventHandler::GetKeyState(
+winrt::Microsoft::UI::Input::VirtualKeyStates CompositionEventHandler::GetKeyState(
     winrt::Windows::System::VirtualKey key) noexcept {
-  winrt::Windows::UI::Core::CoreVirtualKeyStates coreKeyState = winrt::Windows::UI::Core::CoreVirtualKeyStates::None;
+  winrt::Microsoft::UI::Input::VirtualKeyStates coreKeyState = winrt::Microsoft::UI::Input::VirtualKeyStates::None;
   SHORT keyState = ::GetKeyState(static_cast<int>(key));
   if (keyState & 0x01) {
-    coreKeyState = winrt::Windows::UI::Core::CoreVirtualKeyStates::Locked;
+    coreKeyState = winrt::Microsoft::UI::Input::VirtualKeyStates::Locked;
   }
   if (keyState & 0x8000) {
-    coreKeyState = static_cast<winrt::Windows::UI::Core::CoreVirtualKeyStates>(
-        static_cast<int>(coreKeyState) | static_cast<int>(winrt::Windows::UI::Core::CoreVirtualKeyStates::Down));
+    coreKeyState = coreKeyState | winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
   }
 
   return coreKeyState;
@@ -510,10 +497,12 @@ void CompositionEventHandler::onKeyDown(
       return;
   }
 
-  bool fShift = source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) ==
-      winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
-  bool fCtrl = source.GetKeyState(winrt::Windows::System::VirtualKey::Control) ==
-      winrt::Windows::UI::Core::CoreVirtualKeyStates::Down;
+  bool fShift =
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
+  bool fCtrl =
+      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+       winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
 
   if (fShift && fCtrl && args.Key() == static_cast<winrt::Windows::System::VirtualKey>(VkKeyScanA('d')) &&
       Mso::React::ReactOptions::UseDeveloperSupport(m_context.Properties().Handle())) {

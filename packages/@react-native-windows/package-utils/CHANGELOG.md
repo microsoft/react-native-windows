@@ -1,8 +1,41 @@
 # Change Log - @react-native-windows/package-utils
 
-This log was last generated on Wed, 05 Jun 2024 05:18:11 GMT and should not be manually modified.
+This log was last generated on Wed, 10 Jul 2024 05:15:30 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.79
+
+Wed, 10 Jul 2024 05:15:30 GMT
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.82
+- Bump @react-native-windows/fs to v0.0.0-canary.53
+- Bump @rnw-scripts/eslint-config to v1.2.24
+- Bump @rnw-scripts/just-task to v2.3.41
+
+## 0.0.0-canary.78
+
+Wed, 12 Jun 2024 05:16:24 GMT
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.81
+- Bump @react-native-windows/fs to v0.0.0-canary.52
+- Bump @rnw-scripts/eslint-config to v1.2.23
+- Bump @rnw-scripts/just-task to v2.3.40
+
+## 0.0.0-canary.77
+
+Sat, 08 Jun 2024 05:17:57 GMT
+
+### Changes
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.80
+- Bump @react-native-windows/fs to v0.0.0-canary.51
+- Bump @rnw-scripts/eslint-config to v1.2.22
+- Bump @rnw-scripts/just-task to v2.3.39
 
 ## 0.0.0-canary.76
 

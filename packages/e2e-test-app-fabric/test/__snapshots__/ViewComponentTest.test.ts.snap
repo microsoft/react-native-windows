@@ -2372,7 +2372,7 @@ exports[`View Tests Views can have insets 1`] = `
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
-        "Name": "inset 10",
+        "Name": "inset 5",
       },
       {
         "AutomationId": "",
@@ -2507,17 +2507,17 @@ exports[`View Tests Views can have insets 1`] = `
   "Visual Tree": {
     "Comment": "view-test-insets",
     "Offset": "0, 0, 0",
-    "Size": "916, 410",
+    "Size": "916, 310",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "916, 50",
+        "Size": "916, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 50",
+            "Size": "916, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2561,6 +2561,27 @@ exports[`View Tests Views can have insets 1`] = `
                 "Visual Type": "SpriteVisual",
               },
             ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "6, 6, 0",
+        "Size": "904, 28",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Brush": {
+              "Brush Type": "ColorBrush",
+              "Color": "rgba(82, 127, 228, 255)",
+            },
+            "Offset": "0, 0, 0",
+            "Size": "904, 28",
+            "Visual Type": "SpriteVisual",
           },
           {
             "Offset": "0, 0, 0",
@@ -2571,16 +2592,12 @@ exports[`View Tests Views can have insets 1`] = `
       },
       {
         "Offset": "11, 11, 0",
-        "Size": "894, 28",
+        "Size": "894, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
-            "Brush": {
-              "Brush Type": "ColorBrush",
-              "Color": "rgba(82, 127, 228, 255)",
-            },
             "Offset": "0, 0, 0",
-            "Size": "894, 28",
+            "Size": "894, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2591,30 +2608,13 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "16, 16, 0",
-        "Size": "884, 16",
+        "Offset": "0, 45, 0",
+        "Size": "916, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "884, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "0, 60, 0",
-        "Size": "916, 50",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "916, 50",
+            "Size": "916, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2667,8 +2667,8 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "1, 66, 0",
-        "Size": "68, 38",
+        "Offset": "1, 51, 0",
+        "Size": "68, 28",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
@@ -2677,7 +2677,7 @@ exports[`View Tests Views can have insets 1`] = `
               "Color": "rgba(82, 127, 228, 255)",
             },
             "Offset": "0, 0, 0",
-            "Size": "68, 38",
+            "Size": "68, 28",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2688,7 +2688,7 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "6, 71, 0",
+        "Offset": "6, 56, 0",
         "Size": "58, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -2705,13 +2705,13 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "0, 120, 0",
-        "Size": "916, 50",
+        "Offset": "0, 90, 0",
+        "Size": "916, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 50",
+            "Size": "916, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2764,7 +2764,7 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "1, 139, 0",
+        "Offset": "1, 99, 0",
         "Size": "86, 25",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -2785,7 +2785,7 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "6, 144, 0",
+        "Offset": "6, 104, 0",
         "Size": "77, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -2802,13 +2802,13 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "0, 180, 0",
-        "Size": "916, 50",
+        "Offset": "0, 135, 0",
+        "Size": "916, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 50",
+            "Size": "916, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2861,7 +2861,7 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "1, 186, 0",
+        "Offset": "1, 141, 0",
         "Size": "90, 24",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -2882,7 +2882,7 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "6, 191, 0",
+        "Offset": "6, 146, 0",
         "Size": "81, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -2899,13 +2899,13 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "0, 240, 0",
-        "Size": "916, 50",
+        "Offset": "0, 180, 0",
+        "Size": "916, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 50",
+            "Size": "916, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -2958,7 +2958,7 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "6, 241, 0",
+        "Offset": "6, 181, 0",
         "Size": "904, 24",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -2979,7 +2979,7 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "11, 246, 0",
+        "Offset": "11, 186, 0",
         "Size": "894, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -2996,13 +2996,13 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "0, 300, 0",
-        "Size": "916, 50",
+        "Offset": "0, 225, 0",
+        "Size": "916, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 50",
+            "Size": "916, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3055,7 +3055,7 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "823, 301, 0",
+        "Offset": "823, 226, 0",
         "Size": "87, 24",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -3076,7 +3076,7 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "828, 306, 0",
+        "Offset": "828, 231, 0",
         "Size": "77, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -3093,13 +3093,13 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "0, 360, 0",
-        "Size": "916, 50",
+        "Offset": "0, 270, 0",
+        "Size": "916, 40",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 50",
+            "Size": "916, 40",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -3152,7 +3152,7 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "6, 361, 0",
+        "Offset": "6, 271, 0",
         "Size": "91, 24",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -3173,7 +3173,7 @@ exports[`View Tests Views can have insets 1`] = `
         ],
       },
       {
-        "Offset": "11, 366, 0",
+        "Offset": "11, 276, 0",
         "Size": "81, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [

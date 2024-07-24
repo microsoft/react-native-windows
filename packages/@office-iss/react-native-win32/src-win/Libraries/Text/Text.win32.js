@@ -56,8 +56,10 @@ const Text: React.AbstractComponent<
     'aria-selected': ariaSelected,
     'aria-setsize': ariaSetsize, // Win32
     ellipsizeMode,
+    disabled,
     id,
     nativeID,
+    numberOfLines,
     onLongPress,
     onPress,
     onPressIn,
@@ -69,15 +71,20 @@ const Text: React.AbstractComponent<
     onResponderTerminationRequest,
     onStartShouldSetResponder,
     pressRetentionOffset,
+    selectable,
+    selectionColor,
     suppressHighlighting,
+    style,
     ...restProps
   } = props;
 
   const [isHighlighted, setHighlighted] = useState(false);
 
-  let _accessibilityState;
+  const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
+
+  let _accessibilityState: ?TextProps['accessibilityState'] =
+    accessibilityState;
   if (
-    accessibilityState != null ||
     ariaBusy != null ||
     ariaChecked != null ||
     ariaDisabled != null ||
@@ -86,27 +93,32 @@ const Text: React.AbstractComponent<
     ariaRequired != null ||
     ariaSelected != null
   ) {
-    _accessibilityState = {
-      busy: ariaBusy ?? accessibilityState?.busy,
-      checked: ariaChecked ?? accessibilityState?.checked,
-      disabled: ariaDisabled ?? accessibilityState?.disabled,
-      expanded: ariaExpanded ?? accessibilityState?.expanded,
-      multiselectable:
-        ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
-      required: ariaRequired ?? accessibilityState?.required, // Win32
-      selected: ariaSelected ?? accessibilityState?.selected,
-    };
+    if (_accessibilityState != null) {
+      _accessibilityState = {
+        busy: ariaBusy ?? _accessibilityState.busy,
+        checked: ariaChecked ?? _accessibilityState.checked,
+        disabled: ariaDisabled ?? _accessibilityState.disabled,
+        expanded: ariaExpanded ?? _accessibilityState.expanded,
+        multiselectable:
+          ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
+        required: ariaRequired ?? accessibilityState?.required, // Win32
+        selected: ariaSelected ?? _accessibilityState.selected,
+      };
+    } else {
+      _accessibilityState = {
+        busy: ariaBusy,
+        checked: ariaChecked,
+        disabled: ariaDisabled,
+        expanded: ariaExpanded,
+        multiselectable: ariaMultiselectable,  // Win32,
+        required: ariaRequired,  // Win32
+        selected: ariaSelected,
+      };
+    }
   }
 
-  const _disabled =
-    restProps.disabled != null
-      ? restProps.disabled
-      : _accessibilityState?.disabled;
-
-  const nativeTextAccessibilityState =
-    _disabled !== _accessibilityState?.disabled
-      ? {..._accessibilityState, disabled: _disabled}
-      : _accessibilityState;
+  const _accessibilityStateDisabled = _accessibilityState?.disabled;
+  const _disabled = disabled ?? _accessibilityStateDisabled;
 
   const isPressable =
     (onPress != null ||
@@ -115,41 +127,47 @@ const Text: React.AbstractComponent<
     _disabled !== true;
 
   const initialized = useLazyInitialization(isPressable);
-  const config = useMemo(
-    () =>
-      initialized
-        ? {
-            disabled: !isPressable,
-            pressRectOffset: pressRetentionOffset,
-            onLongPress,
-            onPress,
-            onPressIn(event: PressEvent) {
-              // Updating isHighlighted causes unnecessary re-renders for platforms that don't use it
-              // in the best case, and cause issues with text selection in the worst case. Forcing
-              // the isHighlighted prop to false on all platforms except iOS.
-              setHighlighted(
-                (suppressHighlighting == null || !suppressHighlighting) &&
-                  Platform.OS === 'ios',
-              );
-              onPressIn?.(event);
-            },
-            onPressOut(event: PressEvent) {
-              setHighlighted(false);
-              onPressOut?.(event);
-            },
-          }
-        : null,
-    [
-      initialized,
-      isPressable,
-      pressRetentionOffset,
+  const config = useMemo(() => {
+    if (!initialized) {
+      return null;
+    }
+
+    let _onPressIn = onPressIn;
+    let _onPressOut = onPressOut;
+
+    // Updating isHighlighted causes unnecessary re-renders for platforms that don't use it
+    // in the best case, and cause issues with text selection in the worst case. Forcing
+    // the isHighlighted prop to false on all platforms except iOS.
+    if (Platform.OS === 'ios') {
+      _onPressIn = (event: PressEvent) => {
+        setHighlighted(suppressHighlighting == null || !suppressHighlighting);
+        onPressIn?.(event);
+      };
+
+      _onPressOut = (event: PressEvent) => {
+        setHighlighted(false);
+        onPressOut?.(event);
+      };
+    }
+
+    return {
+      disabled: !isPressable,
+      pressRectOffset: pressRetentionOffset,
       onLongPress,
       onPress,
-      onPressIn,
-      onPressOut,
-      suppressHighlighting,
-    ],
-  );
+      onPressIn: _onPressIn,
+      onPressOut: _onPressOut,
+    };
+  }, [
+    initialized,
+    isPressable,
+    pressRetentionOffset,
+    onLongPress,
+    onPress,
+    onPressIn,
+    onPressOut,
+    suppressHighlighting,
+  ]);
 
   const eventHandlers = usePressability(config);
   const eventHandlersForText = useMemo(
@@ -203,115 +221,120 @@ const Text: React.AbstractComponent<
   );
 
   // TODO: Move this processing to the view configuration.
-  const selectionColor =
-    restProps.selectionColor == null
-      ? null
-      : processColor(restProps.selectionColor);
+  const _selectionColor =
+    selectionColor == null ? null : processColor(selectionColor);
 
-  let style = restProps.style;
-
+  let _style = style;
   if (__DEV__) {
     if (PressabilityDebug.isEnabled() && onPress != null) {
-      style = [restProps.style, {color: 'magenta'}];
+      _style = [style, {color: 'magenta'}];
     }
   }
 
-  let numberOfLines = restProps.numberOfLines;
-  if (numberOfLines != null && !(numberOfLines >= 0)) {
-    console.error(
-      `'numberOfLines' in <Text> must be a non-negative number, received: ${numberOfLines}. The value will be set to 0.`,
-    );
-    numberOfLines = 0;
+  let _numberOfLines = numberOfLines;
+  if (_numberOfLines != null && !(_numberOfLines >= 0)) {
+    if (__DEV__) {
+      console.error(
+        `'numberOfLines' in <Text> must be a non-negative number, received: ${_numberOfLines}. The value will be set to 0.`,
+      );
+    }
+    _numberOfLines = 0;
   }
 
+  let _selectable = selectable;
+  const processedStyle = flattenStyle(_style);
+  if (processedStyle != null) {
+    if (typeof processedStyle.fontWeight === 'number') {
+      // $FlowFixMe[cannot-write]
+      processedStyle.fontWeight = processedStyle.fontWeight.toString();
+    }
+
+    if (processedStyle.userSelect != null) {
+      _selectable = userSelectToSelectableMap[processedStyle.userSelect];
+      // $FlowFixMe[cannot-write]
+      delete processedStyle.userSelect;
+    }
+
+    if (processedStyle.verticalAlign != null) {
+      // $FlowFixMe[cannot-write]
+      processedStyle.textAlignVertical =
+        verticalAlignToTextAlignVerticalMap[processedStyle.verticalAlign];
+      // $FlowFixMe[cannot-write]
+      delete processedStyle.verticalAlign;
+    }
+  }
+
+  const _nativeID = id ?? nativeID;
+
   const hasTextAncestor = useContext(TextAncestor);
+  if (hasTextAncestor) {
+    return (
+      <NativeVirtualText
+        {...restProps}
+        {...eventHandlersForText}
+        accessibilityLabel={_accessibilityLabel}
+        accessibilityState={_accessibilityState}
+        accessibilityControls={ariaControls ?? accessibilityControls} // Win32
+        accessibilityDescribedBy={ariaDescribedBy ?? accessibilityDescribedBy} // Win32
+        accessibilityDescription={ariaDescription ?? accessibilityDescription} // Win32
+        accessibilityLevel={ariaLevel ?? accessibilityLevel} // Win32
+        accessibilityPositionInSet={ariaPosinset ?? accessibilityPositionInSet} // Win32
+        accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Win32
+        isHighlighted={isHighlighted}
+        isPressable={isPressable}
+        nativeID={_nativeID}
+        numberOfLines={_numberOfLines}
+        ref={forwardedRef}
+        selectable={_selectable}
+        selectionColor={_selectionColor}
+        style={processedStyle}
+        disabled={disabled}
+      />
+    );
+  }
+
+  // If the disabled prop and accessibilityState.disabled are out of sync but not both in
+  // falsy states we need to update the accessibilityState object to use the disabled prop.
+  if (
+    _disabled !== _accessibilityStateDisabled &&
+    ((_disabled != null && _disabled !== false) ||
+      (_accessibilityStateDisabled != null &&
+        _accessibilityStateDisabled !== false))
+  ) {
+    _accessibilityState = {..._accessibilityState, disabled: _disabled};
+  }
 
   const _accessible = Platform.select({
     ios: accessible !== false,
-    default: accessible,
+    android:
+      accessible == null ? onPress != null || onLongPress != null : accessible,
+    default: accessible !== false,
   });
 
-  // $FlowFixMe[underconstrained-implicit-instantiation]
-  style = flattenStyle(style);
-
-  if (typeof style?.fontWeight === 'number') {
-    // $FlowFixMe[prop-missing]
-    // $FlowFixMe[cannot-write]
-    style.fontWeight = style?.fontWeight.toString();
-  }
-
-  let _selectable = restProps.selectable;
-  if (style?.userSelect != null) {
-    // $FlowFixMe[invalid-computed-prop]
-    _selectable = userSelectToSelectableMap[style.userSelect];
-    // $FlowFixMe[prop-missing]
-    // $FlowFixMe[cannot-write]
-    delete style.userSelect;
-  }
-
-  if (style?.verticalAlign != null) {
-    // $FlowFixMe[prop-missing]
-    // $FlowFixMe[cannot-write]
-    style.textAlignVertical =
-      // $FlowFixMe[invalid-computed-prop]
-      verticalAlignToTextAlignVerticalMap[style.verticalAlign];
-    // $FlowFixMe[prop-missing]
-    // $FlowFixMe[cannot-write]
-    delete style.verticalAlign;
-  }
-
-  const _hasOnPressOrOnLongPress =
-    props.onPress != null || props.onLongPress != null;
-
-  return hasTextAncestor ? (
-    <NativeVirtualText
-      {...restProps}
-      {...eventHandlersForText}
-      accessibilityControls={ariaControls ?? accessibilityControls} // Win32
-      accessibilityDescribedBy={ariaDescribedBy ?? accessibilityDescribedBy} // Win32
-      accessibilityDescription={ariaDescription ?? accessibilityDescription} // Win32
-      accessibilityLabel={ariaLabel ?? accessibilityLabel}
-      accessibilityLevel={ariaLevel ?? accessibilityLevel} // Win32
-      accessibilityPositionInSet={ariaPosinset ?? accessibilityPositionInSet} // Win32
-      accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Win32
-      accessibilityState={_accessibilityState}
-      isHighlighted={isHighlighted}
-      isPressable={isPressable}
-      nativeID={id ?? nativeID}
-      numberOfLines={numberOfLines}
-      ref={forwardedRef}
-      selectable={_selectable}
-      selectionColor={selectionColor}
-      style={style}
-    />
-  ) : (
+  return (
     <TextAncestor.Provider value={true}>
       <NativeText
         {...restProps}
         {...eventHandlersForText}
+        accessibilityLabel={_accessibilityLabel}
+        accessibilityState={_accessibilityState}
+        accessible={_accessible}
         accessibilityControls={ariaControls ?? accessibilityControls} // Win32
         accessibilityDescribedBy={ariaDescribedBy ?? accessibilityDescribedBy} // Win32
         accessibilityDescription={ariaDescription ?? accessibilityDescription} // Win32
-        accessibilityLabel={ariaLabel ?? accessibilityLabel}
         accessibilityLevel={ariaLevel ?? accessibilityLevel} // Win32
         accessibilityPositionInSet={ariaPosinset ?? accessibilityPositionInSet} // Win32
         accessibilitySetSize={ariaSetsize ?? accessibilitySetSize} // Win32
-        accessibilityState={nativeTextAccessibilityState}
-        accessible={
-          accessible == null && Platform.OS === 'android'
-            ? _hasOnPressOrOnLongPress
-            : _accessible
-        }
         allowFontScaling={allowFontScaling !== false}
         disabled={_disabled}
         ellipsizeMode={ellipsizeMode ?? 'tail'}
         isHighlighted={isHighlighted}
-        nativeID={id ?? nativeID}
-        numberOfLines={numberOfLines}
+        nativeID={_nativeID}
+        numberOfLines={_numberOfLines}
         ref={forwardedRef}
         selectable={_selectable}
-        selectionColor={selectionColor}
-        style={style}
+        selectionColor={_selectionColor}
+        style={processedStyle}
       />
     </TextAncestor.Provider>
   );

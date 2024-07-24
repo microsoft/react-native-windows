@@ -52,29 +52,14 @@ const int MODAL_DEFAULT_HEIGHT = 500;
 
 // creates a new modal window
 void WindowsModalHostComponentView::EnsureModalCreated() {
-  auto host =
-      winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(m_reactContext.Properties());
+  auto host = winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(m_reactContext.Properties());
 
   // return if hwnd already exists
   if (!host || m_hwnd) {
     return;
   }
 
-  RegisterWndClass(); // creates and register a windows class
-  /*
-  m_compositionHwndHost = winrt::Microsoft::ReactNative::CompositionHwndHost(); // creates a new RNW hwndHost
-  winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
-  // this is the name of the component registered in Javascript via AppRegistry.registerComponent('ModuleName', () =>
-  ModuleName);
-  // IE, Bootstrap is the app name registered, do we need to do the same for Modal in javascript? How do we do that?
-  viewOptions.ComponentName(L"Bootstrap");
-  m_compositionHwndHost.ReactViewHost(winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host,
-  viewOptions)); // creates a new ReactViewHost. What is the difference between CompositionHwndHost and ViewHost?
-
-  winrt::impl::abi<winrt::Microsoft::ReactNative::ICompositionHwndHost>::type *pHost{nullptr};
-  winrt::com_ptr<::IUnknown> spunk;
-  m_compositionHwndHost.as(spunk);
-  */
+  RegisterWndClass();
 
   HINSTANCE hInstance = GetModuleHandle(NULL);
   winrt::com_ptr<::IUnknown> spunk;
@@ -101,48 +86,49 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
     throw std::exception("Failed to create new hwnd for Modal: " + GetLastError());
   }
 
-  // create new root visual
-  // auto compositor =
-  // winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(m_compositionContext);
-  winrt::Windows::UI::Composition::Compositor compositor;
-  rootVisual = compositor.CreateContainerVisual();
+  // set the top-level windows as the new hwnd
+   winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(m_hwnd));
+
+  // create new compositor - handles the creation/manipulation of visual objects
+  auto compositor = winrt::Windows::UI::Composition::Compositor();
+
+  // link the compositor to the hwnd
+  auto interop = compositor.try_as<ABI::Windows::UI::Composition::Desktop::ICompositorDesktopInterop>(); // ICompositorDesktopInterop provides methods that allow composition visuals to be rendered to HWND
+  winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget m_target{nullptr}; // DesktopWindowTarget allow the render of composition visual to a specific hwnd.
+  // params m_hwnd - hwnd the visuals to be rendered at
+  //        true - if the window should be topmost
+  //        IDesktopWindowTarget - get raw pointer to m_target interface and cast it as a IDesktopWindowTarget
+  check_hresult(interop->CreateDesktopWindowTarget(
+      m_hwnd,
+      true,
+      reinterpret_cast<ABI::Windows::UI::Composition::Desktop::IDesktopWindowTarget **>(put_abi(m_target))));
+
+  // make container/root visual (every visual will be added to this tree)
+  rootVisual = compositor.CreateContainerVisual(); 
   rootVisual.RelativeSizeAdjustment({1.0f, 1.0f});
   rootVisual.Offset({0, 0, 0});
   rootVisual.Comment(L"Modal Root Visual");
 
-  for (unsigned i = 0; i != 3; ++i) {
-    winrt::Windows::UI::Composition::SpriteVisual visual = compositor.CreateSpriteVisual();
-    visual.Size({300.0f, 200.0f});
-    visual.Offset({50 + 20.0f * i, 50 + 20.0f * i, 0.0f});
-    visual.Comment(L"Visual" + i);
-    rootVisual.Children().InsertAtTop(visual);
-  }
-
-  // Create a child visual with a solid color brush
-  auto childVisual = compositor.CreateSpriteVisual();
-  childVisual.Size({100.0f, 100.0f}); // Set the size of the visual
-  auto brush = compositor.CreateColorBrush(winrt::Windows::UI::Colors::Red()); // Set the color to red
-  childVisual.Brush(brush);
-
-  // Add the child visual to the root visual
-  rootVisual.Children().InsertAtTop(childVisual);
-
-  // trying new stuff
-  // auto compositor2 =
-  // winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(ReactContext().Properties());
-  // winrt::Windows::UI::Composition::Compositor compositor;
-
-  // try to link it to the hwnd
-  auto interop = compositor.try_as<ABI::Windows::UI::Composition::Desktop::ICompositorDesktopInterop>();
-  winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget m_target{nullptr};
-  check_hresult(interop->CreateDesktopWindowTarget(
-      m_hwnd,
-      false,
-      reinterpret_cast<ABI::Windows::UI::Composition::Desktop::IDesktopWindowTarget **>(put_abi(m_target))));
+  // set the root visual of DesktopWindowTarget
   m_target.Root(rootVisual);
 
-  winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
-      host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(m_hwnd));
+  // Create a SpriteVisual (a rectangle filled with a solid color)
+  winrt::Windows::UI::Composition::SpriteVisual spriteVisual = compositor.CreateSpriteVisual();
+  spriteVisual.Size({100.0f, 100.0f});
+  spriteVisual.Offset({50.0f, 50.0f, 0.0f});
+  spriteVisual.Brush(compositor.CreateColorBrush(winrt::Windows::UI::Colors::Red()));
+
+  // Animate the position of the sprite visual - just to see if it end up anywhere
+  auto animation = compositor.CreateVector3KeyFrameAnimation();
+  animation.InsertKeyFrame(0.0f, {0.0f, 0.0f, 0.0f});
+  animation.InsertKeyFrame(1.0f, {200.0f, 200.0f, 0.0f});
+  animation.Duration(std::chrono::seconds(2));
+
+  // Add the spirit visual to the root visual
+  rootVisual.Children().InsertAtTop(spriteVisual);
+
+  // Start the animation
+  spriteVisual.StartAnimation(L"Offset", animation);
 
   spunk.detach();
 }

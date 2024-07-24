@@ -34,6 +34,9 @@ struct ParagraphComponentView : ParagraphComponentViewT<ParagraphComponentView, 
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
+  void updateLayoutMetrics(
+      facebook::react::LayoutMetrics const &layoutMetrics,
+      facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept
       override;
   void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept override;

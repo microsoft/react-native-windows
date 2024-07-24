@@ -58,6 +58,9 @@
 <PROJECT_ROOT>/packages/react-native/template/.*
 <PROJECT_ROOT>/packages/react-native/sdks/.*
 
+; Ignore the codegen e2e tests
+<PROJECT_ROOT>/packages/react-native-codegen/e2e/__test_fixtures__/modules/NativeEnumTurboModule.js
+
 ; Ignore the Dangerfile
 <PROJECT_ROOT>/packages/react-native-bots/dangerfile.js
 
@@ -80,6 +83,9 @@
 
 ; Generated build output
 <PROJECT_ROOT>/packages/.*/dist
+
+; helloworld
+<PROJECT_ROOT>/packages/helloworld/ios/Pods/
 
 [untyped]
 .*/node_modules/@react-native-community/cli/.*/.*
@@ -153,4 +159,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.236.0
+^0.238.0

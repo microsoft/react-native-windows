@@ -795,6 +795,16 @@ struct CompScrollerVisual : winrt::implements<
     m_visual.Brush(TTypeRedirects::CompositionContextHelper::InnerBrush(brush));
   }
 
+  void ScrollEnabled(bool isScrollEnabled) noexcept {
+    if (isScrollEnabled) {
+      m_visualInteractionSource.ManipulationRedirectionMode(
+          TTypeRedirects::VisualInteractionSourceRedirectionMode::CapableTouchpadAndPointerWheel);
+    } else {
+      m_visualInteractionSource.ManipulationRedirectionMode(
+          TTypeRedirects::VisualInteractionSourceRedirectionMode::Off);
+    }
+  }
+
   void Opacity(float opacity) noexcept {
     m_visual.Opacity(opacity);
   }

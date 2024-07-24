@@ -979,7 +979,9 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
 
 function TextBorderExample(props: {}): React.Node {
   return (
-    <View testID={'text-border'}>
+    <View testID={'text-border'}
+      accessible
+      accessibilityLabel="Border Example">
       <Text style={styles.borderedTextSimple}>
         Sample bordered text with default styling.
       </Text>
@@ -1009,7 +1011,9 @@ function TextBorderExample(props: {}): React.Node {
 
 function AdvancedBordersExample(props: {}): React.Node {
   return (
-    <View testID={'advanced-borders'}>
+    <View testID={'advanced-borders'}
+      accessible
+      accessibilityLabel="Advanced Border Example">
       <Text
         style={{
           borderColor: 'red',
@@ -1507,6 +1511,29 @@ const examples = [
           </Text>
           <Text style={{verticalAlign: 'middle', borderWidth: 1, height: 75}}>
             Text element aligned to the middle via verticalAlign
+          </Text>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Clipping',
+    name: 'clipping',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text
+            testID="text-clipping"
+            style={{
+              borderRadius: 50,
+              padding: 0,
+              borderColor: 'red',
+              borderWidth: 5,
+              overflow: 'hidden',
+              fontSize: 16,
+            }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </Text>
         </View>
       );

@@ -83,13 +83,6 @@
     </ClCompile>
     <ClCompile Include="pch.cpp" />
     <ClCompile Include="$(FollyDir)\folly\system\AtFork.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\SharedMutex.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\concurrency\CacheLocality.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\detail\Futex.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\synchronization\ParkingLot.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\synchronization\SanitizeThread.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\portability\SysResource.cpp" />
-    <ClCompile Include="$(FollyDir)\folly\portability\Unistd.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="$(FollyDir)\folly\portability\Asm.h">

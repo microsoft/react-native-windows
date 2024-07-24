@@ -1,8 +1,153 @@
 # Change Log - @react-native-windows/automation-channel
 
-This log was last generated on Thu, 06 Jun 2024 05:17:00 GMT and should not be manually modified.
+This log was last generated on Thu, 18 Jul 2024 05:15:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.12.183
+
+Thu, 18 Jul 2024 05:15:24 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.843
+
+## 0.12.182
+
+Fri, 12 Jul 2024 05:15:36 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.842
+
+## 0.12.181
+
+Thu, 11 Jul 2024 05:15:32 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.841
+
+## 0.12.180
+
+Wed, 10 Jul 2024 05:15:29 GMT
+
+### Patches
+
+- Integrate 6/13 (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.24
+- Bump @rnw-scripts/just-task to v2.3.41
+- Bump react-native-windows to v0.0.0-canary.840
+
+## 0.12.179
+
+Thu, 04 Jul 2024 05:15:30 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.839
+
+## 0.12.178
+
+Sat, 29 Jun 2024 05:17:16 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.838
+
+## 0.12.177
+
+Fri, 28 Jun 2024 05:15:52 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.837
+
+## 0.12.176
+
+Thu, 27 Jun 2024 05:21:00 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.836
+
+## 0.12.175
+
+Wed, 26 Jun 2024 05:15:03 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.835
+
+## 0.12.174
+
+Tue, 25 Jun 2024 05:16:03 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.834
+
+## 0.12.173
+
+Sat, 22 Jun 2024 05:15:16 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.833
+
+## 0.12.172
+
+Fri, 21 Jun 2024 05:17:50 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.832
+
+## 0.12.171
+
+Wed, 19 Jun 2024 05:14:44 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.831
+
+## 0.12.170
+
+Wed, 12 Jun 2024 05:16:24 GMT
+
+### Patches
+
+- Integrate 6/10 (yajurgrover24@gmail.com)
+- Bump @rnw-scripts/eslint-config to v1.2.23
+- Bump @rnw-scripts/just-task to v2.3.40
+- Bump react-native-windows to v0.0.0-canary.830
+
+## 0.12.169
+
+Tue, 11 Jun 2024 05:17:20 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.829
+
+## 0.12.168
+
+Sat, 08 Jun 2024 05:17:56 GMT
+
+### Patches
+
+- Integrate 5/31 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.22
+- Bump @rnw-scripts/just-task to v2.3.39
+- Bump react-native-windows to v0.0.0-canary.828
+
+## 0.12.167
+
+Fri, 07 Jun 2024 05:16:19 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.827
 
 ## 0.12.166
 
