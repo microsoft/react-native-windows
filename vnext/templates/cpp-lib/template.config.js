@@ -6,10 +6,10 @@
  * @format
  */
 
+const crypto = require('crypto');
 const existsSync = require('fs').existsSync;
 const path = require('path');
 const username = require('username');
-const uuid = require('uuid');
 const util = require('util');
 
 const glob = util.promisify(require('glob'));
@@ -86,7 +86,7 @@ async function getFileMappings(config = {}, options = {}) {
   const projectGuid =
     libConfig?.project?.windows?.projects[0]?.projectGuid
       ?.replace('{', '')
-      .replace('}', '') ?? uuid.v4();
+      .replace('}', '') ?? crypto.randomUUID();
   const currentUser = username.sync(); // Gets the current username depending on the platform.
 
   const cppNugetPackages = [];

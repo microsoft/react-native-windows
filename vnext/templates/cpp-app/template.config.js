@@ -7,10 +7,10 @@
  */
 
 const chalk = require('chalk');
+const crypto = require('crypto');
 const existsSync = require('fs').existsSync;
 const path = require('path');
 const username = require('username');
-const uuid = require('uuid');
 const util = require('util');
 
 const glob = util.promisify(require('glob'));
@@ -29,8 +29,8 @@ async function getFileMappings(config = {}, options = {}) {
   const projectGuid =
     config?.project?.windows?.project?.projectGuid
       ?.replace('{', '')
-      .replace('}', '') ?? uuid.v4();
-  const packageGuid = uuid.v4();
+      .replace('}', '') ?? crypto.randomUUID();
+  const packageGuid = crypto.randomUUID();
   const currentUser = username.sync(); // Gets the current username depending on the platform.
 
   const appJsonPath = path.join(config?.root ?? process.cwd(), 'app.json');
