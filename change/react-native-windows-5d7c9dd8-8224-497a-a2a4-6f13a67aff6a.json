@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Increase method effective parameters to 8",
-  "packageName": "react-native-windows",
-  "email": "10109130+sharath2727@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 24 Jul 2024 05:24:33 GMT and should not be manually modified.
+This log was last generated on Thu, 25 Jul 2024 05:13:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.845
+
+Thu, 25 Jul 2024 05:13:50 GMT
+
+### Changes
+
+- Don't override Hermes platform for ARM64EC (julio.rocha@microsoft.com)
+- Increase method effective parameters to 8 (10109130+sharath2727@users.noreply.github.com)
 
 ## 0.0.0-canary.844
 

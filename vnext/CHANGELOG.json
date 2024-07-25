@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 25 Jul 2024 05:13:50 GMT",
+      "version": "0.0.0-canary.845",
+      "tag": "react-native-windows_v0.0.0-canary.845",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5c094d6398cb539520484eb9b42deccd231f441e",
+            "comment": "Don't override Hermes platform for ARM64EC"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9ddfc2505e1cdd7159a187a9b38c8f666f1a6cbc",
+            "comment": "Increase method effective parameters to 8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 24 Jul 2024 05:24:33 GMT",
       "version": "0.0.0-canary.844",
       "tag": "react-native-windows_v0.0.0-canary.844",
