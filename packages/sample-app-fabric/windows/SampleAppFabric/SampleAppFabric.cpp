@@ -48,18 +48,12 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   // Enable per monitor DPI scaling
   SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 
-  // Create a DispatcherQueue for this thread.  This is needed for Composition, Content, and
-  // Input APIs.
-  auto dispatcherQueueController =
-      winrt::Microsoft::UI::Dispatching::DispatcherQueueController::CreateOnCurrentThread();
-
-  // Create a top-level window.
+ // Create a top-level window.
   auto window = winrt::Microsoft::UI::Windowing::AppWindow::Create();
   window.Title(windowTitle);
   window.Resize({1000, 1000});
   window.Show();
   auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
-  auto scaleFactor = ScaleFactor(hwnd);
 
   WCHAR appDirectory[MAX_PATH];
   GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
@@ -131,20 +125,8 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
         });
       });
 
-  // DesktopChildSiteBridge associated with a ContentIsland
-  auto bridge = reactNativeWin32App.DesktopChildSiteBridge();
-
-  reactNativeIsland.ScaleFactor(scaleFactor);
-
   // Set the intialSize of the root view
   UpdateRootViewSizeToAppWindow(reactNativeIsland, window);
 
   reactNativeWin32App.Start();
-
-  // Run the main application event loop
-  dispatcherQueueController.DispatcherQueue().RunEventLoop();
-
-  // Rundown the DispatcherQueue. This drains the queue and raises events to let components
-  // know the message loop has finished.
-  dispatcherQueueController.ShutdownQueue();
 }

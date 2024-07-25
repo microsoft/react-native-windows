@@ -58,8 +58,6 @@ namespace Microsoft.ReactNative {
 
         ReactNativeAppBuilder SetReactInstanceSettings(ReactInstanceSettings settings);
 
-        ReactNativeAppBuilder SetCompositor(Microsoft.UI.Composition.Compositor compositor);
-
         ReactNativeAppBuilder SetAppWindow(Microsoft.UI.Windowing.AppWindow appWindow);
 
         ReactNativeAppBuilder SetReactViewOptions(Microsoft.ReactNative.ReactViewOptions reactViewOptions);

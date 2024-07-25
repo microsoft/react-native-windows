@@ -21,6 +21,11 @@ struct ReactNativeWin32App : ReactNativeWin32AppT<ReactNativeWin32App> {
   winrt::Microsoft::ReactNative::ReactNativeHost ReactNativeHost();
   void ReactNativeHost(winrt::Microsoft::ReactNative::ReactNativeHost const &host);
 
+  void DispatchQueueController(winrt::Microsoft::UI::Dispatching::DispatcherQueueController const& dispatcherQueueController)
+  {
+    m_dispatcherQueueController = dispatcherQueueController;
+  }
+
   void Start();
 
  private:

@@ -22,7 +22,6 @@ struct ReactNativeAppBuilder : ReactNativeAppBuilderT<ReactNativeAppBuilder> {
   winrt::Microsoft::ReactNative::ReactNativeWin32App Build();
 
  private:
-  winrt::Microsoft::ReactNative::ReactNativeHost m_host{};
   winrt::Microsoft::ReactNative::ReactViewOptions m_reactViewOptions{};
   winrt::Microsoft::ReactNative::ReactNativeWin32App m_reactNativeWin32App{nullptr};
 };

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "ReactNativeWin32App.h"
+#include "ReactNativeHost.h"
 #include "ReactNativeWin32App.g.cpp"
 #include "winrt/Microsoft.UI.Composition.h"
 #include "winrt/Microsoft.UI.Content.h"
@@ -10,7 +11,7 @@ namespace winrt::Microsoft::ReactNative::implementation {
 ReactNativeWin32App::ReactNativeWin32App() {}
 
 ReactNativeWin32App::~ReactNativeWin32App() {
-  m_desktopChildSiteBridge.Close();
+
   m_desktopChildSiteBridge = nullptr;
 
   // Destroy all Composition objects
@@ -56,6 +57,10 @@ void ReactNativeWin32App::DesktopChildSiteBridge(
 }
 
 winrt::Microsoft::ReactNative::ReactNativeHost ReactNativeWin32App::ReactNativeHost() {
+  if (m_host == nullptr)
+  {
+    m_host = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactNativeHost>();
+  }
   return m_host;
 }
 
@@ -64,6 +69,16 @@ void ReactNativeWin32App::ReactNativeHost(winrt::Microsoft::ReactNative::ReactNa
 }
 
 void ReactNativeWin32App::Start() {
+
   m_desktopChildSiteBridge.Show();
+
+  // Run the main application event loop
+  m_dispatcherQueueController.DispatcherQueue().RunEventLoop();
+
+  // Rundown the DispatcherQueue. This drains the queue and raises events to let components
+  // know the message loop has finished.
+  m_dispatcherQueueController.ShutdownQueue();
+
+  m_desktopChildSiteBridge.Close();
 }
 } // namespace winrt::Microsoft::ReactNative::implementation
