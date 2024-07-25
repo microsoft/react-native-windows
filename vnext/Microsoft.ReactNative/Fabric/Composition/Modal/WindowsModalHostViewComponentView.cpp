@@ -229,17 +229,10 @@ void WindowsModalHostComponentView::MountChildComponentView(
   EnsureModalCreated();
   // TODO: these are getting added to the roothwnd but we want them in the modal hwnd? What is the best way to do this?
   m_children.InsertAt(index, childComponentView); // insert childComponent into m_children
-  // Set parent: This line sets the parent of the childComponentView to *this (the current instance of
-  // WindowsModalHostComponentView). The get_self function is used to obtain the implementation object from the WinRT
-  // projection object.
+  // Sets the parent of the childComponentView to *this (the current instance of WindowsModalHostComponentView)
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(*this);
-  // Adjust index for borders: This line calls the indexOffsetForBorder method with the index parameter. This method
-  // likely adjusts the index to account for any special border handling or offsets required when inserting the child.
   indexOffsetForBorder(index);
-  // Ensure visual setup: This line calls the ensureVisual method. This method probably ensures that the visual tree for
-  // the component view is properly set up and initialized.
   ensureVisual();
-  // This ensures that the subsequent code only runs if the childComponentView can be treated as a ComponentView
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
     Visual().InsertAt(compositionChild->OuterVisual(), index);
   }
