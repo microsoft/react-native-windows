@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 25 Jul 2024 05:13:50 GMT and should not be manually modified.
+This log was last generated on Fri, 26 Jul 2024 05:14:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.846
+
+Fri, 26 Jul 2024 05:14:21 GMT
+
+### Changes
+
+- Use Node's UUIDv4 implementation (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.228
 
 ## 0.0.0-canary.845
 
