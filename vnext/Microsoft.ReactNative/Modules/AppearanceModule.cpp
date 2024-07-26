@@ -68,7 +68,7 @@ void Appearance::RequeryTheme() noexcept {
   auto oldTheme = winrt::unbox_value_or<ApplicationTheme>(oldThemeBoxed, ApplicationTheme::Light);
 
   if (oldTheme != theme) {
-    appearanceChanged(ToString(theme));
+    appearanceChanged({ToString(theme)});
   }
 }
 

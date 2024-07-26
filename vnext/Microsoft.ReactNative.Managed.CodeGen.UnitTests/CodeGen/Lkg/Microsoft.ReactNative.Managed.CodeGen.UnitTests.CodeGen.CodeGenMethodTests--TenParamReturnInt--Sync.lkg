@@ -1,0 +1,6 @@
+moduleBuilder.AddSyncMethod("MyMethod", (global::Microsoft.ReactNative.IJSValueReader reader, global::Microsoft.ReactNative.IJSValueWriter writer) =>
+{
+    global::Microsoft.ReactNative.Managed.JSValueReader.ReadArgs(reader, out int arg0, out string arg1, out int arg2, out string arg3, out double arg4, out string arg5, out int arg6, out double arg7, out string arg8, out int arg9);
+    int result = module.Method(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9);
+    global::Microsoft.ReactNative.Managed.JSValueWriter.WriteValue(writer, result);
+});
