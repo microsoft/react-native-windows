@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "ReactNativeAppBuilder.h"
 #include "ReactNativeAppBuilder.g.cpp"
+#include "IReactDispatcher.h"
 #include "ReactNativeHost.h"
 #include "ReactNativeWin32App.h"
-#include "IReactDispatcher.h"
 #include "winrt/Microsoft.UI.Composition.h"
 #include "winrt/Microsoft.UI.Windowing.h"
 #include "winrt/microsoft.UI.Interop.h"
@@ -66,8 +66,7 @@ winrt::Microsoft::ReactNative::ReactNativeAppBuilder ReactNativeAppBuilder::SetR
 }
 
 winrt::ReactNative::ReactNativeWin32App ReactNativeAppBuilder::Build() {
-
-   if (m_reactNativeWin32App.Compositor() == nullptr) {
+  if (m_reactNativeWin32App.Compositor() == nullptr) {
     // Create a DispatcherQueue for this thread.  This is needed for Composition, Content, and
     // Input APIs.
     auto dispatcherQueueController =
@@ -92,9 +91,10 @@ winrt::ReactNative::ReactNativeWin32App ReactNativeAppBuilder::Build() {
   }
 
   // Currently set the property to use current thread dispatcher as a default UI dispatcher.
+  // TODO: Provision for setting dispatcher based on the thread dispatcherQueueController is created.
   m_reactNativeWin32App.ReactNativeHost().InstanceSettings().Properties().Set(
       ReactDispatcherHelper::UIDispatcherProperty(), ReactDispatcherHelper::UIThreadDispatcher());
-  
+
   auto hwnd{winrt::UI::GetWindowFromWindowId(m_reactNativeWin32App.AppWindow().Id())};
 
   winrt::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
@@ -111,7 +111,8 @@ winrt::ReactNative::ReactNativeWin32App ReactNativeAppBuilder::Build() {
   reactNativeIsland.ReactViewHost(winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(
       m_reactNativeWin32App.ReactNativeHost(), m_reactViewOptions));
 
-  m_reactNativeWin32App.as<implementation::ReactNativeWin32App>().get()->ReactNativeIsland(std::move(reactNativeIsland));
+  m_reactNativeWin32App.as<implementation::ReactNativeWin32App>().get()->ReactNativeIsland(
+      std::move(reactNativeIsland));
 
   // DesktopChildSiteBridge create a ContentSite that can host the RootView ContentIsland
   auto desktopChildSiteBridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(

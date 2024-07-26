@@ -18,13 +18,11 @@ struct ReactNativeWin32App : ReactNativeWin32AppT<ReactNativeWin32App> {
   winrt::Microsoft::UI::Content::DesktopChildSiteBridge DesktopChildSiteBridge();
   void DesktopChildSiteBridge(winrt::Microsoft::UI::Content::DesktopChildSiteBridge const &desktopChildSiteBridge);
 
+  void DispatchQueueController(
+      winrt::Microsoft::UI::Dispatching::DispatcherQueueController const &dispatcherQueueController);
+
   winrt::Microsoft::ReactNative::ReactNativeHost ReactNativeHost();
   void ReactNativeHost(winrt::Microsoft::ReactNative::ReactNativeHost const &host);
-
-  void DispatchQueueController(winrt::Microsoft::UI::Dispatching::DispatcherQueueController const& dispatcherQueueController)
-  {
-    m_dispatcherQueueController = dispatcherQueueController;
-  }
 
   void Start();
 

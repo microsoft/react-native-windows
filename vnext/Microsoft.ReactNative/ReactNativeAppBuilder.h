@@ -13,6 +13,8 @@ struct ReactNativeAppBuilder : ReactNativeAppBuilderT<ReactNativeAppBuilder> {
           &packageProviders);
   winrt::Microsoft::ReactNative::ReactNativeAppBuilder SetReactInstanceSettings(
       winrt::Microsoft::ReactNative::ReactInstanceSettings const &settings);
+
+  // TODO: Currently, SetCompositor API is not exposed to the developer due to threading issues.
   winrt::Microsoft::ReactNative::ReactNativeAppBuilder SetCompositor(
       winrt::Microsoft::UI::Composition::Compositor const &compositor);
   winrt::Microsoft::ReactNative::ReactNativeAppBuilder SetAppWindow(

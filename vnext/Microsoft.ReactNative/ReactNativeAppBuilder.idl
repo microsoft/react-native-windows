@@ -9,6 +9,7 @@ import "IReactPackageProvider.idl";
 namespace Microsoft.ReactNative {
 
      [experimental]
+     DOC_STRING("ReactNativeWin32App is used to manage resources appropriately to be able to host ReactNative component in a contentIsland.")
      runtimeclass ReactNativeWin32App {
         // Properties
         Microsoft.UI.Windowing.AppWindow AppWindow {get;};
@@ -21,6 +22,7 @@ namespace Microsoft.ReactNative {
 
         ReactNativeIsland ReactNativeIsland {get;};
 
+        // Methods
         void Start();
      }
 
@@ -48,7 +50,7 @@ namespace Microsoft.ReactNative {
     }
 
     [experimental]
-    DOC_STRING("ReactNativeAppBuilder initializes and manages the ReactNativeHost component for a Win32 Fabric Application.")
+    DOC_STRING("ReactNativeAppBuilder initializes all the required infrastructure for a Win32 Fabric Application.")
     runtimeclass ReactNativeAppBuilder
     {
         ReactNativeAppBuilder();

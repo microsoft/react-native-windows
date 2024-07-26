@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "ReactNativeWin32App.h"
-#include "ReactNativeHost.h"
 #include "ReactNativeWin32App.g.cpp"
+#include "ReactNativeHost.h"
 #include "winrt/Microsoft.UI.Composition.h"
 #include "winrt/Microsoft.UI.Content.h"
 #include "winrt/Microsoft.UI.Interop.h"
@@ -11,7 +11,6 @@ namespace winrt::Microsoft::ReactNative::implementation {
 ReactNativeWin32App::ReactNativeWin32App() {}
 
 ReactNativeWin32App::~ReactNativeWin32App() {
-
   m_desktopChildSiteBridge = nullptr;
 
   // Destroy all Composition objects
@@ -28,11 +27,7 @@ winrt::Microsoft::UI::Windowing::AppWindow ReactNativeWin32App::AppWindow() {
 }
 
 void ReactNativeWin32App::Compositor(winrt::Microsoft::UI::Composition::Compositor const &compositor) {
-  if (compositor == nullptr) {
-    m_compositor = winrt::Microsoft::UI::Composition::Compositor();
-  } else {
-    m_compositor = compositor;
-  }
+  m_compositor = compositor;
 }
 
 winrt::Microsoft::UI::Composition::Compositor ReactNativeWin32App::Compositor() {
@@ -57,8 +52,7 @@ void ReactNativeWin32App::DesktopChildSiteBridge(
 }
 
 winrt::Microsoft::ReactNative::ReactNativeHost ReactNativeWin32App::ReactNativeHost() {
-  if (m_host == nullptr)
-  {
+  if (m_host == nullptr) {
     m_host = winrt::make<winrt::Microsoft::ReactNative::implementation::ReactNativeHost>();
   }
   return m_host;
@@ -68,8 +62,12 @@ void ReactNativeWin32App::ReactNativeHost(winrt::Microsoft::ReactNative::ReactNa
   m_host = host;
 }
 
-void ReactNativeWin32App::Start() {
+void ReactNativeWin32App::DispatchQueueController(
+    winrt::Microsoft::UI::Dispatching::DispatcherQueueController const &dispatcherQueueController) {
+  m_dispatcherQueueController = dispatcherQueueController;
+}
 
+void ReactNativeWin32App::Start() {
   m_desktopChildSiteBridge.Show();
 
   // Run the main application event loop

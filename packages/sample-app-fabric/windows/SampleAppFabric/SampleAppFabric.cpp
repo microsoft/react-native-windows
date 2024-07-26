@@ -48,12 +48,12 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   // Enable per monitor DPI scaling
   SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 
- // Create a top-level window.
+  // Create a top-level window.
   auto window = winrt::Microsoft::UI::Windowing::AppWindow::Create();
   window.Title(windowTitle);
   window.Resize({1000, 1000});
   window.Show();
-  auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
+  // auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
 
   WCHAR appDirectory[MAX_PATH];
   GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
