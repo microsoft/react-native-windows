@@ -38,7 +38,7 @@ struct Appearance : std::enable_shared_from_this<Appearance> {
 
   REACT_EVENT(appearanceChanged);
   std::function<void(AppearanceChangeArgs const &)> appearanceChanged;
-  
+
   // This function allows the module to get the current theme on the UI thread before it is requested by any JS thread
   static void InitOnUIThread(const Mso::React::IReactContext &context) noexcept;
 
