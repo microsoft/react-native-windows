@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Don't override Hermes platform for ARM64EC (#13490)",
+  "packageName": "react-native-windows",
+  "email": "julio.rocha@microsoft.com",
+  "dependentChangeType": "patch"
+}
