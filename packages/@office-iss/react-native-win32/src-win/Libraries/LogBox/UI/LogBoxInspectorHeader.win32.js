@@ -17,17 +17,18 @@ import View from '../../Components/View/View';
 import StyleSheet from '../../StyleSheet/StyleSheet';
 import Text from '../../Text/Text';
 import Platform from '../../Utilities/Platform';
-import LogBoxButton from './LogBoxButton';
+import LogBoxInspectorHeaderButton from './LogBoxInspectorHeaderButton';
 import * as LogBoxStyle from './LogBoxStyle';
 import * as React from 'react';
-type Props = $ReadOnly<{|
+
+type Props = $ReadOnly<{
   onSelectIndex: (selectedIndex: number) => void,
   selectedIndex: number,
   total: number,
   level: LogLevel,
-|}>;
+}>;
 
-function LogBoxInspectorHeader(props: Props): React.Node {
+export default function LogBoxInspectorHeader(props: Props): React.Node {
   if (props.level === 'syntax') {
     return (
       <View style={[styles.safeArea, styles[props.level]]}>
@@ -53,7 +54,7 @@ function LogBoxInspectorHeader(props: Props): React.Node {
         <LogBoxInspectorHeaderButton
           disabled={props.total <= 1}
           level={props.level}
-          image={'←'}
+          image={new String('←')}
           onPress={() => props.onSelectIndex(prevIndex)}
         />
         <View style={styles.title}>
@@ -62,77 +63,13 @@ function LogBoxInspectorHeader(props: Props): React.Node {
         <LogBoxInspectorHeaderButton
           disabled={props.total <= 1}
           level={props.level}
-          image={'→'}
+          image={new String('→')}
           onPress={() => props.onSelectIndex(nextIndex)}
         />
       </View>
     </View>
   );
 }
-
-const backgroundForLevel = (level: LogLevel) =>
-  ({
-    warn: {
-      default: 'transparent',
-      pressed: LogBoxStyle.getWarningDarkColor(),
-    },
-    error: {
-      default: 'transparent',
-      pressed: LogBoxStyle.getErrorDarkColor(),
-    },
-    fatal: {
-      default: 'transparent',
-      pressed: LogBoxStyle.getFatalDarkColor(),
-    },
-    syntax: {
-      default: 'transparent',
-      pressed: LogBoxStyle.getFatalDarkColor(),
-    },
-  })[level];
-
-function LogBoxInspectorHeaderButton(
-  props: $ReadOnly<{|
-    disabled: boolean,
-    image: string,
-    level: LogLevel,
-    onPress?: ?() => void,
-  |}>,
-): React.Node {
-  return (
-    <LogBoxButton
-      backgroundColor={backgroundForLevel(props.level)}
-      onPress={props.disabled ? null : props.onPress}
-      style={styles.title}>
-      {props.disabled ? null : (
-        <Text style={[styles.titleText, headerStyles.buttonText]}>
-          {props.image}
-        </Text>
-      )}
-    </LogBoxButton>
-  );
-}
-
-const headerStyles = StyleSheet.create({
-  button: {
-    alignItems: 'center',
-    aspectRatio: 1,
-    justifyContent: 'center',
-    marginTop: 0,
-    marginRight: 6,
-    marginLeft: 6,
-    marginBottom: 0,
-    borderRadius: 3,
-    height: 50,
-    width: 50,
-  },
-  buttonText: {
-    fontSize: 30,
-  },
-  buttonImage: {
-    fontSize: 20,
-    color: LogBoxStyle.getTextColor(),
-  },
-});
 
 const styles = StyleSheet.create({
   syntax: {
@@ -173,5 +110,3 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === 'android' ? StatusBar.currentHeight : 40,
   },
 });
-
-export default LogBoxInspectorHeader;

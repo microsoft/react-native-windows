@@ -9,6 +9,12 @@
 
 namespace Microsoft::ReactNative {
 
+REACT_STRUCT(AppearanceChangeArgs)
+struct AppearanceChangeArgs {
+  REACT_FIELD(colorScheme)
+  std::string colorScheme;
+};
+
 REACT_MODULE(Appearance)
 struct Appearance : std::enable_shared_from_this<Appearance> {
   using ApplicationTheme = xaml::ApplicationTheme;
@@ -31,7 +37,7 @@ struct Appearance : std::enable_shared_from_this<Appearance> {
   void removeListeners(double count) noexcept;
 
   REACT_EVENT(appearanceChanged);
-  std::function<void(std::string const &)> appearanceChanged;
+  std::function<void(AppearanceChangeArgs const &)> appearanceChanged;
 
   // This function allows the module to get the current theme on the UI thread before it is requested by any JS thread
   static void InitOnUIThread(const Mso::React::IReactContext &context) noexcept;

@@ -30,9 +30,9 @@ extern "C" HRESULT WINAPI WICCreateImagingFactory_Proxy(UINT SDKVersion, IWICIma
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-ImageComponentView::WindowsImageResponseObserver::WindowsImageResponseObserver(ImageComponentView &image) {
-  m_image.copy_from(&image);
-}
+ImageComponentView::WindowsImageResponseObserver::WindowsImageResponseObserver(
+    winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::implementation::ImageComponentView> wkImage)
+    : m_wkImage(std::move(wkImage)) {}
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveProgress(float progress, int64_t loaded, int64_t total)
     const {
@@ -41,14 +41,21 @@ void ImageComponentView::WindowsImageResponseObserver::didReceiveProgress(float 
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveImage(
     facebook::react::ImageResponse const &imageResponse) const {
-  auto imageResponseImage = std::static_pointer_cast<ImageResponseImage>(imageResponse.getImage());
-  m_image->m_reactContext.UIDispatcher().Post(
-      [imageResponseImage, image = m_image]() { image->didReceiveImage(imageResponseImage); });
+  if (auto imgComponentView{m_wkImage.get()}) {
+    auto imageResponseImage = std::static_pointer_cast<ImageResponseImage>(imageResponse.getImage());
+    imgComponentView->m_reactContext.UIDispatcher().Post([imageResponseImage, wkImage = m_wkImage]() {
+      if (auto image{wkImage.get()}) {
+        image->didReceiveImage(imageResponseImage);
+      }
+    });
+  }
 }
 
 void ImageComponentView::WindowsImageResponseObserver::didReceiveFailure(
     facebook::react::ImageLoadError const &error) const {
-  m_image->didReceiveFailureFromObserver(error);
+  if (auto imgComponentView{m_wkImage.get()}) {
+    imgComponentView->didReceiveFailureFromObserver(error);
+  }
 }
 
 facebook::react::SharedViewProps ImageComponentView::defaultProps() noexcept {
@@ -146,14 +153,7 @@ void ImageComponentView::updateState(
   auto newImageState = std::static_pointer_cast<facebook::react::ImageShadowNode::ConcreteState const>(state);
 
   if (!m_imageResponseObserver) {
-    // Should ViewComponents enable_shared_from_this? then we don't need this dance to get a shared_ptr
-    std::shared_ptr<::Microsoft::ReactNative::FabricUIManager> fabricuiManager =
-        ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_reactContext.Properties());
-    auto componentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_tag);
-
-    m_imageResponseObserver = std::make_shared<WindowsImageResponseObserver>(
-        *componentViewDescriptor.view
-             .as<winrt::Microsoft::ReactNative::Composition::implementation::ImageComponentView>());
+    m_imageResponseObserver = std::make_shared<WindowsImageResponseObserver>(get_weak());
   }
 
   setStateAndResubscribeImageResponseObserver(newImageState);
@@ -180,6 +180,10 @@ void ImageComponentView::setStateAndResubscribeImageResponseObserver(
     auto &observerCoordinator = m_state->getData().getImageRequest().getObserverCoordinator();
     observerCoordinator.addObserver(*m_imageResponseObserver);
   }
+}
+
+void ImageComponentView::prepareForRecycle() noexcept {
+  setStateAndResubscribeImageResponseObserver(nullptr);
 }
 
 winrt::Microsoft::ReactNative::ImageProps ImageComponentView::ImageProps() noexcept {

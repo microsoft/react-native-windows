@@ -7,8 +7,8 @@
 import chalk from 'chalk';
 import path from 'path';
 import username from 'username';
-import uuid from 'uuid';
 import childProcess from 'child_process';
+import crypto from 'crypto';
 import fs from '@react-native-windows/fs';
 import semver from 'semver';
 import _ from 'lodash';
@@ -162,10 +162,10 @@ export async function copyProjectTemplateAndReplace(
   const projDir = 'proj';
   const srcPath = path.join(srcRootPath, `${language}-${projectType}`);
   const sharedPath = path.join(srcRootPath, `shared-${projectType}`);
-  const projectGuid = existingProjectGuid || uuid.v4();
+  const projectGuid = existingProjectGuid || crypto.randomUUID();
   const rnwVersion = require(resolveRnwPath('package.json')).version;
   const nugetVersion = options.nuGetTestVersion || rnwVersion;
-  const packageGuid = uuid.v4();
+  const packageGuid = crypto.randomUUID();
   const currentUser = username.sync()!; // Gets the current username depending on the platform.
 
   let mainComponentName = newProjectName;

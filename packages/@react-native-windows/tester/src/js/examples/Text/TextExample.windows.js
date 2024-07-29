@@ -979,7 +979,9 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
 
 function TextBorderExample(props: {}): React.Node {
   return (
-    <View testID={'text-border'}>
+    <View testID={'text-border'}
+      accessible
+      accessibilityLabel="Border Example">
       <Text style={styles.borderedTextSimple}>
         Sample bordered text with default styling.
       </Text>
@@ -1009,7 +1011,9 @@ function TextBorderExample(props: {}): React.Node {
 
 function AdvancedBordersExample(props: {}): React.Node {
   return (
-    <View testID={'advanced-borders'}>
+    <View testID={'advanced-borders'}
+      accessible
+      accessibilityLabel="Advanced Border Example">
       <Text
         style={{
           borderColor: 'red',

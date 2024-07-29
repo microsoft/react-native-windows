@@ -1,8 +1,70 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 11 Jul 2024 05:15:32 GMT and should not be manually modified.
+This log was last generated on Sat, 27 Jul 2024 05:13:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.847
+
+Sat, 27 Jul 2024 05:13:53 GMT
+
+### Changes
+
+- Make appearanceChanged event consistent with Android/iOS (erozell@outlook.com)
+
+## 0.0.0-canary.846
+
+Fri, 26 Jul 2024 05:14:21 GMT
+
+### Changes
+
+- Use Node's UUIDv4 implementation (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.228
+
+## 0.0.0-canary.845
+
+Thu, 25 Jul 2024 05:13:50 GMT
+
+### Changes
+
+- Don't override Hermes platform for ARM64EC (julio.rocha@microsoft.com)
+- Increase method effective parameters to 8 (10109130+sharath2727@users.noreply.github.com)
+
+## 0.0.0-canary.844
+
+Wed, 24 Jul 2024 05:24:33 GMT
+
+### Changes
+
+- Fix flyout (tatianakapos@microsoft.com)
+- integrate 6/14 (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.227
+- Bump @react-native-windows/codegen to v0.0.0-canary.98
+- Bump @rnw-scripts/eslint-config to v1.2.25
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.29
+- Bump @rnw-scripts/just-task to v2.3.42
+- Bump react-native-platform-override to v1.9.44
+
+## 0.0.0-canary.843
+
+Thu, 18 Jul 2024 05:15:23 GMT
+
+### Changes
+
+- [Fabric] call reportMount to implement UIManagerMountHook support (30809111+acoates-ms@users.noreply.github.com)
+- Updating native WebSocket header logic to match RN (sawalker@microsoft.com)
+- [Fabric] Text renders borders twice (30809111+acoates-ms@users.noreply.github.com)
+- Resolve transform before animation (10109130+sharath2727@users.noreply.github.com)
+- [Fabric] Fix image component reference cycle (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.842
+
+Fri, 12 Jul 2024 05:15:36 GMT
+
+### Changes
+
+- [Fabric] Move to WinAppSDK types for KeyStatus, and ensure usages account for locked flag (30809111+acoates-ms@users.noreply.github.com)
+- Fix scrollview (10109130+sharath2727@users.noreply.github.com)
 
 ## 0.0.0-canary.841
 

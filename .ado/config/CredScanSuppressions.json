@@ -6,6 +6,10 @@
             "_justification": "Debug secret created and consumed by third-party library"
         },
         {
+            "file": "\\node_modules\\@react-native-community\\template\\template\\android\\app\\debug.keystore",
+            "_justification": "Debug secret created and consumed by third-party library"
+        },
+        {
             "file": "\\node_modules\\resolve\\test\\resolver\\malformed_package_json\\package.json",
             "_justification": "Explicitly malformed test file"
         }

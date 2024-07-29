@@ -50,6 +50,12 @@ namespace Microsoft.ReactNative.Managed.CodeGen.UnitTests.CodeGen
     }
 
     [TestMethod]
+    public void TenParamReturnInt()
+    {
+      TestMethod("public int Method(int a, string b, int c, string d, double e, string f, int g, double h, string i, int j) { return 42; }", ReactMethod.MethodReturnStyle.ReturnValue);
+    }
+
+    [TestMethod]
     public void ReadOnlyListOfStringParamReturnReadOnlyList()
     {
       TestMethod("public string Method(IReadOnlyList<string> values) { return string.Empty; }", ReactMethod.MethodReturnStyle.ReturnValue);

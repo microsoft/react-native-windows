@@ -2,6 +2,33 @@
   "name": "@rnw-scripts/format-files",
   "entries": [
     {
+      "date": "Wed, 24 Jul 2024 05:24:31 GMT",
+      "version": "1.1.45",
+      "tag": "@rnw-scripts/format-files_v1.1.45",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/format-files",
+            "commit": "7b187af8b17b433ac02a8aff0051684924da4217",
+            "comment": "integrate 0.75.0-nightly-20240618-5df5ed1a8"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/format-files",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.25",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/format-files",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.42",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jul 2024 05:15:30 GMT",
       "version": "1.1.44",
       "tag": "@rnw-scripts/format-files_v1.1.44",
