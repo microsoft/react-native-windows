@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 29 Jul 2024 15:15:30 GMT",
+      "version": "0.74.13",
+      "tag": "react-native-windows_v0.74.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "de774bb0e1c5557cc96566c810e65decc7182859",
+            "comment": "Don't override Hermes platform for ARM64EC (#13490)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Jul 2024 15:14:15 GMT",
       "version": "0.74.12",
       "tag": "react-native-windows_v0.74.12",
