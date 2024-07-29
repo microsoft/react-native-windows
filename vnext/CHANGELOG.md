@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 22 Jul 2024 15:12:53 GMT and should not be manually modified.
+This log was last generated on Mon, 29 Jul 2024 15:13:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.18
+
+Mon, 29 Jul 2024 15:13:21 GMT
+
+### Patches
+
+- Don't override Hermes platform for ARM64EC (#13490) (julio.rocha@microsoft.com)
 
 ## 0.73.17
 
