@@ -35,7 +35,7 @@ parameters:
 steps:
   - ${{ if eq(parameters.buildConfiguration, 'Debug') }}:
     - script: >
-        yarn @react-native-community/cli run-windows
+        npx @react-native-community/cli run-windows
         --arch ${{ parameters.buildPlatform }}
         --no-launch
         --logging
@@ -47,7 +47,7 @@ steps:
 
   - ${{ if and(eq(parameters.buildConfiguration, 'Release'), endsWith(parameters.buildEnvironment, 'PullRequest')) }}:
     - script: >
-        yarn @react-native-community/cli run-windows
+        npx @react-native-community/cli run-windows
         --arch ${{ parameters.buildPlatform }}
         --release
         --no-launch
@@ -64,7 +64,7 @@ steps:
         certificateName: ${{ parameters.certificateName }}
 
     - script: >
-        yarn @react-native-community/cli run-windows
+        npx @react-native-community/cli run-windows
         --arch ${{ parameters.buildPlatform }}
         --release
         --no-launch

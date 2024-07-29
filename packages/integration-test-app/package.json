@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "windows": "@react-native-community/cli run-windows",
-    "start": "@react-native-community/cli start",
+    "windows": "npx @react-native-community/cli run-windows",
+    "start": "npx @react-native-community/cli start",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
     "integration-test": "jest --config jest.integration.config.js --runInBand --verbose"

@@ -3,15 +3,15 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "@react-native-community/cli start",
+    "start": "npx @react-native-community/cli start",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch",
-    "windows": "@react-native-community/cli run-windows",
-    "e2etest": "@react-native-community/cli rnx-test --platform windows",
-    "e2etest:updateSnapshots": "@react-native-community/cli rnx-test --platform windows -u",
-    "e2etest:debug": "@react-native-community/cli rnx-test --platform windows --config ./jest.debug.config.js",
-    "bundle:debug": "@react-native-community/cli bundle --entry-file index.js --bundle-output ./windows/x64/Debug/RNTesterApp-Fabric/Bundle/index.windows.bundle --assets-dest ./windows/x64/Debug/RNTesterApp-Fabric/Bundle --platform windows"
+    "windows": "npx @react-native-community/cli run-windows",
+    "e2etest": "npx @react-native-community/cli rnx-test --platform windows",
+    "e2etest:updateSnapshots": "npx @react-native-community/cli rnx-test --platform windows -u",
+    "e2etest:debug": "npx @react-native-community/cli rnx-test --platform windows --config ./jest.debug.config.js",
+    "bundle:debug": "npx @react-native-community/cli bundle --entry-file index.js --bundle-output ./windows/x64/Debug/RNTesterApp-Fabric/Bundle/index.windows.bundle --assets-dest ./windows/x64/Debug/RNTesterApp-Fabric/Bundle --platform windows"
   },
   "dependencies": {
     "@react-native-windows/automation-channel": "^0.12.187",

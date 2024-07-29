@@ -3,11 +3,11 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "@react-native-community/cli start",
+    "start": "npx @react-native-community/cli start",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch",
-    "windows": "@react-native-community/cli run-windows",
+    "windows": "npx @react-native-community/cli run-windows",
     "e2etest": "jest",
     "e2etest:updateSnapshots": "jest -u",
     "e2etest:debug": "jest --config ./jest.debug.config.js"
