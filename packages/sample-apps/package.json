@@ -3,13 +3,13 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "bundle-cpp": "rnw-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle",
-    "bundle-cs": "rnw-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCS/Bundle/index.windows.bundle --assets-dest windows/SampleAppCS/Bundle",
+    "bundle-cpp": "rnw-scripts prepareBundle && npx @react-native-community/cli bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle",
+    "bundle-cs": "rnw-scripts prepareBundle && npx @react-native-community/cli bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCS/Bundle/index.windows.bundle --assets-dest windows/SampleAppCS/Bundle",
     "build": "rnw-scripts codegen",
-    "start": "@react-native-community/cli start",
+    "start": "npx @react-native-community/cli start",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
-    "windows": "@react-native-community/cli run-windows"
+    "windows": "npx @react-native-community/cli run-windows"
   },
   "dependencies": {
     "@types/react": "^18.2.6",
@@ -23,6 +23,7 @@
     "@babel/core": "^7.20.0",
     "@babel/eslint-parser": "^7.20.0",
     "@babel/runtime": "^7.20.0",
+    "@react-native-community/cli": "14.0.0-alpha.11",
     "@react-native-windows/cli": "0.0.0-canary.228",
     "@react-native-windows/codegen": "0.0.0-canary.98",
     "@react-native/metro-config": "0.75.0-nightly-20240614-8b53d41a8",

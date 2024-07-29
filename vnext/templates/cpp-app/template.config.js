@@ -109,7 +109,7 @@ async function postInstall(config = {}, options = {}) {
   // Update package.json with new scripts and dependencies
   await templateUtils.updateProjectPackageJson(config, options, {
     scripts: {
-      windows: '@react-native-community/cli run-windows',
+      windows: 'npx @react-native-community/cli run-windows',
       'test:windows': 'jest --config jest.config.windows.js',
     },
     devDependencies: {

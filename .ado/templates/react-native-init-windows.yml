@@ -105,7 +105,7 @@ steps:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
   - script: |
-      call yarn @react-native-community/cli init-windows --template ${{ parameters.template }} --overwrite --logging ${{ parameters.additionalInitArguments }}
+      call npx @react-native-community/cli init-windows --template ${{ parameters.template }} --overwrite --logging ${{ parameters.additionalInitArguments }}
     displayName: Call @react-native-community/cli init-windows
     workingDirectory: $(Agent.BuildDirectory)\testcli
     env:

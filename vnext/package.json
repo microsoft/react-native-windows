@@ -16,7 +16,7 @@
     "flow-check": "rnw-scripts flow-check",
     "lint:fix": "rnw-scripts lint:fix",
     "lint": "rnw-scripts lint",
-    "start": "@react-native-community/cli start",
+    "start": "npx @react-native-community/cli start",
     "validate-overrides": "react-native-platform-override validate",
     "test": "jest"
   },

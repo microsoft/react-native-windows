@@ -16,13 +16,13 @@ npx @react-native-community/cli autolink-windows
 ```
 ### Options
 
-Here are the options that `@react-native-community/cli autolink-windows` takes:
+Here are the options that `npx @react-native-community/cli autolink-windows` takes:
 | Option                | Input Type | Description                                      |
 |-----------------------|------------|--------------------------------------------------|
 | `--logging`           | boolean    | Verbose output logging                           |
 | `--check`             | boolean    | Only check whether any autolinked files need to change |
-| `--sln`               | string     | Override the app solution file determined by '@react-native-community/cli config', i.e. `windows\myApp.sln` |
-| `--proj`              | string     | Override the app project file determined by '@react-native-community/cli config', i.e. `windows\myApp\myApp.vcxproj` |
+| `--sln`               | string     | Override the app solution file determined by 'npx @react-native-community/cli config', i.e. `windows\myApp.sln` |
+| `--proj`              | string     | Override the app project file determined by 'npx @react-native-community/cli config', i.e. `windows\myApp\myApp.vcxproj` |
 | `--no-telemetry`      | boolean    | Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI |
 | `-h`, `--help`        | boolean    | Display help for command                         |
 
@@ -38,7 +38,7 @@ npx @react-native-community/cli codegen-windows
 ```
 ### Options
 
-Here are the options that `@react-native-community/cli codegen-windows` takes:
+Here are the options that `npx @react-native-community/cli codegen-windows` takes:
 | Option                | Input Type | Description                                      |
 |-----------------------|------------|--------------------------------------------------|
 | `--logging`           | boolean    | Verbose output logging                           |
@@ -58,7 +58,7 @@ npx @react-native-community/cli init-windows
 ```
 ### Options
 
-Here are the options that `@react-native-community/cli init-windows` takes:
+Here are the options that `npx @react-native-community/cli init-windows` takes:
 | Option                | Input Type | Description                                      |
 |-----------------------|------------|--------------------------------------------------|
 | `--logging`           | boolean    | Verbose output logging                           |
@@ -83,7 +83,7 @@ npx @react-native-community/cli run-windows
 
 > **Note:** Remote Debugging was officially marked as [deprecated](https://github.com/react-native-community/discussions-and-proposals/discussions/734) in RN 0.73 and will be removed in a later release.
 
-Here are the options that `@react-native-community/cli run-windows` takes:
+Here are the options that `npx @react-native-community/cli run-windows` takes:
 | Option                | Input Type | Description                                      |
 |-----------------------|------------|--------------------------------------------------|
 | `--release`           | boolean    | Specifies a Release build                        |
@@ -102,8 +102,8 @@ Here are the options that `@react-native-community/cli run-windows` takes:
 | `--no-build`          | boolean    | Do not build the solution                        |
 | `--no-deploy`         | boolean    | Do not deploy the app                            |
 | `--deploy-from-layout`| boolean    | Force deploy from layout even in Release builds |
-| `--sln`               | string     | Override the app solution file determined by '@react-native-community/cli config', i.e. `windows\myApp.sln` |
-| `--proj`              | string     | Override the app project file determined by '@react-native-community/cli config', i.e. `windows\myApp\myApp.vcxproj` |
+| `--sln`               | string     | Override the app solution file determined by 'npx @react-native-community/cli config', i.e. `windows\myApp.sln` |
+| `--proj`              | string     | Override the app project file determined by 'npx @react-native-community/cli config', i.e. `windows\myApp\myApp.vcxproj` |
 | `--msbuildprops`      | string     | Comma separated props to pass to MSBuild, i.e. `prop1=value1,prop2=value2` |
 | `--buildLogDirectory` | string     | Optional directory where MSBuild log files should be stored |
 | `--info`              | boolean    | Dump environment information                     |

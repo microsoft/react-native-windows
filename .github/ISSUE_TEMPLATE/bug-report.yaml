@@ -98,7 +98,7 @@ body:
     attributes:
       value: |
         **Troubleshooting**
-        If you see build failure on `@react-native-community/cli run-windows`, please try again with `@react-native-community/cli run-windows --logging` and provide the output.
+        If you see build failure on `npx @react-native-community/cli run-windows`, please try again with `npx @react-native-community/cli run-windows --logging` and provide the output.
     id: troubleshoot
   - type: textarea
     attributes:

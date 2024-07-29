@@ -3,13 +3,13 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "@react-native-community/cli start",
+    "start": "npx @react-native-community/cli start",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch",
-    "windows": "@react-native-community/cli run-windows",
+    "windows": "npx @react-native-community/cli run-windows",
     "test": "rnw-scripts test",
-    "bundle": "rnw-scripts prepareBundle && react-native bundle --platform windows --entry-file App.tsx --bundle-output windows/SampleAppFabric/Bundle/app.windows.bundle --assets-dest windows/SampleAppFabric/Bundle"
+    "bundle": "rnw-scripts prepareBundle && npx @react-native-community/cli bundle --platform windows --entry-file App.tsx --bundle-output windows/SampleAppFabric/Bundle/app.windows.bundle --assets-dest windows/SampleAppFabric/Bundle"
   },
   "dependencies": {
     "@types/react": "^18.2.6",
@@ -26,6 +26,7 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
     "@jest/globals": "^29.7.0",
+    "@react-native-community/cli": "14.0.0-alpha.11",
     "@react-native/metro-config": "0.75.0-nightly-20240614-8b53d41a8",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
