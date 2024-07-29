@@ -49,7 +49,7 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)
 
   - ${{ if and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old'))) }}:
-    - script: | # Change version of @react-native-community/cli from 'next' to '$(reactNativeDevDependency)' and remove upgrade commands - Windows #13446
+    - script: | # Change version of react-native from 'next' to '$(reactNativeDevDependency)' and remove upgrade commands - Windows #13446
         npx --yes create-react-native-library@latest --slug testcli --description testcli --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type module-new --react-native-version next --example vanilla testcli
         cd testcli && call yarn upgrade react-native@$(reactNativeDevDependency) --dev
         cd example && call yarn upgrade react-native@$(reactNativeDevDependency)
@@ -70,7 +70,7 @@ steps:
         call yarn install
         call yarn upgrade react@$(reactDevDependency) --dev
         call yarn upgrade react-native@$(reactNativeDevDependency) --dev
-      displayName: Update lib project react and @react-native-community/cli dev versions
+      displayName: Update lib project react and react-native dev versions
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - script: |
