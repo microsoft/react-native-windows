@@ -342,7 +342,7 @@ configuration:
 
             Otherwise if `--info` doesn't exist:
 
-            1. `@react-native-community/cli -v`:
+            1. `npx @react-native-community/cli -v`:
 
             2. `npm ls rnpm-plugin-windows`:
 

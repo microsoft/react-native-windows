@@ -16,7 +16,7 @@ npx @react-native-community/cli autolink-windows
 ```
 ### Options
 
-Here are the options that `@react-native-community/cli autolink-windows` takes:
+Here are the options that `npx @react-native-community/cli autolink-windows` takes:
 | Option                | Input Type | Description                                      |
 |-----------------------|------------|--------------------------------------------------|
 | `--logging`           | boolean    | Verbose output logging                           |
@@ -38,7 +38,7 @@ npx @react-native-community/cli codegen-windows
 ```
 ### Options
 
-Here are the options that `@react-native-community/cli codegen-windows` takes:
+Here are the options that `npx @react-native-community/cli codegen-windows` takes:
 | Option                | Input Type | Description                                      |
 |-----------------------|------------|--------------------------------------------------|
 | `--logging`           | boolean    | Verbose output logging                           |
@@ -58,7 +58,7 @@ npx @react-native-community/cli init-windows
 ```
 ### Options
 
-Here are the options that `@react-native-community/cli init-windows` takes:
+Here are the options that `npx @react-native-community/cli init-windows` takes:
 | Option                | Input Type | Description                                      |
 |-----------------------|------------|--------------------------------------------------|
 | `--logging`           | boolean    | Verbose output logging                           |
@@ -83,7 +83,7 @@ npx @react-native-community/cli run-windows
 
 > **Note:** Remote Debugging was officially marked as [deprecated](https://github.com/react-native-community/discussions-and-proposals/discussions/734) in RN 0.73 and will be removed in a later release.
 
-Here are the options that `@react-native-community/cli run-windows` takes:
+Here are the options that `npx @react-native-community/cli run-windows` takes:
 | Option                | Input Type | Description                                      |
 |-----------------------|------------|--------------------------------------------------|
 | `--release`           | boolean    | Specifies a Release build                        |

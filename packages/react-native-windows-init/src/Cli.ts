@@ -448,7 +448,7 @@ async function startTelemetrySession(
 }
 
 /**
- * Adds the new project's telemetry info by calling and processing `@react-native-community/cli config`.
+ * Adds the new project's telemetry info by calling and processing `npx @react-native-community/cli config`.
  */
 async function addProjectInfoToTelemetry() {
   if (!Telemetry.isEnabled()) {

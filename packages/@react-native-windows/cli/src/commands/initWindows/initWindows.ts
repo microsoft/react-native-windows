@@ -252,7 +252,7 @@ async function getExtraProps(): Promise<Record<string, any>> {
 }
 
 /**
- * The function run when calling `@react-native-community/cli init-windows`.
+ * The function run when calling `npx @react-native-community/cli init-windows`.
  * @param args Unprocessed args passed from react-native CLI.
  * @param config Config passed from react-native CLI.
  * @param options Options passed from react-native CLI.
