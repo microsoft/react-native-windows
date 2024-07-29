@@ -131,13 +131,13 @@ export const runWindowsOptions: CommandOption[] = [
   {
     name: '--sln [string]',
     description:
-      "Override the app solution file determined by '@react-native-community/cli config', i.e. windows\\myApp.sln",
+      "Override the app solution file determined by 'npx @react-native-community/cli config', i.e. windows\\myApp.sln",
     default: undefined,
   },
   {
     name: '--proj [string]',
     description:
-      "Override the app project file determined by '@react-native-community/cli config', i.e. windows\\myApp\\myApp.vcxproj",
+      "Override the app project file determined by 'npx @react-native-community/cli config', i.e. windows\\myApp\\myApp.vcxproj",
     default: undefined,
   },
   {

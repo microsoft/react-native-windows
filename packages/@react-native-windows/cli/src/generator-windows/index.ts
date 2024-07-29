@@ -460,7 +460,7 @@ export async function installScriptsAndDependencies(options: {
   }
 
   await projectPackage.mergeProps({
-    scripts: {windows: '@react-native-community/cli run-windows'},
+    scripts: {windows: 'npx @react-native-community/cli run-windows'},
   });
 
   const rnwPackage = await findPackage('react-native-windows');
