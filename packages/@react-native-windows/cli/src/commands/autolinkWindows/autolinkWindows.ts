@@ -225,7 +225,7 @@ export class AutoLinkWindows {
       ) {
         throw new CodedError(
           'IncompleteConfig',
-          `${item} is required but not specified by react-native config`,
+          `${item} is required but not specified by @react-native-community/cli config`,
           {item: item},
         );
       } else if (
@@ -268,7 +268,7 @@ export class AutoLinkWindows {
       ) {
         throw new CodedError(
           'IncompleteConfig',
-          `project.${item} is required but not specified by react-native config`,
+          `project.${item} is required but not specified by @react-native-community/cli config`,
           {item: item},
         );
       } else if (
@@ -840,7 +840,7 @@ export class AutoLinkWindows {
   public getAutolinkWindowsCommand() {
     const folder = this.windowsAppConfig.folder;
 
-    const autolinkCommand = 'npx react-native autolink-windows';
+    const autolinkCommand = 'npx @react-native-community/cli autolink-windows';
     const autolinkArgs = `--sln "${path.relative(
       folder,
       this.getSolutionFile(),
@@ -908,7 +908,7 @@ async function getExtraProps(): Promise<Record<string, any>> {
 }
 
 /**
- * The function run when calling `react-native autolink-windows`.
+ * The function run when calling `@react-native-community/cli autolink-windows`.
  * @param args Unprocessed args passed from react-native CLI.
  * @param config Config passed from react-native CLI.
  * @param options Options passed from react-native CLI.

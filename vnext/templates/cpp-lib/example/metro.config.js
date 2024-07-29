@@ -38,11 +38,11 @@ const config = {
         (m) =>
           new RegExp(`^${escape(path.join(root, 'node_modules', m))}\\/.*$`)
       ).concat([
-        // This stops "react-native run-windows" from causing the metro server to crash if its already running
+        // This stops "@react-native-community/cli run-windows" from causing the metro server to crash if its already running
         new RegExp(
           `${path.resolve(__dirname, 'windows').replace(/[/\\]/g, '/')}.*`,
         ),
-        // This prevents "react-native run-windows" from hitting: EBUSY: resource busy or locked, open msbuild.ProjectImports.zip or other files produced by msbuild
+        // This prevents "@react-native-community/cli run-windows" from hitting: EBUSY: resource busy or locked, open msbuild.ProjectImports.zip or other files produced by msbuild
         new RegExp(`${rnwPath}/build/.*`),
         new RegExp(`${rnwPath}/target/.*`),
         /.*\.ProjectImports\.zip/,

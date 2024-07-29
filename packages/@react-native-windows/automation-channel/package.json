@@ -13,7 +13,7 @@
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch",
-    "windows": "react-native run-windows"
+    "windows": "@react-native-community/cli run-windows"
   },
   "main": "lib-commonjs/automationChannel.js",
   "dependencies": {

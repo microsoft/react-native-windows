@@ -35,8 +35,8 @@ body:
     attributes:
       label: CLI version
       description: |
-        Run the command `npx react-native --version` in your terminal and copy the results here
-      value: "npx react-native -v"
+        Run the command `npx @react-native-community/cli --version` in your terminal and copy the results here
+      value: "npx @react-native-community/cli -v"
     id: cli
   - type: textarea
     validations:
@@ -44,8 +44,8 @@ body:
     attributes:
       label: Environment
       description: |
-        Run the command `npx react-native info` in your terminal and copy the results here
-      value: "npx react-native info"
+        Run the command `npx @react-native-community/cli info` in your terminal and copy the results here
+      value: "npx @react-native-community/cli info"
       render: markdown
     id: env
   - type: textarea
@@ -98,7 +98,7 @@ body:
     attributes:
       value: |
         **Troubleshooting**
-        If you see build failure on `react-native run-windows`, please try again with `react-native run-windows --logging` and provide the output.
+        If you see build failure on `@react-native-community/cli run-windows`, please try again with `@react-native-community/cli run-windows --logging` and provide the output.
     id: troubleshoot
   - type: textarea
     attributes:

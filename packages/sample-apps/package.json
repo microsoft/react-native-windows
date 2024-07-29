@@ -6,10 +6,10 @@
     "bundle-cpp": "rnw-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCpp/Bundle/index.windows.bundle --assets-dest windows/SampleAppCpp/Bundle",
     "bundle-cs": "rnw-scripts prepareBundle && react-native bundle --platform windows --entry-file index.windows.js --bundle-output windows/SampleAppCS/Bundle/index.windows.bundle --assets-dest windows/SampleAppCS/Bundle",
     "build": "rnw-scripts codegen",
-    "start": "react-native start",
+    "start": "@react-native-community/cli start",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
-    "windows": "react-native run-windows"
+    "windows": "@react-native-community/cli run-windows"
   },
   "dependencies": {
     "@types/react": "^18.2.6",

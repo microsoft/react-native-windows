@@ -12,17 +12,17 @@ The `autolink-windows` CLI command is used to link the native code and build sys
 Runs Windows-specific autolinking for your RNW project.
   
 ```bat
-npx react-native autolink-windows
+npx @react-native-community/cli autolink-windows
 ```
 ### Options
 
-Here are the options that `react-native autolink-windows` takes:
+Here are the options that `@react-native-community/cli autolink-windows` takes:
 | Option                | Input Type | Description                                      |
 |-----------------------|------------|--------------------------------------------------|
 | `--logging`           | boolean    | Verbose output logging                           |
 | `--check`             | boolean    | Only check whether any autolinked files need to change |
-| `--sln`               | string     | Override the app solution file determined by 'react-native config', i.e. `windows\myApp.sln` |
-| `--proj`              | string     | Override the app project file determined by 'react-native config', i.e. `windows\myApp\myApp.vcxproj` |
+| `--sln`               | string     | Override the app solution file determined by '@react-native-community/cli config', i.e. `windows\myApp.sln` |
+| `--proj`              | string     | Override the app project file determined by '@react-native-community/cli config', i.e. `windows\myApp\myApp.vcxproj` |
 | `--no-telemetry`      | boolean    | Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI |
 | `-h`, `--help`        | boolean    | Display help for command                         |
 
@@ -34,11 +34,11 @@ The `codegen-windows` CLI command is used to generate some necessary Windows-spe
 Runs Windows-specific codegen for native modules.
   
 ```bat
-npx react-native codegen-windows
+npx @react-native-community/cli codegen-windows
 ```
 ### Options
 
-Here are the options that `react-native codegen-windows` takes:
+Here are the options that `@react-native-community/cli codegen-windows` takes:
 | Option                | Input Type | Description                                      |
 |-----------------------|------------|--------------------------------------------------|
 | `--logging`           | boolean    | Verbose output logging                           |
@@ -54,11 +54,11 @@ The `init-windows` CLI command is used to initialize a new React Native for Wind
 Initializes a new RNW project from a given template.
   
 ```bat
-npx react-native init-windows
+npx @react-native-community/cli init-windows
 ```
 ### Options
 
-Here are the options that `react-native init-windows` takes:
+Here are the options that `@react-native-community/cli init-windows` takes:
 | Option                | Input Type | Description                                      |
 |-----------------------|------------|--------------------------------------------------|
 | `--logging`           | boolean    | Verbose output logging                           |
@@ -77,13 +77,13 @@ The `run-windows` CLI command is used to build and run React Native for Windows 
 Builds your RNW app and starts it on a connected Windows desktop, emulator or device.
   
 ```bat
-npx react-native run-windows
+npx @react-native-community/cli run-windows
 ```
 ### Options
 
 > **Note:** Remote Debugging was officially marked as [deprecated](https://github.com/react-native-community/discussions-and-proposals/discussions/734) in RN 0.73 and will be removed in a later release.
 
-Here are the options that `react-native run-windows` takes:
+Here are the options that `@react-native-community/cli run-windows` takes:
 | Option                | Input Type | Description                                      |
 |-----------------------|------------|--------------------------------------------------|
 | `--release`           | boolean    | Specifies a Release build                        |
@@ -102,8 +102,8 @@ Here are the options that `react-native run-windows` takes:
 | `--no-build`          | boolean    | Do not build the solution                        |
 | `--no-deploy`         | boolean    | Do not deploy the app                            |
 | `--deploy-from-layout`| boolean    | Force deploy from layout even in Release builds |
-| `--sln`               | string     | Override the app solution file determined by 'react-native config', i.e. `windows\myApp.sln` |
-| `--proj`              | string     | Override the app project file determined by 'react-native config', i.e. `windows\myApp\myApp.vcxproj` |
+| `--sln`               | string     | Override the app solution file determined by '@react-native-community/cli config', i.e. `windows\myApp.sln` |
+| `--proj`              | string     | Override the app project file determined by '@react-native-community/cli config', i.e. `windows\myApp\myApp.vcxproj` |
 | `--msbuildprops`      | string     | Comma separated props to pass to MSBuild, i.e. `prop1=value1,prop2=value2` |
 | `--buildLogDirectory` | string     | Optional directory where MSBuild log files should be stored |
 | `--info`              | boolean    | Dump environment information                     |

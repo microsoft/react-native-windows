@@ -109,7 +109,7 @@ async function postInstall(config = {}, options = {}) {
   // Update package.json with new scripts and dependencies
   await templateUtils.updateProjectPackageJson(config, options, {
     scripts: {
-      windows: 'react-native run-windows',
+      windows: '@react-native-community/cli run-windows',
       'test:windows': 'jest --config jest.config.windows.js',
     },
     devDependencies: {
@@ -121,7 +121,7 @@ async function postInstall(config = {}, options = {}) {
   await templateUtils.runNpmInstall(config, options);
 
   console.log(chalk.white.bold('To run your new windows app:'));
-  console.log(chalk.white('   npx react-native run-windows'));
+  console.log(chalk.white('   npx @react-native-community/cli run-windows'));
 }
 
 module.exports = {

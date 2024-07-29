@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "react-native start",
+    "start": "@react-native-community/cli start",
     "lint": "rnw-scripts lint",
     "lint:fix": "rnw-scripts lint:fix",
     "watch": "rnw-scripts watch",
-    "windows": "react-native run-windows",
+    "windows": "@react-native-community/cli run-windows",
     "test": "rnw-scripts test",
     "bundle": "rnw-scripts prepareBundle && react-native bundle --platform windows --entry-file App.tsx --bundle-output windows/SampleAppFabric/Bundle/app.windows.bundle --assets-dest windows/SampleAppFabric/Bundle"
   },

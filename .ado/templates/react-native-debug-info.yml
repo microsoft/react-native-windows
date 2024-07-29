@@ -11,18 +11,18 @@ parameters:
 
 steps:
   # Useful info to have in the log, but also a necessary workaround to make sure the cli is cached by npx
-  - script: npx react-native info
+  - script: npx @react-native-community/cli info
     displayName: React Native Info
     workingDirectory: ${{ parameters.workingDirectory }}
 
   - ${{ if eq(parameters.doctor, true) }}:
-    # Verify react-native doctor command works
-    - script: npx react-native doctor
+    # Verify @react-native-community/cli doctor command works
+    - script: npx @react-native-community/cli doctor
       displayName: React Native Doctor
       workingDirectory: ${{ parameters.workingDirectory }}
 
   - ${{ if eq(parameters.config, true) }}:
-    # Print the config for debugging react-native CLI commands
-    - script: npx react-native config
+    # Print the config for debugging @react-native-community/cli CLI commands
+    - script: npx @react-native-community/cli config
       displayName: React Native Config
       workingDirectory: ${{ parameters.workingDirectory }}

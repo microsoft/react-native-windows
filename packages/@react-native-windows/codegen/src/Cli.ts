@@ -91,7 +91,7 @@ const changesNecessary = runCodeGen(<CodeGenOptions>argv);
 
 if (argv.test && changesNecessary) {
   console.error(
-    'There is a change in the output of codegen.  Rerun "react-native codegen-windows" to regenerate.',
+    'There is a change in the output of codegen.  Rerun "@react-native-community/cli codegen-windows" to regenerate.',
   );
   process.exit(2);
 }

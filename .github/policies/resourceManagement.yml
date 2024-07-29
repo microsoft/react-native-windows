@@ -335,14 +335,14 @@ configuration:
 
             If you are using latest version:
 
-            1. `npx react-native --version`:
+            1. `npx @react-native-community/cli --version`:
 
-            2. `npx react-native run-windows --info`:
+            2. `npx @react-native-community/cli run-windows --info`:
 
 
             Otherwise if `--info` doesn't exist:
 
-            1. `react-native -v`:
+            1. `@react-native-community/cli -v`:
 
             2. `npm ls rnpm-plugin-windows`:
 

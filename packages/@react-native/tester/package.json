@@ -13,8 +13,8 @@
     "node": ">=18"
   },
   "scripts": {
-    "start": "react-native start",
-    "android": "react-native run-android --mode HermesDebug",
+    "start": "@react-native-community/cli start",
+    "android": "@react-native-community/cli run-android --mode HermesDebug",
     "install-android-jsc": "../../gradlew :packages:rn-tester:android:app:installJscDebug",
     "install-android-hermes": "../../gradlew :packages:rn-tester:android:app:installHermesDebug",
     "clean-android": "rm -rf android/app/build",

@@ -57,7 +57,7 @@ export function getAppSolutionFile(options: RunWindowsOptions, config: Config) {
     return path.join(options.root, options.sln);
   }
 
-  // Check the answer from react-native config
+  // Check the answer from @react-native-community/cli config
   const windowsAppConfig = config.project.windows;
   if (!windowsAppConfig) {
     throw new CodedError(
@@ -88,7 +88,7 @@ export function getAppProjectFile(options: RunWindowsOptions, config: Config) {
     return path.join(options.root, options.proj);
   }
 
-  // Check the answer from react-native config
+  // Check the answer from @react-native-community/cli config
   const windowsAppConfig = config.project.windows;
   const configProject = windowsAppConfig.project;
 

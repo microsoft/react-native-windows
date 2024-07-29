@@ -36,7 +36,7 @@ const checkVersions = function checkVersions(): void {
         `Native version: ${_formatVersion(nativeVersion)}\n\n` +
         'Make sure that you have rebuilt the native code. If the problem ' +
         'persists try clearing the Watchman and packager caches with ' +
-        '`watchman watch-del-all && npx react-native start --reset-cache`.',
+        '`watchman watch-del-all && npx @react-native-community/cli start --reset-cache`.',
     );
   }
 };

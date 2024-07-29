@@ -3,11 +3,11 @@
   "version": "0.0.54",
   "private": true,
   "scripts": {
-    "bundle-win32": "rnw-scripts prepareBundleWin32 && npx react-native bundle --entry-file Samples/rntester.tsx --bundle-output windows/playground-win32/Bundle/Samples/rntester.bundle --platform windows --assets-dest windows/playground-win32/Bundle",
-    "start": "react-native start",
+    "bundle-win32": "rnw-scripts prepareBundleWin32 && npx @react-native-community/cli bundle --entry-file Samples/rntester.tsx --bundle-output windows/playground-win32/Bundle/Samples/rntester.bundle --platform windows --assets-dest windows/playground-win32/Bundle",
+    "start": "@react-native-community/cli start",
     "lint:fix": "rnw-scripts lint:fix",
     "lint": "rnw-scripts lint",
-    "windows": "react-native run-windows"
+    "windows": "@react-native-community/cli run-windows"
   },
   "dependencies": {
     "@react-native-picker/picker": "^2.5.1",

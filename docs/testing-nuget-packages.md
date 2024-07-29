@@ -1,4 +1,4 @@
-## Testing NuGet package for new react-native init templates.
+## Testing NuGet package for new @react-native-community/cli init templates.
 Today's default is to use the C++ and C# code from the `react-native-windows` npm package as source. We have been working on moving to a binary distribution model for this code via NuGet. 
 
 Today we support the following projects as a NuGet package:
@@ -38,7 +38,7 @@ Today we support the following projects as a NuGet package:
       > if it fails with already being registered for another enlistment you can run `yarn unlink`
 1. Generate a test project
    1. open terminal in a test folder
-   1. `npx react-native init MyProj`
+   1. `npx @react-native-community/cli init MyProj`
    1. cd `MyProj`
    1. Apply the react-native-windows template:
       1. `node z:\src\r3\packages\react-native-windows-init\bin.js --useDevMode --overwrite  --language cs --experimentalNuGetDependency --nuGetTestFeed c:\temp\RnWNuGetTesting\feed --nuGetTestVersion 0.0.1-MyTest001 `
