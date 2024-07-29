@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 22 Jul 2024 15:21:31 GMT and should not be manually modified.
+This log was last generated on Mon, 29 Jul 2024 15:20:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.0-preview.3
+
+Mon, 29 Jul 2024 15:20:55 GMT
+
+### Changes
+
+- Don't override Hermes platform for ARM64EC (#13490) (julio.rocha@microsoft.com)
+- integrate RN 0.75.0-rc.5 (tatianakapos@microsoft.com)
+- Backport #13476 - Fix Flyout's Stylesheet import (tatianakapos@microsoft.com)
 
 ## 0.75.0-preview.2
 

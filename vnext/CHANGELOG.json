@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 29 Jul 2024 15:20:55 GMT",
+      "version": "0.75.0-preview.3",
+      "tag": "react-native-windows_v0.75.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "78a21ec1bba5cd676751ef01ddc3651af8c856f4",
+            "comment": "Don't override Hermes platform for ARM64EC (#13490)"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d5feb184a8555cfc8169dd1c15d4630fff567ffc",
+            "comment": "integrate RN 0.75.0-rc.5"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c2619ff8fa4359a9e3dd3bb3176e7349a6b81763",
+            "comment": "Backport #13476 - Fix Flyout's Stylesheet import"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 22 Jul 2024 15:21:31 GMT",
       "version": "0.75.0-preview.2",
       "tag": "react-native-windows_v0.75.0-preview.2",
