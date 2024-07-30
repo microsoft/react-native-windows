@@ -2226,18 +2226,6 @@
     fast-glob "^3.3.2"
     joi "^17.2.1"
 
-"@react-native-community/cli-config@14.0.0-alpha.11":
-  version "14.0.0-alpha.11"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-config/-/cli-config-14.0.0-alpha.11.tgz#44605edc66f4fb7f65e7c9aeb71ed4c4a54e3abd"
-  integrity sha512-6De3iEH71LnEPUTQZXORnl8J5t1p3Lsp1iweFf5oaHdYlBPqPLt2pGZxtSc09oNIOdtmYW9RHm14OM6/mJm/xA==
-  dependencies:
-    "@react-native-community/cli-tools" "14.0.0-alpha.11"
-    chalk "^4.1.2"
-    cosmiconfig "^9.0.0"
-    deepmerge "^4.3.0"
-    fast-glob "^3.3.2"
-    joi "^17.2.1"
-
 "@react-native-community/cli-debugger-ui@14.0.0":
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-debugger-ui/-/cli-debugger-ui-14.0.0.tgz#ef02d531e70b86265d39773abc3b58ab5cb8f4b8"
@@ -2274,46 +2262,12 @@
     wcwidth "^1.0.1"
     yaml "^2.2.1"
 
-"@react-native-community/cli-doctor@14.0.0-alpha.11":
-  version "14.0.0-alpha.11"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-doctor/-/cli-doctor-14.0.0-alpha.11.tgz#1ee0910be05113c920027bd042c3a658908ec203"
-  integrity sha512-i+awVrt964+MxneGuw/6GXdzm+MJtFyS9Jpuc87HApLxOY9AC4pVjFSi6tUUjC5SlORN3zuMo87DmzgQuqBR+w==
-  dependencies:
-    "@react-native-community/cli-config" "14.0.0-alpha.11"
-    "@react-native-community/cli-platform-android" "14.0.0-alpha.11"
-    "@react-native-community/cli-platform-apple" "14.0.0-alpha.11"
-    "@react-native-community/cli-platform-ios" "14.0.0-alpha.11"
-    "@react-native-community/cli-tools" "14.0.0-alpha.11"
-    chalk "^4.1.2"
-    command-exists "^1.2.8"
-    deepmerge "^4.3.0"
-    envinfo "^7.10.0"
-    execa "^5.0.0"
-    node-stream-zip "^1.9.1"
-    ora "^5.4.1"
-    semver "^7.5.2"
-    strip-ansi "^5.2.0"
-    wcwidth "^1.0.1"
-    yaml "^2.2.1"
-
 "@react-native-community/cli-platform-android@14.0.0":
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-14.0.0.tgz#36f47999af9b386aaa8f8286923edd9a65101f28"
   integrity sha512-nt7yVz3pGKQXnVa5MAk7zR+1n41kNKD3Hi2OgybH5tVShMBo7JQoL2ZVVH6/y/9wAwI/s7hXJgzf1OIP3sMq+Q==
   dependencies:
     "@react-native-community/cli-tools" "14.0.0"
-    chalk "^4.1.2"
-    execa "^5.0.0"
-    fast-glob "^3.3.2"
-    fast-xml-parser "^4.2.4"
-    logkitty "^0.7.1"
-
-"@react-native-community/cli-platform-android@14.0.0-alpha.11":
-  version "14.0.0-alpha.11"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-android/-/cli-platform-android-14.0.0-alpha.11.tgz#29bb5ee9e55eea0199d824335f54f7adc0cf50f5"
-  integrity sha512-DIKku0qcJ2pB75YTqBCHdJiQaMtFBkp8Hhloq57OpNMspDqLTuWjDDbcCtqD7LQb9MGpaf+b6FWUQFw9BNtVkQ==
-  dependencies:
-    "@react-native-community/cli-tools" "14.0.0-alpha.11"
     chalk "^4.1.2"
     execa "^5.0.0"
     fast-glob "^3.3.2"
@@ -2332,31 +2286,12 @@
     fast-xml-parser "^4.2.4"
     ora "^5.4.1"
 
-"@react-native-community/cli-platform-apple@14.0.0-alpha.11":
-  version "14.0.0-alpha.11"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-apple/-/cli-platform-apple-14.0.0-alpha.11.tgz#7085a08b2f71f78291722196834e1e47a5d74ae5"
-  integrity sha512-tNKKte5K/tNNHy0Pxy/vJaSUw0jS7Cuo+F7tTT2ZgDmarp7IlfWnfVMKCtlSC3rR8ZCktmgPgteTf9SicSldxg==
-  dependencies:
-    "@react-native-community/cli-tools" "14.0.0-alpha.11"
-    chalk "^4.1.2"
-    execa "^5.0.0"
-    fast-glob "^3.3.2"
-    fast-xml-parser "^4.2.4"
-    ora "^5.4.1"
-
 "@react-native-community/cli-platform-ios@14.0.0":
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-14.0.0.tgz#7c7c393a13415bf61aaad82f1a3583c30afb110e"
   integrity sha512-8kxGv7mZ5nGMtueQDq+ndu08f0ikf3Zsqm3Ix8FY5KCXpSgP14uZloO2GlOImq/zFESij+oMhCkZJGggpWpfAw==
   dependencies:
     "@react-native-community/cli-platform-apple" "14.0.0"
-
-"@react-native-community/cli-platform-ios@14.0.0-alpha.11":
-  version "14.0.0-alpha.11"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-platform-ios/-/cli-platform-ios-14.0.0-alpha.11.tgz#d446583ebf1eeaf0066ddb649e28b345aa32149e"
-  integrity sha512-coHbTcymVsrOBYvch0M7JtKIRlfCc2GwXs7JEyG54CUKTfhLGDgWWTGOdAwWxiF4cDbj46Qr/4Es2AGJbmTBGA==
-  dependencies:
-    "@react-native-community/cli-platform-apple" "14.0.0-alpha.11"
 
 "@react-native-community/cli-server-api@14.0.0":
   version "14.0.0"
@@ -2424,13 +2359,6 @@
   version "14.0.0"
   resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-14.0.0.tgz#6cde2d2a93edd9b13238171edef30352d37e8dd2"
   integrity sha512-CMUevd1pOWqvmvutkUiyQT2lNmMHUzSW7NKc1xvHgg39NjbS58Eh2pMzIUP85IwbYNeocfYc3PH19vA/8LnQtg==
-  dependencies:
-    joi "^17.2.1"
-
-"@react-native-community/cli-types@14.0.0-alpha.11":
-  version "14.0.0-alpha.11"
-  resolved "https://registry.yarnpkg.com/@react-native-community/cli-types/-/cli-types-14.0.0-alpha.11.tgz#d8ca6352659bc44d569bae3fb321ed52502168f0"
-  integrity sha512-jujAIipCmgc0mHXh9G+6cVT8wPaw1m8L3OSpajNKuARtjva+jGNYmx4itRP05c+SgFqN4eASEV563nNfI4Ja/g==
   dependencies:
     joi "^17.2.1"
 
@@ -5730,7 +5658,7 @@ env-paths@^2.2.1:
   resolved "https://registry.yarnpkg.com/env-paths/-/env-paths-2.2.1.tgz#420399d416ce1fbe9bc0a07c62fa68d67fd0f8f2"
   integrity sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==
 
-envinfo@^7.10.0, envinfo@^7.13.0, envinfo@^7.5.0, envinfo@^7.8.1:
+envinfo@^7.13.0, envinfo@^7.5.0, envinfo@^7.8.1:
   version "7.13.0"
   resolved "https://registry.yarnpkg.com/envinfo/-/envinfo-7.13.0.tgz#81fbb81e5da35d74e814941aeab7c325a606fb31"
   integrity sha512-cvcaMr7KqXVh4nyzGTVqTum+gAiL265x5jUWQIDLq//zOGbW+gSW/C+OWLleY/rs9Qole6AZLMXPbtIFQbqu+Q==
@@ -10527,11 +10455,6 @@ react@18.3.1, react@^18.2.0:
   integrity sha512-wS+hAgJShR0KhEvPJArfuPVN1+Hz1t0Y6n5jLrGQbkb4urgPE/0Rve+1kMB1v/oWgHgm4WIcV+i7F2pTVj+2iQ==
   dependencies:
     loose-envify "^1.1.0"
-
-react@19.0.0-rc-fb9a90fa48-20240614:
-  version "19.0.0-rc-fb9a90fa48-20240614"
-  resolved "https://registry.yarnpkg.com/react/-/react-19.0.0-rc-fb9a90fa48-20240614.tgz#90eb43a0b005e8cc3cbf0d801c14816d01df1b08"
-  integrity sha512-nvE3Gy+IOIfH/DXhkyxFVQSrITarFcQz4+shzC/McxQXEUSonpw2oDy/Wi9hdDtV3hlP12VYuDL95iiBREedNQ==
 
 read-yaml-file@^2.1.0:
   version "2.1.0"
