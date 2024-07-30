@@ -1,7 +1,3 @@
-parameters:
-  - name: certificateName
-    type: string
-
 steps:
   - powershell: |
       $certStoreRoot = "cert:\CurrentUser\My"
