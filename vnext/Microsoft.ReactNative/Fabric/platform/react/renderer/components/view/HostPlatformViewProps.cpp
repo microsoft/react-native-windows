@@ -26,7 +26,15 @@ HostPlatformViewProps::HostPlatformViewProps(
       focusable(
           CoreFeatures::enablePropIteratorSetter
               ? sourceProps.focusable
-              : convertRawProp(context, rawProps, "focusable", sourceProps.focusable, {})) {}
+              : convertRawProp(context, rawProps, "focusable", sourceProps.focusable, {})),
+      accessibilityPosInSet(
+          CoreFeatures::enablePropIteratorSetter
+              ? sourceProps.accessibilityPosInSet
+              : convertRawProp(context, rawProps, "accessibilityPosInSet", sourceProps.accessibilityPosInSet, 0)),
+      accessibilitySetSize(
+          CoreFeatures::enablePropIteratorSetter
+              ? sourceProps.accessibilitySetSize
+              : convertRawProp(context, rawProps, "accessibilitySetSize", sourceProps.accessibilitySetSize, 0)) {}
 
 #define WINDOWS_VIEW_EVENT_CASE(eventType)                    \
   case CONSTEXPR_RAW_PROPS_KEY_HASH("on" #eventType): {       \
@@ -61,6 +69,8 @@ void HostPlatformViewProps::setProp(
     WINDOWS_VIEW_EVENT_CASE(MouseLeave);
     RAW_SET_PROP_SWITCH_CASE_BASIC(enableFocusRing);
     RAW_SET_PROP_SWITCH_CASE_BASIC(focusable);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityPosInSet);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilitySetSize);
     RAW_SET_PROP_SWITCH_CASE_BASIC(keyDownEvents);
     RAW_SET_PROP_SWITCH_CASE_BASIC(keyUpEvents);
   }
