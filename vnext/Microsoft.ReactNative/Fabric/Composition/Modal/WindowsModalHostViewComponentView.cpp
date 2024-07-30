@@ -96,29 +96,15 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   auto compositor = winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(compositionContext);
 
   auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(compositor, winrt::Microsoft::UI::GetWindowIdFromWindow(m_hwnd));
-  m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland(compositor);
-  auto island = m_compRootView.Island();
+  auto compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland(compositor);
+  auto island = compRootView.Island();
   bridge.Connect(island);
   bridge.Show();
   bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
-  m_rootVisual = m_compRootView.RootVisual().try_as<winrt::Microsoft::UI::Composition::ContainerVisual>();
+  m_rootVisual = compRootView.RootVisual().try_as<winrt::Microsoft::UI::Composition::ContainerVisual>();
 
-  // Create a SpriteVisual (a rectangle filled with a solid color)
-  winrt::Microsoft::UI::Composition::SpriteVisual spriteVisual = compositor.CreateSpriteVisual();
-  spriteVisual.Size({100.0f, 100.0f});
-  spriteVisual.Offset({50.0f, 50.0f, 0.0f});
-  spriteVisual.Brush(compositor.CreateColorBrush(winrt::Windows::UI::Colors::Red()));
-
-  // Animate the position of the sprite visual - just to see if it end up anywhere
-  auto animation = compositor.CreateVector3KeyFrameAnimation();
-  animation.InsertKeyFrame(0.0f, {0.0f, 0.0f, 0.0f});
-  animation.InsertKeyFrame(1.0f, {200.0f, 200.0f, 0.0f});
-  animation.Duration(std::chrono::seconds(2));
-
-  m_rootVisual.Children().InsertAtTop(spriteVisual);
-
-  // Start the animation
-  spriteVisual.StartAnimation(L"Offset", animation);
+  //compRootView.ReactViewHost();
+  compRootView.ScaleFactor(GetDpiForWindow(m_hwnd) / 96.0f);
 
   spunk.detach();
 }
@@ -217,16 +203,12 @@ void WindowsModalHostComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   EnsureModalCreated();
-  // TODO: these are getting added to the roothwnd but we want them in the modal hwnd? What is the best way to do this?
   m_children.InsertAt(index, childComponentView); // insert childComponent into m_children
   // Sets the parent of the childComponentView to *this (the current instance of WindowsModalHostComponentView)
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(*this);
   indexOffsetForBorder(index);
   ensureVisual();
-  auto a = childComponentView.try_as<winrt::Microsoft::UI::Composition::Visual>();
-  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual b = (childComponentView.try_as<ComponentView>())->OuterVisual(); 
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
-    //Visual().InsertAt(compositionChild->OuterVisual(), index);
     auto containerChildren = m_rootVisual.as<winrt::Microsoft::UI::Composition::ContainerVisual>().Children();
     auto compVisual = winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(compositionChild->OuterVisual());
     if (index == 0) {
@@ -271,75 +253,8 @@ void WindowsModalHostComponentView::updateProps(
 void WindowsModalHostComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
+
   Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
-
-  // Temporary placeholder for Modal, draws on main hwnd
-  if (m_layoutMetrics.frame.size != layoutMetrics.frame.size ||
-      m_layoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor || m_layoutMetrics.frame.size.width == 0) {
-    // Always make visual a min size, so that even if its laid out at zero size, its clear an unimplemented view was
-    // rendered
-    float width = std::max(m_layoutMetrics.frame.size.width, 200.0f);
-    float height = std::max(m_layoutMetrics.frame.size.width, 50.0f);
-
-    winrt::Windows::Foundation::Size surfaceSize = {
-        width * m_layoutMetrics.pointScaleFactor, height * m_layoutMetrics.pointScaleFactor};
-    auto drawingSurface = m_compContext.CreateDrawingSurfaceBrush(
-        surfaceSize,
-        winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-        winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
-
-    drawingSurface.HorizontalAlignmentRatio(0.f);
-    drawingSurface.VerticalAlignmentRatio(0.f);
-    drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::None);
-    Visual().as<Experimental::ISpriteVisual>().Brush(drawingSurface);
-    Visual().Size(surfaceSize);
-    Visual().Offset({
-        layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
-        layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
-        0.0f,
-    });
-
-    POINT offset;
-    {
-      ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(
-          drawingSurface, m_layoutMetrics.pointScaleFactor, &offset);
-      if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
-        d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Blue, 0.3f));
-        assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
-
-        float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
-        float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
-
-        winrt::com_ptr<IDWriteTextFormat> spTextFormat;
-        winrt::check_hresult(::Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
-            L"Segoe UI",
-            nullptr, // Font collection (nullptr sets it to use the system font collection).
-            DWRITE_FONT_WEIGHT_REGULAR,
-            DWRITE_FONT_STYLE_NORMAL,
-            DWRITE_FONT_STRETCH_NORMAL,
-            12,
-            L"",
-            spTextFormat.put()));
-
-        winrt::com_ptr<ID2D1SolidColorBrush> textBrush;
-        winrt::check_hresult(
-            d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::White), textBrush.put()));
-
-        const D2D1_RECT_F rect = {
-            static_cast<float>(offset.x), static_cast<float>(offset.y), width + offset.x, height + offset.y};
-
-        auto label = ::Microsoft::Common::Unicode::Utf8ToUtf16(std::string("This is a Modal"));
-        d2dDeviceContext->DrawText(
-            label.c_str(),
-            static_cast<UINT32>(label.length()),
-            spTextFormat.get(),
-            rect,
-            textBrush.get(),
-            D2D1_DRAW_TEXT_OPTIONS_NONE,
-            DWRITE_MEASURING_MODE_NATURAL);
-      }
-    }
-  }
 }
 
 void WindowsModalHostComponentView::updateState(

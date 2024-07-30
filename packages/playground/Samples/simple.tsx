@@ -22,10 +22,10 @@ const Bootstrap = () => {
       />
       <Text style={{textAlign:'center'}}>Modal visibility: {String(modalVisible)}</Text>
       <Modal visible={modalVisible} style={{backgroundColor: 'yellow'}}>
-        <SafeAreaView>
+        <SafeAreaView style={{backgroundColor: 'yellow', width: 200, height: 200}}>
           <Text style={{backgroundColor: 'green', width: 100, height: 100}}>I should be in the Modal!</Text>
-          <Button title="I am in the Modal"/>
           <Text style={{backgroundColor: 'green', width: 100, height: 100}}>I should be in the Modal 2!</Text>
+          <Button title='Close Modal' onPress={() => setModalVisible(!modalVisible)}/>
         </SafeAreaView>
       </Modal>
       <View

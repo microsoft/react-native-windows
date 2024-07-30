@@ -62,7 +62,6 @@ struct WindowsModalHostComponentView
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compositionContext;
   winrt::Microsoft::UI::Composition::ContainerVisual m_rootVisual{nullptr};
-  winrt::Microsoft::ReactNative::ReactNativeIsland m_compRootView{nullptr};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
