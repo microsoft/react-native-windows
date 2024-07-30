@@ -13,6 +13,22 @@ float ScaleFactor(HWND hwnd) noexcept {
   return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
 }
 
+void UpdateRootViewSizeToAppWindow(
+    winrt::Microsoft::ReactNative::ReactNativeIsland const &rootView,
+    winrt::Microsoft::UI::Windowing::AppWindow const &window) {
+  auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
+  auto scaleFactor = ScaleFactor(hwnd);
+  winrt::Windows::Foundation::Size size{
+      window.ClientSize().Width / scaleFactor, window.ClientSize().Height / scaleFactor};
+  // Do not relayout when minimized
+  if (window.Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>().State() !=
+      winrt::Microsoft::UI::Windowing::OverlappedPresenterState::Minimized) {
+    winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+    constraints.MaximumSize = constraints.MinimumSize = size;
+    rootView.Arrange(constraints, {0, 0});
+  }
+}
+
 namespace winrt::ReactNative {
 using namespace winrt::Microsoft::ReactNative;
 }
@@ -83,7 +99,7 @@ winrt::ReactNative::ReactNativeWin32App ReactNativeAppBuilder::Build() {
   // Create the AppWindow if the developer doesn't provide one
   if (m_reactNativeWin32App.AppWindow() == nullptr) {
     auto appWindow = winrt::Microsoft::UI::Windowing::AppWindow::Create();
-    appWindow.Title(L"Sample-App-Fabric");
+    appWindow.Title(L"SampleFabricApplication");
     appWindow.Resize({1000, 1000});
     appWindow.Show();
 
@@ -114,6 +130,30 @@ winrt::ReactNative::ReactNativeWin32App ReactNativeAppBuilder::Build() {
   m_reactNativeWin32App.as<implementation::ReactNativeWin32App>().get()->ReactNativeIsland(
       std::move(reactNativeIsland));
 
+  // Update the size of the RootView when the AppWindow changes size
+  m_reactNativeWin32App.AppWindow().Changed(
+      [wkRootView = winrt::make_weak(m_reactNativeWin32App.ReactNativeIsland())](
+          winrt::Microsoft::UI::Windowing::AppWindow const &window,
+          winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const &args) {
+        if (args.DidSizeChange() || args.DidVisibilityChange()) {
+          if (auto rootView = wkRootView.get()) {
+            UpdateRootViewSizeToAppWindow(rootView, window);
+          }
+        }
+      });
+
+  // Quit application when main window is closed
+  m_reactNativeWin32App.AppWindow().Destroying(
+      [this](winrt::Microsoft::UI::Windowing::AppWindow const &window, winrt::IInspectable const & /*args*/) {
+        // Before we shutdown the application - unload the ReactNativeHost to give the javascript a chance to save any
+        // state
+        auto async = m_reactNativeWin32App.ReactNativeHost().UnloadInstance();
+        async.Completed([this](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
+          m_reactNativeWin32App.ReactNativeHost().InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
+        });
+      });
+
   // DesktopChildSiteBridge create a ContentSite that can host the RootView ContentIsland
   auto desktopChildSiteBridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
       m_reactNativeWin32App.Compositor(), m_reactNativeWin32App.AppWindow().Id());
@@ -124,6 +164,8 @@ winrt::ReactNative::ReactNativeWin32App ReactNativeAppBuilder::Build() {
 
   auto scaleFactor = ScaleFactor(hwnd);
   m_reactNativeWin32App.ReactNativeIsland().ScaleFactor(scaleFactor);
+
+  UpdateRootViewSizeToAppWindow(reactNativeIsland, m_reactNativeWin32App.AppWindow());
 
   m_reactNativeWin32App.as<implementation::ReactNativeWin32App>().get()->DesktopChildSiteBridge(
       std::move(desktopChildSiteBridge));

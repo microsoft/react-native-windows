@@ -21,25 +21,6 @@ constexpr PCWSTR windowTitle = L"sample_app_fabric";
 constexpr PCWSTR mainComponentName = L"sample_app_fabric";
 
 // Scaling factor for the window's content based on the DPI of the display where the window is located.
-float ScaleFactor(HWND hwnd) noexcept {
-  return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
-}
-
-void UpdateRootViewSizeToAppWindow(
-    winrt::Microsoft::ReactNative::ReactNativeIsland const &rootView,
-    winrt::Microsoft::UI::Windowing::AppWindow const &window) {
-  auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
-  auto scaleFactor = ScaleFactor(hwnd);
-  winrt::Windows::Foundation::Size size{
-      window.ClientSize().Width / scaleFactor, window.ClientSize().Height / scaleFactor};
-  // Do not relayout when minimized
-  if (window.Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>().State() !=
-      winrt::Microsoft::UI::Windowing::OverlappedPresenterState::Minimized) {
-    winrt::Microsoft::ReactNative::LayoutConstraints constraints;
-    constraints.MaximumSize = constraints.MinimumSize = size;
-    rootView.Arrange(constraints, {0, 0});
-  }
-}
 
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
   // Initialize WinRT.
@@ -53,7 +34,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   window.Title(windowTitle);
   window.Resize({1000, 1000});
   window.Show();
-  // auto hwnd = winrt::Microsoft::UI::GetWindowFromWindowId(window.Id());
 
   WCHAR appDirectory[MAX_PATH];
   GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
@@ -97,36 +77,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   // Start the react-native instance by creating a javascript runtime and load the bundle.
   auto reactNativeWin32App{reactNativeAppBuilder.Build()};
-
-  auto reactNativeIsland{reactNativeWin32App.ReactNativeIsland()};
-
-  // Update the size of the RootView when the AppWindow changes size
-  window.Changed([wkRootView = winrt::make_weak(reactNativeIsland)](
-                     winrt::Microsoft::UI::Windowing::AppWindow const &window,
-                     winrt::Microsoft::UI::Windowing::AppWindowChangedEventArgs const &args) {
-    if (args.DidSizeChange() || args.DidVisibilityChange()) {
-      if (auto rootView = wkRootView.get()) {
-        UpdateRootViewSizeToAppWindow(rootView, window);
-      }
-    }
-  });
-
-  auto host{reactNativeWin32App.ReactNativeHost()};
-
-  // Quit application when main window is closed
-  window.Destroying(
-      [host](winrt::Microsoft::UI::Windowing::AppWindow const &window, winrt::IInspectable const & /*args*/) {
-        // Before we shutdown the application - unload the ReactNativeHost to give the javascript a chance to save any
-        // state
-        auto async = host.UnloadInstance();
-        async.Completed([host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
-          assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
-          host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
-        });
-      });
-
-  // Set the intialSize of the root view
-  UpdateRootViewSizeToAppWindow(reactNativeIsland, window);
 
   reactNativeWin32App.Start();
 }
