@@ -20,6 +20,8 @@
 #include "IReactContext.h"
 #include "ReactHost/ReactInstanceWin.h"
 #include "ReactNativeHost.h"
+#include <winrt/Microsoft.UI.Content.h>
+#include <winrt/Microsoft.UI.interop.h>
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 WindowsModalHostComponentView::WindowsModalHostComponentView(
@@ -87,33 +89,22 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   }
 
   // set the top-level windows as the new hwnd
-   winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(m_hwnd));
+  winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(m_hwnd));
 
-  // create new compositor - handles the creation/manipulation of visual objects
-  auto compositor = winrt::Windows::UI::Composition::Compositor();
+  // get current compositor - handles the creation/manipulation of visual objects
+  auto compositionContext = winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(m_reactContext.Properties().Handle());
+  auto compositor = winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(compositionContext);
 
-  // link the compositor to the hwnd
-  auto interop = compositor.try_as<ABI::Windows::UI::Composition::Desktop::ICompositorDesktopInterop>(); // ICompositorDesktopInterop provides methods that allow composition visuals to be rendered to HWND
-  winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget m_target{nullptr}; // DesktopWindowTarget allow the render of composition visual to a specific hwnd.
-  // params m_hwnd - hwnd the visuals to be rendered at
-  //        true - if the window should be topmost
-  //        IDesktopWindowTarget - get raw pointer to m_target interface and cast it as a IDesktopWindowTarget
-  check_hresult(interop->CreateDesktopWindowTarget(
-      m_hwnd,
-      true,
-      reinterpret_cast<ABI::Windows::UI::Composition::Desktop::IDesktopWindowTarget **>(put_abi(m_target))));
-
-  // make container/root visual (every visual will be added to this tree)
-  rootVisual = compositor.CreateContainerVisual(); 
-  rootVisual.RelativeSizeAdjustment({1.0f, 1.0f});
-  rootVisual.Offset({0, 0, 0});
-  rootVisual.Comment(L"Modal Root Visual");
-
-  // set the root visual of DesktopWindowTarget
-  m_target.Root(rootVisual);
+  auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(compositor, winrt::Microsoft::UI::GetWindowIdFromWindow(m_hwnd));
+  m_compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland(compositor);
+  auto island = m_compRootView.Island();
+  bridge.Connect(island);
+  bridge.Show();
+  bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
+  m_rootVisual = m_compRootView.RootVisual().try_as<winrt::Microsoft::UI::Composition::ContainerVisual>();
 
   // Create a SpriteVisual (a rectangle filled with a solid color)
-  winrt::Windows::UI::Composition::SpriteVisual spriteVisual = compositor.CreateSpriteVisual();
+  winrt::Microsoft::UI::Composition::SpriteVisual spriteVisual = compositor.CreateSpriteVisual();
   spriteVisual.Size({100.0f, 100.0f});
   spriteVisual.Offset({50.0f, 50.0f, 0.0f});
   spriteVisual.Brush(compositor.CreateColorBrush(winrt::Windows::UI::Colors::Red()));
@@ -124,8 +115,7 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   animation.InsertKeyFrame(1.0f, {200.0f, 200.0f, 0.0f});
   animation.Duration(std::chrono::seconds(2));
 
-  // Add the spirit visual to the root visual
-  rootVisual.Children().InsertAtTop(spriteVisual);
+  m_rootVisual.Children().InsertAtTop(spriteVisual);
 
   // Start the animation
   spriteVisual.StartAnimation(L"Offset", animation);
@@ -233,8 +223,20 @@ void WindowsModalHostComponentView::MountChildComponentView(
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(*this);
   indexOffsetForBorder(index);
   ensureVisual();
+  auto a = childComponentView.try_as<winrt::Microsoft::UI::Composition::Visual>();
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual b = (childComponentView.try_as<ComponentView>())->OuterVisual(); 
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
-    Visual().InsertAt(compositionChild->OuterVisual(), index);
+    //Visual().InsertAt(compositionChild->OuterVisual(), index);
+    auto containerChildren = m_rootVisual.as<winrt::Microsoft::UI::Composition::ContainerVisual>().Children();
+    auto compVisual = winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(compositionChild->OuterVisual());
+    if (index == 0) {
+      containerChildren.InsertAtBottom(compVisual);
+      return;
+    }
+    auto insertAfter = containerChildren.First();
+    for (uint32_t i = 1; i < index; i++)
+     insertAfter.MoveNext();
+    containerChildren.InsertAbove(compVisual, insertAfter.Current());
   }
 }
 
