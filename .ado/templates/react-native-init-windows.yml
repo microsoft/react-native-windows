@@ -48,6 +48,7 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)
     
     - script: | # Remove upgrade command - Windows #13446
+        call yarn install
         call yarn upgrade react-native@$(reactNativeDevDependency)
       displayName: Fix app react-native dependency
       workingDirectory: $(Agent.BuildDirectory)\testcli
@@ -59,11 +60,13 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)
 
     - script: | # Remove upgrade commands - Windows #13446
+        call yarn install
         call yarn upgrade react-native@$(reactNativeDevDependency) --dev
       displayName: Fix lib react-native dependency
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
     - script: | # Remove upgrade commands - Windows #13446
+        call yarn install
         call yarn upgrade react-native@$(reactNativeDevDependency)
       displayName: Fix example app react-native dependency
       workingDirectory: $(Agent.BuildDirectory)\testcli\example
