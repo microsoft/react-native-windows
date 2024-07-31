@@ -95,16 +95,17 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   auto compositionContext = winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(m_reactContext.Properties().Handle());
   auto compositor = winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(compositionContext);
 
+  // create a react native island - code taken from CompositionHwndHost
   auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(compositor, winrt::Microsoft::UI::GetWindowIdFromWindow(m_hwnd));
-  auto compRootView = winrt::Microsoft::ReactNative::ReactNativeIsland(compositor);
-  auto island = compRootView.Island();
-  bridge.Connect(island);
+  auto reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland(compositor);
+  auto contentIsland = reactNativeIsland.Island();
+  bridge.Connect(contentIsland);
   bridge.Show();
   bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
-  m_rootVisual = compRootView.RootVisual().try_as<winrt::Microsoft::UI::Composition::ContainerVisual>();
+  m_rootVisual = reactNativeIsland.RootVisual().try_as<winrt::Microsoft::UI::Composition::ContainerVisual>();
 
-  //compRootView.ReactViewHost();
-  compRootView.ScaleFactor(GetDpiForWindow(m_hwnd) / 96.0f);
+  // set ScaleFactor
+  reactNativeIsland.ScaleFactor(GetDpiForWindow(m_hwnd) / 96.0f);
 
   spunk.detach();
 }
@@ -119,9 +120,7 @@ void WindowsModalHostComponentView::ShowOnUIThread() {
 
 void WindowsModalHostComponentView::HideOnUIThread() noexcept {
   if (m_hwnd) {
-    LPARAM lParam = 0;
-    WPARAM wParam = 0;
-    SendMessage(m_hwnd, WM_CLOSE, wParam, lParam);
+    SendMessage(m_hwnd, WM_CLOSE, 0, 0);
   }
 }
 
@@ -144,14 +143,13 @@ LRESULT CALLBACK ModalBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM 
   }
 
   switch (message) {
-    case WM_NCCREATE: { // sent before WM_CREATE, lparam should be identical to members of CreateWindowEx
+    case WM_NCCREATE: { // called before WM_CREATE, lparam should be identical to members of CreateWindowEx
       auto createStruct = reinterpret_cast<CREATESTRUCT *>(lparam); // CreateStruct
       data = static_cast<::IUnknown *>(createStruct->lpCreateParams);
       SetProp(hwnd, CompHostProperty, data); // adds new properties to window
       break;
     }
-    case WM_CREATE: { // recieves after window is created but before visible
-      // host.Initialize((uint64_t)hwnd);
+    case WM_CREATE: { // called after window is created but before visible
       break;
     }
     case WM_CLOSE: {
@@ -160,7 +158,6 @@ LRESULT CALLBACK ModalBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM 
       return 0;
     }
     case WM_DESTROY: { // called when we want to destroy the window
-      // data->Release();
       SetProp(hwnd, CompHostProperty, nullptr);
       break;
     }
@@ -225,7 +222,6 @@ void WindowsModalHostComponentView::MountChildComponentView(
 void WindowsModalHostComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  // base_type::UnmountChildComponentView(childComponentView, index);
   HideOnUIThread();
 }
 
