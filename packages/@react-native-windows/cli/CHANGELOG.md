@@ -1,8 +1,25 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Fri, 26 Apr 2024 22:42:37 GMT and should not be manually modified.
+This log was last generated on Mon, 01 Jul 2024 15:14:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.5
+
+Mon, 01 Jul 2024 15:14:50 GMT
+
+### Patches
+
+- SFI: Component Governance fixes 6/19/24 (jthysell@microsoft.com)
+- Bump @react-native-windows/codegen to v0.73.2
+
+## 0.73.4
+
+Thu, 23 May 2024 15:40:04 GMT
+
+### Patches
+
+- Fix yarn build with latest Node.js versions (vmorozov@microsoft.com)
 
 ## 0.73.3
 

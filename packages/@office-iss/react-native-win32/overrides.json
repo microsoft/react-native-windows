@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src/rntypes/**"
   ],
-  "baseVersion": "0.73.6",
+  "baseVersion": "0.73.8",
   "overrides": [
     {
       "type": "derived",
@@ -39,11 +39,16 @@
       "issue": 11041
     },
     {
-      "type": "patch",
+      "type": "derived",
+      "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.d.ts",
+      "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.d.ts",
+      "baseHash": "f55fda723b8dc0f9836f2fa4a4a766ed45c71c00"
+    },
+    {
+      "type": "derived",
       "file": "src/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "163927cc271b53109f06eaf5fc6d30a9af8cb27e",
-      "issue": 4578
+      "baseHash": "163927cc271b53109f06eaf5fc6d30a9af8cb27e"
     },
     {
       "type": "copy",
@@ -51,6 +56,12 @@
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/legacySendAccessibilityEvent.android.js",
       "baseHash": "d37b2f72125246ababf3260e99ef790ce76fe3bb",
       "issue": 4578
+    },
+    {
+      "type": "derived",
+      "file": "src/Libraries/Components/AccessibilityInfo/NativeAccessibilityInfoWin32.js",
+      "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/NativeAccessibilityInfo.js",
+      "baseHash": "9427a7feebfbe3de606b2d100439cabf2faa8661"
     },
     {
       "type": "derived",

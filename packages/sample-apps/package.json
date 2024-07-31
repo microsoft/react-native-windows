@@ -15,15 +15,15 @@
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.57.1",
     "react": "18.2.0",
-    "react-native": "0.73.6",
-    "react-native-windows": "0.73.12"
+    "react-native": "0.73.8",
+    "react-native-windows": "0.73.18"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
     "@babel/eslint-parser": "^7.20.0",
     "@babel/runtime": "^7.8.4",
-    "@react-native-windows/cli": "0.73.3",
-    "@react-native-windows/codegen": "0.73.1",
+    "@react-native-windows/cli": "0.73.5",
+    "@react-native-windows/codegen": "0.73.2",
     "@react-native/metro-config": "^0.73.0",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.3",

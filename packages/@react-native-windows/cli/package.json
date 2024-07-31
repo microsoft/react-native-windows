@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.73.3",
+  "version": "0.73.5",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,7 +17,7 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/codegen": "0.73.1",
+    "@react-native-windows/codegen": "0.73.2",
     "@react-native-windows/fs": "0.73.1",
     "@react-native-windows/package-utils": "0.73.1",
     "@react-native-windows/telemetry": "0.73.2",
@@ -40,8 +40,8 @@
     "xpath": "^0.0.27"
   },
   "devDependencies": {
-    "@react-native-community/cli-doctor": "12.3.2",
-    "@react-native-community/cli-types": "12.3.2",
+    "@react-native-community/cli-doctor": "12.3.6",
+    "@react-native-community/cli-types": "12.3.6",
     "@rnw-scripts/eslint-config": "1.2.3",
     "@rnw-scripts/jest-unittest-config": "1.5.6",
     "@rnw-scripts/just-task": "2.3.17",

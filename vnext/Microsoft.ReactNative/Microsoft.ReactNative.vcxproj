@@ -107,6 +107,7 @@
         $(ReactNativeWindowsDir)Microsoft.ReactNative\Views;
         $(ReactNativeWindowsDir);
         $(ReactNativeWindowsDir)codegen;
+        $(ReactNativeWindowsDir)codegen\react\components\rnwcore;
         $(ReactNativeWindowsDir)Common;
         $(ReactNativeWindowsDir)include;
         $(ReactNativeWindowsDir)Shared;
@@ -117,21 +118,25 @@
         $(GeneratedFilesDir);
         %(AdditionalIncludeDirectories)
       </AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>DISABLE_XAML_GENERATED_MAIN;FOLLY_NO_CONFIG;NOMINMAX;_HAS_AUTO_PTR_ETC;_USE_MATH_DEFINES;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <!--
         REACTWINDOWS_BUILD - building with REACTWINDOWS_API as dll exports
         OLD_CPPWINRT is a workaround to make target version to 19H1
       -->
       <PreprocessorDefinitions>
+        DISABLE_XAML_GENERATED_MAIN;
         REACTWINDOWS_BUILD;
         RN_PLATFORM=windows;
         NOMINMAX;
+        FOLLY_CFG_NO_COROUTINES;
         FOLLY_NO_CONFIG;
         RN_EXPORT=;
         JSI_EXPORT=;
         WIN32=0;
         WINRT=1;
         _HAS_AUTO_PTR_ETC;
+        _USE_MATH_DEFINES;
+        <!-- See https://cplusplus.github.io/LWG/issue3840 -->
+        _SILENCE_CXX20_U8PATH_DEPRECATION_WARNING;
         %(PreprocessorDefinitions)
       </PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>

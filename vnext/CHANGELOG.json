@@ -2,6 +2,114 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 29 Jul 2024 15:13:21 GMT",
+      "version": "0.73.18",
+      "tag": "react-native-windows_v0.73.18",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "ed947f1ba0d5375706d8b95977aa02119f548f64",
+            "comment": "Don't override Hermes platform for ARM64EC (#13490)"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 22 Jul 2024 15:12:53 GMT",
+      "version": "0.73.17",
+      "tag": "react-native-windows_v0.73.17",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0c34c3ba4d01c15bc226502f5596cfa9804f440b",
+            "comment": "Port Desktop DLL to ARM64EC (#13320)"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "be4fbd8d8b3905d9d3f1d2d3f8b8f29328b4d43c",
+            "comment": "Upgrade Desktop solution/projects to Win SDK 10.0.22621.0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 01 Jul 2024 15:14:51 GMT",
+      "version": "0.73.16",
+      "tag": "react-native-windows_v0.73.16",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.73.5",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.73.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 29 May 2024 18:11:54 GMT",
+      "version": "0.73.15",
+      "tag": "react-native-windows_v0.73.15",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "7cb849542746286f1fb7758306cdf152c89db1aa",
+            "comment": "Enable Timer TurboModule for Desktop"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 23 May 2024 15:40:04 GMT",
+      "version": "0.73.14",
+      "tag": "react-native-windows_v0.73.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "4c08164bf076cae9c341b048fa4bad145a63be08",
+            "comment": "integrate 73.8"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.73.4",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 13 May 2024 15:15:54 GMT",
+      "version": "0.73.13",
+      "tag": "react-native-windows_v0.73.13",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a1b2139eec4ce5416a6098b737ea2662af3d896f",
+            "comment": "Change Hermes package version to 0.1.21"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Apr 2024 22:42:39 GMT",
       "version": "0.73.12",
       "tag": "react-native-windows_v0.73.12",

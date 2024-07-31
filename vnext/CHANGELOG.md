@@ -1,8 +1,59 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 26 Apr 2024 22:42:39 GMT and should not be manually modified.
+This log was last generated on Mon, 29 Jul 2024 15:13:21 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.18
+
+Mon, 29 Jul 2024 15:13:21 GMT
+
+### Patches
+
+- Don't override Hermes platform for ARM64EC (#13490) (julio.rocha@microsoft.com)
+
+## 0.73.17
+
+Mon, 22 Jul 2024 15:12:53 GMT
+
+### Patches
+
+- Port Desktop DLL to ARM64EC (#13320) (julio.rocha@microsoft.com)
+- Upgrade Desktop solution/projects to Win SDK 10.0.22621.0 (julio.rocha@microsoft.com)
+
+## 0.73.16
+
+Mon, 01 Jul 2024 15:14:51 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.73.5
+- Bump @react-native-windows/codegen to v0.73.2
+
+## 0.73.15
+
+Wed, 29 May 2024 18:11:54 GMT
+
+### Patches
+
+- Enable Timer TurboModule for Desktop (vmorozov@microsoft.com)
+
+## 0.73.14
+
+Thu, 23 May 2024 15:40:04 GMT
+
+### Patches
+
+- integrate 73.8 (email not defined)
+- Bump @react-native-windows/cli to v0.73.4
+
+## 0.73.13
+
+Mon, 13 May 2024 15:15:54 GMT
+
+### Patches
+
+- Change Hermes package version to 0.1.21 (vmorozov@microsoft.com)
 
 ## 0.73.12
 

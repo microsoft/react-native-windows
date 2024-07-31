@@ -42,13 +42,13 @@ parameters:
       BuildConfiguration: Release
       BuildPlatform: x86
       UseFabric: false
-    - Name: ARM64Debug
+    - Name: ARM64ECDebug
       BuildConfiguration: Debug
-      BuildPlatform: ARM64
+      BuildPlatform: ARM64EC
       UseFabric: false
-    - Name: ARM64Release
+    - Name: ARM64ECRelease
       BuildConfiguration: Release
-      BuildPlatform: ARM64
+      BuildPlatform: ARM64EC
       UseFabric: false
     - Name: X64DebugFabric
       BuildConfiguration: Debug
@@ -110,7 +110,7 @@ jobs:
           persistCredentials: false # We're going to use rnbot's git creds to publish
 
       - powershell: gci env:/BUILD_*
-        displayName: Show build information  
+        displayName: Show build information
 
       - template: templates/prepare-js-env.yml
 
@@ -159,13 +159,13 @@ jobs:
         displayName: 📒 Generate Manifest Npm
         inputs:
           BuildDropPath: $(System.DefaultWorkingDirectory)
-    
+
       - task: PublishPipelineArtifact@1
         displayName: 📒 Publish Manifest Npm
         inputs:
           artifactName: SBom-$(System.JobAttempt)
           targetPath: $(System.DefaultWorkingDirectory)/_manifest
-    
+
       - template: templates/publish-version-vars.yml
 
   - ${{ each matrix in parameters.desktopBuildMatrix }}:
@@ -232,7 +232,7 @@ jobs:
           BuildPlatform: x86
         Arm64Debug:
           BuildConfiguration: Debug
-          BuildPlatform: ARM64          
+          BuildPlatform: ARM64
     pool: ${{ parameters.AgentPool.Large }}
 
     steps:
@@ -318,7 +318,7 @@ jobs:
             - platform: x86
               configuration: Release
             - platform: ARM64
-              configuration: Release  
+              configuration: Release
             - platform: x64
               configuration: Debug
             - platform: x86
@@ -340,13 +340,13 @@ jobs:
               configuration: Release
             - platform: x86
               configuration: Release
-            - platform: ARM64
+            - platform: ARM64EC
               configuration: Release
             - platform: x64
               configuration: Debug
             - platform: x86
               configuration: Debug
-            - platform: ARM64
+            - platform: ARM64EC
               configuration: Debug
 
       - template: templates/prep-and-pack-nuget.yml
@@ -363,13 +363,13 @@ jobs:
               configuration: Release
             - platform: x86
               configuration: Release
-            # - platform: ARM64
+            # - platform: ARM64EC
             #   configuration: Release
             - platform: x64
               configuration: Debug
             - platform: x86
               configuration: Debug
-            # - platform: ARM64
+            # - platform: ARM64EC
             #   configuration: Debug
 
       - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0

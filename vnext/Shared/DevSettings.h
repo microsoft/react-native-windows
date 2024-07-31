@@ -105,6 +105,9 @@ struct DevSettings {
 
   // OC:8368383 - Memory leak under investigation.
   bool useWebSocketTurboModule{false};
+
+  // If true, then use only Turbo Modules instead of CxxModules.
+  bool useTurboModulesOnly{false};
 };
 
 } // namespace react

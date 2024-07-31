@@ -1,8 +1,33 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Fri, 26 Apr 2024 22:42:37 GMT and should not be manually modified.
+This log was last generated on Thu, 23 May 2024 15:40:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.6
+
+Thu, 23 May 2024 15:40:04 GMT
+
+### Patches
+
+- Fix for PaperUIManger (30809111+acoates-ms@users.noreply.github.com)
+- integrate 73.8 (email not defined)
+
+## 0.73.5
+
+Wed, 15 May 2024 20:50:52 GMT
+
+### Patches
+
+- add support for announceForAccessibilityWithOptions (krsiler@microsoft.com)
+
+## 0.73.4
+
+Mon, 06 May 2024 15:14:45 GMT
+
+### Patches
+
+- PaperUIManager running as turbomodule fix (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.73.3
 
