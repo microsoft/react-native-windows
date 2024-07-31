@@ -19,7 +19,7 @@ export type PlatformConstantsWin32 = {|
     major: number,
     minor: number,
     patch: number,
-    prerelease: ?string | number,
+    prerelease: ?string,
   |},
   forceTouchAvailable: boolean,
   osVersion: number,
