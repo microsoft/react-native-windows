@@ -5,6 +5,7 @@
 #include "ReactNativeHost.h"
 #include "ReactNativeWin32App.h"
 #include "winrt/Microsoft.UI.Composition.h"
+#include "winrt/Microsoft.UI.Dispatching.h"
 #include "winrt/Microsoft.UI.Windowing.h"
 #include "winrt/microsoft.UI.Interop.h"
 
@@ -99,7 +100,7 @@ winrt::ReactNative::ReactNativeWin32App ReactNativeAppBuilder::Build() {
   // Create the AppWindow if the developer doesn't provide one
   if (m_reactNativeWin32App.AppWindow() == nullptr) {
     auto appWindow = winrt::Microsoft::UI::Windowing::AppWindow::Create();
-    appWindow.Title(L"SampleFabricApplication");
+    appWindow.Title(L"SampleApplication");
     appWindow.Resize({1000, 1000});
     appWindow.Show();
 

@@ -14,7 +14,9 @@ struct ReactNativeAppBuilder : ReactNativeAppBuilderT<ReactNativeAppBuilder> {
   winrt::Microsoft::ReactNative::ReactNativeAppBuilder SetReactInstanceSettings(
       winrt::Microsoft::ReactNative::ReactInstanceSettings const &settings);
 
-  // TODO: Currently, SetCompositor API is not exposed to the developer due to threading issues.
+  // TODO: Currently, SetCompositor API is not exposed to the developer.
+  // Compositor depends on the DispatcherQueue created by DispatcherQueueController on a current thread
+  // or dedicated thread. So we also have to make a provision for setting DispatcherQueueController.
   winrt::Microsoft::ReactNative::ReactNativeAppBuilder SetCompositor(
       winrt::Microsoft::UI::Composition::Compositor const &compositor);
   winrt::Microsoft::ReactNative::ReactNativeAppBuilder SetAppWindow(
