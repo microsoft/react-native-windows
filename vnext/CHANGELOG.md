@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 26 Jul 2024 05:14:21 GMT and should not be manually modified.
+This log was last generated on Sat, 27 Jul 2024 05:13:53 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.847
+
+Sat, 27 Jul 2024 05:13:53 GMT
+
+### Changes
+
+- Make appearanceChanged event consistent with Android/iOS (erozell@outlook.com)
 
 ## 0.0.0-canary.846
 

@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 27 Jul 2024 05:13:53 GMT",
+      "version": "0.0.0-canary.847",
+      "tag": "react-native-windows_v0.0.0-canary.847",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "erozell@outlook.com",
+            "package": "react-native-windows",
+            "commit": "2466bb967dd792b2ecc5b50896e1cd7b9d52b1c8",
+            "comment": "Make appearanceChanged event consistent with Android/iOS"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 26 Jul 2024 05:14:21 GMT",
       "version": "0.0.0-canary.846",
       "tag": "react-native-windows_v0.0.0-canary.846",

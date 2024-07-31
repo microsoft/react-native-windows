@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Make appearanceChanged event consistent with Android/iOS",
-  "packageName": "react-native-windows",
-  "email": "erozell@outlook.com",
-  "dependentChangeType": "patch"
-}
