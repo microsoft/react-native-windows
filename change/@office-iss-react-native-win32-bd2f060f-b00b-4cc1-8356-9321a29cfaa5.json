@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "consolidate rn dependencies",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
