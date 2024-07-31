@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240613-f7aea0c8e",
+  "baseVersion": "0.75.0-nightly-20240618-5df5ed1a8",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "0a0c16d79748a5e84407a57c772c3508160134ae"
+      "baseHash": "75582b181be0cd6790f7c021bfafb761dfc42381"
     },
     {
       "type": "derived",
@@ -523,7 +523,7 @@
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorHeader.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorHeader.js",
-      "baseHash": "1a12281b1cfab7352fcfeb5984f0ed3c83c04660"
+      "baseHash": "e85290422895e30d58e2d804f11e73407a743282"
     },
     {
       "type": "derived",
@@ -587,37 +587,9 @@
     },
     {
       "type": "patch",
-      "file": "src-win/Libraries/ReactNative/AppContainer.js",
-      "baseFile": "packages/react-native/Libraries/ReactNative/AppContainer.js",
-      "baseHash": "547149b6581de22ddf68f91e58294703a71b118d",
-      "issue": 13314
-    },
-    {
-      "type": "patch",
-      "file": "src-win/Libraries/ReactNative/AppRegistry.d.ts",
-      "baseFile": "packages/react-native/Libraries/ReactNative/AppRegistry.d.ts",
-      "baseHash": "ec4dce37a05e1d0ef00f40b6549cdb277ad3a227",
-      "issue": 13314
-    },
-    {
-      "type": "patch",
-      "file": "src-win/Libraries/ReactNative/AppRegistry.js",
-      "baseFile": "packages/react-native/Libraries/ReactNative/AppRegistry.js",
-      "baseHash": "80a5455a014ab826cc21b9e8efe1dbe7c29b5f44",
-      "issue": 13314
-    },
-    {
-      "type": "patch",
       "file": "src-win/Libraries/ReactNative/PaperUIManager.windows.js",
       "baseFile": "packages/react-native/Libraries/ReactNative/PaperUIManager.js",
       "baseHash": "5421778518fbd545ba3896bdfb1fb4f829d016fd"
-    },
-    {
-      "type": "patch",
-      "file": "src-win/Libraries/ReactNative/renderApplication.js",
-      "baseFile": "packages/react-native/Libraries/ReactNative/renderApplication.js",
-      "baseHash": "14b60713c380bbedeb9cdf0811708fd5f5fe49c2",
-      "issue": 13314
     },
     {
       "type": "platform",
@@ -627,7 +599,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.windows.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "24376d16dfc834512d72348e2a434731440146d4"
+      "baseHash": "71c24366f3f0baa9a48ba34c08b255483bf77553"
     },
     {
       "type": "derived",

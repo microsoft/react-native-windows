@@ -104,6 +104,7 @@ export function translateFieldOrReturnType(
         callerName,
         options,
       )}>`;
+    case 'FunctionTypeAnnotation':
     case 'MixedTypeAnnotation':
       return '';
     case 'EnumDeclaration':

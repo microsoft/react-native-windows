@@ -2,15 +2,15 @@
 'use strict';
 
 const React = require('react');
-const ReactTestRenderer = require('react-test-renderer');
-
+const renderer = require('react-native/jest/renderer');
 const View = require('../Components/View/View');
 
 describe('View', () => {
-  it('renders basic view', () => {
-    const component = ReactTestRenderer.create(
+  it('renders basic view', async () => {
+    expect(
+      await renderer.create(
       <View/>
-    );
-    expect(component).toMatchSnapshot();
+    ),
+  ).toMatchSnapshot();
   });
 });

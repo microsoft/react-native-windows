@@ -11,8 +11,13 @@ export const HealthCheckList = [
   [true, 'WindowsVersion', 'Windows version >= 10.0.17763.0'],
   [true, 'DeveloperMode', 'Developer mode is on'],
   [true, 'LongPath', 'Long path support is enabled'],
+<<<<<<< HEAD
   [true, 'VSUWP', 'Visual Studio 2022 (>= 17.10.4) & req. components'],
   [true, 'Node', 'Node.js (LTS, >= 18.0)'],
+=======
+  [true, 'VSUWP', 'Visual Studio 2022 (>= 17.9) & req. components'],
+  [true, 'Node', 'Node.js (LTS, >= 18.18)'],
+>>>>>>> main
   [true, 'Yarn', 'Yarn'],
   [true, 'DotNetCore', '.NET SDK (LTS, = 6.0)'],
 ];

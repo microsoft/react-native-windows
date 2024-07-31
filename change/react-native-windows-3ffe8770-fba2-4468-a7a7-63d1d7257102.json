@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "add version checks for uses of XamlRoot",
+  "packageName": "react-native-windows",
+  "email": "julie@vendora.io",
+  "dependentChangeType": "patch"
+}

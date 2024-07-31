@@ -8,8 +8,7 @@ import type {ViewProps} from 'react-native';
 
 import FlyoutNativeComponent from './FlyoutNativeComponent';
 import * as React from 'react';
-import StyleSheet from 'react-native';
-import {findNodeHandle} from 'react-native';
+import {findNodeHandle, StyleSheet} from 'react-native';
 
 type Placement =
   | 'top'
