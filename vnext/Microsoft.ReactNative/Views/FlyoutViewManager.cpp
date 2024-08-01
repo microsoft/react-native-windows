@@ -200,7 +200,10 @@ void FlyoutShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
       }
 
       OnFlyoutClosed(GetViewManager()->GetReactContext(), m_tag, false);
-      m_xamlRootChangedRevoker.revoke();
+
+      if (Is19H1OrHigher()) {
+        m_xamlRootChangedRevoker.revoke();
+      }
     }
   });
 
@@ -262,15 +265,17 @@ void FlyoutShadowNode::createView(const winrt::Microsoft::ReactNative::JSValueOb
       });
 
   // Set XamlRoot on the Flyout to handle XamlIsland/AppWindow scenarios.
-  if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {
-    if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
-      if (auto xamlRoot = uiManager->tryGetXamlRoot(m_rootTag)) {
-        flyoutBase6.XamlRoot(xamlRoot);
-        m_xamlRootChangedRevoker = xamlRoot.Changed(winrt::auto_revoke, [this](auto &&, auto &&) {
-          if (m_isLightDismissEnabled) {
-            onDropViewInstance();
-          }
-        });
+  if (Is19H1OrHigher()) {
+    if (auto flyoutBase6 = m_flyout.try_as<winrt::IFlyoutBase6>()) {
+      if (auto uiManager = GetNativeUIManager(GetViewManager()->GetReactContext()).lock()) {
+        if (auto xamlRoot = uiManager->tryGetXamlRoot(m_rootTag)) {
+          flyoutBase6.XamlRoot(xamlRoot);
+          m_xamlRootChangedRevoker = xamlRoot.Changed(winrt::auto_revoke, [this](auto &&, auto &&) {
+            if (m_isLightDismissEnabled) {
+              onDropViewInstance();
+            }
+          });
+        }
       }
     }
   }
@@ -403,12 +408,16 @@ winrt::Flyout FlyoutShadowNode::GetFlyout() {
 void FlyoutShadowNode::OnShowFlyout() {
   AdjustDefaultFlyoutStyle(50000, 50000);
   if (m_isFlyoutShowOptionsSupported) {
-    if (!m_flyout.XamlRoot()) {
-      LogErrorAndClose("The target view window was closed before flyout could be shown.");
-    } else if (!m_targetElement && m_targetTag > 0) {
-      LogErrorAndClose("The target view unmounted before flyout could be shown.");
-    } else if (m_targetElement && m_flyout.XamlRoot() != m_targetElement.XamlRoot()) {
-      LogErrorAndClose("The target view window lost focus before flyout could be shown.");
+    if (Is19H1OrHigher()) {
+      if (!m_flyout.XamlRoot()) {
+        LogErrorAndClose("The target view window was closed before flyout could be shown.");
+      } else if (!m_targetElement && m_targetTag > 0) {
+        LogErrorAndClose("The target view unmounted before flyout could be shown.");
+      } else if (m_targetElement && m_flyout.XamlRoot() != m_targetElement.XamlRoot()) {
+        LogErrorAndClose("The target view window lost focus before flyout could be shown.");
+      } else {
+        m_flyout.ShowAt(m_targetElement, m_showOptions);
+      }
     } else {
       m_flyout.ShowAt(m_targetElement, m_showOptions);
     }
