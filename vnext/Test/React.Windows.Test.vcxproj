@@ -58,7 +58,10 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalOptions>%(AdditionalOptions) /bigobj /Zc:twoPhase-</AdditionalOptions>
+      <AdditionalOptions>
+        %(AdditionalOptions)
+        /bigobj
+      </AdditionalOptions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <!--
         BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
@@ -84,7 +87,7 @@
     <ClCompile Include="WebSocketServer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="boost" Version="1.76.0.0" />
+    <PackageReference Include="boost" Version="1.83.0.0" />
     <PackageReference Include="ReactWindows.OpenSSL.StdCall.Static" Version="1.0.2-p.5" />
   </ItemGroup>
 </Project>
