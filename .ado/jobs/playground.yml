@@ -8,6 +8,9 @@ parameters:
       - Continuous
   - name: AgentPool
     type: object
+  - name: certificatePassword
+    type: string
+    default: 'pwd'
   - name: buildMatrix
     type: object
     default:
@@ -135,7 +138,9 @@ jobs:
 
             - ${{if eq(config.BuildEnvironment, 'Continuous')}}:
               - template: ../templates/write-certificate.yml
-
+                parameters:
+                  certificatePassword: ${{ parameters.certificatePassword }}
+        
             - ${{ if eq(matrix.UseExperimentalWinUI3, true) }}:
               - template:  ../templates/set-experimental-feature.yml
                 parameters:
@@ -174,6 +179,7 @@ jobs:
                 ${{if eq(config.BuildEnvironment, 'Continuous')}}:
                   msbuildArgs:
                     /p:PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
+                    /p:PackageCertificatePassword=${{ parameters.certificatePassword }}
 
             - ${{if and(endsWith(matrix.Name, 'Universal'), eq(matrix.BuildConfiguration, 'Debug')) }}:
               # Execute debug feature tests (skip this step for the Win32 Playground app and for release builds)
