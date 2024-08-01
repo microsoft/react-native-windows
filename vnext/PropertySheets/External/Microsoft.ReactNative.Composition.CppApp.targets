@@ -12,7 +12,7 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets" />
 
   <ItemGroup>
-    <PackageReference Include="boost" Version="1.76.0.0" />
+    <PackageReference Include="boost" Version="1.83.0.0" />
     <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.2-rc" />
   </ItemGroup>
 
