@@ -6,8 +6,6 @@ parameters:
       - PullRequest
       - SecurePullRequest
       - Continuous
-  - name: certificateName
-    type: string
   - name: buildConfiguration
     type: string
     values:
@@ -60,8 +58,6 @@ steps:
 
   - ${{ if and(eq(parameters.buildConfiguration, 'Release'), eq(parameters.buildEnvironment, 'Continuous')) }}:
     - template: ../templates/write-certificate.yml
-      parameters:
-        certificateName: ${{ parameters.certificateName }}
 
     - script: >
         npx @react-native-community/cli run-windows

@@ -135,8 +135,6 @@ jobs:
 
             - ${{if eq(config.BuildEnvironment, 'Continuous')}}:
               - template: ../templates/write-certificate.yml
-                parameters:
-                  certificateName: playgroundEncodedKey
 
             - ${{ if eq(matrix.UseExperimentalWinUI3, true) }}:
               - template:  ../templates/set-experimental-feature.yml
