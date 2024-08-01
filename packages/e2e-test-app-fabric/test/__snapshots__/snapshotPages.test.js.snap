@@ -56053,6 +56053,8 @@ exports[`snapshotAllPages Text 40`] = `
 
 exports[`snapshotAllPages Text 41`] = `
 <View
+  accessibilityLabel="Border Example"
+  accessible={true}
   testID="text-border"
 >
   <Text
@@ -56128,6 +56130,8 @@ exports[`snapshotAllPages Text 41`] = `
 
 exports[`snapshotAllPages Text 42`] = `
 <View
+  accessibilityLabel="Advanced Border Example"
+  accessible={true}
   testID="advanced-borders"
 >
   <Text
