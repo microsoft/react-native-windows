@@ -58,7 +58,10 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalOptions>%(AdditionalOptions) /bigobj /Zc:twoPhase-</AdditionalOptions>
+      <AdditionalOptions>
+        %(AdditionalOptions)
+        /bigobj
+      </AdditionalOptions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <!--
         BOOST_ASIO_HAS_IOCP - Force unique layout/size for boost::asio::basic_stream_socket<> subtypes.
