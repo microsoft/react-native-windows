@@ -26,7 +26,7 @@
     "@react-native-community/cli": "14.0.0-alpha.11",
     "@react-native-windows/cli": "0.0.0-canary.228",
     "@react-native-windows/codegen": "0.0.0-canary.98",
-    "@react-native/metro-config": "0.75.0-nightly-20240614-8b53d41a8",
+    "@react-native/metro-config": "0.76.0-nightly-20240701-9f6cb21ed",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.25",
     "@rnw-scripts/just-task": "2.3.42",
