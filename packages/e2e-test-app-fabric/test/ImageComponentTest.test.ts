@@ -166,7 +166,7 @@ describe('Image Tests', () => {
     const dump = await dumpVisualTree('image-alt');
     expect(dump).toMatchSnapshot();
   });
-  test('A set of Images can have an accessibilityPosInSet and accessibilitySetSize', async () => {
+  test('Images can be defined as a set using accessibilityPosInSet and accessibilitySetSize', async () => {
     const component = await app.findElementByTestID('image-set');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('image-set');

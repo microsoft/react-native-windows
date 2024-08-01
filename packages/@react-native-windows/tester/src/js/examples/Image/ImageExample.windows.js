@@ -1577,7 +1577,7 @@ exports.examples = [
       'When their are a set of elements the acessibilityPosInSet and accessibilitySetSize props should be used to alert UIA of the set structure',
     render: function (): React.Node {
       return (
-        <View accessibile testID='image-set'>
+        <View accessible testID='image-set'>
           <Image
           source={fullImage}
           style={styles.base}

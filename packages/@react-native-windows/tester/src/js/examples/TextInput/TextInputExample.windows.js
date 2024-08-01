@@ -804,7 +804,7 @@ const examples: Array<RNTesterModuleExample> = [
     title: 'Set of TextInputs',
     render: function (): React.Node {
       return (
-        <View accessibile testID="textinput-set">
+        <View accessible testID="textinput-set">
           <ExampleTextInput
             style={styles.singleLine}
             placeholder='TextInput 1 in Set of 3'
