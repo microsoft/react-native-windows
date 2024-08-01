@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 27 Jul 2024 05:13:53 GMT and should not be manually modified.
+This log was last generated on Thu, 01 Aug 2024 05:14:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.848
+
+Thu, 01 Aug 2024 05:14:47 GMT
+
+### Changes
+
+- add version checks for uses of XamlRoot (julie@vendora.io)
 
 ## 0.0.0-canary.847
 

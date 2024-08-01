@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 01 Aug 2024 05:14:47 GMT",
+      "version": "0.0.0-canary.848",
+      "tag": "react-native-windows_v0.0.0-canary.848",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julie@vendora.io",
+            "package": "react-native-windows",
+            "commit": "8de5648eca2a32b446622e72f57ae864c702dd17",
+            "comment": "add version checks for uses of XamlRoot"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 27 Jul 2024 05:13:53 GMT",
       "version": "0.0.0-canary.847",
       "tag": "react-native-windows_v0.0.0-canary.847",
