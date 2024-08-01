@@ -79,6 +79,7 @@ _YGConfigGetUseWebDefaults@4
 _YGConfigIsExperimentalFeatureEnabled@8
 _YGConfigNew@0
 _YGConfigSetContext@8
+_YGConfigSetErrata@8
 _YGConfigSetExperimentalFeatureEnabled@12
 _YGConfigSetLogger@8
 _YGConfigSetPointScaleFactor@8
