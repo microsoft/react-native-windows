@@ -6,7 +6,6 @@
 #include "winrt/Microsoft.UI.Content.h"
 #include "winrt/Microsoft.UI.Interop.h"
 #include "winrt/Microsoft.UI.Windowing.h"
-#include "winrt/Microsoft.UI.Dispatching.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 ReactNativeWin32App::ReactNativeWin32App() {}

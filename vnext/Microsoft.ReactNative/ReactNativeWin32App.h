@@ -1,5 +1,6 @@
 #pragma once
 #include "ReactNativeWin32App.g.h"
+#include "winrt/Microsoft.UI.Dispatching.h"
 
 namespace winrt::Microsoft::ReactNative::implementation {
 struct ReactNativeWin32App : ReactNativeWin32AppT<ReactNativeWin32App> {
