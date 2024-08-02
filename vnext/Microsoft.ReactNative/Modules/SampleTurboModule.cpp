@@ -18,7 +18,32 @@ ReactNativeSpecs::SampleTurboModuleSpec_Constants SampleTurboModule::GetConstant
   return constants;
 }
 
-void SampleTurboModule::voidFunc() noexcept {}
+void SampleTurboModule::voidFunc() noexcept {
+  onPress();
+  onClick("click");
+
+  /*
+    SampleTurboModuleSpec_ObjectStruct will be added in a future version of SampleTurboModuleSpec
+    Uncomment below when we FI to that version
+  */
+  /*
+  ReactNativeSpecs::SampleTurboModuleSpec_ObjectStruct obj;
+  obj.a = 1;
+  obj.b = "two";
+  onChange(obj);
+
+  ReactNativeSpecs::SampleTurboModuleSpec_ObjectStruct obj2;
+  obj2.a = 3;
+  obj2.b = "four";
+
+  auto writer = winrt::Microsoft::ReactNative::MakeJSValueTreeWriter();
+  writer.WriteArrayBegin();
+  winrt::Microsoft::ReactNative::WriteValue(writer, obj);
+  winrt::Microsoft::ReactNative::WriteValue(writer, obj2);
+  writer.WriteArrayEnd();
+  onSubmit(winrt::Microsoft::ReactNative::TakeJSValue(writer).MoveArray());
+  */
+}
 
 bool SampleTurboModule::getBool(bool arg) noexcept {
   return arg;

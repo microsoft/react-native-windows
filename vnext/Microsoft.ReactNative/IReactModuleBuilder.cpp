@@ -129,6 +129,10 @@ void ReactModuleBuilder::AddSyncMethod(hstring const &name, SyncMethodDelegate c
   m_methods.push_back(std::move(cxxMethod));
 }
 
+void ReactModuleBuilder::AddEventEmitter(hstring name, EventEmitterInitializerDelegate emitter) noexcept {
+  // No-op.  We only support auto generated EventEmitters in TurboModules
+}
+
 /*static*/ MethodResultCallback ReactModuleBuilder::MakeMethodResultCallback(CxxModule::Callback &&callback) noexcept {
   if (callback) {
     return [callback = std::move(callback)](const IJSValueWriter &outputWriter) noexcept {

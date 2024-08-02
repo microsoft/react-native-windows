@@ -14,6 +14,24 @@ struct SampleTurboModule {
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
+  REACT_EVENT_EMITTER(onPress)
+  std::function<void()> onPress;
+
+  REACT_EVENT_EMITTER(onClick)
+  std::function<void(std::string)> onClick;
+
+  /*
+    SampleTurboModuleSpec_ObjectStruct will be added in a future version of SampleTurboModuleSpec
+    Uncomment below when we FI to that version
+  */
+  /*
+  REACT_EVENT_EMITTER(onChange)
+  std::function<void(ReactNativeSpecs::SampleTurboModuleSpec_ObjectStruct)> onChange;
+
+  REACT_EVENT_EMITTER(onSubmit)
+  std::function<void(winrt::Microsoft::ReactNative::JSValueArray)> onSubmit;
+  */
+
   REACT_GET_CONSTANTS(GetConstants)
   ReactNativeSpecs::SampleTurboModuleSpec_Constants GetConstants() noexcept;
 

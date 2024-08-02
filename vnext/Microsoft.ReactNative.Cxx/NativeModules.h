@@ -113,6 +113,16 @@
 #define REACT_EVENT(/* field, [opt] eventName, [opt] eventEmitterName */...) \
   INTERNAL_REACT_MEMBER(__VA_ARGS__)(EventField, __VA_ARGS__)
 
+// REACT_EVENT_EMITTER(field, [opt] eventName, [opt] eventEmitterName)
+// Arguments:
+// - field (required) - the field name the macro is attached to.
+// - eventEmitterName (optional) - the JavaScript eventEmitter name. Default is the field name.
+// REACT_EVENT_EMITTER annotates a field that helps raise a JavaScript event.
+// The field type can be any std::function like type. E.g. Func<void(Args...)>.
+// It must be an instance field.
+#define REACT_EVENT_EMITTER(/* field, [opt] eventEmitterName */...) \
+  INTERNAL_REACT_MEMBER(__VA_ARGS__)(EventEmitterField, __VA_ARGS__)
+
 // REACT_FUNCTION(field, [opt] functionName, [opt] moduleName)
 // Arguments:
 // - field (required) - the field name the macro is attached to.
@@ -833,6 +843,35 @@ struct ModuleEventFieldInfo<TFunc<void(TArgs...)> TModule::*> {
 };
 
 template <class TField>
+struct ModuleEventEmitterFieldInfo;
+
+template <class TModule, template <class> class TFunc, class... TArgs>
+struct ModuleEventEmitterFieldInfo<TFunc<void(TArgs...)> TModule::*> {
+  using ModuleType = TModule;
+  using EventType = TFunc<void(TArgs...)>;
+  using FieldType = EventType TModule::*;
+
+  static EventEmitterInitializerDelegate GetEventEmitterInitializer(void *module, FieldType field) noexcept {
+    return [module = static_cast<ModuleType *>(module), field](EmitEventSetterDelegate const &emitEventDelegate) {
+      module->*field = [emitEventDelegate](TArgs... args) noexcept {
+        emitEventDelegate([&args...]([[maybe_unused]] IJSValueWriter const &argWriter) noexcept {
+          (void)argWriter; // [[maybe_unused]] above does not work
+          (WriteValue(argWriter, args), ...);
+        });
+      };
+    };
+  }
+
+  static InitializerDelegate GetEventEmitterEmptyInitializer(void *module, FieldType field) noexcept {
+    return [module = static_cast<ModuleType *>(module), field](IReactContext const &reactContext) noexcept {
+      // Default emitter will do nothing
+      // This will be replaced with a method that will call the jsi EventEmitter when JS requests the emitter
+      module->*field = [](TArgs... args) noexcept {};
+    };
+  }
+};
+
+template <class TField>
 struct ModuleFunctionFieldInfo;
 
 template <class TModule, template <class> class TFunc, class... TArgs>
@@ -898,6 +937,7 @@ enum class ReactMemberKind {
   ConstantStrongTypedMethod,
   ConstantField,
   EventField,
+  EventEmitterField,
   FunctionField,
 };
 
@@ -917,6 +957,7 @@ using ReactConstantMethodAttribute = ReactMemberAttribute<ReactMemberKind::Const
 using ReactConstantStrongTypedMethodAttribute = ReactMemberAttribute<ReactMemberKind::ConstantStrongTypedMethod>;
 using ReactConstantFieldAttribute = ReactMemberAttribute<ReactMemberKind::ConstantField>;
 using ReactEventFieldAttribute = ReactMemberAttribute<ReactMemberKind::EventField>;
+using ReactEventEmitterFieldAttribute = ReactMemberAttribute<ReactMemberKind::EventEmitterField>;
 using ReactFunctionFieldAttribute = ReactMemberAttribute<ReactMemberKind::FunctionField>;
 
 template <class T>
@@ -941,7 +982,7 @@ struct ReactModuleBuilder {
   }
 
   void CompleteRegistration() noexcept {
-    // Add REACT_INIT initializers after REACT_EVENT and REACT_FUNCTION initializers.
+    // Add REACT_INIT initializers after REACT_EVENT, REACT_EVENT_EMITTER and REACT_FUNCTION initializers.
     // This way REACT_INIT method is invoked after event and function fields are initialized.
     for (auto &initializer : m_initializers) {
       m_moduleBuilder.AddInitializer(initializer);
@@ -967,6 +1008,8 @@ struct ReactModuleBuilder {
       RegisterConstantField(member, attributeInfo.JSMemberName);
     } else if constexpr (std::is_same_v<TAttribute, ReactEventFieldAttribute>) {
       RegisterEventField(member, attributeInfo.JSMemberName, attributeInfo.JSModuleName);
+    } else if constexpr (std::is_same_v<TAttribute, ReactEventEmitterFieldAttribute>) {
+      RegisterEventEmitterField(member, attributeInfo.JSMemberName, attributeInfo.JSModuleName);
     } else if constexpr (std::is_same_v<TAttribute, ReactFunctionFieldAttribute>) {
       RegisterFunctionField(member, attributeInfo.JSMemberName, attributeInfo.JSModuleName);
     }
@@ -1015,6 +1058,19 @@ struct ReactModuleBuilder {
     auto eventHandlerInitializer = ModuleEventFieldInfo<TField>::GetEventHandlerInitializer(
         m_module, field, eventName, !eventEmitterName.empty() ? eventEmitterName : m_eventEmitterName);
     m_moduleBuilder.AddInitializer(eventHandlerInitializer);
+  }
+
+  template <class TField>
+  void RegisterEventEmitterField(
+      TField field,
+      std::wstring_view eventName,
+      std::wstring_view eventEmitterName = L"") noexcept {
+    auto eventHandlerEmptyInitializer =
+        ModuleEventEmitterFieldInfo<TField>::GetEventEmitterEmptyInitializer(m_module, field);
+    auto eventEmitterInitializer = ModuleEventEmitterFieldInfo<TField>::GetEventEmitterInitializer(m_module, field);
+
+    m_moduleBuilder.AddInitializer(eventHandlerEmptyInitializer);
+    m_moduleBuilder.AddEventEmitter(eventName, eventEmitterInitializer);
   }
 
   template <class TField>

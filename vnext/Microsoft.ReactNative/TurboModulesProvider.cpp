@@ -8,7 +8,9 @@
 #include "pch.h"
 #include "TurboModulesProvider.h"
 #include <ReactCommon/TurboModuleUtils.h>
+#include <react/bridging/EventEmitter.h>
 #include "JSDispatcherWriter.h"
+#include "JSValueWriter.h"
 #include "JsiApi.h"
 #include "JsiReader.h"
 #include "JsiWriter.h"
@@ -51,6 +53,12 @@ struct TurboModuleBuilder : winrt::implements<TurboModuleBuilder, IReactModuleBu
     m_methods.insert({key, {returnType, method}});
   }
 
+  void AddEventEmitter(hstring name, EventEmitterInitializerDelegate const &emitter) noexcept {
+    auto key = to_string(name);
+    EnsureMemberNotSet(key, true);
+    m_eventEmitters.insert({key, emitter});
+  }
+
   void AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept {
     auto key = to_string(name);
     EnsureMemberNotSet(key, true);
@@ -70,10 +78,15 @@ struct TurboModuleBuilder : winrt::implements<TurboModuleBuilder, IReactModuleBu
     return m_constantProviders;
   }
 
+  const std::unordered_map<std::string, EventEmitterInitializerDelegate> &EventEmitters() const noexcept {
+    return m_eventEmitters;
+  }
+
  private:
   void EnsureMemberNotSet(const std::string &key, bool checkingMethod) noexcept {
     VerifyElseCrash(m_methods.find(key) == m_methods.end());
     VerifyElseCrash(m_syncMethods.find(key) == m_syncMethods.end());
+    VerifyElseCrash(m_eventEmitters.find(key) == m_eventEmitters.end());
     if (checkingMethod && key == "getConstants") {
       VerifyElseCrash(m_constantProviders.size() == 0);
     }
@@ -81,6 +94,7 @@ struct TurboModuleBuilder : winrt::implements<TurboModuleBuilder, IReactModuleBu
 
  private:
   IReactContext m_reactContext;
+  std::unordered_map<std::string, EventEmitterInitializerDelegate> m_eventEmitters;
   std::unordered_map<std::string, TurboModuleMethodInfo> m_methods;
   std::unordered_map<std::string, SyncMethodDelegate> m_syncMethods;
   std::vector<ConstantProviderDelegate> m_constantProviders;
@@ -373,6 +387,36 @@ class TurboModuleImpl : public facebook::react::TurboModule {
       }
     }
 
+    {
+      // try to find an event
+      auto it = m_moduleBuilder->EventEmitters().find(key);
+      if (it != m_moduleBuilder->EventEmitters().end()) {
+        // See if we have an existing eventEmitter
+        auto itEmitter = m_eventEmitters.find(key);
+        if (itEmitter == m_eventEmitters.end()) {
+          m_eventEmitters[key] = std::make_shared<facebook::react::AsyncEventEmitter<facebook::jsi::Value>>();
+
+          itEmitter = m_eventEmitters.find(key);
+
+          it->second([emitter = std::static_pointer_cast<facebook::react::AsyncEventEmitter<facebook::jsi::Value>>(
+                          itEmitter->second),
+                      jsInvoker = jsInvoker_](const JSValueArgWriter &eventDelegate) {
+            auto argWriter = MakeJSValueTreeWriter();
+            eventDelegate(argWriter);
+            emitter->emit(
+                [jsInvoker, eventDelegate, jsValue = std::make_shared<JSValue>(TakeJSValue(argWriter))](
+                    facebook::jsi::Runtime &rt) -> facebook::jsi::Value {
+                  auto argWriter = winrt::make<JsiWriter>(rt);
+                  WriteValue(argWriter, *jsValue);
+                  return argWriter.as<JsiWriter>()->MoveResult();
+                });
+          });
+        }
+
+        return itEmitter->second->get(runtime, jsInvoker_);
+      }
+    }
+
     // returns undefined if the expected member is not found
     return facebook::jsi::Value::undefined();
   }
@@ -408,6 +452,7 @@ class TurboModuleImpl : public facebook::react::TurboModule {
   IReactContext m_reactContext;
   winrt::com_ptr<TurboModuleBuilder> m_moduleBuilder;
   IInspectable m_providedModule;
+  std::unordered_map<std::string, std::shared_ptr<facebook::react::IAsyncEventEmitter>> m_eventEmitters;
   std::shared_ptr<implementation::HostObjectWrapper> m_hostObjectWrapper;
   std::weak_ptr<facebook::react::LongLivedObjectCollection> m_longLivedObjectCollection;
 };
