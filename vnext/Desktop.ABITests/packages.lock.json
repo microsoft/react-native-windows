@@ -16,8 +16,8 @@
       },
       "boost": {
         "type": "Transitive",
-        "resolved": "1.76.0",
-        "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
+        "resolved": "1.83.0",
+        "contentHash": "cy53VNMzysEMvhBixDe8ujPk67Fcj3v6FPHQnH91NYJNLHpc6jxa2xq9ruCaaJjE4M3YrGSHDi4uUSTGBWw6EQ=="
       },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
@@ -56,7 +56,7 @@
       "common": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.76.0, )"
+          "boost": "[1.83.0, )"
         }
       },
       "fmt": {
@@ -104,7 +104,7 @@
         "type": "Project",
         "dependencies": {
           "Folly": "[1.0.0, )",
-          "boost": "[1.76.0, )"
+          "boost": "[1.83.0, )"
         }
       }
     },
