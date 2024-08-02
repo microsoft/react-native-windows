@@ -806,4 +806,12 @@ exports.examples = [
       return <TouchableDisabled />;
     },
   },
+  {
+    title: 'Set of Touchables',
+    description:
+      ('Touchables can be defined as a set': string),
+    render: function (): React.Element<any> {
+      return <TouchableSet />;
+    },
+  },
 ];
