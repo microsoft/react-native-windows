@@ -224,6 +224,9 @@ class SampleTurboModuleExample extends React.Component<{||}, State> {
     }
     Windows]
     */
+
+    /*
+    [Windows Wee need to implement both a proper SampleTurboModule (issue #13531) and add EventEmitter support (issue #13532)
     this.eventSubscriptions.push(
       NativeSampleTurboModule.onPress(value => console.log('onPress: ()')),
     );
@@ -242,6 +245,8 @@ class SampleTurboModuleExample extends React.Component<{||}, State> {
         console.log(`onSubmit: (${JSON.stringify(value)})`),
       ),
     );
+    Windows]
+    */
   }
 
   componentWillUnmount() {
