@@ -12,6 +12,8 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "PositionInSet": 1,
+        "SizeofSet": 3,
         "__Children": [
           {
             "AutomationId": "",
@@ -26,6 +28,8 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "PositionInSet": 2,
+        "SizeofSet": 3,
         "__Children": [
           {
             "AutomationId": "",
@@ -40,6 +44,8 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
+        "PositionInSet": 3,
+        "SizeofSet": 3,
         "__Children": [
           {
             "AutomationId": "",

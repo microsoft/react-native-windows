@@ -1074,6 +1074,8 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "edit",
         "Name": "TextInput 1 in Set of 3",
+        "PositionInSet": 1,
+        "SizeofSet": 3,
       },
       {
         "AutomationId": "",
@@ -1082,6 +1084,8 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "edit",
         "Name": "TextInput 2 in Set of 3",
+        "PositionInSet": 2,
+        "SizeofSet": 3,
       },
       {
         "AutomationId": "",
@@ -1090,6 +1094,8 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "edit",
         "Name": "TextInput 3 in Set of 3",
+        "PositionInSet": 3,
+        "SizeofSet": 3,
       },
     ],
   },
