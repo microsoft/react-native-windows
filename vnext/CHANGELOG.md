@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 01 Aug 2024 18:42:00 GMT and should not be manually modified.
+This log was last generated on Fri, 02 Aug 2024 05:15:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.849
+
+Fri, 02 Aug 2024 05:15:48 GMT
+
+### Changes
+
+- Upgrade to boost 1.83 (julio.rocha@microsoft.com)
 
 ## 0.0.0-canary.848
 
