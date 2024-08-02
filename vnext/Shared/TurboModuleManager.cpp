@@ -29,7 +29,10 @@ std::shared_ptr<TurboModule> TurboModuleManager::getModule(const std::string &mo
       return module;
     }
   }
-  
+
+  if (moduleName.compare("SampleTurboModule") == 0) {
+    return m_modules.emplace(moduleName, std::make_shared<SampleTurboCxxModule>(m_callInvoker)).first->second;
+  }
   return nullptr;
 }
 
