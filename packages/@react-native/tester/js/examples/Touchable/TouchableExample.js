@@ -576,28 +576,6 @@ function TouchableOnFocus<T: React.AbstractComponent<any, any>>() {
   );
 }
 
-// [Windows
-// $FlowFixMe[missing-local-annot]
-function TouchableSet<T: React.AbstractComponent<any, any>>() {
-  return (
-    <View accessible testID='touchable_set'>
-      <TouchableHighlight onPress={()=>{}} accessibilityPosInSet={1} accessibilitySetSize={3}>
-      <Text>
-        Touchable Highlight (Control 1 in Set of 3)
-      </Text>
-    </TouchableHighlight>
-    <TouchableOpacity onPress={()=>{}} accessibilityPosInSet={2} accessibilitySetSize={3}>
-      <Text>Touchable Opacity (Control 2 in Set of 3)</Text>
-    </TouchableOpacity>
-    <TouchableWithoutFeedback onPress={()=>{}} accessibilityPosInSet={3} accessibilitySetSize={3}>
-      <Text>TouchableWithoutFeedback (Control 3 in Set of 3)</Text>
-    </TouchableWithoutFeedback>
-    </View>
-
-  );
-}
-// Windows]
-
 const styles = StyleSheet.create({
   row: {
     justifyContent: 'center',

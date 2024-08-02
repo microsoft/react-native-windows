@@ -1,5 +1,213 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Pressable Tests Pressables can be defined as a set using accessibilityPosInSet and accessibilitySetSize 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "pressable_set",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pressable 1 of 3",
+          },
+        ],
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pressable 2 of 3",
+          },
+        ],
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pressable 3 of 3",
+          },
+        ],
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_set",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "pressable_set",
+    "Offset": "0, 0, 0",
+    "Size": "916, 55",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "916, 18",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 18",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 19, 0",
+        "Size": "916, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 19",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 19",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 19",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 37, 0",
+        "Size": "916, 18",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 18",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
 exports[`Pressable Tests Pressables can be disabled, disabled = {false} 1`] = `
 {
   "Automation Tree": {
