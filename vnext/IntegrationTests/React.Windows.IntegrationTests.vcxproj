@@ -59,7 +59,6 @@
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalOptions>/Zc:twoPhase- %(AdditionalOptions)</AdditionalOptions>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <PreprocessorDefinitions>FOLLY_CFG_NO_COROUTINES;FOLLY_NO_CONFIG;RN_EXPORT=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
@@ -96,7 +95,7 @@
     <None Include="XHRTest.js" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="boost" Version="1.76.0.0" />
+    <PackageReference Include="boost" Version="1.83.0.0" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <Target Name="Test">

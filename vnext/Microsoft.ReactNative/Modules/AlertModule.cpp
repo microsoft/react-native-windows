@@ -117,7 +117,9 @@ void Alert::ProcessPendingAlertRequestsXaml() noexcept {
   // https://github.com/microsoft/microsoft-ui-xaml/issues/2331
   dialog.Opened([useXamlRootForThemeBugWorkaround](winrt::IInspectable const &sender, auto &&) {
     auto contentDialog = sender.as<xaml::Controls::ContentDialog>();
-    auto popups = xaml::Media::VisualTreeHelper::GetOpenPopupsForXamlRoot(contentDialog.XamlRoot());
+    auto popups = useXamlRootForThemeBugWorkaround
+        ? xaml::Media::VisualTreeHelper::GetOpenPopupsForXamlRoot(contentDialog.XamlRoot())
+        : xaml::Media::VisualTreeHelper::GetOpenPopups(xaml::Window::Current());
 
     auto contentAsFrameworkElement = useXamlRootForThemeBugWorkaround
         ? contentDialog.XamlRoot().Content().try_as<xaml::FrameworkElement>()
