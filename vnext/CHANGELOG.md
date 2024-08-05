@@ -1,8 +1,27 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 31 Jul 2024 21:16:47 GMT and should not be manually modified.
+This log was last generated on Mon, 05 Aug 2024 15:25:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.0-preview.5
+
+Mon, 05 Aug 2024 15:25:47 GMT
+
+### Changes
+
+- Handle changes to borderradius (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] call reportMount to implement UIManagerMountHook support (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Move to WinAppSDK types for KeyStatus, and ensure usages account for locked flag (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Text renders borders twice (30809111+acoates-ms@users.noreply.github.com)
+- Add image response APIs to win32 exports (30809111+acoates-ms@users.noreply.github.com)
+- Fix scrollview (10109130+sharath2727@users.noreply.github.com)
+- Resolve transform before animation (10109130+sharath2727@users.noreply.github.com)
+- Upgrade to boost 1.83 (#13511) (julio.rocha@microsoft.com)
+- consolidate rn dependencies (tatianakapos@microsoft.com)
+- [Fabric] Fix image component reference cycle (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Handle scalefactor changes (30809111+acoates-ms@users.noreply.github.com)
+- Patch yoga to handle dynamic scale changes (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.75.0-preview.4
 

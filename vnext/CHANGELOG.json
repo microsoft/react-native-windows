@@ -2,6 +2,87 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 05 Aug 2024 15:25:47 GMT",
+      "version": "0.75.0-preview.5",
+      "tag": "react-native-windows_v0.75.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ae86b08ed65dc04ba3661fb52541a52291b24a0d",
+            "comment": "Handle changes to borderradius"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ae86b08ed65dc04ba3661fb52541a52291b24a0d",
+            "comment": "[Fabric] call reportMount to implement UIManagerMountHook support"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ae86b08ed65dc04ba3661fb52541a52291b24a0d",
+            "comment": "[Fabric] Move to WinAppSDK types for KeyStatus, and ensure usages account for locked flag"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ae86b08ed65dc04ba3661fb52541a52291b24a0d",
+            "comment": "[Fabric] Text renders borders twice"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ae86b08ed65dc04ba3661fb52541a52291b24a0d",
+            "comment": "Add image response APIs to win32 exports"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ae86b08ed65dc04ba3661fb52541a52291b24a0d",
+            "comment": "Fix scrollview"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ae86b08ed65dc04ba3661fb52541a52291b24a0d",
+            "comment": "Resolve transform before animation"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2a861513f5dd870ebec5c0aebd152740d7076ffb",
+            "comment": "Upgrade to boost 1.83 (#13511)"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "79179c5c221cbce9ae727f0546c6b77c3dc861be",
+            "comment": "consolidate rn dependencies"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ae86b08ed65dc04ba3661fb52541a52291b24a0d",
+            "comment": "[Fabric] Fix image component reference cycle"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ae86b08ed65dc04ba3661fb52541a52291b24a0d",
+            "comment": "[Fabric] Handle scalefactor changes"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ae86b08ed65dc04ba3661fb52541a52291b24a0d",
+            "comment": "Patch yoga to handle dynamic scale changes"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 31 Jul 2024 21:16:47 GMT",
       "version": "0.75.0-preview.4",
       "tag": "react-native-windows_v0.75.0-preview.4",
