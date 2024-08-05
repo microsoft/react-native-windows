@@ -332,6 +332,16 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       hr = pRetVal->bstrVal != nullptr ? S_OK : E_OUTOFMEMORY;
       break;
     }
+    case UIA_PositionInSetPropertyId: {
+      pRetVal->vt = VT_I4;
+      pRetVal->lVal = props->accessibilityPosInSet;
+      break;
+    }
+    case UIA_SizeOfSetPropertyId: {
+      pRetVal->vt = VT_I4;
+      pRetVal->lVal = props->accessibilitySetSize;
+      break;
+    }
   }
 
   return hr;

@@ -1572,6 +1572,31 @@ exports.examples = [
     },
   },
   {
+    title: 'Accessibility Position in Set and Accessibility Set Size',
+    description:
+      'When their are a set of elements the acessibilityPosInSet and accessibilitySetSize props should be used to alert UIA of the set structure',
+    render: function (): React.Node {
+      return (
+        <View accessible testID='image-set'>
+          <Image
+          source={fullImage}
+          style={styles.base}
+          accessible
+          accessibilityPosInSet={1}
+          accessibilitySetSize={2}
+        />
+        <Image
+          source={fullImage}
+          style={styles.base}
+          accessible
+          accessibilityPosInSet={2}
+          accessibilitySetSize={2}
+        />
+        </View>
+      );
+    },
+  },
+  {
     title: 'Fade Duration',
     description:
       ('The time (in miliseconds) that an image will fade in for when it appears (default = 300).': string),
