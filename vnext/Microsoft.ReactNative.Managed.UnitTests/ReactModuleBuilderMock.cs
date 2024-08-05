@@ -299,6 +299,8 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       writer.WriteArrayEnd();
       m_jsEventHandler(eventEmitterName, eventName, writer.TakeValue());
     }
+
+    public void AddEventEmitter(string name, EventEmitterInitializerDelegate emitter) { }
   }
 
   class ReactSettingsSnapshot : IReactSettingsSnapshot
