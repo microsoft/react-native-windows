@@ -46,6 +46,7 @@ std::shared_ptr<facebook::react::ShadowNode> AbiViewComponentDescriptor::createS
     const facebook::react::ShadowNodeFragment &fragment,
     facebook::react::ShadowNodeFamily::Shared const &family) const {
   auto shadowNode = std::make_shared<ShadowNodeT>(fragment, family, getTraits());
+  sourceShadowNode.transferRuntimeShadowNodeReference(shadowNode, fragment);
 
   shadowNode->Proxy(winrt::make<winrt::Microsoft::ReactNative::implementation::YogaLayoutableShadowNode>(shadowNode));
   winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)

@@ -59,6 +59,7 @@ facebook::react::ShadowNode::Unshared AbiComponentDescriptor::cloneShadowNode(
     const facebook::react::ShadowNode &sourceShadowNode,
     const facebook::react::ShadowNodeFragment &fragment) const {
   auto shadowNode = std::make_shared<ShadowNodeT>(sourceShadowNode, fragment);
+  sourceShadowNode.transferRuntimeShadowNodeReference(shadowNode, fragment);
 
   shadowNode->Proxy(winrt::make<winrt::Microsoft::ReactNative::implementation::ShadowNode>(shadowNode));
   winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
@@ -89,10 +90,8 @@ facebook::react::Props::Shared AbiComponentDescriptor::cloneProps(
     return ShadowNodeT::defaultSharedProps();
   }
 
-  if constexpr (std::is_base_of_v<facebook::react::YogaLayoutableShadowNode, ShadowNodeT>) {
-    if (facebook::react::CoreFeatures::excludeYogaFromRawProps) {
-      rawProps.filterYogaStylePropsInDynamicConversion();
-    }
+  if constexpr (RawPropsFilterable<ShadowNodeT>) {
+    ShadowNodeT::filterRawProps(rawProps);
   }
 
   rawProps.parse(rawPropsParser_);
