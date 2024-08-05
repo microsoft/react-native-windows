@@ -1325,7 +1325,7 @@ void ComponentView::updateAccessibilityProps(
       m_uiaProvider, UIA_HelpTextPropertyId, oldViewProps.accessibilityHint, newViewProps.accessibilityHint);
 }
 
-std::optional<std::string> ComponentView::getAcccessiblityValue() noexcept {
+std::optional<std::string> ComponentView::getAccessiblityValue() noexcept {
   return std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue.text;
 }
 
