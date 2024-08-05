@@ -511,6 +511,8 @@ exports[`ActivityIndicator Tests An ActivityIndicator can render 1`] = `
     "ControlType": 50012,
     "LocalizedControlType": "progress bar",
     "Name": "Wait for content to load!",
+    "PositionInSet": 1,
+    "SizeofSet": 1,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ActivityIndicatorComponentView",
