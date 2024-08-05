@@ -259,4 +259,10 @@ describe('Pressable Tests', () => {
     const dump = await dumpVisualTree('backface_pressable');
     expect(dump).toMatchSnapshot();
   });
+  test('Pressables can be defined as a set using accessibilityPosInSet and accessibilitySetSize', async () => {
+    const component = await app.findElementByTestID('pressable_set');
+    await component.waitForDisplayed({timeout: 20000});
+    const dump = await dumpVisualTree('pressable_set');
+    expect(dump).toMatchSnapshot();
+  });
 });

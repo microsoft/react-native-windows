@@ -227,6 +227,16 @@ void InsertNumberValueIfNotDefault(
   }
 }
 
+void InsertIntValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    int value,
+    int defaultValue = 0) {
+  if (value != defaultValue) {
+    obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateNumberValue(value));
+  }
+}
+
 void InsertBooleanValueIfNotDefault(
     const winrt::Windows::Data::Json::JsonObject &obj,
     winrt::hstring name,
@@ -292,6 +302,8 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   BOOL isKeyboardFocusable;
   BSTR localizedControlType;
   BSTR name;
+  int positionInSet;
+  int sizeOfSet;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -300,6 +312,13 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   pTarget->get_CurrentIsKeyboardFocusable(&isKeyboardFocusable);
   pTarget->get_CurrentLocalizedControlType(&localizedControlType);
   pTarget->get_CurrentName(&name);
+  IUIAutomationElement4 *pTarget4;
+  HRESULT hr = pTarget->QueryInterface(__uuidof(IUIAutomationElement4), reinterpret_cast<void **>(&pTarget4));
+  if (SUCCEEDED(hr) && pTarget4) {
+    pTarget4->get_CurrentPositionInSet(&positionInSet);
+    pTarget4->get_CurrentSizeOfSet(&sizeOfSet);
+    pTarget4->Release();
+  }
   result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
   result.Insert(L"ControlType", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(controlType));
   InsertStringValueIfNotEmpty(result, L"HelpText", helpText);
@@ -308,6 +327,8 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   result.Insert(
       L"LocalizedControlType", winrt::Windows::Data::Json::JsonValue::CreateStringValue(localizedControlType));
   InsertStringValueIfNotEmpty(result, L"Name", name);
+  InsertIntValueIfNotDefault(result, L"PositionInSet", positionInSet);
+  InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
 
   IUIAutomationElement *pChild;
   IUIAutomationElement *pSibling;

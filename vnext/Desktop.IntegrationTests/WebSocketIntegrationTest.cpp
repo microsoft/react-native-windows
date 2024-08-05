@@ -255,7 +255,7 @@ TEST_CLASS (WebSocketIntegrationTest)
     string cookie;
     auto server = make_shared<Test::WebSocketServer>(s_port);
     server->SetOnHandshake([server](boost::beast::websocket::response_type &response) {
-      auto cookie = response[boost::beast::http::field::cookie].to_string();
+      auto cookie = string{response[boost::beast::http::field::cookie]};
       server->SetMessageFactory([cookie](string &&) { return cookie; });
     });
     auto ws = IWebSocketResource::Make();

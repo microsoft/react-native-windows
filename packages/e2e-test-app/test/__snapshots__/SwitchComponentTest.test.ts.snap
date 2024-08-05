@@ -2584,6 +2584,8 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
               "children": [
                 {
                   "AccessibilityRole": "Switch",
+                  "AutomationPositionInSet": 1,
+                  "AutomationSizeOfSet": 4,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -2808,6 +2810,8 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                 },
                 {
                   "AccessibilityRole": "Switch",
+                  "AutomationPositionInSet": 2,
+                  "AutomationSizeOfSet": 4,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -3052,6 +3056,8 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
               "children": [
                 {
                   "AccessibilityRole": "Switch",
+                  "AutomationPositionInSet": 3,
+                  "AutomationSizeOfSet": 4,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",
@@ -3276,6 +3282,8 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                 },
                 {
                   "AccessibilityRole": "Switch",
+                  "AutomationPositionInSet": 4,
+                  "AutomationSizeOfSet": 4,
                   "Background": null,
                   "BorderBrush": null,
                   "BorderThickness": "0,0,0,0",

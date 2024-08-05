@@ -364,6 +364,8 @@ exports[`ViewTests Views can have accessibility customization 1`] = `
 {
   "AccessibilityRole": "Button",
   "AutomationId": "accessibility",
+  "AutomationPositionInSet": 1,
+  "AutomationSizeOfSet": 1,
   "Background": null,
   "BorderBrush": null,
   "BorderThickness": "0,0,0,0",

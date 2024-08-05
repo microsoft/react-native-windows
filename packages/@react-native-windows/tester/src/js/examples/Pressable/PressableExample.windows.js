@@ -1038,6 +1038,30 @@ const examples = [
       );
     },
   },
+  // [Windows
+  {
+    title: 'Set of Pressables',
+    description: 'Pressables can be defined as a set using accessibilityPosInSet and accessibilitySetSize',
+    render: function (): React.Node {
+      return (
+        <View accessible testID='pressable_set'>
+          <Pressable
+            onPress={() => {}} accessibilityPosInSet={1} accessibilitySetSize={3}>
+            <Text>Pressable 1 of 3</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {}} accessibilityPosInSet={2} accessibilitySetSize={3}>
+            <Text>Pressable 2 of 3</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {}} accessibilityPosInSet={3} accessibilitySetSize={3}>
+            <Text>Pressable 3 of 3</Text>
+          </Pressable>
+        </View>
+      );
+    },
+  },
+  // Windows]
 ];
 
 if (ReactNativeFeatureFlags.shouldPressibilityUseW3CPointerEventsForHover()) {

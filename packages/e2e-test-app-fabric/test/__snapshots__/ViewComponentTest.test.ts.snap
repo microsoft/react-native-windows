@@ -1098,6 +1098,8 @@ exports[`View Tests Views can have customized accessibility 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "Name": "A View with accessibility values",
+    "PositionInSet": 1,
+    "SizeofSet": 1,
     "__Children": [
       {
         "AutomationId": "",
