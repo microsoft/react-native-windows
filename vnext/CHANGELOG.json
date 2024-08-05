@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 05 Aug 2024 15:15:09 GMT",
+      "version": "0.73.19",
+      "tag": "react-native-windows_v0.73.19",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "df1cd77bba137b9663d1bae27dc324219152c3b8",
+            "comment": "Upgrade to boost 1.83 (#13511)"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a8f109514d21d0e44f2feb7cf2a3d0586e45c1ca",
+            "comment": "[Win32] export _YGConfigSetErrata"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 29 Jul 2024 15:13:21 GMT",
       "version": "0.73.18",
       "tag": "react-native-windows_v0.73.18",
