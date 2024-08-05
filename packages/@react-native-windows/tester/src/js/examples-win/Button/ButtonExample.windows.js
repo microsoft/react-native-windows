@@ -219,6 +219,8 @@ exports.examples = [
                 accessibilityLabel="Press to submit your application!"
                 accessibilityRole="Button"
                 accessibilityHint="Submit Button"
+                accessibilityPosInSet={1}
+                accessibilitySetSize={1}
               />
             );
           }}
