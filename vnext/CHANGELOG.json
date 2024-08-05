@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 05 Aug 2024 15:16:27 GMT",
+      "version": "0.74.14",
+      "tag": "react-native-windows_v0.74.14",
+      "comments": {
+        "patch": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d2c334f261850e4b55d7764435567bcf2bc3e73f",
+            "comment": "Upgrade to boost 1.83 (#13511)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 29 Jul 2024 15:15:30 GMT",
       "version": "0.74.13",
       "tag": "react-native-windows_v0.74.13",
