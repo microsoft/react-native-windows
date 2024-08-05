@@ -90,7 +90,7 @@ facebook::react::Props::Shared AbiComponentDescriptor::cloneProps(
     return ShadowNodeT::defaultSharedProps();
   }
 
-  if constexpr (RawPropsFilterable<ShadowNodeT>) {
+  if constexpr (facebook::react::RawPropsFilterable<ShadowNodeT>) {
     ShadowNodeT::filterRawProps(rawProps);
   }
 
