@@ -15,7 +15,7 @@ struct ReactModuleBuilder : winrt::implements<ReactModuleBuilder, IReactModuleBu
   void AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept;
   void AddMethod(hstring const &name, MethodReturnType returnType, MethodDelegate const &method) noexcept;
   void AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept;
-  void AddEventEmitter(hstring name, EventEmitterInitializerDelegate emitter) noexcept;
+  void AddEventEmitter(hstring const &name, EventEmitterInitializerDelegate const &emitter) noexcept;
 
  public:
   std::unique_ptr<facebook::xplat::module::CxxModule> MakeCxxModule(

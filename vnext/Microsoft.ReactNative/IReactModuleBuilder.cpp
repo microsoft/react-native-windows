@@ -129,7 +129,7 @@ void ReactModuleBuilder::AddSyncMethod(hstring const &name, SyncMethodDelegate c
   m_methods.push_back(std::move(cxxMethod));
 }
 
-void ReactModuleBuilder::AddEventEmitter(hstring name, EventEmitterInitializerDelegate emitter) noexcept {
+void ReactModuleBuilder::AddEventEmitter(hstring const &name, EventEmitterInitializerDelegate const &emitter) noexcept {
   // No-op.  We only support auto generated EventEmitters in TurboModules
 }
 

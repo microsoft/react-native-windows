@@ -53,7 +53,7 @@ struct TurboModuleBuilder : winrt::implements<TurboModuleBuilder, IReactModuleBu
     m_methods.insert({key, {returnType, method}});
   }
 
-  void AddEventEmitter(hstring name, EventEmitterInitializerDelegate const &emitter) noexcept {
+  void AddEventEmitter(hstring const &name, EventEmitterInitializerDelegate const &emitter) noexcept {
     auto key = to_string(name);
     EnsureMemberNotSet(key, true);
     m_eventEmitters.insert({key, emitter});
