@@ -14,9 +14,6 @@
 #include <winrt/Microsoft.UI.Input.h>
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.h>
-#include <algorithm> // For std::all_of
-#include <cctype> // For std::isspace
-#include <cwctype>
 #include "../CompositionHelpers.h"
 #include "../RootComponentView.h"
 #include "JSValueReader.h"
