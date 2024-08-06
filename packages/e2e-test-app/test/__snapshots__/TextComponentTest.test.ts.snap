@@ -613,6 +613,8 @@ exports[`TextTest Text can have customized accessibility 1`] = `
           "XamlType": "Microsoft.ReactNative.ViewPanel",
           "children": [
             {
+              "AutomationPositionInSet": 1,
+              "AutomationSizeOfSet": 1,
               "Clip": null,
               "FlowDirection": "LeftToRight",
               "Foreground": "#FF000000",

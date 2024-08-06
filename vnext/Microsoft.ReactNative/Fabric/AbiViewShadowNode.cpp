@@ -17,11 +17,13 @@ YogaLayoutableShadowNode::YogaLayoutableShadowNode(facebook::react::ShadowNode::
     : base_type(shadowNode) {}
 
 void YogaLayoutableShadowNode::Layout(winrt::Microsoft::ReactNative::LayoutContext layoutContext) noexcept {
-  std::const_pointer_cast<facebook::react::YogaLayoutableShadowNode>(
-      std::dynamic_pointer_cast<const facebook::react::YogaLayoutableShadowNode>(m_shadowNode))
-      ->facebook::react::YogaLayoutableShadowNode::layout(
-          winrt::get_self<winrt::Microsoft::ReactNative::implementation::LayoutContext>(layoutContext)
-              ->m_layoutContext);
+  if (auto shadowNode = m_shadowNode.lock()) {
+    std::const_pointer_cast<facebook::react::YogaLayoutableShadowNode>(
+        std::dynamic_pointer_cast<const facebook::react::YogaLayoutableShadowNode>(shadowNode))
+        ->facebook::react::YogaLayoutableShadowNode::layout(
+            winrt::get_self<winrt::Microsoft::ReactNative::implementation::LayoutContext>(layoutContext)
+                ->m_layoutContext);
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

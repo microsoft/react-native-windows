@@ -1550,7 +1550,9 @@ const examples = [
           <Text
             nativeID="text-accessibility"
             accessibilityLabel="This text has customized accessibility"
-            accessibilityHint="Text">
+            accessibilityHint="Text"
+            accessibilityPosInSet={1}
+            accessibilitySetSize={1}>
             This text has customized accessibility.
           </Text>
         </View>

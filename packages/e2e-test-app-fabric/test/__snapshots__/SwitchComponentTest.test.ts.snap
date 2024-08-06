@@ -421,6 +421,8 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
         "Name": "This is a Switch",
+        "PositionInSet": 1,
+        "SizeofSet": 4,
       },
       {
         "AutomationId": "",
@@ -429,6 +431,8 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
         "Name": "This is a Switch with focusable set to false",
+        "PositionInSet": 2,
+        "SizeofSet": 4,
       },
       {
         "AutomationId": "",
@@ -437,6 +441,8 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
         "Name": "This is a Switch with accessible set to false",
+        "PositionInSet": 3,
+        "SizeofSet": 4,
       },
       {
         "AutomationId": "",
@@ -445,6 +451,8 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "button",
         "Name": "This is a Switch with focusable and accessible set to false",
+        "PositionInSet": 4,
+        "SizeofSet": 4,
       },
     ],
   },
