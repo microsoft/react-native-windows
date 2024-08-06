@@ -312,6 +312,12 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('textinput-readyonly');
     expect(dump).toMatchSnapshot();
   });
+  test('TextInputs can be defined as a set using accessibilityPosInSet and accessibilitySetSize', async () => {
+    const component = await app.findElementByTestID('textinput-set');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-set');
+    expect(dump).toMatchSnapshot();
+  });
   test('TextInputs can clear on submit', async () => {
     const component = await app.findElementByTestID(
       'textinput-clear-on-submit',

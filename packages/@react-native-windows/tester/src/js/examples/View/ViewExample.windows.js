@@ -477,6 +477,8 @@ class AccessibilityExample extends React.Component<
           {name: 'copy', label: 'copy'},
           {name: 'paste', label: 'paste'},
         ]}
+        accessibilityPosInSet={1}
+        accessibilitySetSize={1}
         testID="accessibility"
         accessible
         focusable
