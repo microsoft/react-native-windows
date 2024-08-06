@@ -122,6 +122,7 @@ function PressableFeedbackEvents() {
           testID="pressable_feedback_events_button"
           accessibilityLabel="pressable feedback events"
           accessibilityRole="button"
+          accessibilityValue="Press Me"
           // [Windows
           onFocus={() => appendEvent('focus')}
           onBlur={() => appendEvent('blur')}

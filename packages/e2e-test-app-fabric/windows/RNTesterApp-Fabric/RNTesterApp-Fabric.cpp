@@ -304,6 +304,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   BSTR name;
   int positionInSet;
   int sizeOfSet;
+  BSTR value;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -319,6 +320,13 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
     pTarget4->get_CurrentSizeOfSet(&sizeOfSet);
     pTarget4->Release();
   }
+  IUIAutomationValuePattern *valuePattern;
+  hr = element->GetCurrentPatternAs(UIA_ValuePatternId, &valuePattern);
+  if (SUCCEEDED(hr) && valuePattern)
+  {
+    valuePattern->get_CurrentValue(&value);
+    valuePatter->Release();
+  }
   result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
   result.Insert(L"ControlType", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(controlType));
   InsertStringValueIfNotEmpty(result, L"HelpText", helpText);
@@ -329,6 +337,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   InsertStringValueIfNotEmpty(result, L"Name", name);
   InsertIntValueIfNotDefault(result, L"PositionInSet", positionInSet);
   InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
+  InsertStringValueIfNotEmpty(result, L"ValuePattern.Value", value);
 
   IUIAutomationElement *pChild;
   IUIAutomationElement *pSibling;
