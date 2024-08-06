@@ -39,6 +39,7 @@
 #include "Modules/ExceptionsManager.h"
 #include "Modules/PlatformConstantsWinModule.h"
 #include "Modules/ReactRootViewTagGenerator.h"
+#include "Modules/SampleTurboModule.h"
 #include "Modules/SourceCode.h"
 #include "Modules/StatusBarManager.h"
 #include "Modules/Timing.h"
@@ -410,6 +411,10 @@ void ReactInstanceWin::LoadModules(
   registerTurboModule(
       L"PlatformConstants",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::PlatformConstants>());
+
+  registerTurboModule(
+      L"SampleTurboModule",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SampleTurboModule>());
 
   uint32_t hermesBytecodeVersion = 0;
 #if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
