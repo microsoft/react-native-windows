@@ -77,6 +77,8 @@ exports.examples = [
           color="white"
           testID="default_activity_indicator"
           accessibilityLabel="Wait for content to load!"
+          accessibilityPosInSet={1}
+          accessibilitySetSize={1}
           accessible
         />
       );
