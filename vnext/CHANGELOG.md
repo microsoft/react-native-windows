@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 05 Aug 2024 15:16:27 GMT and should not be manually modified.
+This log was last generated on Tue, 06 Aug 2024 21:43:57 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.15
+
+Tue, 06 Aug 2024 21:43:57 GMT
+
+### Patches
+
+- [Fabric] Custom ShadowNode's are never released (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.14
 
