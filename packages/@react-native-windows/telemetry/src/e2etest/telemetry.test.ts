@@ -5,7 +5,7 @@
  * @format
  */
 
-import * as appInsights from 'applicationinsights';
+import * as coreOneDS from '@microsoft/1ds-core-js';
 import * as path from 'path';
 
 import {
@@ -35,22 +35,21 @@ export class TelemetryTest extends Telemetry {
     }
 
     // Ensure that we don't actually fire events when testing
-    Telemetry.isTest = true;
+    Telemetry.isTestEnvironment = true;
 
     await Telemetry.setup(options);
   }
 
   /** Run at the end of each test where telemetry was fired. */
   static endTest(finalCallback?: () => void): void {
-    Telemetry.client?.flush({
-      callback: _ => {
-        if (TelemetryTest.hasTestTelemetryProviders) {
-          expect(TelemetryTest.testTelemetryProvidersRan).toBe(true);
-        }
-        if (finalCallback) {
-          finalCallback();
-        }
-      },
+    Telemetry.appInsightsCore?.flush(undefined /* isAsync */, () => {
+      // Your callback logic here
+      if (TelemetryTest.hasTestTelemetryProviders) {
+        expect(TelemetryTest.testTelemetryProvidersRan).toBe(true);
+      }
+      if (finalCallback) {
+        finalCallback();
+      }
     });
   }
 
@@ -61,7 +60,7 @@ export class TelemetryTest extends Telemetry {
 
   /** Retrieves the value of a common property.*/
   static getCommonProperty(key: string): string | undefined {
-    return TelemetryTest.client?.commonProperties[key];
+    return TelemetryTest.commonProperties[key];
   }
 
   /** Retrieves the version of the specified tool/package. */
@@ -77,15 +76,15 @@ export class TelemetryTest extends Telemetry {
   }
 
   /** Adds a telemetry processor, usually for verifying the envelope. */
-  static addTelemetryProcessor(
-    telemetryProcessor: (
-      envelope: appInsights.Contracts.EnvelopeTelemetry,
+  static addTelemetryInitializer(
+    telemetryInitializer: (
+      envelope: coreOneDS.ITelemetryItem,
       contextObjects?: {
         [name: string]: any;
       },
     ) => boolean,
   ): void {
-    TelemetryTest.client?.addTelemetryProcessor(telemetryProcessor);
+    TelemetryTest.appInsightsCore?.addTelemetryInitializer(telemetryInitializer);
     TelemetryTest.hasTestTelemetryProviders = true;
   }
 }
@@ -346,7 +345,7 @@ function verifyTestCommandTelemetryProcessor(
   expectedResultCode?: errorUtils.CodedErrorType,
   expectedError?: Error,
 ): (
-  envelope: appInsights.Contracts.EnvelopeTelemetry,
+  envelope: coreOneDS.ITelemetryItem,
   contextObjects?: {
     [name: string]: any;
   },
@@ -357,9 +356,12 @@ function verifyTestCommandTelemetryProcessor(
       TelemetryTest.setTestTelemetryProvidersRan();
 
       // Verify roleInstance has been removed
-      expect(envelope.tags['ai.cloud.roleInstance']).toBeUndefined();
+      // NOTE: Verify if ai tags are still a thing.
+      if (envelope.tags) {
+        expect(envelope.tags['ai.cloud.roleInstance']).toBeUndefined();
+      }
 
-      const properties = envelope.data.baseData?.properties;
+      const properties = envelope.data?.baseData?.properties;
       expect(properties).toBeDefined();
 
       // Verify basics
@@ -378,7 +380,7 @@ function verifyTestCommandTelemetryProcessor(
         expect(versions[key]).toBe(TelemetryTest.getVersion(key));
       }
 
-      if (envelope.data.baseType === 'ExceptionData') {
+      if (envelope.data?.baseType === 'ExceptionData') {
         // Verify event name
         expect(properties.eventName).toBe(CodedErrorEventName);
 
@@ -410,7 +412,7 @@ function verifyTestCommandTelemetryProcessor(
         );
       } else {
         // Verify event name
-        expect(envelope.data.baseData?.name).toBe(CommandEventName);
+        expect(envelope.data?.baseData?.name).toBe(CommandEventName);
         expect(properties.eventName).toBe(CommandEventName);
 
         // Verify command info
@@ -445,7 +447,7 @@ test('Telemetry run test command end to end, verify event fires', async () => {
 
   // AI eats errors thrown in telemetry processors
   const caughtErrors: Error[] = [];
-  TelemetryTest.addTelemetryProcessor(
+  TelemetryTest.addTelemetryInitializer(
     verifyTestCommandTelemetryProcessor(caughtErrors),
   );
 
@@ -474,7 +476,7 @@ test.each(testTelemetryOptions)(
 
     // AI eats errors thrown in telemetry processors
     const caughtErrors: Error[] = [];
-    TelemetryTest.addTelemetryProcessor(
+    TelemetryTest.addTelemetryInitializer(
       verifyTestCommandTelemetryProcessor(
         caughtErrors,
         expectedError.type,
@@ -503,7 +505,7 @@ test.each(testTelemetryOptions)(
 
     // AI eats errors thrown in telemetry processors
     const caughtErrors: Error[] = [];
-    TelemetryTest.addTelemetryProcessor(
+    TelemetryTest.addTelemetryInitializer(
       verifyTestCommandTelemetryProcessor(
         caughtErrors,
         expectedError.type,
@@ -533,7 +535,7 @@ test.each(testTelemetryOptions)(
 
     // AI eats errors thrown in telemetry processors
     const caughtErrors: Error[] = [];
-    TelemetryTest.addTelemetryProcessor(
+    TelemetryTest.addTelemetryInitializer(
       verifyTestCommandTelemetryProcessor(
         caughtErrors,
         expectedError.type,
@@ -559,7 +561,7 @@ test.each(testTelemetryOptions)(
 
     // AI eats errors thrown in telemetry processors
     const caughtErrors: Error[] = [];
-    TelemetryTest.addTelemetryProcessor(
+    TelemetryTest.addTelemetryInitializer(
       verifyTestCommandTelemetryProcessor(
         caughtErrors,
         'Unknown',
@@ -585,7 +587,7 @@ test.each(testTelemetryOptions)(
 
     // AI eats errors thrown in telemetry processors
     const caughtErrors: Error[] = [];
-    TelemetryTest.addTelemetryProcessor(
+    TelemetryTest.addTelemetryInitializer(
       verifyTestCommandTelemetryProcessor(
         caughtErrors,
         'Unknown',
@@ -615,7 +617,7 @@ function getVerifyStackTelemetryProcessor(
   caughtErrors: Error[],
   expectedError: Error,
 ): (
-  envelope: appInsights.Contracts.EnvelopeTelemetry,
+  envelope: coreOneDS.ITelemetryItem,
   contextObjects?: {
     [name: string]: any;
   },
@@ -625,7 +627,7 @@ function getVerifyStackTelemetryProcessor(
       // Processor has run, so the test can (potentially) pass
       TelemetryTest.setTestTelemetryProvidersRan();
 
-      if (envelope.data.baseType === 'ExceptionData') {
+      if (envelope.data?.baseType === 'ExceptionData') {
         const data = (envelope.data as any).baseData;
         expect(data.exceptions).toBeDefined();
         expect(data.exceptions.length).toBe(1);
@@ -675,7 +677,7 @@ test.each(testTelemetryOptions)(
 
     // AI eats errors thrown in telemetry processors
     const caughtErrors: Error[] = [];
-    TelemetryTest.addTelemetryProcessor(
+    TelemetryTest.addTelemetryInitializer(
       getVerifyStackTelemetryProcessor(caughtErrors, expectedError),
     );
 
@@ -700,7 +702,7 @@ test.each(testTelemetryOptions)(
 
     // AI eats errors thrown in telemetry processors
     const caughtErrors: Error[] = [];
-    TelemetryTest.addTelemetryProcessor(
+    TelemetryTest.addTelemetryInitializer(
       getVerifyStackTelemetryProcessor(caughtErrors, expectedError),
     );
 

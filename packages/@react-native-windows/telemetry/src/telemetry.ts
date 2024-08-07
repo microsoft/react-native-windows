@@ -101,9 +101,7 @@ export class Telemetry {
 
   // Store "Common Properties", which will be logged for all telemetry events.
   // Unlike AppInsights, 1DS does not provide an API to store such properties.
-  protected static commonProperties: {
-    [key: string]: string
-  };
+  protected static commonProperties: {[key: string]: string} = {};
 
   protected static getDefaultSetupString(): string {
     // Enable overriding the default setup string via an environment variable
@@ -154,6 +152,64 @@ export class Telemetry {
     Telemetry.setupClient();
 
     await Telemetry.setupBaseProperties();
+
+    // Setup telemetry initializers (formerly "processors" while using App Insights)
+    this.addTelemetryInitializers();
+  }
+
+  private static addTelemetryInitializers()
+  {
+    var basicTelemetryInitializer = (envelope: coreOneDS.ITelemetryItem) : boolean => {
+      if (envelope.tags) {
+        delete envelope.tags['ai.cloud.roleInstance'];  
+      }
+      
+      // Filter out "legacy" events from older stable branches
+      const properties = envelope.data?.baseData?.properties;
+      if (
+        properties?.eventName &&
+        EventNamesWeTrack.includes(properties.eventName)
+      ) {
+        return true;
+      }
+
+      return false;
+    }
+
+    Telemetry.appInsightsCore?.addTelemetryInitializer(basicTelemetryInitializer);
+
+    var errorTelemetryInitializer = (envelope: coreOneDS.ITelemetryItem) : boolean => {
+      
+      if (envelope.data?.baseType === 'ExceptionData') {
+        const data = envelope.data.baseData;
+        if (data?.exceptions) {
+          for (const exception of data.exceptions) {
+            for (const frame of exception.parsedStack) {
+              errorUtils.sanitizeErrorStackFrame(frame);
+            }
+  
+            // Exception message must never be blank, or AI will reject it
+            exception.message = exception.message || '[None]';
+  
+            // CodedError has non-PII information in its 'type' member, plus optionally some more info in its 'data'.
+            // The message may contain PII information. This can be sanitized, but for now delete it.
+            // Note that the type of data.exceptions[0] is always going to be ExceptionDetails. It is not the original thrown exception.
+            // https://github.com/microsoft/ApplicationInsights-node.js/issues/707
+            if (Telemetry.options.preserveErrorMessages) {
+              exception.message = errorUtils.sanitizeErrorMessage(
+                exception.message,
+              );
+            } else {
+              exception.message = '[Removed]';
+            }
+          }
+        }
+      }
+
+      return true;
+    }
+
+    Telemetry.appInsightsCore?.addTelemetryInitializer(errorTelemetryInitializer);
   }
 
   /** Sets up Telemetry.appInsightsCore. */
@@ -412,8 +468,8 @@ export class Telemetry {
 
     telemetryItem.data = {
       codedError: {
-      type: codedError?.type ?? 'Unknown',
-      data: codedError?.data ?? {},
+        type: codedError?.type ?? 'Unknown',
+        data: codedError?.data ?? {},
       }
     };
 
