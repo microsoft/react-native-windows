@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 06 Aug 2024 05:15:23 GMT and should not be manually modified.
+This log was last generated on Wed, 07 Aug 2024 05:15:04 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.851
+
+Wed, 07 Aug 2024 05:15:04 GMT
+
+### Changes
+
+- [Fabric] Custom ShadowNode's are never released (30809111+acoates-ms@users.noreply.github.com)
+- Implement SampleTurboModule (jthysell@microsoft.com)
 
 ## 0.0.0-canary.850
 

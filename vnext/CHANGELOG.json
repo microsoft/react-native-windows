@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 07 Aug 2024 05:15:04 GMT",
+      "version": "0.0.0-canary.851",
+      "tag": "react-native-windows_v0.0.0-canary.851",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8d3c567efa4b7987cfec151b9f6843a82c5f36d7",
+            "comment": "[Fabric] Custom ShadowNode's are never released"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "495dbadbcbcedb4c12e1c9e282b616393d4e557a",
+            "comment": "Implement SampleTurboModule"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 06 Aug 2024 05:15:23 GMT",
       "version": "0.0.0-canary.850",
       "tag": "react-native-windows_v0.0.0-canary.850",
