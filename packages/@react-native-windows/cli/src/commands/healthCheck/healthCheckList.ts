@@ -4,7 +4,7 @@
  * @format
  */
 
-// Store list of health checks here to avoid having to launch PowerShell on every react-native config call
+// Store list of health checks here to avoid having to launch PowerShell on every @react-native-community/cli config call
 export const HealthCheckList = [
   [false, 'FreeSpace', 'Free space on current drive > 15 GB'],
   [false, 'InstalledMemory', 'Installed memory >= 16 GB'],

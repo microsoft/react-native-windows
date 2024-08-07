@@ -13,11 +13,11 @@ const {execSync} = require('child_process');
 require('@rnw-scripts/just-task');
 
 task('codegen', () => {
-  execSync('npx react-native codegen-windows --logging', {env: process.env});
+  execSync('npx --yes @react-native-community/cli codegen-windows --logging', {env: process.env});
 });
 
 task('codegen:check', () => {
-  execSync('npx react-native codegen-windows --logging --check', {
+  execSync('npx  --yes @react-native-community/cli codegen-windows --logging --check', {
     env: process.env,
   });
 });
