@@ -2194,9 +2194,9 @@
     semver "^7.5.2"
 
 "@react-native-community/template@^0.75.0-rc.3":
-  version "0.75.0-rc.6"
-  resolved "https://registry.yarnpkg.com/@react-native-community/template/-/template-0.75.0-rc.6.tgz#ed5138461b07aa77cb697f28585fbc1487f1e42c"
-  integrity sha512-wnSGX9AxICmkK7LAUVOlN4rlR8SLisi7SNtdIALfGUYxe8oebf/BQk2h8rjTbfz8E98LMAve/XVbjh28i2QSlA==
+  version "0.75.0-rc.7"
+  resolved "https://registry.yarnpkg.com/@react-native-community/template/-/template-0.75.0-rc.7.tgz#35de84eed05d5561b321053100f4aeaa53d91a72"
+  integrity sha512-FjfX36WlLBwwjwvw5tUIe7/K8yV2aExOM+FSHqYS2ySn6yzZ685waqk5TpoOdoVrG518up1Zrwmc7wAEwkyEfg==
 
 "@react-native-picker/picker@^2.5.1":
   version "2.7.7"
