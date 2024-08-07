@@ -448,7 +448,7 @@ async function startTelemetrySession(
 }
 
 /**
- * Adds the new project's telemetry info by calling and processing `react-native config`.
+ * Adds the new project's telemetry info by calling and processing `npx @react-native-community/cli config`.
  */
 async function addProjectInfoToTelemetry() {
   if (!Telemetry.isEnabled()) {
@@ -457,7 +457,7 @@ async function addProjectInfoToTelemetry() {
 
   try {
     const config = JSON.parse(
-      execSync('npx react-native config', {
+      execSync('npx @react-native-community/cli config', {
         stdio: ['ignore', 'pipe', 'ignore'],
       }).toString(),
     );

@@ -4,9 +4,9 @@
     "UAP,Version=v10.0.17763": {
       "Microsoft.JavaScript.Hermes": {
         "type": "Direct",
-        "requested": "[0.1.18, )",
-        "resolved": "0.1.18",
-        "contentHash": "5K8rRihGwIs2XNOTP2Jsw3T6cegxCBQXcpPS4optONU/AmFElGAfnA6XBQJ4UqlCFCl9Nf9zQrgvCUPBWYHiag=="
+        "requested": "[0.1.23, )",
+        "resolved": "0.1.23",
+        "contentHash": "cA9t1GjY4Yo0JD1AfA//e1lOwk48hLANfuX6GXrikmEBNZVr2TIX5ONJt5tqCnpZyLz6xGiPDgTfFNKbSfb21g=="
       },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
@@ -31,8 +31,8 @@
       },
       "boost": {
         "type": "Transitive",
-        "resolved": "1.76.0",
-        "contentHash": "p+w3YvNdXL8Cu9Fzrmexssu0tZbWxuf6ywsQqHjDlKFE5ojXHof1HIyMC3zDLfLnh80dIeFcEUAuR2Asg/XHRA=="
+        "resolved": "1.83.0",
+        "contentHash": "cy53VNMzysEMvhBixDe8ujPk67Fcj3v6FPHQnH91NYJNLHpc6jxa2xq9ruCaaJjE4M3YrGSHDi4uUSTGBWw6EQ=="
       },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
@@ -162,7 +162,7 @@
       "common": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.76.0, )"
+          "boost": "[1.83.0, )"
         }
       },
       "fmt": {
@@ -171,7 +171,7 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.76.0, )",
+          "boost": "[1.83.0, )",
           "fmt": "[1.0.0, )"
         }
       },
@@ -180,11 +180,11 @@
         "dependencies": {
           "Common": "[1.0.0, )",
           "Folly": "[1.0.0, )",
-          "Microsoft.JavaScript.Hermes": "[0.1.18, )",
+          "Microsoft.JavaScript.Hermes": "[0.1.23, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
           "Microsoft.UI.Xaml": "[2.8.0, )",
           "ReactCommon": "[1.0.0, )",
-          "boost": "[1.76.0, )"
+          "boost": "[1.83.0, )"
         }
       },
       "microsoft.reactnative.managed": {
@@ -198,7 +198,7 @@
         "type": "Project",
         "dependencies": {
           "Folly": "[1.0.0, )",
-          "boost": "[1.76.0, )"
+          "boost": "[1.83.0, )"
         }
       },
       "samplelibrarycpp": {
