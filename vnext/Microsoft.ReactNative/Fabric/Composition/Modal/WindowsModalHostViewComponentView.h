@@ -35,6 +35,7 @@ struct WindowsModalHostComponentView
 
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
+  void Visible(bool visible) noexcept;
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
@@ -58,7 +59,11 @@ struct WindowsModalHostComponentView
 
  private:
   HWND m_hwnd{nullptr};
-  winrt::Microsoft::ReactNative::ReactContext m_context;
+  winrt::Microsoft::ReactNative::CompositionHwndHost m_compositionHwndHost;
+  winrt::Microsoft::ReactNative::ReactContext m_reactContext;
+  winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compositionContext;
+  winrt::Microsoft::UI::Composition::ContainerVisual m_rootVisual{nullptr};
+  facebook::react::ModalHostViewProps *m_ModalProps;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
