@@ -115,7 +115,7 @@ struct ComponentView
   void EnsureTransformMatrixFacade() noexcept;
 
   winrt::IInspectable EnsureUiaProvider() noexcept override;
-  std::optional<std::string> getAcccessiblityValue() noexcept override;
+  std::optional<std::string> getAccessiblityValue() noexcept override;
   void setAcccessiblityValue(std::string &&value) noexcept override;
   bool getAcccessiblityIsReadOnly() noexcept override;
   virtual winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept;
