@@ -1,0 +1,1 @@
+IDS_ERR_CHANGES_SAVED : Изменения сохранены
