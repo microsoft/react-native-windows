@@ -36,15 +36,28 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
     (
       {
         accessible,
+        accessibilityControls, // Win32
+        accessibilityDescribedBy, // Win32
+        accessibilityDescription, // Win32
         accessibilityLabel,
+        accessibilityLevel, // Win32
+        accessibilityPositionInSet, // Win32
+        accessibilitySetSize, // Win32
         accessibilityState,
         allowFontScaling,
         'aria-busy': ariaBusy,
         'aria-checked': ariaChecked,
+        'aria-controls': ariaControls, // Win32
+        'aria-describedby': ariaDescribedBy, // Win32
+        'aria-description': ariaDescription, // Win32
         'aria-disabled': ariaDisabled,
         'aria-expanded': ariaExpanded,
-        'aria-label': ariaLabel,
+        'aria-level': ariaLevel, // Win32
+        'aria-multiselectable': ariaMultiselectable, // Win32
+        'aria-posinset': ariaPosinset, // Win32
+        'aria-required': ariaRequired, // Win32
         'aria-selected': ariaSelected,
+        'aria-setsize': ariaSetsize, // Win32
         children,
         ellipsizeMode,
         disabled,
@@ -71,6 +84,12 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
       forwardedRef,
     ) => {
       const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
+      const _accessibilityControls = ariaControls ?? accessibilityControls; // Win32
+      const _accessibilityDescribedBy = ariaDescribedBy ?? accessibilityDescribedBy; // Win32
+      const _accessibilityDescription = ariaDescription ?? accessibilityDescription; // Win32
+      const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Win32
+      const _accessibilityPositionInSet = ariaPosinset ?? accessibilityPositionInSet; // Win32
+      const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Win32
 
       let _accessibilityState: ?TextProps['accessibilityState'] =
         accessibilityState;
@@ -87,6 +106,8 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
             checked: ariaChecked ?? _accessibilityState.checked,
             disabled: ariaDisabled ?? _accessibilityState.disabled,
             expanded: ariaExpanded ?? _accessibilityState.expanded,
+            multiselectable: ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
+            required: ariaRequired ?? accessibilityState?.required, // Win32
             selected: ariaSelected ?? _accessibilityState.selected,
           };
         } else {
@@ -95,6 +116,8 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
             checked: ariaChecked,
             disabled: ariaDisabled,
             expanded: ariaExpanded,
+            multiselectable: ariaMultiselectable,  // Win32,
+            required: ariaRequired,  // Win32
             selected: ariaSelected,
           };
         }
@@ -166,6 +189,12 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
                 ...restProps,
                 accessibilityLabel: _accessibilityLabel,
                 accessibilityState: _accessibilityState,
+                accessibilityControls: _accessibilityControls, // Win32
+                accessibilityDescribedBy: _accessibilityDescribedBy, // Win32
+                accessibilityDescription: _accessibilityDescription, // Win32
+                accessibilityLevel: _accessibilityLevel, // Win32
+                accessibilityPositionInSet: _accessibilityPositionInSet, // Win32
+                accessibilitySetSize: _accessibilitySetSize, // Win32
                 nativeID: _nativeID,
                 numberOfLines: _numberOfLines,
                 selectable: _selectable,
@@ -197,6 +226,12 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
             {...restProps}
             accessibilityLabel={_accessibilityLabel}
             accessibilityState={_accessibilityState}
+            accessibilityControls={_accessibilityControls} // Win32
+            accessibilityDescribedBy={_accessibilityDescribedBy} // Win32
+            accessibilityDescription={_accessibilityDescription} // Win32
+            accessibilityLevel={_accessibilityLevel} // Win32
+            accessibilityPositionInSet={_accessibilityPositionInSet} // Win32
+            accessibilitySetSize={_accessibilitySetSize} // Win32
             isHighlighted={false}
             isPressable={false}
             nativeID={_nativeID}
@@ -240,6 +275,12 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
               ...restProps,
               accessibilityLabel: _accessibilityLabel,
               accessibilityState: _accessibilityState,
+              accessibilityControls: _accessibilityControls, // Win32
+              accessibilityDescribedBy: _accessibilityDescribedBy, // Win32
+              accessibilityDescription: _accessibilityDescription, // Win32
+              accessibilityLevel: _accessibilityLevel, // Win32
+              accessibilityPositionInSet: _accessibilityPositionInSet, // Win32
+              accessibilitySetSize: _accessibilitySetSize, // Win32
               accessible: _accessible,
               allowFontScaling: allowFontScaling !== false,
               disabled: _disabled,
@@ -273,6 +314,12 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
             {...restProps}
             accessibilityLabel={_accessibilityLabel}
             accessibilityState={_accessibilityState}
+            accessibilityControls={_accessibilityControls} // Win32
+            accessibilityDescribedBy={_accessibilityDescribedBy} // Win32
+            accessibilityDescription={_accessibilityDescription} // Win32
+            accessibilityLevel={_accessibilityLevel} // Win32
+            accessibilityPositionInSet={_accessibilityPositionInSet} // Win32
+            accessibilitySetSize={_accessibilitySetSize} // Win32
             accessible={_accessible}
             allowFontScaling={allowFontScaling !== false}
             disabled={_disabled}
