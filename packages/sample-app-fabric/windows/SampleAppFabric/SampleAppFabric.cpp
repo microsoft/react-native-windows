@@ -20,8 +20,6 @@ struct CompReactPackageProvider
 constexpr PCWSTR windowTitle = L"sample_app_fabric";
 constexpr PCWSTR mainComponentName = L"sample_app_fabric";
 
-// Scaling factor for the window's content based on the DPI of the display where the window is located.
-
 _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
   // Initialize WinRT.
   winrt::init_apartment(winrt::apartment_type::single_threaded);

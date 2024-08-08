@@ -144,16 +144,17 @@ winrt::ReactNative::ReactNativeWin32App ReactNativeAppBuilder::Build() {
       });
 
   // Quit application when main window is closed
-  m_reactNativeWin32App.AppWindow().Destroying(
-      [this](winrt::Microsoft::UI::Windowing::AppWindow const &window, winrt::IInspectable const & /*args*/) {
-        // Before we shutdown the application - unload the ReactNativeHost to give the javascript a chance to save any
-        // state
-        auto async = m_reactNativeWin32App.ReactNativeHost().UnloadInstance();
-        async.Completed([this](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
-          assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
-          m_reactNativeWin32App.ReactNativeHost().InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
-        });
-      });
+  m_reactNativeWin32App.AppWindow().Destroying([this](
+                                                   winrt::Microsoft::UI::Windowing::AppWindow const &window,
+                                                   winrt::Windows::Foundation::IInspectable const & /*args*/) {
+    // Before we shutdown the application - unload the ReactNativeHost to give the javascript a chance to save any
+    // state
+    auto async = m_reactNativeWin32App.ReactNativeHost().UnloadInstance();
+    async.Completed([this](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+      assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
+      m_reactNativeWin32App.ReactNativeHost().InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
+    });
+  });
 
   // DesktopChildSiteBridge create a ContentSite that can host the RootView ContentIsland
   auto desktopChildSiteBridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
