@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240618-5df5ed1a8",
+  "baseVersion": "0.76.0-nightly-20240701-9f6cb21ed",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "75582b181be0cd6790f7c021bfafb761dfc42381"
+      "baseHash": "2b0a3c4f44b686f254516c51469500bf26c5b113"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "dd3b224f82882d17be0a79a368b293c9ac6599a0"
+      "baseHash": "2690130ef7a40e3fb37fc465979e69b1036cdae8"
     },
     {
       "type": "platform",
@@ -317,7 +317,7 @@
       "type": "patch",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorHeader.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorHeader.js",
-      "baseHash": "e85290422895e30d58e2d804f11e73407a743282",
+      "baseHash": "46b6ee5d65a0c820dd0a2415bd8f43e5e8807bae",
       "issue": 7952
     },
     {
@@ -439,7 +439,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "71c24366f3f0baa9a48ba34c08b255483bf77553"
+      "baseHash": "3b40ec7def4177ef81ad2eb84a0f95bc00cec041"
     },
     {
       "type": "derived",

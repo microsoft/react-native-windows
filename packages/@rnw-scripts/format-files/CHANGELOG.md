@@ -1,8 +1,17 @@
 # Change Log - @rnw-scripts/format-files
 
-This log was last generated on Wed, 24 Jul 2024 05:24:31 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Aug 2024 05:16:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.1.46
+
+Thu, 08 Aug 2024 05:16:50 GMT
+
+### Patches
+
+- Bump @rnw-scripts/eslint-config to v1.2.26
+- Bump @rnw-scripts/just-task to v2.3.43
 
 ## 1.1.45
 

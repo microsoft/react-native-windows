@@ -175,7 +175,7 @@ jobs:
                   msbuildArgs:
                     /p:PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
 
-            - ${{if and(endsWith(matrix.Name, 'Universal'), eq(matrix.BuildConfiguration, 'Debug')) }}:
+            - ${{if and(false, endsWith(matrix.Name, 'Universal'), eq(matrix.BuildConfiguration, 'Debug')) }}: # Disabled as debugging doesn't work,remove false after issue is resolved, see https://github.com/microsoft/react-native-windows/issues/13543
               # Execute debug feature tests (skip this step for the Win32 Playground app and for release builds)
               
               # Need to re-setup ProcDump a 2nd time for this to work correctly

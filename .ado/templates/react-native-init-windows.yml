@@ -42,19 +42,37 @@ steps:
       buildEnvironment: ${{ parameters.buildEnvironment }}
 
   - ${{ if endsWith(parameters.template, '-app') }}:
-    - script: | # Change version of @react-native-community/template from 'next' to '$(reactNativeDevDependency)' and remove upgrade command - Windows #13446
-        npx --yes @react-native-community/cli@next init testcli --template @react-native-community/template@next
-        cd testcli && call yarn upgrade react-native@$(reactNativeDevDependency)
+    - script: | # Change version of @react-native-community/template from 'nightly' to '$(reactNativeDevDependency)' - Windows #13446
+        npx --yes @react-native-community/cli@next init testcli --template @react-native-community/template@nightly
       displayName: Init new app project with @react-native-community/cli init
       workingDirectory: $(Agent.BuildDirectory)
+    
+    - script: | # Remove upgrade command - Windows #13446
+        call yarn install
+        call yarn add react@$(reactDevDependency)
+        call yarn add react-native@$(reactNativeDevDependency)
+      displayName: Fix app react-native dependency
+      workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - ${{ if and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old'))) }}:
-    - script: | # Change version of react-native from 'next' to '$(reactNativeDevDependency)' and remove upgrade commands - Windows #13446
+    - script: | # Change version of react-native from 'next' to '$(reactNativeDevDependency)' - Windows #13446
         npx --yes create-react-native-library@latest --slug testcli --description testcli --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type module-new --react-native-version next --example vanilla testcli
-        cd testcli && call yarn upgrade react-native@$(reactNativeDevDependency) --dev
-        cd example && call yarn upgrade react-native@$(reactNativeDevDependency)
       displayName: Init new lib project with create-react-native-library
       workingDirectory: $(Agent.BuildDirectory)
+
+    - script: | # Remove upgrade commands - Windows #13446
+        call yarn install
+        call yarn add react@$(reactDevDependency) --dev
+        call yarn add react-native@$(reactNativeDevDependency) --dev
+      displayName: Fix lib react-native dependency
+      workingDirectory: $(Agent.BuildDirectory)\testcli
+
+    - script: | # Remove upgrade commands - Windows #13446
+        call yarn install
+        call yarn add react@$(reactDevDependency)
+        call yarn add react-native@$(reactNativeDevDependency)
+      displayName: Fix example app react-native dependency
+      workingDirectory: $(Agent.BuildDirectory)\testcli\example
   - ${{ elseif and(endsWith(parameters.template, '-lib'), startsWith(parameters.template, 'old')) }}:
     - script: |
         npx --yes create-react-native-module@0.20.2 --package-name "testcli" testcli
@@ -105,8 +123,8 @@ steps:
         YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
   - script: |
-      call yarn react-native init-windows --template ${{ parameters.template }} --overwrite --logging ${{ parameters.additionalInitArguments }}
-    displayName: Call react-native init-windows
+      call npx @react-native-community/cli init-windows --template ${{ parameters.template }} --overwrite --logging ${{ parameters.additionalInitArguments }}
+    displayName: Call @react-native-community/cli init-windows
     workingDirectory: $(Agent.BuildDirectory)\testcli
     env:
       YARN_ENABLE_IMMUTABLE_INSTALLS: false
@@ -178,7 +196,7 @@ steps:
 
   # Only test bundling in debug since we already bundle as part of release builds
   - ${{ if and(endsWith(parameters.template, '-app'), eq(parameters.configuration, 'Debug')) }}:
-    - script: npx react-native bundle --entry-file index.js --platform windows --bundle-output test.bundle
+    - script: npx @react-native-community/cli bundle --entry-file index.js --platform windows --bundle-output test.bundle
       displayName: Create bundle testcli
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
