@@ -4,6 +4,7 @@
   <PropertyGroup Label="Microsoft.ReactNative Experimental Features">
     <UseFabric>true</UseFabric>
     <UseWinUI3>true</UseWinUI3>
+    <UseExperimentalNuget>{{useNuGets}}</UseExperimentalNuget>
 
     <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
   </PropertyGroup>
