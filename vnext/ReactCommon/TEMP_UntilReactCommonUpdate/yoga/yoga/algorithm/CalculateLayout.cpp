@@ -2121,7 +2121,7 @@ bool calculateLayoutInternal(
 
   const bool needToVisitNode =
       (node->isDirty() && layout->generationCount != generationCount) ||
-      layout->configVersion != node->getConfig()->getVersion() || // [Windows]
+      layout->configVersion != node->getConfig()->getVersion() ||
       layout->lastOwnerDirection != ownerDirection;
 
   if (needToVisitNode) {

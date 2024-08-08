@@ -25,8 +25,28 @@ class JSRuntime : public jsinspector_modern::RuntimeTargetDelegate {
 
   virtual ~JSRuntime() = default;
 
-  virtual void addConsoleMessage(jsi::Runtime& runtime, jsinspector_modern::ConsoleMessage message) = 0;
-  virtual bool supportsConsole() const = 0;
+  /**
+   * Get a reference to the \c RuntimeTargetDelegate owned (or implemented) by
+   * this JSRuntime. This reference must remain valid for the duration of the
+   * JSRuntime's lifetime.
+   */
+  // virtual jsinspector_modern::RuntimeTargetDelegate& getRuntimeTargetDelegate();
+
+  /**
+   * Run initialize work that must happen on the runtime's JS thread. Used for
+   * initializing TLS and registering profiling.
+   *
+   * TODO T194671568 Move the runtime constructor to the JsThread
+   */
+  virtual void unstable_initializeOnJsThread() {}
+
+ private:
+  /**
+   * Initialized by \c getRuntimeTargetDelegate if not overridden, and then
+   * never changes.
+   */
+  std::optional<jsinspector_modern::FallbackRuntimeTargetDelegate>
+      runtimeTargetDelegate_;
 };
 
 /**

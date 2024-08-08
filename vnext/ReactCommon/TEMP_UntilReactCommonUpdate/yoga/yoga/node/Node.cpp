@@ -136,11 +136,11 @@ void Node::setConfig(yoga::Config* config) {
 
   if (yoga::configUpdateInvalidatesLayout(*config_, *config)) {
     markDirtyAndPropagate();
-    layout_.configVersion = 0; // [Windows #13409]
-  } else { // [Windows #13409]
+    layout_.configVersion = 0;
+  } else {
     // If the config is functionally the same, then align the configVersion so
     // that we can reuse the layout cache
-    layout_.configVersion = config->getVersion(); // [Windows #13409]
+    layout_.configVersion = config->getVersion();
   }
   config_ = config;
 }

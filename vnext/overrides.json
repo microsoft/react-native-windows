@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.76.0-nightly-20240701-9f6cb21ed",
+  "baseVersion": "0.76.0-nightly-20240709-12b64b782",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "2b0a3c4f44b686f254516c51469500bf26c5b113"
+      "baseHash": "7dc1336e78f35a559d54272340d714fc5aa6f70e"
     },
     {
       "type": "derived",
@@ -186,14 +186,14 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/JSRuntimeFactory.h",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/JSRuntimeFactory.h",
-      "baseHash": "a3cf8c924d0bd3419943f0e46d603f84eb5b52ab",
+      "baseHash": "36207ddf41b8d0b5b34866b1eda7c8f1fa1b079c",
       "issue": 13172
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "c7a0decdba82a2c225cd593ce193bc074d4e2043",
+      "baseHash": "1de0df4cf6ce5bac089710a03eaabb374776fd60",
       "issue": 13172
     },
     {
@@ -207,42 +207,42 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/algorithm/CalculateLayout.cpp",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/algorithm/CalculateLayout.cpp",
-      "baseHash": "46a638052902e2ce863984b0d6800525d4111e9a",
+      "baseHash": "45c1dfb200b57ff81bdd37c4e201e24a59c2e9a0",
       "issue": 13409
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/config/Config.cpp",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/config/Config.cpp",
-      "baseHash": "9a2e3f6760cd31f262a78cb7e8d7b53fed03827a",
+      "baseHash": "0dd6fab23940d648f810a2508b872d4a23729219",
       "issue": 13409
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/config/Config.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/config/Config.h",
-      "baseHash": "a55ea630b87572d727830c24d64ccffabccafc8e",
+      "baseHash": "e245adeafd561774fbcf8c83500890c3201bf479",
       "issue": 13409
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/LayoutResults.cpp",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/LayoutResults.cpp",
-      "baseHash": "3e5bbf4d0a41f9b3baf94ec544574b6d94fdd4fd",
+      "baseHash": "e5b65abf9e843fda7409b5b33cfb2261b98709d6",
       "issue": 13409
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/LayoutResults.h",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/LayoutResults.h",
-      "baseHash": "e6be6681fc1427c12d2e89da13cfe1984dffd714",
+      "baseHash": "f5c7e4c0e7552fb8734ef5cb9a02dc69343f234d",
       "issue": 13409
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/yoga/yoga/node/Node.cpp",
       "baseFile": "packages/react-native/ReactCommon/yoga/yoga/node/Node.cpp",
-      "baseHash": "85c60b99c8fd8f7fcd2bc3e34c07ba0739a5bbe7",
+      "baseHash": "b6d9e35a26a254cd6c43203e91b84661c4971e3a",
       "issue": 13409
     },
     {
@@ -308,7 +308,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Alert/Alert.windows.js",
       "baseFile": "packages/react-native/Libraries/Alert/Alert.js",
-      "baseHash": "897569d77df852480332b7ce7ec1b594cf40aa28"
+      "baseHash": "173b99e6ae120f14176cf3425877728787d3feed"
     },
     {
       "type": "platform",
@@ -414,7 +414,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "dad569fd3dd81f212afd7b35ffe75108e926eb5e"
+      "baseHash": "ebf94cf0787121f7d2c436a15a72b0c0351639e6"
     },
     {
       "type": "patch",
@@ -613,7 +613,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.windows.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "3b40ec7def4177ef81ad2eb84a0f95bc00cec041"
+      "baseHash": "8f291a19307b6c3c25c99118b2d0c4033f0b159a"
     },
     {
       "type": "derived",
@@ -644,13 +644,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Utilities/Platform.flow.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.flow.js",
-      "baseHash": "d07d4656dc872e92e873bcce248262132085bd99"
+      "baseHash": "f38efa527b9426ae0178bb2336be2e93af0392ba"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Utilities/Platform.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
-      "baseHash": "ddd8013d71adc13b3ef3016631012efd096a9518"
+      "baseHash": "33f07d6fddb5290d05c8d4cc490312e3af88c70b"
     },
     {
       "type": "platform",
@@ -666,7 +666,7 @@
       "type": "derived",
       "file": "src-win/src/private/specs/modules/NativePlatformConstantsWindows.js",
       "baseFile": "packages/react-native/src/private/specs/modules/NativePlatformConstantsAndroid.js",
-      "baseHash": "b4a125d9134f33aeaba9e06988e18cbb0b4e9e9c"
+      "baseHash": "fa0f34a2de33b641bd63863629087644796d8b59"
     }
   ]
 }

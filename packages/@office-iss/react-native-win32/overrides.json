@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.76.0-nightly-20240701-9f6cb21ed",
+  "baseVersion": "0.76.0-nightly-20240709-12b64b782",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "2b0a3c4f44b686f254516c51469500bf26c5b113"
+      "baseHash": "7dc1336e78f35a559d54272340d714fc5aa6f70e"
     },
     {
       "type": "derived",
@@ -29,7 +29,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Alert/Alert.win32.js",
       "baseFile": "packages/react-native/Libraries/Alert/Alert.js",
-      "baseHash": "897569d77df852480332b7ce7ec1b594cf40aa28"
+      "baseHash": "173b99e6ae120f14176cf3425877728787d3feed"
     },
     {
       "type": "derived",
@@ -116,7 +116,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "dad569fd3dd81f212afd7b35ffe75108e926eb5e"
+      "baseHash": "ebf94cf0787121f7d2c436a15a72b0c0351639e6"
     },
     {
       "type": "patch",
@@ -439,7 +439,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "3b40ec7def4177ef81ad2eb84a0f95bc00cec041"
+      "baseHash": "8f291a19307b6c3c25c99118b2d0c4033f0b159a"
     },
     {
       "type": "derived",
@@ -498,13 +498,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Utilities/Platform.flow.win32.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.flow.js",
-      "baseHash": "d07d4656dc872e92e873bcce248262132085bd99"
+      "baseHash": "f38efa527b9426ae0178bb2336be2e93af0392ba"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Utilities/Platform.win32.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
-      "baseHash": "ddd8013d71adc13b3ef3016631012efd096a9518"
+      "baseHash": "33f07d6fddb5290d05c8d4cc490312e3af88c70b"
     },
     {
       "type": "copy",
@@ -528,7 +528,7 @@
       "type": "derived",
       "file": "src-win/src/private/specs/modules/NativePlatformConstantsWin.js",
       "baseFile": "packages/react-native/src/private/specs/modules/NativePlatformConstantsAndroid.js",
-      "baseHash": "b4a125d9134f33aeaba9e06988e18cbb0b4e9e9c"
+      "baseHash": "fa0f34a2de33b641bd63863629087644796d8b59"
     }
   ]
 }
