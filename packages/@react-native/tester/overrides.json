@@ -1,11 +1,11 @@
 {
-  "baseVersion": "0.76.0-nightly-20240701-9f6cb21ed",
+  "baseVersion": "0.76.0-nightly-20240709-12b64b782",
   "overrides": [
     {
       "type": "copy",
       "directory": "js/assets",
       "baseDirectory": "packages/rn-tester/js/assets",
-      "baseHash": "ca9df8f9551fd1c714d652f29e5e8a72b581a69a",
+      "baseHash": "ba3279652a58a4f7cb87e4e1b925c1223ba3c1bd",
       "issue": 4054
     },
     {
@@ -138,7 +138,7 @@
       "type": "copy",
       "directory": "js/examples/FlatList",
       "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "08f70665e487f604110087e5cb8f9bda5a110423",
+      "baseHash": "efdf9f331dea59374a48ed40f8202ece4b7b4e3c",
       "issue": 4054
     },
     {
@@ -292,7 +292,7 @@
       "type": "copy",
       "directory": "js/examples/Pressable",
       "baseDirectory": "packages/rn-tester/js/examples/Pressable",
-      "baseHash": "5773550e2dc20f6a1d786d24460267c637deecf2",
+      "baseHash": "41ecb705a871123c146343db63a0975a7873fa77",
       "issue": 4054
     },
     {
@@ -502,7 +502,7 @@
       "type": "patch",
       "file": "js/utils/RNTesterList.android.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "31470c217dc6b4b68de65fc0be1c072c0790cd56",
+      "baseHash": "587e2db8c14caac51f04005c129479d606e896a7",
       "issue": 13228
     },
     {

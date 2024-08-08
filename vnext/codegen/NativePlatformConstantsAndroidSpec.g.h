@@ -17,7 +17,7 @@ struct PlatformConstantsAndroidSpec_ReactNativeVersionAndroid {
     double major;
     double minor;
     double patch;
-    std::optional<double> prerelease;
+    std::optional<std::string> prerelease;
 };
 
 struct PlatformConstantsAndroidSpec_PlatformConstantsAndroid {
