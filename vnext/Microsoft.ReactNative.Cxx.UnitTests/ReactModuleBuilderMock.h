@@ -73,6 +73,7 @@ struct ReactModuleBuilderMock {
   void AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept;
   void AddMethod(hstring const &name, MethodReturnType returnType, MethodDelegate const &method) noexcept;
   void AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept;
+  void AddEventEmitter(hstring const &name, EventEmitterInitializerDelegate const &emitter) noexcept;
 
  private:
   MethodDelegate GetMethod0(std::wstring const &methodName) const noexcept;

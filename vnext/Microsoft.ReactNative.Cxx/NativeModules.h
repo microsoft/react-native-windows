@@ -27,13 +27,34 @@
 // REACT_MODULE annotates a C++ struct as a ReactNative module.
 // It can be any struct which can be instantiated using a default constructor.
 // Note that it must be a 'struct', not 'class' because macro does a forward declaration using the 'struct' keyword.
+//
+// REACT_EVENTs within a REACT_MODULE will trigger an event on a global event emitter, such as ECTDeviceEventEmitter.
+// To use the newer EventEmitters exposed directly on this module, use REACT_TURBO_MODULE instead.
 #define REACT_MODULE(/* moduleStruct, [opt] moduleName, [opt] eventEmitterName */...) \
   INTERNAL_REACT_MODULE(__VA_ARGS__)(__VA_ARGS__)
+
+// REACT_TURBO_MODULE(moduleStruct, [opt] moduleName, [opt] eventEmitterName)
+// Arguments:
+// - moduleStruct (required) - the struct name the macro is attached to.
+// - moduleName (optional) - the module name visible to JavaScript. Default is the moduleStruct name.
+//
+// REACT_TURBO_MODULE annotates a C++ struct as a ReactNative module.
+// It can be any struct which can be instantiated using a default constructor.
+// Note that it must be a 'struct', not 'class' because macro does a forward declaration using the 'struct' keyword.
+//
+// REACT_EVENTs within a REACT_TURBO_MODULE will return a JS EventEmitter directly from the module.
+#define REACT_TURBO_MODULE(/* moduleStruct, [opt] moduleName */...) \
+  INTERNAL_REACT_TURBO_MODULE(__VA_ARGS__)(__VA_ARGS__)
 
 // REACT_MODULE_NOREG is REACT_MODULE without auto registration
 // they have the same arguments
 #define REACT_MODULE_NOREG(/* moduleStruct, [opt] moduleName, [opt] eventEmitterName */...) \
   INTERNAL_REACT_MODULE_NOREG(__VA_ARGS__)(__VA_ARGS__)
+
+// REACT_TURBO_MODULE_NOREG is REACT_TURBO_MODULE without auto registration
+// they have the same arguments
+#define REACT_TURBO_MODULE_NOREG(/* moduleStruct, [opt] moduleName */...) \
+  INTERNAL_REACT_TURBO_MODULE_NOREG(__VA_ARGS__)(__VA_ARGS__)
 
 // REACT_INIT(method)
 // Arguments:
@@ -145,6 +166,13 @@
   "\" to the attribute:\n"                                                        \
   "    REACT_SYNC_METHOD(method, L\"" methodName "\")\n...\n"
 
+#define REACT_SHOW_EVENTEMITTER_SIGNATURES(eventName, signatures)                \
+  " (see details below in output).\n"                                            \
+  "  It must be one of the following:\n" signatures                              \
+  "  The C++ member name could be different. In that case add the L\"" eventName \
+  "\" to the attribute:\n"                                                       \
+  "    REACT_EVENT(member, L\"" eventName "\")\n...\n"
+
 #define REACT_SHOW_CONSTANT_SPEC_ERRORS(index, typeName, signatures)                                        \
   static_assert(                                                                                            \
       constantCheckResults[index].IsMethodFound,                                                            \
@@ -168,6 +196,18 @@
   static_assert(                                                                                            \
       methodCheckResults[index].IsSignatureMatching,                                                        \
       "Method '" methodName "' does not match signature" REACT_SHOW_SYNC_METHOD_SIGNATURES(methodName, signatures));
+
+#define REACT_SHOW_EVENTEMITTER_SPEC_ERRORS(index, methodName, signatures)                                 \
+  static_assert(                                                                                           \
+      methodCheckResults[index].IsTurboModule,                                                             \
+      "Name '" methodName                                                                                  \
+      "' requires that the module be a TurboModule.  Use REACT_TURBO_MODULE rather than REACT_MODULE");    \
+  static_assert(                                                                                           \
+      methodCheckResults[index].IsMethodFound,                                                             \
+      "Event '" methodName "' is not defined" REACT_SHOW_EVENTEMITTER_SIGNATURES(methodName, signatures)); \
+  static_assert(                                                                                           \
+      methodCheckResults[index].IsSignatureMatching,                                                       \
+      "Event '" methodName "' does not match signature" REACT_SHOW_EVENTEMITTER_SIGNATURES(methodName, signatures));
 
 //
 // Code below helps to register React Native modules and verify method signatures
@@ -711,6 +751,21 @@ struct ModuleSyncMethodInfo<TResult (*)(TArgs...) noexcept> : ModuleSyncMethodIn
   }
 };
 
+template <class TFunc>
+struct ModuleEventEmitterInfo;
+
+// Instance EventEmitter function
+template <class TModule, typename TFuncType>
+struct ModuleEventEmitterInfo<TFuncType TModule::*> {
+  using ModuleType = TModule;
+
+  template <class TMethodSpec>
+  static constexpr bool Match() noexcept {
+    // TODO add validation of function type.
+    return true;
+  }
+};
+
 template <class TField>
 struct ModuleConstFieldInfo;
 
@@ -813,20 +868,40 @@ struct ModuleEventFieldInfo<TFunc<void(TArgs...)> TModule::*> {
   using ModuleType = TModule;
   using EventType = TFunc<void(TArgs...)>;
   using FieldType = EventType TModule::*;
+  using IsTurboModule = IsReactTurboModule<ModuleType>;
 
   static InitializerDelegate GetEventHandlerInitializer(
       void *module,
       FieldType field,
       std::wstring_view eventName,
       std::wstring_view eventEmitterName) noexcept {
-    return [module = static_cast<ModuleType *>(module), field, eventName, eventEmitterName](
-               IReactContext const &reactContext) noexcept {
-      module->*field = [reactContext, eventEmitterName, eventName](TArgs... args) noexcept {
-        reactContext.EmitJSEvent(
-            eventEmitterName, eventName, [&args...]([[maybe_unused]] IJSValueWriter const &argWriter) noexcept {
-              (void)argWriter; // [[maybe_unused]] above does not work
-              (WriteValue(argWriter, args), ...);
-            });
+    if constexpr (IsTurboModule::value) {
+      return [module = static_cast<ModuleType *>(module), field](IReactContext const &) noexcept {
+        // Default emitter will do nothing
+        // This will be replaced with a method that will call the jsi EventEmitter when JS requests the emitter
+        module->*field = [](TArgs... args) noexcept {};
+      };
+    } else {
+      return [module = static_cast<ModuleType *>(module), field, eventName, eventEmitterName](
+                 IReactContext const &reactContext) noexcept {
+        module->*field = [reactContext, eventEmitterName, eventName](TArgs... args) noexcept {
+          reactContext.EmitJSEvent(
+              eventEmitterName, eventName, [&args...]([[maybe_unused]] IJSValueWriter const &argWriter) noexcept {
+                (void)argWriter; // [[maybe_unused]] above does not work
+                (WriteValue(argWriter, args), ...);
+              });
+        };
+      };
+    }
+  }
+
+  static EventEmitterInitializerDelegate GetEventEmitterInitializer(void *module, FieldType field) noexcept {
+    return [module = static_cast<ModuleType *>(module), field](EmitEventSetterDelegate const &emitEventDelegate) {
+      module->*field = [emitEventDelegate](TArgs... args) noexcept {
+        emitEventDelegate([&args...]([[maybe_unused]] IJSValueWriter const &argWriter) noexcept {
+          (void)argWriter; // [[maybe_unused]] above does not work
+          (WriteValue(argWriter, args), ...);
+        });
       };
     };
   }
@@ -1015,6 +1090,10 @@ struct ReactModuleBuilder {
     auto eventHandlerInitializer = ModuleEventFieldInfo<TField>::GetEventHandlerInitializer(
         m_module, field, eventName, !eventEmitterName.empty() ? eventEmitterName : m_eventEmitterName);
     m_moduleBuilder.AddInitializer(eventHandlerInitializer);
+    if constexpr (ModuleEventFieldInfo<TField>::IsTurboModule::value) {
+      auto eventEmitterInitializer = ModuleEventFieldInfo<TField>::GetEventEmitterInitializer(m_module, field);
+      m_moduleBuilder.AddEventEmitter(eventName, eventEmitterInitializer);
+    }
   }
 
   template <class TField>
@@ -1143,6 +1222,28 @@ struct ReactSyncMethodVerifier {
   bool m_result{false};
 };
 
+template <class TModule, int I, class TMethodSpec>
+struct ReactEventEmitterVerifier {
+  static constexpr bool IsTurboModule() noexcept {
+    return IsReactTurboModule<TModule>::value;
+  }
+
+  static constexpr bool Verify() noexcept {
+    ReactEventEmitterVerifier verifier{};
+    ReactMemberInfoIterator<TModule>{}.template GetMemberInfo<I>(verifier);
+    return verifier.m_result;
+  }
+
+  template <class TMember, class TAttribute, int I2>
+  constexpr void
+  Visit([[maybe_unused]] TMember member, ReactAttributeId<I2> /*attributeId*/, TAttribute /*attributeInfo*/) noexcept {
+    m_result = ModuleEventEmitterInfo<TMember>::template Match<TMethodSpec>();
+  }
+
+ private:
+  bool m_result{false};
+};
+
 struct TurboModuleSpec {
   template <class TSignature>
   struct TypedConstant {
@@ -1189,14 +1290,21 @@ struct TurboModuleSpec {
   struct Method : BaseMethodSpec {
     using BaseMethodSpec::BaseMethodSpec;
     using Signature = typename ModuleMethodInfoBase<TSignature>::Signature;
-    static constexpr bool IsSynchronous = false;
+    static constexpr ReactMemberKind MemberKind = ReactMemberKind::AsyncMethod;
   };
 
   template <class TSignature>
   struct SyncMethod : BaseMethodSpec {
     using BaseMethodSpec::BaseMethodSpec;
     using Signature = typename ModuleSyncMethodInfoBase<TSignature>::Signature;
-    static constexpr bool IsSynchronous = true;
+    static constexpr ReactMemberKind MemberKind = ReactMemberKind::SyncMethod;
+  };
+
+  template <class TSignature>
+  struct EventEmitter : BaseMethodSpec {
+    using BaseMethodSpec::BaseMethodSpec;
+    // using Signature = typename ModuleEventEmitterInfo<TSignature>::Signature;
+    static constexpr ReactMemberKind MemberKind = ReactMemberKind::EventField;
   };
 
   template <class... TArgs>
@@ -1209,24 +1317,33 @@ struct TurboModuleSpec {
     bool IsUniqueName{false};
     bool IsMethodFound{false};
     bool IsSignatureMatching{true};
+    bool IsTurboModule{false};
   };
 
   template <class TModule, class TModuleSpec, size_t I>
   static constexpr MethodCheckResult CheckMethod() noexcept {
     constexpr VerificationResult verificationResult = ReactModuleVerifier<TModule>::VerifyMember(
-        std::get<I>(TModuleSpec::methods).Name,
-        std::get<I>(TModuleSpec::methods).IsSynchronous ? ReactMemberKind::SyncMethod : ReactMemberKind::AsyncMethod);
+        std::get<I>(TModuleSpec::methods).Name, std::get<I>(TModuleSpec::methods).MemberKind);
     MethodCheckResult result{};
     result.IsUniqueName = verificationResult.MethodNameCount <= 1;
     result.IsMethodFound = verificationResult.MatchCount == 1;
     if constexpr (verificationResult.MatchCount == 1) {
-      if constexpr (std::get<I>(TModuleSpec::methods).IsSynchronous) {
+      if constexpr (std::get<I>(TModuleSpec::methods).MemberKind == ReactMemberKind::SyncMethod) {
         result.IsSignatureMatching = ReactSyncMethodVerifier<
             TModule,
             verificationResult.MatchedMemberId,
             RemoveConstRef<decltype(std::get<I>(TModuleSpec::methods))>>::Verify();
-      } else {
+      } else if constexpr (std::get<I>(TModuleSpec::methods).MemberKind == ReactMemberKind::AsyncMethod) {
         result.IsSignatureMatching = ReactMethodVerifier<
+            TModule,
+            verificationResult.MatchedMemberId,
+            RemoveConstRef<decltype(std::get<I>(TModuleSpec::methods))>>::Verify();
+      } else if constexpr (std::get<I>(TModuleSpec::methods).MemberKind == ReactMemberKind::EventField) {
+        result.IsTurboModule = ReactEventEmitterVerifier<
+            TModule,
+            verificationResult.MatchedMemberId,
+            RemoveConstRef<decltype(std::get<I>(TModuleSpec::methods))>>::IsTurboModule();
+        result.IsSignatureMatching = ReactEventEmitterVerifier<
             TModule,
             verificationResult.MatchedMemberId,
             RemoveConstRef<decltype(std::get<I>(TModuleSpec::methods))>>::Verify();
