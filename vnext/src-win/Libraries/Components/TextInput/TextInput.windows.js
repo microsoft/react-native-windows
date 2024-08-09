@@ -1381,6 +1381,7 @@ function InternalTextInput(props: Props): React.Node {
       mostRecentEventCount,
       selection,
       text,
+      // $FlowFixMe[incompatible-call]
       viewCommands,
     });
 
