@@ -155,28 +155,24 @@ function translateEventEmitterArray(
   target: ParamTarget,
   options: CppCodegenOptions,
 ): string {
-  if (param.elementType) {
-    switch (target) {
-      case 'spec':
-      case 'template':
-        return `std::vector<${translateEventEmitterParam(
-          param.elementType as NativeModuleEventEmitterBaseTypeAnnotation,
-          aliases,
-          `${baseAliasName}_element`,
-          'template',
-          options,
-        )}>`;
-      default:
-        return `std::vector<${translateEventEmitterParam(
-          param.elementType as NativeModuleEventEmitterBaseTypeAnnotation,
-          aliases,
-          `${baseAliasName}_element`,
-          'template',
-          options,
-        )}> const &`;
-    }
-  } else {
-    return decorateType('::React::JSValueArray', target);
+  switch (target) {
+    case 'spec':
+    case 'template':
+      return `std::vector<${translateEventEmitterParam(
+        param.elementType as NativeModuleEventEmitterBaseTypeAnnotation,
+        aliases,
+        `${baseAliasName}_element`,
+        'template',
+        options,
+      )}>`;
+    default:
+      return `std::vector<${translateEventEmitterParam(
+        param.elementType as NativeModuleEventEmitterBaseTypeAnnotation,
+        aliases,
+        `${baseAliasName}_element`,
+        'template',
+        options,
+      )}> const &`;
   }
 }
 
