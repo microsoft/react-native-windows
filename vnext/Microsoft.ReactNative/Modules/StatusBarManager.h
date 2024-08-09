@@ -14,7 +14,6 @@ struct StatusBarManager {
 
   REACT_GET_CONSTANTS(GetConstants)
   static Microsoft::ReactNativeSpecs::StatusBarManagerAndroidSpec_Constants GetConstants() noexcept {
-    // return {{"HEIGHT", 0}, {"DEFAULT_BACKGROUND_COLOR": 0}};
     return {0};
   }
 
