@@ -17,8 +17,12 @@
 // The macros below are internal implementation details for macro defined in nativeModules.h
 //
 
-template <class T>
+template <typename T>
 struct IsReactTurboModule;
+
+// Default to false if no specific override
+template <typename T>
+struct IsReactTurboModule : std::false_type {};
 
 #define INTERNAL_REACT_MODULE_REGISTRATION_AND_PROVIDER(                                                            \
     moduleStruct, moduleName, eventEmitterName, isReactTurboModule)                                                 \

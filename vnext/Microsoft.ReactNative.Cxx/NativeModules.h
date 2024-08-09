@@ -197,17 +197,18 @@
       methodCheckResults[index].IsSignatureMatching,                                                        \
       "Method '" methodName "' does not match signature" REACT_SHOW_SYNC_METHOD_SIGNATURES(methodName, signatures));
 
-#define REACT_SHOW_EVENTEMITTER_SPEC_ERRORS(index, methodName, signatures)                                 \
-  static_assert(                                                                                           \
-      methodCheckResults[index].IsTurboModule,                                                             \
-      "Name '" methodName                                                                                  \
-      "' requires that the module be a TurboModule.  Use REACT_TURBO_MODULE rather than REACT_MODULE");    \
-  static_assert(                                                                                           \
-      methodCheckResults[index].IsMethodFound,                                                             \
-      "Event '" methodName "' is not defined" REACT_SHOW_EVENTEMITTER_SIGNATURES(methodName, signatures)); \
-  static_assert(                                                                                           \
-      methodCheckResults[index].IsSignatureMatching,                                                       \
-      "Event '" methodName "' does not match signature" REACT_SHOW_EVENTEMITTER_SIGNATURES(methodName, signatures));
+#define REACT_SHOW_EVENTEMITTER_SPEC_ERRORS(index, methodName, signatures)                                        \
+  static_assert(                                                                                                  \
+      methodCheckResults[index].IsTurboModule,                                                                    \
+      "EventEmitter '" methodName                                                                                 \
+      "' requires that the module be a TurboModule.  Use REACT_TURBO_MODULE rather than REACT_MODULE");           \
+  static_assert(                                                                                                  \
+      methodCheckResults[index].IsMethodFound,                                                                    \
+      "EventEmitter '" methodName "' is not defined" REACT_SHOW_EVENTEMITTER_SIGNATURES(methodName, signatures)); \
+  static_assert(                                                                                                  \
+      methodCheckResults[index].IsSignatureMatching,                                                              \
+      "EventEmitter '" methodName                                                                                 \
+      "' does not match signature" REACT_SHOW_EVENTEMITTER_SIGNATURES(methodName, signatures));
 
 //
 // Code below helps to register React Native modules and verify method signatures
