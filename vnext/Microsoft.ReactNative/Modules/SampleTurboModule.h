@@ -7,12 +7,24 @@
 
 namespace Microsoft::ReactNative {
 
-REACT_MODULE(SampleTurboModule)
+REACT_TURBO_MODULE(SampleTurboModule)
 struct SampleTurboModule {
   using ModuleSpec = ReactNativeSpecs::SampleTurboModuleSpec;
 
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+
+  REACT_EVENT(onPress)
+  std::function<void()> onPress;
+
+  REACT_EVENT(onClick)
+  std::function<void(std::string)> onClick;
+
+  REACT_EVENT(onChange)
+  std::function<void(ReactNativeSpecs::SampleTurboModuleSpec_ObjectStruct)> onChange;
+
+  REACT_EVENT(onSubmit)
+  std::function<void(winrt::Microsoft::ReactNative::JSValueArray)> onSubmit;
 
   REACT_GET_CONSTANTS(GetConstants)
   ReactNativeSpecs::SampleTurboModuleSpec_Constants GetConstants() noexcept;

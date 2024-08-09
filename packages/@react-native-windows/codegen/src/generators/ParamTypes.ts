@@ -10,6 +10,8 @@ import type {
   NamedShape,
   NativeModuleArrayTypeAnnotation,
   NativeModuleBaseTypeAnnotation,
+  NativeModuleEventEmitterBaseTypeAnnotation,
+  NativeModuleEventEmitterTypeAnnotation,
   NativeModuleEnumDeclaration,
   NativeModuleFunctionTypeAnnotation,
   NativeModuleParamTypeAnnotation,
@@ -141,6 +143,39 @@ function translateArray(
   }
 }
 
+// Hopefully eventually NativeModuleEventEmitterTypeAnnotation will align better with NativeModuleParamTypeAnnotation
+// and this method can be merged / replaced with translateArray
+function translateEventEmitterArray(
+  param: {
+    readonly type: 'ArrayTypeAnnotation';
+    readonly elementType: NativeModuleEventEmitterBaseTypeAnnotation | {type: string};
+  },
+  aliases: AliasMap,
+  baseAliasName: string,
+  target: ParamTarget,
+  options: CppCodegenOptions,
+): string {
+  switch (target) {
+    case 'spec':
+    case 'template':
+      return `std::vector<${translateEventEmitterParam(
+        param.elementType as NativeModuleEventEmitterBaseTypeAnnotation,
+        aliases,
+        `${baseAliasName}_element`,
+        'template',
+        options,
+      )}>`;
+    default:
+      return `std::vector<${translateEventEmitterParam(
+        param.elementType as NativeModuleEventEmitterBaseTypeAnnotation,
+        aliases,
+        `${baseAliasName}_element`,
+        'template',
+        options,
+      )}> const &`;
+  }
+}
+
 function translateParam(
   param: NativeModuleParamTypeAnnotation,
   aliases: AliasMap,
@@ -188,6 +223,39 @@ function translateParam(
     case 'EnumDeclaration':
     case 'UnionTypeAnnotation':
       return translateUnionReturnType(param, target, options);
+    default:
+      throw new Error(`Unhandled type in translateParam: ${paramType}`);
+  }
+}
+
+// Hopefully eventually NativeModuleEventEmitterTypeAnnotation will align better with NativeModuleParamTypeAnnotation
+// and this method can be merged / replaced with translateParam
+function translateEventEmitterParam(
+  param: NativeModuleEventEmitterTypeAnnotation,
+  aliases: AliasMap,
+  baseAliasName: string,
+  target: ParamTarget,
+  options: CppCodegenOptions,
+): string {
+  // avoid: Property 'type' does not exist on type 'never'
+  const paramType = param.type;
+  switch (param.type) {
+    case 'StringTypeAnnotation':
+      return options.cppStringType;
+    case 'NumberTypeAnnotation':
+    case 'FloatTypeAnnotation':
+    case 'DoubleTypeAnnotation':
+      return 'double';
+    case 'Int32TypeAnnotation':
+      return 'int';
+    case 'BooleanTypeAnnotation':
+      return 'bool';
+    case 'ArrayTypeAnnotation':
+      return translateEventEmitterArray(param, aliases, baseAliasName, target, options);
+    case 'TypeAliasTypeAnnotation':
+      return decorateType(getAliasCppName(param.name), target);
+    case 'VoidTypeAnnotation':
+      return 'void';
     default:
       throw new Error(`Unhandled type in translateParam: ${paramType}`);
   }
@@ -278,6 +346,22 @@ export function translateSpecArgs(
     );
     return `${translatedParam}`;
   });
+}
+
+export function translateEventEmitterArgs(
+  params: NativeModuleEventEmitterTypeAnnotation,
+  aliases: AliasMap,
+  baseAliasName: string,
+  options: CppCodegenOptions,
+) {
+    const translatedParam = translateEventEmitterParam(
+      params,
+      aliases,
+      baseAliasName,
+      'spec',
+      options,
+    );
+    return `${translatedParam}`;
 }
 
 export function translateArgs(

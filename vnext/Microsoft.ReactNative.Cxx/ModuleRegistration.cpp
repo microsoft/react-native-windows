@@ -17,7 +17,7 @@ ModuleRegistration::ModuleRegistration(wchar_t const *moduleName) noexcept : m_m
 
 void AddAttributedModules(IReactPackageBuilder const &packageBuilder, bool useTurboModules) noexcept {
   for (auto const *reg = ModuleRegistration::Head(); reg != nullptr; reg = reg->Next()) {
-    if (useTurboModules)
+    if (useTurboModules || reg->ShouldRegisterAsTurboModule())
       packageBuilder.AddTurboModule(reg->ModuleName(), reg->MakeModuleProvider());
     else
       packageBuilder.AddModule(reg->ModuleName(), reg->MakeModuleProvider());
@@ -30,7 +30,7 @@ bool TryAddAttributedModule(
     bool useTurboModule) noexcept {
   for (auto const *reg = ModuleRegistration::Head(); reg != nullptr; reg = reg->Next()) {
     if (moduleName == reg->ModuleName()) {
-      if (useTurboModule) {
+      if (useTurboModule || reg->ShouldRegisterAsTurboModule()) {
         packageBuilder.AddTurboModule(moduleName, reg->MakeModuleProvider());
       } else {
         packageBuilder.AddModule(moduleName, reg->MakeModuleProvider());
