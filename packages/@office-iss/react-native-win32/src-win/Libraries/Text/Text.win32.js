@@ -52,6 +52,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
         'aria-description': ariaDescription, // Win32
         'aria-disabled': ariaDisabled,
         'aria-expanded': ariaExpanded,
+        'aria-label': ariaLabel,
         'aria-level': ariaLevel, // Win32
         'aria-multiselectable': ariaMultiselectable, // Win32
         'aria-posinset': ariaPosinset, // Win32
@@ -364,7 +365,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
       return (
         <TextAncestor.Provider value={true}>{nativeText}</TextAncestor.Provider>
       );
-    },
+    }
   );
 
 Text.displayName = 'Text';
