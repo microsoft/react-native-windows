@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Integrate 7/1",
-  "packageName": "react-native-platform-override",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

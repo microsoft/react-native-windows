@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 07 Aug 2024 05:15:04 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Aug 2024 05:16:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.852
+
+Thu, 08 Aug 2024 05:16:50 GMT
+
+### Changes
+
+- Integrate 7/1 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.229
+- Bump @react-native-windows/codegen to v0.0.0-canary.99
+- Bump @rnw-scripts/eslint-config to v1.2.26
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.30
+- Bump @rnw-scripts/just-task to v2.3.43
+- Bump react-native-platform-override to v1.9.45
 
 ## 0.0.0-canary.851
 

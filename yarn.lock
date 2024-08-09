@@ -8799,14 +8799,37 @@ metro-resolver@0.80.9:
   resolved "https://registry.yarnpkg.com/metro-resolver/-/metro-resolver-0.80.9.tgz#bae9120a0553e0cb59da6429e83a7e97465cc1a8"
   integrity sha512-wAPIjkN59BQN6gocVsAvvpZ1+LQkkqUaswlT++cJafE/e54GoVkMNCmrR4BsgQHr9DknZ5Um/nKueeN7kaEz9w==
 
-metro-runtime@0.80.9, metro-runtime@^0.80.3:
+metro-runtime@0.80.9:
   version "0.80.9"
   resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.80.9.tgz#665312bd4e4d38fea921b3153d6ab47846eb4f08"
   integrity sha512-8PTVIgrVcyU+X/rVCy/9yxNlvXsBCk5JwwkbAm/Dm+Abo6NBGtNjWF0M1Xo/NWCb4phamNWcD7cHdR91HhbJvg==
   dependencies:
     "@babel/runtime" "^7.0.0"
 
-metro-source-map@0.80.9, metro-source-map@^0.80.3:
+metro-runtime@^0.80.3:
+  version "0.80.10"
+  resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.80.10.tgz#3fbca798586fa3771018e1d2bd0ef7ac445805ba"
+  integrity sha512-Xh0N589ZmSIgJYAM+oYwlzTXEHfASZac9TYPCNbvjNTn0EHKqpoJ/+Im5G3MZT4oZzYv4YnvzRtjqS5k0tK94A==
+  dependencies:
+    "@babel/runtime" "^7.0.0"
+    flow-enums-runtime "^0.0.6"
+
+metro-source-map@0.80.10, metro-source-map@^0.80.3:
+  version "0.80.10"
+  resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.80.10.tgz#95bc0c1edccd3e0b53af4126deda7fbbe104ef15"
+  integrity sha512-EyZswqJW8Uukv/HcQr6K19vkMXW1nzHAZPWJSEyJFKIbgp708QfRZ6vnZGmrtFxeJEaFdNup4bGnu8/mIOYlyA==
+  dependencies:
+    "@babel/traverse" "^7.20.0"
+    "@babel/types" "^7.20.0"
+    flow-enums-runtime "^0.0.6"
+    invariant "^2.2.4"
+    metro-symbolicate "0.80.10"
+    nullthrows "^1.1.1"
+    ob1 "0.80.10"
+    source-map "^0.5.6"
+    vlq "^1.0.0"
+
+metro-source-map@0.80.9:
   version "0.80.9"
   resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.80.9.tgz#df8f673137548f37ab9f9dcfa771b354a452cfab"
   integrity sha512-RMn+XS4VTJIwMPOUSj61xlxgBvPeY4G6s5uIn6kt6HB6A/k9ekhr65UkkDD7WzHYs3a9o869qU8tvOZvqeQzgw==
@@ -8818,6 +8841,19 @@ metro-source-map@0.80.9, metro-source-map@^0.80.3:
     nullthrows "^1.1.1"
     ob1 "0.80.9"
     source-map "^0.5.6"
+    vlq "^1.0.0"
+
+metro-symbolicate@0.80.10:
+  version "0.80.10"
+  resolved "https://registry.yarnpkg.com/metro-symbolicate/-/metro-symbolicate-0.80.10.tgz#441121d97408c5a3da25c49c3ce8ae7b034eadf7"
+  integrity sha512-qAoVUoSxpfZ2DwZV7IdnQGXCSsf2cAUExUcZyuCqGlY5kaWBb0mx2BL/xbMFDJ4wBp3sVvSBPtK/rt4J7a0xBA==
+  dependencies:
+    flow-enums-runtime "^0.0.6"
+    invariant "^2.2.4"
+    metro-source-map "0.80.10"
+    nullthrows "^1.1.1"
+    source-map "^0.5.6"
+    through2 "^2.0.1"
     vlq "^1.0.0"
 
 metro-symbolicate@0.80.9:
@@ -9324,6 +9360,13 @@ oauth-sign@~0.9.0:
   version "0.9.0"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.9.0.tgz#47a7b016baa68b5fa0ecf3dee08a85c679ac6455"
   integrity sha512-fexhUFFPTGV8ybAtSIGbV6gOkSv8UtRbDBnAyLQw4QPKkgNlsH2ByPGtMUqdWkos6YCRmAqViwgZrJc/mRDzZQ==
+
+ob1@0.80.10:
+  version "0.80.10"
+  resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.80.10.tgz#30dc7e4619cf591d46d7e16db5d4aed3e2674172"
+  integrity sha512-dJHyB0S6JkMorUSfSGcYGkkg9kmq3qDUu3ygZUKIfkr47XOPuG35r2Sk6tbwtHXbdKIXmcMvM8DF2CwgdyaHfQ==
+  dependencies:
+    flow-enums-runtime "^0.0.6"
 
 ob1@0.80.9:
   version "0.80.9"

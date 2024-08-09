@@ -1,8 +1,19 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-This log was last generated on Wed, 24 Jul 2024 05:24:37 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Aug 2024 05:16:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.51
+
+Thu, 08 Aug 2024 05:16:50 GMT
+
+### Patches
+
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.84
+- Bump @react-native-windows/fs to v0.0.0-canary.55
+- Bump @rnw-scripts/eslint-config to v1.2.26
+- Bump @rnw-scripts/just-task to v2.3.43
 
 ## 1.4.50
 
