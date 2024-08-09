@@ -18,10 +18,7 @@ const uri =
   'http://localhost:5555/static/utf-8.txt';
 const expectedContent = "IDS_ERR_CHANGES_SAVED : Изменения сохранены\n";
 
-
 type State = {
-  uri: string,
-  expected: string,
   content: string,
 };
 
