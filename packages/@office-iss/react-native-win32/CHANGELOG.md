@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 10 Jul 2024 21:00:35 GMT and should not be manually modified.
+This log was last generated on Sat, 10 Aug 2024 13:22:29 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.5
+
+Sat, 10 Aug 2024 13:22:29 GMT
+
+### Patches
+
+- Update to react-native 0.74.5 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.4
 
