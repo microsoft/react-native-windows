@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "integrate 0.75.0-rc.7",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}

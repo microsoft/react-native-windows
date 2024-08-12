@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 05 Aug 2024 15:25:47 GMT and should not be manually modified.
+This log was last generated on Mon, 12 Aug 2024 15:18:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.0-preview.5
+
+Mon, 12 Aug 2024 15:18:28 GMT
+
+### Changes
+
+- integrate 0.75.0-rc.7 (email not defined)
 
 ## 0.75.0-preview.4
 

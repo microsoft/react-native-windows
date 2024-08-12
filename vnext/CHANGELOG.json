@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 12 Aug 2024 15:18:28 GMT",
+      "version": "0.75.0-preview.6",
+      "tag": "react-native-windows_v0.75.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "2a1e56fda3088095a75dcd7dbcd1718ef6c81905",
+            "comment": "[Fabric] Custom ShadowNode's are never released"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "36274bc5374a75cb75565749adb1d5295724dfc8",
+            "comment": "integrate 0.75.0-rc.7"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 05 Aug 2024 15:25:47 GMT",
       "version": "0.75.0-preview.5",
       "tag": "react-native-windows_v0.75.0-preview.5",
