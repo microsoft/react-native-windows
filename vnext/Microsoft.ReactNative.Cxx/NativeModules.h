@@ -166,7 +166,7 @@
   "\" to the attribute:\n"                                                        \
   "    REACT_SYNC_METHOD(method, L\"" methodName "\")\n...\n"
 
-#define REACT_SHOW_EVENT_SIGNATURES(eventName, signatures)                \
+#define REACT_SHOW_EVENT_SIGNATURES(eventName, signatures)                       \
   " (see details below in output).\n"                                            \
   "  It must be one of the following:\n" signatures                              \
   "  The C++ member name could be different. In that case add the L\"" eventName \
@@ -197,18 +197,17 @@
       methodCheckResults[index].IsSignatureMatching,                                                        \
       "Method '" methodName "' does not match signature" REACT_SHOW_SYNC_METHOD_SIGNATURES(methodName, signatures));
 
-#define REACT_SHOW_EVENTEMITTER_SPEC_ERRORS(index, methodName, signatures)                                        \
-  static_assert(                                                                                                  \
-      methodCheckResults[index].IsTurboModule,                                                                    \
-      "EventEmitter '" methodName                                                                                 \
-      "' requires that the module be a TurboModule.  Use REACT_TURBO_MODULE rather than REACT_MODULE");           \
-  static_assert(                                                                                                  \
-      methodCheckResults[index].IsMethodFound,                                                                    \
+#define REACT_SHOW_EVENTEMITTER_SPEC_ERRORS(index, methodName, signatures)                                 \
+  static_assert(                                                                                           \
+      methodCheckResults[index].IsTurboModule,                                                             \
+      "EventEmitter '" methodName                                                                          \
+      "' requires that the module be a TurboModule.  Use REACT_TURBO_MODULE rather than REACT_MODULE");    \
+  static_assert(                                                                                           \
+      methodCheckResults[index].IsMethodFound,                                                             \
       "EventEmitter '" methodName "' is not defined" REACT_SHOW_EVENT_SIGNATURES(methodName, signatures)); \
-  static_assert(                                                                                                  \
-      methodCheckResults[index].IsSignatureMatching,                                                              \
-      "EventEmitter '" methodName                                                                                 \
-      "' does not match signature" REACT_SHOW_EVENT_SIGNATURES(methodName, signatures));
+  static_assert(                                                                                           \
+      methodCheckResults[index].IsSignatureMatching,                                                       \
+      "EventEmitter '" methodName "' does not match signature" REACT_SHOW_EVENT_SIGNATURES(methodName, signatures));
 
 //
 // Code below helps to register React Native modules and verify method signatures
