@@ -1335,7 +1335,8 @@ void ComponentView::updateAccessibilityProps(
 }
 
 std::optional<std::string> ComponentView::getAccessiblityValue() noexcept {
-  return std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue.text;
+  return winrt::Microsoft::ReactNative::implementation::extractAccessibilityValue(
+      std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue);
 }
 
 void ComponentView::setAcccessiblityValue(std::string &&value) noexcept {

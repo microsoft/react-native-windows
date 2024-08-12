@@ -322,8 +322,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   }
   IUIAutomationValuePattern *valuePattern;
   hr = element->GetCurrentPatternAs(UIA_ValuePatternId, &valuePattern);
-  if (SUCCEEDED(hr) && valuePattern)
-  {
+  if (SUCCEEDED(hr) && valuePattern) {
     valuePattern->get_CurrentValue(&value);
     valuePatter->Release();
   }
