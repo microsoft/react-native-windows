@@ -11434,7 +11434,7 @@ exports[`snapshotAllPages Filter 7`] = `
           {
             "experimental_filter": [
               {
-                "hueRotate": "-90deg",
+                "hue-rotate": "-90deg",
               },
             ],
           },
@@ -11521,7 +11521,7 @@ exports[`snapshotAllPages Filter 7`] = `
           {
             "experimental_filter": [
               {
-                "hueRotate": "-90deg",
+                "hue-rotate": "-90deg",
               },
             ],
           },
@@ -63962,6 +63962,124 @@ exports[`snapshotAllPages Timers 1`] = `
       setTimeout
       (
       fn, 100
+      ) - 
+      0
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "#d3d3d3",
+          "borderColor": "#696969",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "margin": 5,
+          "padding": 10,
+        },
+        false,
+      ]
+    }
+  >
+    <Text>
+      Measure: 
+      setTimeout
+      (
+      fn, 200
+      ) - 
+      0
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "#d3d3d3",
+          "borderColor": "#696969",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "margin": 5,
+          "padding": 10,
+        },
+        false,
+      ]
+    }
+  >
+    <Text>
+      Measure: 
+      setTimeout
+      (
+      fn, 500
       ) - 
       0
     </Text>

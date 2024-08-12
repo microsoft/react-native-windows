@@ -90,7 +90,7 @@ export async function copyProjectTemplateAndReplace(
   const projectType = options.projectType;
   const language = options.language;
 
-  // React-native init only allows alphanumerics in project names, but other
+  // @react-native-community/cli init only allows alphanumerics in project names, but other
   // new project tools (like create-react-native-module) are less strict.
   if (projectType === 'lib') {
     newProjectName = pascalCase(newProjectName);
@@ -441,7 +441,7 @@ export async function copyProjectTemplateAndReplace(
 
   if (projectType === 'app') {
     console.log(chalk.white.bold('To run your app on UWP:'));
-    console.log(chalk.white('   npx react-native run-windows'));
+    console.log(chalk.white('   npx @react-native-community/cli run-windows'));
   }
 }
 
@@ -460,7 +460,7 @@ export async function installScriptsAndDependencies(options: {
   }
 
   await projectPackage.mergeProps({
-    scripts: {windows: 'react-native run-windows'},
+    scripts: {windows: 'npx @react-native-community/cli run-windows'},
   });
 
   const rnwPackage = await findPackage('react-native-windows');

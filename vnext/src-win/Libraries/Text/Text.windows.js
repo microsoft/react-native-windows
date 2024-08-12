@@ -12,6 +12,7 @@
 import type {PressEvent} from '../Types/CoreEventTypes';
 import type {TextProps} from './TextProps';
 
+import * as ReactNativeFeatureFlags from '../../src/private/featureflags/ReactNativeFeatureFlags';
 import * as PressabilityDebug from '../Pressability/PressabilityDebug';
 import usePressability from '../Pressability/usePressability';
 import flattenStyle from '../StyleSheet/flattenStyle';
@@ -19,6 +20,7 @@ import processColor from '../StyleSheet/processColor';
 import Platform from '../Utilities/Platform';
 import TextAncestor from './TextAncestor';
 import {NativeText, NativeVirtualText} from './TextNativeComponent';
+import TextOptimized from './TextOptimized';
 import * as React from 'react';
 import {useContext, useMemo, useState} from 'react';
 
@@ -30,7 +32,7 @@ import {type TextStyleProp, type ViewStyleProp} from '../StyleSheet/StyleSheet';
  *
  * @see https://reactnative.dev/docs/text
  */
-const Text: React.AbstractComponent<
+const TextLegacy: React.AbstractComponent<
   TextProps,
   React.ElementRef<typeof NativeText | typeof NativeVirtualText>,
 > = React.forwardRef((props: TextProps, forwardedRef) => {
@@ -411,7 +413,7 @@ const Text: React.AbstractComponent<
   // [Windows #5740]
 });
 
-Text.displayName = 'Text';
+TextLegacy.displayName = 'TextLegacy';
 
 /**
  * Returns false until the first time `newValue` is true, after which this will
@@ -440,5 +442,18 @@ const verticalAlignToTextAlignVerticalMap = {
   bottom: 'bottom',
   middle: 'center',
 };
+
+const Text: React.AbstractComponent<
+  TextProps,
+  React.ElementRef<typeof NativeText | typeof NativeVirtualText>,
+> = React.forwardRef((props: TextProps, forwardedRef) => {
+  if (ReactNativeFeatureFlags.shouldUseOptimizedText()) {
+    return <TextOptimized {...props} ref={forwardedRef} />;
+  } else {
+    return <TextLegacy {...props} ref={forwardedRef} />;
+  }
+});
+
+Text.displayName = 'Text';
 
 module.exports = Text;

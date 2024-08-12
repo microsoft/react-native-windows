@@ -2,6 +2,108 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 10 Aug 2024 05:14:50 GMT",
+      "version": "0.0.0-canary.853",
+      "tag": "react-native-windows_v0.0.0-canary.853",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "86903215f717f8d60a5a13be1f26d855df07fd57",
+            "comment": "Setup reactnativewin32 app"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 Aug 2024 05:16:50 GMT",
+      "version": "0.0.0-canary.852",
+      "tag": "react-native-windows_v0.0.0-canary.852",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c5dff02edd12aa4a9529b325c7630eb558d375f7",
+            "comment": "Integrate 7/1"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.229",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.99",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.26",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.30",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.43",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.45",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 07 Aug 2024 05:15:04 GMT",
+      "version": "0.0.0-canary.851",
+      "tag": "react-native-windows_v0.0.0-canary.851",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8d3c567efa4b7987cfec151b9f6843a82c5f36d7",
+            "comment": "[Fabric] Custom ShadowNode's are never released"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "495dbadbcbcedb4c12e1c9e282b616393d4e557a",
+            "comment": "Implement SampleTurboModule"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 06 Aug 2024 05:15:23 GMT",
+      "version": "0.0.0-canary.850",
+      "tag": "react-native-windows_v0.0.0-canary.850",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6e887b4ef750876e028311c71f62a6c5d821b2ef",
+            "comment": "Add Support for AccessibilityPosInSet"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 02 Aug 2024 05:15:48 GMT",
       "version": "0.0.0-canary.849",
       "tag": "react-native-windows_v0.0.0-canary.849",

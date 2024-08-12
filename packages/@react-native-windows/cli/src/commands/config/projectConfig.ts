@@ -16,7 +16,7 @@ import * as configUtils from './configUtils';
 
 /*
 
-react-native config will generate the following JSON for app projects that have a
+@react-native-community/cli config will generate the following JSON for app projects that have a
 windows implementation, as a target for auto-linking. This is done heuristically,
 so if the result isn't quite correct, app developers can provide a manual override
 file: react-native.config.js.
@@ -29,7 +29,7 @@ req  - Item is required. If an override file exists, it MUST provide it. If no o
 opt  - Item is optional. If an override file exists, it MAY provide it. If no override file exists, config may try to calculate it.
 
 {
-  folder: string,       // (auto) Absolute path to the app root folder, determined by react-native config, ex: 'c:\path\to\my-app'
+  folder: string,       // (auto) Absolute path to the app root folder, determined by @react-native-community/cli config, ex: 'c:\path\to\my-app'
   sourceDir: string,    // (req) Relative path to the Windows implementation under folder, ex: 'windows'
   solutionFile: string, // (req) Relative path to the app's VS solution file under sourceDir, ex: 'MyApp.sln'
   useWinUI3: boolean    // (opt) If true, use WinUI 3. If false, use Windows XAML and WinUI 2.x. If missing, the value from rnwRoot\PropertySheets\ExperimentalFeatures.props will be used.
