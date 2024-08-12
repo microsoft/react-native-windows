@@ -28,12 +28,12 @@
 // It can be any struct which can be instantiated using a default constructor.
 // Note that it must be a 'struct', not 'class' because macro does a forward declaration using the 'struct' keyword.
 //
-// REACT_EVENTs within a REACT_MODULE will trigger an event on a global event emitter, such as ECTDeviceEventEmitter.
+// REACT_EVENTs within a REACT_MODULE will trigger an event on a global event emitter, such as RCTDeviceEventEmitter.
 // To use the newer EventEmitters exposed directly on this module, use REACT_TURBO_MODULE instead.
 #define REACT_MODULE(/* moduleStruct, [opt] moduleName, [opt] eventEmitterName */...) \
   INTERNAL_REACT_MODULE(__VA_ARGS__)(__VA_ARGS__)
 
-// REACT_TURBO_MODULE(moduleStruct, [opt] moduleName, [opt] eventEmitterName)
+// REACT_TURBO_MODULE(moduleStruct, [opt] moduleName)
 // Arguments:
 // - moduleStruct (required) - the struct name the macro is attached to.
 // - moduleName (optional) - the module name visible to JavaScript. Default is the moduleStruct name.
@@ -166,7 +166,7 @@
   "\" to the attribute:\n"                                                        \
   "    REACT_SYNC_METHOD(method, L\"" methodName "\")\n...\n"
 
-#define REACT_SHOW_EVENTEMITTER_SIGNATURES(eventName, signatures)                \
+#define REACT_SHOW_EVENT_SIGNATURES(eventName, signatures)                \
   " (see details below in output).\n"                                            \
   "  It must be one of the following:\n" signatures                              \
   "  The C++ member name could be different. In that case add the L\"" eventName \
@@ -204,11 +204,11 @@
       "' requires that the module be a TurboModule.  Use REACT_TURBO_MODULE rather than REACT_MODULE");           \
   static_assert(                                                                                                  \
       methodCheckResults[index].IsMethodFound,                                                                    \
-      "EventEmitter '" methodName "' is not defined" REACT_SHOW_EVENTEMITTER_SIGNATURES(methodName, signatures)); \
+      "EventEmitter '" methodName "' is not defined" REACT_SHOW_EVENT_SIGNATURES(methodName, signatures)); \
   static_assert(                                                                                                  \
       methodCheckResults[index].IsSignatureMatching,                                                              \
       "EventEmitter '" methodName                                                                                 \
-      "' does not match signature" REACT_SHOW_EVENTEMITTER_SIGNATURES(methodName, signatures));
+      "' does not match signature" REACT_SHOW_EVENT_SIGNATURES(methodName, signatures));
 
 //
 // Code below helps to register React Native modules and verify method signatures
