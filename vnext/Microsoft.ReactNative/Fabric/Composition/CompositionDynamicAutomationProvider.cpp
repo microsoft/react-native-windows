@@ -442,11 +442,13 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRe
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
   auto accessibilityRole = props->accessibilityRole;
-  if (accessibilityRole.empty()){
+  if (accessibilityRole.empty()) {
     // Control is using default control type. Use default IsReadOnly value.
     *pRetVal = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
-                 ->getAcccessiblityIsReadOnly();
-  }else if (accessibilityRole == "textinput" || accessibilityRole == "searchbox" || accessibilityRole == "adjustable" || accessibilityRole == "spinbutton" || accesibilityRole = "combobox") {
+                   ->getAcccessiblityIsReadOnly();
+  } else if (
+      accessibilityRole == "textinput" || accessibilityRole == "searchbox" || accessibilityRole == "adjustable" ||
+          accessibilityRole == "spinbutton" || accesibilityRole = "combobox") {
     // Control is using customized control type which should not be IsReadOnly for value pattern.
     *pRetVal = false;
   } else {

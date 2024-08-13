@@ -331,9 +331,6 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   InsertStringValueIfNotEmpty(result, L"Name", name);
   InsertIntValueIfNotDefault(result, L"PositionInSet", positionInSet);
   InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
-
-  /// VALUE PATTERN DATA
-
   IValueProvider *valuePattern;
   hr = pTarget->GetCurrentPattern(UIA_ValuePatternId, reinterpret_cast<IUnknown **>(&valuePattern));
   if (SUCCEEDED(hr) && valuePattern) {
@@ -347,8 +344,6 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
     }
     valuePattern->Release();
   }
-  /// VALUE PATTERN DATA 
-
   IUIAutomationElement *pChild;
   IUIAutomationElement *pSibling;
   pWalker->GetFirstChildElement(pTarget, &pChild);
