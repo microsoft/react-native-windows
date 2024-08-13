@@ -31,6 +31,7 @@ public:
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
+  virtual bool fetchImagesInViewPreallocation(jsi::Runtime &rt) = 0;
   virtual bool fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
   virtual bool fixMissedFabricStateUpdatesOnAndroid(jsi::Runtime &rt) = 0;
@@ -160,6 +161,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableUIConsistency, jsInvoker_, instance_);
+    }
+    bool fetchImagesInViewPreallocation(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::fetchImagesInViewPreallocation) == 1,
+          "Expected fetchImagesInViewPreallocation(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::fetchImagesInViewPreallocation, jsInvoker_, instance_);
     }
     bool fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt) override {
       static_assert(

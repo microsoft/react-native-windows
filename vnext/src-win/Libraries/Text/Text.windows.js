@@ -9,6 +9,7 @@
  * @format
  */
 
+import type {____TextStyle_Internal as TextStyleInternal} from '../StyleSheet/StyleSheetTypes';
 import type {PressEvent} from '../Types/CoreEventTypes';
 import type {TextProps} from './TextProps';
 

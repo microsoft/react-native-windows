@@ -66,6 +66,11 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableU
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fetchImagesInViewPreallocation(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->fetchImagesInViewPreallocation(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->fixIncorrectScrollViewStateUpdateOnAndroid(
     rt
@@ -160,6 +165,7 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["enableMicrotasks"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableMicrotasks};
   methodMap_["enableSynchronousStateUpdates"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableSynchronousStateUpdates};
   methodMap_["enableUIConsistency"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableUIConsistency};
+  methodMap_["fetchImagesInViewPreallocation"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fetchImagesInViewPreallocation};
   methodMap_["fixIncorrectScrollViewStateUpdateOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixIncorrectScrollViewStateUpdateOnAndroid};
   methodMap_["fixMappingOfEventPrioritiesBetweenFabricAndReact"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMappingOfEventPrioritiesBetweenFabricAndReact};
   methodMap_["fixMissedFabricStateUpdatesOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMissedFabricStateUpdatesOnAndroid};

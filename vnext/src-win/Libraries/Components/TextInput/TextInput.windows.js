@@ -1670,18 +1670,10 @@ function InternalTextInput(props: Props): React.Node {
     };
   }
 
-  if (focusable && !accessible) {
-    console.warn(
-      'All focusable views should report proper accessibility information. TextInputs marked as focusable should always be accessible.',
-    );
-  }
-
-  const style = flattenStyle<TextStyleProp>(props.style);
-
+  let style = flattenStyle<TextStyleProp>(props.style);
   if (typeof style?.fontWeight === 'number') {
-    // $FlowFixMe[prop-missing]
-    // $FlowFixMe[cannot-write]
-    style.fontWeight = style?.fontWeight.toString();
+    // $FlowFixMe
+    style = [style, {fontWeight: style.fontWeight.toString()}];
   }
 
   if (Platform.OS === 'ios') {
