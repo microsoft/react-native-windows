@@ -109,7 +109,7 @@ let evaluateMSBuildPropsCallback:
   | undefined;
 
 /**
- * The function run when calling `react-native run-windows`.
+ * The function run when calling `npx @react-native-community/cli run-windows`.
  * @param args Unprocessed args passed from react-native CLI.
  * @param config Config passed from react-native CLI.
  * @param options Options passed from react-native CLI.
@@ -306,7 +306,7 @@ async function runWindowsInternal(
     runWindowsPhase = 'Build';
     if (!slnFile) {
       newError(
-        'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
+        'Visual Studio Solution file not found. Maybe run "npx @react-native-community/cli init-windows" first?',
       );
       throw new CodedError('NoSolution', 'Cannot find solution file');
     }
@@ -352,7 +352,7 @@ async function runWindowsInternal(
     runWindowsPhase = 'Deploy';
     if (!slnFile) {
       newError(
-        'Visual Studio Solution file not found. Maybe run "npx react-native-windows-init" first?',
+        'Visual Studio Solution file not found. Maybe run "npx @react-native-community/cli init-windows" first?',
       );
       throw new CodedError('NoSolution', 'Cannot find solution file');
     }

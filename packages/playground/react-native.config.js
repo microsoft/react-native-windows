@@ -1,5 +1,5 @@
 // Change the below to true for autolink to target playground-win32 instead of playground.
-// Then run `npx react-native autolink-windows` to actually run the autolink.
+// Then run `npx @react-native-community/cli autolink-windows` to actually run the autolink.
 const targetWin32 = true;
 
 module.exports = {

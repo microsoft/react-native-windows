@@ -43,7 +43,7 @@ struct ShadowNode : ShadowNodeT<ShadowNode> {
   void StateData(winrt::IInspectable tag) noexcept;
 
  protected:
-  facebook::react::ShadowNode::Shared m_shadowNode;
+  facebook::react::ShadowNode::Weak m_shadowNode;
   winrt::IInspectable m_tag;
 };
 

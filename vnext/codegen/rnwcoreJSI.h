@@ -31,6 +31,7 @@ public:
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
+  virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
   virtual bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(jsi::Runtime &rt) = 0;
   virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledDebug(jsi::Runtime &rt) = 0;
@@ -157,6 +158,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableUIConsistency, jsInvoker_, instance_);
+    }
+    bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::fixMappingOfEventPrioritiesBetweenFabricAndReact) == 1,
+          "Expected fixMappingOfEventPrioritiesBetweenFabricAndReact(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::fixMappingOfEventPrioritiesBetweenFabricAndReact, jsInvoker_, instance_);
     }
     bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(jsi::Runtime &rt) override {
       static_assert(
@@ -6409,7 +6418,63 @@ struct Bridging<NativeSampleTurboModuleEnumInt> {
     }
   }
 };
-  class JSI_EXPORT NativeSampleTurboModuleCxxSpecJSI : public TurboModule {
+  
+#pragma mark - NativeSampleTurboModuleObjectStruct
+
+template <typename P0, typename P1, typename P2>
+struct NativeSampleTurboModuleObjectStruct {
+  P0 a;
+  P1 b;
+  P2 c;
+  bool operator==(const NativeSampleTurboModuleObjectStruct &other) const {
+    return a == other.a && b == other.b && c == other.c;
+  }
+};
+
+template <typename T>
+struct NativeSampleTurboModuleObjectStructBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.a)>(rt, value.getProperty(rt, "a"), jsInvoker),
+      bridging::fromJs<decltype(types.b)>(rt, value.getProperty(rt, "b"), jsInvoker),
+      bridging::fromJs<decltype(types.c)>(rt, value.getProperty(rt, "c"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double aToJs(jsi::Runtime &rt, decltype(types.a) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::String bToJs(jsi::Runtime &rt, decltype(types.b) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static std::optional<jsi::String> cToJs(jsi::Runtime &rt, decltype(types.c) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "a", bridging::toJs(rt, value.a, jsInvoker));
+    result.setProperty(rt, "b", bridging::toJs(rt, value.b, jsInvoker));
+    if (value.c) {
+      result.setProperty(rt, "c", bridging::toJs(rt, value.c.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+class JSI_EXPORT NativeSampleTurboModuleCxxSpecJSI : public TurboModule {
 protected:
   NativeSampleTurboModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
@@ -6450,13 +6515,40 @@ protected:
     : TurboModule(std::string{NativeSampleTurboModuleCxxSpec::kModuleName}, jsInvoker),
       delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
+  void emitOnPress() {
+    static_cast<AsyncEventEmitter<>&>(*delegate_.eventEmitterMap_["onPress"]).emit();
+  }
+
+  template <typename OnClickType> void emitOnClick(OnClickType value) {
+    static_assert(bridging::supportsFromJs<OnClickType, jsi::String>, "value cannnot be converted to jsi::String");
+    static_cast<AsyncEventEmitter<jsi::Value>&>(*delegate_.eventEmitterMap_["onClick"]).emit([jsInvoker = jsInvoker_, eventValue = value](jsi::Runtime& rt) -> jsi::Value {
+      return bridging::toJs(rt, eventValue, jsInvoker);
+    });
+  }
+
+  template <typename OnChangeType> void emitOnChange(OnChangeType value) {
+    static_assert(bridging::supportsFromJs<OnChangeType, jsi::Object>, "value cannnot be converted to jsi::Object");
+    static_cast<AsyncEventEmitter<jsi::Value>&>(*delegate_.eventEmitterMap_["onChange"]).emit([jsInvoker = jsInvoker_, eventValue = value](jsi::Runtime& rt) -> jsi::Value {
+      return bridging::toJs(rt, eventValue, jsInvoker);
+    });
+  }
+
+  template <typename OnSubmitType> void emitOnSubmit(std::vector<OnSubmitType> value) {
+    static_assert(bridging::supportsFromJs<std::vector<OnSubmitType>, jsi::Array>, "value cannnot be converted to jsi::Array");
+    static_cast<AsyncEventEmitter<jsi::Value>&>(*delegate_.eventEmitterMap_["onSubmit"]).emit([jsInvoker = jsInvoker_, eventValue = value](jsi::Runtime& rt) -> jsi::Value {
+      return bridging::toJs(rt, eventValue, jsInvoker);
+    });
+  }
 
 private:
   class Delegate : public NativeSampleTurboModuleCxxSpecJSI {
   public:
     Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
       NativeSampleTurboModuleCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
+      eventEmitterMap_["onPress"] = std::make_shared<AsyncEventEmitter<>>();
+      eventEmitterMap_["onClick"] = std::make_shared<AsyncEventEmitter<jsi::Value>>();
+      eventEmitterMap_["onChange"] = std::make_shared<AsyncEventEmitter<jsi::Value>>();
+      eventEmitterMap_["onSubmit"] = std::make_shared<AsyncEventEmitter<jsi::Value>>();
     }
 
     jsi::Object getConstants(jsi::Runtime &rt) override {

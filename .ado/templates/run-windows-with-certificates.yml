@@ -29,11 +29,14 @@ parameters:
   - name: moreMSBuildProps
     type: string
     default: ''
-
+  - name: certificatePassword
+    type: string
+    default: 'pwd'
+  
 steps:
   - ${{ if eq(parameters.buildConfiguration, 'Debug') }}:
     - script: >
-        yarn react-native run-windows
+        npx @react-native-community/cli run-windows
         --arch ${{ parameters.buildPlatform }}
         --no-launch
         --logging
@@ -45,7 +48,7 @@ steps:
 
   - ${{ if and(eq(parameters.buildConfiguration, 'Release'), endsWith(parameters.buildEnvironment, 'PullRequest')) }}:
     - script: >
-        yarn react-native run-windows
+        npx @react-native-community/cli run-windows
         --arch ${{ parameters.buildPlatform }}
         --release
         --no-launch
@@ -58,15 +61,17 @@ steps:
 
   - ${{ if and(eq(parameters.buildConfiguration, 'Release'), eq(parameters.buildEnvironment, 'Continuous')) }}:
     - template: ../templates/write-certificate.yml
+      parameters:
+        certificatePassword: ${{ parameters.certificatePassword }}
 
     - script: >
-        yarn react-native run-windows
+        npx @react-native-community/cli run-windows
         --arch ${{ parameters.buildPlatform }}
         --release
         --no-launch
         --logging
         --buildLogDirectory ${{ parameters.buildLogDirectory }}
-        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }},PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx${{ parameters.moreMSBuildProps }}
+        --msbuildprops RestoreLockedMode=${{ parameters.restoreLockedMode }},RestoreForceEvaluate=${{ parameters.restoreForceEvaluate }},PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx,PackageCertificatePassword=${{ parameters.certificatePassword }}${{ parameters.moreMSBuildProps }}
         ${{ parameters.deployOption }}
       displayName: run-windows (Release) - CI
       workingDirectory: ${{ parameters.workingDirectory }}
