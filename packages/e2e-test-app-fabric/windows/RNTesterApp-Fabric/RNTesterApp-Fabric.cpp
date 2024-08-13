@@ -302,8 +302,8 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   BOOL isKeyboardFocusable;
   BSTR localizedControlType;
   BSTR name;
-  int positionInSet;
-  int sizeOfSet;
+  int positionInSet = 0;
+  int sizeOfSet = 0;
   BSTR value;
 
   pTarget->get_CurrentAutomationId(&automationId);
@@ -320,12 +320,6 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
     pTarget4->get_CurrentSizeOfSet(&sizeOfSet);
     pTarget4->Release();
   }
-  IUIAutomationValuePattern *valuePattern;
-  hr = element->GetCurrentPatternAs(UIA_ValuePatternId, &valuePattern);
-  if (SUCCEEDED(hr) && valuePattern) {
-    valuePattern->get_CurrentValue(&value);
-    valuePatter->Release();
-  }
   result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
   result.Insert(L"ControlType", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(controlType));
   InsertStringValueIfNotEmpty(result, L"HelpText", helpText);
@@ -336,7 +330,20 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   InsertStringValueIfNotEmpty(result, L"Name", name);
   InsertIntValueIfNotDefault(result, L"PositionInSet", positionInSet);
   InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
-  InsertStringValueIfNotEmpty(result, L"ValuePattern.Value", value);
+
+  /// VALUE PATTERN DATA
+
+  IValueProvider *valuePattern;
+  hr = pTarget->GetCurrentPattern(UIA_ValuePatternId, reinterpret_cast<IUnknown **>(&valuePattern));
+  if (SUCCEEDED(hr) && valuePattern) {
+    hr = valuePattern->get_Value(&value);
+    if (SUCCEEDED(hr)) {
+      result.Insert(L"ValuePattern.Value", winrt::Windows::Data::Json::JsonValue::CreateStringValue(value));
+      // InsertStringValueIfNotEmpty(result, L"ValuePattern.Value", value);
+    }
+    valuePattern->Release();
+  }
+  /// VALUE PATTERN DATA 
 
   IUIAutomationElement *pChild;
   IUIAutomationElement *pSibling;

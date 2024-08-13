@@ -471,7 +471,7 @@ class AccessibilityExample extends React.Component<
         accessibilityLabel="A View with accessibility values"
         accessibilityHint="Accessibility Hint"
         accessibilityRole="button"
-        accessibilityValue={{text: "A view with accessibility values"}}
+        accessibilityValue={{now: this.state.tap}}
         accessibilityActions={[
           {name: 'cut', label: 'cut'},
           {name: 'copy', label: 'copy'},
