@@ -12,7 +12,7 @@
         <id>https://microsoft.github.io/react-native-windows/blog/2022/07/29/coreapp.html</id>
         <link href="https://microsoft.github.io/react-native-windows/blog/2022/07/29/coreapp.html"/>
         <updated>2022-07-29T06:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p> <meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/steamline-coreapp-windows/"> </p> <p>React Native builds on top of the native platform for every OS it runs on; on Windows, this translates to producing a Universal Windows Platform (UWP) app.</p> <p>We heard from some of our customers that build times for these types of apps can be pretty ...</p>]]></summary>
+        <summary type="html"><![CDATA[<p><head> <meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/steamline-coreapp-windows/"> </head></p> <p>React Native builds on top of the native platform for every OS it runs on; on Windows, this translates to producing a Universal Windows Platform (UWP) app.</p> <p>We heard from some of our customers that build times for these types of apps can be pretty ...</p>]]></summary>
         <author>
             <name>Alexander Sklar</name>
             <uri>https://twitter.com/alexsklar</uri>
@@ -166,7 +166,7 @@ Thanks to CodePush, you are able to deliver a new bundle (which might contain up
         <id>https://microsoft.github.io/react-native-windows/blog/2020/06/01/build2020recap.html</id>
         <link href="https://microsoft.github.io/react-native-windows/blog/2020/06/01/build2020recap.html"/>
         <updated>2020-06-01T06:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p> <meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/2020-06-01-build2020recap/"> </p> <p>At the end of May 2020, Microsoft wrapped up the annual <a href="https://mybuild.microsoft.com/">Build developer conference</a>. React Native was a big theme at Build 2020 this year, with over 6 sessions dedicated to React Native and many tie-ins from other talks.</p> <p>The biggest announcement fr...</p>]]></summary>
+        <summary type="html"><![CDATA[<p><head> <meta http-equiv="Refresh" content="0; URL=https://devblogs.microsoft.com/react-native/2020-06-01-build2020recap/"> </head></p> <p>At the end of May 2020, Microsoft wrapped up the annual <a href="https://mybuild.microsoft.com/">Build developer conference</a>. React Native was a big theme at Build 2020 this year, with over 6 sessions dedicated to React Native and many tie-ins from other talks.</p> <p>The biggest announcement fr...</p>]]></summary>
         <author>
             <name>Steven Moyes</name>
             <uri>http://twitter.com/moyessa</uri>
