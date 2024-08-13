@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 08 Aug 2024 05:16:50 GMT and should not be manually modified.
+This log was last generated on Sat, 10 Aug 2024 05:14:50 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.853
+
+Sat, 10 Aug 2024 05:14:50 GMT
+
+### Changes
+
+- Setup reactnativewin32 app (10109130+sharath2727@users.noreply.github.com)
 
 ## 0.0.0-canary.852
 

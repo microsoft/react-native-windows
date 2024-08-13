@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 10 Aug 2024 05:14:50 GMT",
+      "version": "0.0.0-canary.853",
+      "tag": "react-native-windows_v0.0.0-canary.853",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "86903215f717f8d60a5a13be1f26d855df07fd57",
+            "comment": "Setup reactnativewin32 app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Aug 2024 05:16:50 GMT",
       "version": "0.0.0-canary.852",
       "tag": "react-native-windows_v0.0.0-canary.852",

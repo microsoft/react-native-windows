@@ -1,13 +1,20 @@
+parameters:
+  - name: certificatePassword
+    type: string
+    default: 'pwd'
+
 steps:
   - powershell: |
-      $certStoreRoot = "cert:\CurrentUser\My"
-      $rootFolder = $(Build.SourcesDirectory)
-      [System.Security.SecureString] $password = ConvertTo-SecureString -String "pwd" -Force -AsPlainText
+      $certStoreRoot="cert:\CurrentUser\My"
+      $rootFolder="$(Build.SourcesDirectory)"
+
+      # the following two lines must match
+      [System.Security.SecureString] $password = ConvertTo-SecureString -String "${{ parameters.certificatePassword }}" -Force -AsPlainText
 
       $cert = New-SelfSignedCertificate -KeyExportPolicy Exportable -CertStoreLocation $certStoreRoot -DnsName "Development Root CA" -NotAfter (Get-Date).AddYears(5) -Type CodeSigningCert -KeyUsage DigitalSignature
       [String] $pfxPath = [System.IO.Path]::GetFullPath( (Join-Path -Path $rootFolder -ChildPath EncodedKey.pfx) )
       [String] $certPath = "$certStoreRoot\$($cert.Thumbprint)"
-      write-host "$certPath"
+
       Export-PfxCertificate -Cert $certPath -FilePath $pfxPath -Password $password
 
     displayName: Create self-signed certificate
