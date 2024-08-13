@@ -27348,8 +27348,11 @@ exports[`snapshotAllPages Pressable 2`] = `
           "backgroundColor": "white",
         },
         {
+          "alignItems": "center",
           "borderRadius": 8,
+          "justifyContent": "center",
           "padding": 6,
+          "width": "100%",
         },
       ]
     }
@@ -27369,6 +27372,77 @@ exports[`snapshotAllPages Pressable 2`] = `
 `;
 
 exports[`snapshotAllPages Pressable 3`] = `
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "center",
+    }
+  }
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": "white",
+        },
+        {
+          "alignItems": "center",
+          "borderRadius": 8,
+          "justifyContent": "center",
+          "padding": 6,
+          "width": "100%",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        {
+          "fontSize": 16,
+        }
+      }
+    >
+      Press me and move your finger
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Pressable 4`] = `
 <View
   testID="pressable_feedback_events"
 >
@@ -27456,7 +27530,7 @@ exports[`snapshotAllPages Pressable 3`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 4`] = `
+exports[`snapshotAllPages Pressable 5`] = `
 <View
   style={
     {
@@ -27519,7 +27593,7 @@ exports[`snapshotAllPages Pressable 4`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 5`] = `
+exports[`snapshotAllPages Pressable 6`] = `
 <View>
   <View
     style={
@@ -27823,7 +27897,7 @@ exports[`snapshotAllPages Pressable 5`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 6`] = `
+exports[`snapshotAllPages Pressable 7`] = `
 [
   <Text
     onPress={[Function]}
@@ -27855,7 +27929,7 @@ exports[`snapshotAllPages Pressable 6`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 7`] = `
+exports[`snapshotAllPages Pressable 8`] = `
 <View
   testID="pressable_delay_events"
 >
@@ -27941,7 +28015,7 @@ exports[`snapshotAllPages Pressable 7`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 8`] = `
+exports[`snapshotAllPages Pressable 9`] = `
 <View
   testID="pressable_3dtouch_event"
 >
@@ -28000,7 +28074,7 @@ exports[`snapshotAllPages Pressable 8`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 9`] = `
+exports[`snapshotAllPages Pressable 10`] = `
 <View
   testID="pressable_hit_slop"
 >
@@ -28094,7 +28168,7 @@ exports[`snapshotAllPages Pressable 9`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 10`] = `
+exports[`snapshotAllPages Pressable 11`] = `
 <View
   style={
     [
@@ -28151,7 +28225,7 @@ exports[`snapshotAllPages Pressable 10`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 11`] = `
+exports[`snapshotAllPages Pressable 12`] = `
 [
   <View
     accessibilityState={
@@ -28274,7 +28348,7 @@ exports[`snapshotAllPages Pressable 11`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 12`] = `
+exports[`snapshotAllPages Pressable 13`] = `
 <View
   style={
     [
@@ -28344,7 +28418,7 @@ exports[`snapshotAllPages Pressable 12`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 13`] = `
+exports[`snapshotAllPages Pressable 14`] = `
 [
   <View
     style={
@@ -28454,7 +28528,7 @@ exports[`snapshotAllPages Pressable 13`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 14`] = `
+exports[`snapshotAllPages Pressable 15`] = `
 [
   <View
     style={
@@ -28546,7 +28620,7 @@ exports[`snapshotAllPages Pressable 14`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 15`] = `
+exports[`snapshotAllPages Pressable 16`] = `
 [
   <View
     onKeyDown={[Function]}
@@ -28632,7 +28706,7 @@ exports[`snapshotAllPages Pressable 15`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 16`] = `
+exports[`snapshotAllPages Pressable 17`] = `
 <View>
   <View
     accessibilityState={
@@ -28689,7 +28763,7 @@ exports[`snapshotAllPages Pressable 16`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 17`] = `
+exports[`snapshotAllPages Pressable 18`] = `
 <View
   accessible={true}
   testID="opacity_pressable"
@@ -29170,7 +29244,7 @@ exports[`snapshotAllPages Pressable 17`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 18`] = `
+exports[`snapshotAllPages Pressable 19`] = `
 <View
   accessible={true}
   testID="accessible_pressable"
@@ -29354,7 +29428,7 @@ exports[`snapshotAllPages Pressable 18`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 19`] = `
+exports[`snapshotAllPages Pressable 20`] = `
 <View>
   <View
     accessibilityState={
@@ -29406,7 +29480,7 @@ exports[`snapshotAllPages Pressable 19`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 20`] = `
+exports[`snapshotAllPages Pressable 21`] = `
 <View>
   <View
     accessibilityHint="Button"
@@ -29492,7 +29566,7 @@ exports[`snapshotAllPages Pressable 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 21`] = `
+exports[`snapshotAllPages Pressable 22`] = `
 <View
   accessible={true}
   testID="backface_pressable"
@@ -29741,7 +29815,7 @@ exports[`snapshotAllPages Pressable 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 22`] = `
+exports[`snapshotAllPages Pressable 23`] = `
 <View
   accessible={true}
   testID="pressable_set"
