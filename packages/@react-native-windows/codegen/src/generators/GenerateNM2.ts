@@ -118,11 +118,11 @@ export function createNM2Generator({
         });
         let tuples = `
   static constexpr auto methods = std::tuple{
-${methods[0]}
+${methods.traversedPropertyTuples}${methods.traversedEventEmitterTuples ? '\n' : ''}${methods.traversedEventEmitterTuples}
   };`;
         let checks = `
     constexpr auto methodCheckResults = CheckMethods<TModule, ::_MODULE_NAME_::Spec>();`;
-        let errors = methods[1];
+        let errors = methods.traversedProperties + (methods.traversedEventEmitters ? '\n' : '') + methods.traversedEventEmitters;
 
         // prepare constants
         const constants = generateValidateConstants(nativeModule, aliases);

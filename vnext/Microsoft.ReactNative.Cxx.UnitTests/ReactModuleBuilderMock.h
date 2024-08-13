@@ -73,6 +73,7 @@ struct ReactModuleBuilderMock {
   void AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept;
   void AddMethod(hstring const &name, MethodReturnType returnType, MethodDelegate const &method) noexcept;
   void AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept;
+  void AddEventEmitter(hstring const &name, EventEmitterInitializerDelegate const &emitter) noexcept;
 
  private:
   MethodDelegate GetMethod0(std::wstring const &methodName) const noexcept;
@@ -218,6 +219,7 @@ struct ReactModuleBuilderImpl : implements<ReactModuleBuilderImpl, IReactModuleB
   void AddConstantProvider(ConstantProviderDelegate const &constantProvider) noexcept;
   void AddMethod(hstring const &name, MethodReturnType returnType, MethodDelegate const &method) noexcept;
   void AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept;
+  void AddEventEmitter(hstring const &name, EventEmitterInitializerDelegate const &emitter) noexcept;
 
  private:
   ReactModuleBuilderMock &m_mock;
@@ -350,6 +352,12 @@ inline void ReactModuleBuilderImpl::AddMethod(
 
 inline void ReactModuleBuilderImpl::AddSyncMethod(hstring const &name, SyncMethodDelegate const &method) noexcept {
   m_mock.AddSyncMethod(name, method);
+}
+
+inline void ReactModuleBuilderImpl::AddEventEmitter(
+    hstring const &name,
+    EventEmitterInitializerDelegate const &emitter) noexcept {
+  m_mock.AddEventEmitter(name, emitter);
 }
 
 } // namespace winrt::Microsoft::ReactNative
