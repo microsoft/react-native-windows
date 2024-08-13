@@ -496,6 +496,7 @@ exports[`Touchable Tests Touchables can register feedback events 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "Name": "touchable feedback events",
+    "ValuePattern.Value": "Press Me",
     "__Children": [
       {
         "AutomationId": "",

@@ -27402,7 +27402,7 @@ exports[`snapshotAllPages Pressable 3`] = `
           "max": undefined,
           "min": undefined,
           "now": undefined,
-          "text": undefined,
+          "text": "Press Me",
         }
       }
       accessible={true}
@@ -29424,7 +29424,7 @@ exports[`snapshotAllPages Pressable 20`] = `
         "max": undefined,
         "min": undefined,
         "now": undefined,
-        "text": undefined,
+        "text": "Child Pressable",
       }
     }
     accessible={true}
@@ -65064,7 +65064,7 @@ exports[`snapshotAllPages Touchable* and onPress 8`] = `
           "max": undefined,
           "min": undefined,
           "now": undefined,
-          "text": undefined,
+          "text": "Press Me",
         }
       }
       accessible={true}
@@ -68270,7 +68270,11 @@ exports[`snapshotAllPages View 21`] = `
   accessibilityPosInSet={1}
   accessibilityRole="button"
   accessibilitySetSize={1}
-  accessibilityValue={0}
+  accessibilityValue={
+    {
+      "now": 0,
+    }
+  }
   accessible={true}
   focusable={true}
   onAccessibilityAction={[Function]}

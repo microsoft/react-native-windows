@@ -305,6 +305,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   int positionInSet = 0;
   int sizeOfSet = 0;
   BSTR value;
+  BOOL isReadOnly;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -338,8 +339,11 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   if (SUCCEEDED(hr) && valuePattern) {
     hr = valuePattern->get_Value(&value);
     if (SUCCEEDED(hr)) {
-      result.Insert(L"ValuePattern.Value", winrt::Windows::Data::Json::JsonValue::CreateStringValue(value));
-      // InsertStringValueIfNotEmpty(result, L"ValuePattern.Value", value);
+      InsertStringValueIfNotEmpty(result, L"ValuePattern.Value", value);
+    }
+    hr = valuePattern->get_IsReadOnly(&isReadOnly);
+    if (SUCCEEDED(hr)) {
+      InsertBooleanValueIfNotDefault(result, L"ValuePattern.IsReadOnly", isReadOnly, true);
     }
     valuePattern->Release();
   }

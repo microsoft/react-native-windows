@@ -503,6 +503,9 @@ class AccessibilityExample extends React.Component<
         <View importantForAccessibility="no-hide-descendants">
           <Text>This element should be hidden from accessibility.</Text>
         </View>
+        <View accessible accessibilityValue={{now: this.state.tap}}>
+          <Text>This sub-view should not have an accessibility value. It's control type does not support the value pattern.</Text>
+        </View>
       </View>
     );
   }
