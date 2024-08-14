@@ -448,7 +448,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRe
                    ->getAcccessiblityIsReadOnly();
   } else if (
       accessibilityRole == "textinput" || accessibilityRole == "searchbox" || accessibilityRole == "adjustable" ||
-          accessibilityRole == "spinbutton" || accesibilityRole = "combobox") {
+          accessibilityRole == "spinbutton" || accesibilityRole == "combobox") {
     // Control is using customized control type which should not be IsReadOnly for value pattern.
     *pRetVal = false;
   } else {
