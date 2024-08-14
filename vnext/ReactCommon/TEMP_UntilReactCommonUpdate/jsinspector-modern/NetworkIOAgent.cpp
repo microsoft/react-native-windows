@@ -24,7 +24,7 @@ static constexpr std::array kTextMIMETypePrefixes{
     "application/javascript" // Not in Chromium but emitted by Metro
 };
 
-// namespace Stream { [Windows]
+// namespace { [Windows]
 
 struct InitStreamResult {
   int httpStatusCode;
@@ -117,8 +117,9 @@ class Stream : public NetworkRequestListener,
     // Find content-type through case-insensitive search of headers.
     for (const auto& [name, value] : headers) {
       std::string lowerName = name;
-      std::transform(
-          lowerName.begin(), lowerName.end(), lowerName.begin(), ::tolower);
+      std::transform(lowerName.begin(), lowerName.end(), lowerName.begin(), [](unsigned char c) { // [Windows]
+        return static_cast<char>(::tolower(c)); // [Windows]
+      });
       if (lowerName == "content-type") {
         isText_ = isTextMimeType(value);
         break;
@@ -247,7 +248,7 @@ class Stream : public NetworkRequestListener,
   std::vector<std::tuple<long /* bytesToRead */, IOReadCallback>>
       pendingReadRequests_;
 };
-// } // namespace [Windows]
+// } // namespace
 
 bool NetworkIOAgent::handleRequest(
     const cdp::PreparsedRequest& req,
@@ -293,7 +294,7 @@ void NetworkIOAgent::handleLoadNetworkResource(
   // consistent with Chrome.
   StreamID streamId = std::to_string(nextStreamId_++);
 
-  auto stream = facebook::react::jsinspector_modern::Stream::create(
+  auto stream = Stream::create(
       executor_,
       [streamId,
        requestId,
@@ -370,7 +371,7 @@ void NetworkIOAgent::handleIoRead(const cdp::PreparsedRequest& req) {
         "Invalid params: handle is missing or not a string."));
     return;
   }
-  std::optional<unsigned long> size = std::nullopt;
+  std::optional<int64_t> size = std::nullopt; // [Windows]
   if ((req.params.count("size") != 0u) && req.params.at("size").isInt()) {
     size = req.params.at("size").asInt();
   }
@@ -385,7 +386,7 @@ void NetworkIOAgent::handleIoRead(const cdp::PreparsedRequest& req) {
     return;
   } else {
     it->second->read(
-        size ? *size : DEFAULT_BYTES_PER_READ,
+        size ? static_cast<unsigned long>(*size) : DEFAULT_BYTES_PER_READ, // [Windows]
         [requestId,
          frontendChannel = frontendChannel_,
          streamId,

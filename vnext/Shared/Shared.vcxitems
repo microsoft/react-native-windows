@@ -649,6 +649,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\runtime\JSRuntimeFactory.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\runtime\ReactInstance.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\runtime\TimerManager.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryReporter.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jserrorhandler\JsErrorHandler.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\componentregistry\native\NativeComponentRegistryBinding.cpp" />
   </ItemGroup>

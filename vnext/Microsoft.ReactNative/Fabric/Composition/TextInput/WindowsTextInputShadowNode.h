@@ -57,7 +57,7 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
   Size measureContent(const LayoutContext &layoutContext, const LayoutConstraints &layoutConstraints) const override;
   void layout(LayoutContext layoutContext) override;
 
-  Float baseline(const LayoutContext& layoutContext, Size size) const override;
+  Float baseline(const LayoutContext &layoutContext, Size size) const override;
 
  private:
   ContextContainer *m_contextContainer{};
