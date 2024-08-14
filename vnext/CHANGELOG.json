@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 14 Aug 2024 01:32:49 GMT",
+      "version": "0.75.0-preview.7",
+      "tag": "react-native-windows_v0.75.0-preview.7",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b10278638c62d886e936fe4f97aaaef88c24a69c",
+            "comment": "backport Enforce StatusBarManger module aligns with Spec #13556"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 Aug 2024 15:18:28 GMT",
       "version": "0.75.0-preview.6",
       "tag": "react-native-windows_v0.75.0-preview.6",

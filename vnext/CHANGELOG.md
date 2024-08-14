@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 12 Aug 2024 15:18:28 GMT and should not be manually modified.
+This log was last generated on Wed, 14 Aug 2024 01:32:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.0-preview.7
+
+Wed, 14 Aug 2024 01:32:49 GMT
+
+### Changes
+
+- backport Enforce StatusBarManger module aligns with Spec #13556 (tatianakapos@microsoft.com)
 
 ## 0.75.0-preview.6
 
