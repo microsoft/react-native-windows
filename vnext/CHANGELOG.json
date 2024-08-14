@@ -2,6 +2,54 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 14 Aug 2024 05:14:30 GMT",
+      "version": "0.0.0-canary.854",
+      "tag": "react-native-windows_v0.0.0-canary.854",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1b4f560990a6c57adf2b31676da0bbbe2ceee97b",
+            "comment": "Add support for turbomodule eventemitters, and codegen"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b0285c891e5942923673948c91bc5ef42112aa42",
+            "comment": "Enforce StatusBarManger module aligns with Spec"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.230",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.100",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 10 Aug 2024 05:14:50 GMT",
+      "version": "0.0.0-canary.853",
+      "tag": "react-native-windows_v0.0.0-canary.853",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "86903215f717f8d60a5a13be1f26d855df07fd57",
+            "comment": "Setup reactnativewin32 app"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Aug 2024 05:16:50 GMT",
       "version": "0.0.0-canary.852",
       "tag": "react-native-windows_v0.0.0-canary.852",
