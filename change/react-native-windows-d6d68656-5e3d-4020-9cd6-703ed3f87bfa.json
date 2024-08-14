@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "backport Enforce StatusBarManger module aligns with Spec #13556",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
