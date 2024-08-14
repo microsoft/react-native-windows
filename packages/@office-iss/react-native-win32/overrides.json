@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.76.0-nightly-20240715-2eb7bcb8d",
+  "baseVersion": "0.76.0-nightly-20240719-6d56cea28",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "dfbf3a8de0a358dd791edb4feabb7cfe64f9bc5c"
+      "baseHash": "83d25eb077cc8d865039ec211f3fedeac9e57d39"
     },
     {
       "type": "derived",
@@ -116,7 +116,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "0f76221c23657cb95d647d52a23a843b38377b5f"
+      "baseHash": "2cc1ee09c4a71e79656db18576b4983cfca153ed"
     },
     {
       "type": "patch",
@@ -344,7 +344,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "d7b9540d5e637cb86b29d119838a4024bfc2b7d6"
+      "baseHash": "86178b8f2e04b5df9e4c8dc8ca412c22231e6673"
     },
     {
       "type": "copy",

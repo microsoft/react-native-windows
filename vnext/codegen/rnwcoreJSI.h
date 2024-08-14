@@ -24,10 +24,12 @@ public:
   virtual bool allowCollapsableChildren(jsi::Runtime &rt) = 0;
   virtual bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
+  virtual bool changeOrderOfMountingInstructionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) = 0;
   virtual bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) = 0;
   virtual bool enableCleanTextInputYogaNode(jsi::Runtime &rt) = 0;
   virtual bool enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt) = 0;
+  virtual bool enableLongTaskAPI(jsi::Runtime &rt) = 0;
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
   virtual bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
@@ -108,6 +110,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::batchRenderingUpdatesInEventLoop, jsInvoker_, instance_);
     }
+    bool changeOrderOfMountingInstructionsOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::changeOrderOfMountingInstructionsOnAndroid) == 1,
+          "Expected changeOrderOfMountingInstructionsOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::changeOrderOfMountingInstructionsOnAndroid, jsInvoker_, instance_);
+    }
     bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::destroyFabricSurfacesInReactInstanceManager) == 1,
@@ -139,6 +149,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableGranularShadowTreeStateReconciliation, jsInvoker_, instance_);
+    }
+    bool enableLongTaskAPI(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableLongTaskAPI) == 1,
+          "Expected enableLongTaskAPI(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableLongTaskAPI, jsInvoker_, instance_);
     }
     bool enableMicrotasks(jsi::Runtime &rt) override {
       static_assert(

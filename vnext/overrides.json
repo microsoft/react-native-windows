@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.76.0-nightly-20240715-2eb7bcb8d",
+  "baseVersion": "0.76.0-nightly-20240719-6d56cea28",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "dfbf3a8de0a358dd791edb4feabb7cfe64f9bc5c"
+      "baseHash": "83d25eb077cc8d865039ec211f3fedeac9e57d39"
     },
     {
       "type": "derived",
@@ -81,7 +81,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/JSExecutor.cpp",
       "baseFile": "packages/react-native/ReactCommon/cxxreact/JSExecutor.cpp",
-      "baseHash": "0308ba988c534f4a94fb3f1a2006a5fb8a8b2bc5",
+      "baseHash": "e6757a64ba0f8471da7dc92fb496bf9dadfc9c61",
       "issue": 13172
     },
     {
@@ -104,6 +104,20 @@
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
       "baseHash": "4cab1f3169cfe38e0bf7933406dd960fda2e5d28",
       "issue": 12210
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/NetworkIOAgent.cpp",
+      "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/NetworkIOAgent.cpp",
+      "baseHash": "1dda0b2197f5d06ab5bafdd27926203f8e9a861b",
+      "issue": 13516
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/NetworkIOAgent.h",
+      "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/NetworkIOAgent.h",
+      "baseHash": "81f46cd134e7844bcd4d3858b434f95131129883",
+      "issue": 13516
     },
     {
       "type": "patch",
@@ -193,7 +207,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "1de0df4cf6ce5bac089710a03eaabb374776fd60",
+      "baseHash": "70efabe9c4874a3928ffe82f75f46cc0f24bbbe6",
       "issue": 13172
     },
     {
@@ -360,7 +374,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollViewNativeComponent.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollViewNativeComponent.js",
-      "baseHash": "fc24774459ca08e1097b2130535e00d4bc6e0d17"
+      "baseHash": "983c6b4ea4606aa2a690fc07a7960adbb86276ce"
     },
     {
       "type": "derived",
@@ -372,7 +386,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "0f76221c23657cb95d647d52a23a843b38377b5f"
+      "baseHash": "2cc1ee09c4a71e79656db18576b4983cfca153ed"
     },
     {
       "type": "patch",
@@ -513,7 +527,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "d7b9540d5e637cb86b29d119838a4024bfc2b7d6"
+      "baseHash": "86178b8f2e04b5df9e4c8dc8ca412c22231e6673"
     },
     {
       "type": "derived",

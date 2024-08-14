@@ -12,6 +12,8 @@
 
 import type {LayoutEvent} from 'react-native/Libraries/Types/CoreEventTypes';
 
+import * as ReactNativeFeatureFlags from 'react-native/src/private/featureflags/ReactNativeFeatureFlags';
+
 const ImageCapInsetsExample = require('./ImageCapInsetsExample');
 const React = require('react');
 const {
@@ -629,6 +631,27 @@ class OnPartialLoadExample extends React.Component<
           testID="image-onpartialload"
           accessible
         />
+      </View>
+    );
+  }
+}
+
+type VectorDrawableExampleState = {||};
+
+type VectorDrawableExampleProps = $ReadOnly<{||}>;
+
+class VectorDrawableExample extends React.Component<
+  VectorDrawableExampleProps,
+  VectorDrawableExampleState,
+> {
+  state: VectorDrawableExampleState = {};
+
+  render(): React.Node {
+    const isEnabled = ReactNativeFeatureFlags.loadVectorDrawablesOnImages();
+    return (
+      <View style={styles.flex}>
+        <Text>Enabled: {isEnabled ? 'true' : 'false'}</Text>
+        <Image source={{uri: 'ic_android'}} style={{height: 64, width: 64}} />
       </View>
     );
   }
@@ -1629,5 +1652,14 @@ exports.examples = [
       return <OnPartialLoadExample />;
     },
     platform: 'ios',
+  },
+  {
+    title: 'Vector Drawable',
+    description:
+      'Demonstrating an example of loading a vector drawable asset by name',
+    render: function (): React.Node {
+      return <VectorDrawableExample />;
+    },
+    platform: 'android',
   },
 ];
