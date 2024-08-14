@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.76.0-nightly-20240710-9a1ae97c2",
+  "baseVersion": "0.76.0-nightly-20240715-2eb7bcb8d",
   "overrides": [
     {
       "type": "copy",
@@ -390,14 +390,14 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "ab862a63c50985ac4437c31f716fa1ac68ca3159",
+      "baseHash": "b8ca740cedbfaf0955423162ee33a95b26e3870c",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "62cd021ab9b568495fa6703606c075319a5eec8d",
+      "baseHash": "ceeaaf1ec3c137591f8915cb6f0ded60cfe66996",
       "issue": 4054
     },
     {

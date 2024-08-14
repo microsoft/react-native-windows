@@ -29,6 +29,10 @@ AttributedString WindowsTextInputShadowNode::getAttributedString() const {
   auto childTextAttributes = TextAttributes::defaultTextAttributes();
 
   childTextAttributes.apply(getConcreteProps().textAttributes);
+  // Don't propagate the background color of the TextInput onto the attributed
+  // string. Android tries to render shadow of the background alongside the
+  // shadow of the text which results in weird artifacts.
+  childTextAttributes.backgroundColor = HostPlatformColor::UndefinedColor;
 
   auto attributedString = AttributedString{};
   auto attachments = BaseTextShadowNode::Attachments{};
@@ -187,6 +191,26 @@ Size WindowsTextInputShadowNode::measureContent(
           textLayoutContext,
           layoutConstraints)
       .size;
+}
+
+Float WindowsTextInputShadowNode::baseline(
+    const LayoutContext& layoutContext,
+    Size size) const {
+  AttributedString attributedString = getMostRecentAttributedString();
+
+  if (attributedString.isEmpty()) {
+    attributedString = getPlaceholderAttributedString();
+  }
+
+  // Yoga expects a baseline relative to the Node's border-box edge instead of
+  // the content, so we need to adjust by the padding and border widths, which
+  // have already been set by the time of baseline alignment
+  auto top = YGNodeLayoutGetBorder(&yogaNode_, YGEdgeTop) +
+      YGNodeLayoutGetPadding(&yogaNode_, YGEdgeTop);
+
+  return textLayoutManager_->baseline(
+             attributedString, getConcreteProps().paragraphAttributes, size) +
+      top;
 }
 
 void WindowsTextInputShadowNode::layout(LayoutContext layoutContext) {

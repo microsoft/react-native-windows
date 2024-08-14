@@ -25,26 +25,28 @@ public:
   virtual bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
   virtual bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) = 0;
-  virtual bool enableBackgroundExecutor(jsi::Runtime &rt) = 0;
+  virtual bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) = 0;
   virtual bool enableCleanTextInputYogaNode(jsi::Runtime &rt) = 0;
   virtual bool enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt) = 0;
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
+  virtual bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
   virtual bool fetchImagesInViewPreallocation(jsi::Runtime &rt) = 0;
   virtual bool fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
   virtual bool fixMissedFabricStateUpdatesOnAndroid(jsi::Runtime &rt) = 0;
-  virtual bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(jsi::Runtime &rt) = 0;
   virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledDebug(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledRelease(jsi::Runtime &rt) = 0;
+  virtual bool initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime &rt) = 0;
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
-  virtual bool preventDoubleTextMeasure(jsi::Runtime &rt) = 0;
+  virtual bool loadVectorDrawablesOnImages(jsi::Runtime &rt) = 0;
   virtual bool setAndroidLayoutDirection(jsi::Runtime &rt) = 0;
   virtual bool useImmediateExecutorInAndroidBridgeless(jsi::Runtime &rt) = 0;
   virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
+  virtual bool useNewReactImageViewBackgroundDrawing(jsi::Runtime &rt) = 0;
   virtual bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) = 0;
   virtual bool useRuntimeShadowNodeReferenceUpdateOnLayout(jsi::Runtime &rt) = 0;
   virtual bool useStateAlignmentMechanism(jsi::Runtime &rt) = 0;
@@ -114,13 +116,13 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::destroyFabricSurfacesInReactInstanceManager, jsInvoker_, instance_);
     }
-    bool enableBackgroundExecutor(jsi::Runtime &rt) override {
+    bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::enableBackgroundExecutor) == 1,
-          "Expected enableBackgroundExecutor(...) to have 1 parameters");
+          bridging::getParameterCount(&T::enableAlignItemsBaselineOnFabricIOS) == 1,
+          "Expected enableAlignItemsBaselineOnFabricIOS(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::enableBackgroundExecutor, jsInvoker_, instance_);
+          rt, &T::enableAlignItemsBaselineOnFabricIOS, jsInvoker_, instance_);
     }
     bool enableCleanTextInputYogaNode(jsi::Runtime &rt) override {
       static_assert(
@@ -145,6 +147,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableMicrotasks, jsInvoker_, instance_);
+    }
+    bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enablePropsUpdateReconciliationAndroid) == 1,
+          "Expected enablePropsUpdateReconciliationAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enablePropsUpdateReconciliationAndroid, jsInvoker_, instance_);
     }
     bool enableSynchronousStateUpdates(jsi::Runtime &rt) override {
       static_assert(
@@ -194,14 +204,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::fixMissedFabricStateUpdatesOnAndroid, jsInvoker_, instance_);
     }
-    bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak) == 1,
-          "Expected fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak, jsInvoker_, instance_);
-    }
     bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::forceBatchingMountItemsOnAndroid) == 1,
@@ -226,6 +228,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::fuseboxEnabledRelease, jsInvoker_, instance_);
     }
+    bool initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::initEagerTurboModulesOnNativeModulesQueueAndroid) == 1,
+          "Expected initEagerTurboModulesOnNativeModulesQueueAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::initEagerTurboModulesOnNativeModulesQueueAndroid, jsInvoker_, instance_);
+    }
     bool lazyAnimationCallbacks(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::lazyAnimationCallbacks) == 1,
@@ -234,13 +244,13 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::lazyAnimationCallbacks, jsInvoker_, instance_);
     }
-    bool preventDoubleTextMeasure(jsi::Runtime &rt) override {
+    bool loadVectorDrawablesOnImages(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::preventDoubleTextMeasure) == 1,
-          "Expected preventDoubleTextMeasure(...) to have 1 parameters");
+          bridging::getParameterCount(&T::loadVectorDrawablesOnImages) == 1,
+          "Expected loadVectorDrawablesOnImages(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::preventDoubleTextMeasure, jsInvoker_, instance_);
+          rt, &T::loadVectorDrawablesOnImages, jsInvoker_, instance_);
     }
     bool setAndroidLayoutDirection(jsi::Runtime &rt) override {
       static_assert(
@@ -273,6 +283,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useNativeViewConfigsInBridgelessMode, jsInvoker_, instance_);
+    }
+    bool useNewReactImageViewBackgroundDrawing(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useNewReactImageViewBackgroundDrawing) == 1,
+          "Expected useNewReactImageViewBackgroundDrawing(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useNewReactImageViewBackgroundDrawing, jsInvoker_, instance_);
     }
     bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) override {
       static_assert(
