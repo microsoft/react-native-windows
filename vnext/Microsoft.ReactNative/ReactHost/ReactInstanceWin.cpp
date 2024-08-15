@@ -553,6 +553,15 @@ Mso::DispatchQueueSettings CreateDispatchQueueSettings(
   return queueSettings;
 }
 
+std::unique_ptr<facebook::jsi::PreparedScriptStore> CreatePreparedScriptStore() noexcept {
+  std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
+  wchar_t tempPath[MAX_PATH];
+  if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
+    preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+  }
+  return preparedScriptStore;
+}
+
 #ifdef USE_FABRIC
 void ReactInstanceWin::InitializeBridgeless() noexcept {
   InitUIQueue();
@@ -691,15 +700,6 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
   });
 }
 #endif
-
-std::unique_ptr<facebook::jsi::PreparedScriptStore> CreatePreparedScriptStore() noexcept {
-  std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
-  wchar_t tempPath[MAX_PATH];
-  if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
-    preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
-  }
-  return preparedScriptStore;
-}
 
 void ReactInstanceWin::FireInstanceCreatedCallback() noexcept {
   // The InstanceCreated event can be used to augment the JS environment for all JS code.  So it needs to be
