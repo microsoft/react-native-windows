@@ -201,7 +201,7 @@ steps:
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
   # Temporarily disabling due to spurios failures in CI, see https://github.com/microsoft/react-native-windows/issues/13578
-  - ${{ if (and(false, eq(parameters.runWack, true)) }}:
+  - ${{ if and(false, eq(parameters.runWack, true)) }}:
     - template: ../templates/run-wack.yml
       parameters:
         packageName: ReactNative.InitTest
