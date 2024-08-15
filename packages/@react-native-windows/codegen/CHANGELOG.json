@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Wed, 14 Aug 2024 05:14:30 GMT",
+      "version": "0.0.0-canary.100",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.100",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "1b4f560990a6c57adf2b31676da0bbbe2ceee97b",
+            "comment": "Add support for turbomodule eventemitters, and codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Aug 2024 05:16:48 GMT",
       "version": "0.0.0-canary.99",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.99",
