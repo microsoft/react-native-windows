@@ -206,7 +206,7 @@ class Stream : public NetworkRequestListener,
     auto bytesRead = data_.gcount();
     std::string output;
 
-    buffer.resize(bytesRead);
+    buffer.resize(static_cast<size_t>(bytesRead));
     if (isText_) {
       auto originalSize = buffer.size();
       // Maybe resize to drop the last 1-3 bytes so that buffer is valid.
