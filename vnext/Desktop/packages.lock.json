@@ -10,9 +10,9 @@
       },
       "Microsoft.JavaScript.Hermes": {
         "type": "Direct",
-        "requested": "[0.1.18, )",
-        "resolved": "0.1.18",
-        "contentHash": "5K8rRihGwIs2XNOTP2Jsw3T6cegxCBQXcpPS4optONU/AmFElGAfnA6XBQJ4UqlCFCl9Nf9zQrgvCUPBWYHiag=="
+        "requested": "[0.1.27, )",
+        "resolved": "0.1.27",
+        "contentHash": "o4YBxD3yVaDfB7ccauyIIcUL3Q+k2C7dv3F9ODkMzUIL/lZBe44BiB2qdw/jchBD3ByUaC/kK3Lm/SW59V1A/w=="
       },
       "Microsoft.SourceLink.GitHub": {
         "type": "Direct",
@@ -32,15 +32,9 @@
       },
       "ReactNative.V8Jsi.Windows": {
         "type": "Direct",
-        "requested": "[0.71.8, )",
-        "resolved": "0.71.8",
-        "contentHash": "ksHjshj05AMAQ/v7Wet5Dwcwn9Up2BTOIrTv1yEW7+D23FQX0yILW5Zw0bmlWtV8MEtdY611z+06U3Xvu2ygSA=="
-      },
-      "ReactWindows.OpenSSL.StdCall.Static": {
-        "type": "Direct",
-        "requested": "[1.0.2-p.5, )",
-        "resolved": "1.0.2-p.5",
-        "contentHash": "1tAtFgtbVpI/JgRIxy9j30R/W6B1zi9dYt0o5QwAk5V3X2mo9xrrHcbXlbczKQIftYoNHe0Mfq9ExIu9A1Cs0g=="
+        "requested": "[0.71.18, )",
+        "resolved": "0.71.18",
+        "contentHash": "TLXVpgqTeyEKjPqhKR/UQFdU/t7x59uRwixMStEzCSsCoO6AMX8w9WGZWxdNg+xRLup9788MH19o9XrekZAmdA=="
       },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
