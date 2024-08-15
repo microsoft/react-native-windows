@@ -693,11 +693,6 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
 #endif
 
 std::unique_ptr<facebook::jsi::PreparedScriptStore> CreatePreparedScriptStore() noexcept {
-
-  // if (Microsoft::ReactNative::HasPackageIdentity()) {
-  // auto local = winrt::Windows::Storage::ApplicationData::Current().TemporaryFolder().Path();
-  // return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
-
   std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
   wchar_t tempPath[MAX_PATH];
   if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
