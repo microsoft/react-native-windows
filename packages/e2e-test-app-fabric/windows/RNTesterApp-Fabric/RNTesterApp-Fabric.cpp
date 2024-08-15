@@ -356,7 +356,8 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeHelper(winrt::Windows::Data::J
   IUIAutomationElement *pRootElement;
   IUIAutomationTreeWalker *pWalker;
 
-  winrt::check_hresult(CoCreateInstance(__uuidof(CUIAutomation8), nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pAutomation)));
+  winrt::check_hresult(
+      CoCreateInstance(__uuidof(CUIAutomation8), nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pAutomation)));
   pAutomation->get_ContentViewWalker(&pWalker);
   pAutomation->ElementFromHandle(global_hwnd, &pRootElement);
 
