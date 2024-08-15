@@ -121,6 +121,13 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/Utf8.h",
+      "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/Utf8.h",
+      "baseHash": "d961f37983356cbc64622db6194cd4b2a9a4e05c",
+      "issue": 13516
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/Base.h",
       "baseFile": "packages/react-native/ReactCommon/react/bridging/Base.h",
       "baseHash": "e85dc01810f13f0891dfeb0bad43efda7402a145",

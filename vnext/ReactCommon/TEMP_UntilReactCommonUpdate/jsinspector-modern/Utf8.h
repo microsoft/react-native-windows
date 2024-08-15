@@ -27,7 +27,7 @@ inline void truncateToValidUTF8(std::vector<char>& buffer) {
   // is 1) (otherwise the last char is ASCII and we don't need to do
   // anything).
   if (length > 0 && (buffer[length - 1] & 0b10000000) == 0b10000000) {
-    int continuationBytes = 0;
+    size_t continuationBytes = 0; // [Windows]
     // Find the first byte of the UTF-8 code point (topmost bits 11) and count
     // the number of continuation bytes following it.
     while ((buffer[length - continuationBytes - 1] & 0b11000000) !=
