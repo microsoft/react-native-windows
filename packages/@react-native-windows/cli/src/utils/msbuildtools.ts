@@ -200,7 +200,10 @@ export default class MSBuildTools {
       'Microsoft.Component.MSBuild',
       getVCToolsByArch(buildArch),
     ];
-    const minVersion = process.env.VisualStudioVersion || '17.0';
+    const minVersion =
+      process.env.MinimumVisualStudioVersion ||
+      process.env.VisualStudioVersion ||
+      '17.11.0';
     const vsInstallation = findLatestVsInstall({
       requires,
       minVersion,
