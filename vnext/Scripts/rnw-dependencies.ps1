@@ -83,7 +83,7 @@ $vsAll = ($vsComponents + $vsWorkloads);
 # The minimum VS version to check for
 # Note: For install to work, whatever min version you specify here must be met by the current package available on choco.
 # I.E. Do NOT specify a Preview version here because choco doesn't have VS Preview packages.
-$vsver = "17.3";
+$vsver = "17.11.0";
 
 # The exact .NET SDK version to check for
 $dotnetver = "6.0";
