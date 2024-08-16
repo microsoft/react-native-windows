@@ -67,7 +67,7 @@ export default function LogBoxInspectorHeader(props: Props): React.Node {
         <LogBoxInspectorHeaderButton
           disabled={props.total <= 1}
           level={props.level}
-          image={new String(require('./LogBoxImages/chevron-left.png'))}
+          image={new String(require('./LogBoxImages/chevron-left.png'))} // [Windows #13586]
           onPress={() => props.onSelectIndex(prevIndex)}
         />
         <View style={styles.title}>
@@ -76,7 +76,7 @@ export default function LogBoxInspectorHeader(props: Props): React.Node {
         <LogBoxInspectorHeaderButton
           disabled={props.total <= 1}
           level={props.level}
-          image={new String(require('./LogBoxImages/chevron-right.png'))}
+          image={new String(require('./LogBoxImages/chevron-right.png'))} // [Windows #13586]
           onPress={() => props.onSelectIndex(nextIndex)}
         />
       </View>
