@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 14 Aug 2024 05:14:30 GMT and should not be manually modified.
+This log was last generated on Fri, 16 Aug 2024 05:13:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.855
+
+Fri, 16 Aug 2024 05:13:08 GMT
+
+### Changes
+
+- Bump minimum VS version to 17.11.0 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.231
 
 ## 0.0.0-canary.854
 

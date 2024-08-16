@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Bump minimum VS version to 17.11.0",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
