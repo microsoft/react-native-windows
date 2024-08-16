@@ -40,6 +40,9 @@
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxNotificationDismissButton.js
 <PROJECT_ROOT>/Libraries/Utilities/Platform.flow.js
 
+; Windows #13586
+<PROJECT_ROOT>/packages/rn-tester/IntegrationTests/ImageSnapshotTest.js
+
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
 

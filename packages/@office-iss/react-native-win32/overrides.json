@@ -335,24 +335,17 @@
     },
     {
       "type": "derived",
+      "file": "src-win/Libraries/LogBox/UI/LogBoxNotificationDismissButton.win32.js",
+      "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxNotificationDismissButton.js",
+      "baseHash": "41ba23eadc755ea55a5856bd90332be6a0adc2d1",
+      "issue": 13586
+    },
+    {
+      "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxStyle.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxStyle.js",
       "baseHash": "63954df6e04ba9bc97148e04668729f4a8ca9847",
       "issue": 5886
-    },
-    {
-      "type": "derived",
-      "file": "src-win/Libraries/LogBox/UI/LogBoxNotificationDismissButton.win32.js",
-      "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxNotificationDismissButton.js",
-      "baseHash": "6d56cea2836c7f663afacb47c3fe082bc5b5bf10",
-      "issue": 13586
-    },
-    {
-      "type": "derived",
-      "file": "src-win/Libraries/NewAppScreen/components/Header.win32.js",
-      "baseFile": "packages/react-native/Libraries/NewAppScreen/components/Header.js",
-      "baseHash": "6d56cea2836c7f663afacb47c3fe082bc5b5bf10",
-      "issue": 13586
     },
     {
       "type": "derived",
@@ -366,6 +359,13 @@
       "baseFile": "packages/react-native/Libraries/Network/RCTNetworking.ios.js",
       "baseHash": "39fc8e1003b0f6345ec4fea060f455d06939a321",
       "issue": 4318
+    },
+    {
+      "type": "derived",
+      "file": "src-win/Libraries/NewAppScreen/components/Header.win32.js",
+      "baseFile": "packages/react-native/Libraries/NewAppScreen/components/Header.js",
+      "baseHash": "2860e81fae781a1976d9a403c96d4d5b6b9b9d66",
+      "issue": 13586
     },
     {
       "type": "platform",

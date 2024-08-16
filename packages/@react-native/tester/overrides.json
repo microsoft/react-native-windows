@@ -390,7 +390,6 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseVersion": "0.76.0-nightly-20240715-2eb7bcb8d",
       "baseHash": "b8ca740cedbfaf0955423162ee33a95b26e3870c",
       "issue": 4054
     },
@@ -398,7 +397,6 @@
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseVersion": "0.76.0-nightly-20240715-2eb7bcb8d",
       "baseHash": "ceeaaf1ec3c137591f8915cb6f0ded60cfe66996",
       "issue": 4054
     },

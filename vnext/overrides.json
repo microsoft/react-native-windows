@@ -534,7 +534,7 @@
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxNotificationDismissButton.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxNotificationDismissButton.js",
-      "baseHash": "6d56cea2836c7f663afacb47c3fe082bc5b5bf10"
+      "baseHash": "41ba23eadc755ea55a5856bd90332be6a0adc2d1"
     },
     {
       "type": "derived",
@@ -562,15 +562,15 @@
     },
     {
       "type": "patch",
-      "file": "src-win/Libraries/NewAppScreen/components/ReloadInstructions.windows.js",
-      "baseFile": "packages/react-native/Libraries/NewAppScreen/components/ReloadInstructions.js",
-      "baseHash": "6421466afe8bcbc37920be7f9bc7bf6cc29bf40e"
+      "file": "src-win/Libraries/NewAppScreen/components/Header.windows.js",
+      "baseFile": "packages/react-native/Libraries/NewAppScreen/components/Header.js",
+      "baseHash": "2860e81fae781a1976d9a403c96d4d5b6b9b9d66"
     },
     {
       "type": "patch",
-      "file": "src-win/Libraries/NewAppScreen/components/Header.windows.js",
-      "baseFile": "packages/react-native/Libraries/NewAppScreen/components/Header.js",
-      "baseHash": "6d56cea2836c7f663afacb47c3fe082bc5b5bf10"
+      "file": "src-win/Libraries/NewAppScreen/components/ReloadInstructions.windows.js",
+      "baseFile": "packages/react-native/Libraries/NewAppScreen/components/ReloadInstructions.js",
+      "baseHash": "6421466afe8bcbc37920be7f9bc7bf6cc29bf40e"
     },
     {
       "type": "platform",
