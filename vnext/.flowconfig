@@ -41,7 +41,10 @@
 <PROJECT_ROOT>/Libraries/Utilities/Platform.flow.js
 
 ; Windows #13586
-<PROJECT_ROOT>/packages/rn-tester/IntegrationTests/ImageSnapshotTest.js
+<PROJECT_ROOT>/IntegrationTests/ImageSnapshotTest.js
+<PROJECT_ROOT>/IntegrationTests/IntegrationTestsApp.js
+<PROJECT_ROOT>/ReactCopies/IntegrationTests/ImageSnapshotTest.js
+<PROJECT_ROOT>/ReactCopies/IntegrationTests/IntegrationTestsApp.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*

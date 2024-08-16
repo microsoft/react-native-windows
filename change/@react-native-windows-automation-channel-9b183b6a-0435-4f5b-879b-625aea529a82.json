@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "integrate react native nightly 7-15",
+  "comment": "integrate react native nightly 7-19",
   "packageName": "@react-native-windows/automation-channel",
   "email": "tatianakapos@microsoft.com",
   "dependentChangeType": "patch"
