@@ -110,21 +110,21 @@
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/NetworkIOAgent.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/NetworkIOAgent.cpp",
       "baseHash": "1dda0b2197f5d06ab5bafdd27926203f8e9a861b",
-      "issue": 13516
+      "issue": 13587
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/NetworkIOAgent.h",
       "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/NetworkIOAgent.h",
       "baseHash": "81f46cd134e7844bcd4d3858b434f95131129883",
-      "issue": 13516
+      "issue": 13587
     },
     {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsinspector-modern/Utf8.h",
       "baseFile": "packages/react-native/ReactCommon/jsinspector-modern/Utf8.h",
       "baseHash": "d961f37983356cbc64622db6194cd4b2a9a4e05c",
-      "issue": 13516
+      "issue": 13587
     },
     {
       "type": "patch",
@@ -532,6 +532,12 @@
     },
     {
       "type": "derived",
+      "file": "src-win/Libraries/LogBox/UI/LogBoxNotificationDismissButton.windows.js",
+      "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxNotificationDismissButton.js",
+      "baseHash": "6d56cea2836c7f663afacb47c3fe082bc5b5bf10"
+    },
+    {
+      "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
       "baseHash": "86178b8f2e04b5df9e4c8dc8ca412c22231e6673"
@@ -559,6 +565,12 @@
       "file": "src-win/Libraries/NewAppScreen/components/ReloadInstructions.windows.js",
       "baseFile": "packages/react-native/Libraries/NewAppScreen/components/ReloadInstructions.js",
       "baseHash": "6421466afe8bcbc37920be7f9bc7bf6cc29bf40e"
+    },
+    {
+      "type": "patch",
+      "file": "src-win/Libraries/NewAppScreen/components/Header.windows.js",
+      "baseFile": "packages/react-native/Libraries/NewAppScreen/components/Header.js",
+      "baseHash": "6d56cea2836c7f663afacb47c3fe082bc5b5bf10"
     },
     {
       "type": "platform",

@@ -24,7 +24,7 @@ const Header = (): Node => {
     <ImageBackground
       accessibilityRole="image"
       testID="new-app-screen-header"
-      source={new String(require('./logo.png'))}
+      source={new String(require('./logo.png'))} // [Windows #13586]
       style={[
         styles.background,
         {

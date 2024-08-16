@@ -34,7 +34,7 @@ export default function LogBoxNotificationDismissButton(props: {
         onPress={props.onPress}
         style={styles.press}>
         <Image
-          source={new String(require('./LogBoxImages/close.png'))}
+          source={new String(require('./LogBoxImages/close.png'))} // [Windows #13586]
           style={styles.image}
         />
       </LogBoxButton>

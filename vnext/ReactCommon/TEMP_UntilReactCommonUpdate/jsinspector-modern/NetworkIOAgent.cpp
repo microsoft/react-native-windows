@@ -24,7 +24,7 @@ static constexpr std::array kTextMIMETypePrefixes{
     "application/javascript" // Not in Chromium but emitted by Metro
 };
 
-// namespace { [Windows]
+// namespace { [Windows #13587]
 
 struct InitStreamResult {
   int httpStatusCode;
@@ -117,8 +117,8 @@ class Stream : public NetworkRequestListener,
     // Find content-type through case-insensitive search of headers.
     for (const auto& [name, value] : headers) {
       std::string lowerName = name;
-      std::transform(lowerName.begin(), lowerName.end(), lowerName.begin(), [](unsigned char c) { // [Windows]
-        return static_cast<char>(::tolower(c)); // [Windows]
+      std::transform(lowerName.begin(), lowerName.end(), lowerName.begin(), [](unsigned char c) { // [Windows #13587]
+        return static_cast<char>(::tolower(c)); // [Windows #13587]
       });
       if (lowerName == "content-type") {
         isText_ = isTextMimeType(value);
@@ -206,7 +206,7 @@ class Stream : public NetworkRequestListener,
     auto bytesRead = data_.gcount();
     std::string output;
 
-    buffer.resize(static_cast<size_t>(bytesRead));
+    buffer.resize(static_cast<size_t>(bytesRead)); // [Windows #13587]
     if (isText_) {
       auto originalSize = buffer.size();
       // Maybe resize to drop the last 1-3 bytes so that buffer is valid.
@@ -242,13 +242,13 @@ class Stream : public NetworkRequestListener,
   bool isText_{false};
   std::optional<std::string> error_;
   std::stringstream data_;
-  size_t bytesReceived_{0}; // [Windows]
+  size_t bytesReceived_{0}; // [Windows #13587]
   std::optional<std::function<void()>> cancelFunction_{std::nullopt};
   std::unique_ptr<StreamInitCallback> initCb_;
   std::vector<std::tuple<long /* bytesToRead */, IOReadCallback>>
       pendingReadRequests_;
 };
-// } // namespace
+// } // namespace [Windows #13587]
 
 bool NetworkIOAgent::handleRequest(
     const cdp::PreparsedRequest& req,
@@ -371,7 +371,7 @@ void NetworkIOAgent::handleIoRead(const cdp::PreparsedRequest& req) {
         "Invalid params: handle is missing or not a string."));
     return;
   }
-  std::optional<int64_t> size = std::nullopt; // [Windows]
+  std::optional<int64_t> size = std::nullopt; // [Windows #13587]
   if ((req.params.count("size") != 0u) && req.params.at("size").isInt()) {
     size = req.params.at("size").asInt();
   }
@@ -386,7 +386,7 @@ void NetworkIOAgent::handleIoRead(const cdp::PreparsedRequest& req) {
     return;
   } else {
     it->second->read(
-        size ? static_cast<unsigned long>(*size) : DEFAULT_BYTES_PER_READ, // [Windows]
+        size ? static_cast<unsigned long>(*size) : DEFAULT_BYTES_PER_READ, // [Windows #13587]
         [requestId,
          frontendChannel = frontendChannel_,
          streamId,

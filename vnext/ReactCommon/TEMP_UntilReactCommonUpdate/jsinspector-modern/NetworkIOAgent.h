@@ -25,10 +25,10 @@ using StreamID = const std::string;
 using Headers = std::map<std::string, std::string>;
 using IOReadError = const std::string;
 
-// namespace { [Windows]
+// namespace { [Windows #13587]
 class Stream; // Defined in NetworkIOAgent.cpp
 using StreamsMap = std::unordered_map<std::string, std::shared_ptr<Stream>>;
-// } // namespace [Windows]
+// } // namespace [Windows #13587]
 
 struct LoadNetworkResourceRequest {
   std::string url;
