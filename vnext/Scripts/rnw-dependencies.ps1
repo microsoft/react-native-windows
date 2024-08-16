@@ -85,7 +85,7 @@ $vsAll = ($vsComponents + $vsWorkloads);
 
 # The minimum VS version to check for
 # Note: For install to work, whatever min version you specify here must be met by the current package available on winget.
-$vsver = "17.9";
+$vsver = "17.11.0";
 
 # The exact .NET SDK version to check for
 $dotnetver = "6.0";

@@ -153,7 +153,8 @@ steps:
       displayName: Create bundle testcli
       workingDirectory: $(Agent.BuildDirectory)\testcli
 
-  - ${{ if eq(parameters.runWack, true) }}:
+  # Temporarily disabling due to spurious failures in CI, see https://github.com/microsoft/react-native-windows/issues/13578
+  - ${{ if and(false, eq(parameters.runWack, true)) }}:
     - template: ../templates/run-wack.yml
       parameters:
         packageName: ReactNative.InitTest
