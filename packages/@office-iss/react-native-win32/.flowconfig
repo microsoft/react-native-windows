@@ -29,6 +29,7 @@
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
 <PROJECT_ROOT>/Libraries/Pressability/HoverState.js
 <PROJECT_ROOT>/Libraries/StyleSheet/StyleSheet.js
+<PROJECT_ROOT>/Libraries/NewAppScreen/components/Header.js
 <PROJECT_ROOT>/Libraries/Text/TextProps.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
 <PROJECT_ROOT>/Libraries/Utilities/DeviceInfo.js
@@ -39,6 +40,7 @@
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxStyle.js
+<PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxNotificationDismissButton.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*

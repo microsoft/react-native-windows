@@ -29,6 +29,7 @@
 <PROJECT_ROOT>/Libraries/Network/RCTNetworking.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/DebugInstructions.js
 <PROJECT_ROOT>/Libraries/NewAppScreen/components/ReloadInstructions.js
+<PROJECT_ROOT>/Libraries/NewAppScreen/components/Header.js
 <PROJECT_ROOT>/Libraries/Pressability/Pressability.js
 <PROJECT_ROOT>/Libraries/Text/TextProps.js
 <PROJECT_ROOT>/Libraries/Types/CoreEventTypes.js
@@ -36,6 +37,7 @@
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorHeader.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorStackFrame.js
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js
+<PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxNotificationDismissButton.js
 <PROJECT_ROOT>/Libraries/Utilities/Platform.flow.js
 
 ; Ignore react-native files in node_modules since they are copied into project root
