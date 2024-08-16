@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Update V8, Hermes, JSI for Node-API versions",
+  "packageName": "react-native-windows",
+  "email": "vmorozov@microsoft.com",
+  "dependentChangeType": "patch"
+}
