@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 05 Aug 2024 15:15:09 GMT and should not be manually modified.
+This log was last generated on Sat, 17 Aug 2024 01:38:32 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.20
+
+Sat, 17 Aug 2024 01:38:32 GMT
+
+### Patches
+
+- CodeQL fix (1422161+marlenecota@users.noreply.github.com)
+- Bump minimum VS version to 17.11.0 (jthysell@microsoft.com)
+- Update V8, Hermes, JSI for Node-API versions (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.73.6
 
 ## 0.73.19
 

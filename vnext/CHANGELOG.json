@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 17 Aug 2024 01:38:32 GMT",
+      "version": "0.73.20",
+      "tag": "react-native-windows_v0.73.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "1422161+marlenecota@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7a76cd326ffdd0bc965259b4eb2b125cb423bb2a",
+            "comment": "CodeQL fix"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "536e01307e7920a223ec13e43b6f583c81188984",
+            "comment": "Bump minimum VS version to 17.11.0"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d0adfc66ff62628fb1dcb0d10d49d1bc4112485d",
+            "comment": "Update V8, Hermes, JSI for Node-API versions"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.73.6",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 05 Aug 2024 15:15:09 GMT",
       "version": "0.73.19",
       "tag": "react-native-windows_v0.73.19",
