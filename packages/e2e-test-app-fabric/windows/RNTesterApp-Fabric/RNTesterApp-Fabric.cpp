@@ -308,7 +308,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   int sizeOfSet = 0;
   BSTR value;
   BOOL isReadOnly;
-  
+
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
   pTarget->get_CurrentHelpText(&helpText);
