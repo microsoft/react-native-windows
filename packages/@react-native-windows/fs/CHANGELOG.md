@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Mon, 15 Jul 2024 16:52:21 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Aug 2024 20:18:58 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.0
+
+Mon, 19 Aug 2024 20:18:58 GMT
+
+### Patches
+
+- Promote 0.75 to latest (tatianakapos@microsoft.com)
 
 ## 0.75.0-preview.1
 

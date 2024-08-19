@@ -2,6 +2,21 @@
   "name": "@react-native-windows/fs",
   "entries": [
     {
+      "date": "Mon, 19 Aug 2024 20:18:58 GMT",
+      "version": "0.75.0",
+      "tag": "@react-native-windows/fs_v0.75.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/fs",
+            "commit": "ba3dd8c01553d45225124eaab38a13d8aa0b8b20",
+            "comment": "Promote 0.75 to latest"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 15 Jul 2024 16:52:21 GMT",
       "version": "0.75.0-preview.1",
       "tag": "@react-native-windows/fs_v0.75.0-preview.1",
