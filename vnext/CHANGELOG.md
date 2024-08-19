@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 10 Aug 2024 13:22:29 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Aug 2024 15:15:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.17
+
+Mon, 19 Aug 2024 15:15:35 GMT
+
+### Patches
+
+- CodeQL fix (1422161+marlenecota@users.noreply.github.com)
+- Bump minimum VS version to 17.11.0 (jthysell@microsoft.com)
+- backport Enforce StatusBarManger module aligns with Spec #13556 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.74.2
 
 ## 0.74.16
 
