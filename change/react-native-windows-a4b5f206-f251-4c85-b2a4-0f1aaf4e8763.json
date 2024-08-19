@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "[Fabric] Fixes a crash that happens on release builds",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
