@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 19 Aug 2024 15:14:33 GMT",
+      "tag": "react-native-windows_v0.72.37",
+      "version": "0.72.37",
+      "comments": {
+        "patch": [
+          {
+            "author": "1422161+marlenecota@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b96c844d571c5af6238cfc3b1e103c51bd677968",
+            "comment": "CodeQL fix"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 11 Jul 2024 22:51:01 GMT",
       "tag": "react-native-windows_v0.72.36",
       "version": "0.72.36",
