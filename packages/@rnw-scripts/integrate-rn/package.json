@@ -19,7 +19,7 @@
     "integrate-rn": "./bin.js"
   },
   "dependencies": {
-    "@react-native-community/template": "0.75.0-rc.7",
+    "@react-native-community/template": "0.75.1",
     "@react-native-windows/find-repo-root": "0.75.0-preview.1",
     "@react-native-windows/fs": "0.75.0-preview.1",
     "@react-native-windows/package-utils": "0.75.0-preview.1",
