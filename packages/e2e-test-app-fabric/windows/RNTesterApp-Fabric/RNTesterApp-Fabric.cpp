@@ -168,6 +168,7 @@ WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int /* show
         // state
         auto async = host.UnloadInstance();
         async.Completed([host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          asyncStatus;
           assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
           host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
         });
