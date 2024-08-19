@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 19 Aug 2024 15:15:35 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Aug 2024 19:11:34 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.18
+
+Mon, 19 Aug 2024 19:11:34 GMT
+
+### Patches
+
+- Promote 0.74 to legacy (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.74.3
+- Bump @react-native-windows/codegen to v0.74.2
 
 ## 0.74.17
 
