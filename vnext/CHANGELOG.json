@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 19 Aug 2024 15:15:35 GMT",
+      "version": "0.74.17",
+      "tag": "react-native-windows_v0.74.17",
+      "comments": {
+        "patch": [
+          {
+            "author": "1422161+marlenecota@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1c856834e27791d88121d9dc31db7c46ca48c071",
+            "comment": "CodeQL fix"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "468cc100f5582036d05cb98ed519ed224847494d",
+            "comment": "Bump minimum VS version to 17.11.0"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1ad3123cb38c201e34665794b9224cfc9ee1f72f",
+            "comment": "backport Enforce StatusBarManger module aligns with Spec #13556"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.74.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 10 Aug 2024 13:22:29 GMT",
       "version": "0.74.16",
       "tag": "react-native-windows_v0.74.16",
