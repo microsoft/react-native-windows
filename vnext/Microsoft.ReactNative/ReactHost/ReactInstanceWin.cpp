@@ -657,7 +657,8 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
             facebook::react::ReactInstance::JSRuntimeFlags options;
             m_bridgelessReactInstance->initializeRuntime(options, [=](facebook::jsi::Runtime &runtime) {
               auto logger = [loggingHook = GetLoggingCallback()](const std::string &message, unsigned int logLevel) {
-                loggingHook(static_cast<facebook::react::RCTLogLevel>(logLevel), message.c_str());
+                if (loggingHook)
+                  loggingHook(static_cast<facebook::react::RCTLogLevel>(logLevel), message.c_str());
               };
               facebook::react::bindNativeLogger(runtime, logger);
 
