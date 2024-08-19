@@ -2199,9 +2199,9 @@
     semver "^7.5.2"
 
 "@react-native-community/template@^0.75.0-rc.3":
-  version "0.75.0-rc.7"
-  resolved "https://registry.yarnpkg.com/@react-native-community/template/-/template-0.75.0-rc.7.tgz#35de84eed05d5561b321053100f4aeaa53d91a72"
-  integrity sha512-FjfX36WlLBwwjwvw5tUIe7/K8yV2aExOM+FSHqYS2ySn6yzZ685waqk5TpoOdoVrG518up1Zrwmc7wAEwkyEfg==
+  version "0.75.1"
+  resolved "https://registry.yarnpkg.com/@react-native-community/template/-/template-0.75.1.tgz#ddf528b9a9d7aba96e7c13833bd68aaae09162fb"
+  integrity sha512-fDfqlw8wTTa301d0kzNGUpNlHsbOb4ahcxuj7A4f/A6FpZ0ke9ymB25rYnZUBIfgT2LBfEKJ/XdPpaoF701OSg==
 
 "@react-native-picker/picker@^2.5.1":
   version "2.7.7"
@@ -2874,9 +2874,9 @@
   integrity sha512-fAtCfv4jJg+ExtXhvCkCqUKZ+4ok/JQk01qDKhL5BDDoS3AxKXhV5/MAVUZyQnSEd2GT92fkgZl0pz0Q0AzcIQ==
 
 "@types/node@^18.0.0":
-  version "18.19.44"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.44.tgz#875a8322d17ff12bf82b3af8c07b9310a00e72f8"
-  integrity sha512-ZsbGerYg72WMXUIE9fYxtvfzLEuq6q8mKERdWFnqTmOvudMxnz+CBNRoOwJ2kNpFOncrKjT1hZwxjlFgQ9qvQA==
+  version "18.19.45"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.45.tgz#a9ebfe4c316a356be7ca11f753ecb2feda6d6bdf"
+  integrity sha512-VZxPKNNhjKmaC1SUYowuXSRSMGyQGmQjvvA1xE4QZ0xce2kLtEhPDS+kqpCPBZYgqblCLQ2DAjSzmgCM5auvhA==
   dependencies:
     undici-types "~5.26.4"
 
