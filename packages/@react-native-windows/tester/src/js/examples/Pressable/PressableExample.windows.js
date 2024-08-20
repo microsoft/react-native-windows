@@ -1046,15 +1046,15 @@ const examples = [
       return (
         <View accessible testID='pressable_set'>
           <Pressable
-            onPress={() => {}} accessibilityPosInSet={1} accessibilitySetSize={3}>
+            onPress={() => {}} accessibilityPosInSet={1} accessibilitySetSize={3} accessibilityLiveRegion='none'>
             <Text>Pressable 1 of 3</Text>
           </Pressable>
           <Pressable
-            onPress={() => {}} accessibilityPosInSet={2} accessibilitySetSize={3}>
+            onPress={() => {}} accessibilityPosInSet={2} accessibilitySetSize={3} accessibilityLiveRegion='polite'>
             <Text>Pressable 2 of 3</Text>
           </Pressable>
           <Pressable
-            onPress={() => {}} accessibilityPosInSet={3} accessibilitySetSize={3}>
+            onPress={() => {}} accessibilityPosInSet={3} accessibilitySetSize={3} accessibilityLiveRegion='assertive'>
             <Text>Pressable 3 of 3</Text>
           </Pressable>
         </View>

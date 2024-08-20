@@ -221,6 +221,7 @@ exports.examples = [
                 accessibilityHint="Submit Button"
                 accessibilityPosInSet={1}
                 accessibilitySetSize={1}
+                accessibilityLiveRegion='assertive'
               />
             );
           }}

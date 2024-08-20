@@ -247,6 +247,26 @@ void InsertBooleanValueIfNotDefault(
   }
 }
 
+void InsertLiveSettingValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    LiveSetting value,
+    LiveSetting defaultValue = LiveSetting::Off) {
+  if (value != defaultValue) {
+    switch (value) {
+      case 0:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Off"));
+        break;
+      case 1:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Polite"));
+        break;
+      case 2:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Assertive"));
+        break;
+    }
+  }
+}
+
 void InsertSizeValue(
     const winrt::Windows::Data::Json::JsonObject &obj,
     winrt::hstring name,
@@ -304,6 +324,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   BSTR name;
   int positionInSet;
   int sizeOfSet;
+  LiveSetting liveSetting;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -317,6 +338,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   if (SUCCEEDED(hr) && pTarget4) {
     pTarget4->get_CurrentPositionInSet(&positionInSet);
     pTarget4->get_CurrentSizeOfSet(&sizeOfSet);
+    pTarget4->get_CurrentLiveSetting(&liveSetting);
     pTarget4->Release();
   }
   result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
@@ -329,6 +351,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   InsertStringValueIfNotEmpty(result, L"Name", name);
   InsertIntValueIfNotDefault(result, L"PositionInSet", positionInSet);
   InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
+  InsertLiveSettingValueIfNotDefault(result, L"LiveSetting", liveSetting);
 
   IUIAutomationElement *pChild;
   IUIAutomationElement *pSibling;

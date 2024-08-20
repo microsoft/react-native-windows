@@ -479,6 +479,7 @@ class AccessibilityExample extends React.Component<
         ]}
         accessibilityPosInSet={1}
         accessibilitySetSize={1}
+        accessibilityLiveRegion='polite'
         testID="accessibility"
         accessible
         focusable

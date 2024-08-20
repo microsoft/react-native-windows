@@ -29,4 +29,5 @@ void UpdateUiaProperty(
     const std::string &oldValue,
     const std::string &newValue) noexcept;
 
+long GetLiveSetting(const std::string &liveRegion) noexcept;
 } // namespace winrt::Microsoft::ReactNative::implementation
