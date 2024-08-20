@@ -163,4 +163,14 @@ void UpdateUiaProperty(
       spProviderSimple.get(), propId, CComVariant(oldValue.c_str()), CComVariant(newValue.c_str()));
 }
 
+std::string extractAccessibilityValue(const facebook::react::AccessibilityValue &value) noexcept {
+  if (value.now.has_value()) {
+    return std::to_string(value.now.value());
+  } else if (value.text.has_value()) {
+    return value.text.value();
+  } else {
+    return "";
+  }
+}
+
 } // namespace winrt::Microsoft::ReactNative::implementation

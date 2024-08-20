@@ -306,6 +306,8 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   BSTR name;
   int positionInSet = 0;
   int sizeOfSet = 0;
+  BSTR value;
+  BOOL isReadOnly;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -331,7 +333,19 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   InsertStringValueIfNotEmpty(result, L"Name", name);
   InsertIntValueIfNotDefault(result, L"PositionInSet", positionInSet);
   InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
-
+  IValueProvider *valuePattern;
+  hr = pTarget->GetCurrentPattern(UIA_ValuePatternId, reinterpret_cast<IUnknown **>(&valuePattern));
+  if (SUCCEEDED(hr) && valuePattern) {
+    hr = valuePattern->get_Value(&value);
+    if (SUCCEEDED(hr)) {
+      InsertStringValueIfNotEmpty(result, L"ValuePattern.Value", value);
+    }
+    hr = valuePattern->get_IsReadOnly(&isReadOnly);
+    if (SUCCEEDED(hr)) {
+      InsertBooleanValueIfNotDefault(result, L"ValuePattern.IsReadOnly", isReadOnly, true);
+    }
+    valuePattern->Release();
+  }
   IUIAutomationElement *pChild;
   IUIAutomationElement *pSibling;
   pWalker->GetFirstChildElement(pTarget, &pChild);

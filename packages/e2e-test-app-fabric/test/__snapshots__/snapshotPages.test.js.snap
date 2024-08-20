@@ -27402,7 +27402,7 @@ exports[`snapshotAllPages Pressable 3`] = `
           "max": undefined,
           "min": undefined,
           "now": undefined,
-          "text": undefined,
+          "text": "Press Me",
         }
       }
       accessible={true}
@@ -29424,7 +29424,7 @@ exports[`snapshotAllPages Pressable 20`] = `
         "max": undefined,
         "min": undefined,
         "now": undefined,
-        "text": undefined,
+        "text": "Child Pressable",
       }
     }
     accessible={true}
@@ -62873,6 +62873,37 @@ exports[`snapshotAllPages TextInput 42`] = `
 </View>
 `;
 
+exports[`snapshotAllPages TextInput 43`] = `
+<View
+  accessible={true}
+  testID="textinput-searchbox"
+>
+  <TextInput
+    accessibilityRole="searchbox"
+    defaultValue="Search"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+  />
+</View>
+`;
+
 exports[`snapshotAllPages TextInputs with key prop 1`] = `
 <View>
   <TextInput
@@ -65064,7 +65095,7 @@ exports[`snapshotAllPages Touchable* and onPress 8`] = `
           "max": undefined,
           "min": undefined,
           "now": undefined,
-          "text": undefined,
+          "text": "Press Me",
         }
       }
       accessible={true}
@@ -68270,7 +68301,11 @@ exports[`snapshotAllPages View 21`] = `
   accessibilityPosInSet={1}
   accessibilityRole="button"
   accessibilitySetSize={1}
-  accessibilityValue={0}
+  accessibilityValue={
+    {
+      "now": 0,
+    }
+  }
   accessible={true}
   focusable={true}
   onAccessibilityAction={[Function]}
@@ -68289,6 +68324,18 @@ exports[`snapshotAllPages View 21`] = `
   >
     <Text>
       This element should be hidden from accessibility.
+    </Text>
+  </View>
+  <View
+    accessibilityValue={
+      {
+        "now": 0,
+      }
+    }
+    accessible={true}
+  >
+    <Text>
+      This sub-view should not have an accessibility value. It's control type does not support the value pattern.
     </Text>
   </View>
 </View>
