@@ -686,6 +686,7 @@ exports[`Pressable Tests Pressables can have event handlers 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "Name": "pressable feedback events",
+    "ValuePattern.Value": "Press Me",
     "__Children": [
       {
         "AutomationId": "",

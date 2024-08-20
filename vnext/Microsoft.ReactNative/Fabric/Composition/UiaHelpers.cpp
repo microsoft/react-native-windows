@@ -72,9 +72,10 @@ HRESULT UiaNavigateHelper(
       auto parentCV = view.Parent().as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
       if (parentCV != nullptr) {
         auto children = parentCV->Children();
-        for (auto it = children.end(); it != children.begin(); --it) {
-          if (*it == view) {
-            uiaProvider = (*it)
+        for (auto i = children.Size() - 1; i > 0; i--) {
+          auto child = children.GetAt(i);
+          if (child == view) {
+            uiaProvider = children.GetAt(i - 1)
                               .as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()
                               ->EnsureUiaProvider();
             break;
@@ -160,6 +161,16 @@ void UpdateUiaProperty(
 
   UiaRaiseAutomationPropertyChangedEvent(
       spProviderSimple.get(), propId, CComVariant(oldValue.c_str()), CComVariant(newValue.c_str()));
+}
+
+std::string extractAccessibilityValue(const facebook::react::AccessibilityValue &value) noexcept {
+  if (value.now.has_value()) {
+    return std::to_string(value.now.value());
+  } else if (value.text.has_value()) {
+    return value.text.value();
+  } else {
+    return "";
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation
