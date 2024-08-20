@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 16 Aug 2024 05:13:08 GMT and should not be manually modified.
+This log was last generated on Tue, 20 Aug 2024 05:15:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.856
+
+Tue, 20 Aug 2024 05:15:39 GMT
+
+### Changes
+
+- Align <WarningLevel> across app/templates (1422161+marlenecota@users.noreply.github.com)
+- [Fabric] Fixes a crash that happens on release builds (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.855
 

@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 20 Aug 2024 05:15:39 GMT",
+      "version": "0.0.0-canary.856",
+      "tag": "react-native-windows_v0.0.0-canary.856",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "1422161+marlenecota@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8271255b00a49a7af90ad682be46eca3855c95d2",
+            "comment": "Align <WarningLevel> across app/templates"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "fb590aafb7deec74f0a2b64848c1d987ccb0d416",
+            "comment": "[Fabric] Fixes a crash that happens on release builds"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 16 Aug 2024 05:13:08 GMT",
       "version": "0.0.0-canary.855",
       "tag": "react-native-windows_v0.0.0-canary.855",
