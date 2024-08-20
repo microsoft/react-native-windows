@@ -532,12 +532,6 @@
     },
     {
       "type": "derived",
-      "file": "src-win/Libraries/LogBox/UI/LogBoxNotificationDismissButton.windows.js",
-      "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxNotificationDismissButton.js",
-      "baseHash": "41ba23eadc755ea55a5856bd90332be6a0adc2d1"
-    },
-    {
-      "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
       "baseHash": "86178b8f2e04b5df9e4c8dc8ca412c22231e6673"
@@ -559,12 +553,6 @@
       "file": "src-win/Libraries/NewAppScreen/components/DebugInstructions.windows.js",
       "baseFile": "packages/react-native/Libraries/NewAppScreen/components/DebugInstructions.js",
       "baseHash": "710cf9dcde140ade949018c960fed3b1be2030c0"
-    },
-    {
-      "type": "patch",
-      "file": "src-win/Libraries/NewAppScreen/components/Header.windows.js",
-      "baseFile": "packages/react-native/Libraries/NewAppScreen/components/Header.js",
-      "baseHash": "2860e81fae781a1976d9a403c96d4d5b6b9b9d66"
     },
     {
       "type": "patch",
