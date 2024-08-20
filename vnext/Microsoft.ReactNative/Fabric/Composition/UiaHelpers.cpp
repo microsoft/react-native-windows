@@ -72,8 +72,6 @@ HRESULT UiaNavigateHelper(
       auto parentCV = view.Parent().as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
       if (parentCV != nullptr) {
         auto children = parentCV->Children();
-        auto index = children.Size();
-
         for (auto i = children.Size() - 1; i > 0; i--) {
           auto child = children.GetAt(i);
           if (child == view) {
