@@ -20,7 +20,8 @@ const templateUtils = require('../templateUtils');
 async function preInstall(config = {}, options = {}) {}
 
 async function getFileMappings(config = {}, options = {}) {
-  const {rnwVersion, devMode} = templateUtils.getRnwInfo(config, options);
+  const projectRoot = config?.root ?? process.cwd();
+  const {rnwPath, rnwVersion, devMode} = templateUtils.getRnwInfo(config, options);
 
   const projectName =
     config?.project?.windows?.project?.projectName ?? options?.name ?? 'MyApp';
@@ -48,6 +49,7 @@ async function getFileMappings(config = {}, options = {}) {
     namespaceCpp: namespaceCpp,
 
     rnwVersion: rnwVersion,
+    rnwPathFromProjectRoot: path.relative(projectRoot, rnwPath).replace(/\//g, '\\'),
 
     mainComponentName,
 
