@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 11 Jul 2024 22:51:01 GMT and should not be manually modified.
+This log was last generated on Mon, 19 Aug 2024 15:14:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.37
+
+Mon, 19 Aug 2024 15:14:33 GMT
+
+### Patches
+
+- CodeQL fix (1422161+marlenecota@users.noreply.github.com)
 
 ## 0.72.36
 
