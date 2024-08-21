@@ -328,7 +328,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   int sizeOfSet = 0;
   BSTR value;
   BOOL isReadOnly;
-  LiveSetting liveSetting;
+  LiveSetting liveSetting = LiveSetting::Off;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
