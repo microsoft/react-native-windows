@@ -1331,10 +1331,10 @@ function InternalTextInput(props: Props): React.Node {
       : '';
 
   const viewCommands =
-  WindowsTextInputCommands ||AndroidTextInputCommands ||
+    WindowsTextInputCommands || AndroidTextInputCommands || // [Windows]
     (props.multiline === true
       ? RCTMultilineTextInputNativeCommands
-      : RCTSinglelineTextInputNativeCommands) // [Windows]
+      : RCTSinglelineTextInputNativeCommands)
 
   const [mostRecentEventCount, setMostRecentEventCount] = useState<number>(0);
   const useTextInputStateSynchronization =
