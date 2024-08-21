@@ -4,8 +4,6 @@
  * @format
  */
 
-import * as appInsights from 'applicationinsights';
-
 import * as sanitizeUtils from './sanitizeUtils';
 
 // Note: All CLI commands will set process.exitCode to the numerical value of
@@ -155,16 +153,17 @@ export function sanitizeErrorMessage(msg: string): string {
  * @param frame
  */
 export function sanitizeErrorStackFrame(
-  frame: appInsights.Contracts.StackFrame,
+  frame: Record<string, any>,
 ): void {
-  const parens = frame.method.indexOf('(');
+  const parens = frame.functionName.indexOf('(');
   if (parens !== -1) {
     // case 1: method === 'methodName (rootOfThePath'
-    frame.method = frame.method.substr(0, parens).trim();
+    frame.functionName = frame.functionName.substr(0, parens).trim();
   } else {
     // case 2: method === <no_method> or something without '(', fileName is full path
   }
-  // anonymize the filename
-  frame.fileName = sanitizeUtils.getAnonymizedPath(frame.fileName);
-  frame.assembly = '';
+
+  // anonymize the filePath
+  frame.filePath = sanitizeUtils.getAnonymizedPath(frame.filePath);
+  //frame.assembly = ''; // there is no assembly
 }

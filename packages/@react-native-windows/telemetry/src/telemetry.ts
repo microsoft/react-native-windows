@@ -5,6 +5,7 @@
  */
 
 import * as coreOneDS from '@microsoft/1ds-core-js';
+import {PostChannel, IChannelConfiguration} from '@microsoft/1ds-post-js';
 
 // Post 1DS seems to provide configuration settings to post events
 // https://microsoft.github.io/ApplicationInsights-JS/webSdk/1ds-post-js/interfaces/IChannelConfiguration.html
@@ -164,11 +165,7 @@ export class Telemetry {
     }
     
     // Filter out "legacy" events from older stable branches
-    const properties = envelope.data?.baseData?.properties;
-    if (
-      properties?.eventName &&
-      EventNamesWeTrack.includes(properties.eventName)
-    ) {
+    if (envelope.name && EventNamesWeTrack.includes(envelope.name)) {
       return true;
     }
 
@@ -178,28 +175,26 @@ export class Telemetry {
   private static errorTelemetryInitializer(envelope: coreOneDS.ITelemetryItem) : boolean
   {
     if (envelope.data?.baseType === 'ExceptionData') {
-      const data = envelope.data.baseData;
-      if (data?.exceptions) {
-        for (const exception of data.exceptions) {
-          for (const frame of exception.parsedStack) {
+      const exceptionData = envelope.data?.exceptionData;
+      if (exceptionData) {
+          for (const frame of exceptionData.parsedStack) {
             errorUtils.sanitizeErrorStackFrame(frame);
           }
 
           // Exception message must never be blank, or AI will reject it
-          exception.message = exception.message || '[None]';
+          exceptionData.message = exceptionData.message || '[None]';
 
           // CodedError has non-PII information in its 'type' member, plus optionally some more info in its 'data'.
           // The message may contain PII information. This can be sanitized, but for now delete it.
           // Note that the type of data.exceptions[0] is always going to be ExceptionDetails. It is not the original thrown exception.
           // https://github.com/microsoft/ApplicationInsights-node.js/issues/707
           if (Telemetry.options.preserveErrorMessages) {
-            exception.message = errorUtils.sanitizeErrorMessage(
-              exception.message,
+            exceptionData.message = errorUtils.sanitizeErrorMessage(
+              exceptionData.message,
             );
           } else {
-            exception.message = '[Removed]';
+            exceptionData.message = '[Removed]';
           }
-        }
       }
     }
 
@@ -216,19 +211,30 @@ export class Telemetry {
   private static setupClient() {
     // appInsights.Configuration.setInternalLogging(false, false);
 
-    const coreConfig: coreOneDS.IExtendedConfiguration = {
+    var postChannel: PostChannel = new PostChannel();
+
+    const coreConfiguration: coreOneDS.IExtendedConfiguration = {
       instrumentationKey: process.env[ENV_SETUP_OVERRIDE] ?? RNW_1DS_INSTURMENTATION_KEY,
-      extensions: [],
-      extensionConfig: []
+      extensions: [
+        postChannel
+      ],
+      extensionConfig: {}
     }
+
+    var postChannelConfig: IChannelConfiguration = {
+      eventsLimitInMem: 5000
+    };
+
+    coreConfiguration.extensionConfig = {};
+    coreConfiguration.extensionConfig[postChannel.identifier] = postChannelConfig;
 
     // Allow overriding the endpoint URL via an environment variable.
     if (process.env[ENV_PROXY_OVERRIDE] !== undefined) {
-      coreConfig.endpointUrl = process.env[ENV_PROXY_OVERRIDE];
+      coreConfiguration.endpointUrl = process.env[ENV_PROXY_OVERRIDE];
     }
   
     Telemetry.appInsightsCore = new coreOneDS.AppInsightsCore();
-    Telemetry.appInsightsCore.initialize(coreConfig, [] /* extensions */);
+    Telemetry.appInsightsCore.initialize(coreConfiguration, [] /* extensions */);
   }
 
   /** Sets up any base properties that all telemetry events require. */
@@ -398,6 +404,9 @@ export class Telemetry {
     telemetryItem.time = new Date().toISOString();
     telemetryItem.iKey = RNW_1DS_INSTURMENTATION_KEY; // Is this needed?
 
+    let projectPropString = JSON.stringify(Telemetry.projectProp);
+    let versionPropString = JSON.stringify(Telemetry.versionsProp);
+
     // Populate "common" properties into Part B, since most of them
     // don't adhere to the Part A extensions.
     telemetryItem.baseData = {
@@ -417,11 +426,13 @@ export class Telemetry {
         isMsftInternal: Telemetry.commonProperties.isMsftInternal,
         sampleRate: Telemetry.commonProperties.sampleRate,
         isCliTest: Telemetry.commonProperties.isTest,
-        sessionId: Telemetry.commonProperties.sessionId
+        sessionId: Telemetry.commonProperties.sessionId,
+        commandName: Telemetry.commonProperties.commandName
       },
       // Set project and versions props, belonging to Part B.
-      project: Telemetry.projectProp,
-      versions: Telemetry.versionsProp
+      baseType: {},
+      project: projectPropString,
+      versions: versionPropString
     };
 
     // Send and post the telemetry event!
@@ -432,23 +443,27 @@ export class Telemetry {
   private static trackCommandEvent(extraProps?: Record<string, any>) {
     var telemetryItem: coreOneDS.ITelemetryItem = {name: CommandEventName};
 
-    // Set command data, which belongs to Part C.
-    telemetryItem.data = {
-      command: {
-        options: Telemetry.commandInfo.startInfo?.options,
-        defaultOptions: Telemetry.commandInfo.startInfo?.defaultOptions,
-        args: Telemetry.commandInfo.startInfo?.args,
-        durationInSecs:
-          (Telemetry.commandInfo.endTime! - Telemetry.commandInfo.startTime!) /
-          1000,
-        resultCode: Telemetry.commandInfo.endInfo?.resultCode,
-      },
+    let command = {
+      options: Telemetry.commandInfo.startInfo?.options,
+      defaultOptions: Telemetry.commandInfo.startInfo?.defaultOptions,
+      args: Telemetry.commandInfo.startInfo?.args,
+      durationInSecs:
+        (Telemetry.commandInfo.endTime! - Telemetry.commandInfo.startTime!) /
+        1000,
+      resultCode: Telemetry.commandInfo.endInfo?.resultCode,
     };
 
+    let commandPropString = JSON.stringify(command);
+    telemetryItem.data = {};
+    telemetryItem.data.command = commandPropString;
+
     // Set extra props to "additionalData", temporary name
-    telemetryItem.data.additionalData = {};
-    Object.assign(telemetryItem.data.additionalData, extraProps);
-  
+    let additionalDataString = JSON.stringify(extraProps);
+
+    if (additionalDataString.length > 0) {
+      telemetryItem.data.additionalData = additionalDataString;
+    }
+
     // Fire event
     Telemetry.trackEvent(telemetryItem);
   }
@@ -466,23 +481,21 @@ export class Telemetry {
         ? (error as errorUtils.CodedError)
         : null;
 
-    telemetryItem.data = {
-      codedError: {
-        type: codedError?.type ?? 'Unknown',
-        data: codedError?.data ?? {},
-      }
+    let codedErrorStruct = {
+      type: codedError?.type ?? 'Unknown',
+      data: codedError?.data ?? {},
     };
 
     // Copy msBuildErrorMessages into the codedError.data object
     if ((error as any).msBuildErrorMessages) {
       // Always grab MSBuild error codes if possible
-      telemetryItem.data.codedError.data.msBuildErrors = (error as any).msBuildErrorMessages
+      codedErrorStruct.data.msBuildErrors = (error as any).msBuildErrorMessages
         .map(errorUtils.tryGetErrorCode)
         .filter((msg: string | undefined) => msg);
 
       // Grab sanitized MSBuild error messages if we're preserving them
       if (Telemetry.options.preserveErrorMessages) {
-        telemetryItem.data.codedError.data.msBuildErrorMessages = (
+        codedErrorStruct.data.msBuildErrorMessages = (
           error as any
         ).msBuildErrorMessages
           .map(errorUtils.sanitizeErrorMessage)
@@ -494,10 +507,64 @@ export class Telemetry {
     const syscallExceptionFieldsToCopy = ['errno', 'syscall', 'code'];
     for (const f of syscallExceptionFieldsToCopy) {
       if ((error as any)[f]) {
-        telemetryItem.data.codedError.data[f] = (error as any)[f];
+        codedErrorStruct.data.codedError.data[f] = (error as any)[f];
       }
     }
 
+    // Break down TS Error object into Exception Data
+    let exceptionData = Telemetry.convertErrorIntoExceptionData(error);
+    //let exceptionDataString = JSON.stringify(exceptionData);
+
+    let codedDataStructString = JSON.stringify(codedErrorStruct);
+
+    telemetryItem.data = {
+      codedError: codedDataStructString,
+      exceptionData: exceptionData,
+      baseType: 'ExceptionData'
+    };
+
     Telemetry.trackEvent(telemetryItem);
   }
+
+  static convertErrorIntoExceptionData(error: Error) : Record<string, any> {
+
+    let exceptionData = {
+      hasFullStack: false,
+      message: error.message,
+      parsedStack: {},
+      typeName: "", // what is typeName?
+    };
+
+    const lines = error.stack?.split('\n');
+
+    let parsedStack = lines?.slice(1).map(line => {
+      const match = line.trim().match(/^\s*at\s+(?:(.*?)\s+\((.*):(\d+):(\d+)\)|(.*):(\d+):(\d+))$/);
+      
+      if (match) {
+          // Adjust the destructuring to handle both cases
+          const functionName = match[1] || "N/A";  // Use a default value if no function name
+          const filePath = match[2] || match[5];
+          const lineNumber = match[3] || match[6];
+          const columnNumber = match[4] || match[7];
+  
+          return {
+              functionName,
+              filePath,
+              lineNumber: +lineNumber,  // Convert to number
+              columnNumber: +columnNumber // Convert to number
+          };
+      }
+  
+      return "something";  // Fallback in case of no match
+  });
+
+    if (parsedStack != undefined) {
+      parsedStack?.filter(Boolean);
+      exceptionData.hasFullStack = true;
+      exceptionData.parsedStack = parsedStack;
+    }
+
+    return exceptionData;
+  }
+
 }

@@ -6,6 +6,7 @@
  */
 
 import * as coreOneDS from '@microsoft/1ds-core-js';
+import * as path from 'path';
 
 import {
   Telemetry,
@@ -15,10 +16,11 @@ import {
   CommandEventName,
   CodedErrorEventName,
 } from '../telemetry';
-//import * as basePropUtils from '../utils/basePropUtils';
+
+import * as basePropUtils from '../utils/basePropUtils';
 import * as errorUtils from '../utils/errorUtils';
 import * as projectUtils from '../utils/projectUtils';
-//import * as versionUtils from '../utils/versionUtils';
+import * as versionUtils from '../utils/versionUtils';
 
 export class TelemetryTest extends Telemetry {
   protected static hasTestTelemetryProviders: boolean;
@@ -85,7 +87,6 @@ export class TelemetryTest extends Telemetry {
   }
 }
 
-/*
 test('setup() verify session id is valid and a common property', async () => {
   await TelemetryTest.startTest();
 
@@ -356,18 +357,19 @@ function verifyTestCommandTelemetryProcessor(
         expect(envelope.tags['ai.cloud.roleInstance']).toBeUndefined();
       }
 
-      const properties = envelope.data?.baseData?.properties;
+      const properties = envelope.baseData;
       expect(properties).toBeDefined();
 
       // Verify basics
-      expect(properties.commandName).toBe('test-command');
+      const commonProperties = properties!.common;
+      expect(commonProperties.commandName).toBe('test-command');
 
       // Verify versions info
-      const versions = JSON.parse(properties.versions);
+      const versions = JSON.parse(properties!.versions);
       expect(versions).toBeDefined();
 
       // Verify project info
-      const project = JSON.parse(properties.project);
+      const project = JSON.parse(properties!.project);
       expect(project).toStrictEqual(getTestCommandProjectInfo());
 
       expect(Object.keys(versions).length).toBeGreaterThan(0);
@@ -377,10 +379,10 @@ function verifyTestCommandTelemetryProcessor(
 
       if (envelope.data?.baseType === 'ExceptionData') {
         // Verify event name
-        expect(properties.eventName).toBe(CodedErrorEventName);
+        expect(envelope.name).toBe(CodedErrorEventName);
 
         // Verify exception info
-        const exceptions = envelope.data.baseData?.exceptions;
+        /*const exceptions = envelope.data.baseData?.exceptions;
         expect(exceptions).toBeDefined();
         expect(exceptions.length).toBe(1);
         expect(exceptions[0].message).toBeDefined();
@@ -390,10 +392,10 @@ function verifyTestCommandTelemetryProcessor(
           TelemetryTest.getPreserveErrorMessages()
             ? errorUtils.sanitizeErrorMessage(expectedError?.message || 'None')
             : '[Removed]',
-        );
+        );*/
 
         // Verify coded error info
-        const codedError = JSON.parse(properties.codedError);
+        const codedError = JSON.parse(envelope.data!.codedError);
         expect(codedError).toBeDefined();
 
         expect(codedError.type).toBe(
@@ -407,13 +409,12 @@ function verifyTestCommandTelemetryProcessor(
         );
       } else {
         // Verify event name
-        expect(envelope.data?.baseData?.name).toBe(CommandEventName);
-        expect(properties.eventName).toBe(CommandEventName);
+        expect(envelope.name).toBe(CommandEventName);
 
         // Verify command info
         const expectedInfo = getTestCommandStartInfo();
 
-        const command = JSON.parse(properties.command);
+        const command = JSON.parse(envelope.data!.command);
         expect(command).toBeDefined();
         expect(command.args).toStrictEqual(expectedInfo.args);
         expect(command.options).toStrictEqual(expectedInfo.options);
@@ -425,7 +426,8 @@ function verifyTestCommandTelemetryProcessor(
 
         // Verify extra props
         const extraProps = getExtraProps();
-        expect(JSON.parse(properties.extraProps)).toStrictEqual(extraProps);
+        let additionalDataString = JSON.parse(envelope.data?.additionalData);
+        expect(additionalDataString).toStrictEqual(extraProps);
       }
     } catch (ex) {
       caughtErrors.push(
@@ -454,7 +456,6 @@ test('Telemetry run test command end to end, verify event fires', async () => {
   });
 });
 
-/*
 const testTelemetryOptions = [
   {preserveErrorMessages: false},
   {preserveErrorMessages: true},
@@ -609,45 +610,45 @@ function a(s: string) {
 }
 
 /** Verifies the contents of an exception's message and stack frames */
-/*function getVerifyStackTelemetryProcessor(
+function getVerifyStackTelemetryProcessor(
   caughtErrors: Error[],
   expectedError: Error,
 ): (
   envelope: coreOneDS.ITelemetryItem,
 ) => boolean {
-  return (envelope, _) => {
+  return (envelope) => {
     try {
       // Processor has run, so the test can (potentially) pass
       TelemetryTest.setTestTelemetryProvidersRan();
 
-      if (envelope.data?.baseType === 'ExceptionData') {
-        const data = (envelope.data as any).baseData;
-        expect(data.exceptions).toBeDefined();
-        expect(data.exceptions.length).toBe(1);
-        expect(data.exceptions[0].message).toBeDefined();
-        expect(data.exceptions[0].message).not.toBe('');
+      // For now, assume that there is only one exception being captured
+      if (envelope.data!.baseType === 'ExceptionData') {
+        const data = (envelope.data as any);
+        expect(data.exceptionData).toBeDefined();
+        expect(data.exceptionData.message).toBeDefined();
+        expect(data.exceptionData.message).not.toBe('');
 
-        expect(data.exceptions[0].message).toBe(
+        expect(data.exceptionData.message).toBe(
           TelemetryTest.getPreserveErrorMessages()
             ? errorUtils.sanitizeErrorMessage(expectedError.message || 'None')
             : '[Removed]',
         );
 
-        const stack = data.exceptions[0].parsedStack;
+        const stack = data.exceptionData.parsedStack;
         expect(stack).toBeDefined();
         expect(stack.length).toBeGreaterThan(2);
 
         const filename = path.relative(process.cwd(), __filename);
-        expect(stack[0].method).toEqual('b');
-        expect(stack[1].method).toEqual('b');
-        expect(stack[2].method).toEqual('a');
-        expect(stack[0].fileName).toEqual(
+        expect(stack[0].functionName).toEqual('b');
+        expect(stack[1].functionName).toEqual('b');
+        expect(stack[2].functionName).toEqual('a');
+        expect(stack[0].filePath).toEqual(
           `[project_dir]\\???.ts(${filename.length})`,
         );
-        expect(stack[1].fileName).toEqual(
+        expect(stack[1].filePath).toEqual(
           `[project_dir]\\???.ts(${filename.length})`,
         );
-        expect(stack[2].fileName).toEqual(
+        expect(stack[2].filePath).toEqual(
           `[project_dir]\\???.ts(${filename.length})`,
         );
       }
@@ -710,4 +711,3 @@ test.each(testTelemetryOptions)(
     });
   },
 );
-*/
