@@ -2,6 +2,36 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 16 Aug 2024 05:13:08 GMT",
+      "version": "0.0.0-canary.231",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.231",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "4bb42ecfb44c91770c96357e8de9f7a749c15626",
+            "comment": "Bump minimum VS version to 17.11.0"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Aug 2024 05:14:31 GMT",
+      "version": "0.0.0-canary.230",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.230",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.100",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Aug 2024 05:16:48 GMT",
       "version": "0.0.0-canary.229",
       "tag": "@react-native-windows/cli_v0.0.0-canary.229",

@@ -1337,8 +1337,9 @@ void ComponentView::updateAccessibilityProps(
       m_uiaProvider, UIA_LiveSettingPropertyId, oldViewProps.accessibilityLiveRegion, newViewProps.accessibilityLiveRegion);
 }
 
-std::optional<std::string> ComponentView::getAcccessiblityValue() noexcept {
-  return std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue.text;
+std::optional<std::string> ComponentView::getAccessiblityValue() noexcept {
+  return winrt::Microsoft::ReactNative::implementation::extractAccessibilityValue(
+      std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue);
 }
 
 void ComponentView::setAcccessiblityValue(std::string &&value) noexcept {

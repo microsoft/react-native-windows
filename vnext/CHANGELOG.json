@@ -2,6 +2,81 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 20 Aug 2024 05:15:39 GMT",
+      "version": "0.0.0-canary.856",
+      "tag": "react-native-windows_v0.0.0-canary.856",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "1422161+marlenecota@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8271255b00a49a7af90ad682be46eca3855c95d2",
+            "comment": "Align <WarningLevel> across app/templates"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "fb590aafb7deec74f0a2b64848c1d987ccb0d416",
+            "comment": "[Fabric] Fixes a crash that happens on release builds"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 16 Aug 2024 05:13:08 GMT",
+      "version": "0.0.0-canary.855",
+      "tag": "react-native-windows_v0.0.0-canary.855",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4bb42ecfb44c91770c96357e8de9f7a749c15626",
+            "comment": "Bump minimum VS version to 17.11.0"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.231",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Aug 2024 05:14:30 GMT",
+      "version": "0.0.0-canary.854",
+      "tag": "react-native-windows_v0.0.0-canary.854",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1b4f560990a6c57adf2b31676da0bbbe2ceee97b",
+            "comment": "Add support for turbomodule eventemitters, and codegen"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b0285c891e5942923673948c91bc5ef42112aa42",
+            "comment": "Enforce StatusBarManger module aligns with Spec"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.230",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.100",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 10 Aug 2024 05:14:50 GMT",
       "version": "0.0.0-canary.853",
       "tag": "react-native-windows_v0.0.0-canary.853",

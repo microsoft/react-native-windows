@@ -122,6 +122,7 @@ function PressableFeedbackEvents() {
           testID="pressable_feedback_events_button"
           accessibilityLabel="pressable feedback events"
           accessibilityRole="button"
+          accessibilityValue={{text: "Press Me"}}
           // [Windows
           onFocus={() => appendEvent('focus')}
           onBlur={() => appendEvent('blur')}
@@ -959,7 +960,7 @@ const examples = [
             onPress={() => {}}
             importantForAccessibility="no-hide-descendants"
             accessibilityHint="Button"
-            accessibilityValue={0}>
+            accessibilityValue={{text: "Child Pressable"}}>
             <Text>Parent Pressable</Text>
             <Pressable onPress={() => {}}>
               <Text>Child Pressable</Text>

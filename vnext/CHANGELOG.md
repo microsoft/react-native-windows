@@ -1,8 +1,37 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 10 Aug 2024 05:14:50 GMT and should not be manually modified.
+This log was last generated on Tue, 20 Aug 2024 05:15:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.856
+
+Tue, 20 Aug 2024 05:15:39 GMT
+
+### Changes
+
+- Align <WarningLevel> across app/templates (1422161+marlenecota@users.noreply.github.com)
+- [Fabric] Fixes a crash that happens on release builds (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.855
+
+Fri, 16 Aug 2024 05:13:08 GMT
+
+### Changes
+
+- Bump minimum VS version to 17.11.0 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.231
+
+## 0.0.0-canary.854
+
+Wed, 14 Aug 2024 05:14:30 GMT
+
+### Changes
+
+- Add support for turbomodule eventemitters, and codegen (30809111+acoates-ms@users.noreply.github.com)
+- Enforce StatusBarManger module aligns with Spec (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.230
+- Bump @react-native-windows/codegen to v0.0.0-canary.100
 
 ## 0.0.0-canary.853
 

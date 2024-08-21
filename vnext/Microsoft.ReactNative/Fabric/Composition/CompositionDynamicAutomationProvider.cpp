@@ -125,6 +125,10 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_ProviderOptions(Prov
   return S_OK;
 }
 
+bool accessibilityValueHasValue(const facebook::react::AccessibilityValue &value) {
+  return (value.min.has_value() && value.max.has_value()) || value.now.has_value() || value.text.has_value();
+}
+
 HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTERNID patternId, IUnknown **pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
@@ -135,11 +139,15 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (strongView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
+  auto compositionView = strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+  if (compositionView == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
   auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
-  auto accessibilityRole = props->accessibilityRole;
+  auto accessibilityRole =
+      props->accessibilityRole.empty() ? compositionView->DefaultControlType() : props->accessibilityRole;
   // Invoke control pattern is used to support controls that do not maintain state
   // when activated but rather initiate or perform a single, unambiguous action.
   if (patternId == UIA_InvokePatternId &&
@@ -155,7 +163,15 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
-  if (patternId == UIA_ValuePatternId) {
+  if (patternId == UIA_ValuePatternId &&
+      (accessibilityRole == "textinput" || accessibilityRole == "searchbox" ||
+       (accessibilityRole == "button" && accessibilityValueHasValue(props->accessibilityValue)) ||
+       (accessibilityRole == "combobox" && accessibilityValueHasValue(props->accessibilityValue)) ||
+       (accessibilityRole == "link" && accessibilityValueHasValue(props->accessibilityValue)) ||
+       (accessibilityRole == "listitem" && accessibilityValueHasValue(props->accessibilityValue)) ||
+       (accessibilityRole == "progressbar" && accessibilityValueHasValue(props->accessibilityValue)) ||
+       (accessibilityRole == "adjustable" && accessibilityValueHasValue(props->accessibilityValue)) ||
+       (accessibilityRole == "spinbutton" && accessibilityValueHasValue(props->accessibilityValue)))) {
     *pRetVal = static_cast<IValueProvider *>(this);
     AddRef();
   }
@@ -413,7 +429,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_Value(BSTR *pRetVal)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   *pRetVal = StringToBSTR(winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
-                              ->getAcccessiblityValue()
+                              ->getAccessiblityValue()
                               .value_or(""));
   return S_OK;
 }
@@ -426,8 +442,24 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRe
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  *pRetVal = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
-                 ->getAcccessiblityIsReadOnly();
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  auto accessibilityRole = props->accessibilityRole;
+  if (accessibilityRole.empty()) {
+    // Control is using default control type. Use default IsReadOnly value.
+    *pRetVal = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
+                   ->getAcccessiblityIsReadOnly();
+  } else if (
+      accessibilityRole == "textinput" || accessibilityRole == "searchbox" || accessibilityRole == "adjustable" ||
+      accessibilityRole == "spinbutton" || accessibilityRole == "combobox") {
+    // Control is using customized control type which should not be IsReadOnly for value pattern.
+    *pRetVal = false;
+  } else {
+    // Control is using customized control type which should be IsReadOnly for value pattern.
+    *pRetVal = true;
+  }
   return S_OK;
 }
 

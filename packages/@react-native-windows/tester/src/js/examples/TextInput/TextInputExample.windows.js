@@ -830,6 +830,20 @@ const examples: Array<RNTesterModuleExample> = [
       );
     },
   },
+  {
+    title: 'Searchbox',
+    render: function (): React.Node {
+      return (
+        <View accessible testID="textinput-searchbox">
+          <ExampleTextInput
+            style={styles.singleLine}
+            accessibilityRole="searchbox"
+            defaultValue="Search"
+          />
+        </View>
+      );
+    },
+  },
   // Windows]
 ];
 
