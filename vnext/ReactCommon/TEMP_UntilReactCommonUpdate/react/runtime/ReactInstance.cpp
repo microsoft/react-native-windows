@@ -119,6 +119,10 @@ ReactInstance::ReactInstance(
   }
 
   runtimeScheduler_ = std::make_shared<RuntimeScheduler>(runtimeExecutor);
+  runtimeScheduler_->setPerformanceEntryReporter(
+      // FIXME: Move creation of PerformanceEntryReporter to here and guarantee
+      // that its lifetime is the same as the runtime.
+      PerformanceEntryReporter::getInstance().get());
 
   bufferedRuntimeExecutor_ = std::make_shared<BufferedRuntimeExecutor>(
       [runtimeScheduler = runtimeScheduler_.get()](
@@ -345,6 +349,8 @@ void ReactInstance::initializeRuntime(
 
     RuntimeSchedulerBinding::createAndInstallIfNeeded(
         runtime, runtimeScheduler_);
+
+    runtime_->unstable_initializeOnJsThread();
 
     defineReactInstanceFlags(runtime, options);
 

@@ -58,6 +58,39 @@ inline Color hostPlatformColorFromComponents(ColorComponents components) {
       /* .m_platformColor = */ {}};
 }
 
+inline Color hostPlatformColorFromRGBA(uint8_t r, uint8_t g, uint8_t b, uint8_t a) {
+  // Create ColorComponents from RGBA values normalized to the range [0.0f, 1.0f]
+  float ratio = 255.0f;
+  const auto colorComponents = ColorComponents{
+      .red = static_cast<float>(r) / ratio,
+      .green = static_cast<float>(g) / ratio,
+      .blue = static_cast<float>(b) / ratio,
+      .alpha = static_cast<float>(a) / ratio,
+  };
+
+  return hostPlatformColorFromComponents(colorComponents);
+}
+
+inline float alphaFromHostPlatformColor(Color color) {
+  float ratio = 255.0f;
+  return static_cast<float>(color.m_color.A) / ratio;
+}
+
+inline float redFromHostPlatformColor(Color color) {
+  float ratio = 255.0f;
+  return static_cast<float>(color.m_color.R) / ratio;
+}
+
+inline float greenFromHostPlatformColor(Color color) {
+  float ratio = 255.0f;
+  return static_cast<float>(color.m_color.G) / ratio;
+}
+
+inline float blueFromHostPlatformColor(Color color) {
+  float ratio = 255.0f;
+  return static_cast<float>(color.m_color.B) / ratio;
+}
+
 inline ColorComponents colorComponentsFromHostPlatformColor(Color color) {
   float ratio = 255;
   const auto windowsColor = color.AsWindowsColor();
