@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.75.0-nightly-20240618-5df5ed1a8",
+  "baseVersion": "0.76.0-nightly-20240701-9f6cb21ed",
   "overrides": [
     {
       "type": "derived",
@@ -62,10 +62,17 @@
       "issue": 5688
     },
     {
+      "type": "derived",
+      "file": "src/js/examples/Touchable/TouchableExample.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Touchable/TouchableExample.js",
+      "baseHash": "b91360dda9abf5e2b6f5d6d6a258c7e6f9b0b4d8",
+      "issue": 0
+    },
+    {
       "type": "patch",
       "file": "src/js/examples/TurboModule/SampleTurboModuleExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
-      "baseHash": "6e532e2e2fab2fd61b864f6ebe64d7725061043d",
+      "baseHash": "1fbce13cfa80201b10ce55bd05add3addb45d5a5",
       "issue": 0
     },
     {

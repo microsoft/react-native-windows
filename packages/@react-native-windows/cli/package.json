@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.226",
+  "version": "0.0.0-canary.232",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -17,10 +17,10 @@
     "watch": "rnw-scripts watch"
   },
   "dependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.97",
-    "@react-native-windows/fs": "^0.0.0-canary.53",
-    "@react-native-windows/package-utils": "^0.0.0-canary.79",
-    "@react-native-windows/telemetry": "^0.0.0-canary.104",
+    "@react-native-windows/codegen": "0.0.0-canary.100",
+    "@react-native-windows/fs": "^0.0.0-canary.55",
+    "@react-native-windows/package-utils": "^0.0.0-canary.81",
+    "@react-native-windows/telemetry": "^0.0.0-canary.106",
     "@xmldom/xmldom": "^0.7.7",
     "chalk": "^4.1.0",
     "cli-spinners": "^2.2.0",
@@ -34,17 +34,16 @@
     "semver": "^7.3.2",
     "shelljs": "^0.8.4",
     "username": "^5.1.0",
-    "uuid": "^3.3.2",
     "xml-formatter": "^2.4.0",
     "xml-parser": "^1.2.1",
     "xpath": "^0.0.27"
   },
   "devDependencies": {
-    "@react-native-community/cli-doctor": "14.0.0-alpha.2",
-    "@react-native-community/cli-types": "14.0.0-alpha.2",
-    "@rnw-scripts/eslint-config": "1.2.24",
+    "@react-native-community/cli-doctor": "14.0.0-alpha.11",
+    "@react-native-community/cli-types": "14.0.0-alpha.11",
+    "@rnw-scripts/eslint-config": "1.2.26",
     "@rnw-scripts/jest-unittest-config": "1.5.8",
-    "@rnw-scripts/just-task": "2.3.41",
+    "@rnw-scripts/just-task": "2.3.43",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/chalk": "^2.2.0",
     "@types/jest": "^29.2.2",
@@ -55,7 +54,6 @@
     "@types/prompts": "2.0.10",
     "@types/semver": "^7.3.3",
     "@types/shelljs": "^0.8.8",
-    "@types/uuid": "^8.3.0",
     "@types/xml-parser": "^1.2.29",
     "@types/xmldom": "^0.1.30",
     "@typescript-eslint/eslint-plugin": "^5.30.5",

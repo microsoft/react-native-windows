@@ -1,8 +1,144 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 18 Jul 2024 05:15:23 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Aug 2024 05:14:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.857
+
+Wed, 21 Aug 2024 05:14:40 GMT
+
+### Changes
+
+- [Fabric] Fix crash when running inspect (30809111+acoates-ms@users.noreply.github.com)
+- Update templates to calculate rnwPath for *.sln files (jthysell@microsoft.com)
+- Adjust Support for IValueProvider (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.232
+
+## 0.0.0-canary.856
+
+Tue, 20 Aug 2024 05:15:39 GMT
+
+### Changes
+
+- Align <WarningLevel> across app/templates (1422161+marlenecota@users.noreply.github.com)
+- [Fabric] Fixes a crash that happens on release builds (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.855
+
+Fri, 16 Aug 2024 05:13:08 GMT
+
+### Changes
+
+- Bump minimum VS version to 17.11.0 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.231
+
+## 0.0.0-canary.854
+
+Wed, 14 Aug 2024 05:14:30 GMT
+
+### Changes
+
+- Add support for turbomodule eventemitters, and codegen (30809111+acoates-ms@users.noreply.github.com)
+- Enforce StatusBarManger module aligns with Spec (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.230
+- Bump @react-native-windows/codegen to v0.0.0-canary.100
+
+## 0.0.0-canary.853
+
+Sat, 10 Aug 2024 05:14:50 GMT
+
+### Changes
+
+- Setup reactnativewin32 app (10109130+sharath2727@users.noreply.github.com)
+
+## 0.0.0-canary.852
+
+Thu, 08 Aug 2024 05:16:50 GMT
+
+### Changes
+
+- Integrate 7/1 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.229
+- Bump @react-native-windows/codegen to v0.0.0-canary.99
+- Bump @rnw-scripts/eslint-config to v1.2.26
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.30
+- Bump @rnw-scripts/just-task to v2.3.43
+- Bump react-native-platform-override to v1.9.45
+
+## 0.0.0-canary.851
+
+Wed, 07 Aug 2024 05:15:04 GMT
+
+### Changes
+
+- [Fabric] Custom ShadowNode's are never released (30809111+acoates-ms@users.noreply.github.com)
+- Implement SampleTurboModule (jthysell@microsoft.com)
+
+## 0.0.0-canary.850
+
+Tue, 06 Aug 2024 05:15:23 GMT
+
+### Changes
+
+- Add Support for AccessibilityPosInSet (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.849
+
+Fri, 02 Aug 2024 05:15:48 GMT
+
+### Changes
+
+- Upgrade to boost 1.83 (julio.rocha@microsoft.com)
+
+## 0.0.0-canary.848
+
+Thu, 01 Aug 2024 18:42:00 GMT
+
+### Changes
+
+- add version checks for uses of XamlRoot (julie@vendora.io)
+
+## 0.0.0-canary.847
+
+Sat, 27 Jul 2024 05:13:53 GMT
+
+### Changes
+
+- Make appearanceChanged event consistent with Android/iOS (erozell@outlook.com)
+
+## 0.0.0-canary.846
+
+Fri, 26 Jul 2024 05:14:21 GMT
+
+### Changes
+
+- Use Node's UUIDv4 implementation (4123478+tido64@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.228
+
+## 0.0.0-canary.845
+
+Thu, 25 Jul 2024 05:13:50 GMT
+
+### Changes
+
+- Don't override Hermes platform for ARM64EC (julio.rocha@microsoft.com)
+- Increase method effective parameters to 8 (10109130+sharath2727@users.noreply.github.com)
+
+## 0.0.0-canary.844
+
+Wed, 24 Jul 2024 05:24:33 GMT
+
+### Changes
+
+- Fix flyout (tatianakapos@microsoft.com)
+- integrate 6/14 (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.227
+- Bump @react-native-windows/codegen to v0.0.0-canary.98
+- Bump @rnw-scripts/eslint-config to v1.2.25
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.29
+- Bump @rnw-scripts/just-task to v2.3.42
+- Bump react-native-platform-override to v1.9.44
 
 ## 0.0.0-canary.843
 

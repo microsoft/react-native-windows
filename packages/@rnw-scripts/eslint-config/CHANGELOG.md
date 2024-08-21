@@ -1,8 +1,24 @@
 # Change Log - @rnw-scripts/eslint-config
 
-This log was last generated on Wed, 10 Jul 2024 05:15:29 GMT and should not be manually modified.
+This log was last generated on Thu, 08 Aug 2024 05:16:49 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.2.26
+
+Thu, 08 Aug 2024 05:16:49 GMT
+
+### Patches
+
+- Integrate 7/1 (jthysell@microsoft.com)
+
+## 1.2.25
+
+Wed, 24 Jul 2024 05:24:31 GMT
+
+### Patches
+
+- integrate 6/14 (yajurgrover24@gmail.com)
 
 ## 1.2.24
 

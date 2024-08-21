@@ -1323,10 +1323,20 @@ void ComponentView::updateAccessibilityProps(
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       m_uiaProvider, UIA_HelpTextPropertyId, oldViewProps.accessibilityHint, newViewProps.accessibilityHint);
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      m_uiaProvider,
+      UIA_PositionInSetPropertyId,
+      oldViewProps.accessibilityPosInSet,
+      newViewProps.accessibilityPosInSet);
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      m_uiaProvider, UIA_SizeOfSetPropertyId, oldViewProps.accessibilitySetSize, newViewProps.accessibilitySetSize);
 }
 
-std::optional<std::string> ComponentView::getAcccessiblityValue() noexcept {
-  return std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue.text;
+std::optional<std::string> ComponentView::getAccessiblityValue() noexcept {
+  return winrt::Microsoft::ReactNative::implementation::extractAccessibilityValue(
+      std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue);
 }
 
 void ComponentView::setAcccessiblityValue(std::string &&value) noexcept {

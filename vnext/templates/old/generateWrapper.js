@@ -41,9 +41,9 @@ function makeGenerateWindowsWrapper(
       language,
       projectType,
       experimentalNuGetDependency:
-        experimentalFeatures?.UseExperimentalNuget ?? false,
-      useWinUI3: experimentalFeatures?.UseWinUI3 ?? false,
-      useHermes: experimentalFeatures?.UseHermes ?? true,
+        experimentalFeatures?.UseExperimentalNuget === 'true' ?? false,
+      useWinUI3: experimentalFeatures?.UseWinUI3 === 'true' ?? false,
+      useHermes: experimentalFeatures?.UseHermes === 'true' ?? true,
       useDevMode: rnwInfo.devMode,
       verbose: !!options.logging,
       telemetry: !!options.telemetry,

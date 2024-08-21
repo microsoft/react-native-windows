@@ -1,8 +1,127 @@
 # Change Log - @react-native-windows/automation
 
-This log was last generated on Thu, 18 Jul 2024 05:15:24 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Aug 2024 05:14:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.3.279
+
+Wed, 21 Aug 2024 05:14:41 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.197
+
+## 0.3.278
+
+Tue, 20 Aug 2024 05:15:39 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.196
+
+## 0.3.277
+
+Fri, 16 Aug 2024 05:13:08 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.195
+
+## 0.3.276
+
+Wed, 14 Aug 2024 05:14:31 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.194
+
+## 0.3.275
+
+Sat, 10 Aug 2024 05:14:50 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.193
+
+## 0.3.274
+
+Thu, 08 Aug 2024 05:16:50 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.192
+- Bump @react-native-windows/fs to v0.0.0-canary.55
+- Bump @rnw-scripts/eslint-config to v1.2.26
+- Bump @rnw-scripts/just-task to v2.3.43
+
+## 0.3.273
+
+Wed, 07 Aug 2024 05:15:04 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.191
+
+## 0.3.272
+
+Tue, 06 Aug 2024 05:15:24 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.190
+
+## 0.3.271
+
+Fri, 02 Aug 2024 05:15:48 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.189
+
+## 0.3.270
+
+Thu, 01 Aug 2024 18:42:00 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.188
+
+## 0.3.269
+
+Sat, 27 Jul 2024 05:13:54 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.187
+
+## 0.3.268
+
+Fri, 26 Jul 2024 05:14:22 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.186
+
+## 0.3.267
+
+Thu, 25 Jul 2024 05:13:51 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.185
+
+## 0.3.266
+
+Wed, 24 Jul 2024 05:24:35 GMT
+
+### Patches
+
+- integrate 0.75.0-nightly-20240618-5df5ed1a8 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.12.184
+- Bump @react-native-windows/fs to v0.0.0-canary.54
+- Bump @rnw-scripts/eslint-config to v1.2.25
+- Bump @rnw-scripts/just-task to v2.3.42
 
 ## 0.3.265
 

@@ -84,6 +84,8 @@ void ReactModuleBuilderMock::AddSyncMethod(hstring const &name, SyncMethodDelega
   m_syncMethods.emplace(name, method);
 }
 
+void ReactModuleBuilderMock::AddEventEmitter(hstring const &, EventEmitterInitializerDelegate const &) noexcept {}
+
 JSValueObject ReactModuleBuilderMock::GetConstants() noexcept {
   auto constantWriter = MakeJSValueTreeWriter();
   constantWriter.WriteObjectBegin();

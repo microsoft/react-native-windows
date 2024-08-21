@@ -73,7 +73,7 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
 
   void UpdateProps(
       const winrt::Microsoft::ReactNative::IComponentProps &props,
-      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) {
+      const winrt::Microsoft::ReactNative::IComponentProps & /*oldProps*/) {
     auto myProps = props.as<CustomXamlComponentProps>();
 #ifdef USE_EXPERIMENTAL_WINUI3
     m_buttonLabelTextBlock.Text(myProps->label);
@@ -160,8 +160,7 @@ struct CustomComponent : CustomComponentT<CustomComponent> {
           if (m_state) {
             auto state = winrt::get_self<CustomXamlComponentStateData>(m_state.Data());
             if (desiredSize != state->desiredSize) {
-              m_state.UpdateStateWithMutation([desiredSize](winrt::Windows::Foundation::IInspectable data) {
-                auto oldData = winrt::get_self<CustomXamlComponentStateData>(data);
+              m_state.UpdateStateWithMutation([desiredSize](winrt::Windows::Foundation::IInspectable /*data*/) {
                 return winrt::make<CustomXamlComponentStateData>(desiredSize);
               });
             }

@@ -64,7 +64,7 @@ struct EllipseImageHandler
       const winrt::Microsoft::ReactNative::Composition::ImageSource &imageSource) {
     co_return winrt::Microsoft::ReactNative::Composition::Experimental::UriBrushFactoryImageResponse(
         [uri = imageSource.Uri(), size = imageSource.Size(), scale = imageSource.Scale(), context](
-            const winrt::Microsoft::ReactNative::IReactContext &reactContext,
+            const winrt::Microsoft::ReactNative::IReactContext & /*reactContext*/,
             const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compositionContext)
             -> winrt::Microsoft::ReactNative::Composition::Experimental::IBrush {
           auto compositor = winrt::Microsoft::ReactNative::Composition::Experimental::
@@ -405,7 +405,7 @@ struct WindowData {
     }
   }
 
-  LRESULT TranslateMessage(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
+  LRESULT TranslateMessage(HWND /*hwnd*/, UINT message, WPARAM wparam, LPARAM lparam) noexcept {
     if (!m_useLiftedComposition && m_compRootView) {
       return static_cast<LRESULT>(
           m_compRootView.as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>()
@@ -577,6 +577,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
         shouldPostQuitMessage = false;
         auto async = data->m_host.UnloadInstance();
         async.Completed([host = data->m_host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          asyncStatus;
           assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
           host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
         });
@@ -591,14 +592,13 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
     }
     case WM_NCCREATE: {
       auto cs = reinterpret_cast<CREATESTRUCT *>(lparam);
-      auto windowData = static_cast<WindowData *>(cs->lpCreateParams);
+      windowData = static_cast<WindowData *>(cs->lpCreateParams);
       WINRT_ASSERT(windowData);
       SetProp(hwnd, WindowDataProperty, reinterpret_cast<HANDLE>(windowData));
       break;
     }
     case WM_GETOBJECT: {
       if (!windowData->m_useLiftedComposition && lparam == UiaRootObjectId) {
-        auto windowData = WindowData::GetFromWindow(hwnd);
         if (windowData == nullptr || !windowData->m_compRootView)
           break;
 
@@ -612,7 +612,6 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
       }
     }
     case WM_WINDOWPOSCHANGED: {
-      auto windowData = WindowData::GetFromWindow(hwnd);
       windowData->UpdateSize(hwnd);
 
       winrt::Microsoft::ReactNative::ReactNotificationService rns(windowData->InstanceSettings().Notifications());
@@ -626,7 +625,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
 
 constexpr PCWSTR c_windowClassName = L"MS_REACTNATIVE_PLAYGROUND_COMPOSITION";
 
-int RunPlayground(int showCmd, bool useWebDebugger) {
+int RunPlayground(int showCmd, bool /*useWebDebugger*/) {
   constexpr PCWSTR appName = L"React Native Playground (Composition)";
 
   auto windowData = std::make_unique<WindowData>();
@@ -650,8 +649,6 @@ int RunPlayground(int showCmd, bool useWebDebugger) {
   ShowWindow(hwnd, showCmd);
   UpdateWindow(hwnd);
   SetFocus(hwnd);
-
-  HACCEL hAccelTable = LoadAccelerators(WindowData::s_instance, MAKEINTRESOURCE(IDC_PLAYGROUND_COMPOSITION));
 
   g_liftedDispatcherQueueController.DispatcherQueue().RunEventLoop();
 

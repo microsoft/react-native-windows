@@ -1033,6 +1033,8 @@ exports[`snapshotAllPages Accessibility Windows 5`] = `
 exports[`snapshotAllPages ActivityIndicator 1`] = `
 <ActivityIndicator
   accessibilityLabel="Wait for content to load!"
+  accessibilityPosInSet={1}
+  accessibilitySetSize={1}
   accessible={true}
   color="white"
   style={
@@ -11432,7 +11434,7 @@ exports[`snapshotAllPages Filter 7`] = `
           {
             "experimental_filter": [
               {
-                "hueRotate": "-90deg",
+                "hue-rotate": "-90deg",
               },
             ],
           },
@@ -11519,7 +11521,7 @@ exports[`snapshotAllPages Filter 7`] = `
           {
             "experimental_filter": [
               {
-                "hueRotate": "-90deg",
+                "hue-rotate": "-90deg",
               },
             ],
           },
@@ -27400,7 +27402,7 @@ exports[`snapshotAllPages Pressable 3`] = `
           "max": undefined,
           "min": undefined,
           "now": undefined,
-          "text": undefined,
+          "text": "Press Me",
         }
       }
       accessible={true}
@@ -29422,7 +29424,7 @@ exports[`snapshotAllPages Pressable 20`] = `
         "max": undefined,
         "min": undefined,
         "now": undefined,
-        "text": undefined,
+        "text": "Child Pressable",
       }
     }
     accessible={true}
@@ -29735,6 +29737,137 @@ exports[`snapshotAllPages Pressable 21`] = `
         Back
       </Text>
     </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Pressable 22`] = `
+<View
+  accessible={true}
+  testID="pressable_set"
+>
+  <View
+    accessibilityPosInSet={1}
+    accessibilitySetSize={3}
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+  >
+    <Text>
+      Pressable 1 of 3
+    </Text>
+  </View>
+  <View
+    accessibilityPosInSet={2}
+    accessibilitySetSize={3}
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+  >
+    <Text>
+      Pressable 2 of 3
+    </Text>
+  </View>
+  <View
+    accessibilityPosInSet={3}
+    accessibilitySetSize={3}
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+  >
+    <Text>
+      Pressable 3 of 3
+    </Text>
   </View>
 </View>
 `;
@@ -51656,7 +51789,9 @@ exports[`snapshotAllPages Switch 8`] = `
     <RCTSwitch
       accessibilityHint="Switch"
       accessibilityLabel="This is a Switch"
+      accessibilityPosInSet={1}
       accessibilityRole="switch"
+      accessibilitySetSize={4}
       accessible={true}
       focusable={true}
       nativeID="accessibility-switch"
@@ -51674,7 +51809,9 @@ exports[`snapshotAllPages Switch 8`] = `
     <RCTSwitch
       accessibilityHint="Switch"
       accessibilityLabel="This is a Switch with focusable set to false"
+      accessibilityPosInSet={2}
       accessibilityRole="switch"
+      accessibilitySetSize={4}
       accessible={true}
       focusable={true}
       onChange={[Function]}
@@ -51702,7 +51839,9 @@ exports[`snapshotAllPages Switch 8`] = `
     <RCTSwitch
       accessibilityHint="Switch"
       accessibilityLabel="This is a Switch with accessible set to false"
+      accessibilityPosInSet={3}
       accessibilityRole="switch"
+      accessibilitySetSize={4}
       accessible={true}
       focusable={true}
       onChange={[Function]}
@@ -51719,7 +51858,9 @@ exports[`snapshotAllPages Switch 8`] = `
     <RCTSwitch
       accessibilityHint="Switch"
       accessibilityLabel="This is a Switch with focusable and accessible set to false"
+      accessibilityPosInSet={4}
       accessibilityRole="switch"
+      accessibilitySetSize={4}
       accessible={true}
       focusable={true}
       onChange={[Function]}
@@ -56045,6 +56186,8 @@ exports[`snapshotAllPages Text 40`] = `
   <Text
     accessibilityHint="Text"
     accessibilityLabel="This text has customized accessibility"
+    accessibilityPosInSet={1}
+    accessibilitySetSize={1}
     nativeID="text-accessibility"
   >
     This text has customized accessibility.
@@ -62650,6 +62793,117 @@ exports[`snapshotAllPages TextInput 41`] = `
 </View>
 `;
 
+exports[`snapshotAllPages TextInput 42`] = `
+<View
+  accessible={true}
+  testID="textinput-set"
+>
+  <TextInput
+    accessibilityPosInSet={1}
+    accessibilitySetSize={3}
+    placeholder="TextInput 1 in Set of 3"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+  />
+  <TextInput
+    accessibilityPosInSet={2}
+    accessibilitySetSize={3}
+    placeholder="TextInput 2 in Set of 3"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+  />
+  <TextInput
+    accessibilityPosInSet={3}
+    accessibilitySetSize={3}
+    placeholder="TextInput 3 in Set of 3"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 43`] = `
+<View
+  accessible={true}
+  testID="textinput-searchbox"
+>
+  <TextInput
+    accessibilityRole="searchbox"
+    defaultValue="Search"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+  />
+</View>
+`;
+
 exports[`snapshotAllPages TextInputs with key prop 1`] = `
 <View>
   <TextInput
@@ -63743,6 +63997,124 @@ exports[`snapshotAllPages Timers 1`] = `
       0
     </Text>
   </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "#d3d3d3",
+          "borderColor": "#696969",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "margin": 5,
+          "padding": 10,
+        },
+        false,
+      ]
+    }
+  >
+    <Text>
+      Measure: 
+      setTimeout
+      (
+      fn, 200
+      ) - 
+      0
+    </Text>
+  </View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "#d3d3d3",
+          "borderColor": "#696969",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "margin": 5,
+          "padding": 10,
+        },
+        false,
+      ]
+    }
+  >
+    <Text>
+      Measure: 
+      setTimeout
+      (
+      fn, 500
+      ) - 
+      0
+    </Text>
+  </View>
 </View>
 `;
 
@@ -64723,7 +65095,7 @@ exports[`snapshotAllPages Touchable* and onPress 8`] = `
           "max": undefined,
           "min": undefined,
           "now": undefined,
-          "text": undefined,
+          "text": "Press Me",
         }
       }
       accessible={true}
@@ -65435,6 +65807,119 @@ exports[`snapshotAllPages Touchable* and onPress 14`] = `
       Enabled TouchableWithoutFeedback
     </Text>
   </View>
+</View>
+`;
+
+exports[`snapshotAllPages Touchable* and onPress 15`] = `
+<View
+  accessible={true}
+  testID="touchable_set"
+>
+  <View
+    accessibilityPosInSet={1}
+    accessibilitySetSize={3}
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+  >
+    <Text>
+      Touchable Highlight (Control 1 in Set of 3)
+    </Text>
+  </View>
+  <View
+    accessibilityPosInSet={2}
+    accessibilitySetSize={3}
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      {
+        "opacity": 1,
+      }
+    }
+  >
+    <Text>
+      Touchable Opacity (Control 2 in Set of 3)
+    </Text>
+  </View>
+  <Text
+    accessibilityPosInSet={3}
+    accessibilitySetSize={3}
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+  >
+    TouchableWithoutFeedback (Control 3 in Set of 3)
+  </Text>
 </View>
 `;
 
@@ -67813,8 +68298,14 @@ exports[`snapshotAllPages View 21`] = `
   }
   accessibilityHint="Accessibility Hint"
   accessibilityLabel="A View with accessibility values"
+  accessibilityPosInSet={1}
   accessibilityRole="button"
-  accessibilityValue={0}
+  accessibilitySetSize={1}
+  accessibilityValue={
+    {
+      "now": 0,
+    }
+  }
   accessible={true}
   focusable={true}
   onAccessibilityAction={[Function]}
@@ -67833,6 +68324,18 @@ exports[`snapshotAllPages View 21`] = `
   >
     <Text>
       This element should be hidden from accessibility.
+    </Text>
+  </View>
+  <View
+    accessibilityValue={
+      {
+        "now": 0,
+      }
+    }
+    accessible={true}
+  >
+    <Text>
+      This sub-view should not have an accessibility value. It's control type does not support the value pattern.
     </Text>
   </View>
 </View>

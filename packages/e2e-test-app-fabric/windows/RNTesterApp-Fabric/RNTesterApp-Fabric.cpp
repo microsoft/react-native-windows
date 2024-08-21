@@ -115,7 +115,8 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
   return host;
 }
 
-_Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
+_Use_decl_annotations_ int CALLBACK
+WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int /* showCmd */) {
   // Initialize WinRT.
   winrt::init_apartment(winrt::apartment_type::single_threaded);
 
@@ -162,11 +163,12 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   // Quit application when main window is closed
   window.Destroying(
-      [host](winrt::Microsoft::UI::Windowing::AppWindow const &window, winrt::IInspectable const & /*args*/) {
+      [host](winrt::Microsoft::UI::Windowing::AppWindow const & /*window*/, winrt::IInspectable const & /*args*/) {
         // Before we shutdown the application - unload the ReactNativeHost to give the javascript a chance to save any
         // state
         auto async = host.UnloadInstance();
         async.Completed([host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          asyncStatus;
           assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
           host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
         });
@@ -222,6 +224,16 @@ void InsertNumberValueIfNotDefault(
     winrt::hstring name,
     float value,
     float defaultValue = 0.0f) {
+  if (value != defaultValue) {
+    obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateNumberValue(value));
+  }
+}
+
+void InsertIntValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    int value,
+    int defaultValue = 0) {
   if (value != defaultValue) {
     obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateNumberValue(value));
   }
@@ -292,6 +304,10 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   BOOL isKeyboardFocusable;
   BSTR localizedControlType;
   BSTR name;
+  int positionInSet = 0;
+  int sizeOfSet = 0;
+  BSTR value;
+  BOOL isReadOnly;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -300,6 +316,13 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   pTarget->get_CurrentIsKeyboardFocusable(&isKeyboardFocusable);
   pTarget->get_CurrentLocalizedControlType(&localizedControlType);
   pTarget->get_CurrentName(&name);
+  IUIAutomationElement4 *pTarget4;
+  HRESULT hr = pTarget->QueryInterface(__uuidof(IUIAutomationElement4), reinterpret_cast<void **>(&pTarget4));
+  if (SUCCEEDED(hr) && pTarget4) {
+    pTarget4->get_CurrentPositionInSet(&positionInSet);
+    pTarget4->get_CurrentSizeOfSet(&sizeOfSet);
+    pTarget4->Release();
+  }
   result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
   result.Insert(L"ControlType", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(controlType));
   InsertStringValueIfNotEmpty(result, L"HelpText", helpText);
@@ -308,7 +331,21 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   result.Insert(
       L"LocalizedControlType", winrt::Windows::Data::Json::JsonValue::CreateStringValue(localizedControlType));
   InsertStringValueIfNotEmpty(result, L"Name", name);
-
+  InsertIntValueIfNotDefault(result, L"PositionInSet", positionInSet);
+  InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
+  IValueProvider *valuePattern;
+  hr = pTarget->GetCurrentPattern(UIA_ValuePatternId, reinterpret_cast<IUnknown **>(&valuePattern));
+  if (SUCCEEDED(hr) && valuePattern) {
+    hr = valuePattern->get_Value(&value);
+    if (SUCCEEDED(hr)) {
+      InsertStringValueIfNotEmpty(result, L"ValuePattern.Value", value);
+    }
+    hr = valuePattern->get_IsReadOnly(&isReadOnly);
+    if (SUCCEEDED(hr)) {
+      InsertBooleanValueIfNotDefault(result, L"ValuePattern.IsReadOnly", isReadOnly, true);
+    }
+    valuePattern->Release();
+  }
   IUIAutomationElement *pChild;
   IUIAutomationElement *pSibling;
   pWalker->GetFirstChildElement(pTarget, &pChild);
@@ -334,7 +371,8 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeHelper(winrt::Windows::Data::J
   IUIAutomationElement *pRootElement;
   IUIAutomationTreeWalker *pWalker;
 
-  CoCreateInstance(__uuidof(CUIAutomation8), nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pAutomation));
+  winrt::check_hresult(
+      CoCreateInstance(__uuidof(CUIAutomation8), nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pAutomation)));
   pAutomation->get_ContentViewWalker(&pWalker);
   pAutomation->ElementFromHandle(global_hwnd, &pRootElement);
 

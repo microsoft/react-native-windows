@@ -269,6 +269,12 @@ describe('TextInput Tests', () => {
     const dump = await dumpVisualTree('textinput-readyonly');
     expect(dump).toMatchSnapshot();
   });
+  test('TextInputs can be defined as a set using accessibilityPosInSet and accessibilitySetSize', async () => {
+    const component = await app.findElementByTestID('textinput-set');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-set');
+    expect(dump).toMatchSnapshot();
+  });
   test('TextInputs can clear on submit', async () => {
     const component = await app.findElementByTestID(
       'textinput-clear-on-submit',
@@ -795,6 +801,12 @@ describe('TextInput Tests', () => {
       },
     );
     const dump = await dumpVisualTree('textinput-cursorColor');
+    expect(dump).toMatchSnapshot();
+  });
+  test('TextInputs which have a searchbox role should also support the value pattern.', async () => {
+    const component = await app.findElementByTestID('textinput-searchbox');
+    await component.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('textinput-searchbox');
     expect(dump).toMatchSnapshot();
   });
 });
