@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "integrate react native nightly 7-19",
-  "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}

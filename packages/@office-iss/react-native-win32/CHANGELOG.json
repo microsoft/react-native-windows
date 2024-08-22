@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Thu, 22 Aug 2024 05:24:27 GMT",
+      "version": "0.0.0-canary.259",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.259",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "bccbec07eeeda80b870765f2b207a6616b69732b",
+            "comment": "integrate react native nightly 7-19"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Aug 2024 05:16:47 GMT",
       "version": "0.0.0-canary.258",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.258",
