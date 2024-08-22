@@ -54,14 +54,14 @@ namespace Microsoft.ReactNative
   delegate Object InitialStateDataFactory(IComponentProps props);
 
   [experimental]
-  DOC_STRING("Provides a factory method to create an instance of a ComponentView. See @IReactViewComponentBuilder.SetCreateView")
-  delegate ComponentView ComponentViewFactory(CreateComponentViewArgs args);
+  DOC_STRING("Provides a method to initialize an instance of a ComponentView. See @IReactViewComponentBuilder.SetComponentViewInitializer")
+  delegate void ComponentViewInitializer(ComponentView view);
 
   [webhosthidden]
   [experimental]
   interface IReactViewComponentBuilder
   {
-    void SetCreateComponentView(ComponentViewFactory impl);
+    void SetComponentViewInitializer(ComponentViewInitializer initializer);
 
     DOC_STRING("Create an implementation of your custom Props type that will be passed to your components @Composition.ICompositionViewComponent.UpdateProps method.")
     void SetCreateProps(ViewPropsFactory impl);
@@ -73,7 +73,13 @@ namespace Microsoft.ReactNative
     void SetLayoutHandler(LayoutHandler impl);
   };
 
+  // [exclusiveto(ShadowNode)]
+  // [uuid(BF2A2A64-AB8B-47FC-BE69-E31DE6FC29A4)]
+  // interface IShadowNodeFactory
+  // {
+  // }
 
+  // [composable(IShadowNodeFactory, protected)]
   [webhosthidden]
   [experimental]
   unsealed runtimeclass ShadowNode

@@ -36,6 +36,8 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
 
   RootComponentView *rootComponentView() noexcept override;
 
+  winrt::Microsoft::UI::Content::ContentIsland parentContentIsland() noexcept;
+
   // Index that visuals can be inserted into OuterVisual for debugging UI
   uint32_t overlayIndex() noexcept;
   void start(const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept;

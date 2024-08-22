@@ -24,21 +24,18 @@
 #include <DesktopWindowBridge.h>
 #include "App.xaml.h"
 #include "AutoDraw.h"
+#include "DrawingIsland.h"
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 
-#if USE_WINUI3
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Microsoft.UI.Composition.interop.h>
 #include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Microsoft.UI.Windowing.h>
 #include <winrt/Microsoft.UI.interop.h>
-#endif
 
-#if USE_WINUI3
 winrt::Microsoft::UI::Dispatching::DispatcherQueueController g_liftedDispatcherQueueController{nullptr};
 winrt::Microsoft::UI::Composition::Compositor g_liftedCompositor{nullptr};
-#endif
 
 void RegisterCustomComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept;
 
@@ -105,7 +102,10 @@ struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-    RegisterCustomComponent(packageBuilder);
+    // Replace RegisterDrawingIslandComponentView with RegisterCustomComponent when we have better XamlIsland hosting
+    // support
+    RegisterDrawingIslandComponentView(packageBuilder);
+    // RegisterCustomComponent(packageBuilder);
   }
 };
 
@@ -225,12 +225,7 @@ struct WindowData {
           winrt::Microsoft::ReactNative::HttpSettings::SetDefaultUserAgent(
               host.InstanceSettings(), L"React Native Windows Playground");
 
-          // Currently there is only SystemVisualSiteBridge which supports hosing ContentIslands within System
-          // Composition So our custom components do not run when running on lifted composition. This can be enabled in
-          // lifted once we have a VisualSiteBridge that works in lifted
-          if (!m_useLiftedComposition) {
-            host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
-          }
+          host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
           winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
               host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
@@ -333,15 +328,6 @@ struct WindowData {
               m_compRootView.Arrange(contraints, {0, 0});
             }
           }
-
-          /*
-           * Uncomment this to run using the bridge.  This isn't publicly exposed, and isn't a mode that we will
-           * support (Fabric will always be bridgeless for windows.)  But it can be useful for internal bug diagnosis.
-           */
-          /*
-          winrt::Microsoft::ReactNative::ReactPropertyBag{host.InstanceSettings().Properties()}.Set(
-              winrt::Microsoft::ReactNative::ReactPropertyId<bool>(L"ReactNative", L"IsBridgeless"), true);
-          */
 
           // Nudge the ReactNativeHost to create the instance and wrapping context
           host.ReloadInstance();
@@ -699,7 +685,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
           winrt::put_abi(g_dispatcherQueueController))));
   g_compositor = winrt::Windows::UI::Composition::Compositor();
 
-#ifdef USE_WINUI3
   // Create a Lifted (WinAppSDK) DispatcherQueue for this thread.  This is needed for
   // Microsoft.UI.Composition, Content, and Input APIs.
   g_liftedDispatcherQueueController =
@@ -710,8 +695,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 #ifdef USE_EXPERIMENTAL_WINUI3
   // Island-support: Create our custom Xaml App object. This is needed to properly use the controls and metadata
   // in Microsoft.ui.xaml.controls.dll.
-  auto playgroundApp{winrt::make<winrt::Playground::implementation::App>()};
-#endif
+  // auto playgroundApp{winrt::make<winrt::Playground::implementation::App>()};
 #endif
 
   return RunPlayground(showCmd, false);

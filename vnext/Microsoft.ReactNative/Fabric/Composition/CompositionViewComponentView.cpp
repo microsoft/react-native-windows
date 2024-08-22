@@ -31,46 +31,12 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-CreateCompositionComponentViewArgs::CreateCompositionComponentViewArgs(
-    const winrt::Microsoft::ReactNative::IReactContext &reactContext,
-    facebook::react::Tag tag,
-    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compositionContext)
-    : base_type(reactContext, tag), m_compositionContext(compositionContext){};
-
-winrt::Microsoft::UI::Composition::Compositor CreateCompositionComponentViewArgs::Compositor() const noexcept {
-  return winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(ReactContext().Properties());
-}
-
-winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext
-CreateCompositionComponentViewArgs::CompositionContext() const noexcept {
-  return m_compositionContext;
-}
-
-ComponentViewFeatures CreateCompositionComponentViewArgs::Features() const noexcept {
-  return m_features;
-}
-
-void CreateCompositionComponentViewArgs::Features(ComponentViewFeatures value) noexcept {
-  m_features = value;
-}
-
-ComponentView::ComponentView(const winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs &args)
-    : ComponentView(
-          winrt::get_self<
-              winrt::Microsoft::ReactNative::Composition::implementation::CreateCompositionComponentViewArgs>(args)
-              ->CompositionContext(),
-          args.Tag(),
-          args.ReactContext(),
-          args.Features(),
-          true) {}
-
 ComponentView::ComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,
-    ComponentViewFeatures flags,
-    bool customControl)
-    : base_type(tag, reactContext, customControl), m_compContext(compContext), m_flags(flags) {
+    ComponentViewFeatures flags)
+    : base_type(tag, reactContext), m_compContext(compContext), m_flags(flags) {
   m_outerVisual = compContext.CreateSpriteVisual(); // TODO could be a raw ContainerVisual if we had a
                                                     // CreateContainerVisual in ICompositionContext
   m_focusVisual = compContext.CreateFocusVisual();
@@ -105,14 +71,18 @@ void ComponentView::onThemeChanged() noexcept {
 
   base_type::onThemeChanged();
 
-  if (m_customComponent) {
-    // Review is it expected that I need this cast to call overridden methods?
-    winrt::Microsoft::ReactNative::Composition::ComponentView outer(*this);
-    outer.OnThemeChanged();
+  if (m_themeChangedEvent) {
+    m_themeChangedEvent(*this, *this);
   }
 }
 
-void ComponentView::OnThemeChanged() noexcept {}
+winrt::event_token ComponentView::ThemeChanged(
+    winrt::Windows::Foundation::EventHandler<winrt::IInspectable> const &handler) noexcept {
+  return m_themeChangedEvent.add(handler);
+}
+void ComponentView::ThemeChanged(winrt::event_token const &token) noexcept {
+  m_themeChangedEvent.remove(token);
+}
 
 void ComponentView::Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept {
   theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(value));
@@ -170,10 +140,8 @@ void ComponentView::updateLayoutMetrics(
     updateBorderLayoutMetrics(layoutMetrics, *viewProps());
   }
 
-  m_layoutMetrics = layoutMetrics;
-  UpdateCenterPropertySet();
-
   base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
+  UpdateCenterPropertySet();
 }
 
 const facebook::react::LayoutMetrics &ComponentView::layoutMetrics() const noexcept {
@@ -294,7 +262,8 @@ void ComponentView::HandleCommand(
     }
     return;
   }
-  assert(false); // Unhandled command
+
+  base_type::HandleCommand(commandName, args);
 }
 
 bool ComponentView::CapturePointer(const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer) noexcept {
@@ -1492,18 +1461,6 @@ std::string ComponentView::DefaultHelpText() const noexcept {
   return "";
 }
 
-ViewComponentView::ViewComponentView(
-    const winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs &args)
-    : ViewComponentView(
-          ViewComponentView::defaultProps(),
-          winrt::get_self<
-              winrt::Microsoft::ReactNative::Composition::implementation::CreateCompositionComponentViewArgs>(args)
-              ->CompositionContext(),
-          args.Tag(),
-          args.ReactContext(),
-          args.Features(),
-          true) {}
-
 facebook::react::SharedViewProps ViewComponentView::defaultProps() noexcept {
   static auto const defaultViewProps = std::make_shared<facebook::react::ViewProps const>();
   return defaultViewProps;
@@ -1514,33 +1471,48 @@ ViewComponentView::ViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,
-    ComponentViewFeatures flags,
-    bool customComponent)
-    : base_type(compContext, tag, reactContext, flags, customComponent),
+    ComponentViewFeatures flags)
+    : base_type(compContext, tag, reactContext, flags),
       m_props(defaultProps ? defaultProps : ViewComponentView::defaultProps()) {}
 
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ViewComponentView::createVisual() noexcept {
   return m_compContext.CreateSpriteVisual();
 }
 
-winrt::Microsoft::UI::Composition::Visual ViewComponentView::CreateVisual() noexcept {
-  return winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
-      createVisual());
+void ViewComponentView::CreateVisualHandler(
+    const winrt::Microsoft::ReactNative::Composition::CreateVisualDelegate &handler) {
+  if (!m_inInit) {
+    winrt::throw_hresult(E_ACCESSDENIED);
+  }
+  m_createVisualHandler = handler;
+}
+
+winrt::Microsoft::ReactNative::Composition::CreateVisualDelegate ViewComponentView::CreateVisualHandler()
+    const noexcept {
+  return m_createVisualHandler;
+}
+
+void ViewComponentView::CreateInternalVisualHandler(
+    const winrt::Microsoft::ReactNative::Composition::Experimental::CreateInternalVisualDelegate &handler) {
+  if (!m_inInit) {
+    winrt::throw_hresult(E_ACCESSDENIED);
+  }
+  m_createInternalVisualHandler = handler;
+}
+
+winrt::Microsoft::ReactNative::Composition::Experimental::CreateInternalVisualDelegate
+ViewComponentView::CreateInternalVisualHandler() const noexcept {
+  return m_createInternalVisualHandler;
 }
 
 void ViewComponentView::ensureVisual() noexcept {
   if (!m_visual) {
-    if (m_customComponent) {
-      // Review is it expected that I need this cast to call overridden methods?
-      winrt::Microsoft::ReactNative::Composition::ViewComponentView outer(*this);
-      winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCreateVisual internalCreateVisual{nullptr};
-      if (outer.try_as(internalCreateVisual)) {
-        m_visual = internalCreateVisual.CreateInternalVisual();
-      } else {
-        m_visual =
-            winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateVisual(
-                outer.CreateVisual());
-      }
+    if (m_createInternalVisualHandler) {
+      m_visual = m_createInternalVisualHandler();
+    } else if (m_createVisualHandler) {
+      m_visual =
+          winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateVisual(
+              m_createVisualHandler());
     } else {
       m_visual = createVisual();
     }
@@ -1553,7 +1525,7 @@ winrt::Microsoft::ReactNative::ComponentView ViewComponentView::Create(
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<ViewComponentView>(
-      ViewComponentView::defaultProps(), compContext, tag, reactContext, ComponentViewFeatures::Default, false);
+      ViewComponentView::defaultProps(), compContext, tag, reactContext, ComponentViewFeatures::Default);
 }
 
 void ViewComponentView::MountChildComponentView(
@@ -1564,6 +1536,7 @@ void ViewComponentView::MountChildComponentView(
   indexOffsetForBorder(index);
   ensureVisual();
 
+  // Should do in this checkin
   // TODO if we get mixed children of composition and non-composition ComponentViews the indexes will get mixed up
   // We could offset the index based on non-composition children in m_children
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
@@ -1606,7 +1579,6 @@ void ViewComponentView::updateProps(
 
 const winrt::Microsoft::ReactNative::IComponentProps ViewComponentView::userProps(
     facebook::react::Props::Shared const &props) noexcept {
-  assert(m_customComponent);
   const auto &abiViewProps = *std::static_pointer_cast<const ::Microsoft::ReactNative::AbiViewProps>(props);
   return abiViewProps.UserProps();
 }
@@ -1672,22 +1644,21 @@ std::string CodeFromVirtualKey(
 }
 
 void ViewComponentView::OnKeyDown(
-    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  auto eventCode = CodeFromVirtualKey(source, args.Key());
+  auto eventCode = CodeFromVirtualKey(args.KeyboardSource(), args.Key());
   bool fShift =
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
   bool fAlt =
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Menu) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
   bool fCtrl =
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
   bool fMeta =
-      ((source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
+      ((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ||
-      ((source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
+      ((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down);
 
   if (args.OriginalSource() == Tag() && !args.Handled()) {
@@ -1700,7 +1671,7 @@ void ViewComponentView::OnKeyDown(
     event.key = ::Microsoft::ReactNative::FromVirtualKey(
         args.Key(),
         event.shiftKey,
-        !!((source.GetKeyState(winrt::Windows::System::VirtualKey::CapitalLock) &
+        !!((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::CapitalLock) &
             winrt::Microsoft::UI::Input::VirtualKeyStates::Locked) ==
            winrt::Microsoft::UI::Input::VirtualKeyStates::Locked));
     event.code = eventCode;
@@ -1716,26 +1687,25 @@ void ViewComponentView::OnKeyDown(
     }
   }
 
-  base_type::OnKeyDown(source, args);
+  base_type::OnKeyDown(args);
 }
 
 void ViewComponentView::OnKeyUp(
-    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  auto eventCode = CodeFromVirtualKey(source, args.Key());
+  auto eventCode = CodeFromVirtualKey(args.KeyboardSource(), args.Key());
   bool fShift =
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
   bool fAlt =
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Menu) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
   bool fCtrl =
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
   bool fMeta =
-      ((source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
+      ((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ||
-      ((source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
+      ((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down);
 
   if (args.OriginalSource() == Tag()) {
@@ -1748,7 +1718,7 @@ void ViewComponentView::OnKeyUp(
     event.key = ::Microsoft::ReactNative::FromVirtualKey(
         args.Key(),
         event.shiftKey,
-        !!((source.GetKeyState(winrt::Windows::System::VirtualKey::CapitalLock) &
+        !!((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::CapitalLock) &
             winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
            winrt::Microsoft::UI::Input::VirtualKeyStates::Down));
     event.code = eventCode;
@@ -1764,7 +1734,7 @@ void ViewComponentView::OnKeyUp(
     }
   }
 
-  base_type::OnKeyUp(source, args);
+  base_type::OnKeyUp(args);
 }
 
 void ViewComponentView::updateLayoutMetrics(
@@ -1776,10 +1746,9 @@ void ViewComponentView::updateLayoutMetrics(
   }
   ensureVisual();
   base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
-}
-
-void ViewComponentView::UpdateLayoutMetrics(const LayoutMetrics &metrics, const LayoutMetrics &oldMetrics) noexcept {
-  Visual().Size({metrics.Frame.Width * metrics.PointScaleFactor, metrics.Frame.Height * metrics.PointScaleFactor});
+  Visual().Size(
+      {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
+       layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
 
 void ViewComponentView::prepareForRecycle() noexcept {}

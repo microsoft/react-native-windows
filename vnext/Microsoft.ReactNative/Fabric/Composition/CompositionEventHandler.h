@@ -62,14 +62,9 @@ class CompositionEventHandler {
   void onPointerCaptureLost(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
       winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept;
-  void onKeyDown(
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
-  void onKeyUp(
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
+  void onKeyDown(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
+  void onKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
   void onCharacterReceived(
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
 
   void getTargetPointerArgs(

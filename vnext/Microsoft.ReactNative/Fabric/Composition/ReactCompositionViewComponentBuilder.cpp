@@ -4,6 +4,7 @@
 #include "pch.h"
 #include "ReactCompositionViewComponentBuilder.h"
 #include <Fabric/Composition/CompositionViewComponentView.h>
+#include <Fabric/Composition/ContentIslandComponentView.h>
 #include <strsafe.h>
 #include "DynamicWriter.h"
 #include "ReactHost/MsoUtils.h"
@@ -46,16 +47,61 @@ LayoutHandler ReactCompositionViewComponentBuilder::LayoutHandler() const noexce
   return m_layoutHandler;
 }
 
-void ReactCompositionViewComponentBuilder::SetCreateComponentView(ComponentViewFactory impl) noexcept {
-  m_createComponentView = impl;
-  assert(!m_createView); // Only SetCreateComponentView OR SetCreateViewComponentView should be called
+void ReactCompositionViewComponentBuilder::SetComponentViewInitializer(
+    const ComponentViewInitializer &initializer) noexcept {
+  m_fnCreateView =
+      [initializer](const IReactContext &reactContext, int32_t tag, const Experimental::ICompositionContext &context) {
+        auto view = winrt::make<winrt::Microsoft::ReactNative::implementation::ComponentView>(tag, reactContext);
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->BeginCustomInit();
+        initializer(view);
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->EndCustomInit();
+        return view;
+      };
+  m_descriptorConstructorFactory = []() {
+    return &facebook::react::concreteComponentDescriptorConstructor<::Microsoft::ReactNative::AbiComponentDescriptor>;
+  };
 }
 
-void ReactCompositionViewComponentBuilder::SetCreateViewComponentView(
-    CompositionViewComponentViewFactory impl) noexcept {
-  m_createView = impl;
-  assert(!m_createComponentView); // Only SetCreateComponentView OR SetCreateViewComponentView should be called
+void ReactCompositionViewComponentBuilder::SetViewComponentViewInitializer(
+    const ViewComponentViewInitializer &initializer) noexcept {
+  m_fnCreateView =
+      [initializer](const IReactContext &reactContext, int32_t tag, const Experimental::ICompositionContext &context) {
+        auto view = winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView::Create(
+                        context, tag, reactContext)
+                        .as<winrt::Microsoft::ReactNative::Composition::ViewComponentView>();
+        winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>(view)
+            ->BeginCustomInit();
+        initializer(view);
+        winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>(view)
+            ->EndCustomInit();
+        return view;
+      };
+  m_descriptorConstructorFactory = []() {
+    return &facebook::react::concreteComponentDescriptorConstructor<
+        ::Microsoft::ReactNative::AbiViewComponentDescriptor>;
+  };
 }
+
+void ReactCompositionViewComponentBuilder::SetContentIslandComponentViewInitializer(
+    const ComponentIslandComponentViewInitializer &initializer) noexcept {
+  m_fnCreateView = [initializer](
+                       const IReactContext &reactContext, int32_t tag, const Experimental::ICompositionContext &context)
+      -> winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView {
+    auto view = winrt::make<winrt::Microsoft::ReactNative::Composition::implementation::ContentIslandComponentView>(
+        context, tag, reactContext);
+    winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::ContentIslandComponentView>(view)
+        ->BeginCustomInit();
+    initializer(view);
+    winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::ContentIslandComponentView>(view)
+        ->EndCustomInit();
+    return view;
+  };
+  m_descriptorConstructorFactory = []() {
+    return &facebook::react::concreteComponentDescriptorConstructor<
+        ::Microsoft::ReactNative::AbiViewComponentDescriptor>;
+  };
+}
+
 // (Object handle, Microsoft.ReactNative.IComponentState state) => void
 // void ReactCompositionViewComponentBuilder::SetStateUpdater(StateUpdater impl) noexcept {
 //  m_stateUpdater = impl;
@@ -97,18 +143,13 @@ winrt::Microsoft::ReactNative::ComponentView ReactCompositionViewComponentBuilde
     const IReactContext &reactContext,
     int32_t tag,
     const Experimental::ICompositionContext &context) noexcept {
-  if (m_createView) {
-    auto args = winrt::make<implementation::CreateCompositionComponentViewArgs>(reactContext, tag, context);
-    return m_createView(args);
-  } else {
-    assert(m_createComponentView);
-    auto args = winrt::make<winrt::Microsoft::ReactNative::implementation::CreateComponentViewArgs>(reactContext, tag);
-    return m_createComponentView(args);
-  }
+  assert(m_fnCreateView);
+  return m_fnCreateView(reactContext, tag, context);
 }
 
-bool ReactCompositionViewComponentBuilder::IsViewComponent() const noexcept {
-  return m_createView != nullptr;
+facebook::react::ComponentDescriptorConstructor *ReactCompositionViewComponentBuilder::GetComponentDescriptorProvider()
+    const noexcept {
+  return m_descriptorConstructorFactory();
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition

@@ -15,6 +15,7 @@ void *winrt_make_Microsoft_ReactNative_Composition_Experimental_MicrosoftComposi
 #endif
 void *winrt_make_Microsoft_ReactNative_Composition_Experimental_SystemCompositionContextHelper();
 void *winrt_make_Microsoft_ReactNative_Composition_CompositionUIService();
+void* winrt_make_Microsoft_ReactNative_Composition_ContentIslandComponentView();
 void* winrt_make_Microsoft_ReactNative_Composition_ViewComponentView();
 void *winrt_make_Microsoft_ReactNative_Composition_FocusManager();
 void* winrt_make_Microsoft_ReactNative_JsiRuntime();
@@ -44,6 +45,9 @@ void* winrt_make_Microsoft_ReactNative_ReactNativeIsland() {
     winrt::throw_hresult(E_NOTIMPL);
 }
 void* winrt_make_Microsoft_ReactNative_Composition_ViewComponentView() {
+    winrt::throw_hresult(E_NOTIMPL);
+}
+void* winrt_make_Microsoft_ReactNative_Composition_ContentIslandComponentView() {
     winrt::throw_hresult(E_NOTIMPL);
 }
 void *winrt_make_Microsoft_ReactNative_Composition_FocusManager() {
@@ -98,6 +102,9 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
     }
     if (requal(name, L"Microsoft.ReactNative.Composition.FocusManager")) {
       return winrt_make_Microsoft_ReactNative_Composition_FocusManager();
+    }
+    if (requal(name, L"Microsoft.ReactNative.Composition.ContentIslandComponentView")) {
+      return winrt_make_Microsoft_ReactNative_Composition_ContentIslandComponentView();
     }
     if (requal(name, L"Microsoft.ReactNative.Composition.ViewComponentView")) {
       return winrt_make_Microsoft_ReactNative_Composition_ViewComponentView();
