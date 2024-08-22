@@ -83,7 +83,6 @@
 #include "Modules/LogBoxModule.h"
 #include "Modules/NativeUIManager.h"
 #include "Modules/PaperUIManagerModule.h"
-#include "Modules/TimingModule.h"
 #else
 #include "Modules/DesktopTimingModule.h"
 #endif
@@ -458,7 +457,16 @@ void ReactInstanceWin::LoadModules(
 
   registerTurboModule(L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Timing>());
 #else
-  registerTurboModule(L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::facebook::react::Timing>());
+
+#if defined(USE_FABRIC)
+  if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
+    registerTurboModule(
+        L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Timing>());
+  } else
+#endif
+  {
+    registerTurboModule(L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::facebook::react::Timing>());
+  }
 #endif
 
   registerTurboModule(
