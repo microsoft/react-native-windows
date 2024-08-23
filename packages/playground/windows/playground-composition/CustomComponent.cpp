@@ -49,6 +49,7 @@ struct CustomComponentUserData : winrt::implements<CustomComponentUserData, winr
       const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView,
       bool nativeLayout) {
     nativeLayout;
+    islandView;
 #ifdef USE_EXPERIMENTAL_WINUI3
     m_xamlIsland = winrt::Microsoft::UI::Xaml::XamlIsland{};
     m_xamlIsland.Content(CreateXamlButtonContent(nativeLayout));

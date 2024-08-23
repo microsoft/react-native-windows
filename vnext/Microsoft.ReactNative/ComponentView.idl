@@ -84,11 +84,28 @@ namespace Microsoft.ReactNative
     UInt32 Index { get; };
   };
 
+  [experimental]
+  [webhosthidden]
   delegate void HandleCommandDelegate(ComponentView source, String commandName, IJSValueReader args);
+
+  [experimental]
+  [webhosthidden]
   delegate void UpdateFinalizerDelegate(ComponentView source, ComponentViewUpdateMask updateMask);
+
+  [experimental]
+  [webhosthidden]
   delegate void UpdatePropsDelegate(ComponentView source, IComponentProps newProps, IComponentProps oldProps);
+
+  [experimental]
+  [webhosthidden]
   delegate void UpdateStateDelegate(ComponentView source, IComponentState newState);
+
+  [experimental]
+  [webhosthidden]
   delegate void MountChildComponentViewDelegate(ComponentView source, MountChildComponentViewArgs args);
+
+  [experimental]
+  [webhosthidden]
   delegate void UnmountChildComponentViewDelegate(ComponentView source, UnmountChildComponentViewArgs args);
 
   // [exclusiveto(ComponentView)]

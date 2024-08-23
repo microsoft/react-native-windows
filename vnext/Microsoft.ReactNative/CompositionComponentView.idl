@@ -54,6 +54,8 @@ namespace Microsoft.ReactNative.Composition
     void ReleasePointerCapture(Microsoft.ReactNative.Composition.Input.Pointer pointer);
   };
 
+  [experimental]
+  [webhosthidden]
   delegate Microsoft.UI.Composition.Visual CreateVisualDelegate();
 
   namespace Experimental {
