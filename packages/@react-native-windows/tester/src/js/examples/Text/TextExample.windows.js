@@ -1614,7 +1614,6 @@ const examples = [
       );
     },
   },
-  TextInlineViewsExample,
   // [Windows #12997]
   // TextInlineViewsExample,
   {
