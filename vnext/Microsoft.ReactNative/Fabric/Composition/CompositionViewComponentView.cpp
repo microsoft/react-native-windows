@@ -1543,7 +1543,7 @@ void ViewComponentView::MountChildComponentView(
     // But if we have non-visual children, we need to account for that.
     if (m_hasNonVisualChildren) {
       for (size_t i = 0; i <= index; i++) {
-        if (!m_children[i].try_as<ComponentView>()) {
+        if (!m_children.GetAt(i).try_as<ComponentView>()) {
           visualIndex--;
         }
       }
