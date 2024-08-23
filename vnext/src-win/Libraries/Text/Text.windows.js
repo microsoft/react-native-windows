@@ -9,9 +9,11 @@
  * @format
  */
 
+import type {____TextStyle_Internal as TextStyleInternal} from '../StyleSheet/StyleSheetTypes';
 import type {PressEvent} from '../Types/CoreEventTypes';
 import type {TextProps} from './TextProps';
 
+import * as ReactNativeFeatureFlags from '../../src/private/featureflags/ReactNativeFeatureFlags';
 import * as PressabilityDebug from '../Pressability/PressabilityDebug';
 import usePressability from '../Pressability/usePressability';
 import flattenStyle from '../StyleSheet/flattenStyle';
@@ -30,7 +32,7 @@ import {type TextStyleProp, type ViewStyleProp} from '../StyleSheet/StyleSheet';
  *
  * @see https://reactnative.dev/docs/text
  */
-const Text: React.AbstractComponent<
+const TextLegacy: React.AbstractComponent<
   TextProps,
   React.ElementRef<typeof NativeText | typeof NativeVirtualText>,
 > = React.forwardRef((props: TextProps, forwardedRef) => {
@@ -52,8 +54,10 @@ const Text: React.AbstractComponent<
     'aria-setsize': ariaSetsize, // Windows
     'aria-selected': ariaSelected,
     ellipsizeMode,
+    disabled,
     id,
     nativeID,
+    numberOfLines,
     onLongPress,
     onPress,
     onPressIn,
@@ -65,7 +69,10 @@ const Text: React.AbstractComponent<
     onResponderTerminationRequest,
     onStartShouldSetResponder,
     pressRetentionOffset,
+    selectable,
+    selectionColor,
     suppressHighlighting,
+    style,
     ...restProps
   } = props;
 
@@ -102,7 +109,7 @@ const Text: React.AbstractComponent<
   }
 
   const _accessibilityStateDisabled = _accessibilityState?.disabled;
-  const _disabled = restProps.disabled ?? _accessibilityStateDisabled;
+  const _disabled = disabled ?? _accessibilityStateDisabled;
 
   const isPressable =
     (onPress != null ||
@@ -205,29 +212,28 @@ const Text: React.AbstractComponent<
   );
 
   // TODO: Move this processing to the view configuration.
-  const selectionColor =
-    restProps.selectionColor == null
-      ? null
-      : processColor(restProps.selectionColor);
+  const _selectionColor =
+    selectionColor == null ? null : processColor(selectionColor);
 
-  let style = restProps.style;
+  let _style = style;
   if (__DEV__) {
     if (PressabilityDebug.isEnabled() && onPress != null) {
-      style = [restProps.style, {color: 'magenta'}];
+      _style = [style, {color: 'magenta'}];
     }
   }
 
-  let numberOfLines = restProps.numberOfLines;
-  if (numberOfLines != null && !(numberOfLines >= 0)) {
-    console.error(
-      `'numberOfLines' in <Text> must be a non-negative number, received: ${numberOfLines}. The value will be set to 0.`,
-    );
-    numberOfLines = 0;
+  let _numberOfLines = numberOfLines;
+  if (_numberOfLines != null && !(_numberOfLines >= 0)) {
+    if (__DEV__) {
+      console.error(
+        `'numberOfLines' in <Text> must be a non-negative number, received: ${_numberOfLines}. The value will be set to 0.`,
+      );
+    }
+    _numberOfLines = 0;
   }
 
-  let _selectable = restProps.selectable;
-
-  const processedStyle = flattenStyle(style);
+  let _selectable = selectable;
+  const processedStyle = flattenStyle(_style);
   if (processedStyle != null) {
     if (typeof processedStyle.fontWeight === 'number') {
       // $FlowFixMe[cannot-write]
@@ -283,17 +289,18 @@ const Text: React.AbstractComponent<
         isHighlighted={isHighlighted}
         isPressable={isPressable}
         nativeID={_nativeID}
-        numberOfLines={numberOfLines}
+        numberOfLines={_numberOfLines}
         ref={forwardedRef}
         selectable={_selectable}
-        selectionColor={selectionColor}
+        selectionColor={_selectionColor}
         style={processedStyle}
       />
     );
   // [Windows] Following else statement forked due to PR #5740
   } else {
-    let styleProps: ViewStyleProp = (restProps.style: any);
+    let styleProps: ViewStyleProp = (style: any);
     if (
+      global.RN$Bridgeless !== true && // [Windows] Fabric text handles borders, but on paper we need to wrap it in an extra view
       styleProps &&
       styleProps.borderColor &&
       (styleProps.borderWidth ||
@@ -366,12 +373,12 @@ const Text: React.AbstractComponent<
               disabled={_disabled}
               ellipsizeMode={ellipsizeMode ?? 'tail'}
               isHighlighted={isHighlighted}
-              nativeID={id ?? nativeID}
-              numberOfLines={numberOfLines}
+              nativeID={_nativeID}
+              numberOfLines={_numberOfLines}
               ref={forwardedRef}
               selectable={_selectable}
-              selectionColor={selectionColor}
-              style={((rest: any): TextStyleProp)}
+              selectionColor={_selectionColor}
+              style={processedStyle}
             />
           </TextAncestor.Provider>
         </View>
@@ -393,11 +400,11 @@ const Text: React.AbstractComponent<
             ellipsizeMode={ellipsizeMode ?? 'tail'}
             isHighlighted={isHighlighted}
             nativeID={_nativeID}
-            numberOfLines={numberOfLines}
+            numberOfLines={_numberOfLines}
             ref={forwardedRef}
             selectable={_selectable}
-            selectionColor={selectionColor}
-            style={style}
+            selectionColor={_selectionColor}
+            style={processedStyle}
           />
         </TextAncestor.Provider>
       );
@@ -406,7 +413,7 @@ const Text: React.AbstractComponent<
   // [Windows #5740]
 });
 
-Text.displayName = 'Text';
+TextLegacy.displayName = 'TextLegacy';
 
 /**
  * Returns false until the first time `newValue` is true, after which this will
@@ -435,5 +442,14 @@ const verticalAlignToTextAlignVerticalMap = {
   bottom: 'bottom',
   middle: 'center',
 };
+
+const Text: React.AbstractComponent<
+  TextProps,
+  React.ElementRef<typeof NativeText | typeof NativeVirtualText>,
+> = React.forwardRef((props: TextProps, forwardedRef) => {
+    return <TextLegacy {...props} ref={forwardedRef} />;
+});
+
+Text.displayName = 'Text';
 
 module.exports = Text;

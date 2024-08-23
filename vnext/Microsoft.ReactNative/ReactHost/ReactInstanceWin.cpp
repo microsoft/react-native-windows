@@ -39,6 +39,7 @@
 #include "Modules/ExceptionsManager.h"
 #include "Modules/PlatformConstantsWinModule.h"
 #include "Modules/ReactRootViewTagGenerator.h"
+#include "Modules/SampleTurboModule.h"
 #include "Modules/SourceCode.h"
 #include "Modules/StatusBarManager.h"
 #include "Modules/Timing.h"
@@ -337,7 +338,7 @@ void ReactInstanceWin::LoadModules(
   };
 
 #ifdef USE_FABRIC
-  if (!m_options.UseWebDebugger()) {
+  if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
     registerTurboModule(
         L"FabricUIManagerBinding",
         winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::FabricUIManager>());
@@ -410,6 +411,10 @@ void ReactInstanceWin::LoadModules(
   registerTurboModule(
       L"PlatformConstants",
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::PlatformConstants>());
+
+  registerTurboModule(
+      L"SampleTurboModule",
+      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SampleTurboModule>());
 
   uint32_t hermesBytecodeVersion = 0;
 #if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
@@ -602,7 +607,8 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
 
             m_jsMessageThread.Load()->runOnQueueSync([&]() {
               ::SetThreadDescription(GetCurrentThread(), L"React-Native JavaScript Thread");
-              auto timerRegistry = ::Microsoft::ReactNative::TimerRegistry::CreateTimerRegistry(m_options.Properties);
+              auto timerRegistry =
+                  ::Microsoft::ReactNative::TimerRegistry::CreateTimerRegistry(m_reactContext->Properties());
               auto timerRegistryRaw = timerRegistry.get();
 
               auto timerManager = std::make_shared<facebook::react::TimerManager>(std::move(timerRegistry));
@@ -635,7 +641,8 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
             facebook::react::ReactInstance::JSRuntimeFlags options;
             m_bridgelessReactInstance->initializeRuntime(options, [=](facebook::jsi::Runtime &runtime) {
               auto logger = [loggingHook = GetLoggingCallback()](const std::string &message, unsigned int logLevel) {
-                loggingHook(static_cast<facebook::react::RCTLogLevel>(logLevel), message.c_str());
+                if (loggingHook)
+                  loggingHook(static_cast<facebook::react::RCTLogLevel>(logLevel), message.c_str());
               };
               facebook::react::bindNativeLogger(runtime, logger);
 

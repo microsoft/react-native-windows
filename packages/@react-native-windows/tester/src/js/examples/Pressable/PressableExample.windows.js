@@ -8,6 +8,8 @@
  * @flow strict-local
  */
 
+import type {RNTesterModule} from '../../types/RNTesterTypes';
+
 import * as React from 'react';
 import {
   Alert,
@@ -122,6 +124,7 @@ function PressableFeedbackEvents() {
           testID="pressable_feedback_events_button"
           accessibilityLabel="pressable feedback events"
           accessibilityRole="button"
+          accessibilityValue={{text: "Press Me"}}
           // [Windows
           onFocus={() => appendEvent('focus')}
           onBlur={() => appendEvent('blur')}
@@ -484,6 +487,9 @@ const styles = StyleSheet.create({
   wrapperCustom: {
     borderRadius: 8,
     padding: 6,
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   hitSlopWrapper: {
     backgroundColor: 'red',
@@ -522,12 +528,6 @@ const styles = StyleSheet.create({
   },
 });
 
-exports.displayName = (undefined: ?string);
-exports.description = 'Component for making views pressable.';
-exports.title = 'Pressable';
-exports.category = 'UI';
-exports.documentationURL = 'https://reactnative.dev/docs/pressable';
-
 const examples = [
   {
     title: 'Change content based on Press',
@@ -549,6 +549,33 @@ const examples = [
             ]}
             testID="style-change-pressable">
             <Text style={styles.text}>Press Me</Text>
+          </Pressable>
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Change child based on Press',
+    description:
+      ('You should be able to press the button, move your finger while pressing, and release it with the proper status updates.': string),
+    render(): React.Node {
+      return (
+        <View style={styles.row}>
+          <Pressable
+            style={({pressed}) => [
+              {
+                backgroundColor: pressed ? 'rgb(210, 230, 255)' : 'white',
+              },
+              styles.wrapperCustom,
+            ]}>
+            {({pressed}) => (
+              <>
+                {pressed && <Text style={styles.text}>Pressed!</Text>}
+                {!pressed && (
+                  <Text style={styles.text}>Press me and move your finger</Text>
+                )}
+              </>
+            )}
           </Pressable>
         </View>
       );
@@ -959,7 +986,7 @@ const examples = [
             onPress={() => {}}
             importantForAccessibility="no-hide-descendants"
             accessibilityHint="Button"
-            accessibilityValue={0}>
+            accessibilityValue={{text: "Child Pressable"}}>
             <Text>Parent Pressable</Text>
             <Pressable onPress={() => {}}>
               <Text>Child Pressable</Text>
@@ -1038,6 +1065,30 @@ const examples = [
       );
     },
   },
+  // [Windows
+  {
+    title: 'Set of Pressables',
+    description: 'Pressables can be defined as a set using accessibilityPosInSet and accessibilitySetSize',
+    render: function (): React.Node {
+      return (
+        <View accessible testID='pressable_set'>
+          <Pressable
+            onPress={() => {}} accessibilityPosInSet={1} accessibilitySetSize={3}>
+            <Text>Pressable 1 of 3</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {}} accessibilityPosInSet={2} accessibilitySetSize={3}>
+            <Text>Pressable 2 of 3</Text>
+          </Pressable>
+          <Pressable
+            onPress={() => {}} accessibilityPosInSet={3} accessibilitySetSize={3}>
+            <Text>Pressable 3 of 3</Text>
+          </Pressable>
+        </View>
+      );
+    },
+  },
+  // Windows]
 ];
 
 if (ReactNativeFeatureFlags.shouldPressibilityUseW3CPointerEventsForHover()) {
@@ -1049,4 +1100,11 @@ if (ReactNativeFeatureFlags.shouldPressibilityUseW3CPointerEventsForHover()) {
   });
 }
 
-exports.examples = examples;
+module.exports = ({
+  title: 'Pressable',
+  documentationURL: 'https://reactnative.dev/docs/pressable',
+  category: 'UI',
+  description: 'Component for making views pressable.',
+  displayName: 'Pressable',
+  examples,
+}: RNTesterModule);

@@ -1,8 +1,68 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 10 Jul 2024 05:15:30 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Aug 2024 05:14:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.232
+
+Wed, 21 Aug 2024 05:14:40 GMT
+
+### Changes
+
+- Update templates to calculate rnwPath for *.sln files (jthysell@microsoft.com)
+
+## 0.0.0-canary.231
+
+Fri, 16 Aug 2024 05:13:08 GMT
+
+### Changes
+
+- Bump minimum VS version to 17.11.0 (jthysell@microsoft.com)
+
+## 0.0.0-canary.230
+
+Wed, 14 Aug 2024 05:14:31 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.100
+
+## 0.0.0-canary.229
+
+Thu, 08 Aug 2024 05:16:48 GMT
+
+### Changes
+
+- Integrate 7/1 (jthysell@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.99
+- Bump @react-native-windows/fs to v0.0.0-canary.55
+- Bump @react-native-windows/package-utils to v0.0.0-canary.81
+- Bump @react-native-windows/telemetry to v0.0.0-canary.106
+- Bump @rnw-scripts/eslint-config to v1.2.26
+- Bump @rnw-scripts/just-task to v2.3.43
+
+## 0.0.0-canary.228
+
+Fri, 26 Jul 2024 05:14:21 GMT
+
+### Changes
+
+- Use Node's UUIDv4 implementation (4123478+tido64@users.noreply.github.com)
+
+## 0.0.0-canary.227
+
+Wed, 24 Jul 2024 05:24:35 GMT
+
+### Changes
+
+- integrate 0.75.0-nightly-20240618-5df5ed1a8 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.98
+- Bump @react-native-windows/fs to v0.0.0-canary.54
+- Bump @react-native-windows/package-utils to v0.0.0-canary.80
+- Bump @react-native-windows/telemetry to v0.0.0-canary.105
+- Bump @rnw-scripts/eslint-config to v1.2.25
+- Bump @rnw-scripts/just-task to v2.3.42
 
 ## 0.0.0-canary.226
 

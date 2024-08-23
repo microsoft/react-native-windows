@@ -23,6 +23,7 @@ variables:
 
   # Guardian Config
   GDN_DOTNET_INSTALL: false
+  GDN_SUPPRESS_FORKED_BUILD_WARNING: true
 
   # Yarn Config
   YARN_CACHE_FOLDER: $(Agent.TempDirectory)/.yarnCache

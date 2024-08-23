@@ -21,7 +21,13 @@ import TextAdjustsDynamicLayoutExample from './TextAdjustsDynamicLayoutExample';
 // import TextInlineViewsExample from './TextInlineViewsExample';
 // const TextInlineView = require('../../components/TextInlineView');
 const React = require('react');
-const {LayoutAnimation, StyleSheet, Text, View} = require('react-native');
+const {
+  LayoutAnimation,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} = require('react-native');
 
 class Entity extends React.Component<{|children: React.Node|}> {
   render(): React.Node {
@@ -972,6 +978,56 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
         </Text>
         {marker}
       </View>
+
+      <Text style={subtitleStyle}>
+        {'Multi-line interleaved <View> and <Text>:'}
+      </Text>
+      <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+        <Text selectable={true}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris
+          venenatis,{' '}
+          <View
+            style={{
+              backgroundColor: 'yellow',
+            }}>
+            <Text>mauris eu commodo maximus</Text>
+          </View>{' '}
+          , ante arcu vestibulum ligula, et scelerisque diam.
+        </Text>
+      </View>
+
+      <Text style={subtitleStyle}>{'Multi-line <Text> alignment'}</Text>
+      <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+        <View style={{width: 50, height: 50, backgroundColor: 'gray'}} />
+        <View style={{width: 125, backgroundColor: '#eee'}}>
+          <Text style={{fontSize: 15}}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </Text>
+        </View>
+        <View style={{width: 125, backgroundColor: '#eee'}}>
+          <Text style={{fontSize: 10}}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </Text>
+        </View>
+      </View>
+
+      <Text style={subtitleStyle}>{'<TextInput/>:'}</Text>
+      <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+        {marker}
+        <TextInput style={{margin: 0, padding: 0}}>{texts}</TextInput>
+        {marker}
+      </View>
+
+      <Text style={subtitleStyle}>{'<TextInput multiline/>:'}</Text>
+      <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
+        {marker}
+        <TextInput multiline={true} style={{margin: 0, padding: 0}}>
+          {texts}
+        </TextInput>
+        {marker}
+      </View>
 */}
     </View>
   );
@@ -979,7 +1035,9 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
 
 function TextBorderExample(props: {}): React.Node {
   return (
-    <View testID={'text-border'}>
+    <View testID={'text-border'}
+      accessible
+      accessibilityLabel="Border Example">
       <Text style={styles.borderedTextSimple}>
         Sample bordered text with default styling.
       </Text>
@@ -1009,7 +1067,9 @@ function TextBorderExample(props: {}): React.Node {
 
 function AdvancedBordersExample(props: {}): React.Node {
   return (
-    <View testID={'advanced-borders'}>
+    <View testID={'advanced-borders'}
+      accessible
+      accessibilityLabel="Advanced Border Example">
       <Text
         style={{
           borderColor: 'red',
@@ -1546,7 +1606,9 @@ const examples = [
           <Text
             nativeID="text-accessibility"
             accessibilityLabel="This text has customized accessibility"
-            accessibilityHint="Text">
+            accessibilityHint="Text"
+            accessibilityPosInSet={1}
+            accessibilitySetSize={1}>
             This text has customized accessibility.
           </Text>
         </View>

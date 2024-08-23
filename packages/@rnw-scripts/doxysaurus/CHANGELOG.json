@@ -2,6 +2,66 @@
   "name": "@rnw-scripts/doxysaurus",
   "entries": [
     {
+      "date": "Thu, 08 Aug 2024 05:16:50 GMT",
+      "version": "0.4.44",
+      "tag": "@rnw-scripts/doxysaurus_v0.4.44",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.55",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.26",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.43",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 24 Jul 2024 05:24:31 GMT",
+      "version": "0.4.43",
+      "tag": "@rnw-scripts/doxysaurus_v0.4.43",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/doxysaurus",
+            "commit": "7b187af8b17b433ac02a8aff0051684924da4217",
+            "comment": "integrate 0.75.0-nightly-20240618-5df5ed1a8"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.54",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.25",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/doxysaurus",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.42",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 10 Jul 2024 05:15:30 GMT",
       "version": "0.4.42",
       "tag": "@rnw-scripts/doxysaurus_v0.4.42",

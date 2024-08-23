@@ -1,5 +1,219 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Pressable Tests Pressables can be defined as a set using accessibilityPosInSet and accessibilitySetSize 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "pressable_set",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "PositionInSet": 1,
+        "SizeofSet": 3,
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pressable 1 of 3",
+          },
+        ],
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "PositionInSet": 2,
+        "SizeofSet": 3,
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pressable 2 of 3",
+          },
+        ],
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
+        "PositionInSet": 3,
+        "SizeofSet": 3,
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "Pressable 3 of 3",
+          },
+        ],
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "pressable_set",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+        "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "pressable_set",
+    "Offset": "0, 0, 0",
+    "Size": "916, 56",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "916, 18",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 18",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 20",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 20",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 19, 0",
+        "Size": "916, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 19",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 19",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 19",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 37, 0",
+        "Size": "916, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 19",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 19",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 19",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
 exports[`Pressable Tests Pressables can be disabled, disabled = {false} 1`] = `
 {
   "Automation Tree": {
@@ -151,11 +365,11 @@ exports[`Pressable Tests Pressables can change style when pressed 1`] = `
     },
     "Comment": "style-change-pressable",
     "Offset": "0, 0, 0",
-    "Size": "76, 34",
+    "Size": "916, 34",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
-        "Offset": "6, 6, 0",
+        "Offset": "426, 6, 0",
         "Size": "64, 22",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -257,17 +471,17 @@ exports[`Pressable Tests Pressables can have advanced borders 1`] = `
     },
     "Comment": "pressable_hit_slop_button",
     "Offset": "0, 0, 0",
-    "Size": "146, 18",
+    "Size": "146, 19",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "146, 20",
+        "Size": "146, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "146, 20",
+            "Size": "146, 19",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -472,6 +686,7 @@ exports[`Pressable Tests Pressables can have event handlers 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "button",
     "Name": "pressable feedback events",
+    "ValuePattern.Value": "Press Me",
     "__Children": [
       {
         "AutomationId": "",
@@ -737,17 +952,17 @@ exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
     },
     "Comment": "pressable_hit_slop_button",
     "Offset": "0, 0, 0",
-    "Size": "146, 18",
+    "Size": "146, 19",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "146, 20",
+        "Size": "146, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "146, 20",
+            "Size": "146, 19",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -1275,12 +1490,12 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 20",
+                "Size": "916, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 20",
+                    "Size": "916, 19",
                     "Visual Type": "SpriteVisual",
                   },
                   {
@@ -1311,12 +1526,12 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 20",
+                "Size": "916, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 20",
+                    "Size": "916, 19",
                     "Visual Type": "SpriteVisual",
                   },
                   {
@@ -1347,12 +1562,12 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 20",
+                "Size": "916, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 20",
+                    "Size": "916, 19",
                     "Visual Type": "SpriteVisual",
                   },
                   {
@@ -1383,12 +1598,12 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
             "__Children": [
               {
                 "Offset": "0, 0, 0",
-                "Size": "916, 20",
+                "Size": "916, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "916, 20",
+                    "Size": "916, 19",
                     "Visual Type": "SpriteVisual",
                   },
                   {
@@ -1443,7 +1658,7 @@ exports[`Pressable Tests Pressables can have tooltips 1`] = `
   "Visual Tree": {
     "Comment": "tooltip_pressable",
     "Offset": "0, 0, 0",
-    "Size": "916, 18",
+    "Size": "916, 19",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1604,7 +1819,7 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
   "Visual Tree": {
     "Comment": "backface_pressable",
     "Offset": "0, 0, 0",
-    "Size": "916, 468",
+    "Size": "916, 467",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1737,12 +1952,12 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
             "__Children": [
               {
                 "Offset": "6, 90, 0",
-                "Size": "188, 19",
+                "Size": "188, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "188, 19",
+                    "Size": "188, 20",
                     "Visual Type": "SpriteVisual",
                   },
                   {
@@ -1777,12 +1992,12 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
             "__Children": [
               {
                 "Offset": "85, 90, 0",
-                "Size": "30, 19",
+                "Size": "30, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "30, 19",
+                    "Size": "30, 20",
                     "Visual Type": "SpriteVisual",
                   },
                   {

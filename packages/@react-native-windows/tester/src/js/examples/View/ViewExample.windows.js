@@ -471,12 +471,14 @@ class AccessibilityExample extends React.Component<
         accessibilityLabel="A View with accessibility values"
         accessibilityHint="Accessibility Hint"
         accessibilityRole="button"
-        accessibilityValue={0}
+        accessibilityValue={{now: this.state.tap}}
         accessibilityActions={[
           {name: 'cut', label: 'cut'},
           {name: 'copy', label: 'copy'},
           {name: 'paste', label: 'paste'},
         ]}
+        accessibilityPosInSet={1}
+        accessibilitySetSize={1}
         testID="accessibility"
         accessible
         focusable
@@ -500,6 +502,9 @@ class AccessibilityExample extends React.Component<
         <Text>Current Number of Accessibility Taps: {this.state.tap}</Text>
         <View importantForAccessibility="no-hide-descendants">
           <Text>This element should be hidden from accessibility.</Text>
+        </View>
+        <View accessible accessibilityValue={{now: this.state.tap}}>
+          <Text>This sub-view should not have an accessibility value. It's control type does not support the value pattern.</Text>
         </View>
       </View>
     );

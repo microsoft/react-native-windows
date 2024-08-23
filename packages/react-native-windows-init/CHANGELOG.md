@@ -1,8 +1,67 @@
 # Change Log - react-native-windows-init
 
-This log was last generated on Wed, 10 Jul 2024 05:15:30 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Aug 2024 05:14:41 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 1.4.36
+
+Wed, 21 Aug 2024 05:14:41 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.232
+
+## 1.4.35
+
+Fri, 16 Aug 2024 05:13:08 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.231
+
+## 1.4.34
+
+Wed, 14 Aug 2024 05:14:31 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.230
+
+## 1.4.33
+
+Thu, 08 Aug 2024 05:16:50 GMT
+
+### Patches
+
+- Integrate 7/1 (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.55
+- Bump @react-native-windows/telemetry to v0.0.0-canary.106
+- Bump @react-native-windows/cli to v0.0.0-canary.229
+- Bump @rnw-scripts/eslint-config to v1.2.26
+- Bump @rnw-scripts/just-task to v2.3.43
+
+## 1.4.32
+
+Fri, 26 Jul 2024 05:14:22 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.228
+
+## 1.4.31
+
+Wed, 24 Jul 2024 05:24:34 GMT
+
+### Patches
+
+- integrate 0.75.0-nightly-20240618-5df5ed1a8 (tatianakapos@microsoft.com)
+- Add warnings and deprecations for react-native-windows-init (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.54
+- Bump @react-native-windows/telemetry to v0.0.0-canary.105
+- Bump @react-native-windows/cli to v0.0.0-canary.227
+- Bump @rnw-scripts/eslint-config to v1.2.25
+- Bump @rnw-scripts/just-task to v2.3.42
 
 ## 1.4.30
 

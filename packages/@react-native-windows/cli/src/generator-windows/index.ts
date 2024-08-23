@@ -7,8 +7,8 @@
 import chalk from 'chalk';
 import path from 'path';
 import username from 'username';
-import uuid from 'uuid';
 import childProcess from 'child_process';
+import crypto from 'crypto';
 import fs from '@react-native-windows/fs';
 import semver from 'semver';
 import _ from 'lodash';
@@ -90,7 +90,7 @@ export async function copyProjectTemplateAndReplace(
   const projectType = options.projectType;
   const language = options.language;
 
-  // React-native init only allows alphanumerics in project names, but other
+  // @react-native-community/cli init only allows alphanumerics in project names, but other
   // new project tools (like create-react-native-module) are less strict.
   if (projectType === 'lib') {
     newProjectName = pascalCase(newProjectName);
@@ -162,10 +162,11 @@ export async function copyProjectTemplateAndReplace(
   const projDir = 'proj';
   const srcPath = path.join(srcRootPath, `${language}-${projectType}`);
   const sharedPath = path.join(srcRootPath, `shared-${projectType}`);
-  const projectGuid = existingProjectGuid || uuid.v4();
+  const projectGuid = existingProjectGuid || crypto.randomUUID();
+  const rnwPath = path.dirname(resolveRnwPath('package.json'));
   const rnwVersion = require(resolveRnwPath('package.json')).version;
   const nugetVersion = options.nuGetTestVersion || rnwVersion;
-  const packageGuid = uuid.v4();
+  const packageGuid = crypto.randomUUID();
   const currentUser = username.sync()!; // Gets the current username depending on the platform.
 
   let mainComponentName = newProjectName;
@@ -190,6 +191,7 @@ export async function copyProjectTemplateAndReplace(
     languageIsCpp: language === 'cpp',
 
     rnwVersion: await getVersionOfNpmPackage('react-native-windows'),
+    rnwPathFromProjectRoot: path.relative(destPath, rnwPath).replace(/\//g, '\\'),
 
     mainComponentName: mainComponentName,
 
@@ -441,7 +443,7 @@ export async function copyProjectTemplateAndReplace(
 
   if (projectType === 'app') {
     console.log(chalk.white.bold('To run your app on UWP:'));
-    console.log(chalk.white('   npx react-native run-windows'));
+    console.log(chalk.white('   npx @react-native-community/cli run-windows'));
   }
 }
 
@@ -460,7 +462,7 @@ export async function installScriptsAndDependencies(options: {
   }
 
   await projectPackage.mergeProps({
-    scripts: {windows: 'react-native run-windows'},
+    scripts: {windows: 'npx @react-native-community/cli run-windows'},
   });
 
   const rnwPackage = await findPackage('react-native-windows');

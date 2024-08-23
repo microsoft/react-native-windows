@@ -24,23 +24,31 @@ public:
   virtual bool allowCollapsableChildren(jsi::Runtime &rt) = 0;
   virtual bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
+  virtual bool changeOrderOfMountingInstructionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) = 0;
-  virtual bool enableBackgroundExecutor(jsi::Runtime &rt) = 0;
+  virtual bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) = 0;
   virtual bool enableCleanTextInputYogaNode(jsi::Runtime &rt) = 0;
   virtual bool enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt) = 0;
+  virtual bool enableLongTaskAPI(jsi::Runtime &rt) = 0;
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
+  virtual bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
-  virtual bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(jsi::Runtime &rt) = 0;
+  virtual bool fetchImagesInViewPreallocation(jsi::Runtime &rt) = 0;
+  virtual bool fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt) = 0;
+  virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
+  virtual bool fixMissedFabricStateUpdatesOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledDebug(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledRelease(jsi::Runtime &rt) = 0;
+  virtual bool initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime &rt) = 0;
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
-  virtual bool preventDoubleTextMeasure(jsi::Runtime &rt) = 0;
+  virtual bool loadVectorDrawablesOnImages(jsi::Runtime &rt) = 0;
   virtual bool setAndroidLayoutDirection(jsi::Runtime &rt) = 0;
   virtual bool useImmediateExecutorInAndroidBridgeless(jsi::Runtime &rt) = 0;
   virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
+  virtual bool useNewReactImageViewBackgroundDrawing(jsi::Runtime &rt) = 0;
   virtual bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) = 0;
   virtual bool useRuntimeShadowNodeReferenceUpdateOnLayout(jsi::Runtime &rt) = 0;
   virtual bool useStateAlignmentMechanism(jsi::Runtime &rt) = 0;
@@ -102,6 +110,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::batchRenderingUpdatesInEventLoop, jsInvoker_, instance_);
     }
+    bool changeOrderOfMountingInstructionsOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::changeOrderOfMountingInstructionsOnAndroid) == 1,
+          "Expected changeOrderOfMountingInstructionsOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::changeOrderOfMountingInstructionsOnAndroid, jsInvoker_, instance_);
+    }
     bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::destroyFabricSurfacesInReactInstanceManager) == 1,
@@ -110,13 +126,13 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::destroyFabricSurfacesInReactInstanceManager, jsInvoker_, instance_);
     }
-    bool enableBackgroundExecutor(jsi::Runtime &rt) override {
+    bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::enableBackgroundExecutor) == 1,
-          "Expected enableBackgroundExecutor(...) to have 1 parameters");
+          bridging::getParameterCount(&T::enableAlignItemsBaselineOnFabricIOS) == 1,
+          "Expected enableAlignItemsBaselineOnFabricIOS(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::enableBackgroundExecutor, jsInvoker_, instance_);
+          rt, &T::enableAlignItemsBaselineOnFabricIOS, jsInvoker_, instance_);
     }
     bool enableCleanTextInputYogaNode(jsi::Runtime &rt) override {
       static_assert(
@@ -134,6 +150,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableGranularShadowTreeStateReconciliation, jsInvoker_, instance_);
     }
+    bool enableLongTaskAPI(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableLongTaskAPI) == 1,
+          "Expected enableLongTaskAPI(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableLongTaskAPI, jsInvoker_, instance_);
+    }
     bool enableMicrotasks(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableMicrotasks) == 1,
@@ -141,6 +165,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableMicrotasks, jsInvoker_, instance_);
+    }
+    bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enablePropsUpdateReconciliationAndroid) == 1,
+          "Expected enablePropsUpdateReconciliationAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enablePropsUpdateReconciliationAndroid, jsInvoker_, instance_);
     }
     bool enableSynchronousStateUpdates(jsi::Runtime &rt) override {
       static_assert(
@@ -158,13 +190,37 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableUIConsistency, jsInvoker_, instance_);
     }
-    bool fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(jsi::Runtime &rt) override {
+    bool fetchImagesInViewPreallocation(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak) == 1,
-          "Expected fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(...) to have 1 parameters");
+          bridging::getParameterCount(&T::fetchImagesInViewPreallocation) == 1,
+          "Expected fetchImagesInViewPreallocation(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak, jsInvoker_, instance_);
+          rt, &T::fetchImagesInViewPreallocation, jsInvoker_, instance_);
+    }
+    bool fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::fixIncorrectScrollViewStateUpdateOnAndroid) == 1,
+          "Expected fixIncorrectScrollViewStateUpdateOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::fixIncorrectScrollViewStateUpdateOnAndroid, jsInvoker_, instance_);
+    }
+    bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::fixMappingOfEventPrioritiesBetweenFabricAndReact) == 1,
+          "Expected fixMappingOfEventPrioritiesBetweenFabricAndReact(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::fixMappingOfEventPrioritiesBetweenFabricAndReact, jsInvoker_, instance_);
+    }
+    bool fixMissedFabricStateUpdatesOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::fixMissedFabricStateUpdatesOnAndroid) == 1,
+          "Expected fixMissedFabricStateUpdatesOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::fixMissedFabricStateUpdatesOnAndroid, jsInvoker_, instance_);
     }
     bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -190,6 +246,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::fuseboxEnabledRelease, jsInvoker_, instance_);
     }
+    bool initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::initEagerTurboModulesOnNativeModulesQueueAndroid) == 1,
+          "Expected initEagerTurboModulesOnNativeModulesQueueAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::initEagerTurboModulesOnNativeModulesQueueAndroid, jsInvoker_, instance_);
+    }
     bool lazyAnimationCallbacks(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::lazyAnimationCallbacks) == 1,
@@ -198,13 +262,13 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::lazyAnimationCallbacks, jsInvoker_, instance_);
     }
-    bool preventDoubleTextMeasure(jsi::Runtime &rt) override {
+    bool loadVectorDrawablesOnImages(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::preventDoubleTextMeasure) == 1,
-          "Expected preventDoubleTextMeasure(...) to have 1 parameters");
+          bridging::getParameterCount(&T::loadVectorDrawablesOnImages) == 1,
+          "Expected loadVectorDrawablesOnImages(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::preventDoubleTextMeasure, jsInvoker_, instance_);
+          rt, &T::loadVectorDrawablesOnImages, jsInvoker_, instance_);
     }
     bool setAndroidLayoutDirection(jsi::Runtime &rt) override {
       static_assert(
@@ -237,6 +301,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useNativeViewConfigsInBridgelessMode, jsInvoker_, instance_);
+    }
+    bool useNewReactImageViewBackgroundDrawing(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useNewReactImageViewBackgroundDrawing) == 1,
+          "Expected useNewReactImageViewBackgroundDrawing(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useNewReactImageViewBackgroundDrawing, jsInvoker_, instance_);
     }
     bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) override {
       static_assert(
@@ -2673,6 +2745,7 @@ public:
   virtual void setProfilingEnabled(jsi::Runtime &rt, bool isProfilingEnabled) = 0;
   virtual void toggleElementInspector(jsi::Runtime &rt) = 0;
   virtual void addMenuItem(jsi::Runtime &rt, jsi::String title) = 0;
+  virtual void openDebugger(jsi::Runtime &rt) = 0;
   virtual void addListener(jsi::Runtime &rt, jsi::String eventName) = 0;
   virtual void removeListeners(jsi::Runtime &rt, double count) = 0;
   virtual void setIsShakeToShowDevMenuEnabled(jsi::Runtime &rt, bool enabled) = 0;
@@ -2765,6 +2838,14 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::addMenuItem, jsInvoker_, instance_, std::move(title));
+    }
+    void openDebugger(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::openDebugger) == 1,
+          "Expected openDebugger(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::openDebugger, jsInvoker_, instance_);
     }
     void addListener(jsi::Runtime &rt, jsi::String eventName) override {
       static_assert(
@@ -5593,7 +5674,7 @@ struct NativePlatformConstantsAndroidReactNativeVersionAndroidBridging {
     return bridging::toJs(rt, value);
   }
 
-  static std::optional<double> prereleaseToJs(jsi::Runtime &rt, decltype(types.prerelease) value) {
+  static std::optional<jsi::String> prereleaseToJs(jsi::Runtime &rt, decltype(types.prerelease) value) {
     return bridging::toJs(rt, value);
   }
 #endif
@@ -6400,7 +6481,63 @@ struct Bridging<NativeSampleTurboModuleEnumInt> {
     }
   }
 };
-  class JSI_EXPORT NativeSampleTurboModuleCxxSpecJSI : public TurboModule {
+  
+#pragma mark - NativeSampleTurboModuleObjectStruct
+
+template <typename P0, typename P1, typename P2>
+struct NativeSampleTurboModuleObjectStruct {
+  P0 a;
+  P1 b;
+  P2 c;
+  bool operator==(const NativeSampleTurboModuleObjectStruct &other) const {
+    return a == other.a && b == other.b && c == other.c;
+  }
+};
+
+template <typename T>
+struct NativeSampleTurboModuleObjectStructBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.a)>(rt, value.getProperty(rt, "a"), jsInvoker),
+      bridging::fromJs<decltype(types.b)>(rt, value.getProperty(rt, "b"), jsInvoker),
+      bridging::fromJs<decltype(types.c)>(rt, value.getProperty(rt, "c"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double aToJs(jsi::Runtime &rt, decltype(types.a) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::String bToJs(jsi::Runtime &rt, decltype(types.b) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static std::optional<jsi::String> cToJs(jsi::Runtime &rt, decltype(types.c) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "a", bridging::toJs(rt, value.a, jsInvoker));
+    result.setProperty(rt, "b", bridging::toJs(rt, value.b, jsInvoker));
+    if (value.c) {
+      result.setProperty(rt, "c", bridging::toJs(rt, value.c.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+class JSI_EXPORT NativeSampleTurboModuleCxxSpecJSI : public TurboModule {
 protected:
   NativeSampleTurboModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
@@ -6441,13 +6578,40 @@ protected:
     : TurboModule(std::string{NativeSampleTurboModuleCxxSpec::kModuleName}, jsInvoker),
       delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
 
+  void emitOnPress() {
+    static_cast<AsyncEventEmitter<>&>(*delegate_.eventEmitterMap_["onPress"]).emit();
+  }
+
+  template <typename OnClickType> void emitOnClick(OnClickType value) {
+    static_assert(bridging::supportsFromJs<OnClickType, jsi::String>, "value cannnot be converted to jsi::String");
+    static_cast<AsyncEventEmitter<jsi::Value>&>(*delegate_.eventEmitterMap_["onClick"]).emit([jsInvoker = jsInvoker_, eventValue = value](jsi::Runtime& rt) -> jsi::Value {
+      return bridging::toJs(rt, eventValue, jsInvoker);
+    });
+  }
+
+  template <typename OnChangeType> void emitOnChange(OnChangeType value) {
+    static_assert(bridging::supportsFromJs<OnChangeType, jsi::Object>, "value cannnot be converted to jsi::Object");
+    static_cast<AsyncEventEmitter<jsi::Value>&>(*delegate_.eventEmitterMap_["onChange"]).emit([jsInvoker = jsInvoker_, eventValue = value](jsi::Runtime& rt) -> jsi::Value {
+      return bridging::toJs(rt, eventValue, jsInvoker);
+    });
+  }
+
+  template <typename OnSubmitType> void emitOnSubmit(std::vector<OnSubmitType> value) {
+    static_assert(bridging::supportsFromJs<std::vector<OnSubmitType>, jsi::Array>, "value cannnot be converted to jsi::Array");
+    static_cast<AsyncEventEmitter<jsi::Value>&>(*delegate_.eventEmitterMap_["onSubmit"]).emit([jsInvoker = jsInvoker_, eventValue = value](jsi::Runtime& rt) -> jsi::Value {
+      return bridging::toJs(rt, eventValue, jsInvoker);
+    });
+  }
 
 private:
   class Delegate : public NativeSampleTurboModuleCxxSpecJSI {
   public:
     Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
       NativeSampleTurboModuleCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
+      eventEmitterMap_["onPress"] = std::make_shared<AsyncEventEmitter<>>();
+      eventEmitterMap_["onClick"] = std::make_shared<AsyncEventEmitter<jsi::Value>>();
+      eventEmitterMap_["onChange"] = std::make_shared<AsyncEventEmitter<jsi::Value>>();
+      eventEmitterMap_["onSubmit"] = std::make_shared<AsyncEventEmitter<jsi::Value>>();
     }
 
     jsi::Object getConstants(jsi::Runtime &rt) override {
@@ -7686,6 +7850,155 @@ private:
 
   private:
     friend class NativeWebSocketModuleCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  
+#pragma mark - NativeIdleCallbacksIdleDeadline
+
+template <typename P0, typename P1>
+struct NativeIdleCallbacksIdleDeadline {
+  P0 didTimeout;
+  P1 timeRemaining;
+  bool operator==(const NativeIdleCallbacksIdleDeadline &other) const {
+    return didTimeout == other.didTimeout && timeRemaining == other.timeRemaining;
+  }
+};
+
+template <typename T>
+struct NativeIdleCallbacksIdleDeadlineBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.didTimeout)>(rt, value.getProperty(rt, "didTimeout"), jsInvoker),
+      bridging::fromJs<decltype(types.timeRemaining)>(rt, value.getProperty(rt, "timeRemaining"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static bool didTimeoutToJs(jsi::Runtime &rt, decltype(types.didTimeout) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Function timeRemainingToJs(jsi::Runtime &rt, decltype(types.timeRemaining) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "didTimeout", bridging::toJs(rt, value.didTimeout, jsInvoker));
+    result.setProperty(rt, "timeRemaining", bridging::toJs(rt, value.timeRemaining, jsInvoker));
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeIdleCallbacksRequestIdleCallbackOptions
+
+template <typename P0>
+struct NativeIdleCallbacksRequestIdleCallbackOptions {
+  P0 timeout;
+  bool operator==(const NativeIdleCallbacksRequestIdleCallbackOptions &other) const {
+    return timeout == other.timeout;
+  }
+};
+
+template <typename T>
+struct NativeIdleCallbacksRequestIdleCallbackOptionsBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.timeout)>(rt, value.getProperty(rt, "timeout"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double timeoutToJs(jsi::Runtime &rt, decltype(types.timeout) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    if (value.timeout) {
+      result.setProperty(rt, "timeout", bridging::toJs(rt, value.timeout.value(), jsInvoker));
+    }
+    return result;
+  }
+};
+
+class JSI_EXPORT NativeIdleCallbacksCxxSpecJSI : public TurboModule {
+protected:
+  NativeIdleCallbacksCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual jsi::Value requestIdleCallback(jsi::Runtime &rt, jsi::Function callback, std::optional<jsi::Object> options) = 0;
+  virtual void cancelIdleCallback(jsi::Runtime &rt, jsi::Value handle) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeIdleCallbacksCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+  static constexpr std::string_view kModuleName = "NativeIdleCallbacksCxx";
+
+protected:
+  NativeIdleCallbacksCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeIdleCallbacksCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeIdleCallbacksCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeIdleCallbacksCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    jsi::Value requestIdleCallback(jsi::Runtime &rt, jsi::Function callback, std::optional<jsi::Object> options) override {
+      static_assert(
+          bridging::getParameterCount(&T::requestIdleCallback) == 3,
+          "Expected requestIdleCallback(...) to have 3 parameters");
+
+      return bridging::callFromJs<jsi::Value>(
+          rt, &T::requestIdleCallback, jsInvoker_, instance_, std::move(callback), std::move(options));
+    }
+    void cancelIdleCallback(jsi::Runtime &rt, jsi::Value handle) override {
+      static_assert(
+          bridging::getParameterCount(&T::cancelIdleCallback) == 2,
+          "Expected cancelIdleCallback(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::cancelIdleCallback, jsInvoker_, instance_, std::move(handle));
+    }
+
+  private:
+    friend class NativeIdleCallbacksCxxSpec;
     T *instance_;
   };
 

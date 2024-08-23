@@ -115,7 +115,7 @@ struct ComponentView
   void EnsureTransformMatrixFacade() noexcept;
 
   winrt::IInspectable EnsureUiaProvider() noexcept override;
-  std::optional<std::string> getAcccessiblityValue() noexcept override;
+  std::optional<std::string> getAccessiblityValue() noexcept override;
   void setAcccessiblityValue(std::string &&value) noexcept override;
   bool getAcccessiblityIsReadOnly() noexcept override;
   virtual winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept;
@@ -168,7 +168,11 @@ struct ComponentView
   std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
   FindSpecialBorderLayers() const noexcept;
   void UpdateCenterPropertySet() noexcept;
+  void FinalizeTransform(
+      facebook::react::LayoutMetrics const &layoutMetrics,
+      const facebook::react::ViewProps &viewProps) noexcept;
 
+  bool m_FinalizeTransform{false};
   ComponentViewFeatures m_flags;
   void showFocusVisual(bool show) noexcept;
   winrt::Microsoft::ReactNative::Composition::Experimental::IFocusVisual m_focusVisual{nullptr};
