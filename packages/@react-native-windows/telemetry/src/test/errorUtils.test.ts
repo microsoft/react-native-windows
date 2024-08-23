@@ -203,58 +203,50 @@ test('sanitizeErrorMessage() with standard MSBuild error', () => {
   );
 });
 
-// NOTE: COMMENT FOR NOW, UPDATE FOR 1DS STACK FRAME STRUCT
-/*
 test('sanitizeErrorStackFrame() with empty frame', () => {
-  const emptyFrame: appInsights.Contracts.StackFrame = {
-    level: 0,
-    method: '',
-    fileName: '',
-    assembly: 'asdf',
-    line: 0,
+  const stackFrame = {
+    functionName: '',
+    filePath: '',
+    lineNumber: 0,
+    columnNumber: 0
   };
-  errorUtils.sanitizeErrorStackFrame(emptyFrame);
-  expect(emptyFrame).toEqual({
-    level: 0,
-    assembly: '',
-    fileName: '[path]',
-    method: '',
-    line: 0,
+  errorUtils.sanitizeErrorStackFrame(stackFrame);
+  expect(stackFrame).toEqual({
+    functionName: '',
+    filePath: '[path]',
+    lineNumber: 0,
+    columnNumber: 0
   });
 });
 
 test('sanitizeErrorStackFrame() with assembly name', () => {
-  const frame1: appInsights.Contracts.StackFrame = {
-    method: '',
-    fileName: `${process.cwd()}\\foo.js`,
-    assembly: 'asdf',
-    level: 0,
-    line: 0,
+  const stackFrame = {
+    functionName: '',
+    filePath: `${process.cwd()}\\foo.js`,
+    lineNumber: 10,
+    columnNumber: 14
   };
-  errorUtils.sanitizeErrorStackFrame(frame1);
-  expect(frame1).toEqual({
-    assembly: '',
-    fileName: '[project_dir]\\???.js(6)',
-    method: '',
-    level: 0,
-    line: 0,
+  errorUtils.sanitizeErrorStackFrame(stackFrame);
+  expect(stackFrame).toEqual({
+    functionName: '',
+    filePath: '[project_dir]\\???.js(6)',
+    lineNumber: 10,
+    columnNumber: 14
   });
 });
 
 test('sanitizeErrorStackFrame() with method name', () => {
-  const frame2: appInsights.Contracts.StackFrame = {
-    method: `myMethod (something ${process.cwd()}`,
-    fileName: `${process.cwd()}\\telemetry\\foo.js`,
-    assembly: 'asdf',
-    level: 1,
-    line: 42,
+  const stackFrame = {
+    functionName: `myMethod (something ${process.cwd()}`,
+    filePath: `${process.cwd()}\\telemetry\\foo.js`,
+    lineNumber: 10,
+    columnNumber: 14
   };
-  errorUtils.sanitizeErrorStackFrame(frame2);
-  expect(frame2).toEqual({
-    assembly: '',
-    fileName: '[project_dir]\\???.js(16)',
-    method: 'myMethod',
-    level: 1,
-    line: 42,
+  errorUtils.sanitizeErrorStackFrame(stackFrame);
+  expect(stackFrame).toEqual({
+    functionName: 'myMethod',
+    filePath: '[project_dir]\\???.js(16)',
+    lineNumber: 10,
+    columnNumber: 14
   });
-});*/
+});

@@ -7,10 +7,6 @@
 import * as coreOneDS from '@microsoft/1ds-core-js';
 import {PostChannel, IChannelConfiguration} from '@microsoft/1ds-post-js';
 
-// Post 1DS seems to provide configuration settings to post events
-// https://microsoft.github.io/ApplicationInsights-JS/webSdk/1ds-post-js/interfaces/IChannelConfiguration.html
-// import * as postOneDS from '@microsoft/1ds-post-js';
-
 import * as basePropUtils from './utils/basePropUtils';
 import * as versionUtils from './utils/versionUtils';
 import * as errorUtils from './utils/errorUtils';
@@ -154,16 +150,16 @@ export class Telemetry {
 
     await Telemetry.setupBaseProperties();
 
-    // Setup telemetry initializers (formerly "processors" on App Insights)
+    // Setup telemetry initializers (known as "processors" on App Insights)
     this.addTelemetryInitializers();
   }
 
+  // The first telemetry processor that is executed after calling flush().
+  // Applicable to all events.
+  // NOTE: returning true means the next processor will be executed.
+  // Otherwise, the event won't be posted.
   private static basicTelemetryInitializer(envelope: coreOneDS.ITelemetryItem) : boolean
-  {
-    if (envelope.tags) {
-      delete envelope.tags['ai.cloud.roleInstance'];  
-    }
-    
+  {    
     // Filter out "legacy" events from older stable branches
     if (envelope.name && EventNamesWeTrack.includes(envelope.name)) {
       return true;
@@ -172,6 +168,9 @@ export class Telemetry {
     return false;
   }
 
+  // The second telemetry processor that is executed after calling flush().
+  // Performs sanitization and PII removal from ExceptionData,
+  // applicable only to error scenarios.
   private static errorTelemetryInitializer(envelope: coreOneDS.ITelemetryItem) : boolean
   {
     if (envelope.data?.baseType === 'ExceptionData') {
@@ -186,8 +185,6 @@ export class Telemetry {
 
           // CodedError has non-PII information in its 'type' member, plus optionally some more info in its 'data'.
           // The message may contain PII information. This can be sanitized, but for now delete it.
-          // Note that the type of data.exceptions[0] is always going to be ExceptionDetails. It is not the original thrown exception.
-          // https://github.com/microsoft/ApplicationInsights-node.js/issues/707
           if (Telemetry.options.preserveErrorMessages) {
             exceptionData.message = errorUtils.sanitizeErrorMessage(
               exceptionData.message,
@@ -209,16 +206,10 @@ export class Telemetry {
 
   /** Sets up Telemetry.appInsightsCore. */
   private static setupClient() {
-    // appInsights.Configuration.setInternalLogging(false, false);
-
     var postChannel: PostChannel = new PostChannel();
 
     const coreConfiguration: coreOneDS.IExtendedConfiguration = {
       instrumentationKey: process.env[ENV_SETUP_OVERRIDE] ?? RNW_1DS_INSTURMENTATION_KEY,
-      extensions: [
-        postChannel
-      ],
-      extensionConfig: {}
     }
 
     var postChannelConfig: IChannelConfiguration = {
@@ -234,7 +225,7 @@ export class Telemetry {
     }
   
     Telemetry.appInsightsCore = new coreOneDS.AppInsightsCore();
-    Telemetry.appInsightsCore.initialize(coreConfiguration, [] /* extensions */);
+    Telemetry.appInsightsCore.initialize(coreConfiguration, [postChannel] /* extensions */);
   }
 
   /** Sets up any base properties that all telemetry events require. */
@@ -271,8 +262,6 @@ export class Telemetry {
     Telemetry.commonProperties.isTest = Telemetry.isTestEnvironment.toString();
     Telemetry.commonProperties.sessionId = Telemetry.getSessionId();
 
-    // NOTE: Temporarily store sampleRate into CommonProperties
-    //Telemetry.config.samplingPercentage = basePropUtils.sampleRate();
     Telemetry.commonProperties.samplingPercentage = basePropUtils.sampleRate().toString();
 
     await Telemetry.populateToolsVersions();
@@ -400,15 +389,14 @@ export class Telemetry {
 
   private static trackEvent(telemetryItem: coreOneDS.ITelemetryItem) {
     // Populate Part A
-    telemetryItem.ver = "4.0";
+    telemetryItem.ver = "4.0"; // Current Common Schema version
     telemetryItem.time = new Date().toISOString();
-    telemetryItem.iKey = RNW_1DS_INSTURMENTATION_KEY; // Is this needed?
+    telemetryItem.iKey = RNW_1DS_INSTURMENTATION_KEY;
 
     let projectPropString = JSON.stringify(Telemetry.projectProp);
     let versionPropString = JSON.stringify(Telemetry.versionsProp);
 
-    // Populate "common" properties into Part B, since most of them
-    // don't adhere to the Part A extensions.
+    // Populate "common" properties into Part B.
     telemetryItem.baseData = {
       common: {
         device: {
@@ -443,6 +431,7 @@ export class Telemetry {
   private static trackCommandEvent(extraProps?: Record<string, any>) {
     var telemetryItem: coreOneDS.ITelemetryItem = {name: CommandEventName};
 
+    // This is logged in Part C.
     let command = {
       options: Telemetry.commandInfo.startInfo?.options,
       defaultOptions: Telemetry.commandInfo.startInfo?.defaultOptions,
@@ -454,10 +443,11 @@ export class Telemetry {
     };
 
     let commandPropString = JSON.stringify(command);
-    telemetryItem.data = {};
-    telemetryItem.data.command = commandPropString;
+    telemetryItem.data = {
+      command: commandPropString
+    };
 
-    // Set extra props to "additionalData", temporary name
+    // Set extra props to "additionalData".
     let additionalDataString = JSON.stringify(extraProps);
 
     if (additionalDataString.length > 0) {
@@ -513,7 +503,6 @@ export class Telemetry {
 
     // Break down TS Error object into Exception Data
     let exceptionData = Telemetry.convertErrorIntoExceptionData(error);
-    //let exceptionDataString = JSON.stringify(exceptionData);
 
     let codedDataStructString = JSON.stringify(codedErrorStruct);
 
@@ -531,8 +520,7 @@ export class Telemetry {
     let exceptionData = {
       hasFullStack: false,
       message: error.message,
-      parsedStack: {},
-      typeName: "", // what is typeName?
+      parsedStack: {}
     };
 
     const lines = error.stack?.split('\n');
@@ -550,12 +538,12 @@ export class Telemetry {
           return {
               functionName,
               filePath,
-              lineNumber: +lineNumber,  // Convert to number
-              columnNumber: +columnNumber // Convert to number
+              lineNumber: +lineNumber,
+              columnNumber: +columnNumber
           };
       }
   
-      return "something";  // Fallback in case of no match
+      return undefined; 
   });
 
     if (parsedStack != undefined) {
@@ -566,5 +554,4 @@ export class Telemetry {
 
     return exceptionData;
   }
-
 }

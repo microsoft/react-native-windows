@@ -382,17 +382,16 @@ function verifyTestCommandTelemetryProcessor(
         expect(envelope.name).toBe(CodedErrorEventName);
 
         // Verify exception info
-        /*const exceptions = envelope.data.baseData?.exceptions;
-        expect(exceptions).toBeDefined();
-        expect(exceptions.length).toBe(1);
-        expect(exceptions[0].message).toBeDefined();
-        expect(exceptions[0].message).not.toBe('');
+        const exceptionData = envelope.data.exceptionData;
+        expect(exceptionData).toBeDefined();
+        expect(exceptionData.message).toBeDefined();
+        expect(exceptionData.message).not.toBe('');
 
-        expect(exceptions[0].message).toBe(
+        expect(exceptionData.message).toBe(
           TelemetryTest.getPreserveErrorMessages()
             ? errorUtils.sanitizeErrorMessage(expectedError?.message || 'None')
             : '[Removed]',
-        );*/
+        );
 
         // Verify coded error info
         const codedError = JSON.parse(envelope.data!.codedError);
