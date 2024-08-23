@@ -785,6 +785,9 @@ export const __INTERNAL_VIEW_CONFIG: PartialViewConfig = {
     },
     borderTopLeftRadius: true,
     borderTopColor: {process: require('../../StyleSheet/processColor').default},
+    experimental_boxShadow: {
+      process: require('../../StyleSheet/processBoxShadow').default,
+    },
     clearTextOnFocus: true, // [Windows]
     clearTextOnSubmit: true, // [Windows]
     scrollEnabled: true, // [Windows]

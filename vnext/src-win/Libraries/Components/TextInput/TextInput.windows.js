@@ -9,6 +9,7 @@
  */
 
 import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
+import type {____TextStyle_Internal as TextStyleInternal} from '../../StyleSheet/StyleSheetTypes';
 import type {
   KeyEvent, // Windows
   MouseEvent, // Windows
@@ -1669,10 +1670,18 @@ function InternalTextInput(props: Props): React.Node {
     };
   }
 
-  let style = flattenStyle<TextStyleProp>(props.style);
-  if (typeof style?.fontWeight === 'number') {
-    // $FlowFixMe
-    style = [style, {fontWeight: style.fontWeight.toString()}];
+  // Keep the original (potentially nested) style when possible, as React can diff these more efficiently
+  let _style = props.style;
+  const flattenedStyle = flattenStyle<TextStyleProp>(props.style);
+  if (typeof flattenedStyle?.fontWeight === 'number') {
+    _style = [
+      _style,
+      {
+        fontWeight:
+          // $FlowFixMe[incompatible-cast]
+          (flattenedStyle.fontWeight.toString(): TextStyleInternal['fontWeight']),
+      },
+    ];
   }
 
   if (Platform.OS === 'ios') {
@@ -1683,10 +1692,10 @@ function InternalTextInput(props: Props): React.Node {
 
     const useMultilineDefaultStyle =
       props.multiline === true &&
-      (style == null ||
-        (style.padding == null &&
-          style.paddingVertical == null &&
-          style.paddingTop == null));
+      (flattenedStyle == null ||
+        (flattenedStyle.padding == null &&
+          flattenedStyle.paddingVertical == null &&
+          flattenedStyle.paddingTop == null));
 
     textInput = (
       <RCTTextInputView
@@ -1714,7 +1723,7 @@ function InternalTextInput(props: Props): React.Node {
         selectionColor={selectionColor}
         style={StyleSheet.compose(
           useMultilineDefaultStyle ? styles.multilineDefault : null,
-          style,
+          _style,
         )}
         text={text}
       />
@@ -1782,7 +1791,7 @@ function InternalTextInput(props: Props): React.Node {
         onScroll={_onScroll}
         onSelectionChange={_onSelectionChange}
         placeholder={placeholder}
-        style={style}
+        style={_style}
         text={text}
         textBreakStrategy={props.textBreakStrategy}
       />

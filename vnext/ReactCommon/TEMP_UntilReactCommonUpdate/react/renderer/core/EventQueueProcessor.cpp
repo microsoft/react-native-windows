@@ -63,6 +63,7 @@ void EventQueueProcessor::flushEvents(
             return ReactEventPriority::Default;
           // Windows]
         }
+        return ReactEventPriority::Default;
       }();
     } else {
       if (event.category == RawEvent::Category::ContinuousEnd) {

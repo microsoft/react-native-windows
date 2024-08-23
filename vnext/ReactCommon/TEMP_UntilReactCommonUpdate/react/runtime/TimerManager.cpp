@@ -52,6 +52,7 @@ inline const char* getTimerSourceName(TimerSource source) {
       return "unknown";
       // Windows]
   }
+  return "unknown";
 }
 
 } // namespace

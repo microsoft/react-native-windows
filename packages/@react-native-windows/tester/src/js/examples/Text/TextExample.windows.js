@@ -1595,6 +1595,26 @@ const examples = [
       );
     },
   },
+  {
+    title: 'Box Shadow',
+    name: 'boxShadow',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text
+            testID="text-box-shadow"
+            style={{
+              borderRadius: 10,
+              experimental_boxShadow: '0 0 10px red',
+            }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </Text>
+        </View>
+      );
+    },
+  },
+  TextInlineViewsExample,
   // [Windows #12997]
   // TextInlineViewsExample,
   {
