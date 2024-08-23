@@ -602,6 +602,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
       strongThis->Queue().Post([this, weakThis]() noexcept {
         if (auto strongThis = weakThis.GetStrongPtr()) {
           auto devSettings = strongThis->CreateDevSettings();
+          devSettings->useTurboModulesOnly = true;
 
           try {
             if (devSettings->useFastRefresh || devSettings->liveReloadCallback) {
