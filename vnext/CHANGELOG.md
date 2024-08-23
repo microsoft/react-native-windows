@@ -1,8 +1,27 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 20 Aug 2024 05:15:39 GMT and should not be manually modified.
+This log was last generated on Thu, 22 Aug 2024 05:24:28 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.858
+
+Thu, 22 Aug 2024 05:24:28 GMT
+
+### Changes
+
+- integrate react native nightly 7-19 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.857
+
+Wed, 21 Aug 2024 05:14:40 GMT
+
+### Changes
+
+- [Fabric] Fix crash when running inspect (30809111+acoates-ms@users.noreply.github.com)
+- Update templates to calculate rnwPath for *.sln files (jthysell@microsoft.com)
+- Adjust Support for IValueProvider (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.232
 
 ## 0.0.0-canary.856
 

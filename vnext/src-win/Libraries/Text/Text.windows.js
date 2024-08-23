@@ -9,6 +9,7 @@
  * @format
  */
 
+import type {____TextStyle_Internal as TextStyleInternal} from '../StyleSheet/StyleSheetTypes';
 import type {PressEvent} from '../Types/CoreEventTypes';
 import type {TextProps} from './TextProps';
 
@@ -20,7 +21,6 @@ import processColor from '../StyleSheet/processColor';
 import Platform from '../Utilities/Platform';
 import TextAncestor from './TextAncestor';
 import {NativeText, NativeVirtualText} from './TextNativeComponent';
-import TextOptimized from './TextOptimized';
 import * as React from 'react';
 import {useContext, useMemo, useState} from 'react';
 
@@ -447,11 +447,7 @@ const Text: React.AbstractComponent<
   TextProps,
   React.ElementRef<typeof NativeText | typeof NativeVirtualText>,
 > = React.forwardRef((props: TextProps, forwardedRef) => {
-  if (ReactNativeFeatureFlags.shouldUseOptimizedText()) {
-    return <TextOptimized {...props} ref={forwardedRef} />;
-  } else {
     return <TextLegacy {...props} ref={forwardedRef} />;
-  }
 });
 
 Text.displayName = 'Text';

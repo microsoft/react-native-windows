@@ -300,6 +300,11 @@ void *TextLayoutManager::getNativeTextLayoutManager() const {
   return (void *)this;
 }
 
+Float TextLayoutManager::baseline(AttributedString attributedString, ParagraphAttributes paragraphAttributes, Size size)
+    const {
+  return 0;
+}
+
 winrt::hstring TextLayoutManager::GetTransformedText(const AttributedString &attributedString) {
   winrt::hstring result{};
   for (const auto &fragment : attributedString.getFragments()) {

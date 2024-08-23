@@ -2,6 +2,42 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Thu, 22 Aug 2024 05:24:28 GMT",
+      "version": "0.12.198",
+      "tag": "@react-native-windows/automation-channel_v0.12.198",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "bccbec07eeeda80b870765f2b207a6616b69732b",
+            "comment": "integrate react native nightly 7-19"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.858",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Aug 2024 05:14:41 GMT",
+      "version": "0.12.197",
+      "tag": "@react-native-windows/automation-channel_v0.12.197",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.857",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 20 Aug 2024 05:15:39 GMT",
       "version": "0.12.196",
       "tag": "@react-native-windows/automation-channel_v0.12.196",

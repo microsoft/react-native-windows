@@ -39,7 +39,7 @@ struct LinkingManager {
   static void removeListeners(double count) noexcept;
 
   REACT_METHOD(getInitialURL)
-  static void getInitialURL(winrt::Microsoft::ReactNative::ReactPromise<std::string> &&result) noexcept;
+  static void getInitialURL(winrt::Microsoft::ReactNative::ReactPromise<std::optional<std::string>> &&result) noexcept;
 
   static void OpenUri(winrt::Windows::Foundation::Uri const &uri) noexcept;
 
