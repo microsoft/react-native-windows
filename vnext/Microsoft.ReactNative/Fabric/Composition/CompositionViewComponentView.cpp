@@ -1537,11 +1537,20 @@ void ViewComponentView::MountChildComponentView(
   indexOffsetForBorder(index);
   ensureVisual();
 
-  // Should do in this checkin
-  // TODO if we get mixed children of composition and non-composition ComponentViews the indexes will get mixed up
-  // We could offset the index based on non-composition children in m_children
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
-    Visual().InsertAt(compositionChild->OuterVisual(), index);
+    auto visualIndex = index;
+    // Most of the time child index will align with visual index.
+    // But if we have non-visual children, we need to account for that.
+    if (m_hasNonVisualChildren) {
+      for (size_t i = 0; i <= index; i++) {
+        if (!m_children[i].try_as<ComponentView>()) {
+          visualIndex--;
+        }
+      }
+    }
+    Visual().InsertAt(compositionChild->OuterVisual(), visualIndex);
+  } else {
+    m_hasNonVisualChildren = true;
   }
 }
 

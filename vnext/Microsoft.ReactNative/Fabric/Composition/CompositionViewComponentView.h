@@ -218,6 +218,7 @@ struct ViewComponentView : public ViewComponentViewT<
   virtual winrt::Microsoft::ReactNative::ViewProps ViewPropsInner() noexcept;
 
  private:
+  bool m_hasNonVisualChildren{false};
   facebook::react::SharedViewProps m_props;
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_visual{nullptr};
   winrt::Microsoft::ReactNative::Composition::CreateVisualDelegate m_createVisualHandler{nullptr};
