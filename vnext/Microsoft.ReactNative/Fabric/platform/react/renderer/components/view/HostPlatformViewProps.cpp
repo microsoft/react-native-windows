@@ -36,9 +36,13 @@ HostPlatformViewProps::HostPlatformViewProps(
               ? sourceProps.accessibilitySetSize
               : convertRawProp(context, rawProps, "accessibilitySetSize", sourceProps.accessibilitySetSize, 0)),
       accessibilityLiveRegion(
-          CoreFeatures::enablePropIteratorSetter
-              ? sourceProps.accessibilityLiveRegion
-              : convertRawProp(context, rawProps, "accessibilityLiveRegion", sourceProps.accessibilityLiveRegion, "none")) {}
+          CoreFeatures::enablePropIteratorSetter ? sourceProps.accessibilityLiveRegion
+                                                 : convertRawProp(
+                                                       context,
+                                                       rawProps,
+                                                       "accessibilityLiveRegion",
+                                                       sourceProps.accessibilityLiveRegion,
+                                                       "none")) {}
 
 #define WINDOWS_VIEW_EVENT_CASE(eventType)                    \
   case CONSTEXPR_RAW_PROPS_KEY_HASH("on" #eventType): {       \
