@@ -3243,6 +3243,7 @@ exports[`Image Tests Images can be defined as a set using accessibilityPosInSet 
       {
         "AutomationId": "",
         "ControlType": 50006,
+        "LiveSetting": "Polite",
         "LocalizedControlType": "image",
         "PositionInSet": 1,
         "SizeofSet": 2,
@@ -3250,6 +3251,7 @@ exports[`Image Tests Images can be defined as a set using accessibilityPosInSet 
       {
         "AutomationId": "",
         "ControlType": 50006,
+        "LiveSetting": "Assertive",
         "LocalizedControlType": "image",
         "PositionInSet": 2,
         "SizeofSet": 2,
