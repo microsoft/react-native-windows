@@ -48,6 +48,7 @@ struct CustomComponentUserData : winrt::implements<CustomComponentUserData, winr
   void Initialize(
       const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView,
       bool nativeLayout) {
+    nativeLayout;
 #ifdef USE_EXPERIMENTAL_WINUI3
     m_xamlIsland = winrt::Microsoft::UI::Xaml::XamlIsland{};
     m_xamlIsland.Content(CreateXamlButtonContent(nativeLayout));
@@ -77,9 +78,9 @@ struct CustomComponentUserData : winrt::implements<CustomComponentUserData, winr
   }
 
   void PropsChanged(
-      const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView,
+      const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView & /*islandView*/,
       const winrt::Microsoft::ReactNative::IComponentProps &newProps,
-      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) {
+      const winrt::Microsoft::ReactNative::IComponentProps & /*oldProps*/) {
     auto myProps = newProps.as<CustomXamlComponentProps>();
 #ifdef USE_EXPERIMENTAL_WINUI3
     m_buttonLabelTextBlock.Text(myProps->label);
@@ -106,8 +107,7 @@ struct CustomComponentUserData : winrt::implements<CustomComponentUserData, winr
           if (m_state) {
             auto state = winrt::get_self<CustomXamlComponentStateData>(m_state.Data());
             if (desiredSize != state->desiredSize) {
-              m_state.UpdateStateWithMutation([desiredSize](winrt::Windows::Foundation::IInspectable data) {
-                auto oldData = winrt::get_self<CustomXamlComponentStateData>(data);
+              m_state.UpdateStateWithMutation([desiredSize](winrt::Windows::Foundation::IInspectable /*data*/) {
                 return winrt::make<CustomXamlComponentStateData>(desiredSize);
               });
             }

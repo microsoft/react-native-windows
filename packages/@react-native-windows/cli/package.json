@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.230",
+  "version": "0.0.0-canary.232",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {

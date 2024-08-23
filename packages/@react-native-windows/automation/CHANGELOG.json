@@ -2,6 +2,66 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Thu, 22 Aug 2024 05:24:28 GMT",
+      "version": "0.3.280",
+      "tag": "@react-native-windows/automation_v0.3.280",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.198",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Aug 2024 05:14:41 GMT",
+      "version": "0.3.279",
+      "tag": "@react-native-windows/automation_v0.3.279",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.197",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 20 Aug 2024 05:15:39 GMT",
+      "version": "0.3.278",
+      "tag": "@react-native-windows/automation_v0.3.278",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.196",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 16 Aug 2024 05:13:08 GMT",
+      "version": "0.3.277",
+      "tag": "@react-native-windows/automation_v0.3.277",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.195",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Aug 2024 05:14:31 GMT",
       "version": "0.3.276",
       "tag": "@react-native-windows/automation_v0.3.276",

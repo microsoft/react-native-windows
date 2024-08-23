@@ -2,6 +2,96 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 22 Aug 2024 05:24:28 GMT",
+      "version": "0.0.0-canary.858",
+      "tag": "react-native-windows_v0.0.0-canary.858",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bccbec07eeeda80b870765f2b207a6616b69732b",
+            "comment": "integrate react native nightly 7-19"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 21 Aug 2024 05:14:40 GMT",
+      "version": "0.0.0-canary.857",
+      "tag": "react-native-windows_v0.0.0-canary.857",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a9e5ef1a7725e7e4ab160a287f9895540af6fa35",
+            "comment": "[Fabric] Fix crash when running inspect"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "39f65407956450b255e8b96f1c4ca46d85ab3414",
+            "comment": "Update templates to calculate rnwPath for *.sln files"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b9aed0ec10714180efaea48acb076749f6d32a6e",
+            "comment": "Adjust Support for IValueProvider"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.232",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 20 Aug 2024 05:15:39 GMT",
+      "version": "0.0.0-canary.856",
+      "tag": "react-native-windows_v0.0.0-canary.856",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "1422161+marlenecota@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8271255b00a49a7af90ad682be46eca3855c95d2",
+            "comment": "Align <WarningLevel> across app/templates"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "fb590aafb7deec74f0a2b64848c1d987ccb0d416",
+            "comment": "[Fabric] Fixes a crash that happens on release builds"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 16 Aug 2024 05:13:08 GMT",
+      "version": "0.0.0-canary.855",
+      "tag": "react-native-windows_v0.0.0-canary.855",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4bb42ecfb44c91770c96357e8de9f7a749c15626",
+            "comment": "Bump minimum VS version to 17.11.0"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.231",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Aug 2024 05:14:30 GMT",
       "version": "0.0.0-canary.854",
       "tag": "react-native-windows_v0.0.0-canary.854",

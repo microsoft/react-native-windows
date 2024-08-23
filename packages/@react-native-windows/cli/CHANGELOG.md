@@ -1,8 +1,24 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 14 Aug 2024 05:14:31 GMT and should not be manually modified.
+This log was last generated on Wed, 21 Aug 2024 05:14:40 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.232
+
+Wed, 21 Aug 2024 05:14:40 GMT
+
+### Changes
+
+- Update templates to calculate rnwPath for *.sln files (jthysell@microsoft.com)
+
+## 0.0.0-canary.231
+
+Fri, 16 Aug 2024 05:13:08 GMT
+
+### Changes
+
+- Bump minimum VS version to 17.11.0 (jthysell@microsoft.com)
 
 ## 0.0.0-canary.230
 

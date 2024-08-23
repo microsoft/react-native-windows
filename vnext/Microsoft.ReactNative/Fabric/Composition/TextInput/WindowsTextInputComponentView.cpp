@@ -1249,7 +1249,7 @@ void WindowsTextInputComponentView::FinalizeUpdates(
   }
 }
 
-std::optional<std::string> WindowsTextInputComponentView::getAcccessiblityValue() noexcept {
+std::optional<std::string> WindowsTextInputComponentView::getAccessiblityValue() noexcept {
   return GetTextFromRichEdit();
 }
 

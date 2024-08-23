@@ -64,6 +64,12 @@ class TextLayoutManager {
       LayoutConstraints layoutConstraints) const;
 
   /*
+   * Calculates baseline of `attributedString` using native text rendering
+   * infrastructure.
+   */
+  Float baseline(AttributedString attributedString, ParagraphAttributes paragraphAttributes, Size size) const;
+
+  /*
    * Returns an opaque pointer to platform-specific TextLayoutManager.
    * Is used on a native views layer to delegate text rendering to the manager.
    */

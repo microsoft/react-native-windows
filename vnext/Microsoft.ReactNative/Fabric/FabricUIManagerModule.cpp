@@ -109,15 +109,6 @@ void FabricUIManager::installFabricUIManager() noexcept {
   };
   toolbox.runtimeExecutor = runtimeExecutor;
   toolbox.asynchronousEventBeatFactory = asynchronousBeatFactory;
-  toolbox.backgroundExecutor = [context = m_context,
-                                dispatcher = Mso::DispatchQueue::MakeLooperQueue()](std::function<void()> &&callback) {
-    if (context.UIDispatcher().HasThreadAccess()) {
-      callback();
-      return;
-    }
-
-    dispatcher.Post(std::move(callback));
-  };
 
   m_scheduler = std::make_shared<facebook::react::Scheduler>(
       toolbox, (/*animationDriver_ ? animationDriver_.get() :*/ nullptr), this);

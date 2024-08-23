@@ -28,7 +28,7 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   void UnmountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
-  void Connect(const winrt::Microsoft::UI::Content::ContentIsland& contentIsland) noexcept;
+  void Connect(const winrt::Microsoft::UI::Content::ContentIsland &contentIsland) noexcept;
 
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
@@ -40,9 +40,9 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
-  ~ContentIslandComponentView() noexcept;      
+  ~ContentIslandComponentView() noexcept;
 
-private:
+ private:
   void OnMounted() noexcept;
   void OnUnmounted() noexcept;
   void ParentLayoutChanged() noexcept;
@@ -55,7 +55,6 @@ private:
 #ifdef USE_EXPERIMENTAL_WINUI3
   winrt::Microsoft::UI::Content::ChildContentLink m_childContentLink{nullptr};
 #endif
-
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

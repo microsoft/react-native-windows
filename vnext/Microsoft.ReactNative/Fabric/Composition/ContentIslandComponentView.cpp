@@ -6,41 +6,39 @@
 
 #include "ContentIslandComponentView.h"
 
+#include <Fabric/FabricUIManagerModule.h>
+#include <IReactContext.h>
 #include <UI.Xaml.Controls.h>
 #include <Utils/ValueUtils.h>
-#include <IReactContext.h>
 #include <winrt/Microsoft.UI.Content.h>
-#include <Fabric/FabricUIManagerModule.h>
-#include "CompositionContextHelper.h"
 #include <winrt/Windows.UI.Composition.h>
+#include "CompositionContextHelper.h"
 #include "RootComponentView.h"
 
 #include "Composition.ContentIslandComponentView.g.cpp"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-  ContentIslandComponentView::ContentIslandComponentView(
-      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
-      facebook::react::Tag tag,
-      winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-      : base_type(ViewComponentView::defaultProps(),
-      compContext,
-      tag,
-      reactContext,
-      ComponentViewFeatures::Default
-      ) {
-
+ContentIslandComponentView::ContentIslandComponentView(
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
+    facebook::react::Tag tag,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    : base_type(ViewComponentView::defaultProps(), compContext, tag, reactContext, ComponentViewFeatures::Default) {
   m_mountedToken = Mounted([](const winrt::IInspectable &, const winrt::Microsoft::ReactNative::ComponentView &view) {
     view.as<ContentIslandComponentView>()->OnMounted();
   });
-  m_unmountedToken = Unmounted([](const winrt::IInspectable &, const winrt::Microsoft::ReactNative::ComponentView &view) {
-    view.as<ContentIslandComponentView>()->OnUnmounted();
-  });
+  m_unmountedToken =
+      Unmounted([](const winrt::IInspectable &, const winrt::Microsoft::ReactNative::ComponentView &view) {
+        view.as<ContentIslandComponentView>()->OnUnmounted();
+      });
 }
 
 void ContentIslandComponentView::OnMounted() noexcept {
 #ifdef USE_EXPERIMENTAL_WINUI3
-  m_childContentLink = winrt::Microsoft::UI::Content::ChildContentLink::Create(rootComponentView()->parentContentIsland(),  winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual()).as<winrt::Microsoft::UI::Composition::ContainerVisual>());
+  m_childContentLink = winrt::Microsoft::UI::Content::ChildContentLink::Create(
+      rootComponentView()->parentContentIsland(),
+      winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual())
+          .as<winrt::Microsoft::UI::Composition::ContainerVisual>());
   m_childContentLink.ActualSize({m_layoutMetrics.frame.size.width, m_layoutMetrics.frame.size.height});
   if (m_islandToConnect) {
     m_childContentLink.Connect(m_islandToConnect);
@@ -52,12 +50,11 @@ void ContentIslandComponentView::OnMounted() noexcept {
   while (view) {
     m_layoutMetricChangedRevokers.push_back(view.LayoutMetricsChanged(
         winrt::auto_revoke,
-        [wkThis =
-      get_weak()](const winrt::IInspectable& sender, const winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs&
-      args) {
-        if (auto strongThis = wkThis.get()) {
-        strongThis->ParentLayoutChanged();
-      }
+        [wkThis = get_weak()](
+            const winrt::IInspectable &sender, const winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs &args) {
+          if (auto strongThis = wkThis.get()) {
+            strongThis->ParentLayoutChanged();
+          }
         }));
     view = view.Parent();
   }
@@ -75,13 +72,13 @@ void ContentIslandComponentView::ParentLayoutChanged() noexcept {
 
   m_layoutChangePosted = true;
   ReactContext().UIDispatcher().Post([wkThis = get_weak()]() {
-      if (auto strongThis = wkThis.get()) {
+    if (auto strongThis = wkThis.get()) {
       auto clientRect = strongThis->getClientRect();
 
-        strongThis->m_childContentLink.OffsetOverride(
+      strongThis->m_childContentLink.OffsetOverride(
           {static_cast<float>(clientRect.left), static_cast<float>(clientRect.top)});
       strongThis->m_layoutChangePosted = false;
-      }
+    }
   });
 #endif
 }
@@ -107,18 +104,18 @@ void ContentIslandComponentView::UnmountChildComponentView(
 }
 
 void ContentIslandComponentView::updateLayoutMetrics(
-      facebook::react::LayoutMetrics const &layoutMetrics,
-      facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
-  #ifdef USE_EXPERIMENTAL_WINUI3
-    if (m_childContentLink) {
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
+#ifdef USE_EXPERIMENTAL_WINUI3
+  if (m_childContentLink) {
     m_childContentLink.ActualSize({layoutMetrics.frame.size.width, layoutMetrics.frame.size.height});
     ParentLayoutChanged();
-    }
-  #endif
-    base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
+  }
+#endif
+  base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 }
 
-void ContentIslandComponentView::Connect(const winrt::Microsoft::UI::Content::ContentIsland& contentIsland) noexcept {
+void ContentIslandComponentView::Connect(const winrt::Microsoft::UI::Content::ContentIsland &contentIsland) noexcept {
 #ifdef USE_EXPERIMENTAL_WINUI3
   if (m_childContentLink) {
     m_islandToConnect = nullptr;
@@ -129,8 +126,7 @@ void ContentIslandComponentView::Connect(const winrt::Microsoft::UI::Content::Co
 #endif
 }
 
-void ContentIslandComponentView::prepareForRecycle() noexcept
-{
+void ContentIslandComponentView::prepareForRecycle() noexcept {
   Super::prepareForRecycle();
 }
 
