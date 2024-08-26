@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 26 Aug 2024 15:14:14 GMT",
+      "tag": "react-native-windows_v0.72.38",
+      "version": "0.72.38",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "becc1d30784f8d96c1385cebf180506ee6c35912",
+            "comment": "Bump minimum VS version to 17.11.0"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.72.7",
+            "commit": "becc1d30784f8d96c1385cebf180506ee6c35912"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Aug 2024 15:14:33 GMT",
       "tag": "react-native-windows_v0.72.37",
       "version": "0.72.37",

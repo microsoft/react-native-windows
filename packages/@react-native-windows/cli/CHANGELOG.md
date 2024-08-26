@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 01 Jul 2024 15:16:13 GMT and should not be manually modified.
+This log was last generated on Mon, 26 Aug 2024 15:14:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.72.7
+
+Mon, 26 Aug 2024 15:14:14 GMT
+
+### Patches
+
+- Bump minimum VS version to 17.11.0 (jthysell@microsoft.com)
 
 ## 0.72.6
 

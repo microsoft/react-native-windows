@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 26 Aug 2024 15:14:14 GMT",
+      "tag": "@react-native-windows/cli_v0.72.7",
+      "version": "0.72.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "becc1d30784f8d96c1385cebf180506ee6c35912",
+            "comment": "Bump minimum VS version to 17.11.0"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 01 Jul 2024 15:16:13 GMT",
       "tag": "@react-native-windows/cli_v0.72.6",
       "version": "0.72.6",
