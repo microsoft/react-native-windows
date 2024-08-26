@@ -806,7 +806,8 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
 #endif
 
 void ReactNativeIsland::OnMounted() noexcept {
-  assert(!m_mounted);
+  if (m_mounted)
+    return;
   m_mounted = true;
   if (auto componentView = GetComponentView()) {
     componentView->onMounted();
@@ -814,7 +815,8 @@ void ReactNativeIsland::OnMounted() noexcept {
 }
 
 void ReactNativeIsland::OnUnmounted() noexcept {
-  assert(m_mounted);
+  if (!m_mounted)
+    return;
   m_mounted = false;
   if (auto componentView = GetComponentView()) {
     componentView->onUnmounted();
