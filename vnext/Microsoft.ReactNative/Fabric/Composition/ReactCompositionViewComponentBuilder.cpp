@@ -47,14 +47,33 @@ LayoutHandler ReactCompositionViewComponentBuilder::LayoutHandler() const noexce
   return m_layoutHandler;
 }
 
+void ReactCompositionViewComponentBuilder::InitializeComponentView(
+    const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+  auto self = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view);
+  self->MarkAsCustomComponent();
+  if (m_customCommandHandler)
+    self->CustomCommandHandler(m_customCommandHandler);
+  if (m_finalizeUpdateHandler)
+    self->FinalizeUpdateHandler(m_finalizeUpdateHandler);
+  if (m_updatePropsHandler)
+    self->UpdatePropsHandler(m_updatePropsHandler);
+  if (m_updateStateHandler)
+    self->UpdateStateHandler(m_updateStateHandler);
+  if (m_mountChildComponentViewHandler)
+    self->MountChildComponentViewHandler(m_mountChildComponentViewHandler);
+  if (m_unmountChildComponentViewHandler)
+    self->UnmountChildComponentViewHandler(m_unmountChildComponentViewHandler);
+  if (m_createVisualHandler)
+    view.as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>()->CreateVisualHandler(
+        m_createVisualHandler);
+}
+
 void ReactCompositionViewComponentBuilder::SetComponentViewInitializer(
     const ComponentViewInitializer &initializer) noexcept {
   m_fnCreateView =
       [initializer](const IReactContext &reactContext, int32_t tag, const Experimental::ICompositionContext &context) {
         auto view = winrt::make<winrt::Microsoft::ReactNative::implementation::ComponentView>(tag, reactContext);
-        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->BeginCustomInit();
         initializer(view);
-        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->EndCustomInit();
         return view;
       };
   m_descriptorConstructorFactory = []() {
@@ -69,11 +88,7 @@ void ReactCompositionViewComponentBuilder::SetViewComponentViewInitializer(
         auto view = winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView::Create(
                         context, tag, reactContext)
                         .as<winrt::Microsoft::ReactNative::Composition::ViewComponentView>();
-        winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>(view)
-            ->BeginCustomInit();
         initializer(view);
-        winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>(view)
-            ->EndCustomInit();
         return view;
       };
   m_descriptorConstructorFactory = []() {
@@ -89,11 +104,7 @@ void ReactCompositionViewComponentBuilder::SetContentIslandComponentViewInitiali
       -> winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView {
     auto view = winrt::make<winrt::Microsoft::ReactNative::Composition::implementation::ContentIslandComponentView>(
         context, tag, reactContext);
-    winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::ContentIslandComponentView>(view)
-        ->BeginCustomInit();
     initializer(view);
-    winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::ContentIslandComponentView>(view)
-        ->EndCustomInit();
     return view;
   };
   m_descriptorConstructorFactory = []() {
@@ -139,12 +150,44 @@ void ReactCompositionViewComponentBuilder::SetLayoutHandler(
   m_layoutHandler = impl;
 }
 
+void ReactCompositionViewComponentBuilder::SetCustomCommandHandler(HandleCommandDelegate impl) noexcept {
+  m_customCommandHandler = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetFinalizeUpdateHandler(UpdateFinalizerDelegate impl) noexcept {
+  m_finalizeUpdateHandler = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetUpdatePropsHandler(UpdatePropsDelegate impl) noexcept {
+  m_updatePropsHandler = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetUpdateStateHandler(UpdateStateDelegate impl) noexcept {
+  m_updateStateHandler = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetMountChildComponentViewHandler(
+    MountChildComponentViewDelegate impl) noexcept {
+  m_mountChildComponentViewHandler = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetUnmountChildComponentViewHandler(
+    UnmountChildComponentViewDelegate impl) noexcept {
+  m_unmountChildComponentViewHandler = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetCreateVisualHandler(CreateVisualDelegate impl) noexcept {
+  m_createVisualHandler = impl;
+}
+
 winrt::Microsoft::ReactNative::ComponentView ReactCompositionViewComponentBuilder::CreateView(
     const IReactContext &reactContext,
     int32_t tag,
     const Experimental::ICompositionContext &context) noexcept {
   assert(m_fnCreateView);
-  return m_fnCreateView(reactContext, tag, context);
+  auto view = m_fnCreateView(reactContext, tag, context);
+  InitializeComponentView(view);
+  return view;
 }
 
 facebook::react::ComponentDescriptorConstructor *ReactCompositionViewComponentBuilder::GetComponentDescriptorProvider()

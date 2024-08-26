@@ -70,43 +70,6 @@ namespace Microsoft.ReactNative
     LayoutMetrics OldLayoutMetrics { get; };
   };
 
-  [experimental]
-  [webhosthidden]
-  runtimeclass MountChildComponentViewArgs {
-    ComponentView Child { get; };
-    UInt32 Index { get; };
-  };
-
-  [experimental]
-  [webhosthidden]
-  runtimeclass UnmountChildComponentViewArgs {
-    ComponentView Child { get; };
-    UInt32 Index { get; };
-  };
-
-  [experimental]
-  [webhosthidden]
-  delegate void HandleCommandDelegate(ComponentView source, String commandName, IJSValueReader args);
-
-  [experimental]
-  [webhosthidden]
-  delegate void UpdateFinalizerDelegate(ComponentView source, ComponentViewUpdateMask updateMask);
-
-  [experimental]
-  [webhosthidden]
-  delegate void UpdatePropsDelegate(ComponentView source, IComponentProps newProps, IComponentProps oldProps);
-
-  [experimental]
-  [webhosthidden]
-  delegate void UpdateStateDelegate(ComponentView source, IComponentState newState);
-
-  [experimental]
-  [webhosthidden]
-  delegate void MountChildComponentViewDelegate(ComponentView source, MountChildComponentViewArgs args);
-
-  [experimental]
-  [webhosthidden]
-  delegate void UnmountChildComponentViewDelegate(ComponentView source, UnmountChildComponentViewArgs args);
 
   // [exclusiveto(ComponentView)]
   // [uuid(AEE8C30B-0E56-4FB8-8A80-D5CA9DE90916)]
@@ -124,13 +87,6 @@ namespace Microsoft.ReactNative
     IReactContext ReactContext { get; };
     LayoutMetrics LayoutMetrics { get; };
     IInspectable UserData;
-
-    HandleCommandDelegate CustomCommandHandler;
-    UpdateFinalizerDelegate FinalizeUpdateHandler;
-    UpdatePropsDelegate UpdatePropsHandler;
-    UpdateStateDelegate UpdateStateHandler;
-    MountChildComponentViewDelegate MountChildComponentViewHandler;
-    UnmountChildComponentViewDelegate UnmountChildComponentViewHandler;
 
     Boolean TryFocus();
 

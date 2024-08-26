@@ -23,12 +23,8 @@ namespace winrt::Microsoft::ReactNative::implementation {
 ComponentView::ComponentView(facebook::react::Tag tag, winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : m_tag(tag), m_reactContext(reactContext) {}
 
-void ComponentView::BeginCustomInit() noexcept {
+void ComponentView::MarkAsCustomComponent() noexcept {
   m_customComponent = true;
-  m_inInit = true;
-}
-void ComponentView::EndCustomInit() noexcept {
-  m_inInit = false;
 }
 
 std::vector<facebook::react::ComponentDescriptorProvider>
@@ -63,9 +59,6 @@ void ComponentView::MountChildComponentView(
 }
 
 void ComponentView::MountChildComponentViewHandler(const MountChildComponentViewDelegate &handler) {
-  if (!m_inInit) {
-    winrt::throw_hresult(E_ACCESSDENIED);
-  }
   m_mountChildComponentViewHandler = handler;
 }
 
@@ -102,9 +95,6 @@ void ComponentView::UnmountChildComponentView(
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->onUnmounted();
 }
 void ComponentView::UnmountChildComponentViewHandler(const UnmountChildComponentViewDelegate &handler) {
-  if (!m_inInit) {
-    winrt::throw_hresult(E_ACCESSDENIED);
-  }
   m_unmountChildComponentViewHandler = handler;
 }
 
@@ -165,9 +155,6 @@ void ComponentView::updateProps(
 }
 
 void ComponentView::UpdatePropsHandler(const UpdatePropsDelegate &handler) {
-  if (!m_inInit) {
-    winrt::throw_hresult(E_ACCESSDENIED);
-  }
   m_updatePropsDelegate = handler;
 }
 
@@ -194,9 +181,6 @@ void ComponentView::updateState(
 }
 
 void ComponentView::UpdateStateHandler(const UpdateStateDelegate &handler) {
-  if (!m_inInit) {
-    winrt::throw_hresult(E_ACCESSDENIED);
-  }
   m_updateStateDelegate = handler;
 }
 
@@ -258,9 +242,6 @@ void ComponentView::LayoutMetricsChanged(winrt::event_token const &token) noexce
 }
 
 void ComponentView::FinalizeUpdateHandler(const UpdateFinalizerDelegate &handler) {
-  if (!m_inInit) {
-    winrt::throw_hresult(E_ACCESSDENIED);
-  }
   m_finalizeUpdateHandler = handler;
 }
 
@@ -282,9 +263,6 @@ facebook::react::Props::Shared ComponentView::props() noexcept {
 }
 
 void ComponentView::CustomCommandHandler(const HandleCommandDelegate &handler) {
-  if (!m_inInit) {
-    winrt::throw_hresult(E_ACCESSDENIED);
-  }
   m_customCommandHandler = handler;
 }
 

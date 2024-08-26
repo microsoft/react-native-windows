@@ -54,27 +54,6 @@ struct CustomComponentUserData : winrt::implements<CustomComponentUserData, winr
     m_xamlIsland = winrt::Microsoft::UI::Xaml::XamlIsland{};
     m_xamlIsland.Content(CreateXamlButtonContent(nativeLayout));
     islandView.Connect(m_xamlIsland.ContentIsland());
-
-    islandView.UpdatePropsHandler([](const winrt::Microsoft::ReactNative::ComponentView &source,
-                                     const winrt::Microsoft::ReactNative::IComponentProps &newProps,
-                                     const winrt::Microsoft::ReactNative::IComponentProps &oldProps) {
-      auto senderIslandView = source.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>();
-      auto userData = senderIslandView.UserData().as<CustomComponentUserData>();
-      userData->PropsChanged(senderIslandView, newProps, oldProps);
-    });
-
-    islandView.UpdateStateHandler([](const winrt::Microsoft::ReactNative::ComponentView &source,
-                                     const winrt::Microsoft::ReactNative::IComponentState &newState) {
-      auto senderIslandView = source.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>();
-      auto userData = senderIslandView.UserData().as<CustomComponentUserData>();
-      userData->m_state = newState;
-    });
-
-    islandView.Destroying([](const winrt::IInspectable &sender, const winrt::IInspectable &args) {
-      auto senderIslandView = sender.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>();
-      auto userData = senderIslandView.UserData().as<CustomComponentUserData>();
-      userData->m_xamlIsland.Close();
-    });
 #endif
   }
 
@@ -132,65 +111,86 @@ struct CustomComponentUserData : winrt::implements<CustomComponentUserData, winr
 #endif
 };
 
+void ConfigureBuilderForCustomComponent(
+    winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder,
+    bool nativeLayout) {
+  builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props) noexcept {
+    return winrt::make<CustomXamlComponentProps>(props);
+  });
+  auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
+
+  compBuilder.SetContentIslandComponentViewInitializer(
+      [nativeLayout](
+          const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
+        auto userData = winrt::make_self<CustomComponentUserData>();
+        userData->Initialize(islandView, nativeLayout);
+
+#ifdef USE_EXPERIMENTAL_WINUI3
+        islandView.Destroying([](const winrt::IInspectable &sender, const winrt::IInspectable &args) {
+          auto senderIslandView = sender.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>();
+          auto userData = senderIslandView.UserData().as<CustomComponentUserData>();
+          userData->m_xamlIsland.Close();
+        });
+#endif
+      });
+
+  if (nativeLayout) {
+    builder.SetMeasureContentHandler([](winrt::Microsoft::ReactNative::ShadowNode shadowNode,
+                                        winrt::Microsoft::ReactNative::LayoutContext layoutContext,
+                                        winrt::Microsoft::ReactNative::LayoutConstraints layoutContraints) noexcept {
+      shadowNode.Tag(winrt::box_value(layoutContraints));
+
+      auto currentState = winrt::get_self<CustomXamlComponentStateData>(shadowNode.StateData());
+
+      if (currentState) {
+        // Snap up to the nearest whole pixel to avoid pixel snapping truncations
+        auto size = winrt::Windows::Foundation::Size{
+            std::ceil(currentState->desiredSize.Width * layoutContext.PointScaleFactor()) /
+                    layoutContext.PointScaleFactor() +
+                1.0f,
+            std::ceil(currentState->desiredSize.Height * layoutContext.PointScaleFactor()) /
+                    layoutContext.PointScaleFactor() +
+                1.0f,
+        };
+        return size;
+      }
+
+      return winrt::Windows::Foundation::Size{0, 0};
+    });
+    builder.SetInitialStateDataFactory([](const winrt::Microsoft::ReactNative::IComponentProps & /*props*/) noexcept {
+      return winrt::make<CustomXamlComponentStateData>(winrt::Windows::Foundation::Size{0, 0});
+    });
+  }
+
+#ifdef USE_EXPERIMENTAL_WINUI3
+  compBuilder.SetUpdatePropsHandler([](const winrt::Microsoft::ReactNative::ComponentView &source,
+                                       const winrt::Microsoft::ReactNative::IComponentProps &newProps,
+                                       const winrt::Microsoft::ReactNative::IComponentProps &oldProps) {
+    auto senderIslandView = source.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>();
+    auto userData = senderIslandView.UserData().as<CustomComponentUserData>();
+    userData->PropsChanged(senderIslandView, newProps, oldProps);
+  });
+
+  compBuilder.SetUpdateStateHandler([](const winrt::Microsoft::ReactNative::ComponentView &source,
+                                       const winrt::Microsoft::ReactNative::IComponentState &newState) {
+    auto senderIslandView = source.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>();
+    auto userData = senderIslandView.UserData().as<CustomComponentUserData>();
+    userData->m_state = newState;
+  });
+#endif
+}
+
 static void RegisterViewComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) {
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
       L"CustomXamlComponentWithNativeLayout",
       [](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
-        builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props) noexcept {
-          return winrt::make<CustomXamlComponentProps>(props);
-        });
-        auto compBuilder =
-            builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
-
-        compBuilder.SetContentIslandComponentViewInitializer(
-            [](const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
-              auto userData = winrt::make_self<CustomComponentUserData>();
-              userData->Initialize(islandView, true /*nativeLayout*/);
-            });
-
-        builder.SetMeasureContentHandler(
-            [](winrt::Microsoft::ReactNative::ShadowNode shadowNode,
-               winrt::Microsoft::ReactNative::LayoutContext layoutContext,
-               winrt::Microsoft::ReactNative::LayoutConstraints layoutContraints) noexcept {
-              shadowNode.Tag(winrt::box_value(layoutContraints));
-
-              auto currentState = winrt::get_self<CustomXamlComponentStateData>(shadowNode.StateData());
-
-              if (currentState) {
-                // Snap up to the nearest whole pixel to avoid pixel snapping truncations
-                auto size = winrt::Windows::Foundation::Size{
-                    std::ceil(currentState->desiredSize.Width * layoutContext.PointScaleFactor()) /
-                            layoutContext.PointScaleFactor() +
-                        1.0f,
-                    std::ceil(currentState->desiredSize.Height * layoutContext.PointScaleFactor()) /
-                            layoutContext.PointScaleFactor() +
-                        1.0f,
-                };
-                return size;
-              }
-
-              return winrt::Windows::Foundation::Size{0, 0};
-            });
-        builder.SetInitialStateDataFactory(
-            [](const winrt::Microsoft::ReactNative::IComponentProps & /*props*/) noexcept {
-              return winrt::make<CustomXamlComponentStateData>(winrt::Windows::Foundation::Size{0, 0});
-            });
+        ConfigureBuilderForCustomComponent(builder, true /*nativeLayout*/);
       });
 
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
       L"CustomXamlComponentWithYogaLayout",
       [](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
-        builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props) noexcept {
-          return winrt::make<CustomXamlComponentProps>(props);
-        });
-        auto compBuilder =
-            builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
-
-        compBuilder.SetContentIslandComponentViewInitializer(
-            [](const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
-              auto userData = winrt::make_self<CustomComponentUserData>();
-              userData->Initialize(islandView, false /*nativeLayout*/);
-            });
+        ConfigureBuilderForCustomComponent(builder, false /*nativeLayout*/);
       });
 }
 } // namespace winrt::PlaygroundApp::implementation

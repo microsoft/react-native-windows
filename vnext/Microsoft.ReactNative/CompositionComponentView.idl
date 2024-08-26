@@ -54,10 +54,6 @@ namespace Microsoft.ReactNative.Composition
     void ReleasePointerCapture(Microsoft.ReactNative.Composition.Input.Pointer pointer);
   };
 
-  [experimental]
-  [webhosthidden]
-  delegate Microsoft.UI.Composition.Visual CreateVisualDelegate();
-
   namespace Experimental {
 
     [webhosthidden]
@@ -89,8 +85,6 @@ namespace Microsoft.ReactNative.Composition
   unsealed runtimeclass ViewComponentView : ComponentView {
 
     Microsoft.ReactNative.ViewProps ViewProps { get; };
-
-    CreateVisualDelegate CreateVisualHandler;
   };
 
   // Some other interfaces we could consider implementing/exposing

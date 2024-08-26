@@ -109,8 +109,7 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   virtual void onGettingFocus(const winrt::Microsoft::ReactNative::GettingFocusEventArgs &args) noexcept;
   virtual void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept;
   virtual void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept;
-  void BeginCustomInit() noexcept;
-  void EndCustomInit() noexcept;
+  void MarkAsCustomComponent() noexcept;
   virtual void onMounted() noexcept;
   virtual void onUnmounted() noexcept;
   void onDestroying() noexcept;
@@ -261,7 +260,6 @@ struct ComponentView : public ComponentViewT<ComponentView> {
  protected:
   bool m_customComponent : 1 {false}; // Is a user custom component, and so needs to call external override functions
   bool m_mounted : 1 {false};
-  bool m_inInit : 1 {false};
   const facebook::react::Tag m_tag;
   winrt::IInspectable m_userData;
   winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *m_rootView{nullptr};

@@ -1482,9 +1482,6 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ViewComponentV
 
 void ViewComponentView::CreateVisualHandler(
     const winrt::Microsoft::ReactNative::Composition::CreateVisualDelegate &handler) {
-  if (!m_inInit) {
-    winrt::throw_hresult(E_ACCESSDENIED);
-  }
   m_createVisualHandler = handler;
 }
 
@@ -1495,9 +1492,6 @@ winrt::Microsoft::ReactNative::Composition::CreateVisualDelegate ViewComponentVi
 
 void ViewComponentView::CreateInternalVisualHandler(
     const winrt::Microsoft::ReactNative::Composition::Experimental::CreateInternalVisualDelegate &handler) {
-  if (!m_inInit) {
-    winrt::throw_hresult(E_ACCESSDENIED);
-  }
   m_createInternalVisualHandler = handler;
 }
 

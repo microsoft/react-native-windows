@@ -31,9 +31,18 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   void SetMeasureContentHandler(MeasureContentHandler impl) noexcept;
   void SetLayoutHandler(LayoutHandler impl) noexcept;
 
+  void SetCustomCommandHandler(HandleCommandDelegate impl) noexcept;
+  void SetFinalizeUpdateHandler(UpdateFinalizerDelegate impl) noexcept;
+  void SetUpdatePropsHandler(UpdatePropsDelegate impl) noexcept;
+  void SetUpdateStateHandler(UpdateStateDelegate impl) noexcept;
+  void SetMountChildComponentViewHandler(MountChildComponentViewDelegate impl) noexcept;
+  void SetUnmountChildComponentViewHandler(UnmountChildComponentViewDelegate impl) noexcept;
+
  public: // Composition::IReactCompositionViewComponentBuilder
   void SetViewComponentViewInitializer(const ViewComponentViewInitializer &initializer) noexcept;
   void SetContentIslandComponentViewInitializer(const ComponentIslandComponentViewInitializer &initializer) noexcept;
+
+  void SetCreateVisualHandler(CreateVisualDelegate impl) noexcept;
 
  public:
   IComponentProps CreateProps(ViewProps props) noexcept;
@@ -51,6 +60,8 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
       const Experimental::ICompositionContext &context) noexcept;
 
  private:
+  void InitializeComponentView(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept;
+
   ViewPropsFactory m_propsFactory;
   ViewShadowNodeFactory m_shadowNodeFactory;
   ViewShadowNodeCloner m_shadowNodeCloner;
@@ -63,6 +74,14 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
       const Experimental::ICompositionContext &context)>
       m_fnCreateView;
   std::function<facebook::react::ComponentDescriptorConstructor *()> m_descriptorConstructorFactory;
+  winrt::Microsoft::ReactNative::HandleCommandDelegate m_customCommandHandler;
+  winrt::Microsoft::ReactNative::UpdateFinalizerDelegate m_finalizeUpdateHandler;
+  winrt::Microsoft::ReactNative::UpdatePropsDelegate m_updatePropsHandler;
+  winrt::Microsoft::ReactNative::UpdateStateDelegate m_updateStateHandler;
+  winrt::Microsoft::ReactNative::MountChildComponentViewDelegate m_mountChildComponentViewHandler;
+  winrt::Microsoft::ReactNative::UnmountChildComponentViewDelegate m_unmountChildComponentViewHandler;
+
+  winrt::Microsoft::ReactNative::Composition::CreateVisualDelegate m_createVisualHandler;
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition

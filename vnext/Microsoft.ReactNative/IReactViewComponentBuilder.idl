@@ -35,6 +35,18 @@ namespace Microsoft.ReactNative
   };
 
   [experimental]
+  runtimeclass MountChildComponentViewArgs {
+    ComponentView Child { get; };
+    UInt32 Index { get; };
+  };
+
+  [experimental]
+  runtimeclass UnmountChildComponentViewArgs {
+    ComponentView Child { get; };
+    UInt32 Index { get; };
+  };
+
+  [experimental]
   DOC_STRING("A delegate that creates a @IComponentProps object for an instance of @ViewProps. See @IReactViewComponentBuilder.SetCreateProps")
   delegate IComponentProps ViewPropsFactory(ViewProps props);
 
@@ -57,12 +69,28 @@ namespace Microsoft.ReactNative
   DOC_STRING("Provides a method to initialize an instance of a ComponentView. See @IReactViewComponentBuilder.SetComponentViewInitializer")
   delegate void ComponentViewInitializer(ComponentView view);
 
+  [experimental]
+  delegate void HandleCommandDelegate(ComponentView source, String commandName, IJSValueReader args);
+
+  [experimental]
+  delegate void UpdateFinalizerDelegate(ComponentView source, ComponentViewUpdateMask updateMask);
+
+  [experimental]
+  delegate void UpdatePropsDelegate(ComponentView source, IComponentProps newProps, IComponentProps oldProps);
+
+  [experimental]
+  delegate void UpdateStateDelegate(ComponentView source, IComponentState newState);
+
+  [experimental]
+  delegate void MountChildComponentViewDelegate(ComponentView source, MountChildComponentViewArgs args);
+
+  [experimental]
+  delegate void UnmountChildComponentViewDelegate(ComponentView source, UnmountChildComponentViewArgs args);
+
   [webhosthidden]
   [experimental]
   interface IReactViewComponentBuilder
   {
-    void SetComponentViewInitializer(ComponentViewInitializer initializer);
-
     DOC_STRING("Create an implementation of your custom Props type that will be passed to your components @Composition.ICompositionViewComponent.UpdateProps method.")
     void SetCreateProps(ViewPropsFactory impl);
 
@@ -71,6 +99,14 @@ namespace Microsoft.ReactNative
     void SetInitialStateDataFactory(InitialStateDataFactory impl);
     void SetMeasureContentHandler(MeasureContentHandler impl);
     void SetLayoutHandler(LayoutHandler impl);
+
+    void SetComponentViewInitializer(ComponentViewInitializer initializer);
+    void SetCustomCommandHandler(HandleCommandDelegate impl);
+    void SetFinalizeUpdateHandler(UpdateFinalizerDelegate impl);
+    void SetUpdatePropsHandler(UpdatePropsDelegate impl);
+    void SetUpdateStateHandler(UpdateStateDelegate impl);
+    void SetMountChildComponentViewHandler(MountChildComponentViewDelegate impl);
+    void SetUnmountChildComponentViewHandler(UnmountChildComponentViewDelegate impl);
   };
 
   // [exclusiveto(ShadowNode)]
