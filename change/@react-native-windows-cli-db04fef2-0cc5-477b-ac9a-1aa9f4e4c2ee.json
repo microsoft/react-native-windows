@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[0.75] Improve new project name(space) validation and cleaning",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
