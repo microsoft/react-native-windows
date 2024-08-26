@@ -11135,6 +11135,11 @@ exports[`snapshotAllPages Filter 1`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -11153,6 +11158,11 @@ exports[`snapshotAllPages Filter 1`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -11258,6 +11268,11 @@ exports[`snapshotAllPages Filter 2`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -11276,6 +11291,11 @@ exports[`snapshotAllPages Filter 2`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -11381,6 +11401,11 @@ exports[`snapshotAllPages Filter 3`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -11399,6 +11424,11 @@ exports[`snapshotAllPages Filter 3`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -11504,6 +11534,11 @@ exports[`snapshotAllPages Filter 4`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -11522,6 +11557,11 @@ exports[`snapshotAllPages Filter 4`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -11627,6 +11667,11 @@ exports[`snapshotAllPages Filter 5`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -11645,6 +11690,11 @@ exports[`snapshotAllPages Filter 5`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -11750,6 +11800,11 @@ exports[`snapshotAllPages Filter 6`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -11768,6 +11823,11 @@ exports[`snapshotAllPages Filter 6`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -11873,6 +11933,11 @@ exports[`snapshotAllPages Filter 7`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -11891,6 +11956,11 @@ exports[`snapshotAllPages Filter 7`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -11996,6 +12066,11 @@ exports[`snapshotAllPages Filter 8`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -12014,6 +12089,11 @@ exports[`snapshotAllPages Filter 8`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -12120,6 +12200,11 @@ exports[`snapshotAllPages Filter 9`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -12138,6 +12223,11 @@ exports[`snapshotAllPages Filter 9`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -12383,6 +12473,11 @@ exports[`snapshotAllPages Filter 11`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           [
@@ -12406,6 +12501,11 @@ exports[`snapshotAllPages Filter 11`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -12513,6 +12613,11 @@ exports[`snapshotAllPages Filter 12`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           [
@@ -12533,6 +12638,11 @@ exports[`snapshotAllPages Filter 12`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -56708,6 +56818,22 @@ exports[`snapshotAllPages Text 39`] = `
 `;
 
 exports[`snapshotAllPages Text 40`] = `
+<View>
+  <Text
+    style={
+      {
+        "borderRadius": 10,
+        "experimental_boxShadow": "0 0 10px red",
+      }
+    }
+    testID="text-box-shadow"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages Text 41`] = `
 <View
   accessible={true}
   testID="text-accessibility"
@@ -56724,7 +56850,7 @@ exports[`snapshotAllPages Text 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 41`] = `
+exports[`snapshotAllPages Text 42`] = `
 <View
   accessibilityLabel="Border Example"
   accessible={true}
@@ -56801,7 +56927,7 @@ exports[`snapshotAllPages Text 41`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 42`] = `
+exports[`snapshotAllPages Text 43`] = `
 <View
   accessibilityLabel="Advanced Border Example"
   accessible={true}
@@ -56857,7 +56983,7 @@ exports[`snapshotAllPages Text 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 43`] = `
+exports[`snapshotAllPages Text 44`] = `
 <View
   testID="text-opacity"
 >
@@ -56964,7 +57090,7 @@ exports[`snapshotAllPages Text 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 44`] = `
+exports[`snapshotAllPages Text 45`] = `
 <View
   accessible={true}
   testID="text-height-width"
@@ -67412,6 +67538,29 @@ exports[`snapshotAllPages View 7`] = `
         "borderRightWidth": 6,
         "height": 50,
         "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderRadius": "100%",
+        "borderWidth": 6,
+        "height": 50,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderBottomLeftRadius": "100%",
+        "borderBottomRightRadius": "50%",
+        "borderTopLeftRadius": "10%",
+        "borderTopRightRadius": "20%",
+        "borderWidth": 6,
+        "height": 50,
+        "width": 100,
       }
     }
   />
