@@ -201,6 +201,8 @@ export async function copyProjectTemplateAndReplace(
     packageGuid: packageGuid,
     currentUser: currentUser,
 
+    devMode: options.useDevMode,
+
     useExperimentalNuget: options.experimentalNuGetDependency,
     nuGetTestFeed: options.nuGetTestFeed,
     nuGetADOFeed: nugetVersion.startsWith('0.0.0-'),
@@ -228,12 +230,7 @@ export async function copyProjectTemplateAndReplace(
       ? [
           // app common mappings
           {
-            from: path.join(
-              srcRootPath,
-              options.useDevMode
-                ? 'metro.devMode.config.js'
-                : 'metro.config.js',
-            ),
+            from: path.join(srcRootPath, 'metro.config.js'),
             to: 'metro.config.js',
           },
           {
