@@ -164,14 +164,11 @@ void UpdateUiaProperty(
 }
 
 long GetLiveSetting(const std::string &liveRegion) noexcept {
-  if (liveRegion == "none") {
-    return LiveSetting::Off;
-  } else if (liveRegion == "polite") {
+  if (liveRegion == "polite") {
     return LiveSetting::Polite;
   } else if (liveRegion == "assertive") {
     return LiveSetting::Assertive;
   }
-  // assert(false); // TO-DO: swap to a RedBox error
   return LiveSetting::Off;
 }
 
