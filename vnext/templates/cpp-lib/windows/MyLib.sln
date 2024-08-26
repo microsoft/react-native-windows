@@ -4,10 +4,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "{{ name }}", "{{ name }}\{{ name }}.vcxproj", "{{ projectGuidUpper }}"
+{{^useNuGets}}
 	ProjectSection(ProjectDependencies) = postProject
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136} = {F7D32BD0-2749-483E-9A0D-1635EF7E3136}
 	EndProjectSection
+{{/useNuGets}}
 EndProject
+{{^useNuGets}}
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Folly", "..\{{ rnwPathFromProjectRoot }}\Folly\Folly.vcxproj", "{A990658C-CE31-4BCC-976F-0FC6B1AF693D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fmt", "..\{{ rnwPathFromProjectRoot }}\fmt\fmt.vcxproj", "{14B93DC8-FD93-4A6D-81CB-8BC96644501C}"
@@ -33,7 +36,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mso", "..\{{ rnwPathFromPro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Include", "..\{{ rnwPathFromProjectRoot }}\include\Include.vcxitems", "{EF074BA1-2D54-4D49-A28E-5E040B47CD2E}"
 EndProject
+{{/useNuGets}}
 Global
+{{^useNuGets}}
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\{{ rnwPathFromProjectRoot }}\Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
 		..\{{ rnwPathFromProjectRoot }}\Mso\Mso.vcxitems*{84e05bfa-cbaf-4f0d-bfb6-4ce85742a57e}*SharedItemsImports = 9
@@ -45,6 +50,7 @@ Global
 		..\{{ rnwPathFromProjectRoot }}\Mso\Mso.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
 		..\{{ rnwPathFromProjectRoot }}\Shared\Shared.vcxitems*{f7d32bd0-2749-483e-9a0d-1635ef7e3136}*SharedItemsImports = 4
 	EndGlobalSection
+{{/useNuGets}}
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
@@ -54,24 +60,25 @@ Global
 		Release|ARM64 = Release|ARM64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{{ projectGuidUpper }}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{{ projectGuidUpper }}.Debug|ARM64.Build.0 = Debug|ARM64
-		{{ projectGuidUpper }}.Debug|ARM64.Deploy.0 = Debug|ARM64
 		{{ projectGuidUpper }}.Debug|x64.ActiveCfg = Debug|x64
 		{{ projectGuidUpper }}.Debug|x64.Build.0 = Debug|x64
 		{{ projectGuidUpper }}.Debug|x64.Deploy.0 = Debug|x64
 		{{ projectGuidUpper }}.Debug|x86.ActiveCfg = Debug|Win32
 		{{ projectGuidUpper }}.Debug|x86.Build.0 = Debug|Win32
 		{{ projectGuidUpper }}.Debug|x86.Deploy.0 = Debug|Win32
-		{{ projectGuidUpper }}.Release|ARM64.ActiveCfg = Release|ARM64
-		{{ projectGuidUpper }}.Release|ARM64.Build.0 = Release|ARM64
-		{{ projectGuidUpper }}.Release|ARM64.Deploy.0 = Release|ARM64
+		{{ projectGuidUpper }}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{{ projectGuidUpper }}.Debug|ARM64.Build.0 = Debug|ARM64
+		{{ projectGuidUpper }}.Debug|ARM64.Deploy.0 = Debug|ARM64
 		{{ projectGuidUpper }}.Release|x64.ActiveCfg = Release|x64
 		{{ projectGuidUpper }}.Release|x64.Build.0 = Release|x64
 		{{ projectGuidUpper }}.Release|x64.Deploy.0 = Release|x64
 		{{ projectGuidUpper }}.Release|x86.ActiveCfg = Release|Win32
 		{{ projectGuidUpper }}.Release|x86.Build.0 = Release|Win32
 		{{ projectGuidUpper }}.Release|x86.Deploy.0 = Release|Win32
+		{{ projectGuidUpper }}.Release|ARM64.ActiveCfg = Release|ARM64
+		{{ projectGuidUpper }}.Release|ARM64.Build.0 = Release|ARM64
+		{{ projectGuidUpper }}.Release|ARM64.Deploy.0 = Release|ARM64
+{{^useNuGets}}
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM64.ActiveCfg = Debug|ARM64
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|ARM64.Build.0 = Debug|ARM64
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D}.Debug|x64.ActiveCfg = Debug|x64
@@ -134,10 +141,12 @@ Global
 		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|x86.ActiveCfg = Release|Win32
 		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|x86.Build.0 = Release|Win32
 		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|x86.Deploy.0 = Release|Win32
+{{/useNuGets}}
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+{{^useNuGets}}
 	GlobalSection(NestedProjects) = preSolution
 		{A990658C-CE31-4BCC-976F-0FC6B1AF693D} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{A9D95A91-4DB7-4F72-BEB6-FE8A5C89BFBD} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
@@ -150,6 +159,7 @@ Global
 		{EF074BA1-2D54-4D49-A28E-5E040B47CD2E} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 		{14B93DC8-FD93-4A6D-81CB-8BC96644501C} = {5EA20F54-880A-49F3-99FA-4B3FE54E8AB1}
 	EndGlobalSection
+{{/useNuGets}}
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D43FAD39-F619-437D-BB40-04A3982ACB6A}
 	EndGlobalSection
