@@ -161,6 +161,7 @@ export async function copyProjectTemplateAndReplace(
   const srcPath = path.join(srcRootPath, `${language}-${projectType}`);
   const sharedPath = path.join(srcRootPath, `shared-${projectType}`);
   const projectGuid = existingProjectGuid || uuid.v4();
+  const rnwPath = path.dirname(resolveRnwPath('package.json'));
   const rnwVersion = require(resolveRnwPath('package.json')).version;
   const nugetVersion = options.nuGetTestVersion || rnwVersion;
   const packageGuid = uuid.v4();
@@ -188,6 +189,7 @@ export async function copyProjectTemplateAndReplace(
     languageIsCpp: language === 'cpp',
 
     rnwVersion: await getVersionOfNpmPackage('react-native-windows'),
+    rnwPathFromProjectRoot: path.relative(destPath, rnwPath).replace(/\//g, '\\'),
 
     mainComponentName: mainComponentName,
 
