@@ -22,6 +22,9 @@ parameters:
   - name: useChakra
     type: boolean
     default: false
+  - name: useNuGet
+    type: boolean
+    default: false
   - name: runWack
     type: boolean
     default: false
@@ -40,6 +43,17 @@ steps:
   - template: set-version-vars.yml
     parameters:
       buildEnvironment: ${{ parameters.buildEnvironment }}
+
+  - ${{ if eq(parameters.useNuGet, true) }}:
+    - template: prep-and-pack-nuget.yml
+      parameters:
+        artifactName: ReactWindowsFabric
+        npmVersion: $(npmVersion)-Fabric
+        packMicrosoftReactNative: true
+        packMicrosoftReactNativeCxx: true
+        slices:
+          - platform: ${{ parameters.platform }}
+            configuration: Release
 
   - ${{ if endsWith(parameters.template, '-app') }}:
     - script: | # Change version of @react-native-community/template from 'nightly' to '$(reactNativeDevDependency)' - Windows #13446
@@ -170,6 +184,15 @@ steps:
         workingDirectory: $(Agent.BuildDirectory)\testcli\example
       ${{ else }}:
         workingDirectory: $(Agent.BuildDirectory)\testcli
+
+  - ${{ if eq(parameters.useNuGet, true) }}:
+    - powershell: |
+        nuget.exe sources add -name TestFeed -source $(System.DefaultWorkingDirectory)\NugetTestFeed
+        nuget.exe sources remove -name react-native
+        nuget.exe sources remove -name Nuget.org
+        nuget.exe sources add -name Nuget.org -source https://api.nuget.org/v3/index.json
+      displayName: Add local NuGet test feed
+      workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - template: ../templates/run-windows-with-certificates.yml
     parameters:
