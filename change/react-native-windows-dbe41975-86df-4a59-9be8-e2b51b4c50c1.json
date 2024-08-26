@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Enable Timer TurboModule for Desktop",
-  "packageName": "react-native-windows",
-  "email": "vmorozov@microsoft.com",
-  "dependentChangeType": "patch"
-}

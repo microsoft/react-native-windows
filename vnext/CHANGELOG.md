@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 19 Aug 2024 19:11:34 GMT and should not be manually modified.
+This log was last generated on Mon, 26 Aug 2024 15:14:15 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.19
+
+Mon, 26 Aug 2024 15:14:15 GMT
+
+### Patches
+
+- Enable Timer TurboModule for Desktop (vmorozov@microsoft.com)
 
 ## 0.74.18
 
