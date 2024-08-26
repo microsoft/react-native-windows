@@ -7,6 +7,7 @@
  */
 
 const generateWindows = require('../../generate');
+const templateUtils = require('../templateUtils');
 
 function makeGenerateWindowsWrapper(
   language = 'cpp',
@@ -33,6 +34,8 @@ function makeGenerateWindowsWrapper(
   const postInstall = async (config = {}, options = {}) => {
     const experimentalFeatures = config?.project?.windows?.experimentalFeatures;
 
+    const rnwInfo = templateUtils.getRnwInfo(config, options);
+
     const generateOptions = {
       overwrite: !!options.overwrite,
       language,
@@ -41,7 +44,7 @@ function makeGenerateWindowsWrapper(
         experimentalFeatures?.UseExperimentalNuget === 'true' ?? false,
       useWinUI3: experimentalFeatures?.UseWinUI3 === 'true' ?? false,
       useHermes: experimentalFeatures?.UseHermes === 'true' ?? true,
-      useDevMode: false,
+      useDevMode: rnwInfo.devMode,
       verbose: !!options.logging,
       telemetry: !!options.telemetry,
     };
