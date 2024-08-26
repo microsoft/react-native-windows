@@ -114,6 +114,9 @@ struct DevSettings {
 
   // Enable concurrent mode by installing runtimeScheduler
   bool useRuntimeScheduler{false};
+
+  // If true, then use only Turbo Modules instead of CxxModules.
+  bool useTurboModulesOnly{false};
 };
 
 } // namespace react
