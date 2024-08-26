@@ -83,7 +83,14 @@
 #include "Modules/LogBoxModule.h"
 #include "Modules/NativeUIManager.h"
 #include "Modules/PaperUIManagerModule.h"
+#else
+#include "Modules/DesktopTimingModule.h"
 #endif
+#include "Modules/ExceptionsManager.h"
+#include "Modules/PlatformConstantsWinModule.h"
+#include "Modules/ReactRootViewTagGenerator.h"
+#include "Modules/SourceCode.h"
+#include "Modules/StatusBarManager.h"
 
 #if !defined(CORE_ABI) || defined(USE_FABRIC)
 #include <Modules/ImageViewManagerModule.h>
@@ -397,42 +404,44 @@ void ReactInstanceWin::LoadModules(
   }
 #endif
 
-  ::Microsoft::ReactNative::ExceptionsManager::SetRedBoxHander(
-      winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()), m_redboxHandler);
-  registerTurboModule(
-      L"ExceptionsManager",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ExceptionsManager>());
+  if (devSettings->useTurboModulesOnly) {
+    ::Microsoft::ReactNative::ExceptionsManager::SetRedBoxHander(
+        winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()), m_redboxHandler);
+    registerTurboModule(
+        L"ExceptionsManager",
+        winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::ExceptionsManager>());
 
-  registerTurboModule(
-      L"StatusBarManager",
-      winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::StatusBarManager>());
+    registerTurboModule(
+        L"StatusBarManager",
+        winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::StatusBarManager>());
 
-  registerTurboModule(
-      L"PlatformConstants",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::PlatformConstants>());
+    registerTurboModule(
+        L"PlatformConstants",
+        winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::PlatformConstants>());
 
-  uint32_t hermesBytecodeVersion = 0;
+    uint32_t hermesBytecodeVersion = 0;
 #if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
-  hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
+    hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
 #endif
 
-  std::string bundleUrl = (devSettings->useWebDebugger || devSettings->liveReloadCallback)
-      ? facebook::react::DevServerHelper::get_BundleUrl(
-            devSettings->sourceBundleHost,
-            devSettings->sourceBundlePort,
-            devSettings->debugBundlePath,
-            devSettings->platformName,
-            devSettings->bundleAppId,
-            devSettings->devBundle,
-            devSettings->useFastRefresh,
-            devSettings->inlineSourceMap,
-            hermesBytecodeVersion)
-      : devSettings->bundleRootPath;
-  ::Microsoft::ReactNative::SourceCode::SetScriptUrl(
-      winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()), bundleUrl);
+    std::string bundleUrl = (devSettings->useWebDebugger || devSettings->liveReloadCallback)
+        ? facebook::react::DevServerHelper::get_BundleUrl(
+              devSettings->sourceBundleHost,
+              devSettings->sourceBundlePort,
+              devSettings->debugBundlePath,
+              devSettings->platformName,
+              devSettings->bundleAppId,
+              devSettings->devBundle,
+              devSettings->useFastRefresh,
+              devSettings->inlineSourceMap,
+              hermesBytecodeVersion)
+        : devSettings->bundleRootPath;
+    ::Microsoft::ReactNative::SourceCode::SetScriptUrl(
+        winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()), bundleUrl);
 
-  registerTurboModule(
-      L"SourceCode", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SourceCode>());
+    registerTurboModule(
+        L"SourceCode", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SourceCode>());
+  }
 
   registerTurboModule(
       L"DevSettings", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::DevSettings>());
@@ -446,6 +455,17 @@ void ReactInstanceWin::LoadModules(
       winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::LinkingManager>());
 
   registerTurboModule(L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Timing>());
+#else
+
+#if defined(USE_FABRIC)
+  if (Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties())) {
+    registerTurboModule(
+        L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::Microsoft::ReactNative::Timing>());
+  } else
+#endif
+  {
+    registerTurboModule(L"Timing", winrt::Microsoft::ReactNative::MakeModuleProvider<::facebook::react::Timing>());
+  }
 #endif
 
   registerTurboModule(
@@ -582,6 +602,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
       strongThis->Queue().Post([this, weakThis]() noexcept {
         if (auto strongThis = weakThis.GetStrongPtr()) {
           auto devSettings = strongThis->CreateDevSettings();
+          devSettings->useTurboModulesOnly = true;
 
           try {
             if (devSettings->useFastRefresh || devSettings->liveReloadCallback) {
@@ -739,10 +760,20 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
     // Objects that must be created on the UI thread
     if (auto strongThis = weakThis.GetStrongPtr()) {
       InitUIDependentCalls();
-
       strongThis->Queue().Post([this, weakThis]() noexcept {
         if (auto strongThis = weakThis.GetStrongPtr()) {
           auto devSettings = strongThis->CreateDevSettings();
+
+          auto getBoolProperty = [properties = ReactPropertyBag{m_options.Properties}](
+                                     const wchar_t *ns, const wchar_t *name, bool defaultValue) noexcept -> bool {
+            ReactPropertyId<bool> propId{ns == nullptr ? ReactPropertyNamespace() : ReactPropertyNamespace(ns), name};
+            std::optional<bool> propValue = properties.Get(propId);
+            return propValue.value_or(defaultValue);
+          };
+
+          devSettings->omitNetworkingCxxModules = getBoolProperty(nullptr, L"OmitNetworkingCxxModules", false);
+          devSettings->useWebSocketTurboModule = getBoolProperty(nullptr, L"UseWebSocketTurboModule", false);
+          devSettings->useTurboModulesOnly = getBoolProperty(L"DevSettings", L"UseTurboModulesOnly", false);
 
           std::vector<facebook::react::NativeModuleDescription> cxxModules;
           auto nmp = std::make_shared<winrt::Microsoft::ReactNative::NativeModulesProvider>();
@@ -835,12 +866,7 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
             // We need to keep the instance wrapper alive as its destruction shuts down the native queue.
             m_options.TurboModuleProvider->SetReactContext(
                 winrt::make<implementation::ReactContext>(Mso::Copy(m_reactContext)));
-            auto omitNetCxxPropName = ReactPropertyBagHelper::GetName(nullptr, L"OmitNetworkingCxxModules");
-            auto omitNetCxxPropValue = m_options.Properties.Get(omitNetCxxPropName);
-            devSettings->omitNetworkingCxxModules = winrt::unbox_value_or(omitNetCxxPropValue, false);
-            auto useWebSocketTurboModulePropName = ReactPropertyBagHelper::GetName(nullptr, L"UseWebSocketTurboModule");
-            auto useWebSocketTurboModulePropValue = m_options.Properties.Get(useWebSocketTurboModulePropName);
-            devSettings->useWebSocketTurboModule = winrt::unbox_value_or(useWebSocketTurboModulePropValue, false);
+
             auto bundleRootPath = devSettings->bundleRootPath;
             auto jsiRuntimeHolder = devSettings->jsiRuntimeHolder;
             auto instanceWrapper = facebook::react::CreateReactInstance(
