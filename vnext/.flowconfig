@@ -38,6 +38,7 @@
 <PROJECT_ROOT>/Libraries/LogBox/UI/LogBoxInspectorReactFrames.js
 <PROJECT_ROOT>/Libraries/Utilities/Platform.flow.js
 
+
 ; Ignore react-native files in node_modules since they are copied into project root
 .*/node_modules/react-native/.*
 
@@ -121,9 +122,7 @@ module.name_mapper='^react-native-windows$' -> '<PROJECT_ROOT>/index.windows.js'
 module.name_mapper='^react-native/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^react-native-windows/\(.*\)$' -> '<PROJECT_ROOT>/\1'
 module.name_mapper='^@react-native/dev-middleware$' -> '<PROJECT_ROOT>/\1'
-module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
-
-one_sided_type_guards=true
+module.name_mapper='^@?[./a-zA-Z0-9$_-]+\.\(bmp\|gif\|jpg\|jpeg\|png\|psd\|svg\|webp\|m4v\|mov\|mp4\|mpeg\|mpg\|webm\|aac\|aiff\|caf\|m4a\|mp3\|wav\|html\|pdf\|xml\)$' -> '<PROJECT_ROOT>/Libraries/Image/RelativeImageStub'
 
 suppress_type=$FlowIssue
 suppress_type=$FlowFixMe
@@ -154,4 +153,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.238.3
+^0.241.0

@@ -6925,6 +6925,415 @@ exports[`snapshotAllPages Animated 12`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Animated 13`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    collapsable={false}
+    style={
+      {
+        "position": "absolute",
+        "transform": [
+          {
+            "translateY": 0,
+          },
+        ],
+        "width": "100%",
+        "zIndex": 2,
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "backgroundColor": {
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
+            },
+            "borderBottomWidth": 1.5,
+            "borderColor": {
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
+            },
+            "borderRadius": 3,
+            "borderWidth": 1,
+          },
+        ]
+      }
+    >
+      <View
+        style={{}}
+      >
+        <View
+          style={{}}
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": {
+                    "windowsbrush": [
+                      "ButtonForeground",
+                    ],
+                  },
+                  "fontSize": 14,
+                  "fontWeight": "400",
+                  "margin": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Press count : 0
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <RCTScrollView
+    collapsable={false}
+    data={
+      [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62,
+        63,
+        64,
+        65,
+        66,
+        67,
+        68,
+        69,
+        70,
+        71,
+        72,
+        73,
+        74,
+        75,
+        76,
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85,
+        86,
+        87,
+        88,
+        89,
+        90,
+        91,
+        92,
+        93,
+        94,
+        95,
+        96,
+        97,
+        98,
+        99,
+        100,
+      ]
+    }
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={0.0001}
+    stickyHeaderIndices={[]}
+    style={
+      {
+        "height": "100%",
+        "position": "absolute",
+        "width": "100%",
+        "zIndex": 1,
+      }
+    }
+    viewabilityConfigCallbackPairs={[]}
+  >
+    <View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <Text
+          style={
+            {
+              "backgroundColor": "white",
+              "height": 28,
+            }
+          }
+        >
+          0
+        </Text>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <Text
+          style={
+            {
+              "backgroundColor": "white",
+              "height": 28,
+            }
+          }
+        >
+          1
+        </Text>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <Text
+          style={
+            {
+              "backgroundColor": "white",
+              "height": 28,
+            }
+          }
+        >
+          2
+        </Text>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <Text
+          style={
+            {
+              "backgroundColor": "white",
+              "height": 28,
+            }
+          }
+        >
+          3
+        </Text>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <Text
+          style={
+            {
+              "backgroundColor": "white",
+              "height": 28,
+            }
+          }
+        >
+          4
+        </Text>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <Text
+          style={
+            {
+              "backgroundColor": "white",
+              "height": 28,
+            }
+          }
+        >
+          5
+        </Text>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <Text
+          style={
+            {
+              "backgroundColor": "white",
+              "height": 28,
+            }
+          }
+        >
+          6
+        </Text>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <Text
+          style={
+            {
+              "backgroundColor": "white",
+              "height": 28,
+            }
+          }
+        >
+          7
+        </Text>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <Text
+          style={
+            {
+              "backgroundColor": "white",
+              "height": 28,
+            }
+          }
+        >
+          8
+        </Text>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <Text
+          style={
+            {
+              "backgroundColor": "white",
+              "height": 28,
+            }
+          }
+        >
+          9
+        </Text>
+      </View>
+      <View
+        style={
+          {
+            "height": 0,
+          }
+        }
+      />
+    </View>
+  </RCTScrollView>
+</View>
+`;
+
 exports[`snapshotAllPages AppState 1`] = `<Text />`;
 
 exports[`snapshotAllPages AppState 2`] = `
@@ -10725,11 +11134,7 @@ exports[`snapshotAllPages Filter 1`] = `
     }
   >
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         [
           {
@@ -10747,11 +11152,7 @@ exports[`snapshotAllPages Filter 1`] = `
       }
     />
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         {
           "height": 90,
@@ -10856,11 +11257,7 @@ exports[`snapshotAllPages Filter 2`] = `
     }
   >
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         [
           {
@@ -10878,11 +11275,7 @@ exports[`snapshotAllPages Filter 2`] = `
       }
     />
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         {
           "height": 90,
@@ -10987,11 +11380,7 @@ exports[`snapshotAllPages Filter 3`] = `
     }
   >
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         [
           {
@@ -11009,11 +11398,7 @@ exports[`snapshotAllPages Filter 3`] = `
       }
     />
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         {
           "height": 90,
@@ -11118,11 +11503,7 @@ exports[`snapshotAllPages Filter 4`] = `
     }
   >
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         [
           {
@@ -11140,11 +11521,7 @@ exports[`snapshotAllPages Filter 4`] = `
       }
     />
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         {
           "height": 90,
@@ -11249,11 +11626,7 @@ exports[`snapshotAllPages Filter 5`] = `
     }
   >
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         [
           {
@@ -11271,11 +11644,7 @@ exports[`snapshotAllPages Filter 5`] = `
       }
     />
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         {
           "height": 90,
@@ -11380,11 +11749,7 @@ exports[`snapshotAllPages Filter 6`] = `
     }
   >
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         [
           {
@@ -11402,11 +11767,7 @@ exports[`snapshotAllPages Filter 6`] = `
       }
     />
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         {
           "height": 90,
@@ -11434,7 +11795,7 @@ exports[`snapshotAllPages Filter 7`] = `
           {
             "experimental_filter": [
               {
-                "hue-rotate": "-90deg",
+                "hueRotate": "-90deg",
               },
             ],
           },
@@ -11511,17 +11872,13 @@ exports[`snapshotAllPages Filter 7`] = `
     }
   >
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         [
           {
             "experimental_filter": [
               {
-                "hue-rotate": "-90deg",
+                "hueRotate": "-90deg",
               },
             ],
           },
@@ -11533,11 +11890,7 @@ exports[`snapshotAllPages Filter 7`] = `
       }
     />
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         {
           "height": 90,
@@ -11642,11 +11995,7 @@ exports[`snapshotAllPages Filter 8`] = `
     }
   >
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         [
           {
@@ -11664,11 +12013,7 @@ exports[`snapshotAllPages Filter 8`] = `
       }
     />
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         {
           "height": 90,
@@ -11774,11 +12119,7 @@ exports[`snapshotAllPages Filter 9`] = `
     }
   >
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         [
           {
@@ -11796,9 +12137,139 @@ exports[`snapshotAllPages Filter 9`] = `
       }
     />
     <Image
+      resizeMode="contain"
+      style={
+        {
+          "height": 90,
+          "width": 150,
+        }
+      }
+    />
+  </View>,
+]
+`;
+
+exports[`snapshotAllPages Filter 10`] = `
+[
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "justifyContent": "space-around",
+      }
+    }
+    testID="filter-test-drop-shadow"
+  >
+    <View
+      style={
+        [
+          {
+            "experimental_filter": [
+              {
+                "dropShadow": "30px 10px 4px #4444dd",
+              },
+            ],
+          },
+          {
+            "backgroundColor": "#275752",
+            "height": 150,
+            "width": 150,
+          },
+        ]
+      }
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "#8d2b8f",
+            "height": 75,
+            "width": 75,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "#32a840",
+              "height": 38.5,
+              "width": 38.5,
+            }
+          }
+        />
+        <Text>
+          Hello world!
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        {
+          "backgroundColor": "#275752",
+          "height": 150,
+          "width": 150,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "#8d2b8f",
+            "height": 75,
+            "width": 75,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "backgroundColor": "#32a840",
+              "height": 38.5,
+              "width": 38.5,
+            }
+          }
+        />
+        <Text>
+          Hello world!
+        </Text>
+      </View>
+    </View>
+  </View>,
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "justifyContent": "space-around",
+      }
+    }
+  >
+    <Image
+      resizeMode="contain"
       source={
         {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/alpha-hotdog.png",
+        }
+      }
+      style={
+        [
+          {
+            "experimental_filter": [
+              {
+                "dropShadow": "30px 10px 4px #4444dd",
+              },
+            ],
+          },
+          {
+            "height": 90,
+            "width": 150,
+          },
+        ]
+      }
+    />
+    <Image
+      resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/alpha-hotdog.png",
         }
       }
       style={
@@ -11812,7 +12283,7 @@ exports[`snapshotAllPages Filter 9`] = `
 ]
 `;
 
-exports[`snapshotAllPages Filter 10`] = `
+exports[`snapshotAllPages Filter 11`] = `
 [
   <View
     style={
@@ -11911,11 +12382,7 @@ exports[`snapshotAllPages Filter 10`] = `
     }
   >
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         [
           [
@@ -11938,11 +12405,7 @@ exports[`snapshotAllPages Filter 10`] = `
       }
     />
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         {
           "height": 90,
@@ -11954,7 +12417,7 @@ exports[`snapshotAllPages Filter 10`] = `
 ]
 `;
 
-exports[`snapshotAllPages Filter 11`] = `
+exports[`snapshotAllPages Filter 12`] = `
 [
   <View
     style={
@@ -12049,11 +12512,7 @@ exports[`snapshotAllPages Filter 11`] = `
     }
   >
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         [
           [
@@ -12073,11 +12532,7 @@ exports[`snapshotAllPages Filter 11`] = `
       }
     />
     <Image
-      source={
-        {
-          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
-        }
-      }
+      resizeMode="contain"
       style={
         {
           "height": 90,
@@ -27348,8 +27803,11 @@ exports[`snapshotAllPages Pressable 2`] = `
           "backgroundColor": "white",
         },
         {
+          "alignItems": "center",
           "borderRadius": 8,
+          "justifyContent": "center",
           "padding": 6,
+          "width": "100%",
         },
       ]
     }
@@ -27369,6 +27827,77 @@ exports[`snapshotAllPages Pressable 2`] = `
 `;
 
 exports[`snapshotAllPages Pressable 3`] = `
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "justifyContent": "center",
+    }
+  }
+>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": "white",
+        },
+        {
+          "alignItems": "center",
+          "borderRadius": 8,
+          "justifyContent": "center",
+          "padding": 6,
+          "width": "100%",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        {
+          "fontSize": 16,
+        }
+      }
+    >
+      Press me and move your finger
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Pressable 4`] = `
 <View
   testID="pressable_feedback_events"
 >
@@ -27456,7 +27985,7 @@ exports[`snapshotAllPages Pressable 3`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 4`] = `
+exports[`snapshotAllPages Pressable 5`] = `
 <View
   style={
     {
@@ -27519,7 +28048,7 @@ exports[`snapshotAllPages Pressable 4`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 5`] = `
+exports[`snapshotAllPages Pressable 6`] = `
 <View>
   <View
     style={
@@ -27823,7 +28352,7 @@ exports[`snapshotAllPages Pressable 5`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 6`] = `
+exports[`snapshotAllPages Pressable 7`] = `
 [
   <Text
     onPress={[Function]}
@@ -27855,7 +28384,7 @@ exports[`snapshotAllPages Pressable 6`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 7`] = `
+exports[`snapshotAllPages Pressable 8`] = `
 <View
   testID="pressable_delay_events"
 >
@@ -27941,7 +28470,7 @@ exports[`snapshotAllPages Pressable 7`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 8`] = `
+exports[`snapshotAllPages Pressable 9`] = `
 <View
   testID="pressable_3dtouch_event"
 >
@@ -28000,7 +28529,7 @@ exports[`snapshotAllPages Pressable 8`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 9`] = `
+exports[`snapshotAllPages Pressable 10`] = `
 <View
   testID="pressable_hit_slop"
 >
@@ -28094,7 +28623,7 @@ exports[`snapshotAllPages Pressable 9`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 10`] = `
+exports[`snapshotAllPages Pressable 11`] = `
 <View
   style={
     [
@@ -28151,7 +28680,7 @@ exports[`snapshotAllPages Pressable 10`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 11`] = `
+exports[`snapshotAllPages Pressable 12`] = `
 [
   <View
     accessibilityState={
@@ -28274,7 +28803,7 @@ exports[`snapshotAllPages Pressable 11`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 12`] = `
+exports[`snapshotAllPages Pressable 13`] = `
 <View
   style={
     [
@@ -28344,7 +28873,7 @@ exports[`snapshotAllPages Pressable 12`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 13`] = `
+exports[`snapshotAllPages Pressable 14`] = `
 [
   <View
     style={
@@ -28454,7 +28983,7 @@ exports[`snapshotAllPages Pressable 13`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 14`] = `
+exports[`snapshotAllPages Pressable 15`] = `
 [
   <View
     style={
@@ -28546,7 +29075,7 @@ exports[`snapshotAllPages Pressable 14`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 15`] = `
+exports[`snapshotAllPages Pressable 16`] = `
 [
   <View
     onKeyDown={[Function]}
@@ -28632,7 +29161,7 @@ exports[`snapshotAllPages Pressable 15`] = `
 ]
 `;
 
-exports[`snapshotAllPages Pressable 16`] = `
+exports[`snapshotAllPages Pressable 17`] = `
 <View>
   <View
     accessibilityState={
@@ -28689,7 +29218,7 @@ exports[`snapshotAllPages Pressable 16`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 17`] = `
+exports[`snapshotAllPages Pressable 18`] = `
 <View
   accessible={true}
   testID="opacity_pressable"
@@ -29170,7 +29699,7 @@ exports[`snapshotAllPages Pressable 17`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 18`] = `
+exports[`snapshotAllPages Pressable 19`] = `
 <View
   accessible={true}
   testID="accessible_pressable"
@@ -29354,7 +29883,7 @@ exports[`snapshotAllPages Pressable 18`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 19`] = `
+exports[`snapshotAllPages Pressable 20`] = `
 <View>
   <View
     accessibilityState={
@@ -29406,7 +29935,7 @@ exports[`snapshotAllPages Pressable 19`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 20`] = `
+exports[`snapshotAllPages Pressable 21`] = `
 <View>
   <View
     accessibilityHint="Button"
@@ -29492,7 +30021,7 @@ exports[`snapshotAllPages Pressable 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 21`] = `
+exports[`snapshotAllPages Pressable 22`] = `
 <View
   accessible={true}
   testID="backface_pressable"
@@ -29741,7 +30270,7 @@ exports[`snapshotAllPages Pressable 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Pressable 22`] = `
+exports[`snapshotAllPages Pressable 23`] = `
 <View
   accessible={true}
   testID="pressable_set"
@@ -56454,27 +56983,56 @@ exports[`snapshotAllPages Text 44`] = `
 `;
 
 exports[`snapshotAllPages TextInput 1`] = `
-<TextInput
-  accessibilityLabel="I am the accessibility label for text input"
-  autoFocus={true}
-  style={
-    [
-      {
-        "backgroundColor": "#ffffffff",
-        "borderColor": "#3c3c432d",
-        "color": "#000000ff",
-      },
-      {
-        "borderWidth": 1,
-        "flexGrow": 1,
-        "flexShrink": 1,
-        "fontSize": 13,
-        "padding": 4,
-      },
-      undefined,
-    ]
-  }
-/>
+<View>
+  <TextInput
+    accessibilityLabel="I am the accessibility label for text input"
+    autoFocus={false}
+    onChangeText={[Function]}
+    selectTextOnFocus={true}
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+    value="autoFocus: false - selectTextOnFocus: true"
+  />
+  <TextInput
+    accessibilityLabel="I am the accessibility label for text input"
+    autoFocus={true}
+    onChangeText={[Function]}
+    selectTextOnFocus={true}
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        undefined,
+      ]
+    }
+    value="autoFocus: true - selectTextOnFocus: true"
+  />
+</View>
 `;
 
 exports[`snapshotAllPages TextInput 2`] = `

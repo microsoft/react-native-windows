@@ -31,13 +31,18 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_batchRe
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_changeOrderOfMountingInstructionsOnAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->changeOrderOfMountingInstructionsOnAndroid(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->destroyFabricSurfacesInReactInstanceManager(
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableBackgroundExecutor(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableBackgroundExecutor(
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableAlignItemsBaselineOnFabricIOS(
     rt
   );
 }
@@ -51,8 +56,18 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableG
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableLongTaskAPI(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableLongTaskAPI(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableMicrotasks(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableMicrotasks(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enablePropsUpdateReconciliationAndroid(
     rt
   );
 }
@@ -66,13 +81,23 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableU
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fetchImagesInViewPreallocation(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->fetchImagesInViewPreallocation(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->fixIncorrectScrollViewStateUpdateOnAndroid(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->fixMappingOfEventPrioritiesBetweenFabricAndReact(
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak(
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMissedFabricStateUpdatesOnAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->fixMissedFabricStateUpdatesOnAndroid(
     rt
   );
 }
@@ -91,13 +116,18 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fusebox
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->initEagerTurboModulesOnNativeModulesQueueAndroid(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_lazyAnimationCallbacks(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->lazyAnimationCallbacks(
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_preventDoubleTextMeasure(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->preventDoubleTextMeasure(
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_loadVectorDrawablesOnImages(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->loadVectorDrawablesOnImages(
     rt
   );
 }
@@ -118,6 +148,11 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useMode
 }
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useNativeViewConfigsInBridgelessMode(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNewReactImageViewBackgroundDrawing(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->useNewReactImageViewBackgroundDrawing(
     rt
   );
 }
@@ -143,24 +178,31 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["allowCollapsableChildren"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_allowCollapsableChildren};
   methodMap_["allowRecursiveCommitsWithSynchronousMountOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_allowRecursiveCommitsWithSynchronousMountOnAndroid};
   methodMap_["batchRenderingUpdatesInEventLoop"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_batchRenderingUpdatesInEventLoop};
+  methodMap_["changeOrderOfMountingInstructionsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_changeOrderOfMountingInstructionsOnAndroid};
   methodMap_["destroyFabricSurfacesInReactInstanceManager"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_destroyFabricSurfacesInReactInstanceManager};
-  methodMap_["enableBackgroundExecutor"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableBackgroundExecutor};
+  methodMap_["enableAlignItemsBaselineOnFabricIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAlignItemsBaselineOnFabricIOS};
   methodMap_["enableCleanTextInputYogaNode"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableCleanTextInputYogaNode};
   methodMap_["enableGranularShadowTreeStateReconciliation"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableGranularShadowTreeStateReconciliation};
+  methodMap_["enableLongTaskAPI"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableLongTaskAPI};
   methodMap_["enableMicrotasks"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableMicrotasks};
+  methodMap_["enablePropsUpdateReconciliationAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enablePropsUpdateReconciliationAndroid};
   methodMap_["enableSynchronousStateUpdates"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableSynchronousStateUpdates};
   methodMap_["enableUIConsistency"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableUIConsistency};
+  methodMap_["fetchImagesInViewPreallocation"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fetchImagesInViewPreallocation};
+  methodMap_["fixIncorrectScrollViewStateUpdateOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixIncorrectScrollViewStateUpdateOnAndroid};
   methodMap_["fixMappingOfEventPrioritiesBetweenFabricAndReact"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMappingOfEventPrioritiesBetweenFabricAndReact};
-  methodMap_["fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixStoppedSurfaceRemoveDeleteTreeUIFrameCallbackLeak};
+  methodMap_["fixMissedFabricStateUpdatesOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMissedFabricStateUpdatesOnAndroid};
   methodMap_["forceBatchingMountItemsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_forceBatchingMountItemsOnAndroid};
   methodMap_["fuseboxEnabledDebug"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fuseboxEnabledDebug};
   methodMap_["fuseboxEnabledRelease"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fuseboxEnabledRelease};
+  methodMap_["initEagerTurboModulesOnNativeModulesQueueAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_initEagerTurboModulesOnNativeModulesQueueAndroid};
   methodMap_["lazyAnimationCallbacks"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_lazyAnimationCallbacks};
-  methodMap_["preventDoubleTextMeasure"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_preventDoubleTextMeasure};
+  methodMap_["loadVectorDrawablesOnImages"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_loadVectorDrawablesOnImages};
   methodMap_["setAndroidLayoutDirection"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_setAndroidLayoutDirection};
   methodMap_["useImmediateExecutorInAndroidBridgeless"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useImmediateExecutorInAndroidBridgeless};
   methodMap_["useModernRuntimeScheduler"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useModernRuntimeScheduler};
   methodMap_["useNativeViewConfigsInBridgelessMode"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNativeViewConfigsInBridgelessMode};
+  methodMap_["useNewReactImageViewBackgroundDrawing"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useNewReactImageViewBackgroundDrawing};
   methodMap_["useRuntimeShadowNodeReferenceUpdate"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useRuntimeShadowNodeReferenceUpdate};
   methodMap_["useRuntimeShadowNodeReferenceUpdateOnLayout"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useRuntimeShadowNodeReferenceUpdateOnLayout};
   methodMap_["useStateAlignmentMechanism"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useStateAlignmentMechanism};

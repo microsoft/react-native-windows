@@ -31,6 +31,7 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
   static ShadowNodeTraits BaseTraits() {
     auto traits = ConcreteViewShadowNode::BaseTraits();
     traits.set(ShadowNodeTraits::Trait::LeafYogaNode);
+    traits.set(ShadowNodeTraits::Trait::BaselineYogaNode);
     return traits;
   }
 

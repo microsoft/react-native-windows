@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "replace IAppData.TemporaryFolder with GetTempPathW",
+  "packageName": "react-native-windows",
+  "email": "aeulitz@outlook.com",
+  "dependentChangeType": "patch"
+}
