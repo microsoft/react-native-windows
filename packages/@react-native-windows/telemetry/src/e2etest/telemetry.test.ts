@@ -425,7 +425,7 @@ function verifyTestCommandTelemetryProcessor(
 
         // Verify extra props
         const extraProps = getExtraProps();
-        let additionalDataString = JSON.parse(envelope.data?.additionalData);
+        const additionalDataString = JSON.parse(envelope.data?.additionalData);
         expect(additionalDataString).toStrictEqual(extraProps);
       }
     } catch (ex) {

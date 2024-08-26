@@ -206,13 +206,13 @@ export class Telemetry {
 
   /** Sets up Telemetry.appInsightsCore. */
   private static setupClient() {
-    var postChannel: PostChannel = new PostChannel();
+    const postChannel: PostChannel = new PostChannel();
 
     const coreConfiguration: coreOneDS.IExtendedConfiguration = {
       instrumentationKey: process.env[ENV_SETUP_OVERRIDE] ?? RNW_1DS_INSTURMENTATION_KEY,
     }
 
-    var postChannelConfig: IChannelConfiguration = {
+    const postChannelConfig: IChannelConfiguration = {
       eventsLimitInMem: 5000
     };
 
@@ -393,8 +393,8 @@ export class Telemetry {
     telemetryItem.time = new Date().toISOString();
     telemetryItem.iKey = RNW_1DS_INSTURMENTATION_KEY;
 
-    let projectPropString = JSON.stringify(Telemetry.projectProp);
-    let versionPropString = JSON.stringify(Telemetry.versionsProp);
+    const projectPropString = JSON.stringify(Telemetry.projectProp);
+    const versionPropString = JSON.stringify(Telemetry.versionsProp);
 
     // Populate "common" properties into Part B.
     telemetryItem.baseData = {
@@ -429,10 +429,10 @@ export class Telemetry {
   }
 
   private static trackCommandEvent(extraProps?: Record<string, any>) {
-    var telemetryItem: coreOneDS.ITelemetryItem = {name: CommandEventName};
+    const telemetryItem: coreOneDS.ITelemetryItem = {name: CommandEventName};
 
     // This is logged in Part C.
-    let command = {
+    const command = {
       options: Telemetry.commandInfo.startInfo?.options,
       defaultOptions: Telemetry.commandInfo.startInfo?.defaultOptions,
       args: Telemetry.commandInfo.startInfo?.args,
@@ -442,13 +442,13 @@ export class Telemetry {
       resultCode: Telemetry.commandInfo.endInfo?.resultCode,
     };
 
-    let commandPropString = JSON.stringify(command);
+    const commandPropString = JSON.stringify(command);
     telemetryItem.data = {
       command: commandPropString
     };
 
     // Set extra props to "additionalData".
-    let additionalDataString = JSON.stringify(extraProps);
+    const additionalDataString = JSON.stringify(extraProps);
 
     if (additionalDataString.length > 0) {
       telemetryItem.data.additionalData = additionalDataString;
@@ -463,7 +463,7 @@ export class Telemetry {
       return;
     }
 
-    var telemetryItem: coreOneDS.ITelemetryItem = {name: CodedErrorEventName};
+    const telemetryItem: coreOneDS.ITelemetryItem = {name: CodedErrorEventName};
 
     // Save off CodedError info in Part C.
     const codedError =
@@ -471,7 +471,7 @@ export class Telemetry {
         ? (error as errorUtils.CodedError)
         : null;
 
-    let codedErrorStruct = {
+    const codedErrorStruct = {
       type: codedError?.type ?? 'Unknown',
       data: codedError?.data ?? {},
     };
@@ -502,9 +502,9 @@ export class Telemetry {
     }
 
     // Break down TS Error object into Exception Data
-    let exceptionData = Telemetry.convertErrorIntoExceptionData(error);
+    const exceptionData = Telemetry.convertErrorIntoExceptionData(error);
 
-    let codedDataStructString = JSON.stringify(codedErrorStruct);
+    const codedDataStructString = JSON.stringify(codedErrorStruct);
 
     telemetryItem.data = {
       codedError: codedDataStructString,
@@ -517,7 +517,7 @@ export class Telemetry {
 
   static convertErrorIntoExceptionData(error: Error) : Record<string, any> {
 
-    let exceptionData = {
+    const exceptionData = {
       hasFullStack: false,
       message: error.message,
       parsedStack: {}
@@ -525,7 +525,7 @@ export class Telemetry {
 
     const lines = error.stack?.split('\n');
 
-    let parsedStack = lines?.slice(1).map(line => {
+    const parsedStack = lines?.slice(1).map(line => {
       const match = line.trim().match(/^\s*at\s+(?:(.*?)\s+\((.*):(\d+):(\d+)\)|(.*):(\d+):(\d+))$/);
       
       if (match) {
@@ -544,9 +544,9 @@ export class Telemetry {
       }
   
       return undefined; 
-  });
+    });
 
-    if (parsedStack != undefined) {
+    if (parsedStack) {
       parsedStack?.filter(Boolean);
       exceptionData.hasFullStack = true;
       exceptionData.parsedStack = parsedStack;
