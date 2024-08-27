@@ -399,6 +399,14 @@ bool ComponentView::getAcccessiblityIsReadOnly() noexcept {
   return false;
 }
 
+ToggleState ComponentView::getToggleState() noexcept {
+  return ToggleState::ToggleState_Off;
+}
+
+void ComponentView::Toggle() noexcept {
+  assert(false);
+}
+
 // Notify up the tree to bring the rect into view by scrolling as needed
 void ComponentView::StartBringIntoView(BringIntoViewOptions &&args) noexcept {
   assert(false);

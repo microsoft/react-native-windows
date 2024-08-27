@@ -118,6 +118,8 @@ struct ComponentView
   std::optional<std::string> getAccessiblityValue() noexcept override;
   void setAcccessiblityValue(std::string &&value) noexcept override;
   bool getAcccessiblityIsReadOnly() noexcept override;
+  ToggleState getToggleState() noexcept override;
+  void Toggle() noexcept override; 
   virtual winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept;
 
   const facebook::react::LayoutMetrics &layoutMetrics() const noexcept;

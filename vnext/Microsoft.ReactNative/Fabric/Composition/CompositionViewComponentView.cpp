@@ -1347,6 +1347,14 @@ bool ComponentView::getAcccessiblityIsReadOnly() noexcept {
   return true;
 }
 
+ToggleState ComponentView::getToggleState() noexcept{
+  return ToggleState::ToggleState_Off;
+}
+
+void ComponentView::Toggle() noexcept{
+  // no-op
+}
+
 void ComponentView::updateBorderLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {

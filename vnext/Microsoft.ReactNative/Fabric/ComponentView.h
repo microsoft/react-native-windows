@@ -14,6 +14,7 @@
 #include <Fabric/Composition/Theme.h>
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
 #include <winrt/Microsoft.ReactNative.h>
+#include <uiautomationcore.h>
 
 #include "ComponentView.g.h"
 #include "CreateComponentViewArgs.g.h"
@@ -123,6 +124,8 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   virtual std::optional<std::string> getAccessiblityValue() noexcept;
   virtual void setAcccessiblityValue(std::string &&value) noexcept;
   virtual bool getAcccessiblityIsReadOnly() noexcept;
+  virtual ToggleState getToggleState() noexcept;
+  virtual void Toggle() noexcept; 
   winrt::Microsoft::ReactNative::IReactContext ReactContext() const noexcept;
 
   // Notify up the tree to bring the rect into view by scrolling as needed

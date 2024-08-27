@@ -273,6 +273,26 @@ void InsertFloat3Value(
   obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(str));
 }
 
+void InsertToggleStateValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    ToggleState value,
+    ToggleState defaultValue = ToggleState::ToggleState_Off) {
+  if (value != defaultValue) {
+    switch (value) {
+      case 0:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Off"));
+        break;
+      case 1:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"On"));
+        break;
+      case 2:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Indeterminate"));
+        break;
+    }
+  }
+}
+
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload) {
   winrt::Windows::Data::Json::JsonObject result;
   winrt::Windows::Data::Json::JsonArray jsonErrors;
@@ -308,6 +328,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   int sizeOfSet = 0;
   BSTR value;
   BOOL isReadOnly;
+  ToggleState toggleState;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -346,6 +367,17 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
     }
     valuePattern->Release();
   }
+  // Toggle Provider 
+  IToggleProvider *togglePattern;
+  hr = pTarget->GetCurrentPattern(UIA_TogglePatternId, reinterpret_cast<IUnknown **>(&togglePattern));
+  if (SUCCEEDED(hr) && togglePattern) {
+    hr = togglePattern->get_ToggleState(&toggleState);
+    if (SUCCEEDED(hr)) {
+      InsertToggleStateValueIfNotDefault(result, L"TogglePattern.ToggleState", toggleState);
+    }
+    togglePattern->Release();
+  }
+  // Toggle
   IUIAutomationElement *pChild;
   IUIAutomationElement *pSibling;
   pWalker->GetFirstChildElement(pTarget, &pChild);
