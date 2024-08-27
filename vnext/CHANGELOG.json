@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 27 Aug 2024 05:13:39 GMT",
+      "version": "0.0.0-canary.859",
+      "tag": "react-native-windows_v0.0.0-canary.859",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "aeulitz@outlook.com",
+            "package": "react-native-windows",
+            "commit": "cf493d4187976239849f52a3e493717f877af241",
+            "comment": "replace IAppData.TemporaryFolder with GetTempPathW"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9ce78de3323b1bfcf62879250cd7225269bac12a",
+            "comment": "Switch New Architecture templates to use prebuilt NuGets"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.233",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Aug 2024 05:24:28 GMT",
       "version": "0.0.0-canary.858",
       "tag": "react-native-windows_v0.0.0-canary.858",

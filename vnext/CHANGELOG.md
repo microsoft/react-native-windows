@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 22 Aug 2024 05:24:28 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Aug 2024 05:13:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.859
+
+Tue, 27 Aug 2024 05:13:39 GMT
+
+### Changes
+
+- replace IAppData.TemporaryFolder with GetTempPathW (aeulitz@outlook.com)
+- Switch New Architecture templates to use prebuilt NuGets (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.233
 
 ## 0.0.0-canary.858
 
