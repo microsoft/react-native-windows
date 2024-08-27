@@ -191,13 +191,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/EventQueueProcessor.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/EventQueueProcessor.cpp",
-      "baseHash": "c577b94f18f5c6cd93b6ff30c9288bcb33f2efb3",
-      "issue": 13516
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/JSRuntimeFactory.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/JSRuntimeFactory.cpp",
       "baseHash": "c77f0b0829b850f8e2f115bfc3440ce94feb207d",
@@ -216,13 +209,6 @@
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
       "baseHash": "2c02cd138f55d35ae118ee251e18e2e9243c2a0e",
       "issue": 13172
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/TimerManager.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/runtime/TimerManager.cpp",
-      "baseHash": "6d48fc0cf5c35a8acf0a8c77d382a847dcc3119c",
-      "issue": 13516
     },
     {
       "type": "copy",
