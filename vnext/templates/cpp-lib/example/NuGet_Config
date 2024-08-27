@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <!-- This placeholder file is reserved for future use, but also to prevent
+      using the config from the cpp-app template, allowing the lib to rely on
+      config file added to its root. -->
+</configuration>

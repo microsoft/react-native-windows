@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Wed, 21 Aug 2024 05:14:40 GMT and should not be manually modified.
+This log was last generated on Tue, 27 Aug 2024 05:13:39 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.233
+
+Tue, 27 Aug 2024 05:13:39 GMT
+
+### Changes
+
+- Fix run-windows --singleproc to override high memory (jthysell@microsoft.com)
+- Improve new project name(space) validation and cleaning (jthysell@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.0.0-canary.107
 
 ## 0.0.0-canary.232
 
