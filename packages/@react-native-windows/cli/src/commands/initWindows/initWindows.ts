@@ -29,6 +29,7 @@ import {
   endTelemetrySession,
 } from '../../utils/telemetryHelpers';
 import {copyAndReplaceWithChangedCallback} from '../../generator-common';
+import * as nameHelpers from '../../utils/nameHelpers';
 import {InitOptions, initOptions} from './initWindowsOptions';
 
 export interface TemplateFileMapping {
@@ -94,18 +95,6 @@ export class InitWindows {
     );
   }
 
-  protected pascalCase(str: string): string {
-    const camelCase = _.camelCase(str);
-    return camelCase[0].toUpperCase() + camelCase.substr(1);
-  }
-
-  protected isValidProjectName(name: string): boolean {
-    if (name.match(/^[a-z][a-z0-9]*$/gi)) {
-      return true;
-    }
-    return false;
-  }
-
   protected getReactNativeProjectName(projectDir: string): string {
     this.verboseMessage('Looking for project name in package.json...');
     const pkgJsonPath = path.join(projectDir, 'package.json');
@@ -152,21 +141,53 @@ export class InitWindows {
     }
     const templateConfig = this.templates.get(this.options.template)!;
 
-    if (this.options.name && !this.isValidProjectName(this.options.name)) {
+    // Check if there's a passed-in project name and if it's valid
+    if (this.options.name && !nameHelpers.isValidProjectName(this.options.name)) {
       throw new CodedError(
         'InvalidProjectName',
-        `The specified name is not a valid identifier`,
+        `The specified name '${this.options.name}' is not a valid identifier`,
       );
     }
 
+    // If no project name is provided, calculate the name and clean if necessary
     if (!this.options.name) {
       const projectName = this.getReactNativeProjectName(this.config.root);
-      this.options.name = this.isValidProjectName(projectName)
+      this.options.name = nameHelpers.isValidProjectName(projectName)
         ? projectName
-        : this.pascalCase(projectName);
+        : nameHelpers.cleanName(projectName);
     }
 
-    this.options.namespace ??= this.options.name;
+    // Final check that the project name is valid
+    if (!nameHelpers.isValidProjectName(this.options.name)) {
+      throw new CodedError(
+        'InvalidProjectName',
+        `The name '${this.options.name}' is not a valid identifier`,
+      );
+    }
+
+    // Check if there's a passed-in project namespace and if it's valid
+    if (this.options.namespace && !nameHelpers.isValidProjectNamespace(this.options.namespace)) {
+      throw new CodedError(
+        'InvalidProjectNamespace',
+        `The specified namespace '${this.options.namespace}' is not a valid identifier`,
+      );
+    }
+
+    // If no project namespace is provided, use the project name and clean if necessary
+    if (!this.options.namespace) {
+      const namespace = this.options.name;
+      this.options.namespace = nameHelpers.isValidProjectNamespace(namespace)
+        ? namespace
+        : nameHelpers.cleanNamespace(namespace);
+    }
+
+    // Final check that the project namespace is valid
+    if (!nameHelpers.isValidProjectNamespace(this.options.namespace)) {
+      throw new CodedError(
+        'InvalidProjectNamespace',
+        `The namespace '${this.options.namespace}' is not a valid identifier`,
+      );
+    }
 
     if (templateConfig.preInstall) {
       spinner.info(`Running ${this.options.template} preInstall()...`);
