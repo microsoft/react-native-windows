@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[0.74] [Fabric] Fixes a crash that happens on release builds",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
