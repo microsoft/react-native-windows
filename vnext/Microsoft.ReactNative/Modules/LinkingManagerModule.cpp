@@ -113,7 +113,7 @@ void LinkingManager::HandleOpenUri(winrt::hstring const &uri) noexcept {
   if (s_initialUri) {
     result.Resolve(to_string(s_initialUri.AbsoluteUri()));
   } else {
-    result.Resolve("");
+    result.Resolve(std::nullopt);
   }
 }
 
