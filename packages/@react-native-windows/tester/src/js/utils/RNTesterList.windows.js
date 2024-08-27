@@ -315,9 +315,9 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/Layout/LayoutExample'),
   },
   typeof MutationObserver === 'function'
-     ? {
-         key: 'MutationObserver',
-         category: 'UI',
+    ? {
+        key: 'MutationObserver',
+        category: 'UI',
         module: require('../examples/MutationObserver/MutationObserverIndex'),
       }
     : null,
