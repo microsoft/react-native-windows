@@ -110,7 +110,7 @@ ReactInstance::ReactInstance(
       //   creation task to finish before starting the destruction.
       inspectorTarget_ = &hostTarget.registerInstance(*this);
       runtimeInspectorTarget_ =
-          &inspectorTarget_->registerRuntime(*runtime_, runtimeExecutor);
+          &inspectorTarget_->registerRuntime(*runtime_, runtimeExecutor); // [Windows #13172]
       runtimeExecutorThatWaitsForInspectorSetup->flush();
     });
 
