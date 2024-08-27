@@ -119,7 +119,7 @@ export default class MSBuildTools {
     // doesn't lead to dramatic performance gains (See #4739). Only enable
     // parallel builds on machines with >16GB of memory to avoid OOM errors
     const highMemory = totalmem() > 16 * 1024 * 1024 * 1024;
-    const enableParallelBuilds = singleproc === false || highMemory;
+    const enableParallelBuilds = singleproc !== true && highMemory;
 
     if (enableParallelBuilds) {
       args.push('/maxCpuCount');

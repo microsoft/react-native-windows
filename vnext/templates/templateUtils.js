@@ -30,6 +30,8 @@ function getRnwInfo(config = {}, options = {}) {
 
   const devMode = existsSync(path.join(rnwPath, 'src-win'));
 
+  const isCanary = rnwVersion.includes('canary');
+
   if (options?.logging) {
     console.log(
       `Found react-native-windows@${rnwVersion} at ${rnwPath}${
@@ -38,7 +40,7 @@ function getRnwInfo(config = {}, options = {}) {
     );
   }
 
-  return {rnwPath, rnwVersion, devMode};
+  return {rnwPath, rnwVersion, devMode, isCanary};
 }
 
 function getWindowsProjectConfig(root) {
