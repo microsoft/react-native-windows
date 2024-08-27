@@ -42,14 +42,22 @@
               BuildConfiguration: Debug
               BuildPlatform: x64
               UseFabric: true
+            - Name: X64ReleaseFabric
+              BuildConfiguration: Release
+              BuildPlatform: x64
+              UseFabric: true
             - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
               BuildConfiguration: Release
               BuildPlatform: x86
               UseFabric: true
+            - Name: Arm64ReleaseFabric
+              BuildConfiguration: Release
+              BuildPlatform: ARM64
+              UseFabric: true
         - BuildEnvironment: SecurePullRequest
           Matrix:
-            - Name: X64DebugFabric
-              BuildConfiguration: Debug
+            - Name: X64ReleaseFabric
+              BuildConfiguration: Release
               BuildPlatform: x64
               UseFabric: true
             - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
@@ -87,9 +95,25 @@
               BuildConfiguration: Debug
               BuildPlatform: x64
               UseFabric: true
+            - Name: X64ReleaseFabric
+              BuildConfiguration: Release
+              BuildPlatform: x64
+              UseFabric: true
+            - Name: X86DebugFabric
+              BuildConfiguration: Debug
+              BuildPlatform: x86
+              UseFabric: true
             - Name: X86ReleaseFabric # Specifically built so binskim / tests get run on fabric
               BuildConfiguration: Release
               BuildPlatform: x86
+              UseFabric: true
+            - Name: Arm64DebugFabric
+              BuildConfiguration: Debug
+              BuildPlatform: ARM64
+              UseFabric: true
+            - Name: Arm64ReleaseFabric
+              BuildConfiguration: Release
+              BuildPlatform: ARM64
               UseFabric: true
 
   jobs:

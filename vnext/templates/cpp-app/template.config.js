@@ -21,7 +21,7 @@ async function preInstall(config = {}, options = {}) {}
 
 async function getFileMappings(config = {}, options = {}) {
   const projectRoot = config?.root ?? process.cwd();
-  const {rnwPath, rnwVersion, devMode} = templateUtils.getRnwInfo(
+  const {rnwPath, rnwVersion, devMode, isCanary} = templateUtils.getRnwInfo(
     config,
     options,
   );
@@ -70,6 +70,9 @@ async function getFileMappings(config = {}, options = {}) {
     currentUser,
 
     devMode,
+
+    useNuGets: !devMode, // default is to use published NuGets except in devMode, change to true here if you want to test devMode and nugets simultaneously
+    addReactNativePublicAdoFeed: isCanary,
 
     cppNugetPackages,
   };
