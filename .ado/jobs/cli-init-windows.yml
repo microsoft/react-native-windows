@@ -8,6 +8,9 @@ parameters:
       - Continuous
   - name: AgentPool
     type: object
+  - name: buildNuGetOnly
+    type: boolean
+    default: false
   - name: buildMatrix
     type: object
     default:
@@ -18,60 +21,173 @@ parameters:
             configuration: Debug
             platform: x64
             additionalRunArguments: --no-autolink
+            useNuGet: true
           - Name: FabricX64Release
             template: cpp-app
             configuration: Release
             platform: x64
             additionalRunArguments: --no-autolink
+            useNuGet: true
           - Name: FabricX86Debug
             template: cpp-app
             configuration: Debug
             platform: x86
             additionalRunArguments: --no-autolink
+            useNuGet: true
           - Name: FabricX86Release
             template: cpp-app
             configuration: Release
             platform: x86
+            useNuGet: true
           - Name: FabricArm64Debug
             template: cpp-app
             configuration: Debug
             platform: ARM64
             additionalRunArguments: --no-autolink --no-deploy
+            useNuGet: true
           - Name: FabricArm64Release
             template: cpp-app
             configuration: Release
             platform: ARM64
             additionalRunArguments: --no-autolink --no-deploy
+            useNuGet: true
           - Name: FabricLibX64Debug
             template: cpp-lib
             configuration: Debug
             platform: x64
-            additionalRunArguments:
+            additionalRunArguments: --singleproc # --singleproc required to workaround issue #13599
+            useNuGet: true
           - Name: FabricLibX64Release
             template: cpp-lib
             configuration: Release
             platform: x64
-            additionalRunArguments:
+            additionalRunArguments: --singleproc # --singleproc required to workaround issue #13599
+            useNuGet: true
           - Name: FabricLibX86Debug
             template: cpp-lib
             configuration: Debug
             platform: x86
-            additionalRunArguments:
+            additionalRunArguments: --singleproc # --singleproc required to workaround issue #13599
+            useNuGet: true
           - Name: FabricLibX86Release
             template: cpp-lib
             configuration: Release
             platform: x86
-            additionalRunArguments:
+            additionalRunArguments: --singleproc # --singleproc required to workaround issue #13599
+            useNuGet: true
           - Name: FabricLibArm64Debug
             template: cpp-lib
             configuration: Debug
             platform: ARM64
-            additionalRunArguments: --no-deploy
+            additionalRunArguments: --no-deploy --singleproc # --singleproc required to workaround issue #13599
+            useNuGet: true
           - Name: FabricLibArm64Release
             template: cpp-lib
             configuration: Release
             platform: ARM64
+            additionalRunArguments: --no-deploy --singleproc # --singleproc required to workaround issue #13599
+            useNuGet: true
+          - Name: PaperX64ReleaseCpp
+            template: old/uwp-cpp-app
+            configuration: Release
+            platform: x64
+            runWack: true
+          - Name: PaperX64ReleaseCs
+            template: old/uwp-cs-app
+            configuration: Release
+            platform: x64
+            runWack: true
+          - Name: PaperX86DebugCpp
+            template: old/uwp-cpp-app
+            configuration: Debug
+            platform: x86
+            additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
+          - Name: PaperX86DebugCs
+            template: old/uwp-cs-app
+            configuration: Debug
+            platform: x86
+            additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
+          - Name: PaperLibX86DebugCpp
+            template: old/uwp-cpp-lib
+            configuration: Debug
+            platform: x86
+            additionalRunArguments: --no-autolink --no-deploy
+          - Name: PaperLibX86DebugCs
+            template: old/uwp-cs-lib
+            configuration: Debug
+            platform: x86
+            additionalRunArguments: --no-autolink --no-deploy
+          - Name: PaperX86DebugCppChakra
+            template: old/uwp-cpp-app
+            configuration: Debug
+            platform: x86
+            useChakra: true
+          - Name: PaperX64ReleaseCsChakra
+            template: old/uwp-cs-app
+            configuration: Release
+            platform: x64
+            useChakra: true
+            runWack: true
+          - Name: PaperArm64ReleaseCsChakra
+            template: old/uwp-cs-app
+            configuration: Release
+            platform: ARM64
+            useChakra: true
             additionalRunArguments: --no-deploy
+          - Name: PaperX64ReleaseCppChakra
+            template: old/uwp-cpp-app
+            configuration: Release
+            platform: x64
+            useChakra: true
+            runWack: true
+          - Name: PaperArm64DebugCpp
+            template: old/uwp-cpp-app
+            configuration: Debug
+            platform: ARM64
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: PaperArm64DebugCs
+            template: old/uwp-cs-app
+            configuration: Debug
+            platform: ARM64
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: PaperArm64ReleaseCpp
+            template: old/uwp-cpp-app
+            configuration: Release
+            platform: ARM64
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: PaperArm64ReleaseCs
+            template: old/uwp-cs-app
+            configuration: Release
+            platform: ARM64
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: PaperX86ReleaseCpp
+            template: old/uwp-cpp-app
+            configuration: Release
+            platform: x86
+            runWack: true
+          - Name: PaperX86ReleaseCs
+            template: old/uwp-cs-app
+            configuration: Release
+            platform: x86
+            runWack: true
+          - Name: PaperX64DebugCpp
+            template: old/uwp-cpp-app
+            configuration: Debug
+            platform: x64
+          - Name: PaperX64DebugCs
+            template: old/uwp-cs-app
+            configuration: Debug
+            platform: x64
+          - Name: PaperX64DebugCppLowResource
+            template: old/uwp-cpp-app
+            configuration: Debug
+            platform: x64
+            lowResource: true
+          - Name: PaperX64ReleaseCppLowResource
+            template: old/uwp-cpp-app
+            configuration: Release
+            platform: x64
+            lowResource: true
       - BuildEnvironment: SecurePullRequest
         Matrix:
           - Name: FabricX64Release
@@ -79,6 +195,7 @@ parameters:
             configuration: Release
             platform: x64
             additionalRunArguments: --no-autolink
+            useNuGet: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: FabricX64Debug
@@ -86,66 +203,184 @@ parameters:
             configuration: Debug
             platform: x64
             additionalRunArguments: --no-autolink
+            useNuGet: true
           - Name: FabricX64Release
             template: cpp-app
             configuration: Release
             platform: x64
             additionalRunArguments: --no-autolink
+            useNuGet: true
           - Name: FabricX86Debug
             template: cpp-app
             configuration: Debug
             platform: x86
             additionalRunArguments: --no-autolink
+            useNuGet: true
           - Name: FabricX86Release
             template: cpp-app
             configuration: Release
             platform: x86
+            useNuGet: true
           - Name: FabricArm64Debug
             template: cpp-app
             configuration: Debug
             platform: ARM64
             additionalRunArguments: --no-autolink --no-deploy
+            useNuGet: true
           - Name: FabricArm64Release
             template: cpp-app
             configuration: Release
             platform: ARM64
             additionalRunArguments: --no-autolink --no-deploy
+            useNuGet: true
           - Name: FabricLibX64Debug
             template: cpp-lib
             configuration: Debug
             platform: x64
-            additionalRunArguments:
+            additionalRunArguments: --singleproc # --singleproc required to workaround issue #13599
+            useNuGet: true
           - Name: FabricLibX64Release
             template: cpp-lib
             configuration: Release
             platform: x64
-            additionalRunArguments:
+            additionalRunArguments: --singleproc # --singleproc required to workaround issue #13599
+            useNuGet: true
           - Name: FabricLibX86Debug
             template: cpp-lib
             configuration: Debug
             platform: x86
-            additionalRunArguments:
+            additionalRunArguments: --singleproc # --singleproc required to workaround issue #13599
+            useNuGet: true
           - Name: FabricLibX86Release
             template: cpp-lib
             configuration: Release
             platform: x86
-            additionalRunArguments:
+            additionalRunArguments: --singleproc # --singleproc required to workaround issue #13599
+            useNuGet: true
           - Name: FabricLibArm64Debug
             template: cpp-lib
             configuration: Debug
             platform: ARM64
-            additionalRunArguments: --no-deploy
+            additionalRunArguments: --no-deploy --singleproc # --singleproc required to workaround issue #13599
+            useNuGet: true
           - Name: FabricLibArm64Release
             template: cpp-lib
             configuration: Release
             platform: ARM64
+            additionalRunArguments: --no-deploy --singleproc # --singleproc required to workaround issue #13599
+            useNuGet: true
+          - Name: PaperX64ReleaseCpp
+            template: old/uwp-cpp-app
+            configuration: Release
+            platform: x64
+            runWack: true
+          - Name: PaperX64ReleaseCs
+            template: old/uwp-cs-app
+            configuration: Release
+            platform: x64
+            runWack: true
+          - Name: PaperX86DebugCpp
+            template: old/uwp-cpp-app
+            configuration: Debug
+            platform: x86
+            additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
+          - Name: PaperX86DebugCs
+            template: old/uwp-cs-app
+            configuration: Debug
+            platform: x86
+            additionalInitArguments: --namespace MyCompany.MyApplication.MyComponent
+          - Name: PaperLibX86DebugCpp
+            template: old/uwp-cpp-lib
+            configuration: Debug
+            platform: x86
+            additionalRunArguments: --no-autolink --no-deploy
+          - Name: PaperLibX86DebugCs
+            template: old/uwp-cs-lib
+            configuration: Debug
+            platform: x86
+            additionalRunArguments: --no-autolink --no-deploy
+          - Name: PaperX86DebugCppChakra
+            template: old/uwp-cpp-app
+            configuration: Debug
+            platform: x86
+            useChakra: true
+          - Name: PaperX64ReleaseCsChakra
+            template: old/uwp-cs-app
+            configuration: Release
+            platform: x64
+            useChakra: true
+            runWack: true
+          - Name: PaperArm64ReleaseCsChakra
+            template: old/uwp-cs-app
+            configuration: Release
+            platform: ARM64
+            useChakra: true
             additionalRunArguments: --no-deploy
+          - Name: PaperX64ReleaseCppChakra
+            template: old/uwp-cpp-app
+            configuration: Release
+            platform: x64
+            useChakra: true
+            runWack: true
+          - Name: PaperArm64DebugCpp
+            template: old/uwp-cpp-app
+            configuration: Debug
+            platform: ARM64
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: PaperArm64DebugCs
+            template: old/uwp-cs-app
+            configuration: Debug
+            platform: ARM64
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: PaperArm64ReleaseCpp
+            template: old/uwp-cpp-app
+            configuration: Release
+            platform: ARM64
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: PaperArm64ReleaseCs
+            template: old/uwp-cs-app
+            configuration: Release
+            platform: ARM64
+            additionalRunArguments: --no-deploy # We don't have Arm agents
+          - Name: PaperX86ReleaseCpp
+            template: old/uwp-cpp-app
+            configuration: Release
+            platform: x86
+            runWack: true
+          - Name: PaperX86ReleaseCs
+            template: old/uwp-cs-app
+            configuration: Release
+            platform: x86
+            runWack: true
+          - Name: PaperX64DebugCpp
+            template: old/uwp-cpp-app
+            configuration: Debug
+            platform: x64
+          - Name: PaperX64DebugCs
+            template: old/uwp-cs-app
+            configuration: Debug
+            platform: x64
+          - Name: PaperX64DebugCppLowResource
+            template: old/uwp-cpp-app
+            configuration: Debug
+            platform: x64
+            lowResource: true
+          - Name: PaperX64ReleaseCppLowResource
+            template: old/uwp-cpp-app
+            configuration: Release
+            platform: x64
+            lowResource: true
 jobs:
   - ${{ each config in parameters.buildMatrix }}:
     - ${{ if eq(config.BuildEnvironment, parameters.buildEnvironment) }}:
       - ${{ each matrix in config.Matrix }}:
+        - ${{ if eq(coalesce(matrix.useNuGet, false), parameters.buildNuGetOnly) }}:
           - job: CliInitWindows${{ matrix.Name }}
             displayName: Verify CliInitWindows ${{ matrix.Name }}
+
+            ${{ if eq(matrix.useNuGet, true) }}:
+              dependsOn:
+                - UniversalBuild${{ matrix.platform }}ReleaseFabric
 
             variables: [template: ../variables/windows.yml]
 
@@ -184,3 +419,5 @@ jobs:
                   additionalRunArguments: ${{ matrix.additionalRunArguments }}
                   runWack: ${{ coalesce(matrix.runWack, false) }}
                   buildEnvironment: ${{ parameters.buildEnvironment }}
+                  useChakra: ${{ coalesce(matrix.useChakra, false) }}
+                  useNuGet: ${{ coalesce(matrix.useNuGet, false) }}
