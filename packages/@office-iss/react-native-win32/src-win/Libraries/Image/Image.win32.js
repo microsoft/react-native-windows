@@ -131,38 +131,27 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
     height: undefined,
   };
 
+  let style: ImageStyleProp;
   let sources;
-  let style: ImageStyle;
-
   if (Array.isArray(source)) {
-    style =
-      flattenStyle<ImageStyleProp>([styles.base, props.style]) ||
-      ({}: ImageStyle);
+    style = [styles.base, props.style];
     sources = source;
   } else {
     const {uri} = source;
-    const width = source.width ?? props.width;
-    const height = source.height ?? props.height;
-    style =
-      flattenStyle<ImageStyleProp>([
-        {width, height},
-        styles.base,
-        props.style,
-      ]) || ({}: ImageStyle);
-    sources = [source];
-
     if (uri === '') {
       console.warn('source.uri should not be an empty string');
     }
+    const width = source.width ?? props.width;
+    const height = source.height ?? props.height;
+    style = [{width, height}, styles.base, props.style];
+    sources = [source];
   }
 
-  const objectFit =
-    style.objectFit != null
-      ? convertObjectFitToResizeMode(style.objectFit)
-      : null;
+  const flattenedStyle = flattenStyle<ImageStyleProp>(style);
+  const objectFit = convertObjectFitToResizeMode(flattenedStyle?.objectFit);
   const resizeMode =
-    objectFit || props.resizeMode || style.resizeMode || 'cover';
-  const tintColor = props.tintColor ?? style.tintColor;
+    objectFit || props.resizeMode || flattenedStyle?.resizeMode || 'cover';
+  const tintColor = props.tintColor ?? flattenedStyle?.tintColor;
 
   if (props.children != null) {
     throw new Error(

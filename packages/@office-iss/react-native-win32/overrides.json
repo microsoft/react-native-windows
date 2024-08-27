@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.76.0-nightly-20240719-6d56cea28",
+  "baseVersion": "0.76.0-nightly-20240816-17017d2b8",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "83d25eb077cc8d865039ec211f3fedeac9e57d39"
+      "baseHash": "3d94d14740956b3455abfbdff5e043212d04974b"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "2690130ef7a40e3fb37fc465979e69b1036cdae8"
+      "baseHash": "dc1e45b643d33d868da60fa27da2cbda0231b7f3"
     },
     {
       "type": "platform",
@@ -116,7 +116,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "2cc1ee09c4a71e79656db18576b4983cfca153ed"
+      "baseHash": "259941a60002c5a2a4166a39404d099f0472941e"
     },
     {
       "type": "patch",
@@ -174,7 +174,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/ReactNativeViewAttributes.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ReactNativeViewAttributes.js",
-      "baseHash": "8fc645a55ff86ceeac9c45f09d232586589ee7dc"
+      "baseHash": "4279b8fc936dbb03599892069fb7e3ceeb86b846"
     },
     {
       "type": "patch",
@@ -186,7 +186,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/View/ViewAccessibility.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewAccessibility.d.ts",
-      "baseHash": "eafbdb8db89b98aafd23514173360e07a942d205"
+      "baseHash": "d97e29f01e57cc2b0de209a03f8584b984cfe190"
     },
     {
       "type": "derived",
@@ -204,7 +204,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "50bd550ba0710173ca3533b7b103075ecdda6b56",
+      "baseHash": "a742b26e4c96fdefb07779e40bc58cd1cc872675",
       "issue": 6240
     },
     {
@@ -245,7 +245,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Image/Image.win32.js",
       "baseFile": "packages/react-native/Libraries/Image/Image.ios.js",
-      "baseHash": "f3298e1dac3f1cd3d277b15b916753535b677f04",
+      "baseHash": "e5cd104f5060ad354072889937ea92d508a32490",
       "issue": 4320
     },
     {
@@ -344,7 +344,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "86178b8f2e04b5df9e4c8dc8ca412c22231e6673"
+      "baseHash": "91e7e2aacf6c1559247dccad0c581fde64202bf3"
     },
     {
       "type": "copy",
@@ -427,7 +427,7 @@
       "type": "patch",
       "file": "src-win/Libraries/StyleSheet/StyleSheet.win32.js",
       "baseFile": "packages/react-native/Libraries/StyleSheet/StyleSheet.js",
-      "baseHash": "5c01bd55040fb9d31534bd27b98fe9c3671994c0"
+      "baseHash": "acf84f21e80cce08afd0a56a2f79690641c7228e"
     },
     {
       "type": "derived",
@@ -439,13 +439,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "fa9abb0db816a992824228c520fc0381bf2a1f63"
+      "baseHash": "8ad2e56ba09c1b5428d50cfd71972c60502ed2e2"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextNativeComponent.js",
-      "baseHash": "1b2e6301edc13f3a91e47b9befe8a47a12e6ad39",
+      "baseHash": "dcb764530f8a6529152d9791597865034e2c36ae",
       "issue": 7074
     },
     {

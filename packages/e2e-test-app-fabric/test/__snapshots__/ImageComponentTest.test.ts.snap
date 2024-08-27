@@ -758,14 +758,14 @@ exports[`Image Tests An Image can borders 1`] = `
 exports[`Image Tests An Image can have a background color 1`] = `
 {
   "Automation Tree": {
-    "AutomationId": "image-background-color",
+    "AutomationId": "background-color-example",
     "ControlType": 50026,
     "LocalizedControlType": "group",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
     "_Props": {
-      "TestId": "image-background-color",
+      "TestId": "background-color-example",
     },
     "__Children": [
       {
@@ -815,7 +815,7 @@ exports[`Image Tests An Image can have a background color 1`] = `
     ],
   },
   "Visual Tree": {
-    "Comment": "image-background-color",
+    "Comment": "background-color-example",
     "Offset": "0, 0, 0",
     "Size": "916, 72",
     "Visual Type": "SpriteVisual",
@@ -3078,12 +3078,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "0, 233, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3154,12 +3154,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "100, 233, 0",
-        "Size": "90, 16",
+        "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 16",
+            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
           {
