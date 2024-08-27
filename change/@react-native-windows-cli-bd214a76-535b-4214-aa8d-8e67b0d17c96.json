@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix run-windows --singleproc to override high memory",
-  "packageName": "@react-native-windows/cli",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
