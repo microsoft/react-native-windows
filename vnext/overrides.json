@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.76.0-nightly-20240816-17017d2b8",
+  "baseVersion": "0.76.0-nightly-20240821-387560a9a",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "3d94d14740956b3455abfbdff5e043212d04974b"
+      "baseHash": "27c9677306d4f1bd627a346969c592aee606811a"
     },
     {
       "type": "derived",
@@ -44,7 +44,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
-      "baseHash": "2c005b6dafacbc59dc887fbd5bc78b801ec465f0"
+      "baseHash": "955b45185e3548af3cffad5d9b05bcf2a658ed4d"
     },
     {
       "type": "derived",

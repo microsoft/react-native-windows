@@ -1,11 +1,11 @@
 {
-  "baseVersion": "0.76.0-nightly-20240816-17017d2b8",
+  "baseVersion": "0.76.0-nightly-20240821-387560a9a",
   "overrides": [
     {
       "type": "patch",
       "file": "package.json",
       "baseFile": "package.json",
-      "baseHash": "31a876f677281e076b80fc3317d1fc5e863b7f5b"
+      "baseHash": "1c0ac5832bde0b6f5e6183aea746b45f0ec70b6d"
     }
   ]
 }
