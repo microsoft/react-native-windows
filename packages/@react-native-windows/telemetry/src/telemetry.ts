@@ -349,9 +349,6 @@ export class Telemetry {
     telemetryItem.time = new Date().toISOString();
     telemetryItem.iKey = RNW_1DS_INSTRUMENTATION_KEY;
 
-    const projectPropString = JSON.stringify(Telemetry.projectProp);
-    const versionPropString = JSON.stringify(Telemetry.versionsProp);
-
     // Populate "common" properties into Part B.
     telemetryItem.baseData = {
       common: {
@@ -374,8 +371,8 @@ export class Telemetry {
         commandName: Telemetry.commonProperties.commandName
       },
       // Set project and versions props, belonging to Part B.
-      project: projectPropString,
-      versions: versionPropString
+      project: Telemetry.projectProp,
+      versions: Telemetry.versionsProp
     };
 
     // Send and post the telemetry event!
@@ -397,16 +394,12 @@ export class Telemetry {
       resultCode: Telemetry.commandInfo.endInfo?.resultCode,
     };
 
-    const commandPropString = JSON.stringify(command);
     telemetryItem.data = {
-      command: commandPropString
+      command: command
     };
 
-    // Set extra props to "additionalData".
-    const additionalDataString = JSON.stringify(extraProps);
-
-    if (additionalDataString.length > 0) {
-      telemetryItem.data.additionalData = additionalDataString;
+    if (extraProps) {
+      telemetryItem.data.additionalData = extraProps;
     }
 
     // Fire event
@@ -459,10 +452,8 @@ export class Telemetry {
     // Break down TS Error object into Exception Data
     const exceptionData = Telemetry.convertErrorIntoExceptionData(error);
 
-    const codedDataStructString = JSON.stringify(codedErrorStruct);
-
     telemetryItem.data = {
-      codedError: codedDataStructString,
+      codedError: codedErrorStruct,
       exceptionData: exceptionData
     };
 

@@ -358,7 +358,7 @@ function verifyTestCommandTelemetryProcessor(
       expect(commonProperties.commandName).toBe('test-command');
 
       // Verify versions info
-      const versions = JSON.parse(properties!.versions);
+      const versions = properties!.versions;
       expect(versions).toBeDefined();
 
       expect(Object.keys(versions).length).toBeGreaterThan(0);
@@ -367,7 +367,7 @@ function verifyTestCommandTelemetryProcessor(
       }
 
       // Verify project info
-      const project = JSON.parse(properties!.project);
+      const project = properties!.project;
       expect(project).toStrictEqual(getTestCommandProjectInfo());
 
       // Verify properties exclusive to error scenarios
@@ -385,7 +385,7 @@ function verifyTestCommandTelemetryProcessor(
         );
 
         // Verify coded error info
-        const codedError = JSON.parse(envelope.data!.codedError);
+        const codedError = envelope.data!.codedError;
         expect(codedError).toBeDefined();
 
         expect(codedError.type).toBe(
@@ -404,7 +404,7 @@ function verifyTestCommandTelemetryProcessor(
         // Verify command info
         const expectedInfo = getTestCommandStartInfo();
 
-        const command = JSON.parse(envelope.data!.command);
+        const command = envelope.data!.command;
         expect(command).toBeDefined();
         expect(command.args).toStrictEqual(expectedInfo.args);
         expect(command.options).toStrictEqual(expectedInfo.options);
@@ -416,8 +416,7 @@ function verifyTestCommandTelemetryProcessor(
 
         // Verify extra props
         const extraProps = getExtraProps();
-        const additionalDataString = JSON.parse(envelope.data?.additionalData);
-        expect(additionalDataString).toStrictEqual(extraProps);
+        expect(envelope.data?.additionalData).toStrictEqual(extraProps);
       }
     } catch (ex) {
       caughtErrors.push(
