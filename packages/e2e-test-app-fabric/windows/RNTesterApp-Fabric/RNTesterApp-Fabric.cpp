@@ -406,6 +406,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   InsertStringValueIfNotEmpty(result, L"Name", name);
   InsertIntValueIfNotDefault(result, L"PositionInSet", positionInSet);
   InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
+  InsertLiveSettingValueIfNotDefault(result, L"LiveSetting", liveSetting);
   DumpUIAPatternInfo(pTarget, result);
 
   IUIAutomationElement *pChild;
