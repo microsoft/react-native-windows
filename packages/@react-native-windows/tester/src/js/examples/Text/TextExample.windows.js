@@ -1627,7 +1627,8 @@ const examples = [
             accessibilityLabel="This text has customized accessibility"
             accessibilityHint="Text"
             accessibilityPosInSet={1}
-            accessibilitySetSize={1}>
+            accessibilitySetSize={1}
+            accessibilityLiveRegion='polite'>
             This text has customized accessibility.
           </Text>
         </View>

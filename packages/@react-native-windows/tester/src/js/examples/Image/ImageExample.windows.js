@@ -1665,6 +1665,7 @@ exports.examples = [
           accessible
           accessibilityPosInSet={1}
           accessibilitySetSize={2}
+          accessibilityLiveRegion='polite'
         />
         <Image
           source={fullImage}
@@ -1672,6 +1673,7 @@ exports.examples = [
           accessible
           accessibilityPosInSet={2}
           accessibilitySetSize={2}
+          accessibilityLiveRegion='assertive'
         />
         </View>
       );

@@ -303,6 +303,7 @@ class AccessibilitySwitchExample extends React.Component<
             accessibilityHint="Switch"
             accessibilityPosInSet={2}
             accessibilitySetSize={4}
+            accessibilityLiveRegion='none'
             // focusable={false}
             onValueChange={value => this.setState({noFocusableValue: value})}
             value={this.state.noFocusableValue}
@@ -314,6 +315,7 @@ class AccessibilitySwitchExample extends React.Component<
             accessibilityHint="Switch"
             accessibilityPosInSet={3}
             accessibilitySetSize={4}
+            accessibilityLiveRegion='polite'
             // accessible={false}
             onValueChange={value => this.setState({noAccessibleValue: value})}
             value={this.state.noAccessibleValue}
@@ -323,6 +325,7 @@ class AccessibilitySwitchExample extends React.Component<
             accessibilityHint="Switch"
             accessibilityPosInSet={4}
             accessibilitySetSize={4}
+            accessibilityLiveRegion='assertive'
             // focusable={false}
             // accessible={false}
             onValueChange={value => this.setState({noFocusValue: value})}
