@@ -361,14 +361,14 @@ function verifyTestCommandTelemetryProcessor(
       const versions = JSON.parse(properties!.versions);
       expect(versions).toBeDefined();
 
-      // Verify project info
-      const project = JSON.parse(properties!.project);
-      expect(project).toStrictEqual(getTestCommandProjectInfo());
-
       expect(Object.keys(versions).length).toBeGreaterThan(0);
       for (const key of Object.keys(versions)) {
         expect(versions[key]).toBe(TelemetryTest.getVersion(key));
       }
+
+      // Verify project info
+      const project = JSON.parse(properties!.project);
+      expect(project).toStrictEqual(getTestCommandProjectInfo());
 
       // Verify properties exclusive to error scenarios
       if (envelope.name === CodedErrorEventName) {
