@@ -118,11 +118,6 @@ using namespace winrt::Microsoft::ReactNative;
 
 namespace Mso::React {
 
-std::string getApplicationTempFolder() {
-  auto local = winrt::Windows::Storage::ApplicationData::Current().TemporaryFolder().Path();
-  return Microsoft::Common::Unicode::Utf16ToUtf8(local.c_str(), local.size()) + "\\";
-}
-
 //=============================================================================================
 // LoadedCallbackGuard ensures that the OnReactInstanceLoaded is always called.
 // It calls OnReactInstanceLoaded in destructor with a cancellation error.
@@ -573,6 +568,15 @@ Mso::DispatchQueueSettings CreateDispatchQueueSettings(
   return queueSettings;
 }
 
+std::unique_ptr<facebook::jsi::PreparedScriptStore> CreatePreparedScriptStore() noexcept {
+  std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
+  wchar_t tempPath[MAX_PATH];
+  if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
+    preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
+  }
+  return preparedScriptStore;
+}
+
 #ifdef USE_FABRIC
 void ReactInstanceWin::InitializeBridgeless() noexcept {
   InitUIQueue();
@@ -640,7 +644,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
               }
 
               m_jsiRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
-                  devSettings, m_jsMessageThread.Load(), CreateHermesPreparedScriptStore());
+                  devSettings, m_jsMessageThread.Load(), CreatePreparedScriptStore());
               auto jsRuntime = std::make_unique<Microsoft::ReactNative::HermesJSRuntime>(m_jsiRuntimeHolder);
               jsRuntime->getRuntime();
               m_bridgelessReactInstance = std::make_unique<facebook::react::ReactInstance>(
@@ -713,19 +717,6 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
   });
 }
 #endif
-
-std::unique_ptr<facebook::jsi::PreparedScriptStore> ReactInstanceWin::CreateHermesPreparedScriptStore() noexcept {
-  std::unique_ptr<facebook::jsi::PreparedScriptStore> preparedScriptStore = nullptr;
-  if (Microsoft::ReactNative::HasPackageIdentity()) {
-    preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
-  } else {
-    wchar_t tempPath[MAX_PATH];
-    if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
-      preparedScriptStore = std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
-    }
-  }
-  return preparedScriptStore;
-}
 
 void ReactInstanceWin::FireInstanceCreatedCallback() noexcept {
   // The InstanceCreated event can be used to augment the JS environment for all JS code.  So it needs to be
@@ -804,7 +795,7 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
           } else {
             switch (m_options.JsiEngine()) {
               case JSIEngine::Hermes: {
-                preparedScriptStore = CreateHermesPreparedScriptStore();
+                preparedScriptStore = CreatePreparedScriptStore();
 
                 auto hermesRuntimeHolder = std::make_shared<Microsoft::ReactNative::HermesRuntimeHolder>(
                     devSettings, m_jsMessageThread.Load(), std::move(preparedScriptStore));
@@ -816,17 +807,7 @@ void ReactInstanceWin::InitializeWithBridge() noexcept {
               case JSIEngine::V8:
 #if defined(USE_V8)
               {
-                if (Microsoft::ReactNative::HasPackageIdentity()) {
-                  preparedScriptStore =
-                      std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(getApplicationTempFolder());
-                } else {
-                  wchar_t tempPath[MAX_PATH];
-                  if (GetTempPathW(static_cast<DWORD>(std::size(tempPath)), tempPath)) {
-                    preparedScriptStore =
-                        std::make_unique<facebook::react::BasePreparedScriptStoreImpl>(winrt::to_string(tempPath));
-                  }
-                }
-
+                preparedScriptStore = CreatePreparedScriptStore();
                 bool enableMultiThreadSupport{false};
 #ifdef USE_FABRIC
                 enableMultiThreadSupport = Microsoft::ReactNative::IsFabricEnabled(m_reactContext->Properties());
