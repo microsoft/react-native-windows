@@ -24,15 +24,6 @@
           "Microsoft.SourceLink.Common": "1.1.1"
         }
       },
-      "Microsoft.UI.Xaml": {
-        "type": "Direct",
-        "requested": "[2.8.0, )",
-        "resolved": "2.8.0",
-        "contentHash": "vxdHxTr63s5KVtNddMFpgvjBjUH50z7seq/5jLWmmSuf8poxg+sXrywkofUdE8ZstbpO9y3FL/IXXUcPYbeesA==",
-        "dependencies": {
-          "Microsoft.Web.WebView2": "1.0.1264.42"
-        }
-      },
       "Microsoft.Windows.CppWinRT": {
         "type": "Direct",
         "requested": "[2.0.230706.1, )",

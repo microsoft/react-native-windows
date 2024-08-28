@@ -1332,6 +1332,12 @@ void ComponentView::updateAccessibilityProps(
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       m_uiaProvider, UIA_SizeOfSetPropertyId, oldViewProps.accessibilitySetSize, newViewProps.accessibilitySetSize);
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      m_uiaProvider,
+      UIA_LiveSettingPropertyId,
+      oldViewProps.accessibilityLiveRegion,
+      newViewProps.accessibilityLiveRegion);
 }
 
 std::optional<std::string> ComponentView::getAccessiblityValue() noexcept {

@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
-  "comment": "replace IAppData.TemporaryFolder with GetTempPathW",
+  "comment": "integrate 0.76.0-nightly-20240816-17017d2b8",
   "packageName": "react-native-windows",
-  "email": "aeulitz@outlook.com",
+  "email": "tatianakapos@microsoft.com",
   "dependentChangeType": "patch"
 }

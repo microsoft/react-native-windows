@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Switch New Architecture templates to use prebuilt NuGets",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

@@ -166,6 +166,7 @@ parameters:
             configuration: Release
             platform: x64
             additionalRunArguments: --singleproc # --singleproc required to workaround issue #13599
+            useNuGet: true
           - Name: FabricLibX86Debug
             template: cpp-lib
             configuration: Debug

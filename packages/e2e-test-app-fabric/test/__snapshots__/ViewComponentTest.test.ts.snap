@@ -1096,6 +1096,7 @@ exports[`View Tests Views can have customized accessibility 1`] = `
     "ControlType": 50000,
     "HelpText": "Accessibility Hint",
     "IsKeyboardFocusable": true,
+    "LiveSetting": "Polite",
     "LocalizedControlType": "button",
     "Name": "A View with accessibility values",
     "PositionInSet": 1,
