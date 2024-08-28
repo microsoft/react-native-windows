@@ -343,9 +343,9 @@ const facebook::react::SwitchProps &SwitchComponentView::switchProps() const noe
 
 // getToggleState method for IToggleProvider
 ToggleState SwitchComponentView::getToggleState() noexcept {
-  if (switchProps().value){
+  if (switchProps().value) {
     return ToggleState::ToggleState_On;
-  }else{
+  } else {
     return ToggleState::ToggleState_Off;
   }
 }

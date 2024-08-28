@@ -16,7 +16,7 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
                                                  IInvokeProvider,
                                                  IScrollItemProvider,
                                                  IValueProvider,
-                                                 IToggleProvider>{
+                                                 IToggleProvider> {
  public:
   CompositionDynamicAutomationProvider(
       const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept;

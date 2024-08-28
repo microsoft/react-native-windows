@@ -1347,11 +1347,11 @@ bool ComponentView::getAcccessiblityIsReadOnly() noexcept {
   return true;
 }
 
-ToggleState ComponentView::getToggleState() noexcept{
+ToggleState ComponentView::getToggleState() noexcept {
   return ToggleState::ToggleState_Off;
 }
 
-void ComponentView::Toggle() noexcept{
+void ComponentView::Toggle() noexcept {
   // no-op
 }
 
