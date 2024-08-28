@@ -350,13 +350,6 @@ function verifyTestCommandTelemetryProcessor(
 
     try {
       // Processor has run, so the test can (potentially) pass
-
-      // Verify roleInstance has been removed
-      // NOTE: Verify if ai tags are still a thing.
-      if (envelope.tags) {
-        expect(envelope.tags['ai.cloud.roleInstance']).toBeUndefined();
-      }
-
       const properties = envelope.baseData;
       expect(properties).toBeDefined();
 
@@ -377,12 +370,10 @@ function verifyTestCommandTelemetryProcessor(
         expect(versions[key]).toBe(TelemetryTest.getVersion(key));
       }
 
-      if (envelope.data?.baseType === 'ExceptionData') {
-        // Verify event name
-        expect(envelope.name).toBe(CodedErrorEventName);
-
+      // Verify properties exclusive to error scenarios
+      if (envelope.name === CodedErrorEventName) {
         // Verify exception info
-        const exceptionData = envelope.data.exceptionData;
+        const exceptionData = envelope.data!.exceptionData;
         expect(exceptionData).toBeDefined();
         expect(exceptionData.message).toBeDefined();
         expect(exceptionData.message).not.toBe('');
@@ -407,7 +398,7 @@ function verifyTestCommandTelemetryProcessor(
           (expectedError as errorUtils.CodedError).data ?? {},
         );
       } else {
-        // Verify event name
+        // If this is not error scenario, it must be a command successful event.
         expect(envelope.name).toBe(CommandEventName);
 
         // Verify command info
@@ -620,8 +611,7 @@ function getVerifyStackTelemetryProcessor(
       // Processor has run, so the test can (potentially) pass
       TelemetryTest.setTestTelemetryProvidersRan();
 
-      // For now, assume that there is only one exception being captured
-      if (envelope.data!.baseType === 'ExceptionData') {
+      if (envelope.name == CodedErrorEventName) {
         const data = (envelope.data as any);
         expect(data.exceptionData).toBeDefined();
         expect(data.exceptionData.message).toBeDefined();

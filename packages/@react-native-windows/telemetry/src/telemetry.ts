@@ -37,7 +37,7 @@ interface CommandInfo {
 }
 
 // 1DS instrumentation key
-const RNW_1DS_INSTURMENTATION_KEY = "49ff6d3ef12f4578a7b75a2573d9dba8-026332b2-2d50-452f-ad0d-50f921c97a9d-7145"
+const RNW_1DS_INSTRUMENTATION_KEY = "49ff6d3ef12f4578a7b75a2573d9dba8-026332b2-2d50-452f-ad0d-50f921c97a9d-7145"
 
 // Environment variable to override the default setup string
 const ENV_SETUP_OVERRIDE = 'RNW_TELEMETRY_SETUP';
@@ -96,13 +96,12 @@ export class Telemetry {
     | projectUtils.AppProjectInfo
     | projectUtils.DependencyProjectInfo = undefined;
 
-  // Store "Common Properties", which will be logged for all telemetry events.
-  // Unlike AppInsights, 1DS does not provide an API to store such properties.
+  // Store "Common Properties" in a single object. This will be logged in all telemetry events.
   protected static commonProperties: {[key: string]: string} = {};
 
   protected static getDefaultSetupString(): string {
     // Enable overriding the default setup string via an environment variable
-    return process.env[ENV_SETUP_OVERRIDE] ?? RNW_1DS_INSTURMENTATION_KEY;
+    return process.env[ENV_SETUP_OVERRIDE] ?? RNW_1DS_INSTRUMENTATION_KEY;
   }
 
   protected static reset(): void {
@@ -139,7 +138,7 @@ export class Telemetry {
     }
 
     // Bail if we're in CI and not capturing CI
-    if (!this.isTestEnvironment && basePropUtils.isCI() && !basePropUtils.captureCI()) {
+    if (!Telemetry.isTestEnvironment && basePropUtils.isCI() && !basePropUtils.captureCI()) {
       return;
     }
 
@@ -149,15 +148,8 @@ export class Telemetry {
     Telemetry.setupClient();
 
     await Telemetry.setupBaseProperties();
-
-    // Setup telemetry initializers (known as "processors" on App Insights)
-    this.addTelemetryInitializers();
   }
 
-  // The first telemetry processor that is executed after calling flush().
-  // Applicable to all events.
-  // NOTE: returning true means the next processor will be executed.
-  // Otherwise, the event won't be posted.
   private static basicTelemetryInitializer(envelope: coreOneDS.ITelemetryItem) : boolean
   {    
     // Filter out "legacy" events from older stable branches
@@ -168,48 +160,12 @@ export class Telemetry {
     return false;
   }
 
-  // The second telemetry processor that is executed after calling flush().
-  // Performs sanitization and PII removal from ExceptionData,
-  // applicable only to error scenarios.
-  private static errorTelemetryInitializer(envelope: coreOneDS.ITelemetryItem) : boolean
-  {
-    if (envelope.data?.baseType === 'ExceptionData') {
-      const exceptionData = envelope.data?.exceptionData;
-      if (exceptionData) {
-          for (const frame of exceptionData.parsedStack) {
-            errorUtils.sanitizeErrorStackFrame(frame);
-          }
-
-          // Exception message must never be blank, or AI will reject it
-          exceptionData.message = exceptionData.message || '[None]';
-
-          // CodedError has non-PII information in its 'type' member, plus optionally some more info in its 'data'.
-          // The message may contain PII information. This can be sanitized, but for now delete it.
-          if (Telemetry.options.preserveErrorMessages) {
-            exceptionData.message = errorUtils.sanitizeErrorMessage(
-              exceptionData.message,
-            );
-          } else {
-            exceptionData.message = '[Removed]';
-          }
-      }
-    }
-
-    return true;
-  }
-
-  private static addTelemetryInitializers()
-  {
-    Telemetry.appInsightsCore?.addTelemetryInitializer(Telemetry.basicTelemetryInitializer);
-    Telemetry.appInsightsCore?.addTelemetryInitializer(Telemetry.errorTelemetryInitializer);
-  }
-
   /** Sets up Telemetry.appInsightsCore. */
   private static setupClient() {
     const postChannel: PostChannel = new PostChannel();
 
     const coreConfiguration: coreOneDS.IExtendedConfiguration = {
-      instrumentationKey: process.env[ENV_SETUP_OVERRIDE] ?? RNW_1DS_INSTURMENTATION_KEY,
+      instrumentationKey: process.env[ENV_SETUP_OVERRIDE] ?? RNW_1DS_INSTRUMENTATION_KEY,
     }
 
     const postChannelConfig: IChannelConfiguration = {
@@ -226,6 +182,8 @@ export class Telemetry {
   
     Telemetry.appInsightsCore = new coreOneDS.AppInsightsCore();
     Telemetry.appInsightsCore.initialize(coreConfiguration, [postChannel] /* extensions */);
+
+    Telemetry.appInsightsCore.addTelemetryInitializer(Telemetry.basicTelemetryInitializer);
   }
 
   /** Sets up any base properties that all telemetry events require. */
@@ -258,11 +216,9 @@ export class Telemetry {
       .toString();
     Telemetry.commonProperties.sampleRate = basePropUtils
       .sampleRate()
-      .toString();
+      .toString(); // May consider for removal if 1DS doesn't support sampling.
     Telemetry.commonProperties.isTest = Telemetry.isTestEnvironment.toString();
     Telemetry.commonProperties.sessionId = Telemetry.getSessionId();
-
-    Telemetry.commonProperties.samplingPercentage = basePropUtils.sampleRate().toString();
 
     await Telemetry.populateToolsVersions();
     if (Telemetry.options.populateNpmPackageVersions) {
@@ -391,7 +347,7 @@ export class Telemetry {
     // Populate Part A
     telemetryItem.ver = "4.0"; // Current Common Schema version
     telemetryItem.time = new Date().toISOString();
-    telemetryItem.iKey = RNW_1DS_INSTURMENTATION_KEY;
+    telemetryItem.iKey = RNW_1DS_INSTRUMENTATION_KEY;
 
     const projectPropString = JSON.stringify(Telemetry.projectProp);
     const versionPropString = JSON.stringify(Telemetry.versionsProp);
@@ -418,7 +374,6 @@ export class Telemetry {
         commandName: Telemetry.commonProperties.commandName
       },
       // Set project and versions props, belonging to Part B.
-      baseType: {},
       project: projectPropString,
       versions: versionPropString
     };
@@ -508,8 +463,7 @@ export class Telemetry {
 
     telemetryItem.data = {
       codedError: codedDataStructString,
-      exceptionData: exceptionData,
-      baseType: 'ExceptionData'
+      exceptionData: exceptionData
     };
 
     Telemetry.trackEvent(telemetryItem);
@@ -523,31 +477,42 @@ export class Telemetry {
       parsedStack: {}
     };
 
+    exceptionData.message = exceptionData.message || '[None]';
+
+    // CodedError has non-PII information in its 'type' member, plus optionally some more info in its 'data'.
+    // The message may contain PII information. This can be sanitized, but for now delete it.
+    if (Telemetry.options.preserveErrorMessages) {
+      exceptionData.message = errorUtils.sanitizeErrorMessage(
+        exceptionData.message,
+      );
+    } else {
+      exceptionData.message = '[Removed]';
+    }
+
     const lines = error.stack?.split('\n');
 
-    const parsedStack = lines?.slice(1).map(line => {
+    const parsedStack = lines?.slice(1).map(line => {      
+      const errorStackFrame : errorUtils.ErrorStackFrame = {};
+
       const match = line.trim().match(/^\s*at\s+(?:(.*?)\s+\((.*):(\d+):(\d+)\)|(.*):(\d+):(\d+))$/);
-      
       if (match) {
-          // Adjust the destructuring to handle both cases
-          const functionName = match[1] || "N/A";  // Use a default value if no function name
-          const filePath = match[2] || match[5];
-          const lineNumber = match[3] || match[6];
-          const columnNumber = match[4] || match[7];
-  
-          return {
-              functionName,
-              filePath,
-              lineNumber: +lineNumber,
-              columnNumber: +columnNumber
-          };
+          errorStackFrame.functionName = match[1] || "N/A"; // Use a default value if no function name
+          errorStackFrame.filePath = match[2] || match[5];
+          errorStackFrame.lineNumber = parseInt(match[3], 10) || parseInt(match[6], 10);
+          errorStackFrame.columnNumber = parseInt(match[4], 10) || parseInt(match[7], 10);
       }
   
-      return undefined; 
+      return errorStackFrame;
     });
 
     if (parsedStack) {
-      parsedStack?.filter(Boolean);
+      parsedStack.filter(Boolean);
+
+      // Sanitize parsed error stack frames
+      for (const frame of parsedStack) {
+        errorUtils.sanitizeErrorStackFrame(frame);
+      }
+
       exceptionData.hasFullStack = true;
       exceptionData.parsedStack = parsedStack;
     }
