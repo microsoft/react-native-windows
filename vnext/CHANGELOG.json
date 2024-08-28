@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 28 Aug 2024 05:14:45 GMT",
+      "version": "0.0.0-canary.860",
+      "tag": "react-native-windows_v0.0.0-canary.860",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a05f8d2fc33fa74b4f3517c672e3f27c91edb1ff",
+            "comment": "Linking.getInitialURL should return null by default instead of empty string"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "98197a259f5e7c97c877e361dd70b048343e65a8",
+            "comment": "integrate 0.76.0-nightly-20240816-17017d2b8"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3658abf611861068c70ac8a9a3651cacea86792e",
+            "comment": "Add Tests"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6eb9265d019268754b4d2b1734fd1aca75b18990",
+            "comment": "Enable Timer TurboModule for Desktop"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Aug 2024 05:13:39 GMT",
       "version": "0.0.0-canary.859",
       "tag": "react-native-windows_v0.0.0-canary.859",

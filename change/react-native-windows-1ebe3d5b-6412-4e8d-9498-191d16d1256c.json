@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Linking.getInitialURL should return null by default instead of empty string",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

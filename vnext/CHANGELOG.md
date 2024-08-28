@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 27 Aug 2024 05:13:39 GMT and should not be manually modified.
+This log was last generated on Wed, 28 Aug 2024 05:14:45 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.860
+
+Wed, 28 Aug 2024 05:14:45 GMT
+
+### Changes
+
+- Linking.getInitialURL should return null by default instead of empty string (30809111+acoates-ms@users.noreply.github.com)
+- integrate 0.76.0-nightly-20240816-17017d2b8 (tatianakapos@microsoft.com)
+- Add Tests (34109996+chiaramooney@users.noreply.github.com)
+- Enable Timer TurboModule for Desktop (vmorozov@microsoft.com)
 
 ## 0.0.0-canary.859
 
