@@ -16,7 +16,9 @@
 #include <winrt/Microsoft.ReactNative.h>
 
 #include "ComponentView.g.h"
-#include "CreateComponentViewArgs.g.h"
+#include "LayoutMetricsChangedArgs.g.h"
+#include "MountChildComponentViewArgs.g.h"
+#include "UnmountChildComponentViewArgs.g.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 struct RootComponentView;
@@ -41,25 +43,41 @@ struct BringIntoViewOptions {
   float VerticalOffset{0};
 };
 
-struct CreateComponentViewArgs : public CreateComponentViewArgsT<CreateComponentViewArgs> {
-  CreateComponentViewArgs(const winrt::Microsoft::ReactNative::IReactContext &reactContext, facebook::react::Tag tag);
+struct LayoutMetricsChangedArgs : public LayoutMetricsChangedArgsT<LayoutMetricsChangedArgs> {
+  LayoutMetricsChangedArgs(const LayoutMetrics &newLayoutMetrics, const LayoutMetrics &oldLayoutMetrics);
 
-  facebook::react::Tag Tag() const noexcept;
-
-  winrt::Microsoft::ReactNative::IReactContext ReactContext() const noexcept;
+  LayoutMetrics OldLayoutMetrics() const noexcept;
+  LayoutMetrics NewLayoutMetrics() const noexcept;
 
  private:
-  const facebook::react::Tag m_tag;
-  const winrt::Microsoft::ReactNative::IReactContext m_reactContext;
+  LayoutMetrics m_old;
+  LayoutMetrics m_new;
+};
+
+struct MountChildComponentViewArgs : public MountChildComponentViewArgsT<MountChildComponentViewArgs> {
+  MountChildComponentViewArgs(const winrt::Microsoft::ReactNative::ComponentView &child, uint32_t index);
+
+  winrt::Microsoft::ReactNative::ComponentView Child() const noexcept;
+  uint32_t Index() const noexcept;
+
+ private:
+  winrt::Microsoft::ReactNative::ComponentView m_child;
+  uint32_t m_index;
+};
+
+struct UnmountChildComponentViewArgs : public UnmountChildComponentViewArgsT<UnmountChildComponentViewArgs> {
+  UnmountChildComponentViewArgs(const winrt::Microsoft::ReactNative::ComponentView &child, uint32_t index);
+
+  winrt::Microsoft::ReactNative::ComponentView Child() const noexcept;
+  uint32_t Index() const noexcept;
+
+ private:
+  winrt::Microsoft::ReactNative::ComponentView m_child;
+  uint32_t m_index;
 };
 
 struct ComponentView : public ComponentViewT<ComponentView> {
-  ComponentView(winrt::Microsoft::ReactNative::CreateComponentViewArgs const &args);
-
-  ComponentView(
-      facebook::react::Tag tag,
-      winrt::Microsoft::ReactNative::ReactContext const &reactContext,
-      bool customComponent);
+  ComponentView(facebook::react::Tag tag, winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   virtual std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept;
   virtual void updateProps(
@@ -91,7 +109,20 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   virtual void onGettingFocus(const winrt::Microsoft::ReactNative::GettingFocusEventArgs &args) noexcept;
   virtual void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept;
   virtual void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept;
+  void MarkAsCustomComponent() noexcept;
+  virtual void onMounted() noexcept;
+  virtual void onUnmounted() noexcept;
+  void onDestroying() noexcept;
 
+  winrt::event_token Destroying(
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::ComponentView> const &handler) noexcept;
+  void Destroying(winrt::event_token const &token) noexcept;
+  winrt::event_token Mounted(
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::ComponentView> const &handler) noexcept;
+  void Mounted(winrt::event_token const &token) noexcept;
+  winrt::event_token Unmounted(
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::ComponentView> const &handler) noexcept;
+  void Unmounted(winrt::event_token const &token) noexcept;
   winrt::event_token LosingFocus(
       winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::LosingFocusEventArgs> const
           &handler) noexcept;
@@ -108,6 +139,52 @@ struct ComponentView : public ComponentViewT<ComponentView> {
       winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs> const
           &handler) noexcept;
   void GotFocus(winrt::event_token const &token) noexcept;
+  winrt::event_token LayoutMetricsChanged(
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs> const
+          &handler) noexcept;
+  void LayoutMetricsChanged(winrt::event_token const &token) noexcept;
+
+  winrt::event_token KeyDown(
+      winrt::Windows::Foundation::EventHandler<
+          winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs> const &handler) noexcept;
+  void KeyDown(winrt::event_token const &token) noexcept;
+  winrt::event_token KeyUp(
+      winrt::Windows::Foundation::EventHandler<
+          winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs> const &handler) noexcept;
+  void KeyUp(winrt::event_token const &token) noexcept;
+  winrt::event_token CharacterReceived(
+      winrt::Windows::Foundation::EventHandler<
+          winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs> const &handler) noexcept;
+  void CharacterReceived(winrt::event_token const &token) noexcept;
+  winrt::event_token PointerPressed(
+      winrt::Windows::Foundation::EventHandler<
+          winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs> const &handler) noexcept;
+  void PointerPressed(winrt::event_token const &token) noexcept;
+  winrt::event_token PointerReleased(
+      winrt::Windows::Foundation::EventHandler<
+          winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs> const &handler) noexcept;
+  void PointerReleased(winrt::event_token const &token) noexcept;
+  winrt::event_token PointerMoved(
+      winrt::Windows::Foundation::EventHandler<
+          winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs> const &handler) noexcept;
+  void PointerMoved(winrt::event_token const &token) noexcept;
+  winrt::event_token PointerWheelChanged(
+      winrt::Windows::Foundation::EventHandler<
+          winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs> const &handler) noexcept;
+  void PointerWheelChanged(winrt::event_token const &token) noexcept;
+  winrt::event_token PointerEntered(
+      winrt::Windows::Foundation::EventHandler<
+          winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs> const &handler) noexcept;
+  void PointerEntered(winrt::event_token const &token) noexcept;
+  winrt::event_token PointerExited(
+      winrt::Windows::Foundation::EventHandler<
+          winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs> const &handler) noexcept;
+  void PointerExited(winrt::event_token const &token) noexcept;
+  winrt::event_token PointerCaptureLost(
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::ComponentView> const &handler) noexcept;
+  void PointerCaptureLost(winrt::event_token const &token) noexcept;
+
+  LayoutMetrics LayoutMetrics() const noexcept;
 
   bool TryFocus() noexcept;
 
@@ -131,7 +208,27 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   virtual const winrt::Microsoft::ReactNative::IComponentProps userProps(
       facebook::react::Props::Shared const &props) noexcept;
 
-  // Publicaly overridable APIs
+  void UserData(const winrt::IInspectable &userData) noexcept;
+  winrt::IInspectable UserData() const noexcept;
+
+  void CustomCommandHandler(const HandleCommandDelegate &handler);
+  HandleCommandDelegate CustomCommandHandler() const noexcept;
+
+  void UpdatePropsHandler(const UpdatePropsDelegate &handler);
+  UpdatePropsDelegate UpdatePropsHandler() const noexcept;
+
+  void UpdateStateHandler(const UpdateStateDelegate &handler);
+  UpdateStateDelegate UpdateStateHandler() const noexcept;
+
+  void MountChildComponentViewHandler(const MountChildComponentViewDelegate &handler);
+  MountChildComponentViewDelegate MountChildComponentViewHandler() const noexcept;
+
+  void UnmountChildComponentViewHandler(const UnmountChildComponentViewDelegate &handler);
+  UnmountChildComponentViewDelegate UnmountChildComponentViewHandler() const noexcept;
+
+  void FinalizeUpdateHandler(const UpdateFinalizerDelegate &handler);
+  UpdateFinalizerDelegate FinalizeUpdateHandler() const noexcept;
+
   virtual void MountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept;
@@ -141,11 +238,6 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   virtual void HandleCommand(
       winrt::hstring commandName,
       const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept;
-  virtual void UpdateProps(
-      const winrt::Microsoft::ReactNative::IComponentProps &props,
-      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) noexcept;
-  virtual void UpdateState(const winrt::Microsoft::ReactNative::IComponentState &state) noexcept;
-  virtual void UpdateLayoutMetrics(const LayoutMetrics &metrics, const LayoutMetrics &oldMetrics) noexcept;
   virtual void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept;
   virtual void OnPointerEntered(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
@@ -160,25 +252,67 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   virtual void OnPointerWheelChanged(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
   virtual void OnPointerCaptureLost() noexcept;
-  virtual void OnKeyDown(
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
-  virtual void OnKeyUp(
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
+  virtual void OnKeyDown(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
+  virtual void OnKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept;
   virtual void OnCharacterReceived(
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
 
  protected:
-  const bool m_customComponent; // Is a user custom component, and so needs to call external override functions
+  bool m_customComponent : 1 {false}; // Is a user custom component, and so needs to call external override functions
+  bool m_mounted : 1 {false};
   const facebook::react::Tag m_tag;
+  winrt::IInspectable m_userData;
   winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *m_rootView{nullptr};
   mutable winrt::Microsoft::ReactNative::Composition::implementation::Theme *m_theme{nullptr};
   const winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   winrt::Microsoft::ReactNative::ComponentView m_parent{nullptr};
+  facebook::react::LayoutMetrics m_layoutMetrics;
   winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::ComponentView> m_children{
       winrt::single_threaded_vector<winrt::Microsoft::ReactNative::ComponentView>()};
+
+  UpdatePropsDelegate m_updatePropsDelegate{nullptr};
+  UpdateStateDelegate m_updateStateDelegate{nullptr};
+  HandleCommandDelegate m_customCommandHandler{nullptr};
+  UpdateFinalizerDelegate m_finalizeUpdateHandler{nullptr};
+  MountChildComponentViewDelegate m_mountChildComponentViewHandler{nullptr};
+  UnmountChildComponentViewDelegate m_unmountChildComponentViewHandler{nullptr};
+
+  winrt::event<
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs>>
+      m_keyDownEvent;
+  winrt::event<
+      winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs>>
+      m_keyUpEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<
+      winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs>>
+      m_characterReceivedEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<
+      winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs>>
+      m_pointerPressedEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<
+      winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs>>
+      m_pointerReleasedEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<
+      winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs>>
+      m_pointerMovedEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<
+      winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs>>
+      m_pointerWheelChangedEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<
+      winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs>>
+      m_pointerEnteredEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<
+      winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs>>
+      m_pointerExitedEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::ComponentView>>
+      m_pointerCaptureLostEvent;
+
+  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::LayoutMetricsChangedArgs>>
+      m_layoutMetricsChangedEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::ComponentView>>
+      m_destroyingEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::ComponentView>> m_mountedEvent;
+  winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::ComponentView>> m_unmountedEvent;
   winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::LosingFocusEventArgs>>
       m_losingFocusEvent;
   winrt::event<winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::GettingFocusEventArgs>>
@@ -199,9 +333,3 @@ bool walkTree(
     Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> &fn) noexcept;
 
 } // namespace winrt::Microsoft::ReactNative::implementation
-
-namespace winrt::Microsoft::ReactNative::factory_implementation {
-
-struct ComponentView : ComponentViewT<ComponentView, implementation::ComponentView> {};
-
-} // namespace winrt::Microsoft::ReactNative::factory_implementation

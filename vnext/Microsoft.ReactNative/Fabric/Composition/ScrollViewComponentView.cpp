@@ -608,8 +608,7 @@ ScrollViewComponentView::ScrollViewComponentView(
           compContext,
           tag,
           reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
-          false) {
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {
   // m_element.Content(m_contentPanel);
 
   /*
@@ -910,7 +909,6 @@ void ScrollViewComponentView::OnPointerCaptureLost() noexcept {
 }
 
 void ScrollViewComponentView::OnKeyDown(
-    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   switch (args.Key()) {
     case winrt::Windows::System::VirtualKey::End:
@@ -939,7 +937,7 @@ void ScrollViewComponentView::OnKeyDown(
       break;
   }
 
-  base_type::OnKeyDown(source, args);
+  base_type::OnKeyDown(args);
 }
 
 bool ScrollViewComponentView::scrollToEnd(bool animate) noexcept {

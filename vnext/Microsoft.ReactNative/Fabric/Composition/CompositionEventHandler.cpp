@@ -235,6 +235,7 @@ CompositionEventHandler::CompositionEventHandler(
             return;
 
           auto focusedComponent = strongThis->RootComponentView().GetFocusedComponent();
+          auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
           auto keyArgs =
               winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
                   focusedComponent
@@ -243,9 +244,10 @@ CompositionEventHandler::CompositionEventHandler(
                             winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(
                                 strongRootView)
                                 ->RootTag()),
-                  args);
+                  args,
+                  keyboardSource);
           auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
-          strongThis->onKeyDown(keyboardSource, keyArgs);
+          strongThis->onKeyDown(keyArgs);
           winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
         }
       }
@@ -260,6 +262,7 @@ CompositionEventHandler::CompositionEventHandler(
             return;
 
           auto focusedComponent = strongThis->RootComponentView().GetFocusedComponent();
+          auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
           auto keyArgs =
               winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
                   focusedComponent
@@ -268,9 +271,9 @@ CompositionEventHandler::CompositionEventHandler(
                             winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(
                                 strongRootView)
                                 ->RootTag()),
-                  args);
-          auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
-          strongThis->onKeyUp(keyboardSource, keyArgs);
+                  args,
+                  keyboardSource);
+          strongThis->onKeyUp(keyArgs);
           winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
         }
       }
@@ -286,6 +289,7 @@ CompositionEventHandler::CompositionEventHandler(
                 return;
 
               auto focusedComponent = strongThis->RootComponentView().GetFocusedComponent();
+              auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
               auto charArgs = winrt::make<
                   winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
                   focusedComponent
@@ -294,9 +298,9 @@ CompositionEventHandler::CompositionEventHandler(
                             winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(
                                 strongRootView)
                                 ->RootTag()),
-                  args);
-              auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
-              strongThis->onCharacterReceived(keyboardSource, charArgs);
+                  args,
+                  keyboardSource);
+              strongThis->onCharacterReceived(charArgs);
               winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
             }
           }
@@ -360,7 +364,8 @@ void CompositionEventHandler::onPointerWheelChanged(
     auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
         m_context, tag, pointerPoint, keyModifiers);
 
-    targetComponentView.OnPointerWheelChanged(args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
+        ->OnPointerWheelChanged(args);
   }
 }
 
@@ -457,6 +462,7 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
     case WM_SYSCHAR: {
       if (auto strongRootView = m_wkRootView.get()) {
         auto focusedComponent = RootComponentView().GetFocusedComponent();
+        auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
         auto args = winrt::make<
             winrt::Microsoft::ReactNative::Composition::Input::implementation::CharacterReceivedRoutedEventArgs>(
             focusedComponent
@@ -466,9 +472,9 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
                           ->RootTag()),
             msg,
             wParam,
-            lParam);
-        auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
-        onCharacterReceived(keyboardSource, args);
+            lParam,
+            keyboardSource);
+        onCharacterReceived(args);
         winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
       }
       break;
@@ -479,6 +485,7 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
     case WM_SYSKEYUP: {
       if (auto strongRootView = m_wkRootView.get()) {
         auto focusedComponent = RootComponentView().GetFocusedComponent();
+        auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
         auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::KeyRoutedEventArgs>(
             focusedComponent
                 ? focusedComponent.Tag()
@@ -487,12 +494,12 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
                           ->RootTag()),
             msg,
             wParam,
-            lParam);
-        auto keyboardSource = winrt::make<CompositionKeyboardSource>(this);
+            lParam,
+            keyboardSource);
         if (msg == WM_KEYDOWN || msg == WM_SYSKEYDOWN) {
-          onKeyDown(keyboardSource, args);
+          onKeyDown(args);
         } else {
-          onKeyUp(keyboardSource, args);
+          onKeyUp(args);
         }
         winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
       }
@@ -504,20 +511,19 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
 }
 
 void CompositionEventHandler::onKeyDown(
-    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
-    focusedComponent.OnKeyDown(source, args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)->OnKeyDown(args);
 
     if (args.Handled())
       return;
   }
 
   bool fShift =
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
   bool fCtrl =
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
 
   if (fShift && fCtrl && args.Key() == static_cast<winrt::Windows::System::VirtualKey>(VkKeyScanA('d')) &&
@@ -538,10 +544,9 @@ void CompositionEventHandler::onKeyDown(
 }
 
 void CompositionEventHandler::onKeyUp(
-    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
-    focusedComponent.OnKeyUp(source, args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)->OnKeyUp(args);
 
     if (args.Handled())
       return;
@@ -549,10 +554,10 @@ void CompositionEventHandler::onKeyUp(
 }
 
 void CompositionEventHandler::onCharacterReceived(
-    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
   if (auto focusedComponent = RootComponentView().GetFocusedComponent()) {
-    focusedComponent.OnCharacterReceived(source, args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(focusedComponent)
+        ->OnCharacterReceived(args);
 
     if (args.Handled())
       return;
@@ -640,7 +645,8 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
       auto args =
           winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
               m_context, componentView.Tag(), pointerPoint, keyModifiers);
-      componentView.OnPointerEntered(args);
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentView)
+          ->OnPointerEntered(args);
 
       if (shouldEmitEvent) {
         const auto eventEmitter =
@@ -718,7 +724,7 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
 
     auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
         m_context, componentView.Tag(), pointerPoint, keyModifiers);
-    componentView.OnPointerExited(args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentView)->OnPointerExited(args);
   }
 
   for (auto itComponentView = viewsToEmitJSLeaveEventsTo.rbegin(); itComponentView != viewsToEmitJSLeaveEventsTo.rend();
@@ -869,7 +875,8 @@ void CompositionEventHandler::onPointerMoved(
         m_context, tag, pointerPoint, keyModifiers);
     auto targetComponentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view;
 
-    targetComponentView.OnPointerMoved(args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
+        ->OnPointerMoved(args);
 
     auto targetView = FindClosestFabricManagedTouchableView(
         fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view);
@@ -923,7 +930,8 @@ void CompositionEventHandler::onPointerPressed(
     auto targetComponentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view;
     auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
         m_context, tag, pointerPoint, keyModifiers);
-    targetComponentView.OnPointerPressed(args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
+        ->OnPointerPressed(args);
 
     ActiveTouch activeTouch{0};
     activeTouch.touchType = UITouchType::Mouse;
@@ -984,7 +992,8 @@ void CompositionEventHandler::onPointerReleased(
     auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
         m_context, tag, pointerPoint, keyModifiers);
 
-    targetComponentView.OnPointerReleased(args);
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
+        ->OnPointerReleased(args);
 
     UpdateActiveTouch(activeTouch->second, ptScaled, ptLocal);
     DispatchTouchEvent(TouchEventType::End, pointerId, pointerPoint, keyModifiers);
@@ -1003,7 +1012,8 @@ bool CompositionEventHandler::CapturePointer(
       auto targetComponentView =
           fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_pointerCapturingComponentTag).view;
 
-      targetComponentView.OnPointerCaptureLost();
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
+          ->OnPointerCaptureLost();
     }
   }
 
@@ -1034,7 +1044,8 @@ bool CompositionEventHandler::releasePointerCapture(PointerId pointerId, faceboo
       auto targetComponentView =
           fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_pointerCapturingComponentTag).view;
 
-      targetComponentView.OnPointerCaptureLost();
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(targetComponentView)
+          ->OnPointerCaptureLost();
     }
 
     if (m_capturedPointers.size() == 0) {
