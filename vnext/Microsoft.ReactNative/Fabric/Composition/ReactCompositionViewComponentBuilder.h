@@ -35,6 +35,7 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   void SetFinalizeUpdateHandler(UpdateFinalizerDelegate impl) noexcept;
   void SetUpdatePropsHandler(UpdatePropsDelegate impl) noexcept;
   void SetUpdateStateHandler(UpdateStateDelegate impl) noexcept;
+  void SetUpdateEventEmitterHandler(UpdateEventEmitterDelegate impl) noexcept;
   void SetMountChildComponentViewHandler(MountChildComponentViewDelegate impl) noexcept;
   void SetUnmountChildComponentViewHandler(UnmountChildComponentViewDelegate impl) noexcept;
 
@@ -78,6 +79,7 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   winrt::Microsoft::ReactNative::UpdateFinalizerDelegate m_finalizeUpdateHandler;
   winrt::Microsoft::ReactNative::UpdatePropsDelegate m_updatePropsHandler;
   winrt::Microsoft::ReactNative::UpdateStateDelegate m_updateStateHandler;
+  winrt::Microsoft::ReactNative::UpdateEventEmitterDelegate m_updateEventEmitterHandler;
   winrt::Microsoft::ReactNative::MountChildComponentViewDelegate m_mountChildComponentViewHandler;
   winrt::Microsoft::ReactNative::UnmountChildComponentViewDelegate m_unmountChildComponentViewHandler;
 

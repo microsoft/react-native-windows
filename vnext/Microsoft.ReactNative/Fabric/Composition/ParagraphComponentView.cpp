@@ -67,10 +67,6 @@ void ParagraphComponentView::updateProps(
   Super::updateProps(props, oldProps);
 }
 
-void ParagraphComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
-  Super::updateEventEmitter(eventEmitter);
-}
-
 void ParagraphComponentView::updateState(
     facebook::react::State::Shared const &state,
     facebook::react::State::Shared const &oldState) noexcept {

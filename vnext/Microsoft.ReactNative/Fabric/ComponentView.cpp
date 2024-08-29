@@ -12,6 +12,7 @@
 #include "MountChildComponentViewArgs.g.cpp"
 #include "UnmountChildComponentViewArgs.g.cpp"
 #include <Fabric/Composition/RootComponentView.h>
+#include "AbiEventEmitter.h"
 #include "AbiShadowNode.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
@@ -58,12 +59,8 @@ void ComponentView::MountChildComponentView(
   }
 }
 
-void ComponentView::MountChildComponentViewHandler(const MountChildComponentViewDelegate &handler) {
+void ComponentView::MountChildComponentViewHandler(const MountChildComponentViewDelegate &handler) noexcept {
   m_mountChildComponentViewHandler = handler;
-}
-
-MountChildComponentViewDelegate ComponentView::MountChildComponentViewHandler() const noexcept {
-  return m_mountChildComponentViewHandler;
 }
 
 void ComponentView::onMounted() noexcept {
@@ -94,12 +91,8 @@ void ComponentView::UnmountChildComponentView(
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(nullptr);
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->onUnmounted();
 }
-void ComponentView::UnmountChildComponentViewHandler(const UnmountChildComponentViewDelegate &handler) {
+void ComponentView::UnmountChildComponentViewHandler(const UnmountChildComponentViewDelegate &handler) noexcept {
   m_unmountChildComponentViewHandler = handler;
-}
-
-UnmountChildComponentViewDelegate ComponentView::UnmountChildComponentViewHandler() const noexcept {
-  return m_unmountChildComponentViewHandler;
 }
 
 void ComponentView::onUnmounted() noexcept {
@@ -154,12 +147,8 @@ void ComponentView::updateProps(
   }
 }
 
-void ComponentView::UpdatePropsHandler(const UpdatePropsDelegate &handler) {
+void ComponentView::UpdatePropsHandler(const UpdatePropsDelegate &handler) noexcept {
   m_updatePropsDelegate = handler;
-}
-
-UpdatePropsDelegate ComponentView::UpdatePropsHandler() const noexcept {
-  return m_updatePropsDelegate;
 }
 
 const winrt::Microsoft::ReactNative::IComponentProps ComponentView::userProps(
@@ -169,7 +158,15 @@ const winrt::Microsoft::ReactNative::IComponentProps ComponentView::userProps(
   return abiProps.UserProps();
 }
 
-void ComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {}
+void ComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
+  if (m_updateEventEmitterHandler) {
+    m_updateEventEmitterHandler(*this, winrt::make<EventEmitter>(eventEmitter));
+  }
+}
+
+void ComponentView::UpdateEventEmitterHandler(const UpdateEventEmitterDelegate &handler) noexcept {
+  m_updateEventEmitterHandler = handler;
+}
 
 void ComponentView::updateState(
     facebook::react::State::Shared const &state,
@@ -180,12 +177,8 @@ void ComponentView::updateState(
   }
 }
 
-void ComponentView::UpdateStateHandler(const UpdateStateDelegate &handler) {
+void ComponentView::UpdateStateHandler(const UpdateStateDelegate &handler) noexcept {
   m_updateStateDelegate = handler;
-}
-
-UpdateStateDelegate ComponentView::UpdateStateHandler() const noexcept {
-  return m_updateStateDelegate;
 }
 
 LayoutMetricsChangedArgs::LayoutMetricsChangedArgs(
@@ -241,12 +234,8 @@ void ComponentView::LayoutMetricsChanged(winrt::event_token const &token) noexce
   m_layoutMetricsChangedEvent.remove(token);
 }
 
-void ComponentView::FinalizeUpdateHandler(const UpdateFinalizerDelegate &handler) {
+void ComponentView::FinalizeUpdateHandler(const UpdateFinalizerDelegate &handler) noexcept {
   m_finalizeUpdateHandler = handler;
-}
-
-UpdateFinalizerDelegate ComponentView::FinalizeUpdateHandler() const noexcept {
-  return m_finalizeUpdateHandler;
 }
 
 void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
@@ -262,12 +251,8 @@ facebook::react::Props::Shared ComponentView::props() noexcept {
   return {};
 }
 
-void ComponentView::CustomCommandHandler(const HandleCommandDelegate &handler) {
+void ComponentView::CustomCommandHandler(const HandleCommandDelegate &handler) noexcept {
   m_customCommandHandler = handler;
-}
-
-HandleCommandDelegate ComponentView::CustomCommandHandler() const noexcept {
-  return m_customCommandHandler;
 }
 
 void ComponentView::HandleCommand(

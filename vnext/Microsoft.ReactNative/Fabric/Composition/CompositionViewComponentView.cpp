@@ -245,6 +245,7 @@ void ComponentView::StartBringIntoView(
 
 void ComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
   m_eventEmitter = std::static_pointer_cast<facebook::react::ViewEventEmitter const>(eventEmitter);
+  base_type::updateEventEmitter(eventEmitter);
 }
 
 void ComponentView::HandleCommand(
