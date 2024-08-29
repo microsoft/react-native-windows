@@ -303,6 +303,7 @@ class AccessibilitySwitchExample extends React.Component<
             accessibilityHint="Switch"
             accessibilityPosInSet={2}
             accessibilitySetSize={4}
+            accessibilityLiveRegion='none'
             // focusable={false}
             onValueChange={value => this.setState({noFocusableValue: value})}
             value={this.state.noFocusableValue}
@@ -314,6 +315,7 @@ class AccessibilitySwitchExample extends React.Component<
             accessibilityHint="Switch"
             accessibilityPosInSet={3}
             accessibilitySetSize={4}
+            accessibilityLiveRegion='polite'
             // accessible={false}
             onValueChange={value => this.setState({noAccessibleValue: value})}
             value={this.state.noAccessibleValue}
@@ -323,6 +325,7 @@ class AccessibilitySwitchExample extends React.Component<
             accessibilityHint="Switch"
             accessibilityPosInSet={4}
             accessibilitySetSize={4}
+            accessibilityLiveRegion='assertive'
             // focusable={false}
             // accessible={false}
             onValueChange={value => this.setState({noFocusValue: value})}
@@ -343,47 +346,47 @@ exports.examples = [
   {
     title: 'Switches can be set to true or false',
     name: 'basic',
-    render(): React.Element<any> {
+    render(): React.MixedElement {
       return <BasicSwitchExample />;
     },
   },
   {
     title: 'Switches can be disabled',
     name: 'disabled',
-    render(): React.Element<any> {
+    render(): React.MixedElement {
       return <DisabledSwitchExample />;
     },
   },
   {
     title: 'Change events can be detected',
     name: 'events',
-    render(): React.Element<any> {
+    render(): React.MixedElement {
       return <EventSwitchExample />;
     },
   },
   {
     title: 'Switches are controlled components',
     name: 'controlled',
-    render(): React.Element<any> {
+    render(): React.MixedElement {
       return <Switch testID="controlled-switch" />;
     },
   },
   {
     title: 'Custom colors can be provided',
     name: 'custom-colors',
-    render(): React.Element<any> {
+    render(): React.MixedElement {
       return <ColorSwitchExample />;
     },
   },
   {
     title: 'OnChange receives the change event as an argument',
-    render(): React.Element<any> {
+    render(): React.MixedElement {
       return <OnChangeExample />;
     },
   },
   {
     title: "The container's background color can be set",
-    render(): React.Element<any> {
+    render(): React.MixedElement {
       return <ContainerBackgroundColorStyleExample />;
     },
   },
@@ -398,7 +401,7 @@ exports.examples = [
 if (Platform.OS === 'ios') {
   exports.examples.push({
     title: '[iOS Only] Custom background colors can be set',
-    render(): React.Element<any> {
+    render(): React.MixedElement {
       return <IOSBackgroundColEx />;
     },
   });

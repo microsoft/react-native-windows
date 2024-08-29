@@ -34,6 +34,12 @@ stages:
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
+      
+      - template: jobs/cli-init-windows.yml
+        parameters:
+          buildEnvironment: ${{ parameters.buildEnvironment }}
+          AgentPool: ${{ parameters.AgentPool }}
+          buildNuGetOnly: true
 
   - stage: IntegrationTests
     displayName: Tests 🧪
@@ -79,3 +85,4 @@ stages:
         parameters:
           buildEnvironment: ${{ parameters.buildEnvironment }}
           AgentPool: ${{ parameters.AgentPool }}
+          buildNuGetOnly: false

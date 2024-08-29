@@ -76,6 +76,7 @@ export const CodedErrors = {
   InvalidTemplateName: 5002,
   NoProjectName: 5003,
   InvalidProjectName: 5004,
+  InvalidProjectNamespace: 5005,
 };
 
 export type CodedErrorType = keyof typeof CodedErrors;

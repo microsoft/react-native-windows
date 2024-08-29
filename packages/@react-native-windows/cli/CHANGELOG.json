@@ -2,6 +2,33 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 27 Aug 2024 05:13:39 GMT",
+      "version": "0.0.0-canary.233",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.233",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "9ce78de3323b1bfcf62879250cd7225269bac12a",
+            "comment": "Fix run-windows --singleproc to override high memory"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "849d71f68f0cc542804534769998e9f4fb34fe99",
+            "comment": "Improve new project name(space) validation and cleaning"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.107",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 21 Aug 2024 05:14:40 GMT",
       "version": "0.0.0-canary.232",
       "tag": "@react-native-windows/cli_v0.0.0-canary.232",

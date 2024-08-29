@@ -595,6 +595,10 @@ InstanceImpl::~InstanceImpl() {
 std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules(
     std::shared_ptr<MessageQueueThread> nativeQueue) {
   std::vector<std::unique_ptr<NativeModule>> modules;
+  if (m_devSettings->useTurboModulesOnly) {
+    return modules;
+  }
+
   auto transitionalProps{ReactPropertyBagHelper::CreatePropertyBag()};
 
   // These modules are instantiated separately in MSRN (Universal Windows).
@@ -612,9 +616,9 @@ std::vector<std::unique_ptr<NativeModule>> InstanceImpl::GetDefaultNativeModules
         nativeQueue));
   }
 
-  // Applications using the Windows ABI feature should loade the networking TurboModule variants instead.
+  // Applications using the Windows ABI feature should load the networking TurboModule variants instead.
   if (!m_devSettings->omitNetworkingCxxModules) {
-    // Use in case the host app provides its a non-Blob-compatilbe HTTP module.
+    // Use in case the host app provides its a non-Blob-compatible HTTP module.
     if (!Microsoft::React::GetRuntimeOptionBool("Blob.DisableModule")) {
       modules.push_back(std::make_unique<CxxNativeModule>(
           m_innerInstance,

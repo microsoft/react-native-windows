@@ -339,6 +339,11 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       pRetVal->lVal = props->accessibilitySetSize;
       break;
     }
+    case UIA_LiveSettingPropertyId: {
+      pRetVal->vt = VT_I4;
+      pRetVal->lVal = GetLiveSetting(props->accessibilityLiveRegion);
+      break;
+    }
   }
 
   return hr;

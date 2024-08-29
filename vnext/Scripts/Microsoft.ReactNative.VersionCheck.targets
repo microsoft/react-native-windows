@@ -66,6 +66,8 @@
 
     <PropertyGroup>
       <_ReactNativeWindowsVersionCheckNugetVersion>$$nuGetPackageVersion$$</_ReactNativeWindowsVersionCheckNugetVersion>
+      <!-- Strip out the -Fabric qualifier from the version string if present -->
+      <_ReactNativeWindowsVersionCheckNugetVersion>$(_ReactNativeWindowsVersionCheckNugetVersion.Replace('-Fabric', ''))</_ReactNativeWindowsVersionCheckNugetVersion>
     </PropertyGroup>
    
     <!-- Validate package.json file -->

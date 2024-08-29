@@ -1033,6 +1033,7 @@ exports[`snapshotAllPages Accessibility Windows 5`] = `
 exports[`snapshotAllPages ActivityIndicator 1`] = `
 <ActivityIndicator
   accessibilityLabel="Wait for content to load!"
+  accessibilityLiveRegion="polite"
   accessibilityPosInSet={1}
   accessibilitySetSize={1}
   accessible={true}
@@ -11135,6 +11136,11 @@ exports[`snapshotAllPages Filter 1`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -11153,6 +11159,11 @@ exports[`snapshotAllPages Filter 1`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -11258,6 +11269,11 @@ exports[`snapshotAllPages Filter 2`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -11276,6 +11292,11 @@ exports[`snapshotAllPages Filter 2`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -11381,6 +11402,11 @@ exports[`snapshotAllPages Filter 3`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -11399,6 +11425,11 @@ exports[`snapshotAllPages Filter 3`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -11504,6 +11535,11 @@ exports[`snapshotAllPages Filter 4`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -11522,6 +11558,11 @@ exports[`snapshotAllPages Filter 4`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -11627,6 +11668,11 @@ exports[`snapshotAllPages Filter 5`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -11645,6 +11691,11 @@ exports[`snapshotAllPages Filter 5`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -11750,6 +11801,11 @@ exports[`snapshotAllPages Filter 6`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -11768,6 +11824,11 @@ exports[`snapshotAllPages Filter 6`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -11873,6 +11934,11 @@ exports[`snapshotAllPages Filter 7`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -11891,6 +11957,11 @@ exports[`snapshotAllPages Filter 7`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -11996,6 +12067,11 @@ exports[`snapshotAllPages Filter 8`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -12014,6 +12090,11 @@ exports[`snapshotAllPages Filter 8`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -12120,6 +12201,11 @@ exports[`snapshotAllPages Filter 9`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           {
@@ -12138,6 +12224,11 @@ exports[`snapshotAllPages Filter 9`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -12383,6 +12474,11 @@ exports[`snapshotAllPages Filter 11`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           [
@@ -12406,6 +12502,11 @@ exports[`snapshotAllPages Filter 11`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -12513,6 +12614,11 @@ exports[`snapshotAllPages Filter 12`] = `
   >
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         [
           [
@@ -12533,6 +12639,11 @@ exports[`snapshotAllPages Filter 12`] = `
     />
     <Image
       resizeMode="contain"
+      source={
+        {
+          "testUri": "../../packages/@react-native-windows/tester/js/assets/hotdog.jpg",
+        }
+      }
       style={
         {
           "height": 90,
@@ -30276,6 +30387,7 @@ exports[`snapshotAllPages Pressable 23`] = `
   testID="pressable_set"
 >
   <View
+    accessibilityLiveRegion="none"
     accessibilityPosInSet={1}
     accessibilitySetSize={3}
     accessibilityState={
@@ -30317,6 +30429,7 @@ exports[`snapshotAllPages Pressable 23`] = `
     </Text>
   </View>
   <View
+    accessibilityLiveRegion="polite"
     accessibilityPosInSet={2}
     accessibilitySetSize={3}
     accessibilityState={
@@ -30358,6 +30471,7 @@ exports[`snapshotAllPages Pressable 23`] = `
     </Text>
   </View>
   <View
+    accessibilityLiveRegion="assertive"
     accessibilityPosInSet={3}
     accessibilitySetSize={3}
     accessibilityState={
@@ -52338,6 +52452,7 @@ exports[`snapshotAllPages Switch 8`] = `
     <RCTSwitch
       accessibilityHint="Switch"
       accessibilityLabel="This is a Switch with focusable set to false"
+      accessibilityLiveRegion="none"
       accessibilityPosInSet={2}
       accessibilityRole="switch"
       accessibilitySetSize={4}
@@ -52368,6 +52483,7 @@ exports[`snapshotAllPages Switch 8`] = `
     <RCTSwitch
       accessibilityHint="Switch"
       accessibilityLabel="This is a Switch with accessible set to false"
+      accessibilityLiveRegion="polite"
       accessibilityPosInSet={3}
       accessibilityRole="switch"
       accessibilitySetSize={4}
@@ -52387,6 +52503,7 @@ exports[`snapshotAllPages Switch 8`] = `
     <RCTSwitch
       accessibilityHint="Switch"
       accessibilityLabel="This is a Switch with focusable and accessible set to false"
+      accessibilityLiveRegion="assertive"
       accessibilityPosInSet={4}
       accessibilityRole="switch"
       accessibilitySetSize={4}
@@ -56708,6 +56825,22 @@ exports[`snapshotAllPages Text 39`] = `
 `;
 
 exports[`snapshotAllPages Text 40`] = `
+<View>
+  <Text
+    style={
+      {
+        "borderRadius": 10,
+        "experimental_boxShadow": "0 0 10px red",
+      }
+    }
+    testID="text-box-shadow"
+  >
+    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages Text 41`] = `
 <View
   accessible={true}
   testID="text-accessibility"
@@ -56715,6 +56848,7 @@ exports[`snapshotAllPages Text 40`] = `
   <Text
     accessibilityHint="Text"
     accessibilityLabel="This text has customized accessibility"
+    accessibilityLiveRegion="polite"
     accessibilityPosInSet={1}
     accessibilitySetSize={1}
     nativeID="text-accessibility"
@@ -56724,7 +56858,7 @@ exports[`snapshotAllPages Text 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 41`] = `
+exports[`snapshotAllPages Text 42`] = `
 <View
   accessibilityLabel="Border Example"
   accessible={true}
@@ -56801,7 +56935,7 @@ exports[`snapshotAllPages Text 41`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 42`] = `
+exports[`snapshotAllPages Text 43`] = `
 <View
   accessibilityLabel="Advanced Border Example"
   accessible={true}
@@ -56857,7 +56991,7 @@ exports[`snapshotAllPages Text 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 43`] = `
+exports[`snapshotAllPages Text 44`] = `
 <View
   testID="text-opacity"
 >
@@ -56964,7 +57098,7 @@ exports[`snapshotAllPages Text 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 44`] = `
+exports[`snapshotAllPages Text 45`] = `
 <View
   accessible={true}
   testID="text-height-width"
@@ -63357,6 +63491,7 @@ exports[`snapshotAllPages TextInput 42`] = `
   testID="textinput-set"
 >
   <TextInput
+    accessibilityLiveRegion="none"
     accessibilityPosInSet={1}
     accessibilitySetSize={3}
     placeholder="TextInput 1 in Set of 3"
@@ -63381,6 +63516,7 @@ exports[`snapshotAllPages TextInput 42`] = `
     }
   />
   <TextInput
+    accessibilityLiveRegion="polite"
     accessibilityPosInSet={2}
     accessibilitySetSize={3}
     placeholder="TextInput 2 in Set of 3"
@@ -63405,6 +63541,7 @@ exports[`snapshotAllPages TextInput 42`] = `
     }
   />
   <TextInput
+    accessibilityLiveRegion="assertive"
     accessibilityPosInSet={3}
     accessibilitySetSize={3}
     placeholder="TextInput 3 in Set of 3"
@@ -66374,6 +66511,7 @@ exports[`snapshotAllPages Touchable* and onPress 15`] = `
   testID="touchable_set"
 >
   <View
+    accessibilityLiveRegion="none"
     accessibilityPosInSet={1}
     accessibilitySetSize={3}
     accessibilityValue={
@@ -66405,6 +66543,7 @@ exports[`snapshotAllPages Touchable* and onPress 15`] = `
     </Text>
   </View>
   <View
+    accessibilityLiveRegion="polite"
     accessibilityPosInSet={2}
     accessibilitySetSize={3}
     accessibilityState={
@@ -66451,6 +66590,7 @@ exports[`snapshotAllPages Touchable* and onPress 15`] = `
     </Text>
   </View>
   <Text
+    accessibilityLiveRegion="assertive"
     accessibilityPosInSet={3}
     accessibilitySetSize={3}
     accessibilityState={
@@ -67412,6 +67552,29 @@ exports[`snapshotAllPages View 7`] = `
         "borderRightWidth": 6,
         "height": 50,
         "width": 50,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderRadius": "100%",
+        "borderWidth": 6,
+        "height": 50,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderBottomLeftRadius": "100%",
+        "borderBottomRightRadius": "50%",
+        "borderTopLeftRadius": "10%",
+        "borderTopRightRadius": "20%",
+        "borderWidth": 6,
+        "height": 50,
+        "width": 100,
       }
     }
   />
@@ -68856,6 +69019,7 @@ exports[`snapshotAllPages View 21`] = `
   }
   accessibilityHint="Accessibility Hint"
   accessibilityLabel="A View with accessibility values"
+  accessibilityLiveRegion="polite"
   accessibilityPosInSet={1}
   accessibilityRole="button"
   accessibilitySetSize={1}

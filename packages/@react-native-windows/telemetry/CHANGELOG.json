@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Tue, 27 Aug 2024 05:13:39 GMT",
+      "version": "0.0.0-canary.107",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.107",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "849d71f68f0cc542804534769998e9f4fb34fe99",
+            "comment": "Improve new project name(space) validation and cleaning"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 08 Aug 2024 05:16:48 GMT",
       "version": "0.0.0-canary.106",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.106",

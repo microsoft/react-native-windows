@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.76.0-nightly-20240719-6d56cea28",
+  "baseVersion": "0.76.0-nightly-20240816-17017d2b8",
   "overrides": [
     {
       "type": "derived",
@@ -17,7 +17,7 @@
       "type": "derived",
       "file": "src/js/examples-win/Switch/SwitchExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Switch/SwitchExample.js",
-      "baseHash": "fdf533bef0d75f8126faf21186b160ae7616e81f"
+      "baseHash": "a2b2cc1f89348b999a886e2a11ff4e0ed66f9a5c"
     },
     {
       "type": "patch",
@@ -38,7 +38,7 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "d6fbf20539299e4830ff1da7f6f7a7b83dacae0a",
+      "baseHash": "245d0e0fae43f8eed7cc682aaa1d9c9f55441015",
       "issue": 12869
     },
     {
@@ -52,7 +52,7 @@
       "type": "derived",
       "file": "src/js/examples/Text/TextExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextExample.android.js",
-      "baseHash": "49e1d49f57a983e08a4580163955817ca80d6f43"
+      "baseHash": "983f14d94feec6a16f4e3ce51cada4dea242ba00"
     },
     {
       "type": "patch",
@@ -65,7 +65,7 @@
       "type": "derived",
       "file": "src/js/examples/Touchable/TouchableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Touchable/TouchableExample.js",
-      "baseHash": "b91360dda9abf5e2b6f5d6d6a258c7e6f9b0b4d8"
+      "baseHash": "d277813f801c1d961f11f220e8cf7c74ab9b9e63"
     },
     {
       "type": "patch",
@@ -78,7 +78,7 @@
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "5bb19a8c2b266305bd7bd6c97e304160dba12fb4"
+      "baseHash": "a370b643252bd68bd7af33c874086adc5edfb100"
     },
     {
       "type": "copy",
@@ -91,7 +91,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "587e2db8c14caac51f04005c129479d606e896a7"
+      "baseHash": "b40cdc34295381fbd40d38ade093cc0d198edd13"
     }
   ]
 }
