@@ -21,8 +21,7 @@ DebuggingOverlayComponentView::DebuggingOverlayComponentView(
           reactContext,
           ComponentViewFeatures::Default &
               ~(ComponentViewFeatures::Background | ComponentViewFeatures::ShadowProps |
-                ComponentViewFeatures::NativeBorder),
-          false) {}
+                ComponentViewFeatures::NativeBorder)) {}
 
 void DebuggingOverlayComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
