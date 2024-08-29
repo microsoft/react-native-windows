@@ -10,8 +10,13 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::Input::implementation {
 
-KeyRoutedEventArgs::KeyRoutedEventArgs(facebook::react::Tag tag, uint32_t msg, uint64_t wParam, int64_t lParam)
-    : m_tag(tag) {
+KeyRoutedEventArgs::KeyRoutedEventArgs(
+    facebook::react::Tag tag,
+    uint32_t msg,
+    uint64_t wParam,
+    int64_t lParam,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source)
+    : m_tag(tag), m_source(source) {
   bool fUp = (msg == WM_KEYUP || msg == WM_SYSKEYUP);
   bool fSysKey = (msg == WM_SYSKEYUP || msg == WM_SYSKEYDOWN);
 
@@ -35,8 +40,11 @@ KeyRoutedEventArgs::KeyRoutedEventArgs(facebook::react::Tag tag, uint32_t msg, u
 }
 
 #ifdef USE_WINUI3
-KeyRoutedEventArgs::KeyRoutedEventArgs(facebook::react::Tag tag, winrt::Microsoft::UI::Input::KeyEventArgs const &args)
-    : m_tag(tag) {
+KeyRoutedEventArgs::KeyRoutedEventArgs(
+    facebook::react::Tag tag,
+    winrt::Microsoft::UI::Input::KeyEventArgs const &args,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source)
+    : m_tag(tag), m_source(source) {
   auto keyStatus = args.KeyStatus();
   m_keyStatus.RepeatCount = keyStatus.RepeatCount;
   m_keyStatus.ScanCode = keyStatus.ScanCode;
@@ -75,12 +83,17 @@ winrt::Microsoft::UI::Input::PhysicalKeyStatus KeyRoutedEventArgs::KeyStatus() n
 winrt::Windows::System::VirtualKey KeyRoutedEventArgs::OriginalKey() noexcept {
   return m_key;
 }
+winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource KeyRoutedEventArgs::KeyboardSource() const noexcept {
+  return m_source;
+}
 
 CharacterReceivedRoutedEventArgs::CharacterReceivedRoutedEventArgs(
     facebook::react::Tag tag,
     uint32_t msg,
     uint64_t wParam,
-    int64_t lParam) {
+    int64_t lParam,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source)
+    : m_source(source) {
   m_keycode = static_cast<int32_t>(wParam);
   m_keyStatus.RepeatCount = (lParam & 0x0000FFFF); // bits 0-15
   m_keyStatus.ScanCode = (lParam & 0x00FF0000) >> 16; // bits 16-23
@@ -93,8 +106,9 @@ CharacterReceivedRoutedEventArgs::CharacterReceivedRoutedEventArgs(
 #ifdef USE_WINUI3
 CharacterReceivedRoutedEventArgs::CharacterReceivedRoutedEventArgs(
     facebook::react::Tag tag,
-    winrt::Microsoft::UI::Input::CharacterReceivedEventArgs const &args)
-    : m_tag(tag) {
+    winrt::Microsoft::UI::Input::CharacterReceivedEventArgs const &args,
+    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source)
+    : m_tag(tag), m_source(source) {
   auto keyStatus = args.KeyStatus();
   m_keyStatus.RepeatCount = keyStatus.RepeatCount;
   m_keyStatus.ScanCode = keyStatus.ScanCode;
@@ -120,6 +134,10 @@ int32_t CharacterReceivedRoutedEventArgs::KeyCode() noexcept {
 }
 winrt::Microsoft::UI::Input::PhysicalKeyStatus CharacterReceivedRoutedEventArgs::KeyStatus() noexcept {
   return m_keyStatus;
+}
+winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource CharacterReceivedRoutedEventArgs::KeyboardSource()
+    const noexcept {
+  return m_source;
 }
 
 Pointer::Pointer(winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType type, uint32_t id)

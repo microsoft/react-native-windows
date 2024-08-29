@@ -27,8 +27,7 @@ ParagraphComponentView::ParagraphComponentView(
           compContext,
           tag,
           reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
-          false) {}
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {}
 
 void ParagraphComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,

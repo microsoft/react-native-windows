@@ -24,8 +24,7 @@ RootComponentView::RootComponentView(
           reactContext,
           ComponentViewFeatures::Default &
               ~(ComponentViewFeatures::Background | ComponentViewFeatures::ShadowProps |
-                ComponentViewFeatures::NativeBorder),
-          false) {}
+                ComponentViewFeatures::NativeBorder)) {}
 
 RootComponentView::~RootComponentView() {
   if (auto rootView = m_wkRootView.get()) {
@@ -201,6 +200,13 @@ winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixel
     return nullptr;
 
   return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->EnsureUiaProvider();
+}
+
+winrt::Microsoft::UI::Content::ContentIsland RootComponentView::parentContentIsland() noexcept {
+  if (auto rootView = m_wkRootView.get()) {
+    return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->Island();
+  }
+  return nullptr;
 }
 
 winrt::Microsoft::ReactNative::implementation::ClipState RootComponentView::getClipState() noexcept {
