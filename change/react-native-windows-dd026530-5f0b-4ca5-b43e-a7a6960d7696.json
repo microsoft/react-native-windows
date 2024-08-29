@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "[Fabric] Enable implementation of custom events on custom components",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
