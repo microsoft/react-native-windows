@@ -867,7 +867,8 @@ void DrawAllBorderLayers(
       {AnchorPosition::Right, AnchorPosition::Top},
       {-borderWidths.right, borderWidths.top + borderRadii.topRight.horizontal},
       {borderWidths.right,
-       -(borderWidths.top + borderRadii.topRight.horizontal + borderWidths.bottom + borderRadii.bottomRight.horizontal)}, // size
+       -(borderWidths.top + borderRadii.topRight.horizontal + borderWidths.bottom +
+         borderRadii.bottomRight.horizontal)}, // size
       {0.0f, 1.0f},
       borderWidths.right,
       borderColors.right,
@@ -885,7 +886,8 @@ void DrawAllBorderLayers(
        textureWidth,
        textureHeight},
       {AnchorPosition::Right, AnchorPosition::Bottom},
-      {-(borderWidths.right + borderRadii.bottomRight.vertical), -(borderWidths.bottom + borderRadii.bottomRight.horizontal)},
+      {-(borderWidths.right + borderRadii.bottomRight.vertical),
+       -(borderWidths.bottom + borderRadii.bottomRight.horizontal)},
       {borderWidths.right + borderRadii.bottomRight.vertical, borderWidths.bottom + borderRadii.bottomRight.horizontal},
       {0, 0},
       std::max(borderWidths.right, borderWidths.bottom),
@@ -944,7 +946,8 @@ void DrawAllBorderLayers(
        textureHeight - (borderWidths.bottom + borderRadii.bottomLeft.horizontal)},
       {AnchorPosition::Left, AnchorPosition::Top},
       {0, borderWidths.top + borderRadii.topLeft.horizontal},
-      {borderWidths.left, -(borderWidths.top + borderRadii.topLeft.horizontal + borderWidths.bottom + borderRadii.bottomLeft.horizontal)},
+      {borderWidths.left,
+       -(borderWidths.top + borderRadii.topLeft.horizontal + borderWidths.bottom + borderRadii.bottomLeft.horizontal)},
       {0, 1},
       borderWidths.left,
       borderColors.left,
@@ -1023,10 +1026,17 @@ winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
 // Also apply scale factor to the radii at this point
 void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scaleFactor) noexcept {
   // Always round radii down to avoid spikey circles
-  borderRadii.topLeft = {std::floor(borderRadii.topLeft.horizontal * scaleFactor), std::floor(borderRadii.topLeft.vertical * scaleFactor)};
-  borderRadii.topRight = {std::floor(borderRadii.topRight.horizontal * scaleFactor), std::floor(borderRadii.topRight.vertical * scaleFactor)};
-  borderRadii.bottomLeft = {std::floor(borderRadii.bottomLeft.horizontal * scaleFactor), std::floor(borderRadii.bottomLeft.vertical * scaleFactor)};
-  borderRadii.bottomRight = {std::floor(borderRadii.bottomRight.horizontal * scaleFactor), std::floor(borderRadii.bottomRight.vertical * scaleFactor)};
+  borderRadii.topLeft = {
+      std::floor(borderRadii.topLeft.horizontal * scaleFactor), std::floor(borderRadii.topLeft.vertical * scaleFactor)};
+  borderRadii.topRight = {
+      std::floor(borderRadii.topRight.horizontal * scaleFactor),
+      std::floor(borderRadii.topRight.vertical * scaleFactor)};
+  borderRadii.bottomLeft = {
+      std::floor(borderRadii.bottomLeft.horizontal * scaleFactor),
+      std::floor(borderRadii.bottomLeft.vertical * scaleFactor)};
+  borderRadii.bottomRight = {
+      std::floor(borderRadii.bottomRight.horizontal * scaleFactor),
+      std::floor(borderRadii.bottomRight.vertical * scaleFactor)};
 }
 
 void scaleAndPixelRoundBorderWidths(
