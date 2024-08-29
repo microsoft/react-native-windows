@@ -378,6 +378,7 @@ struct WindowData {
         auto async = Host().UnloadInstance();
         async.Completed([&, uidispatch = InstanceSettings().UIDispatcher()](
                             auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          asyncStatus;
           OutputDebugStringA("Instance Unload completed\n");
 
           uidispatch.Post([&]() {
