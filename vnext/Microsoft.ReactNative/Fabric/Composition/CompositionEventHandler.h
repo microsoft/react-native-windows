@@ -27,7 +27,7 @@ struct FabricUIManager;
 struct winrt::Microsoft::ReactNative::implementation::ComponentView;
 typedef int PointerId;
 
-class CompositionEventHandler {
+class CompositionEventHandler : std::enable_shared_from_this<CompositionEventHandler> {
  public:
   CompositionEventHandler(
       const winrt::Microsoft::ReactNative::ReactContext &context,

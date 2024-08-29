@@ -123,6 +123,7 @@ struct WindowData {
 
   std::wstring m_bundleFile;
   winrt::Microsoft::ReactNative::ReactNativeIsland m_compRootView{nullptr};
+  winrt::Microsoft::UI::Content::DesktopChildSiteBridge m_bridge{nullptr};
   winrt::Microsoft::ReactNative::ReactNativeHost m_host{nullptr};
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   bool m_useLiftedComposition{true};
@@ -253,13 +254,13 @@ struct WindowData {
               // Register ellipse:// uri hander for images
               host.PackageProviders().Append(winrt::make<EllipseReactPackageProvider>());
 
-              auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
+              m_bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
                   g_liftedCompositor, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
 
               auto appContent = m_compRootView.Island();
 
-              bridge.Connect(appContent);
-              bridge.Show();
+              m_bridge.Connect(appContent);
+              m_bridge.Show();
 
               m_compRootView.ScaleFactor(ScaleFactor(hwnd));
               winrt::Microsoft::ReactNative::LayoutConstraints constraints;
@@ -292,7 +293,7 @@ struct WindowData {
               }
               m_compRootView.Arrange(constraints, {0, 0});
 
-              bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
+              m_bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
             } else if (!m_target) {
               // General users of RNW should never set CompositionContext - this is an advanced usage to inject another
@@ -373,6 +374,22 @@ struct WindowData {
       case IDM_SETTINGS:
         DialogBoxParam(s_instance, MAKEINTRESOURCE(IDD_SETTINGSBOX), hwnd, &Settings, reinterpret_cast<INT_PTR>(this));
         break;
+      case IDM_UNLOAD: {
+        auto async = Host().UnloadInstance();
+        async.Completed([&, uidispatch = InstanceSettings().UIDispatcher()](
+                            auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          OutputDebugStringA("Instance Unload completed\n");
+
+          uidispatch.Post([&]() {
+            m_bridge.Close();
+            m_bridge = nullptr;
+          });
+          assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
+        });
+        m_compRootView = nullptr;
+        m_instanceSettings = nullptr;
+        m_host = nullptr;
+      } break;
     }
 
     return 0;
@@ -575,12 +592,22 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam) 
       bool shouldPostQuitMessage = true;
       if (data->m_host) {
         shouldPostQuitMessage = false;
+
+        winrt::Microsoft::ReactNative::ReactPropertyBag properties(data->m_host.InstanceSettings().Properties());
+
+        properties.Remove(winrt::Microsoft::ReactNative::ReactPropertyId<
+                          winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext>{
+            L"ReactNative.Composition", L"CompositionContext"});
+
         auto async = data->m_host.UnloadInstance();
         async.Completed([host = data->m_host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
           asyncStatus;
           assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
           host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
         });
+        data->m_compRootView = nullptr;
+        data->m_instanceSettings = nullptr;
+        data->m_host = nullptr;
       }
 
       delete WindowData::GetFromWindow(hwnd);
