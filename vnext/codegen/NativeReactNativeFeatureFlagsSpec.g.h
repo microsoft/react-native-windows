@@ -19,18 +19,18 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{0, L"commonTestFlag"},
       SyncMethod<bool() noexcept>{1, L"allowRecursiveCommitsWithSynchronousMountOnAndroid"},
       SyncMethod<bool() noexcept>{2, L"batchRenderingUpdatesInEventLoop"},
-      SyncMethod<bool() noexcept>{3, L"changeOrderOfMountingInstructionsOnAndroid"},
-      SyncMethod<bool() noexcept>{4, L"completeReactInstanceCreationOnBgThreadOnAndroid"},
-      SyncMethod<bool() noexcept>{5, L"destroyFabricSurfacesInReactInstanceManager"},
-      SyncMethod<bool() noexcept>{6, L"enableAlignItemsBaselineOnFabricIOS"},
-      SyncMethod<bool() noexcept>{7, L"enableAndroidMixBlendModeProp"},
-      SyncMethod<bool() noexcept>{8, L"enableBackgroundStyleApplicator"},
-      SyncMethod<bool() noexcept>{9, L"enableCleanTextInputYogaNode"},
-      SyncMethod<bool() noexcept>{10, L"enableEagerRootViewAttachment"},
-      SyncMethod<bool() noexcept>{11, L"enableEventEmitterRetentionDuringGesturesOnAndroid"},
-      SyncMethod<bool() noexcept>{12, L"enableFabricLogs"},
-      SyncMethod<bool() noexcept>{13, L"enableFabricRendererExclusively"},
-      SyncMethod<bool() noexcept>{14, L"enableGranularShadowTreeStateReconciliation"},
+      SyncMethod<bool() noexcept>{3, L"completeReactInstanceCreationOnBgThreadOnAndroid"},
+      SyncMethod<bool() noexcept>{4, L"destroyFabricSurfacesInReactInstanceManager"},
+      SyncMethod<bool() noexcept>{5, L"enableAlignItemsBaselineOnFabricIOS"},
+      SyncMethod<bool() noexcept>{6, L"enableAndroidMixBlendModeProp"},
+      SyncMethod<bool() noexcept>{7, L"enableBackgroundStyleApplicator"},
+      SyncMethod<bool() noexcept>{8, L"enableCleanTextInputYogaNode"},
+      SyncMethod<bool() noexcept>{9, L"enableEagerRootViewAttachment"},
+      SyncMethod<bool() noexcept>{10, L"enableEventEmitterRetentionDuringGesturesOnAndroid"},
+      SyncMethod<bool() noexcept>{11, L"enableFabricLogs"},
+      SyncMethod<bool() noexcept>{12, L"enableFabricRendererExclusively"},
+      SyncMethod<bool() noexcept>{13, L"enableGranularShadowTreeStateReconciliation"},
+      SyncMethod<bool() noexcept>{14, L"enableLayoutAnimationsOnIOS"},
       SyncMethod<bool() noexcept>{15, L"enableLongTaskAPI"},
       SyncMethod<bool() noexcept>{16, L"enableMicrotasks"},
       SyncMethod<bool() noexcept>{17, L"enablePropsUpdateReconciliationAndroid"},
@@ -84,64 +84,64 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(batchRenderingUpdatesInEventLoop) static bool batchRenderingUpdatesInEventLoop() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
-          "changeOrderOfMountingInstructionsOnAndroid",
-          "    REACT_SYNC_METHOD(changeOrderOfMountingInstructionsOnAndroid) bool changeOrderOfMountingInstructionsOnAndroid() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(changeOrderOfMountingInstructionsOnAndroid) static bool changeOrderOfMountingInstructionsOnAndroid() noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          4,
           "completeReactInstanceCreationOnBgThreadOnAndroid",
           "    REACT_SYNC_METHOD(completeReactInstanceCreationOnBgThreadOnAndroid) bool completeReactInstanceCreationOnBgThreadOnAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(completeReactInstanceCreationOnBgThreadOnAndroid) static bool completeReactInstanceCreationOnBgThreadOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          5,
+          4,
           "destroyFabricSurfacesInReactInstanceManager",
           "    REACT_SYNC_METHOD(destroyFabricSurfacesInReactInstanceManager) bool destroyFabricSurfacesInReactInstanceManager() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(destroyFabricSurfacesInReactInstanceManager) static bool destroyFabricSurfacesInReactInstanceManager() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          6,
+          5,
           "enableAlignItemsBaselineOnFabricIOS",
           "    REACT_SYNC_METHOD(enableAlignItemsBaselineOnFabricIOS) bool enableAlignItemsBaselineOnFabricIOS() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableAlignItemsBaselineOnFabricIOS) static bool enableAlignItemsBaselineOnFabricIOS() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          7,
+          6,
           "enableAndroidMixBlendModeProp",
           "    REACT_SYNC_METHOD(enableAndroidMixBlendModeProp) bool enableAndroidMixBlendModeProp() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableAndroidMixBlendModeProp) static bool enableAndroidMixBlendModeProp() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          8,
+          7,
           "enableBackgroundStyleApplicator",
           "    REACT_SYNC_METHOD(enableBackgroundStyleApplicator) bool enableBackgroundStyleApplicator() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableBackgroundStyleApplicator) static bool enableBackgroundStyleApplicator() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          9,
+          8,
           "enableCleanTextInputYogaNode",
           "    REACT_SYNC_METHOD(enableCleanTextInputYogaNode) bool enableCleanTextInputYogaNode() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableCleanTextInputYogaNode) static bool enableCleanTextInputYogaNode() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          10,
+          9,
           "enableEagerRootViewAttachment",
           "    REACT_SYNC_METHOD(enableEagerRootViewAttachment) bool enableEagerRootViewAttachment() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableEagerRootViewAttachment) static bool enableEagerRootViewAttachment() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          11,
+          10,
           "enableEventEmitterRetentionDuringGesturesOnAndroid",
           "    REACT_SYNC_METHOD(enableEventEmitterRetentionDuringGesturesOnAndroid) bool enableEventEmitterRetentionDuringGesturesOnAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableEventEmitterRetentionDuringGesturesOnAndroid) static bool enableEventEmitterRetentionDuringGesturesOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          12,
+          11,
           "enableFabricLogs",
           "    REACT_SYNC_METHOD(enableFabricLogs) bool enableFabricLogs() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableFabricLogs) static bool enableFabricLogs() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          13,
+          12,
           "enableFabricRendererExclusively",
           "    REACT_SYNC_METHOD(enableFabricRendererExclusively) bool enableFabricRendererExclusively() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableFabricRendererExclusively) static bool enableFabricRendererExclusively() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          14,
+          13,
           "enableGranularShadowTreeStateReconciliation",
           "    REACT_SYNC_METHOD(enableGranularShadowTreeStateReconciliation) bool enableGranularShadowTreeStateReconciliation() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableGranularShadowTreeStateReconciliation) static bool enableGranularShadowTreeStateReconciliation() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          14,
+          "enableLayoutAnimationsOnIOS",
+          "    REACT_SYNC_METHOD(enableLayoutAnimationsOnIOS) bool enableLayoutAnimationsOnIOS() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(enableLayoutAnimationsOnIOS) static bool enableLayoutAnimationsOnIOS() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           15,
           "enableLongTaskAPI",
