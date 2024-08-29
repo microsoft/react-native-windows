@@ -610,7 +610,7 @@ function getVerifyStackTelemetryProcessor(
       // Processor has run, so the test can (potentially) pass
       TelemetryTest.setTestTelemetryProvidersRan();
 
-      if (envelope.name == CodedErrorEventName) {
+      if (envelope.name === CodedErrorEventName) {
         const data = (envelope.data as any);
         expect(data.exceptionData).toBeDefined();
         expect(data.exceptionData.message).toBeDefined();
