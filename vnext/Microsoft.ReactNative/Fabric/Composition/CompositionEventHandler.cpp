@@ -246,7 +246,6 @@ CompositionEventHandler::CompositionEventHandler(
                                 ->RootTag()),
                   args,
                   keyboardSource);
-          auto keyboardSource = winrt::make<CompositionInputKeyboardSource>(source);
           strongThis->onKeyDown(keyArgs);
           winrt::get_self<CompositionInputKeyboardSource>(keyboardSource)->Disconnect();
         }
