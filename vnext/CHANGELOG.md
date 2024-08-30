@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 28 Aug 2024 05:14:45 GMT and should not be manually modified.
+This log was last generated on Fri, 30 Aug 2024 05:14:22 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.0.0-canary.861
+
+Fri, 30 Aug 2024 05:14:22 GMT
+
+### Changes
+
+- Rework custom components to not rely on open compose patterns (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.860
 

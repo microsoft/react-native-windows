@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 30 Aug 2024 05:14:22 GMT",
+      "version": "0.0.0-canary.861",
+      "tag": "react-native-windows_v0.0.0-canary.861",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "fff6d5a9b667198ad677ad459b0c7a3164040d74",
+            "comment": "Rework custom components to not rely on open compose patterns"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 28 Aug 2024 05:14:45 GMT",
       "version": "0.0.0-canary.860",
       "tag": "react-native-windows_v0.0.0-canary.860",
