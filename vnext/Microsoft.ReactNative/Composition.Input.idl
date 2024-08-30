@@ -23,6 +23,7 @@ namespace Microsoft.ReactNative.Composition.Input
     Windows.System.VirtualKey Key { get; };
     Microsoft.UI.Input.PhysicalKeyStatus KeyStatus { get; };
     Windows.System.VirtualKey OriginalKey { get; };
+    KeyboardSource KeyboardSource { get; };
   }
 
   interface CharacterReceivedRoutedEventArgs requires RoutedEventArgs
@@ -30,6 +31,7 @@ namespace Microsoft.ReactNative.Composition.Input
     Boolean Handled { get; set; };
     Microsoft.UI.Input.PhysicalKeyStatus KeyStatus { get; };
     Int32 KeyCode { get; };
+    KeyboardSource KeyboardSource { get; };
   };
 
   interface IPointerPointTransform

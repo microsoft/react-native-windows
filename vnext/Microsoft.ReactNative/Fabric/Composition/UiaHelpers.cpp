@@ -162,4 +162,23 @@ void UpdateUiaProperty(
       spProviderSimple.get(), propId, CComVariant(oldValue.c_str()), CComVariant(newValue.c_str()));
 }
 
+long GetLiveSetting(const std::string &liveRegion) noexcept {
+  if (liveRegion == "polite") {
+    return LiveSetting::Polite;
+  } else if (liveRegion == "assertive") {
+    return LiveSetting::Assertive;
+  }
+  return LiveSetting::Off;
+}
+
+std::string extractAccessibilityValue(const facebook::react::AccessibilityValue &value) noexcept {
+  if (value.now.has_value()) {
+    return std::to_string(value.now.value());
+  } else if (value.text.has_value()) {
+    return value.text.value();
+  } else {
+    return "";
+  }
+}
+
 } // namespace winrt::Microsoft::ReactNative::implementation

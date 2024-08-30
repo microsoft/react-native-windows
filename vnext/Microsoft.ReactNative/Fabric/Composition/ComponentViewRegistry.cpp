@@ -124,5 +124,8 @@ void ComponentViewRegistry::enqueueComponentViewWithComponentHandle(
       ->prepareForRecycle();
 
   m_registry.erase(tag);
+
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(componentViewDescriptor.view)
+      ->onDestroying();
 }
 } // namespace Microsoft::ReactNative

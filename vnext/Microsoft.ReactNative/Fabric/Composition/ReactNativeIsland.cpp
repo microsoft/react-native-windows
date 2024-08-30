@@ -143,9 +143,13 @@ ReactNativeIsland::ReactNativeIsland(const winrt::Microsoft::UI::Composition::Co
 
 ReactNativeIsland::~ReactNativeIsland() noexcept {
 #ifdef USE_WINUI3
-  if (m_island && m_island.IsConnected()) {
+  if (m_island) {
     m_island.AutomationProviderRequested(m_islandAutomationProviderRequestedToken);
     m_island.StateChanged(m_islandStateChangedToken);
+#ifdef USE_EXPERIMENTAL_WINUI3
+    m_island.Connected(m_islandConnectedToken);
+    m_island.Disconnected(m_islandDisconnectedToken);
+#endif
   }
 #endif
 
@@ -199,6 +203,12 @@ void ReactNativeIsland::AddRenderedVisual(
   assert(!m_hasRenderedVisual);
   InternalRootVisual().InsertAt(visual, 0);
   m_hasRenderedVisual = true;
+
+  if (m_mounted) {
+    if (auto componentView = GetComponentView()) {
+      componentView->onMounted();
+    }
+  }
 }
 
 void ReactNativeIsland::RemoveRenderedVisual(
@@ -398,6 +408,7 @@ void ReactNativeIsland::InitRootView(
   m_context = winrt::Microsoft::ReactNative::ReactContext(std::move(context));
   m_reactViewOptions = std::move(viewOptions);
   m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this);
+  m_CompositionEventHandler->Initialize();
 
   UpdateRootViewInternal();
 
@@ -761,12 +772,57 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
             if (args.DidRasterizationScaleChange()) {
               pThis->ScaleFactor(island.RasterizationScale());
             }
+#ifndef USE_EXPERIMENTAL_WINUI3 // Use this in place of Connected/Disconnected events for now. -- Its not quite what we
+                                // want, but it will do for now.
+            if (args.DidSiteVisibleChange()) {
+              if (island.IsSiteVisible()) {
+                pThis->OnMounted();
+              } else {
+                pThis->OnUnmounted();
+              }
+            }
+#endif
           }
         });
+#ifdef USE_EXPERIMENTAL_WINUI3
+    m_islandConnectedToken = m_island.Connected(
+        [weakThis = get_weak()](
+            winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
+          if (auto pThis = weakThis.get()) {
+            pThis->OnMounted();
+          }
+        });
+
+    m_islandDisconnectedToken = m_island.Disconnected(
+        [weakThis = get_weak()](
+            winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
+          if (auto pThis = weakThis.get()) {
+            pThis->OnUnmounted();
+          }
+        });
+#endif
   }
   return m_island;
 }
 #endif
+
+void ReactNativeIsland::OnMounted() noexcept {
+  if (m_mounted)
+    return;
+  m_mounted = true;
+  if (auto componentView = GetComponentView()) {
+    componentView->onMounted();
+  }
+}
+
+void ReactNativeIsland::OnUnmounted() noexcept {
+  if (!m_mounted)
+    return;
+  m_mounted = false;
+  if (auto componentView = GetComponentView()) {
+    componentView->onUnmounted();
+  }
+}
 
 winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
 ReactNativeIsland::GetComponentView() noexcept {

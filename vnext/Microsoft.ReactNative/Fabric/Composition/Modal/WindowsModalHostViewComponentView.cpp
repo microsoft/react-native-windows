@@ -27,8 +27,7 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
           compContext,
           tag,
           reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
-          false) {
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {
   m_context = reactContext; // save context
 }
 

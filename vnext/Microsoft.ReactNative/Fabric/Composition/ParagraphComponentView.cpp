@@ -27,8 +27,7 @@ ParagraphComponentView::ParagraphComponentView(
           compContext,
           tag,
           reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
-          false) {}
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {}
 
 void ParagraphComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
@@ -66,10 +65,6 @@ void ParagraphComponentView::updateProps(
   }
 
   Super::updateProps(props, oldProps);
-}
-
-void ParagraphComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
-  Super::updateEventEmitter(eventEmitter);
 }
 
 void ParagraphComponentView::updateState(

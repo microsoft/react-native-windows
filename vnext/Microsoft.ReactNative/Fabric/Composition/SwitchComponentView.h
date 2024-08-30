@@ -38,9 +38,7 @@ struct SwitchComponentView : SwitchComponentViewT<SwitchComponentView, ViewCompo
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept override;
   void onThemeChanged() noexcept override;
-  void OnKeyUp(
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void OnKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   void OnPointerPressed(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
   void OnPointerReleased(

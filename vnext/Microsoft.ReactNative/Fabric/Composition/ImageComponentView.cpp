@@ -72,8 +72,7 @@ ImageComponentView::ImageComponentView(
           compContext,
           tag,
           reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
-          false) {}
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {}
 
 void ImageComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
@@ -189,7 +188,6 @@ void ImageComponentView::prepareForRecycle() noexcept {
 winrt::Microsoft::ReactNative::ImageProps ImageComponentView::ImageProps() noexcept {
   // We do not currently support custom ImageComponentView's
   // If we did we would need to create a AbiImageProps and possibly return them here
-  assert(!m_customComponent);
   return winrt::make<winrt::Microsoft::ReactNative::implementation::ImageProps>(viewProps());
 }
 
@@ -200,7 +198,6 @@ winrt::Microsoft::ReactNative::ImageProps ImageComponentView::ViewProps() noexce
 winrt::Microsoft::ReactNative::ViewProps ImageComponentView::ViewPropsInner() noexcept {
   // We do not currently support custom ImageComponentView's
   // If we did we would need to create a AbiImageProps and possibly return them here
-  assert(!m_customComponent);
   return winrt::make<winrt::Microsoft::ReactNative::implementation::ImageProps>(viewProps());
 }
 
