@@ -59,6 +59,8 @@ void ReactCompositionViewComponentBuilder::InitializeComponentView(
     self->UpdatePropsHandler(m_updatePropsHandler);
   if (m_updateStateHandler)
     self->UpdateStateHandler(m_updateStateHandler);
+  if (m_updateEventEmitterHandler)
+    self->UpdateEventEmitterHandler(m_updateEventEmitterHandler);
   if (m_mountChildComponentViewHandler)
     self->MountChildComponentViewHandler(m_mountChildComponentViewHandler);
   if (m_unmountChildComponentViewHandler)
@@ -164,6 +166,10 @@ void ReactCompositionViewComponentBuilder::SetUpdatePropsHandler(UpdatePropsDele
 
 void ReactCompositionViewComponentBuilder::SetUpdateStateHandler(UpdateStateDelegate impl) noexcept {
   m_updateStateHandler = impl;
+}
+
+void ReactCompositionViewComponentBuilder::SetUpdateEventEmitterHandler(UpdateEventEmitterDelegate impl) noexcept {
+  m_updateEventEmitterHandler = impl;
 }
 
 void ReactCompositionViewComponentBuilder::SetMountChildComponentViewHandler(

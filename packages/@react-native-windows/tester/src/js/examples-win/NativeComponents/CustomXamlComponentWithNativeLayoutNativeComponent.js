@@ -12,13 +12,22 @@
 
 import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
 import type {HostComponent} from 'react-native/Libraries/Renderer/shims/ReactNativeTypes';
+import type {DirectEventHandler} from 'react-native/Libraries/Types/CodegenTypes';
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
+
+type MyEventEvent = $ReadOnly<{|
+  value: boolean,
+  target: Int32,
+|}>;
 
 type NativeProps = $ReadOnly<{|
   ...ViewProps,
 
   // Props
   label: string,
+
+  // Events
+  onMyEvent?: ?DirectEventHandler<MyEventEvent>,
 |}>;
 
 type ComponentType = HostComponent<NativeProps>;

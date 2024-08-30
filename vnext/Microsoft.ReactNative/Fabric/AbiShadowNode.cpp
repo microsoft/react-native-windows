@@ -65,6 +65,13 @@ void ShadowNode::StateData(winrt::IInspectable tag) noexcept {
   }
 }
 
+winrt::Microsoft::ReactNative::EventEmitter ShadowNode::EventEmitter() const noexcept {
+  if (auto shadowNode = m_shadowNode.lock()) {
+    return winrt::make<winrt::Microsoft::ReactNative::implementation::EventEmitter>(shadowNode->getEventEmitter());
+  }
+  return nullptr;
+}
+
 } // namespace winrt::Microsoft::ReactNative::implementation
 
 namespace Microsoft::ReactNative {
