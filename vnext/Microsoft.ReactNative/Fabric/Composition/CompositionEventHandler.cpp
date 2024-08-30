@@ -140,9 +140,11 @@ struct CompositionInputKeyboardSource : winrt::implements<
 CompositionEventHandler::CompositionEventHandler(
     const winrt::Microsoft::ReactNative::ReactContext &context,
     const winrt::Microsoft::ReactNative::ReactNativeIsland &reactNativeIsland)
-    : m_context(context), m_wkRootView(reactNativeIsland) {
+    : m_context(context), m_wkRootView(reactNativeIsland) {}
+
+void CompositionEventHandler::Initialize() noexcept {
 #ifdef USE_WINUI3
-  if (auto island = reactNativeIsland.Island()) {
+  if (auto island = m_wkRootView.get().Island()) {
     auto pointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(island);
 
     m_pointerPressedToken =

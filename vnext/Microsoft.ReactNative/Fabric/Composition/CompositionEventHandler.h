@@ -27,13 +27,14 @@ struct FabricUIManager;
 struct winrt::Microsoft::ReactNative::implementation::ComponentView;
 typedef int PointerId;
 
-class CompositionEventHandler : std::enable_shared_from_this<CompositionEventHandler> {
+class CompositionEventHandler : public std::enable_shared_from_this<CompositionEventHandler> {
  public:
   CompositionEventHandler(
       const winrt::Microsoft::ReactNative::ReactContext &context,
       const winrt::Microsoft::ReactNative::ReactNativeIsland &ReactNativeIsland);
   virtual ~CompositionEventHandler();
 
+  void Initialize() noexcept;
   int64_t SendMessage(HWND hwnd, uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
   void RemoveTouchHandlers();
   winrt::Microsoft::UI::Input::VirtualKeyStates GetKeyState(winrt::Windows::System::VirtualKey key) noexcept;
