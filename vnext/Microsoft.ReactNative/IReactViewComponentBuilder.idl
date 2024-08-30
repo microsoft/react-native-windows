@@ -3,6 +3,7 @@
 
 import "ViewProps.idl";
 import "ComponentView.idl";
+import "IJSValueWriter.idl";
 
 #include "DocString.h"
 
@@ -35,6 +36,18 @@ namespace Microsoft.ReactNative
   };
 
   [experimental]
+  runtimeclass MountChildComponentViewArgs {
+    ComponentView Child { get; };
+    UInt32 Index { get; };
+  };
+
+  [experimental]
+  runtimeclass UnmountChildComponentViewArgs {
+    ComponentView Child { get; };
+    UInt32 Index { get; };
+  };
+
+  [experimental]
   DOC_STRING("A delegate that creates a @IComponentProps object for an instance of @ViewProps. See @IReactViewComponentBuilder.SetCreateProps")
   delegate IComponentProps ViewPropsFactory(ViewProps props);
 
@@ -54,15 +67,39 @@ namespace Microsoft.ReactNative
   delegate Object InitialStateDataFactory(IComponentProps props);
 
   [experimental]
-  DOC_STRING("Provides a factory method to create an instance of a ComponentView. See @IReactViewComponentBuilder.SetCreateView")
-  delegate ComponentView ComponentViewFactory(CreateComponentViewArgs args);
+  DOC_STRING("Provides a method to initialize an instance of a ComponentView. See @IReactViewComponentBuilder.SetComponentViewInitializer")
+  delegate void ComponentViewInitializer(ComponentView view);
+
+  [experimental]
+  delegate void HandleCommandDelegate(ComponentView source, String commandName, IJSValueReader args);
+
+  [experimental]
+  delegate void UpdateFinalizerDelegate(ComponentView source, ComponentViewUpdateMask updateMask);
+
+  [experimental]
+  delegate void UpdatePropsDelegate(ComponentView source, IComponentProps newProps, IComponentProps oldProps);
+
+  [experimental]
+  delegate void UpdateStateDelegate(ComponentView source, IComponentState newState);
+
+  [experimental]
+  delegate void MountChildComponentViewDelegate(ComponentView source, MountChildComponentViewArgs args);
+
+  [experimental]
+  delegate void UnmountChildComponentViewDelegate(ComponentView source, UnmountChildComponentViewArgs args);
+
+  [experimental]
+  runtimeclass EventEmitter {
+    void DispatchEvent(String eventName, JSValueArgWriter args);
+  };
+
+  [experimental]
+  delegate void UpdateEventEmitterDelegate(ComponentView source, EventEmitter eventEmitter);
 
   [webhosthidden]
   [experimental]
   interface IReactViewComponentBuilder
   {
-    void SetCreateComponentView(ComponentViewFactory impl);
-
     DOC_STRING("Create an implementation of your custom Props type that will be passed to your components @Composition.ICompositionViewComponent.UpdateProps method.")
     void SetCreateProps(ViewPropsFactory impl);
 
@@ -71,9 +108,24 @@ namespace Microsoft.ReactNative
     void SetInitialStateDataFactory(InitialStateDataFactory impl);
     void SetMeasureContentHandler(MeasureContentHandler impl);
     void SetLayoutHandler(LayoutHandler impl);
+
+    void SetComponentViewInitializer(ComponentViewInitializer initializer);
+    void SetCustomCommandHandler(HandleCommandDelegate impl);
+    void SetFinalizeUpdateHandler(UpdateFinalizerDelegate impl);
+    void SetUpdatePropsHandler(UpdatePropsDelegate impl);
+    void SetUpdateStateHandler(UpdateStateDelegate impl);
+    void SetUpdateEventEmitterHandler(UpdateEventEmitterDelegate impl);
+    void SetMountChildComponentViewHandler(MountChildComponentViewDelegate impl);
+    void SetUnmountChildComponentViewHandler(UnmountChildComponentViewDelegate impl);
   };
 
+  // [exclusiveto(ShadowNode)]
+  // [uuid(BF2A2A64-AB8B-47FC-BE69-E31DE6FC29A4)]
+  // interface IShadowNodeFactory
+  // {
+  // }
 
+  // [composable(IShadowNodeFactory, protected)]
   [webhosthidden]
   [experimental]
   unsealed runtimeclass ShadowNode
@@ -81,6 +133,7 @@ namespace Microsoft.ReactNative
     void EnsureUnsealed();
     Object Tag { get; set; };
     Object StateData{ get; set; };
+    EventEmitter EventEmitter { get; };
   };
 
   [webhosthidden]
