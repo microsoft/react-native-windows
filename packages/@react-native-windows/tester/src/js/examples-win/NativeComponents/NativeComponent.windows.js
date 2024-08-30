@@ -14,6 +14,39 @@ import React, { useState } from 'react';
 import {Text, View} from 'react-native';
 import CustomXamlComponentWithNativeLayout from './CustomXamlComponentWithNativeLayoutNativeComponent';
 
+const NativeComponentWithNativeLayout = () => {
+  let [log, setLog] = useState('');
+  return (
+    <View
+      style={{
+        borderRadius: 0,
+        margin: 10,
+        borderWidth: 2,
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        gap: 5,
+      }}>
+      <View style={{width: 100, height: 100, backgroundColor: 'green'}} />
+      <View style={{width: 100, height: 100, backgroundColor: 'red'}} />
+      <View style={{width: 100, height: 100, backgroundColor: 'blue'}} />
+      <View style={{width: 100, height: 100, backgroundColor: 'pink'}} />
+      <View style={{width: 100, height: 100, backgroundColor: 'gray'}} />
+      <Text style={{color: 'gray'}}>This is RN Text</Text>
+      <Text style={{color: 'red'}}>{log}</Text>
+      <CustomXamlComponentWithNativeLayout
+        label="This is a Xaml Button set to ellipisify on truncation"
+        style={{flexShrink: 1}}
+        onMyEvent={(arg) => {setLog(log + '\nRecieved MyEvent: ' + JSON.stringify(arg.nativeEvent) + '\n')}}
+      />
+      <View style={{width: 100, height: 100, backgroundColor: 'green'}} />
+      <View style={{width: 100, height: 100, backgroundColor: 'red'}} />
+      <View style={{width: 100, height: 100, backgroundColor: 'blue'}} />
+      <View style={{width: 100, height: 100, backgroundColor: 'pink'}} />
+      <View style={{width: 100, height: 100, backgroundColor: 'gray'}} />
+    </View>
+  );
+}
+
 exports.displayName = 'NativeFabricComponent';
 exports.framework = 'React';
 exports.category = 'UI';
@@ -26,36 +59,9 @@ exports.examples = [
   {
     title: 'Native Component',
     render: function (): React.Node {
-      let [log, setLog] = useState('');
       return (
-        <View
-          style={{
-            borderRadius: 0,
-            margin: 10,
-            borderWidth: 2,
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            gap: 5,
-          }}>
-          <View style={{width: 100, height: 100, backgroundColor: 'green'}} />
-          <View style={{width: 100, height: 100, backgroundColor: 'red'}} />
-          <View style={{width: 100, height: 100, backgroundColor: 'blue'}} />
-          <View style={{width: 100, height: 100, backgroundColor: 'pink'}} />
-          <View style={{width: 100, height: 100, backgroundColor: 'gray'}} />
-          <Text style={{color: 'gray'}}>This is RN Text</Text>
-          <Text style={{color: 'red'}}>{log}</Text>
-          <CustomXamlComponentWithNativeLayout
-            label="This is a Xaml Button set to ellipisify on truncation"
-            style={{flexShrink: 1}}
-            onMyEvent={(arg) => {setLog(log + '\nRecieved MyEvent: ' + JSON.stringify(arg.nativeEvent) + '\n')}}
-          />
-          <View style={{width: 100, height: 100, backgroundColor: 'green'}} />
-          <View style={{width: 100, height: 100, backgroundColor: 'red'}} />
-          <View style={{width: 100, height: 100, backgroundColor: 'blue'}} />
-          <View style={{width: 100, height: 100, backgroundColor: 'pink'}} />
-          <View style={{width: 100, height: 100, backgroundColor: 'gray'}} />
-        </View>
+        <NativeComponentWithNativeLayout />
       );
     },
-  },
+  }
 ];
