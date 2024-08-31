@@ -227,6 +227,16 @@ void InsertNumberValueIfNotDefault(
   }
 }
 
+void InsertIntValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    int value,
+    int defaultValue = 0) {
+  if (value != defaultValue) {
+    obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateNumberValue(value));
+  }
+}
+
 void InsertBooleanValueIfNotDefault(
     const winrt::Windows::Data::Json::JsonObject &obj,
     winrt::hstring name,
