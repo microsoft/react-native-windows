@@ -5,12 +5,12 @@
 // vnext/Microsoft.ReactNative.Cxx/README.md
 
 #pragma once
-#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Microsoft.ReactNative.h>
 #include <winrt/Windows.Foundation.h>
+#include "JSValueComposition.h"
 #include "JSValueReader.h"
 #include "JSValueWriter.h"
-#include "JSValueComposition.h"
 #include "ModuleRegistration.h"
 #include "ReactContext.h"
 #include "ReactNonAbiValue.h"
@@ -25,7 +25,6 @@
 #define REACT_COMPONENT_CREATE_VISUAL(name) using _HasCreateVisualMethod = std::true_type;
 #define REACT_COMPONENT_UPDATE_EVENTEMITTER(name) using _HasUpdateEventEmitterMethod = std::true_type;
 
-
 template <class TUserData, typename = void>
 struct ReactHasUpdatePropsHanderOrVoid {
   using Type = void;
@@ -37,9 +36,7 @@ struct ReactHasUpdatePropsHanderOrVoid<
   using Type = typename TUserData::_HasUpdatePropsMethod;
 };
 template <typename TUserData, typename TProps>
-void RegisterUpdatePropsHandler(
-        winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
-
+void RegisterUpdatePropsHandler(winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
   if constexpr (!std::is_same_v<typename ReactHasUpdatePropsHanderOrVoid<TUserData>::Type, void>) {
     builder.SetUpdatePropsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentProps &newProps,
@@ -50,7 +47,6 @@ void RegisterUpdatePropsHandler(
     });
   }
 }
-
 
 template <class TUserData, typename = void>
 struct ReactHasUpdateEventEmiiterHanderOrVoid {
@@ -63,16 +59,16 @@ struct ReactHasUpdateEventEmiiterHanderOrVoid<
   using Type = typename TUserData::_HasUpdateEventEmitterMethod;
 };
 template <typename TUserData, typename TEventEmitter>
-void RegisterUpdateEventEmitterHandler(winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
+void RegisterUpdateEventEmitterHandler(
+    winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
   if constexpr (!std::is_same_v<typename ReactHasUpdateEventEmiiterHanderOrVoid<TUserData>::Type, void>) {
     builder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
-                                     const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter) noexcept {
+                                            const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter) noexcept {
       auto userData = view.UserData().as<TUserData>();
       userData->UpdateEventEmitter(std::make_shared<TEventEmitter>(eventEmitter));
     });
   }
 }
-
 
 template <class TUserData, typename = void>
 struct ReactHasFinalizeUpdateMethodOrVoid {
@@ -137,4 +133,3 @@ void RegisterComponentCreateVisual(winrt::Microsoft::ReactNative::IReactViewComp
     });
   }
 }
-

@@ -5,9 +5,9 @@
 
 #include "NativeModules.h"
 
-namespace winrt::SampleCustomComponent
-{
+namespace winrt::SampleCustomComponent {
 
-  void RegisterMovingLightNativeComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept;
+void RegisterMovingLightNativeComponent(
+    winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept;
 
 } // namespace winrt::SampleCustomComponent
