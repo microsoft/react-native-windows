@@ -1510,11 +1510,11 @@ ViewComponentView::CreateInternalVisualHandler() const noexcept {
 void ViewComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     if (m_createInternalVisualHandler) {
-      m_visual = m_createInternalVisualHandler();
+      m_visual = m_createInternalVisualHandler(*this);
     } else if (m_createVisualHandler) {
       m_visual =
           winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateVisual(
-              m_createVisualHandler());
+              m_createVisualHandler(*this));
     } else {
       m_visual = createVisual();
     }

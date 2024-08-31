@@ -1,43 +1,46 @@
 {
-  "name": "playground",
-  "version": "0.0.54",
+  "name": "sample-custom-component",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "bundle-win32": "rnw-scripts prepareBundleWin32 && npx @react-native-community/cli bundle --entry-file Samples/rntester.tsx --bundle-output windows/playground-win32/Bundle/Samples/rntester.bundle --platform windows --assets-dest windows/playground-win32/Bundle",
-    "start": "npx @react-native-community/cli start",
-    "lint:fix": "rnw-scripts lint:fix",
+    "build": "rnw-scripts buildWithCodegetNativeComponents",
     "lint": "rnw-scripts lint",
-    "windows": "npx @react-native-community/cli run-windows"
+    "lint:fix": "rnw-scripts lint:fix"
   },
+  "main": "lib-commonjs/index.js",
+  "types": "lib-commonjs/index.d.ts",
   "dependencies": {
-    "@react-native-picker/picker": "^2.5.1",
-    "@react-native-windows/tester": "0.0.1",
     "@types/react": "^18.2.6",
-    "@typescript-eslint/eslint-plugin": "^5.21.0",
-    "@typescript-eslint/parser": "^5.21.0",
     "react": "^19.0.0-rc-fb9a90fa48-20240614",
     "react-native": "0.76.0-nightly-20240816-17017d2b8",
     "react-native-windows": "^0.0.0-canary.861"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@babel/generator": "^7.20.0",
+    "@babel/preset-env": "^7.20.0",
+    "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "14.0.0-alpha.11",
     "@react-native/metro-config": "0.76.0-nightly-20240701-9f6cb21ed",
+    "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.26",
     "@rnw-scripts/just-task": "2.3.43",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnw-scripts/ts-config": "2.0.5",
-    "@types/node": "^18.0.0",
+    "@rnx-kit/jest-preset": "^0.1.16",
     "@types/react": "^18.2.6",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
+    "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
+    "glob": "^7.1.6",
     "just-scripts": "^1.3.3",
     "prettier": "2.8.8",
-    "react-test-renderer": "18.3.1",
-    "sample-custom-component": "0.0.1"
+    "typescript": "5.0.4"
   },
   "engines": {
-    "node": ">= 18"
+    "node": ">=18"
   }
 }

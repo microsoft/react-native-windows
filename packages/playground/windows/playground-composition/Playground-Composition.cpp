@@ -34,6 +34,9 @@
 #include <winrt/Microsoft.UI.Windowing.h>
 #include <winrt/Microsoft.UI.interop.h>
 
+// Includes from sample-custom-component
+#include <winrt/SampleCustomComponent.h>
+
 winrt::Microsoft::UI::Dispatching::DispatcherQueueController g_liftedDispatcherQueueController{nullptr};
 winrt::Microsoft::UI::Composition::Compositor g_liftedCompositor{nullptr};
 
@@ -227,6 +230,9 @@ struct WindowData {
               host.InstanceSettings(), L"React Native Windows Playground");
 
           host.PackageProviders().Append(winrt::make<CompReactPackageProvider>());
+
+          host.PackageProviders().Append(winrt::SampleCustomComponent::ReactPackageProvider());
+
           winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
               host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(hwnd));
 
@@ -449,6 +455,7 @@ struct WindowData {
       LR"(Samples\image)",
       LR"(Samples\index)",
       LR"(Samples\nativeFabricComponent)",
+      LR"(Samples\movingLight)",
       LR"(Samples\mouse)",
       LR"(Samples\scrollViewSnapSample)",
       LR"(Samples\simple)",
