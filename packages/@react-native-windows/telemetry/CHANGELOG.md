@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-This log was last generated on Mon, 19 Aug 2024 20:18:58 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Sep 2024 15:15:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.1
+
+Mon, 02 Sep 2024 15:15:00 GMT
+
+### Patches
+
+- Improve new project name(space) validation and cleaning (jthysell@microsoft.com)
 
 ## 0.75.0
 

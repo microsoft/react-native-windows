@@ -2,6 +2,39 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 02 Sep 2024 15:14:59 GMT",
+      "version": "0.75.1",
+      "tag": "@react-native-windows/cli_v0.75.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "d03d305b2c997e8d8b3f775a0351d5f1654de0ec",
+            "comment": "Update templates to calculate rnwPath for *.sln files"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "79dfcfc76abbc951f3aa0b4c508b595addf8458b",
+            "comment": "Fix run-windows --singleproc to override high memory"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "e0419218dbfadc01cc12e263e588863c58eb4b6c",
+            "comment": "Improve new project name(space) validation and cleaning"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.75.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Aug 2024 20:18:59 GMT",
       "version": "0.75.0",
       "tag": "@react-native-windows/cli_v0.75.0",

@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Mon, 02 Sep 2024 15:15:00 GMT",
+      "version": "0.75.1",
+      "tag": "@react-native-windows/telemetry_v0.75.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "e0419218dbfadc01cc12e263e588863c58eb4b6c",
+            "comment": "Improve new project name(space) validation and cleaning"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Aug 2024 20:18:58 GMT",
       "version": "0.75.0",
       "tag": "@react-native-windows/telemetry_v0.75.0",

@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 19 Aug 2024 20:18:58 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Sep 2024 15:15:00 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.1
+
+Mon, 02 Sep 2024 15:15:00 GMT
+
+### Patches
+
+- Update templates to calculate rnwPath for *.sln files (jthysell@microsoft.com)
+- replace IAppData.TemporaryFolder with GetTempPathW (aeulitz@outlook.com)
+- integrate 0.75.2 (tatianakapos@microsoft.com)
+- Switch New Architecture templates to use prebuilt NuGets (jthysell@microsoft.com)
+- Enable Timer TurboModule for Desktop (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.75.1
 
 ## 0.75.0
 

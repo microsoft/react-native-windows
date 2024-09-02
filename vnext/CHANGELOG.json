@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 02 Sep 2024 15:15:00 GMT",
+      "version": "0.75.1",
+      "tag": "react-native-windows_v0.75.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d03d305b2c997e8d8b3f775a0351d5f1654de0ec",
+            "comment": "Update templates to calculate rnwPath for *.sln files"
+          },
+          {
+            "author": "aeulitz@outlook.com",
+            "package": "react-native-windows",
+            "commit": "6c7cbf211f56e533e7d747f56229ba31598855b7",
+            "comment": "replace IAppData.TemporaryFolder with GetTempPathW"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "576f06fd10e020c30e9e204e189c5133a0cbd038",
+            "comment": "integrate 0.75.2"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "79dfcfc76abbc951f3aa0b4c508b595addf8458b",
+            "comment": "Switch New Architecture templates to use prebuilt NuGets"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "0eb7b622d1fffda42f6af1e5dae55c999e96bf69",
+            "comment": "Enable Timer TurboModule for Desktop"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.75.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Aug 2024 20:18:58 GMT",
       "version": "0.75.0",
       "tag": "react-native-windows_v0.75.0",

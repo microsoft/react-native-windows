@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.75] Update templates to calculate rnwPath for *.sln files",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
