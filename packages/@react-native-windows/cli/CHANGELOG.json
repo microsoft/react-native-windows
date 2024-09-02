@@ -2,6 +2,45 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 02 Sep 2024 15:14:35 GMT",
+      "version": "0.74.4",
+      "tag": "@react-native-windows/cli_v0.74.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "c3627ebdea1044489b9eb1dfd6c645784f5b1186",
+            "comment": "Enable devMode with react-native init-windows old/* templates"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "8c67f63e0511338ddcd028ccd13afb56a39e8e97",
+            "comment": "Update templates to calculate rnwPath for *.sln files"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "e4b77e59951cbf03cd09aec8209b4ea349e32e2f",
+            "comment": "Fix run-windows --singleproc to override high memory"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "39e5e797fea7af038edbc39d010ec1131009c5ff",
+            "comment": "Improve new project name(space) validation and cleaning"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.74.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Aug 2024 19:11:33 GMT",
       "version": "0.74.3",
       "tag": "@react-native-windows/cli_v0.74.3",

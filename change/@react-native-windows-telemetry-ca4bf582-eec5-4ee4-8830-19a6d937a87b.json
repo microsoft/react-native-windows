@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[0.74] Improve new project name(space) validation and cleaning",
-  "packageName": "@react-native-windows/telemetry",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

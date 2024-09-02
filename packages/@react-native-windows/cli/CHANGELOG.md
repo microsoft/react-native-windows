@@ -1,8 +1,20 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 19 Aug 2024 19:11:33 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Sep 2024 15:14:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.4
+
+Mon, 02 Sep 2024 15:14:35 GMT
+
+### Patches
+
+- Enable devMode with react-native init-windows old/* templates (jthysell@microsoft.com)
+- Update templates to calculate rnwPath for *.sln files (jthysell@microsoft.com)
+- Fix run-windows --singleproc to override high memory (jthysell@microsoft.com)
+- Improve new project name(space) validation and cleaning (jthysell@microsoft.com)
+- Bump @react-native-windows/telemetry to v0.74.2
 
 ## 0.74.3
 

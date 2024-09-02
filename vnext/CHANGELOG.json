@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 02 Sep 2024 15:14:36 GMT",
+      "version": "0.74.20",
+      "tag": "react-native-windows_v0.74.20",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8c67f63e0511338ddcd028ccd13afb56a39e8e97",
+            "comment": "Update templates to calculate rnwPath for *.sln files"
+          },
+          {
+            "author": "aeulitz@outlook.com",
+            "package": "react-native-windows",
+            "commit": "845b736b4e6b6e814384ccb9389c7b0a1d549f4c",
+            "comment": "replace IAppData.TemporaryFolder with GetTempPathW"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8a4ac585a13798eba221c67c248737e6f789d169",
+            "comment": "[Fabric] Fixes a crash that happens on release builds"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "c3627ebdea1044489b9eb1dfd6c645784f5b1186",
+            "comment": "Enable devMode with react-native init-windows old/* templates"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e4b77e59951cbf03cd09aec8209b4ea349e32e2f",
+            "comment": "Switch New Architecture templates to use prebuilt NuGets"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.74.4",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 26 Aug 2024 15:14:15 GMT",
       "version": "0.74.19",
       "tag": "react-native-windows_v0.74.19",

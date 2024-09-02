@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 26 Aug 2024 15:14:15 GMT and should not be manually modified.
+This log was last generated on Mon, 02 Sep 2024 15:14:36 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.20
+
+Mon, 02 Sep 2024 15:14:36 GMT
+
+### Patches
+
+- Update templates to calculate rnwPath for *.sln files (jthysell@microsoft.com)
+- replace IAppData.TemporaryFolder with GetTempPathW (aeulitz@outlook.com)
+- [Fabric] Fixes a crash that happens on release builds (30809111+acoates-ms@users.noreply.github.com)
+- Enable devMode with react-native init-windows old/* templates (jthysell@microsoft.com)
+- Switch New Architecture templates to use prebuilt NuGets (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.74.4
 
 ## 0.74.19
 
