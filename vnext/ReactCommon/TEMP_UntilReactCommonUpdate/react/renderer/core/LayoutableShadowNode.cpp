@@ -289,8 +289,10 @@ ShadowNode::Shared LayoutableShadowNode::findNodeAtPoint(
       relativeX = -relativeX;
     }
 
+    // [Windows - #13644
     point.x = float(centerX + relativeX);
     point.y = float(centerY + relativeY);
+    // Windows]
   }
 
   auto newPoint = point - transformedFrame.origin -
