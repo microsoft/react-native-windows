@@ -126,7 +126,9 @@ export function parseMsBuildProps(
     const props = options.msbuildprops.split(',');
     for (const prop of props) {
       const propAssignment = prop.split('=');
-      result[propAssignment[0]] = propAssignment[1];
+      if (propAssignment.length === 2) {
+        result[propAssignment[0]] = propAssignment[1];
+      }
     }
   }
   return result;

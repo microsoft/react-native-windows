@@ -50,7 +50,8 @@ function optionSanitizer(key: keyof RunWindowsOptions, value: any): any {
     case 'buildLogDirectory':
       return value === undefined ? false : true; // Strip PII
     case 'msbuildprops':
-      return value === undefined ? 0 : value.split(',').length; // Convert to count
+      const val:string = value?.toString() ?? '';
+      return val.split(',').length; // Convert to count
     case 'release':
     case 'arch':
     case 'singleproc':
