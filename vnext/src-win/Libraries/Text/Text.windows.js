@@ -314,18 +314,19 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
       }
 
       // [Windows
-      let styleProps: ViewStyleProp = (style: any);
+      // $FlowFixMe[unclear-type]
+      let styleProps: ViewStyleProp = (style: any); // Flow style type casting
       if (
         global.RN$Bridgeless !== true && // [Windows] Fabric text handles borders, but on paper we need to wrap it in an extra view
         styleProps &&
-        styleProps.borderColor &&
-        (styleProps.borderWidth ||
-          styleProps.borderBottomWidth ||
-          styleProps.borderEndWidth ||
-          styleProps.borderLeftWidth ||
-          styleProps.borderRightWidth ||
-          styleProps.borderStartWidth ||
-          styleProps.borderTopWidth)
+        styleProps.borderColor != null &&
+        (styleProps.borderWidth != null ||
+          styleProps.borderBottomWidth != null ||
+          styleProps.borderEndWidth != null ||
+          styleProps.borderLeftWidth != null ||
+          styleProps.borderRightWidth != null ||
+          styleProps.borderStartWidth != null ||
+          styleProps.borderTopWidth != null)
       ) {
         let textStyleProps = Array.isArray(styleProps)
         ? // $FlowFixMe[underconstrained-implicit-instantiation]
