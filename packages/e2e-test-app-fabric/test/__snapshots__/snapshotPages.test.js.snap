@@ -10550,8 +10550,16 @@ exports[`snapshotAllPages Fabric Native Component 1`] = `
   >
     This is RN Text
   </Text>
+  <Text
+    style={
+      {
+        "color": "red",
+      }
+    }
+  />
   <CustomXamlComponentWithNativeLayout
     label="This is a Xaml Button set to ellipisify on truncation"
+    onMyEvent={[Function]}
     style={
       {
         "flexShrink": 1,
@@ -10673,8 +10681,16 @@ exports[`snapshotAllPages Fabric Native Component Yoga 1`] = `
   >
     This is RN Text
   </Text>
+  <Text
+    style={
+      {
+        "color": "red",
+      }
+    }
+  />
   <CustomXamlComponentWithYogaLayout
     label="This is a Xaml Button set to ellipisify on truncation"
+    onMyEvent={[Function]}
     style={
       {
         "flex": 1,
@@ -67572,6 +67588,16 @@ exports[`snapshotAllPages View 7`] = `
         "borderBottomRightRadius": "50%",
         "borderTopLeftRadius": "10%",
         "borderTopRightRadius": "20%",
+        "borderWidth": 6,
+        "height": 50,
+        "width": 100,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "borderRadius": "0%",
         "borderWidth": 6,
         "height": 50,
         "width": 100,
