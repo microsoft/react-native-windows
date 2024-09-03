@@ -57,6 +57,7 @@ BEGIN
         MENUITEM "&Open Javascript File...\tCtrl+O", IDM_OPENJSFILE
         MENUITEM "&New Window\tCtrl+N",         IDM_NEWWINDOW
         MENUITEM "&Refresh\tF5",                IDM_REFRESH
+        MENUITEM "&Unload",                     IDM_UNLOAD
         MENUITEM SEPARATOR
         MENUITEM "&Settings...\tAlt+S",         IDM_SETTINGS
         MENUITEM SEPARATOR

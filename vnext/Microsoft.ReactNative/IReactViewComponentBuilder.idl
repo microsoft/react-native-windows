@@ -3,6 +3,7 @@
 
 import "ViewProps.idl";
 import "ComponentView.idl";
+import "IJSValueWriter.idl";
 
 #include "DocString.h"
 
@@ -87,6 +88,14 @@ namespace Microsoft.ReactNative
   [experimental]
   delegate void UnmountChildComponentViewDelegate(ComponentView source, UnmountChildComponentViewArgs args);
 
+  [experimental]
+  runtimeclass EventEmitter {
+    void DispatchEvent(String eventName, JSValueArgWriter args);
+  };
+
+  [experimental]
+  delegate void UpdateEventEmitterDelegate(ComponentView source, EventEmitter eventEmitter);
+
   [webhosthidden]
   [experimental]
   interface IReactViewComponentBuilder
@@ -105,6 +114,7 @@ namespace Microsoft.ReactNative
     void SetFinalizeUpdateHandler(UpdateFinalizerDelegate impl);
     void SetUpdatePropsHandler(UpdatePropsDelegate impl);
     void SetUpdateStateHandler(UpdateStateDelegate impl);
+    void SetUpdateEventEmitterHandler(UpdateEventEmitterDelegate impl);
     void SetMountChildComponentViewHandler(MountChildComponentViewDelegate impl);
     void SetUnmountChildComponentViewHandler(UnmountChildComponentViewDelegate impl);
   };
@@ -123,6 +133,7 @@ namespace Microsoft.ReactNative
     void EnsureUnsealed();
     Object Tag { get; set; };
     Object StateData{ get; set; };
+    EventEmitter EventEmitter { get; };
   };
 
   [webhosthidden]

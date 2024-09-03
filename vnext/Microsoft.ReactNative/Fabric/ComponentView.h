@@ -211,23 +211,13 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   void UserData(const winrt::IInspectable &userData) noexcept;
   winrt::IInspectable UserData() const noexcept;
 
-  void CustomCommandHandler(const HandleCommandDelegate &handler);
-  HandleCommandDelegate CustomCommandHandler() const noexcept;
-
-  void UpdatePropsHandler(const UpdatePropsDelegate &handler);
-  UpdatePropsDelegate UpdatePropsHandler() const noexcept;
-
-  void UpdateStateHandler(const UpdateStateDelegate &handler);
-  UpdateStateDelegate UpdateStateHandler() const noexcept;
-
-  void MountChildComponentViewHandler(const MountChildComponentViewDelegate &handler);
-  MountChildComponentViewDelegate MountChildComponentViewHandler() const noexcept;
-
-  void UnmountChildComponentViewHandler(const UnmountChildComponentViewDelegate &handler);
-  UnmountChildComponentViewDelegate UnmountChildComponentViewHandler() const noexcept;
-
-  void FinalizeUpdateHandler(const UpdateFinalizerDelegate &handler);
-  UpdateFinalizerDelegate FinalizeUpdateHandler() const noexcept;
+  void CustomCommandHandler(const HandleCommandDelegate &handler) noexcept;
+  void UpdatePropsHandler(const UpdatePropsDelegate &handler) noexcept;
+  void UpdateStateHandler(const UpdateStateDelegate &handler) noexcept;
+  void UpdateEventEmitterHandler(const UpdateEventEmitterDelegate &handler) noexcept;
+  void MountChildComponentViewHandler(const MountChildComponentViewDelegate &handler) noexcept;
+  void UnmountChildComponentViewHandler(const UnmountChildComponentViewDelegate &handler) noexcept;
+  void FinalizeUpdateHandler(const UpdateFinalizerDelegate &handler) noexcept;
 
   virtual void MountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
@@ -276,6 +266,7 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   UpdateFinalizerDelegate m_finalizeUpdateHandler{nullptr};
   MountChildComponentViewDelegate m_mountChildComponentViewHandler{nullptr};
   UnmountChildComponentViewDelegate m_unmountChildComponentViewHandler{nullptr};
+  UpdateEventEmitterDelegate m_updateEventEmitterHandler{nullptr};
 
   winrt::event<
       winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs>>

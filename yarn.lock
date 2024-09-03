@@ -8756,9 +8756,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 lage@^2.7.1:
-  version "2.7.22"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-2.7.22.tgz#8cedba0d5abb2315be3b13675c5ae3d2898a142b"
-  integrity sha512-oCtUgWTtr2fPKoWso4utPNiogJIGs5H4yZCPy7u+wjdGiIh3Y+EQLOuosvHjdL7qpkErtISo65om9gXttXXBZw==
+  version "2.7.23"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-2.7.23.tgz#e764ed5d5c03a0584140a928de11c1816b139992"
+  integrity sha512-22sQNiflRWEtXGw0dfbpnTnPxK8mq4ycIY2G6FcOyShgDnqnbRILZlbEZWGO6sGdXyOYfKyThJ/XfFjHMBStsw==
   dependencies:
     glob-hasher "^1.4.2"
   optionalDependencies:
@@ -11296,9 +11296,9 @@ signedsource@^1.0.0:
   integrity sha512-6+eerH9fEnNmi/hyM1DXcRK3pWdoMQtlkQ+ns0ntzunjKqp5i3sKCc80ym8Fib3iaYhdJUOPdhlJWj1tvge2Ww==
 
 simple-git@^3.3.0:
-  version "3.25.0"
-  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.25.0.tgz#3666e76d6831f0583dc380645945b97e0ac4aab6"
-  integrity sha512-KIY5sBnzc4yEcJXW7Tdv4viEz8KyG+nU0hay+DWZasvdFOYKeUZ6Xc25LUHHjw0tinPT7O1eY6pzX7pRT1K8rw==
+  version "3.26.0"
+  resolved "https://registry.yarnpkg.com/simple-git/-/simple-git-3.26.0.tgz#9ee91de402206911dcb752c65db83f5177e18121"
+  integrity sha512-5tbkCSzuskR6uA7uA23yjasmA0RzugVo8QM2bpsnxkrgP13eisFT7TMS4a+xKEJvbmr4qf+l0WT3eKa9IxxUyw==
   dependencies:
     "@kwsites/file-exists" "^1.1.1"
     "@kwsites/promise-deferred" "^1.1.1"
