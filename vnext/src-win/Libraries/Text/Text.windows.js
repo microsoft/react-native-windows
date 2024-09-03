@@ -388,6 +388,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
       // to keep the check simple to avoid regressing overall perf. For this reason the
       // `children.length` constant is set to `3`, this should be a reasonable tradeoff
       // to capture the majority of `Text` uses but also not make this check too expensive.
+      /*
       if (Array.isArray(children) && children.length <= 3) {
         let hasNonTextChild = false;
         for (let child of children) {
@@ -402,6 +403,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
       } else if (typeof children !== 'object') {
         return nativeText;
       }
+      */
 
       return (
         <TextAncestor.Provider value={true}>{nativeText}</TextAncestor.Provider>
