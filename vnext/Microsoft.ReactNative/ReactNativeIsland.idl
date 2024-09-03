@@ -59,6 +59,9 @@ namespace Microsoft.ReactNative
 
     DOC_STRING("Forward input to the RootView. Only required when not using ContentIslands")
     Int64 SendMessage(UInt32 Msg, UInt64 WParam, Int64 LParam);
+
+    void OnMounted();
+    void OnUnmounted();
   }
   }
 

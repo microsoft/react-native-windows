@@ -61,6 +61,9 @@ struct ReactNativeIsland
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual InternalRootVisual() noexcept;
   void InternalRootVisual(winrt::Microsoft::ReactNative::Composition::Experimental::IVisual const &value) noexcept;
 
+  void OnMounted() noexcept;
+  void OnUnmounted() noexcept;
+
   // property Size
   winrt::Windows::Foundation::Size Size() noexcept;
   void Size(winrt::Windows::Foundation::Size value) noexcept;
@@ -126,6 +129,8 @@ struct ReactNativeIsland
   winrt::event_token m_islandFrameworkClosedToken;
   winrt::event_token m_islandAutomationProviderRequestedToken;
   winrt::event_token m_islandStateChangedToken;
+  winrt::event_token m_islandConnectedToken;
+  winrt::event_token m_islandDisconnectedToken;
 #endif
 
   HWND m_hwnd{0};
@@ -133,6 +138,7 @@ struct ReactNativeIsland
   bool m_isJSViewAttached{false};
   bool m_hasRenderedVisual{false};
   bool m_showingLoadingUI{false};
+  bool m_mounted{false};
   IReactDispatcher m_uiDispatcher{nullptr};
   winrt::IInspectable m_uiaProvider{nullptr};
   int64_t m_rootTag{-1};

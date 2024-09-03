@@ -74,9 +74,7 @@ void WindowsComponentDescriptorRegistry::Add(
        m_descriptorFlavors.back()->c_str(),
        std::static_pointer_cast<void const>(m_descriptorFlavors.back()),
        winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(builder)
-               ->IsViewComponent()
-           ? &facebook::react::concreteComponentDescriptorConstructor<AbiViewComponentDescriptor>
-           : &facebook::react::concreteComponentDescriptorConstructor<AbiComponentDescriptor>});
+           ->GetComponentDescriptorProvider()});
 }
 
 winrt::Microsoft::ReactNative::IReactViewComponentBuilder WindowsComponentDescriptorRegistry::GetDescriptor(

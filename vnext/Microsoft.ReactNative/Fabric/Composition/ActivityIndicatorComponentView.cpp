@@ -29,8 +29,7 @@ ActivityIndicatorComponentView::ActivityIndicatorComponentView(
           compContext,
           tag,
           reactContext,
-          ComponentViewFeatures::Default,
-          false) {}
+          ComponentViewFeatures::Default) {}
 
 void ActivityIndicatorComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
@@ -83,6 +82,7 @@ void ActivityIndicatorComponentView::FinalizeUpdates(
   } else {
     m_ActivityIndicatorVisual.Size(radiusLarge * m_layoutMetrics.pointScaleFactor);
   }
+  base_type::FinalizeUpdates(updateMask);
 }
 
 void ActivityIndicatorComponentView::updateState(
