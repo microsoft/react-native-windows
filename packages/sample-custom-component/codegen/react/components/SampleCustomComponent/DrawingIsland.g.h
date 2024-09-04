@@ -38,16 +38,41 @@ void RegisterDrawingIslandNativeComponent(
         builder.SetCreateProps(
             [](winrt::Microsoft::ReactNative::ViewProps props) noexcept { return winrt::make<TProps>(props); });
 
-        RegisterUpdatePropsHandler<TUserData, TProps>(builder);
-        RegisterUpdateEventEmitterHandler<TUserData, TEventEmitter>(builder);
-        RegisterFinalizeUpdateHandler<TUserData>(builder);
-        RegisterUpdateStateHandler<TUserData, TProps>(builder);
-        RegisterCommandHandler<TUserData>(builder);
-        RegisterMountChildComponentViewHandler<TUserData>(builder);
-        RegisterUnmountChildComponentViewHandler<TUserData>(builder);
+        if constexpr (requires { &TUserData::template RegisterUpdatePropsHandler<TUserData, TProps>; }) {
+          TUserData::template RegisterUpdatePropsHandler<TUserData, TProps>(builder);
+        }
 
-        RegisterComponentInitializer<TUserData>(compBuilder);
-        RegisterComponentCreateVisual<TUserData>(compBuilder);
+        if constexpr (requires { &TUserData::template RegisterUpdateEventEmitterHandler<TUserData, TEventEmitter>; }) {
+          TUserData::template RegisterUpdateEventEmitterHandler<TUserData, TEventEmitter>(builder);
+        }
+
+        if constexpr (requires { &TUserData::template RegisterFinalizeUpdateHandler<TUserData>; }) {
+          TUserData::template RegisterFinalizeUpdateHandler<TUserData>(builder);
+        } 
+
+        if constexpr (requires { &TUserData::template RegisterUpdateStateHandler<TUserData, TProps>; }) {
+          TUserData::template RegisterUpdateStateHandler<TUserData, TProps>(builder);
+        }
+
+        if constexpr (requires { &TUserData::template RegisterCommandHandler<TUserData>; }) {
+          TUserData::template RegisterCommandHandler<TUserData>(builder);
+        }
+
+        if constexpr (requires { &TUserData::template RegisterMountChildComponentViewHandler<TUserData>; }) {
+          TUserData::template RegisterMountChildComponentViewHandler<TUserData>(builder);
+        }
+
+        if constexpr (requires { &TUserData::template RegisterUnmountChildComponentViewHandler<TUserData>; }) {
+          TUserData::template RegisterUnmountChildComponentViewHandler<TUserData>(builder);
+        }
+
+        if constexpr (requires { &TUserData::template RegisterComponentInitializer<TUserData>; }) {
+          TUserData::template RegisterComponentInitializer<TUserData>(compBuilder);
+        }
+
+        if constexpr (requires { &TUserData::template RegisterComponentCreateVisual<TUserData>; }) {
+          TUserData::template RegisterComponentCreateVisual<TUserData>(compBuilder);
+        }
 
         // Allow app to further customize the builder
         if (builderCallback) {
