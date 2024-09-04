@@ -9257,18 +9257,18 @@ metro-runtime@^0.80.3:
     "@babel/runtime" "^7.25.0"
     flow-enums-runtime "^0.0.6"
 
-metro-source-map@0.80.10, metro-source-map@^0.80.3:
-  version "0.80.10"
-  resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.80.10.tgz#95bc0c1edccd3e0b53af4126deda7fbbe104ef15"
-  integrity sha512-EyZswqJW8Uukv/HcQr6K19vkMXW1nzHAZPWJSEyJFKIbgp708QfRZ6vnZGmrtFxeJEaFdNup4bGnu8/mIOYlyA==
+metro-source-map@0.80.11, metro-source-map@^0.80.3:
+  version "0.80.11"
+  resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.80.11.tgz#5154845e2c0a9bfcc5d7332baa3b67c742ab6643"
+  integrity sha512-s/lxGxUBVYhufYmJBLpxk1m6m73KbcXBS30T1TGPKJWhrO/hu6T0i9fqS6r/z4LdhB/TGQkHoB1VWiQ/J445iQ==
   dependencies:
     "@babel/traverse" "^7.20.0"
     "@babel/types" "^7.20.0"
     flow-enums-runtime "^0.0.6"
     invariant "^2.2.4"
-    metro-symbolicate "0.80.10"
+    metro-symbolicate "0.80.11"
     nullthrows "^1.1.1"
-    ob1 "0.80.10"
+    ob1 "0.80.11"
     source-map "^0.5.6"
     vlq "^1.0.0"
 
@@ -9286,14 +9286,14 @@ metro-source-map@0.80.9:
     source-map "^0.5.6"
     vlq "^1.0.0"
 
-metro-symbolicate@0.80.10:
-  version "0.80.10"
-  resolved "https://registry.yarnpkg.com/metro-symbolicate/-/metro-symbolicate-0.80.10.tgz#441121d97408c5a3da25c49c3ce8ae7b034eadf7"
-  integrity sha512-qAoVUoSxpfZ2DwZV7IdnQGXCSsf2cAUExUcZyuCqGlY5kaWBb0mx2BL/xbMFDJ4wBp3sVvSBPtK/rt4J7a0xBA==
+metro-symbolicate@0.80.11:
+  version "0.80.11"
+  resolved "https://registry.yarnpkg.com/metro-symbolicate/-/metro-symbolicate-0.80.11.tgz#b3ad437ebc09bcee441a74789e8f0b872c62a4b9"
+  integrity sha512-xYQYC5dZd9qtK6gxwsnzgw3Byv9juQnJPcnt+fFcNfQBPxiZNuDa8tLq240btVGG3giQfmkNTWe1lHKsFddDBQ==
   dependencies:
     flow-enums-runtime "^0.0.6"
     invariant "^2.2.4"
-    metro-source-map "0.80.10"
+    metro-source-map "0.80.11"
     nullthrows "^1.1.1"
     source-map "^0.5.6"
     through2 "^2.0.1"
@@ -9804,10 +9804,10 @@ oauth-sign@~0.9.0:
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.9.0.tgz#47a7b016baa68b5fa0ecf3dee08a85c679ac6455"
   integrity sha512-fexhUFFPTGV8ybAtSIGbV6gOkSv8UtRbDBnAyLQw4QPKkgNlsH2ByPGtMUqdWkos6YCRmAqViwgZrJc/mRDzZQ==
 
-ob1@0.80.10:
-  version "0.80.10"
-  resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.80.10.tgz#30dc7e4619cf591d46d7e16db5d4aed3e2674172"
-  integrity sha512-dJHyB0S6JkMorUSfSGcYGkkg9kmq3qDUu3ygZUKIfkr47XOPuG35r2Sk6tbwtHXbdKIXmcMvM8DF2CwgdyaHfQ==
+ob1@0.80.11:
+  version "0.80.11"
+  resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.80.11.tgz#c1dd4d7825f94c9c51c94f0b02e88e828a2ce0d8"
+  integrity sha512-1FqQEnd4n3UJ441/eHSKCgiMGf1RbrR/aXN0ybJ27zhbq+cc4mpE4WHLuzgNEnXu/9wf43lnAUL0WN7vcVD8Yg==
   dependencies:
     flow-enums-runtime "^0.0.6"
 
