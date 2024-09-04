@@ -404,6 +404,23 @@ void ReactNativeIsland::InitRootView(
   m_isInitialized = true;
 }
 
+void ReactNativeIsland::AddCompositionEventHandler(
+    uint64_t hwnd,
+    winrt::Microsoft::ReactNative::IReactContext context) noexcept {
+  m_uiDispatcher = context.Properties()
+                       .Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
+                       .try_as<IReactDispatcher>();
+  VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
+
+  if (!m_CompositionEventHandler) {
+    // Create CompositionEventHandler if not already created
+    m_context = winrt::Microsoft::ReactNative::ReactContext(std::move(context));
+    m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this);
+    m_isInitialized = true;
+  }
+}
+
+
 void ReactNativeIsland::UpdateRootView() noexcept {
   VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
   VerifyElseCrash(m_isInitialized);

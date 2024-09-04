@@ -112,6 +112,10 @@ struct ReactNativeIsland
       const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
       facebook::react::Tag tag) noexcept;
 
+  void AddCompositionEventHandler(
+      uint64_t hwnd,
+      winrt::Microsoft::ReactNative::IReactContext context) noexcept;
+
  public: // IReactViewInstance UI-thread implementation
   void InitRootView(
       winrt::Microsoft::ReactNative::IReactContext &&context,
