@@ -33,8 +33,7 @@ SwitchComponentView::SwitchComponentView(
           compContext,
           tag,
           reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
-          false) {}
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {}
 
 winrt::Microsoft::ReactNative::ComponentView SwitchComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
@@ -304,14 +303,13 @@ void SwitchComponentView::OnPointerExited(
 }
 
 void SwitchComponentView::OnKeyUp(
-    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   if (args.Key() == winrt::Windows::System::VirtualKey::Space) {
     if (toggle()) {
       args.Handled(true);
     }
   }
-  Super::OnKeyUp(source, args);
+  Super::OnKeyUp(args);
 }
 
 bool SwitchComponentView::toggle() noexcept {

@@ -24,8 +24,7 @@ UnimplementedNativeViewComponentView::UnimplementedNativeViewComponentView(
           reactContext,
           ComponentViewFeatures::Default &
               ~(ComponentViewFeatures::Background | ComponentViewFeatures::ShadowProps |
-                ComponentViewFeatures::NativeBorder),
-          false) {
+                ComponentViewFeatures::NativeBorder)) {
   m_labelVisual = compContext.CreateSpriteVisual();
   OuterVisual().InsertAt(m_labelVisual, 1);
 }
