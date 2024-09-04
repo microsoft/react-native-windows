@@ -1249,7 +1249,7 @@
   resolved "https://registry.yarnpkg.com/@babel/regjsgen/-/regjsgen-0.8.0.tgz#f0ba69b075e1f05fb2825b7fad991e7adbb18310"
   integrity sha512-x/rqGMdzj+fWZvCOYForTghzbtqPDZ5gPwaoNGHdgDfF2QA/XZbCBp4Moo5scrkAMPhB7z26XM/AaHuIJdgauA==
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.20.0", "@babel/runtime@^7.8.4":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.20.0", "@babel/runtime@^7.25.0", "@babel/runtime@^7.8.4":
   version "7.25.6"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.25.6.tgz#9afc3289f7184d8d7f98b099884c26317b9264d2"
   integrity sha512-VBj9MYyDb9tuLq7yzqjgzt6Q+IBQLrGZfdjOekyEirZPHxXWoTSGUTMrpsfi58Up73d13NfYLv8HT9vmznjzhQ==
@@ -9250,11 +9250,11 @@ metro-runtime@0.80.9:
     "@babel/runtime" "^7.0.0"
 
 metro-runtime@^0.80.3:
-  version "0.80.10"
-  resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.80.10.tgz#3fbca798586fa3771018e1d2bd0ef7ac445805ba"
-  integrity sha512-Xh0N589ZmSIgJYAM+oYwlzTXEHfASZac9TYPCNbvjNTn0EHKqpoJ/+Im5G3MZT4oZzYv4YnvzRtjqS5k0tK94A==
+  version "0.80.11"
+  resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.80.11.tgz#fe43c5dd62b865da484568298de7275c45bf60f9"
+  integrity sha512-EI7idlPKPZntUnht2ipFhIVR4+PyjRxCXi4xcDyJfrGhOJH/EfXjb5jp3sYN/np6m9HOtCniBOmL1twlDtmeaA==
   dependencies:
-    "@babel/runtime" "^7.0.0"
+    "@babel/runtime" "^7.25.0"
     flow-enums-runtime "^0.0.6"
 
 metro-source-map@0.80.10, metro-source-map@^0.80.3:
