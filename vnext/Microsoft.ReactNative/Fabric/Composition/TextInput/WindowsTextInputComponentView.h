@@ -62,16 +62,10 @@ struct WindowsTextInputComponentView
   void OnPointerMoved(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
 
-  void OnKeyDown(
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
-  void OnKeyUp(
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
-  void OnCharacterReceived(
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
-      const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept
-      override;
+  void OnKeyDown(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void OnKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void OnCharacterReceived(const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs
+                               &args) noexcept override;
 
   std::optional<std::string> getAcccessiblityValue() noexcept override;
   void setAcccessiblityValue(std::string &&value) noexcept override;
@@ -106,7 +100,6 @@ struct WindowsTextInputComponentView
       const facebook::react::SharedColor &cursorColor,
       const facebook::react::SharedColor &foregroundColor) noexcept;
   bool ShouldSubmit(
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
       const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};

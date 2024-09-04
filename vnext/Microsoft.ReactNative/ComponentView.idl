@@ -45,13 +45,6 @@ namespace Microsoft.ReactNative
 
   [experimental]
   [webhosthidden]
-  unsealed runtimeclass CreateComponentViewArgs {
-    Int32 Tag {get;};
-    IReactContext ReactContext { get;};
-  };
-
-  [experimental]
-  [webhosthidden]
   runtimeclass LosingFocusEventArgs : Microsoft.ReactNative.Composition.Input.RoutedEventArgs {
     Microsoft.ReactNative.ComponentView NewFocusedComponent { get; };
     Microsoft.ReactNative.ComponentView OldFocusedComponent { get; };
@@ -72,40 +65,48 @@ namespace Microsoft.ReactNative
 
   [experimental]
   [webhosthidden]
-  unsealed runtimeclass ComponentView {
-    ComponentView(CreateComponentViewArgs args);
+  runtimeclass LayoutMetricsChangedArgs {
+    LayoutMetrics NewLayoutMetrics { get; };
+    LayoutMetrics OldLayoutMetrics { get; };
+  };
 
+
+  // [exclusiveto(ComponentView)]
+  // [uuid(AEE8C30B-0E56-4FB8-8A80-D5CA9DE90916)]
+  // interface IComponentViewFactory
+  // {
+  // }
+
+  // [composable(IComponentViewFactory, protected)]
+  [experimental]
+  [webhosthidden]
+  unsealed runtimeclass ComponentView {
     Int32 Tag { get; };
     ComponentView Parent { get; };
     IVectorView<ComponentView> Children { get; };
-    IReactContext ReactContext { get;};
-
-    overridable void MountChildComponentView(ComponentView childComponentView, UInt32 index);
-    overridable void UnmountChildComponentView(ComponentView childComponentView, UInt32 index);
-    overridable void HandleCommand(String commandName, IJSValueReader args);
-    overridable void UpdateProps(IComponentProps props, IComponentProps oldProps);
-    overridable void UpdateState(IComponentState state);
-    overridable void UpdateLayoutMetrics(LayoutMetrics metrics, LayoutMetrics oldMetrics);
-    overridable void FinalizeUpdates(ComponentViewUpdateMask updateMask);
-
-    DOC_STRING("Used to handle key down events when this component is focused, or if a child component did not handle the key down")
-    overridable void OnKeyDown(Microsoft.ReactNative.Composition.Input.KeyboardSource source, Microsoft.ReactNative.Composition.Input.KeyRoutedEventArgs args);
-
-    DOC_STRING("Used to handle key up events when this component is focused, or if a child component did not handle the key up")
-    overridable void OnKeyUp(Microsoft.ReactNative.Composition.Input.KeyboardSource source, Microsoft.ReactNative.Composition.Input.KeyRoutedEventArgs args);
-
-    overridable void OnCharacterReceived(Microsoft.ReactNative.Composition.Input.KeyboardSource source, Microsoft.ReactNative.Composition.Input.CharacterReceivedRoutedEventArgs args);
-
-    overridable void OnPointerPressed(Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
-    overridable void OnPointerReleased(Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
-    overridable void OnPointerMoved(Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
-    overridable void OnPointerWheelChanged(Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
-    overridable void OnPointerEntered(Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
-    overridable void OnPointerExited(Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
-    overridable void OnPointerCaptureLost();
+    IReactContext ReactContext { get; };
+    LayoutMetrics LayoutMetrics { get; };
+    IInspectable UserData;
 
     Boolean TryFocus();
+
+    DOC_STRING("Used to handle key down events when this component is focused, or if a child component did not handle the key down")
+    event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.KeyRoutedEventArgs> KeyDown;
+    DOC_STRING("Used to handle key up events when this component is focused, or if a child component did not handle the key up")
+    event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.KeyRoutedEventArgs> KeyUp;
+    event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.CharacterReceivedRoutedEventArgs> CharacterReceived;
+    event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs> PointerPressed;
+    event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs> PointerReleased;
+    event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs> PointerMoved;
+    event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs> PointerWheelChanged;
+    event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs> PointerEntered;
+    event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs> PointerExited;
+    event Windows.Foundation.EventHandler<ComponentView> PointerCaptureLost;
     
+    event Windows.Foundation.EventHandler<ComponentView> Destroying;
+    event Windows.Foundation.EventHandler<LayoutMetricsChangedArgs> LayoutMetricsChanged;
+    event Windows.Foundation.EventHandler<ComponentView> Mounted;
+    event Windows.Foundation.EventHandler<ComponentView> Unmounted;
     event Windows.Foundation.EventHandler<LosingFocusEventArgs> LosingFocus;
     event Windows.Foundation.EventHandler<GettingFocusEventArgs> GettingFocus;
     event Windows.Foundation.EventHandler<Microsoft.ReactNative.Composition.Input.RoutedEventArgs> LostFocus;

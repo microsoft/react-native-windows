@@ -9627,6 +9627,7 @@ exports[`Home UIA Tree Dump Search Bar 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "Search...",
+    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",

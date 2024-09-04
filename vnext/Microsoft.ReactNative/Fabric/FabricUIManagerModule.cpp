@@ -245,9 +245,10 @@ void FabricUIManager::RCTPerformMountInstructions(
         newChildComponentView->updateEventEmitter(newChildShadowView.eventEmitter);
         newChildComponentView->updateState(newChildShadowView.state, oldChildShadowView.state);
         newChildComponentView->updateLayoutMetrics(newChildShadowView.layoutMetrics, oldChildShadowView.layoutMetrics);
-        newChildViewDescriptor.view.FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask::All);
+        newChildComponentView->FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask::All);
 
-        parentViewDescriptor.view.MountChildComponentView(*newChildComponentView, mutation.index);
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
+            ->MountChildComponentView(*newChildComponentView, mutation.index);
         break;
       }
 
@@ -256,7 +257,8 @@ void FabricUIManager::RCTPerformMountInstructions(
         auto &parentShadowView = mutation.parentShadowView;
         auto &oldChildViewDescriptor = m_registry.componentViewDescriptorWithTag(oldChildShadowView.tag);
         auto &parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentShadowView.tag);
-        parentViewDescriptor.view.UnmountChildComponentView(oldChildViewDescriptor.view, mutation.index);
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
+            ->UnmountChildComponentView(oldChildViewDescriptor.view, mutation.index);
         break;
       }
 
@@ -290,7 +292,8 @@ void FabricUIManager::RCTPerformMountInstructions(
         }
 
         if (mask != winrt::Microsoft::ReactNative::ComponentViewUpdateMask::None) {
-          newChildViewDescriptor.view.FinalizeUpdates(mask);
+          winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(newChildViewDescriptor.view)
+              ->FinalizeUpdates(mask);
         }
 
         break;
@@ -380,15 +383,15 @@ void FabricUIManager::schedulerDidDispatchCommand(
     folly::dynamic const &arg) {
   if (m_context.UIDispatcher().HasThreadAccess()) {
     auto descriptor = m_registry.componentViewDescriptorWithTag(shadowView.tag);
-    descriptor.view.HandleCommand(
-        winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(arg));
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(descriptor.view)
+        ->HandleCommand(winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(arg));
   } else {
     m_context.UIDispatcher().Post(
         [wkThis = weak_from_this(), commandName, tag = shadowView.tag, args = folly::dynamic(arg)]() {
           if (auto pThis = wkThis.lock()) {
             auto view = pThis->m_registry.findComponentViewWithTag(tag);
             if (view) {
-              view.HandleCommand(
+              winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->HandleCommand(
                   winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(args));
             }
           }

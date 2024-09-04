@@ -227,6 +227,16 @@ void InsertNumberValueIfNotDefault(
   }
 }
 
+void InsertIntValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    int value,
+    int defaultValue = 0) {
+  if (value != defaultValue) {
+    obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateNumberValue(value));
+  }
+}
+
 void InsertBooleanValueIfNotDefault(
     const winrt::Windows::Data::Json::JsonObject &obj,
     winrt::hstring name,
@@ -234,6 +244,26 @@ void InsertBooleanValueIfNotDefault(
     bool defaultValue = false) {
   if (value != defaultValue) {
     obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateBooleanValue(value));
+  }
+}
+
+void InsertLiveSettingValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    LiveSetting value,
+    LiveSetting defaultValue = LiveSetting::Off) {
+  if (value != defaultValue) {
+    switch (value) {
+      case 0:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Off"));
+        break;
+      case 1:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Polite"));
+        break;
+      case 2:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Assertive"));
+        break;
+    }
   }
 }
 
@@ -292,6 +322,11 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   BOOL isKeyboardFocusable;
   BSTR localizedControlType;
   BSTR name;
+  int positionInSet = 0;
+  int sizeOfSet = 0;
+  BSTR value;
+  BOOL isReadOnly;
+  LiveSetting liveSetting = LiveSetting::Off;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -300,6 +335,14 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   pTarget->get_CurrentIsKeyboardFocusable(&isKeyboardFocusable);
   pTarget->get_CurrentLocalizedControlType(&localizedControlType);
   pTarget->get_CurrentName(&name);
+  IUIAutomationElement4 *pTarget4;
+  HRESULT hr = pTarget->QueryInterface(__uuidof(IUIAutomationElement4), reinterpret_cast<void **>(&pTarget4));
+  if (SUCCEEDED(hr) && pTarget4) {
+    pTarget4->get_CurrentPositionInSet(&positionInSet);
+    pTarget4->get_CurrentSizeOfSet(&sizeOfSet);
+    pTarget4->get_CurrentLiveSetting(&liveSetting);
+    pTarget4->Release();
+  }
   result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
   result.Insert(L"ControlType", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(controlType));
   InsertStringValueIfNotEmpty(result, L"HelpText", helpText);
@@ -308,7 +351,23 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   result.Insert(
       L"LocalizedControlType", winrt::Windows::Data::Json::JsonValue::CreateStringValue(localizedControlType));
   InsertStringValueIfNotEmpty(result, L"Name", name);
+  InsertIntValueIfNotDefault(result, L"PositionInSet", positionInSet);
+  InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
+  InsertLiveSettingValueIfNotDefault(result, L"LiveSetting", liveSetting);
 
+  IValueProvider *valuePattern;
+  hr = pTarget->GetCurrentPattern(UIA_ValuePatternId, reinterpret_cast<IUnknown **>(&valuePattern));
+  if (SUCCEEDED(hr) && valuePattern) {
+    hr = valuePattern->get_Value(&value);
+    if (SUCCEEDED(hr)) {
+      InsertStringValueIfNotEmpty(result, L"ValuePattern.Value", value);
+    }
+    hr = valuePattern->get_IsReadOnly(&isReadOnly);
+    if (SUCCEEDED(hr)) {
+      InsertBooleanValueIfNotDefault(result, L"ValuePattern.IsReadOnly", isReadOnly, true);
+    }
+    valuePattern->Release();
+  }
   IUIAutomationElement *pChild;
   IUIAutomationElement *pSibling;
   pWalker->GetFirstChildElement(pTarget, &pChild);
