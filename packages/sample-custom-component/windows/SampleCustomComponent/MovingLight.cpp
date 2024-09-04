@@ -39,7 +39,7 @@ struct MovingLight : winrt::implements<MovingLight, winrt::IInspectable> {
     // TODO
   }
 
-  REACT_COMPONENT_INITIALIZE(Initialize)
+  REACT_COMPONENT_VIEW_INITIALIZE(Initialize)
   void Initialize(const winrt::Microsoft::ReactNative::ComponentView &sender) noexcept {
     auto view = sender.as<winrt::Microsoft::ReactNative::Composition::ViewComponentView>();
     view.PointerPressed(

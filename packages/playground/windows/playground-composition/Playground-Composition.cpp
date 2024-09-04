@@ -24,7 +24,6 @@
 #include <DesktopWindowBridge.h>
 #include "App.xaml.h"
 #include "AutoDraw.h"
-#include "DrawingIsland.h"
 #include "NativeModules.h"
 #include "ReactPropertyBag.h"
 
@@ -104,10 +103,8 @@ struct EllipseReactPackageProvider
 struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
-  void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-    // Replace RegisterDrawingIslandComponentView with RegisterCustomComponent when we have better XamlIsland hosting
-    // support
-    RegisterDrawingIslandComponentView(packageBuilder);
+  void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const & /*packageBuilder*/) noexcept {
+    // Reenable RegisterCustomComponent when we have better XamlIsland hosting support
     // RegisterCustomComponent(packageBuilder);
   }
 };

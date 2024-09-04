@@ -13,7 +13,7 @@
 
 #include "DrawingIsland.h"
 
-#include "App.DrawingIsland.g.cpp"
+#include "DrawingIsland.g.cpp"
 
 namespace winrt {
 using namespace winrt::Windows::Foundation;
@@ -29,7 +29,7 @@ using namespace winrt::Microsoft::UI::Content;
 using namespace winrt::Microsoft::UI::Input;
 } // namespace winrt
 
-namespace winrt::PlaygroundApp::implementation {
+namespace winrt::SampleCustomComponent::implementation {
 
 // std::map<winrt::Visual, winrt::com_ptr<NodeSimpleFragment>> g_visualToFragmentMap;
 
@@ -934,43 +934,25 @@ void DrawingIsland::Window_OnStateChanged(winrt::ContentIslandEnvironment const 
 #endif
 }
 
-REACT_STRUCT(DrawingIslandComponentProps)
-struct DrawingIslandComponentProps
-    : winrt::implements<DrawingIslandComponentProps, winrt::Microsoft::ReactNative::IComponentProps> {
-  DrawingIslandComponentProps(winrt::Microsoft::ReactNative::ViewProps props) : m_props(props) {}
-
-  void SetProp(uint32_t hash, winrt::hstring propName, winrt::Microsoft::ReactNative::IJSValueReader value) noexcept {
-    winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
+struct DrawingIslandComponentView : winrt::implements<DrawingIslandComponentView, winrt::IInspectable> {
+  REACT_COMPONENT_CONTENT_ISLAND_VIEW_INITIALIZE(Initialize)
+  void Initialize(const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) {
+    m_drawingIsland = winrt::make_self<DrawingIsland>(islandView.Compositor());
+    islandView.Connect(m_drawingIsland->Island());
+    islandView.Destroying({this, &DrawingIslandComponentView::Destroying});
   }
 
- private:
-  winrt::Microsoft::ReactNative::ViewProps m_props;
+  void Destroying(const winrt::IInspectable &, const winrt::IInspectable &) {
+    m_drawingIsland->Close();
+  }
+
+private:
+  winrt::com_ptr<DrawingIsland> m_drawingIsland;
 };
 
-} // namespace winrt::PlaygroundApp::implementation
+} // namespace winrt::SampleCustomComponent::implementation
 
 void RegisterDrawingIslandComponentView(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) {
-  packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
-      L"CustomXamlComponentWithYogaLayout",
-      [](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
-        builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props) noexcept {
-          return winrt::make<winrt::PlaygroundApp::implementation::DrawingIslandComponentProps>(props);
-        });
-        auto compBuilder =
-            builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
-        compBuilder.SetContentIslandComponentViewInitializer(
-            [](const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
-              auto drawingIsland =
-                  winrt::make<winrt::PlaygroundApp::implementation::DrawingIsland>(islandView.Compositor());
-              islandView.UserData(drawingIsland);
-              islandView.Connect(
-                  winrt::get_self<winrt::PlaygroundApp::implementation::DrawingIsland>(drawingIsland)->Island());
-              islandView.Destroying([](const winrt::IInspectable &, const winrt::IInspectable &args) {
-                auto view = args.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>();
-                auto drawingIsland = view.UserData().as<winrt::PlaygroundApp::implementation::DrawingIsland>();
-                drawingIsland->Close();
-                view.UserData(nullptr);
-              });
-            });
-      });
+  winrt::SampleCustomComponent::Codegen::RegisterDrawingIslandNativeComponent<
+      winrt::SampleCustomComponent::implementation::DrawingIslandComponentView>(packageBuilder, {});
 }

@@ -69,6 +69,10 @@ const Components: Array<RNTesterModuleInfo> = [
   //   module: require('../examples/Modal/ModalExample'),
   // },
   {
+    key: 'Drawing Island',
+    module: require('../examples-win/NativeComponents/DrawingIsland'),
+  },
+  {
     key: 'Native Component',
     module: require('../examples-win/NativeComponents/NativeComponent'),
   },
