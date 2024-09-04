@@ -12,6 +12,7 @@ import type {
   NativeModuleUnionTypeAnnotation,
   NativeModuleStringTypeAnnotation,
   NativeModuleFunctionTypeAnnotation,
+  UnsafeAnyTypeAnnotation,
   Nullable,
 } from '@react-native/codegen/lib/CodegenSchema';
 import {
@@ -50,7 +51,7 @@ export function translateFieldOrReturnType(
     | NativeModuleBaseTypeAnnotation
     | NativeModuleStringTypeAnnotation
     | NativeModuleFunctionTypeAnnotation
-  >,
+  > | UnsafeAnyTypeAnnotation,
   aliases: AliasMap,
   baseAliasName: string,
   callerName: 'translateField' | 'translateReturnType',
@@ -110,6 +111,8 @@ export function translateFieldOrReturnType(
     case 'EnumDeclaration':
     case 'UnionTypeAnnotation':
       return translateUnionReturnType(type, options);
+    case 'AnyTypeAnnotation':
+      return 'any';
     default:
       throw new Error(`Unhandled type in ${callerName}: ${returnType}`);
   }

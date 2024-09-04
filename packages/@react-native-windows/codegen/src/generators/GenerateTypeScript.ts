@@ -14,6 +14,7 @@ import type {
   NativeModuleParamTypeAnnotation,
   NativeModuleReturnTypeAnnotation,
   NativeModuleSchema,
+  UnsafeAnyTypeAnnotation,
   Nullable,
   SchemaType,
 } from '@react-native/codegen/lib/CodegenSchema';
@@ -65,7 +66,7 @@ function translateType(
     | NativeModuleBaseTypeAnnotation
     | NativeModuleParamTypeAnnotation
     | NativeModuleReturnTypeAnnotation
-  >,
+  > | UnsafeAnyTypeAnnotation,
 ): string {
   // avoid: Property 'type' does not exist on type 'never'
   const returnType = type.type;

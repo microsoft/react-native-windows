@@ -16,6 +16,7 @@ import type {
   NativeModuleFunctionTypeAnnotation,
   NativeModuleParamTypeAnnotation,
   NativeModuleUnionTypeAnnotation,
+  UnsafeAnyTypeAnnotation,
   Nullable,
 } from '@react-native/codegen/lib/CodegenSchema';
 import {
@@ -177,7 +178,7 @@ function translateEventEmitterArray(
 }
 
 function translateParam(
-  param: NativeModuleParamTypeAnnotation,
+  param: NativeModuleParamTypeAnnotation | UnsafeAnyTypeAnnotation,
   aliases: AliasMap,
   baseAliasName: string,
   target: ParamTarget,
@@ -264,7 +265,7 @@ function translateEventEmitterParam(
 }
 
 function translateNullableParamType(
-  paramType: Nullable<NativeModuleParamTypeAnnotation>,
+  paramType: Nullable<NativeModuleParamTypeAnnotation> | UnsafeAnyTypeAnnotation,
   aliases: AliasMap,
   baseAliasName: string,
   nullableTarget: ParamTarget,
