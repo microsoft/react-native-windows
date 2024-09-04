@@ -9,6 +9,15 @@
   },
   "main": "lib-commonjs/index.js",
   "types": "lib-commonjs/index.d.ts",
+  "codegenConfig": {
+    "name": "SampleCustomComponent",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "windows": {
+      "generators": "componentsWindows",
+      "namespace": "winrt::SampleCustomComponent::Codegen"
+    }
+  },
   "dependencies": {
     "@types/react": "^18.2.6",
     "react": "^19.0.0-rc-fb9a90fa48-20240614",

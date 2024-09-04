@@ -4,6 +4,7 @@ import type { ColorValue, ViewProps } from 'react-native';
 import type {
   DirectEventHandler,
   Float,
+  Double,
   Int32,
   WithDefault,
 } from 'react-native/Libraries/Types/CodegenTypes';
@@ -18,6 +19,7 @@ export interface MovingLightProps extends ViewProps {
   size?: WithDefault<Float, 42>;
   color?: ColorValue
   eventParam?: string;
+  objectProp?: { number: Double, string: string};
 
   // Events
   onSomething?: DirectEventHandler<SomethingEvent>,

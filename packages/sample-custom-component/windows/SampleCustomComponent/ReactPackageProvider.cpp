@@ -5,7 +5,7 @@
 #include "ReactPackageProvider.g.cpp"
 #endif
 
-#include "SampleCustomComponent.h"
+#include "MovingLight.h"
 
 using namespace winrt::Microsoft::ReactNative;
 

@@ -1,8 +1,8 @@
 #include "pch.h"
 
-#include "SampleCustomComponent.h"
+#include "MovingLight.h"
 
-#include "SampleCustomComponent.g.h"
+#include "../../codegen/react/components/SampleCustomComponent/MovingLight.g.h"
 
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
 #include <winrt/Microsoft.UI.Composition.h>
@@ -14,8 +14,8 @@ struct MovingLight : winrt::implements<MovingLight, winrt::IInspectable> {
   REACT_COMPONENT_UPDATE_PROPS(UpdateProps)
   void UpdateProps(
       const winrt::Microsoft::ReactNative::ComponentView &sender,
-      const winrt::com_ptr<MovingLightCodegen::MovingLightProps> &newProps,
-      const winrt::com_ptr<MovingLightCodegen::MovingLightProps> &oldProps) noexcept {
+      const winrt::com_ptr<Codegen::MovingLightProps> &newProps,
+      const winrt::com_ptr<Codegen::MovingLightProps> &oldProps) noexcept {
     auto view = sender.as<winrt::Microsoft::ReactNative::Composition::ViewComponentView>();
     if (!oldProps || oldProps->color != newProps->color) {
       m_spotlight.InnerConeColor(newProps->color.AsWindowsColor(view.Theme()));
@@ -48,8 +48,8 @@ struct MovingLight : winrt::implements<MovingLight, winrt::IInspectable> {
             const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs & /*args*/) {
           if (auto strongThis = wkThis.get()) {
             if (strongThis->m_eventEmitter) {
-              winrt::SampleCustomComponent::MovingLightCodegen::OnSomething eventArgs;
-              eventArgs.value = strongThis->m_eventParam;
+              Codegen::MovingLightEventEmitter::OnSomething eventArgs;
+              eventArgs.value = strongThis->m_eventParam ? *strongThis->m_eventParam : "No eventParam set";
               strongThis->m_eventEmitter->onSomething(eventArgs);
             }
           }
@@ -89,23 +89,20 @@ struct MovingLight : winrt::implements<MovingLight, winrt::IInspectable> {
   }
 
   REACT_COMPONENT_UPDATE_EVENTEMITTER(UpdateEventEmitter)
-  void UpdateEventEmitter(const std::shared_ptr<MovingLightCodegen::MovingLightEventEmitter> &eventEmitter) noexcept {
+  void UpdateEventEmitter(const std::shared_ptr<Codegen::MovingLightEventEmitter> &eventEmitter) noexcept {
     m_eventEmitter = eventEmitter;
   }
 
  private:
-  std::string m_eventParam;
-  std::shared_ptr<MovingLightCodegen::MovingLightEventEmitter> m_eventEmitter{nullptr};
+  std::optional<std::string> m_eventParam;
+  std::shared_ptr<Codegen::MovingLightEventEmitter> m_eventEmitter{nullptr};
   winrt::Microsoft::UI::Composition::SpriteVisual m_visual{nullptr};
   winrt::Microsoft::UI::Composition::SpotLight m_spotlight{nullptr};
 };
 
 void RegisterMovingLightNativeComponent(
     winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-  packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
-      L"MovingLight", [](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
-        MovingLightCodegen::ConfigureMovingLightNativeComponent<MovingLight>(builder);
-      });
+     Codegen::RegisterMovingLightNativeComponent<MovingLight>(packageBuilder, {});
 }
 
 } // namespace winrt::SampleCustomComponent
