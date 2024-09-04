@@ -1,6 +1,6 @@
 
 /*
- * This file is auto-generated from a NativeComponent spec file in js.
+ * This file is auto-generated from MovingLightNativeComponent spec file in flow / TypeScript.
  */
 #pragma once
 
@@ -20,11 +20,11 @@ struct MovingLightSpec_MovingLightProps_objectProp {
 REACT_STRUCT(MovingLightProps)
 struct MovingLightProps : winrt::implements<MovingLightProps, winrt::Microsoft::ReactNative::IComponentProps> {
   MovingLightProps(winrt::Microsoft::ReactNative::ViewProps props) : m_props(props) {}
-  
+
   void SetProp(uint32_t hash, winrt::hstring propName, winrt::Microsoft::ReactNative::IJSValueReader value) noexcept {
     winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
   }
-  
+
   REACT_FIELD(size)
   float size{42};
 
@@ -49,12 +49,12 @@ struct MovingLight_OnSomething {
   int32_t target{};
 };
 
-
 struct MovingLightEventEmitter {
   MovingLightEventEmitter(const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter)
       : m_eventEmitter(eventEmitter) {}
 
   using OnSomething = MovingLight_OnSomething;
+
   void onSomething(OnSomething &value) const {
     m_eventEmitter.DispatchEvent(L"something", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
@@ -65,9 +65,10 @@ struct MovingLightEventEmitter {
   winrt::Microsoft::ReactNative::EventEmitter m_eventEmitter{nullptr};
 };
 
-
 template <typename TUserData, typename TProps = MovingLightProps, typename TEventEmitter = MovingLightEventEmitter>
-void RegisterMovingLightNativeComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder, std::function<void(const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder&)> builderCallback) noexcept {
+void RegisterMovingLightNativeComponent(
+    winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder,
+    std::function<void(const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder&)> builderCallback) noexcept {
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
       L"MovingLight", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
         auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();

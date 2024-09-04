@@ -17,22 +17,21 @@ export type {CppStringTypes} from './ObjectTypes';
 type FilesOutput = Map<string, string>;
 
 const headerTemplate = `/*
- * This file is auto-generated from a NativeComponent spec file in js.
+ * This file is auto-generated from ::_COMPONENT_NAME_::NativeComponent spec file in flow / TypeScript.
  */
 #pragma once
 
 #include "NativeComponents.h"`;
 
-// @ts-ignore
- 
+
 const propsTemplate = `REACT_STRUCT(::_PROPS_NAME_::)
 struct ::_PROPS_NAME_:: : winrt::implements<::_PROPS_NAME_::, winrt::Microsoft::ReactNative::IComponentProps> {
   ::_PROPS_NAME_::(winrt::Microsoft::ReactNative::ViewProps props) : m_props(props) {}
-  
+
   void SetProp(uint32_t hash, winrt::hstring propName, winrt::Microsoft::ReactNative::IJSValueReader value) noexcept {
     winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
   }
-  
+
 ::_PROPS_FIELDS_::
   winrt::Microsoft::ReactNative::ViewProps m_props;
 };`
@@ -46,7 +45,7 @@ struct ::_OBJECT_NAME_:: {
 ::_OBJECT_FIELDS_::};
 `
 
-const eventEmitterMethodTemplate = `  void ::_EVENT_NAME_::(OnSomething &value) const {
+const eventEmitterMethodTemplate = `  void ::_EVENT_NAME_::(::_EVENT_OBJECT_TYPE_:: &value) const {
     m_eventEmitter.DispatchEvent(L"::_EVENT_NAME_NO_ON_::", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
@@ -60,15 +59,18 @@ struct ::_EVENT_EMITTER_NAME_:: {
       : m_eventEmitter(eventEmitter) {}
 
 ::_EVENT_EMITTER_USINGS_::
+
 ::_EVENT_EMITTER_METHODS_::
 
  private:
   winrt::Microsoft::ReactNative::EventEmitter m_eventEmitter{nullptr};
 };`
- 
+
 const registerTemplate = `
 template <typename TUserData, typename TProps = ::_PROPS_NAME_::, typename TEventEmitter = ::_EVENT_EMITTER_NAME_::>
-void Register::_COMPONENT_NAME_::NativeComponent(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder, std::function<void(const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder&)> builderCallback) noexcept {
+void Register::_COMPONENT_NAME_::NativeComponent(
+    winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder,
+    std::function<void(const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder&)> builderCallback) noexcept {
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
       L"::_COMPONENT_NAME_::", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
         auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
@@ -170,8 +172,11 @@ export function createComponentGenerator({
           let eventNameLower = event.name.replace('on', '');
           eventNameLower = eventNameLower[0].toLowerCase() + eventNameLower.slice(1);
 
-          return eventEmitterMethodTemplate.replace(/::_EVENT_NAME_::/g,event.name).replace(/::_EVENT_NAME_NO_ON_::/g,eventNameLower);
-        }).join('\n');
+          return eventEmitterMethodTemplate
+                      .replace(/::_EVENT_NAME_::/g,event.name)
+                      .replace(/::_EVENT_NAME_NO_ON_::/g,eventNameLower)
+                      .replace(/::_EVENT_OBJECT_TYPE_::/g, event.name.replace('on', 'On'));
+        }).join('\n\n');
         
         const eventObjects = eventObjectAliases.jobs.map(eventObjectTypeName => {
           const eventObjectType = eventObjectAliases.types[eventObjectTypeName]!;
@@ -205,7 +210,8 @@ export function createComponentGenerator({
             .replace(/::_PROPS_NAME_::/g, propsName)
             .replace(/::_COMPONENT_NAME_::/g, componentName)
             .replace(/::_PROPS_FIELDS_::/g, propsFields)
-            .replace(/::_NAMESPACE_::/g, namespace);
+            .replace(/::_NAMESPACE_::/g, namespace)
+            .replace(/\n\n\n+/g, '\n\n');
         };
 
         files.set(
