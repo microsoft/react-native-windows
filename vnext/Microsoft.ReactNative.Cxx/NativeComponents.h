@@ -20,7 +20,8 @@
 #define REACT_COMPONENT_MOUNT_CHILD_COMPONENT_VIEW(name) using _HasMountChildComponentMethod = std::true ::type;
 #define REACT_COMPONENT_UNMOUNT_CHILD_COMPONENT_VIEW(name) using _HasUnmountChildComponentMethod = std::true ::type;
 
-#define REACT_COMPONENT_CONTENT_ISLAND_VIEW_INITIALIZE(name) using _HasContentIslandViewInitializeMethod = std::true_type;
+#define REACT_COMPONENT_CONTENT_ISLAND_VIEW_INITIALIZE(name) \
+  using _HasContentIslandViewInitializeMethod = std::true_type;
 #define REACT_COMPONENT_VIEW_INITIALIZE(name) using _HasViewInitializeMethod = std::true_type;
 #define REACT_COMPONENT_CREATE_VISUAL(name) using _HasCreateVisualMethod = std::true_type;
 
@@ -142,17 +143,15 @@ void RegisterComponentInitializer(
       }
       view.UserData(*userData);
     });
+  } else if (!std::is_same_v<typename ReactHasContentIslandInitializeMethodOrVoid<TUserData>::Type, void>) {
+    builder.SetContentIslandComponentViewInitializer(
+        [](const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &contentIslandView) noexcept {
+          auto userData = winrt::make_self<TUserData>();
+          userData->Initialize(contentIslandView);
+          contentIslandView.UserData(*userData);
+        });
   }
-  else if (!std::is_same_v<typename ReactHasContentIslandInitializeMethodOrVoid<TUserData>::Type, void>) {
-    builder.SetContentIslandComponentViewInitializer([](const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &contentIslandView) noexcept {
-      auto userData = winrt::make_self<TUserData>();
-      userData->Initialize(contentIslandView);
-      contentIslandView.UserData(*userData);
-    });
-  }
-
 }
-
 
 template <class TUserData, typename = void>
 struct ReactHasCreateVisualMethodOrVoid {

@@ -946,7 +946,7 @@ struct DrawingIslandComponentView : winrt::implements<DrawingIslandComponentView
     m_drawingIsland->Close();
   }
 
-private:
+ private:
   winrt::com_ptr<DrawingIsland> m_drawingIsland;
 };
 
