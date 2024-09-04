@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 31 Aug 2024 05:22:20 GMT",
+      "version": "0.0.0-canary.862",
+      "tag": "react-native-windows_v0.0.0-canary.862",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "829ff8dbccc8297dd22ebd9bab7dd04504ca462e",
+            "comment": "[Fabric] Enable implementation of custom events on custom components"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3486e573e05157a8296eabb609f83a9c17bf395a",
+            "comment": "[Fabric] Fix ScrollViewComponentView object leak"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 30 Aug 2024 05:14:22 GMT",
       "version": "0.0.0-canary.861",
       "tag": "react-native-windows_v0.0.0-canary.861",

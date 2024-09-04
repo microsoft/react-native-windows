@@ -67594,6 +67594,16 @@ exports[`snapshotAllPages View 7`] = `
       }
     }
   />
+  <View
+    style={
+      {
+        "borderRadius": "0%",
+        "borderWidth": 6,
+        "height": 50,
+        "width": 100,
+      }
+    }
+  />
 </View>
 `;
 
@@ -69004,6 +69014,158 @@ exports[`snapshotAllPages View 19`] = `
 
 exports[`snapshotAllPages View 20`] = `
 <View
+  style={
+    {
+      "gap": 20,
+    }
+  }
+  testID="view-test-box-shadow"
+>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "gap": 15,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "borderColor": "red",
+          "borderRadius": 10,
+          "borderWidth": 5,
+          "experimental_boxShadow": "0 0 10px 0 black",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "borderColor": "red",
+          "borderRadius": 30,
+          "borderWidth": 5,
+          "experimental_boxShadow": "inset 0 0 10px 0 black",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "borderColor": "red",
+          "borderRadius": 30,
+          "borderWidth": 5,
+          "experimental_boxShadow": "inset 15px -5px 5px 5px cyan, inset 15px -5px 20px 10px orange, -5px 5px 5px 0px green, 0px -10px 0px 5px black",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "gap": 15,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "experimental_boxShadow": "0px 0px 5px 5px black",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "cyan",
+            "height": 25,
+            "left": -10,
+            "width": 25,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        {
+          "backgroundColor": "red",
+          "experimental_boxShadow": "inset 0px 0px 5px 5px black",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "cyan",
+            "height": 25,
+            "width": 25,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "experimental_boxShadow": " 0px 0px 20px 5px black",
+            "height": 75,
+            "width": 75,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "backgroundColor": "cyan",
+            "height": 25,
+            "width": 25,
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "gap": 15,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "green",
+          "experimental_boxShadow": "0px 10px",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 21`] = `
+<View
   accessibilityLabel="NativeID Example"
   accessible={true}
   nativeID="native-id-view"
@@ -69015,7 +69177,7 @@ exports[`snapshotAllPages View 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 21`] = `
+exports[`snapshotAllPages View 22`] = `
 <View
   accessibilityActions={
     [
@@ -69079,7 +69241,7 @@ exports[`snapshotAllPages View 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 22`] = `
+exports[`snapshotAllPages View 23`] = `
 <View
   accessibilityLabel="Shadow Example"
   accessible={true}
@@ -69100,7 +69262,7 @@ exports[`snapshotAllPages View 22`] = `
 />
 `;
 
-exports[`snapshotAllPages View 23`] = `
+exports[`snapshotAllPages View 24`] = `
 <View
   accessibilityLabel="HitSlop Example"
   accessible={true}
@@ -69125,7 +69287,7 @@ exports[`snapshotAllPages View 23`] = `
 />
 `;
 
-exports[`snapshotAllPages View 24`] = `
+exports[`snapshotAllPages View 25`] = `
 <View
   accessibilityLabel="Tooltip Example"
   accessible={true}
