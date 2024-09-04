@@ -223,6 +223,8 @@ function translateParam(
     case 'EnumDeclaration':
     case 'UnionTypeAnnotation':
       return translateUnionReturnType(param, target, options);
+    case 'AnyTypeAnnotation':
+      return 'any';
     default:
       throw new Error(`Unhandled type in translateParam: ${paramType}`);
   }
