@@ -81,8 +81,13 @@ void Register::_COMPONENT_NAME_::NativeComponent(
         RegisterUpdatePropsHandler<TUserData, TProps>(builder);
         RegisterUpdateEventEmitterHandler<TUserData, TEventEmitter>(builder);
         RegisterFinalizeUpdateHandler<TUserData>(builder);
-        RegisterComponentInitializer<TUserData>(builder);
-        RegisterComponentCreateVisual<TUserData>(builder);
+        RegisterUpdateStateHandler<TUserData, TProps>(builder);
+        RegisterCommandHandler<TUserData>(builder);
+        RegisterMountChildComponentViewHandler<TUserData>(builder);
+        RegisterUnmountChildComponentViewHandler<TUserData>(builder);
+
+        RegisterComponentInitializer<TUserData>(compBuilder);
+        RegisterComponentCreateVisual<TUserData>(compBuilder);
 
         // Allow app to further customize the builder
         if (builderCallback) {
