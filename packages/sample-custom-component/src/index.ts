@@ -1,12 +1,10 @@
-import MovingLight from './MovingLightNativeComponent';
-import type {MovingLightProps} from './MovingLightNativeComponent';
+import MovingLight from './MovingLight';
+import type {MovingLightHandle} from './MovingLight';
 
-import DrawingIsland from './DrawingIslandNativeComponent';
-import type { DrawingIslandProps } from './DrawingIslandNativeComponent';
+import DrawingIsland from './DrawingIsland';
 
 export {
     DrawingIsland,
-    DrawingIslandProps,
     MovingLight,
-    MovingLightProps
+    MovingLightHandle,
 };

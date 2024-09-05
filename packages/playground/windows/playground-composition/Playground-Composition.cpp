@@ -452,7 +452,6 @@ struct WindowData {
       LR"(Samples\image)",
       LR"(Samples\index)",
       LR"(Samples\nativeFabricComponent)",
-      LR"(Samples\movingLight)",
       LR"(Samples\mouse)",
       LR"(Samples\scrollViewSnapSample)",
       LR"(Samples\simple)",

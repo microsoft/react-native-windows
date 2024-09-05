@@ -86,8 +86,8 @@ struct MovingLight : public winrt::implements<MovingLight, winrt::IInspectable>,
     return m_visual;
   }
 
-  void HandleSetLightOnCommand(bool /*value*/) noexcept override {
-    // Do something
+  void HandleSetLightOnCommand(bool value) noexcept override {
+    m_spotlight.IsEnabled(value);
   }
 
  private:
