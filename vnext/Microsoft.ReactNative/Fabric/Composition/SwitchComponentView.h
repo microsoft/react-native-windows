@@ -57,6 +57,8 @@ struct SwitchComponentView : SwitchComponentViewT<SwitchComponentView, ViewCompo
 
   static facebook::react::SharedViewProps defaultProps() noexcept;
   const facebook::react::SwitchProps &switchProps() const noexcept;
+  ToggleState getToggleState() noexcept override;
+  void Toggle() noexcept override;
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual createVisual() noexcept override;
 
  private:
