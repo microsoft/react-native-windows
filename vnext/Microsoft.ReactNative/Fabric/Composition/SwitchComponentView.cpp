@@ -339,4 +339,18 @@ const facebook::react::SwitchProps &SwitchComponentView::switchProps() const noe
   return *std::static_pointer_cast<const facebook::react::SwitchProps>(viewProps());
 }
 
+// getToggleState method for IToggleProvider
+ToggleState SwitchComponentView::getToggleState() noexcept {
+  if (switchProps().value) {
+    return ToggleState::ToggleState_On;
+  } else {
+    return ToggleState::ToggleState_Off;
+  }
+}
+
+// Toggle method for IToggleProvider
+void SwitchComponentView::Toggle() noexcept {
+  toggle();
+}
+
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
