@@ -246,7 +246,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
           accessible == null
             ? onPress != null || onLongPress != null
             : accessible,
-        default: accessible,
+        default: accessible !== false, // [Windows]
       });
 
       let nativeText = null;
