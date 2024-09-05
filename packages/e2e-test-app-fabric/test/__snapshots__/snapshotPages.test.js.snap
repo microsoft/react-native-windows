@@ -10483,6 +10483,102 @@ exports[`snapshotAllPages Display:none Style 1`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Drawing Island Example 1`] = `
+<View
+  style={
+    {
+      "borderRadius": 0,
+      "borderWidth": 2,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "gap": 5,
+      "margin": 10,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <DrawingIsland
+    style={
+      {
+        "flex": 1,
+        "minWidth": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+</View>
+`;
+
 exports[`snapshotAllPages Fabric Native Component 1`] = `
 <View
   style={
