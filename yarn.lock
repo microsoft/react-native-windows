@@ -3360,9 +3360,9 @@
   integrity sha512-fAtCfv4jJg+ExtXhvCkCqUKZ+4ok/JQk01qDKhL5BDDoS3AxKXhV5/MAVUZyQnSEd2GT92fkgZl0pz0Q0AzcIQ==
 
 "@types/node@^18.0.0":
-  version "18.19.49"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.49.tgz#2f55cba5214da8f16d48f02724bee58b104f374e"
-  integrity sha512-ALCeIR6n0nQ7j0FUF1ycOhrp6+XutJWqEu/vtdEqXFUQwkBfgUA5cEg3ZNmjWGF/ZYA/FcF9QMkL55Ar0O6UrA==
+  version "18.19.50"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.50.tgz#8652b34ee7c0e7e2004b3f08192281808d41bf5a"
+  integrity sha512-xonK+NRrMBRtkL1hVCc3G+uXtjh1Al4opBLjqVmipe5ZAaBYWW6cNAiBVZ1BvmkBhep698rP3UM3aRAdSALuhg==
   dependencies:
     undici-types "~5.26.4"
 
@@ -4732,9 +4732,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^2.20.0:
-  version "2.45.0"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.45.0.tgz#a16f229cabac80f70a0fd5d24581907271c28d50"
-  integrity sha512-KWqpy8buEtDXPt6FFrUvrCIX52G39YLxuq6JffUpH/ntLIz36IS/LWW5PsSyKoSdmI1TWaLbYsohk/4Uka3Erw==
+  version "2.46.0"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.46.0.tgz#7aaeab322dc1a4731069c885e127ae523416fcba"
+  integrity sha512-5HRxA8+kr/MIPD2xcgJVNLkcCZq/J9o3JYAabLHIqMFjCbNmLyQ0N36vkY8D0KwhW8u/COdWO/EiSAcRsnCrOw==
   dependencies:
     cosmiconfig "^8.3.6"
     execa "^5.0.0"
@@ -8846,9 +8846,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 lage@^2.7.1:
-  version "2.7.23"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-2.7.23.tgz#e764ed5d5c03a0584140a928de11c1816b139992"
-  integrity sha512-22sQNiflRWEtXGw0dfbpnTnPxK8mq4ycIY2G6FcOyShgDnqnbRILZlbEZWGO6sGdXyOYfKyThJ/XfFjHMBStsw==
+  version "2.7.24"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-2.7.24.tgz#15c42bff17d4c4916bb72ee5980b27081ed6a3c1"
+  integrity sha512-7uR6Io5UP54ZkqFqTdSTxbsgNWOLEiW+w8d8p1grG3IiQS9B/ozfH1Z3CTaktl2nO+tX2BR7rgFjEBCWPcgoMw==
   dependencies:
     glob-hasher "^1.4.2"
   optionalDependencies:
