@@ -1781,6 +1781,95 @@ exports[`Home UIA Tree Dump Display:none Style 1`] = `
 }
 `;
 
+exports[`Home UIA Tree Dump Drawing Island Example 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "Drawing Island Example",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "Drawing Island Example Sample Fabric Native Component that contains a custom ContentIsland",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Drawing Island Example",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Sample Fabric Native Component that contains a custom ContentIsland",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Drawing Island Example Sample Fabric Native Component that contains a custom ContentIsland",
+      "TestId": "Drawing Island Example",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Comment": "Drawing Island Example",
+    "Offset": "0, 0, 0",
+    "Size": "966, 78",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "16, 16, 0",
+        "Size": "190, 25",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "190, 25",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "16, 45, 0",
+        "Size": "934, 17",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "934, 17",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
 exports[`Home UIA Tree Dump Fabric Native Component 1`] = `
 {
   "Automation Tree": {
@@ -2011,12 +2100,12 @@ exports[`Home UIA Tree Dump Fast Path Texts 1`] = `
     "__Children": [
       {
         "Offset": "16, 16, 0",
-        "Size": "115, 25",
+        "Size": "115, 24",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "115, 25",
+            "Size": "115, 24",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2189,12 +2278,12 @@ exports[`Home UIA Tree Dump FlatList 1`] = `
     "__Children": [
       {
         "Offset": "16, 16, 0",
-        "Size": "55, 24",
+        "Size": "55, 25",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "55, 24",
+            "Size": "55, 25",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -2807,7 +2896,7 @@ exports[`Home UIA Tree Dump Keyboard extension Example 1`] = `
     },
     "Comment": "Keyboard extension Example",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "966, 77",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3163,7 +3252,7 @@ exports[`Home UIA Tree Dump LegacyControlStyleTest 1`] = `
     },
     "Comment": "LegacyControlStyleTest",
     "Offset": "0, 0, 0",
-    "Size": "966, 77",
+    "Size": "966, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3541,12 +3630,12 @@ exports[`Home UIA Tree Dump LegacyTextHitTestTest 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "934, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "934, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3630,12 +3719,12 @@ exports[`Home UIA Tree Dump LegacyTextInputTest 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 16",
+        "Size": "934, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 16",
+            "Size": "934, 17",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -3886,6 +3975,95 @@ exports[`Home UIA Tree Dump Mouse Events 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "110, 25",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "16, 45, 0",
+        "Size": "934, 17",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "934, 17",
+            "Visual Type": "SpriteVisual",
+          },
+          {
+            "Offset": "0, 0, 0",
+            "Size": "0, 0",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`Home UIA Tree Dump Moving Light Example 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "Moving Light Example",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "Moving Light Example Sample Custom Fabric Native Component",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Moving Light Example",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Sample Custom Fabric Native Component",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Moving Light Example Sample Custom Fabric Native Component",
+      "TestId": "Moving Light Example",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Comment": "Moving Light Example",
+    "Offset": "0, 0, 0",
+    "Size": "966, 78",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "16, 16, 0",
+        "Size": "177, 25",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "177, 25",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -4676,7 +4854,7 @@ exports[`Home UIA Tree Dump Popup 1`] = `
     },
     "Comment": "Popup",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "966, 77",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -4943,7 +5121,7 @@ exports[`Home UIA Tree Dump ScrollView 1`] = `
     },
     "Comment": "ScrollView",
     "Offset": "0, 0, 0",
-    "Size": "966, 77",
+    "Size": "966, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5342,12 +5520,12 @@ exports[`Home UIA Tree Dump SectionList 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "934, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "934, 16",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -5609,12 +5787,12 @@ exports[`Home UIA Tree Dump Switch 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 16",
+        "Size": "934, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 16",
+            "Size": "934, 17",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -6032,7 +6210,7 @@ exports[`Home UIA Tree Dump Touchable* and onPress 1`] = `
     },
     "Comment": "Touchable* and onPress",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "966, 77",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6299,7 +6477,7 @@ exports[`Home UIA Tree Dump TransparentHitTestExample 1`] = `
     },
     "Comment": "TransparentHitTestExample",
     "Offset": "0, 0, 0",
-    "Size": "966, 77",
+    "Size": "966, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6749,12 +6927,12 @@ exports[`Home UIA Tree Dump XMLHttpRequest 1`] = `
     "__Children": [
       {
         "Offset": "16, 16, 0",
-        "Size": "135, 25",
+        "Size": "135, 24",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "135, 25",
+            "Size": "135, 24",
             "Visual Type": "SpriteVisual",
           },
           {

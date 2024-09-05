@@ -10483,6 +10483,102 @@ exports[`snapshotAllPages Display:none Style 1`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Drawing Island Example 1`] = `
+<View
+  style={
+    {
+      "borderRadius": 0,
+      "borderWidth": 2,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "gap": 5,
+      "margin": 10,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <DrawingIsland
+    style={
+      {
+        "flex": 1,
+        "minWidth": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+</View>
+`;
+
 exports[`snapshotAllPages Fabric Native Component 1`] = `
 <View
   style={
@@ -23064,6 +23160,115 @@ exports[`snapshotAllPages Mouse Events 1`] = `
   <View>
     <Text />
   </View>
+</View>
+`;
+
+exports[`snapshotAllPages Moving Light Example 1`] = `
+<View>
+  <Text>
+    Size: 25
+  </Text>
+  <Text>
+    Color: white
+  </Text>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Toggle Light
+        </Text>
+      </View>
+    </View>
+  </View>
+  <Text>
+    Last Event Value: No Event yet
+  </Text>
+  <MovingLight
+    color="white"
+    eventParam="white"
+    onSomething={[Function]}
+    size={25}
+    style={
+      {
+        "backgroundColor": "white",
+        "height": 500,
+        "width": 500,
+      }
+    }
+  />
 </View>
 `;
 

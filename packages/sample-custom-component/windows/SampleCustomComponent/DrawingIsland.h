@@ -12,7 +12,9 @@
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.UI.h>
 
-#include "App.DrawingIsland.g.h"
+#include "../../codegen/react/components/SampleCustomComponent/DrawingIsland.g.h"
+
+#include "DrawingIsland.g.h"
 #include <NativeModules.h>
 
 namespace winrt {
@@ -29,7 +31,7 @@ using namespace winrt::Microsoft::UI::Content;
 using namespace winrt::Microsoft::UI::Input;
 } // namespace winrt
 
-namespace winrt::PlaygroundApp::implementation {
+namespace winrt::SampleCustomComponent::implementation {
 
 // std::map<winrt::Visual, winrt::com_ptr<NodeSimpleFragment>> g_visualToFragmentMap;
 
@@ -241,10 +243,10 @@ void Accessibility_OnAutomationProviderRequested(
   boolean m_crossProcUIA = false;
 };
 
-} // namespace winrt::PlaygroundApp::implementation
+} // namespace winrt::SampleCustomComponent::implementation
 
-namespace winrt::PlaygroundApp::factory_implementation {
+namespace winrt::SampleCustomComponent::factory_implementation {
 struct DrawingIsland : DrawingIslandT<DrawingIsland, implementation::DrawingIsland> {};
-} // namespace winrt::PlaygroundApp::factory_implementation
+} // namespace winrt::SampleCustomComponent::factory_implementation
 
 void RegisterDrawingIslandComponentView(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder);

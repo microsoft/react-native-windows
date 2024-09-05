@@ -3,10 +3,10 @@
 #include "pch.h"
 #include "resource.h"
 
-#if __has_include("codegen\Native{{ pascalName }}DataTypes.g.h")
-  #include "codegen\Native{{ pascalName }}DataTypes.g.h"
+#if __has_include("codegen/Native{{ pascalName }}DataTypes.g.h")
+  #include "codegen/Native{{ pascalName }}DataTypes.g.h"
 #endif
-#include "codegen\Native{{ pascalName }}Spec.g.h"
+#include "codegen/Native{{ pascalName }}Spec.g.h"
 
 #include "NativeModules.h"
 

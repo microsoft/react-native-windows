@@ -23,7 +23,7 @@ namespace Microsoft.ReactNative.Composition
 
   [experimental]
   [webhosthidden]
-  delegate Microsoft.UI.Composition.Visual CreateVisualDelegate();
+  delegate Microsoft.UI.Composition.Visual CreateVisualDelegate(Microsoft.ReactNative.ComponentView view);
 
   [webhosthidden]
   [experimental]
