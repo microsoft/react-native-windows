@@ -71,7 +71,7 @@ export function translateFieldOrReturnType(
     case 'BooleanTypeAnnotation':
       return 'bool';
     case 'ArrayTypeAnnotation':
-      if (type.elementType) {
+      if (type.elementType.type !== 'AnyTypeAnnotation') {
         return `std::vector<${translateFieldOrReturnType(
           type.elementType,
           aliases,
@@ -112,7 +112,7 @@ export function translateFieldOrReturnType(
     case 'UnionTypeAnnotation':
       return translateUnionReturnType(type, options);
     case 'AnyTypeAnnotation':
-      return 'any';
+      return '::React::JSValue?';
     default:
       throw new Error(`Unhandled type in ${callerName}: ${returnType}`);
   }

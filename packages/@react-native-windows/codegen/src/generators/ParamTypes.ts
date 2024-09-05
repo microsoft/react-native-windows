@@ -117,7 +117,7 @@ function translateArray(
   target: ParamTarget,
   options: CppCodegenOptions,
 ): string {
-  if (param.elementType) {
+  if (param.elementType.type !== 'AnyTypeAnnotation') {
     switch (target) {
       case 'spec':
       case 'template':
@@ -225,7 +225,7 @@ function translateParam(
     case 'UnionTypeAnnotation':
       return translateUnionReturnType(param, target, options);
     case 'AnyTypeAnnotation':
-      return 'any';
+      return decorateType('::React::JSValue', target);
     default:
       throw new Error(`Unhandled type in translateParam: ${paramType}`);
   }

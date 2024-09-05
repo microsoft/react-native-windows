@@ -81,7 +81,7 @@ function translateType(
     case 'BooleanTypeAnnotation':
       return 'boolean';
     case 'ArrayTypeAnnotation':
-      if (type.elementType) {
+      if (type.elementType.type !== 'AnyTypeAnnotation') {
         return `${translateType(type.elementType)}[]`;
       } else {
         return `Array`;
