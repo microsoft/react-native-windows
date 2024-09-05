@@ -7,6 +7,7 @@
 #include <Fabric/ComponentView.h>
 
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
+#include <winrt/Microsoft.UI.Content.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "CompositionHelpers.h"
 #include "CompositionViewComponentView.h"

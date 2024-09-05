@@ -150,6 +150,8 @@ export class CodeGenWindows {
           jsRootPathRelative ? '/' : ''
         }**/*Native*.[jt]s`,
       ],
+      componentsWindows: generators.indexOf('componentsWindows') !== -1,
+      internalComponents: generators.indexOf('internalComponents') !== -1,
       cppStringType,
       separateDataTypes,
       libraryName: projectName,

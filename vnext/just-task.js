@@ -28,7 +28,7 @@ option('clean');
 
 function codegen(test) {
   execSync(
-    `react-native-windows-codegen --files src/**/*Native*.js --namespace Microsoft::ReactNativeSpecs --libraryName rnwcore --modulesWindows --modulesCxx${
+    `react-native-windows-codegen --files src/**/*Native*.js --namespace Microsoft::ReactNativeSpecs --libraryName rnwcore --modulesWindows --internalComponents --modulesCxx${
       test ? ' --test' : ''
     }`,
     {env: process.env},

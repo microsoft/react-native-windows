@@ -96,7 +96,8 @@ void ComponentView::UnmountChildComponentViewHandler(const UnmountChildComponent
 }
 
 void ComponentView::onUnmounted() noexcept {
-  assert(m_mounted);
+  if (!m_mounted)
+    return;
   m_mounted = false;
   for (auto it = m_children.begin(); it != m_children.end(); ++it) {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)->onUnmounted();
