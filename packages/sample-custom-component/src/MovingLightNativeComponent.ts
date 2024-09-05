@@ -1,5 +1,6 @@
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
-import type { ColorValue, ViewProps } from 'react-native';
+import codegenNativeCommands from 'react-native/Libraries/Utilities/codegenNativeCommands';
+import type { ColorValue, HostComponent, ViewProps } from 'react-native';
 
 import type {
   DirectEventHandler,
@@ -24,5 +25,16 @@ export interface MovingLightProps extends ViewProps {
   // Events
   onSomething?: DirectEventHandler<SomethingEvent>,
 }
+
+
+type ComponentType = HostComponent<MovingLightProps>;
+
+interface NativeCommands {
+  setLightOn: (viewRef: React.ElementRef<ComponentType>, value: boolean) => void;
+}
+
+export const Commands: NativeCommands = codegenNativeCommands<NativeCommands>({
+  supportedCommands: ['setLightOn'],
+});
 
 export default codegenNativeComponent<MovingLightProps>('MovingLight');

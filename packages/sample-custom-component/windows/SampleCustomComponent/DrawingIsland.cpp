@@ -934,9 +934,10 @@ void DrawingIsland::Window_OnStateChanged(winrt::ContentIslandEnvironment const 
 #endif
 }
 
-struct DrawingIslandComponentView : winrt::implements<DrawingIslandComponentView, winrt::IInspectable> {
-  REACT_COMPONENT_CONTENT_ISLAND_VIEW_INITIALIZE(Initialize)
-  void Initialize(const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) {
+struct DrawingIslandComponentView : winrt::implements<DrawingIslandComponentView, winrt::IInspectable>,
+                                    Codegen::BaseDrawingIsland<DrawingIslandComponentView> {
+  void InitializeContentIsland(
+      const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
     m_drawingIsland = winrt::make_self<DrawingIsland>(islandView.Compositor());
     islandView.Connect(m_drawingIsland->Island());
     islandView.Destroying({this, &DrawingIslandComponentView::Destroying});
@@ -953,6 +954,16 @@ struct DrawingIslandComponentView : winrt::implements<DrawingIslandComponentView
 } // namespace winrt::SampleCustomComponent::implementation
 
 void RegisterDrawingIslandComponentView(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) {
-  winrt::SampleCustomComponent::Codegen::RegisterDrawingIslandNativeComponent<
-      winrt::SampleCustomComponent::implementation::DrawingIslandComponentView>(packageBuilder, {});
+  winrt::SampleCustomComponent::Codegen::RegisterDrawingIslandNativeComponent2<
+      winrt::SampleCustomComponent::implementation::DrawingIslandComponentView>(
+      packageBuilder,
+      [](const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder &builder) {
+        builder.SetContentIslandComponentViewInitializer(
+            [](const winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView &islandView) noexcept {
+              auto userData =
+                  winrt::make_self<winrt::SampleCustomComponent::implementation::DrawingIslandComponentView>();
+              userData->InitializeContentIsland(islandView);
+              islandView.UserData(*userData);
+            });
+      });
 }

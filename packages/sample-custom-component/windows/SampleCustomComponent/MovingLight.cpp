@@ -10,12 +10,11 @@
 
 namespace winrt::SampleCustomComponent {
 
-struct MovingLight : winrt::implements<MovingLight, winrt::IInspectable> {
-  REACT_COMPONENT_UPDATE_PROPS(UpdateProps)
+struct MovingLight : public winrt::implements<MovingLight, winrt::IInspectable>, Codegen::BaseMovingLight<MovingLight> {
   void UpdateProps(
       const winrt::Microsoft::ReactNative::ComponentView &sender,
       const winrt::com_ptr<Codegen::MovingLightProps> &newProps,
-      const winrt::com_ptr<Codegen::MovingLightProps> &oldProps) noexcept {
+      const winrt::com_ptr<Codegen::MovingLightProps> &oldProps) noexcept override {
     auto view = sender.as<winrt::Microsoft::ReactNative::Composition::ViewComponentView>();
     if (!oldProps || oldProps->color != newProps->color) {
       m_spotlight.InnerConeColor(newProps->color.AsWindowsColor(view.Theme()));
@@ -30,35 +29,34 @@ struct MovingLight : winrt::implements<MovingLight, winrt::IInspectable> {
     if (!oldProps || oldProps->eventParam != newProps->eventParam) {
       m_eventParam = newProps->eventParam;
     }
+
+    Codegen::BaseMovingLight<MovingLight>::UpdateProps(sender, newProps, oldProps);
   }
 
-  REACT_COMPONENT_FINALIZE_UPDATES(FinalizeUpdates)
-  void FinalizeUpdates(
+  void FinalizeUpdate(
       const winrt::Microsoft::ReactNative::ComponentView & /*view*/,
-      winrt::Microsoft::ReactNative::ComponentViewUpdateMask /*mask*/) noexcept {
+      winrt::Microsoft::ReactNative::ComponentViewUpdateMask /*mask*/) noexcept override {
     // TODO
   }
 
-  REACT_COMPONENT_VIEW_INITIALIZE(Initialize)
-  void Initialize(const winrt::Microsoft::ReactNative::ComponentView &sender) noexcept {
+  void Initialize(const winrt::Microsoft::ReactNative::ComponentView &sender) noexcept override {
     auto view = sender.as<winrt::Microsoft::ReactNative::Composition::ViewComponentView>();
     view.PointerPressed(
         [wkThis = get_weak()](
             const winrt::IInspectable & /*sender*/,
             const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs & /*args*/) {
           if (auto strongThis = wkThis.get()) {
-            if (strongThis->m_eventEmitter) {
+            if (auto eventEmitter = strongThis->EventEmitter()) {
               Codegen::MovingLightEventEmitter::OnSomething eventArgs;
               eventArgs.value = strongThis->m_eventParam ? *strongThis->m_eventParam : "No eventParam set";
-              strongThis->m_eventEmitter->onSomething(eventArgs);
+              eventEmitter->onSomething(eventArgs);
             }
           }
         });
   }
 
-  REACT_COMPONENT_CREATE_VISUAL(CreateVisual)
   winrt::Microsoft::UI::Composition::Visual CreateVisual(
-      const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+      const winrt::Microsoft::ReactNative::ComponentView &view) noexcept override {
     auto compositor = view.as<winrt::Microsoft::ReactNative::Composition::ViewComponentView>().Compositor();
     m_visual = compositor.CreateSpriteVisual();
     m_visual.Brush(compositor.CreateColorBrush(winrt::Windows::UI::Colors::White()));
@@ -88,21 +86,19 @@ struct MovingLight : winrt::implements<MovingLight, winrt::IInspectable> {
     return m_visual;
   }
 
-  REACT_COMPONENT_UPDATE_EVENTEMITTER(UpdateEventEmitter)
-  void UpdateEventEmitter(const std::shared_ptr<Codegen::MovingLightEventEmitter> &eventEmitter) noexcept {
-    m_eventEmitter = eventEmitter;
+  void HandleSetLightOnCommand(bool /*value*/) noexcept override {
+    // Do something
   }
 
  private:
   std::optional<std::string> m_eventParam;
-  std::shared_ptr<Codegen::MovingLightEventEmitter> m_eventEmitter{nullptr};
   winrt::Microsoft::UI::Composition::SpriteVisual m_visual{nullptr};
   winrt::Microsoft::UI::Composition::SpotLight m_spotlight{nullptr};
 };
 
 void RegisterMovingLightNativeComponent(
     winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-  Codegen::RegisterMovingLightNativeComponent<MovingLight>(packageBuilder, {});
+  Codegen::RegisterMovingLightNativeComponent2<MovingLight>(packageBuilder, {});
 }
 
 } // namespace winrt::SampleCustomComponent

@@ -4,7 +4,10 @@
  */
 #pragma once
 
-#include "NativeComponents.h"
+#include <JSValueComposition.h>
+#include <NativeModules.h>
+#include <winrt/Microsoft.ReactNative.Composition.h>
+#include <winrt/Microsoft.UI.Composition.h>
 
 namespace winrt::SampleCustomComponent::Codegen {
 
@@ -19,7 +22,7 @@ struct MovingLightSpec_MovingLightProps_objectProp {
 
 REACT_STRUCT(MovingLightProps)
 struct MovingLightProps : winrt::implements<MovingLightProps, winrt::Microsoft::ReactNative::IComponentProps> {
-  MovingLightProps(winrt::Microsoft::ReactNative::ViewProps props) : m_props(props) {}
+  MovingLightProps(winrt::Microsoft::ReactNative::ViewProps props) : ViewProps(props) {}
 
   void SetProp(uint32_t hash, winrt::hstring propName, winrt::Microsoft::ReactNative::IJSValueReader value) noexcept {
     winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
@@ -37,7 +40,7 @@ struct MovingLightProps : winrt::implements<MovingLightProps, winrt::Microsoft::
   REACT_FIELD(objectProp)
   std::optional<MovingLightSpec_MovingLightProps_objectProp> objectProp;
 
-  winrt::Microsoft::ReactNative::ViewProps m_props;
+  const winrt::Microsoft::ReactNative::ViewProps ViewProps;
 };
 
 REACT_STRUCT(MovingLight_OnSomething)
@@ -65,8 +68,74 @@ struct MovingLightEventEmitter {
   winrt::Microsoft::ReactNative::EventEmitter m_eventEmitter{nullptr};
 };
 
-template <typename TUserData, typename TProps = MovingLightProps, typename TEventEmitter = MovingLightEventEmitter>
-void RegisterMovingLightNativeComponent(
+template<typename TUserData>
+struct BaseMovingLight {
+
+  virtual void UpdateProps(
+    const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
+    const winrt::com_ptr<MovingLightProps> &newProps,
+    const winrt::com_ptr<MovingLightProps> &/*oldProps*/) noexcept {
+    m_props = newProps;
+  }
+
+  // UpdateState will only be called if this method is overridden
+  virtual void UpdateState(
+    const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
+    const winrt::Microsoft::ReactNative::IComponentState &/*newState*/) noexcept {
+  }
+
+  virtual void UpdateEventEmitter(const std::shared_ptr<MovingLightEventEmitter> &eventEmitter) noexcept {
+    m_eventEmitter = eventEmitter;
+  }
+
+  // MountChildComponentView will only be called if this method is overridden
+  virtual void MountChildComponentView(const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
+           const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &/*args*/) noexcept {
+  }
+
+  // UnmountChildComponentView will only be called if this method is overridden
+  virtual void UnmountChildComponentView(const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
+           const winrt::Microsoft::ReactNative::UnmountChildComponentViewArgs &/*args*/) noexcept {
+  }
+
+  // Initialize will only be called if this method is overridden
+  virtual void Initialize(const winrt::Microsoft::ReactNative::ComponentView &/*view*/) noexcept {
+  }
+
+  // CreateVisual will only be called if this method is overridden
+  virtual winrt::Microsoft::UI::Composition::Visual CreateVisual(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+    return view.as<winrt::Microsoft::ReactNative::Composition::ComponentView>().Compositor().CreateSpriteVisual();
+  }
+
+  // FinalizeUpdate will only be called if this method is overridden
+  virtual void FinalizeUpdate(const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
+                                        winrt::Microsoft::ReactNative::ComponentViewUpdateMask /*mask*/) noexcept {
+  }
+
+  // You must provide an implementation of this method to handle the "setLightOn" command
+  virtual void HandleSetLightOnCommand(bool value) noexcept = 0;
+
+  void HandleCommand(const winrt::Microsoft::ReactNative::ComponentView &view, winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+    args;
+    auto userData = view.UserData().as<TUserData>();
+    if (commandName == L"setLightOn") {
+      bool value;
+      winrt::Microsoft::ReactNative::ReadArgs(args, value);
+      userData->HandleSetLightOnCommand(value);
+      return;
+    }
+  }
+
+  const std::shared_ptr<MovingLightEventEmitter>& EventEmitter() const { return m_eventEmitter; }
+  const winrt::com_ptr<MovingLightProps>& Props() const { return m_props; }
+
+private:
+  winrt::com_ptr<MovingLightProps> m_props;
+  std::shared_ptr<MovingLightEventEmitter> m_eventEmitter;
+};
+
+template <typename TUserData>
+void RegisterMovingLightNativeComponent2(
     winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder,
     std::function<void(const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder&)> builderCallback) noexcept {
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
@@ -74,42 +143,73 @@ void RegisterMovingLightNativeComponent(
         auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
 
         builder.SetCreateProps(
-            [](winrt::Microsoft::ReactNative::ViewProps props) noexcept { return winrt::make<TProps>(props); });
+            [](winrt::Microsoft::ReactNative::ViewProps props) noexcept { return winrt::make<MovingLightProps>(props); });
 
-        if constexpr (requires { &TUserData::template RegisterUpdatePropsHandler<TUserData, TProps>; }) {
-          TUserData::template RegisterUpdatePropsHandler<TUserData, TProps>(builder);
-        }
+        builder.SetUpdatePropsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                     const winrt::Microsoft::ReactNative::IComponentProps &newProps,
+                                     const winrt::Microsoft::ReactNative::IComponentProps &oldProps) noexcept {
+            auto userData = view.UserData().as<TUserData>();
+            userData->UpdateProps(view, newProps ? newProps.as<MovingLightProps>() : nullptr, oldProps ? oldProps.as<MovingLightProps>() : nullptr);
+        });
 
-        if constexpr (requires { &TUserData::template RegisterUpdateEventEmitterHandler<TUserData, TEventEmitter>; }) {
-          TUserData::template RegisterUpdateEventEmitterHandler<TUserData, TEventEmitter>(builder);
-        }
+        builder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                     const winrt::Microsoft::ReactNative::EventEmitter &eventEmitter) noexcept {
+          auto userData = view.UserData().as<TUserData>();
+          userData->UpdateEventEmitter(std::make_shared<MovingLightEventEmitter>(eventEmitter));
+        });
 
-        if constexpr (requires { &TUserData::template RegisterFinalizeUpdateHandler<TUserData>; }) {
-          TUserData::template RegisterFinalizeUpdateHandler<TUserData>(builder);
+        if constexpr (&TUserData::FinalizeUpdate != &BaseMovingLight<TUserData>::FinalizeUpdate) {
+            builder.SetFinalizeUpdateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                     winrt::Microsoft::ReactNative::ComponentViewUpdateMask mask) noexcept {
+            auto userData = view.UserData().as<TUserData>();
+            userData->FinalizeUpdate(view, mask);
+          });
         } 
 
-        if constexpr (requires { &TUserData::template RegisterUpdateStateHandler<TUserData, TProps>; }) {
-          TUserData::template RegisterUpdateStateHandler<TUserData, TProps>(builder);
+        if constexpr (&TUserData::UpdateState != &BaseMovingLight<TUserData>::UpdateState) {
+          builder.SetUpdateStateHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                     const winrt::Microsoft::ReactNative::IComponentState &newState) noexcept {
+            auto userData = view.UserData().as<TUserData>();
+            userData->member(view, newState);
+          });
         }
 
-        if constexpr (requires { &TUserData::template RegisterCommandHandler<TUserData>; }) {
-          TUserData::template RegisterCommandHandler<TUserData>(builder);
+        builder.SetCustomCommandHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                          winrt::hstring commandName,
+                                          const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+          auto userData = view.UserData().as<TUserData>();
+          userData->HandleCommand(view, commandName, args);
+        });
+
+        if constexpr (&TUserData::MountChildComponentView != &BaseMovingLight<TUserData>::MountChildComponentView) {
+          builder.SetMountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                      const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept {
+            auto userData = view.UserData().as<TUserData>();
+            return userData->MountChildComponentView(view, args);
+          });
         }
 
-        if constexpr (requires { &TUserData::template RegisterMountChildComponentViewHandler<TUserData>; }) {
-          TUserData::template RegisterMountChildComponentViewHandler<TUserData>(builder);
+        if constexpr (&TUserData::UnmountChildComponentView != &BaseMovingLight<TUserData>::UnmountChildComponentView) {
+          builder.SetUnmountChildComponentViewHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                      const winrt::Microsoft::ReactNative::UnmountChildComponentViewArgs &args) noexcept {
+            auto userData = view.UserData().as<TUserData>();
+            return userData->UnmountChildComponentView(view, args);
+          });
         }
 
-        if constexpr (requires { &TUserData::template RegisterUnmountChildComponentViewHandler<TUserData>; }) {
-          TUserData::template RegisterUnmountChildComponentViewHandler<TUserData>(builder);
-        }
+        compBuilder.SetViewComponentViewInitializer([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+          auto userData = winrt::make_self<TUserData>();
+          if constexpr (&TUserData::Initialize != &BaseMovingLight<TUserData>::Initialize) {
+            userData->Initialize(view);
+          }
+          view.UserData(*userData);
+        });
 
-        if constexpr (requires { &TUserData::template RegisterComponentInitializer<TUserData>; }) {
-          TUserData::template RegisterComponentInitializer<TUserData>(compBuilder);
-        }
-
-        if constexpr (requires { &TUserData::template RegisterComponentCreateVisual<TUserData>; }) {
-          TUserData::template RegisterComponentCreateVisual<TUserData>(compBuilder);
+        if constexpr (&TUserData::CreateVisual != &BaseMovingLight<TUserData>::CreateVisual) {
+          compBuilder.SetCreateVisualHandler([](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+            auto userData = view.UserData().as<TUserData>();
+            return userData->CreateVisual(view);
+          });
         }
 
         // Allow app to further customize the builder
