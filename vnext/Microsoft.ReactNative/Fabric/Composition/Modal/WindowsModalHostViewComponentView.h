@@ -62,6 +62,7 @@ struct WindowsModalHostComponentView
   winrt::Microsoft::ReactNative::CompositionHwndHost m_compositionHwndHost;
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compositionContext;
+  winrt::Microsoft::ReactNative::ReactNativeIsland m_reactNativeIsland;
   winrt::Microsoft::UI::Composition::ContainerVisual m_rootVisual{nullptr};
   facebook::react::ModalHostViewProps *m_ModalProps;
 };

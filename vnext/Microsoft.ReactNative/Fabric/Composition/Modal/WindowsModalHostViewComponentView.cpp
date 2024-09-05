@@ -97,19 +97,19 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
 
   // create a react native island - code taken from CompositionHwndHost
   auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(compositor, winrt::Microsoft::UI::GetWindowIdFromWindow(m_hwnd));
-  auto reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland(compositor);
-  auto contentIsland = reactNativeIsland.Island();
+  m_reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland(compositor);
+  auto contentIsland = m_reactNativeIsland.Island();
   bridge.Connect(contentIsland);
   bridge.Show();
   bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
   // ReactNativeIsland creates a new rootVisual for us
-  m_rootVisual = reactNativeIsland.RootVisual().try_as<winrt::Microsoft::UI::Composition::ContainerVisual>();
+  m_rootVisual = m_reactNativeIsland.RootVisual().try_as<winrt::Microsoft::UI::Composition::ContainerVisual>();
 
   // set ScaleFactor
-  reactNativeIsland.ScaleFactor(GetDpiForWindow(m_hwnd) / 96.0f);
+  m_reactNativeIsland.ScaleFactor(GetDpiForWindow(m_hwnd) / 96.0f);
 
   // update composition handler
-  reactNativeIsland.AddCompositionEventHandler(
+  m_reactNativeIsland.AddCompositionEventHandler(
       reinterpret_cast<uint64_t>(m_hwnd), m_reactContext.Handle());
 
   spunk.detach();
