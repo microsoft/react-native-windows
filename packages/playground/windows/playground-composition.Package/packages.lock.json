@@ -25,13 +25,20 @@
       "playground-composition": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.ReactNative": "[1.0.0, )"
+          "Microsoft.ReactNative": "[1.0.0, )",
+          "SampleCustomComponent": "[1.0.0, )"
         }
       },
       "reactcommon": {
         "type": "Project",
         "dependencies": {
           "Folly": "[1.0.0, )"
+        }
+      },
+      "samplecustomcomponent": {
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.ReactNative": "[1.0.0, )"
         }
       }
     },
