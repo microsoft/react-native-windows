@@ -58,7 +58,7 @@ namespace Microsoft.ReactNative.Composition
 
     [webhosthidden]
     [experimental]
-    delegate Microsoft.ReactNative.Composition.Experimental.IVisual CreateInternalVisualDelegate();
+    delegate Microsoft.ReactNative.Composition.Experimental.IVisual CreateInternalVisualDelegate(Microsoft.ReactNative.ComponentView view);
 
     [webhosthidden]
     [experimental]
