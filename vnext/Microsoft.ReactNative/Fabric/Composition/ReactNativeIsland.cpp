@@ -397,7 +397,7 @@ void ReactNativeIsland::InitRootView(
 
   m_context = winrt::Microsoft::ReactNative::ReactContext(std::move(context));
   m_reactViewOptions = std::move(viewOptions);
-  m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this);
+  m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this, false);
 
   UpdateRootViewInternal();
 
@@ -415,7 +415,7 @@ void ReactNativeIsland::AddCompositionEventHandler(
   if (!m_CompositionEventHandler) {
     // Create CompositionEventHandler if not already created
     m_context = winrt::Microsoft::ReactNative::ReactContext(std::move(context));
-    m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this);
+    m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this, true);
     m_isInitialized = true;
   }
 }

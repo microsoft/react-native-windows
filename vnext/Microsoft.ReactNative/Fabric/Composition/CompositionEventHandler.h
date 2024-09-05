@@ -31,7 +31,8 @@ class CompositionEventHandler {
  public:
   CompositionEventHandler(
       const winrt::Microsoft::ReactNative::ReactContext &context,
-      const winrt::Microsoft::ReactNative::ReactNativeIsland &ReactNativeIsland);
+      const winrt::Microsoft::ReactNative::ReactNativeIsland &ReactNativeIsland,
+      const bool isFragment);
   virtual ~CompositionEventHandler();
 
   int64_t SendMessage(HWND hwnd, uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
@@ -152,6 +153,8 @@ class CompositionEventHandler {
 
   std::map<PointerId, ActiveTouch> m_activeTouches; // iOS is map of touch event args to ActiveTouch..?
   PointerId m_touchId = 0;
+
+   bool m_isFragment{false};
 
   std::map<PointerId, std::vector<ReactTaggedView>> m_currentlyHoveredViewsPerPointer;
   winrt::weak_ref<winrt::Microsoft::ReactNative::ReactNativeIsland> m_wkRootView;

@@ -139,10 +139,13 @@ struct CompositionInputKeyboardSource : winrt::implements<
 
 CompositionEventHandler::CompositionEventHandler(
     const winrt::Microsoft::ReactNative::ReactContext &context,
-    const winrt::Microsoft::ReactNative::ReactNativeIsland &reactNativeIsland)
+    const winrt::Microsoft::ReactNative::ReactNativeIsland &reactNativeIsland,
+    const bool isFragment)
     : m_context(context), m_wkRootView(reactNativeIsland) {
 #ifdef USE_WINUI3
   if (auto island = reactNativeIsland.Island()) {
+    m_isFragment = isFragment;
+
     auto pointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(island);
 
     m_pointerPressedToken =
@@ -150,7 +153,7 @@ CompositionEventHandler::CompositionEventHandler(
                                          winrt::Microsoft::UI::Input::InputPointerSource const &,
                                          winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
           if (auto strongRootView = m_wkRootView.get()) {
-            if (SurfaceId() == -1)
+            if (!m_isFragment && SurfaceId() == -1)
               return;
 
             auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
@@ -164,7 +167,7 @@ CompositionEventHandler::CompositionEventHandler(
                                           winrt::Microsoft::UI::Input::InputPointerSource const &,
                                           winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
           if (auto strongRootView = m_wkRootView.get()) {
-            if (SurfaceId() == -1)
+            if (!m_isFragment && SurfaceId() == -1)
               return;
 
             auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
@@ -177,7 +180,7 @@ CompositionEventHandler::CompositionEventHandler(
                                                          winrt::Microsoft::UI::Input::InputPointerSource const &,
                                                          winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
       if (auto strongRootView = m_wkRootView.get()) {
-        if (SurfaceId() == -1)
+        if (!m_isFragment && SurfaceId() == -1)
           return;
 
         auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
@@ -191,7 +194,7 @@ CompositionEventHandler::CompositionEventHandler(
                                              winrt::Microsoft::UI::Input::InputPointerSource const &,
                                              winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
           if (auto strongRootView = m_wkRootView.get()) {
-            if (SurfaceId() == -1)
+            if (!m_isFragment && SurfaceId() == -1)
               return;
 
             auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
@@ -205,7 +208,7 @@ CompositionEventHandler::CompositionEventHandler(
                                               winrt::Microsoft::UI::Input::InputPointerSource const &,
                                               winrt::Microsoft::UI::Input::PointerEventArgs const &args) {
           if (auto strongRootView = m_wkRootView.get()) {
-            if (SurfaceId() == -1)
+            if (!m_isFragment && SurfaceId() == -1)
               return;
 
             auto pp = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerPoint>(
@@ -220,7 +223,7 @@ CompositionEventHandler::CompositionEventHandler(
                                                 winrt::Microsoft::UI::Input::InputKeyboardSource const &source,
                                                 winrt::Microsoft::UI::Input::KeyEventArgs const &args) {
       if (auto strongRootView = m_wkRootView.get()) {
-        if (SurfaceId() == -1)
+        if (!m_isFragment && SurfaceId() == -1)
           return;
 
         auto focusedComponent = RootComponentView().GetFocusedComponent();
@@ -243,7 +246,7 @@ CompositionEventHandler::CompositionEventHandler(
                                             winrt::Microsoft::UI::Input::InputKeyboardSource const &source,
                                             winrt::Microsoft::UI::Input::KeyEventArgs const &args) {
       if (auto strongRootView = m_wkRootView.get()) {
-        if (SurfaceId() == -1)
+        if (!m_isFragment && SurfaceId() == -1)
           return;
 
         auto focusedComponent = RootComponentView().GetFocusedComponent();
@@ -267,7 +270,7 @@ CompositionEventHandler::CompositionEventHandler(
                                              winrt::Microsoft::UI::Input::InputKeyboardSource const &source,
                                              winrt::Microsoft::UI::Input::CharacterReceivedEventArgs const &args) {
           if (auto strongRootView = m_wkRootView.get()) {
-            if (SurfaceId() == -1)
+            if (!m_isFragment && SurfaceId() == -1)
               return;
 
             auto focusedComponent = RootComponentView().GetFocusedComponent();
@@ -807,7 +810,7 @@ void CompositionEventHandler::getTargetPointerArgs(
       ptLocal.x = ptScaled.x - (clientRect.left / strongRootView.ScaleFactor());
       ptLocal.y = ptScaled.y - (clientRect.top / strongRootView.ScaleFactor());
     }
-  } else {
+  } else if (!m_isFragment) {
     tag = RootComponentView().hitTest(ptScaled, ptLocal);
   }
 }
@@ -815,7 +818,7 @@ void CompositionEventHandler::getTargetPointerArgs(
 void CompositionEventHandler::onPointerCaptureLost(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
     winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
-  if (SurfaceId() == -1)
+  if (!m_isFragment && SurfaceId() == -1)
     return;
 
   if (m_pointerCapturingComponentTag) {
@@ -833,7 +836,7 @@ void CompositionEventHandler::onPointerCaptureLost(
 void CompositionEventHandler::onPointerMoved(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
     winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
-  if (SurfaceId() == -1)
+  if (!m_isFragment && SurfaceId() == -1)
     return;
 
   int pointerId = pointerPoint.PointerId();
