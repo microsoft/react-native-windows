@@ -135,7 +135,7 @@ private:
 };
 
 template <typename TUserData>
-void RegisterMovingLightNativeComponent2(
+void RegisterMovingLightNativeComponent(
     winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder,
     std::function<void(const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder&)> builderCallback) noexcept {
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(

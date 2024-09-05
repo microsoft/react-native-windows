@@ -129,7 +129,7 @@ private:
 
 const registerTemplate = `
 template <typename TUserData>
-void Register::_COMPONENT_NAME_::NativeComponent2(
+void Register::_COMPONENT_NAME_::NativeComponent(
     winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder,
     std::function<void(const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder&)> builderCallback) noexcept {
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(

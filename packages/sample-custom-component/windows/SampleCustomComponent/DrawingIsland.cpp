@@ -954,7 +954,7 @@ struct DrawingIslandComponentView : winrt::implements<DrawingIslandComponentView
 } // namespace winrt::SampleCustomComponent::implementation
 
 void RegisterDrawingIslandComponentView(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) {
-  winrt::SampleCustomComponent::Codegen::RegisterDrawingIslandNativeComponent2<
+  winrt::SampleCustomComponent::Codegen::RegisterDrawingIslandNativeComponent<
       winrt::SampleCustomComponent::implementation::DrawingIslandComponentView>(
       packageBuilder,
       [](const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder &builder) {

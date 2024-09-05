@@ -98,7 +98,7 @@ struct MovingLight : public winrt::implements<MovingLight, winrt::IInspectable>,
 
 void RegisterMovingLightNativeComponent(
     winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder) noexcept {
-  Codegen::RegisterMovingLightNativeComponent2<MovingLight>(packageBuilder, {});
+  Codegen::RegisterMovingLightNativeComponent<MovingLight>(packageBuilder, {});
 }
 
 } // namespace winrt::SampleCustomComponent
