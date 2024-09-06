@@ -1322,6 +1322,14 @@ bool ComponentView::getAcccessiblityIsReadOnly() noexcept {
   return true;
 }
 
+ToggleState ComponentView::getToggleState() noexcept {
+  return ToggleState::ToggleState_Off;
+}
+
+void ComponentView::Toggle() noexcept {
+  // no-op
+}
+
 void ComponentView::updateBorderLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
@@ -1509,11 +1517,11 @@ ViewComponentView::CreateInternalVisualHandler() const noexcept {
 void ViewComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     if (m_createInternalVisualHandler) {
-      m_visual = m_createInternalVisualHandler();
+      m_visual = m_createInternalVisualHandler(*this);
     } else if (m_createVisualHandler) {
       m_visual =
           winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateVisual(
-              m_createVisualHandler());
+              m_createVisualHandler(*this));
     } else {
       m_visual = createVisual();
     }

@@ -10,6 +10,7 @@ import fs from '@react-native-windows/fs';
 import globby from 'globby';
 import type {CppStringTypes} from './generators/GenerateNM2';
 import {createNM2Generator} from './generators/GenerateNM2';
+import {createComponentGenerator} from './generators/GenerateComponentWindows';
 import {
   generateTypeScript,
   setOptionalTurboModule,
@@ -49,6 +50,8 @@ export interface SharedOptions {
   modulesCxx: boolean;
   modulesTypeScriptTypes: boolean;
   modulesWindows: boolean;
+  componentsWindows: boolean;
+  internalComponents: boolean;
   namespace: string;
   outputDirectory: string;
   cppStringType: CppStringTypes;
@@ -214,6 +217,8 @@ export function generate(
     modulesCxx,
     modulesTypeScriptTypes,
     modulesWindows,
+    internalComponents,
+    componentsWindows,
     namespace,
     outputDirectory,
     cppStringType,
@@ -319,17 +324,30 @@ export function generate(
       moduleName => schema.modules[moduleName].type === 'Component',
     )
   ) {
-    const componentGenerators = [
-      generatorComponentDescriptorH,
-      generatorEventEmitterCPP,
-      generatorEventEmitterH,
-      generatorPropsCPP,
-      generatorPropsH,
-      generatorShadowNodeCPP,
-      generatorShadowNodeH,
-      generatorStateCPP,
-      generatorStateH,
-    ];
+    const componentGenerators = [];
+
+    if (internalComponents) {
+      componentGenerators.push(
+        generatorComponentDescriptorH,
+        generatorEventEmitterCPP,
+        generatorEventEmitterH,
+        generatorPropsCPP,
+        generatorPropsH,
+        generatorShadowNodeCPP,
+        generatorShadowNodeH,
+        generatorStateCPP,
+        generatorStateH,
+      );
+    }
+
+    if (componentsWindows) {
+      const generateComponentWindows = createComponentGenerator({
+        namespace,
+        cppStringType,
+      });
+
+      componentGenerators.push(generateComponentWindows);
+    }
 
     componentGenerators.forEach(generator => {
       const generated: Map<string, string> = generator(
@@ -369,6 +387,8 @@ export function runCodeGen(options: CodeGenOptions): boolean {
     modulesCxx,
     modulesTypeScriptTypes,
     modulesWindows,
+    componentsWindows,
+    internalComponents,
     namespace,
     outputDirectory,
     cppStringType,
@@ -381,6 +401,8 @@ export function runCodeGen(options: CodeGenOptions): boolean {
       modulesCxx,
       modulesTypeScriptTypes,
       modulesWindows,
+      componentsWindows,
+      internalComponents,
       namespace,
       outputDirectory,
       cppStringType,

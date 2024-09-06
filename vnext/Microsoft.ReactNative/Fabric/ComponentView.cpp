@@ -96,7 +96,8 @@ void ComponentView::UnmountChildComponentViewHandler(const UnmountChildComponent
 }
 
 void ComponentView::onUnmounted() noexcept {
-  assert(m_mounted);
+  if (!m_mounted)
+    return;
   m_mounted = false;
   for (auto it = m_children.begin(); it != m_children.end(); ++it) {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)->onUnmounted();
@@ -647,6 +648,14 @@ void ComponentView::setAcccessiblityValue(std::string &&value) noexcept {
 
 bool ComponentView::getAcccessiblityIsReadOnly() noexcept {
   return false;
+}
+
+ToggleState ComponentView::getToggleState() noexcept {
+  return ToggleState::ToggleState_Off;
+}
+
+void ComponentView::Toggle() noexcept {
+  assert(false);
 }
 
 // Notify up the tree to bring the rect into view by scrolling as needed
