@@ -16,6 +16,7 @@ import type {
   NativeModuleFunctionTypeAnnotation,
   NativeModuleParamTypeAnnotation,
   NativeModuleUnionTypeAnnotation,
+  UnsafeAnyTypeAnnotation,
   Nullable,
 } from '@react-native/codegen/lib/CodegenSchema';
 import {
@@ -116,7 +117,7 @@ function translateArray(
   target: ParamTarget,
   options: CppCodegenOptions,
 ): string {
-  if (param.elementType) {
+  if (param.elementType.type !== 'AnyTypeAnnotation') {
     switch (target) {
       case 'spec':
       case 'template':
@@ -177,7 +178,7 @@ function translateEventEmitterArray(
 }
 
 function translateParam(
-  param: NativeModuleParamTypeAnnotation,
+  param: NativeModuleParamTypeAnnotation | UnsafeAnyTypeAnnotation,
   aliases: AliasMap,
   baseAliasName: string,
   target: ParamTarget,
@@ -223,6 +224,8 @@ function translateParam(
     case 'EnumDeclaration':
     case 'UnionTypeAnnotation':
       return translateUnionReturnType(param, target, options);
+    case 'AnyTypeAnnotation':
+      return decorateType('::React::JSValue', target);
     default:
       throw new Error(`Unhandled type in translateParam: ${paramType}`);
   }
@@ -262,7 +265,7 @@ function translateEventEmitterParam(
 }
 
 function translateNullableParamType(
-  paramType: Nullable<NativeModuleParamTypeAnnotation>,
+  paramType: Nullable<NativeModuleParamTypeAnnotation> | UnsafeAnyTypeAnnotation,
   aliases: AliasMap,
   baseAliasName: string,
   nullableTarget: ParamTarget,

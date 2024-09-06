@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.76.0-nightly-20240824-09e88448c",
+  "baseVersion": "0.76.0-nightly-20240901-305b4357e",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "27c9677306d4f1bd627a346969c592aee606811a"
+      "baseHash": "67b097833fd6733db6c64c57fbcb2efb3e9b51c5"
     },
     {
       "type": "derived",
@@ -116,7 +116,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "259941a60002c5a2a4166a39404d099f0472941e"
+      "baseHash": "494c1159a38de1b57d3889a4dabdc3708204ad4d"
     },
     {
       "type": "patch",
@@ -445,7 +445,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextNativeComponent.js",
-      "baseHash": "dcb764530f8a6529152d9791597865034e2c36ae",
+      "baseHash": "642b6fc1c5b5802e3612f39c2ae0135b149a65f8",
       "issue": 7074
     },
     {

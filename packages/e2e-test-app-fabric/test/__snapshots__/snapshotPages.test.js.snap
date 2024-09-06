@@ -7970,6 +7970,113 @@ exports[`snapshotAllPages Border 22`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Border 23`] = `
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "gap": "10",
+    }
+  }
+  testID="border-test-border-clipping-compliance"
+>
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "backgroundColor": "red",
+          "borderColor": "rgba(0, 0, 0, 0.5)",
+          "borderRadius": 10,
+          "borderWidth": 10,
+          "overflow": "hidden",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "blue",
+          "height": 20,
+          "left": -10,
+          "top": -10,
+          "width": 20,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "backgroundColor": "red",
+          "borderColor": "rgba(0, 0, 0, 0.5)",
+          "borderTopLeftRadius": 20,
+          "borderWidth": 10,
+        },
+        {
+          "overflow": "hidden",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "blue",
+          "height": 20,
+          "left": -10,
+          "top": -10,
+          "width": 20,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "backgroundColor": "red",
+          "borderColor": "rgba(0, 0, 0, 0.5)",
+          "borderTopLeftRadius": 20,
+          "borderWidth": 10,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "blue",
+            "height": 20,
+            "left": -10,
+            "top": -10,
+            "width": 20,
+          },
+          {
+            "left": -15,
+            "top": 0,
+          },
+        ]
+      }
+    />
+  </View>
+</View>
+`;
+
 exports[`snapshotAllPages Button 1`] = `
 <View
   accessibilityLabel="Press to submit your application!"
@@ -55697,6 +55804,40 @@ exports[`snapshotAllPages Text 16`] = `
       blue color, 
     </Text>
     and red color again
+  </Text>,
+  <Text
+    style={
+      {
+        "opacity": 0.7,
+      }
+    }
+  >
+    (opacity
+    <Text>
+      (is inherited
+      <Text
+        style={
+          {
+            "opacity": 0.7,
+          }
+        }
+      >
+        (and accumulated
+        <Text
+          style={
+            {
+              "backgroundColor": "#ffaaaa",
+              "opacity": 0.5,
+            }
+          }
+        >
+          (and also applies to the background)
+        </Text>
+        )
+      </Text>
+      )
+    </Text>
+    )
   </Text>,
 ]
 `;
