@@ -12,6 +12,7 @@
 
 #include <Windows.Graphics.Interop.h>
 #include <windows.ui.composition.interop.h>
+#include <winrt/Microsoft.ReactNative.Composition.Input.h>
 #include <winrt/Windows.Graphics.DirectX.Direct3D11.h>
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.UI.Composition.interactions.h>
@@ -744,14 +745,9 @@ struct CompScrollerVisual : winrt::implements<
     m_interactionTracker.MaxScale(1.0);
 
     m_visualInteractionSource = TTypeRedirects::VisualInteractionSource::Create(m_visual);
-
-    m_visualInteractionSource.PositionXSourceMode(TTypeRedirects::InteractionSourceMode::EnabledWithInertia);
-    m_visualInteractionSource.PositionYSourceMode(TTypeRedirects::InteractionSourceMode::EnabledWithInertia);
     m_visualInteractionSource.ScaleSourceMode(TTypeRedirects::InteractionSourceMode::Disabled);
-
-    m_visualInteractionSource.ManipulationRedirectionMode(
-        TTypeRedirects::VisualInteractionSourceRedirectionMode::CapableTouchpadAndPointerWheel);
     m_interactionTracker.InteractionSources().Add(m_visualInteractionSource);
+    UpdateInteractionModes();
 
     auto positionExpression = compositor.CreateExpressionAnimation(L"-tracker.Position");
     positionExpression.SetReferenceParameter(L"tracker", m_interactionTracker);
@@ -760,6 +756,41 @@ struct CompScrollerVisual : winrt::implements<
 
   typename TTypeRedirects::Visual InnerVisual() const noexcept {
     return m_visual;
+  }
+
+  void OnPointerPressed(
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs& args) noexcept {
+    if constexpr (std::is_same_v<TTypeRedirects, MicrosoftTypeRedirects>) {
+      auto pointerDeviceType = args.Pointer().PointerDeviceType();
+      if (pointerDeviceType == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Touch)
+      {
+         m_visualInteractionSource.TryRedirectForManipulation(args.GetCurrentPoint(args.OriginalSource()).Inner());
+      }
+    }
+  }
+
+  bool Horizontal() const noexcept {
+    return m_horizontal;
+  }
+
+  void Horizontal(bool value) noexcept {
+    m_horizontal = value;
+
+    UpdateInteractionModes();
+  }
+
+  void UpdateInteractionModes() noexcept {
+    if (m_isScrollEnabled) {
+      m_visualInteractionSource.PositionXSourceMode(m_horizontal ? TTypeRedirects::InteractionSourceMode::EnabledWithInertia : TTypeRedirects::InteractionSourceMode::Disabled);
+      m_visualInteractionSource.PositionYSourceMode(m_horizontal ? TTypeRedirects::InteractionSourceMode::Disabled : TTypeRedirects::InteractionSourceMode::EnabledWithInertia);
+      m_visualInteractionSource.ManipulationRedirectionMode(
+          TTypeRedirects::VisualInteractionSourceRedirectionMode::CapableTouchpadAndPointerWheel);
+    } else {
+      m_visualInteractionSource.PositionXSourceMode(TTypeRedirects::InteractionSourceMode::Disabled);
+      m_visualInteractionSource.PositionYSourceMode(TTypeRedirects::InteractionSourceMode::Disabled);
+      m_visualInteractionSource.ManipulationRedirectionMode(
+          TTypeRedirects::VisualInteractionSourceRedirectionMode::Off);
+    }
   }
 
   void InsertAt(
@@ -796,13 +827,8 @@ struct CompScrollerVisual : winrt::implements<
   }
 
   void ScrollEnabled(bool isScrollEnabled) noexcept {
-    if (isScrollEnabled) {
-      m_visualInteractionSource.ManipulationRedirectionMode(
-          TTypeRedirects::VisualInteractionSourceRedirectionMode::CapableTouchpadAndPointerWheel);
-    } else {
-      m_visualInteractionSource.ManipulationRedirectionMode(
-          TTypeRedirects::VisualInteractionSourceRedirectionMode::Off);
-    }
+    m_isScrollEnabled = isScrollEnabled;
+    UpdateInteractionModes();
   }
 
   void Opacity(float opacity) noexcept {
@@ -970,6 +996,8 @@ struct CompScrollerVisual : winrt::implements<
          0});
   }
 
+  bool m_isScrollEnabled{true};
+  bool m_horizontal{false};
   bool m_inertia{false};
   bool m_custom{false};
   winrt::Windows::Foundation::Numerics::float3 m_targetPosition;
