@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 06 Sep 2024 17:54:26 GMT",
+      "version": "0.74.21",
+      "tag": "react-native-windows_v0.74.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "71d7eb4e1fa044e9da43bca9751b011988b3c023",
+            "comment": "Add Support for AccessibilityPosInSet"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cd70c894ca067363614e483ac519e18d57a96a72",
+            "comment": "CreateVisual handler should have reference to view"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "71d7eb4e1fa044e9da43bca9751b011988b3c023",
+            "comment": "Rework custom components to not rely on open compose patterns"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cd70c894ca067363614e483ac519e18d57a96a72",
+            "comment": "Add Support for Toggle Provider"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "71d7eb4e1fa044e9da43bca9751b011988b3c023",
+            "comment": "[Fabric] Fix ScrollViewComponentView object leak"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "71d7eb4e1fa044e9da43bca9751b011988b3c023",
+            "comment": "[Fabric] Enable implementation of custom events on custom components"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.74.5",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.74.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 02 Sep 2024 15:14:36 GMT",
       "version": "0.74.20",
       "tag": "react-native-windows_v0.74.20",

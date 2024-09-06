@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 06 Sep 2024 17:54:26 GMT",
+      "version": "0.74.3",
+      "tag": "@react-native-windows/codegen_v0.74.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "cd70c894ca067363614e483ac519e18d57a96a72",
+            "comment": "[Fabric] Add native component codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Aug 2024 19:11:33 GMT",
       "version": "0.74.2",
       "tag": "@react-native-windows/codegen_v0.74.2",

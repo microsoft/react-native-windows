@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Rework custom components to not rely on open compose patterns",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
