@@ -381,6 +381,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Invoke() {
   if (spProviderSimple != nullptr) {
     UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_Invoke_InvokedEventId);
   }
+  DispatchAccessibilityAction(m_view, "invoke");
 
   return S_OK;
 }
@@ -394,6 +395,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::ScrollIntoView() {
   winrt::Microsoft::ReactNative::implementation::BringIntoViewOptions scrollOptions;
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
       ->StartBringIntoView(std::move(scrollOptions));
+  DispatchAccessibilityAction(m_view, "scrollIntoView");
 
   return S_OK;
 }
@@ -422,6 +424,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(LPCWSTR val) {
 
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
       ->setAcccessiblityValue(winrt::to_string(val));
+  DispatchAccessibilityAction(m_view, "setValue");
   return S_OK;
 }
 
@@ -488,6 +491,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Toggle() {
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->Toggle();
+  DispatchAccessibilityAction(m_view, "toggle");
   return S_OK;
 }
 
