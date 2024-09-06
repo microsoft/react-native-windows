@@ -382,6 +382,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Invoke() {
     UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_Invoke_InvokedEventId);
   }
   DispatchAccessibilityAction(m_view, "invoke");
+  DispatchAccessibilityAction(m_view, "activate");
 
   return S_OK;
 }
