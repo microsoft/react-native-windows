@@ -182,7 +182,7 @@ std::string extractAccessibilityValue(const facebook::react::AccessibilityValue 
   }
 }
 
-void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view, const std::string &action) noexcept{
+void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view, const std::string &action) noexcept {
   auto strongView = view.view();
 
   if (!strongView)
