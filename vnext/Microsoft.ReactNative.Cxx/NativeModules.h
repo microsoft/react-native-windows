@@ -431,12 +431,12 @@ struct MethodSignature {
   }
 
   template <class TOtherInputArgs, size_t... I>
-  static constexpr bool MatchInputArgs(std::index_sequence<I...>) noexcept {
+  constexpr bool MatchInputArgs(std::index_sequence<I...>) noexcept {
     return (MatchInputArg<std::tuple_element_t<I, InputArgs>, std::tuple_element_t<I, TOtherInputArgs>>() && ...);
   }
 
   template <class TOtherOutputCallbacks, size_t... I>
-  static constexpr bool MatchOutputCallbacks(std::index_sequence<I...>) noexcept {
+  constexpr bool MatchOutputCallbacks(std::index_sequence<I...>) noexcept {
     return (
         std::is_same_v<std::tuple_element_t<I, OutputCallbacks>, std::tuple_element_t<I, TOtherOutputCallbacks>> &&
         ...);
