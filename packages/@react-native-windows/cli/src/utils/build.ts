@@ -122,9 +122,8 @@ export function parseMsBuildProps(
   options: RunWindowsOptions,
 ): Record<string, string> {
   const result: Record<string, string> = {};
-  const msbuildprops = (options.msbuildprops?.toString() ?? '').trim();
-  if (msbuildprops !== '') {
-    const props = msbuildprops.split(',');
+  if (typeof options.msbuildprops === 'string') {
+    const props = options.msbuildprops.split(',');
     for (const prop of props) {
       const propAssignment = prop.split('=');
       if (propAssignment.length === 2 && propAssignment[0].trim().length > 0) {
