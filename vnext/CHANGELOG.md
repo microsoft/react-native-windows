@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 05 Sep 2024 05:13:45 GMT and should not be manually modified.
+<!-- This log was last generated on Fri, 06 Sep 2024 05:14:01 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.864
+
+Fri, 06 Sep 2024 05:14:01 GMT
+
+### Changes
+
+- CreateVisual handler should have reference to view (30809111+acoates-ms@users.noreply.github.com)
+- Add Support for Toggle Provider (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.234
+- Bump @react-native-windows/codegen to v0.0.0-canary.101
 
 ## 0.0.0-canary.863
 
