@@ -759,12 +759,11 @@ struct CompScrollerVisual : winrt::implements<
   }
 
   void OnPointerPressed(
-      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs& args) noexcept {
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
     if constexpr (std::is_same_v<TTypeRedirects, MicrosoftTypeRedirects>) {
       auto pointerDeviceType = args.Pointer().PointerDeviceType();
-      if (pointerDeviceType == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Touch)
-      {
-         m_visualInteractionSource.TryRedirectForManipulation(args.GetCurrentPoint(args.OriginalSource()).Inner());
+      if (pointerDeviceType == winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Touch) {
+        m_visualInteractionSource.TryRedirectForManipulation(args.GetCurrentPoint(args.OriginalSource()).Inner());
       }
     }
   }
@@ -781,8 +780,12 @@ struct CompScrollerVisual : winrt::implements<
 
   void UpdateInteractionModes() noexcept {
     if (m_isScrollEnabled) {
-      m_visualInteractionSource.PositionXSourceMode(m_horizontal ? TTypeRedirects::InteractionSourceMode::EnabledWithInertia : TTypeRedirects::InteractionSourceMode::Disabled);
-      m_visualInteractionSource.PositionYSourceMode(m_horizontal ? TTypeRedirects::InteractionSourceMode::Disabled : TTypeRedirects::InteractionSourceMode::EnabledWithInertia);
+      m_visualInteractionSource.PositionXSourceMode(
+          m_horizontal ? TTypeRedirects::InteractionSourceMode::EnabledWithInertia
+                       : TTypeRedirects::InteractionSourceMode::Disabled);
+      m_visualInteractionSource.PositionYSourceMode(
+          m_horizontal ? TTypeRedirects::InteractionSourceMode::Disabled
+                       : TTypeRedirects::InteractionSourceMode::EnabledWithInertia);
       m_visualInteractionSource.ManipulationRedirectionMode(
           TTypeRedirects::VisualInteractionSourceRedirectionMode::CapableTouchpadAndPointerWheel);
     } else {
