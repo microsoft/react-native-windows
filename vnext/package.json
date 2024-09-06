@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows",
-  "version": "0.0.0-canary.863",
+  "version": "0.0.0-canary.864",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -26,7 +26,7 @@
     "@react-native-community/cli": "14.0.0",
     "@react-native-community/cli-platform-android": "14.0.0",
     "@react-native-community/cli-platform-ios": "14.0.0",
-    "@react-native-windows/cli": "0.0.0-canary.233",
+    "@react-native-windows/cli": "0.0.0-canary.234",
     "@react-native/assets": "1.0.0",
     "@react-native/assets-registry": "0.76.0-nightly-20240824-09e88448c",
     "@react-native/codegen": "0.76.0-nightly-20240824-09e88448c",
@@ -66,7 +66,7 @@
     "yargs": "^17.6.2"
   },
   "devDependencies": {
-    "@react-native-windows/codegen": "0.0.0-canary.100",
+    "@react-native-windows/codegen": "0.0.0-canary.101",
     "@react-native/metro-config": "0.76.0-nightly-20240701-9f6cb21ed",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.26",

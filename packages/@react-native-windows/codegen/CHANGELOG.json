@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 06 Sep 2024 05:14:01 GMT",
+      "version": "0.0.0-canary.101",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.101",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "ecdff31009099ee8245529b633b65a1f8bcabc79",
+            "comment": "[Fabric] Add native component codegen"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 14 Aug 2024 05:14:30 GMT",
       "version": "0.0.0-canary.100",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.100",
