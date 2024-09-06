@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[0.75] Fix parsing of empty build props in run-windows",
+  "packageName": "@react-native-windows/cli",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
