@@ -160,7 +160,7 @@ struct CustomComponentUserData : winrt::implements<CustomComponentUserData, winr
           islandView.UserData(*userData);
 
 #ifdef USE_EXPERIMENTAL_WINUI3
-          islandView.Destroying([](const winrt::IInspectable &sender, const winrt::IInspectable &args) {
+          islandView.Destroying([](const winrt::IInspectable &sender, const winrt::IInspectable & /*args*/) {
             auto senderIslandView = sender.as<winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView>();
             auto userData = senderIslandView.UserData().as<CustomComponentUserData>();
             userData->m_xamlIsland.Close();
