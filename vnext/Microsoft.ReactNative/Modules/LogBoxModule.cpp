@@ -19,6 +19,20 @@
 
 namespace Microsoft::ReactNative {
 
+LogBox::~LogBox() {
+#ifdef USE_FABRIC
+  if (m_hwnd)
+  {
+    m_context.UIDispatcher().Post([hwnd = m_hwnd]()
+    {
+      DestroyWindow(hwnd);
+    });
+    m_hwnd = nullptr;
+  }
+#endif
+}
+
+
 #ifdef USE_FABRIC
 constexpr PCWSTR c_logBoxWindowClassName = L"MS_REACTNATIVE_LOGBOX";
 constexpr auto CompHostProperty = L"CompHost";
