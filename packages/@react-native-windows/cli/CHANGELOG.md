@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Fri, 06 Sep 2024 05:14:01 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 07 Sep 2024 05:14:11 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.235
+
+Sat, 07 Sep 2024 05:14:11 GMT
+
+### Changes
+
+- Fix parsing of empty build props in run-windows (jthysell@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.102
 
 ## 0.0.0-canary.234
 

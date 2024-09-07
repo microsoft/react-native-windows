@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix parsing of empty build props in run-windows",
-  "packageName": "@react-native-windows/cli",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
