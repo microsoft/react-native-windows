@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 02 Sep 2024 15:15:00 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Sep 2024 15:21:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.2
+
+Mon, 09 Sep 2024 15:21:55 GMT
+
+### Patches
+
+- CreateVisual handler should have reference to view (30809111+acoates-ms@users.noreply.github.com)
+- replace IAppData.TemporaryFolder with GetTempPathW (aeulitz@outlook.com)
+- Rework custom components to not rely on open compose patterns (30809111+acoates-ms@users.noreply.github.com)
+- Add Support for Toggle Provider (34109996+chiaramooney@users.noreply.github.com)
+- [Fabric] Fix ScrollViewComponentView object leak (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Enable implementation of custom events on custom components (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.75.2
+- Bump @react-native-windows/codegen to v0.75.1
 
 ## 0.75.1
 

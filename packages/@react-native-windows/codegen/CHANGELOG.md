@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Mon, 19 Aug 2024 20:18:57 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Sep 2024 15:21:55 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.1
+
+Mon, 09 Sep 2024 15:21:55 GMT
+
+### Patches
+
+- [Fabric] Add native component codegen (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.75.0
 
