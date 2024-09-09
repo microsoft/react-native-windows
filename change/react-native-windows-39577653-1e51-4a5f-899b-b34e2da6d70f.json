@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "C++ 20: Fix \"Explicit template specialization cannot have a storage class\"",
+  "packageName": "react-native-windows",
+  "email": "ngerlem@fb.com",
+  "dependentChangeType": "patch"
+}
