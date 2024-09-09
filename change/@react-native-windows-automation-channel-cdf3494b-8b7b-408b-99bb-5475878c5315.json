@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Automatically set EnableSourceLink for in-repo builds only",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

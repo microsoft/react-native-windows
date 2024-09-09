@@ -7,6 +7,9 @@
   <PropertyGroup>
     <SolutionDir Condition="'$(SolutionDir)' == '' OR '$(SolutionDir)' == '*Undefined*'">$(MSBuildThisFileDirectory)</SolutionDir>
 
+    <!-- This property can be used to affect project builds in-repo (as opposed to by customers) -->
+    <BuildingInRnwRepo Condition="'$(BuildingInRnwRepo)' == '' AND Exists('$(MSBuildThisFileDirectory)\src-win')">true</BuildingInRnwRepo>
+
     <!-- This property sets the CscTask to print the full path of the csharp file on errors and warnings rather than just the filename. -->
     <GenerateFullPaths>true</GenerateFullPaths>
 
@@ -14,6 +17,7 @@
       SourceLink is disabled by default since customer projects are still building our projects and therefore we don't want to force customers to use this.
       The PR (windows-vs-pr.yml) and CI (publish.yml() turn it back on.
     -->
+    <EnableSourceLink Condition="'$(EnableSourceLink)' == '' AND '$(BuildingInRnwRepo)' == 'true'">true</EnableSourceLink>
     <EnableSourceLink Condition="'$(EnableSourceLink)' == ''">false</EnableSourceLink>
     <!-- When bumping the Folly version, be sure to bump the git hash of that version's commit and build Folly.vcxproj (to update its cgmanifest.json) too. -->
     <FollyVersion>2023.11.06.00</FollyVersion>
