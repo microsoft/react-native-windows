@@ -9341,7 +9341,7 @@ metro-runtime@0.80.9:
   dependencies:
     "@babel/runtime" "^7.0.0"
 
-metro-source-map@0.80.11, metro-source-map@^0.80.10:
+metro-source-map@0.80.11:
   version "0.80.11"
   resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.80.11.tgz#5154845e2c0a9bfcc5d7332baa3b67c742ab6643"
   integrity sha512-s/lxGxUBVYhufYmJBLpxk1m6m73KbcXBS30T1TGPKJWhrO/hu6T0i9fqS6r/z4LdhB/TGQkHoB1VWiQ/J445iQ==
@@ -9353,6 +9353,21 @@ metro-source-map@0.80.11, metro-source-map@^0.80.10:
     metro-symbolicate "0.80.11"
     nullthrows "^1.1.1"
     ob1 "0.80.11"
+    source-map "^0.5.6"
+    vlq "^1.0.0"
+
+metro-source-map@0.80.12, metro-source-map@^0.80.10:
+  version "0.80.12"
+  resolved "https://registry.yarnpkg.com/metro-source-map/-/metro-source-map-0.80.12.tgz#36a2768c880f8c459d6d758e2d0975e36479f49c"
+  integrity sha512-o+AXmE7hpvM8r8MKsx7TI21/eerYYy2DCDkWfoBkv+jNkl61khvDHlQn0cXZa6lrcNZiZkl9oHSMcwLLIrFmpw==
+  dependencies:
+    "@babel/traverse" "^7.20.0"
+    "@babel/types" "^7.20.0"
+    flow-enums-runtime "^0.0.6"
+    invariant "^2.2.4"
+    metro-symbolicate "0.80.12"
+    nullthrows "^1.1.1"
+    ob1 "0.80.12"
     source-map "^0.5.6"
     vlq "^1.0.0"
 
@@ -9378,6 +9393,19 @@ metro-symbolicate@0.80.11:
     flow-enums-runtime "^0.0.6"
     invariant "^2.2.4"
     metro-source-map "0.80.11"
+    nullthrows "^1.1.1"
+    source-map "^0.5.6"
+    through2 "^2.0.1"
+    vlq "^1.0.0"
+
+metro-symbolicate@0.80.12:
+  version "0.80.12"
+  resolved "https://registry.yarnpkg.com/metro-symbolicate/-/metro-symbolicate-0.80.12.tgz#3a6aa783c6e494e2879342d88d5379fab69d1ed2"
+  integrity sha512-/dIpNdHksXkGHZXARZpL7doUzHqSNxgQ8+kQGxwpJuHnDhGkENxB5PS2QBaTDdEcmyTMjS53CN1rl9n1gR6fmw==
+  dependencies:
+    flow-enums-runtime "^0.0.6"
+    invariant "^2.2.4"
+    metro-source-map "0.80.12"
     nullthrows "^1.1.1"
     source-map "^0.5.6"
     through2 "^2.0.1"
@@ -9971,6 +9999,13 @@ ob1@0.80.11:
   version "0.80.11"
   resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.80.11.tgz#c1dd4d7825f94c9c51c94f0b02e88e828a2ce0d8"
   integrity sha512-1FqQEnd4n3UJ441/eHSKCgiMGf1RbrR/aXN0ybJ27zhbq+cc4mpE4WHLuzgNEnXu/9wf43lnAUL0WN7vcVD8Yg==
+  dependencies:
+    flow-enums-runtime "^0.0.6"
+
+ob1@0.80.12:
+  version "0.80.12"
+  resolved "https://registry.yarnpkg.com/ob1/-/ob1-0.80.12.tgz#0451944ba6e5be225cc9751d8cd0d7309d2d1537"
+  integrity sha512-VMArClVT6LkhUGpnuEoBuyjG9rzUyEzg4PDkav6wK1cLhOK02gPCYFxoiB4mqVnrMhDpIzJcrGNAMVi9P+hXrw==
   dependencies:
     flow-enums-runtime "^0.0.6"
 
