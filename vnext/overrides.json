@@ -193,7 +193,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/LayoutableShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/LayoutableShadowNode.cpp",
-      "baseHash": "e7e8401408c7e186cfc019e26044bad08822957d",
+      "baseHash": "db08c2728c084069690aa6281f1b9e713e82cc94",
       "issue": 13644
     },
     {
