@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 17 Aug 2024 01:38:32 GMT and should not be manually modified.
+This log was last generated on Mon, 09 Sep 2024 21:08:14 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.73.21
+
+Mon, 09 Sep 2024 21:08:14 GMT
+
+### Patches
+
+- C++ 20: Fix "Explicit template specialization cannot have a storage class" (ngerlem@fb.com)
 
 ## 0.73.20
 

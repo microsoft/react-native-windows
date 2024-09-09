@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 09 Sep 2024 21:08:14 GMT",
+      "version": "0.73.21",
+      "tag": "react-native-windows_v0.73.21",
+      "comments": {
+        "patch": [
+          {
+            "author": "ngerlem@fb.com",
+            "package": "react-native-windows",
+            "commit": "38be74aa26770ed745fbbae5a999c6a1fea34ef1",
+            "comment": "C++ 20: Fix \"Explicit template specialization cannot have a storage class\""
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 17 Aug 2024 01:38:32 GMT",
       "version": "0.73.20",
       "tag": "react-native-windows_v0.73.20",
