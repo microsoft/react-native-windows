@@ -57,7 +57,7 @@ steps:
 
   - ${{ if endsWith(parameters.template, '-app') }}:
     - script: |
-        npx --yes @react-native-community/cli@next init testcli --version $(reactNativeDevDependency)
+        npx --yes @react-native-community/cli@latest init testcli --version $(reactNativeDevDependency) --verbose --install-pods false --skip-git-init true
       displayName: Init new app project with @react-native-community/cli init
       workingDirectory: $(Agent.BuildDirectory)
 
