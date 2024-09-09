@@ -135,7 +135,7 @@ const API = {
       }
     : (tag, saveValueCallback) => {
         NativeOperations.getValue(tag, saveValueCallback);
-      }) as $NonMaybeType<typeof NativeAnimatedModule>['getValue']
+      }) as $NonMaybeType<typeof NativeAnimatedModule>['getValue'],
 
   setWaitingForIdentifier(id: string): void {
     waitingForQueuedOperations.add(id);
