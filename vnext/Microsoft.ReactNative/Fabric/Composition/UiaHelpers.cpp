@@ -184,4 +184,26 @@ std::string extractAccessibilityValue(const facebook::react::AccessibilityValue 
   }
 }
 
+void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view, const std::string &action) noexcept {
+  auto strongView = view.view();
+
+  if (!strongView)
+    return;
+
+  auto baseView = strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+  if (baseView == nullptr)
+    return;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(baseView->props());
+  if (props == nullptr)
+    return;
+
+  auto accessibilityActions = props->accessibilityActions;
+  for (size_t i = 0; i < accessibilityActions.size(); i++) {
+    if (accessibilityActions[i].name == action) {
+      baseView->GetEventEmitter()->onAccessibilityAction(action);
+    }
+  }
+}
+
 } // namespace winrt::Microsoft::ReactNative::implementation

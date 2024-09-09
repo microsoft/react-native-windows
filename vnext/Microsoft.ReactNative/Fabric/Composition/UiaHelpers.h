@@ -33,4 +33,6 @@ long GetLiveSetting(const std::string &liveRegion) noexcept;
 
 std::string extractAccessibilityValue(const facebook::react::AccessibilityValue &value) noexcept;
 
+void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view, const std::string &action) noexcept;
+
 } // namespace winrt::Microsoft::ReactNative::implementation
