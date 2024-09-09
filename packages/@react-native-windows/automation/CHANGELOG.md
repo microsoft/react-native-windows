@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Fri, 06 Sep 2024 05:14:02 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 07 Sep 2024 05:14:12 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.3.287
+
+Sat, 07 Sep 2024 05:14:12 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.205
 
 ## 0.3.286
 
