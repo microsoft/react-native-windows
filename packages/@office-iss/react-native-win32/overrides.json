@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.76.0-nightly-20240901-305b4357e",
+  "baseVersion": "0.76.0-nightly-20240909-143f1ad29",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "67b097833fd6733db6c64c57fbcb2efb3e9b51c5"
+      "baseHash": "cc375839a102263f435205df68b79d3d74c4f20a"
     },
     {
       "type": "derived",
@@ -30,13 +30,6 @@
       "file": "src-win/Libraries/Alert/Alert.win32.js",
       "baseFile": "packages/react-native/Libraries/Alert/Alert.js",
       "baseHash": "173b99e6ae120f14176cf3425877728787d3feed"
-    },
-    {
-      "type": "derived",
-      "file": "src-win/Libraries/Animated/NativeAnimatedHelper.win32.js",
-      "baseFile": "packages/react-native/Libraries/Animated/NativeAnimatedHelper.js",
-      "baseHash": "2cefe6e59aa26f98158be3f35452f9a49d8395c4",
-      "issue": 11041
     },
     {
       "type": "derived",
@@ -299,7 +292,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "packages/react-native/Libraries/Inspector/Inspector.js",
-      "baseHash": "847b7e0e4f2088fac00f36eb30f3fa3b8e94ec14"
+      "baseHash": "ac4d1824877906651f2d82ab7910dda3ecb2bd80"
     },
     {
       "type": "patch",
@@ -317,7 +310,7 @@
       "type": "patch",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorHeader.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorHeader.js",
-      "baseHash": "46b6ee5d65a0c820dd0a2415bd8f43e5e8807bae",
+      "baseHash": "9e394821ea51994288aa4626d0fdff7aae1aa0a1",
       "issue": 7952
     },
     {
@@ -511,6 +504,13 @@
       "file": "src-win/Libraries/Utilities/useMergeRefs.js",
       "baseFile": "packages/react-native/Libraries/Utilities/useMergeRefs.js",
       "baseHash": "1f1ca637132e6e0fe1549ba520d98508269ca2bd"
+    },
+    {
+      "type": "patch",
+      "file": "src-win/src/private/animated/NativeAnimatedHelper.win32.js",
+      "baseFile": "packages/react-native/src/private/animated/NativeAnimatedHelper.js",
+      "baseHash": "c91921c31ad267817d7a38859005149473ca6da5",
+      "issue": 11041
     },
     {
       "type": "derived",
