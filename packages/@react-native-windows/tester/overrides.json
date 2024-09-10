@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.76.0-nightly-20240816-17017d2b8",
+  "baseVersion": "0.76.0-nightly-20240901-305b4357e",
   "overrides": [
     {
       "type": "derived",
@@ -52,7 +52,7 @@
       "type": "derived",
       "file": "src/js/examples/Text/TextExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextExample.android.js",
-      "baseHash": "983f14d94feec6a16f4e3ce51cada4dea242ba00"
+      "baseHash": "5da60586e3e8510d1697814e91a3a2c84266dff7"
     },
     {
       "type": "patch",
@@ -78,7 +78,7 @@
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "a370b643252bd68bd7af33c874086adc5edfb100"
+      "baseHash": "e4b0f11a9f8a9f289258afb17ad7d2c4c00b5c46"
     },
     {
       "type": "copy",

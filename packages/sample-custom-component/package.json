@@ -1,0 +1,55 @@
+{
+  "name": "sample-custom-component",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "rnw-scripts buildWithCodegetNativeComponents",
+    "lint": "rnw-scripts lint",
+    "lint:fix": "rnw-scripts lint:fix"
+  },
+  "main": "lib-commonjs/index.js",
+  "types": "lib-commonjs/index.d.ts",
+  "codegenConfig": {
+    "name": "SampleCustomComponent",
+    "type": "all",
+    "jsSrcsDir": "src",
+    "windows": {
+      "generators": "componentsWindows",
+      "namespace": "winrt::SampleCustomComponent::Codegen"
+    }
+  },
+  "dependencies": {
+    "@types/react": "^18.2.6",
+    "react": "^19.0.0-rc-fb9a90fa48-20240614",
+    "react-native": "0.76.0-nightly-20240901-305b4357e",
+    "react-native-windows": "^0.0.0-canary.866"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.0",
+    "@babel/generator": "^7.20.0",
+    "@babel/preset-env": "^7.20.0",
+    "@babel/preset-typescript": "^7.8.3",
+    "@babel/runtime": "^7.20.0",
+    "@react-native-community/cli": "14.0.0-alpha.11",
+    "@react-native/metro-config": "0.76.0-nightly-20240901-305b4357e",
+    "@rnw-scripts/babel-node-config": "2.3.2",
+    "@rnw-scripts/babel-react-native-config": "0.0.0",
+    "@rnw-scripts/eslint-config": "1.2.26",
+    "@rnw-scripts/just-task": "2.3.43",
+    "@rnw-scripts/metro-dev-config": "0.0.0",
+    "@rnw-scripts/ts-config": "2.0.5",
+    "@rnx-kit/jest-preset": "^0.1.16",
+    "@types/react": "^18.2.6",
+    "@typescript-eslint/eslint-plugin": "^5.21.0",
+    "@typescript-eslint/parser": "^5.21.0",
+    "babel-jest": "^29.6.3",
+    "eslint": "^8.19.0",
+    "glob": "^7.1.6",
+    "just-scripts": "^1.3.3",
+    "prettier": "2.8.8",
+    "typescript": "5.0.4"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

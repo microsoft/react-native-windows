@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Create separate NuGet restore lock files for Fabric builds",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

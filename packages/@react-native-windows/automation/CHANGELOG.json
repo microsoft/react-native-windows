@@ -2,6 +2,66 @@
   "name": "@react-native-windows/automation",
   "entries": [
     {
+      "date": "Tue, 10 Sep 2024 05:15:18 GMT",
+      "version": "0.3.288",
+      "tag": "@react-native-windows/automation_v0.3.288",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.206",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Sep 2024 05:14:12 GMT",
+      "version": "0.3.287",
+      "tag": "@react-native-windows/automation_v0.3.287",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.205",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Sep 2024 05:14:02 GMT",
+      "version": "0.3.286",
+      "tag": "@react-native-windows/automation_v0.3.286",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.204",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Sep 2024 05:13:45 GMT",
+      "version": "0.3.285",
+      "tag": "@react-native-windows/automation_v0.3.285",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.203",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 31 Aug 2024 05:22:21 GMT",
       "version": "0.3.284",
       "tag": "@react-native-windows/automation_v0.3.284",

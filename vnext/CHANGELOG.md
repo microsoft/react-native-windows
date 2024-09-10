@@ -1,8 +1,48 @@
 # Change Log - react-native-windows
 
-This log was last generated on Sat, 31 Aug 2024 05:22:20 GMT and should not be manually modified.
+<!-- This log was last generated on Tue, 10 Sep 2024 05:15:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.866
+
+Tue, 10 Sep 2024 05:15:18 GMT
+
+### Changes
+
+- Automatically set EnableSourceLink for in-repo builds only (jthysell@microsoft.com)
+- Add Implementation for accessibilityActions (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.865
+
+Sat, 07 Sep 2024 05:14:12 GMT
+
+### Changes
+
+- Integrate 8/31 (34109996+chiaramooney@users.noreply.github.com)
+- switch to optimized text (tatianakapos@microsoft.com)
+- Fix to enable update of @types/react (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.235
+- Bump @react-native-windows/codegen to v0.0.0-canary.102
+
+## 0.0.0-canary.864
+
+Fri, 06 Sep 2024 05:14:01 GMT
+
+### Changes
+
+- CreateVisual handler should have reference to view (30809111+acoates-ms@users.noreply.github.com)
+- Add Support for Toggle Provider (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.234
+- Bump @react-native-windows/codegen to v0.0.0-canary.101
+
+## 0.0.0-canary.863
+
+Thu, 05 Sep 2024 05:13:45 GMT
+
+### Changes
+
+- Integrate 8/20 (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.862
 

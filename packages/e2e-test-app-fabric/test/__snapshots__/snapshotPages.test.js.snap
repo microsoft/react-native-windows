@@ -7970,6 +7970,113 @@ exports[`snapshotAllPages Border 22`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Border 23`] = `
+<View
+  style={
+    {
+      "flexDirection": "row",
+      "gap": "10",
+    }
+  }
+  testID="border-test-border-clipping-compliance"
+>
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "backgroundColor": "red",
+          "borderColor": "rgba(0, 0, 0, 0.5)",
+          "borderRadius": 10,
+          "borderWidth": 10,
+          "overflow": "hidden",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "blue",
+          "height": 20,
+          "left": -10,
+          "top": -10,
+          "width": 20,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "backgroundColor": "red",
+          "borderColor": "rgba(0, 0, 0, 0.5)",
+          "borderTopLeftRadius": 20,
+          "borderWidth": 10,
+        },
+        {
+          "overflow": "hidden",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "blue",
+          "height": 20,
+          "left": -10,
+          "top": -10,
+          "width": 20,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "backgroundColor": "red",
+          "borderColor": "rgba(0, 0, 0, 0.5)",
+          "borderTopLeftRadius": 20,
+          "borderWidth": 10,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "blue",
+            "height": 20,
+            "left": -10,
+            "top": -10,
+            "width": 20,
+          },
+          {
+            "left": -15,
+            "top": 0,
+          },
+        ]
+      }
+    />
+  </View>
+</View>
+`;
+
 exports[`snapshotAllPages Button 1`] = `
 <View
   accessibilityLabel="Press to submit your application!"
@@ -10480,6 +10587,102 @@ exports[`snapshotAllPages Display:none Style 1`] = `
       </View>
     </View>
   </RCTScrollView>
+</View>
+`;
+
+exports[`snapshotAllPages Drawing Island Example 1`] = `
+<View
+  style={
+    {
+      "borderRadius": 0,
+      "borderWidth": 2,
+      "flexDirection": "row",
+      "flexWrap": "wrap",
+      "gap": 5,
+      "margin": 10,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <DrawingIsland
+    style={
+      {
+        "flex": 1,
+        "minWidth": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "green",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "red",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "blue",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
+  <View
+    style={
+      {
+        "backgroundColor": "pink",
+        "height": 200,
+        "width": 200,
+      }
+    }
+  />
 </View>
 `;
 
@@ -23064,6 +23267,115 @@ exports[`snapshotAllPages Mouse Events 1`] = `
   <View>
     <Text />
   </View>
+</View>
+`;
+
+exports[`snapshotAllPages Moving Light Example 1`] = `
+<View>
+  <Text>
+    Size: 25
+  </Text>
+  <Text>
+    Color: white
+  </Text>
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Toggle Light
+        </Text>
+      </View>
+    </View>
+  </View>
+  <Text>
+    Last Event Value: No Event yet
+  </Text>
+  <MovingLight
+    color="white"
+    eventParam="white"
+    onSomething={[Function]}
+    size={25}
+    style={
+      {
+        "backgroundColor": "white",
+        "height": 500,
+        "width": 500,
+      }
+    }
+  />
 </View>
 `;
 
@@ -55493,6 +55805,40 @@ exports[`snapshotAllPages Text 16`] = `
     </Text>
     and red color again
   </Text>,
+  <Text
+    style={
+      {
+        "opacity": 0.7,
+      }
+    }
+  >
+    (opacity
+    <Text>
+      (is inherited
+      <Text
+        style={
+          {
+            "opacity": 0.7,
+          }
+        }
+      >
+        (and accumulated
+        <Text
+          style={
+            {
+              "backgroundColor": "#ffaaaa",
+              "opacity": 0.5,
+            }
+          }
+        >
+          (and also applies to the background)
+        </Text>
+        )
+      </Text>
+      )
+    </Text>
+    )
+  </Text>,
 ]
 `;
 
@@ -67594,6 +67940,16 @@ exports[`snapshotAllPages View 7`] = `
       }
     }
   />
+  <View
+    style={
+      {
+        "borderRadius": "0%",
+        "borderWidth": 6,
+        "height": 50,
+        "width": 100,
+      }
+    }
+  />
 </View>
 `;
 
@@ -69004,6 +69360,158 @@ exports[`snapshotAllPages View 19`] = `
 
 exports[`snapshotAllPages View 20`] = `
 <View
+  style={
+    {
+      "gap": 20,
+    }
+  }
+  testID="view-test-box-shadow"
+>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "gap": 15,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "borderColor": "red",
+          "borderRadius": 10,
+          "borderWidth": 5,
+          "experimental_boxShadow": "0 0 10px 0 black",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "borderColor": "red",
+          "borderRadius": 30,
+          "borderWidth": 5,
+          "experimental_boxShadow": "inset 0 0 10px 0 black",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "borderColor": "red",
+          "borderRadius": 30,
+          "borderWidth": 5,
+          "experimental_boxShadow": "inset 15px -5px 5px 5px cyan, inset 15px -5px 20px 10px orange, -5px 5px 5px 0px green, 0px -10px 0px 5px black",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    />
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "gap": 15,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "experimental_boxShadow": "0px 0px 5px 5px black",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "cyan",
+            "height": 25,
+            "left": -10,
+            "width": 25,
+          }
+        }
+      />
+    </View>
+    <View
+      style={
+        {
+          "backgroundColor": "red",
+          "experimental_boxShadow": "inset 0px 0px 5px 5px black",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    />
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    >
+      <View
+        style={
+          {
+            "backgroundColor": "cyan",
+            "height": 25,
+            "width": 25,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "experimental_boxShadow": " 0px 0px 20px 5px black",
+            "height": 75,
+            "width": 75,
+          }
+        }
+      />
+      <View
+        style={
+          {
+            "backgroundColor": "cyan",
+            "height": 25,
+            "width": 25,
+          }
+        }
+      />
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "gap": 15,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "green",
+          "experimental_boxShadow": "0px 10px",
+          "height": 75,
+          "width": 75,
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 21`] = `
+<View
   accessibilityLabel="NativeID Example"
   accessible={true}
   nativeID="native-id-view"
@@ -69015,7 +69523,7 @@ exports[`snapshotAllPages View 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 21`] = `
+exports[`snapshotAllPages View 22`] = `
 <View
   accessibilityActions={
     [
@@ -69079,7 +69587,7 @@ exports[`snapshotAllPages View 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 22`] = `
+exports[`snapshotAllPages View 23`] = `
 <View
   accessibilityLabel="Shadow Example"
   accessible={true}
@@ -69100,7 +69608,7 @@ exports[`snapshotAllPages View 22`] = `
 />
 `;
 
-exports[`snapshotAllPages View 23`] = `
+exports[`snapshotAllPages View 24`] = `
 <View
   accessibilityLabel="HitSlop Example"
   accessible={true}
@@ -69125,7 +69633,7 @@ exports[`snapshotAllPages View 23`] = `
 />
 `;
 
-exports[`snapshotAllPages View 24`] = `
+exports[`snapshotAllPages View 25`] = `
 <View
   accessibilityLabel="Tooltip Example"
   accessible={true}

@@ -23,7 +23,6 @@ public:
   virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
   virtual bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
-  virtual bool changeOrderOfMountingInstructionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) = 0;
   virtual bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) = 0;
@@ -35,6 +34,8 @@ public:
   virtual bool enableFabricLogs(jsi::Runtime &rt) = 0;
   virtual bool enableFabricRendererExclusively(jsi::Runtime &rt) = 0;
   virtual bool enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt) = 0;
+  virtual bool enableIOSViewClipToPaddingBox(jsi::Runtime &rt) = 0;
+  virtual bool enableLayoutAnimationsOnIOS(jsi::Runtime &rt) = 0;
   virtual bool enableLongTaskAPI(jsi::Runtime &rt) = 0;
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
   virtual bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) = 0;
@@ -47,6 +48,7 @@ public:
   virtual bool fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
   virtual bool fixMissedFabricStateUpdatesOnAndroid(jsi::Runtime &rt) = 0;
+  virtual bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledDebug(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledRelease(jsi::Runtime &rt) = 0;
@@ -61,6 +63,7 @@ public:
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
   virtual bool useNewReactImageViewBackgroundDrawing(jsi::Runtime &rt) = 0;
   virtual bool useOptimisedViewPreallocationOnAndroid(jsi::Runtime &rt) = 0;
+  virtual bool useOptimizedEventBatchingOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) = 0;
   virtual bool useRuntimeShadowNodeReferenceUpdateOnLayout(jsi::Runtime &rt) = 0;
   virtual bool useStateAlignmentMechanism(jsi::Runtime &rt) = 0;
@@ -114,14 +117,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::batchRenderingUpdatesInEventLoop, jsInvoker_, instance_);
-    }
-    bool changeOrderOfMountingInstructionsOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::changeOrderOfMountingInstructionsOnAndroid) == 1,
-          "Expected changeOrderOfMountingInstructionsOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::changeOrderOfMountingInstructionsOnAndroid, jsInvoker_, instance_);
     }
     bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -210,6 +205,22 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableGranularShadowTreeStateReconciliation, jsInvoker_, instance_);
+    }
+    bool enableIOSViewClipToPaddingBox(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableIOSViewClipToPaddingBox) == 1,
+          "Expected enableIOSViewClipToPaddingBox(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableIOSViewClipToPaddingBox, jsInvoker_, instance_);
+    }
+    bool enableLayoutAnimationsOnIOS(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableLayoutAnimationsOnIOS) == 1,
+          "Expected enableLayoutAnimationsOnIOS(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableLayoutAnimationsOnIOS, jsInvoker_, instance_);
     }
     bool enableLongTaskAPI(jsi::Runtime &rt) override {
       static_assert(
@@ -306,6 +317,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::fixMissedFabricStateUpdatesOnAndroid, jsInvoker_, instance_);
+    }
+    bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::fixMountingCoordinatorReportedPendingTransactionsOnAndroid) == 1,
+          "Expected fixMountingCoordinatorReportedPendingTransactionsOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::fixMountingCoordinatorReportedPendingTransactionsOnAndroid, jsInvoker_, instance_);
     }
     bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -418,6 +437,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useOptimisedViewPreallocationOnAndroid, jsInvoker_, instance_);
+    }
+    bool useOptimizedEventBatchingOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useOptimizedEventBatchingOnAndroid) == 1,
+          "Expected useOptimizedEventBatchingOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useOptimizedEventBatchingOnAndroid, jsInvoker_, instance_);
     }
     bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) override {
       static_assert(
@@ -2347,65 +2374,6 @@ private:
 
   private:
     friend class NativeClipboardCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  class JSI_EXPORT NativeDebuggerSessionObserverCxxSpecJSI : public TurboModule {
-protected:
-  NativeDebuggerSessionObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual bool hasActiveSession(jsi::Runtime &rt) = 0;
-  virtual jsi::Function subscribe(jsi::Runtime &rt, jsi::Function callback) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeDebuggerSessionObserverCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "NativeDebuggerSessionObserverCxx";
-
-protected:
-  NativeDebuggerSessionObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeDebuggerSessionObserverCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeDebuggerSessionObserverCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeDebuggerSessionObserverCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    bool hasActiveSession(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::hasActiveSession) == 1,
-          "Expected hasActiveSession(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::hasActiveSession, jsInvoker_, instance_);
-    }
-    jsi::Function subscribe(jsi::Runtime &rt, jsi::Function callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::subscribe) == 2,
-          "Expected subscribe(...) to have 2 parameters");
-
-      return bridging::callFromJs<jsi::Function>(
-          rt, &T::subscribe, jsInvoker_, instance_, std::move(callback));
-    }
-
-  private:
-    friend class NativeDebuggerSessionObserverCxxSpec;
     T *instance_;
   };
 

@@ -2,6 +2,48 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 07 Sep 2024 05:14:11 GMT",
+      "version": "0.0.0-canary.235",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.235",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "6bddf6ac751ac973fddfecfd40ac3a3c13847ebc",
+            "comment": "Fix parsing of empty build props in run-windows"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.102",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Sep 2024 05:14:01 GMT",
+      "version": "0.0.0-canary.234",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.234",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "ecdff31009099ee8245529b633b65a1f8bcabc79",
+            "comment": "[Fabric] Add native component codegen"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.101",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Aug 2024 05:13:39 GMT",
       "version": "0.0.0-canary.233",
       "tag": "@react-native-windows/cli_v0.0.0-canary.233",

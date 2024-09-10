@@ -176,6 +176,11 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
+  if (patternId == UIA_TogglePatternId && (accessibilityRole == "switch" || accessibilityRole == "checkbox")) {
+    *pRetVal = static_cast<IToggleProvider *>(this);
+    AddRef();
+  }
+
   return S_OK;
 }
 
@@ -376,6 +381,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Invoke() {
   if (spProviderSimple != nullptr) {
     UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_Invoke_InvokedEventId);
   }
+  DispatchAccessibilityAction(m_view, "invoke");
+  DispatchAccessibilityAction(m_view, "activate");
 
   return S_OK;
 }
@@ -389,6 +396,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::ScrollIntoView() {
   winrt::Microsoft::ReactNative::implementation::BringIntoViewOptions scrollOptions;
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
       ->StartBringIntoView(std::move(scrollOptions));
+  DispatchAccessibilityAction(m_view, "scrollIntoView");
 
   return S_OK;
 }
@@ -417,6 +425,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(LPCWSTR val) {
 
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
       ->setAcccessiblityValue(winrt::to_string(val));
+  DispatchAccessibilityAction(m_view, "setValue");
   return S_OK;
 }
 
@@ -460,6 +469,30 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRe
     // Control is using customized control type which should be IsReadOnly for value pattern.
     *pRetVal = true;
   }
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_ToggleState(ToggleState *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal =
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->getToggleState();
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::Toggle() {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->Toggle();
+  DispatchAccessibilityAction(m_view, "toggle");
   return S_OK;
 }
 

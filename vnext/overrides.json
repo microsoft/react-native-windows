@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.76.0-nightly-20240816-17017d2b8",
+  "baseVersion": "0.76.0-nightly-20240901-305b4357e",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "3d94d14740956b3455abfbdff5e043212d04974b"
+      "baseHash": "67b097833fd6733db6c64c57fbcb2efb3e9b51c5"
     },
     {
       "type": "derived",
@@ -44,7 +44,7 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
-      "baseHash": "2c005b6dafacbc59dc887fbd5bc78b801ec465f0"
+      "baseHash": "955b45185e3548af3cffad5d9b05bcf2a658ed4d"
     },
     {
       "type": "derived",
@@ -191,6 +191,20 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/LayoutableShadowNode.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/core/LayoutableShadowNode.cpp",
+      "baseHash": "e7e8401408c7e186cfc019e26044bad08822957d",
+      "issue": 13644
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/ValueUnit.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/ValueUnit.h",
+      "baseHash": "130966ad531e27c54faac4fa4446c90d78ab44a9",
+      "issue": 13645
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/JSRuntimeFactory.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/JSRuntimeFactory.cpp",
       "baseHash": "c77f0b0829b850f8e2f115bfc3440ce94feb207d",
@@ -221,7 +235,7 @@
       "type": "derived",
       "file": "src-win/index.windows.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "dc1e45b643d33d868da60fa27da2cbda0231b7f3"
+      "baseHash": "da5d9e79c8c14c56ba00f73c8514c06e6fffe8ed"
     },
     {
       "type": "platform",
@@ -367,7 +381,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollViewNativeComponent.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollViewNativeComponent.js",
-      "baseHash": "03897a84e9c9bc797593c46be397eeebf3304d4a"
+      "baseHash": "fc24774459ca08e1097b2130535e00d4bc6e0d17"
     },
     {
       "type": "derived",
@@ -379,7 +393,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "259941a60002c5a2a4166a39404d099f0472941e"
+      "baseHash": "494c1159a38de1b57d3889a4dabdc3708204ad4d"
     },
     {
       "type": "patch",
@@ -391,7 +405,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/WindowsTextInputNativeComponent.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/AndroidTextInputNativeComponent.js",
-      "baseHash": "9e399a7f068199f406b192bc3f87cff810bd2270"
+      "baseHash": "3c7663b85d918f6da7f7e769bec85aed9f8c62b1"
     },
     {
       "type": "patch",

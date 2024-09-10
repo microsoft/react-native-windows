@@ -2,6 +2,114 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 10 Sep 2024 05:15:18 GMT",
+      "version": "0.0.0-canary.866",
+      "tag": "react-native-windows_v0.0.0-canary.866",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "401416f6373dcb678b143bce2227b59830ace602",
+            "comment": "Automatically set EnableSourceLink for in-repo builds only"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f756797f9ea5490a29220f28053c24b3e5984950",
+            "comment": "Add Implementation for accessibilityActions"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Sep 2024 05:14:12 GMT",
+      "version": "0.0.0-canary.865",
+      "tag": "react-native-windows_v0.0.0-canary.865",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "409bf6e085cc1aa6421cff078037f7b3774bd8ec",
+            "comment": "Integrate 8/31"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "55e32071ac30a673c7830f717fcbd1a3a228dcff",
+            "comment": "switch to optimized text"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "87ee8c23b3cce594901366a3dc47a3e121dc1987",
+            "comment": "Fix to enable update of @types/react"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.235",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.102",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Sep 2024 05:14:01 GMT",
+      "version": "0.0.0-canary.864",
+      "tag": "react-native-windows_v0.0.0-canary.864",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ecdff31009099ee8245529b633b65a1f8bcabc79",
+            "comment": "CreateVisual handler should have reference to view"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8c60ffef9c4a74d3c05d73c1a21a673b7dad8625",
+            "comment": "Add Support for Toggle Provider"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.234",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.101",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Sep 2024 05:13:45 GMT",
+      "version": "0.0.0-canary.863",
+      "tag": "react-native-windows_v0.0.0-canary.863",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "277d6f06a3e1bf1650cd9d1e7b4f22e0619968e9",
+            "comment": "Integrate 8/20"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 31 Aug 2024 05:22:20 GMT",
       "version": "0.0.0-canary.862",
       "tag": "react-native-windows_v0.0.0-canary.862",

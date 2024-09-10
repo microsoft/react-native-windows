@@ -54,8 +54,6 @@
 .*/node_modules/sample-apps/.*
 .*/node_modules/playground/.*
 
-; Ignore templates for 'npx @react-native-community/cli init'
-<PROJECT_ROOT>/packages/react-native/template/.*
 <PROJECT_ROOT>/packages/react-native/sdks/.*
 
 ; Ignore the codegen e2e tests
@@ -66,6 +64,9 @@
 
 ; Ignore "BUCK" generated dirs
 <PROJECT_ROOT>/\.buckd/
+
+; Ignore cache files
+.*/node_modules/.cache*
 
 ; Ignore the src-win folder - flow files are combined with ones from react-native into the root Libraries folder
 .*/react-native-win32/src-win/.*
@@ -159,4 +160,4 @@ untyped-import
 untyped-type-import
 
 [version]
-^0.243.0
+^0.245.0

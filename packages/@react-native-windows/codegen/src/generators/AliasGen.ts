@@ -71,7 +71,7 @@ interface AliasCodeMap {
 
 function getArrayTypeName(
   type: Nullable<NativeModuleBaseTypeAnnotation>): string {
-    if (type.type === 'ArrayTypeAnnotation' && type.elementType?.type === 'TypeAliasTypeAnnotation') {
+    if (type.type === 'ArrayTypeAnnotation' && type.elementType.type === 'TypeAliasTypeAnnotation') {
       return  type.elementType.name;
     }
 

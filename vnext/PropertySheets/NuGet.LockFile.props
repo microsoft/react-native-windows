@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- This props file is intended to make sure in-repo projects restore with a NuGet
+       lock file for compliance reasons, and furthermore to help differentiate the
+       lock file (i.e. packages.lock.json) for projects that we build in in different
+       variants, such as Paper vs. Fabric, Hermes vs. Chakra, etc.
+       -->
+
+  <PropertyGroup>
+    <RestoreLockedMode Condition="'$(RestoreLockedMode)'=='' OR '$(BuildingInRnwRepo)'=='true'">true</RestoreLockedMode>
+    <NuGetLockFileName>packages</NuGetLockFileName>
+    <NuGetLockFileName Condition="'$(UseFabric)'=='true'">$(NuGetLockFileName).fabric</NuGetLockFileName>
+    <NuGetLockFileName Condition="'$(UseExperimentalWinUI3)'=='true'">$(NuGetLockFileName).experimentalwinui3</NuGetLockFileName>
+    <NuGetLockFilePath>.\$(NuGetLockFileName).lock.json</NuGetLockFilePath>
+  </PropertyGroup>
+
+</Project>
