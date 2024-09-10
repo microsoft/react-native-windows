@@ -749,6 +749,10 @@ void ScrollViewComponentView::updateProps(
     m_horizontalScrollbarComponent->UpdateColorForScrollBarRegions();
     m_verticalScrollbarComponent->UpdateColorForScrollBarRegions();
   }
+
+  if (!oldProps || oldViewProps.horizontal != newViewProps.horizontal) {
+    m_scrollVisual.Horizontal(newViewProps.horizontal);
+  }
 }
 
 void ScrollViewComponentView::updateState(
@@ -886,6 +890,12 @@ void ScrollViewComponentView::OnPointerPressed(
   m_verticalScrollbarComponent->OnPointerPressed(args);
   m_horizontalScrollbarComponent->OnPointerPressed(args);
   Super::OnPointerPressed(args);
+
+  if (!args.Handled()) {
+    auto f = args.Pointer();
+    auto g = f.PointerDeviceType();
+    m_scrollVisual.OnPointerPressed(args);
+  }
 }
 
 void ScrollViewComponentView::OnPointerReleased(
