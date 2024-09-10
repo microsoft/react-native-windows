@@ -59,10 +59,6 @@ struct CompositionReactViewInstance
   void UninitRootView() noexcept;
 
  private:
-  template <class TAction>
-  Mso::Future<void> PostInUIQueue(TAction &&action) noexcept;
-
- private:
   winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland> m_weakRootControl;
   IReactDispatcher m_uiDispatcher{nullptr};
 };
@@ -100,29 +96,6 @@ void CompositionReactViewInstance::UninitRootView() noexcept {
       rootControl->UninitRootView();
     }
   }
-}
-
-//===========================================================================
-// ReactViewInstance inline implementation
-//===========================================================================
-
-template <class TAction>
-inline Mso::Future<void> CompositionReactViewInstance::PostInUIQueue(TAction &&action) noexcept {
-  // ReactViewInstance has shorter lifetime than ReactRootControl. Thus, we capture this WeakPtr.
-  auto promise = Mso::Promise<void>();
-
-  m_uiDispatcher.Post([promise, weakThis{get_weak()}, action{std::forward<TAction>(action)}]() mutable {
-    if (auto strongThis = weakThis.get()) {
-      if (auto rootControl = strongThis->m_weakRootControl.get()) {
-        action(rootControl);
-        promise.SetValue();
-        return;
-      }
-    }
-    promise.TryCancel();
-  });
-
-  return promise.AsFuture();
 }
 
 void ApplyConstraints(
