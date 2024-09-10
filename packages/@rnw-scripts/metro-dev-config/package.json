@@ -28,7 +28,10 @@
     "@rnw-scripts/eslint-config": "1.2.26",
     "@rnw-scripts/just-task": "2.3.43",
     "eslint": "^8.19.0",
-    "prettier": "2.8.8"
+    "hermes-eslint": "0.23.1",
+    "hermes-transform": "0.23.1",
+    "prettier": "2.8.8",
+    "prettier-plugin-hermes-parser": "0.23.1"
   },
   "engines": {
     "node": ">= 18"
