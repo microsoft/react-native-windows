@@ -14,6 +14,9 @@ import osLocale from 'os-locale';
 const DeviceIdRegPath = 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\SQMClient';
 const DeviceIdRegKey = 'MachineId';
 
+const DeviceIdBuildPath = '"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"';
+const DeviceIdBuildKey = 'BuildLabEx';
+
 /**
  * Gets a telemetry-safe stable device ID.
  * @returns A telemetry-safe stable device ID.
@@ -30,6 +33,29 @@ export async function deviceId(): Promise<string> {
     const result = output.match(/\{([0-9A-Fa-f-]{36})\}/);
     if (result && result.length > 1) {
       return `s:${result[1]}`;
+    }
+  } catch {}
+  return '';
+}
+
+/**
+ * Gets the Windows build name, number and architecture.
+ * @returns A string containing the Windows build name, number and architecture.
+ * e.g. 19569.1000.amd64fre.rs_prerelease.200214-1419
+ */
+export async function fullBuildInfo(): Promise<string> {
+  try {
+    let regCommand = `${process.env.windir}\\System32\\reg.exe query ${DeviceIdBuildPath} /v ${DeviceIdBuildKey}`;
+    if (deviceArchitecture() === 'x64') {
+      // Ensure we query the correct registry
+      regCommand += ' /reg:64';
+    }
+    const output = execSync(regCommand).toString();
+
+    // Retrieve the build info
+    const match = output.match(/BuildLabEx\s+REG_SZ\s+([^\r\n]+)/);
+    if (match && match.length > 1) {
+      return match[1];
     }
   } catch {}
   return '';
@@ -63,7 +89,9 @@ export function nodeArchitecture(): string {
  * @returns The device platform.
  */
 export function devicePlatform(): string {
-  return platform();
+  const os = platform();
+
+  return os === 'win32' ? 'Windows' : os;
 }
 
 /**
@@ -107,14 +135,6 @@ export function deviceDiskFreeSpace(drivePath?: string | null): number {
     }
   } catch {}
   return -1;
-}
-
-/**
- * Gets the telemetry sample rate.
- * @returns The telemetry sample rate.
- */
-export function sampleRate(): number {
-  return 100;
 }
 
 /**

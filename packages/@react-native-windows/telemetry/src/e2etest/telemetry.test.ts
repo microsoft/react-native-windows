@@ -129,7 +129,6 @@ test('setup() verify static common property values with sync sources', async () 
     ciCaptured: () => basePropUtils.captureCI().toString(),
     ciType: () => basePropUtils.ciType(),
     isMsftInternal: () => basePropUtils.isMsftInternal().toString(),
-    sampleRate: () => basePropUtils.sampleRate().toString(),
     isTest: () => 'true',
   };
 

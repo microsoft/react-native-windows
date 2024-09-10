@@ -67,12 +67,6 @@ test('deviceDiskFreeSpace() is valid', () => {
   expect(value).toBeGreaterThanOrEqual(0);
 });
 
-test('sampleRate() is within valid range', () => {
-  const value = basePropUtils.sampleRate();
-  expect(value).toBeGreaterThanOrEqual(0);
-  expect(value).toBeLessThanOrEqual(100);
-});
-
 test('ciType() is valid', () => {
   const value = basePropUtils.ciType();
   expect(value).toBeDefined();

@@ -37,7 +37,7 @@ interface CommandInfo {
 }
 
 // 1DS instrumentation key
-const RNW_1DS_INSTRUMENTATION_KEY = "49ff6d3ef12f4578a7b75a2573d9dba8-026332b2-2d50-452f-ad0d-50f921c97a9d-7145"
+const RNW_1DS_INSTRUMENTATION_KEY = ""
 
 // Environment variable to override the default setup string
 const ENV_SETUP_OVERRIDE = 'RNW_TELEMETRY_SETUP';
@@ -190,6 +190,8 @@ export class Telemetry {
   private static async setupBaseProperties() {
     Telemetry.commonProperties.deviceId =
       await basePropUtils.deviceId();
+    Telemetry.commonProperties.fullBuildInfo =
+      await basePropUtils.fullBuildInfo();
     Telemetry.commonProperties.deviceArchitecture =
       basePropUtils.deviceArchitecture();
     Telemetry.commonProperties.nodeArchitecture =
@@ -214,9 +216,6 @@ export class Telemetry {
     Telemetry.commonProperties.isMsftInternal = basePropUtils
       .isMsftInternal()
       .toString();
-    Telemetry.commonProperties.sampleRate = basePropUtils
-      .sampleRate()
-      .toString(); // May consider for removal if 1DS doesn't support sampling.
     Telemetry.commonProperties.isTest = Telemetry.isTestEnvironment.toString();
     Telemetry.commonProperties.sessionId = Telemetry.getSessionId();
 
@@ -349,14 +348,22 @@ export class Telemetry {
     telemetryItem.time = new Date().toISOString();
     telemetryItem.iKey = RNW_1DS_INSTRUMENTATION_KEY;
 
-    // Populate "common" properties into Part B.
+    // Populate Part A extensions
+    telemetryItem.ext = {};
+    telemetryItem.ext.device = {
+      id: Telemetry.commonProperties.deviceId,
+      deviceClass: Telemetry.commonProperties.devicePlatform
+    };
+    telemetryItem.ext.os = {
+      locale: Telemetry.commonProperties.deviceLocale,
+      ver: Telemetry.commonProperties.fullBuildInfo,
+    };
+
+    // Populate most of "common" properties into Part B.
     telemetryItem.baseData = {
       common: {
         device: {
-          id: Telemetry.commonProperties.deviceId,
           architecture: Telemetry.commonProperties.deviceArchitecture,
-          platform: Telemetry.commonProperties.devicePlatform,
-          locale: Telemetry.commonProperties.deviceLocale,
           numCPUs: Telemetry.commonProperties.numCPUs,
           totalMemory: Telemetry.commonProperties.totalMemory,
           diskFreeSpace: Telemetry.commonProperties.deviceDiskFreeSpace
@@ -365,7 +372,6 @@ export class Telemetry {
         ciCaptured: Telemetry.commonProperties.ciCaptured,
         ciType: Telemetry.commonProperties.ciType,
         isMsftInternal: Telemetry.commonProperties.isMsftInternal,
-        sampleRate: Telemetry.commonProperties.sampleRate,
         isCliTest: Telemetry.commonProperties.isTest,
         sessionId: Telemetry.commonProperties.sessionId,
         commandName: Telemetry.commonProperties.commandName
@@ -402,7 +408,7 @@ export class Telemetry {
       telemetryItem.data.additionalData = extraProps;
     }
 
-    // Fire event
+    // Populate common properties and fire event
     Telemetry.trackEvent(telemetryItem);
   }
 
