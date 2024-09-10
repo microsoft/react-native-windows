@@ -9326,7 +9326,7 @@ metro-resolver@0.80.9:
   resolved "https://registry.yarnpkg.com/metro-resolver/-/metro-resolver-0.80.9.tgz#bae9120a0553e0cb59da6429e83a7e97465cc1a8"
   integrity sha512-wAPIjkN59BQN6gocVsAvvpZ1+LQkkqUaswlT++cJafE/e54GoVkMNCmrR4BsgQHr9DknZ5Um/nKueeN7kaEz9w==
 
-metro-runtime@0.80.11, metro-runtime@^0.80.10, metro-runtime@^0.80.3:
+metro-runtime@0.80.11:
   version "0.80.11"
   resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.80.11.tgz#fe43c5dd62b865da484568298de7275c45bf60f9"
   integrity sha512-EI7idlPKPZntUnht2ipFhIVR4+PyjRxCXi4xcDyJfrGhOJH/EfXjb5jp3sYN/np6m9HOtCniBOmL1twlDtmeaA==
@@ -9340,6 +9340,14 @@ metro-runtime@0.80.9:
   integrity sha512-8PTVIgrVcyU+X/rVCy/9yxNlvXsBCk5JwwkbAm/Dm+Abo6NBGtNjWF0M1Xo/NWCb4phamNWcD7cHdR91HhbJvg==
   dependencies:
     "@babel/runtime" "^7.0.0"
+
+metro-runtime@^0.80.10, metro-runtime@^0.80.3:
+  version "0.80.12"
+  resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.80.12.tgz#a68af3a2a013f5372d3b8cee234fdd467455550b"
+  integrity sha512-LIx7+92p5rpI0i6iB4S4GBvvLxStNt6fF0oPMaUd1Weku7jZdfkCZzmrtDD9CSQ6EPb0T9NUZoyXIxlBa3wOCw==
+  dependencies:
+    "@babel/runtime" "^7.25.0"
+    flow-enums-runtime "^0.0.6"
 
 metro-source-map@0.80.11:
   version "0.80.11"
