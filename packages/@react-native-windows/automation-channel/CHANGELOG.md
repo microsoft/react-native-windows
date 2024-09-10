@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Sat, 07 Sep 2024 05:14:11 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 10 Sep 2024 05:15:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.206
+
+Tue, 10 Sep 2024 05:15:18 GMT
+
+### Patches
+
+- Automatically set EnableSourceLink for in-repo builds only (jthysell@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.866
 
 ## 0.12.205
 

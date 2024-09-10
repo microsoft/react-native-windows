@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Tue, 10 Sep 2024 05:15:18 GMT",
+      "version": "0.12.206",
+      "tag": "@react-native-windows/automation-channel_v0.12.206",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "401416f6373dcb678b143bce2227b59830ace602",
+            "comment": "Automatically set EnableSourceLink for in-repo builds only"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.866",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 07 Sep 2024 05:14:11 GMT",
       "version": "0.12.205",
       "tag": "@react-native-windows/automation-channel_v0.12.205",

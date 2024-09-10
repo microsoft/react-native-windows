@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 07 Sep 2024 05:14:12 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 10 Sep 2024 05:15:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.866
+
+Tue, 10 Sep 2024 05:15:18 GMT
+
+### Changes
+
+- Automatically set EnableSourceLink for in-repo builds only (jthysell@microsoft.com)
+- Add Implementation for accessibilityActions (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.865
 
