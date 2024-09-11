@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Wed, 11 Sep 2024 05:13:20 GMT",
+      "version": "0.12.207",
+      "tag": "@react-native-windows/automation-channel_v0.12.207",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "a4e263c58b19bd9a97cc554d69762406588706ad",
+            "comment": "Create separate NuGet restore lock files for Fabric builds"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.867",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Sep 2024 05:15:18 GMT",
       "version": "0.12.206",
       "tag": "@react-native-windows/automation-channel_v0.12.206",

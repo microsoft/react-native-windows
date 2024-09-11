@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 11 Sep 2024 05:13:20 GMT",
+      "version": "0.0.0-canary.867",
+      "tag": "react-native-windows_v0.0.0-canary.867",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7a7577e11cea2d1d6a3f4727c359714b54fb17af",
+            "comment": "[Fabric] LogBox should destroy its window on instance shutdown"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bc4949e569c131812b0187de0e6957cd65255c72",
+            "comment": "[Fabric] Enable ScrollView touch scrolling"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a4e263c58b19bd9a97cc554d69762406588706ad",
+            "comment": "Create separate NuGet restore lock files for Fabric builds"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Sep 2024 05:15:18 GMT",
       "version": "0.0.0-canary.866",
       "tag": "react-native-windows_v0.0.0-canary.866",
