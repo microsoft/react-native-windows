@@ -11,7 +11,7 @@ module.exports = {
         'ft-flow/use-flow-type': 0,
         // flow handles this check for us, so it's not required
         'no-undef': 0,
-    },
+      },
     },
     {
       files: ['*d.ts'],
