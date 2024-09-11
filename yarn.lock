@@ -4784,9 +4784,9 @@ bcrypt-pbkdf@^1.0.0:
     tweetnacl "^0.14.3"
 
 beachball@^2.20.0:
-  version "2.47.0"
-  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.47.0.tgz#1749c91b75d7faf8df3f41145d0cb487e12bc0fa"
-  integrity sha512-ClzA7/8g/xrxIlFm1UNlcogOcvXaAMLvtWPEvUyn0doFJfa+thxa9m0fHlh/VE782xWGIOEJG+8IUcLWMMoYQA==
+  version "2.47.1"
+  resolved "https://registry.yarnpkg.com/beachball/-/beachball-2.47.1.tgz#6d6e95ee4bfc771be33688f1b564f3bba9a4d45e"
+  integrity sha512-OAbbAK0Vx16Uzukrvfki9WO1S5AtKFEZEUENIOdePJtfAunECjD1Gmz8kKJeRy6g5S0JVaC875DaAPWtujQY9A==
   dependencies:
     cosmiconfig "^8.3.6"
     execa "^5.0.0"
@@ -9477,7 +9477,7 @@ metro-resolver@0.80.9:
   resolved "https://registry.yarnpkg.com/metro-resolver/-/metro-resolver-0.80.9.tgz#bae9120a0553e0cb59da6429e83a7e97465cc1a8"
   integrity sha512-wAPIjkN59BQN6gocVsAvvpZ1+LQkkqUaswlT++cJafE/e54GoVkMNCmrR4BsgQHr9DknZ5Um/nKueeN7kaEz9w==
 
-metro-runtime@0.80.11, metro-runtime@^0.80.10, metro-runtime@^0.80.3:
+metro-runtime@0.80.11:
   version "0.80.11"
   resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.80.11.tgz#fe43c5dd62b865da484568298de7275c45bf60f9"
   integrity sha512-EI7idlPKPZntUnht2ipFhIVR4+PyjRxCXi4xcDyJfrGhOJH/EfXjb5jp3sYN/np6m9HOtCniBOmL1twlDtmeaA==
@@ -9491,6 +9491,14 @@ metro-runtime@0.80.9:
   integrity sha512-8PTVIgrVcyU+X/rVCy/9yxNlvXsBCk5JwwkbAm/Dm+Abo6NBGtNjWF0M1Xo/NWCb4phamNWcD7cHdR91HhbJvg==
   dependencies:
     "@babel/runtime" "^7.0.0"
+
+metro-runtime@^0.80.10, metro-runtime@^0.80.3:
+  version "0.80.12"
+  resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.80.12.tgz#a68af3a2a013f5372d3b8cee234fdd467455550b"
+  integrity sha512-LIx7+92p5rpI0i6iB4S4GBvvLxStNt6fF0oPMaUd1Weku7jZdfkCZzmrtDD9CSQ6EPb0T9NUZoyXIxlBa3wOCw==
+  dependencies:
+    "@babel/runtime" "^7.25.0"
+    flow-enums-runtime "^0.0.6"
 
 metro-source-map@0.80.11:
   version "0.80.11"
@@ -11526,9 +11534,9 @@ serialize-error@^8.0.0:
     type-fest "^0.20.2"
 
 serve-static@^1.13.1:
-  version "1.15.0"
-  resolved "https://registry.yarnpkg.com/serve-static/-/serve-static-1.15.0.tgz#faaef08cffe0a1a62f60cad0c4e513cff0ac9540"
-  integrity sha512-XGuRDNjXUijsUL0vl6nSD7cwURuzEgglbOaFuZM9g3kwDXOWVTck0jLzjPzGD+TazWbboZYu52/9/XPdUgne9g==
+  version "1.16.0"
+  resolved "https://registry.yarnpkg.com/serve-static/-/serve-static-1.16.0.tgz#2bf4ed49f8af311b519c46f272bf6ac3baf38a92"
+  integrity sha512-pDLK8zwl2eKaYrs8mrPZBJua4hMplRWJ1tIFksVC3FtBEBnl8dxgeHtsaMS8DhS9i4fLObaon6ABoc4/hQGdPA==
   dependencies:
     encodeurl "~1.0.2"
     escape-html "~1.0.3"

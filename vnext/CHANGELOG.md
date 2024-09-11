@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 10 Sep 2024 05:15:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 11 Sep 2024 20:06:16 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.867
+
+Wed, 11 Sep 2024 20:06:16 GMT
+
+### Changes
+
+- [Fabric] Enable ScrollView touch scrolling (30809111+acoates-ms@users.noreply.github.com)
+- Create separate NuGet restore lock files for Fabric builds (jthysell@microsoft.com)
+- [Fabric] LogBox should destroy its window on instance shutdown (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.866
 

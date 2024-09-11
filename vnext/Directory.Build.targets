@@ -21,6 +21,11 @@
     <MSBuild Projects="$(MSBuildProjectFile)" Targets="Restore" Properties="RestoreProjectStyle=PackagesConfig;RestorePackagesConfig=true;RestoreUseStaticGraphEvaluation=false" />
   </Target>
 
+  <!-- This ensures NuGet restores use the nuget config's feed and not any pre-installed files. -->
+  <PropertyGroup>
+    <RestoreAdditionalProjectFallbackFolders></RestoreAdditionalProjectFallbackFolders>
+  </PropertyGroup>
+
   <PropertyGroup Label="WindowsAppSDKOverrides" Condition="'$(Platform)' == 'ARM64EC'">
     <Ixp-Platform>win10-x64</Ixp-Platform>
     <_WindowsAppSDKFoundationPlatform>x64</_WindowsAppSDKFoundationPlatform>
