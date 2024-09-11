@@ -255,6 +255,7 @@
                     msbuildArchitecture: x64
                     msbuildArguments:
                       /t:Restore
+                      /p:EnableSourceLink=true
 
                 - task: VSTest@2
                   displayName: Run Universal Unit Tests (Native)

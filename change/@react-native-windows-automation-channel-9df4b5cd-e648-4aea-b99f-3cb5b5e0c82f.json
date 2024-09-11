@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Remove RestoreForceEvaluate from builds",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

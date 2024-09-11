@@ -1,1 +1,2 @@
 # This project follows an explicit 'include' pattern as defined in the `files` section of package.json
+packages*.lock.json

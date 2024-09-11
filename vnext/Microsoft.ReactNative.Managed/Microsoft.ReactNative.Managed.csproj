@@ -24,6 +24,7 @@
     <ProduceReferenceAssemblyInOutDir>true</ProduceReferenceAssemblyInOutDir>
     <NoWarn>;2008</NoWarn>
     <NoWarn>$(NoWarn);1591</NoWarn>
+    <RestoreForceEvaluate Condition="'$(RestoreForceEvaluate)' == '' AND '$(BuildingInRnwRepo)' == 'true'">true</RestoreForceEvaluate>
     <!-- Missing XML comment for publicly visible type or member -->
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
