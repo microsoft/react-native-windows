@@ -8,7 +8,7 @@ import path from 'path';
 
 import MSBuildTools from './msbuildtools';
 import Version from './version';
-import {newError} from './commandWithProgress';
+import {newError, newWarn} from './commandWithProgress';
 import {
   RunWindowsOptions,
   BuildConfig,
@@ -122,11 +122,15 @@ export function parseMsBuildProps(
   options: RunWindowsOptions,
 ): Record<string, string> {
   const result: Record<string, string> = {};
-  if (options.msbuildprops) {
+  if (typeof options.msbuildprops === 'string') {
     const props = options.msbuildprops.split(',');
     for (const prop of props) {
       const propAssignment = prop.split('=');
-      result[propAssignment[0]] = propAssignment[1];
+      if (propAssignment.length === 2 && propAssignment[0].trim().length > 0) {
+        result[propAssignment[0].trim()] = propAssignment[1].trim();
+      } else if (options.logging === true) {
+        newWarn(`Unable to parse msbuildprop: '${prop}'`);
+      }
     }
   }
   return result;
