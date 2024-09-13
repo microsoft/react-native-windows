@@ -56,15 +56,16 @@ steps:
         ${{parameters.msbuildArguments}}
 
   - powershell: |
+      & git add */packages.lock.json
       $changed = git status --porcelain=v1 */packages.lock.json
       if ($changed -ne $null) {
         Write-Host "##[warning] Detected packages.lock.json changes. See full log for details."
         Write-Host Files changed:`n([string]::Join("`n", $changed))
-        $diff = git diff */packages.lock.json
+        $diff = git diff --cached -- */packages.lock.json
         Write-Host Diff:`n([string]::Join("`n", $diff))
         Write-Host "Run vnext/Scripts/NuGetRestoreForceEvaluateAllSolutions.ps1 to update lock files locally."
       }
-    displayName: Process NuGet Restore Issues
+    displayName: Detect packages.lock.json changes during build
     condition: succeededOrFailed()
 
   - template: upload-build-logs.yml

@@ -69,16 +69,9 @@ steps:
 
   - ${{ if eq(parameters.projectType, 'app') }}:
     - script: |
-        npx --yes react-native@$(reactNativeDevDependency) init testcli --template @react-native-community/template@$(reactNativeDevDependency)
+        npx --yes @react-native-community/cli@latest init testcli --version $(reactNativeDevDependency) --verbose --skip-install --install-pods false --skip-git-init true
       displayName: Init new app project
       workingDirectory: $(Agent.BuildDirectory)
-
-    - script: |
-        call yarn install
-      displayName: pre-windows yarn install
-      workingDirectory: $(Agent.BuildDirectory)\testcli
-      env:
-        YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
     - script: |
         call yarn config set npmRegistryServer http://localhost:4873
@@ -105,6 +98,13 @@ steps:
         call yarn upgrade react-native@$(reactNativeDevDependency) --dev
       displayName: Update lib project react and react-native dev versions
       workingDirectory: $(Agent.BuildDirectory)\testcli
+
+  - script: |
+      call yarn install
+    displayName: pre-windows yarn install
+    workingDirectory: $(Agent.BuildDirectory)\testcli
+    env:
+      YARN_ENABLE_IMMUTABLE_INSTALLS: false
 
   - ${{ if eq(parameters.useNuget, true) }}:
     - script: |
