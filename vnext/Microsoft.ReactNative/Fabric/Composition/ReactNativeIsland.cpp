@@ -665,13 +665,15 @@ void ReactNativeIsland::InitTextScaleMultiplier() noexcept {
   m_textScaleChangedRevoker = m_uiSettings.TextScaleFactorChanged(
       winrt::auto_revoke,
       [this](const winrt::Windows::UI::ViewManagement::UISettings &uiSettings, const winrt::IInspectable &) {
-        m_context.UIDispatcher().Post(
-            [wkThis = get_weak(), textScaleMultiplier = static_cast<float>(uiSettings.TextScaleFactor())]() {
-              if (auto strongThis = wkThis.get()) {
-                strongThis->m_textScaleMultiplier = textScaleMultiplier;
-                strongThis->Arrange(strongThis->m_layoutConstraints, strongThis->m_viewportOffset);
-              }
-            });
+        if (m_context) {
+          m_context.UIDispatcher().Post(
+              [wkThis = get_weak(), textScaleMultiplier = static_cast<float>(uiSettings.TextScaleFactor())]() {
+                if (auto strongThis = wkThis.get()) {
+                  strongThis->m_textScaleMultiplier = textScaleMultiplier;
+                  strongThis->Arrange(strongThis->m_layoutConstraints, strongThis->m_viewportOffset);
+                }
+              });
+        }
       });
 }
 
