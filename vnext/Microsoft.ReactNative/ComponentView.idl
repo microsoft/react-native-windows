@@ -49,6 +49,15 @@ namespace Microsoft.ReactNative
     All           = 0x0000000F,
   };
 
+  enum FocusNavigationDirection
+  {
+    None,
+    Next,
+    Previous,
+    First,
+    Last,
+  };
+
   [webhosthidden]
   [experimental]
   interface IComponentState 
@@ -63,6 +72,7 @@ namespace Microsoft.ReactNative
   [experimental]
   [webhosthidden]
   runtimeclass LosingFocusEventArgs : Microsoft.ReactNative.Composition.Input.RoutedEventArgs {
+    FocusNavigationDirection Direction { get; };
     Microsoft.ReactNative.ComponentView NewFocusedComponent { get; };
     Microsoft.ReactNative.ComponentView OldFocusedComponent { get; };
 
@@ -73,6 +83,7 @@ namespace Microsoft.ReactNative
   [experimental]
   [webhosthidden]
   runtimeclass GettingFocusEventArgs : Microsoft.ReactNative.Composition.Input.RoutedEventArgs {
+    FocusNavigationDirection Direction { get; };
     Microsoft.ReactNative.ComponentView NewFocusedComponent { get; };
     Microsoft.ReactNative.ComponentView OldFocusedComponent { get; };
 

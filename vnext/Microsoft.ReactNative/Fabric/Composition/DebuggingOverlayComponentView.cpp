@@ -67,17 +67,21 @@ struct TraceUpdate {
 };
 
 void DebuggingOverlayComponentView::HandleCommand(
-    winrt::hstring commandName,
-    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+    const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
+  base_type::HandleCommand(args);
+  if (args.Handled())
+    return;
+
+  auto commandName = args.CommandName();
   if (commandName == L"highlightTraceUpdates") {
     std::vector<TraceUpdate> updates;
-    winrt::Microsoft::ReactNative::ReadArgs(args, updates);
+    winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), updates);
     // TODO should create visuals that get removed after 2 seconds
     return;
   }
   if (commandName == L"highlightElements") {
     std::vector<ElementRectangle> elements;
-    winrt::Microsoft::ReactNative::ReadArgs(args, elements);
+    winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), elements);
 
     if (auto root = rootComponentView()) {
       auto rootVisual = root->OuterVisual();
@@ -106,8 +110,6 @@ void DebuggingOverlayComponentView::HandleCommand(
     }
     return;
   }
-
-  base_type::HandleCommand(commandName, args);
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
