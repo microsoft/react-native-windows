@@ -122,7 +122,9 @@ HRESULT UiaSetFocusHelper(::Microsoft::ReactNative::ReactTaggedView &view) noexc
   if (rootCV == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  return rootCV->TrySetFocusedComponent(strongView) ? S_OK : E_FAIL;
+  return rootCV->TrySetFocusedComponent(strongView, winrt::Microsoft::ReactNative::FocusNavigationDirection::None)
+      ? S_OK
+      : E_FAIL;
 }
 
 bool WasUiaPropertyAdvised(winrt::com_ptr<IRawElementProviderSimple> &providerSimple, PROPERTYID propId) noexcept {

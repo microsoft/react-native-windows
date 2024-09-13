@@ -32,17 +32,21 @@ struct LosingFocusEventArgs
     : winrt::Microsoft::ReactNative::implementation::LosingFocusEventArgsT<LosingFocusEventArgs> {
   LosingFocusEventArgs(
       const winrt::Microsoft::ReactNative::ComponentView &originalSource,
+      winrt::Microsoft::ReactNative::FocusNavigationDirection direction,
       const winrt::Microsoft::ReactNative::ComponentView &oldFocusedComponent,
       const winrt::Microsoft::ReactNative::ComponentView &newFocusedComponent);
-  int32_t OriginalSource() noexcept;
-  winrt::Microsoft::ReactNative::ComponentView NewFocusedComponent() noexcept;
-  winrt::Microsoft::ReactNative::ComponentView OldFocusedComponent() noexcept;
+  int32_t OriginalSource() const noexcept;
+  winrt::Microsoft::ReactNative::FocusNavigationDirection Direction() const noexcept;
+
+  winrt::Microsoft::ReactNative::ComponentView NewFocusedComponent() const noexcept;
+  winrt::Microsoft::ReactNative::ComponentView OldFocusedComponent() const noexcept;
 
   void TryCancel() noexcept;
   void TrySetNewFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &newFocusedComponent) noexcept;
 
  private:
   const int32_t m_originalSource;
+  const winrt::Microsoft::ReactNative::FocusNavigationDirection m_direction;
   winrt::Microsoft::ReactNative::ComponentView m_old{nullptr};
   winrt::Microsoft::ReactNative::ComponentView m_new{nullptr};
 };
@@ -51,17 +55,20 @@ struct GettingFocusEventArgs
     : winrt::Microsoft::ReactNative::implementation::GettingFocusEventArgsT<GettingFocusEventArgs> {
   GettingFocusEventArgs(
       const winrt::Microsoft::ReactNative::ComponentView &originalSource,
+      winrt::Microsoft::ReactNative::FocusNavigationDirection direction,
       const winrt::Microsoft::ReactNative::ComponentView &oldFocusedComponent,
       const winrt::Microsoft::ReactNative::ComponentView &newFocusedComponent);
-  int32_t OriginalSource() noexcept;
-  winrt::Microsoft::ReactNative::ComponentView NewFocusedComponent() noexcept;
-  winrt::Microsoft::ReactNative::ComponentView OldFocusedComponent() noexcept;
+  int32_t OriginalSource() const noexcept;
+  winrt::Microsoft::ReactNative::FocusNavigationDirection Direction() const noexcept;
+  winrt::Microsoft::ReactNative::ComponentView NewFocusedComponent() const noexcept;
+  winrt::Microsoft::ReactNative::ComponentView OldFocusedComponent() const noexcept;
 
   void TryCancel() noexcept;
   void TrySetNewFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &newFocusedComponent) noexcept;
 
  private:
   const int32_t m_originalSource;
+  const winrt::Microsoft::ReactNative::FocusNavigationDirection m_direction;
   winrt::Microsoft::ReactNative::ComponentView m_old{nullptr};
   winrt::Microsoft::ReactNative::ComponentView m_new{nullptr};
 };

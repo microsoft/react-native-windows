@@ -48,6 +48,13 @@ namespace Microsoft.ReactNative
   };
 
   [experimental]
+  runtimeclass HandleCommandArgs {
+    String CommandName { get; };
+    IJSValueReader CommandArgs { get; };
+    Boolean Handled;
+  };
+
+  [experimental]
   DOC_STRING("A delegate that creates a @IComponentProps object for an instance of @ViewProps. See @IReactViewComponentBuilder.SetCreateProps")
   delegate IComponentProps ViewPropsFactory(ViewProps props);
 
@@ -71,7 +78,7 @@ namespace Microsoft.ReactNative
   delegate void ComponentViewInitializer(ComponentView view);
 
   [experimental]
-  delegate void HandleCommandDelegate(ComponentView source, String commandName, IJSValueReader args);
+  delegate void HandleCommandDelegate(ComponentView source, HandleCommandArgs args);
 
   [experimental]
   delegate void UpdateFinalizerDelegate(ComponentView source, ComponentViewUpdateMask updateMask);
