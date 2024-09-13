@@ -117,7 +117,6 @@ struct WindowsTextInputComponentView
   unsigned int m_imgWidth{0}, m_imgHeight{0};
   std::shared_ptr<facebook::react::WindowsTextInputShadowNode::ConcreteState const> m_state;
   float m_fontSizeMultiplier{1.0};
-  RECT m_rcClient;
   int64_t m_mostRecentEventCount{0};
   int m_nativeEventCount{0};
   bool m_comingFromJS{false};

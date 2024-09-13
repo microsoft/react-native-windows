@@ -176,9 +176,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
       return false;
     }
 
-    m_outer->m_caretVisual.Position(
-        {x - (m_outer->m_layoutMetrics.frame.origin.x * m_outer->m_layoutMetrics.pointScaleFactor),
-         y - (m_outer->m_layoutMetrics.frame.origin.y * m_outer->m_layoutMetrics.pointScaleFactor)});
+    auto pt = m_outer->getClientOffset();
+    m_outer->m_caretVisual.Position({x - pt.x, y - pt.y});
     return true;
   }
 
@@ -261,7 +260,7 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Retrieves the coordinates of a window's client area
   HRESULT TxGetClientRect(LPRECT prc) override {
-    *prc = m_outer->m_rcClient;
+    *prc = m_outer->getClientRect();
     return S_OK;
   }
 
@@ -1303,8 +1302,8 @@ void WindowsTextInputComponentView::ensureDrawingSurface() noexcept {
         winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
         winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
 
-    m_rcClient = getClientRect();
-    winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&m_rcClient));
+    auto rc = getClientRect();
+    winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rc));
 
     LRESULT lresult;
     winrt::check_hresult(

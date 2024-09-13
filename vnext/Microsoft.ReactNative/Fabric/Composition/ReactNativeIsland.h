@@ -47,10 +47,8 @@ struct ReactNativeIsland
   ReactNativeIsland() noexcept;
   ~ReactNativeIsland() noexcept;
 
-#ifdef USE_WINUI3
   ReactNativeIsland(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept;
   winrt::Microsoft::UI::Content::ContentIsland Island();
-#endif
 
   // property ReactViewHost
   ReactNative::IReactViewHost ReactViewHost() noexcept;

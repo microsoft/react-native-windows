@@ -121,16 +121,13 @@ void ReactNativeIsland::ApplyConstraints(
   }
 }
 
-ReactNativeIsland::ReactNativeIsland() noexcept {
+ReactNativeIsland::ReactNativeIsland(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept
+    : m_compositor(compositor),
+      m_layoutConstraints({{0, 0}, {0, 0}, winrt::Microsoft::ReactNative::LayoutDirection::Undefined}) {
   InitTextScaleMultiplier();
 }
 
-#ifdef USE_WINUI3
-ReactNativeIsland::ReactNativeIsland(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept
-    : m_compositor(compositor) {
-  InitTextScaleMultiplier();
-}
-#endif
+ReactNativeIsland::ReactNativeIsland() noexcept : ReactNativeIsland(nullptr) {}
 
 ReactNativeIsland::~ReactNativeIsland() noexcept {
 #ifdef USE_WINUI3
@@ -453,10 +450,9 @@ void ReactNativeIsland::UninitRootView() noexcept {
     uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(RootTag()));
 
     // This is needed to ensure that the unmount JS logic is completed before the the instance is shutdown during
-    // instance destruction. Aligns with similar code in ReactInstanceWin::DetachRootView for paper Future: Instead this
-    // method should return a Promise, which should be resolved when the JS logic is complete.
-    // The task will auto set the event on destruction to ensure that the event is set if the JS Queue has already been
-    // shutdown
+    // instance destruction. Aligns with similar code in ReactInstanceWin::DetachRootView for paper Future: Instead
+    // this method should return a Promise, which should be resolved when the JS logic is complete. The task will auto
+    // set the event on destruction to ensure that the event is set if the JS Queue has already been shutdown
     Mso::ManualResetEvent mre;
     m_context.JSDispatcher().Post([autoMRE = std::make_unique<AutoMRE>(AutoMRE{mre})]() {});
     mre.Wait();
@@ -739,7 +735,6 @@ void ReactNativeIsland::Arrange(
   }
 }
 
-#ifdef USE_WINUI3
 winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
   if (!m_compositor) {
     return nullptr;
@@ -828,7 +823,6 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
   }
   return m_island;
 }
-#endif
 
 void ReactNativeIsland::OnMounted() noexcept {
   if (m_mounted)
