@@ -40,8 +40,8 @@ winrt::Microsoft::ReactNative::ComponentView RootComponentView::Create(
   return winrt::make<RootComponentView>(compContext, tag, reactContext);
 }
 
-RootComponentView *RootComponentView::rootComponentView() noexcept {
-  return this;
+RootComponentView *RootComponentView::rootComponentView() const noexcept {
+  return const_cast<RootComponentView *>(this);
 }
 
 void RootComponentView::updateLayoutMetrics(
@@ -200,6 +200,15 @@ winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixel
     return nullptr;
 
   return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->EnsureUiaProvider();
+}
+
+float RootComponentView::FontSizeMultiplier() const noexcept {
+  if (auto rootView = m_wkRootView.get()) {
+    return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)
+        ->FontSizeMultiplier();
+  }
+  assert(false);
+  return 1.0f;
 }
 
 winrt::Microsoft::UI::Content::ContentIsland RootComponentView::parentContentIsland() noexcept {

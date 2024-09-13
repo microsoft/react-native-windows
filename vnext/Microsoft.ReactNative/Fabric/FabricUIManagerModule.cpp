@@ -8,6 +8,7 @@
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionUIService.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
+#include <Fabric/Composition/ReactNativeIsland.h>
 #include <Fabric/Composition/RootComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
@@ -139,7 +140,7 @@ void FabricUIManager::startSurface(
 
   facebook::react::LayoutContext layoutContext;
   layoutContext.pointScaleFactor = rootView.ScaleFactor();
-  layoutContext.fontSizeMultiplier = rootView.ScaleFactor();
+  layoutContext.fontSizeMultiplier = rootView.FontSizeMultiplier();
 
   m_surfaceManager->startSurface(
       surfaceId,

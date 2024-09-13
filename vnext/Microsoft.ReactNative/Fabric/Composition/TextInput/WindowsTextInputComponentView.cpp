@@ -454,6 +454,7 @@ facebook::react::AttributedString WindowsTextInputComponentView::getAttributedSt
   // Use BaseTextShadowNode to get attributed string from children
 
   auto childTextAttributes = facebook::react::TextAttributes::defaultTextAttributes();
+  childTextAttributes.fontSizeMultiplier = m_fontSizeMultiplier;
 
   childTextAttributes.apply(windowsTextInputProps().textAttributes);
 
@@ -463,9 +464,9 @@ facebook::react::AttributedString WindowsTextInputComponentView::getAttributedSt
   // BaseTextShadowNode only gets children. We must detect and prepend text
   // value attributes manually.
   auto text = GetTextFromRichEdit();
-  // if (!m_props->text.empty()) {
   if (!text.empty()) {
     auto textAttributes = facebook::react::TextAttributes::defaultTextAttributes();
+    textAttributes.fontSizeMultiplier = m_fontSizeMultiplier;
     textAttributes.apply(windowsTextInputProps().textAttributes);
     auto fragment = facebook::react::AttributedString::Fragment{};
     fragment.string = text;
@@ -491,35 +492,7 @@ WindowsTextInputComponentView::WindowsTextInputComponentView(
           compContext,
           tag,
           reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {
-  /*
-  m_textChangedRevoker =
-      m_element.TextChanged(winrt::auto_revoke, [this](auto sender, xaml::Controls::TextChangedEventArgs args) {
-        auto data = m_state->getData();
-        data.attributedString = getAttributedString();
-        data.mostRecentEventCount = m_nativeEventCount;
-        m_state->updateState(std::move(data));
-
-        if (m_eventEmitter && !m_comingFromJS) {
-          auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
-          facebook::react::WindowsTextInputEventEmitter::OnChange onChangeArgs;
-          onChangeArgs.text = winrt::to_string(m_element.Text());
-          onChangeArgs.eventCount = ++m_nativeEventCount;
-          emitter->onChange(onChangeArgs);
-        }
-      });
-
-  m_SelectionChangedRevoker = m_element.SelectionChanged(winrt::auto_revoke, [this](auto sender, auto args) {
-    if (m_eventEmitter) {
-      auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);
-      facebook::react::WindowsTextInputEventEmitter::OnSelectionChange onSelectionChangeArgs;
-      onSelectionChangeArgs.selection.start = m_element.SelectionStart();
-      onSelectionChangeArgs.selection.end = m_element.SelectionStart() + m_element.SelectionLength();
-      emitter->onSelectionChange(onSelectionChangeArgs);
-    }
-  });
-  */
-}
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {}
 
 void WindowsTextInputComponentView::HandleCommand(
     winrt::hstring commandName,
@@ -986,37 +959,35 @@ void WindowsTextInputComponentView::updateProps(
       *std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(oldProps ? oldProps : viewProps());
   const auto &newTextInputProps = *std::static_pointer_cast<const facebook::react::WindowsTextInputProps>(props);
 
-  DWORD propBitsMask = 0;
-  DWORD propBits = 0;
-
   Super::updateProps(props, oldProps);
 
   if (!facebook::react::floatEquality(
           oldTextInputProps.textAttributes.fontSize, newTextInputProps.textAttributes.fontSize) ||
+      (oldTextInputProps.textAttributes.allowFontScaling != newTextInputProps.textAttributes.allowFontScaling) ||
       oldTextInputProps.textAttributes.fontWeight != newTextInputProps.textAttributes.fontWeight) {
-    propBitsMask |= TXTBIT_CHARFORMATCHANGE;
-    propBits |= TXTBIT_CHARFORMATCHANGE;
+    m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
+    m_propBits |= TXTBIT_CHARFORMATCHANGE;
   }
 
   if (oldTextInputProps.secureTextEntry != newTextInputProps.secureTextEntry) {
-    propBitsMask |= TXTBIT_USEPASSWORD;
+    m_propBitsMask |= TXTBIT_USEPASSWORD;
     if (newTextInputProps.secureTextEntry) {
-      propBits |= TXTBIT_USEPASSWORD;
+      m_propBits |= TXTBIT_USEPASSWORD;
     }
   }
 
   if (oldTextInputProps.multiline != newTextInputProps.multiline) {
     m_multiline = newTextInputProps.multiline;
-    propBitsMask |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
+    m_propBitsMask |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
     if (newTextInputProps.multiline) {
-      propBits |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
+      m_propBits |= TXTBIT_MULTILINE | TXTBIT_WORDWRAP;
     }
   }
 
   if (oldTextInputProps.editable != newTextInputProps.editable) {
-    propBitsMask |= TXTBIT_READONLY;
+    m_propBitsMask |= TXTBIT_READONLY;
     if (!newTextInputProps.editable) {
-      propBits |= TXTBIT_READONLY;
+      m_propBits |= TXTBIT_READONLY;
     }
   }
 
@@ -1047,63 +1018,6 @@ void WindowsTextInputComponentView::updateProps(
   } else {
     m_submitKeyEvents.clear();
   }
-
-  /*
-  if (oldTextInputProps.textAttributes.foregroundColor != newTextInputProps.textAttributes.foregroundColor) {
-    if (newTextInputProps.textAttributes.foregroundColor)
-      m_element.Foreground(newTextInputProps.textAttributes.foregroundColor.AsWindowsBrush());
-    else
-      m_element.ClearValue(::xaml::Controls::TextBlock::ForegroundProperty());
-  }
-
-  if (oldTextInputProps.textAttributes.fontStyle != newTextInputProps.textAttributes.fontStyle) {
-    switch (newTextInputProps.textAttributes.fontStyle.value_or(facebook::react::FontStyle::Normal)) {
-      case facebook::react::FontStyle::Italic:
-        m_element.FontStyle(winrt::Windows::UI::Text::FontStyle::Italic);
-        break;
-      case facebook::react::FontStyle::Normal:
-        m_element.FontStyle(winrt::Windows::UI::Text::FontStyle::Normal);
-        break;
-      case facebook::react::FontStyle::Oblique:
-        m_element.FontStyle(winrt::Windows::UI::Text::FontStyle::Oblique);
-        break;
-      default:
-        assert(false);
-    }
-  }
-
-  if (oldTextInputProps.textAttributes.fontFamily != newTextInputProps.textAttributes.fontFamily) {
-    if (newTextInputProps.textAttributes.fontFamily.empty())
-      m_element.FontFamily(xaml::Media::FontFamily(L"Segoe UI"));
-    else
-      m_element.FontFamily(xaml::Media::FontFamily(
-          Microsoft::Common::Unicode::Utf8ToUtf16(newTextInputProps.textAttributes.fontFamily)));
-  }
-
-  if (oldTextInputProps.allowFontScaling != newTextInputProps.allowFontScaling) {
-    m_element.IsTextScaleFactorEnabled(newTextInputProps.allowFontScaling);
-  }
-
-  if (oldTextInputProps.selection.start != newTextInputProps.selection.start ||
-      oldTextInputProps.selection.end != newTextInputProps.selection.end) {
-    m_element.Select(
-        newTextInputProps.selection.start, newTextInputProps.selection.end - newTextInputProps.selection.start);
-  }
-
-  if (oldTextInputProps.autoCapitalize != newTextInputProps.autoCapitalize) {
-    if (newTextInputProps.autoCapitalize == "characters") {
-      m_element.CharacterCasing(xaml::Controls::CharacterCasing::Upper);
-    } else { // anything else turns off autoCap (should be "None" but
-             // we don't support "words"/"sentences" yet)
-      m_element.CharacterCasing(xaml::Controls::CharacterCasing::Normal);
-    }
-  }
-  */
-
-  if (propBitsMask != 0) {
-    DrawBlock db(*this);
-    winrt::check_hresult(m_textServices->OnTxPropertyBitsChange(propBitsMask, propBits));
-  }
 }
 
 void WindowsTextInputComponentView::updateState(
@@ -1113,7 +1027,6 @@ void WindowsTextInputComponentView::updateState(
 
   if (!m_state) {
     assert(false && "State is `null` for <TextInput> component.");
-    // m_element.Text(L"");
     return;
   }
 
@@ -1121,14 +1034,19 @@ void WindowsTextInputComponentView::updateState(
     m_mostRecentEventCount = m_state->getData().mostRecentEventCount;
   }
 
+  if (auto root = rootComponentView()) {
+    auto fontSizeMultiplier = root->FontSizeMultiplier();
+    if (fontSizeMultiplier != m_fontSizeMultiplier) {
+      fontSizeMultiplier = m_fontSizeMultiplier;
+      m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
+      m_propBits |= TXTBIT_CHARFORMATCHANGE;
+    }
+  }
+
   if (m_mostRecentEventCount == m_state->getData().mostRecentEventCount) {
     m_comingFromState = true;
-    // Only handle single/empty fragments right now -- ignore the other fragments
-
-    UpdateText(
-        m_state->getData().attributedString.getFragments().size()
-            ? m_state->getData().attributedString.getFragments()[0].string
-            : "");
+    auto &fragments = m_state->getData().attributedString.getFragments();
+    UpdateText(fragments.size() ? fragments[0].string : "");
 
     m_comingFromState = false;
   }
@@ -1243,10 +1161,35 @@ std::string WindowsTextInputComponentView::GetTextFromRichEdit() const noexcept 
 void WindowsTextInputComponentView::FinalizeUpdates(
     winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
   Super::FinalizeUpdates(updateMask);
-  ensureDrawingSurface();
-  if (m_needsRedraw) {
-    DrawText();
+  InternalFinalize();
+}
+
+void WindowsTextInputComponentView::InternalFinalize() noexcept {
+  if (m_mounted) {
+    if (m_propBitsMask != 0) {
+      DrawBlock db(*this);
+      winrt::check_hresult(m_textServices->OnTxPropertyBitsChange(m_propBitsMask, m_propBits));
+      m_propBitsMask = 0;
+      m_propBits = 0;
+    }
+
+    ensureDrawingSurface();
+    if (m_needsRedraw) {
+      DrawText();
+    }
   }
+}
+
+void WindowsTextInputComponentView::onMounted() noexcept {
+  Super::onMounted();
+
+  auto fontSizeMultiplier = rootComponentView()->FontSizeMultiplier();
+  if (m_fontSizeMultiplier != fontSizeMultiplier) {
+    m_fontSizeMultiplier = fontSizeMultiplier;
+    m_propBitsMask |= TXTBIT_CHARFORMATCHANGE;
+    m_propBits |= TXTBIT_CHARFORMATCHANGE;
+  }
+  InternalFinalize();
 }
 
 std::optional<std::string> WindowsTextInputComponentView::getAccessiblityValue() noexcept {
@@ -1291,9 +1234,9 @@ void WindowsTextInputComponentView::UpdateCharFormat() noexcept {
 
   // set font size -- 15 to convert twips to pt
   const auto &props = windowsTextInputProps();
-  float fontSize = props.textAttributes.fontSize;
-  if (std::isnan(fontSize))
-    fontSize = facebook::react::TextAttributes::defaultTextAttributes().fontSize;
+  float fontSize = m_fontSizeMultiplier *
+      (std::isnan(props.textAttributes.fontSize) ? facebook::react::TextAttributes::defaultTextAttributes().fontSize
+                                                 : props.textAttributes.fontSize);
   // TODO get fontSize from props.textAttributes, or defaultTextAttributes, or fragment?
   cfNew.dwMask |= CFM_SIZE;
   cfNew.yHeight = static_cast<LONG>(fontSize * 15);
@@ -1391,6 +1334,7 @@ winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceho
   if (std::isnan(props.textAttributes.fontSize)) {
     textAttributes.fontSize = 12.0f;
   }
+  textAttributes.fontSizeMultiplier = m_fontSizeMultiplier;
   fragment1.string = props.placeholder;
   fragment1.textAttributes = textAttributes;
   attributedString.appendFragment(fragment1);
