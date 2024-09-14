@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 11 Sep 2024 20:06:16 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 14 Sep 2024 05:15:32 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.868
+
+Sat, 14 Sep 2024 05:15:32 GMT
+
+### Changes
+
+- [Fabric] Add FocusNavigationDirection and allow overriding of default command handling (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.236
+- Bump @react-native-windows/codegen to v0.0.0-canary.103
 
 ## 0.0.0-canary.867
 
