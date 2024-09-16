@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 16 Sep 2024 21:59:06 GMT",
+      "version": "0.75.3",
+      "tag": "@react-native-windows/cli_v0.75.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "66d2022b5573abc5fb57584f2eee87d38c62e673",
+            "comment": "Fix parsing of empty build props in run-windows"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 09 Sep 2024 15:21:54 GMT",
       "version": "0.75.2",
       "tag": "@react-native-windows/cli_v0.75.2",
