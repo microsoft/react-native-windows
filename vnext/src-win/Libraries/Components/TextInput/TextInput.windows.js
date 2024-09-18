@@ -9,6 +9,7 @@
  */
 
 import type {HostComponent} from '../../Renderer/shims/ReactNativeTypes';
+import type {____TextStyle_Internal as TextStyleInternal} from '../../StyleSheet/StyleSheetTypes';
 import type {
   KeyEvent, // Windows
   MouseEvent, // Windows
@@ -1669,10 +1670,29 @@ function InternalTextInput(props: Props): React.Node {
     };
   }
 
-  let style = flattenStyle<TextStyleProp>(props.style);
-  if (typeof style?.fontWeight === 'number') {
-    // $FlowFixMe
-    style = [style, {fontWeight: style.fontWeight.toString()}];
+  // Keep the original (potentially nested) style when possible, as React can diff these more efficiently
+  let _style = props.style;
+  const flattenedStyle = flattenStyle<TextStyleProp>(props.style);
+  if (flattenedStyle != null) {
+    let overrides: ?{...TextStyleInternal} = null;
+    if (typeof flattenedStyle?.fontWeight === 'number') {
+      overrides = overrides || ({}: {...TextStyleInternal});
+      overrides.fontWeight =
+        // $FlowFixMe[incompatible-cast]
+        (flattenedStyle.fontWeight.toString(): TextStyleInternal['fontWeight']);
+    }
+
+    if (flattenedStyle.verticalAlign != null) {
+      overrides = overrides || ({}: {...TextStyleInternal});
+      overrides.textAlignVertical =
+        verticalAlignToTextAlignVerticalMap[flattenedStyle.verticalAlign];
+      overrides.verticalAlign = undefined;
+    }
+
+    if (overrides != null) {
+      // $FlowFixMe[incompatible-type]
+      _style = [_style, overrides];
+    }
   }
 
   if (Platform.OS === 'ios') {
@@ -1683,10 +1703,10 @@ function InternalTextInput(props: Props): React.Node {
 
     const useMultilineDefaultStyle =
       props.multiline === true &&
-      (style == null ||
-        (style.padding == null &&
-          style.paddingVertical == null &&
-          style.paddingTop == null));
+      (flattenedStyle == null ||
+        (flattenedStyle.padding == null &&
+          flattenedStyle.paddingVertical == null &&
+          flattenedStyle.paddingTop == null));
 
     textInput = (
       <RCTTextInputView
@@ -1714,7 +1734,7 @@ function InternalTextInput(props: Props): React.Node {
         selectionColor={selectionColor}
         style={StyleSheet.compose(
           useMultilineDefaultStyle ? styles.multilineDefault : null,
-          style,
+          _style,
         )}
         text={text}
       />
@@ -1782,7 +1802,7 @@ function InternalTextInput(props: Props): React.Node {
         onScroll={_onScroll}
         onSelectionChange={_onSelectionChange}
         placeholder={placeholder}
-        style={style}
+        style={_style}
         text={text}
         textBreakStrategy={props.textBreakStrategy}
       />
@@ -1952,20 +1972,6 @@ const ExportedForwardRef: React.AbstractComponent<
   },
   forwardedRef: ReactRefSetter<TextInputInstance>,
 ) {
-  // $FlowFixMe[underconstrained-implicit-instantiation]
-  let style = flattenStyle(restProps.style);
-
-  if (style?.verticalAlign != null) {
-    // $FlowFixMe[prop-missing]
-    // $FlowFixMe[cannot-write]
-    style.textAlignVertical =
-      // $FlowFixMe[invalid-computed-prop]
-      verticalAlignToTextAlignVerticalMap[style.verticalAlign];
-    // $FlowFixMe[prop-missing]
-    // $FlowFixMe[cannot-write]
-    delete style.verticalAlign;
-  }
-
   return (
     <InternalTextInput
       allowFontScaling={allowFontScaling}
@@ -2001,7 +2007,6 @@ const ExportedForwardRef: React.AbstractComponent<
       }
       {...restProps}
       forwardedRef={forwardedRef}
-      style={style}
     />
   );
 });

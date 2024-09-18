@@ -28,13 +28,17 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
 
   winrt::Microsoft::ReactNative::ComponentView GetFocusedComponent() noexcept;
   void SetFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &value) noexcept;
-  bool TrySetFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept;
+  bool TrySetFocusedComponent(
+      const winrt::Microsoft::ReactNative::ComponentView &view,
+      winrt::Microsoft::ReactNative::FocusNavigationDirection direction) noexcept;
 
   bool NavigateFocus(const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept;
 
   bool TryMoveFocus(bool next) noexcept;
 
   RootComponentView *rootComponentView() noexcept override;
+
+  winrt::Microsoft::UI::Content::ContentIsland parentContentIsland() noexcept;
 
   // Index that visuals can be inserted into OuterVisual for debugging UI
   uint32_t overlayIndex() noexcept;

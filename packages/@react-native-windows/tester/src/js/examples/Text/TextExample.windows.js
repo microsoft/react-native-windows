@@ -689,6 +689,21 @@ function NestedExample(props: {}): React.Node {
         <Text style={{color: 'blue'}}>blue color, </Text>
         and red color again
       </Text>
+      <Text style={{opacity: 0.7}}>
+        (opacity
+        <Text>
+          (is inherited
+          <Text style={{opacity: 0.7}}>
+            (and accumulated
+            <Text style={{opacity: 0.5, backgroundColor: '#ffaaaa'}}>
+              (and also applies to the background)
+            </Text>
+            )
+          </Text>
+          )
+        </Text>
+        )
+      </Text>
     </>
   );
 }
@@ -1595,6 +1610,25 @@ const examples = [
       );
     },
   },
+  {
+    title: 'Box Shadow',
+    name: 'boxShadow',
+    render: function (): React.Node {
+      return (
+        <View>
+          <Text
+            testID="text-box-shadow"
+            style={{
+              borderRadius: 10,
+              experimental_boxShadow: '0 0 10px red',
+            }}>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua.
+          </Text>
+        </View>
+      );
+    },
+  },
   // [Windows #12997]
   // TextInlineViewsExample,
   {
@@ -1608,7 +1642,8 @@ const examples = [
             accessibilityLabel="This text has customized accessibility"
             accessibilityHint="Text"
             accessibilityPosInSet={1}
-            accessibilitySetSize={1}>
+            accessibilitySetSize={1}
+            accessibilityLiveRegion='polite'>
             This text has customized accessibility.
           </Text>
         </View>

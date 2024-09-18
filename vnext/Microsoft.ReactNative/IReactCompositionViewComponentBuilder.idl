@@ -13,16 +13,26 @@ import "CompositionComponentView.idl";
 
 namespace Microsoft.ReactNative.Composition
 {
+  [webhosthidden]
   [experimental]
-  DOC_STRING("Provides a factory method to create an instance of a ViewComponentView. See @IReactCompositionViewComponentBuilder.SetCreateViewComponentView")
-  delegate Microsoft.ReactNative.Composition.ViewComponentView CompositionViewComponentViewFactory(CreateCompositionComponentViewArgs args);
+  delegate void ViewComponentViewInitializer(ViewComponentView view);
+
+  [webhosthidden]
+  [experimental]
+  delegate void ComponentIslandComponentViewInitializer(ContentIslandComponentView view);
+
+  [experimental]
+  [webhosthidden]
+  delegate Microsoft.UI.Composition.Visual CreateVisualDelegate(Microsoft.ReactNative.ComponentView view);
 
   [webhosthidden]
   [experimental]
   DOC_STRING(".")
   interface IReactCompositionViewComponentBuilder
   {
-    void SetCreateViewComponentView(CompositionViewComponentViewFactory impl);
+    void SetViewComponentViewInitializer(ViewComponentViewInitializer initializer);
+    void SetContentIslandComponentViewInitializer(ComponentIslandComponentViewInitializer initializer);
+    void SetCreateVisualHandler(CreateVisualDelegate impl);
   };
 
 } // namespace Microsoft.ReactNative

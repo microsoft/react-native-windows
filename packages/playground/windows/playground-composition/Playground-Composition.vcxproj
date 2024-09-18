@@ -144,7 +144,6 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
-    <Midl Include="CustomComponent.idl"/>
     <Midl Include="YogaXamlPanel.idl"/>
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +161,11 @@
   </ImportGroup>
   <ItemGroup>
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\sample-custom-component\windows\SampleCustomComponent\SampleCustomComponent.vcxproj">
+      <Project>{a8da218c-4cb5-48cb-a9ee-9e6337165d07}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Target Name="EnsureReactNativeWindowsTargets" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

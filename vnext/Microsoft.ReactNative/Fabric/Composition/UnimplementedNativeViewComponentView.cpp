@@ -24,8 +24,7 @@ UnimplementedNativeViewComponentView::UnimplementedNativeViewComponentView(
           reactContext,
           ComponentViewFeatures::Default &
               ~(ComponentViewFeatures::Background | ComponentViewFeatures::ShadowProps |
-                ComponentViewFeatures::NativeBorder),
-          false) {
+                ComponentViewFeatures::NativeBorder)) {
   m_labelVisual = compContext.CreateSpriteVisual();
   OuterVisual().InsertAt(m_labelVisual, 1);
 }
@@ -38,8 +37,7 @@ winrt::Microsoft::ReactNative::ComponentView UnimplementedNativeViewComponentVie
 }
 
 void UnimplementedNativeViewComponentView::HandleCommand(
-    winrt::hstring commandName,
-    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+    const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
   // Do not call base to avoid unknown command asserts
 }
 

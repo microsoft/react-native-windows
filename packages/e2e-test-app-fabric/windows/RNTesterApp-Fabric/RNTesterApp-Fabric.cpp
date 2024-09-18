@@ -249,6 +249,26 @@ void InsertBooleanValueIfNotDefault(
   }
 }
 
+void InsertLiveSettingValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    LiveSetting value,
+    LiveSetting defaultValue = LiveSetting::Off) {
+  if (value != defaultValue) {
+    switch (value) {
+      case 0:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Off"));
+        break;
+      case 1:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Polite"));
+        break;
+      case 2:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Assertive"));
+        break;
+    }
+  }
+}
+
 void InsertSizeValue(
     const winrt::Windows::Data::Json::JsonObject &obj,
     winrt::hstring name,
@@ -273,6 +293,26 @@ void InsertFloat3Value(
   obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(str));
 }
 
+void InsertToggleStateValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    ToggleState value,
+    ToggleState defaultValue = ToggleState::ToggleState_Off) {
+  if (value != defaultValue) {
+    switch (value) {
+      case 0:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Off"));
+        break;
+      case 1:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"On"));
+        break;
+      case 2:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Indeterminate"));
+        break;
+    }
+  }
+}
+
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload) {
   winrt::Windows::Data::Json::JsonObject result;
   winrt::Windows::Data::Json::JsonArray jsonErrors;
@@ -293,6 +333,39 @@ winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::Js
   return result;
 }
 
+void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Data::Json::JsonObject &result) {
+  BSTR value;
+  BOOL isReadOnly;
+  ToggleState toggleState;
+  IValueProvider *valuePattern;
+  HRESULT hr;
+
+  // Dump IValueProvider Information
+  hr = pTarget->GetCurrentPattern(UIA_ValuePatternId, reinterpret_cast<IUnknown **>(&valuePattern));
+  if (SUCCEEDED(hr) && valuePattern) {
+    hr = valuePattern->get_Value(&value);
+    if (SUCCEEDED(hr)) {
+      InsertStringValueIfNotEmpty(result, L"ValuePattern.Value", value);
+    }
+    hr = valuePattern->get_IsReadOnly(&isReadOnly);
+    if (SUCCEEDED(hr)) {
+      InsertBooleanValueIfNotDefault(result, L"ValuePattern.IsReadOnly", isReadOnly, true);
+    }
+    valuePattern->Release();
+  }
+
+  // Dump IToggleProvider Information
+  IToggleProvider *togglePattern;
+  hr = pTarget->GetCurrentPattern(UIA_TogglePatternId, reinterpret_cast<IUnknown **>(&togglePattern));
+  if (SUCCEEDED(hr) && togglePattern) {
+    hr = togglePattern->get_ToggleState(&toggleState);
+    if (SUCCEEDED(hr)) {
+      InsertToggleStateValueIfNotDefault(result, L"TogglePattern.ToggleState", toggleState);
+    }
+    togglePattern->Release();
+  }
+}
+
 winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
     IUIAutomationElement *pTarget,
     IUIAutomationTreeWalker *pWalker) {
@@ -306,8 +379,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   BSTR name;
   int positionInSet = 0;
   int sizeOfSet = 0;
-  BSTR value;
-  BOOL isReadOnly;
+  LiveSetting liveSetting = LiveSetting::Off;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -321,6 +393,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   if (SUCCEEDED(hr) && pTarget4) {
     pTarget4->get_CurrentPositionInSet(&positionInSet);
     pTarget4->get_CurrentSizeOfSet(&sizeOfSet);
+    pTarget4->get_CurrentLiveSetting(&liveSetting);
     pTarget4->Release();
   }
   result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
@@ -333,19 +406,9 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   InsertStringValueIfNotEmpty(result, L"Name", name);
   InsertIntValueIfNotDefault(result, L"PositionInSet", positionInSet);
   InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
-  IValueProvider *valuePattern;
-  hr = pTarget->GetCurrentPattern(UIA_ValuePatternId, reinterpret_cast<IUnknown **>(&valuePattern));
-  if (SUCCEEDED(hr) && valuePattern) {
-    hr = valuePattern->get_Value(&value);
-    if (SUCCEEDED(hr)) {
-      InsertStringValueIfNotEmpty(result, L"ValuePattern.Value", value);
-    }
-    hr = valuePattern->get_IsReadOnly(&isReadOnly);
-    if (SUCCEEDED(hr)) {
-      InsertBooleanValueIfNotDefault(result, L"ValuePattern.IsReadOnly", isReadOnly, true);
-    }
-    valuePattern->Release();
-  }
+  InsertLiveSettingValueIfNotDefault(result, L"LiveSetting", liveSetting);
+  DumpUIAPatternInfo(pTarget, result);
+
   IUIAutomationElement *pChild;
   IUIAutomationElement *pSibling;
   pWalker->GetFirstChildElement(pTarget, &pChild);

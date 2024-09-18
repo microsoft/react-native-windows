@@ -2,6 +2,237 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 16 Sep 2024 21:21:14 GMT",
+      "version": "0.0.0-canary.868",
+      "tag": "react-native-windows_v0.0.0-canary.868",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "67e7442be24d990db7c6bff2d0f47206c9a73450",
+            "comment": "[Fabric] Add FocusNavigationDirection and allow overriding of default command handling"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.236",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.103",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Sep 2024 20:06:16 GMT",
+      "version": "0.0.0-canary.867",
+      "tag": "react-native-windows_v0.0.0-canary.867",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bc4949e569c131812b0187de0e6957cd65255c72",
+            "comment": "[Fabric] Enable ScrollView touch scrolling"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a4e263c58b19bd9a97cc554d69762406588706ad",
+            "comment": "Create separate NuGet restore lock files for Fabric builds"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7a7577e11cea2d1d6a3f4727c359714b54fb17af",
+            "comment": "[Fabric] LogBox should destroy its window on instance shutdown"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Sep 2024 05:15:18 GMT",
+      "version": "0.0.0-canary.866",
+      "tag": "react-native-windows_v0.0.0-canary.866",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "401416f6373dcb678b143bce2227b59830ace602",
+            "comment": "Automatically set EnableSourceLink for in-repo builds only"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f756797f9ea5490a29220f28053c24b3e5984950",
+            "comment": "Add Implementation for accessibilityActions"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Sep 2024 05:14:12 GMT",
+      "version": "0.0.0-canary.865",
+      "tag": "react-native-windows_v0.0.0-canary.865",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "409bf6e085cc1aa6421cff078037f7b3774bd8ec",
+            "comment": "Integrate 8/31"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "55e32071ac30a673c7830f717fcbd1a3a228dcff",
+            "comment": "switch to optimized text"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "87ee8c23b3cce594901366a3dc47a3e121dc1987",
+            "comment": "Fix to enable update of @types/react"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.235",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.102",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Sep 2024 05:14:01 GMT",
+      "version": "0.0.0-canary.864",
+      "tag": "react-native-windows_v0.0.0-canary.864",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ecdff31009099ee8245529b633b65a1f8bcabc79",
+            "comment": "CreateVisual handler should have reference to view"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "8c60ffef9c4a74d3c05d73c1a21a673b7dad8625",
+            "comment": "Add Support for Toggle Provider"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.234",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.101",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Sep 2024 05:13:45 GMT",
+      "version": "0.0.0-canary.863",
+      "tag": "react-native-windows_v0.0.0-canary.863",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "277d6f06a3e1bf1650cd9d1e7b4f22e0619968e9",
+            "comment": "Integrate 8/20"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 31 Aug 2024 05:22:20 GMT",
+      "version": "0.0.0-canary.862",
+      "tag": "react-native-windows_v0.0.0-canary.862",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "829ff8dbccc8297dd22ebd9bab7dd04504ca462e",
+            "comment": "[Fabric] Enable implementation of custom events on custom components"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3486e573e05157a8296eabb609f83a9c17bf395a",
+            "comment": "[Fabric] Fix ScrollViewComponentView object leak"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 30 Aug 2024 05:14:22 GMT",
+      "version": "0.0.0-canary.861",
+      "tag": "react-native-windows_v0.0.0-canary.861",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "fff6d5a9b667198ad677ad459b0c7a3164040d74",
+            "comment": "Rework custom components to not rely on open compose patterns"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 28 Aug 2024 05:14:45 GMT",
+      "version": "0.0.0-canary.860",
+      "tag": "react-native-windows_v0.0.0-canary.860",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a05f8d2fc33fa74b4f3517c672e3f27c91edb1ff",
+            "comment": "Linking.getInitialURL should return null by default instead of empty string"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "98197a259f5e7c97c877e361dd70b048343e65a8",
+            "comment": "integrate 0.76.0-nightly-20240816-17017d2b8"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3658abf611861068c70ac8a9a3651cacea86792e",
+            "comment": "Add Tests"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6eb9265d019268754b4d2b1734fd1aca75b18990",
+            "comment": "Enable Timer TurboModule for Desktop"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Aug 2024 05:13:39 GMT",
       "version": "0.0.0-canary.859",
       "tag": "react-native-windows_v0.0.0-canary.859",

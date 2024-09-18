@@ -509,6 +509,7 @@ exports[`ActivityIndicator Tests An ActivityIndicator can render 1`] = `
   "Automation Tree": {
     "AutomationId": "default_activity_indicator",
     "ControlType": 50012,
+    "LiveSetting": "Polite",
     "LocalizedControlType": "progress bar",
     "Name": "Wait for content to load!",
     "PositionInSet": 1,

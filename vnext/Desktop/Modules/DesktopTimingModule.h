@@ -3,7 +3,10 @@
 
 #pragma once
 
+#include "../../codegen/NativeTimingSpec.g.h"
+
 #include <InstanceManager.h>
+#include <NativeModules.h>
 #include <cxxreact/CxxModule.h>
 #include <cxxreact/MessageQueueThread.h>
 
@@ -13,8 +16,7 @@
 
 #include <windows.h>
 
-namespace facebook {
-namespace react {
+namespace facebook::react {
 
 using DateTime = std::chrono::time_point<std::chrono::system_clock, std::chrono::milliseconds>;
 using TimeSpan = std::chrono::milliseconds;
@@ -66,10 +68,11 @@ class TimerQueue {
 //           Timing timing;
 //           timing.createTimer(instance, id, duration, jsScheduleTime, repeat);
 //           timing.delete(id);
-class Timing : public std::enable_shared_from_this<Timing> {
+class TimingHelper : public std::enable_shared_from_this<TimingHelper> {
  public:
-  Timing(const std::shared_ptr<facebook::react::MessageQueueThread> &nativeThread) : m_nativeThread(nativeThread) {}
-  ~Timing();
+  TimingHelper(const std::shared_ptr<facebook::react::MessageQueueThread> &nativeThread)
+      : m_nativeThread(nativeThread) {}
+  ~TimingHelper();
   void createTimer(
       std::weak_ptr<facebook::react::Instance> instance,
       uint64_t id,
@@ -105,14 +108,46 @@ class Timing : public std::enable_shared_from_this<Timing> {
 //           false); Timing.deleteTimer(timerID);
 class TimingModule : public facebook::xplat::module::CxxModule {
  public:
-  TimingModule(std::shared_ptr<Timing> &&timing);
+  TimingModule(std::shared_ptr<TimingHelper> &&timing);
   std::string getName() override;
   virtual std::map<std::string, folly::dynamic> getConstants() noexcept override;
   virtual std::vector<Method> getMethods() noexcept override;
 
  private:
-  std::shared_ptr<Timing> m_timing;
+  std::shared_ptr<TimingHelper> m_timing;
 };
 
-} // namespace react
-} // namespace facebook
+REACT_MODULE(Timing)
+struct Timing : public std::enable_shared_from_this<Timing> {
+  ~Timing();
+
+  REACT_INIT(Initialize)
+  void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
+
+  REACT_METHOD(createTimer)
+  void createTimer(uint64_t id, double duration, double jsSchedulingTime, bool repeat) noexcept;
+
+  REACT_METHOD(deleteTimer)
+  void deleteTimer(uint64_t id) noexcept;
+
+  REACT_METHOD(setSendIdleEvents)
+  void setSendIdleEvents(bool sendIdleEvents) noexcept;
+
+ private:
+  static void CALLBACK
+  ThreadpoolTimerCallback(PTP_CALLBACK_INSTANCE Instance, PVOID Parameter, PTP_TIMER Timer) noexcept;
+  void OnTimerRaised() noexcept;
+  void SetKernelTimer(DateTime dueTime) noexcept;
+  void InitializeKernelTimer() noexcept;
+  void TimersChanged() noexcept;
+  void StopKernelTimer() noexcept;
+  bool KernelTimerIsAboutToFire() noexcept;
+
+ private:
+  winrt::Microsoft::ReactNative::ReactContext m_reactContext;
+  TimerQueue m_timerQueue;
+  PTP_TIMER m_threadpoolTimer{};
+  DateTime m_dueTime;
+};
+
+} // namespace facebook::react

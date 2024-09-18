@@ -31,46 +31,12 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-CreateCompositionComponentViewArgs::CreateCompositionComponentViewArgs(
-    const winrt::Microsoft::ReactNative::IReactContext &reactContext,
-    facebook::react::Tag tag,
-    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compositionContext)
-    : base_type(reactContext, tag), m_compositionContext(compositionContext){};
-
-winrt::Microsoft::UI::Composition::Compositor CreateCompositionComponentViewArgs::Compositor() const noexcept {
-  return winrt::Microsoft::ReactNative::Composition::CompositionUIService::GetCompositor(ReactContext().Properties());
-}
-
-winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext
-CreateCompositionComponentViewArgs::CompositionContext() const noexcept {
-  return m_compositionContext;
-}
-
-ComponentViewFeatures CreateCompositionComponentViewArgs::Features() const noexcept {
-  return m_features;
-}
-
-void CreateCompositionComponentViewArgs::Features(ComponentViewFeatures value) noexcept {
-  m_features = value;
-}
-
-ComponentView::ComponentView(const winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs &args)
-    : ComponentView(
-          winrt::get_self<
-              winrt::Microsoft::ReactNative::Composition::implementation::CreateCompositionComponentViewArgs>(args)
-              ->CompositionContext(),
-          args.Tag(),
-          args.ReactContext(),
-          args.Features(),
-          true) {}
-
 ComponentView::ComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,
-    ComponentViewFeatures flags,
-    bool customControl)
-    : base_type(tag, reactContext, customControl), m_compContext(compContext), m_flags(flags) {
+    ComponentViewFeatures flags)
+    : base_type(tag, reactContext), m_compContext(compContext), m_flags(flags) {
   m_outerVisual = compContext.CreateSpriteVisual(); // TODO could be a raw ContainerVisual if we had a
                                                     // CreateContainerVisual in ICompositionContext
   m_focusVisual = compContext.CreateFocusVisual();
@@ -105,14 +71,18 @@ void ComponentView::onThemeChanged() noexcept {
 
   base_type::onThemeChanged();
 
-  if (m_customComponent) {
-    // Review is it expected that I need this cast to call overridden methods?
-    winrt::Microsoft::ReactNative::Composition::ComponentView outer(*this);
-    outer.OnThemeChanged();
+  if (m_themeChangedEvent) {
+    m_themeChangedEvent(*this, *this);
   }
 }
 
-void ComponentView::OnThemeChanged() noexcept {}
+winrt::event_token ComponentView::ThemeChanged(
+    winrt::Windows::Foundation::EventHandler<winrt::IInspectable> const &handler) noexcept {
+  return m_themeChangedEvent.add(handler);
+}
+void ComponentView::ThemeChanged(winrt::event_token const &token) noexcept {
+  m_themeChangedEvent.remove(token);
+}
 
 void ComponentView::Theme(const winrt::Microsoft::ReactNative::Composition::Theme &value) noexcept {
   theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(value));
@@ -170,10 +140,8 @@ void ComponentView::updateLayoutMetrics(
     updateBorderLayoutMetrics(layoutMetrics, *viewProps());
   }
 
-  m_layoutMetrics = layoutMetrics;
-  UpdateCenterPropertySet();
-
   base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
+  UpdateCenterPropertySet();
 }
 
 const facebook::react::LayoutMetrics &ComponentView::layoutMetrics() const noexcept {
@@ -277,24 +245,29 @@ void ComponentView::StartBringIntoView(
 
 void ComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept {
   m_eventEmitter = std::static_pointer_cast<facebook::react::ViewEventEmitter const>(eventEmitter);
+  base_type::updateEventEmitter(eventEmitter);
 }
 
-void ComponentView::HandleCommand(
-    winrt::hstring commandName,
-    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+void ComponentView::HandleCommand(const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
+  base_type::HandleCommand(args);
+  if (args.Handled())
+    return;
+
+  auto commandName = args.CommandName();
   if (commandName == L"focus") {
     if (auto root = rootComponentView()) {
-      root->TrySetFocusedComponent(*get_strong());
+      root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
     }
     return;
   }
   if (commandName == L"blur") {
     if (auto root = rootComponentView()) {
-      root->TrySetFocusedComponent(nullptr); // Todo store this component as previously focused element
+      root->TrySetFocusedComponent(
+          nullptr, winrt::Microsoft::ReactNative::FocusNavigationDirection::None); // Todo store this component as
+                                                                                   // previously focused element
     }
     return;
   }
-  assert(false); // Unhandled command
 }
 
 bool ComponentView::CapturePointer(const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer) noexcept {
@@ -548,7 +521,7 @@ static winrt::com_ptr<ID2D1PathGeometry> GenerateRoundedRectPathGeometry(
 }
 
 RoundedPathParameters GenerateRoundedPathParameters(
-    const facebook::react::RectangleCorners<float> &baseRadius,
+    const facebook::react::RectangleCorners<facebook::react::CornerRadii> &baseRadius,
     const facebook::react::RectangleEdges<float> &inset,
     const facebook::react::Size &pathSize) noexcept {
   RoundedPathParameters result;
@@ -557,10 +530,10 @@ RoundedPathParameters GenerateRoundedPathParameters(
     return result;
   }
 
-  float totalTopRadius = baseRadius.topLeft + baseRadius.topRight;
-  float totalRightRadius = baseRadius.topRight + baseRadius.bottomRight;
-  float totalBottomRadius = baseRadius.bottomRight + baseRadius.bottomLeft;
-  float totalLeftRadius = baseRadius.bottomLeft + baseRadius.topLeft;
+  float totalTopRadius = baseRadius.topLeft.horizontal + baseRadius.topRight.horizontal;
+  float totalRightRadius = baseRadius.topRight.vertical + baseRadius.bottomRight.vertical;
+  float totalBottomRadius = baseRadius.bottomRight.horizontal + baseRadius.bottomLeft.horizontal;
+  float totalLeftRadius = baseRadius.bottomLeft.vertical + baseRadius.topLeft.vertical;
 
   float maxHorizontalRadius = std::max(totalTopRadius, totalBottomRadius);
   float maxVerticalRadius = std::max(totalLeftRadius, totalRightRadius);
@@ -573,21 +546,21 @@ RoundedPathParameters GenerateRoundedPathParameters(
 
   float maxScale = std::max(1.0f, std::max(scaleHoriz, scaleVert));
 
-  result.topLeftRadiusX = std::max(0.0f, baseRadius.topLeft / maxScale - inset.left);
-  result.topLeftRadiusY = std::max(0.0f, baseRadius.topLeft / maxScale - inset.top);
-  result.topRightRadiusX = std::max(0.0f, baseRadius.topRight / maxScale - inset.right);
-  result.topRightRadiusY = std::max(0.0f, baseRadius.topRight / maxScale - inset.top);
-  result.bottomRightRadiusX = std::max(0.0f, baseRadius.bottomRight / maxScale - inset.right);
-  result.bottomRightRadiusY = std::max(0.0f, baseRadius.bottomRight / maxScale - inset.bottom);
-  result.bottomLeftRadiusX = std::max(0.0f, baseRadius.bottomLeft / maxScale - inset.left);
-  result.bottomLeftRadiusY = std::max(0.0f, baseRadius.bottomLeft / maxScale - inset.bottom);
+  result.topLeftRadiusX = std::max(0.0f, baseRadius.topLeft.horizontal / maxScale - inset.left);
+  result.topLeftRadiusY = std::max(0.0f, baseRadius.topLeft.vertical / maxScale - inset.top);
+  result.topRightRadiusX = std::max(0.0f, baseRadius.topRight.horizontal / maxScale - inset.right);
+  result.topRightRadiusY = std::max(0.0f, baseRadius.topRight.vertical / maxScale - inset.top);
+  result.bottomRightRadiusX = std::max(0.0f, baseRadius.bottomRight.horizontal / maxScale - inset.right);
+  result.bottomRightRadiusY = std::max(0.0f, baseRadius.bottomRight.vertical / maxScale - inset.bottom);
+  result.bottomLeftRadiusX = std::max(0.0f, baseRadius.bottomLeft.horizontal / maxScale - inset.left);
+  result.bottomLeftRadiusY = std::max(0.0f, baseRadius.bottomLeft.vertical / maxScale - inset.bottom);
 
   return result;
 }
 
 static winrt::com_ptr<ID2D1PathGeometry> GenerateRoundedRectPathGeometry(
     winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
-    const facebook::react::RectangleCorners<float> &baseRadius,
+    const facebook::react::RectangleCorners<facebook::react::CornerRadii> &baseRadius,
     const facebook::react::RectangleEdges<float> &inset,
     const facebook::react::RectangleEdges<float> &rectPathGeometry) noexcept {
   RoundedPathParameters params = GenerateRoundedPathParameters(
@@ -804,11 +777,11 @@ void DrawAllBorderLayers(
       spTextures[0], // Target Layer, Source Texture, Target Texture
       {0,
        0,
-       borderRadii.topLeft + borderWidths.left,
-       borderRadii.topLeft + borderWidths.top}, // Texture Left, Top, Width, Height
+       borderRadii.topLeft.vertical + borderWidths.left,
+       borderRadii.topLeft.horizontal + borderWidths.top}, // Texture Left, Top, Width, Height
       {AnchorPosition::Left, AnchorPosition::Top}, // Layer Anchor Point
       {0, 0}, // Layer Anchor Offset
-      {borderRadii.topLeft + borderWidths.left, borderRadii.topLeft + borderWidths.top}, // size
+      {borderRadii.topLeft.vertical + borderWidths.left, borderRadii.topLeft.horizontal + borderWidths.top}, // size
       {0.0f, 0.0f}, // relativeSize
       std::max(borderWidths.left, borderWidths.top),
       borderColors.left ? borderColors.left : borderColors.top,
@@ -821,13 +794,13 @@ void DrawAllBorderLayers(
       spBorderLayers[1],
       shape,
       spTextures[1],
-      {borderRadii.topLeft + borderWidths.left,
+      {borderRadii.topLeft.vertical + borderWidths.left,
        0,
-       textureWidth - (borderRadii.topRight + borderWidths.right),
+       textureWidth - (borderRadii.topRight.vertical + borderWidths.right),
        borderWidths.top},
       {AnchorPosition::Left, AnchorPosition::Top},
-      {borderRadii.topLeft + borderWidths.left, 0},
-      {-(borderRadii.topLeft + borderWidths.left + borderRadii.topRight + borderWidths.right),
+      {borderRadii.topLeft.vertical + borderWidths.left, 0},
+      {-(borderRadii.topLeft.vertical + borderWidths.left + borderRadii.topRight.vertical + borderWidths.right),
        borderWidths.top}, // size
       {1.0f, 0.0f}, // relativeSize
       borderWidths.top,
@@ -841,13 +814,13 @@ void DrawAllBorderLayers(
       spBorderLayers[2],
       shape,
       spTextures[2],
-      {textureWidth - (borderRadii.topRight + borderWidths.right),
+      {textureWidth - (borderRadii.topRight.vertical + borderWidths.right),
        0,
        textureWidth,
-       borderRadii.topRight + borderWidths.top},
+       borderRadii.topRight.horizontal + borderWidths.top},
       {AnchorPosition::Right, AnchorPosition::Top},
-      {-(borderRadii.topRight + borderWidths.right), 0},
-      {borderRadii.topRight + borderWidths.right, borderRadii.topRight + borderWidths.top},
+      {-(borderRadii.topRight.vertical + borderWidths.right), 0},
+      {borderRadii.topRight.vertical + borderWidths.right, borderRadii.topRight.horizontal + borderWidths.top},
       {0.0f, 0.0f},
       std::max(borderWidths.right, borderWidths.top),
       borderColors.right ? borderColors.right : borderColors.top,
@@ -861,13 +834,14 @@ void DrawAllBorderLayers(
       shape,
       spTextures[3],
       {textureWidth - borderWidths.right,
-       borderWidths.top + borderRadii.topRight,
+       borderWidths.top + borderRadii.topRight.horizontal,
        textureWidth,
-       textureHeight - (borderWidths.bottom + borderRadii.bottomRight)},
+       textureHeight - (borderWidths.bottom + borderRadii.bottomRight.horizontal)},
       {AnchorPosition::Right, AnchorPosition::Top},
-      {-borderWidths.right, borderWidths.top + borderRadii.topRight},
+      {-borderWidths.right, borderWidths.top + borderRadii.topRight.horizontal},
       {borderWidths.right,
-       -(borderWidths.top + borderRadii.topRight + borderWidths.bottom + borderRadii.bottomRight)}, // size
+       -(borderWidths.top + borderRadii.topRight.horizontal + borderWidths.bottom +
+         borderRadii.bottomRight.horizontal)}, // size
       {0.0f, 1.0f},
       borderWidths.right,
       borderColors.right,
@@ -880,13 +854,14 @@ void DrawAllBorderLayers(
       spBorderLayers[4],
       shape,
       spTextures[4],
-      {textureWidth - (borderWidths.right + borderRadii.bottomRight),
-       textureHeight - (borderWidths.bottom + borderRadii.bottomRight),
+      {textureWidth - (borderWidths.right + borderRadii.bottomRight.vertical),
+       textureHeight - (borderWidths.bottom + borderRadii.bottomRight.horizontal),
        textureWidth,
        textureHeight},
       {AnchorPosition::Right, AnchorPosition::Bottom},
-      {-(borderWidths.right + borderRadii.bottomRight), -(borderWidths.bottom + borderRadii.bottomRight)},
-      {borderWidths.right + borderRadii.bottomRight, borderWidths.bottom + borderRadii.bottomRight},
+      {-(borderWidths.right + borderRadii.bottomRight.vertical),
+       -(borderWidths.bottom + borderRadii.bottomRight.horizontal)},
+      {borderWidths.right + borderRadii.bottomRight.vertical, borderWidths.bottom + borderRadii.bottomRight.horizontal},
       {0, 0},
       std::max(borderWidths.right, borderWidths.bottom),
       borderColors.right ? borderColors.right : borderColors.bottom,
@@ -899,13 +874,13 @@ void DrawAllBorderLayers(
       spBorderLayers[5],
       shape,
       spTextures[5],
-      {borderWidths.left + borderRadii.bottomLeft,
+      {borderWidths.left + borderRadii.bottomLeft.vertical,
        textureHeight - borderWidths.bottom,
-       textureWidth - (borderWidths.right + borderRadii.bottomRight),
+       textureWidth - (borderWidths.right + borderRadii.bottomRight.vertical),
        textureHeight},
       {AnchorPosition::Left, AnchorPosition::Bottom},
-      {borderWidths.left + borderRadii.bottomLeft, -borderWidths.bottom},
-      {-(borderWidths.right + borderRadii.bottomLeft + borderWidths.left + borderRadii.bottomRight),
+      {borderWidths.left + borderRadii.bottomLeft.vertical, -borderWidths.bottom},
+      {-(borderWidths.right + borderRadii.bottomLeft.vertical + borderWidths.left + borderRadii.bottomRight.vertical),
        borderWidths.bottom},
       {1.0f, 0.0f},
       borderWidths.bottom,
@@ -920,12 +895,12 @@ void DrawAllBorderLayers(
       shape,
       spTextures[6],
       {0,
-       textureHeight - (borderWidths.bottom + borderRadii.bottomLeft),
-       borderWidths.left + borderRadii.bottomLeft,
+       textureHeight - (borderWidths.bottom + borderRadii.bottomLeft.horizontal),
+       borderWidths.left + borderRadii.bottomLeft.vertical,
        textureHeight},
       {AnchorPosition::Left, AnchorPosition::Bottom},
-      {0, -(borderWidths.bottom + borderRadii.bottomLeft)},
-      {borderWidths.left + borderRadii.bottomLeft, borderWidths.bottom + borderRadii.bottomLeft},
+      {0, -(borderWidths.bottom + borderRadii.bottomLeft.horizontal)},
+      {borderWidths.left + borderRadii.bottomLeft.vertical, borderWidths.bottom + borderRadii.bottomLeft.horizontal},
       {0, 0},
       std::max(borderWidths.left, borderWidths.bottom),
       borderColors.left ? borderColors.left : borderColors.bottom,
@@ -939,12 +914,13 @@ void DrawAllBorderLayers(
       shape,
       spTextures[7],
       {0,
-       borderWidths.top + borderRadii.topLeft,
+       borderWidths.top + borderRadii.topLeft.horizontal,
        borderWidths.left,
-       textureHeight - (borderWidths.bottom + borderRadii.bottomLeft)},
+       textureHeight - (borderWidths.bottom + borderRadii.bottomLeft.horizontal)},
       {AnchorPosition::Left, AnchorPosition::Top},
-      {0, borderWidths.top + borderRadii.topLeft},
-      {borderWidths.left, -(borderWidths.top + borderRadii.topLeft + borderWidths.bottom + borderRadii.bottomLeft)},
+      {0, borderWidths.top + borderRadii.topLeft.horizontal},
+      {borderWidths.left,
+       -(borderWidths.top + borderRadii.topLeft.horizontal + borderWidths.bottom + borderRadii.bottomLeft.horizontal)},
       {0, 1},
       borderWidths.left,
       borderColors.left,
@@ -953,7 +929,7 @@ void DrawAllBorderLayers(
 
 winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
     winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
-    const facebook::react::RectangleCorners<float> &radius,
+    const facebook::react::RectangleCorners<facebook::react::CornerRadii> &radius,
     const facebook::react::RectangleEdges<float> &inset,
     const facebook::react::RectangleEdges<float> &thickness,
     const facebook::react::RectangleEdges<float> &rectPathGeometry) noexcept {
@@ -1023,10 +999,17 @@ winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
 // Also apply scale factor to the radii at this point
 void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scaleFactor) noexcept {
   // Always round radii down to avoid spikey circles
-  borderRadii.topLeft = std::floor(borderRadii.topLeft * scaleFactor);
-  borderRadii.topRight = std::floor(borderRadii.topRight * scaleFactor);
-  borderRadii.bottomLeft = std::floor(borderRadii.bottomLeft * scaleFactor);
-  borderRadii.bottomRight = std::floor(borderRadii.bottomRight * scaleFactor);
+  borderRadii.topLeft = {
+      std::floor(borderRadii.topLeft.horizontal * scaleFactor), std::floor(borderRadii.topLeft.vertical * scaleFactor)};
+  borderRadii.topRight = {
+      std::floor(borderRadii.topRight.horizontal * scaleFactor),
+      std::floor(borderRadii.topRight.vertical * scaleFactor)};
+  borderRadii.bottomLeft = {
+      std::floor(borderRadii.bottomLeft.horizontal * scaleFactor),
+      std::floor(borderRadii.bottomLeft.vertical * scaleFactor)};
+  borderRadii.bottomRight = {
+      std::floor(borderRadii.bottomRight.horizontal * scaleFactor),
+      std::floor(borderRadii.bottomRight.vertical * scaleFactor)};
 }
 
 void scaleAndPixelRoundBorderWidths(
@@ -1114,8 +1097,10 @@ bool ComponentView::TryUpdateSpecialBorderLayers(
   float extentWidth = layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor;
   float extentHeight = layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor;
 
-  if (borderMetrics.borderRadii.topLeft != 0 || borderMetrics.borderRadii.topRight != 0 ||
-      borderMetrics.borderRadii.bottomLeft != 0 || borderMetrics.borderRadii.bottomRight != 0) {
+  if (borderMetrics.borderRadii.topLeft.horizontal != 0 || borderMetrics.borderRadii.topRight.horizontal != 0 ||
+      borderMetrics.borderRadii.bottomLeft.horizontal != 0 || borderMetrics.borderRadii.bottomRight.horizontal != 0 ||
+      borderMetrics.borderRadii.topLeft.vertical != 0 || borderMetrics.borderRadii.topRight.vertical != 0 ||
+      borderMetrics.borderRadii.bottomLeft.vertical != 0 || borderMetrics.borderRadii.bottomRight.vertical != 0) {
     if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
       // Because in DirectX geometry starts at the center of the stroke, we need to deflate
       // rectangle by half the stroke width to render correctly.
@@ -1332,6 +1317,12 @@ void ComponentView::updateAccessibilityProps(
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       m_uiaProvider, UIA_SizeOfSetPropertyId, oldViewProps.accessibilitySetSize, newViewProps.accessibilitySetSize);
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      m_uiaProvider,
+      UIA_LiveSettingPropertyId,
+      oldViewProps.accessibilityLiveRegion,
+      newViewProps.accessibilityLiveRegion);
 }
 
 std::optional<std::string> ComponentView::getAccessiblityValue() noexcept {
@@ -1347,13 +1338,23 @@ bool ComponentView::getAcccessiblityIsReadOnly() noexcept {
   return true;
 }
 
+ToggleState ComponentView::getToggleState() noexcept {
+  return ToggleState::ToggleState_Off;
+}
+
+void ComponentView::Toggle() noexcept {
+  // no-op
+}
+
 void ComponentView::updateBorderLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
   auto borderMetrics = resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
 
-  if (borderMetrics.borderRadii.topLeft == 0 && borderMetrics.borderRadii.topRight == 0 &&
-      borderMetrics.borderRadii.bottomLeft == 0 && borderMetrics.borderRadii.bottomRight == 0) {
+  if (borderMetrics.borderRadii.topLeft.horizontal == 0 && borderMetrics.borderRadii.topRight.horizontal == 0 &&
+      borderMetrics.borderRadii.bottomLeft.horizontal == 0 && borderMetrics.borderRadii.bottomRight.horizontal == 0 &&
+      borderMetrics.borderRadii.topLeft.vertical == 0 && borderMetrics.borderRadii.topRight.vertical == 0 &&
+      borderMetrics.borderRadii.bottomLeft.vertical == 0 && borderMetrics.borderRadii.bottomRight.vertical == 0) {
     Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
   } else {
     winrt::com_ptr<ID2D1PathGeometry> pathGeometry = GenerateRoundedRectPathGeometry(
@@ -1495,18 +1496,6 @@ std::string ComponentView::DefaultHelpText() const noexcept {
   return "";
 }
 
-ViewComponentView::ViewComponentView(
-    const winrt::Microsoft::ReactNative::Composition::CreateCompositionComponentViewArgs &args)
-    : ViewComponentView(
-          ViewComponentView::defaultProps(),
-          winrt::get_self<
-              winrt::Microsoft::ReactNative::Composition::implementation::CreateCompositionComponentViewArgs>(args)
-              ->CompositionContext(),
-          args.Tag(),
-          args.ReactContext(),
-          args.Features(),
-          true) {}
-
 facebook::react::SharedViewProps ViewComponentView::defaultProps() noexcept {
   static auto const defaultViewProps = std::make_shared<facebook::react::ViewProps const>();
   return defaultViewProps;
@@ -1517,33 +1506,42 @@ ViewComponentView::ViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,
-    ComponentViewFeatures flags,
-    bool customComponent)
-    : base_type(compContext, tag, reactContext, flags, customComponent),
+    ComponentViewFeatures flags)
+    : base_type(compContext, tag, reactContext, flags),
       m_props(defaultProps ? defaultProps : ViewComponentView::defaultProps()) {}
 
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ViewComponentView::createVisual() noexcept {
   return m_compContext.CreateSpriteVisual();
 }
 
-winrt::Microsoft::UI::Composition::Visual ViewComponentView::CreateVisual() noexcept {
-  return winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
-      createVisual());
+void ViewComponentView::CreateVisualHandler(
+    const winrt::Microsoft::ReactNative::Composition::CreateVisualDelegate &handler) {
+  m_createVisualHandler = handler;
+}
+
+winrt::Microsoft::ReactNative::Composition::CreateVisualDelegate ViewComponentView::CreateVisualHandler()
+    const noexcept {
+  return m_createVisualHandler;
+}
+
+void ViewComponentView::CreateInternalVisualHandler(
+    const winrt::Microsoft::ReactNative::Composition::Experimental::CreateInternalVisualDelegate &handler) {
+  m_createInternalVisualHandler = handler;
+}
+
+winrt::Microsoft::ReactNative::Composition::Experimental::CreateInternalVisualDelegate
+ViewComponentView::CreateInternalVisualHandler() const noexcept {
+  return m_createInternalVisualHandler;
 }
 
 void ViewComponentView::ensureVisual() noexcept {
   if (!m_visual) {
-    if (m_customComponent) {
-      // Review is it expected that I need this cast to call overridden methods?
-      winrt::Microsoft::ReactNative::Composition::ViewComponentView outer(*this);
-      winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCreateVisual internalCreateVisual{nullptr};
-      if (outer.try_as(internalCreateVisual)) {
-        m_visual = internalCreateVisual.CreateInternalVisual();
-      } else {
-        m_visual =
-            winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateVisual(
-                outer.CreateVisual());
-      }
+    if (m_createInternalVisualHandler) {
+      m_visual = m_createInternalVisualHandler(*this);
+    } else if (m_createVisualHandler) {
+      m_visual =
+          winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateVisual(
+              m_createVisualHandler(*this));
     } else {
       m_visual = createVisual();
     }
@@ -1556,7 +1554,7 @@ winrt::Microsoft::ReactNative::ComponentView ViewComponentView::Create(
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<ViewComponentView>(
-      ViewComponentView::defaultProps(), compContext, tag, reactContext, ComponentViewFeatures::Default, false);
+      ViewComponentView::defaultProps(), compContext, tag, reactContext, ComponentViewFeatures::Default);
 }
 
 void ViewComponentView::MountChildComponentView(
@@ -1567,10 +1565,20 @@ void ViewComponentView::MountChildComponentView(
   indexOffsetForBorder(index);
   ensureVisual();
 
-  // TODO if we get mixed children of composition and non-composition ComponentViews the indexes will get mixed up
-  // We could offset the index based on non-composition children in m_children
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
-    Visual().InsertAt(compositionChild->OuterVisual(), index);
+    auto visualIndex = index;
+    // Most of the time child index will align with visual index.
+    // But if we have non-visual children, we need to account for that.
+    if (m_hasNonVisualChildren) {
+      for (uint32_t i = 0; i <= index; i++) {
+        if (!m_children.GetAt(i).try_as<ComponentView>()) {
+          visualIndex--;
+        }
+      }
+    }
+    Visual().InsertAt(compositionChild->OuterVisual(), visualIndex);
+  } else {
+    m_hasNonVisualChildren = true;
   }
 }
 
@@ -1609,7 +1617,6 @@ void ViewComponentView::updateProps(
 
 const winrt::Microsoft::ReactNative::IComponentProps ViewComponentView::userProps(
     facebook::react::Props::Shared const &props) noexcept {
-  assert(m_customComponent);
   const auto &abiViewProps = *std::static_pointer_cast<const ::Microsoft::ReactNative::AbiViewProps>(props);
   return abiViewProps.UserProps();
 }
@@ -1675,22 +1682,21 @@ std::string CodeFromVirtualKey(
 }
 
 void ViewComponentView::OnKeyDown(
-    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  auto eventCode = CodeFromVirtualKey(source, args.Key());
+  auto eventCode = CodeFromVirtualKey(args.KeyboardSource(), args.Key());
   bool fShift =
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
   bool fAlt =
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Menu) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
   bool fCtrl =
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
   bool fMeta =
-      ((source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
+      ((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ||
-      ((source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
+      ((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down);
 
   if (args.OriginalSource() == Tag() && !args.Handled()) {
@@ -1703,7 +1709,7 @@ void ViewComponentView::OnKeyDown(
     event.key = ::Microsoft::ReactNative::FromVirtualKey(
         args.Key(),
         event.shiftKey,
-        !!((source.GetKeyState(winrt::Windows::System::VirtualKey::CapitalLock) &
+        !!((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::CapitalLock) &
             winrt::Microsoft::UI::Input::VirtualKeyStates::Locked) ==
            winrt::Microsoft::UI::Input::VirtualKeyStates::Locked));
     event.code = eventCode;
@@ -1719,26 +1725,25 @@ void ViewComponentView::OnKeyDown(
     }
   }
 
-  base_type::OnKeyDown(source, args);
+  base_type::OnKeyDown(args);
 }
 
 void ViewComponentView::OnKeyUp(
-    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
-  auto eventCode = CodeFromVirtualKey(source, args.Key());
+  auto eventCode = CodeFromVirtualKey(args.KeyboardSource(), args.Key());
   bool fShift =
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
   bool fAlt =
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Menu) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Menu) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
   bool fCtrl =
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
   bool fMeta =
-      ((source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
+      ((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ||
-      ((source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
+      ((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down);
 
   if (args.OriginalSource() == Tag()) {
@@ -1751,7 +1756,7 @@ void ViewComponentView::OnKeyUp(
     event.key = ::Microsoft::ReactNative::FromVirtualKey(
         args.Key(),
         event.shiftKey,
-        !!((source.GetKeyState(winrt::Windows::System::VirtualKey::CapitalLock) &
+        !!((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::CapitalLock) &
             winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
            winrt::Microsoft::UI::Input::VirtualKeyStates::Down));
     event.code = eventCode;
@@ -1767,7 +1772,7 @@ void ViewComponentView::OnKeyUp(
     }
   }
 
-  base_type::OnKeyUp(source, args);
+  base_type::OnKeyUp(args);
 }
 
 void ViewComponentView::updateLayoutMetrics(
@@ -1779,10 +1784,9 @@ void ViewComponentView::updateLayoutMetrics(
   }
   ensureVisual();
   base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
-}
-
-void ViewComponentView::UpdateLayoutMetrics(const LayoutMetrics &metrics, const LayoutMetrics &oldMetrics) noexcept {
-  Visual().Size({metrics.Frame.Width * metrics.PointScaleFactor, metrics.Frame.Height * metrics.PointScaleFactor});
+  Visual().Size(
+      {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
+       layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
 }
 
 void ViewComponentView::prepareForRecycle() noexcept {}

@@ -225,7 +225,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
     winrt::Microsoft::ReactNative::ComponentView view{nullptr};
     winrt::check_hresult(
         m_outer->QueryInterface(winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
-    m_outer->rootComponentView()->TrySetFocusedComponent(view);
+    m_outer->rootComponentView()->TrySetFocusedComponent(
+        view, winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
     // assert(false);
     // TODO focus
   }
@@ -491,8 +492,7 @@ WindowsTextInputComponentView::WindowsTextInputComponentView(
           compContext,
           tag,
           reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
-          false) {
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {
   /*
   m_textChangedRevoker =
       m_element.TextChanged(winrt::auto_revoke, [this](auto sender, xaml::Controls::TextChangedEventArgs args) {
@@ -523,13 +523,17 @@ WindowsTextInputComponentView::WindowsTextInputComponentView(
 }
 
 void WindowsTextInputComponentView::HandleCommand(
-    winrt::hstring commandName,
-    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+    const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
+  Super::HandleCommand(args);
+  if (args.Handled())
+    return;
+
+  auto commandName = args.CommandName();
   if (commandName == L"setTextAndSelection") {
     int eventCount, begin, end;
     winrt::hstring text;
 
-    winrt::Microsoft::ReactNative::ReadArgs(args, eventCount, text, begin, end);
+    winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), eventCount, text, begin, end);
     if (eventCount >= m_nativeEventCount) {
       m_comingFromJS = true;
       UpdateText(winrt::to_string(text));
@@ -550,8 +554,6 @@ void WindowsTextInputComponentView::HandleCommand(
 
       m_comingFromJS = false;
     }
-  } else {
-    Super::HandleCommand(commandName, args);
   }
 }
 
@@ -750,12 +752,11 @@ void WindowsTextInputComponentView::OnPointerMoved(
 }
 
 void WindowsTextInputComponentView::OnKeyDown(
-    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
   // behavior We do forward Ctrl+Tab to the textinput.
   if (args.Key() != winrt::Windows::System::VirtualKey::Tab ||
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) {
     WPARAM wParam = static_cast<WPARAM>(args.Key());
     LPARAM lParam = 0;
@@ -776,16 +777,15 @@ void WindowsTextInputComponentView::OnKeyDown(
     }
   }
 
-  Super::OnKeyDown(source, args);
+  Super::OnKeyDown(args);
 }
 
 void WindowsTextInputComponentView::OnKeyUp(
-    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept {
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
   // behavior We do forward Ctrl+Tab to the textinput.
   if (args.Key() != winrt::Windows::System::VirtualKey::Tab ||
-      (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+      (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
        winrt::Microsoft::UI::Input::VirtualKeyStates::Down) == winrt::Microsoft::UI::Input::VirtualKeyStates::Down) {
     WPARAM wParam = static_cast<WPARAM>(args.Key());
     LPARAM lParam = 1;
@@ -807,11 +807,10 @@ void WindowsTextInputComponentView::OnKeyUp(
     }
   }
 
-  Super::OnKeyUp(source, args);
+  Super::OnKeyUp(args);
 }
 
 bool WindowsTextInputComponentView::ShouldSubmit(
-    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
   bool shouldSubmit = true;
 
@@ -824,19 +823,19 @@ bool WindowsTextInputComponentView::ShouldSubmit(
       // If 'submitKeyEvents' are supplied, use them to determine whether to emit onSubmitEditing' for either
       // single-line or multi-line TextInput
       if (args.KeyCode() == '\r') {
-        bool shiftDown = (source.GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
+        bool shiftDown = (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Shift) &
                           winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
             winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
-        bool ctrlDown = (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+        bool ctrlDown = (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
                          winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
             winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
-        bool altDown = (source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+        bool altDown = (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
                         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
             winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
-        bool metaDown = (source.GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
+        bool metaDown = (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::LeftWindows) &
                          winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
                 winrt::Microsoft::UI::Input::VirtualKeyStates::Down ||
-            (source.GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
+            (args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::RightWindows) &
              winrt::Microsoft::UI::Input::VirtualKeyStates::Down) ==
                 winrt::Microsoft::UI::Input::VirtualKeyStates::Down;
         return (submitKeyEvent.shiftKey && shiftDown) || (submitKeyEvent.ctrlKey && ctrlDown) ||
@@ -854,18 +853,17 @@ bool WindowsTextInputComponentView::ShouldSubmit(
 }
 
 void WindowsTextInputComponentView::OnCharacterReceived(
-    const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
     const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept {
   // Do not forward tab keys into the TextInput, since we want that to do the tab loop instead.  This aligns with WinUI
   // behavior We do forward Ctrl+Tab to the textinput.
   if ((args.KeyCode() == '\t') &&
-      ((source.GetKeyState(winrt::Windows::System::VirtualKey::Control) &
+      ((args.KeyboardSource().GetKeyState(winrt::Windows::System::VirtualKey::Control) &
         winrt::Microsoft::UI::Input::VirtualKeyStates::Down) != winrt::Microsoft::UI::Input::VirtualKeyStates::Down)) {
     return;
   }
 
   // Logic for submit events
-  if (ShouldSubmit(source, args)) {
+  if (ShouldSubmit(args)) {
     // call onSubmitEditing event
     if (m_eventEmitter && !m_comingFromJS) {
       auto emitter = std::static_pointer_cast<const facebook::react::WindowsTextInputEventEmitter>(m_eventEmitter);

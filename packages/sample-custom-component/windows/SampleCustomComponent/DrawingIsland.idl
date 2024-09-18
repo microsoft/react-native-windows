@@ -1,0 +1,13 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
+namespace SampleCustomComponent
+{
+  [default_interface]
+  [webhosthidden]
+  [experimental]
+  runtimeclass DrawingIsland : Windows.Foundation.IClosable
+  {
+    DrawingIsland(Microsoft.UI.Composition.Compositor compositor);
+  }
+}

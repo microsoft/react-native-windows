@@ -16,6 +16,7 @@ import type {TextProps} from './TextProps';
 import {createViewConfig} from '../NativeComponent/ViewConfig';
 import UIManager from '../ReactNative/UIManager';
 import createReactNativeComponentClass from '../Renderer/shims/createReactNativeComponentClass';
+import Platform from '../Utilities/Platform';
 
 export type NativeTextProps = $ReadOnly<{
   ...TextProps,

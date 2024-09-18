@@ -8,6 +8,7 @@
  * @format
  */
 
+import type {TextStyleProp} from '../StyleSheet/StyleSheet';
 import type {____TextStyle_Internal as TextStyleInternal} from '../StyleSheet/StyleSheetTypes';
 import type {PressEvent} from '../Types/CoreEventTypes';
 import type {NativeTextProps} from './TextNativeComponent';
@@ -157,7 +158,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
 
       let _selectable = selectable;
 
-      let processedStyle: ?TextStyleInternal = flattenStyle(_style);
+      let processedStyle = flattenStyle<TextStyleProp>(_style);
       if (processedStyle != null) {
         let overrides: ?{...TextStyleInternal} = null;
         if (typeof processedStyle.fontWeight === 'number') {
@@ -182,7 +183,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
 
         if (overrides != null) {
           // $FlowFixMe[incompatible-type]
-          processedStyle = [processedStyle, overrides];
+          _style = [_style, overrides];
         }
       }
 
@@ -208,7 +209,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
                 numberOfLines: _numberOfLines,
                 selectable: _selectable,
                 selectionColor: _selectionColor,
-                style: processedStyle,
+                style: _style,
                 disabled: disabled,
                 children,
               }}
@@ -248,7 +249,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
             ref={forwardedRef}
             selectable={_selectable}
             selectionColor={_selectionColor}
-            style={processedStyle}
+            style={_style}
             disabled={disabled}>
             {children}
           </NativeVirtualText>
@@ -272,7 +273,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
           accessible == null
             ? onPress != null || onLongPress != null
             : accessible,
-        default: accessible,
+        default: accessible !== false, // Win32
       });
 
       let nativeText = null;
@@ -298,7 +299,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
               numberOfLines: _numberOfLines,
               selectable: _selectable,
               selectionColor: _selectionColor,
-              style: processedStyle,
+              style: _style,
               children,
             }}
             textPressabilityProps={{
@@ -339,7 +340,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
             ref={forwardedRef}
             selectable={_selectable}
             selectionColor={_selectionColor}
-            style={processedStyle}>
+            style={_style}>
             {children}
           </NativeText>
         );

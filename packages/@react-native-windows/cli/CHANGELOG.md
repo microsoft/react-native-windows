@@ -1,8 +1,34 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Tue, 27 Aug 2024 05:13:39 GMT and should not be manually modified.
+<!-- This log was last generated on Mon, 16 Sep 2024 21:21:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.236
+
+Mon, 16 Sep 2024 21:21:15 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.103
+
+## 0.0.0-canary.235
+
+Sat, 07 Sep 2024 05:14:11 GMT
+
+### Changes
+
+- Fix parsing of empty build props in run-windows (jthysell@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.102
+
+## 0.0.0-canary.234
+
+Fri, 06 Sep 2024 05:14:01 GMT
+
+### Changes
+
+- [Fabric] Add native component codegen (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.101
 
 ## 0.0.0-canary.233
 

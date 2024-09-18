@@ -33,8 +33,7 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
           compContext,
           tag,
           reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background,
-          false) {
+          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {
   m_reactContext = reactContext; // save react context
   m_compositionContext = compContext; // save composition context
 }
@@ -217,13 +216,14 @@ void WindowsModalHostComponentView::MountChildComponentView(
     uint32_t index) noexcept {
   EnsureModalCreated();
   m_children.InsertAt(index, childComponentView); // insert childComponent into m_children
-  auto test = m_children.Size();
-  auto test2 = childComponentView.Tag();
-  auto test3 = childComponentView.Children().Size();
-
 
   // Sets the parent of the childComponentView to *this (the current instance of WindowsModalHostComponentView)
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(*this);
+
+  if (m_mounted) {
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->onMounted();
+  }
+
   indexOffsetForBorder(index);
   ensureVisual();
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
@@ -231,21 +231,13 @@ void WindowsModalHostComponentView::MountChildComponentView(
     auto compVisual = winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(compositionChild->OuterVisual());
     if (index == 0) {
       containerChildren.InsertAtBottom(compVisual);
-
-
-      // auto test = winrt::make<winrt::Microsoft::ReactNative::implementation::ComponentView>(14, m_reactContext, false);
-      // if (test) {
-        // m_children.InsertAt(index, test);
-      // }
-
       m_reactNativeIsland.AddCompositionEventHandler(reinterpret_cast<uint64_t>(m_hwnd), m_reactContext.Handle(), *this);
       return;
     }
     auto insertAfter = containerChildren.First();
     for (uint32_t i = 1; i < index; i++)
-     insertAfter.MoveNext();
+    insertAfter.MoveNext();
     containerChildren.InsertAbove(compVisual, insertAfter.Current());
-    // update composition handler
   }
 }
 
@@ -256,9 +248,8 @@ void WindowsModalHostComponentView::UnmountChildComponentView(
 }
 
 void WindowsModalHostComponentView::HandleCommand(
-    winrt::hstring commandName,
-    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
-  Super::HandleCommand(commandName, args);
+    const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
+  Super::HandleCommand(args);
 }
 
 void WindowsModalHostComponentView::updateProps(

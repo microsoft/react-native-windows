@@ -107,9 +107,9 @@ describe('Image Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('An Image can have a background color', async () => {
-    const component = await app.findElementByTestID('image-background-color');
+    const component = await app.findElementByTestID('background-color-example');
     await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-background-color');
+    const dump = await dumpVisualTree('background-color-example');
     expect(dump).toMatchSnapshot();
   });
   test('An Image can have custom opacity', async () => {

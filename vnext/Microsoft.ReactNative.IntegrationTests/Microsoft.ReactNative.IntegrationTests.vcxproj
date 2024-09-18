@@ -66,6 +66,8 @@
   <ImportGroup Condition=" '$(UseFabric)' == 'true' AND '$(UseWinUI3)' == 'true' ">
     <Import Project="..\PropertySheets\WinUI.props" />
   </ImportGroup>
+  <!-- Added since we build this project with Paper/Fabric. -->
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.LockFile.props" />
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup>
     <ClCompile>

@@ -78,6 +78,8 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="PropertySheet.props" />
     <Import Project="..\PropertySheets\WinUI.props" />
+    <!-- Added since we build this project with Paper/Fabric. -->
+    <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.LockFile.props" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -121,6 +123,7 @@
         OLD_CPPWINRT is a workaround to make target version to 19H1
       -->
       <PreprocessorDefinitions>
+        DISABLE_XAML_GENERATED_MAIN;
         REACTWINDOWS_BUILD;
         RN_PLATFORM=windows;
         NOMINMAX;
@@ -131,6 +134,7 @@
         WIN32=0;
         WINRT=1;
         _HAS_AUTO_PTR_ETC;
+        _USE_MATH_DEFINES;
         <!-- See https://cplusplus.github.io/LWG/issue3840 -->
         _SILENCE_CXX20_U8PATH_DEPRECATION_WARNING;
         %(PreprocessorDefinitions)

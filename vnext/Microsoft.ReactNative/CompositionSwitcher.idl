@@ -3,6 +3,7 @@
 
 #include "NamespaceRedirect.h"
 #include "DocString.h"
+import "Composition.Input.idl";
 
 namespace Microsoft.ReactNative.Composition.Experimental
 {
@@ -112,6 +113,8 @@ namespace Microsoft.ReactNative.Composition.Experimental
     Windows.Foundation.Numerics.Vector3 ScrollPosition { get; };
     void ScrollBy(Windows.Foundation.Numerics.Vector3 offset, Boolean animate);
     void TryUpdatePosition(Windows.Foundation.Numerics.Vector3 position, Boolean animate);
+    void OnPointerPressed(Microsoft.ReactNative.Composition.Input.PointerRoutedEventArgs args);
+    Boolean Horizontal;
   }
 
   [webhosthidden]

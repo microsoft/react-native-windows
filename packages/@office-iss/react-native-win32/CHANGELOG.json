@@ -2,6 +2,57 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 07 Sep 2024 05:14:10 GMT",
+      "version": "0.0.0-canary.262",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.262",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "55e32071ac30a673c7830f717fcbd1a3a228dcff",
+            "comment": "switch to optimized text"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "409bf6e085cc1aa6421cff078037f7b3774bd8ec",
+            "comment": "Integrate 8/31"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Sep 2024 05:13:45 GMT",
+      "version": "0.0.0-canary.261",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.261",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "277d6f06a3e1bf1650cd9d1e7b4f22e0619968e9",
+            "comment": "Integrate 8/20"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 28 Aug 2024 05:14:44 GMT",
+      "version": "0.0.0-canary.260",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.260",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "98197a259f5e7c97c877e361dd70b048343e65a8",
+            "comment": "integrate 0.76.0-nightly-20240816-17017d2b8"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 22 Aug 2024 05:24:27 GMT",
       "version": "0.0.0-canary.259",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.259",

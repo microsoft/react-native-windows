@@ -40,7 +40,7 @@ exports[`Text Tests Text can be restricted to one line 1`] = `
   "Visual Tree": {
     "Comment": "text-one-line",
     "Offset": "0, 0, 0",
-    "Size": "300, 20",
+    "Size": "300, 19",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -63,7 +63,7 @@ exports[`Text Tests Text can be selectable 1`] = `
   "Visual Tree": {
     "Comment": "text-selectable",
     "Offset": "0, 0, 0",
-    "Size": "916, 19",
+    "Size": "916, 20",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -190,7 +190,7 @@ exports[`Text Tests Text can have advanced borders 1`] = `
   "Visual Tree": {
     "Comment": "advanced-borders",
     "Offset": "0, 0, 0",
-    "Size": "916, 97",
+    "Size": "916, 98",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -612,12 +612,12 @@ exports[`Text Tests Text can have borders 1`] = `
       },
       {
         "Offset": "100, 127, 0",
-        "Size": "716, 138",
+        "Size": "716, 139",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "716, 138",
+            "Size": "716, 139",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -671,12 +671,12 @@ exports[`Text Tests Text can have borders 1`] = `
       },
       {
         "Offset": "0, 365, 0",
-        "Size": "916, 20",
+        "Size": "916, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 20",
+            "Size": "916, 19",
             "Visual Type": "SpriteVisual",
           },
           {
@@ -754,7 +754,7 @@ exports[`Text Tests Text can have shadows 1`] = `
   "Visual Tree": {
     "Comment": "text-shadow",
     "Offset": "0, 0, 0",
-    "Size": "916, 28",
+    "Size": "916, 27",
     "Visual Type": "SpriteVisual",
   },
 }

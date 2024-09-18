@@ -56,37 +56,17 @@ steps:
             configuration: Release
 
   - ${{ if endsWith(parameters.template, '-app') }}:
-    - script: | # Change version of @react-native-community/template from 'nightly' to '$(reactNativeDevDependency)' - Windows #13446
-        npx --yes @react-native-community/cli@next init testcli --template @react-native-community/template@nightly
+    - script: |
+        npx --yes @react-native-community/cli@latest init testcli --version $(reactNativeDevDependency) --verbose --skip-install --install-pods false --skip-git-init true
       displayName: Init new app project with @react-native-community/cli init
       workingDirectory: $(Agent.BuildDirectory)
-    
-    - script: | # Remove upgrade command - Windows #13446
-        call yarn install
-        call yarn add react@$(reactDevDependency)
-        call yarn add react-native@$(reactNativeDevDependency)
-      displayName: Fix app react-native dependency
-      workingDirectory: $(Agent.BuildDirectory)\testcli
 
   - ${{ if and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old'))) }}:
-    - script: | # Change version of react-native from 'next' to '$(reactNativeDevDependency)' - Windows #13446
-        npx --yes create-react-native-library@latest --slug testcli --description testcli --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type module-new --react-native-version next --example vanilla testcli
+    - script: |
+        npx --yes create-react-native-library@latest --slug testcli --description testcli --author-name "React-Native-Windows Bot" --author-email 53619745+rnbot@users.noreply.github.com --author-url http://example.com --repo-url http://example.com --languages kotlin-objc --type module-new --react-native-version $(reactNativeDevDependency) --example vanilla testcli
       displayName: Init new lib project with create-react-native-library
       workingDirectory: $(Agent.BuildDirectory)
 
-    - script: | # Remove upgrade commands - Windows #13446
-        call yarn install
-        call yarn add react@$(reactDevDependency) --dev
-        call yarn add react-native@$(reactNativeDevDependency) --dev
-      displayName: Fix lib react-native dependency
-      workingDirectory: $(Agent.BuildDirectory)\testcli
-
-    - script: | # Remove upgrade commands - Windows #13446
-        call yarn install
-        call yarn add react@$(reactDevDependency)
-        call yarn add react-native@$(reactNativeDevDependency)
-      displayName: Fix example app react-native dependency
-      workingDirectory: $(Agent.BuildDirectory)\testcli\example
   - ${{ elseif and(endsWith(parameters.template, '-lib'), startsWith(parameters.template, 'old')) }}:
     - script: |
         npx --yes create-react-native-module@0.20.2 --package-name "testcli" testcli

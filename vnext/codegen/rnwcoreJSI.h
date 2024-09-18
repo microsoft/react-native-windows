@@ -21,23 +21,34 @@ protected:
 
 public:
   virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
-  virtual bool allowCollapsableChildren(jsi::Runtime &rt) = 0;
   virtual bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
-  virtual bool changeOrderOfMountingInstructionsOnAndroid(jsi::Runtime &rt) = 0;
+  virtual bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) = 0;
   virtual bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) = 0;
+  virtual bool enableAndroidMixBlendModeProp(jsi::Runtime &rt) = 0;
+  virtual bool enableBackgroundStyleApplicator(jsi::Runtime &rt) = 0;
   virtual bool enableCleanTextInputYogaNode(jsi::Runtime &rt) = 0;
+  virtual bool enableEagerRootViewAttachment(jsi::Runtime &rt) = 0;
+  virtual bool enableEventEmitterRetentionDuringGesturesOnAndroid(jsi::Runtime &rt) = 0;
+  virtual bool enableFabricLogs(jsi::Runtime &rt) = 0;
+  virtual bool enableFabricRendererExclusively(jsi::Runtime &rt) = 0;
   virtual bool enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt) = 0;
+  virtual bool enableIOSViewClipToPaddingBox(jsi::Runtime &rt) = 0;
+  virtual bool enableLayoutAnimationsOnIOS(jsi::Runtime &rt) = 0;
   virtual bool enableLongTaskAPI(jsi::Runtime &rt) = 0;
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
   virtual bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) = 0;
+  virtual bool enableReportEventPaintTime(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
+  virtual bool enableViewRecycling(jsi::Runtime &rt) = 0;
+  virtual bool excludeYogaFromRawProps(jsi::Runtime &rt) = 0;
   virtual bool fetchImagesInViewPreallocation(jsi::Runtime &rt) = 0;
   virtual bool fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
   virtual bool fixMissedFabricStateUpdatesOnAndroid(jsi::Runtime &rt) = 0;
+  virtual bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledDebug(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledRelease(jsi::Runtime &rt) = 0;
@@ -45,13 +56,18 @@ public:
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
   virtual bool loadVectorDrawablesOnImages(jsi::Runtime &rt) = 0;
   virtual bool setAndroidLayoutDirection(jsi::Runtime &rt) = 0;
+  virtual bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) = 0;
+  virtual bool useFabricInterop(jsi::Runtime &rt) = 0;
   virtual bool useImmediateExecutorInAndroidBridgeless(jsi::Runtime &rt) = 0;
   virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
   virtual bool useNewReactImageViewBackgroundDrawing(jsi::Runtime &rt) = 0;
+  virtual bool useOptimisedViewPreallocationOnAndroid(jsi::Runtime &rt) = 0;
+  virtual bool useOptimizedEventBatchingOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) = 0;
   virtual bool useRuntimeShadowNodeReferenceUpdateOnLayout(jsi::Runtime &rt) = 0;
   virtual bool useStateAlignmentMechanism(jsi::Runtime &rt) = 0;
+  virtual bool useTurboModuleInterop(jsi::Runtime &rt) = 0;
 
 };
 
@@ -86,14 +102,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::commonTestFlag, jsInvoker_, instance_);
     }
-    bool allowCollapsableChildren(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::allowCollapsableChildren) == 1,
-          "Expected allowCollapsableChildren(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::allowCollapsableChildren, jsInvoker_, instance_);
-    }
     bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::allowRecursiveCommitsWithSynchronousMountOnAndroid) == 1,
@@ -110,13 +118,13 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::batchRenderingUpdatesInEventLoop, jsInvoker_, instance_);
     }
-    bool changeOrderOfMountingInstructionsOnAndroid(jsi::Runtime &rt) override {
+    bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) override {
       static_assert(
-          bridging::getParameterCount(&T::changeOrderOfMountingInstructionsOnAndroid) == 1,
-          "Expected changeOrderOfMountingInstructionsOnAndroid(...) to have 1 parameters");
+          bridging::getParameterCount(&T::completeReactInstanceCreationOnBgThreadOnAndroid) == 1,
+          "Expected completeReactInstanceCreationOnBgThreadOnAndroid(...) to have 1 parameters");
 
       return bridging::callFromJs<bool>(
-          rt, &T::changeOrderOfMountingInstructionsOnAndroid, jsInvoker_, instance_);
+          rt, &T::completeReactInstanceCreationOnBgThreadOnAndroid, jsInvoker_, instance_);
     }
     bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) override {
       static_assert(
@@ -134,6 +142,22 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableAlignItemsBaselineOnFabricIOS, jsInvoker_, instance_);
     }
+    bool enableAndroidMixBlendModeProp(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableAndroidMixBlendModeProp) == 1,
+          "Expected enableAndroidMixBlendModeProp(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableAndroidMixBlendModeProp, jsInvoker_, instance_);
+    }
+    bool enableBackgroundStyleApplicator(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableBackgroundStyleApplicator) == 1,
+          "Expected enableBackgroundStyleApplicator(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableBackgroundStyleApplicator, jsInvoker_, instance_);
+    }
     bool enableCleanTextInputYogaNode(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableCleanTextInputYogaNode) == 1,
@@ -142,6 +166,38 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableCleanTextInputYogaNode, jsInvoker_, instance_);
     }
+    bool enableEagerRootViewAttachment(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableEagerRootViewAttachment) == 1,
+          "Expected enableEagerRootViewAttachment(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableEagerRootViewAttachment, jsInvoker_, instance_);
+    }
+    bool enableEventEmitterRetentionDuringGesturesOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableEventEmitterRetentionDuringGesturesOnAndroid) == 1,
+          "Expected enableEventEmitterRetentionDuringGesturesOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableEventEmitterRetentionDuringGesturesOnAndroid, jsInvoker_, instance_);
+    }
+    bool enableFabricLogs(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableFabricLogs) == 1,
+          "Expected enableFabricLogs(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableFabricLogs, jsInvoker_, instance_);
+    }
+    bool enableFabricRendererExclusively(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableFabricRendererExclusively) == 1,
+          "Expected enableFabricRendererExclusively(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableFabricRendererExclusively, jsInvoker_, instance_);
+    }
     bool enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableGranularShadowTreeStateReconciliation) == 1,
@@ -149,6 +205,22 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableGranularShadowTreeStateReconciliation, jsInvoker_, instance_);
+    }
+    bool enableIOSViewClipToPaddingBox(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableIOSViewClipToPaddingBox) == 1,
+          "Expected enableIOSViewClipToPaddingBox(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableIOSViewClipToPaddingBox, jsInvoker_, instance_);
+    }
+    bool enableLayoutAnimationsOnIOS(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableLayoutAnimationsOnIOS) == 1,
+          "Expected enableLayoutAnimationsOnIOS(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableLayoutAnimationsOnIOS, jsInvoker_, instance_);
     }
     bool enableLongTaskAPI(jsi::Runtime &rt) override {
       static_assert(
@@ -174,6 +246,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enablePropsUpdateReconciliationAndroid, jsInvoker_, instance_);
     }
+    bool enableReportEventPaintTime(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableReportEventPaintTime) == 1,
+          "Expected enableReportEventPaintTime(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableReportEventPaintTime, jsInvoker_, instance_);
+    }
     bool enableSynchronousStateUpdates(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableSynchronousStateUpdates) == 1,
@@ -189,6 +269,22 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableUIConsistency, jsInvoker_, instance_);
+    }
+    bool enableViewRecycling(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableViewRecycling) == 1,
+          "Expected enableViewRecycling(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableViewRecycling, jsInvoker_, instance_);
+    }
+    bool excludeYogaFromRawProps(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::excludeYogaFromRawProps) == 1,
+          "Expected excludeYogaFromRawProps(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::excludeYogaFromRawProps, jsInvoker_, instance_);
     }
     bool fetchImagesInViewPreallocation(jsi::Runtime &rt) override {
       static_assert(
@@ -221,6 +317,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::fixMissedFabricStateUpdatesOnAndroid, jsInvoker_, instance_);
+    }
+    bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::fixMountingCoordinatorReportedPendingTransactionsOnAndroid) == 1,
+          "Expected fixMountingCoordinatorReportedPendingTransactionsOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::fixMountingCoordinatorReportedPendingTransactionsOnAndroid, jsInvoker_, instance_);
     }
     bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -278,6 +382,22 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::setAndroidLayoutDirection, jsInvoker_, instance_);
     }
+    bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::traceTurboModulePromiseRejectionsOnAndroid) == 1,
+          "Expected traceTurboModulePromiseRejectionsOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::traceTurboModulePromiseRejectionsOnAndroid, jsInvoker_, instance_);
+    }
+    bool useFabricInterop(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useFabricInterop) == 1,
+          "Expected useFabricInterop(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useFabricInterop, jsInvoker_, instance_);
+    }
     bool useImmediateExecutorInAndroidBridgeless(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::useImmediateExecutorInAndroidBridgeless) == 1,
@@ -310,6 +430,22 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::useNewReactImageViewBackgroundDrawing, jsInvoker_, instance_);
     }
+    bool useOptimisedViewPreallocationOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useOptimisedViewPreallocationOnAndroid) == 1,
+          "Expected useOptimisedViewPreallocationOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useOptimisedViewPreallocationOnAndroid, jsInvoker_, instance_);
+    }
+    bool useOptimizedEventBatchingOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useOptimizedEventBatchingOnAndroid) == 1,
+          "Expected useOptimizedEventBatchingOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useOptimizedEventBatchingOnAndroid, jsInvoker_, instance_);
+    }
     bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::useRuntimeShadowNodeReferenceUpdate) == 1,
@@ -333,6 +469,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useStateAlignmentMechanism, jsInvoker_, instance_);
+    }
+    bool useTurboModuleInterop(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useTurboModuleInterop) == 1,
+          "Expected useTurboModuleInterop(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useTurboModuleInterop, jsInvoker_, instance_);
     }
 
   private:
@@ -4463,229 +4607,6 @@ private:
 };
 
 
-  
-#pragma mark - NativeIntersectionObserverNativeIntersectionObserverEntry
-
-template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
-struct NativeIntersectionObserverNativeIntersectionObserverEntry {
-  P0 intersectionObserverId;
-  P1 targetInstanceHandle;
-  P2 targetRect;
-  P3 rootRect;
-  P4 intersectionRect;
-  P5 isIntersectingAboveThresholds;
-  P6 time;
-  bool operator==(const NativeIntersectionObserverNativeIntersectionObserverEntry &other) const {
-    return intersectionObserverId == other.intersectionObserverId && targetInstanceHandle == other.targetInstanceHandle && targetRect == other.targetRect && rootRect == other.rootRect && intersectionRect == other.intersectionRect && isIntersectingAboveThresholds == other.isIntersectingAboveThresholds && time == other.time;
-  }
-};
-
-template <typename T>
-struct NativeIntersectionObserverNativeIntersectionObserverEntryBridging {
-  static T types;
-
-  static T fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    T result{
-      bridging::fromJs<decltype(types.intersectionObserverId)>(rt, value.getProperty(rt, "intersectionObserverId"), jsInvoker),
-      bridging::fromJs<decltype(types.targetInstanceHandle)>(rt, value.getProperty(rt, "targetInstanceHandle"), jsInvoker),
-      bridging::fromJs<decltype(types.targetRect)>(rt, value.getProperty(rt, "targetRect"), jsInvoker),
-      bridging::fromJs<decltype(types.rootRect)>(rt, value.getProperty(rt, "rootRect"), jsInvoker),
-      bridging::fromJs<decltype(types.intersectionRect)>(rt, value.getProperty(rt, "intersectionRect"), jsInvoker),
-      bridging::fromJs<decltype(types.isIntersectingAboveThresholds)>(rt, value.getProperty(rt, "isIntersectingAboveThresholds"), jsInvoker),
-      bridging::fromJs<decltype(types.time)>(rt, value.getProperty(rt, "time"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static double intersectionObserverIdToJs(jsi::Runtime &rt, decltype(types.intersectionObserverId) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::Value targetInstanceHandleToJs(jsi::Runtime &rt, decltype(types.targetInstanceHandle) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::Array targetRectToJs(jsi::Runtime &rt, decltype(types.targetRect) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::Array rootRectToJs(jsi::Runtime &rt, decltype(types.rootRect) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static std::optional<jsi::Array> intersectionRectToJs(jsi::Runtime &rt, decltype(types.intersectionRect) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static bool isIntersectingAboveThresholdsToJs(jsi::Runtime &rt, decltype(types.isIntersectingAboveThresholds) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static double timeToJs(jsi::Runtime &rt, decltype(types.time) value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const T &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    result.setProperty(rt, "intersectionObserverId", bridging::toJs(rt, value.intersectionObserverId, jsInvoker));
-    result.setProperty(rt, "targetInstanceHandle", bridging::toJs(rt, value.targetInstanceHandle, jsInvoker));
-    result.setProperty(rt, "targetRect", bridging::toJs(rt, value.targetRect, jsInvoker));
-    result.setProperty(rt, "rootRect", bridging::toJs(rt, value.rootRect, jsInvoker));
-    result.setProperty(rt, "intersectionRect", bridging::toJs(rt, value.intersectionRect, jsInvoker));
-    result.setProperty(rt, "isIntersectingAboveThresholds", bridging::toJs(rt, value.isIntersectingAboveThresholds, jsInvoker));
-    result.setProperty(rt, "time", bridging::toJs(rt, value.time, jsInvoker));
-    return result;
-  }
-};
-
-
-
-#pragma mark - NativeIntersectionObserverNativeIntersectionObserverObserveOptions
-
-template <typename P0, typename P1, typename P2>
-struct NativeIntersectionObserverNativeIntersectionObserverObserveOptions {
-  P0 intersectionObserverId;
-  P1 targetShadowNode;
-  P2 thresholds;
-  bool operator==(const NativeIntersectionObserverNativeIntersectionObserverObserveOptions &other) const {
-    return intersectionObserverId == other.intersectionObserverId && targetShadowNode == other.targetShadowNode && thresholds == other.thresholds;
-  }
-};
-
-template <typename T>
-struct NativeIntersectionObserverNativeIntersectionObserverObserveOptionsBridging {
-  static T types;
-
-  static T fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    T result{
-      bridging::fromJs<decltype(types.intersectionObserverId)>(rt, value.getProperty(rt, "intersectionObserverId"), jsInvoker),
-      bridging::fromJs<decltype(types.targetShadowNode)>(rt, value.getProperty(rt, "targetShadowNode"), jsInvoker),
-      bridging::fromJs<decltype(types.thresholds)>(rt, value.getProperty(rt, "thresholds"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static double intersectionObserverIdToJs(jsi::Runtime &rt, decltype(types.intersectionObserverId) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::Value targetShadowNodeToJs(jsi::Runtime &rt, decltype(types.targetShadowNode) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::Array thresholdsToJs(jsi::Runtime &rt, decltype(types.thresholds) value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const T &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    result.setProperty(rt, "intersectionObserverId", bridging::toJs(rt, value.intersectionObserverId, jsInvoker));
-    result.setProperty(rt, "targetShadowNode", bridging::toJs(rt, value.targetShadowNode, jsInvoker));
-    result.setProperty(rt, "thresholds", bridging::toJs(rt, value.thresholds, jsInvoker));
-    return result;
-  }
-};
-
-class JSI_EXPORT NativeIntersectionObserverCxxSpecJSI : public TurboModule {
-protected:
-  NativeIntersectionObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void observe(jsi::Runtime &rt, jsi::Object options) = 0;
-  virtual void unobserve(jsi::Runtime &rt, double intersectionObserverId, jsi::Value targetShadowNode) = 0;
-  virtual void connect(jsi::Runtime &rt, jsi::Function notifyIntersectionObserversCallback) = 0;
-  virtual void disconnect(jsi::Runtime &rt) = 0;
-  virtual jsi::Array takeRecords(jsi::Runtime &rt) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeIntersectionObserverCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "NativeIntersectionObserverCxx";
-
-protected:
-  NativeIntersectionObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeIntersectionObserverCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeIntersectionObserverCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeIntersectionObserverCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void observe(jsi::Runtime &rt, jsi::Object options) override {
-      static_assert(
-          bridging::getParameterCount(&T::observe) == 2,
-          "Expected observe(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::observe, jsInvoker_, instance_, std::move(options));
-    }
-    void unobserve(jsi::Runtime &rt, double intersectionObserverId, jsi::Value targetShadowNode) override {
-      static_assert(
-          bridging::getParameterCount(&T::unobserve) == 3,
-          "Expected unobserve(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::unobserve, jsInvoker_, instance_, std::move(intersectionObserverId), std::move(targetShadowNode));
-    }
-    void connect(jsi::Runtime &rt, jsi::Function notifyIntersectionObserversCallback) override {
-      static_assert(
-          bridging::getParameterCount(&T::connect) == 2,
-          "Expected connect(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::connect, jsInvoker_, instance_, std::move(notifyIntersectionObserversCallback));
-    }
-    void disconnect(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::disconnect) == 1,
-          "Expected disconnect(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::disconnect, jsInvoker_, instance_);
-    }
-    jsi::Array takeRecords(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::takeRecords) == 1,
-          "Expected takeRecords(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Array>(
-          rt, &T::takeRecords, jsInvoker_, instance_);
-    }
-
-  private:
-    friend class NativeIntersectionObserverCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
   class JSI_EXPORT NativeJSCHeapCaptureCxxSpecJSI : public TurboModule {
 protected:
   NativeJSCHeapCaptureCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -5051,208 +4972,6 @@ private:
 
   private:
     friend class NativeModalManagerCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  
-#pragma mark - NativeMutationObserverNativeMutationObserverObserveOptions
-
-template <typename P0, typename P1, typename P2>
-struct NativeMutationObserverNativeMutationObserverObserveOptions {
-  P0 mutationObserverId;
-  P1 targetShadowNode;
-  P2 subtree;
-  bool operator==(const NativeMutationObserverNativeMutationObserverObserveOptions &other) const {
-    return mutationObserverId == other.mutationObserverId && targetShadowNode == other.targetShadowNode && subtree == other.subtree;
-  }
-};
-
-template <typename T>
-struct NativeMutationObserverNativeMutationObserverObserveOptionsBridging {
-  static T types;
-
-  static T fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    T result{
-      bridging::fromJs<decltype(types.mutationObserverId)>(rt, value.getProperty(rt, "mutationObserverId"), jsInvoker),
-      bridging::fromJs<decltype(types.targetShadowNode)>(rt, value.getProperty(rt, "targetShadowNode"), jsInvoker),
-      bridging::fromJs<decltype(types.subtree)>(rt, value.getProperty(rt, "subtree"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static double mutationObserverIdToJs(jsi::Runtime &rt, decltype(types.mutationObserverId) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::Value targetShadowNodeToJs(jsi::Runtime &rt, decltype(types.targetShadowNode) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static bool subtreeToJs(jsi::Runtime &rt, decltype(types.subtree) value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const T &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    result.setProperty(rt, "mutationObserverId", bridging::toJs(rt, value.mutationObserverId, jsInvoker));
-    result.setProperty(rt, "targetShadowNode", bridging::toJs(rt, value.targetShadowNode, jsInvoker));
-    result.setProperty(rt, "subtree", bridging::toJs(rt, value.subtree, jsInvoker));
-    return result;
-  }
-};
-
-
-
-#pragma mark - NativeMutationObserverNativeMutationRecord
-
-template <typename P0, typename P1, typename P2, typename P3>
-struct NativeMutationObserverNativeMutationRecord {
-  P0 mutationObserverId;
-  P1 target;
-  P2 addedNodes;
-  P3 removedNodes;
-  bool operator==(const NativeMutationObserverNativeMutationRecord &other) const {
-    return mutationObserverId == other.mutationObserverId && target == other.target && addedNodes == other.addedNodes && removedNodes == other.removedNodes;
-  }
-};
-
-template <typename T>
-struct NativeMutationObserverNativeMutationRecordBridging {
-  static T types;
-
-  static T fromJs(
-      jsi::Runtime &rt,
-      const jsi::Object &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    T result{
-      bridging::fromJs<decltype(types.mutationObserverId)>(rt, value.getProperty(rt, "mutationObserverId"), jsInvoker),
-      bridging::fromJs<decltype(types.target)>(rt, value.getProperty(rt, "target"), jsInvoker),
-      bridging::fromJs<decltype(types.addedNodes)>(rt, value.getProperty(rt, "addedNodes"), jsInvoker),
-      bridging::fromJs<decltype(types.removedNodes)>(rt, value.getProperty(rt, "removedNodes"), jsInvoker)};
-    return result;
-  }
-
-#ifdef DEBUG
-  static double mutationObserverIdToJs(jsi::Runtime &rt, decltype(types.mutationObserverId) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::Value targetToJs(jsi::Runtime &rt, decltype(types.target) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::Array addedNodesToJs(jsi::Runtime &rt, decltype(types.addedNodes) value) {
-    return bridging::toJs(rt, value);
-  }
-
-  static jsi::Array removedNodesToJs(jsi::Runtime &rt, decltype(types.removedNodes) value) {
-    return bridging::toJs(rt, value);
-  }
-#endif
-
-  static jsi::Object toJs(
-      jsi::Runtime &rt,
-      const T &value,
-      const std::shared_ptr<CallInvoker> &jsInvoker) {
-    auto result = facebook::jsi::Object(rt);
-    result.setProperty(rt, "mutationObserverId", bridging::toJs(rt, value.mutationObserverId, jsInvoker));
-    result.setProperty(rt, "target", bridging::toJs(rt, value.target, jsInvoker));
-    result.setProperty(rt, "addedNodes", bridging::toJs(rt, value.addedNodes, jsInvoker));
-    result.setProperty(rt, "removedNodes", bridging::toJs(rt, value.removedNodes, jsInvoker));
-    return result;
-  }
-};
-
-class JSI_EXPORT NativeMutationObserverCxxSpecJSI : public TurboModule {
-protected:
-  NativeMutationObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void observe(jsi::Runtime &rt, jsi::Object options) = 0;
-  virtual void unobserve(jsi::Runtime &rt, double mutationObserverId, jsi::Value targetShadowNode) = 0;
-  virtual void connect(jsi::Runtime &rt, jsi::Function notifyMutationObservers, jsi::Function getPublicInstanceFromInstanceHandle) = 0;
-  virtual void disconnect(jsi::Runtime &rt) = 0;
-  virtual jsi::Array takeRecords(jsi::Runtime &rt) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeMutationObserverCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "NativeMutationObserverCxx";
-
-protected:
-  NativeMutationObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeMutationObserverCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeMutationObserverCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeMutationObserverCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void observe(jsi::Runtime &rt, jsi::Object options) override {
-      static_assert(
-          bridging::getParameterCount(&T::observe) == 2,
-          "Expected observe(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::observe, jsInvoker_, instance_, std::move(options));
-    }
-    void unobserve(jsi::Runtime &rt, double mutationObserverId, jsi::Value targetShadowNode) override {
-      static_assert(
-          bridging::getParameterCount(&T::unobserve) == 3,
-          "Expected unobserve(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::unobserve, jsInvoker_, instance_, std::move(mutationObserverId), std::move(targetShadowNode));
-    }
-    void connect(jsi::Runtime &rt, jsi::Function notifyMutationObservers, jsi::Function getPublicInstanceFromInstanceHandle) override {
-      static_assert(
-          bridging::getParameterCount(&T::connect) == 3,
-          "Expected connect(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::connect, jsInvoker_, instance_, std::move(notifyMutationObservers), std::move(getPublicInstanceFromInstanceHandle));
-    }
-    void disconnect(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::disconnect) == 1,
-          "Expected disconnect(...) to have 1 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::disconnect, jsInvoker_, instance_);
-    }
-    jsi::Array takeRecords(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::takeRecords) == 1,
-          "Expected takeRecords(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Array>(
-          rt, &T::takeRecords, jsInvoker_, instance_);
-    }
-
-  private:
-    friend class NativeMutationObserverCxxSpec;
     T *instance_;
   };
 
@@ -8006,6 +7725,229 @@ private:
 };
 
 
+  
+#pragma mark - NativeIntersectionObserverNativeIntersectionObserverEntry
+
+template <typename P0, typename P1, typename P2, typename P3, typename P4, typename P5, typename P6>
+struct NativeIntersectionObserverNativeIntersectionObserverEntry {
+  P0 intersectionObserverId;
+  P1 targetInstanceHandle;
+  P2 targetRect;
+  P3 rootRect;
+  P4 intersectionRect;
+  P5 isIntersectingAboveThresholds;
+  P6 time;
+  bool operator==(const NativeIntersectionObserverNativeIntersectionObserverEntry &other) const {
+    return intersectionObserverId == other.intersectionObserverId && targetInstanceHandle == other.targetInstanceHandle && targetRect == other.targetRect && rootRect == other.rootRect && intersectionRect == other.intersectionRect && isIntersectingAboveThresholds == other.isIntersectingAboveThresholds && time == other.time;
+  }
+};
+
+template <typename T>
+struct NativeIntersectionObserverNativeIntersectionObserverEntryBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.intersectionObserverId)>(rt, value.getProperty(rt, "intersectionObserverId"), jsInvoker),
+      bridging::fromJs<decltype(types.targetInstanceHandle)>(rt, value.getProperty(rt, "targetInstanceHandle"), jsInvoker),
+      bridging::fromJs<decltype(types.targetRect)>(rt, value.getProperty(rt, "targetRect"), jsInvoker),
+      bridging::fromJs<decltype(types.rootRect)>(rt, value.getProperty(rt, "rootRect"), jsInvoker),
+      bridging::fromJs<decltype(types.intersectionRect)>(rt, value.getProperty(rt, "intersectionRect"), jsInvoker),
+      bridging::fromJs<decltype(types.isIntersectingAboveThresholds)>(rt, value.getProperty(rt, "isIntersectingAboveThresholds"), jsInvoker),
+      bridging::fromJs<decltype(types.time)>(rt, value.getProperty(rt, "time"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double intersectionObserverIdToJs(jsi::Runtime &rt, decltype(types.intersectionObserverId) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Value targetInstanceHandleToJs(jsi::Runtime &rt, decltype(types.targetInstanceHandle) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Array targetRectToJs(jsi::Runtime &rt, decltype(types.targetRect) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Array rootRectToJs(jsi::Runtime &rt, decltype(types.rootRect) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static std::optional<jsi::Array> intersectionRectToJs(jsi::Runtime &rt, decltype(types.intersectionRect) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static bool isIntersectingAboveThresholdsToJs(jsi::Runtime &rt, decltype(types.isIntersectingAboveThresholds) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double timeToJs(jsi::Runtime &rt, decltype(types.time) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "intersectionObserverId", bridging::toJs(rt, value.intersectionObserverId, jsInvoker));
+    result.setProperty(rt, "targetInstanceHandle", bridging::toJs(rt, value.targetInstanceHandle, jsInvoker));
+    result.setProperty(rt, "targetRect", bridging::toJs(rt, value.targetRect, jsInvoker));
+    result.setProperty(rt, "rootRect", bridging::toJs(rt, value.rootRect, jsInvoker));
+    result.setProperty(rt, "intersectionRect", bridging::toJs(rt, value.intersectionRect, jsInvoker));
+    result.setProperty(rt, "isIntersectingAboveThresholds", bridging::toJs(rt, value.isIntersectingAboveThresholds, jsInvoker));
+    result.setProperty(rt, "time", bridging::toJs(rt, value.time, jsInvoker));
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeIntersectionObserverNativeIntersectionObserverObserveOptions
+
+template <typename P0, typename P1, typename P2>
+struct NativeIntersectionObserverNativeIntersectionObserverObserveOptions {
+  P0 intersectionObserverId;
+  P1 targetShadowNode;
+  P2 thresholds;
+  bool operator==(const NativeIntersectionObserverNativeIntersectionObserverObserveOptions &other) const {
+    return intersectionObserverId == other.intersectionObserverId && targetShadowNode == other.targetShadowNode && thresholds == other.thresholds;
+  }
+};
+
+template <typename T>
+struct NativeIntersectionObserverNativeIntersectionObserverObserveOptionsBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.intersectionObserverId)>(rt, value.getProperty(rt, "intersectionObserverId"), jsInvoker),
+      bridging::fromJs<decltype(types.targetShadowNode)>(rt, value.getProperty(rt, "targetShadowNode"), jsInvoker),
+      bridging::fromJs<decltype(types.thresholds)>(rt, value.getProperty(rt, "thresholds"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double intersectionObserverIdToJs(jsi::Runtime &rt, decltype(types.intersectionObserverId) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Value targetShadowNodeToJs(jsi::Runtime &rt, decltype(types.targetShadowNode) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Array thresholdsToJs(jsi::Runtime &rt, decltype(types.thresholds) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "intersectionObserverId", bridging::toJs(rt, value.intersectionObserverId, jsInvoker));
+    result.setProperty(rt, "targetShadowNode", bridging::toJs(rt, value.targetShadowNode, jsInvoker));
+    result.setProperty(rt, "thresholds", bridging::toJs(rt, value.thresholds, jsInvoker));
+    return result;
+  }
+};
+
+class JSI_EXPORT NativeIntersectionObserverCxxSpecJSI : public TurboModule {
+protected:
+  NativeIntersectionObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void observe(jsi::Runtime &rt, jsi::Object options) = 0;
+  virtual void unobserve(jsi::Runtime &rt, double intersectionObserverId, jsi::Value targetShadowNode) = 0;
+  virtual void connect(jsi::Runtime &rt, jsi::Function notifyIntersectionObserversCallback) = 0;
+  virtual void disconnect(jsi::Runtime &rt) = 0;
+  virtual jsi::Array takeRecords(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeIntersectionObserverCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+  static constexpr std::string_view kModuleName = "NativeIntersectionObserverCxx";
+
+protected:
+  NativeIntersectionObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeIntersectionObserverCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeIntersectionObserverCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeIntersectionObserverCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    void observe(jsi::Runtime &rt, jsi::Object options) override {
+      static_assert(
+          bridging::getParameterCount(&T::observe) == 2,
+          "Expected observe(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::observe, jsInvoker_, instance_, std::move(options));
+    }
+    void unobserve(jsi::Runtime &rt, double intersectionObserverId, jsi::Value targetShadowNode) override {
+      static_assert(
+          bridging::getParameterCount(&T::unobserve) == 3,
+          "Expected unobserve(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::unobserve, jsInvoker_, instance_, std::move(intersectionObserverId), std::move(targetShadowNode));
+    }
+    void connect(jsi::Runtime &rt, jsi::Function notifyIntersectionObserversCallback) override {
+      static_assert(
+          bridging::getParameterCount(&T::connect) == 2,
+          "Expected connect(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::connect, jsInvoker_, instance_, std::move(notifyIntersectionObserversCallback));
+    }
+    void disconnect(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::disconnect) == 1,
+          "Expected disconnect(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::disconnect, jsInvoker_, instance_);
+    }
+    jsi::Array takeRecords(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::takeRecords) == 1,
+          "Expected takeRecords(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::takeRecords, jsInvoker_, instance_);
+    }
+
+  private:
+    friend class NativeIntersectionObserverCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
   class JSI_EXPORT NativeMicrotasksCxxSpecJSI : public TurboModule {
 protected:
   NativeMicrotasksCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -8049,6 +7991,208 @@ private:
 
   private:
     friend class NativeMicrotasksCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
+  
+#pragma mark - NativeMutationObserverNativeMutationObserverObserveOptions
+
+template <typename P0, typename P1, typename P2>
+struct NativeMutationObserverNativeMutationObserverObserveOptions {
+  P0 mutationObserverId;
+  P1 targetShadowNode;
+  P2 subtree;
+  bool operator==(const NativeMutationObserverNativeMutationObserverObserveOptions &other) const {
+    return mutationObserverId == other.mutationObserverId && targetShadowNode == other.targetShadowNode && subtree == other.subtree;
+  }
+};
+
+template <typename T>
+struct NativeMutationObserverNativeMutationObserverObserveOptionsBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.mutationObserverId)>(rt, value.getProperty(rt, "mutationObserverId"), jsInvoker),
+      bridging::fromJs<decltype(types.targetShadowNode)>(rt, value.getProperty(rt, "targetShadowNode"), jsInvoker),
+      bridging::fromJs<decltype(types.subtree)>(rt, value.getProperty(rt, "subtree"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double mutationObserverIdToJs(jsi::Runtime &rt, decltype(types.mutationObserverId) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Value targetShadowNodeToJs(jsi::Runtime &rt, decltype(types.targetShadowNode) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static bool subtreeToJs(jsi::Runtime &rt, decltype(types.subtree) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "mutationObserverId", bridging::toJs(rt, value.mutationObserverId, jsInvoker));
+    result.setProperty(rt, "targetShadowNode", bridging::toJs(rt, value.targetShadowNode, jsInvoker));
+    result.setProperty(rt, "subtree", bridging::toJs(rt, value.subtree, jsInvoker));
+    return result;
+  }
+};
+
+
+
+#pragma mark - NativeMutationObserverNativeMutationRecord
+
+template <typename P0, typename P1, typename P2, typename P3>
+struct NativeMutationObserverNativeMutationRecord {
+  P0 mutationObserverId;
+  P1 target;
+  P2 addedNodes;
+  P3 removedNodes;
+  bool operator==(const NativeMutationObserverNativeMutationRecord &other) const {
+    return mutationObserverId == other.mutationObserverId && target == other.target && addedNodes == other.addedNodes && removedNodes == other.removedNodes;
+  }
+};
+
+template <typename T>
+struct NativeMutationObserverNativeMutationRecordBridging {
+  static T types;
+
+  static T fromJs(
+      jsi::Runtime &rt,
+      const jsi::Object &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    T result{
+      bridging::fromJs<decltype(types.mutationObserverId)>(rt, value.getProperty(rt, "mutationObserverId"), jsInvoker),
+      bridging::fromJs<decltype(types.target)>(rt, value.getProperty(rt, "target"), jsInvoker),
+      bridging::fromJs<decltype(types.addedNodes)>(rt, value.getProperty(rt, "addedNodes"), jsInvoker),
+      bridging::fromJs<decltype(types.removedNodes)>(rt, value.getProperty(rt, "removedNodes"), jsInvoker)};
+    return result;
+  }
+
+#ifdef DEBUG
+  static double mutationObserverIdToJs(jsi::Runtime &rt, decltype(types.mutationObserverId) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Value targetToJs(jsi::Runtime &rt, decltype(types.target) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Array addedNodesToJs(jsi::Runtime &rt, decltype(types.addedNodes) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static jsi::Array removedNodesToJs(jsi::Runtime &rt, decltype(types.removedNodes) value) {
+    return bridging::toJs(rt, value);
+  }
+#endif
+
+  static jsi::Object toJs(
+      jsi::Runtime &rt,
+      const T &value,
+      const std::shared_ptr<CallInvoker> &jsInvoker) {
+    auto result = facebook::jsi::Object(rt);
+    result.setProperty(rt, "mutationObserverId", bridging::toJs(rt, value.mutationObserverId, jsInvoker));
+    result.setProperty(rt, "target", bridging::toJs(rt, value.target, jsInvoker));
+    result.setProperty(rt, "addedNodes", bridging::toJs(rt, value.addedNodes, jsInvoker));
+    result.setProperty(rt, "removedNodes", bridging::toJs(rt, value.removedNodes, jsInvoker));
+    return result;
+  }
+};
+
+class JSI_EXPORT NativeMutationObserverCxxSpecJSI : public TurboModule {
+protected:
+  NativeMutationObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void observe(jsi::Runtime &rt, jsi::Object options) = 0;
+  virtual void unobserve(jsi::Runtime &rt, double mutationObserverId, jsi::Value targetShadowNode) = 0;
+  virtual void connect(jsi::Runtime &rt, jsi::Function notifyMutationObservers, jsi::Function getPublicInstanceFromInstanceHandle) = 0;
+  virtual void disconnect(jsi::Runtime &rt) = 0;
+  virtual jsi::Array takeRecords(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeMutationObserverCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+  static constexpr std::string_view kModuleName = "NativeMutationObserverCxx";
+
+protected:
+  NativeMutationObserverCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeMutationObserverCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeMutationObserverCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeMutationObserverCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    void observe(jsi::Runtime &rt, jsi::Object options) override {
+      static_assert(
+          bridging::getParameterCount(&T::observe) == 2,
+          "Expected observe(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::observe, jsInvoker_, instance_, std::move(options));
+    }
+    void unobserve(jsi::Runtime &rt, double mutationObserverId, jsi::Value targetShadowNode) override {
+      static_assert(
+          bridging::getParameterCount(&T::unobserve) == 3,
+          "Expected unobserve(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::unobserve, jsInvoker_, instance_, std::move(mutationObserverId), std::move(targetShadowNode));
+    }
+    void connect(jsi::Runtime &rt, jsi::Function notifyMutationObservers, jsi::Function getPublicInstanceFromInstanceHandle) override {
+      static_assert(
+          bridging::getParameterCount(&T::connect) == 3,
+          "Expected connect(...) to have 3 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::connect, jsInvoker_, instance_, std::move(notifyMutationObservers), std::move(getPublicInstanceFromInstanceHandle));
+    }
+    void disconnect(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::disconnect) == 1,
+          "Expected disconnect(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::disconnect, jsInvoker_, instance_);
+    }
+    jsi::Array takeRecords(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::takeRecords) == 1,
+          "Expected takeRecords(...) to have 1 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::takeRecords, jsInvoker_, instance_);
+    }
+
+  private:
+    friend class NativeMutationObserverCxxSpec;
     T *instance_;
   };
 
@@ -8292,7 +8436,7 @@ public:
   virtual void logRawEntry(jsi::Runtime &rt, jsi::Object entry) = 0;
   virtual jsi::Array getEventCounts(jsi::Runtime &rt) = 0;
   virtual void setDurationThreshold(jsi::Runtime &rt, double entryType, double durationThreshold) = 0;
-  virtual void clearEntries(jsi::Runtime &rt, double entryType, std::optional<jsi::String> entryName) = 0;
+  virtual void clearEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) = 0;
   virtual jsi::Array getEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) = 0;
   virtual jsi::Array getSupportedPerformanceEntryTypes(jsi::Runtime &rt) = 0;
 
@@ -8385,7 +8529,7 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::setDurationThreshold, jsInvoker_, instance_, std::move(entryType), std::move(durationThreshold));
     }
-    void clearEntries(jsi::Runtime &rt, double entryType, std::optional<jsi::String> entryName) override {
+    void clearEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) override {
       static_assert(
           bridging::getParameterCount(&T::clearEntries) == 3,
           "Expected clearEntries(...) to have 3 parameters");
