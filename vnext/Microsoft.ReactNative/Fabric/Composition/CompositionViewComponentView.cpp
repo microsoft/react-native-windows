@@ -1473,6 +1473,8 @@ bool ComponentView::anyHitTestHelper(
       targetTag = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_children.GetAt(index))
                       ->hitTest(ptContent, localPt);
       if (targetTag != -1) {
+        // remove later, for easier debugging
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_children.GetAt(index))->hitTest(ptContent, localPt);
         return true;
       }
     } while (index != 0);

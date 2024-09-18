@@ -140,13 +140,14 @@ struct CompositionInputKeyboardSource : winrt::implements<
 CompositionEventHandler::CompositionEventHandler(
     const winrt::Microsoft::ReactNative::ReactContext &context,
     const winrt::Microsoft::ReactNative::ReactNativeIsland &reactNativeIsland,
-    const bool isFragment)
+    const int isFragment)
     : m_context(context), m_wkRootView(reactNativeIsland) {
 #ifdef USE_WINUI3
   if (auto island = reactNativeIsland.Island()) {
     m_isFragment = isFragment;
 
     auto pointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(island);
+    auto SurfaceID = SurfaceId();
 
     m_pointerPressedToken =
         pointerSource.PointerPressed([this](
@@ -810,8 +811,29 @@ void CompositionEventHandler::getTargetPointerArgs(
       ptLocal.x = ptScaled.x - (clientRect.left / strongRootView.ScaleFactor());
       ptLocal.y = ptScaled.y - (clientRect.top / strongRootView.ScaleFactor());
     }
-  } else if (!m_isFragment) {
-    tag = RootComponentView().hitTest(ptScaled, ptLocal);
+  } else {
+    if (m_isFragment == -1) {
+      tag = RootComponentView().hitTest(ptScaled, ptLocal);
+      return;
+    }
+
+    if (!fabricuiManager->GetViewRegistry().findComponentViewWithTag(m_isFragment)) {
+      return;
+    }
+
+    auto modalView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_isFragment).view; // hard-coded tag
+    auto children = modalView.Children();
+
+    for (auto index = children.Size(); index > 0; index--) {
+      auto childView = children.GetAt(index - 1);
+      auto targetTag =
+          winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childView)->hitTest(
+              ptScaled, ptLocal);
+      if (targetTag != -1) {
+        tag = targetTag;
+        break;
+      }
+    }
   }
 }
 
@@ -910,6 +932,7 @@ void CompositionEventHandler::onPointerPressed(
     auto targetComponentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(tag).view;
     auto args = winrt::make<winrt::Microsoft::ReactNative::Composition::Input::implementation::PointerRoutedEventArgs>(
         m_context, tag, pointerPoint, keyModifiers);
+
     targetComponentView.OnPointerPressed(args);
 
     ActiveTouch activeTouch{0};

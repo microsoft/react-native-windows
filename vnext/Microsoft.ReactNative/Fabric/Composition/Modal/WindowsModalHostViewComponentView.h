@@ -59,7 +59,6 @@ struct WindowsModalHostComponentView
 
  private:
   HWND m_hwnd{nullptr};
-  winrt::Microsoft::ReactNative::CompositionHwndHost m_compositionHwndHost;
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compositionContext;
   winrt::Microsoft::ReactNative::ReactNativeIsland m_reactNativeIsland;

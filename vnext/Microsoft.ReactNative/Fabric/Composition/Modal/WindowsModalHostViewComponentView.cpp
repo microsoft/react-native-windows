@@ -52,6 +52,10 @@ constexpr auto CompHostProperty = L"CompHost";
 const int MODAL_DEFAULT_WIDTH = 500;
 const int MODAL_DEFAULT_HEIGHT = 500;
 
+float ScaleFactor(HWND hwnd) noexcept {
+  return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
+}
+
 // creates a new modal window
 void WindowsModalHostComponentView::EnsureModalCreated() {
   auto host = winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(m_reactContext.Properties());
@@ -101,19 +105,23 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   auto contentIsland = m_reactNativeIsland.Island();
   bridge.Connect(contentIsland);
   bridge.Show();
-  bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
   // ReactNativeIsland creates a new rootVisual for us
   m_rootVisual = m_reactNativeIsland.RootVisual().try_as<winrt::Microsoft::UI::Composition::ContainerVisual>();
 
   // set ScaleFactor
   m_reactNativeIsland.ScaleFactor(GetDpiForWindow(m_hwnd) / 96.0f);
 
-  // update composition handler
-  m_reactNativeIsland.AddCompositionEventHandler(
-      reinterpret_cast<uint64_t>(m_hwnd), m_reactContext.Handle());
-
+  // set layout contraints
+  winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+  constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::LeftToRight;
+  constraints.MaximumSize = constraints.MinimumSize = {500 / ScaleFactor(m_hwnd), 500 / ScaleFactor(m_hwnd)};
+  m_reactNativeIsland.Arrange(constraints, {0, 0});
+  bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
+  
   spunk.detach();
 }
+
+
 
 void WindowsModalHostComponentView::ShowOnUIThread() {
   if (m_hwnd) {
@@ -148,6 +156,9 @@ LRESULT CALLBACK ModalBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM 
   }
 
   switch (message) {
+    case WM_COMMAND: {
+      break;
+    }
     case WM_NCCREATE: { // called before WM_CREATE, lparam should be identical to members of CreateWindowEx
       auto createStruct = reinterpret_cast<CREATESTRUCT *>(lparam); // CreateStruct
       data = static_cast<::IUnknown *>(createStruct->lpCreateParams);
@@ -206,21 +217,35 @@ void WindowsModalHostComponentView::MountChildComponentView(
     uint32_t index) noexcept {
   EnsureModalCreated();
   m_children.InsertAt(index, childComponentView); // insert childComponent into m_children
+  auto test = m_children.Size();
+  auto test2 = childComponentView.Tag();
+  auto test3 = childComponentView.Children().Size();
+
+
   // Sets the parent of the childComponentView to *this (the current instance of WindowsModalHostComponentView)
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(*this);
   indexOffsetForBorder(index);
   ensureVisual();
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
-    auto containerChildren = m_rootVisual.as<winrt::Microsoft::UI::Composition::ContainerVisual>().Children();
+    auto containerChildren = m_rootVisual.Children();
     auto compVisual = winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(compositionChild->OuterVisual());
     if (index == 0) {
       containerChildren.InsertAtBottom(compVisual);
+
+
+      // auto test = winrt::make<winrt::Microsoft::ReactNative::implementation::ComponentView>(14, m_reactContext, false);
+      // if (test) {
+        // m_children.InsertAt(index, test);
+      // }
+
+      m_reactNativeIsland.AddCompositionEventHandler(reinterpret_cast<uint64_t>(m_hwnd), m_reactContext.Handle(), *this);
       return;
     }
     auto insertAfter = containerChildren.First();
     for (uint32_t i = 1; i < index; i++)
      insertAfter.MoveNext();
     containerChildren.InsertAbove(compVisual, insertAfter.Current());
+    // update composition handler
   }
 }
 
@@ -274,6 +299,7 @@ facebook::react::Tag WindowsModalHostComponentView::hitTest(
     facebook::react::Point pt,
     facebook::react::Point &localPt,
     bool ignorePointerEvents) const noexcept {
+  facebook::react::LayoutMetrics layoutMetrics = facebook::react::LayoutMetrics();
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   if ((ignorePointerEvents || viewProps()->pointerEvents == facebook::react::PointerEventsMode::Auto ||

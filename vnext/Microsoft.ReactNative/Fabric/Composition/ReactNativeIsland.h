@@ -114,7 +114,8 @@ struct ReactNativeIsland
 
   void AddCompositionEventHandler(
       uint64_t hwnd,
-      winrt::Microsoft::ReactNative::IReactContext context) noexcept;
+      winrt::Microsoft::ReactNative::IReactContext context,
+      winrt::Microsoft::ReactNative::ComponentView componentView) noexcept;
 
  public: // IReactViewInstance UI-thread implementation
   void InitRootView(

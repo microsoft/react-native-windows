@@ -49,6 +49,11 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
 
   const IComponentViewRegistry &GetViewRegistry() const noexcept;
 
+  void ModalTest(
+      const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView,
+      facebook::react::SurfaceId surfaceId,
+      const facebook::react::LayoutConstraints &layoutConstraints) noexcept;
+
   winrt::Microsoft::ReactNative::ReactNativeIsland GetReactNativeIsland(
       facebook::react::SurfaceId surfaceId) const noexcept;
 

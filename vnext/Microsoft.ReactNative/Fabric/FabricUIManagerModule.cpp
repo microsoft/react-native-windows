@@ -32,6 +32,7 @@
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include "DynamicReader.h"
 #include "Unicode.h"
+#include "FabricUIManagerModule.h"
 
 namespace Microsoft::ReactNative {
 
@@ -117,6 +118,33 @@ void FabricUIManager::installFabricUIManager() noexcept {
 
 const IComponentViewRegistry &FabricUIManager::GetViewRegistry() const noexcept {
   return m_registry;
+}
+
+void FabricUIManager::ModalTest(
+    const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView,
+    facebook::react::SurfaceId surfaceId,
+    const facebook::react::LayoutConstraints &layoutConstraints) noexcept {
+  m_surfaceRegistry.insert({surfaceId, {rootView}});
+
+  m_context.UIDispatcher().Post([self = shared_from_this(), surfaceId, rootView]() {
+    auto &rootComponentViewDescriptor = self->m_registry.dequeueComponentViewWithComponentHandle(
+        facebook::react::RootShadowNode::Handle(), surfaceId, self->m_compContext);
+
+    auto root = rootComponentViewDescriptor.view.as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
+    root->theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(rootView.Theme()));
+    root->start(rootView);
+  });
+
+  facebook::react::LayoutContext layoutContext;
+  layoutContext.pointScaleFactor = rootView.ScaleFactor();
+  layoutContext.fontSizeMultiplier = rootView.ScaleFactor();
+
+  folly::dynamic initProps = folly::dynamic::object();
+  initProps["concurrentRoot"] = true;
+
+  auto test = m_surfaceManager->measureSurface(11, layoutConstraints, layoutContext);
+  m_surfaceManager->constraintSurfaceLayout(11, layoutConstraints, layoutContext);
+  test = m_surfaceManager->measureSurface(11, layoutConstraints, layoutContext);
 }
 
 void FabricUIManager::startSurface(
