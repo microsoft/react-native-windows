@@ -388,18 +388,16 @@ void ReactNativeIsland::InitRootView(
   m_isInitialized = true;
 }
 
-void ReactNativeIsland::AddCompositionEventHandler(
-    uint64_t hwnd,
+void ReactNativeIsland::AddFragmentCompositionEventHandler(
     winrt::Microsoft::ReactNative::IReactContext context,
     winrt::Microsoft::ReactNative::ComponentView componentView) noexcept {
   m_uiDispatcher = context.Properties()
                        .Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
                        .try_as<IReactDispatcher>();
   VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
+  auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+      winrt::Microsoft::ReactNative::ReactPropertyBag(context.Properties()));
 
-  auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(winrt::Microsoft::ReactNative::ReactPropertyBag(context.Properties()));
-  SetWindow(hwnd);
-  
   auto initProps = DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps()));
   if (initProps.isNull()) {
     initProps = folly::dynamic::object();
@@ -409,28 +407,18 @@ void ReactNativeIsland::AddCompositionEventHandler(
   facebook::react::LayoutConstraints fbLayoutConstraints;
   ApplyConstraints(m_layoutConstraints, fbLayoutConstraints);
 
-  m_rootTag = 11 ; // 11 = m_rootTag for main hwnd, does modal need to create it's own m_rootTag? Modal isn't a new surface (because a new surface needs an module name) so I would assume no
-  //uiManager->ModalTest(*this, static_cast<facebook::react::SurfaceId>(m_rootTag), fbLayoutConstraints);
-
-  // m_rootTag = ::Microsoft::ReactNative::getNextRootViewTag(); // rootTag is the surfaceID used in FabricUIManager
-  /*
-  uiManager->startSurface(
-      *this,
-      static_cast<facebook::react::SurfaceId>(m_rootTag),
-      fbLayoutConstraints, "",
-      initProps);
-  */
-
+  m_rootTag = 11; // 11 = m_rootTag for main hwnd, does modal need to create it's own m_rootTag? Modal isn't a new
+                  // surface (because a new surface needs an module name) so I would assume no
 
   if (!m_CompositionEventHandler) {
     // Create CompositionEventHandler if not already created
     m_context = winrt::Microsoft::ReactNative::ReactContext(std::move(context));
-    m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this, componentView.Tag());
+    m_CompositionEventHandler =
+        std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this, componentView.Tag());
     m_CompositionEventHandler->Initialize();
     m_isInitialized = true;
   }
 }
-
 
 void ReactNativeIsland::UpdateRootView() noexcept {
   VerifyElseCrash(m_uiDispatcher.HasThreadAccess());

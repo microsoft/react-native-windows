@@ -15,13 +15,13 @@
 #include <Fabric/Composition/CompositionUIService.h>
 #include <windows.ui.composition.interop.h>
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
+#include <winrt/Microsoft.UI.Content.h>
+#include <winrt/Microsoft.UI.interop.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "IReactContext.h"
 #include "ReactHost/ReactInstanceWin.h"
 #include "ReactNativeHost.h"
-#include <winrt/Microsoft.UI.Content.h>
-#include <winrt/Microsoft.UI.interop.h>
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 WindowsModalHostComponentView::WindowsModalHostComponentView(
@@ -57,7 +57,8 @@ float ScaleFactor(HWND hwnd) noexcept {
 
 // creates a new modal window
 void WindowsModalHostComponentView::EnsureModalCreated() {
-  auto host = winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(m_reactContext.Properties());
+  auto host =
+      winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(m_reactContext.Properties());
 
   // return if hwnd already exists
   if (!host || m_hwnd) {
@@ -92,14 +93,20 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   }
 
   // set the top-level windows as the new hwnd
-  winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(m_hwnd));
+  winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
+      host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(m_hwnd));
 
   // get current compositor - handles the creation/manipulation of visual objects
-  auto compositionContext = winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(m_reactContext.Properties().Handle());
-  auto compositor = winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(compositionContext);
+  auto compositionContext =
+      winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
+          m_reactContext.Properties().Handle());
+  auto compositor =
+      winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(
+          compositionContext);
 
   // create a react native island - code taken from CompositionHwndHost
-  auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(compositor, winrt::Microsoft::UI::GetWindowIdFromWindow(m_hwnd));
+  auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
+      compositor, winrt::Microsoft::UI::GetWindowIdFromWindow(m_hwnd));
   m_reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland(compositor);
   auto contentIsland = m_reactNativeIsland.Island();
   bridge.Connect(contentIsland);
@@ -116,11 +123,9 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   constraints.MaximumSize = constraints.MinimumSize = {500 / ScaleFactor(m_hwnd), 500 / ScaleFactor(m_hwnd)};
   m_reactNativeIsland.Arrange(constraints, {0, 0});
   bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
-  
+
   spunk.detach();
 }
-
-
 
 void WindowsModalHostComponentView::ShowOnUIThread() {
   if (m_hwnd) {
@@ -228,15 +233,17 @@ void WindowsModalHostComponentView::MountChildComponentView(
   ensureVisual();
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
     auto containerChildren = m_rootVisual.Children();
-    auto compVisual = winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(compositionChild->OuterVisual());
+    auto compVisual =
+        winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
+            compositionChild->OuterVisual());
     if (index == 0) {
       containerChildren.InsertAtBottom(compVisual);
-      m_reactNativeIsland.AddCompositionEventHandler(reinterpret_cast<uint64_t>(m_hwnd), m_reactContext.Handle(), *this);
+      m_reactNativeIsland.AddFragmentCompositionEventHandler(m_reactContext.Handle(), *this);
       return;
     }
     auto insertAfter = containerChildren.First();
     for (uint32_t i = 1; i < index; i++)
-    insertAfter.MoveNext();
+      insertAfter.MoveNext();
     containerChildren.InsertAbove(compVisual, insertAfter.Current());
   }
 }
@@ -270,7 +277,6 @@ void WindowsModalHostComponentView::updateProps(
 void WindowsModalHostComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
-
   Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 }
 

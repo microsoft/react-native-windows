@@ -842,11 +842,11 @@ void CompositionEventHandler::getTargetPointerArgs(
       return;
     }
 
-    auto modalView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_isFragment).view; // hard-coded tag
-    auto children = modalView.Children();
+    auto fagmentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_isFragment).view;
+    auto fagmentchildren = fagmentView.Children();
 
-    for (auto index = children.Size(); index > 0; index--) {
-      auto childView = children.GetAt(index - 1);
+    for (auto index = fagmentchildren.Size(); index > 0; index--) {
+      auto childView = fagmentchildren.GetAt(index - 1);
       auto targetTag =
           winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childView)->hitTest(
               ptScaled, ptLocal);
@@ -861,7 +861,7 @@ void CompositionEventHandler::getTargetPointerArgs(
 void CompositionEventHandler::onPointerCaptureLost(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
     winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
-  if (!m_isFragment && SurfaceId() == -1)
+  if (SurfaceId() == -1)
     return;
 
   if (m_pointerCapturingComponentTag) {
@@ -879,7 +879,7 @@ void CompositionEventHandler::onPointerCaptureLost(
 void CompositionEventHandler::onPointerMoved(
     const winrt::Microsoft::ReactNative::Composition::Input::PointerPoint &pointerPoint,
     winrt::Windows::System::VirtualKeyModifiers keyModifiers) noexcept {
-  if (!m_isFragment && SurfaceId() == -1)
+  if (SurfaceId() == -1)
     return;
 
   int pointerId = pointerPoint.PointerId();

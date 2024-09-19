@@ -149,8 +149,7 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
 
   std::map<PointerId, ActiveTouch> m_activeTouches; // iOS is map of touch event args to ActiveTouch..?
   PointerId m_touchId = 0;
-
-   int m_isFragment = -1;
+  int m_isFragment = -1;
 
   std::map<PointerId, std::vector<ReactTaggedView>> m_currentlyHoveredViewsPerPointer;
   winrt::weak_ref<winrt::Microsoft::ReactNative::ReactNativeIsland> m_wkRootView;
