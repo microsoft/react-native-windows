@@ -20,8 +20,8 @@ namespace {{ namespace }}
       var appDirectory = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
       var reactInstanceSettingsBuilder = new ReactInstanceSettingsBuilder()
-        .DebugBundlePath(L"index")
-        .JavaScriptBundleFile(L"index.windows")
+        .DebugBundlePath("index")
+        .JavaScriptBundleFile("index.windows")
         .BundleRootPath(appDirectory)
 #if BUNDLE
         .UseFastRefresh(false)
@@ -43,7 +43,7 @@ namespace {{ namespace }}
       viewOptions.ComponentName = "{{ mainComponentName }}";
 
       // Initialize and Manage the ReactNativeHost
-      var reactNativeAppBuilder = ReactNativeAppBuilder()
+      var reactNativeAppBuilder = new ReactNativeAppBuilder()
         .AddPackageProviders(reactPackageProviders)
         .SetReactInstanceSettings(reactInstanceSettingsBuilder.ReactInstanceSettings)
         .SetReactViewOptions(viewOptions);
