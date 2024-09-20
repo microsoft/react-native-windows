@@ -35,7 +35,7 @@ function ModalOnShowOnDismiss(): React.Node {
           onRequestClose={() => {
             setModalVisible(false);
           }}>
-          <View style={[styles.centeredView, styles.modalBackdrop]}>
+          <View style={[styles.centeredView, styles.modalBackdrop, styles.widthHeight]}>
             <View style={styles.modalView}>
               <Text testID="modal-on-show-count">
                 onShow is called {onShowCount} times
@@ -127,6 +127,12 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  // [Windows
+  widthHeight: {
+    width: 500, 
+    height: 500
+  }
+  // Windows]
 });
 
 export default ({

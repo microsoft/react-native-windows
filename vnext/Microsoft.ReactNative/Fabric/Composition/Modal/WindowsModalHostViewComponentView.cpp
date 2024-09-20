@@ -125,6 +125,7 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   m_reactNativeIsland.Arrange(constraints, {0, 0});
   bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
+  // Add CompositionEventHandler
   m_reactNativeIsland.AddFragmentCompositionEventHandler(m_reactContext.Handle(), *this);
 
   spunk.detach();
@@ -224,6 +225,7 @@ void WindowsModalHostComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   EnsureModalCreated();
+  // Skip calling ViewComponentView::MountChildComponentView since we override adding it to the rootVisual below
   ComponentView::MountChildComponentView(childComponentView, index);
 
   // Handle index offset and ensure visual

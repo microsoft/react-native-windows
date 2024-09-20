@@ -398,17 +398,9 @@ void ReactNativeIsland::AddFragmentCompositionEventHandler(
   auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
       winrt::Microsoft::ReactNative::ReactPropertyBag(context.Properties()));
 
-  auto initProps = DynamicWriter::ToDynamic(Mso::Copy(m_reactViewOptions.InitialProps()));
-  if (initProps.isNull()) {
-    initProps = folly::dynamic::object();
-  }
-  initProps["concurrentRoot"] = true;
-
-  facebook::react::LayoutConstraints fbLayoutConstraints;
-  ApplyConstraints(m_layoutConstraints, fbLayoutConstraints);
-
-  // this is hard-coded but how do we get the rootTag? the parent of modal isn't set yet
+  // currently Modal is only supported with one surface
   m_rootTag = uiManager->getRootSurfaceTag();
+  assert(m_rootTag != -1);
 
   if (!m_CompositionEventHandler) {
     // Create CompositionEventHandler if not already created
