@@ -668,6 +668,10 @@ winrt::Windows::Foundation::Size ReactNativeIsland::Measure(
 void ReactNativeIsland::Arrange(
     const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
     const winrt::Windows::Foundation::Point &viewportOffset) noexcept {
+  if (layoutConstraints.layoutDirection == winrt::Microsoft::ReactNative::LayoutDirection::Undefined) {
+    throw std::runtime_error("layoutDirection is Undefined");
+  }
+
   m_layoutConstraints = layoutConstraints;
   m_viewportOffset = viewportOffset;
   facebook::react::LayoutConstraints fbLayoutConstraints;
