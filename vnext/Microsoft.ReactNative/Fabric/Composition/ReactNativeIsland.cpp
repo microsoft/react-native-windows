@@ -407,8 +407,10 @@ void ReactNativeIsland::AddFragmentCompositionEventHandler(
   facebook::react::LayoutConstraints fbLayoutConstraints;
   ApplyConstraints(m_layoutConstraints, fbLayoutConstraints);
 
-  m_rootTag = 11; // 11 = m_rootTag for main hwnd, does modal need to create it's own m_rootTag? Modal isn't a new
-                  // surface (because a new surface needs an module name) so I would assume no
+  auto &registry = uiManager->GetViewRegistry();
+  auto parent = componentView.Parent();
+
+  m_rootTag = 11;
 
   if (!m_CompositionEventHandler) {
     // Create CompositionEventHandler if not already created

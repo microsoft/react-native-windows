@@ -34,10 +34,10 @@ struct WindowsModalHostComponentView
 
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
-  void Visible(bool visible) noexcept;
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
+  void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept;
   static facebook::react::SharedViewProps defaultProps() noexcept;
   const facebook::react::ModalHostViewProps &modalHostViewProps() const noexcept;
   bool focusable() const noexcept override;

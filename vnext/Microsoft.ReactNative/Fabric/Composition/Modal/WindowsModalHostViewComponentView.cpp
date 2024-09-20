@@ -22,6 +22,7 @@
 #include "IReactContext.h"
 #include "ReactHost/ReactInstanceWin.h"
 #include "ReactNativeHost.h"
+#include <Fabric/ComponentView.h>
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 WindowsModalHostComponentView::WindowsModalHostComponentView(
@@ -124,11 +125,14 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   m_reactNativeIsland.Arrange(constraints, {0, 0});
   bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
+  m_reactNativeIsland.AddFragmentCompositionEventHandler(m_reactContext.Handle(), *this);
+
   spunk.detach();
 }
 
 void WindowsModalHostComponentView::ShowOnUIThread() {
   if (m_hwnd) {
+    auto test2 = rootComponentView();
     ShowWindow(m_hwnd, SW_NORMAL);
     BringWindowToTop(m_hwnd);
     SetFocus(m_hwnd);
@@ -220,37 +224,36 @@ void WindowsModalHostComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   EnsureModalCreated();
-  m_children.InsertAt(index, childComponentView); // insert childComponent into m_children
+  ComponentView::MountChildComponentView(childComponentView, index);
 
-  // Sets the parent of the childComponentView to *this (the current instance of WindowsModalHostComponentView)
-  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->parent(*this);
+  auto test = m_rootView;
+  auto test2 = rootComponentView();
 
-  if (m_mounted) {
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childComponentView)->onMounted();
-  }
-
+  // Handle index offset and ensure visual
   indexOffsetForBorder(index);
   ensureVisual();
+
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
     auto containerChildren = m_rootVisual.Children();
     auto compVisual =
         winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
             compositionChild->OuterVisual());
+
     if (index == 0) {
       containerChildren.InsertAtBottom(compVisual);
-      m_reactNativeIsland.AddFragmentCompositionEventHandler(m_reactContext.Handle(), *this);
-      return;
+    } else {
+      auto insertAfter = containerChildren.First();
+      for (uint32_t i = 1; i < index; i++) {
+        insertAfter.MoveNext();
+      }
+      containerChildren.InsertAbove(compVisual, insertAfter.Current());
     }
-    auto insertAfter = containerChildren.First();
-    for (uint32_t i = 1; i < index; i++)
-      insertAfter.MoveNext();
-    containerChildren.InsertAbove(compVisual, insertAfter.Current());
-  }
-}
+  }}
 
 void WindowsModalHostComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
+  ComponentView::UnmountChildComponentView(childComponentView, index);
   HideOnUIThread();
 }
 
@@ -280,9 +283,17 @@ void WindowsModalHostComponentView::updateLayoutMetrics(
   Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
 }
 
+void WindowsModalHostComponentView::FinalizeUpdates(
+    winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
+  Super::FinalizeUpdates(updateMask);
+  auto test2 = rootComponentView();
+}
+
 void WindowsModalHostComponentView::updateState(
     facebook::react::State::Shared const &state,
-    facebook::react::State::Shared const &oldState) noexcept {}
+    facebook::react::State::Shared const &oldState) noexcept {
+  auto test2 = rootComponentView();
+}
 
 facebook::react::SharedViewProps WindowsModalHostComponentView::defaultProps() noexcept {
   static auto const defaultProps = std::make_shared<facebook::react::ModalHostViewProps const>();
