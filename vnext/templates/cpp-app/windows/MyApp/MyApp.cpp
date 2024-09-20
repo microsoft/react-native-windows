@@ -27,12 +27,6 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   // Enable per monitor DPI scaling
   SetProcessDpiAwarenessContext(DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2);
 
-  // Create a top-level window.
-  auto window = winrt::Microsoft::UI::Windowing::AppWindow::Create();
-  window.Title(windowTitle);
-  window.Resize({1000, 1000});
-  window.Show();
-
   WCHAR appDirectory[MAX_PATH];
   GetModuleFileNameW(NULL, appDirectory, MAX_PATH);
   PathCchRemoveFileSpec(appDirectory, MAX_PATH);
@@ -41,12 +35,12 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   // is not provided fallback to a combination of JavaScriptBundleFile and BundleRootPath
   auto reactInstanceSettingsBuilder {
     winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder()
-        .DebugBundlePath(L"index")
-        .JavaScriptBundleFile(L"index.windows")
-        .BundleRootPath(appDirectory)
 #if BUNDLE
+        .BundleRootPath(appDirectory)
+        .JavaScriptBundleFile(L"index.windows")
         .UseFastRefresh(false)
 #else
+        .JavaScriptBundleFile(L"index")
         .UseFastRefresh(true)
 #endif
 #if _DEBUG
@@ -70,11 +64,14 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
   auto reactNativeAppBuilder{winrt::Microsoft::ReactNative::ReactNativeAppBuilder()
                                  .AddPackageProviders(packageProviders)
                                  .SetReactInstanceSettings(reactInstanceSettingsBuilder.ReactInstanceSettings())
-                                 .SetAppWindow(window)
                                  .SetReactViewOptions(viewOptions)};
 
   // Start the react-native instance by creating a javascript runtime and load the bundle.
   auto reactNativeWin32App{reactNativeAppBuilder.Build()};
 
+  auto window{reactNativeWin32App.AppWindow()};
+  window.Title(windowTitle);
+
+  // Start the island in the application.
   reactNativeWin32App.Start();
 }
