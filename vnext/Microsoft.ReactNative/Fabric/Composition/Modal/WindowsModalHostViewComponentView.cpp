@@ -11,6 +11,7 @@
 #include "Unicode.h"
 
 #include <DispatcherQueue.h>
+#include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionContextHelper.h>
 #include <Fabric/Composition/CompositionUIService.h>
 #include <windows.ui.composition.interop.h>
@@ -22,7 +23,6 @@
 #include "IReactContext.h"
 #include "ReactHost/ReactInstanceWin.h"
 #include "ReactNativeHost.h"
-#include <Fabric/ComponentView.h>
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 WindowsModalHostComponentView::WindowsModalHostComponentView(
@@ -226,9 +226,6 @@ void WindowsModalHostComponentView::MountChildComponentView(
   EnsureModalCreated();
   ComponentView::MountChildComponentView(childComponentView, index);
 
-  auto test = m_rootView;
-  auto test2 = rootComponentView();
-
   // Handle index offset and ensure visual
   indexOffsetForBorder(index);
   ensureVisual();
@@ -248,7 +245,8 @@ void WindowsModalHostComponentView::MountChildComponentView(
       }
       containerChildren.InsertAbove(compVisual, insertAfter.Current());
     }
-  }}
+  }
+}
 
 void WindowsModalHostComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,

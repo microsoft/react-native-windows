@@ -49,6 +49,8 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
 
   const IComponentViewRegistry &GetViewRegistry() const noexcept;
 
+  int64_t getRootSurfaceTag() noexcept;
+
   winrt::Microsoft::ReactNative::ReactNativeIsland GetReactNativeIsland(
       facebook::react::SurfaceId surfaceId) const noexcept;
 

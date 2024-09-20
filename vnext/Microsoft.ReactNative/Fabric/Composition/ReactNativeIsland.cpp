@@ -407,10 +407,8 @@ void ReactNativeIsland::AddFragmentCompositionEventHandler(
   facebook::react::LayoutConstraints fbLayoutConstraints;
   ApplyConstraints(m_layoutConstraints, fbLayoutConstraints);
 
-  auto &registry = uiManager->GetViewRegistry();
-  auto parent = componentView.Parent();
-
-  m_rootTag = 11;
+  // this is hard-coded but how do we get the rootTag? the parent of modal isn't set yet
+  m_rootTag = uiManager->getRootSurfaceTag();
 
   if (!m_CompositionEventHandler) {
     // Create CompositionEventHandler if not already created

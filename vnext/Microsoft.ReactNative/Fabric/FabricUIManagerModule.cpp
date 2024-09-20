@@ -122,6 +122,13 @@ const IComponentViewRegistry &FabricUIManager::GetViewRegistry() const noexcept 
   return m_registry;
 }
 
+int64_t FabricUIManager::getRootSurfaceTag() noexcept {
+  if (m_surfaceRegistry.size() == 1) {
+    return m_surfaceRegistry.begin()->second.wkRootView.get().RootTag();
+  }
+  return -1;
+}
+
 void FabricUIManager::startSurface(
     const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView,
     facebook::react::SurfaceId surfaceId,
