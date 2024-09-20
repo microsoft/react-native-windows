@@ -27,10 +27,6 @@
     <!-- WinAppSDK/Composition projects have higher version requirements. -->
     <TargetPlatformVersion Condition="'$(UseWinUI3)'=='true' And $([MSBuild]::VersionLessThan('$(TargetPlatformVersion)', '10.0.22621.0'))">10.0.22621.0</TargetPlatformVersion>
     <TargetPlatformMinVersion Condition="'$(UseWinUI3)'=='true' And $([MSBuild]::VersionLessThan('$(TargetPlatformMinVersion)', '10.0.17763.0'))">10.0.17763.0</TargetPlatformMinVersion>
-
-    <TargetFramework Condition="'$(TargetFramework)'==''">net6.0-windows$(TargetPlatformVersion)</TargetFramework>
-    <Platforms Condition="'$(Platforms)'==''">x86;x64;ARM64</Platforms>
-    <RuntimeIdentifiers Condition="'$(RuntimeIdentifiers)'==''">win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
   </PropertyGroup>
 
 </Project>

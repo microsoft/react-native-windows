@@ -1,0 +1,36 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0-windows</TargetFrameworks>
+    <Platforms>x64;x86;ARM64</Platforms>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <LangVersion>9</LangVersion>
+    <CsWinRTEmbedded>true</CsWinRTEmbedded>
+    <CsWinRTWindowsMetadata>10.0.22621.0</CsWinRTWindowsMetadata>
+    <CsWinRTGenerateProjection>true</CsWinRTGenerateProjection>
+    <TargetPlatformVersion>10.0</TargetPlatformVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="$(ReactNativeWindowsDir)\Microsoft.ReactNative\Microsoft.ReactNative.vcxproj" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <CsWinRTIncludes>
+      Microsoft.ReactNative;
+      Windows.Foundation;
+    </CsWinRTIncludes>
+    <CsWinRTExcludes>
+      Windows.Foundation.Diagnostics;
+      Windows.Foundation.PropertyType;
+    </CsWinRTExcludes>
+  </PropertyGroup>
+
+</Project>

@@ -10,6 +10,7 @@
       "Microsoft.ReactNative.Cxx\\Microsoft.ReactNative.Cxx.vcxitems",
       "Microsoft.ReactNative.IntegrationTests\\Microsoft.ReactNative.IntegrationTests.vcxproj",
       "Microsoft.ReactNative\\Microsoft.ReactNative.vcxproj",
+      "Microsoft.ReactNative.CsWinRT\\Microsoft.ReactNative.CsWinRT.csproj",
       "Mso.UnitTests\\Mso.UnitTests.vcxproj",
       "Mso\\Mso.vcxitems",
       "ReactCommon\\ReactCommon.vcxproj",
