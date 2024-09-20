@@ -133,7 +133,6 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
 
 void WindowsModalHostComponentView::ShowOnUIThread() {
   if (m_hwnd) {
-    auto test2 = rootComponentView();
     ShowWindow(m_hwnd, SW_NORMAL);
     BringWindowToTop(m_hwnd);
     SetFocus(m_hwnd);
@@ -286,14 +285,11 @@ void WindowsModalHostComponentView::updateLayoutMetrics(
 void WindowsModalHostComponentView::FinalizeUpdates(
     winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
   Super::FinalizeUpdates(updateMask);
-  auto test2 = rootComponentView();
 }
 
 void WindowsModalHostComponentView::updateState(
     facebook::react::State::Shared const &state,
-    facebook::react::State::Shared const &oldState) noexcept {
-  auto test2 = rootComponentView();
-}
+    facebook::react::State::Shared const &oldState) noexcept {}
 
 facebook::react::SharedViewProps WindowsModalHostComponentView::defaultProps() noexcept {
   static auto const defaultProps = std::make_shared<facebook::react::ModalHostViewProps const>();
