@@ -667,7 +667,7 @@ winrt::Windows::Foundation::Size ReactNativeIsland::Measure(
 
 void ReactNativeIsland::Arrange(
     const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
-    const winrt::Windows::Foundation::Point &viewportOffset) noexcept {
+    const winrt::Windows::Foundation::Point &viewportOffset) {
   if (layoutConstraints.LayoutDirection == winrt::Microsoft::ReactNative::LayoutDirection::Undefined) {
     throw std::runtime_error("LayoutDirection is Undefined");
   }
