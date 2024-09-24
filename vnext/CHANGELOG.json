@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 16 Sep 2024 21:21:14 GMT",
+      "version": "0.0.0-canary.868",
+      "tag": "react-native-windows_v0.0.0-canary.868",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "67e7442be24d990db7c6bff2d0f47206c9a73450",
+            "comment": "[Fabric] Add FocusNavigationDirection and allow overriding of default command handling"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.236",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.103",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Sep 2024 20:06:16 GMT",
       "version": "0.0.0-canary.867",
       "tag": "react-native-windows_v0.0.0-canary.867",

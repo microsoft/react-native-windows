@@ -248,23 +248,26 @@ void ComponentView::updateEventEmitter(facebook::react::EventEmitter::Shared con
   base_type::updateEventEmitter(eventEmitter);
 }
 
-void ComponentView::HandleCommand(
-    winrt::hstring commandName,
-    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+void ComponentView::HandleCommand(const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
+  base_type::HandleCommand(args);
+  if (args.Handled())
+    return;
+
+  auto commandName = args.CommandName();
   if (commandName == L"focus") {
     if (auto root = rootComponentView()) {
-      root->TrySetFocusedComponent(*get_strong());
+      root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
     }
     return;
   }
   if (commandName == L"blur") {
     if (auto root = rootComponentView()) {
-      root->TrySetFocusedComponent(nullptr); // Todo store this component as previously focused element
+      root->TrySetFocusedComponent(
+          nullptr, winrt::Microsoft::ReactNative::FocusNavigationDirection::None); // Todo store this component as
+                                                                                   // previously focused element
     }
     return;
   }
-
-  base_type::HandleCommand(commandName, args);
 }
 
 bool ComponentView::CapturePointer(const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer) noexcept {

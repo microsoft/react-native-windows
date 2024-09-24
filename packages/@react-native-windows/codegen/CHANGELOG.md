@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Sat, 07 Sep 2024 05:14:11 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 16 Sep 2024 21:21:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.103
+
+Mon, 16 Sep 2024 21:21:15 GMT
+
+### Changes
+
+- [Fabric] Add FocusNavigationDirection and allow overriding of default command handling (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.102
 
