@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "RN Integration 9/9",
+  "packageName": "@rnw-scripts/jest-debug-config",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
