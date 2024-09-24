@@ -206,4 +206,12 @@ void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view
   }
 }
 
+ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept {
+  if (expanded) {
+    return ExpandCollapseState_Expanded;
+  }else{
+    return ExpandCollapseState_Collapsed;
+  }
+}
+
 } // namespace winrt::Microsoft::ReactNative::implementation
