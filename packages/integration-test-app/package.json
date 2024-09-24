@@ -21,9 +21,9 @@
     "react-native-windows": "^0.0.0-canary.868"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
+    "@babel/core": "^7.25.2",
     "@babel/parser": "^7.11.5",
-    "@babel/preset-env": "^7.20.0",
+    "@babel/preset-env": "^7.25.3",
     "@babel/preset-typescript": "^7.11.5",
     "@babel/traverse": "^7.11.5",
     "@babel/types": "^7.11.5",

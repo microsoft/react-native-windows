@@ -20,8 +20,8 @@
     "react-native-windows": "^0.0.0-canary.868"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "@babel/eslint-parser": "^7.20.0",
+    "@babel/core": "^7.25.2",
+    "@babel/eslint-parser": "^7.25.1",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "14.0.0-alpha.11",
     "@react-native-windows/cli": "0.0.0-canary.236",

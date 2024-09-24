@@ -30,8 +30,8 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "@babel/preset-env": "^7.20.0",
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
     "@babel/preset-typescript": "^7.8.3",
     "@rnw-scripts/eslint-config": "1.2.26",
     "@rnw-scripts/jest-unittest-config": "1.5.8",
