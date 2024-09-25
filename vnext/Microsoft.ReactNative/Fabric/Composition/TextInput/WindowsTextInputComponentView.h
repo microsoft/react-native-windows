@@ -102,6 +102,7 @@ struct WindowsTextInputComponentView
   bool ShouldSubmit(
       const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
   void InternalFinalize() noexcept;
+  void UpdatePropertyBits() noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};

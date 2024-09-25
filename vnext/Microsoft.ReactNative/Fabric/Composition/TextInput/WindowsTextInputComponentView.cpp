@@ -509,25 +509,20 @@ void WindowsTextInputComponentView::HandleCommand(
     if (eventCount >= m_nativeEventCount) {
       m_comingFromJS = true;
       {
-        if (text.has_value())
-        {
+        if (text.has_value()) {
           DrawBlock db(*this);
           UpdateText(winrt::to_string(text.value()));
         }
 
-      SELCHANGE sc;
-      memset(&sc, 0, sizeof(sc));
-      sc.chrg.cpMin = static_cast<LONG>(begin);
-      sc.chrg.cpMax = static_cast<LONG>(end);
-      sc.seltyp = (begin == end) ? SEL_EMPTY : SEL_TEXT;
+        SELCHANGE sc;
+        memset(&sc, 0, sizeof(sc));
+        sc.chrg.cpMin = static_cast<LONG>(begin);
+        sc.chrg.cpMax = static_cast<LONG>(end);
+        sc.seltyp = (begin == end) ? SEL_EMPTY : SEL_TEXT;
 
-      LRESULT res;
-      /*
-      winrt::check_hresult(m_textServices->TxSendMessage(
-          EM_SELCHANGE, 0 , reinterpret_cast<WPARAM>(&sc), &res));
-          */
+        LRESULT res;
         winrt::check_hresult(
-          m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(begin), static_cast<LPARAM>(end), &res));
+            m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(begin), static_cast<LPARAM>(end), &res));
       }
 
       m_comingFromJS = false;
@@ -1026,6 +1021,8 @@ void WindowsTextInputComponentView::updateProps(
   } else {
     m_submitKeyEvents.clear();
   }
+
+  UpdatePropertyBits();
 }
 
 void WindowsTextInputComponentView::updateState(
@@ -1172,14 +1169,18 @@ void WindowsTextInputComponentView::FinalizeUpdates(
   InternalFinalize();
 }
 
+void WindowsTextInputComponentView::UpdatePropertyBits() noexcept {
+  if (m_propBitsMask != 0) {
+    DrawBlock db(*this);
+    winrt::check_hresult(m_textServices->OnTxPropertyBitsChange(m_propBitsMask, m_propBits));
+    m_propBitsMask = 0;
+    m_propBits = 0;
+  }
+}
+
 void WindowsTextInputComponentView::InternalFinalize() noexcept {
   if (m_mounted) {
-    if (m_propBitsMask != 0) {
-      DrawBlock db(*this);
-      winrt::check_hresult(m_textServices->OnTxPropertyBitsChange(m_propBitsMask, m_propBits));
-      m_propBitsMask = 0;
-      m_propBits = 0;
-    }
+    UpdatePropertyBits();
 
     ensureDrawingSurface();
     if (m_needsRedraw) {
