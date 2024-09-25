@@ -36,7 +36,7 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
 
   bool TryMoveFocus(bool next) noexcept;
 
-  RootComponentView *rootComponentView() noexcept override;
+  RootComponentView *rootComponentView() const noexcept override;
 
   winrt::Microsoft::UI::Content::ContentIsland parentContentIsland() noexcept;
 
@@ -46,6 +46,7 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
 
   HRESULT GetFragmentRoot(IRawElementProviderFragmentRoot **pRetVal) noexcept;
   winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept override;
+  float FontSizeMultiplier() const noexcept;
 
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,
