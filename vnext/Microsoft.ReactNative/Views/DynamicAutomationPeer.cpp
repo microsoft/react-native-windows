@@ -257,7 +257,8 @@ winrt::IInspectable DynamicAutomationPeer::GetPatternCore(winrt::PatternInterfac
   if (patternInterface == winrt::PatternInterface::Invoke &&
       (accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::Button ||
        accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::ImageButton ||
-       accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::Radio)) {
+       accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::Radio ||
+       accessibilityRole == winrt::Microsoft::ReactNative::AccessibilityRoles::Link)) {
     return *this;
   } else if (
       (patternInterface == winrt::PatternInterface::Selection ||
