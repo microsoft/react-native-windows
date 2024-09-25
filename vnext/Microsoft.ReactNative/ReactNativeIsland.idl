@@ -98,6 +98,8 @@ namespace Microsoft.ReactNative
     DOC_STRING("ScaleFactor for this windows (DPI/96)")
     Single ScaleFactor {get; set;};
 
+    Single FontSizeMultiplier { get; };
+
     DOC_STRING("Move focus to this @ReactNativeIsland")
     FocusNavigationResult NavigateFocus(FocusNavigationRequest request);
 
