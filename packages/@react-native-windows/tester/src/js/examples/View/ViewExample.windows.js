@@ -544,7 +544,7 @@ class AccessibilityExample extends React.Component<
 > {
   state: {tap: number} = {
     tap: 0,
-    expanded: false,
+    expanded: true,
   };
 
   render(): React.Node {
