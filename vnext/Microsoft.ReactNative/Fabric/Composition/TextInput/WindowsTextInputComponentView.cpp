@@ -503,12 +503,17 @@ void WindowsTextInputComponentView::HandleCommand(
   auto commandName = args.CommandName();
   if (commandName == L"setTextAndSelection") {
     int eventCount, begin, end;
-    winrt::hstring text;
+    std::optional<winrt::hstring> text;
 
     winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), eventCount, text, begin, end);
     if (eventCount >= m_nativeEventCount) {
       m_comingFromJS = true;
-      UpdateText(winrt::to_string(text));
+      {
+        if (text.has_value())
+        {
+          DrawBlock db(*this);
+          UpdateText(winrt::to_string(text.value()));
+        }
 
       SELCHANGE sc;
       memset(&sc, 0, sizeof(sc));
@@ -521,8 +526,9 @@ void WindowsTextInputComponentView::HandleCommand(
       winrt::check_hresult(m_textServices->TxSendMessage(
           EM_SELCHANGE, 0 , reinterpret_cast<WPARAM>(&sc), &res));
           */
-      winrt::check_hresult(
+        winrt::check_hresult(
           m_textServices->TxSendMessage(EM_SETSEL, static_cast<WPARAM>(begin), static_cast<LPARAM>(end), &res));
+      }
 
       m_comingFromJS = false;
     }
@@ -1386,7 +1392,11 @@ void WindowsTextInputComponentView::DrawText() noexcept {
           static_cast<LONG>(offset.x) + static_cast<LONG>(m_imgWidth),
           static_cast<LONG>(offset.y) + static_cast<LONG>(m_imgHeight)};
 
-      winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
+      {
+        m_cDrawBlock++; // Dont use AutoDrawBlock as we are already in draw, and dont need to draw again.
+        winrt::check_hresult(m_textServices->OnTxInPlaceActivate(&rcClient));
+        m_cDrawBlock--;
+      }
 
       const auto &props = windowsTextInputProps();
       if (facebook::react::isColorMeaningful(props.backgroundColor)) {
