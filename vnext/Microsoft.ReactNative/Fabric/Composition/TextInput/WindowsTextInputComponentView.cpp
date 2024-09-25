@@ -224,7 +224,8 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
     winrt::Microsoft::ReactNative::ComponentView view{nullptr};
     winrt::check_hresult(
         m_outer->QueryInterface(winrt::guid_of<winrt::Microsoft::ReactNative::ComponentView>(), winrt::put_abi(view)));
-    m_outer->rootComponentView()->TrySetFocusedComponent(view);
+    m_outer->rootComponentView()->TrySetFocusedComponent(
+        view, winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
     // assert(false);
     // TODO focus
   }
@@ -494,13 +495,17 @@ WindowsTextInputComponentView::WindowsTextInputComponentView(
           ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {}
 
 void WindowsTextInputComponentView::HandleCommand(
-    winrt::hstring commandName,
-    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+    const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
+  Super::HandleCommand(args);
+  if (args.Handled())
+    return;
+
+  auto commandName = args.CommandName();
   if (commandName == L"setTextAndSelection") {
     int eventCount, begin, end;
     winrt::hstring text;
 
-    winrt::Microsoft::ReactNative::ReadArgs(args, eventCount, text, begin, end);
+    winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), eventCount, text, begin, end);
     if (eventCount >= m_nativeEventCount) {
       m_comingFromJS = true;
       UpdateText(winrt::to_string(text));
@@ -521,8 +526,6 @@ void WindowsTextInputComponentView::HandleCommand(
 
       m_comingFromJS = false;
     }
-  } else {
-    Super::HandleCommand(commandName, args);
   }
 }
 

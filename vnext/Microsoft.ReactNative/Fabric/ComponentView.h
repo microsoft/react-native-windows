@@ -229,9 +229,7 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   virtual void UnmountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept;
-  virtual void HandleCommand(
-      winrt::hstring commandName,
-      const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept;
+  virtual void HandleCommand(const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept;
   virtual void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept;
   virtual void OnPointerEntered(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;

@@ -46,8 +46,7 @@ struct WindowsTextInputComponentView
   void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept override;
   static facebook::react::SharedViewProps defaultProps() noexcept;
   const facebook::react::WindowsTextInputProps &windowsTextInputProps() const noexcept;
-  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
-      override;
+  void HandleCommand(const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept override;
   void OnRenderingDeviceLost() noexcept override;
   void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
   void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
