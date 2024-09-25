@@ -128,6 +128,7 @@ struct WindowData {
   winrt::Microsoft::ReactNative::ReactInstanceSettings m_instanceSettings{nullptr};
   bool m_useLiftedComposition{true};
   bool m_sizeToContent{false};
+  bool m_forceRTL{false};
   winrt::Windows::UI::Composition::Desktop::DesktopWindowTarget m_target{nullptr};
   LONG m_height{0};
   LONG m_width{0};
@@ -252,6 +253,10 @@ struct WindowData {
               m_bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
                   g_liftedCompositor, winrt::Microsoft::UI::GetWindowIdFromWindow(hwnd));
 
+              if (m_forceRTL) {
+                m_bridge.LayoutDirectionOverride(winrt::Microsoft::UI::Content::ContentLayoutDirection::RightToLeft);
+              }
+
               auto appContent = m_compRootView.Island();
 
               m_bridge.Connect(appContent);
@@ -259,7 +264,7 @@ struct WindowData {
 
               m_compRootView.ScaleFactor(ScaleFactor(hwnd));
               winrt::Microsoft::ReactNative::LayoutConstraints constraints;
-              constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::LeftToRight;
+              constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
               constraints.MaximumSize =
                   constraints.MinimumSize = {m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
 
@@ -324,6 +329,7 @@ struct WindowData {
                                           SystemCompositionContextHelper::CreateVisual(root));
               m_compRootView.ScaleFactor(ScaleFactor(hwnd));
               winrt::Microsoft::ReactNative::LayoutConstraints contraints;
+              contraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
               contraints.MaximumSize =
                   contraints.MinimumSize = {m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
               m_compRootView.Arrange(contraints, {0, 0});
@@ -368,8 +374,10 @@ struct WindowData {
           OutputDebugStringA("Instance Unload completed\n");
 
           uidispatch.Post([&]() {
-            m_bridge.Close();
-            m_bridge = nullptr;
+            if (m_bridge) {
+              m_bridge.Close();
+              m_bridge = nullptr;
+            }
           });
           assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
         });
@@ -377,6 +385,14 @@ struct WindowData {
         m_instanceSettings = nullptr;
         m_host = nullptr;
       } break;
+      case IDM_TOGGLE_LAYOUT_DIRECTION: {
+        if (m_bridge) {
+          m_bridge.LayoutDirectionOverride(
+              (m_forceRTL) ? winrt::Microsoft::UI::Content::ContentLayoutDirection::LeftToRight
+                           : winrt::Microsoft::UI::Content::ContentLayoutDirection::RightToLeft);
+        }
+        m_forceRTL = !m_forceRTL;
+      }
     }
 
     return 0;
@@ -397,7 +413,7 @@ struct WindowData {
           winrt::Windows::Foundation::Size size{m_width / ScaleFactor(hwnd), m_height / ScaleFactor(hwnd)};
           if (!IsIconic(hwnd)) {
             winrt::Microsoft::ReactNative::LayoutConstraints constraints;
-            constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::LeftToRight;
+            constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
             constraints.MinimumSize = constraints.MaximumSize = size;
             if (m_sizeToContent) {
               ApplyConstraintsForContentSizedWindow(constraints);

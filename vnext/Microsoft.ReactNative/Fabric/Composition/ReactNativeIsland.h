@@ -10,6 +10,7 @@
 #include <react/renderer/core/LayoutConstraints.h>
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
 #include <winrt/Microsoft.ReactNative.h>
+#include <winrt/Windows.UI.ViewManagement.h>
 #include "CompositionEventHandler.h"
 #include "ReactHost/React.h"
 
@@ -46,10 +47,8 @@ struct ReactNativeIsland
   ReactNativeIsland() noexcept;
   ~ReactNativeIsland() noexcept;
 
-#ifdef USE_WINUI3
   ReactNativeIsland(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept;
   winrt::Microsoft::UI::Content::ContentIsland Island();
-#endif
 
   // property ReactViewHost
   ReactNative::IReactViewHost ReactViewHost() noexcept;
@@ -72,6 +71,8 @@ struct ReactNativeIsland
   float ScaleFactor() noexcept;
   void ScaleFactor(float value) noexcept;
 
+  float FontSizeMultiplier() const noexcept;
+
   winrt::event_token SizeChanged(
       winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::RootViewSizeChangedEventArgs> const
           &handler) noexcept;
@@ -90,10 +91,10 @@ struct ReactNativeIsland
 
   winrt::Windows::Foundation::Size Measure(
       const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
-      const winrt::Windows::Foundation::Point &viewportOffset) const noexcept;
+      const winrt::Windows::Foundation::Point &viewportOffset) const;
   void Arrange(
       const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
-      const winrt::Windows::Foundation::Point &viewportOffset) noexcept;
+      const winrt::Windows::Foundation::Point &viewportOffset);
 
   winrt::Microsoft::ReactNative::FocusNavigationResult NavigateFocus(
       const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept;
@@ -143,6 +144,9 @@ struct ReactNativeIsland
   winrt::IInspectable m_uiaProvider{nullptr};
   int64_t m_rootTag{-1};
   float m_scaleFactor{1.0};
+  float m_textScaleMultiplier{1.0};
+  winrt::Windows::UI::ViewManagement::UISettings::TextScaleFactorChanged_revoker m_textScaleChangedRevoker;
+  winrt::Windows::UI::ViewManagement::UISettings m_uiSettings{nullptr};
   winrt::Windows::Foundation::Size m_size{0, 0};
   winrt::Microsoft::ReactNative::ReactContext m_context;
   winrt::Microsoft::ReactNative::IReactViewHost m_reactViewHost;
@@ -168,6 +172,12 @@ struct ReactNativeIsland
   void UpdateRootVisualSize() noexcept;
   void UpdateLoadingVisualSize() noexcept;
   Composition::Experimental::IDrawingSurfaceBrush CreateLoadingVisualBrush() noexcept;
+  void ApplyConstraints(
+      const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraintsIn,
+      facebook::react::LayoutConstraints &layoutConstraintsOut) const noexcept;
+  facebook::react::Size MeasureLoading(
+      const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints) const noexcept;
+  void InitTextScaleMultiplier() noexcept;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

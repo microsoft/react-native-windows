@@ -23,10 +23,11 @@ void WindowsTextInputShadowNode::setContextContainer(ContextContainer *contextCo
   m_contextContainer = contextContainer;
 }
 
-AttributedString WindowsTextInputShadowNode::getAttributedString() const {
+AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutContext &layoutContext) const {
   // Use BaseTextShadowNode to get attributed string from children
 
   auto childTextAttributes = TextAttributes::defaultTextAttributes();
+  childTextAttributes.fontSizeMultiplier = layoutContext.fontSizeMultiplier;
 
   childTextAttributes.apply(getConcreteProps().textAttributes);
 
@@ -38,6 +39,7 @@ AttributedString WindowsTextInputShadowNode::getAttributedString() const {
   // value attributes manually.
   if (!getConcreteProps().text.empty()) {
     auto textAttributes = TextAttributes::defaultTextAttributes();
+    textAttributes.fontSizeMultiplier = layoutContext.fontSizeMultiplier;
     textAttributes.apply(getConcreteProps().textAttributes);
     auto fragment = AttributedString::Fragment{};
     fragment.string = getConcreteProps().text;
@@ -59,7 +61,7 @@ AttributedString WindowsTextInputShadowNode::getAttributedString() const {
 // display at all.
 // TODO T67606511: We will redefine the measurement of empty strings as part
 // of T67606511
-AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString() const {
+AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(const LayoutContext &layoutContext) const {
   // Return placeholder text, since text and children are empty.
   auto textAttributedString = AttributedString{};
   auto fragment = AttributedString::Fragment{};
@@ -70,6 +72,7 @@ AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString() co
   }
 
   auto textAttributes = TextAttributes::defaultTextAttributes();
+  textAttributes.fontSizeMultiplier = layoutContext.fontSizeMultiplier;
   textAttributes.apply(getConcreteProps().textAttributes);
 
   // If there's no text, it's possible that this Fragment isn't actually
@@ -86,10 +89,10 @@ void WindowsTextInputShadowNode::setTextLayoutManager(SharedTextLayoutManager te
   m_textLayoutManager = std::move(textLayoutManager);
 }
 
-AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString() const {
+AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString(const LayoutContext &layoutContext) const {
   const auto &state = getStateData();
 
-  auto reactTreeAttributedString = getAttributedString();
+  auto reactTreeAttributedString = getAttributedString(layoutContext);
 
   // Sometimes the treeAttributedString will only differ from the state
   // not by inherent properties (string or prop attributes), but by the frame of
@@ -101,10 +104,10 @@ AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString() con
   return (!treeAttributedStringChanged ? state.attributedString : reactTreeAttributedString);
 }
 
-void WindowsTextInputShadowNode::updateStateIfNeeded() {
+void WindowsTextInputShadowNode::updateStateIfNeeded(const LayoutContext &layoutContext) {
   ensureUnsealed();
 
-  auto reactTreeAttributedString = getAttributedString();
+  auto reactTreeAttributedString = getAttributedString(layoutContext);
   const auto &state = getStateData();
 
   // Tree is often out of sync with the value of the TextInput.
@@ -125,13 +128,13 @@ void WindowsTextInputShadowNode::updateStateIfNeeded() {
   // in the AttributedString, and when State is updated, it needs some way to
   // reconstruct a Fragment with default TextAttributes.
   auto defaultTextAttributes = TextAttributes::defaultTextAttributes();
-
+  defaultTextAttributes.fontSizeMultiplier = layoutContext.fontSizeMultiplier;
   defaultTextAttributes.apply(getConcreteProps().textAttributes);
 
   auto newEventCount = state.reactTreeAttributedString.isContentEqual(reactTreeAttributedString)
       ? 0
       : getConcreteProps().mostRecentEventCount;
-  auto newAttributedString = getMostRecentAttributedString();
+  auto newAttributedString = getMostRecentAttributedString(layoutContext);
 
   // Even if we're here and updating state, it may be only to update the layout
   // manager If that is the case, make sure we don't update text: pass in the
@@ -168,10 +171,10 @@ Size WindowsTextInputShadowNode::measureContent(
   // during layout, but not during `measure`. If State is out-of-date in layout,
   // it's too late: measure will have already operated on old State. Thus, we
   // use the same value here that we *will* use in layout to update the state.
-  AttributedString attributedString = getMostRecentAttributedString();
+  AttributedString attributedString = getMostRecentAttributedString(layoutContext);
 
   if (attributedString.isEmpty()) {
-    attributedString = getPlaceholderAttributedString();
+    attributedString = getPlaceholderAttributedString(layoutContext);
   }
 
   if (attributedString.isEmpty() && getStateData().mostRecentEventCount != 0) {
@@ -190,7 +193,7 @@ Size WindowsTextInputShadowNode::measureContent(
 }
 
 void WindowsTextInputShadowNode::layout(LayoutContext layoutContext) {
-  updateStateIfNeeded();
+  updateStateIfNeeded(layoutContext);
   ConcreteViewShadowNode::layout(layoutContext);
 }
 
