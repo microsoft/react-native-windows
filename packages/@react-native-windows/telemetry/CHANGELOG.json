@@ -2,6 +2,39 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Thu, 26 Sep 2024 17:38:27 GMT",
+      "version": "0.0.0-canary.108",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.108",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.56",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.27",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.5.9",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.44",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Aug 2024 05:13:39 GMT",
       "version": "0.0.0-canary.107",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.107",
