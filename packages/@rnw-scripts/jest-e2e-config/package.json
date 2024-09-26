@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/jest-e2e-config",
-  "version": "1.4.9",
+  "version": "1.4.8",
   "license": "MIT",
   "main": "jest.e2e.config.js",
   "repository": {
