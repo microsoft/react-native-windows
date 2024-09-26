@@ -22,7 +22,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/runtime": "^7.20.0",
-    "@react-native-community/cli": "14.0.0-alpha.11",
+    "@react-native-community/cli": "14.1.0",
     "@react-native/metro-config": "0.76.0-nightly-20240701-9f6cb21ed",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.27",
