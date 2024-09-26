@@ -389,11 +389,11 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   if (SUCCEEDED(hr) && expandCollapsePattern) {
     hr = expandCollapsePattern->get_ExpandCollapseState(&expandCollapseState);
     if (SUCCEEDED(hr)) {
-      InsertExpandCollapseStateValueIfNotDefault(result, L"ExpandCollapsePattern.ExpandCollapseState", expandCollapseState);
+      InsertExpandCollapseStateValueIfNotDefault(
+          result, L"ExpandCollapsePattern.ExpandCollapseState", expandCollapseState);
     }
     expandCollapsePattern->Release();
   }
-
 }
 
 winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(

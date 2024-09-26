@@ -129,7 +129,7 @@ bool accessibilityValueHasValue(const facebook::react::AccessibilityValue &value
   return (value.min.has_value() && value.max.has_value()) || value.now.has_value() || value.text.has_value();
 }
 
-bool expandableControl(const facebook::react::SharedViewProps props){
+bool expandableControl(const facebook::react::SharedViewProps props) {
   if (props->accessibilityState.has_value() && props->accessibilityState->expanded.has_value())
     return true;
   auto accessibilityActions = props->accessibilityActions;
@@ -193,9 +193,11 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
-  if (patternId == UIA_ExpandCollapsePatternId && 
-  (accessibilityRole == "combobox" || accessibilityRole == "splitbutton" || accessibilityRole == "treeitem" || 
-  (expandableControl(props) && (accessibilityRole == "toolbar" || accessibilityRole == "menuitem" || accessibilityRole == "menubar" || accessibilityRole == "listitem" || accessibilityRole == "group" || accessibilityRole == "button")))){
+  if (patternId == UIA_ExpandCollapsePatternId &&
+      (accessibilityRole == "combobox" || accessibilityRole == "splitbutton" || accessibilityRole == "treeitem" ||
+       (expandableControl(props) &&
+        (accessibilityRole == "toolbar" || accessibilityRole == "menuitem" || accessibilityRole == "menubar" ||
+         accessibilityRole == "listitem" || accessibilityRole == "group" || accessibilityRole == "button")))) {
     *pRetVal = static_cast<IExpandCollapseProvider *>(this);
     AddRef();
   }
@@ -522,14 +524,16 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_ExpandCollapseState(
 
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
-  
+
   auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
 
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  *pRetVal = props->accessibilityState->expanded.has_value() ? GetExpandCollapseState(props->accessibilityState->expanded.value()) : ExpandCollapseState_Collapsed;
+  *pRetVal = props->accessibilityState->expanded.has_value()
+      ? GetExpandCollapseState(props->accessibilityState->expanded.value())
+      : ExpandCollapseState_Collapsed;
   return S_OK;
 }
 

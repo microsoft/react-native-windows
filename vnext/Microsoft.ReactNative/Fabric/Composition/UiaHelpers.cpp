@@ -209,7 +209,7 @@ void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view
 ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept {
   if (expanded) {
     return ExpandCollapseState_Expanded;
-  }else{
+  } else {
     return ExpandCollapseState_Collapsed;
   }
 }
