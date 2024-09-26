@@ -2,20 +2,18 @@
   <Import Project="$(SolutionDir)\ExperimentalFeatures.props" Condition="Exists('$(SolutionDir)\ExperimentalFeatures.props')" />
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0-windows</TargetFrameworks>
-    <Platforms>x64;x86;ARM64</Platforms>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <LangVersion>9</LangVersion>
-    <CsWinRTEmbedded>true</CsWinRTEmbedded>
-    <CsWinRTWindowsMetadata>10.0.22621.0</CsWinRTWindowsMetadata>
-    <CsWinRTGenerateProjection>true</CsWinRTGenerateProjection>
-    <TargetPlatformVersion>10.0</TargetPlatformVersion>
+    <TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <Platform>AnyCPU</Platform>
+    <!-- Workaround for MSB3271 error on processor architecture mismatch -->
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <NoWarn>CS8305;CS0436</NoWarn>
+    <AssemblyName>Microsoft.ReactNative.projection</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />
+    <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.1" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240227000" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,14 +21,34 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <CsWinRTIncludes>
-      Microsoft.ReactNative;
-      Windows.Foundation;
-    </CsWinRTIncludes>
-    <CsWinRTExcludes>
-      Windows.Foundation.Diagnostics;
-      Windows.Foundation.PropertyType;
-    </CsWinRTExcludes>
+    <CsWinRTFilters>
+      -include Microsoft.ReactNative
+      -exclude Microsoft.ReactNative.DevMenuControl
+      -exclude Microsoft.ReactNative.DynamicAutomationPeer
+      -exclude Microsoft.ReactNative.DynamicAutomationProperties
+      -exclude Microsoft.ReactNative.DynamicValueProvider
+      -exclude Microsoft.ReactNative.IViewManager
+      -exclude Microsoft.ReactNative.IViewManagerCreateWithProperties
+      -exclude Microsoft.ReactNative.IViewManagerRequiresNativeLayout
+      -exclude Microsoft.ReactNative.IViewManagerWithChildren
+      -exclude Microsoft.ReactNative.IViewManagerWithCommands
+      -exclude Microsoft.ReactNative.IViewManagerWithDropViewInstance
+      -exclude Microsoft.ReactNative.IViewManagerWithExportedEventTypeConstants
+      -exclude Microsoft.ReactNative.IViewManagerWithExportedViewConstants
+      -exclude Microsoft.ReactNative.IViewManagerWithNativeProperties
+      -exclude Microsoft.ReactNative.IViewManagerWithOnLayout
+      -exclude Microsoft.ReactNative.IViewManagerWithPointerEvents
+      -exclude Microsoft.ReactNative.IViewManagerWithReactContext
+      -exclude Microsoft.ReactNative.ReactApplication
+      -exclude Microsoft.ReactNative.ReactPointerEventArgs
+      -exclude Microsoft.ReactNative.ReactRootView
+      -exclude Microsoft.ReactNative.ReactViewManagerProvider
+      -exclude Microsoft.ReactNative.ViewControl
+      -exclude Microsoft.ReactNative.ViewManagerPropertyType
+      -exclude Microsoft.ReactNative.ViewPanel
+      -exclude Microsoft.ReactNative.XamlHelper
+      -exclude Microsoft.ReactNative.XamlMetaDataProvider
+      -exclude Microsoft.ReactNative.XamlUIService
+    </CsWinRTFilters>
   </PropertyGroup>
-
 </Project>
