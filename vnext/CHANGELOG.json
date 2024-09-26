@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 25 Sep 2024 17:38:46 GMT",
+      "version": "0.0.0-canary.868",
+      "tag": "react-native-windows_v0.0.0-canary.868",
+      "comments": {
+        "none": [
+          {
+            "author": "sawalker@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "274d6ef88d3bd17112dadd112af81aac40ec46c3",
+            "comment": "Moving childrenWithImportantForAccessibility creation out of every View render"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Sep 2024 21:21:14 GMT",
       "version": "0.0.0-canary.868",
       "tag": "react-native-windows_v0.0.0-canary.868",

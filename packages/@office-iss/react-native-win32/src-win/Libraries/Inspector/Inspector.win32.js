@@ -17,6 +17,7 @@ import type {
 } from '../Renderer/shims/ReactNativeTypes';
 import type {ViewStyleProp} from '../StyleSheet/StyleSheet';
 import type {ReactDevToolsAgent} from '../Types/ReactDevToolsTypes';
+import SafeAreaView from '../../src/private/components/SafeAreaView_INTERNAL_DO_NOT_USE';
 
 const PressabilityDebug = require('../Pressability/PressabilityDebug');
 const ReactNative = require('../Renderer/shims/ReactNative');
@@ -170,7 +171,7 @@ function Inspector({
         />
       )}
 
-      <View style={[styles.panelContainer, panelContainerStyle]}>
+      <SafeAreaView style={[styles.panelContainer, panelContainerStyle]}>
         <InspectorPanel
           devtoolsIsOpen={!!reactDevToolsAgent}
           inspecting={selectedTab === 'elements-inspector'}
@@ -186,7 +187,7 @@ function Inspector({
           networking={selectedTab === 'network-profiling'}
           setNetworking={setNetworking}
         />
-      </View>
+      </SafeAreaView>
     </View>
   );
 }

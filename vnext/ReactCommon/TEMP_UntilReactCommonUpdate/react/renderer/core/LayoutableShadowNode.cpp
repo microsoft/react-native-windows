@@ -279,8 +279,10 @@ ShadowNode::Shared LayoutableShadowNode::findNodeAtPoint(
     auto centerY =
         transformedFrame.origin.y + transformedFrame.size.height / 2.0;
 
+    // [Windows - #13644
     auto relativeX = point.x - centerX;
     auto relativeY = point.y - centerY;
+    // Windows]
 
     if (Transform::isVerticalInversion(transform)) {
       relativeY = -relativeY;
