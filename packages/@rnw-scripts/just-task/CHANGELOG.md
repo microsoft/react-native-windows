@@ -1,8 +1,18 @@
 # Change Log - @rnw-scripts/just-task
 
-This log was last generated on Thu, 08 Aug 2024 05:16:50 GMT and should not be manually modified.
+<!-- This log was last generated on Thu, 26 Sep 2024 05:19:02 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 2.3.44
+
+Thu, 26 Sep 2024 05:19:02 GMT
+
+### Patches
+
+- Bump @rnw-scripts/jest-e2e-config to v1.4.9
+- Bump @rnw-scripts/jest-unittest-config to v1.5.9
+- Bump @rnw-scripts/eslint-config to v1.2.27
 
 ## 2.3.43
 
