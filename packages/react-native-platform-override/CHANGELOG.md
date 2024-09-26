@@ -1,8 +1,21 @@
 # Change Log - react-native-platform-override
 
-This log was last generated on Thu, 08 Aug 2024 05:16:49 GMT and should not be manually modified.
+<!-- This log was last generated on Thu, 26 Sep 2024 16:06:53 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.9.47
+
+Thu, 26 Sep 2024 16:06:53 GMT
+
+### Patches
+
+- RN Integration 9/9 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.57
+- Bump @react-native-windows/package-utils to v0.0.0-canary.83
+- Bump @rnw-scripts/eslint-config to v1.2.28
+- Bump @rnw-scripts/jest-unittest-config to v1.5.10
+- Bump @rnw-scripts/just-task to v2.3.45
 
 ## 1.9.45
 

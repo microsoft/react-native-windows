@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/jest-e2e-config",
   "entries": [
     {
+      "date": "Thu, 26 Sep 2024 16:06:52 GMT",
+      "version": "1.4.10",
+      "tag": "@rnw-scripts/jest-e2e-config_v1.4.10",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/jest-e2e-config",
+            "commit": "ca03cc6d24f6863ef5f94aab8755e8fb61e34c8f",
+            "comment": "RN Integration 9/9"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 27 Feb 2024 06:18:03 GMT",
       "version": "1.4.8",
       "tag": "@rnw-scripts/jest-e2e-config_v1.4.8",

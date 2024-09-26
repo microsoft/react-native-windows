@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/jest-debug-config
 
-This log was last generated on Tue, 27 Feb 2024 06:18:02 GMT and should not be manually modified.
+<!-- This log was last generated on Thu, 26 Sep 2024 16:06:52 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.5.10
+
+Thu, 26 Sep 2024 16:06:52 GMT
+
+### Patches
+
+- RN Integration 9/9 (tatianakapos@microsoft.com)
 
 ## 1.5.8
 

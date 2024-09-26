@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 16 Sep 2024 21:21:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 26 Sep 2024 16:06:53 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.870
+
+Thu, 26 Sep 2024 16:06:53 GMT
+
+### Changes
+
+- RN Integration 9/9 (1422161+marlenecota@users.noreply.github.com)
+- add invoke support for link (yajurgrover24@gmail.com)
+- [Fabric] LayoutDirection and FontSizeMultiplier support (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.238
+- Bump @react-native-windows/codegen to v0.0.0-canary.105
+- Bump @rnw-scripts/eslint-config to v1.2.28
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.32
+- Bump @rnw-scripts/just-task to v2.3.45
+- Bump react-native-platform-override to v1.9.47
 
 ## 0.0.0-canary.868
 
