@@ -1,7 +1,0 @@
-{
-  "type": "none",
-  "comment": "Moving childrenWithImportantForAccessibility creation out of every View render",
-  "packageName": "react-native-windows",
-  "email": "sawalker@microsoft.com",
-  "dependentChangeType": "none"
-}

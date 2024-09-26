@@ -2,6 +2,84 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 26 Sep 2024 17:38:23 GMT",
+      "version": "0.0.0-canary.869",
+      "tag": "react-native-windows_v0.0.0-canary.869",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e43ea51ea7827678b6d30792d88dcd9cbc8c0fa3",
+            "comment": "[Fabric] LayoutDirection and FontSizeMultiplier support"
+          },
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "0f4ade83577d0ce37f864755e681df348a47e21a",
+            "comment": "add invoke support for link"
+          },
+          {
+            "author": "1422161+marlenecota@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ca03cc6d24f6863ef5f94aab8755e8fb61e34c8f",
+            "comment": "RN Integration 9/9"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.237",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.104",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.27",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.31",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.44",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.46",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 25 Sep 2024 17:38:46 GMT",
+      "version": "0.0.0-canary.868",
+      "tag": "react-native-windows_v0.0.0-canary.868",
+      "comments": {
+        "none": [
+          {
+            "author": "sawalker@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "274d6ef88d3bd17112dadd112af81aac40ec46c3",
+            "comment": "Moving childrenWithImportantForAccessibility creation out of every View render"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Sep 2024 21:21:14 GMT",
       "version": "0.0.0-canary.868",
       "tag": "react-native-windows_v0.0.0-canary.868",

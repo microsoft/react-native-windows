@@ -42,8 +42,8 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
   /*
    * Returns a `AttributedString` which represents text content of the node.
    */
-  AttributedString getAttributedString() const;
-  AttributedString getPlaceholderAttributedString() const;
+  AttributedString getAttributedString(const LayoutContext &layoutContext) const;
+  AttributedString getPlaceholderAttributedString(const LayoutContext &layoutContext) const;
 
   /*
    * Associates a shared TextLayoutManager with the node.
@@ -63,13 +63,13 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
   /**
    * Get the most up-to-date attributed string for measurement and State.
    */
-  AttributedString getMostRecentAttributedString() const;
+  AttributedString getMostRecentAttributedString(const LayoutContext &layoutContext) const;
 
   /*
    * Creates a `State` object (with `AttributedText` and
    * `TextLayoutManager`) if needed.
    */
-  void updateStateIfNeeded();
+  void updateStateIfNeeded(const LayoutContext &layoutContext);
 
   SharedTextLayoutManager m_textLayoutManager;
 

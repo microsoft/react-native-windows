@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.76.0-nightly-20240901-305b4357e",
+  "baseVersion": "0.76.0-nightly-20240909-143f1ad29",
   "overrides": [
     {
       "type": "copy",
@@ -12,7 +12,7 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "ccf010ec403d61126a79506802928270b7b74ee9",
+      "baseHash": "76becd362d76ede7c7f59d15bc618db6a108406f",
       "issue": 4054
     },
     {
@@ -138,7 +138,7 @@
       "type": "copy",
       "directory": "js/examples/FlatList",
       "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "efdf9f331dea59374a48ed40f8202ece4b7b4e3c",
+      "baseHash": "ba2eb97b95116e0dee8796d5053574fa4d3e18db",
       "issue": 4054
     },
     {
@@ -341,7 +341,7 @@
       "type": "copy",
       "directory": "js/examples/SectionList",
       "baseDirectory": "packages/rn-tester/js/examples/SectionList",
-      "baseHash": "6eece2a1231a745ae8cba5c42b1b9274ea2e12bb",
+      "baseHash": "aefc6fb28df280928ecd58eab5950afd607e4071",
       "issue": 4054
     },
     {
@@ -495,7 +495,7 @@
       "type": "copy",
       "directory": "js/types",
       "baseDirectory": "packages/rn-tester/js/types",
-      "baseHash": "b3759879c62d3813d62e7e59e1c7b6f216240b95",
+      "baseHash": "789c5ff543590fece7ea04ed41d6818f5dbe15d2",
       "issue": 4054
     },
     {
@@ -572,7 +572,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "3fa0481a7539b35d7187b4cbdb94174c5f261ef1",
+      "baseHash": "accb2021420ce739367854a46511379f3d6d4906",
       "issue": 13228
     }
   ]

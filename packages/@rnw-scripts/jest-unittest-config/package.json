@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/jest-unittest-config",
-  "version": "1.5.8",
+  "version": "1.5.9",
   "license": "MIT",
   "main": "jest.unittest.config.js",
   "repository": {
@@ -12,8 +12,8 @@
     "@rnw-scripts/babel-node-config": "2.3.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
-    "@babel/preset-env": "^7.20.0",
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
     "@babel/preset-typescript": "^7.8.3",
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",

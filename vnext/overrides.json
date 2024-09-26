@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.76.0-nightly-20240901-305b4357e",
+  "baseVersion": "0.76.0-nightly-20240909-143f1ad29",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "67b097833fd6733db6c64c57fbcb2efb3e9b51c5"
+      "baseHash": "cc375839a102263f435205df68b79d3d74c4f20a"
     },
     {
       "type": "derived",
@@ -193,15 +193,8 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/LayoutableShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/LayoutableShadowNode.cpp",
-      "baseHash": "e7e8401408c7e186cfc019e26044bad08822957d",
+      "baseHash": "db08c2728c084069690aa6281f1b9e713e82cc94",
       "issue": 13644
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/graphics/ValueUnit.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/graphics/ValueUnit.h",
-      "baseHash": "130966ad531e27c54faac4fa4446c90d78ab44a9",
-      "issue": 13645
     },
     {
       "type": "patch",
@@ -516,7 +509,7 @@
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorHeader.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorHeader.js",
-      "baseHash": "46b6ee5d65a0c820dd0a2415bd8f43e5e8807bae"
+      "baseHash": "9e394821ea51994288aa4626d0fdff7aae1aa0a1"
     },
     {
       "type": "derived",
