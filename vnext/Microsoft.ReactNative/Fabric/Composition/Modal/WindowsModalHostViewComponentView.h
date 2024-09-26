@@ -10,12 +10,14 @@
 #include "../CompositionViewComponentView.h"
 
 #include <react/components/rnwcore/ShadowNodes.h>
+#include <Fabric/Composition/RootComponentView.h>
+
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 struct WindowsModalHostComponentView
-    : WindowsModalHostComponentViewT<WindowsModalHostComponentView, ViewComponentView> {
-  using Super = WindowsModalHostComponentViewT<WindowsModalHostComponentView, ViewComponentView>;
+    : WindowsModalHostComponentViewT<WindowsModalHostComponentView, RootComponentView> {
+  using Super = WindowsModalHostComponentViewT<WindowsModalHostComponentView, RootComponentView>;
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
@@ -61,7 +63,7 @@ struct WindowsModalHostComponentView
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compositionContext;
   winrt::Microsoft::ReactNative::ReactNativeIsland m_reactNativeIsland;
-  winrt::Microsoft::UI::Composition::ContainerVisual m_rootVisual{nullptr};
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_rootVisual{nullptr};
   facebook::react::ModalHostViewProps *m_ModalProps;
 };
 

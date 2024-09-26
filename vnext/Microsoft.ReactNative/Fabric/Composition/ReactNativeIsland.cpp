@@ -398,8 +398,7 @@ void ReactNativeIsland::AddFragmentCompositionEventHandler(
   auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
       winrt::Microsoft::ReactNative::ReactPropertyBag(context.Properties()));
 
-  // currently Modal is only supported with one surface
-  m_rootTag = uiManager->getRootSurfaceTag();
+  m_rootTag = componentView.Tag();
   assert(m_rootTag != -1);
 
   if (!m_CompositionEventHandler) {

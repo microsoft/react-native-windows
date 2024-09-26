@@ -30,11 +30,9 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
     : Super(
-          WindowsModalHostComponentView::defaultProps(),
           compContext,
           tag,
-          reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {
+          reactContext) {
   m_reactContext = reactContext; // save react context
   m_compositionContext = compContext; // save composition context
 }
@@ -116,7 +114,7 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   m_rootVisual = m_reactNativeIsland.RootVisual().try_as<winrt::Microsoft::UI::Composition::ContainerVisual>();
 
   // set ScaleFactor
-  m_reactNativeIsland.ScaleFactor(GetDpiForWindow(m_hwnd) / 96.0f);
+  ScaleFactor(m_hwnd);
 
   // set layout contraints
   winrt::Microsoft::ReactNative::LayoutConstraints constraints;
@@ -303,7 +301,6 @@ facebook::react::Tag WindowsModalHostComponentView::hitTest(
     facebook::react::Point pt,
     facebook::react::Point &localPt,
     bool ignorePointerEvents) const noexcept {
-  facebook::react::LayoutMetrics layoutMetrics = facebook::react::LayoutMetrics();
   facebook::react::Point ptLocal{pt.x - m_layoutMetrics.frame.origin.x, pt.y - m_layoutMetrics.frame.origin.y};
 
   if ((ignorePointerEvents || viewProps()->pointerEvents == facebook::react::PointerEventsMode::Auto ||
