@@ -9,9 +9,8 @@
 #include "Composition.WindowsModalHostComponentView.g.h"
 #include "../CompositionViewComponentView.h"
 
-#include <react/components/rnwcore/ShadowNodes.h>
 #include <Fabric/Composition/RootComponentView.h>
-
+#include <react/components/rnwcore/ShadowNodes.h>
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
@@ -24,6 +23,7 @@ struct WindowsModalHostComponentView
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual VisualToMountChildrenInto() noexcept override;
   void MountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
@@ -60,10 +60,10 @@ struct WindowsModalHostComponentView
 
  private:
   HWND m_hwnd{nullptr};
+  uint64_t prevWindowID;
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compositionContext;
   winrt::Microsoft::ReactNative::ReactNativeIsland m_reactNativeIsland;
-  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_rootVisual{nullptr};
   facebook::react::ModalHostViewProps *m_ModalProps;
 };
 

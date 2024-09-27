@@ -29,10 +29,7 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(
-          compContext,
-          tag,
-          reactContext) {
+    : Super(compContext, tag, reactContext) {
   m_reactContext = reactContext; // save react context
   m_compositionContext = compContext; // save composition context
 }
@@ -70,8 +67,9 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   winrt::com_ptr<::IUnknown> spunk;
 
   // get the root hwnd
-  auto roothwnd = reinterpret_cast<HWND>(
-      winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(m_reactContext.Properties().Handle()));
+  prevWindowID =
+      winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(m_reactContext.Properties().Handle());
+  auto roothwnd = reinterpret_cast<HWND>(prevWindowID);
 
   m_hwnd = CreateWindow(
       c_modalWindowClassName,
@@ -110,8 +108,6 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   auto contentIsland = m_reactNativeIsland.Island();
   bridge.Connect(contentIsland);
   bridge.Show();
-  // ReactNativeIsland creates a new rootVisual for us
-  m_rootVisual = m_reactNativeIsland.RootVisual().try_as<winrt::Microsoft::UI::Composition::ContainerVisual>();
 
   // set ScaleFactor
   ScaleFactor(m_hwnd);
@@ -140,6 +136,12 @@ void WindowsModalHostComponentView::ShowOnUIThread() {
 void WindowsModalHostComponentView::HideOnUIThread() noexcept {
   if (m_hwnd) {
     SendMessage(m_hwnd, WM_CLOSE, 0, 0);
+  }
+  if (prevWindowID) {
+    auto host =
+        winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(m_reactContext.Properties());
+    winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
+        host.InstanceSettings().Properties(), prevWindowID);
   }
 }
 
@@ -216,6 +218,11 @@ void WindowsModalHostComponentView::RegisterWndClass() noexcept {
   registered = true;
 }
 
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
+WindowsModalHostComponentView::VisualToMountChildrenInto() noexcept {
+  return m_reactNativeIsland.InternalRootVisual();
+}
+
 // childComponentView - reference to the child component view
 // index - the position in which the childComponentView should be mounted
 void WindowsModalHostComponentView::MountChildComponentView(
@@ -223,34 +230,13 @@ void WindowsModalHostComponentView::MountChildComponentView(
     uint32_t index) noexcept {
   EnsureModalCreated();
   // Skip calling ViewComponentView::MountChildComponentView since we override adding it to the rootVisual below
-  ComponentView::MountChildComponentView(childComponentView, index);
-
-  // Handle index offset and ensure visual
-  indexOffsetForBorder(index);
-  ensureVisual();
-
-  if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
-    auto containerChildren = m_rootVisual.Children();
-    auto compVisual =
-        winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerVisual(
-            compositionChild->OuterVisual());
-
-    if (index == 0) {
-      containerChildren.InsertAtBottom(compVisual);
-    } else {
-      auto insertAfter = containerChildren.First();
-      for (uint32_t i = 1; i < index; i++) {
-        insertAfter.MoveNext();
-      }
-      containerChildren.InsertAbove(compVisual, insertAfter.Current());
-    }
-  }
+  base_type::MountChildComponentView(childComponentView, index);
 }
 
 void WindowsModalHostComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  ComponentView::UnmountChildComponentView(childComponentView, index);
+  base_type::UnmountChildComponentView(childComponentView, index);
   HideOnUIThread();
 }
 

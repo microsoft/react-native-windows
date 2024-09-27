@@ -93,6 +93,9 @@ namespace Microsoft.ReactNative
     DOC_STRING("The RootVisual associated with the @ReactNativeIsland. It must be set to show any React UI elements.")
     Microsoft.UI.Composition.Visual RootVisual { get; };
 
+    DOC_STRING("The InternalRootVisual associated with the @ReactNativeIsland.")
+    Microsoft.ReactNative.Composition.Experimental.IVisual InternalRootVisual { get; };
+
     Windows.Foundation.Size Size { get; };
 
     DOC_STRING("ScaleFactor for this windows (DPI/96)")
