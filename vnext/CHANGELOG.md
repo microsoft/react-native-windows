@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 26 Sep 2024 17:38:23 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 28 Sep 2024 05:15:20 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.871
+
+Sat, 28 Sep 2024 05:15:20 GMT
+
+### Changes
+
+- Update cpp-app template (10109130+sharath2727@users.noreply.github.com)
 
 ## 0.0.0-canary.869
 
