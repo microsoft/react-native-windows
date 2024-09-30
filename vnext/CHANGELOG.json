@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 30 Sep 2024 16:33:12 GMT",
+      "version": "0.0.0-canary.871",
+      "tag": "react-native-windows_v0.0.0-canary.871",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ce41d52561180744ab6e58b5c00bc0a940464ede",
+            "comment": "Update cpp-app template"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Sep 2024 17:38:23 GMT",
       "version": "0.0.0-canary.869",
       "tag": "react-native-windows_v0.0.0-canary.869",
