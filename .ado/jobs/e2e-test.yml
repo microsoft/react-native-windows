@@ -12,7 +12,7 @@ parameters:
   - name: buildMatrix
     type: object
     default:
-      - BuildEnvironment: Continuous
+      - BuildEnvironment: PullRequest
         Matrix:
           - Name: X64Chakra
             BuildPlatform: x64
