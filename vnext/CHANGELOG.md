@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 26 Sep 2024 17:38:23 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 30 Sep 2024 21:38:00 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.0-preview.1
+
+Mon, 30 Sep 2024 21:38:00 GMT
+
+### Changes
+
+- Promote 0.76 to preview (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.76.0-preview.1
+- Bump @react-native-windows/codegen to v0.76.0-preview.1
 
 ## 0.0.0-canary.869
 

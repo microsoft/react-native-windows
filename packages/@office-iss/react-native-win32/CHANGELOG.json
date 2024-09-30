@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 30 Sep 2024 21:37:57 GMT",
+      "version": "0.76.0-preview.1",
+      "tag": "@office-iss/react-native-win32_v0.76.0-preview.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "739dfc5f58c5921fcab5eacb1aa0009396252995",
+            "comment": "Promote 0.76 to preview"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Sep 2024 17:38:26 GMT",
       "version": "0.0.0-canary.263",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.263",
