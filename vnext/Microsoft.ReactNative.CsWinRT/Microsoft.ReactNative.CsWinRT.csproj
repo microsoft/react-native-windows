@@ -8,12 +8,12 @@
     <!-- Workaround for MSB3271 error on processor architecture mismatch -->
     <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
     <NoWarn>CS8305;CS0436</NoWarn>
-    <AssemblyName>Microsoft.ReactNative.projection</AssemblyName>
+    <AssemblyName>Microsoft.ReactNative.Projection</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Windows.CsWinRT" Version="2.1.3" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.5.240227000" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.240829007" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +23,9 @@
   <PropertyGroup>
     <WindowsSdkPackageVersion>10.0.22621.38</WindowsSdkPackageVersion>
     <CSWinRTIncludes>Microsoft.ReactNative</CSWinRTIncludes>
-    <CSWinRTExcludes>Windows;Microsoft</CSWinRTExcludes>
+    <CSWinRTExcludes>
+      Windows;
+      Microsoft
+    </CSWinRTExcludes>
   </PropertyGroup>
 </Project>
