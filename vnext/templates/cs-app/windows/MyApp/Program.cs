@@ -37,7 +37,7 @@ namespace {{ namespace }}
 #endif
 
       var reactPackageProviders = new List<IReactPackageProvider>();
-      AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(reactPackageProviders);
+      Microsoft.ReactNative.Managed.AutolinkedNativeModules.RegisterAutolinkedNativeModulePackages(reactPackageProviders);
 
       var viewOptions = new ReactViewOptions();
       viewOptions.ComponentName = "{{ mainComponentName }}";

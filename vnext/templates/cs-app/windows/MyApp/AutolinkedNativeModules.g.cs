@@ -4,7 +4,7 @@ using System.Collections.Generic;{{ &autolinkCsUsingNamespaces }}
 
 using Microsoft.ReactNative;
 
-namespace {{ namespace }}
+namespace Microsoft.ReactNative.Managed
 {
     internal static class AutolinkedNativeModules
     {
