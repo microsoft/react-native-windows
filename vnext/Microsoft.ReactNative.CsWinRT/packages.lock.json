@@ -4,9 +4,9 @@
     "net6.0-windows10.0.22621": {
       "Microsoft.Windows.CsWinRT": {
         "type": "Direct",
-        "requested": "[2.1.1, )",
-        "resolved": "2.1.1",
-        "contentHash": "q2CixHYFojIC1As4qUcK+yRIdDsN9UVT96TsI+3wBPab+zDKIv1PqrFOfJgB4Jkpn6iPs7nbLFRH3abVFzBPGA=="
+        "requested": "[2.1.3, )",
+        "resolved": "2.1.3",
+        "contentHash": "Nl8A4rQ4l2GNj703GvLSbr0Vo++FjxKxU7CIj1pcKz/sN8XSvD4dIvUCYYgD16o2pG4PSSXNgAxfwDUwLGHLPA=="
       },
       "Microsoft.WindowsAppSDK": {
         "type": "Direct",
