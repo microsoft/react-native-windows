@@ -114,7 +114,6 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
 
   // set layout contraints
   winrt::Microsoft::ReactNative::LayoutConstraints constraints;
-  constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::LeftToRight;
   constraints.MaximumSize = constraints.MinimumSize = {500 / ScaleFactor(m_hwnd), 500 / ScaleFactor(m_hwnd)};
   m_reactNativeIsland.Arrange(constraints, {0, 0});
   bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
@@ -237,7 +236,6 @@ void WindowsModalHostComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   base_type::UnmountChildComponentView(childComponentView, index);
-  HideOnUIThread();
 }
 
 void WindowsModalHostComponentView::HandleCommand(
