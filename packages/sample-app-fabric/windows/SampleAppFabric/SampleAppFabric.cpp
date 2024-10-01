@@ -43,7 +43,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
     winrt::Microsoft::ReactNative::ReactInstanceSettingsBuilder()
         .DebugBundlePath(L"index")
         .JavaScriptBundleFile(L"index.windows")
-        .BundleRootPath(appDirectory)
+        .BundleRootPath(std::wstring(L"file://").append(appDirectory).append(L"\\Bundle\\").c_str())
 #if BUNDLE
         .UseFastRefresh(false)
 #else

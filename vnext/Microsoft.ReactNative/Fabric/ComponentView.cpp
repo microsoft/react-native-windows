@@ -266,8 +266,8 @@ void ComponentView::HandleCommand(const winrt::Microsoft::ReactNative::HandleCom
   }
 }
 
-winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
-ComponentView::rootComponentView() noexcept {
+winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *ComponentView::rootComponentView()
+    const noexcept {
   if (m_rootView)
     return m_rootView;
 

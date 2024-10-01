@@ -103,6 +103,8 @@ namespace Microsoft.ReactNative
 
     DOC_STRING("Adds CompositionEventHandler to a ReactNativeIsland that doesn't have it's own RootView")
     void AddFragmentCompositionEventHandler(Microsoft.ReactNative.IReactContext context, Microsoft.ReactNative.ComponentView componentView);
+    
+    Single FontSizeMultiplier { get; };
 
     DOC_STRING("Move focus to this @ReactNativeIsland")
     FocusNavigationResult NavigateFocus(FocusNavigationRequest request);

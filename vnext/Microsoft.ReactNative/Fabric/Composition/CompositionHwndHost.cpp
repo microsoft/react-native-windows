@@ -102,6 +102,7 @@ void CompositionHwndHost::UpdateSize() noexcept {
       // Do not relayout when minimized
       if (!IsIconic(m_hwnd)) {
         winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+        constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
         constraints.MinimumSize = constraints.MaximumSize = size;
         m_compRootView.Arrange(constraints, {0, 0});
       }

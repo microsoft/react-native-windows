@@ -10,12 +10,12 @@
     "directory": "packages/@rnw-scripts/babel-react-native-config"
   },
   "dependencies": {
-    "@babel/core": "^7.20.0",
+    "@babel/core": "^7.25.2",
     "@react-native/babel-preset": "0.76.0-nightly-20240701-9f6cb21ed",
     "babel-plugin-transform-flow-enums": "^0.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0",
+    "@babel/core": "^7.25.2",
     "@react-native/babel-preset": "0.76.0-nightly-20240701-9f6cb21ed",
     "eslint": "^8.19.0",
     "prettier": "2.8.8"
