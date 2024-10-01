@@ -400,9 +400,9 @@ void ReactInstanceWin::LoadModules(
   }
 #endif
 
-  registerTurboModule(
-      L"SampleTurboModule",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SampleTurboModule>());
+  if (!m_options.UseWebDebugger()) {
+    turboModulesProvider->AddModuleProvider(L"SampleTurboModule", winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SampleTurboModule>()), false);
+  }
 
   if (devSettings->useTurboModulesOnly) {
     ::Microsoft::ReactNative::ExceptionsManager::SetRedBoxHander(
