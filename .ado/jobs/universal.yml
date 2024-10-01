@@ -133,14 +133,11 @@
 
                 - template: ../templates/apply-published-version-vars.yml
 
-                - ${{ if eq(matrix.UseFabric, true) }}:
-                  - template: ../templates/enable-fabric-experimental-feature.yml
-
                 - template: ../templates/msbuild-sln.yml
                   parameters:
                     solutionDir: vnext
                     ${{ if eq(matrix.UseFabric, true) }}:
-                      solutionName: Microsoft.ReactNative.CppOnly.slnf
+                      solutionName: Microsoft.ReactNative.NewArch.sln
                     ${{ else }}:
                       solutionName: Microsoft.ReactNative.sln
                     buildPlatform: ${{ matrix.BuildPlatform }}
@@ -186,6 +183,15 @@
                       Microsoft.ReactNative.Managed.CodeGen.UnitTests\**
                       Microsoft.ReactNative.Managed.UnitTests\**
                       Mso.UnitTests\**
+
+                - ${{ if eq(matrix.UseFabric, true) }}:
+                    - template: ../templates/publish-build-artifacts.yml
+                      parameters:
+                        artifactName: ReactWindowsFabric
+                        buildPlatform: AnyCPU
+                        buildConfiguration: ${{ matrix.BuildConfiguration }}
+                        contents: |
+                          Microsoft.ReactNative.CsWinRT\**
 
             - job: UniversalTest${{ matrix.Name }}
               variables:
