@@ -61,4 +61,7 @@ steps:
     inputs:
       targetType: filePath # filePath | inline
       filePath: $(Build.SourcesDirectory)\.ado\scripts\RunProcDump.ps1
-      arguments: -ProcDumpArgs @("-mm", "-i", "$(CrashDumpRootPath)") -ProcDumpInstallPath "$(ProcDumpPath)" -Verbose
+      arguments: >
+        -ProcDumpArgs @("-mm", "-i", "`$(CrashDumpRootPath)")
+        -ProcDumpInstallPath "`$(ProcDumpPath)"
+        -Verbose
