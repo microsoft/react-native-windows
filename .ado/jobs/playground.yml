@@ -195,7 +195,7 @@ jobs:
                 inputs:
                   targetType: filePath # filePath | inline
                   filePath: $(Build.SourcesDirectory)\.ado\scripts\RunProcDump.ps1
-                  arguments: "-ProcDumpArgs @('-mm', '-i', '$(CrashDumpRootPath)') -ProcDumpInstallPath '$(ProcDumpPath)' -Verbose"
+                  arguments: -ProcDumpArgs @('-mm', '-i', '$(CrashDumpRootPath)') -ProcDumpInstallPath '$(ProcDumpPath)' -Verbose
 
               # This step loose-file-deploys the UWP Playground app and uses it as an RNW host for a series
               # of debug feature tests. In the future, these tests should be performed against a host app
