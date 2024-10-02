@@ -185,13 +185,13 @@
                       Mso.UnitTests\**
 
                 - ${{ if eq(matrix.UseFabric, true) }}:
-                    - template: ../templates/publish-build-artifacts.yml
-                      parameters:
-                        artifactName: ReactWindowsFabric
-                        buildPlatform: AnyCPU
-                        buildConfiguration: ${{ matrix.BuildConfiguration }}
-                        contents: |
-                          Microsoft.ReactNative.CsWinRT\**
+                  - template: ../templates/publish-build-artifacts.yml
+                    parameters:
+                      artifactName: ReactWindowsFabric
+                      buildPlatform: AnyCPU
+                      buildConfiguration: ${{ matrix.BuildConfiguration }}
+                      contents: |
+                        Microsoft.ReactNative.CsWinRT\**
 
             - job: UniversalTest${{ matrix.Name }}
               variables:
