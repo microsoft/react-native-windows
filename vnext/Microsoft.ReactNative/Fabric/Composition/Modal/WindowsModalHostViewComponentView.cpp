@@ -34,6 +34,15 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
   m_compositionContext = compContext; // save composition context
 }
 
+WindowsModalHostComponentView::~WindowsModalHostComponentView() {
+  // Check if the window handle (m_hwnd) exists and destroy it if necessary
+  if (m_hwnd) {
+    // Close the modal window
+    HideOnUIThread();
+    m_hwnd = nullptr;
+  }
+}
+
 winrt::Microsoft::ReactNative::ComponentView WindowsModalHostComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
@@ -67,9 +76,9 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   winrt::com_ptr<::IUnknown> spunk;
 
   // get the root hwnd
-  prevWindowID =
+  m_prevWindowID =
       winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(m_reactContext.Properties().Handle());
-  auto roothwnd = reinterpret_cast<HWND>(prevWindowID);
+  auto roothwnd = reinterpret_cast<HWND>(m_prevWindowID);
 
   m_hwnd = CreateWindow(
       c_modalWindowClassName,
@@ -114,6 +123,7 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
 
   // set layout contraints
   winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+  constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
   constraints.MaximumSize = constraints.MinimumSize = {500 / ScaleFactor(m_hwnd), 500 / ScaleFactor(m_hwnd)};
   m_reactNativeIsland.Arrange(constraints, {0, 0});
   bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
@@ -136,11 +146,13 @@ void WindowsModalHostComponentView::HideOnUIThread() noexcept {
   if (m_hwnd) {
     SendMessage(m_hwnd, WM_CLOSE, 0, 0);
   }
-  if (prevWindowID) {
+
+  // reset the topWindowID
+  if (m_prevWindowID) {
     auto host =
         winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(m_reactContext.Properties());
     winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
-        host.InstanceSettings().Properties(), prevWindowID);
+        host.InstanceSettings().Properties(), m_prevWindowID);
   }
 }
 
@@ -219,7 +231,9 @@ void WindowsModalHostComponentView::RegisterWndClass() noexcept {
 
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 WindowsModalHostComponentView::VisualToMountChildrenInto() noexcept {
-  return m_reactNativeIsland.InternalRootVisual();
+  return m_reactNativeIsland
+      .as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>()
+      .InternalRootVisual();
 }
 
 // childComponentView - reference to the child component view

@@ -18,6 +18,8 @@ struct WindowsModalHostComponentView
     : WindowsModalHostComponentViewT<WindowsModalHostComponentView, RootComponentView> {
   using Super = WindowsModalHostComponentViewT<WindowsModalHostComponentView, RootComponentView>;
 
+  ~WindowsModalHostComponentView(); // Declare the destructor here
+
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
@@ -60,7 +62,7 @@ struct WindowsModalHostComponentView
 
  private:
   HWND m_hwnd{nullptr};
-  uint64_t prevWindowID;
+  uint64_t m_prevWindowID;
   winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compositionContext;
   winrt::Microsoft::ReactNative::ReactNativeIsland m_reactNativeIsland;

@@ -140,8 +140,8 @@ struct CompositionInputKeyboardSource : winrt::implements<
 CompositionEventHandler::CompositionEventHandler(
     const winrt::Microsoft::ReactNative::ReactContext &context,
     const winrt::Microsoft::ReactNative::ReactNativeIsland &reactNativeIsland,
-    const int isFragment)
-    : m_isFragment(isFragment), m_context(context), m_wkRootView(reactNativeIsland) {}
+    const int fragmentTag)
+    : m_fragmentTag(fragmentTag), m_context(context), m_wkRootView(reactNativeIsland) {}
 
 void CompositionEventHandler::Initialize() noexcept {
 #ifdef USE_WINUI3
@@ -833,18 +833,20 @@ void CompositionEventHandler::getTargetPointerArgs(
       ptLocal.y = ptScaled.y - (clientRect.top / strongRootView.ScaleFactor());
     }
   } else {
-    if (m_isFragment == -1) {
+    if (m_fragmentTag == -1) {
       tag = RootComponentView().hitTest(ptScaled, ptLocal);
       return;
     }
 
-    if (!fabricuiManager->GetViewRegistry().findComponentViewWithTag(m_isFragment)) {
+    // check if the fragment tag exists
+    if (!fabricuiManager->GetViewRegistry().findComponentViewWithTag(m_fragmentTag)) {
       return;
     }
 
-    auto fagmentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_isFragment).view;
+    auto fagmentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_fragmentTag).view;
     auto fagmentchildren = fagmentView.Children();
 
+    // call the hitTest with the fargment as the RootComponent
     for (auto index = fagmentchildren.Size(); index > 0; index--) {
       auto childView = fagmentchildren.GetAt(index - 1);
       auto targetTag =

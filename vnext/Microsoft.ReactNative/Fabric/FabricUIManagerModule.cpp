@@ -253,12 +253,6 @@ void FabricUIManager::RCTPerformMountInstructions(
         auto &parentShadowView = mutation.parentShadowView;
         auto &oldChildViewDescriptor = m_registry.componentViewDescriptorWithTag(oldChildShadowView.tag);
         auto &parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentShadowView.tag);
-        // If we are removing a Modal, we also need to hide it on the UIThread
-        if (strcmp(oldChildShadowView.componentName, "ModalHostView") == 0) {
-          m_registry.findComponentViewWithTag(oldChildShadowView.tag)
-              .try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsModalHostComponentView>()
-              ->HideOnUIThread();
-        }
         winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
             ->UnmountChildComponentView(oldChildViewDescriptor.view, mutation.index);
         break;
