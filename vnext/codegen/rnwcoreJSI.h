@@ -30,6 +30,7 @@ public:
   virtual bool enableAndroidMixBlendModeProp(jsi::Runtime &rt) = 0;
   virtual bool enableBackgroundStyleApplicator(jsi::Runtime &rt) = 0;
   virtual bool enableCleanTextInputYogaNode(jsi::Runtime &rt) = 0;
+  virtual bool enableDeletionOfUnmountedViews(jsi::Runtime &rt) = 0;
   virtual bool enableEagerRootViewAttachment(jsi::Runtime &rt) = 0;
   virtual bool enableEventEmitterRetentionDuringGesturesOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableFabricLogs(jsi::Runtime &rt) = 0;
@@ -42,6 +43,7 @@ public:
   virtual bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableReportEventPaintTime(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
+  virtual bool enableTextPreallocationOptimisation(jsi::Runtime &rt) = 0;
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
   virtual bool enableViewRecycling(jsi::Runtime &rt) = 0;
   virtual bool excludeYogaFromRawProps(jsi::Runtime &rt) = 0;
@@ -175,6 +177,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableCleanTextInputYogaNode, jsInvoker_, instance_);
     }
+    bool enableDeletionOfUnmountedViews(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableDeletionOfUnmountedViews) == 1,
+          "Expected enableDeletionOfUnmountedViews(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableDeletionOfUnmountedViews, jsInvoker_, instance_);
+    }
     bool enableEagerRootViewAttachment(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableEagerRootViewAttachment) == 1,
@@ -270,6 +280,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableSynchronousStateUpdates, jsInvoker_, instance_);
+    }
+    bool enableTextPreallocationOptimisation(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableTextPreallocationOptimisation) == 1,
+          "Expected enableTextPreallocationOptimisation(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableTextPreallocationOptimisation, jsInvoker_, instance_);
     }
     bool enableUIConsistency(jsi::Runtime &rt) override {
       static_assert(

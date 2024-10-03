@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-nightly-20240912-c94246970",
+  "baseVersion": "0.77.0-nightly-20240915-afb40e9f2",
   "overrides": [
     {
       "type": "derived",
@@ -193,7 +193,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/LayoutableShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/LayoutableShadowNode.cpp",
-      "baseHash": "db08c2728c084069690aa6281f1b9e713e82cc94",
+      "baseHash": "d66daa36deef63d32e164dd26cfc76ad09569169",
       "issue": 13644
     },
     {
@@ -374,7 +374,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollViewNativeComponent.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollViewNativeComponent.js",
-      "baseHash": "fc24774459ca08e1097b2130535e00d4bc6e0d17"
+      "baseHash": "21f339b78c92e68ed9ed34c36bee75bc27949060"
     },
     {
       "type": "derived",
@@ -527,7 +527,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "f00c344931a7caca8f3300049ae4b01b78a73b85"
+      "baseHash": "0b4642542c2865c5cd3d542a82b295a1aca21c1a"
     },
     {
       "type": "derived",
