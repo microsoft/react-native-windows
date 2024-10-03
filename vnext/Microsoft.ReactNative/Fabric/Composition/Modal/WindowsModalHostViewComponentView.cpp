@@ -242,7 +242,6 @@ void WindowsModalHostComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
   EnsureModalCreated();
-  // Skip calling ViewComponentView::MountChildComponentView since we override adding it to the rootVisual below
   base_type::MountChildComponentView(childComponentView, index);
 }
 
