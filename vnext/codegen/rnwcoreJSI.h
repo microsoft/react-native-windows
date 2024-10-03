@@ -40,6 +40,7 @@ public:
   virtual bool enableLayoutAnimationsOnIOS(jsi::Runtime &rt) = 0;
   virtual bool enableLongTaskAPI(jsi::Runtime &rt) = 0;
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
+  virtual bool enablePreciseSchedulingForPremountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableReportEventPaintTime(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
@@ -56,6 +57,7 @@ public:
   virtual bool initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime &rt) = 0;
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
   virtual bool loadVectorDrawablesOnImages(jsi::Runtime &rt) = 0;
+  virtual bool removeNestedCallsToDispatchMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool setAndroidLayoutDirection(jsi::Runtime &rt) = 0;
   virtual bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useFabricInterop(jsi::Runtime &rt) = 0;
@@ -255,6 +257,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableMicrotasks, jsInvoker_, instance_);
     }
+    bool enablePreciseSchedulingForPremountItemsOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enablePreciseSchedulingForPremountItemsOnAndroid) == 1,
+          "Expected enablePreciseSchedulingForPremountItemsOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enablePreciseSchedulingForPremountItemsOnAndroid, jsInvoker_, instance_);
+    }
     bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enablePropsUpdateReconciliationAndroid) == 1,
@@ -382,6 +392,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::loadVectorDrawablesOnImages, jsInvoker_, instance_);
+    }
+    bool removeNestedCallsToDispatchMountItemsOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::removeNestedCallsToDispatchMountItemsOnAndroid) == 1,
+          "Expected removeNestedCallsToDispatchMountItemsOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::removeNestedCallsToDispatchMountItemsOnAndroid, jsInvoker_, instance_);
     }
     bool setAndroidLayoutDirection(jsi::Runtime &rt) override {
       static_assert(
