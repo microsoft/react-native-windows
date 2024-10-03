@@ -56,12 +56,7 @@ steps:
         Write-Host "##vso[task.setvariable variable=ProcDumpPath]$(Build.StagingDirectory)\Procdump"
     displayName: Set ProcDumpPath
 
-  - task: PowerShell@2
+  - powershell: |
+      & $(Build.SourcesDirectory)\.ado\scripts\RunProcDump.ps1 -ProcDumpArgs @("-mm", "-i", "$(CrashDumpRootPath)") -ProcDumpInstallPath "$(ProcDumpPath)" -Verbose
     displayName: Setup ProcDump as AeDebug
-    inputs:
-      targetType: filePath # filePath | inline
-      filePath: $(Build.SourcesDirectory)\.ado\scripts\RunProcDump.ps1
-      arguments: >
-        -ProcDumpArgs @()
-        -ProcDumpInstallPath "$(ProcDumpPath)"
-        -Verbose
+  
