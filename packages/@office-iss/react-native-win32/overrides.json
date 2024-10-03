@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-nightly-20240915-afb40e9f2",
+  "baseVersion": "0.77.0-nightly-20240918-bebd6531b",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "cc375839a102263f435205df68b79d3d74c4f20a"
+      "baseHash": "3fbaf9dcd4027fa382894d06f330d0c68ceff9fb"
     },
     {
       "type": "derived",
@@ -438,7 +438,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextNativeComponent.js",
-      "baseHash": "642b6fc1c5b5802e3612f39c2ae0135b149a65f8",
+      "baseHash": "1b2e6301edc13f3a91e47b9befe8a47a12e6ad39",
       "issue": 7074
     },
     {

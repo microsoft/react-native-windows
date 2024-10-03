@@ -151,18 +151,8 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fetchIm
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->fixIncorrectScrollViewStateUpdateOnAndroid(
-    rt
-  );
-}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->fixMappingOfEventPrioritiesBetweenFabricAndReact(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMissedFabricStateUpdatesOnAndroid(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->fixMissedFabricStateUpdatesOnAndroid(
     rt
   );
 }
@@ -297,9 +287,7 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["enableViewRecycling"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableViewRecycling};
   methodMap_["excludeYogaFromRawProps"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_excludeYogaFromRawProps};
   methodMap_["fetchImagesInViewPreallocation"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fetchImagesInViewPreallocation};
-  methodMap_["fixIncorrectScrollViewStateUpdateOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixIncorrectScrollViewStateUpdateOnAndroid};
   methodMap_["fixMappingOfEventPrioritiesBetweenFabricAndReact"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMappingOfEventPrioritiesBetweenFabricAndReact};
-  methodMap_["fixMissedFabricStateUpdatesOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMissedFabricStateUpdatesOnAndroid};
   methodMap_["fixMountingCoordinatorReportedPendingTransactionsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMountingCoordinatorReportedPendingTransactionsOnAndroid};
   methodMap_["forceBatchingMountItemsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_forceBatchingMountItemsOnAndroid};
   methodMap_["fuseboxEnabledDebug"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fuseboxEnabledDebug};

@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.77.0-nightly-20240915-afb40e9f2",
+  "baseVersion": "0.77.0-nightly-20240918-bebd6531b",
   "overrides": [
     {
       "type": "copy",
@@ -12,6 +12,7 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
+      "baseVersion": "0.77.0-nightly-20240915-afb40e9f2",
       "baseHash": "c3668e7f1197c559d18ff6cb16078f53636ddc29",
       "issue": 4054
     },
@@ -131,6 +132,7 @@
       "type": "copy",
       "directory": "js/examples/Filter",
       "baseDirectory": "packages/rn-tester/js/examples/Filter",
+      "baseVersion": "0.77.0-nightly-20240915-afb40e9f2",
       "baseHash": "0bc04c6ee9f9c427da85915be91c0d49aeede435",
       "issue": 4054
     },
@@ -145,6 +147,7 @@
       "type": "copy",
       "directory": "js/examples/Image",
       "baseDirectory": "packages/rn-tester/js/examples/Image",
+      "baseVersion": "0.77.0-nightly-20240915-afb40e9f2",
       "baseHash": "52c008e059a1385dc9a49b5f773ca1f1f4389b61",
       "issue": 4054
     },
@@ -208,7 +211,7 @@
       "type": "copy",
       "directory": "js/examples/Modal",
       "baseDirectory": "packages/rn-tester/js/examples/Modal",
-      "baseHash": "ec81ace5a2a313a128939467110c931dd45b1703",
+      "baseHash": "2a676165a58a182d633eede14add631af3cc134f",
       "issue": 4054
     },
     {
@@ -390,6 +393,7 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
+      "baseVersion": "0.77.0-nightly-20240915-afb40e9f2",
       "baseHash": "528bba6e7f5938ec8c81c54471962883047e68f3",
       "issue": 4054
     },
@@ -397,6 +401,7 @@
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
+      "baseVersion": "0.77.0-nightly-20240915-afb40e9f2",
       "baseHash": "517045664204290fb29333ce7919cb6855d8c33f",
       "issue": 4054
     },
@@ -453,6 +458,7 @@
       "type": "copy",
       "directory": "js/examples/View",
       "baseDirectory": "packages/rn-tester/js/examples/View",
+      "baseVersion": "0.77.0-nightly-20240915-afb40e9f2",
       "baseHash": "8941e5114920781850b2b200becaaa7359bfc3f9",
       "issue": 4054
     },

@@ -48,9 +48,7 @@ public:
   virtual bool enableViewRecycling(jsi::Runtime &rt) = 0;
   virtual bool excludeYogaFromRawProps(jsi::Runtime &rt) = 0;
   virtual bool fetchImagesInViewPreallocation(jsi::Runtime &rt) = 0;
-  virtual bool fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
-  virtual bool fixMissedFabricStateUpdatesOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledDebug(jsi::Runtime &rt) = 0;
@@ -321,14 +319,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::fetchImagesInViewPreallocation, jsInvoker_, instance_);
     }
-    bool fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::fixIncorrectScrollViewStateUpdateOnAndroid) == 1,
-          "Expected fixIncorrectScrollViewStateUpdateOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::fixIncorrectScrollViewStateUpdateOnAndroid, jsInvoker_, instance_);
-    }
     bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::fixMappingOfEventPrioritiesBetweenFabricAndReact) == 1,
@@ -336,14 +326,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::fixMappingOfEventPrioritiesBetweenFabricAndReact, jsInvoker_, instance_);
-    }
-    bool fixMissedFabricStateUpdatesOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::fixMissedFabricStateUpdatesOnAndroid) == 1,
-          "Expected fixMissedFabricStateUpdatesOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::fixMissedFabricStateUpdatesOnAndroid, jsInvoker_, instance_);
     }
     bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
