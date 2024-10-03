@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
-#include "FabricUIManagerModule.h"
 #include "HandleCommandArgs.g.cpp"
 #include "HandleCommandArgs.g.h"
 #include <AsynchronousEventBeat.h>
@@ -11,7 +10,6 @@
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionUIService.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
-#include <Fabric/Composition/Modal/WindowsModalHostViewComponentView.h>
 #include <Fabric/Composition/ReactNativeIsland.h>
 #include <Fabric/Composition/RootComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>

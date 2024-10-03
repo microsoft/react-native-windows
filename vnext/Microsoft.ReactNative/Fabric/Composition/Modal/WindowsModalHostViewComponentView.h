@@ -18,7 +18,7 @@ struct WindowsModalHostComponentView
     : WindowsModalHostComponentViewT<WindowsModalHostComponentView, RootComponentView> {
   using Super = WindowsModalHostComponentViewT<WindowsModalHostComponentView, RootComponentView>;
 
-  ~WindowsModalHostComponentView(); // Declare the destructor here
+  ~WindowsModalHostComponentView();
 
   [[nodiscard]] static winrt::Microsoft::ReactNative::ComponentView Create(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
