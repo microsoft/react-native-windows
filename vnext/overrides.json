@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.76.0-nightly-20240909-143f1ad29",
+  "baseVersion": "0.77.0-nightly-20240912-c94246970",
   "overrides": [
     {
       "type": "derived",
@@ -151,7 +151,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/Convert.h",
       "baseFile": "packages/react-native/ReactCommon/react/bridging/Convert.h",
-      "baseHash": "dd7973a16878a953fd70d51e8f5cf8b6130b3f8a",
+      "baseHash": "3bcf618bef5574c4fbd88d1c7f754f4077adef84",
       "issue": 13391
     },
     {
@@ -386,7 +386,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "494c1159a38de1b57d3889a4dabdc3708204ad4d"
+      "baseHash": "19224f9b870df6e0c82d8da36f1f7b22bdd6b596"
     },
     {
       "type": "patch",
@@ -483,7 +483,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Image/AssetSourceResolver.windows.js",
       "baseFile": "packages/react-native/Libraries/Image/AssetSourceResolver.js",
-      "baseHash": "2a43e21c13507780d98cfab848b98d9534fda4b1"
+      "baseHash": "2c318e9f701806ff8ac9373ab7f39dd6f2e0255a"
     },
     {
       "type": "patch",
@@ -527,7 +527,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "91e7e2aacf6c1559247dccad0c581fde64202bf3"
+      "baseHash": "f00c344931a7caca8f3300049ae4b01b78a73b85"
     },
     {
       "type": "derived",

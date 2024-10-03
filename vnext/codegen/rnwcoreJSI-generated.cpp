@@ -41,6 +41,11 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableA
     rt
   );
 }
+static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAndroidLineHeightCentering(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableAndroidLineHeightCentering(
+    rt
+  );
+}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAndroidMixBlendModeProp(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableAndroidMixBlendModeProp(
     rt
@@ -260,6 +265,7 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["completeReactInstanceCreationOnBgThreadOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_completeReactInstanceCreationOnBgThreadOnAndroid};
   methodMap_["destroyFabricSurfacesInReactInstanceManager"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_destroyFabricSurfacesInReactInstanceManager};
   methodMap_["enableAlignItemsBaselineOnFabricIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAlignItemsBaselineOnFabricIOS};
+  methodMap_["enableAndroidLineHeightCentering"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAndroidLineHeightCentering};
   methodMap_["enableAndroidMixBlendModeProp"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAndroidMixBlendModeProp};
   methodMap_["enableBackgroundStyleApplicator"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableBackgroundStyleApplicator};
   methodMap_["enableCleanTextInputYogaNode"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableCleanTextInputYogaNode};

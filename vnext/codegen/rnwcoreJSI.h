@@ -26,6 +26,7 @@ public:
   virtual bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) = 0;
   virtual bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) = 0;
+  virtual bool enableAndroidLineHeightCentering(jsi::Runtime &rt) = 0;
   virtual bool enableAndroidMixBlendModeProp(jsi::Runtime &rt) = 0;
   virtual bool enableBackgroundStyleApplicator(jsi::Runtime &rt) = 0;
   virtual bool enableCleanTextInputYogaNode(jsi::Runtime &rt) = 0;
@@ -141,6 +142,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableAlignItemsBaselineOnFabricIOS, jsInvoker_, instance_);
+    }
+    bool enableAndroidLineHeightCentering(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableAndroidLineHeightCentering) == 1,
+          "Expected enableAndroidLineHeightCentering(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableAndroidLineHeightCentering, jsInvoker_, instance_);
     }
     bool enableAndroidMixBlendModeProp(jsi::Runtime &rt) override {
       static_assert(

@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.76.0-nightly-20240909-143f1ad29",
+  "baseVersion": "0.77.0-nightly-20240912-c94246970",
   "overrides": [
     {
       "type": "copy",
@@ -12,7 +12,7 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "76becd362d76ede7c7f59d15bc618db6a108406f",
+      "baseHash": "c3668e7f1197c559d18ff6cb16078f53636ddc29",
       "issue": 4054
     },
     {
@@ -145,7 +145,7 @@
       "type": "copy",
       "directory": "js/examples/Image",
       "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseHash": "16be0e00eb2af54ac42933e0c3f79a58af7c2144",
+      "baseHash": "52c008e059a1385dc9a49b5f773ca1f1f4389b61",
       "issue": 4054
     },
     {
@@ -390,14 +390,14 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "fde8e7d13900439129ee6d48fc8c037667c8d8bc",
+      "baseHash": "528bba6e7f5938ec8c81c54471962883047e68f3",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "986ccca321c59084c52956bbaf32dbe72e844006",
+      "baseHash": "517045664204290fb29333ce7919cb6855d8c33f",
       "issue": 4054
     },
     {
@@ -453,7 +453,7 @@
       "type": "copy",
       "directory": "js/examples/View",
       "baseDirectory": "packages/rn-tester/js/examples/View",
-      "baseHash": "9ba75b48229fa4bdbee1b08def0ca6458a492982",
+      "baseHash": "04410f2304df14e85df10b094c6e358c50c9dbc9",
       "issue": 4054
     },
     {
