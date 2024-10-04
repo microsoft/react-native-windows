@@ -144,7 +144,9 @@
     "/metro-react-native-platform.js",
     "/metro.config.js",
     "/react-native.config.js",
-    "/rn-get-polyfills.js"
+    "/rn-get-polyfills.js",
+    "!packages.lock.json",
+    "!packages.fabric.lock.json"
   ],
   "promoteRelease": true,
   "engines": {
