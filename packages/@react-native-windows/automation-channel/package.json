@@ -37,7 +37,9 @@
   },
   "files": [
     "lib-commonjs",
-    "windows"
+    "windows",
+    "!packages.lock.json",
+    "!packages.fabric.lock.json"
   ],
   "engines": {
     "node": ">= 18"
