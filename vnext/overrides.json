@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.76.0-rc.0",
+  "baseVersion": "0.76.0-rc.3",
   "overrides": [
     {
       "type": "derived",
@@ -374,7 +374,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollViewNativeComponent.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollViewNativeComponent.js",
-      "baseHash": "fc24774459ca08e1097b2130535e00d4bc6e0d17"
+      "baseHash": "21f339b78c92e68ed9ed34c36bee75bc27949060"
     },
     {
       "type": "derived",
@@ -527,7 +527,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "91e7e2aacf6c1559247dccad0c581fde64202bf3"
+      "baseHash": "0b4642542c2865c5cd3d542a82b295a1aca21c1a"
     },
     {
       "type": "derived",

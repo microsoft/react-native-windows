@@ -11275,7 +11275,7 @@ exports[`snapshotAllPages Filter 1`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "brightness": 1.5,
               },
@@ -11363,7 +11363,7 @@ exports[`snapshotAllPages Filter 1`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "brightness": 1.5,
               },
@@ -11408,7 +11408,7 @@ exports[`snapshotAllPages Filter 2`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "opacity": 0.5,
               },
@@ -11496,7 +11496,7 @@ exports[`snapshotAllPages Filter 2`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "opacity": 0.5,
               },
@@ -11541,7 +11541,7 @@ exports[`snapshotAllPages Filter 3`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "contrast": 0.5,
               },
@@ -11629,7 +11629,7 @@ exports[`snapshotAllPages Filter 3`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "contrast": 0.5,
               },
@@ -11674,7 +11674,7 @@ exports[`snapshotAllPages Filter 4`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "sepia": 0.5,
               },
@@ -11762,7 +11762,7 @@ exports[`snapshotAllPages Filter 4`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "sepia": 0.5,
               },
@@ -11807,7 +11807,7 @@ exports[`snapshotAllPages Filter 5`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "grayscale": 0.5,
               },
@@ -11895,7 +11895,7 @@ exports[`snapshotAllPages Filter 5`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "grayscale": 0.5,
               },
@@ -11940,7 +11940,7 @@ exports[`snapshotAllPages Filter 6`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "saturate": 4,
               },
@@ -12028,7 +12028,7 @@ exports[`snapshotAllPages Filter 6`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "saturate": 4,
               },
@@ -12073,7 +12073,7 @@ exports[`snapshotAllPages Filter 7`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "hueRotate": "-90deg",
               },
@@ -12161,7 +12161,7 @@ exports[`snapshotAllPages Filter 7`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "hueRotate": "-90deg",
               },
@@ -12206,7 +12206,7 @@ exports[`snapshotAllPages Filter 8`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "invert": 0.7,
               },
@@ -12294,7 +12294,7 @@ exports[`snapshotAllPages Filter 8`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "invert": 0.7,
               },
@@ -12340,7 +12340,7 @@ exports[`snapshotAllPages Filter 9`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "blur": 10,
               },
@@ -12428,7 +12428,7 @@ exports[`snapshotAllPages Filter 9`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "blur": 10,
               },
@@ -12474,7 +12474,7 @@ exports[`snapshotAllPages Filter 10`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "dropShadow": "30px 10px 4px #4444dd",
               },
@@ -12562,7 +12562,7 @@ exports[`snapshotAllPages Filter 10`] = `
       style={
         [
           {
-            "experimental_filter": [
+            "filter": [
               {
                 "dropShadow": "30px 10px 4px #4444dd",
               },
@@ -12609,7 +12609,7 @@ exports[`snapshotAllPages Filter 11`] = `
         [
           [
             {
-              "experimental_filter": [
+              "filter": [
                 {
                   "brightness": 1.5,
                 },
@@ -12702,7 +12702,7 @@ exports[`snapshotAllPages Filter 11`] = `
         [
           [
             {
-              "experimental_filter": [
+              "filter": [
                 {
                   "brightness": 1.5,
                 },
@@ -12752,7 +12752,7 @@ exports[`snapshotAllPages Filter 12`] = `
         [
           [
             {
-              "experimental_filter": [
+              "filter": [
                 {
                   "brightness": 1.5,
                 },
@@ -12842,7 +12842,7 @@ exports[`snapshotAllPages Filter 12`] = `
         [
           [
             {
-              "experimental_filter": [
+              "filter": [
                 {
                   "brightness": 1.5,
                 },
@@ -65409,7 +65409,7 @@ exports[`snapshotAllPages Text 40`] = `
     style={
       {
         "borderRadius": 10,
-        "experimental_boxShadow": "0 0 10px red",
+        "boxShadow": "0 0 10px red",
       }
     }
     testID="text-box-shadow"
@@ -77598,7 +77598,7 @@ exports[`snapshotAllPages View 20`] = `
           "borderColor": "red",
           "borderRadius": 10,
           "borderWidth": 5,
-          "experimental_boxShadow": "0 0 10px 0 black",
+          "boxShadow": "0 0 10px 0 black",
           "height": 75,
           "width": 75,
         }
@@ -77610,7 +77610,7 @@ exports[`snapshotAllPages View 20`] = `
           "borderColor": "red",
           "borderRadius": 30,
           "borderWidth": 5,
-          "experimental_boxShadow": "inset 0 0 10px 0 black",
+          "boxShadow": "inset 0 0 10px 0 black",
           "height": 75,
           "width": 75,
         }
@@ -77622,7 +77622,7 @@ exports[`snapshotAllPages View 20`] = `
           "borderColor": "red",
           "borderRadius": 30,
           "borderWidth": 5,
-          "experimental_boxShadow": "inset 15px -5px 5px 5px cyan, inset 15px -5px 20px 10px orange, -5px 5px 5px 0px green, 0px -10px 0px 5px black",
+          "boxShadow": "inset 15px -5px 5px 5px cyan, inset 15px -5px 20px 10px orange, -5px 5px 5px 0px green, 0px -10px 0px 5px black",
           "height": 75,
           "width": 75,
         }
@@ -77640,7 +77640,7 @@ exports[`snapshotAllPages View 20`] = `
     <View
       style={
         {
-          "experimental_boxShadow": "0px 0px 5px 5px black",
+          "boxShadow": "0px 0px 5px 5px black",
           "height": 75,
           "width": 75,
         }
@@ -77661,7 +77661,7 @@ exports[`snapshotAllPages View 20`] = `
       style={
         {
           "backgroundColor": "red",
-          "experimental_boxShadow": "inset 0px 0px 5px 5px black",
+          "boxShadow": "inset 0px 0px 5px 5px black",
           "height": 75,
           "width": 75,
         }
@@ -77688,7 +77688,7 @@ exports[`snapshotAllPages View 20`] = `
       <View
         style={
           {
-            "experimental_boxShadow": " 0px 0px 20px 5px black",
+            "boxShadow": " 0px 0px 20px 5px black",
             "height": 75,
             "width": 75,
           }
@@ -77717,7 +77717,7 @@ exports[`snapshotAllPages View 20`] = `
       style={
         {
           "backgroundColor": "green",
-          "experimental_boxShadow": "0px 10px",
+          "boxShadow": "0px 10px",
           "height": 75,
           "width": 75,
         }
