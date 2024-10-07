@@ -399,6 +399,13 @@ void ReactInstanceWin::LoadModules(
   }
 #endif
 
+  if (!m_options.UseWebDebugger()) {
+    turboModulesProvider->AddModuleProvider(
+        L"SampleTurboModule",
+        winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SampleTurboModule>(),
+        false);
+  }
+
   if (devSettings->useTurboModulesOnly) {
     ::Microsoft::ReactNative::ExceptionsManager::SetRedBoxHander(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()), m_redboxHandler);
