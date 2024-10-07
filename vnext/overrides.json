@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-nightly-20240921-1747f57c6",
+  "baseVersion": "0.77.0-nightly-20240925-0cb32d5ac",
   "overrides": [
     {
       "type": "derived",
@@ -214,7 +214,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "2c02cd138f55d35ae118ee251e18e2e9243c2a0e",
+      "baseHash": "807c3113a5dbfe4774994e9b02058dc55525b80d",
       "issue": 13172
     },
     {
