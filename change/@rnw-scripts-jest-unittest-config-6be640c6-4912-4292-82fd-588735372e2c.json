@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "integrate RN nightly 0.77.0-nightly-20240921-1747f57c6",
+  "packageName": "@rnw-scripts/jest-unittest-config",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}

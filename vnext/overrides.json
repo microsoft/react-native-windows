@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.76.0-nightly-20240909-143f1ad29",
+  "baseVersion": "0.77.0-nightly-20240921-1747f57c6",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "cc375839a102263f435205df68b79d3d74c4f20a"
+      "baseHash": "3fbaf9dcd4027fa382894d06f330d0c68ceff9fb"
     },
     {
       "type": "derived",
@@ -151,7 +151,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/Convert.h",
       "baseFile": "packages/react-native/ReactCommon/react/bridging/Convert.h",
-      "baseHash": "dd7973a16878a953fd70d51e8f5cf8b6130b3f8a",
+      "baseHash": "3bcf618bef5574c4fbd88d1c7f754f4077adef84",
       "issue": 13391
     },
     {
@@ -193,7 +193,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/LayoutableShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/LayoutableShadowNode.cpp",
-      "baseHash": "db08c2728c084069690aa6281f1b9e713e82cc94",
+      "baseHash": "d66daa36deef63d32e164dd26cfc76ad09569169",
       "issue": 13644
     },
     {
@@ -374,7 +374,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollViewNativeComponent.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollViewNativeComponent.js",
-      "baseHash": "fc24774459ca08e1097b2130535e00d4bc6e0d17"
+      "baseHash": "21f339b78c92e68ed9ed34c36bee75bc27949060"
     },
     {
       "type": "derived",
@@ -386,7 +386,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "494c1159a38de1b57d3889a4dabdc3708204ad4d"
+      "baseHash": "19224f9b870df6e0c82d8da36f1f7b22bdd6b596"
     },
     {
       "type": "patch",
@@ -411,13 +411,13 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableHighlight.js",
-      "baseHash": "93b82dba785d9c2799e59e8aa4dc886d5d474a5f"
+      "baseHash": "61a20bbe5190cfdbb38949d3397808034afb46c9"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "453a8e280be0833d0470e6645db217a108710036"
+      "baseHash": "d23a9ecca6a82a2e0de2473a7ca7d8ad613053ef"
     },
     {
       "type": "patch",
@@ -483,7 +483,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Image/AssetSourceResolver.windows.js",
       "baseFile": "packages/react-native/Libraries/Image/AssetSourceResolver.js",
-      "baseHash": "2a43e21c13507780d98cfab848b98d9534fda4b1"
+      "baseHash": "2c318e9f701806ff8ac9373ab7f39dd6f2e0255a"
     },
     {
       "type": "patch",
@@ -527,7 +527,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "91e7e2aacf6c1559247dccad0c581fde64202bf3"
+      "baseHash": "0b4642542c2865c5cd3d542a82b295a1aca21c1a"
     },
     {
       "type": "derived",
