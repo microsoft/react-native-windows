@@ -8,7 +8,7 @@
     "lint:fix": "rnw-scripts lint:fix"
   },
   "devDependencies": {
-    "@react-native-windows/automation": "^0.3.293",
+    "@react-native-windows/automation": "^0.3.294",
     "@react-native-windows/fs": "^0.0.0-canary.57",
     "@rnw-scripts/eslint-config": "1.2.28",
     "@rnw-scripts/ts-config": "2.0.5",

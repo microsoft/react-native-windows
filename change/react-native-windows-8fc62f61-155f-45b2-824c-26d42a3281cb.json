@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "SampleTurboModule only works as a turbomodule, so do not install it when using web debugger",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

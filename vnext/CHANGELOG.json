@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 07 Oct 2024 19:06:03 GMT",
+      "version": "0.0.0-canary.872",
+      "tag": "react-native-windows_v0.0.0-canary.872",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bcb7c901080ffdf8d5e870d0a4c7cbd74f4af5c3",
+            "comment": "Exclude NuGet package lock files from NPM packages"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bc8039e64a43bb834436ff7466e5a6af52c7443f",
+            "comment": "SampleTurboModule only works as a turbomodule, so do not install it when using web debugger"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Sep 2024 16:33:12 GMT",
       "version": "0.0.0-canary.871",
       "tag": "react-native-windows_v0.0.0-canary.871",

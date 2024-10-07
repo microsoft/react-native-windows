@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Mon, 30 Sep 2024 16:33:12 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 07 Oct 2024 19:06:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.212
+
+Mon, 07 Oct 2024 19:06:03 GMT
+
+### Patches
+
+- Exclude NuGet package lock files from NPM packages (jthysell@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.872
 
 ## 0.12.211
 

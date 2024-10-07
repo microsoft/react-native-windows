@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 30 Sep 2024 16:33:12 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 07 Oct 2024 19:06:03 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.872
+
+Mon, 07 Oct 2024 19:06:03 GMT
+
+### Changes
+
+- Exclude NuGet package lock files from NPM packages (jthysell@microsoft.com)
+- SampleTurboModule only works as a turbomodule, so do not install it when using web debugger (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.871
 
