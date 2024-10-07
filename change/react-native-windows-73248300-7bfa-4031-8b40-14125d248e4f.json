@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Exclude NuGet package lock files from NPM packages",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
