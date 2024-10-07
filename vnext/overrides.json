@@ -472,9 +472,8 @@
     {
       "type": "copy",
       "file": "src-win/Libraries/DevToolsSettings/DevToolsSettingsManager.windows.js",
-      "baseFile": "packages/react-native/Libraries/DevToolsSettings/DevToolsSettingsManager.android.js",
-      "baseVersion": "0.77.0-nightly-20240925-0cb32d5ac",
-      "baseHash": "1c9eb481e8ed077fa650e3ea34837e2a31310366"
+      "baseFile": "packages/react-native/src/private/reactdevtools/ReactDevToolsSettingsManager.android.js",
+      "baseHash": "df41b76dc3d2df9455fae588748261d7b0a22d01"
     },
     {
       "type": "platform",

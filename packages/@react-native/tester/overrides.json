@@ -19,7 +19,6 @@
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
-      "baseVersion": "0.77.0-nightly-20240925-0cb32d5ac",
       "baseHash": "8679456302662e4ce453c6bb41740a8739d3b5f0",
       "issue": 4054
     },
@@ -209,7 +208,6 @@
       "type": "copy",
       "directory": "js/examples/Modal",
       "baseDirectory": "packages/rn-tester/js/examples/Modal",
-      "baseVersion": "0.77.0-nightly-20240925-0cb32d5ac",
       "baseHash": "e4cbd489c88782d6d22aa7cbd404bf4e522b480c",
       "issue": 4054
     },

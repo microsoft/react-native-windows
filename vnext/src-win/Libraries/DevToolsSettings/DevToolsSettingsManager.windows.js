@@ -8,28 +8,13 @@
  * @format
  */
 
-import DevSettings from '../Utilities/DevSettings';
-import NativeDevToolsSettingsManager from './NativeDevToolsSettingsManager';
+import NativeReactDevToolsSettingsManager from '../specs/modules/NativeReactDevToolsSettingsManager';
 
 module.exports = {
-  setConsolePatchSettings(newSettings: string) {
-    NativeDevToolsSettingsManager?.setConsolePatchSettings(newSettings);
+  setGlobalHookSettings(settings: string) {
+    NativeReactDevToolsSettingsManager?.setGlobalHookSettings(settings);
   },
-  getConsolePatchSettings(): ?string {
-    return NativeDevToolsSettingsManager?.getConsolePatchSettings();
-  },
-  setProfilingSettings(newSettings: string) {
-    if (NativeDevToolsSettingsManager?.setProfilingSettings != null) {
-      NativeDevToolsSettingsManager.setProfilingSettings(newSettings);
-    }
-  },
-  getProfilingSettings(): ?string {
-    if (NativeDevToolsSettingsManager?.getProfilingSettings != null) {
-      return NativeDevToolsSettingsManager.getProfilingSettings();
-    }
-    return null;
-  },
-  reload(): void {
-    DevSettings?.reload();
+  getGlobalHookSettings(): ?string {
+    return NativeReactDevToolsSettingsManager?.getGlobalHookSettings();
   },
 };
