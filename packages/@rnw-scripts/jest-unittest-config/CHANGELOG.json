@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/jest-unittest-config",
   "entries": [
     {
+      "date": "Mon, 07 Oct 2024 19:54:24 GMT",
+      "version": "1.5.11",
+      "tag": "@rnw-scripts/jest-unittest-config_v1.5.11",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@rnw-scripts/jest-unittest-config",
+            "commit": "eb6b345ee2128d56f32c85f1702bb093e0375a1f",
+            "comment": "integrate RN nightly 0.77.0-nightly-20240921-1747f57c6"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Sep 2024 17:38:25 GMT",
       "version": "1.5.9",
       "tag": "@rnw-scripts/jest-unittest-config_v1.5.9",
