@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-nightly-20240925-0cb32d5ac",
+  "baseVersion": "0.77.0-nightly-20241001-223e98cc4",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "3fbaf9dcd4027fa382894d06f330d0c68ceff9fb"
+      "baseHash": "0ef50a705dc56608e4a8bd11d3b0d3daedfc0012"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "da5d9e79c8c14c56ba00f73c8514c06e6fffe8ed"
+      "baseHash": "70b04f859a60e3752e6937b9fc294ffee30e6366"
     },
     {
       "type": "platform",
@@ -74,7 +74,7 @@
       "type": "copy",
       "file": "src-win/Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.js",
       "baseFile": "packages/react-native/Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.js",
-      "baseHash": "09f143fc3f2ee80463764e1c2b3f23107d501a4c",
+      "baseHash": "b9a6866d03ca389af38734ffed24199505b05402",
       "issue": 4378
     },
     {
@@ -136,7 +136,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/Touchable.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/Touchable.js",
-      "baseHash": "27e19d3bf49ff28629fdad544aad04939c2ce030",
+      "baseHash": "b06bb9da5282d7559f283a7d535797a0417808a6",
       "issue": 0
     },
     {
@@ -228,6 +228,7 @@
       "type": "copy",
       "file": "src-win/Libraries/DevToolsSettings/DevToolsSettingsManager.win32.js",
       "baseFile": "packages/react-native/Libraries/DevToolsSettings/DevToolsSettingsManager.android.js",
+      "baseVersion": "0.77.0-nightly-20240925-0cb32d5ac",
       "baseHash": "1c9eb481e8ed077fa650e3ea34837e2a31310366"
     },
     {
@@ -337,7 +338,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "0b4642542c2865c5cd3d542a82b295a1aca21c1a"
+      "baseHash": "af602af3c3acc6521f5535f2fe14bfe08cf1b5e9"
     },
     {
       "type": "copy",
