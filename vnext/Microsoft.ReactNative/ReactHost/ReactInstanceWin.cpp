@@ -400,6 +400,13 @@ void ReactInstanceWin::LoadModules(
   }
 #endif
 
+  if (!m_options.UseWebDebugger()) {
+    turboModulesProvider->AddModuleProvider(
+        L"SampleTurboModule",
+        winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SampleTurboModule>(),
+        false);
+  }
+
   if (devSettings->useTurboModulesOnly) {
     ::Microsoft::ReactNative::ExceptionsManager::SetRedBoxHander(
         winrt::Microsoft::ReactNative::ReactPropertyBag(m_reactContext->Properties()), m_redboxHandler);
@@ -414,10 +421,6 @@ void ReactInstanceWin::LoadModules(
     registerTurboModule(
         L"PlatformConstants",
         winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::PlatformConstants>());
-
-  registerTurboModule(
-      L"SampleTurboModule",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SampleTurboModule>());
 
   uint32_t hermesBytecodeVersion = 0;
 #if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
