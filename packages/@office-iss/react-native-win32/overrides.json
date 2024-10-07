@@ -226,7 +226,7 @@
     },
     {
       "type": "copy",
-      "file": "src-win/Libraries/DevToolsSettings/DevToolsSettingsManager.win32.js",
+      "file": "src/private/reactdevtools/ReactDevToolsSettingsManager.win32.js",
       "baseFile": "packages/react-native/src/private/reactdevtools/ReactDevToolsSettingsManager.android.js",
       "baseHash": "df41b76dc3d2df9455fae588748261d7b0a22d01"
     },
