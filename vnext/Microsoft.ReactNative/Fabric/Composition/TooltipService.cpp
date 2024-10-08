@@ -237,7 +237,8 @@ void TooltipTracker::ShowTooltip(const winrt::Microsoft::ReactNative::ComponentV
     DWRITE_TEXT_METRICS tm;
     winrt::check_hresult(tooltipData->textLayout->GetMetrics(&tm));
 
-    tooltipData->width = static_cast<int>(tm.width + ((tooltipHorizontalPadding + tooltipHorizontalPadding) * scaleFactor));
+    tooltipData->width =
+        static_cast<int>(tm.width + ((tooltipHorizontalPadding + tooltipHorizontalPadding) * scaleFactor));
     tooltipData->height = static_cast<int>(tm.height + ((tooltipTopPadding + tooltipBottomPadding) * scaleFactor));
 
     POINT pt = {static_cast<LONG>(m_pos.X), static_cast<LONG>(m_pos.Y)};
@@ -298,8 +299,8 @@ void TooltipService::StopTracking(const winrt::Microsoft::ReactNative::Component
   }
 }
 
-static const ReactPropertyId<winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<TooltipService>>> &
-TooltipServicePropertyId() noexcept {
+static const ReactPropertyId<winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<TooltipService>>>
+    &TooltipServicePropertyId() noexcept {
   static const ReactPropertyId<winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<TooltipService>>> prop{
       L"ReactNative", L"TooltipService"};
   return prop;
