@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 08 Oct 2024 19:10:04 GMT",
+      "version": "0.0.0-canary.873",
+      "tag": "react-native-windows_v0.0.0-canary.873",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "67a19fee053ce0fba0d7504a293369c83656d243",
+            "comment": "Use a legacy native module binding that always returns null in bridgeless mode"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Oct 2024 19:54:23 GMT",
       "version": "0.0.0-canary.872",
       "tag": "react-native-windows_v0.0.0-canary.872",
