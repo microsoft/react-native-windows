@@ -26,6 +26,7 @@ constexpr float tooltipBottomPadding = 7;
 constexpr float toolTipBorderThickness = 1;
 constexpr int toolTipPlacementMargin = 12;
 constexpr int toolTipAnimationTimeMs = 200;
+constexpr int toolTipTimeToShowMs = 1000;
 
 struct TooltipData {
   TooltipData(const winrt::Microsoft::ReactNative::ComponentView &view) : view(view) {}
@@ -163,6 +164,7 @@ TooltipTracker::TooltipTracker(
     : m_view(view), m_properties(properties), m_outer(outer) {
   view.PointerEntered({this, &TooltipTracker::OnPointerEntered});
   view.PointerExited({this, &TooltipTracker::OnPointerExited});
+  view.PointerMoved({this, &TooltipTracker::OnPointerMoved});
 }
 
 TooltipTracker::~TooltipTracker() {
@@ -186,9 +188,21 @@ void TooltipTracker::OnPointerEntered(
   m_pos = pp.Position();
 
   m_timer = winrt::Microsoft::ReactNative::Timer::Create(m_properties.Handle());
-  m_timer.Interval(std::chrono::milliseconds(500));
+  m_timer.Interval(std::chrono::milliseconds(toolTipTimeToShowMs));
   m_timer.Tick({this, &TooltipTracker::OnTick});
   m_timer.Start();
+}
+
+void TooltipTracker::OnPointerMoved(
+    const winrt::Windows::Foundation::IInspectable &sender,
+    const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept {
+  if (args.Pointer().PointerDeviceType() !=
+          winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse &&
+      args.Pointer().PointerDeviceType() != winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Pen)
+    return;
+
+  auto pp = args.GetCurrentPoint(-1);
+  m_pos = pp.Position();
 }
 
 void TooltipTracker::OnTick(

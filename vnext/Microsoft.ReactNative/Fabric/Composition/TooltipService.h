@@ -21,6 +21,9 @@ struct TooltipTracker {
   void OnPointerEntered(
       const winrt::Windows::Foundation::IInspectable &sender,
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
+  void OnPointerMoved(
+      const winrt::Windows::Foundation::IInspectable &sender,
+      const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
   void OnPointerExited(
       const winrt::Windows::Foundation::IInspectable &sender,
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
