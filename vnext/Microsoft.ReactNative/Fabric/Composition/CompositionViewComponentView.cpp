@@ -23,6 +23,7 @@
 #include "CompositionHelpers.h"
 #include "RootComponentView.h"
 #include "Theme.h"
+#include "TooltipService.h"
 #include "UiaHelpers.h"
 #include "d2d1helper.h"
 
@@ -128,6 +129,14 @@ void ComponentView::updateProps(
   }
   if ((m_flags & ComponentViewFeatures::ShadowProps) == ComponentViewFeatures::ShadowProps) {
     updateShadowProps(oldViewProps, newViewProps);
+  }
+
+  if (oldViewProps.tooltip != newViewProps.tooltip) {
+    if (newViewProps.tooltip) {
+      TooltipService::GetCurrent(m_reactContext.Properties())->StartTracking(*this);
+    } else {
+      TooltipService::GetCurrent(m_reactContext.Properties())->StopTracking(*this);
+    }
   }
 
   base_type::updateProps(props, oldProps);
