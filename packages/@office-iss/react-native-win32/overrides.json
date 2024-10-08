@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.76.0-nightly-20240901-305b4357e",
+  "baseVersion": "0.77.0-nightly-20240921-1747f57c6",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "67b097833fd6733db6c64c57fbcb2efb3e9b51c5"
+      "baseHash": "3fbaf9dcd4027fa382894d06f330d0c68ceff9fb"
     },
     {
       "type": "derived",
@@ -30,13 +30,6 @@
       "file": "src-win/Libraries/Alert/Alert.win32.js",
       "baseFile": "packages/react-native/Libraries/Alert/Alert.js",
       "baseHash": "173b99e6ae120f14176cf3425877728787d3feed"
-    },
-    {
-      "type": "derived",
-      "file": "src-win/Libraries/Animated/NativeAnimatedHelper.win32.js",
-      "baseFile": "packages/react-native/Libraries/Animated/NativeAnimatedHelper.js",
-      "baseHash": "2cefe6e59aa26f98158be3f35452f9a49d8395c4",
-      "issue": 11041
     },
     {
       "type": "derived",
@@ -116,7 +109,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "494c1159a38de1b57d3889a4dabdc3708204ad4d"
+      "baseHash": "19224f9b870df6e0c82d8da36f1f7b22bdd6b596"
     },
     {
       "type": "patch",
@@ -299,7 +292,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "packages/react-native/Libraries/Inspector/Inspector.js",
-      "baseHash": "847b7e0e4f2088fac00f36eb30f3fa3b8e94ec14"
+      "baseHash": "ac4d1824877906651f2d82ab7910dda3ecb2bd80"
     },
     {
       "type": "patch",
@@ -317,7 +310,7 @@
       "type": "patch",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorHeader.win32.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorHeader.js",
-      "baseHash": "46b6ee5d65a0c820dd0a2415bd8f43e5e8807bae",
+      "baseHash": "9e394821ea51994288aa4626d0fdff7aae1aa0a1",
       "issue": 7952
     },
     {
@@ -344,7 +337,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "91e7e2aacf6c1559247dccad0c581fde64202bf3"
+      "baseHash": "0b4642542c2865c5cd3d542a82b295a1aca21c1a"
     },
     {
       "type": "copy",
@@ -445,7 +438,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/TextNativeComponent.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/TextNativeComponent.js",
-      "baseHash": "642b6fc1c5b5802e3612f39c2ae0135b149a65f8",
+      "baseHash": "1b2e6301edc13f3a91e47b9befe8a47a12e6ad39",
       "issue": 7074
     },
     {
@@ -511,6 +504,13 @@
       "file": "src-win/Libraries/Utilities/useMergeRefs.js",
       "baseFile": "packages/react-native/Libraries/Utilities/useMergeRefs.js",
       "baseHash": "1f1ca637132e6e0fe1549ba520d98508269ca2bd"
+    },
+    {
+      "type": "patch",
+      "file": "src-win/src/private/animated/NativeAnimatedHelper.win32.js",
+      "baseFile": "packages/react-native/src/private/animated/NativeAnimatedHelper.js",
+      "baseHash": "bc63f57b28f1e98755101f650a2c15b6aa263abf",
+      "issue": 11041
     },
     {
       "type": "derived",

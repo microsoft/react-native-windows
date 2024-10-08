@@ -56,14 +56,14 @@ void SwitchComponentView::UnmountChildComponentView(
   base_type::UnmountChildComponentView(childComponentView, index);
 }
 
-void SwitchComponentView::HandleCommand(
-    winrt::hstring commandName,
-    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+void SwitchComponentView::HandleCommand(const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
+  Super::HandleCommand(args);
+  if (args.Handled())
+    return;
+  auto commandName = args.CommandName();
   if (commandName == L"setValue") {
     // TODO - Current implementation always aligns with JS value
     // This will be needed when we move to using WinUI controls
-  } else {
-    Super::HandleCommand(commandName, args);
   }
 }
 
@@ -261,7 +261,7 @@ void SwitchComponentView::OnPointerPressed(
     m_supressAnimationForNextFrame = true;
 
     if (auto root = rootComponentView()) {
-      root->TrySetFocusedComponent(*get_strong());
+      root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
     }
 
     updateVisuals();

@@ -1,8 +1,68 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 10 Sep 2024 05:15:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 07 Oct 2024 19:54:23 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.872
+
+Mon, 07 Oct 2024 19:54:23 GMT
+
+### Changes
+
+- SampleTurboModule only works as a turbomodule, so do not install it when using web debugger (30809111+acoates-ms@users.noreply.github.com)
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Exclude NuGet package lock files from NPM packages (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.239
+- Bump @react-native-windows/codegen to v0.0.0-canary.106
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.33
+- Bump @rnw-scripts/just-task to v2.3.46
+- Bump react-native-platform-override to v1.9.48
+
+## 0.0.0-canary.871
+
+Mon, 30 Sep 2024 16:33:12 GMT
+
+### Changes
+
+- Update cpp-app template (10109130+sharath2727@users.noreply.github.com)
+
+## 0.0.0-canary.869
+
+Thu, 26 Sep 2024 17:38:23 GMT
+
+### Changes
+
+- [Fabric] LayoutDirection and FontSizeMultiplier support (30809111+acoates-ms@users.noreply.github.com)
+- add invoke support for link (yajurgrover24@gmail.com)
+- RN Integration 9/9 (1422161+marlenecota@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.237
+- Bump @react-native-windows/codegen to v0.0.0-canary.104
+- Bump @rnw-scripts/eslint-config to v1.2.27
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.31
+- Bump @rnw-scripts/just-task to v2.3.44
+- Bump react-native-platform-override to v1.9.46
+
+## 0.0.0-canary.868
+
+Mon, 16 Sep 2024 21:21:14 GMT
+
+### Changes
+
+- [Fabric] Add FocusNavigationDirection and allow overriding of default command handling (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.236
+- Bump @react-native-windows/codegen to v0.0.0-canary.103
+
+## 0.0.0-canary.867
+
+Wed, 11 Sep 2024 20:06:16 GMT
+
+### Changes
+
+- [Fabric] Enable ScrollView touch scrolling (30809111+acoates-ms@users.noreply.github.com)
+- Create separate NuGet restore lock files for Fabric builds (jthysell@microsoft.com)
+- [Fabric] LogBox should destroy its window on instance shutdown (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.866
 

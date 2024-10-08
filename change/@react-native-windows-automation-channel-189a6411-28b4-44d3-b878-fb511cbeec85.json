@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Create separate NuGet restore lock files for Fabric builds",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

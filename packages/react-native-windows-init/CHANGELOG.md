@@ -1,8 +1,43 @@
 # Change Log - react-native-windows-init
 
-<!-- This log was last generated on Sat, 07 Sep 2024 05:14:12 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 07 Oct 2024 19:54:23 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.43
+
+Mon, 07 Oct 2024 19:54:23 GMT
+
+### Patches
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.58
+- Bump @react-native-windows/telemetry to v0.0.0-canary.110
+- Bump @react-native-windows/cli to v0.0.0-canary.239
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/jest-unittest-config to v1.5.11
+- Bump @rnw-scripts/just-task to v2.3.46
+
+## 1.4.41
+
+Thu, 26 Sep 2024 17:38:27 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.56
+- Bump @react-native-windows/telemetry to v0.0.0-canary.108
+- Bump @react-native-windows/cli to v0.0.0-canary.237
+- Bump @rnw-scripts/eslint-config to v1.2.27
+- Bump @rnw-scripts/jest-unittest-config to v1.5.9
+- Bump @rnw-scripts/just-task to v2.3.44
+
+## 1.4.40
+
+Mon, 16 Sep 2024 21:21:15 GMT
+
+### Patches
+
+- Bump @react-native-windows/cli to v0.0.0-canary.236
 
 ## 1.4.39
 

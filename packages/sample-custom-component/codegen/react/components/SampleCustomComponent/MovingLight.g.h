@@ -115,12 +115,12 @@ struct BaseMovingLight {
   // You must provide an implementation of this method to handle the "setLightOn" command
   virtual void HandleSetLightOnCommand(bool value) noexcept = 0;
 
-  void HandleCommand(const winrt::Microsoft::ReactNative::ComponentView &view, winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
-    args;
+  void HandleCommand(const winrt::Microsoft::ReactNative::ComponentView &view, const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
     auto userData = view.UserData().as<TUserData>();
+    auto commandName = args.CommandName();
     if (commandName == L"setLightOn") {
       bool value;
-      winrt::Microsoft::ReactNative::ReadArgs(args, value);
+      winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), value);
       userData->HandleSetLightOnCommand(value);
       return;
     }
@@ -175,10 +175,9 @@ void RegisterMovingLightNativeComponent(
         }
 
         builder.SetCustomCommandHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
-                                          winrt::hstring commandName,
-                                          const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+                                          const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
           auto userData = view.UserData().as<TUserData>();
-          userData->HandleCommand(view, commandName, args);
+          userData->HandleCommand(view, args);
         });
 
         if constexpr (&TUserData::MountChildComponentView != &BaseMovingLight<TUserData>::MountChildComponentView) {

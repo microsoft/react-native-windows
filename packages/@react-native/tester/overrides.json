@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.76.0-nightly-20240901-305b4357e",
+  "baseVersion": "0.77.0-nightly-20240921-1747f57c6",
   "overrides": [
     {
       "type": "copy",
@@ -12,7 +12,8 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "ccf010ec403d61126a79506802928270b7b74ee9",
+      "baseVersion": "0.77.0-nightly-20240915-afb40e9f2",
+      "baseHash": "c3668e7f1197c559d18ff6cb16078f53636ddc29",
       "issue": 4054
     },
     {
@@ -131,21 +132,23 @@
       "type": "copy",
       "directory": "js/examples/Filter",
       "baseDirectory": "packages/rn-tester/js/examples/Filter",
-      "baseHash": "f452d57a8f985da0375c223ea0cd710f22b1313a",
+      "baseVersion": "0.77.0-nightly-20240915-afb40e9f2",
+      "baseHash": "0bc04c6ee9f9c427da85915be91c0d49aeede435",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/FlatList",
       "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "efdf9f331dea59374a48ed40f8202ece4b7b4e3c",
+      "baseHash": "ba2eb97b95116e0dee8796d5053574fa4d3e18db",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Image",
       "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseHash": "16be0e00eb2af54ac42933e0c3f79a58af7c2144",
+      "baseVersion": "0.77.0-nightly-20240915-afb40e9f2",
+      "baseHash": "52c008e059a1385dc9a49b5f773ca1f1f4389b61",
       "issue": 4054
     },
     {
@@ -208,7 +211,8 @@
       "type": "copy",
       "directory": "js/examples/Modal",
       "baseDirectory": "packages/rn-tester/js/examples/Modal",
-      "baseHash": "ec81ace5a2a313a128939467110c931dd45b1703",
+      "baseVersion": "0.77.0-nightly-20240918-bebd6531b",
+      "baseHash": "2a676165a58a182d633eede14add631af3cc134f",
       "issue": 4054
     },
     {
@@ -341,7 +345,7 @@
       "type": "copy",
       "directory": "js/examples/SectionList",
       "baseDirectory": "packages/rn-tester/js/examples/SectionList",
-      "baseHash": "6eece2a1231a745ae8cba5c42b1b9274ea2e12bb",
+      "baseHash": "aefc6fb28df280928ecd58eab5950afd607e4071",
       "issue": 4054
     },
     {
@@ -390,14 +394,16 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "fde8e7d13900439129ee6d48fc8c037667c8d8bc",
+      "baseVersion": "0.77.0-nightly-20240915-afb40e9f2",
+      "baseHash": "528bba6e7f5938ec8c81c54471962883047e68f3",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "986ccca321c59084c52956bbaf32dbe72e844006",
+      "baseVersion": "0.77.0-nightly-20240915-afb40e9f2",
+      "baseHash": "517045664204290fb29333ce7919cb6855d8c33f",
       "issue": 4054
     },
     {
@@ -453,7 +459,7 @@
       "type": "copy",
       "directory": "js/examples/View",
       "baseDirectory": "packages/rn-tester/js/examples/View",
-      "baseHash": "9ba75b48229fa4bdbee1b08def0ca6458a492982",
+      "baseHash": "f348591a6bbd8c0dca7bf64229ba256515c94231",
       "issue": 4054
     },
     {
@@ -495,7 +501,7 @@
       "type": "copy",
       "directory": "js/types",
       "baseDirectory": "packages/rn-tester/js/types",
-      "baseHash": "b3759879c62d3813d62e7e59e1c7b6f216240b95",
+      "baseHash": "789c5ff543590fece7ea04ed41d6818f5dbe15d2",
       "issue": 4054
     },
     {
@@ -544,7 +550,7 @@
       "type": "copy",
       "file": "NativeComponentExample/js/MyNativeView.js",
       "baseFile": "packages/rn-tester/NativeComponentExample/js/MyNativeView.js",
-      "baseHash": "2ad7976c764e91346fd87254acaf72f5071674b7",
+      "baseHash": "284dc6e671bd30ab7ed27e26562b1b7769231ed0",
       "issue": 4054
     },
     {
@@ -572,7 +578,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "3fa0481a7539b35d7187b4cbdb94174c5f261ef1",
+      "baseHash": "77fd235a74287fea760daf65a013839724cd9e03",
       "issue": 13228
     }
   ]

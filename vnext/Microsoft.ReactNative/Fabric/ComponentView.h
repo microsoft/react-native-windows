@@ -93,7 +93,8 @@ struct ComponentView : public ComponentViewT<ComponentView> {
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept;
   virtual void prepareForRecycle() noexcept;
   virtual facebook::react::Props::Shared props() noexcept;
-  virtual winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *rootComponentView() noexcept;
+  virtual winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *rootComponentView()
+      const noexcept;
   virtual void parent(const winrt::Microsoft::ReactNative::ComponentView &parent) noexcept;
   virtual winrt::Microsoft::ReactNative::ComponentView Parent() const noexcept;
   virtual winrt::IVectorView<winrt::Microsoft::ReactNative::ComponentView> Children() const noexcept;
@@ -228,9 +229,7 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   virtual void UnmountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept;
-  virtual void HandleCommand(
-      winrt::hstring commandName,
-      const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept;
+  virtual void HandleCommand(const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept;
   virtual void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept;
   virtual void OnPointerEntered(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept;
@@ -255,7 +254,7 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   bool m_mounted : 1 {false};
   const facebook::react::Tag m_tag;
   winrt::IInspectable m_userData;
-  winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *m_rootView{nullptr};
+  mutable winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *m_rootView{nullptr};
   mutable winrt::Microsoft::ReactNative::Composition::implementation::Theme *m_theme{nullptr};
   const winrt::Microsoft::ReactNative::ReactContext m_reactContext;
   winrt::Microsoft::ReactNative::ComponentView m_parent{nullptr};

@@ -1,8 +1,24 @@
 # Change Log - @rnw-scripts/jest-e2e-config
 
-This log was last generated on Tue, 27 Feb 2024 06:18:03 GMT and should not be manually modified.
+<!-- This log was last generated on Mon, 07 Oct 2024 19:54:24 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.11
+
+Mon, 07 Oct 2024 19:54:24 GMT
+
+### Patches
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+
+## 1.4.9
+
+Thu, 26 Sep 2024 17:38:24 GMT
+
+### Patches
+
+- RN Integration 9/9 (tatianakapos@microsoft.com)
 
 ## 1.4.8
 

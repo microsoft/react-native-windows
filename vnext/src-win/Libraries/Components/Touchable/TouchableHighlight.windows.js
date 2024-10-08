@@ -44,7 +44,7 @@ type Props = $ReadOnly<{|
   onHideUnderlay?: ?() => void,
   testOnly_pressed?: ?boolean,
 
-  hostRef: React.Ref<typeof View>,
+  hostRef: React.RefSetter<React.ElementRef<typeof View>>,
 |}>;
 
 type ExtraStyles = $ReadOnly<{|
@@ -397,7 +397,7 @@ class TouchableHighlight extends React.Component<Props, State> {
 }
 
 const Touchable: React.AbstractComponent<
-  $ReadOnly<$Diff<Props, {|hostRef: React.Ref<typeof View>|}>>,
+  $ReadOnly<$Diff<Props, {|+hostRef: mixed|}>>,
   React.ElementRef<typeof View>,
 > = React.forwardRef((props, hostRef) => (
   <TouchableHighlight {...props} hostRef={hostRef} />

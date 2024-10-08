@@ -1,4 +1,4 @@
 module.exports = {
   extends: ['@rnw-scripts'],
-  parserOptions: { tsconfigRootDir: __dirname },
+  parserOptions: {tsconfigRootDir : __dirname},
 };

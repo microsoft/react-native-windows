@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "[Fabric] LogBox should destroy its window on instance shutdown",
+  "comment": "Use a legacy native module binding that always returns null in bridgeless mode",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
