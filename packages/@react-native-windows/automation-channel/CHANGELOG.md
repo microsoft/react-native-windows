@@ -1,8 +1,20 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Mon, 30 Sep 2024 16:33:12 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 07 Oct 2024 19:54:26 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.212
+
+Mon, 07 Oct 2024 19:54:26 GMT
+
+### Patches
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Exclude NuGet package lock files from NPM packages (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/just-task to v2.3.46
+- Bump react-native-windows to v0.0.0-canary.872
 
 ## 0.12.211
 

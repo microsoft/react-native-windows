@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/jest-out-of-tree-resolver",
   "entries": [
     {
+      "date": "Mon, 07 Oct 2024 19:54:27 GMT",
+      "version": "1.1.32",
+      "tag": "@rnw-scripts/jest-out-of-tree-resolver_v1.1.32",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/jest-out-of-tree-resolver",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.29",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 26 Sep 2024 17:38:27 GMT",
       "version": "1.1.30",
       "tag": "@rnw-scripts/jest-out-of-tree-resolver_v1.1.30",

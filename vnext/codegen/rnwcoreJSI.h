@@ -26,9 +26,11 @@ public:
   virtual bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) = 0;
   virtual bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) = 0;
+  virtual bool enableAndroidLineHeightCentering(jsi::Runtime &rt) = 0;
   virtual bool enableAndroidMixBlendModeProp(jsi::Runtime &rt) = 0;
   virtual bool enableBackgroundStyleApplicator(jsi::Runtime &rt) = 0;
   virtual bool enableCleanTextInputYogaNode(jsi::Runtime &rt) = 0;
+  virtual bool enableDeletionOfUnmountedViews(jsi::Runtime &rt) = 0;
   virtual bool enableEagerRootViewAttachment(jsi::Runtime &rt) = 0;
   virtual bool enableEventEmitterRetentionDuringGesturesOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableFabricLogs(jsi::Runtime &rt) = 0;
@@ -38,16 +40,16 @@ public:
   virtual bool enableLayoutAnimationsOnIOS(jsi::Runtime &rt) = 0;
   virtual bool enableLongTaskAPI(jsi::Runtime &rt) = 0;
   virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
+  virtual bool enablePreciseSchedulingForPremountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableReportEventPaintTime(jsi::Runtime &rt) = 0;
   virtual bool enableSynchronousStateUpdates(jsi::Runtime &rt) = 0;
+  virtual bool enableTextPreallocationOptimisation(jsi::Runtime &rt) = 0;
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
   virtual bool enableViewRecycling(jsi::Runtime &rt) = 0;
   virtual bool excludeYogaFromRawProps(jsi::Runtime &rt) = 0;
   virtual bool fetchImagesInViewPreallocation(jsi::Runtime &rt) = 0;
-  virtual bool fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
-  virtual bool fixMissedFabricStateUpdatesOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledDebug(jsi::Runtime &rt) = 0;
@@ -55,6 +57,7 @@ public:
   virtual bool initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime &rt) = 0;
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
   virtual bool loadVectorDrawablesOnImages(jsi::Runtime &rt) = 0;
+  virtual bool removeNestedCallsToDispatchMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool setAndroidLayoutDirection(jsi::Runtime &rt) = 0;
   virtual bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useFabricInterop(jsi::Runtime &rt) = 0;
@@ -142,6 +145,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableAlignItemsBaselineOnFabricIOS, jsInvoker_, instance_);
     }
+    bool enableAndroidLineHeightCentering(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableAndroidLineHeightCentering) == 1,
+          "Expected enableAndroidLineHeightCentering(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableAndroidLineHeightCentering, jsInvoker_, instance_);
+    }
     bool enableAndroidMixBlendModeProp(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableAndroidMixBlendModeProp) == 1,
@@ -165,6 +176,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableCleanTextInputYogaNode, jsInvoker_, instance_);
+    }
+    bool enableDeletionOfUnmountedViews(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableDeletionOfUnmountedViews) == 1,
+          "Expected enableDeletionOfUnmountedViews(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableDeletionOfUnmountedViews, jsInvoker_, instance_);
     }
     bool enableEagerRootViewAttachment(jsi::Runtime &rt) override {
       static_assert(
@@ -238,6 +257,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableMicrotasks, jsInvoker_, instance_);
     }
+    bool enablePreciseSchedulingForPremountItemsOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enablePreciseSchedulingForPremountItemsOnAndroid) == 1,
+          "Expected enablePreciseSchedulingForPremountItemsOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enablePreciseSchedulingForPremountItemsOnAndroid, jsInvoker_, instance_);
+    }
     bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enablePropsUpdateReconciliationAndroid) == 1,
@@ -261,6 +288,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableSynchronousStateUpdates, jsInvoker_, instance_);
+    }
+    bool enableTextPreallocationOptimisation(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableTextPreallocationOptimisation) == 1,
+          "Expected enableTextPreallocationOptimisation(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableTextPreallocationOptimisation, jsInvoker_, instance_);
     }
     bool enableUIConsistency(jsi::Runtime &rt) override {
       static_assert(
@@ -294,14 +329,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::fetchImagesInViewPreallocation, jsInvoker_, instance_);
     }
-    bool fixIncorrectScrollViewStateUpdateOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::fixIncorrectScrollViewStateUpdateOnAndroid) == 1,
-          "Expected fixIncorrectScrollViewStateUpdateOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::fixIncorrectScrollViewStateUpdateOnAndroid, jsInvoker_, instance_);
-    }
     bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::fixMappingOfEventPrioritiesBetweenFabricAndReact) == 1,
@@ -309,14 +336,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::fixMappingOfEventPrioritiesBetweenFabricAndReact, jsInvoker_, instance_);
-    }
-    bool fixMissedFabricStateUpdatesOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::fixMissedFabricStateUpdatesOnAndroid) == 1,
-          "Expected fixMissedFabricStateUpdatesOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::fixMissedFabricStateUpdatesOnAndroid, jsInvoker_, instance_);
     }
     bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -373,6 +392,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::loadVectorDrawablesOnImages, jsInvoker_, instance_);
+    }
+    bool removeNestedCallsToDispatchMountItemsOnAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::removeNestedCallsToDispatchMountItemsOnAndroid) == 1,
+          "Expected removeNestedCallsToDispatchMountItemsOnAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::removeNestedCallsToDispatchMountItemsOnAndroid, jsInvoker_, instance_);
     }
     bool setAndroidLayoutDirection(jsi::Runtime &rt) override {
       static_assert(

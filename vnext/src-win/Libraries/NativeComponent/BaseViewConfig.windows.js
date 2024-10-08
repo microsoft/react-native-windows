@@ -245,7 +245,7 @@ const validAttributesForNonEventProps = {
   experimental_filter: {
     process: require('../StyleSheet/processFilter').default,
   },
-  experimental_boxShadow: {
+  boxShadow: {
     process: require('../StyleSheet/processBoxShadow').default,
   },
   experimental_mixBlendMode: true,

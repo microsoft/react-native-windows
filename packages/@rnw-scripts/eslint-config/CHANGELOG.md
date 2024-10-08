@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/eslint-config
 
-<!-- This log was last generated on Thu, 26 Sep 2024 17:38:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 07 Oct 2024 19:54:25 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.2.29
+
+Mon, 07 Oct 2024 19:54:25 GMT
+
+### Patches
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
 
 ## 1.2.27
 
