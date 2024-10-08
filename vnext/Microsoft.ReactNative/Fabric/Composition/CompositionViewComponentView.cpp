@@ -44,6 +44,13 @@ ComponentView::ComponentView(
   m_outerVisual.InsertAt(m_focusVisual.InnerVisual(), 0);
 }
 
+ComponentView::~ComponentView() {
+  if (m_tooltipTracked) {
+    TooltipService::GetCurrent(m_reactContext.Properties())->StopTracking(*this);
+    m_tooltipTracked = false;
+  }
+}
+
 facebook::react::Tag ComponentView::Tag() const noexcept {
   return m_tag;
 }
@@ -132,10 +139,12 @@ void ComponentView::updateProps(
   }
 
   if (oldViewProps.tooltip != newViewProps.tooltip) {
-    if (newViewProps.tooltip) {
+    if (!m_tooltipTracked && newViewProps.tooltip) {
       TooltipService::GetCurrent(m_reactContext.Properties())->StartTracking(*this);
-    } else {
+      m_tooltipTracked = true;
+    } else if (m_tooltipTracked && !newViewProps.tooltip) {
       TooltipService::GetCurrent(m_reactContext.Properties())->StopTracking(*this);
+      m_tooltipTracked = false;
     }
   }
 

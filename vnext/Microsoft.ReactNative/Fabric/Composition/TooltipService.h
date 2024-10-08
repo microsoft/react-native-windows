@@ -30,6 +30,9 @@ struct TooltipTracker {
   void OnTick(
       const winrt::Windows::Foundation::IInspectable &,
       const winrt::Windows::Foundation::IInspectable &) noexcept;
+  void OnUnmounted(
+      const winrt::Windows::Foundation::IInspectable &,
+      const winrt::Microsoft::ReactNative::ComponentView &) noexcept;
 
   facebook::react::Tag Tag() const noexcept;
 
@@ -50,9 +53,6 @@ struct TooltipService {
   TooltipService(const winrt::Microsoft::ReactNative::ReactPropertyBag &properties);
   void StartTracking(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept;
   void StopTracking(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept;
-
-  void Entered(std::shared_ptr<TooltipTracker> tracker) noexcept;
-  void Exited(std::shared_ptr<TooltipTracker> tracker) noexcept;
 
   static std::shared_ptr<TooltipService> GetCurrent(
       const winrt::Microsoft::ReactNative::ReactPropertyBag &properties) noexcept;

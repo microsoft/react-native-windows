@@ -165,6 +165,7 @@ TooltipTracker::TooltipTracker(
   view.PointerEntered({this, &TooltipTracker::OnPointerEntered});
   view.PointerExited({this, &TooltipTracker::OnPointerExited});
   view.PointerMoved({this, &TooltipTracker::OnPointerMoved});
+  view.Unmounted({this, &TooltipTracker::OnUnmounted});
 }
 
 TooltipTracker::~TooltipTracker() {
@@ -218,6 +219,13 @@ void TooltipTracker::OnPointerExited(
           winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Mouse &&
       args.Pointer().PointerDeviceType() != winrt::Microsoft::ReactNative::Composition::Input::PointerDeviceType::Pen)
     return;
+  DestroyTimer();
+  DestroyTooltip();
+}
+
+void TooltipTracker::OnUnmounted(
+    const winrt::Windows::Foundation::IInspectable &,
+    const winrt::Microsoft::ReactNative::ComponentView &) noexcept {
   DestroyTimer();
   DestroyTooltip();
 }
