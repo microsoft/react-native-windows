@@ -283,6 +283,13 @@
     },
     {
       "type": "copy",
+      "directory": "js/examples/Playground",
+      "baseDirectory": "packages/rn-tester/js/examples/Playground",
+      "baseHash": "e47040a1660aa6acaf06e912226c0e2a78dd7760",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
       "directory": "js/examples/PointerEvents",
       "baseDirectory": "packages/rn-tester/js/examples/PointerEvents",
       "baseHash": "f3054ec6fb37c2be1064a9573aec03e8a8601db1",

@@ -184,6 +184,20 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/performance/timeline/PerformanceEntryReporter.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/performance/timeline/PerformanceEntryReporter.cpp",
+      "baseHash": "2b13190288dfb30dc4fe0631c9e64d73e1e2baea",
+      "issue": 13939
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/performance/timeline/PerformanceEntryReporter.h",
+      "baseFile": "packages/react-native/ReactCommon/react/performance/timeline/PerformanceEntryReporter.h",
+      "baseHash": "e21188b830c8dd5700fb21901ce9d9532d2986ca",
+      "issue": 13939
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/scrollview/ScrollViewProps.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/scrollview/ScrollViewProps.cpp",
       "baseHash": "ba169659231c48eae21905371dcba8cc83db90f2",
@@ -470,12 +484,6 @@
       "issue": 12704
     },
     {
-      "type": "copy",
-      "file": "src/private/reactdevtools/ReactDevToolsSettingsManager.windows.js",
-      "baseFile": "packages/react-native/src/private/reactdevtools/ReactDevToolsSettingsManager.android.js",
-      "baseHash": "df41b76dc3d2df9455fae588748261d7b0a22d01"
-    },
-    {
       "type": "platform",
       "file": "src-win/Libraries/Image/assetPaths.js"
     },
@@ -639,6 +647,12 @@
       "file": "src-win/src/private/specs/modules/NativePlatformConstantsWindows.js",
       "baseFile": "packages/react-native/src/private/specs/modules/NativePlatformConstantsAndroid.js",
       "baseHash": "fa0f34a2de33b641bd63863629087644796d8b59"
+    },
+    {
+      "type": "copy",
+      "file": "src-win/src/private/reactdevtools/ReactDevToolsSettingsManager.windows.js",
+      "baseFile": "packages/react-native/src/private/reactdevtools/ReactDevToolsSettingsManager.android.js",
+      "baseHash": "df41b76dc3d2df9455fae588748261d7b0a22d01"
     }
   ]
 }
