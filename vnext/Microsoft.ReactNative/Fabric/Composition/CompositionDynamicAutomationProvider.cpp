@@ -188,7 +188,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
-  if (patternId == UIA_TogglePatternId && (accessibilityRole == "switch" || accessibilityRole == "checkbox")) {
+  if (patternId == UIA_TogglePatternId && (accessibilityRole == "switch" || accessibilityRole == "checkbox" || (props->accessibilityState.has_value() && props->accessibilityState->checked != facebook::react::AccessibilityState::None))) {
     *pRetVal = static_cast<IToggleProvider *>(this);
     AddRef();
   }
@@ -501,8 +501,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_ToggleState(ToggleSt
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  *pRetVal =
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->getToggleState();
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+
+  *pRetVal = (props->accessibilityState.has_value() && props->accessibilityState->checked != facebook::react::AccessibilityState::None)
+            ? GetToggleState(props->accessibilityState)
+            : winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->getToggleState();
   return S_OK;
 }
 
