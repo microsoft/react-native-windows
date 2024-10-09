@@ -18,19 +18,33 @@ const DeviceIdBuildPath = '"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\
 const DeviceIdBuildKey = 'BuildLabEx';
 
 /**
+ * Given a path and a key, retrieves the value from the Registry.
+ * @returns If the path and key exist, the requested value from the Registry; empty string otherwise.
+ */
+export async function getValueFromRegistry(path: string, key: string): Promise<string> {
+  try {
+    let regCommand = `${process.env.windir}\\System32\\reg.exe query ${path} /v ${key}`;
+    if (deviceArchitecture() === 'x64') {
+      // Ensure we query the correct registry
+      regCommand += ' /reg:64';
+    }
+    
+    const output = execSync(regCommand).toString();
+    return output;
+  } catch {}
+
+  return '';
+}
+
+/**
  * Gets a telemetry-safe stable device ID.
  * @returns A telemetry-safe stable device ID.
  */
 export async function deviceId(): Promise<string> {
   try {
-    let regCommand = `${process.env.windir}\\System32\\reg.exe query ${DeviceIdRegPath} /v ${DeviceIdRegKey}`;
-    if (deviceArchitecture() === 'x64') {
-      // Ensure we query the correct registry
-      regCommand += ' /reg:64';
-    }
-    const output = execSync(regCommand).toString();
+    const deviceIdValue = await getValueFromRegistry(DeviceIdRegPath, DeviceIdRegKey);
 
-    const result = output.match(/\{([0-9A-Fa-f-]{36})\}/);
+    const result = deviceIdValue.match(/\{([0-9A-Fa-f-]{36})\}/);
     if (result && result.length > 1) {
       return `s:${result[1]}`;
     }
@@ -45,15 +59,10 @@ export async function deviceId(): Promise<string> {
  */
 export async function fullBuildInfo(): Promise<string> {
   try {
-    let regCommand = `${process.env.windir}\\System32\\reg.exe query ${DeviceIdBuildPath} /v ${DeviceIdBuildKey}`;
-    if (deviceArchitecture() === 'x64') {
-      // Ensure we query the correct registry
-      regCommand += ' /reg:64';
-    }
-    const output = execSync(regCommand).toString();
+    const fullBuildValue = await getValueFromRegistry(DeviceIdBuildPath, DeviceIdBuildKey);
 
     // Retrieve the build info
-    const match = output.match(/BuildLabEx\s+REG_SZ\s+([^\r\n]+)/);
+    const match = fullBuildValue.match(/BuildLabEx\s+REG_SZ\s+([^\r\n]+)/);
     if (match && match.length > 1) {
       return match[1];
     }
@@ -85,13 +94,30 @@ export function nodeArchitecture(): string {
 }
 
 /**
- * Gets the device platform, like darwin/linux/win32.
+ * Gets the node platform, like darwin/linux/win32.
  * @returns The device platform.
  */
-export function devicePlatform(): string {
-  const os = platform();
+export function nodePlatform(): string {
+  return platform();
+}
 
-  return os === 'win32' ? 'Windows' : os;
+/**
+ * Gets the OS name, to be filled in the PartA device.deviceClass field.
+ * @returns The device class.
+ */
+export function deviceClass(): string {
+  const node = nodePlatform();
+
+  switch (node) {
+    case 'darwin':
+      return 'Mac';
+    case 'linux':
+      return 'Linux';
+    case 'win32':
+      return 'Windows';
+    default:
+      return node;
+  }
 }
 
 /**

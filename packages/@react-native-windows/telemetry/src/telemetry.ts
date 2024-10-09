@@ -196,8 +196,10 @@ export class Telemetry {
       basePropUtils.deviceArchitecture();
     Telemetry.commonProperties.nodeArchitecture =
       basePropUtils.nodeArchitecture();
-    Telemetry.commonProperties.devicePlatform =
-      basePropUtils.devicePlatform();
+    Telemetry.commonProperties.nodePlatform =
+      basePropUtils.nodePlatform();
+    Telemetry.commonProperties.deviceClass =
+      basePropUtils.deviceClass();
     Telemetry.commonProperties.deviceLocale =
       await basePropUtils.deviceLocale();
     Telemetry.commonProperties.deviceNumCPUs = basePropUtils
@@ -352,7 +354,7 @@ export class Telemetry {
     telemetryItem.ext = {};
     telemetryItem.ext.device = {
       id: Telemetry.commonProperties.deviceId,
-      deviceClass: Telemetry.commonProperties.devicePlatform
+      deviceClass: Telemetry.commonProperties.deviceClass
     };
     telemetryItem.ext.os = {
       locale: Telemetry.commonProperties.deviceLocale,
@@ -368,6 +370,7 @@ export class Telemetry {
           totalMemory: Telemetry.commonProperties.totalMemory,
           diskFreeSpace: Telemetry.commonProperties.deviceDiskFreeSpace
         },
+        nodePlatform: Telemetry.commonProperties.nodePlatform,
         nodeArchitecture: Telemetry.commonProperties.nodeArchitecture,
         ciCaptured: Telemetry.commonProperties.ciCaptured,
         ciType: Telemetry.commonProperties.ciType,

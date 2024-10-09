@@ -123,7 +123,7 @@ test('setup() verify static common property values with sync sources', async () 
 
   const props: Record<string, () => string | undefined> = {
     deviceArchitecture: () => basePropUtils.deviceArchitecture(),
-    devicePlatform: () => basePropUtils.devicePlatform(),
+    nodePlatform: () => basePropUtils.nodePlatform(),
     deviceNumCPUs: () => basePropUtils.deviceNumCPUs().toString(),
     deviceTotalMemory: () => basePropUtils.deviceTotalMemory().toString(),
     ciCaptured: () => basePropUtils.captureCI().toString(),
