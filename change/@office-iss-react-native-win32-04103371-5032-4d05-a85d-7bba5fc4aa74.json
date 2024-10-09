@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update to @react-native-community/cli@15.0.0-alpha.2",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
