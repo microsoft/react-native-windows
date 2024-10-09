@@ -26,7 +26,7 @@
     "chalk": "^4.1.0",
     "glob": "^7.1.6",
     "lodash": "^4.17.15",
-    "semver": "^7.3.2",
+    "semver": "^7.6.3",
     "simple-git": "^3.3.0",
     "source-map-support": "^0.5.19",
     "yargs": "^16.2.0"
