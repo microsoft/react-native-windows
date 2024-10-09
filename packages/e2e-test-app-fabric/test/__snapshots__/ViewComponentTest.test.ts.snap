@@ -1094,6 +1094,7 @@ exports[`View Tests Views can have customized accessibility 1`] = `
   "Automation Tree": {
     "AutomationId": "accessibility",
     "ControlType": 50000,
+    "ExpandCollapsePattern.ExpandCollapseState": "Expanded",
     "HelpText": "Accessibility Hint",
     "IsKeyboardFocusable": true,
     "LiveSetting": "Polite",
