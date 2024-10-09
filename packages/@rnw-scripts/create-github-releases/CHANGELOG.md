@@ -1,8 +1,20 @@
 # Change Log - @rnw-scripts/create-github-releases
 
-<!-- This log was last generated on Thu, 26 Sep 2024 17:38:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 07 Oct 2024 19:54:25 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.4.54
+
+Mon, 07 Oct 2024 19:54:25 GMT
+
+### Patches
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/find-repo-root to v0.0.0-canary.87
+- Bump @react-native-windows/fs to v0.0.0-canary.58
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/just-task to v2.3.46
 
 ## 1.4.52
 

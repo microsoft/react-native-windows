@@ -2,6 +2,84 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 08 Oct 2024 19:23:40 GMT",
+      "version": "0.0.0-canary.873",
+      "tag": "react-native-windows_v0.0.0-canary.873",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "67a19fee053ce0fba0d7504a293369c83656d243",
+            "comment": "Use a legacy native module binding that always returns null in bridgeless mode"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 07 Oct 2024 19:54:23 GMT",
+      "version": "0.0.0-canary.872",
+      "tag": "react-native-windows_v0.0.0-canary.872",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bc8039e64a43bb834436ff7466e5a6af52c7443f",
+            "comment": "SampleTurboModule only works as a turbomodule, so do not install it when using web debugger"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "eb6b345ee2128d56f32c85f1702bb093e0375a1f",
+            "comment": "integrate RN nightly 0.77.0-nightly-20240921-1747f57c6"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "bcb7c901080ffdf8d5e870d0a4c7cbd74f4af5c3",
+            "comment": "Exclude NuGet package lock files from NPM packages"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.239",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.106",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.29",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.33",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.46",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.48",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Sep 2024 16:33:12 GMT",
       "version": "0.0.0-canary.871",
       "tag": "react-native-windows_v0.0.0-canary.871",

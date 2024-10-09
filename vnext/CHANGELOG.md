@@ -1,8 +1,32 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 30 Sep 2024 16:33:12 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 08 Oct 2024 19:23:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.873
+
+Tue, 08 Oct 2024 19:23:40 GMT
+
+### Changes
+
+- Use a legacy native module binding that always returns null in bridgeless mode (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.872
+
+Mon, 07 Oct 2024 19:54:23 GMT
+
+### Changes
+
+- SampleTurboModule only works as a turbomodule, so do not install it when using web debugger (30809111+acoates-ms@users.noreply.github.com)
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Exclude NuGet package lock files from NPM packages (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.239
+- Bump @react-native-windows/codegen to v0.0.0-canary.106
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.33
+- Bump @rnw-scripts/just-task to v2.3.46
+- Bump react-native-platform-override to v1.9.48
 
 ## 0.0.0-canary.871
 
