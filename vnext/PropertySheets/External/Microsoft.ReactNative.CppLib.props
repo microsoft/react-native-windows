@@ -3,7 +3,7 @@
   Copyright (c) Microsoft Corporation.
   Licensed under the MIT License.
 
-  This file will be consumed by ALL C++ Win32 module projects (both inside
+  This file will be consumed by ALL C++ module projects (both inside
   and outside of this repo) that build on top of Microsoft.ReactNative.
   Do not make any changes here unless it applies to ALL such projects.
 -->
