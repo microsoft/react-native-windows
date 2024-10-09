@@ -29,16 +29,13 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(compContext, tag, reactContext) {
-  m_reactContext = reactContext; // save react context
-  m_compositionContext = compContext; // save composition context
-}
+    : Super(compContext, tag, reactContext) {}
 
 WindowsModalHostComponentView::~WindowsModalHostComponentView() {
   // Check if the window handle (m_hwnd) exists and destroy it if necessary
   if (m_hwnd) {
-    // Close the modal window
-    HideOnUIThread();
+    // Close/Destroy the modal window
+    SendMessage(m_hwnd, WM_DESTROY, 0, 0);
     m_hwnd = nullptr;
   }
 }
@@ -103,9 +100,7 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
       host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(m_hwnd));
 
   // get current compositor - handles the creation/manipulation of visual objects
-  auto compositionContext =
-      winrt::Microsoft::ReactNative::Composition::implementation::CompositionUIService::GetCompositionContext(
-          m_reactContext.Properties().Handle());
+  auto compositionContext = CompositionContext();
   auto compositor =
       winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(
           compositionContext);
@@ -175,16 +170,10 @@ LRESULT CALLBACK ModalBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM 
   }
 
   switch (message) {
-    case WM_COMMAND: {
-      break;
-    }
     case WM_NCCREATE: { // called before WM_CREATE, lparam should be identical to members of CreateWindowEx
       auto createStruct = reinterpret_cast<CREATESTRUCT *>(lparam); // CreateStruct
       data = static_cast<::IUnknown *>(createStruct->lpCreateParams);
       SetProp(hwnd, CompHostProperty, data); // adds new properties to window
-      break;
-    }
-    case WM_CREATE: { // called after window is created but before visible
       break;
     }
     case WM_CLOSE: {
@@ -193,6 +182,10 @@ LRESULT CALLBACK ModalBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM 
       return 0;
     }
     case WM_DESTROY: { // called when we want to destroy the window
+      ::ShowWindow(hwnd, SW_HIDE);
+      if (data) {
+        data->Release();
+      }
       SetProp(hwnd, CompHostProperty, nullptr);
       break;
     }
@@ -251,11 +244,6 @@ void WindowsModalHostComponentView::UnmountChildComponentView(
   base_type::UnmountChildComponentView(childComponentView, index);
 }
 
-void WindowsModalHostComponentView::HandleCommand(
-    const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
-  Super::HandleCommand(args);
-}
-
 void WindowsModalHostComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
@@ -270,21 +258,6 @@ void WindowsModalHostComponentView::updateProps(
 
   base_type::updateProps(props, oldProps);
 }
-
-void WindowsModalHostComponentView::updateLayoutMetrics(
-    facebook::react::LayoutMetrics const &layoutMetrics,
-    facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
-  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
-}
-
-void WindowsModalHostComponentView::FinalizeUpdates(
-    winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
-  Super::FinalizeUpdates(updateMask);
-}
-
-void WindowsModalHostComponentView::updateState(
-    facebook::react::State::Shared const &state,
-    facebook::react::State::Shared const &oldState) noexcept {}
 
 facebook::react::SharedViewProps WindowsModalHostComponentView::defaultProps() noexcept {
   static auto const defaultProps = std::make_shared<facebook::react::ModalHostViewProps const>();
