@@ -216,7 +216,7 @@ extends:
             parameters:
               persistCredentials: false # We're going to use rnbot's git creds to publish
 
-          - template: ../templates/prepare-js-env.yml
+          - template: .ado/templates/prepare-js-env.yml
             parameters:
               agentImage: HostedImage
 
