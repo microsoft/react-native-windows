@@ -67813,16 +67813,12 @@ exports[`snapshotAllPages View 21`] = `
   accessibilityActions={
     [
       {
-        "label": "cut",
-        "name": "cut",
+        "label": "expand",
+        "name": "expand",
       },
       {
-        "label": "copy",
-        "name": "copy",
-      },
-      {
-        "label": "paste",
-        "name": "paste",
+        "label": "collapse",
+        "name": "collapse",
       },
     ]
   }
@@ -67845,6 +67841,7 @@ exports[`snapshotAllPages View 21`] = `
   focusable={true}
   onAccessibilityAction={[Function]}
   onAccessibilityTap={[Function]}
+  onPress={[Function]}
   testID="accessibility"
 >
   <Text>
