@@ -83759,27 +83759,34 @@ exports[`snapshotAllPages View 20`] = `
   accessibilityActions={
     [
       {
-        "label": "cut",
-        "name": "cut",
+        "label": "expand",
+        "name": "expand",
       },
       {
-        "label": "copy",
-        "name": "copy",
-      },
-      {
-        "label": "paste",
-        "name": "paste",
+        "label": "collapse",
+        "name": "collapse",
       },
     ]
   }
   accessibilityHint="Accessibility Hint"
   accessibilityLabel="A View with accessibility values"
   accessibilityRole="button"
-  accessibilityValue={0}
+  accessibilitySetSize={1}
+  accessibilityState={
+    {
+      "expanded": true,
+    }
+  }
+  accessibilityValue={
+    {
+      "now": 0,
+    }
+  }
   accessible={true}
   focusable={true}
   onAccessibilityAction={[Function]}
   onAccessibilityTap={[Function]}
+  onPress={[Function]}
   testID="accessibility"
 >
   <Text>
