@@ -8,16 +8,10 @@
   Do not make any changes here unless it applies to ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Choose>
-    <When Condition="'$(UseFabric)' == 'true'">
-      <ImportGroup>
-        <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Composition.CppLib.props" />
-      </ImportGroup>
-    </When>
-    <Otherwise>
-      <ImportGroup>
-        <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.CppLib.props" />
-      </ImportGroup>
-    </Otherwise>
-  </Choose>
+  <ImportGroup Condition="'$(UseFabric)' == 'true'">
+    <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Composition.CppLib.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(UseFabric)' != 'true'">
+    <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.CppLib.props" />
+  </ImportGroup>
 </Project>
