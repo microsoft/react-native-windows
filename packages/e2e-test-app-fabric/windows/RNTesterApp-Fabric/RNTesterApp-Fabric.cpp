@@ -314,6 +314,23 @@ void InsertToggleStateValueIfNotDefault(
   }
 }
 
+void InsertExpandCollapseStateValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    ExpandCollapseState value,
+    ExpandCollapseState defaultValue = ExpandCollapseState::ExpandCollapseState_Collapsed) {
+  if (value != defaultValue) {
+    switch (value) {
+      case 0:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Collapsed"));
+        break;
+      case 1:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Expanded"));
+        break;
+    }
+  }
+}
+
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload) {
   winrt::Windows::Data::Json::JsonObject result;
   winrt::Windows::Data::Json::JsonArray jsonErrors;
@@ -339,6 +356,7 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   BOOL isReadOnly;
   ToggleState toggleState;
   IValueProvider *valuePattern;
+  ExpandCollapseState expandCollapseState;
   HRESULT hr;
 
   // Dump IValueProvider Information
@@ -364,6 +382,18 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
       InsertToggleStateValueIfNotDefault(result, L"TogglePattern.ToggleState", toggleState);
     }
     togglePattern->Release();
+  }
+
+  // Dump IExpandCollapseProvider Information
+  IExpandCollapseProvider *expandCollapsePattern;
+  hr = pTarget->GetCurrentPattern(UIA_ExpandCollapsePatternId, reinterpret_cast<IUnknown **>(&expandCollapsePattern));
+  if (SUCCEEDED(hr) && expandCollapsePattern) {
+    hr = expandCollapsePattern->get_ExpandCollapseState(&expandCollapseState);
+    if (SUCCEEDED(hr)) {
+      InsertExpandCollapseStateValueIfNotDefault(
+          result, L"ExpandCollapsePattern.ExpandCollapseState", expandCollapseState);
+    }
+    expandCollapsePattern->Release();
   }
 }
 
