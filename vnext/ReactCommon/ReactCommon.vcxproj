@@ -168,6 +168,10 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\mapbuffer\MapBufferBuilder.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\telemetry\TransactionTelemetry.cpp" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryReporter.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceObserverRegistry.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryCircularBuffer.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceObserver.cpp" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\performance\timeline\PerformanceEntryKeyedBuffer.cpp" />
     <ClCompile Include="$(YogaDir)\yoga\event\event.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

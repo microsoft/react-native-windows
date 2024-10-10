@@ -18,7 +18,6 @@ namespace facebook::react {
 
 using ActivityIndicatorViewComponentDescriptor = ConcreteComponentDescriptor<ActivityIndicatorViewShadowNode>;
 using AndroidDrawerLayoutComponentDescriptor = ConcreteComponentDescriptor<AndroidDrawerLayoutShadowNode>;
-using AndroidHorizontalScrollContentViewComponentDescriptor = ConcreteComponentDescriptor<AndroidHorizontalScrollContentViewShadowNode>;
 using AndroidSwipeRefreshLayoutComponentDescriptor = ConcreteComponentDescriptor<AndroidSwipeRefreshLayoutShadowNode>;
 using DebuggingOverlayComponentDescriptor = ConcreteComponentDescriptor<DebuggingOverlayShadowNode>;
 using PullToRefreshViewComponentDescriptor = ConcreteComponentDescriptor<PullToRefreshViewShadowNode>;

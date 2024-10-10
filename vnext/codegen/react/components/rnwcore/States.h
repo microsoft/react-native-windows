@@ -38,18 +38,6 @@ public:
 #endif
 };
 
-class AndroidHorizontalScrollContentViewState {
-public:
-  AndroidHorizontalScrollContentViewState() = default;
-
-#ifdef ANDROID
-  AndroidHorizontalScrollContentViewState(AndroidHorizontalScrollContentViewState const &previousState, folly::dynamic data){};
-  folly::dynamic getDynamic() const {
-    return {};
-  };
-#endif
-};
-
 class AndroidSwipeRefreshLayoutState {
 public:
   AndroidSwipeRefreshLayoutState() = default;

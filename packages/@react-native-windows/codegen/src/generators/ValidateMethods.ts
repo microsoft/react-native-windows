@@ -33,6 +33,7 @@ function getPossibleMethodSignatures(
 ): string[] {
   const args = translateArgs(funcType.params, aliases, baseAliasName, options);
   if (funcType.returnTypeAnnotation.type === 'PromiseTypeAnnotation') {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (funcType.returnTypeAnnotation.elementType) {
       args.push(
         `::React::ReactPromise<${translateImplReturnType(
@@ -120,6 +121,7 @@ function renderProperties(
       );
 
       if (funcType.returnTypeAnnotation.type === 'PromiseTypeAnnotation') {
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
         if (funcType.returnTypeAnnotation.elementType) {
           traversedArgs.push(
             `Promise<${translateSpecReturnType(

@@ -27,13 +27,14 @@ public:
   virtual bool destroyFabricSurfacesInReactInstanceManager(jsi::Runtime &rt) = 0;
   virtual bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) = 0;
   virtual bool enableAndroidLineHeightCentering(jsi::Runtime &rt) = 0;
-  virtual bool enableAndroidMixBlendModeProp(jsi::Runtime &rt) = 0;
   virtual bool enableBackgroundStyleApplicator(jsi::Runtime &rt) = 0;
+  virtual bool enableBridgelessArchitecture(jsi::Runtime &rt) = 0;
   virtual bool enableCleanTextInputYogaNode(jsi::Runtime &rt) = 0;
   virtual bool enableDeletionOfUnmountedViews(jsi::Runtime &rt) = 0;
   virtual bool enableEagerRootViewAttachment(jsi::Runtime &rt) = 0;
   virtual bool enableEventEmitterRetentionDuringGesturesOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableFabricLogs(jsi::Runtime &rt) = 0;
+  virtual bool enableFabricRenderer(jsi::Runtime &rt) = 0;
   virtual bool enableFabricRendererExclusively(jsi::Runtime &rt) = 0;
   virtual bool enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt) = 0;
   virtual bool enableIOSViewClipToPaddingBox(jsi::Runtime &rt) = 0;
@@ -69,8 +70,8 @@ public:
   virtual bool useOptimizedEventBatchingOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) = 0;
   virtual bool useRuntimeShadowNodeReferenceUpdateOnLayout(jsi::Runtime &rt) = 0;
-  virtual bool useStateAlignmentMechanism(jsi::Runtime &rt) = 0;
   virtual bool useTurboModuleInterop(jsi::Runtime &rt) = 0;
+  virtual bool useTurboModules(jsi::Runtime &rt) = 0;
 
 };
 
@@ -153,14 +154,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableAndroidLineHeightCentering, jsInvoker_, instance_);
     }
-    bool enableAndroidMixBlendModeProp(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::enableAndroidMixBlendModeProp) == 1,
-          "Expected enableAndroidMixBlendModeProp(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::enableAndroidMixBlendModeProp, jsInvoker_, instance_);
-    }
     bool enableBackgroundStyleApplicator(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableBackgroundStyleApplicator) == 1,
@@ -168,6 +161,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableBackgroundStyleApplicator, jsInvoker_, instance_);
+    }
+    bool enableBridgelessArchitecture(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableBridgelessArchitecture) == 1,
+          "Expected enableBridgelessArchitecture(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableBridgelessArchitecture, jsInvoker_, instance_);
     }
     bool enableCleanTextInputYogaNode(jsi::Runtime &rt) override {
       static_assert(
@@ -208,6 +209,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableFabricLogs, jsInvoker_, instance_);
+    }
+    bool enableFabricRenderer(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableFabricRenderer) == 1,
+          "Expected enableFabricRenderer(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableFabricRenderer, jsInvoker_, instance_);
     }
     bool enableFabricRendererExclusively(jsi::Runtime &rt) override {
       static_assert(
@@ -489,14 +498,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::useRuntimeShadowNodeReferenceUpdateOnLayout, jsInvoker_, instance_);
     }
-    bool useStateAlignmentMechanism(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::useStateAlignmentMechanism) == 1,
-          "Expected useStateAlignmentMechanism(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::useStateAlignmentMechanism, jsInvoker_, instance_);
-    }
     bool useTurboModuleInterop(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::useTurboModuleInterop) == 1,
@@ -504,6 +505,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useTurboModuleInterop, jsInvoker_, instance_);
+    }
+    bool useTurboModules(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useTurboModules) == 1,
+          "Expected useTurboModules(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useTurboModules, jsInvoker_, instance_);
     }
 
   private:
@@ -3045,83 +3054,6 @@ private:
 
   private:
     friend class NativeDevSettingsCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  class JSI_EXPORT NativeDevToolsSettingsManagerCxxSpecJSI : public TurboModule {
-protected:
-  NativeDevToolsSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void setConsolePatchSettings(jsi::Runtime &rt, jsi::String newConsolePatchSettings) = 0;
-  virtual std::optional<jsi::String> getConsolePatchSettings(jsi::Runtime &rt) = 0;
-  virtual void setProfilingSettings(jsi::Runtime &rt, jsi::String newProfilingSettings) = 0;
-  virtual std::optional<jsi::String> getProfilingSettings(jsi::Runtime &rt) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeDevToolsSettingsManagerCxxSpec : public TurboModule {
-public:
-  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.get(rt, propName);
-  }
-
-  static constexpr std::string_view kModuleName = "DevToolsSettingsManager";
-
-protected:
-  NativeDevToolsSettingsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeDevToolsSettingsManagerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeDevToolsSettingsManagerCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeDevToolsSettingsManagerCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void setConsolePatchSettings(jsi::Runtime &rt, jsi::String newConsolePatchSettings) override {
-      static_assert(
-          bridging::getParameterCount(&T::setConsolePatchSettings) == 2,
-          "Expected setConsolePatchSettings(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setConsolePatchSettings, jsInvoker_, instance_, std::move(newConsolePatchSettings));
-    }
-    std::optional<jsi::String> getConsolePatchSettings(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getConsolePatchSettings) == 1,
-          "Expected getConsolePatchSettings(...) to have 1 parameters");
-
-      return bridging::callFromJs<std::optional<jsi::String>>(
-          rt, &T::getConsolePatchSettings, jsInvoker_, instance_);
-    }
-    void setProfilingSettings(jsi::Runtime &rt, jsi::String newProfilingSettings) override {
-      static_assert(
-          bridging::getParameterCount(&T::setProfilingSettings) == 2,
-          "Expected setProfilingSettings(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setProfilingSettings, jsInvoker_, instance_, std::move(newProfilingSettings));
-    }
-    std::optional<jsi::String> getProfilingSettings(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::getProfilingSettings) == 1,
-          "Expected getProfilingSettings(...) to have 1 parameters");
-
-      return bridging::callFromJs<std::optional<jsi::String>>(
-          rt, &T::getProfilingSettings, jsInvoker_, instance_);
-    }
-
-  private:
-    friend class NativeDevToolsSettingsManagerCxxSpec;
     T *instance_;
   };
 
@@ -6141,6 +6073,65 @@ private:
 };
 
 
+  class JSI_EXPORT NativeReactDevToolsSettingsManagerCxxSpecJSI : public TurboModule {
+protected:
+  NativeReactDevToolsSettingsManagerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
+
+public:
+  virtual void setGlobalHookSettings(jsi::Runtime &rt, jsi::String settings) = 0;
+  virtual std::optional<jsi::String> getGlobalHookSettings(jsi::Runtime &rt) = 0;
+
+};
+
+template <typename T>
+class JSI_EXPORT NativeReactDevToolsSettingsManagerCxxSpec : public TurboModule {
+public:
+  jsi::Value get(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
+    return delegate_.get(rt, propName);
+  }
+
+  static constexpr std::string_view kModuleName = "ReactDevToolsSettingsManager";
+
+protected:
+  NativeReactDevToolsSettingsManagerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
+    : TurboModule(std::string{NativeReactDevToolsSettingsManagerCxxSpec::kModuleName}, jsInvoker),
+      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
+
+
+private:
+  class Delegate : public NativeReactDevToolsSettingsManagerCxxSpecJSI {
+  public:
+    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
+      NativeReactDevToolsSettingsManagerCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
+
+    }
+
+    void setGlobalHookSettings(jsi::Runtime &rt, jsi::String settings) override {
+      static_assert(
+          bridging::getParameterCount(&T::setGlobalHookSettings) == 2,
+          "Expected setGlobalHookSettings(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::setGlobalHookSettings, jsInvoker_, instance_, std::move(settings));
+    }
+    std::optional<jsi::String> getGlobalHookSettings(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::getGlobalHookSettings) == 1,
+          "Expected getGlobalHookSettings(...) to have 1 parameters");
+
+      return bridging::callFromJs<std::optional<jsi::String>>(
+          rt, &T::getGlobalHookSettings, jsInvoker_, instance_);
+    }
+
+  private:
+    friend class NativeReactDevToolsSettingsManagerCxxSpec;
+    T *instance_;
+  };
+
+  Delegate delegate_;
+};
+
+
   class JSI_EXPORT NativeRedBoxCxxSpecJSI : public TurboModule {
 protected:
   NativeRedBoxCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
@@ -8315,19 +8306,21 @@ private:
 
 
   
-#pragma mark - NativePerformanceObserverGetPendingEntriesResult
+#pragma mark - NativePerformanceObserverPerformanceObserverInit
 
-template <typename P0, typename P1>
-struct NativePerformanceObserverGetPendingEntriesResult {
-  P0 entries;
-  P1 droppedEntriesCount;
-  bool operator==(const NativePerformanceObserverGetPendingEntriesResult &other) const {
-    return entries == other.entries && droppedEntriesCount == other.droppedEntriesCount;
+template <typename P0, typename P1, typename P2, typename P3>
+struct NativePerformanceObserverPerformanceObserverInit {
+  P0 entryTypes;
+  P1 type;
+  P2 buffered;
+  P3 durationThreshold;
+  bool operator==(const NativePerformanceObserverPerformanceObserverInit &other) const {
+    return entryTypes == other.entryTypes && type == other.type && buffered == other.buffered && durationThreshold == other.durationThreshold;
   }
 };
 
 template <typename T>
-struct NativePerformanceObserverGetPendingEntriesResultBridging {
+struct NativePerformanceObserverPerformanceObserverInitBridging {
   static T types;
 
   static T fromJs(
@@ -8335,17 +8328,27 @@ struct NativePerformanceObserverGetPendingEntriesResultBridging {
       const jsi::Object &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     T result{
-      bridging::fromJs<decltype(types.entries)>(rt, value.getProperty(rt, "entries"), jsInvoker),
-      bridging::fromJs<decltype(types.droppedEntriesCount)>(rt, value.getProperty(rt, "droppedEntriesCount"), jsInvoker)};
+      bridging::fromJs<decltype(types.entryTypes)>(rt, value.getProperty(rt, "entryTypes"), jsInvoker),
+      bridging::fromJs<decltype(types.type)>(rt, value.getProperty(rt, "type"), jsInvoker),
+      bridging::fromJs<decltype(types.buffered)>(rt, value.getProperty(rt, "buffered"), jsInvoker),
+      bridging::fromJs<decltype(types.durationThreshold)>(rt, value.getProperty(rt, "durationThreshold"), jsInvoker)};
     return result;
   }
 
 #ifdef DEBUG
-  static jsi::Array entriesToJs(jsi::Runtime &rt, decltype(types.entries) value) {
+  static jsi::Array entryTypesToJs(jsi::Runtime &rt, decltype(types.entryTypes) value) {
     return bridging::toJs(rt, value);
   }
 
-  static double droppedEntriesCountToJs(jsi::Runtime &rt, decltype(types.droppedEntriesCount) value) {
+  static double typeToJs(jsi::Runtime &rt, decltype(types.type) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static bool bufferedToJs(jsi::Runtime &rt, decltype(types.buffered) value) {
+    return bridging::toJs(rt, value);
+  }
+
+  static double durationThresholdToJs(jsi::Runtime &rt, decltype(types.durationThreshold) value) {
     return bridging::toJs(rt, value);
   }
 #endif
@@ -8355,8 +8358,18 @@ struct NativePerformanceObserverGetPendingEntriesResultBridging {
       const T &value,
       const std::shared_ptr<CallInvoker> &jsInvoker) {
     auto result = facebook::jsi::Object(rt);
-    result.setProperty(rt, "entries", bridging::toJs(rt, value.entries, jsInvoker));
-    result.setProperty(rt, "droppedEntriesCount", bridging::toJs(rt, value.droppedEntriesCount, jsInvoker));
+    if (value.entryTypes) {
+      result.setProperty(rt, "entryTypes", bridging::toJs(rt, value.entryTypes.value(), jsInvoker));
+    }
+    if (value.type) {
+      result.setProperty(rt, "type", bridging::toJs(rt, value.type.value(), jsInvoker));
+    }
+    if (value.buffered) {
+      result.setProperty(rt, "buffered", bridging::toJs(rt, value.buffered.value(), jsInvoker));
+    }
+    if (value.durationThreshold) {
+      result.setProperty(rt, "durationThreshold", bridging::toJs(rt, value.durationThreshold.value(), jsInvoker));
+    }
     return result;
   }
 };
@@ -8455,14 +8468,12 @@ protected:
   NativePerformanceObserverCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
 
 public:
-  virtual void startReporting(jsi::Runtime &rt, double entryType) = 0;
-  virtual void stopReporting(jsi::Runtime &rt, double entryType) = 0;
-  virtual void setIsBuffered(jsi::Runtime &rt, jsi::Array entryTypes, bool isBuffered) = 0;
-  virtual jsi::Object popPendingEntries(jsi::Runtime &rt) = 0;
-  virtual void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) = 0;
-  virtual void logRawEntry(jsi::Runtime &rt, jsi::Object entry) = 0;
   virtual jsi::Array getEventCounts(jsi::Runtime &rt) = 0;
-  virtual void setDurationThreshold(jsi::Runtime &rt, double entryType, double durationThreshold) = 0;
+  virtual jsi::Value createObserver(jsi::Runtime &rt, jsi::Function callback) = 0;
+  virtual double getDroppedEntriesCount(jsi::Runtime &rt, jsi::Value observer) = 0;
+  virtual void observe(jsi::Runtime &rt, jsi::Value observer, jsi::Object options) = 0;
+  virtual void disconnect(jsi::Runtime &rt, jsi::Value observer) = 0;
+  virtual jsi::Array takeRecords(jsi::Runtime &rt, jsi::Value observer, bool sort) = 0;
   virtual void clearEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) = 0;
   virtual jsi::Array getEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) = 0;
   virtual jsi::Array getSupportedPerformanceEntryTypes(jsi::Runtime &rt) = 0;
@@ -8492,54 +8503,6 @@ private:
 
     }
 
-    void startReporting(jsi::Runtime &rt, double entryType) override {
-      static_assert(
-          bridging::getParameterCount(&T::startReporting) == 2,
-          "Expected startReporting(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::startReporting, jsInvoker_, instance_, std::move(entryType));
-    }
-    void stopReporting(jsi::Runtime &rt, double entryType) override {
-      static_assert(
-          bridging::getParameterCount(&T::stopReporting) == 2,
-          "Expected stopReporting(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::stopReporting, jsInvoker_, instance_, std::move(entryType));
-    }
-    void setIsBuffered(jsi::Runtime &rt, jsi::Array entryTypes, bool isBuffered) override {
-      static_assert(
-          bridging::getParameterCount(&T::setIsBuffered) == 3,
-          "Expected setIsBuffered(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setIsBuffered, jsInvoker_, instance_, std::move(entryTypes), std::move(isBuffered));
-    }
-    jsi::Object popPendingEntries(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::popPendingEntries) == 1,
-          "Expected popPendingEntries(...) to have 1 parameters");
-
-      return bridging::callFromJs<jsi::Object>(
-          rt, &T::popPendingEntries, jsInvoker_, instance_);
-    }
-    void setOnPerformanceEntryCallback(jsi::Runtime &rt, std::optional<jsi::Function> callback) override {
-      static_assert(
-          bridging::getParameterCount(&T::setOnPerformanceEntryCallback) == 2,
-          "Expected setOnPerformanceEntryCallback(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::setOnPerformanceEntryCallback, jsInvoker_, instance_, std::move(callback));
-    }
-    void logRawEntry(jsi::Runtime &rt, jsi::Object entry) override {
-      static_assert(
-          bridging::getParameterCount(&T::logRawEntry) == 2,
-          "Expected logRawEntry(...) to have 2 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::logRawEntry, jsInvoker_, instance_, std::move(entry));
-    }
     jsi::Array getEventCounts(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::getEventCounts) == 1,
@@ -8548,13 +8511,45 @@ private:
       return bridging::callFromJs<jsi::Array>(
           rt, &T::getEventCounts, jsInvoker_, instance_);
     }
-    void setDurationThreshold(jsi::Runtime &rt, double entryType, double durationThreshold) override {
+    jsi::Value createObserver(jsi::Runtime &rt, jsi::Function callback) override {
       static_assert(
-          bridging::getParameterCount(&T::setDurationThreshold) == 3,
-          "Expected setDurationThreshold(...) to have 3 parameters");
+          bridging::getParameterCount(&T::createObserver) == 2,
+          "Expected createObserver(...) to have 2 parameters");
+
+      return bridging::callFromJs<jsi::Value>(
+          rt, &T::createObserver, jsInvoker_, instance_, std::move(callback));
+    }
+    double getDroppedEntriesCount(jsi::Runtime &rt, jsi::Value observer) override {
+      static_assert(
+          bridging::getParameterCount(&T::getDroppedEntriesCount) == 2,
+          "Expected getDroppedEntriesCount(...) to have 2 parameters");
+
+      return bridging::callFromJs<double>(
+          rt, &T::getDroppedEntriesCount, jsInvoker_, instance_, std::move(observer));
+    }
+    void observe(jsi::Runtime &rt, jsi::Value observer, jsi::Object options) override {
+      static_assert(
+          bridging::getParameterCount(&T::observe) == 3,
+          "Expected observe(...) to have 3 parameters");
 
       return bridging::callFromJs<void>(
-          rt, &T::setDurationThreshold, jsInvoker_, instance_, std::move(entryType), std::move(durationThreshold));
+          rt, &T::observe, jsInvoker_, instance_, std::move(observer), std::move(options));
+    }
+    void disconnect(jsi::Runtime &rt, jsi::Value observer) override {
+      static_assert(
+          bridging::getParameterCount(&T::disconnect) == 2,
+          "Expected disconnect(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::disconnect, jsInvoker_, instance_, std::move(observer));
+    }
+    jsi::Array takeRecords(jsi::Runtime &rt, jsi::Value observer, bool sort) override {
+      static_assert(
+          bridging::getParameterCount(&T::takeRecords) == 3,
+          "Expected takeRecords(...) to have 3 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::takeRecords, jsInvoker_, instance_, std::move(observer), std::move(sort));
     }
     void clearEntries(jsi::Runtime &rt, std::optional<double> entryType, std::optional<jsi::String> entryName) override {
       static_assert(
