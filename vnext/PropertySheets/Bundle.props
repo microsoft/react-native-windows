@@ -48,6 +48,7 @@
     <BundleEntryFile Condition="'$(BundleEntryFile)' == '' and Exists('$(BundleCommandWorkingDir)\index.windows.js')">index.windows.js</BundleEntryFile>
     <BundleEntryFile Condition="'$(BundleEntryFile)' == ''">index.js</BundleEntryFile>
 
+    <OutDir Condition="'$(OutDir)'==''">$(ProjectDir)</OutDir>
     <FullOutDir Condition="'$([System.IO.Path]::GetFullPath($(OutDir)))' == '$(OutDir)'">$(OutDir)</FullOutDir>
     <FullOutDir Condition="'$([System.IO.Path]::GetFullPath($(OutDir)))' != '$(OutDir)'">$(ProjectDir)$(OutDir)</FullOutDir>
     
