@@ -211,11 +211,6 @@ extends:
           timeoutInMinutes: 120
           cancelTimeoutInMinutes: 5
           steps:
-
-          - template: .ado/templates/checkout-full.yml@self
-            parameters:
-              persistCredentials: false # We're going to use rnbot's git creds to publish
-
           - template: .ado/templates/prepare-js-env.yml@self
             parameters:
               agentImage: HostedImage
