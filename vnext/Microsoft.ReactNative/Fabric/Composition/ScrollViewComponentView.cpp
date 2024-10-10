@@ -749,6 +749,10 @@ void ScrollViewComponentView::updateProps(
     m_horizontalScrollbarComponent->UpdateColorForScrollBarRegions();
     m_verticalScrollbarComponent->UpdateColorForScrollBarRegions();
   }
+
+  if (!oldProps || oldViewProps.horizontal != newViewProps.horizontal) {
+    m_scrollVisual.Horizontal(newViewProps.horizontal);
+  }
 }
 
 void ScrollViewComponentView::updateState(
@@ -886,6 +890,12 @@ void ScrollViewComponentView::OnPointerPressed(
   m_verticalScrollbarComponent->OnPointerPressed(args);
   m_horizontalScrollbarComponent->OnPointerPressed(args);
   Super::OnPointerPressed(args);
+
+  if (!args.Handled()) {
+    auto f = args.Pointer();
+    auto g = f.PointerDeviceType();
+    m_scrollVisual.OnPointerPressed(args);
+  }
 }
 
 void ScrollViewComponentView::OnPointerReleased(
@@ -1045,13 +1055,16 @@ bool ScrollViewComponentView::scrollRight(float delta, bool animate) noexcept {
   return true;
 }
 
-void ScrollViewComponentView::HandleCommand(
-    winrt::hstring commandName,
-    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+void ScrollViewComponentView::HandleCommand(const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
+  Super::HandleCommand(args);
+  if (args.Handled())
+    return;
+
+  auto commandName = args.CommandName();
   if (commandName == L"scrollTo") {
     double x, y;
     bool animate;
-    winrt::Microsoft::ReactNative::ReadArgs(args, x, y, animate);
+    winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), x, y, animate);
     scrollTo(
         {static_cast<float>(x) * m_layoutMetrics.pointScaleFactor,
          static_cast<float>(y) * m_layoutMetrics.pointScaleFactor,
@@ -1061,12 +1074,10 @@ void ScrollViewComponentView::HandleCommand(
     // No-op for now
   } else if (commandName == L"scrollToEnd") {
     bool animate;
-    winrt::Microsoft::ReactNative::ReadArgs(args, animate);
+    winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), animate);
     scrollToEnd(animate);
   } else if (commandName == L"zoomToRect") {
     // No-op for now
-  } else {
-    Super::HandleCommand(commandName, args);
   }
 }
 

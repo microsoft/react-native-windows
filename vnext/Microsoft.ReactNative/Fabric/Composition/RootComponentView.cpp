@@ -40,8 +40,8 @@ winrt::Microsoft::ReactNative::ComponentView RootComponentView::Create(
   return winrt::make<RootComponentView>(compContext, tag, reactContext);
 }
 
-RootComponentView *RootComponentView::rootComponentView() noexcept {
-  return this;
+RootComponentView *RootComponentView::rootComponentView() const noexcept {
+  return const_cast<RootComponentView *>(this);
 }
 
 void RootComponentView::updateLayoutMetrics(
@@ -91,12 +91,18 @@ bool RootComponentView::NavigateFocus(const winrt::Microsoft::ReactNative::Focus
       ? FocusManager::FindFirstFocusableElement(*this)
       : FocusManager::FindLastFocusableElement(*this);
   if (view) {
-    TrySetFocusedComponent(view);
+    TrySetFocusedComponent(
+        view,
+        request.Reason() == winrt::Microsoft::ReactNative::FocusNavigationReason::First
+            ? winrt::Microsoft::ReactNative::FocusNavigationDirection::First
+            : winrt::Microsoft::ReactNative::FocusNavigationDirection::Last);
   }
   return view != nullptr;
 }
 
-bool RootComponentView::TrySetFocusedComponent(const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+bool RootComponentView::TrySetFocusedComponent(
+    const winrt::Microsoft::ReactNative::ComponentView &view,
+    winrt::Microsoft::ReactNative::FocusNavigationDirection direction) noexcept {
   auto target = view;
   auto selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(target);
   if (selfView && !selfView->focusable()) {
@@ -110,7 +116,7 @@ bool RootComponentView::TrySetFocusedComponent(const winrt::Microsoft::ReactNati
     return false;
 
   auto losingFocusArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::LosingFocusEventArgs>(
-      target, m_focusedComponent, target);
+      target, direction, m_focusedComponent, target);
   if (m_focusedComponent) {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_focusedComponent)
         ->onLosingFocus(losingFocusArgs);
@@ -118,7 +124,7 @@ bool RootComponentView::TrySetFocusedComponent(const winrt::Microsoft::ReactNati
 
   if (losingFocusArgs.NewFocusedComponent()) {
     auto gettingFocusArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::GettingFocusEventArgs>(
-        target, m_focusedComponent, losingFocusArgs.NewFocusedComponent());
+        target, direction, m_focusedComponent, losingFocusArgs.NewFocusedComponent());
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(losingFocusArgs.NewFocusedComponent())
         ->onGettingFocus(gettingFocusArgs);
 
@@ -138,13 +144,16 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
   }
 
   Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> fn =
-      [currentlyFocused = m_focusedComponent](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+      [currentlyFocused = m_focusedComponent, next](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
         if (view == currentlyFocused)
           return false;
 
         return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)
             ->rootComponentView()
-            ->TrySetFocusedComponent(view);
+            ->TrySetFocusedComponent(
+                view,
+                next ? winrt::Microsoft::ReactNative::FocusNavigationDirection::Next
+                     : winrt::Microsoft::ReactNative::FocusNavigationDirection::Previous);
       };
 
   return winrt::Microsoft::ReactNative::implementation::walkTree(m_focusedComponent, next, fn);
@@ -200,6 +209,15 @@ winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixel
     return nullptr;
 
   return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->EnsureUiaProvider();
+}
+
+float RootComponentView::FontSizeMultiplier() const noexcept {
+  if (auto rootView = m_wkRootView.get()) {
+    return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)
+        ->FontSizeMultiplier();
+  }
+  assert(false);
+  return 1.0f;
 }
 
 winrt::Microsoft::UI::Content::ContentIsland RootComponentView::parentContentIsland() noexcept {

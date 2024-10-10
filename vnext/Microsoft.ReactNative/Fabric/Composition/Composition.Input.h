@@ -198,6 +198,7 @@ struct PointerPoint : PointerPointT<PointerPoint> {
   uint64_t Timestamp() const noexcept;
   winrt::Microsoft::ReactNative::Composition::Input::PointerPoint GetOffsetPoint(
       const winrt::Windows::Foundation::Point &offset) const noexcept;
+  winrt::Microsoft::UI::Input::PointerPoint Inner() const noexcept;
 
  private:
   bool IsPointerMessage(uint32_t message) const noexcept;

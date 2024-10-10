@@ -1,0 +1,69 @@
+
+import "ReactNativeHost.idl";
+import "ReactNativeIsland.idl";
+import "ReactInstanceSettings.idl";
+import "IReactPackageProvider.idl";
+
+#include "DocString.h"
+
+namespace Microsoft.ReactNative {
+
+     [experimental]
+     DOC_STRING("ReactNativeWin32App is used to manage resources appropriately to be able to host ReactNative component in a contentIsland.")
+     runtimeclass ReactNativeWin32App {
+        // Properties
+        Microsoft.UI.Windowing.AppWindow AppWindow {get;};
+
+        Microsoft.UI.Composition.Compositor Compositor {get;};
+
+        Microsoft.UI.Content.DesktopChildSiteBridge DesktopChildSiteBridge {get;};
+
+        ReactNativeHost ReactNativeHost {get;};
+
+        ReactNativeIsland ReactNativeIsland {get;};
+
+        // Methods
+        void Start();
+     }
+
+    [experimental]
+    DOC_STRING("This is the builder for creating ReactInstanceSettings.")
+    runtimeclass ReactInstanceSettingsBuilder
+    {
+        ReactInstanceSettingsBuilder();
+
+        // Properties
+        ReactInstanceSettings ReactInstanceSettings {get;};
+
+        // Methods
+        ReactInstanceSettingsBuilder UseDirectDebugger(Boolean state);
+
+        ReactInstanceSettingsBuilder UseDeveloperSupport(Boolean state);
+    
+        ReactInstanceSettingsBuilder BundleRootPath(String path);
+
+        ReactInstanceSettingsBuilder DebugBundlePath(String path);
+
+        ReactInstanceSettingsBuilder JavaScriptBundleFile(String file);
+
+        ReactInstanceSettingsBuilder UseFastRefresh(Boolean state);
+    }
+
+    [experimental]
+    DOC_STRING("ReactNativeAppBuilder initializes all the required infrastructure for a Win32 Fabric Application.")
+    runtimeclass ReactNativeAppBuilder
+    {
+        ReactNativeAppBuilder();
+
+        // Methods
+        ReactNativeAppBuilder AddPackageProviders(Windows.Foundation.Collections.IVector<Microsoft.ReactNative.IReactPackageProvider> packageProviders);
+
+        ReactNativeAppBuilder SetReactInstanceSettings(ReactInstanceSettings settings);
+
+        ReactNativeAppBuilder SetAppWindow(Microsoft.UI.Windowing.AppWindow appWindow);
+
+        ReactNativeAppBuilder SetReactViewOptions(Microsoft.ReactNative.ReactViewOptions reactViewOptions);
+
+        ReactNativeWin32App Build();
+    }
+}

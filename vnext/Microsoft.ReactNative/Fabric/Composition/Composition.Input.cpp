@@ -637,6 +637,10 @@ bool PointerPoint::IsPointerMessage(uint32_t message) const noexcept {
   return (message >= WM_POINTERFIRST && message <= WM_POINTERLAST);
 }
 
+winrt::Microsoft::UI::Input::PointerPoint PointerPoint::Inner() const noexcept {
+  return m_sysPointerPoint;
+}
+
 PointerRoutedEventArgs::PointerRoutedEventArgs(
     const winrt::Microsoft::ReactNative::ReactContext &context,
     facebook::react::Tag tag,

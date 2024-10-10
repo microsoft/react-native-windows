@@ -37,8 +37,7 @@ winrt::Microsoft::ReactNative::ComponentView UnimplementedNativeViewComponentVie
 }
 
 void UnimplementedNativeViewComponentView::HandleCommand(
-    winrt::hstring commandName,
-    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+    const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
   // Do not call base to avoid unknown command asserts
 }
 

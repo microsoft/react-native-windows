@@ -38,8 +38,7 @@ struct ComponentView : public ComponentViewT<
   virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual OuterVisual() const noexcept;
   void updateEventEmitter(facebook::react::EventEmitter::Shared const &eventEmitter) noexcept override;
   const facebook::react::SharedViewEventEmitter &GetEventEmitter() const noexcept;
-  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
-      override;
+  void HandleCommand(const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept override;
   facebook::react::Props::Shared props() noexcept override;
   virtual const facebook::react::SharedViewProps &viewProps() const noexcept {
     static facebook::react::SharedViewProps emptyProps;
@@ -92,7 +91,7 @@ struct ComponentView : public ComponentViewT<
   void EnsureTransformMatrixFacade() noexcept;
 
   winrt::IInspectable EnsureUiaProvider() noexcept override;
-  std::optional<std::string> getAcccessiblityValue() noexcept override;
+  std::optional<std::string> getAccessiblityValue() noexcept override;
   void setAcccessiblityValue(std::string &&value) noexcept override;
   bool getAcccessiblityIsReadOnly() noexcept override;
   ToggleState getToggleState() noexcept override;

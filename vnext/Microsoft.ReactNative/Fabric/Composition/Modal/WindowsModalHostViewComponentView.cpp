@@ -191,9 +191,8 @@ void WindowsModalHostComponentView::UnmountChildComponentView(
 }
 
 void WindowsModalHostComponentView::HandleCommand(
-    winrt::hstring commandName,
-    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
-  Super::HandleCommand(commandName, args);
+    const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
+  Super::HandleCommand(args);
 }
 
 void WindowsModalHostComponentView::updateProps(

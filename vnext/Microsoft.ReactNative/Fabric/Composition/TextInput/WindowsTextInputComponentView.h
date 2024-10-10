@@ -46,8 +46,7 @@ struct WindowsTextInputComponentView
   void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept override;
   static facebook::react::SharedViewProps defaultProps() noexcept;
   const facebook::react::WindowsTextInputProps &windowsTextInputProps() const noexcept;
-  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
-      override;
+  void HandleCommand(const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept override;
   void OnRenderingDeviceLost() noexcept override;
   void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
   void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
@@ -66,8 +65,9 @@ struct WindowsTextInputComponentView
   void OnKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   void OnCharacterReceived(const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs
                                &args) noexcept override;
+  void onMounted() noexcept override;
 
-  std::optional<std::string> getAcccessiblityValue() noexcept override;
+  std::optional<std::string> getAccessiblityValue() noexcept override;
   void setAcccessiblityValue(std::string &&value) noexcept override;
   bool getAcccessiblityIsReadOnly() noexcept override;
 
@@ -101,6 +101,8 @@ struct WindowsTextInputComponentView
       const facebook::react::SharedColor &foregroundColor) noexcept;
   bool ShouldSubmit(
       const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
+  void InternalFinalize() noexcept;
+  void UpdatePropertyBits() noexcept;
 
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};
@@ -114,7 +116,7 @@ struct WindowsTextInputComponentView
   winrt::com_ptr<ITextServices2> m_textServices;
   unsigned int m_imgWidth{0}, m_imgHeight{0};
   std::shared_ptr<facebook::react::WindowsTextInputShadowNode::ConcreteState const> m_state;
-  RECT m_rcClient;
+  float m_fontSizeMultiplier{1.0};
   int64_t m_mostRecentEventCount{0};
   int m_nativeEventCount{0};
   bool m_comingFromJS{false};
@@ -124,6 +126,8 @@ struct WindowsTextInputComponentView
   bool m_drawing{false};
   bool m_clearTextOnSubmit{false};
   bool m_multiline{false};
+  DWORD m_propBitsMask{0};
+  DWORD m_propBits{0};
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
 };
 

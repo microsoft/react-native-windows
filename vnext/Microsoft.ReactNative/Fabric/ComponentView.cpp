@@ -256,16 +256,14 @@ void ComponentView::CustomCommandHandler(const HandleCommandDelegate &handler) n
   m_customCommandHandler = handler;
 }
 
-void ComponentView::HandleCommand(
-    winrt::hstring commandName,
-    const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+void ComponentView::HandleCommand(const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
   if (m_customCommandHandler) {
-    m_customCommandHandler(*this, commandName, args);
+    m_customCommandHandler(*this, args);
   }
 }
 
-winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
-ComponentView::rootComponentView() noexcept {
+winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *ComponentView::rootComponentView()
+    const noexcept {
   if (m_rootView)
     return m_rootView;
 
@@ -285,7 +283,7 @@ void ComponentView::parent(const winrt::Microsoft::ReactNative::ComponentView &p
     m_parent = parent;
     if (!parent) {
       if (oldRootView && oldRootView->GetFocusedComponent() == *this) {
-        oldRootView->TrySetFocusedComponent(oldParent);
+        oldRootView->TrySetFocusedComponent(oldParent, winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
       }
     }
     if (parent) {
@@ -424,7 +422,7 @@ void ComponentView::GotFocus(winrt::event_token const &token) noexcept {
 
 bool ComponentView::TryFocus() noexcept {
   if (auto root = rootComponentView()) {
-    return root->TrySetFocusedComponent(*get_strong());
+    return root->TrySetFocusedComponent(*get_strong(), winrt::Microsoft::ReactNative::FocusNavigationDirection::None);
   }
 
   return false;
@@ -638,7 +636,7 @@ winrt::IInspectable ComponentView::EnsureUiaProvider() noexcept {
   return nullptr;
 }
 
-std::optional<std::string> ComponentView::getAcccessiblityValue() noexcept {
+std::optional<std::string> ComponentView::getAccessiblityValue() noexcept {
   return std::nullopt;
 }
 
