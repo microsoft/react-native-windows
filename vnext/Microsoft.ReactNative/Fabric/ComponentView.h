@@ -199,7 +199,7 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   virtual facebook::react::Tag
   hitTest(facebook::react::Point pt, facebook::react::Point &localPt, bool ignorePointerEvents = false) const noexcept;
   virtual winrt::IInspectable EnsureUiaProvider() noexcept;
-  virtual std::optional<std::string> getAcccessiblityValue() noexcept;
+  virtual std::optional<std::string> getAccessiblityValue() noexcept;
   virtual void setAcccessiblityValue(std::string &&value) noexcept;
   virtual bool getAcccessiblityIsReadOnly() noexcept;
   virtual ToggleState getToggleState() noexcept;

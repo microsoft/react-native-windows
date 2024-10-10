@@ -636,7 +636,7 @@ winrt::IInspectable ComponentView::EnsureUiaProvider() noexcept {
   return nullptr;
 }
 
-std::optional<std::string> ComponentView::getAcccessiblityValue() noexcept {
+std::optional<std::string> ComponentView::getAccessiblityValue() noexcept {
   return std::nullopt;
 }
 
