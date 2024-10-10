@@ -165,7 +165,7 @@ export class Telemetry {
     const postChannel: PostChannel = new PostChannel();
 
     const coreConfiguration: coreOneDS.IExtendedConfiguration = {
-      instrumentationKey: process.env[ENV_SETUP_OVERRIDE] ?? RNW_1DS_INSTRUMENTATION_KEY,
+      instrumentationKey: Telemetry.getDefaultSetupString()
     }
 
     const postChannelConfig: IChannelConfiguration = {
