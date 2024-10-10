@@ -64,6 +64,8 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   winrt::Microsoft::ReactNative::ComponentView FindFirstFocusableElement() noexcept;
   winrt::Microsoft::ReactNative::ComponentView FindLastFocusableElement() noexcept;
 
+  HWND GetHwndForParenting() noexcept override;
+
  private:
   // should this be a ReactTaggedView? - It shouldn't actually matter since if the view is going away it should always
   // be clearing its focus But being a reactTaggedView might make it easier to identify cases where that isn't

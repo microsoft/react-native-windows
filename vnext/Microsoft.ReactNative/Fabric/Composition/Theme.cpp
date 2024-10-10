@@ -296,7 +296,9 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
           {"ScrollBarThumbFillDisabled", "ControlStrongFillColorDisabled"},
           {"ScrollBarTrackFill",
            "AcrylicInAppFillColorDefault"}, // TODO make AcrylicInAppFillColorDefault a real acrylic brush
-      };
+          {"ToolTipBackground", "SystemChromeMediumLowColor"},
+          {"ToolTipForeground", "SystemControlForegroundBaseHighColor"},
+          {"ToolTipBorderBrush", "SystemControlTransientBorderColor"}};
 
   static std::unordered_map<std::string, winrt::Windows::UI::Color, std::hash<std::string_view>, std::equal_to<>>
       s_lightColors = {
@@ -326,7 +328,9 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
           {"ControlStrongFillColorDefault", {0x72, 0x00, 0x00, 0x00}},
           {"ControlStrongFillColorDisabled", {0x51, 0x00, 0x00, 0x00}},
           {"AcrylicInAppFillColorDefault", {0x9E, 0xFF, 0xFF, 0xFF}},
-      };
+          {"SystemChromeMediumLowColor", {0xFF, 0xF2, 0xF2, 0xF2}},
+          {"SystemControlForegroundBaseHighColor", {0xFF, 0x00, 0x00, 0x00}},
+          {"SystemControlTransientBorderColor", {0x24, 0x00, 0x00, 0x00}}};
 
   static std::unordered_map<std::string, winrt::Windows::UI::Color, std::hash<std::string_view>, std::equal_to<>>
       s_darkColors = {
@@ -356,7 +360,9 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
           {"ControlStrongFillColorDefault", {0x8B, 0xFF, 0xFF, 0xFF}},
           {"ControlStrongFillColorDisabled", {0x3F, 0xFF, 0xFF, 0xFF}},
           {"AcrylicInAppFillColorDefault", {0x9E, 0x00, 0x00, 0x00}},
-      };
+          {"SystemChromeMediumLowColor", {0xFF, 0x2B, 0x2B, 0x2B}},
+          {"SystemControlForegroundBaseHighColor", {0xFF, 0xFF, 0xFF, 0xFF}},
+          {"SystemControlTransientBorderColor", {0x5C, 0x00, 0x00, 0x00}}};
 
   static std::unordered_map<
       std::string,
@@ -391,7 +397,9 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
           {"SubtleFillColorSecondary", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
           {"ControlStrongFillColorDefault", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
           {"ControlStrongFillColorDisabled", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
-      };
+          {"SystemChromeMediumLowColor", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
+          {"SystemControlForegroundBaseHighColor", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonText, {}}},
+          {"SystemControlTransientBorderColor", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonText, {}}}};
 
   auto alias = s_xamlAliasedColors.find(platformColor);
   if (alias != s_xamlAliasedColors.end()) {

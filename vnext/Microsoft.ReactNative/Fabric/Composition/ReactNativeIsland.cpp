@@ -332,7 +332,7 @@ winrt::IInspectable ReactNativeIsland::GetUiaProvider() noexcept {
   if (m_uiaProvider == nullptr) {
     m_uiaProvider =
         winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(*this);
-    if (m_hwnd) {
+    if (m_hwnd && !m_island) {
       auto pRootProvider =
           static_cast<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider *>(
               m_uiaProvider.as<IRawElementProviderSimple>().get());
@@ -346,6 +346,10 @@ winrt::IInspectable ReactNativeIsland::GetUiaProvider() noexcept {
 
 void ReactNativeIsland::SetWindow(uint64_t hwnd) noexcept {
   m_hwnd = reinterpret_cast<HWND>(hwnd);
+}
+
+HWND ReactNativeIsland::GetHwndForParenting() noexcept {
+  return m_hwnd;
 }
 
 int64_t ReactNativeIsland::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
@@ -367,7 +371,7 @@ int64_t ReactNativeIsland::SendMessage(uint32_t msg, uint64_t wParam, int64_t lP
 bool ReactNativeIsland::CapturePointer(
     const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
     facebook::react::Tag tag) noexcept {
-  if (m_hwnd) {
+  if (m_hwnd && !m_island) {
     SetCapture(m_hwnd);
   }
   return m_CompositionEventHandler->CapturePointer(pointer, tag);
@@ -377,7 +381,7 @@ void ReactNativeIsland::ReleasePointerCapture(
     const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
     facebook::react::Tag tag) noexcept {
   if (m_CompositionEventHandler->ReleasePointerCapture(pointer, tag)) {
-    if (m_hwnd) {
+    if (m_hwnd && !m_island) {
       if (m_hwnd == GetCapture()) {
         ReleaseCapture();
       }

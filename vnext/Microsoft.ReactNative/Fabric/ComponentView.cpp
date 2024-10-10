@@ -14,6 +14,7 @@
 #include <Fabric/Composition/RootComponentView.h>
 #include "AbiEventEmitter.h"
 #include "AbiShadowNode.h"
+#include "ReactCoreInjection.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 struct RootComponentView;
@@ -260,6 +261,17 @@ void ComponentView::HandleCommand(const winrt::Microsoft::ReactNative::HandleCom
   if (m_customCommandHandler) {
     m_customCommandHandler(*this, args);
   }
+}
+
+HWND ComponentView::GetHwndForParenting() noexcept {
+  if (m_parent) {
+    return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)
+        ->GetHwndForParenting();
+  }
+
+  // Fallback if we do not know any more specific HWND
+  return reinterpret_cast<HWND>(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(
+      m_reactContext.Properties().Handle()));
 }
 
 winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *ComponentView::rootComponentView()

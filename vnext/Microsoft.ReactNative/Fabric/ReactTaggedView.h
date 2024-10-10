@@ -31,6 +31,10 @@ struct ReactTaggedView {
     return strongView;
   }
 
+  facebook::react::Tag Tag() const noexcept {
+    return m_tag;
+  }
+
  private:
   facebook::react::Tag m_tag;
   winrt::weak_ref<winrt::Microsoft::ReactNative::ComponentView> m_view;

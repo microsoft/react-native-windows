@@ -231,4 +231,15 @@ winrt::Microsoft::ReactNative::implementation::ClipState RootComponentView::getC
   return winrt::Microsoft::ReactNative::implementation::ClipState::NoClip;
 }
 
+HWND RootComponentView::GetHwndForParenting() noexcept {
+  if (auto rootView = m_wkRootView.get()) {
+    auto hwnd = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)
+                    ->GetHwndForParenting();
+    if (hwnd)
+      return hwnd;
+  }
+
+  return base_type::GetHwndForParenting();
+}
+
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

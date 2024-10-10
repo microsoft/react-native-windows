@@ -27,6 +27,10 @@ HostPlatformViewProps::HostPlatformViewProps(
           CoreFeatures::enablePropIteratorSetter
               ? sourceProps.focusable
               : convertRawProp(context, rawProps, "focusable", sourceProps.focusable, {})),
+      tooltip(
+          CoreFeatures::enablePropIteratorSetter
+              ? sourceProps.tooltip
+              : convertRawProp(context, rawProps, "tooltip", sourceProps.tooltip, {})),
       accessibilityPosInSet(
           CoreFeatures::enablePropIteratorSetter
               ? sourceProps.accessibilityPosInSet
@@ -82,6 +86,7 @@ void HostPlatformViewProps::setProp(
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityLiveRegion);
     RAW_SET_PROP_SWITCH_CASE_BASIC(keyDownEvents);
     RAW_SET_PROP_SWITCH_CASE_BASIC(keyUpEvents);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(tooltip);
   }
 }
 

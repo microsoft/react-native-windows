@@ -150,6 +150,9 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextDrawing.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TooltipService.cpp">
+      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\UiaHelpers.cpp">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
     </ClCompile>

@@ -30,6 +30,7 @@ struct ComponentView : public ComponentViewT<
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext,
       ComponentViewFeatures flags);
+  virtual ~ComponentView();
 
   virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual Visual() const noexcept {
     return nullptr;
@@ -151,6 +152,7 @@ struct ComponentView : public ComponentViewT<
       const facebook::react::ViewProps &viewProps) noexcept;
 
   bool m_FinalizeTransform{false};
+  bool m_tooltipTracked{false};
   ComponentViewFeatures m_flags;
   void showFocusVisual(bool show) noexcept;
   winrt::Microsoft::ReactNative::Composition::Experimental::IFocusVisual m_focusVisual{nullptr};
