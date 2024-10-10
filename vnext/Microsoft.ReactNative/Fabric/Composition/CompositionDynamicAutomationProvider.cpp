@@ -422,7 +422,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_Value(BSTR *pRetVal)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   *pRetVal = StringToBSTR(winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
-                              ->getAcccessiblityValue()
+                              ->getAccessiblityValue()
                               .value_or(""));
   return S_OK;
 }

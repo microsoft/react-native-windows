@@ -1313,7 +1313,7 @@ void ComponentView::updateAccessibilityProps(
       newViewProps.accessibilityLiveRegion);
 }
 
-std::optional<std::string> ComponentView::getAcccessiblityValue() noexcept {
+std::optional<std::string> ComponentView::getAccessiblityValue() noexcept {
   return std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue.text;
 }
 
