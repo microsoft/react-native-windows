@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Mon, 07 Oct 2024 19:54:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 10 Oct 2024 05:16:20 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.266
+
+Thu, 10 Oct 2024 05:16:20 GMT
+
+### Changes
+
+- Update to @react-native-community/cli@15.0.0-alpha.2 (jthysell@microsoft.com)
 
 ## 0.0.0-canary.265
 

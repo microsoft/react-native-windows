@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 10 Oct 2024 05:16:20 GMT",
+      "version": "0.0.0-canary.874",
+      "tag": "react-native-windows_v0.0.0-canary.874",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bba47ee2319246d6f4cfe947418dc589a2e423a8",
+            "comment": "Implement IExpandCollapseProvider"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d1f46f7a19b38d8ea60fcb697dae154849ec7520",
+            "comment": "Create hybrid CppLib props/targets"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "61bde52b38ce5f74aa09d68974dcda306023f378",
+            "comment": "Update to @react-native-community/cli@15.0.0-alpha.2"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.240",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Oct 2024 19:23:40 GMT",
       "version": "0.0.0-canary.873",
       "tag": "react-native-windows_v0.0.0-canary.873",
