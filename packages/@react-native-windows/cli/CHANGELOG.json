@@ -2,6 +2,27 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Thu, 10 Oct 2024 18:14:30 GMT",
+      "version": "0.0.0-canary.240",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.240",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "61bde52b38ce5f74aa09d68974dcda306023f378",
+            "comment": "Update to @react-native-community/cli@15.0.0-alpha.2"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "d1f46f7a19b38d8ea60fcb697dae154849ec7520",
+            "comment": "Create hybrid CppLib props/targets"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Oct 2024 19:54:26 GMT",
       "version": "0.0.0-canary.239",
       "tag": "@react-native-windows/cli_v0.0.0-canary.239",
