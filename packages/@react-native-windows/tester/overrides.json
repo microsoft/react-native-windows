@@ -51,7 +51,7 @@
       "type": "patch",
       "file": "src/js/examples/Modal/ModalPresentation.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Modal/ModalPresentation.js",
-      "baseHash": "97e0408dad28bd62e6ec22a8454af764d69d8ed5"
+      "baseHash": "2978679d6ff2e40ae686c3bdce9801b5e12cab86"
     },
     {
       "type": "patch",
