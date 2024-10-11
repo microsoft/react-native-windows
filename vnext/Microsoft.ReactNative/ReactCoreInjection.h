@@ -53,7 +53,6 @@ struct ReactCoreInjection : ReactCoreInjectionT<ReactCoreInjection> {
   static uint64_t GetTopLevelWindowId(const IReactPropertyBag &properties) noexcept;
   static void SetTopLevelWindowId(const IReactPropertyBag &properties, uint64_t windowId) noexcept;
 
-  static ITimer CreateTimer(const IReactPropertyBag &properties);
   static TimerFactory GetTimerFactory(const IReactPropertyBag &properties) noexcept;
   static void SetTimerFactory(const IReactPropertyBag &properties, const TimerFactory &timerFactory) noexcept;
 };
