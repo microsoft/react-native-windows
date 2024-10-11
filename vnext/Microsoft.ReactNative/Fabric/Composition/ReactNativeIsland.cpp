@@ -157,6 +157,7 @@ void ReactNativeIsland::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewH
   }
 
   if (m_reactViewHost) {
+    UninitRootView();
     m_reactViewHost.DetachViewInstance();
   }
 
