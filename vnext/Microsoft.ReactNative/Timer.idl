@@ -4,7 +4,7 @@
 #include "DocString.h"
 import "IJSValueReader.idl";
 import "IJSValueWriter.idl";
-import "Theme.idl";
+import "IReactPropertyBag.idl";
 
 namespace Microsoft.ReactNative {
 
