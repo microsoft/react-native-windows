@@ -456,6 +456,11 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   if (children.Size() > 0) {
     result.Insert(L"__Children", children);
   }
+  ::SysFreeString(automationId);
+  ::SysFreeString(helpText);
+  ::SysFreeString(localizedControlType);
+  ::SysFreeString(name);
+  ::SysFreeString(itemStatus);
   return result;
 }
 
