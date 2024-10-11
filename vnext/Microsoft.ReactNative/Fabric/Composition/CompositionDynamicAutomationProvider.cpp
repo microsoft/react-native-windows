@@ -164,8 +164,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
       props->accessibilityRole.empty() ? compositionView->DefaultControlType() : props->accessibilityRole;
   // Invoke control pattern is used to support controls that do not maintain state
   // when activated but rather initiate or perform a single, unambiguous action.
-  if (patternId == UIA_InvokePatternId &&
-      (props->onAccessibilityTap)) {
+  if (patternId == UIA_InvokePatternId && (props->onAccessibilityTap)) {
     *pRetVal = static_cast<IInvokeProvider *>(this);
     AddRef();
   }
@@ -176,7 +175,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   }
 
   if (patternId == UIA_ValuePatternId &&
-      (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() || accessibilityValueHasValue(props->accessibilityValue))) {
+      (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
+       accessibilityValueHasValue(props->accessibilityValue))) {
     *pRetVal = static_cast<IValueProvider *>(this);
     AddRef();
   }
@@ -187,8 +187,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
-  if (patternId == UIA_ExpandCollapsePatternId &&
-      expandableControl(props)) {
+  if (patternId == UIA_ExpandCollapsePatternId && expandableControl(props)) {
     *pRetVal = static_cast<IExpandCollapseProvider *>(this);
     AddRef();
   }

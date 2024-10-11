@@ -4,7 +4,7 @@
  * @format
  */
 import React from 'react';
-import {AppRegistry, View, TextInput, Switch} from 'react-native';
+import {AppRegistry, View} from 'react-native';
 
 export default class Bootstrap extends React.Component {
   render() {
@@ -12,8 +12,6 @@ export default class Bootstrap extends React.Component {
       <View
         accessible={true}
         style={{borderRadius: 30, width: 60, height: 60, margin: 10}}>
-          <TextInput />
-          <Switch/>
         <View style={{backgroundColor: 'magenta', width: 60, height: 60}} />
       </View>
     );
