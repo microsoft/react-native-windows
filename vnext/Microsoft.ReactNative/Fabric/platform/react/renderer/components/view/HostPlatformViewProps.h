@@ -29,7 +29,7 @@ class HostPlatformViewProps : public BaseViewProps {
   std::string accessibilityLiveRegion{"none"};
 
   // std::optional<std::string> overflowAnchor{};
-  // std::optional<std::string> tooltip{};
+  std::optional<std::string> tooltip{};
   std::vector<HandledKeyEvent> keyDownEvents{};
   std::vector<HandledKeyEvent> keyUpEvents{};
 };

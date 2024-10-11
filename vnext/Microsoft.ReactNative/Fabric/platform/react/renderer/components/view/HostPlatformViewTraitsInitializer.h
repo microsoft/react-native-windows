@@ -13,7 +13,7 @@ inline bool formsStackingContext(ViewProps const &viewProps) {
   // Only Views which are marked as focusable can actually trigger the events, which will already avoid being collapsed.
   constexpr decltype(WindowsViewEvents::bits) focusEventsMask = {
       (1 << (int)WindowsViewEvents::Offset::Focus) & (1 << (int)WindowsViewEvents::Offset::Blur)};
-  return (viewProps.windowsEvents.bits & focusEventsMask).any();
+  return (viewProps.windowsEvents.bits & focusEventsMask).any() || viewProps.tooltip;
 }
 
 inline bool formsView(ViewProps const &viewProps) {
