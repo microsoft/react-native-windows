@@ -82,6 +82,7 @@ struct ReactNativeIsland
   void AddRenderedVisual(const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept;
   void RemoveRenderedVisual(const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept;
   bool TrySetFocus() noexcept;
+  HWND GetHwndForParenting() noexcept;
 
   winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader Resources() noexcept;
   void Resources(const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &resources) noexcept;
