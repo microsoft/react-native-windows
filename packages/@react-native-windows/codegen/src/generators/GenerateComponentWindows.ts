@@ -438,19 +438,40 @@ export function createComponentGenerator({
               .join('\n\n')
           : '';
 
-
-        const commandHandler = hasAnyCommands ? `void HandleCommand(const winrt::Microsoft::ReactNative::ComponentView &view, const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
+        const commandHandler = hasAnyCommands
+          ? `void HandleCommand(const winrt::Microsoft::ReactNative::ComponentView &view, const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
     auto userData = view.UserData().as<TUserData>();
     auto commandName = args.CommandName();
-${componentShape.commands.map(command => {
-      const commaSeparatedCommandArgs = command.typeAnnotation.params.map(param => param.name).join(', ');
-      return `    if (commandName == L"${command.name}") {
-${command.typeAnnotation.params.length !== 0 ? `      ${command.typeAnnotation.params.map(param => {
-            const commandArgType = translateCommandParamType(param.typeAnnotation, commandAliases, `${componentName}_${command.name}`, cppCodegenOptions);
-            return `${(param.optional && !commandArgType.alreadySupportsOptionalOrHasDefault) ? `std::optional<${commandArgType.type}>` : commandArgType.type} ${param.name};`;
-      }).join('\n')}
-      winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), ${commaSeparatedCommandArgs});` : ''}
-      userData->Handle${capitalizeFirstLetter(command.name)}Command(${commaSeparatedCommandArgs});
+${componentShape.commands
+  .map(command => {
+    const commaSeparatedCommandArgs = command.typeAnnotation.params
+      .map(param => param.name)
+      .join(', ');
+    return `    if (commandName == L"${command.name}") {
+${
+  command.typeAnnotation.params.length !== 0
+    ? `      ${command.typeAnnotation.params
+        .map(param => {
+          const commandArgType = translateCommandParamType(
+            param.typeAnnotation,
+            commandAliases,
+            `${componentName}_${command.name}`,
+            cppCodegenOptions,
+          );
+          return `${
+            param.optional &&
+            !commandArgType.alreadySupportsOptionalOrHasDefault
+              ? `std::optional<${commandArgType.type}>`
+              : commandArgType.type
+          } ${param.name};`;
+        })
+        .join('\n')}
+      winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), ${commaSeparatedCommandArgs});`
+    : ''
+}
+      userData->Handle${capitalizeFirstLetter(
+        command.name,
+      )}Command(${commaSeparatedCommandArgs});
       return;
     }`;
   })
@@ -458,11 +479,13 @@ ${command.typeAnnotation.params.length !== 0 ? `      ${command.typeAnnotation.p
   }`
           : '';
 
-      const registerCommandHandler = hasAnyCommands ? `        builder.SetCustomCommandHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+        const registerCommandHandler = hasAnyCommands
+          ? `        builder.SetCustomCommandHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                           const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
           auto userData = view.UserData().as<TUserData>();
           userData->HandleCommand(view, args);
-        });` : '';
+        });`
+          : '';
 
         const baseType = baseStructTemplate
           .replace(/::_COMPONENT_VIEW_COMMAND_HANDLERS_::/g, commandHandlers)
