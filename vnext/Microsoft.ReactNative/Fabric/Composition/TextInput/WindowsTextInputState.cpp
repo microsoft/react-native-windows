@@ -31,17 +31,4 @@ WindowsTextInputState::WindowsTextInputState(
       defaultThemePaddingTop(defaultThemePaddingTop),
       defaultThemePaddingBottom(defaultThemePaddingBottom) {}
 
-WindowsTextInputState::WindowsTextInputState(const WindowsTextInputState &previousState, const folly::dynamic &data)
-    : mostRecentEventCount(data.getDefault("mostRecentEventCount", previousState.mostRecentEventCount).getInt()),
-      cachedAttributedStringId(data.getDefault("opaqueCacheId", previousState.cachedAttributedStringId).getInt()),
-      attributedString(previousState.attributedString),
-      reactTreeAttributedString(previousState.reactTreeAttributedString),
-      paragraphAttributes(previousState.paragraphAttributes),
-      defaultThemePaddingStart(
-          data.getDefault("themePaddingStart", previousState.defaultThemePaddingStart).getDouble()),
-      defaultThemePaddingEnd(data.getDefault("themePaddingEnd", previousState.defaultThemePaddingEnd).getDouble()),
-      defaultThemePaddingTop(data.getDefault("themePaddingTop", previousState.defaultThemePaddingTop).getDouble()),
-      defaultThemePaddingBottom(
-          data.getDefault("themePaddingBottom", previousState.defaultThemePaddingBottom).getDouble()){};
-
 } // namespace facebook::react

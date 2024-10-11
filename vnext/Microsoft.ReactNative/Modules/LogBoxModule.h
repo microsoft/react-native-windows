@@ -14,6 +14,8 @@ REACT_MODULE(LogBox)
 struct LogBox : public std::enable_shared_from_this<LogBox> {
   using ModuleSpec = ReactNativeSpecs::LogBoxSpec;
 
+  ~LogBox();
+
   REACT_INIT(Initialize)
   void Initialize(winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
