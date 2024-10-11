@@ -155,9 +155,9 @@ void FabricUIManager::startSurface(
 
 void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept {
   m_surfaceManager->stopSurface(surfaceId);
-  auto& rootDescriptor = m_registry.componentViewDescriptorWithTag(surfaceId);
+  auto &rootDescriptor = m_registry.componentViewDescriptorWithTag(surfaceId);
   m_registry.enqueueComponentViewWithComponentHandle(
-    facebook::react::RootShadowNode::Handle(), surfaceId, rootDescriptor);
+      facebook::react::RootShadowNode::Handle(), surfaceId, rootDescriptor);
 }
 
 winrt::Microsoft::ReactNative::ReactNativeIsland FabricUIManager::GetReactNativeIsland(
