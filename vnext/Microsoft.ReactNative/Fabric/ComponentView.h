@@ -210,6 +210,9 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   // Notify up the tree to bring the rect into view by scrolling as needed
   virtual void StartBringIntoView(BringIntoViewOptions &&args) noexcept;
 
+  // Eventually PopupContentLink and similar APIs will remove the need for this.
+  virtual HWND GetHwndForParenting() noexcept;
+
   virtual const winrt::Microsoft::ReactNative::IComponentProps userProps(
       facebook::react::Props::Shared const &props) noexcept;
 
