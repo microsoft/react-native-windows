@@ -422,7 +422,7 @@ void ReactInstanceWin::LoadModules(
         L"PlatformConstants",
         winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::PlatformConstants>());
 
-  uint32_t hermesBytecodeVersion = 0;
+    uint32_t hermesBytecodeVersion = 0;
 #if defined(USE_HERMES) && defined(ENABLE_DEVSERVER_HBCBUNDLES)
     hermesBytecodeVersion = ::hermes::hbc::BYTECODE_VERSION;
 #endif
