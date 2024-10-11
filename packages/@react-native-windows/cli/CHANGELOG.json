@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 11 Oct 2024 20:17:23 GMT",
+      "version": "0.76.0-preview.2",
+      "tag": "@react-native-windows/cli_v0.76.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "9614bfe01650f577bf573989faecac1d0989c93d",
+            "comment": "Update to @react-native-community/cli@15.0.0-alpha.2"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Sep 2024 23:20:40 GMT",
       "version": "0.76.0-preview.1",
       "tag": "@react-native-windows/cli_v0.76.0-preview.1",

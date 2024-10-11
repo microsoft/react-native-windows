@@ -2,6 +2,45 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 11 Oct 2024 20:17:23 GMT",
+      "version": "0.76.0-preview.2",
+      "tag": "react-native-windows_v0.76.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "9614bfe01650f577bf573989faecac1d0989c93d",
+            "comment": "Update to @react-native-community/cli@15.0.0-alpha.2"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "25a9ed16bbbd2c142fab182122356c4bb934161a",
+            "comment": "Exclude NuGet package lock files from NPM packages"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "c1536386579b67da32092327aacbb821730dab02",
+            "comment": "integrate 0.76.0-rc.4"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "6e76721bda69d1c8603a211729b89056743eb01f",
+            "comment": "integrate RN 0.76.0-rc3"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.76.0-preview.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Sep 2024 23:20:37 GMT",
       "version": "0.76.0-preview.1",
       "tag": "react-native-windows_v0.76.0-preview.1",

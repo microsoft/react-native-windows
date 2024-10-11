@@ -1,8 +1,18 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Mon, 30 Sep 2024 23:20:39 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 11 Oct 2024 20:17:22 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.0-preview.2
+
+Fri, 11 Oct 2024 20:17:22 GMT
+
+### Changes
+
+- Update to @react-native-community/cli@15.0.0-alpha.2 (jthysell@microsoft.com)
+- integrate RN 0.76.0-rc3 (email not defined)
+- integrate 0.76.0-rc.4 (email not defined)
 
 ## 0.76.0-preview.1
 

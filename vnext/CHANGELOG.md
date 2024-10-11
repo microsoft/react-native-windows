@@ -1,8 +1,20 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 30 Sep 2024 23:20:37 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 11 Oct 2024 20:17:23 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.0-preview.2
+
+Fri, 11 Oct 2024 20:17:23 GMT
+
+### Changes
+
+- Update to @react-native-community/cli@15.0.0-alpha.2 (jthysell@microsoft.com)
+- Exclude NuGet package lock files from NPM packages (jthysell@microsoft.com)
+- integrate 0.76.0-rc.4 (email not defined)
+- integrate RN 0.76.0-rc3 (email not defined)
+- Bump @react-native-windows/cli to v0.76.0-preview.2
 
 ## 0.76.0-preview.1
 
