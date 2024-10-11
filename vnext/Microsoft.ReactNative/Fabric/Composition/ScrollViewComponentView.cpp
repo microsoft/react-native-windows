@@ -749,10 +749,6 @@ void ScrollViewComponentView::updateProps(
     m_horizontalScrollbarComponent->UpdateColorForScrollBarRegions();
     m_verticalScrollbarComponent->UpdateColorForScrollBarRegions();
   }
-
-  if (!oldProps || oldViewProps.horizontal != newViewProps.horizontal) {
-    m_scrollVisual.Horizontal(newViewProps.horizontal);
-  }
 }
 
 void ScrollViewComponentView::updateState(
