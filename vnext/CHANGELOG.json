@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 12 Oct 2024 05:22:56 GMT",
+      "version": "0.0.0-canary.875",
+      "tag": "react-native-windows_v0.0.0-canary.875",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "10f9674e959fbb16b79cf2fe1773e12a3b4743b6",
+            "comment": "Fix RootComponentView leak"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "efcfebfb6485ed5a3f7ba5de175d0ca1af7965ce",
+            "comment": "[Fabric] implement view tooltip property"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Oct 2024 18:14:31 GMT",
       "version": "0.0.0-canary.874",
       "tag": "react-native-windows_v0.0.0-canary.874",

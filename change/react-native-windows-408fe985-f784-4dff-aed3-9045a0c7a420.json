@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix RootComponentView leak",
-  "packageName": "react-native-windows",
-  "email": "53619745+rnbot@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
