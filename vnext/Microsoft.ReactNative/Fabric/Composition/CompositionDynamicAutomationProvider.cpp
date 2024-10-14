@@ -358,6 +358,13 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       pRetVal->lVal = GetLiveSetting(props->accessibilityLiveRegion);
       break;
     }
+    case UIA_ItemStatusPropertyId: {
+      pRetVal->vt = VT_BSTR;
+      pRetVal->bstrVal = (props->accessibilityState.has_value() && props->accessibilityState->busy)
+          ? SysAllocString(L"Busy")
+          : SysAllocString(L"");
+      break;
+    }
   }
 
   return hr;

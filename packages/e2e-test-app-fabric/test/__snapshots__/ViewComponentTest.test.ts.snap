@@ -1097,6 +1097,8 @@ exports[`View Tests Views can have customized accessibility 1`] = `
     "ExpandCollapsePattern.ExpandCollapseState": "Expanded",
     "HelpText": "Accessibility Hint",
     "IsKeyboardFocusable": true,
+    "ItemStatus": "Busy",
+    "LiveSetting": "Polite",
     "LocalizedControlType": "button",
     "Name": "A View with accessibility values",
     "__Children": [
