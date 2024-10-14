@@ -4,5 +4,6 @@ steps:
   - checkout: self
     fetchDepth: 10 # Buffer to avoid race condition with AZP jobs started against merge branch
     clean: false
+    persistCredentials: true # override tests, and flowdownload tasks require basic github read permissions
     submodules: false
     lfs: false
