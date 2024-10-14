@@ -1,8 +1,29 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 30 Sep 2024 16:40:50 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Oct 2024 15:28:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.5
+
+Mon, 14 Oct 2024 15:28:33 GMT
+
+### Patches
+
+- [Fabric] Fix crash when running inspect (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] LogBox should destroy its window on instance shutdown (30809111+acoates-ms@users.noreply.github.com)
+- Use a legacy native module binding that always returns null in bridgeless mode (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Add FocusNavigationDirection and allow overriding of default command handling (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Enable ScrollView touch scrolling (30809111+acoates-ms@users.noreply.github.com)
+- Implement SampleTurboModule (jthysell@microsoft.com)
+- SampleTurboModule only works as a turbomodule, so do not install it when using web debugger (30809111+acoates-ms@users.noreply.github.com)
+- Update SampleAppFabric to use ReactNativeAppBuilder (10109130+sharath2727@users.noreply.github.com)
+- Introduce ReactNativeAppBuilder.idl (10109130+sharath2727@users.noreply.github.com)
+- Add Implementation for accessibilityActions (34109996+chiaramooney@users.noreply.github.com)
+- Setup reactnativewin32 app (10109130+sharath2727@users.noreply.github.com)
+- [Fabric] LayoutDirection and FontSizeMultiplier support (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.75.4
+- Bump @react-native-windows/codegen to v0.75.2
 
 ## 0.75.4
 

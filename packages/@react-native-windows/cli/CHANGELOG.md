@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-This log was last generated on Mon, 16 Sep 2024 21:59:06 GMT and should not be manually modified.
+This log was last generated on Mon, 14 Oct 2024 15:28:35 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.4
+
+Mon, 14 Oct 2024 15:28:35 GMT
+
+### Patches
+
+- Bump @react-native-windows/codegen to v0.75.2
 
 ## 0.75.3
 

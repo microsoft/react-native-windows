@@ -2,6 +2,99 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 14 Oct 2024 15:28:33 GMT",
+      "version": "0.75.5",
+      "tag": "react-native-windows_v0.75.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "91192a3cc0a59ab92355a55721d20e04eade9648",
+            "comment": "[Fabric] Fix crash when running inspect"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "91192a3cc0a59ab92355a55721d20e04eade9648",
+            "comment": "[Fabric] LogBox should destroy its window on instance shutdown"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "91192a3cc0a59ab92355a55721d20e04eade9648",
+            "comment": "Use a legacy native module binding that always returns null in bridgeless mode"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "91192a3cc0a59ab92355a55721d20e04eade9648",
+            "comment": "[Fabric] Add FocusNavigationDirection and allow overriding of default command handling"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "91192a3cc0a59ab92355a55721d20e04eade9648",
+            "comment": "[Fabric] Enable ScrollView touch scrolling"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "91192a3cc0a59ab92355a55721d20e04eade9648",
+            "comment": "Implement SampleTurboModule"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "91192a3cc0a59ab92355a55721d20e04eade9648",
+            "comment": "SampleTurboModule only works as a turbomodule, so do not install it when using web debugger"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "91192a3cc0a59ab92355a55721d20e04eade9648",
+            "comment": "Update SampleAppFabric to use ReactNativeAppBuilder"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "91192a3cc0a59ab92355a55721d20e04eade9648",
+            "comment": "Introduce ReactNativeAppBuilder.idl"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "91192a3cc0a59ab92355a55721d20e04eade9648",
+            "comment": "Add Implementation for accessibilityActions"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "91192a3cc0a59ab92355a55721d20e04eade9648",
+            "comment": "Setup reactnativewin32 app"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "91192a3cc0a59ab92355a55721d20e04eade9648",
+            "comment": "[Fabric] LayoutDirection and FontSizeMultiplier support"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.75.4",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.75.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Sep 2024 16:40:50 GMT",
       "version": "0.75.4",
       "tag": "react-native-windows_v0.75.4",
