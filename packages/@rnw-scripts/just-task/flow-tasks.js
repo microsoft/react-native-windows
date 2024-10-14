@@ -57,7 +57,9 @@ async function downloadFilesFromReactNative(
   }
 
   const octokit = new Octokit({
-    auth: process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN, // Used to make sure CI doesn't get rate-throttled
+    ...(process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN
+      ? {auth: process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN}
+      : {}), // Used to make sure CI doesn't get rate-throttled
     userAgent: 'RNW Just Task Script',
   });
 
