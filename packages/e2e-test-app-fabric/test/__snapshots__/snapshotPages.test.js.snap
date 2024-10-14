@@ -67829,7 +67829,18 @@ exports[`snapshotAllPages View 21`] = `
   accessibilityHint="Accessibility Hint"
   accessibilityLabel="A View with accessibility values"
   accessibilityRole="button"
-  accessibilityValue={0}
+  accessibilitySetSize={1}
+  accessibilityState={
+    {
+      "busy": true,
+      "expanded": true,
+    }
+  }
+  accessibilityValue={
+    {
+      "now": 0,
+    }
+  }
   accessible={true}
   focusable={true}
   onAccessibilityAction={[Function]}

@@ -1292,6 +1292,12 @@ void ComponentView::updateAccessibilityProps(
       !(newViewProps.accessibilityState && newViewProps.accessibilityState->disabled));
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      m_uiaProvider,
+      UIA_IsEnabledPropertyId,
+      !(oldViewProps.accessibilityState && oldViewProps.accessibilityState->busy),
+      !(newViewProps.accessibilityState && newViewProps.accessibilityState->busy));
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       m_uiaProvider, UIA_ControlTypePropertyId, oldViewProps.accessibilityRole, newViewProps.accessibilityRole);
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(

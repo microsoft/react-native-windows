@@ -379,6 +379,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   int positionInSet = 0;
   int sizeOfSet = 0;
   LiveSetting liveSetting = LiveSetting::Off;
+  BSTR itemStatus;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -387,6 +388,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   pTarget->get_CurrentIsKeyboardFocusable(&isKeyboardFocusable);
   pTarget->get_CurrentLocalizedControlType(&localizedControlType);
   pTarget->get_CurrentName(&name);
+  pTarget->get_CurrentItemStatus(&itemStatus);
   IUIAutomationElement4 *pTarget4;
   HRESULT hr = pTarget->QueryInterface(__uuidof(IUIAutomationElement4), reinterpret_cast<void **>(&pTarget4));
   if (SUCCEEDED(hr) && pTarget4) {
@@ -406,6 +408,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   InsertIntValueIfNotDefault(result, L"PositionInSet", positionInSet);
   InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
   InsertLiveSettingValueIfNotDefault(result, L"LiveSetting", liveSetting);
+  InsertStringValueIfNotEmpty(result, L"ItemStatus", itemStatus);
   DumpUIAPatternInfo(pTarget, result);
 
   IUIAutomationElement *pChild;
@@ -421,6 +424,11 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   if (children.Size() > 0) {
     result.Insert(L"__Children", children);
   }
+  ::SysFreeString(automationId);
+  ::SysFreeString(helpText);
+  ::SysFreeString(localizedControlType);
+  ::SysFreeString(name);
+  ::SysFreeString(itemStatus);
   return result;
 }
 
