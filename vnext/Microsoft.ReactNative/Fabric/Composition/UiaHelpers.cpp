@@ -214,11 +214,11 @@ ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept {
   }
 }
 
-ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept{
-  if (state.has_value()){
-    if (state->checked == facebook::react::AccessibilityState::Checked){
+ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept {
+  if (state.has_value()) {
+    if (state->checked == facebook::react::AccessibilityState::Checked) {
       return ToggleState::ToggleState_On;
-    }else if (state->checked == facebook::react::AccessibilityState::Mixed){
+    } else if (state->checked == facebook::react::AccessibilityState::Mixed) {
       return ToggleState::ToggleState_Indeterminate;
     }
   }
