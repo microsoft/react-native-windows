@@ -558,7 +558,7 @@ class AccessibilityExample extends React.Component<
           {name: 'expand', label: 'expand'},
           {name: 'collapse', label: 'collapse'},
         ]}
-        accessibilityState={{expanded: this.state.expanded}}
+        accessibilityState={{expanded: this.state.expanded, busy: true}}
         accessibilityPosInSet={1}
         accessibilitySetSize={1}
         accessibilityLiveRegion='polite'
