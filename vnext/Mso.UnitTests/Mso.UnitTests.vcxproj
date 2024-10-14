@@ -73,6 +73,8 @@
   <ImportGroup Condition=" '$(UseFabric)' == 'true' AND '$(UseWinUI3)' == 'true' ">
     <Import Project="..\PropertySheets\WinUI.props" />
   </ImportGroup>
+  <!-- Added since we build this project with Paper/Fabric. -->
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.LockFile.props" />
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup>
     <ClCompile>
@@ -170,7 +172,7 @@
     <None Include="future\futureTest.tt" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" Version="1.8.1" />
+    <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" Version="1.8.1.7" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
   </ItemGroup>
   <ItemGroup Condition=" '$(UseFabric)' == 'true' AND '$(UseWinUI3)' == 'true' ">

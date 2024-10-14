@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "playground-composition.Package", "playground-composition.Package\playground-composition.Package.wapproj", "{10DADE6A-A98D-45D4-9CCB-0C6E82227CDC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Playground-Composition", "playground-composition\Playground-Composition.vcxproj", "{F54A991F-5535-43DF-AE79-85821E001675}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Playground-composition", "playground-composition\Playground-Composition.vcxproj", "{F54A991F-5535-43DF-AE79-85821E001675}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F7D32BD0-2749-483E-9A0D-1635EF7E3136} = {F7D32BD0-2749-483E-9A0D-1635EF7E3136}
 	EndProjectSection
@@ -35,7 +35,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Mso", "..\..\..\vnext\Mso\M
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Include", "..\..\..\vnext\include\Include.vcxitems", "{EF074BA1-2D54-4D49-A28E-5E040B47CD2E}"
 EndProject
-Global
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SampleCustomComponent", "..\..\sample-custom-component\windows\SampleCustomComponent\SampleCustomComponent.vcxproj", "{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}"
+EndProject
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\..\..\vnext\Shared\Shared.vcxitems*{2049dbe9-8d13-42c9-ae4b-413ae38fffd0}*SharedItemsImports = 9
 		..\..\..\vnext\Mso\Mso.vcxitems*{84e05bfa-cbaf-4f0d-bfb6-4ce85742a57e}*SharedItemsImports = 9
@@ -154,6 +155,22 @@ Global
 		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|x86.ActiveCfg = Release|Win32
 		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|x86.Build.0 = Release|Win32
 		{14B93DC8-FD93-4A6D-81CB-8BC96644501C}.Release|x86.Deploy.0 = Release|Win32
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|ARM64.Build.0 = Debug|ARM64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|x64.ActiveCfg = Debug|x64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|x64.Build.0 = Debug|x64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|x64.Deploy.0 = Debug|x64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|x86.ActiveCfg = Debug|Win32
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|x86.Build.0 = Debug|Win32
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Debug|x86.Deploy.0 = Debug|Win32
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|ARM64.ActiveCfg = Release|ARM64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|ARM64.Build.0 = Release|ARM64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|x64.ActiveCfg = Release|x64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|x64.Build.0 = Release|x64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|x64.Deploy.0 = Release|x64
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|x86.ActiveCfg = Release|Win32
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|x86.Build.0 = Release|Win32
+		{A8DA218C-4CB5-48CB-A9EE-9E6337165D07}.Release|x86.Deploy.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,8 +1,74 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Wed, 24 Jul 2024 05:24:36 GMT and should not be manually modified.
+<!-- This log was last generated on Mon, 07 Oct 2024 19:54:26 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.106
+
+Mon, 07 Oct 2024 19:54:26 GMT
+
+### Changes
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.58
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/jest-unittest-config to v1.5.11
+- Bump @rnw-scripts/just-task to v2.3.46
+
+## 0.0.0-canary.104
+
+Thu, 26 Sep 2024 17:38:27 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.56
+- Bump @rnw-scripts/eslint-config to v1.2.27
+- Bump @rnw-scripts/jest-unittest-config to v1.5.9
+- Bump @rnw-scripts/just-task to v2.3.44
+
+## 0.0.0-canary.103
+
+Mon, 16 Sep 2024 21:21:15 GMT
+
+### Changes
+
+- [Fabric] Add FocusNavigationDirection and allow overriding of default command handling (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.102
+
+Sat, 07 Sep 2024 05:14:11 GMT
+
+### Changes
+
+- Integrate 8/31 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.101
+
+Fri, 06 Sep 2024 05:14:01 GMT
+
+### Changes
+
+- [Fabric] Add native component codegen (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.100
+
+Wed, 14 Aug 2024 05:14:30 GMT
+
+### Changes
+
+- Add support for turbomodule eventemitters, and codegen (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.99
+
+Thu, 08 Aug 2024 05:16:48 GMT
+
+### Changes
+
+- Integrate 7/1 (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.55
+- Bump @rnw-scripts/eslint-config to v1.2.26
+- Bump @rnw-scripts/just-task to v2.3.43
 
 ## 0.0.0-canary.98
 

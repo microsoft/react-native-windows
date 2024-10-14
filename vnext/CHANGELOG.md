@@ -1,8 +1,244 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 07 Aug 2024 05:15:04 GMT and should not be manually modified.
+<!-- This log was last generated on Sat, 12 Oct 2024 05:22:56 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.875
+
+Sat, 12 Oct 2024 05:22:56 GMT
+
+### Changes
+
+- Fix RootComponentView leak (53619745+rnbot@users.noreply.github.com)
+- [Fabric] implement view tooltip property (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.874
+
+Thu, 10 Oct 2024 18:14:31 GMT
+
+### Changes
+
+- Create hybrid CppLib props/targets (jthysell@microsoft.com)
+- Update to @react-native-community/cli@15.0.0-alpha.2 (jthysell@microsoft.com)
+- Implement IExpandCollapseProvider (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.240
+
+## 0.0.0-canary.873
+
+Tue, 08 Oct 2024 19:23:40 GMT
+
+### Changes
+
+- Use a legacy native module binding that always returns null in bridgeless mode (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.872
+
+Mon, 07 Oct 2024 19:54:23 GMT
+
+### Changes
+
+- SampleTurboModule only works as a turbomodule, so do not install it when using web debugger (30809111+acoates-ms@users.noreply.github.com)
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Exclude NuGet package lock files from NPM packages (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.239
+- Bump @react-native-windows/codegen to v0.0.0-canary.106
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.33
+- Bump @rnw-scripts/just-task to v2.3.46
+- Bump react-native-platform-override to v1.9.48
+
+## 0.0.0-canary.871
+
+Mon, 30 Sep 2024 16:33:12 GMT
+
+### Changes
+
+- Update cpp-app template (10109130+sharath2727@users.noreply.github.com)
+
+## 0.0.0-canary.869
+
+Thu, 26 Sep 2024 17:38:23 GMT
+
+### Changes
+
+- [Fabric] LayoutDirection and FontSizeMultiplier support (30809111+acoates-ms@users.noreply.github.com)
+- add invoke support for link (yajurgrover24@gmail.com)
+- RN Integration 9/9 (1422161+marlenecota@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.237
+- Bump @react-native-windows/codegen to v0.0.0-canary.104
+- Bump @rnw-scripts/eslint-config to v1.2.27
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.31
+- Bump @rnw-scripts/just-task to v2.3.44
+- Bump react-native-platform-override to v1.9.46
+
+## 0.0.0-canary.868
+
+Mon, 16 Sep 2024 21:21:14 GMT
+
+### Changes
+
+- [Fabric] Add FocusNavigationDirection and allow overriding of default command handling (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.236
+- Bump @react-native-windows/codegen to v0.0.0-canary.103
+
+## 0.0.0-canary.867
+
+Wed, 11 Sep 2024 20:06:16 GMT
+
+### Changes
+
+- [Fabric] Enable ScrollView touch scrolling (30809111+acoates-ms@users.noreply.github.com)
+- Create separate NuGet restore lock files for Fabric builds (jthysell@microsoft.com)
+- [Fabric] LogBox should destroy its window on instance shutdown (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.866
+
+Tue, 10 Sep 2024 05:15:18 GMT
+
+### Changes
+
+- Automatically set EnableSourceLink for in-repo builds only (jthysell@microsoft.com)
+- Add Implementation for accessibilityActions (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.865
+
+Sat, 07 Sep 2024 05:14:12 GMT
+
+### Changes
+
+- Integrate 8/31 (34109996+chiaramooney@users.noreply.github.com)
+- switch to optimized text (tatianakapos@microsoft.com)
+- Fix to enable update of @types/react (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.235
+- Bump @react-native-windows/codegen to v0.0.0-canary.102
+
+## 0.0.0-canary.864
+
+Fri, 06 Sep 2024 05:14:01 GMT
+
+### Changes
+
+- CreateVisual handler should have reference to view (30809111+acoates-ms@users.noreply.github.com)
+- Add Support for Toggle Provider (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.234
+- Bump @react-native-windows/codegen to v0.0.0-canary.101
+
+## 0.0.0-canary.863
+
+Thu, 05 Sep 2024 05:13:45 GMT
+
+### Changes
+
+- Integrate 8/20 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.862
+
+Sat, 31 Aug 2024 05:22:20 GMT
+
+### Changes
+
+- [Fabric] Enable implementation of custom events on custom components (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Fix ScrollViewComponentView object leak (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.861
+
+Fri, 30 Aug 2024 05:14:22 GMT
+
+### Changes
+
+- Rework custom components to not rely on open compose patterns (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.860
+
+Wed, 28 Aug 2024 05:14:45 GMT
+
+### Changes
+
+- Linking.getInitialURL should return null by default instead of empty string (30809111+acoates-ms@users.noreply.github.com)
+- integrate 0.76.0-nightly-20240816-17017d2b8 (tatianakapos@microsoft.com)
+- Add Tests (34109996+chiaramooney@users.noreply.github.com)
+- Enable Timer TurboModule for Desktop (vmorozov@microsoft.com)
+
+## 0.0.0-canary.859
+
+Tue, 27 Aug 2024 05:13:39 GMT
+
+### Changes
+
+- replace IAppData.TemporaryFolder with GetTempPathW (aeulitz@outlook.com)
+- Switch New Architecture templates to use prebuilt NuGets (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.233
+
+## 0.0.0-canary.858
+
+Thu, 22 Aug 2024 05:24:28 GMT
+
+### Changes
+
+- integrate react native nightly 7-19 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.857
+
+Wed, 21 Aug 2024 05:14:40 GMT
+
+### Changes
+
+- [Fabric] Fix crash when running inspect (30809111+acoates-ms@users.noreply.github.com)
+- Update templates to calculate rnwPath for *.sln files (jthysell@microsoft.com)
+- Adjust Support for IValueProvider (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.232
+
+## 0.0.0-canary.856
+
+Tue, 20 Aug 2024 05:15:39 GMT
+
+### Changes
+
+- Align <WarningLevel> across app/templates (1422161+marlenecota@users.noreply.github.com)
+- [Fabric] Fixes a crash that happens on release builds (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.855
+
+Fri, 16 Aug 2024 05:13:08 GMT
+
+### Changes
+
+- Bump minimum VS version to 17.11.0 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.231
+
+## 0.0.0-canary.854
+
+Wed, 14 Aug 2024 05:14:30 GMT
+
+### Changes
+
+- Add support for turbomodule eventemitters, and codegen (30809111+acoates-ms@users.noreply.github.com)
+- Enforce StatusBarManger module aligns with Spec (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.230
+- Bump @react-native-windows/codegen to v0.0.0-canary.100
+
+## 0.0.0-canary.853
+
+Sat, 10 Aug 2024 05:14:50 GMT
+
+### Changes
+
+- Setup reactnativewin32 app (10109130+sharath2727@users.noreply.github.com)
+
+## 0.0.0-canary.852
+
+Thu, 08 Aug 2024 05:16:50 GMT
+
+### Changes
+
+- Integrate 7/1 (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.229
+- Bump @react-native-windows/codegen to v0.0.0-canary.99
+- Bump @rnw-scripts/eslint-config to v1.2.26
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.30
+- Bump @rnw-scripts/just-task to v2.3.43
+- Bump react-native-platform-override to v1.9.45
 
 ## 0.0.0-canary.851
 

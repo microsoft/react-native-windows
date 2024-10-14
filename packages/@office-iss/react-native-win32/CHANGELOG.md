@@ -1,8 +1,85 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Wed, 24 Jul 2024 05:24:34 GMT and should not be manually modified.
+<!-- This log was last generated on Thu, 10 Oct 2024 18:14:30 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.266
+
+Thu, 10 Oct 2024 18:14:30 GMT
+
+### Changes
+
+- Update to @react-native-community/cli@15.0.0-alpha.2 (jthysell@microsoft.com)
+
+## 0.0.0-canary.265
+
+Mon, 07 Oct 2024 19:54:26 GMT
+
+### Changes
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.33
+- Bump @rnw-scripts/just-task to v2.3.46
+- Bump react-native-platform-override to v1.9.48
+
+## 0.0.0-canary.263
+
+Thu, 26 Sep 2024 17:38:26 GMT
+
+### Changes
+
+- RN Integration 9/9 (1422161+marlenecota@users.noreply.github.com)
+- Bump @rnw-scripts/eslint-config to v1.2.27
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.31
+- Bump @rnw-scripts/just-task to v2.3.44
+- Bump react-native-platform-override to v1.9.46
+
+## 0.0.0-canary.262
+
+Sat, 07 Sep 2024 05:14:10 GMT
+
+### Changes
+
+- switch to optimized text (tatianakapos@microsoft.com)
+- Integrate 8/31 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.261
+
+Thu, 05 Sep 2024 05:13:45 GMT
+
+### Changes
+
+- Integrate 8/20 (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.260
+
+Wed, 28 Aug 2024 05:14:44 GMT
+
+### Changes
+
+- integrate 0.76.0-nightly-20240816-17017d2b8 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.259
+
+Thu, 22 Aug 2024 05:24:27 GMT
+
+### Changes
+
+- integrate react native nightly 7-19 (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.258
+
+Thu, 08 Aug 2024 05:16:47 GMT
+
+### Changes
+
+- Integrate 7/1 (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.26
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.30
+- Bump @rnw-scripts/just-task to v2.3.43
+- Bump react-native-platform-override to v1.9.45
 
 ## 0.0.0-canary.257
 

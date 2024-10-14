@@ -129,6 +129,11 @@ void ReactModuleBuilder::AddSyncMethod(hstring const &name, SyncMethodDelegate c
   m_methods.push_back(std::move(cxxMethod));
 }
 
+void ReactModuleBuilder::AddEventEmitter(hstring const &, EventEmitterInitializerDelegate const &) {
+  throw std::runtime_error(
+      "This module requires that it is registered as a TurboModule. If the module is being manually registered ensure you are using packageBuilder.AddTurboModule instead of packageBuilder.AddModule.");
+}
+
 /*static*/ MethodResultCallback ReactModuleBuilder::MakeMethodResultCallback(CxxModule::Callback &&callback) noexcept {
   if (callback) {
     return [callback = std::move(callback)](const IJSValueWriter &outputWriter) noexcept {

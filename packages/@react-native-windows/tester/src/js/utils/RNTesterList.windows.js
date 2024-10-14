@@ -69,6 +69,14 @@ const Components: Array<RNTesterModuleInfo> = [
   //   module: require('../examples/Modal/ModalExample'),
   // },
   {
+    key: 'Drawing Island',
+    module: require('../examples-win/NativeComponents/DrawingIsland'),
+  },
+  {
+    key: 'Moving Light',
+    module: require('../examples-win/NativeComponents/MovingLight'),
+  },
+  {
     key: 'Native Component',
     module: require('../examples-win/NativeComponents/NativeComponent'),
   },
@@ -394,6 +402,16 @@ const APIs: Array<RNTesterModuleInfo> = ([
     module: require('../examples/Filter/FilterExample'),
   },
   /*
+  {
+    key: 'LinearGradient',
+    category: 'UI',
+    module: require('../examples/LinearGradient/LinearGradientExample'),
+  },
+  {
+    key: 'MixBlendModeExample',
+    category: 'UI',
+    module: require('../examples/MixBlendMode/MixBlendModeExample'),
+  },
   {
     key: 'VibrationExample',
     category: 'Basic',

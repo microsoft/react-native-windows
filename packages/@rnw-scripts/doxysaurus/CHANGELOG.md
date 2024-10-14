@@ -1,8 +1,42 @@
 # Change Log - @rnw-scripts/doxysaurus
 
-This log was last generated on Wed, 24 Jul 2024 05:24:31 GMT and should not be manually modified.
+<!-- This log was last generated on Mon, 07 Oct 2024 19:54:25 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.4.47
+
+Mon, 07 Oct 2024 19:54:25 GMT
+
+### Patches
+
+- integrate RN nightly 0.77.0-nightly-20240921-1747f57c6 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.58
+- Bump @rnw-scripts/eslint-config to v1.2.29
+- Bump @rnw-scripts/jest-unittest-config to v1.5.11
+- Bump @rnw-scripts/just-task to v2.3.46
+
+## 0.4.45
+
+Thu, 26 Sep 2024 17:38:26 GMT
+
+### Patches
+
+- RN Integration 9/9 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.56
+- Bump @rnw-scripts/eslint-config to v1.2.27
+- Bump @rnw-scripts/jest-unittest-config to v1.5.9
+- Bump @rnw-scripts/just-task to v2.3.44
+
+## 0.4.44
+
+Thu, 08 Aug 2024 05:16:50 GMT
+
+### Patches
+
+- Bump @react-native-windows/fs to v0.0.0-canary.55
+- Bump @rnw-scripts/eslint-config to v1.2.26
+- Bump @rnw-scripts/just-task to v2.3.43
 
 ## 0.4.43
 

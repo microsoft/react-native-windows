@@ -17,10 +17,11 @@
 namespace facebook::react {
 
 void TextLayoutManager::GetTextLayout(
-    const AttributedString &attributedString,
+    const AttributedStringBox &attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,
     Size size,
     winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept {
+  const auto &attributedString = attributedStringBox.getValue();
   auto fragments = attributedString.getFragments();
   auto outerFragment = fragments[0];
 
@@ -40,7 +41,10 @@ void TextLayoutManager::GetTextLayout(
           static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
       style,
       DWRITE_FONT_STRETCH_NORMAL,
-      outerFragment.textAttributes.fontSize,
+      (outerFragment.textAttributes.allowFontScaling.value_or(true) &&
+       !std::isnan(outerFragment.textAttributes.fontSizeMultiplier))
+          ? (outerFragment.textAttributes.fontSizeMultiplier * outerFragment.textAttributes.fontSize)
+          : outerFragment.textAttributes.fontSize,
       L"",
       spTextFormat.put()));
 
@@ -83,7 +87,7 @@ void TextLayoutManager::GetTextLayout(
   }
   winrt::check_hresult(spTextFormat->SetTextAlignment(alignment));
 
-  auto str = GetTransformedText(attributedString);
+  auto str = GetTransformedText(attributedStringBox);
 
   winrt::check_hresult(Microsoft::ReactNative::DWriteFactory()->CreateTextLayout(
       str.c_str(), // The string to be laid out and formatted.
@@ -115,7 +119,11 @@ void TextLayoutManager::GetTextLayout(
             attributes.fontWeight.value_or(static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
         range));
     winrt::check_hresult(spTextLayout->SetFontStyle(fragmentStyle, range));
-    winrt::check_hresult(spTextLayout->SetFontSize(attributes.fontSize, range));
+    winrt::check_hresult(spTextLayout->SetFontSize(
+        (attributes.allowFontScaling.value_or(true) && !std::isnan(attributes.fontSizeMultiplier))
+            ? (attributes.fontSizeMultiplier * attributes.fontSize)
+            : attributes.fontSize,
+        range));
 
     if (!isnan(attributes.letterSpacing)) {
       winrt::check_hresult(
@@ -134,7 +142,7 @@ void TextLayoutManager::GetTextLayout(
   if (attributedStringBox.getValue().isEmpty())
     return;
 
-  GetTextLayout(attributedStringBox.getValue(), paragraphAttributes, layoutConstraints.maximumSize, spTextLayout);
+  GetTextLayout(attributedStringBox, paragraphAttributes, layoutConstraints.maximumSize, spTextLayout);
 }
 
 TextMeasurement TextLayoutManager::measure(
@@ -218,14 +226,14 @@ Microsoft::ReactNative::TextTransform ConvertTextTransform(std::optional<TextTra
 }
 
 LinesMeasurements TextLayoutManager::measureLines(
-    const AttributedString &attributedString,
+    const AttributedStringBox &attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,
     Size size) const {
   LinesMeasurements lineMeasurements{};
 
   winrt::com_ptr<IDWriteTextLayout> spTextLayout;
 
-  GetTextLayout(attributedString, paragraphAttributes, size, spTextLayout);
+  GetTextLayout(attributedStringBox, paragraphAttributes, size, spTextLayout);
 
   if (spTextLayout) {
     std::vector<DWRITE_LINE_METRICS> lineMetrics;
@@ -265,6 +273,7 @@ LinesMeasurements TextLayoutManager::measureLines(
       }
 
       std::string str;
+      const auto &attributedString = attributedStringBox.getValue();
       for (const auto &fragment : attributedString.getFragments()) {
         str = str +
             winrt::to_string(Microsoft::ReactNative::TransformableText::TransformText(
@@ -290,7 +299,7 @@ LinesMeasurements TextLayoutManager::measureLines(
 }
 
 std::shared_ptr<void> TextLayoutManager::getHostTextStorage(
-    const AttributedString &attributedString,
+    const AttributedStringBox &attributedStringBox,
     const ParagraphAttributes &paragraphAttributes,
     LayoutConstraints layoutConstraints) const {
   return nullptr;
@@ -300,8 +309,16 @@ void *TextLayoutManager::getNativeTextLayoutManager() const {
   return (void *)this;
 }
 
-winrt::hstring TextLayoutManager::GetTransformedText(const AttributedString &attributedString) {
+Float TextLayoutManager::baseline(
+    AttributedStringBox attributedStringBox,
+    ParagraphAttributes paragraphAttributes,
+    Size size) const {
+  return 0;
+}
+
+winrt::hstring TextLayoutManager::GetTransformedText(const AttributedStringBox &attributedStringBox) {
   winrt::hstring result{};
+  const auto &attributedString = attributedStringBox.getValue();
   for (const auto &fragment : attributedString.getFragments()) {
     result = result +
         Microsoft::ReactNative::TransformableText::TransformText(

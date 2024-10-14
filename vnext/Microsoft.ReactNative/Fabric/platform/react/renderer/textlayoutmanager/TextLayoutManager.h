@@ -45,12 +45,12 @@ class TextLayoutManager {
    * infrastructure.
    */
   LinesMeasurements measureLines(
-      const AttributedString &attributedString,
+      const AttributedStringBox &attributedStringBox,
       const ParagraphAttributes &paragraphAttributes,
       Size size) const;
 
   std::shared_ptr<void> getHostTextStorage(
-      const AttributedString &attributedString,
+      const AttributedStringBox &attributedStringBox,
       const ParagraphAttributes &paragraphAttributes,
       LayoutConstraints layoutConstraints) const;
 
@@ -62,6 +62,12 @@ class TextLayoutManager {
       int64_t cacheId,
       const ParagraphAttributes &paragraphAttributes,
       LayoutConstraints layoutConstraints) const;
+
+  /*
+   * Calculates baseline of `attributedString` using native text rendering
+   * infrastructure.
+   */
+  Float baseline(AttributedStringBox attributedStringBox, ParagraphAttributes paragraphAttributes, Size size) const;
 
   /*
    * Returns an opaque pointer to platform-specific TextLayoutManager.
@@ -78,9 +84,9 @@ class TextLayoutManager {
 #pragma endregion
 
  private:
-  static winrt::hstring GetTransformedText(const AttributedString &attributedString);
+  static winrt::hstring GetTransformedText(const AttributedStringBox &attributedStringBox);
   static void GetTextLayout(
-      const AttributedString &attributedString,
+      const AttributedStringBox &attributedStringBox,
       const ParagraphAttributes &paragraphAttributes,
       Size size,
       winrt::com_ptr<IDWriteTextLayout> &spTextLayout) noexcept;

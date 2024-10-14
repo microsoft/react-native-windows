@@ -59,10 +59,6 @@ struct CompositionReactViewInstance
   void UninitRootView() noexcept;
 
  private:
-  template <class TAction>
-  Mso::Future<void> PostInUIQueue(TAction &&action) noexcept;
-
- private:
   winrt::weak_ref<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland> m_weakRootControl;
   IReactDispatcher m_uiDispatcher{nullptr};
 };
@@ -102,50 +98,46 @@ void CompositionReactViewInstance::UninitRootView() noexcept {
   }
 }
 
-//===========================================================================
-// ReactViewInstance inline implementation
-//===========================================================================
-
-template <class TAction>
-inline Mso::Future<void> CompositionReactViewInstance::PostInUIQueue(TAction &&action) noexcept {
-  // ReactViewInstance has shorter lifetime than ReactRootControl. Thus, we capture this WeakPtr.
-  auto promise = Mso::Promise<void>();
-
-  m_uiDispatcher.Post([promise, weakThis{get_weak()}, action{std::forward<TAction>(action)}]() mutable {
-    if (auto strongThis = weakThis.get()) {
-      if (auto rootControl = strongThis->m_weakRootControl.get()) {
-        action(rootControl);
-        promise.SetValue();
-        return;
-      }
-    }
-    promise.TryCancel();
-  });
-
-  return promise.AsFuture();
-}
-
-void ApplyConstraints(
+void ReactNativeIsland::ApplyConstraints(
     const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraintsIn,
-    facebook::react::LayoutConstraints &layoutConstraintsOut) noexcept {
+    facebook::react::LayoutConstraints &layoutConstraintsOut) const noexcept {
   layoutConstraintsOut.minimumSize = {layoutConstraintsIn.MinimumSize.Width, layoutConstraintsIn.MinimumSize.Height};
   layoutConstraintsOut.maximumSize = {layoutConstraintsIn.MaximumSize.Width, layoutConstraintsIn.MaximumSize.Height};
-  layoutConstraintsOut.layoutDirection =
-      static_cast<facebook::react::LayoutDirection>(layoutConstraintsIn.LayoutDirection);
+  if (layoutConstraintsIn.LayoutDirection == winrt::Microsoft::ReactNative::LayoutDirection::Undefined) {
+    if (m_island) {
+      layoutConstraintsOut.layoutDirection =
+          (m_island.LayoutDirection() == winrt::Microsoft::UI::Content::ContentLayoutDirection::LeftToRight)
+          ? facebook::react::LayoutDirection::LeftToRight
+          : facebook::react::LayoutDirection::RightToLeft;
+    } else if (m_hwnd) {
+      auto styles = GetWindowLongPtrW(m_hwnd, GWL_EXSTYLE);
+      layoutConstraintsOut.layoutDirection = ((styles & WS_EX_LAYOUTRTL) == WS_EX_LAYOUTRTL)
+          ? facebook::react::LayoutDirection::RightToLeft
+          : facebook::react::LayoutDirection::LeftToRight;
+    }
+  } else {
+    layoutConstraintsOut.layoutDirection =
+        static_cast<facebook::react::LayoutDirection>(layoutConstraintsIn.LayoutDirection);
+  }
 }
 
-ReactNativeIsland::ReactNativeIsland() noexcept {}
-
-#ifdef USE_WINUI3
 ReactNativeIsland::ReactNativeIsland(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept
-    : m_compositor(compositor) {}
-#endif
+    : m_compositor(compositor),
+      m_layoutConstraints({{0, 0}, {0, 0}, winrt::Microsoft::ReactNative::LayoutDirection::Undefined}) {
+  InitTextScaleMultiplier();
+}
+
+ReactNativeIsland::ReactNativeIsland() noexcept : ReactNativeIsland(nullptr) {}
 
 ReactNativeIsland::~ReactNativeIsland() noexcept {
 #ifdef USE_WINUI3
-  if (m_island && m_island.IsConnected()) {
+  if (m_island) {
     m_island.AutomationProviderRequested(m_islandAutomationProviderRequestedToken);
     m_island.StateChanged(m_islandStateChangedToken);
+#ifdef USE_EXPERIMENTAL_WINUI3
+    m_island.Connected(m_islandConnectedToken);
+    m_island.Disconnected(m_islandDisconnectedToken);
+#endif
   }
 #endif
 
@@ -165,6 +157,7 @@ void ReactNativeIsland::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewH
   }
 
   if (m_reactViewHost) {
+    UninitRootView();
     m_reactViewHost.DetachViewInstance();
   }
 
@@ -199,6 +192,12 @@ void ReactNativeIsland::AddRenderedVisual(
   assert(!m_hasRenderedVisual);
   InternalRootVisual().InsertAt(visual, 0);
   m_hasRenderedVisual = true;
+
+  if (m_mounted) {
+    if (auto componentView = GetComponentView()) {
+      componentView->onMounted();
+    }
+  }
 }
 
 void ReactNativeIsland::RemoveRenderedVisual(
@@ -263,6 +262,10 @@ void ReactNativeIsland::ScaleFactor(float value) noexcept {
     UpdateRootVisualSize();
     Arrange(m_layoutConstraints, m_viewportOffset);
   }
+}
+
+float ReactNativeIsland::FontSizeMultiplier() const noexcept {
+  return m_textScaleMultiplier;
 }
 
 int64_t ReactNativeIsland::RootTag() const noexcept {
@@ -330,7 +333,7 @@ winrt::IInspectable ReactNativeIsland::GetUiaProvider() noexcept {
   if (m_uiaProvider == nullptr) {
     m_uiaProvider =
         winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(*this);
-    if (m_hwnd) {
+    if (m_hwnd && !m_island) {
       auto pRootProvider =
           static_cast<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider *>(
               m_uiaProvider.as<IRawElementProviderSimple>().get());
@@ -344,6 +347,10 @@ winrt::IInspectable ReactNativeIsland::GetUiaProvider() noexcept {
 
 void ReactNativeIsland::SetWindow(uint64_t hwnd) noexcept {
   m_hwnd = reinterpret_cast<HWND>(hwnd);
+}
+
+HWND ReactNativeIsland::GetHwndForParenting() noexcept {
+  return m_hwnd;
 }
 
 int64_t ReactNativeIsland::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
@@ -365,7 +372,7 @@ int64_t ReactNativeIsland::SendMessage(uint32_t msg, uint64_t wParam, int64_t lP
 bool ReactNativeIsland::CapturePointer(
     const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
     facebook::react::Tag tag) noexcept {
-  if (m_hwnd) {
+  if (m_hwnd && !m_island) {
     SetCapture(m_hwnd);
   }
   return m_CompositionEventHandler->CapturePointer(pointer, tag);
@@ -375,7 +382,7 @@ void ReactNativeIsland::ReleasePointerCapture(
     const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
     facebook::react::Tag tag) noexcept {
   if (m_CompositionEventHandler->ReleasePointerCapture(pointer, tag)) {
-    if (m_hwnd) {
+    if (m_hwnd && !m_island) {
       if (m_hwnd == GetCapture()) {
         ReleaseCapture();
       }
@@ -398,6 +405,7 @@ void ReactNativeIsland::InitRootView(
   m_context = winrt::Microsoft::ReactNative::ReactContext(std::move(context));
   m_reactViewOptions = std::move(viewOptions);
   m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this);
+  m_CompositionEventHandler->Initialize();
 
   UpdateRootViewInternal();
 
@@ -447,10 +455,9 @@ void ReactNativeIsland::UninitRootView() noexcept {
     uiManager->stopSurface(static_cast<facebook::react::SurfaceId>(RootTag()));
 
     // This is needed to ensure that the unmount JS logic is completed before the the instance is shutdown during
-    // instance destruction. Aligns with similar code in ReactInstanceWin::DetachRootView for paper Future: Instead this
-    // method should return a Promise, which should be resolved when the JS logic is complete.
-    // The task will auto set the event on destruction to ensure that the event is set if the JS Queue has already been
-    // shutdown
+    // instance destruction. Aligns with similar code in ReactInstanceWin::DetachRootView for paper Future: Instead
+    // this method should return a Promise, which should be resolved when the JS logic is complete. The task will auto
+    // set the event on destruction to ensure that the event is set if the JS Queue has already been shutdown
     Mso::ManualResetEvent mre;
     m_context.JSDispatcher().Post([autoMRE = std::make_unique<AutoMRE>(AutoMRE{mre})]() {});
     mre.Wait();
@@ -515,9 +522,8 @@ facebook::react::AttributedStringBox CreateLoadingAttributedString() noexcept {
   return facebook::react::AttributedStringBox{attributedString};
 }
 
-facebook::react::Size MeasureLoading(
-    const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
-    float scaleFactor) {
+facebook::react::Size ReactNativeIsland::MeasureLoading(
+    const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints) const noexcept {
   facebook::react::LayoutConstraints fbLayoutConstraints;
   ApplyConstraints(layoutConstraints, fbLayoutConstraints);
 
@@ -530,7 +536,7 @@ facebook::react::Size MeasureLoading(
   winrt::check_hresult(textLayout->GetMetrics(&tm));
 
   return fbLayoutConstraints.clamp(
-      {loadingActivityHorizontalOffset * scaleFactor + tm.width, loadingBarHeight * scaleFactor});
+      {loadingActivityHorizontalOffset * m_scaleFactor + tm.width, loadingBarHeight * m_scaleFactor});
 }
 
 winrt::event_token ReactNativeIsland::SizeChanged(
@@ -560,7 +566,7 @@ void ReactNativeIsland::NotifySizeChanged() noexcept {
   if (rootComponentView) {
     size = rootComponentView->layoutMetrics().frame.size;
   } else if (m_loadingVisual) {
-    size = MeasureLoading(m_layoutConstraints, m_scaleFactor);
+    size = MeasureLoading(m_layoutConstraints);
   }
 
   m_size = {size.width, size.height};
@@ -654,10 +660,33 @@ void ReactNativeIsland::ShowInstanceLoading() noexcept {
   InternalRootVisual().InsertAt(m_loadingVisual, m_hasRenderedVisual ? 1 : 0);
 }
 
+void ReactNativeIsland::InitTextScaleMultiplier() noexcept {
+  m_uiSettings = winrt::Windows::UI::ViewManagement::UISettings();
+  m_textScaleMultiplier = static_cast<float>(m_uiSettings.TextScaleFactor());
+  m_textScaleChangedRevoker = m_uiSettings.TextScaleFactorChanged(
+      winrt::auto_revoke,
+      [this](const winrt::Windows::UI::ViewManagement::UISettings &uiSettings, const winrt::IInspectable &) {
+        if (m_context) {
+          m_context.UIDispatcher().Post(
+              [wkThis = get_weak(), textScaleMultiplier = static_cast<float>(uiSettings.TextScaleFactor())]() {
+                if (auto strongThis = wkThis.get()) {
+                  strongThis->m_textScaleMultiplier = textScaleMultiplier;
+                  strongThis->Arrange(strongThis->m_layoutConstraints, strongThis->m_viewportOffset);
+                }
+              });
+        }
+      });
+}
+
 winrt::Windows::Foundation::Size ReactNativeIsland::Measure(
     const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
-    const winrt::Windows::Foundation::Point &viewportOffset) const noexcept {
+    const winrt::Windows::Foundation::Point &viewportOffset) const {
   facebook::react::Size size{0, 0};
+
+  if (layoutConstraints.LayoutDirection != winrt::Microsoft::ReactNative::LayoutDirection::LeftToRight &&
+      layoutConstraints.LayoutDirection != winrt::Microsoft::ReactNative::LayoutDirection::RightToLeft &&
+      layoutConstraints.LayoutDirection != winrt::Microsoft::ReactNative::LayoutDirection::Undefined)
+    winrt::throw_hresult(E_INVALIDARG);
 
   facebook::react::LayoutConstraints constraints;
   ApplyConstraints(layoutConstraints, constraints);
@@ -666,15 +695,14 @@ winrt::Windows::Foundation::Size ReactNativeIsland::Measure(
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
       facebook::react::LayoutContext context;
-      // TODO scaling factor
+      context.fontSizeMultiplier = m_textScaleMultiplier;
       context.pointScaleFactor = static_cast<facebook::react::Float>(m_scaleFactor);
-      context.fontSizeMultiplier = static_cast<facebook::react::Float>(m_scaleFactor);
       context.viewportOffset = {viewportOffset.X, viewportOffset.Y};
 
       size = fabricuiManager->measureSurface(static_cast<facebook::react::SurfaceId>(m_rootTag), constraints, context);
     }
   } else if (m_loadingVisual) {
-    size = MeasureLoading(layoutConstraints, m_scaleFactor);
+    size = MeasureLoading(layoutConstraints);
   }
 
   auto clampedSize = constraints.clamp(size);
@@ -683,7 +711,12 @@ winrt::Windows::Foundation::Size ReactNativeIsland::Measure(
 
 void ReactNativeIsland::Arrange(
     const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
-    const winrt::Windows::Foundation::Point &viewportOffset) noexcept {
+    const winrt::Windows::Foundation::Point &viewportOffset) {
+  if (layoutConstraints.LayoutDirection != winrt::Microsoft::ReactNative::LayoutDirection::LeftToRight &&
+      layoutConstraints.LayoutDirection != winrt::Microsoft::ReactNative::LayoutDirection::RightToLeft &&
+      layoutConstraints.LayoutDirection != winrt::Microsoft::ReactNative::LayoutDirection::Undefined)
+    winrt::throw_hresult(E_INVALIDARG);
+
   m_layoutConstraints = layoutConstraints;
   m_viewportOffset = viewportOffset;
   facebook::react::LayoutConstraints fbLayoutConstraints;
@@ -693,8 +726,8 @@ void ReactNativeIsland::Arrange(
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
       facebook::react::LayoutContext context;
+      context.fontSizeMultiplier = m_textScaleMultiplier;
       context.pointScaleFactor = static_cast<facebook::react::Float>(m_scaleFactor);
-      context.fontSizeMultiplier = static_cast<facebook::react::Float>(m_scaleFactor);
       context.viewportOffset = {viewportOffset.X, viewportOffset.Y};
 
       fabricuiManager->constraintSurfaceLayout(
@@ -702,12 +735,11 @@ void ReactNativeIsland::Arrange(
     }
   } else if (m_loadingVisual) {
     // TODO: Resize to align loading
-    auto s = fbLayoutConstraints.clamp(MeasureLoading(layoutConstraints, m_scaleFactor));
+    auto s = fbLayoutConstraints.clamp(MeasureLoading(layoutConstraints));
     NotifySizeChanged();
   }
 }
 
-#ifdef USE_WINUI3
 winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
   if (!m_compositor) {
     return nullptr;
@@ -761,12 +793,59 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
             if (args.DidRasterizationScaleChange()) {
               pThis->ScaleFactor(island.RasterizationScale());
             }
+            if (args.DidLayoutDirectionChange()) {
+              pThis->Arrange(pThis->m_layoutConstraints, pThis->m_viewportOffset);
+            }
+#ifndef USE_EXPERIMENTAL_WINUI3 // Use this in place of Connected/Disconnected events for now. -- Its not quite what we
+                                // want, but it will do for now.
+            if (args.DidSiteVisibleChange()) {
+              if (island.IsSiteVisible()) {
+                pThis->OnMounted();
+              } else {
+                pThis->OnUnmounted();
+              }
+            }
+#endif
           }
         });
+#ifdef USE_EXPERIMENTAL_WINUI3
+    m_islandConnectedToken = m_island.Connected(
+        [weakThis = get_weak()](
+            winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
+          if (auto pThis = weakThis.get()) {
+            pThis->OnMounted();
+          }
+        });
+
+    m_islandDisconnectedToken = m_island.Disconnected(
+        [weakThis = get_weak()](
+            winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
+          if (auto pThis = weakThis.get()) {
+            pThis->OnUnmounted();
+          }
+        });
+#endif
   }
   return m_island;
 }
-#endif
+
+void ReactNativeIsland::OnMounted() noexcept {
+  if (m_mounted)
+    return;
+  m_mounted = true;
+  if (auto componentView = GetComponentView()) {
+    componentView->onMounted();
+  }
+}
+
+void ReactNativeIsland::OnUnmounted() noexcept {
+  if (!m_mounted)
+    return;
+  m_mounted = false;
+  if (auto componentView = GetComponentView()) {
+    componentView->onUnmounted();
+  }
+}
 
 winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
 ReactNativeIsland::GetComponentView() noexcept {

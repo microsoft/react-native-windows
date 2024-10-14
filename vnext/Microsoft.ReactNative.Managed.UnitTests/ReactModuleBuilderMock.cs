@@ -70,6 +70,10 @@ namespace Microsoft.ReactNative.Managed.UnitTests
       m_syncMethods.Add(name, method);
     }
 
+    public void AddEventEmitter(string name, EventEmitterInitializerDelegate emitter)
+    {
+    }
+
     public void Call0(string methodName) =>
         GetMethod0(methodName)?.Invoke(ArgReader(), ArgWriter(), null, null);
 

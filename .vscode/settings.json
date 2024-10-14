@@ -100,7 +100,9 @@
     "xmemory": "cpp",
     "xtr1common": "cpp",
     "xtree": "cpp",
-    "xutility": "cpp"
+    "xutility": "cpp",
+    "xstddef": "cpp",
+    "cfenv": "cpp"
   },
   "search.exclude": {
     "**/dist/**/*.js": true,

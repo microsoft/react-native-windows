@@ -125,6 +125,22 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_ProviderOptions(Prov
   return S_OK;
 }
 
+bool accessibilityValueHasValue(const facebook::react::AccessibilityValue &value) {
+  return (value.min.has_value() && value.max.has_value()) || value.now.has_value() || value.text.has_value();
+}
+
+bool expandableControl(const facebook::react::SharedViewProps props) {
+  if (props->accessibilityState.has_value() && props->accessibilityState->expanded.has_value())
+    return true;
+  auto accessibilityActions = props->accessibilityActions;
+  for (size_t i = 0; i < accessibilityActions.size(); i++) {
+    if (accessibilityActions[i].name == "expand" || accessibilityActions[i].name == "collapse") {
+      return true;
+    }
+  }
+  return false;
+}
+
 HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTERNID patternId, IUnknown **pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
@@ -135,11 +151,15 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   if (strongView == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
+  auto compositionView = strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+  if (compositionView == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
   auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
-  auto accessibilityRole = props->accessibilityRole;
+  auto accessibilityRole =
+      props->accessibilityRole.empty() ? compositionView->DefaultControlType() : props->accessibilityRole;
   // Invoke control pattern is used to support controls that do not maintain state
   // when activated but rather initiate or perform a single, unambiguous action.
   if (patternId == UIA_InvokePatternId &&
@@ -155,8 +175,30 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
-  if (patternId == UIA_ValuePatternId) {
+  if (patternId == UIA_ValuePatternId &&
+      (accessibilityRole == "textinput" || accessibilityRole == "searchbox" ||
+       (accessibilityRole == "button" && accessibilityValueHasValue(props->accessibilityValue)) ||
+       (accessibilityRole == "combobox" && accessibilityValueHasValue(props->accessibilityValue)) ||
+       (accessibilityRole == "link" && accessibilityValueHasValue(props->accessibilityValue)) ||
+       (accessibilityRole == "listitem" && accessibilityValueHasValue(props->accessibilityValue)) ||
+       (accessibilityRole == "progressbar" && accessibilityValueHasValue(props->accessibilityValue)) ||
+       (accessibilityRole == "adjustable" && accessibilityValueHasValue(props->accessibilityValue)) ||
+       (accessibilityRole == "spinbutton" && accessibilityValueHasValue(props->accessibilityValue)))) {
     *pRetVal = static_cast<IValueProvider *>(this);
+    AddRef();
+  }
+
+  if (patternId == UIA_TogglePatternId && (accessibilityRole == "switch" || accessibilityRole == "checkbox")) {
+    *pRetVal = static_cast<IToggleProvider *>(this);
+    AddRef();
+  }
+
+  if (patternId == UIA_ExpandCollapsePatternId &&
+      (accessibilityRole == "combobox" || accessibilityRole == "splitbutton" || accessibilityRole == "treeitem" ||
+       (expandableControl(props) &&
+        (accessibilityRole == "toolbar" || accessibilityRole == "menuitem" || accessibilityRole == "menubar" ||
+         accessibilityRole == "listitem" || accessibilityRole == "group" || accessibilityRole == "button")))) {
+    *pRetVal = static_cast<IExpandCollapseProvider *>(this);
     AddRef();
   }
 
@@ -323,6 +365,11 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
       pRetVal->lVal = props->accessibilitySetSize;
       break;
     }
+    case UIA_LiveSettingPropertyId: {
+      pRetVal->vt = VT_I4;
+      pRetVal->lVal = GetLiveSetting(props->accessibilityLiveRegion);
+      break;
+    }
   }
 
   return hr;
@@ -355,6 +402,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Invoke() {
   if (spProviderSimple != nullptr) {
     UiaRaiseAutomationEvent(spProviderSimple.get(), UIA_Invoke_InvokedEventId);
   }
+  DispatchAccessibilityAction(m_view, "invoke");
+  DispatchAccessibilityAction(m_view, "activate");
 
   return S_OK;
 }
@@ -368,6 +417,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::ScrollIntoView() {
   winrt::Microsoft::ReactNative::implementation::BringIntoViewOptions scrollOptions;
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
       ->StartBringIntoView(std::move(scrollOptions));
+  DispatchAccessibilityAction(m_view, "scrollIntoView");
 
   return S_OK;
 }
@@ -396,6 +446,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(LPCWSTR val) {
 
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
       ->setAcccessiblityValue(winrt::to_string(val));
+  DispatchAccessibilityAction(m_view, "setValue");
   return S_OK;
 }
 
@@ -408,7 +459,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_Value(BSTR *pRetVal)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   *pRetVal = StringToBSTR(winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
-                              ->getAcccessiblityValue()
+                              ->getAccessiblityValue()
                               .value_or(""));
   return S_OK;
 }
@@ -421,8 +472,86 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRe
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  *pRetVal = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
-                 ->getAcccessiblityIsReadOnly();
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  auto accessibilityRole = props->accessibilityRole;
+  if (accessibilityRole.empty()) {
+    // Control is using default control type. Use default IsReadOnly value.
+    *pRetVal = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
+                   ->getAcccessiblityIsReadOnly();
+  } else if (
+      accessibilityRole == "textinput" || accessibilityRole == "searchbox" || accessibilityRole == "adjustable" ||
+      accessibilityRole == "spinbutton" || accessibilityRole == "combobox") {
+    // Control is using customized control type which should not be IsReadOnly for value pattern.
+    *pRetVal = false;
+  } else {
+    // Control is using customized control type which should be IsReadOnly for value pattern.
+    *pRetVal = true;
+  }
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_ToggleState(ToggleState *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal =
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->getToggleState();
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::Toggle() {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->Toggle();
+  DispatchAccessibilityAction(m_view, "toggle");
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_ExpandCollapseState(ExpandCollapseState *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = props->accessibilityState->expanded.has_value()
+      ? GetExpandCollapseState(props->accessibilityState->expanded.value())
+      : ExpandCollapseState_Collapsed;
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::Expand() {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  DispatchAccessibilityAction(m_view, "expand");
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::Collapse() {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  DispatchAccessibilityAction(m_view, "collapse");
   return S_OK;
 }
 

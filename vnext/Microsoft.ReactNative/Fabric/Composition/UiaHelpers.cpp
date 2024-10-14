@@ -72,9 +72,10 @@ HRESULT UiaNavigateHelper(
       auto parentCV = view.Parent().as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
       if (parentCV != nullptr) {
         auto children = parentCV->Children();
-        for (auto it = children.end(); it != children.begin(); --it) {
-          if (*it == view) {
-            uiaProvider = (*it)
+        for (auto i = children.Size() - 1; i > 0; i--) {
+          auto child = children.GetAt(i);
+          if (child == view) {
+            uiaProvider = children.GetAt(i - 1)
                               .as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()
                               ->EnsureUiaProvider();
             break;
@@ -121,7 +122,9 @@ HRESULT UiaSetFocusHelper(::Microsoft::ReactNative::ReactTaggedView &view) noexc
   if (rootCV == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  return rootCV->TrySetFocusedComponent(strongView) ? S_OK : E_FAIL;
+  return rootCV->TrySetFocusedComponent(strongView, winrt::Microsoft::ReactNative::FocusNavigationDirection::None)
+      ? S_OK
+      : E_FAIL;
 }
 
 bool WasUiaPropertyAdvised(winrt::com_ptr<IRawElementProviderSimple> &providerSimple, PROPERTYID propId) noexcept {
@@ -160,6 +163,55 @@ void UpdateUiaProperty(
 
   UiaRaiseAutomationPropertyChangedEvent(
       spProviderSimple.get(), propId, CComVariant(oldValue.c_str()), CComVariant(newValue.c_str()));
+}
+
+long GetLiveSetting(const std::string &liveRegion) noexcept {
+  if (liveRegion == "polite") {
+    return LiveSetting::Polite;
+  } else if (liveRegion == "assertive") {
+    return LiveSetting::Assertive;
+  }
+  return LiveSetting::Off;
+}
+
+std::string extractAccessibilityValue(const facebook::react::AccessibilityValue &value) noexcept {
+  if (value.now.has_value()) {
+    return std::to_string(value.now.value());
+  } else if (value.text.has_value()) {
+    return value.text.value();
+  } else {
+    return "";
+  }
+}
+
+void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view, const std::string &action) noexcept {
+  auto strongView = view.view();
+
+  if (!strongView)
+    return;
+
+  auto baseView = strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+  if (baseView == nullptr)
+    return;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(baseView->props());
+  if (props == nullptr)
+    return;
+
+  auto accessibilityActions = props->accessibilityActions;
+  for (size_t i = 0; i < accessibilityActions.size(); i++) {
+    if (accessibilityActions[i].name == action) {
+      baseView->GetEventEmitter()->onAccessibilityAction(action);
+    }
+  }
+}
+
+ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept {
+  if (expanded) {
+    return ExpandCollapseState_Expanded;
+  } else {
+    return ExpandCollapseState_Collapsed;
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

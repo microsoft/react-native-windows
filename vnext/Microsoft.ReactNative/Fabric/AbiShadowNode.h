@@ -8,6 +8,7 @@
 #include "YogaLayoutableShadowNode.g.h"
 #include <react/components/rnwcore/EventEmitters.h>
 #include <unordered_map>
+#include "AbiEventEmitter.h"
 #include "AbiState.h"
 #include "AbiViewProps.h"
 
@@ -41,6 +42,8 @@ struct ShadowNode : ShadowNodeT<ShadowNode> {
 
   winrt::IInspectable StateData() const noexcept;
   void StateData(winrt::IInspectable tag) noexcept;
+
+  winrt::Microsoft::ReactNative::EventEmitter EventEmitter() const noexcept;
 
  protected:
   facebook::react::ShadowNode::Weak m_shadowNode;

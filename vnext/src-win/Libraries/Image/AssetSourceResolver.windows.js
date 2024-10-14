@@ -18,7 +18,10 @@ export type ResolvedAssetSource = {|
   +scale: number,
 |};
 
-import type {PackagerAsset} from '@react-native/assets-registry/registry';
+import type {
+  AssetDestPathResolver,
+  PackagerAsset,
+} from '@react-native/assets-registry/registry';
 
 const PixelRatio = require('../Utilities/PixelRatio').default;
 const Platform = require('../Utilities/Platform');
@@ -72,6 +75,13 @@ function getAssetPathInDrawableFolder(asset: PackagerAsset): string {
   return drawableFolder + '/' + fileName + '.' + asset.type;
 }
 
+/**
+ * Returns true if the asset can be loaded over the network.
+ */
+function assetSupportsNetworkLoads(asset: PackagerAsset): boolean {
+  return !(asset.type === 'xml' && Platform.OS === 'android');
+}
+
 class AssetSourceResolver {
   serverUrl: ?string;
   // where the jsbundle is being run from
@@ -86,7 +96,11 @@ class AssetSourceResolver {
   }
 
   isLoadedFromServer(): boolean {
-    return !!this.serverUrl;
+    return (
+      this.serverUrl != null &&
+      this.serverUrl !== '' &&
+      assetSupportsNetworkLoads(this.asset)
+    );
   }
 
   isLoadedFromFileSystem(): boolean {
@@ -98,12 +112,36 @@ class AssetSourceResolver {
       return this.assetServerURL();
     }
 
+    if (this.asset.resolver != null) {
+      return this.getAssetUsingResolver(this.asset.resolver);
+    }
+
     if (Platform.OS === 'android') {
       return this.isLoadedFromFileSystem()
         ? this.drawableFolderInBundle()
         : this.resourceIdentifierWithoutScale();
     } else {
       return this.scaledAssetURLNearBundle();
+    }
+  }
+
+  getAssetUsingResolver(resolver: AssetDestPathResolver): ResolvedAssetSource {
+    switch (resolver) {
+      case 'android':
+        return this.isLoadedFromFileSystem()
+          ? this.drawableFolderInBundle()
+          : this.resourceIdentifierWithoutScale();
+      case 'generic':
+        return this.scaledAssetURLNearBundle();
+      default:
+        throw new Error(
+          "Don't know how to get asset via provided resolver: " +
+            resolver +
+            '\nAsset: ' +
+            JSON.stringify(this.asset, null, '\t') +
+            '\nPossible resolvers are:' +
+            JSON.stringify(['android', 'generic'], null, '\t'),
+        );
     }
   }
 

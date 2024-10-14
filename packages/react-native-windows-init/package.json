@@ -1,6 +1,6 @@
 {
   "name": "react-native-windows-init",
-  "version": "1.4.32",
+  "version": "1.4.44",
   "description": "CLI to add react-native-windows to an existing react-native project",
   "main": "index.js",
   "repository": {
@@ -22,8 +22,8 @@
     "react-native-windows-init": "./bin.js"
   },
   "dependencies": {
-    "@react-native-windows/fs": "0.0.0-canary.54",
-    "@react-native-windows/telemetry": "0.0.0-canary.105",
+    "@react-native-windows/fs": "0.0.0-canary.58",
+    "@react-native-windows/telemetry": "0.0.0-canary.110",
     "@typescript-eslint/eslint-plugin": "^5.30.5",
     "@typescript-eslint/parser": "^5.57.1",
     "chalk": "^4.1.0",
@@ -37,10 +37,10 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
-    "@react-native-windows/cli": "0.0.0-canary.228",
-    "@rnw-scripts/eslint-config": "1.2.25",
-    "@rnw-scripts/jest-unittest-config": "1.5.8",
-    "@rnw-scripts/just-task": "2.3.42",
+    "@react-native-windows/cli": "0.0.0-canary.240",
+    "@rnw-scripts/eslint-config": "1.2.29",
+    "@rnw-scripts/jest-unittest-config": "1.5.11",
+    "@rnw-scripts/just-task": "2.3.46",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/chalk": "^2.2.0",
     "@types/jest": "^29.2.2",
@@ -52,7 +52,7 @@
     "@types/yargs": "16.0.0",
     "babel-jest": "^29.6.3",
     "eslint": "^8.19.0",
-    "jest": "^29.6.3",
+    "jest": "^29.7.0",
     "prettier": "2.8.8",
     "typescript": "5.0.4"
   },

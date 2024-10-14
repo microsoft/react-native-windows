@@ -66,6 +66,8 @@
   <ImportGroup Condition=" '$(UseFabric)' == 'true' AND '$(UseWinUI3)' == 'true' ">
     <Import Project="..\PropertySheets\WinUI.props" />
   </ImportGroup>
+  <!-- Added since we build this project with Paper/Fabric. -->
+  <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.LockFile.props" />
   <PropertyGroup Label="UserMacros" />
   <ItemDefinitionGroup>
     <ClCompile>
@@ -174,7 +176,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="boost" Version="1.83.0.0" />
-    <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" Version="1.8.1" />
+    <PackageReference Include="Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn" Version="1.8.1.7" />
     <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.6" />
     <PackageReference Include="Microsoft.Windows.CppWinRT" Version="$(CppWinRTVersion)" PrivateAssets="all" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />

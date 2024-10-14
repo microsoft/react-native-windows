@@ -170,13 +170,6 @@ ReactContext::ReactContext(
       m_properties{winrt::make<WeakRefPropertyBag>(properties)},
       m_notifications{notifications} {}
 
-void ReactContext::Destroy() noexcept {
-  if (auto notificationService =
-          winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNotificationService>(m_notifications)) {
-    notificationService->UnsubscribeAll();
-  }
-}
-
 winrt::Microsoft::ReactNative::IReactPropertyBag ReactContext::Properties() const noexcept {
   return m_properties;
 }

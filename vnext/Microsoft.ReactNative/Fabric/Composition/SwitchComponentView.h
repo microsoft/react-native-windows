@@ -27,8 +27,7 @@ struct SwitchComponentView : SwitchComponentViewT<SwitchComponentView, ViewCompo
   void UnmountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
-  void HandleCommand(winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept
-      override;
+  void HandleCommand(const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept override;
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   void updateState(facebook::react::State::Shared const &state, facebook::react::State::Shared const &oldState) noexcept
@@ -38,9 +37,7 @@ struct SwitchComponentView : SwitchComponentViewT<SwitchComponentView, ViewCompo
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept override;
   void onThemeChanged() noexcept override;
-  void OnKeyUp(
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyboardSource &source,
-      const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
+  void OnKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   void OnPointerPressed(
       const winrt::Microsoft::ReactNative::Composition::Input::PointerRoutedEventArgs &args) noexcept override;
   void OnPointerReleased(
@@ -59,6 +56,8 @@ struct SwitchComponentView : SwitchComponentViewT<SwitchComponentView, ViewCompo
 
   static facebook::react::SharedViewProps defaultProps() noexcept;
   const facebook::react::SwitchProps &switchProps() const noexcept;
+  ToggleState getToggleState() noexcept override;
+  void Toggle() noexcept override;
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual createVisual() noexcept override;
 
  private:

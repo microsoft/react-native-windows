@@ -810,18 +810,35 @@ const examples: Array<RNTesterModuleExample> = [
             placeholder='TextInput 1 in Set of 3'
             accessibilityPosInSet={1}
             accessibilitySetSize={3}
+            accessibilityLiveRegion='none'
           />
           <ExampleTextInput
             style={styles.singleLine}
             placeholder='TextInput 2 in Set of 3'
             accessibilityPosInSet={2}
             accessibilitySetSize={3}
+            accessibilityLiveRegion='polite'
           />
           <ExampleTextInput
             style={styles.singleLine}
             placeholder='TextInput 3 in Set of 3'
             accessibilityPosInSet={3}
             accessibilitySetSize={3}
+            accessibilityLiveRegion='assertive'
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Searchbox',
+    render: function (): React.Node {
+      return (
+        <View accessible testID="textinput-searchbox">
+          <ExampleTextInput
+            style={styles.singleLine}
+            accessibilityRole="searchbox"
+            defaultValue="Search"
           />
         </View>
       );

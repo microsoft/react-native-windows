@@ -84,6 +84,7 @@
           "Microsoft.ReactNative": "[1.0.0, )",
           "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
           "Microsoft.WindowsAppSDK": "[1.5.240227000, )",
+          "SampleCustomComponent": "[1.0.0, )",
           "boost": "[1.83.0, )"
         }
       },
@@ -91,6 +92,15 @@
         "type": "Project",
         "dependencies": {
           "Folly": "[1.0.0, )",
+          "boost": "[1.83.0, )"
+        }
+      },
+      "samplecustomcomponent": {
+        "type": "Project",
+        "dependencies": {
+          "Microsoft.ReactNative": "[1.0.0, )",
+          "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
+          "Microsoft.WindowsAppSDK": "[1.5.240227000, )",
           "boost": "[1.83.0, )"
         }
       }

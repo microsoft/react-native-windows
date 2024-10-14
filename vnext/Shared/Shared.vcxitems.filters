@@ -293,6 +293,7 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerBinding.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\RuntimeSchedulerCallInvoker.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\runtimescheduler\Task.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\components\scrollview\ScrollEvent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\CoreFeatures.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\platform\react\renderer\graphics\PlatformColorUtils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiViewShadowNode.cpp" />
@@ -319,16 +320,20 @@
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\FallbackRuntimeAgentDelegate.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\FallbackRuntimeTargetDelegate.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeTarget.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeTargetDebuggerSessionObserver.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\ExecutionContextManager.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\ExecutionContext.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\CdpJson.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\ConsoleMessage.cpp" />
+    <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\NetworkIOAgent.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\utils\jsi-utils.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TextDrawing.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\graphics\ColorComponents.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\cxxreact\JSExecutor.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\jsinspector-modern\RuntimeTargetConsole.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)Networking\NetworkPropertyIds.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\AbiEventEmitter.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\Fabric\Composition\TooltipService.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Source Files">

@@ -20,6 +20,38 @@ import type {KeyEvent} from '../../Types/CoreEventTypes';
 
 export type Props = ViewProps;
 
+// [Windows
+// $FlowFixMe - children typing
+const childrenWithImportantForAccessibility = children => {
+  if (children == null) {
+    return children;
+  }
+  const updatedChildren = React.Children.map(children, child => {
+    if (React.isValidElement(child)) {
+      // $FlowFixMe[incompatible-use]
+      if (child.props.children) {
+        // $FlowFixMe[incompatible-call]
+        return React.cloneElement(child, {
+          accessible: false,
+          children: childrenWithImportantForAccessibility(
+            child.props.children,
+          ),
+        });
+      } else {
+        // $FlowFixMe[incompatible-call]
+        return React.cloneElement(child, {accessible: false});
+      }
+    }
+    return child;
+  });
+  if (updatedChildren.length === 1) {
+    return updatedChildren[0];
+  } else {
+    return updatedChildren;
+  }
+};
+// Windows]
+
 /**
  * The most fundamental component for building a UI, View is a container that
  * supports layout with flexbox, style, some touch handling, and accessibility
@@ -165,36 +197,6 @@ const View: React.AbstractComponent<
     };
 
     // [Windows
-    // $FlowFixMe - children typing
-    const childrenWithImportantForAccessibility = children => {
-      if (children == null) {
-        return children;
-      }
-      const updatedChildren = React.Children.map(children, child => {
-        if (React.isValidElement(child)) {
-          // $FlowFixMe[incompatible-use]
-          if (child.props.children) {
-            // $FlowFixMe[incompatible-call]
-            return React.cloneElement(child, {
-              accessible: false,
-              children: childrenWithImportantForAccessibility(
-                child.props.children,
-              ),
-            });
-          } else {
-            // $FlowFixMe[incompatible-call]
-            return React.cloneElement(child, {accessible: false});
-          }
-        }
-        return child;
-      });
-      if (updatedChildren.length === 1) {
-        return updatedChildren[0];
-      } else {
-        return updatedChildren;
-      }
-    };
-
     const _focusable = tabIndex !== undefined ? !tabIndex : focusable;
     const _accessible =
       importantForAccessibility === 'no-hide-descendants'

@@ -27,6 +27,10 @@ HostPlatformViewProps::HostPlatformViewProps(
           CoreFeatures::enablePropIteratorSetter
               ? sourceProps.focusable
               : convertRawProp(context, rawProps, "focusable", sourceProps.focusable, {})),
+      tooltip(
+          CoreFeatures::enablePropIteratorSetter
+              ? sourceProps.tooltip
+              : convertRawProp(context, rawProps, "tooltip", sourceProps.tooltip, {})),
       accessibilityPosInSet(
           CoreFeatures::enablePropIteratorSetter
               ? sourceProps.accessibilityPosInSet
@@ -34,7 +38,15 @@ HostPlatformViewProps::HostPlatformViewProps(
       accessibilitySetSize(
           CoreFeatures::enablePropIteratorSetter
               ? sourceProps.accessibilitySetSize
-              : convertRawProp(context, rawProps, "accessibilitySetSize", sourceProps.accessibilitySetSize, 0)) {}
+              : convertRawProp(context, rawProps, "accessibilitySetSize", sourceProps.accessibilitySetSize, 0)),
+      accessibilityLiveRegion(
+          CoreFeatures::enablePropIteratorSetter ? sourceProps.accessibilityLiveRegion
+                                                 : convertRawProp(
+                                                       context,
+                                                       rawProps,
+                                                       "accessibilityLiveRegion",
+                                                       sourceProps.accessibilityLiveRegion,
+                                                       "none")) {}
 
 #define WINDOWS_VIEW_EVENT_CASE(eventType)                    \
   case CONSTEXPR_RAW_PROPS_KEY_HASH("on" #eventType): {       \
@@ -71,8 +83,10 @@ void HostPlatformViewProps::setProp(
     RAW_SET_PROP_SWITCH_CASE_BASIC(focusable);
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityPosInSet);
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilitySetSize);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityLiveRegion);
     RAW_SET_PROP_SWITCH_CASE_BASIC(keyDownEvents);
     RAW_SET_PROP_SWITCH_CASE_BASIC(keyUpEvents);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(tooltip);
   }
 }
 

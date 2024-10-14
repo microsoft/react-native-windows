@@ -2,6 +2,171 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Mon, 07 Oct 2024 19:54:26 GMT",
+      "version": "0.0.0-canary.106",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.106",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "eb6b345ee2128d56f32c85f1702bb093e0375a1f",
+            "comment": "integrate RN nightly 0.77.0-nightly-20240921-1747f57c6"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.58",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.29",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.5.11",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.46",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 26 Sep 2024 17:38:27 GMT",
+      "version": "0.0.0-canary.104",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.104",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.56",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.27",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/jest-unittest-config to v1.5.9",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.44",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 16 Sep 2024 21:21:15 GMT",
+      "version": "0.0.0-canary.103",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.103",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "67e7442be24d990db7c6bff2d0f47206c9a73450",
+            "comment": "[Fabric] Add FocusNavigationDirection and allow overriding of default command handling"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 07 Sep 2024 05:14:11 GMT",
+      "version": "0.0.0-canary.102",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.102",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "409bf6e085cc1aa6421cff078037f7b3774bd8ec",
+            "comment": "Integrate 8/31"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Sep 2024 05:14:01 GMT",
+      "version": "0.0.0-canary.101",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.101",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "ecdff31009099ee8245529b633b65a1f8bcabc79",
+            "comment": "[Fabric] Add native component codegen"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 14 Aug 2024 05:14:30 GMT",
+      "version": "0.0.0-canary.100",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.100",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "1b4f560990a6c57adf2b31676da0bbbe2ceee97b",
+            "comment": "Add support for turbomodule eventemitters, and codegen"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 08 Aug 2024 05:16:48 GMT",
+      "version": "0.0.0-canary.99",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.99",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "c5dff02edd12aa4a9529b325c7630eb558d375f7",
+            "comment": "Integrate 7/1"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.55",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.26",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.43",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 24 Jul 2024 05:24:36 GMT",
       "version": "0.0.0-canary.98",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.98",

@@ -20,13 +20,17 @@
     "clean-android": "rm -rf android/app/build",
     "setup-ios-jsc": "bundle install && USE_HERMES=0 bundle exec pod install",
     "setup-ios-hermes": "bundle install && USE_HERMES=1 bundle exec pod install",
-    "clean-ios": "rm -rf build/generated/ios Pods Podfile.lock"
+    "clean-ios": "rm -rf build/generated/ios Pods Podfile.lock",
+    "e2e-build-android": "../../gradlew :packages:rn-tester:android:app:installHermesRelease -PreactNativeArchitectures=arm64-v8a",
+    "e2e-build-ios": "./scripts/maestro-build-ios.sh",
+    "e2e-test-android": "maestro test .maestro/ -e APP_ID=com.facebook.react.uiapp",
+    "e2e-test-ios": "./scripts/maestro-test-ios.sh"
   },
   "dependencies": {
+    "@react-native/popup-menu-android": "0.76.0-nightly-20240816-17017d2b8",
     "flow-enums-runtime": "^0.0.6",
     "invariant": "^2.2.4",
-    "nullthrows": "^1.1.1",
-    "@react-native/popup-menu-android": "0.76.0-nightly-20240701-9f6cb21ed"
+    "nullthrows": "^1.1.1"
   },
   "peerDependencies": {
     "react": "19.0.0-rc-fb9a90fa48-20240614",
@@ -39,5 +43,10 @@
     "android": {
       "javaPackageName": "com.facebook.fbreact.specs"
     }
+  },
+  "devDependencies": {
+    "@react-native-community/cli": "15.0.0-alpha.2",
+    "@react-native-community/cli-platform-android": "15.0.0-alpha.2",
+    "@react-native-community/cli-platform-ios": "15.0.0-alpha.2"
   }
 }

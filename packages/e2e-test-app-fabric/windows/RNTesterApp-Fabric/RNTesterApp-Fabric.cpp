@@ -51,6 +51,7 @@ void UpdateRootViewSizeToAppWindow(
   if (window.Presenter().as<winrt::Microsoft::UI::Windowing::OverlappedPresenter>().State() !=
       winrt::Microsoft::UI::Windowing::OverlappedPresenterState::Minimized) {
     winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+    constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
     constraints.MaximumSize = constraints.MinimumSize = size;
     rootView.Arrange(constraints, {0, 0});
   }
@@ -115,7 +116,8 @@ winrt::Microsoft::ReactNative::ReactNativeHost CreateReactNativeHost(
   return host;
 }
 
-_Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR /* commandLine */, int showCmd) {
+_Use_decl_annotations_ int CALLBACK
+WinMain(HINSTANCE /* instance */, HINSTANCE, PSTR /* commandLine */, int /* showCmd */) {
   // Initialize WinRT.
   winrt::init_apartment(winrt::apartment_type::single_threaded);
 
@@ -162,11 +164,12 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 
   // Quit application when main window is closed
   window.Destroying(
-      [host](winrt::Microsoft::UI::Windowing::AppWindow const &window, winrt::IInspectable const & /*args*/) {
+      [host](winrt::Microsoft::UI::Windowing::AppWindow const & /*window*/, winrt::IInspectable const & /*args*/) {
         // Before we shutdown the application - unload the ReactNativeHost to give the javascript a chance to save any
         // state
         auto async = host.UnloadInstance();
         async.Completed([host](auto asyncInfo, winrt::Windows::Foundation::AsyncStatus asyncStatus) {
+          asyncStatus;
           assert(asyncStatus == winrt::Windows::Foundation::AsyncStatus::Completed);
           host.InstanceSettings().UIDispatcher().Post([]() { PostQuitMessage(0); });
         });
@@ -247,6 +250,26 @@ void InsertBooleanValueIfNotDefault(
   }
 }
 
+void InsertLiveSettingValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    LiveSetting value,
+    LiveSetting defaultValue = LiveSetting::Off) {
+  if (value != defaultValue) {
+    switch (value) {
+      case 0:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Off"));
+        break;
+      case 1:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Polite"));
+        break;
+      case 2:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Assertive"));
+        break;
+    }
+  }
+}
+
 void InsertSizeValue(
     const winrt::Windows::Data::Json::JsonObject &obj,
     winrt::hstring name,
@@ -271,6 +294,43 @@ void InsertFloat3Value(
   obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(str));
 }
 
+void InsertToggleStateValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    ToggleState value,
+    ToggleState defaultValue = ToggleState::ToggleState_Off) {
+  if (value != defaultValue) {
+    switch (value) {
+      case 0:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Off"));
+        break;
+      case 1:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"On"));
+        break;
+      case 2:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Indeterminate"));
+        break;
+    }
+  }
+}
+
+void InsertExpandCollapseStateValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    ExpandCollapseState value,
+    ExpandCollapseState defaultValue = ExpandCollapseState::ExpandCollapseState_Collapsed) {
+  if (value != defaultValue) {
+    switch (value) {
+      case 0:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Collapsed"));
+        break;
+      case 1:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Expanded"));
+        break;
+    }
+  }
+}
+
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload) {
   winrt::Windows::Data::Json::JsonObject result;
   winrt::Windows::Data::Json::JsonArray jsonErrors;
@@ -291,6 +351,52 @@ winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::Js
   return result;
 }
 
+void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Data::Json::JsonObject &result) {
+  BSTR value;
+  BOOL isReadOnly;
+  ToggleState toggleState;
+  IValueProvider *valuePattern;
+  ExpandCollapseState expandCollapseState;
+  HRESULT hr;
+
+  // Dump IValueProvider Information
+  hr = pTarget->GetCurrentPattern(UIA_ValuePatternId, reinterpret_cast<IUnknown **>(&valuePattern));
+  if (SUCCEEDED(hr) && valuePattern) {
+    hr = valuePattern->get_Value(&value);
+    if (SUCCEEDED(hr)) {
+      InsertStringValueIfNotEmpty(result, L"ValuePattern.Value", value);
+    }
+    hr = valuePattern->get_IsReadOnly(&isReadOnly);
+    if (SUCCEEDED(hr)) {
+      InsertBooleanValueIfNotDefault(result, L"ValuePattern.IsReadOnly", isReadOnly, true);
+    }
+    valuePattern->Release();
+  }
+
+  // Dump IToggleProvider Information
+  IToggleProvider *togglePattern;
+  hr = pTarget->GetCurrentPattern(UIA_TogglePatternId, reinterpret_cast<IUnknown **>(&togglePattern));
+  if (SUCCEEDED(hr) && togglePattern) {
+    hr = togglePattern->get_ToggleState(&toggleState);
+    if (SUCCEEDED(hr)) {
+      InsertToggleStateValueIfNotDefault(result, L"TogglePattern.ToggleState", toggleState);
+    }
+    togglePattern->Release();
+  }
+
+  // Dump IExpandCollapseProvider Information
+  IExpandCollapseProvider *expandCollapsePattern;
+  hr = pTarget->GetCurrentPattern(UIA_ExpandCollapsePatternId, reinterpret_cast<IUnknown **>(&expandCollapsePattern));
+  if (SUCCEEDED(hr) && expandCollapsePattern) {
+    hr = expandCollapsePattern->get_ExpandCollapseState(&expandCollapseState);
+    if (SUCCEEDED(hr)) {
+      InsertExpandCollapseStateValueIfNotDefault(
+          result, L"ExpandCollapsePattern.ExpandCollapseState", expandCollapseState);
+    }
+    expandCollapsePattern->Release();
+  }
+}
+
 winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
     IUIAutomationElement *pTarget,
     IUIAutomationTreeWalker *pWalker) {
@@ -302,8 +408,9 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   BOOL isKeyboardFocusable;
   BSTR localizedControlType;
   BSTR name;
-  int positionInSet;
-  int sizeOfSet;
+  int positionInSet = 0;
+  int sizeOfSet = 0;
+  LiveSetting liveSetting = LiveSetting::Off;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -317,6 +424,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   if (SUCCEEDED(hr) && pTarget4) {
     pTarget4->get_CurrentPositionInSet(&positionInSet);
     pTarget4->get_CurrentSizeOfSet(&sizeOfSet);
+    pTarget4->get_CurrentLiveSetting(&liveSetting);
     pTarget4->Release();
   }
   result.Insert(L"AutomationId", winrt::Windows::Data::Json::JsonValue::CreateStringValue(automationId));
@@ -329,6 +437,8 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   InsertStringValueIfNotEmpty(result, L"Name", name);
   InsertIntValueIfNotDefault(result, L"PositionInSet", positionInSet);
   InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
+  InsertLiveSettingValueIfNotDefault(result, L"LiveSetting", liveSetting);
+  DumpUIAPatternInfo(pTarget, result);
 
   IUIAutomationElement *pChild;
   IUIAutomationElement *pSibling;
@@ -355,7 +465,8 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeHelper(winrt::Windows::Data::J
   IUIAutomationElement *pRootElement;
   IUIAutomationTreeWalker *pWalker;
 
-  CoCreateInstance(__uuidof(CUIAutomation8), nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pAutomation));
+  winrt::check_hresult(
+      CoCreateInstance(__uuidof(CUIAutomation8), nullptr, CLSCTX_INPROC_SERVER, IID_PPV_ARGS(&pAutomation)));
   pAutomation->get_ContentViewWalker(&pWalker);
   pAutomation->ElementFromHandle(global_hwnd, &pRootElement);
 

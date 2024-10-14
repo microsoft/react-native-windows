@@ -15,7 +15,9 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
                                                  IRawElementProviderSimple,
                                                  IInvokeProvider,
                                                  IScrollItemProvider,
-                                                 IValueProvider> {
+                                                 IValueProvider,
+                                                 IToggleProvider,
+                                                 IExpandCollapseProvider> {
  public:
   CompositionDynamicAutomationProvider(
       const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept;
@@ -45,6 +47,15 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall SetValue(LPCWSTR val) override;
   virtual HRESULT __stdcall get_Value(BSTR *pRetVal) override;
   virtual HRESULT __stdcall get_IsReadOnly(BOOL *pRetVal) override;
+
+  // inherited via IToggleProvider
+  virtual HRESULT __stdcall get_ToggleState(ToggleState *pRetVal) override;
+  virtual HRESULT __stdcall Toggle() override;
+
+  // inherited via IExpandCollapseProvider
+  virtual HRESULT __stdcall get_ExpandCollapseState(ExpandCollapseState *pRetVal) override;
+  virtual HRESULT __stdcall Expand() override;
+  virtual HRESULT __stdcall Collapse() override;
 
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;

@@ -2,12 +2,15 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include "HandleCommandArgs.g.cpp"
+#include "HandleCommandArgs.g.h"
 #include <AsynchronousEventBeat.h>
 #include <DynamicReader.h>
 #include <DynamicWriter.h>
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionUIService.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
+#include <Fabric/Composition/ReactNativeIsland.h>
 #include <Fabric/Composition/RootComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
@@ -109,15 +112,6 @@ void FabricUIManager::installFabricUIManager() noexcept {
   };
   toolbox.runtimeExecutor = runtimeExecutor;
   toolbox.asynchronousEventBeatFactory = asynchronousBeatFactory;
-  toolbox.backgroundExecutor = [context = m_context,
-                                dispatcher = Mso::DispatchQueue::MakeLooperQueue()](std::function<void()> &&callback) {
-    if (context.UIDispatcher().HasThreadAccess()) {
-      callback();
-      return;
-    }
-
-    dispatcher.Post(std::move(callback));
-  };
 
   m_scheduler = std::make_shared<facebook::react::Scheduler>(
       toolbox, (/*animationDriver_ ? animationDriver_.get() :*/ nullptr), this);
@@ -148,7 +142,7 @@ void FabricUIManager::startSurface(
 
   facebook::react::LayoutContext layoutContext;
   layoutContext.pointScaleFactor = rootView.ScaleFactor();
-  layoutContext.fontSizeMultiplier = rootView.ScaleFactor();
+  layoutContext.fontSizeMultiplier = rootView.FontSizeMultiplier();
 
   m_surfaceManager->startSurface(
       surfaceId,
@@ -161,6 +155,9 @@ void FabricUIManager::startSurface(
 
 void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept {
   m_surfaceManager->stopSurface(surfaceId);
+  auto &rootDescriptor = m_registry.componentViewDescriptorWithTag(surfaceId);
+  m_registry.enqueueComponentViewWithComponentHandle(
+      facebook::react::RootShadowNode::Handle(), surfaceId, rootDescriptor);
 }
 
 winrt::Microsoft::ReactNative::ReactNativeIsland FabricUIManager::GetReactNativeIsland(
@@ -245,9 +242,10 @@ void FabricUIManager::RCTPerformMountInstructions(
         newChildComponentView->updateEventEmitter(newChildShadowView.eventEmitter);
         newChildComponentView->updateState(newChildShadowView.state, oldChildShadowView.state);
         newChildComponentView->updateLayoutMetrics(newChildShadowView.layoutMetrics, oldChildShadowView.layoutMetrics);
-        newChildViewDescriptor.view.FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask::All);
+        newChildComponentView->FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask::All);
 
-        parentViewDescriptor.view.MountChildComponentView(*newChildComponentView, mutation.index);
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
+            ->MountChildComponentView(*newChildComponentView, mutation.index);
         break;
       }
 
@@ -256,7 +254,8 @@ void FabricUIManager::RCTPerformMountInstructions(
         auto &parentShadowView = mutation.parentShadowView;
         auto &oldChildViewDescriptor = m_registry.componentViewDescriptorWithTag(oldChildShadowView.tag);
         auto &parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentShadowView.tag);
-        parentViewDescriptor.view.UnmountChildComponentView(oldChildViewDescriptor.view, mutation.index);
+        winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
+            ->UnmountChildComponentView(oldChildViewDescriptor.view, mutation.index);
         break;
       }
 
@@ -290,7 +289,8 @@ void FabricUIManager::RCTPerformMountInstructions(
         }
 
         if (mask != winrt::Microsoft::ReactNative::ComponentViewUpdateMask::None) {
-          newChildViewDescriptor.view.FinalizeUpdates(mask);
+          winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(newChildViewDescriptor.view)
+              ->FinalizeUpdates(mask);
         }
 
         break;
@@ -374,22 +374,44 @@ void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(const faceboo
   */
 }
 
+struct HandleCommandArgs : public winrt::Microsoft::ReactNative::implementation::HandleCommandArgsT<HandleCommandArgs> {
+  HandleCommandArgs(winrt::hstring commandName, folly::dynamic const &arg) : m_commandName(commandName), m_args(arg) {}
+
+  winrt::hstring CommandName() const noexcept {
+    return m_commandName;
+  }
+  winrt::Microsoft::ReactNative::IJSValueReader CommandArgs() const noexcept {
+    return winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(m_args);
+  }
+  bool Handled() const noexcept {
+    return m_handled;
+  }
+  void Handled(bool value) noexcept {
+    m_handled = value;
+  }
+
+ private:
+  folly::dynamic const &m_args;
+  const winrt::hstring m_commandName;
+  bool m_handled{false};
+};
+
 void FabricUIManager::schedulerDidDispatchCommand(
     facebook::react::ShadowView const &shadowView,
     std::string const &commandName,
     folly::dynamic const &arg) {
   if (m_context.UIDispatcher().HasThreadAccess()) {
     auto descriptor = m_registry.componentViewDescriptorWithTag(shadowView.tag);
-    descriptor.view.HandleCommand(
-        winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(arg));
+    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(descriptor.view)
+        ->HandleCommand(winrt::make<HandleCommandArgs>(winrt::to_hstring(commandName), arg));
   } else {
     m_context.UIDispatcher().Post(
         [wkThis = weak_from_this(), commandName, tag = shadowView.tag, args = folly::dynamic(arg)]() {
           if (auto pThis = wkThis.lock()) {
             auto view = pThis->m_registry.findComponentViewWithTag(tag);
             if (view) {
-              view.HandleCommand(
-                  winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(args));
+              winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->HandleCommand(
+                  winrt::make<HandleCommandArgs>(winrt::to_hstring(commandName), args));
             }
           }
         });

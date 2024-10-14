@@ -4,8 +4,6 @@
  * @format
  */
 
-import * as appInsights from 'applicationinsights';
-
 import * as sanitizeUtils from './sanitizeUtils';
 
 // Note: All CLI commands will set process.exitCode to the numerical value of
@@ -78,6 +76,7 @@ export const CodedErrors = {
   InvalidTemplateName: 5002,
   NoProjectName: 5003,
   InvalidProjectName: 5004,
+  InvalidProjectNamespace: 5005,
 };
 
 export type CodedErrorType = keyof typeof CodedErrors;
@@ -98,6 +97,13 @@ export class CodedError extends Error {
     super(message);
     this.name = type;
   }
+}
+
+export interface ErrorStackFrame {
+  functionName?: string;
+  filePath?: string;
+  lineNumber?: number;
+  columnNumber?: number;
 }
 
 /**
@@ -155,16 +161,18 @@ export function sanitizeErrorMessage(msg: string): string {
  * @param frame
  */
 export function sanitizeErrorStackFrame(
-  frame: appInsights.Contracts.StackFrame,
-): void {
-  const parens = frame.method.indexOf('(');
-  if (parens !== -1) {
-    // case 1: method === 'methodName (rootOfThePath'
-    frame.method = frame.method.substr(0, parens).trim();
-  } else {
-    // case 2: method === <no_method> or something without '(', fileName is full path
+  frame: ErrorStackFrame): void {
+
+  if (frame.functionName) {
+    const leftParenthesisIndex = frame.functionName.indexOf('(');
+    if (leftParenthesisIndex !== -1) {
+      // case 1: method === 'methodName (rootOfThePath'
+      frame.functionName = frame.functionName.substr(0, leftParenthesisIndex).trim();
+    } else {
+      // case 2: method === <no_method> or something without '(', fileName is full path
+    }  
   }
-  // anonymize the filename
-  frame.fileName = sanitizeUtils.getAnonymizedPath(frame.fileName);
-  frame.assembly = '';
+
+  // anonymize the filePath
+  frame.filePath = sanitizeUtils.getAnonymizedPath(frame.filePath);
 }

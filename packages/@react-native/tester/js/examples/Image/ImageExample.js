@@ -12,15 +12,11 @@
 
 import type {LayoutEvent} from 'react-native/Libraries/Types/CoreEventTypes';
 
-const ImageCapInsetsExample = require('./ImageCapInsetsExample');
-const React = require('react');
-const {
-  Image,
-  ImageBackground,
-  StyleSheet,
-  Text,
-  View,
-} = require('react-native');
+import * as ReactNativeFeatureFlags from 'react-native/src/private/featureflags/ReactNativeFeatureFlags';
+
+import ImageCapInsetsExample from './ImageCapInsetsExample';
+import React from 'react';
+import {Image, ImageBackground, StyleSheet, Text, View} from 'react-native';
 
 const IMAGE1 =
   'https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png';
@@ -601,6 +597,29 @@ class OnPartialLoadExample extends React.Component<
   }
 }
 
+type VectorDrawableExampleState = {||};
+
+type VectorDrawableExampleProps = $ReadOnly<{||}>;
+
+class VectorDrawableExample extends React.Component<
+  VectorDrawableExampleProps,
+  VectorDrawableExampleState,
+> {
+  state: VectorDrawableExampleState = {};
+
+  render(): React.Node {
+    const isEnabled = ReactNativeFeatureFlags.loadVectorDrawablesOnImages();
+    return (
+      <View style={styles.flex}>
+        <Text>Enabled: {isEnabled ? 'true' : 'false'}</Text>
+        <View style={styles.vectorDrawableRow}>
+          <Image source={{uri: 'ic_android'}} style={styles.vectorDrawable} />
+        </View>
+      </View>
+    );
+  }
+}
+
 const fullImage: ImageSource = {
   uri: IMAGE2,
 };
@@ -802,6 +821,38 @@ const styles = StyleSheet.create({
     borderColor: 'red',
     backgroundColor: 'yellow',
   },
+  boxShadow: {
+    margin: 10,
+  },
+  boxShadowWithBackground: {
+    backgroundColor: 'lightblue',
+    boxShadow: '0px 0px 10px 0px rgba(0, 0, 0, 0.5)',
+  },
+  boxShadowMultiOutsetInset: {
+    boxShadow:
+      '-5px -5px 10px 2px rgba(0, 128, 0, 0.5), 5px 5px 10px 2px rgba(128, 0, 0, 0.5), inset orange 0px 0px 20px 0px, black 0px 0px 5px 1px',
+    borderColor: 'blue',
+    borderWidth: 1,
+    borderRadius: 20,
+  },
+  boxShadowAsymetricallyRounded: {
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 5,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 20,
+    marginRight: 80,
+    marginTop: 40,
+    boxShadow: '80px 0px 10px 0px hotpink',
+    transform: 'rotate(-15deg)',
+  },
+  vectorDrawableRow: {
+    flexDirection: 'row',
+    gap: 8,
+  },
+  vectorDrawable: {
+    height: 64,
+    width: 64,
+  },
 });
 
 exports.displayName = (undefined: ?string);
@@ -967,9 +1018,10 @@ exports.examples = [
   },
   {
     title: 'Borders',
+    name: 'borders',
     render: function (): React.Node {
       return (
-        <View style={styles.horizontal}>
+        <View style={styles.horizontal} testID="borders-example">
           <Image
             source={smallImage}
             style={[styles.base, styles.background, styles.customBorderColor]}
@@ -980,9 +1032,10 @@ exports.examples = [
   },
   {
     title: 'Border Radius',
+    name: 'border-radius',
     render: function (): React.Node {
       return (
-        <View style={styles.horizontal}>
+        <View style={styles.horizontal} testID="border-radius-example">
           <Image
             style={[styles.base, styles.imageWithBorderRadius]}
             source={fullImage}
@@ -1017,9 +1070,10 @@ exports.examples = [
   },
   {
     title: 'Background Color',
+    name: 'background-color',
     render: function (): React.Node {
       return (
-        <View style={styles.horizontal}>
+        <View style={styles.horizontal} testID="background-color-example">
           <Image source={smallImage} style={styles.base} />
           <Image
             style={[styles.base, styles.backgroundColor1]}
@@ -1032,6 +1086,40 @@ exports.examples = [
           <Image
             style={[styles.base, styles.backgroundColor3]}
             source={smallImage}
+          />
+        </View>
+      );
+    },
+  },
+  {
+    title: 'Box Shadow',
+    name: 'box-shadow',
+    render: function (): React.Node {
+      return (
+        <View style={styles.horizontal} testID="box-shadow-example">
+          <Image
+            style={[
+              styles.base,
+              styles.boxShadow,
+              styles.boxShadowWithBackground,
+            ]}
+            source={smallImage}
+          />
+          <Image
+            style={[
+              styles.base,
+              styles.boxShadow,
+              styles.boxShadowMultiOutsetInset,
+            ]}
+            source={smallImage}
+          />
+          <Image
+            style={[
+              styles.base,
+              styles.boxShadow,
+              styles.boxShadowAsymetricallyRounded,
+            ]}
+            source={fullImage}
           />
         </View>
       );
@@ -1510,5 +1598,14 @@ exports.examples = [
       return <OnPartialLoadExample />;
     },
     platform: 'ios',
+  },
+  {
+    title: 'Vector Drawable',
+    description:
+      'Demonstrating an example of loading a vector drawable asset by name',
+    render: function (): React.Node {
+      return <VectorDrawableExample />;
+    },
+    platform: 'android',
   },
 ];
