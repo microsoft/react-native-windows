@@ -57,7 +57,9 @@ async function downloadFilesFromReactNative(
   }
 
   const octokit = new Octokit({
-    auth: process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN, // Used to make sure CI doesn't get rate-throttled
+    ...(process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN
+      ? {auth: process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN}
+      : {}), // Used to make sure CI doesn't get rate-throttled
     userAgent: 'RNW Just Task Script',
   });
 
@@ -100,9 +102,10 @@ async function downloadFilesFromReactNative(
 
 async function downloadFlowTypes(overwrite = false) {
   const rnDir = path.dirname(require.resolve('react-native/package.json'));
-  const reactNativeVersion = require(
-    path.resolve(rnDir, 'package.json'),
-  ).version;
+  const reactNativeVersion = require(path.resolve(
+    rnDir,
+    'package.json',
+  )).version;
 
   const reactNativeRef = await getAbbreviatedRef(reactNativeVersion);
 
