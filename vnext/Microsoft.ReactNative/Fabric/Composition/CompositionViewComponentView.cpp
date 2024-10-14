@@ -1579,6 +1579,11 @@ winrt::Microsoft::ReactNative::ComponentView ViewComponentView::Create(
       ViewComponentView::defaultProps(), compContext, tag, reactContext, ComponentViewFeatures::Default);
 }
 
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
+ViewComponentView::VisualToMountChildrenInto() noexcept {
+  return Visual();
+}
+
 void ViewComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
@@ -1598,7 +1603,7 @@ void ViewComponentView::MountChildComponentView(
         }
       }
     }
-    Visual().InsertAt(compositionChild->OuterVisual(), visualIndex);
+    VisualToMountChildrenInto().InsertAt(compositionChild->OuterVisual(), visualIndex);
   } else {
     m_hasNonVisualChildren = true;
   }
@@ -1611,7 +1616,7 @@ void ViewComponentView::UnmountChildComponentView(
 
   indexOffsetForBorder(index);
   if (auto compositionChild = childComponentView.try_as<ComponentView>()) {
-    Visual().Remove(compositionChild->OuterVisual());
+    VisualToMountChildrenInto().Remove(compositionChild->OuterVisual());
   }
 }
 

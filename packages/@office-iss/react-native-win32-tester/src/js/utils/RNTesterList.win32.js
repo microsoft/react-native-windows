@@ -59,6 +59,11 @@ const Components: Array<RNTesterModuleInfo> = [
     key: 'ImageWin32Test',
     module: require('@office-iss/react-native-win32/Libraries/Image/Tests/ImageWin32Test'),
   },
+  {
+    key: 'ModalExample',
+    category: 'UI',
+    module: require('../examples/Modal/ModalExample'),
+  },
   /*
   {
     key: 'JSResponderHandlerExample',
@@ -67,11 +72,6 @@ const Components: Array<RNTesterModuleInfo> = [
   {
     key: 'KeyboardAvoidingViewExample',
     module: require('../examples/KeyboardAvoidingView/KeyboardAvoidingViewExample'),
-  },
-  {
-    key: 'ModalExample',
-    category: 'UI',
-    module: require('../examples/Modal/ModalExample'),
   },
   {
     key: 'NewAppScreenExample',
