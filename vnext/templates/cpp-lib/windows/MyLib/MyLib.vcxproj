@@ -14,6 +14,7 @@
     <MinimumVisualStudioVersion>17.0</MinimumVisualStudioVersion>
     <AppxPackage>false</AppxPackage>
     <ReactNativeWindowsVersion>{{ rnwVersion }}</ReactNativeWindowsVersion>
+    <ShortenedReactNativeWindowsVersion>{{ shortenedRNWVersion }}</ShortenedReactNativeWindowsVersion>
   </PropertyGroup>
   <PropertyGroup Label="ReactNativeWindowsProps">
     <ReactNativeWindowsDir Condition="'$(ReactNativeWindowsDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native-windows\package.json'))\node_modules\react-native-windows\</ReactNativeWindowsDir>
