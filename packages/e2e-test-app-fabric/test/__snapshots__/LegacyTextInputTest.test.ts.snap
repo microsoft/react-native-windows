@@ -91,9 +91,7 @@ onKeyPress key: c
 onChange text: ab
 onSelectionChange range: 2,2
 onKeyPress key: b
-onSelectionChange range: 1,1
 onChange text: a
-onSelectionChange range: 0,0
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
@@ -111,7 +109,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "998, 858",
+    "Size": "998, 820",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -129,9 +127,7 @@ onKeyPress key: c
 onChange text: ab
 onSelectionChange range: 2,2
 onKeyPress key: b
-onSelectionChange range: 1,1
 onChange text: a
-onSelectionChange range: 0,0
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
@@ -149,7 +145,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "998, 299",
+    "Size": "998, 262",
     "Visual Type": "SpriteVisual",
   },
 }
@@ -190,9 +186,7 @@ onKeyPress key: c
 onChange text: ab
 onSelectionChange range: 2,2
 onKeyPress key: b
-onSelectionChange range: 1,1
 onChange text: a
-onSelectionChange range: 0,0
 onChange text: a
 onSelectionChange range: 1,1
 onKeyPress key: a
@@ -210,7 +204,7 @@ onFocus
   "Visual Tree": {
     "Comment": "textinput-log",
     "Offset": "0, 0, 0",
-    "Size": "998, 727",
+    "Size": "998, 690",
     "Visual Type": "SpriteVisual",
   },
 }
