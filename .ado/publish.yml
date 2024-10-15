@@ -70,6 +70,14 @@ parameters:
       BuildConfiguration: Release
       BuildPlatform: x86
       UseFabric: true
+    - Name: ARM64ECDebugFabric
+      BuildConfiguration: Debug
+      BuildPlatform: ARM64EC
+      UseFabric: true
+    - Name: ARM64ECReleaseFabric
+      BuildConfiguration: Release
+      BuildPlatform: ARM64EC
+      UseFabric: true
 
 - name: universalBuildMatrix
   type: object
@@ -529,14 +537,14 @@ extends:
                   configuration: Release
                 - platform: x86
                   configuration: Release
-                # - platform: ARM64EC
-                #   configuration: Release
+                - platform: ARM64EC
+                  configuration: Release
                 - platform: x64
                   configuration: Debug
                 - platform: x86
                   configuration: Debug
-                # - platform: ARM64EC
-                #   configuration: Debug
+                - platform: ARM64EC
+                  configuration: Debug
 
           templateContext:
             sdl:
