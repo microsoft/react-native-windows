@@ -439,9 +439,9 @@ export function createComponentGenerator({
           : '';
 
         const commandHandler = hasAnyCommands
-          ? `void HandleCommand(const winrt::Microsoft::ReactNative::ComponentView &view, winrt::hstring commandName, const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
-    args;
+          ? `void HandleCommand(const winrt::Microsoft::ReactNative::ComponentView &view, const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
     auto userData = view.UserData().as<TUserData>();
+    auto commandName = args.CommandName();
 ${componentShape.commands
   .map(command => {
     const commaSeparatedCommandArgs = command.typeAnnotation.params
@@ -466,7 +466,7 @@ ${
           } ${param.name};`;
         })
         .join('\n')}
-      winrt::Microsoft::ReactNative::ReadArgs(args, ${commaSeparatedCommandArgs});`
+      winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), ${commaSeparatedCommandArgs});`
     : ''
 }
       userData->Handle${capitalizeFirstLetter(
@@ -481,10 +481,9 @@ ${
 
         const registerCommandHandler = hasAnyCommands
           ? `        builder.SetCustomCommandHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
-                                          winrt::hstring commandName,
-                                          const winrt::Microsoft::ReactNative::IJSValueReader &args) noexcept {
+                                          const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
           auto userData = view.UserData().as<TUserData>();
-          userData->HandleCommand(view, commandName, args);
+          userData->HandleCommand(view, args);
         });`
           : '';
 

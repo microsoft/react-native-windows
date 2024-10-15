@@ -2,12 +2,15 @@
 // Licensed under the MIT License.
 
 #include "pch.h"
+#include "HandleCommandArgs.g.cpp"
+#include "HandleCommandArgs.g.h"
 #include <AsynchronousEventBeat.h>
 #include <DynamicReader.h>
 #include <DynamicWriter.h>
 #include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionUIService.h>
 #include <Fabric/Composition/CompositionViewComponentView.h>
+#include <Fabric/Composition/ReactNativeIsland.h>
 #include <Fabric/Composition/RootComponentView.h>
 #include <Fabric/FabricUIManagerModule.h>
 #include <Fabric/ReactNativeConfigProperties.h>
@@ -160,7 +163,7 @@ void FabricUIManager::startSurface(
 
   facebook::react::LayoutContext layoutContext;
   layoutContext.pointScaleFactor = rootView.ScaleFactor();
-  layoutContext.fontSizeMultiplier = rootView.ScaleFactor();
+  layoutContext.fontSizeMultiplier = rootView.FontSizeMultiplier();
 
   m_surfaceManager->startSurface(
       surfaceId,
@@ -384,6 +387,28 @@ void FabricUIManager::schedulerDidRequestPreliminaryViewAllocation(
   */
 }
 
+struct HandleCommandArgs : public winrt::Microsoft::ReactNative::implementation::HandleCommandArgsT<HandleCommandArgs> {
+  HandleCommandArgs(winrt::hstring commandName, folly::dynamic const &arg) : m_commandName(commandName), m_args(arg) {}
+
+  winrt::hstring CommandName() const noexcept {
+    return m_commandName;
+  }
+  winrt::Microsoft::ReactNative::IJSValueReader CommandArgs() const noexcept {
+    return winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(m_args);
+  }
+  bool Handled() const noexcept {
+    return m_handled;
+  }
+  void Handled(bool value) noexcept {
+    m_handled = value;
+  }
+
+ private:
+  folly::dynamic const &m_args;
+  const winrt::hstring m_commandName;
+  bool m_handled{false};
+};
+
 void FabricUIManager::schedulerDidDispatchCommand(
     facebook::react::ShadowView const &shadowView,
     std::string const &commandName,
@@ -391,7 +416,7 @@ void FabricUIManager::schedulerDidDispatchCommand(
   if (m_context.UIDispatcher().HasThreadAccess()) {
     auto descriptor = m_registry.componentViewDescriptorWithTag(shadowView.tag);
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(descriptor.view)
-        ->HandleCommand(winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(arg));
+        ->HandleCommand(winrt::make<HandleCommandArgs>(winrt::to_hstring(commandName), arg));
   } else {
     m_context.UIDispatcher().Post(
         [wkThis = weak_from_this(), commandName, tag = shadowView.tag, args = folly::dynamic(arg)]() {
@@ -399,7 +424,7 @@ void FabricUIManager::schedulerDidDispatchCommand(
             auto view = pThis->m_registry.findComponentViewWithTag(tag);
             if (view) {
               winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->HandleCommand(
-                  winrt::to_hstring(commandName), winrt::make<winrt::Microsoft::ReactNative::DynamicReader>(args));
+                  winrt::make<HandleCommandArgs>(winrt::to_hstring(commandName), args));
             }
           }
         });

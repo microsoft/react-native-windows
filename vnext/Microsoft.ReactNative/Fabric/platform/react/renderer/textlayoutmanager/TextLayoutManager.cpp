@@ -43,7 +43,10 @@ void TextLayoutManager::GetTextLayout(
           static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
       style,
       DWRITE_FONT_STRETCH_NORMAL,
-      outerFragment.textAttributes.fontSize,
+      (outerFragment.textAttributes.allowFontScaling.value_or(true) &&
+       !std::isnan(outerFragment.textAttributes.fontSizeMultiplier))
+          ? (outerFragment.textAttributes.fontSizeMultiplier * outerFragment.textAttributes.fontSize)
+          : outerFragment.textAttributes.fontSize,
       L"",
       spTextFormat.put()));
 
@@ -118,7 +121,11 @@ void TextLayoutManager::GetTextLayout(
             attributes.fontWeight.value_or(static_cast<facebook::react::FontWeight>(DWRITE_FONT_WEIGHT_REGULAR))),
         range));
     winrt::check_hresult(spTextLayout->SetFontStyle(fragmentStyle, range));
-    winrt::check_hresult(spTextLayout->SetFontSize(attributes.fontSize, range));
+    winrt::check_hresult(spTextLayout->SetFontSize(
+        (attributes.allowFontScaling.value_or(true) && !std::isnan(attributes.fontSizeMultiplier))
+            ? (attributes.fontSizeMultiplier * attributes.fontSize)
+            : attributes.fontSize,
+        range));
 
     if (!isnan(attributes.letterSpacing)) {
       winrt::check_hresult(

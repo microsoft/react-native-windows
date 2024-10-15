@@ -2056,7 +2056,7 @@ exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
           "Brush Type": "ColorBrush",
           "Color": "rgba(0, 0, 0, 228)",
         },
-        "Offset": "78, 128, 0",
+        "Offset": "78, 0, 0",
         "Opacity": 0,
         "Size": "1, 19",
         "Visual Type": "SpriteVisual",
