@@ -53,21 +53,21 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
     },
     "Comment": "apis-tab",
     "Offset": "0, 0, 0",
-    "Size": "499, 65",
+    "Size": "333, 65",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "499, 65",
+        "Size": "333, 65",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "499, 65",
+            "Size": "333, 65",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
-                "Offset": "235, 13, 0",
+                "Offset": "151, 13, 0",
                 "Size": "30, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
@@ -84,7 +84,7 @@ exports[`Home UIA Tree Dump APIs Tab 1`] = `
                 ],
               },
               {
-                "Offset": "236, 33, 0",
+                "Offset": "153, 33, 0",
                 "Size": "27, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
@@ -1146,17 +1146,17 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
     },
     "Comment": "components-tab",
     "Offset": "0, 0, 0",
-    "Size": "499, 65",
+    "Size": "333, 65",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "499, 65",
+        "Size": "333, 65",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "499, 65",
+            "Size": "333, 65",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -1200,7 +1200,7 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
                 "Visual Type": "SpriteVisual",
               },
               {
-                "Offset": "240, 14, 0",
+                "Offset": "156, 14, 0",
                 "Size": "20, 20",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
@@ -1217,13 +1217,13 @@ exports[`Home UIA Tree Dump Components Tab 1`] = `
                 ],
               },
               {
-                "Offset": "209, 34, 0",
-                "Size": "81, 19",
+                "Offset": "126, 34, 0",
+                "Size": "80, 19",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
                     "Offset": "0, 0, 0",
-                    "Size": "81, 19",
+                    "Size": "80, 19",
                     "Visual Type": "SpriteVisual",
                   },
                   {
