@@ -9124,7 +9124,7 @@ metro-runtime@0.80.9:
   dependencies:
     "@babel/runtime" "^7.0.0"
 
-metro-runtime@0.81.0-alpha.2, metro-runtime@^0.81.0-alpha.0:
+metro-runtime@0.81.0-alpha.2:
   version "0.81.0-alpha.2"
   resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.81.0-alpha.2.tgz#216f02d5473799379403db71a0a6ec1b791197f6"
   integrity sha512-uP+7ejq7R+WOV39TucJsgeRalA8jlw5l3JtID+Iu8zZvzJT0WO4VlINAFVS5n6Xk7tK+dkqGH1oF0lst1X+qNw==
@@ -9136,6 +9136,14 @@ metro-runtime@^0.80.10, metro-runtime@^0.80.3:
   version "0.80.12"
   resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.80.12.tgz#a68af3a2a013f5372d3b8cee234fdd467455550b"
   integrity sha512-LIx7+92p5rpI0i6iB4S4GBvvLxStNt6fF0oPMaUd1Weku7jZdfkCZzmrtDD9CSQ6EPb0T9NUZoyXIxlBa3wOCw==
+  dependencies:
+    "@babel/runtime" "^7.25.0"
+    flow-enums-runtime "^0.0.6"
+
+metro-runtime@^0.81.0-alpha.0:
+  version "0.81.0"
+  resolved "https://registry.yarnpkg.com/metro-runtime/-/metro-runtime-0.81.0.tgz#63af9b3fec15d1f307d89ef4881f5ba2c592291e"
+  integrity sha512-6oYB5HOt37RuGz2eV4A6yhcl+PUTwJYLDlY9vhT+aVjbUWI6MdBCf69vc4f5K5Vpt+yOkjy+2LDwLS0ykWFwYw==
   dependencies:
     "@babel/runtime" "^7.25.0"
     flow-enums-runtime "^0.0.6"
