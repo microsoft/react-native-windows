@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 12 Oct 2024 05:22:56 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 15 Oct 2024 05:26:25 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.876
+
+Tue, 15 Oct 2024 05:26:25 GMT
+
+### Changes
+
+- Support AccessibilityState: Busy (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.875
 
