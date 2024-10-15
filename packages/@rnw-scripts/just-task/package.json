@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@octokit/rest": "^18.5.3",
+    "@octokit/auth-unauthenticated": "^6.1.0",
     "@rnw-scripts/jest-e2e-config": "1.4.11",
     "@rnw-scripts/jest-unittest-config": "1.5.11",
     "depcheck": "^1.4.1",

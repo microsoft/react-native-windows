@@ -56,10 +56,12 @@ async function downloadFilesFromReactNative(
     fs.mkdirSync(destPath, {recursive: true});
   }
 
+  const {createUnauthenticatedAuth} = (await import('@octokit/auth-unauthenticated'));
+
   const octokit = new Octokit({
     ...(process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN
       ? {auth: process.env.PLATFORM_OVERRIDE_GITHUB_TOKEN}
-      : {}), // Used to make sure CI doesn't get rate-throttled
+      : {authStrategy: (args) => { args.reason ='public CI builds are restricted from using auth tokens'; return createUnauthenticatedAuth(args)}}),
     userAgent: 'RNW Just Task Script',
   });
 
