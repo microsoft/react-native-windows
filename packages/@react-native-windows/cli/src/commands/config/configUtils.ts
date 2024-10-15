@@ -118,6 +118,10 @@ export function isRnwDependencyProject(filePath: string): boolean {
       importProjectExists(
         projectContents,
         'Microsoft.ReactNative.Composition.CppLib.targets',
+      ) ||
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.CppLib.targets',
       )
     );
   }

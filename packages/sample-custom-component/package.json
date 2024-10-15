@@ -22,7 +22,7 @@
     "@types/react": "^18.2.6",
     "react": "^19.0.0-rc-fb9a90fa48-20240614",
     "react-native": "0.77.0-nightly-20240921-1747f57c6",
-    "react-native-windows": "^0.0.0-canary.873"
+    "react-native-windows": "^0.0.0-canary.876"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
@@ -30,7 +30,7 @@
     "@babel/preset-env": "^7.25.3",
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
-    "@react-native-community/cli": "14.0.0-alpha.11",
+    "@react-native-community/cli": "15.0.0-alpha.2",
     "@react-native/metro-config": "0.76.0-nightly-20240901-305b4357e",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/babel-react-native-config": "0.0.0",

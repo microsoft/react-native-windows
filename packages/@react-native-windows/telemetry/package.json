@@ -19,9 +19,10 @@
   },
   "dependencies": {
     "@azure/core-auth": "1.5.0",
+    "@microsoft/1ds-core-js": "^4.3.0",
+    "@microsoft/1ds-post-js": "^4.3.0",
     "@react-native-windows/fs": "0.0.0-canary.58",
     "@xmldom/xmldom": "^0.7.7",
-    "applicationinsights": "2.9.1",
     "ci-info": "^3.2.0",
     "envinfo": "^7.8.1",
     "lodash": "^4.17.21",

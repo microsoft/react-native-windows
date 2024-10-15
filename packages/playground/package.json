@@ -17,12 +17,12 @@
     "@typescript-eslint/parser": "^5.21.0",
     "react": "^19.0.0-rc-fb9a90fa48-20240614",
     "react-native": "0.77.0-nightly-20240921-1747f57c6",
-    "react-native-windows": "^0.0.0-canary.873"
+    "react-native-windows": "^0.0.0-canary.876"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/runtime": "^7.20.0",
-    "@react-native-community/cli": "14.0.0-alpha.11",
+    "@react-native-community/cli": "15.0.0-alpha.2",
     "@react-native/metro-config": "0.76.0-nightly-20240701-9f6cb21ed",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.29",

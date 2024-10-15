@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/cli",
-  "version": "0.0.0-canary.239",
+  "version": "0.0.0-canary.240",
   "license": "MIT",
   "main": "lib-commonjs/index.js",
   "repository": {
@@ -39,8 +39,8 @@
     "xpath": "^0.0.27"
   },
   "devDependencies": {
-    "@react-native-community/cli-doctor": "14.0.0-alpha.11",
-    "@react-native-community/cli-types": "14.0.0-alpha.11",
+    "@react-native-community/cli-doctor": "15.0.0-alpha.2",
+    "@react-native-community/cli-types": "15.0.0-alpha.2",
     "@rnw-scripts/eslint-config": "1.2.29",
     "@rnw-scripts/jest-unittest-config": "1.5.11",
     "@rnw-scripts/just-task": "2.3.46",

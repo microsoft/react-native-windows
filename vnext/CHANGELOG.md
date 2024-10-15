@@ -1,8 +1,36 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 08 Oct 2024 19:23:40 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 15 Oct 2024 05:26:25 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.876
+
+Tue, 15 Oct 2024 05:26:25 GMT
+
+### Changes
+
+- Support AccessibilityState: Busy (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.875
+
+Sat, 12 Oct 2024 05:22:56 GMT
+
+### Changes
+
+- Fix RootComponentView leak (53619745+rnbot@users.noreply.github.com)
+- [Fabric] implement view tooltip property (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.874
+
+Thu, 10 Oct 2024 18:14:31 GMT
+
+### Changes
+
+- Create hybrid CppLib props/targets (jthysell@microsoft.com)
+- Update to @react-native-community/cli@15.0.0-alpha.2 (jthysell@microsoft.com)
+- Implement IExpandCollapseProvider (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.240
 
 ## 0.0.0-canary.873
 

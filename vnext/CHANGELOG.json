@@ -2,6 +2,75 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 15 Oct 2024 05:26:25 GMT",
+      "version": "0.0.0-canary.876",
+      "tag": "react-native-windows_v0.0.0-canary.876",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "37e15f19e90697f8756068713b79df5bf0cdf474",
+            "comment": "Support AccessibilityState: Busy"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Oct 2024 05:22:56 GMT",
+      "version": "0.0.0-canary.875",
+      "tag": "react-native-windows_v0.0.0-canary.875",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "10f9674e959fbb16b79cf2fe1773e12a3b4743b6",
+            "comment": "Fix RootComponentView leak"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "efcfebfb6485ed5a3f7ba5de175d0ca1af7965ce",
+            "comment": "[Fabric] implement view tooltip property"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 10 Oct 2024 18:14:31 GMT",
+      "version": "0.0.0-canary.874",
+      "tag": "react-native-windows_v0.0.0-canary.874",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d1f46f7a19b38d8ea60fcb697dae154849ec7520",
+            "comment": "Create hybrid CppLib props/targets"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "61bde52b38ce5f74aa09d68974dcda306023f378",
+            "comment": "Update to @react-native-community/cli@15.0.0-alpha.2"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bba47ee2319246d6f4cfe947418dc589a2e423a8",
+            "comment": "Implement IExpandCollapseProvider"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.240",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Oct 2024 19:23:40 GMT",
       "version": "0.0.0-canary.873",
       "tag": "react-native-windows_v0.0.0-canary.873",
