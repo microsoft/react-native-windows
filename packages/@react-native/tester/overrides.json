@@ -572,7 +572,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "cf30.76.0-rc.59e226a38d9c497932f13f4e9aa",
+      "baseHash": "cf3ad96ccfe4689e226a38d9c497932f13f4e9aa",
       "issue": 13228
     }
   ]
