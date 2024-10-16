@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Use a legacy native module binding that always returns null in bridgeless mode",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",

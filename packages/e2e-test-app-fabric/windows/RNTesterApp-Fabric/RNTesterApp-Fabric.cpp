@@ -308,6 +308,23 @@ void InsertToggleStateValueIfNotDefault(
   }
 }
 
+void InsertExpandCollapseStateValueIfNotDefault(
+    const winrt::Windows::Data::Json::JsonObject &obj,
+    winrt::hstring name,
+    ExpandCollapseState value,
+    ExpandCollapseState defaultValue = ExpandCollapseState::ExpandCollapseState_Collapsed) {
+  if (value != defaultValue) {
+    switch (value) {
+      case 0:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Collapsed"));
+        break;
+      case 1:
+        obj.Insert(name, winrt::Windows::Data::Json::JsonValue::CreateStringValue(L"Expanded"));
+        break;
+    }
+  }
+}
+
 winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::JsonValue payload) {
   winrt::Windows::Data::Json::JsonObject result;
   winrt::Windows::Data::Json::JsonArray jsonErrors;
@@ -333,6 +350,7 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
   BOOL isReadOnly;
   ToggleState toggleState;
   IValueProvider *valuePattern;
+  ExpandCollapseState expandCollapseState;
   HRESULT hr;
 
   // Dump IValueProvider Information
@@ -359,6 +377,18 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
     }
     togglePattern->Release();
   }
+
+  // Dump IExpandCollapseProvider Information
+  IExpandCollapseProvider *expandCollapsePattern;
+  hr = pTarget->GetCurrentPattern(UIA_ExpandCollapsePatternId, reinterpret_cast<IUnknown **>(&expandCollapsePattern));
+  if (SUCCEEDED(hr) && expandCollapsePattern) {
+    hr = expandCollapsePattern->get_ExpandCollapseState(&expandCollapseState);
+    if (SUCCEEDED(hr)) {
+      InsertExpandCollapseStateValueIfNotDefault(
+          result, L"ExpandCollapsePattern.ExpandCollapseState", expandCollapseState);
+    }
+    expandCollapsePattern->Release();
+  }
 }
 
 winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
@@ -375,6 +405,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   int positionInSet = 0;
   int sizeOfSet = 0;
   LiveSetting liveSetting = LiveSetting::Off;
+  BSTR itemStatus;
 
   pTarget->get_CurrentAutomationId(&automationId);
   pTarget->get_CurrentControlType(&controlType);
@@ -383,6 +414,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   pTarget->get_CurrentIsKeyboardFocusable(&isKeyboardFocusable);
   pTarget->get_CurrentLocalizedControlType(&localizedControlType);
   pTarget->get_CurrentName(&name);
+  pTarget->get_CurrentItemStatus(&itemStatus);
   IUIAutomationElement4 *pTarget4;
   HRESULT hr = pTarget->QueryInterface(__uuidof(IUIAutomationElement4), reinterpret_cast<void **>(&pTarget4));
   if (SUCCEEDED(hr) && pTarget4) {
@@ -402,6 +434,7 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   InsertIntValueIfNotDefault(result, L"PositionInSet", positionInSet);
   InsertIntValueIfNotDefault(result, L"SizeofSet", sizeOfSet);
   InsertLiveSettingValueIfNotDefault(result, L"LiveSetting", liveSetting);
+  InsertStringValueIfNotEmpty(result, L"ItemStatus", itemStatus);
   DumpUIAPatternInfo(pTarget, result);
 
   IUIAutomationElement *pChild;
@@ -417,6 +450,11 @@ winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
   if (children.Size() > 0) {
     result.Insert(L"__Children", children);
   }
+  ::SysFreeString(automationId);
+  ::SysFreeString(helpText);
+  ::SysFreeString(localizedControlType);
+  ::SysFreeString(name);
+  ::SysFreeString(itemStatus);
   return result;
 }
 

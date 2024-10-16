@@ -104,6 +104,7 @@
         comsuppw.lib;
         Shlwapi.lib;
         Version.lib;
+        Dwmapi.lib;
         WindowsApp_downlevel.lib;
         %(AdditionalDependencies)
       </AdditionalDependencies>
