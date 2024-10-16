@@ -15,6 +15,7 @@ export default async function runCommand(
   command: string,
   opts: ExecOptions = {},
 ): Promise<{stdout: string; stderr: string}> {
+  opts.maxBuffer = 10 * 1024 * 1024; // 10 MB
   if (!opts.cwd) {
     opts.cwd = await findRepoRoot();
   }
