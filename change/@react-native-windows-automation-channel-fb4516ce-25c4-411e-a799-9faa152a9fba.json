@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "integrate rn nightly 0.77.0-nightly-20241001-223e98cc4",
-  "packageName": "@react-native-windows/automation-channel",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}
