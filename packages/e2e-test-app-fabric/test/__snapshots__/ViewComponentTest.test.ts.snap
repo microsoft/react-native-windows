@@ -1094,10 +1094,15 @@ exports[`View Tests Views can have customized accessibility 1`] = `
   "Automation Tree": {
     "AutomationId": "accessibility",
     "ControlType": 50000,
+    "ExpandCollapsePattern.ExpandCollapseState": "Expanded",
     "HelpText": "Accessibility Hint",
     "IsKeyboardFocusable": true,
+    "ItemStatus": "Busy",
+    "LiveSetting": "Polite",
     "LocalizedControlType": "button",
     "Name": "A View with accessibility values",
+    "PositionInSet": 1,
+    "SizeofSet": 1,
     "__Children": [
       {
         "AutomationId": "",
@@ -6021,12 +6026,24 @@ exports[`View Tests Views can have tooltips 1`] = `
         "_Props": {},
       },
       {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
         "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
       },
       {
-        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
         "_Props": {},
+        "__Children": [
+          {
+            "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+            "_Props": {},
+          },
+        ],
       },
     ],
   },
@@ -6062,6 +6079,25 @@ exports[`View Tests Views can have tooltips 1`] = `
             "Offset": "0, 0, 0",
             "Size": "916, 15",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 15",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 15",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
           },
           {
             "Offset": "0, 0, 0",
@@ -6072,13 +6108,32 @@ exports[`View Tests Views can have tooltips 1`] = `
       },
       {
         "Offset": "0, 29, 0",
-        "Size": "916, 16",
+        "Size": "916, 14",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "916, 16",
+            "Size": "916, 14",
             "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "916, 16",
+                "Visual Type": "SpriteVisual",
+                "__Children": [
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "916, 16",
+                    "Visual Type": "SpriteVisual",
+                  },
+                  {
+                    "Offset": "0, 0, 0",
+                    "Size": "0, 0",
+                    "Visual Type": "SpriteVisual",
+                  },
+                ],
+              },
+            ],
           },
           {
             "Offset": "0, 0, 0",

@@ -23,6 +23,7 @@
 #include "CompositionHelpers.h"
 #include "RootComponentView.h"
 #include "Theme.h"
+#include "TooltipService.h"
 #include "UiaHelpers.h"
 #include "d2d1helper.h"
 
@@ -41,6 +42,13 @@ ComponentView::ComponentView(
                                                     // CreateContainerVisual in ICompositionContext
   m_focusVisual = compContext.CreateFocusVisual();
   m_outerVisual.InsertAt(m_focusVisual.InnerVisual(), 0);
+}
+
+ComponentView::~ComponentView() {
+  if (m_tooltipTracked) {
+    TooltipService::GetCurrent(m_reactContext.Properties())->StopTracking(*this);
+    m_tooltipTracked = false;
+  }
 }
 
 facebook::react::Tag ComponentView::Tag() const noexcept {
@@ -128,6 +136,16 @@ void ComponentView::updateProps(
   }
   if ((m_flags & ComponentViewFeatures::ShadowProps) == ComponentViewFeatures::ShadowProps) {
     updateShadowProps(oldViewProps, newViewProps);
+  }
+
+  if (oldViewProps.tooltip != newViewProps.tooltip) {
+    if (!m_tooltipTracked && newViewProps.tooltip) {
+      TooltipService::GetCurrent(m_reactContext.Properties())->StartTracking(*this);
+      m_tooltipTracked = true;
+    } else if (m_tooltipTracked && !newViewProps.tooltip) {
+      TooltipService::GetCurrent(m_reactContext.Properties())->StopTracking(*this);
+      m_tooltipTracked = false;
+    }
   }
 
   base_type::updateProps(props, oldProps);
@@ -1290,6 +1308,12 @@ void ComponentView::updateAccessibilityProps(
       UIA_IsEnabledPropertyId,
       !(oldViewProps.accessibilityState && oldViewProps.accessibilityState->disabled),
       !(newViewProps.accessibilityState && newViewProps.accessibilityState->disabled));
+
+  winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
+      m_uiaProvider,
+      UIA_IsEnabledPropertyId,
+      !(oldViewProps.accessibilityState && oldViewProps.accessibilityState->busy),
+      !(newViewProps.accessibilityState && newViewProps.accessibilityState->busy));
 
   winrt::Microsoft::ReactNative::implementation::UpdateUiaProperty(
       m_uiaProvider, UIA_ControlTypePropertyId, oldViewProps.accessibilityRole, newViewProps.accessibilityRole);
