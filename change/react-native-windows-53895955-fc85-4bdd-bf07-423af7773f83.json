@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "[Fabric] Add FocusNavigationDirection and allow overriding of default command handling",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
