@@ -544,6 +544,7 @@ class AccessibilityExample extends React.Component<
 > {
   state: {tap: number} = {
     tap: 0,
+    expanded: true,
   };
 
   render(): React.Node {
@@ -554,10 +555,10 @@ class AccessibilityExample extends React.Component<
         accessibilityRole="button"
         accessibilityValue={{now: this.state.tap}}
         accessibilityActions={[
-          {name: 'cut', label: 'cut'},
-          {name: 'copy', label: 'copy'},
-          {name: 'paste', label: 'paste'},
+          {name: 'expand', label: 'expand'},
+          {name: 'collapse', label: 'collapse'},
         ]}
+        accessibilityState={{expanded: this.state.expanded, busy: true}}
         accessibilityPosInSet={1}
         accessibilitySetSize={1}
         accessibilityLiveRegion='polite'
@@ -566,19 +567,19 @@ class AccessibilityExample extends React.Component<
         focusable
         onAccessibilityAction={event => {
           switch (event.nativeEvent.actionName) {
-            case 'cut':
-              Alert.alert('Alert', 'cut action success');
+            case 'expand':
+              this.setState({expanded: true})
               break;
-            case 'copy':
-              Alert.alert('Alert', 'copy action success');
-              break;
-            case 'paste':
-              Alert.alert('Alert', 'paste action success');
-              break;
+            case 'collapse':
+              this.setState({expanded: false})
           }
         }}
         onAccessibilityTap={() => {
           this.setState({tap: this.state.tap + 1});
+        }}
+        onPress={()=>{
+          this.setState({expanded: !this.state.expanded});
+          console.log('Pressed');
         }}>
         <Text>A View with accessibility values.</Text>
         <Text>Current Number of Accessibility Taps: {this.state.tap}</Text>

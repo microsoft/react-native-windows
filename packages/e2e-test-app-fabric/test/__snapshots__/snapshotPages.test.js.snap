@@ -77745,16 +77745,12 @@ exports[`snapshotAllPages View 22`] = `
   accessibilityActions={
     [
       {
-        "label": "cut",
-        "name": "cut",
+        "label": "expand",
+        "name": "expand",
       },
       {
-        "label": "copy",
-        "name": "copy",
-      },
-      {
-        "label": "paste",
-        "name": "paste",
+        "label": "collapse",
+        "name": "collapse",
       },
     ]
   }
@@ -77764,6 +77760,12 @@ exports[`snapshotAllPages View 22`] = `
   accessibilityPosInSet={1}
   accessibilityRole="button"
   accessibilitySetSize={1}
+  accessibilityState={
+    {
+      "busy": true,
+      "expanded": true,
+    }
+  }
   accessibilityValue={
     {
       "now": 0,
@@ -77773,6 +77775,7 @@ exports[`snapshotAllPages View 22`] = `
   focusable={true}
   onAccessibilityAction={[Function]}
   onAccessibilityTap={[Function]}
+  onPress={[Function]}
   testID="accessibility"
 >
   <Text>
