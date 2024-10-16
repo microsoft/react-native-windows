@@ -67824,6 +67824,8 @@ exports[`snapshotAllPages View 21`] = `
   }
   accessibilityHint="Accessibility Hint"
   accessibilityLabel="A View with accessibility values"
+  accessibilityLiveRegion="polite"
+  accessibilityPosInSet={1}
   accessibilityRole="button"
   accessibilitySetSize={1}
   accessibilityState={
@@ -67832,11 +67834,7 @@ exports[`snapshotAllPages View 21`] = `
       "expanded": true,
     }
   }
-  accessibilityValue={
-    {
-      "now": 0,
-    }
-  }
+  accessibilityValue={0}
   accessible={true}
   focusable={true}
   onAccessibilityAction={[Function]}
