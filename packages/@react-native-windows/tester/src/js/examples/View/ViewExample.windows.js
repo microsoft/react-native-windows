@@ -480,23 +480,23 @@ class AccessibilityExample extends React.Component<
         accessibilityState={{expanded: this.state.expanded, busy: true}}
         accessibilityPosInSet={1}
         accessibilitySetSize={1}
-        accessibilityLiveRegion='polite'
+        accessibilityLiveRegion="polite"
         testID="accessibility"
         accessible
         focusable
         onAccessibilityAction={event => {
           switch (event.nativeEvent.actionName) {
             case 'expand':
-              this.setState({expanded: true})
+              this.setState({expanded: true});
               break;
             case 'collapse':
-              this.setState({expanded: false})
+              this.setState({expanded: false});
           }
         }}
         onAccessibilityTap={() => {
           this.setState({tap: this.state.tap + 1});
         }}
-        onPress={()=>{
+        onPress={() => {
           this.setState({expanded: !this.state.expanded});
           console.log('Pressed');
         }}>
