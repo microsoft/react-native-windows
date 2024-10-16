@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 16 Oct 2024 05:20:55 GMT",
+      "version": "0.0.0-canary.877",
+      "tag": "react-native-windows_v0.0.0-canary.877",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e265163b8cab921b5643d552775403b45c01bf6f",
+            "comment": "integrate rn nightly 0.77.0-nightly-20241001-223e98cc4"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.241",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.107",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 15 Oct 2024 05:26:25 GMT",
+      "version": "0.0.0-canary.876",
+      "tag": "react-native-windows_v0.0.0-canary.876",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "37e15f19e90697f8756068713b79df5bf0cdf474",
+            "comment": "Support AccessibilityState: Busy"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Oct 2024 05:22:56 GMT",
+      "version": "0.0.0-canary.875",
+      "tag": "react-native-windows_v0.0.0-canary.875",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "10f9674e959fbb16b79cf2fe1773e12a3b4743b6",
+            "comment": "Fix RootComponentView leak"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "efcfebfb6485ed5a3f7ba5de175d0ca1af7965ce",
+            "comment": "[Fabric] implement view tooltip property"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 10 Oct 2024 18:14:31 GMT",
       "version": "0.0.0-canary.874",
       "tag": "react-native-windows_v0.0.0-canary.874",

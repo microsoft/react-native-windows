@@ -1,8 +1,35 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 10 Oct 2024 18:14:31 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 16 Oct 2024 05:20:55 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.877
+
+Wed, 16 Oct 2024 05:20:55 GMT
+
+### Changes
+
+- integrate rn nightly 0.77.0-nightly-20241001-223e98cc4 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.241
+- Bump @react-native-windows/codegen to v0.0.0-canary.107
+
+## 0.0.0-canary.876
+
+Tue, 15 Oct 2024 05:26:25 GMT
+
+### Changes
+
+- Support AccessibilityState: Busy (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.875
+
+Sat, 12 Oct 2024 05:22:56 GMT
+
+### Changes
+
+- Fix RootComponentView leak (53619745+rnbot@users.noreply.github.com)
+- [Fabric] implement view tooltip property (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.874
 

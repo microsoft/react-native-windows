@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Sat, 12 Oct 2024 05:22:56 GMT",
+      "version": "0.0.0-canary.110",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.110",
+      "comments": {
+        "none": [
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "0b6877e9f9cdc888c4a43425952e8e627a4b2d94",
+            "comment": "Enables telemetry by migrating from AppInsights to 1DS"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Oct 2024 19:54:25 GMT",
       "version": "0.0.0-canary.110",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.110",
