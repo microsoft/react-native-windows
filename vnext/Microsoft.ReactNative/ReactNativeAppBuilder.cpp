@@ -9,6 +9,7 @@
 
 #include "winrt/Microsoft.ReactNative.h"
 #include "winrt/Microsoft.UI.Composition.h"
+#include "winrt/Microsoft.UI.Dispatching.h"
 #include "winrt/Microsoft.UI.Interop.h"
 #include "winrt/Microsoft.UI.Windowing.h"
 
