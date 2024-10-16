@@ -39,7 +39,8 @@ opt  - Item is optional. If an override file exists, it MAY provide it. If no ov
     projectLang: string, // (auto) Language of the project, cpp or cs, determined from projectFile
     projectGuid: string, // (auto) Project identifier, determined from projectFile
   },
-  experimentalFeatures: Record<String, string> // (auto) Properties extracted from ExperimentalFeatures.props
+  experimentalFeatures: Record<string, string>, // (auto) Properties extracted from ExperimentalFeatures.props
+  rnwConfig: Record<string, any>, // (auto) Object extracted from 'react-native-windows' property in package.json
 }
 
 Example react-native.config.js for a 'MyApp':
@@ -73,6 +74,7 @@ export interface WindowsProjectConfig {
   project: Project;
   useWinUI3?: boolean;
   experimentalFeatures?: Record<string, string>;
+  rnwConfig?: Record<string, any>;
 }
 
 type DeepPartial<T> = {[P in keyof T]?: DeepPartial<T[P]>};
@@ -234,6 +236,9 @@ export function projectConfigWindows(
       result.experimentalFeatures = result.experimentalFeatures ?? {};
       result.experimentalFeatures.UseExperimentalNuget = useExperimentalNuget;
     }
+
+    result.rnwConfig = configUtils.getRnwConfig(folder,
+      projectFile);
   }
 
   return result as WindowsProjectConfig;
