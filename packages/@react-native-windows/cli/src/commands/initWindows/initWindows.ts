@@ -144,104 +144,105 @@ export class InitWindows {
 
     if (this.options.list) {
       this.printTemplateList();
+      return;
     }
-    else {
-      this.options.template ??= this.getDefaultTemplateName();
 
-      spinner.info(`Using template '${this.options.template}'...`);
-      if (!this.templates.has(this.options.template.replace(/[\\]/g, '/'))) {
-        throw new CodedError(
-          'InvalidTemplateName',
-          `Unable to find template '${this.options.template}'.`,
+    this.options.template ??= this.getDefaultTemplateName();
+
+    spinner.info(`Using template '${this.options.template}'...`);
+    if (!this.templates.has(this.options.template.replace(/[\\]/g, '/'))) {
+      throw new CodedError(
+        'InvalidTemplateName',
+        `Unable to find template '${this.options.template}'.`,
+      );
+    }
+    const templateConfig = this.templates.get(this.options.template)!;
+
+    // Check if there's a passed-in project name and if it's valid
+    if (this.options.name && !nameHelpers.isValidProjectName(this.options.name)) {
+      throw new CodedError(
+        'InvalidProjectName',
+        `The specified name '${this.options.name}' is not a valid identifier`,
+      );
+    }
+
+    // If no project name is provided, calculate the name and clean if necessary
+    if (!this.options.name) {
+      const projectName = this.getReactNativeProjectName(this.config.root);
+      this.options.name = nameHelpers.isValidProjectName(projectName)
+        ? projectName
+        : nameHelpers.cleanName(projectName);
+    }
+
+    // Final check that the project name is valid
+    if (!nameHelpers.isValidProjectName(this.options.name)) {
+      throw new CodedError(
+        'InvalidProjectName',
+        `The name '${this.options.name}' is not a valid identifier`,
+      );
+    }
+
+    // Check if there's a passed-in project namespace and if it's valid
+    if (this.options.namespace && !nameHelpers.isValidProjectNamespace(this.options.namespace)) {
+      throw new CodedError(
+        'InvalidProjectNamespace',
+        `The specified namespace '${this.options.namespace}' is not a valid identifier`,
+      );
+    }
+
+    // If no project namespace is provided, use the project name and clean if necessary
+    if (!this.options.namespace) {
+      const namespace = this.options.name;
+      this.options.namespace = nameHelpers.isValidProjectNamespace(namespace)
+        ? namespace
+        : nameHelpers.cleanNamespace(namespace);
+    }
+
+    // Final check that the project namespace is valid
+    if (!nameHelpers.isValidProjectNamespace(this.options.namespace)) {
+      throw new CodedError(
+        'InvalidProjectNamespace',
+        `The namespace '${this.options.namespace}' is not a valid identifier`,
+      );
+    }
+
+    if (templateConfig.preInstall) {
+      spinner.info(`Running ${this.options.template} preInstall()...`);
+      await templateConfig.preInstall(this.config, this.options);
+    }
+
+    // Get template files to copy and copy if available
+    if (templateConfig.getFileMappings) {
+      const fileMappings = await templateConfig.getFileMappings(
+        this.config,
+        this.options,
+      );
+
+      for (const fileMapping of fileMappings) {
+        const targetDir = path.join(
+          this.config.root,
+          path.dirname(fileMapping.to),
         );
-      }
-      const templateConfig = this.templates.get(this.options.template)!;
 
-      // Check if there's a passed-in project name and if it's valid
-      if (this.options.name && !nameHelpers.isValidProjectName(this.options.name)) {
-        throw new CodedError(
-          'InvalidProjectName',
-          `The specified name '${this.options.name}' is not a valid identifier`,
-        );
-      }
-
-      // If no project name is provided, calculate the name and clean if necessary
-      if (!this.options.name) {
-        const projectName = this.getReactNativeProjectName(this.config.root);
-        this.options.name = nameHelpers.isValidProjectName(projectName)
-          ? projectName
-          : nameHelpers.cleanName(projectName);
-      }
-
-      // Final check that the project name is valid
-      if (!nameHelpers.isValidProjectName(this.options.name)) {
-        throw new CodedError(
-          'InvalidProjectName',
-          `The name '${this.options.name}' is not a valid identifier`,
-        );
-      }
-
-      // Check if there's a passed-in project namespace and if it's valid
-      if (this.options.namespace && !nameHelpers.isValidProjectNamespace(this.options.namespace)) {
-        throw new CodedError(
-          'InvalidProjectNamespace',
-          `The specified namespace '${this.options.namespace}' is not a valid identifier`,
-        );
-      }
-
-      // If no project namespace is provided, use the project name and clean if necessary
-      if (!this.options.namespace) {
-        const namespace = this.options.name;
-        this.options.namespace = nameHelpers.isValidProjectNamespace(namespace)
-          ? namespace
-          : nameHelpers.cleanNamespace(namespace);
-      }
-
-      // Final check that the project namespace is valid
-      if (!nameHelpers.isValidProjectNamespace(this.options.namespace)) {
-        throw new CodedError(
-          'InvalidProjectNamespace',
-          `The namespace '${this.options.namespace}' is not a valid identifier`,
-        );
-      }
-
-      if (templateConfig.preInstall) {
-        spinner.info(`Running ${this.options.template} preInstall()...`);
-        await templateConfig.preInstall(this.config, this.options);
-      }
-
-      // Get template files to copy and copy if available
-      if (templateConfig.getFileMappings) {
-        const fileMappings = await templateConfig.getFileMappings(
-          this.config,
-          this.options,
-        );
-
-        for (const fileMapping of fileMappings) {
-          const targetDir = path.join(
-            this.config.root,
-            path.dirname(fileMapping.to),
-          );
-
-          if (!(await fs.exists(targetDir))) {
-            await fs.mkdir(targetDir, {recursive: true});
-          }
-
-          await copyAndReplaceWithChangedCallback(
-            fileMapping.from,
-            this.config.root,
-            fileMapping.to,
-            fileMapping.replacements,
-            this.options.overwrite,
-          );
+        if (!(await fs.exists(targetDir))) {
+          await fs.mkdir(targetDir, {recursive: true});
         }
-      }
 
-      if (templateConfig.postInstall) {
-        spinner.info(`Running ${this.options.template} postInstall()...`);
-        await templateConfig.postInstall(this.config, this.options);
+        await copyAndReplaceWithChangedCallback(
+          fileMapping.from,
+          this.config.root,
+          fileMapping.to,
+          fileMapping.replacements,
+          this.options.overwrite,
+        );
       }
     }
+
+    if (templateConfig.postInstall) {
+      spinner.info(`Running ${this.options.template} postInstall()...`);
+      await templateConfig.postInstall(this.config, this.options);
+    }
+
     spinner.succeed();
   }
 }
