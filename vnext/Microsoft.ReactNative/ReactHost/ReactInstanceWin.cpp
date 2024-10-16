@@ -400,9 +400,12 @@ void ReactInstanceWin::LoadModules(
   }
 #endif
 
-  registerTurboModule(
-      L"SampleTurboModule",
-      winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SampleTurboModule>());
+  if (!m_options.UseWebDebugger()) {
+    turboModulesProvider->AddModuleProvider(
+        L"SampleTurboModule",
+        winrt::Microsoft::ReactNative::MakeTurboModuleProvider<::Microsoft::ReactNative::SampleTurboModule>(),
+        false);
+  }
 
   if (devSettings->useTurboModulesOnly) {
     ::Microsoft::ReactNative::ExceptionsManager::SetRedBoxHander(
@@ -680,8 +683,16 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                 return turboModuleManager->getModule(name);
               };
 
+              // Use a legacy native module binding that always returns null
+              // This means that calls to NativeModules.XXX will always return null, rather than crashing on access
+              auto legacyNativeModuleBinding =
+                  [](const std::string & /*name*/) -> std::shared_ptr<facebook::react::TurboModule> { return nullptr; };
+
               facebook::react::TurboModuleBinding::install(
-                  runtime, std::function(binding), nullptr, m_options.TurboModuleProvider->LongLivedObjectCollection());
+                  runtime,
+                  std::function(binding),
+                  std::function(legacyNativeModuleBinding),
+                  m_options.TurboModuleProvider->LongLivedObjectCollection());
 
               auto componentDescriptorRegistry =
                   Microsoft::ReactNative::WindowsComponentDescriptorRegistry::FromProperties(
