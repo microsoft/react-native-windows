@@ -42,10 +42,10 @@
     "beachball": "^2.20.0",
     "fast-glob": "^3.2.11",
     "husky": "^4.2.5",
-    "react-native-platform-override": "*",
-    "unbroken": "1.0.27",
     "lage": "^2.7.1",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "react-native-platform-override": "*",
+    "unbroken": "1.0.27"
   },
   "resolutions": {
     "convert-source-map": "^2.0.0",
