@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Mon, 07 Oct 2024 19:54:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 16 Oct 2024 05:20:54 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.107
+
+Wed, 16 Oct 2024 05:20:54 GMT
+
+### Changes
+
+- 0.77.0-nightly-20241001-223e98cc4 (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.106
 

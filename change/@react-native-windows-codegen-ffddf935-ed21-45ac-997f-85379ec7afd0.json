@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "0.77.0-nightly-20241001-223e98cc4",
-  "packageName": "@react-native-windows/codegen",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}
