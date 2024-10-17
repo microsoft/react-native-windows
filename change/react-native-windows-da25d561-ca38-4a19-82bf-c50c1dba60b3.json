@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "integrate 0.76.0-rc.5",
+  "comment": "integrate 0.76.0-rc.6",
   "packageName": "react-native-windows",
   "email": "tatianakapos@microsoft.com",
   "dependentChangeType": "patch"
