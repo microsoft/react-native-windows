@@ -2,6 +2,7 @@
 .vscode/
 
 # packages/*
+packages/**/lib
 packages/**/lib-commonjs
 
 # packages/@office-iss/react-native-win32
@@ -18,6 +19,21 @@ packages/@office-iss/react-native-win32/rntypes
 packages/@office-iss/react-native-win32/src-win/rntypes
 packages/@office-iss/react-native-win32/types
 packages/@office-iss/react-native-win32/flow-typed
+
+# packages/@office-iss/react-native-win32-tester
+packages/@office-iss/react-native-win32-tester/js
+
+# @react-native-windows/automation
+packages/@react-native-windows/automation/src/index.ts
+
+# @react-native-windows/tester
+packages/@react-native-windows/tester/js
+
+# packages/react-native-platform-override
+packages/react-native-platform-override/src/e2etest/collateral
+
+# packages/react-native-windows-init
+packages/react-native-windows-init/src/GenerateWindowsType.ts
 
 # vnext
 vnext/dist

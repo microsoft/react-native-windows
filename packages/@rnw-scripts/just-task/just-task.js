@@ -75,8 +75,8 @@ task('prettier:fix', prettierTask({ files: path.resolve(process.cwd(), '**', '*.
 task('eslint', eslintTask());
 task('eslint:fix', eslintTask({fix: true}));
 
-task('lint', parallel('eslint', 'depcheck', 'prettier'));
-task('lint:fix', series('eslint:fix', 'prettier:fix'));
+task('lint', parallel(series('prettier', 'eslint'), 'depcheck'));
+task('lint:fix', series('prettier:fix', 'eslint:fix'));
 
 task('watch', tscWatchTask({outDir: 'lib-commonjs'}));
 
