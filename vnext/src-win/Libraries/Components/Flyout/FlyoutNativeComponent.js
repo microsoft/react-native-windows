@@ -7,7 +7,11 @@
 
 import type {ViewProps} from 'react-native/Libraries/Components/View/ViewPropTypes';
 import type {HostComponent} from 'react-native/Libraries/Renderer/shims/ReactNativeTypes';
-import type {DirectEventHandler, Double, Int32} from 'react-native/Libraries/Types/CodegenTypes';
+import type {
+  DirectEventHandler,
+  Double,
+  Int32,
+} from 'react-native/Libraries/Types/CodegenTypes';
 
 import codegenNativeComponent from 'react-native/Libraries/Utilities/codegenNativeComponent';
 

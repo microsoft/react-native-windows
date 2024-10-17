@@ -14,7 +14,11 @@ import type {
 } from '@react-native/codegen/lib/CodegenSchema';
 import {AliasMap} from './AliasManaging';
 import type {CppCodegenOptions} from './ObjectTypes';
-import {translateArgs, translateSpecArgs, translateEventEmitterArgs} from './ParamTypes';
+import {
+  translateArgs,
+  translateSpecArgs,
+  translateEventEmitterArgs,
+} from './ParamTypes';
 import {translateImplReturnType, translateSpecReturnType} from './ReturnTypes';
 
 function isMethodSync(funcType: NativeModuleFunctionTypeAnnotation) {
@@ -93,7 +97,7 @@ function renderProperties(
   aliases: AliasMap,
   tuple: boolean,
   options: CppCodegenOptions,
-): { code: string, numberOfProperties: number } {
+): {code: string; numberOfProperties: number} {
   // TODO: generate code for constants
   const properties = methods
     .filter(prop => prop.name !== 'getConstants')
@@ -156,32 +160,31 @@ function renderProperties(
       }
     });
 
-    return {code: properties.join('\n'), numberOfProperties: properties.length};
+  return {code: properties.join('\n'), numberOfProperties: properties.length};
 }
 
 function getPossibleEventEmitterSignatures(
   eventEmitter: NativeModuleEventEmitterShape,
   aliases: AliasMap,
-  options: CppCodegenOptions): string[] {
-  
+  options: CppCodegenOptions,
+): string[] {
   const traversedArgs = translateEventEmitterArgs(
     eventEmitter.typeAnnotation.typeAnnotation,
     aliases,
     eventEmitter.name,
     options,
   );
-  return [`REACT_EVENT(${eventEmitter.name}) std::function<void(${traversedArgs})> ${eventEmitter.name};`]
+  return [
+    `REACT_EVENT(${eventEmitter.name}) std::function<void(${traversedArgs})> ${eventEmitter.name};`,
+  ];
 }
 
 function translatePossibleEventSignatures(
   eventEmitter: NativeModuleEventEmitterShape,
   aliases: AliasMap,
-  options: CppCodegenOptions): string {
-  return getPossibleEventEmitterSignatures(
-    eventEmitter,
-    aliases,
-    options
-  )
+  options: CppCodegenOptions,
+): string {
+  return getPossibleEventEmitterSignatures(eventEmitter, aliases, options)
     .map(sig => `"    ${sig}\\n"`)
     .join('\n          ');
 }
@@ -203,7 +206,9 @@ function renderEventEmitters(
       );
 
       if (tuple) {
-        return `      EventEmitter<void(${traversedArgs})>{${index + indexOffset}, L"${eventEmitter.name}"},`;
+        return `      EventEmitter<void(${traversedArgs})>{${
+          index + indexOffset
+        }, L"${eventEmitter.name}"},`;
       } else {
         return `    REACT_SHOW_EVENTEMITTER_SPEC_ERRORS(
           ${index + indexOffset},
@@ -212,7 +217,7 @@ function renderEventEmitters(
             eventEmitter,
             aliases,
             options,
-      )});`;
+          )});`;
       }
     })
     .join('\n');
@@ -223,10 +228,10 @@ export function generateValidateMethods(
   aliases: AliasMap,
   options: CppCodegenOptions,
 ): {
-  traversedProperties: string,
-  traversedEventEmitters: string,
-  traversedPropertyTuples: string,
-  traversedEventEmitterTuples: string,
+  traversedProperties: string;
+  traversedEventEmitters: string;
+  traversedPropertyTuples: string;
+  traversedEventEmitterTuples: string;
 } {
   const methods = nativeModule.spec.methods;
   const eventEmitters = nativeModule.spec.eventEmitters;
@@ -256,5 +261,10 @@ export function generateValidateMethods(
     true,
     options,
   );
-  return {traversedPropertyTuples: traversedPropertyTuples.code, traversedEventEmitterTuples, traversedProperties: traversedProperties.code, traversedEventEmitters};
+  return {
+    traversedPropertyTuples: traversedPropertyTuples.code,
+    traversedEventEmitterTuples,
+    traversedProperties: traversedProperties.code,
+    traversedEventEmitters,
+  };
 }

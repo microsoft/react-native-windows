@@ -47,11 +47,13 @@ function translateUnionReturnType(
 }
 
 export function translateFieldOrReturnType(
-  type: Nullable<
-    | NativeModuleBaseTypeAnnotation
-    | NativeModuleStringTypeAnnotation
-    | NativeModuleFunctionTypeAnnotation
-  > | UnsafeAnyTypeAnnotation,
+  type:
+    | Nullable<
+        | NativeModuleBaseTypeAnnotation
+        | NativeModuleStringTypeAnnotation
+        | NativeModuleFunctionTypeAnnotation
+      >
+    | UnsafeAnyTypeAnnotation,
   aliases: AliasMap,
   baseAliasName: string,
   callerName: 'translateField' | 'translateReturnType',

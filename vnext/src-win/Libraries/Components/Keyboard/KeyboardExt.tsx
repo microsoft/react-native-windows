@@ -21,17 +21,23 @@ export const supportKeyboard = <P extends Record<string, any>>(
   // children is used to avoid error: Property 'children' does not exist on type 'IntrinsicAttributes & ViewProps &
   // IKeyboardProps & RefAttributes<any>
   type PropsWithoutForwardedRef = P & React.PropsWithChildren<IKeyboardProps>;
-  type PropsWithForwardedRef = React.PropsWithoutRef<PropsWithoutForwardedRef> & IForwardRefProps;
+  type PropsWithForwardedRef = React.PropsWithoutRef<PropsWithoutForwardedRef> &
+    IForwardRefProps;
 
   class SupportKeyboard extends React.Component<PropsWithForwardedRef> {
     public render(): JSX.Element {
       const {forwardedRef, ...rest} = this.props;
-      return <WrappedComponent ref={forwardedRef} {...(rest as unknown as P)} />;
+      return (
+        <WrappedComponent ref={forwardedRef} {...(rest as unknown as P)} />
+      );
     }
   }
 
   return React.forwardRef(
-    (props: React.PropsWithoutRef<PropsWithoutForwardedRef>, ref: React.Ref<any>) => {
+    (
+      props: React.PropsWithoutRef<PropsWithoutForwardedRef>,
+      ref: React.Ref<any>,
+    ) => {
       return <SupportKeyboard {...props} forwardedRef={ref} />;
     },
   );

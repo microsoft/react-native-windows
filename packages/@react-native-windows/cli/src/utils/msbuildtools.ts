@@ -200,7 +200,10 @@ export default class MSBuildTools {
       'Microsoft.Component.MSBuild',
       getVCToolsByArch(buildArch),
     ];
-    const minVersion = process.env.MinimumVisualStudioVersion || process.env.VisualStudioVersion || '17.11.0';
+    const minVersion =
+      process.env.MinimumVisualStudioVersion ||
+      process.env.VisualStudioVersion ||
+      '17.11.0';
     const vsInstallation = findLatestVsInstall({
       requires,
       minVersion,
@@ -213,7 +216,10 @@ export default class MSBuildTools {
         throw new CodedError(
           'NoMSBuild',
           `MSBuild tools not found for version ${process.env.MinimumVisualStudioVersion} (from environment). Make sure all required components have been installed`,
-          {MinimumVisualStudioVersionFromEnv: process.env.MinimumVisualStudioVersion},
+          {
+            MinimumVisualStudioVersionFromEnv:
+              process.env.MinimumVisualStudioVersion,
+          },
         );
       } else if (process.env.VisualStudioVersion != null) {
         throw new CodedError(

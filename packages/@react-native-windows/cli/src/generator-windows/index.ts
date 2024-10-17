@@ -189,7 +189,9 @@ export async function copyProjectTemplateAndReplace(
     languageIsCpp: language === 'cpp',
 
     rnwVersion: await getVersionOfNpmPackage('react-native-windows'),
-    rnwPathFromProjectRoot: path.relative(destPath, rnwPath).replace(/\//g, '\\'),
+    rnwPathFromProjectRoot: path
+      .relative(destPath, rnwPath)
+      .replace(/\//g, '\\'),
 
     mainComponentName: mainComponentName,
 
