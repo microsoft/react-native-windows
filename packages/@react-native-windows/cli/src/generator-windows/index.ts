@@ -53,6 +53,10 @@ function resolveRnwPath(subpath: string): string {
   });
 }
 
+const removeVersionText = (fullVersion: string, textToRemove: string): string => {
+  return fullVersion.split(textToRemove).join('');
+}
+
 // Existing high cyclomatic complexity
 // eslint-disable-next-line complexity
 export async function copyProjectTemplateAndReplace(
@@ -163,6 +167,8 @@ export async function copyProjectTemplateAndReplace(
   const projectGuid = existingProjectGuid || crypto.randomUUID();
   const rnwPath = path.dirname(resolveRnwPath('package.json'));
   const rnwVersion = require(resolveRnwPath('package.json')).version;
+  let shortenedRNWVersion = removeVersionText(rnwVersion, '-preview');
+  shortenedRNWVersion = removeVersionText(rnwVersion, '-canary');
   const nugetVersion = options.nuGetTestVersion || rnwVersion;
   const packageGuid = crypto.randomUUID();
   const currentUser = username.sync()!; // Gets the current username depending on the platform.
@@ -188,7 +194,8 @@ export async function copyProjectTemplateAndReplace(
     namespaceCpp: namespaceCpp,
     languageIsCpp: language === 'cpp',
 
-    rnwVersion: await getVersionOfNpmPackage('react-native-windows'),
+    rnwVersion: rnwVersion,
+    shortenedRNWVersion: shortenedRNWVersion,
     rnwPathFromProjectRoot: path.relative(destPath, rnwPath).replace(/\//g, '\\'),
 
     mainComponentName: mainComponentName,
