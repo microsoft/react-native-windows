@@ -54,6 +54,8 @@ steps:
         slices:
           - platform: ${{ parameters.platform }}
             configuration: Release
+          - platform: AnyCPU
+            configuration: Release
 
   - ${{ if endsWith(parameters.template, '-app') }}:
     - script: |

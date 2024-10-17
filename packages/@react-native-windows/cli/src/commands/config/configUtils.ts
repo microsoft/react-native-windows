@@ -105,9 +105,15 @@ export function isRnwDependencyProject(filePath: string): boolean {
 
   const projectLang = getProjectLanguage(filePath);
   if (projectLang === 'cs') {
-    return importProjectExists(
-      projectContents,
-      'Microsoft.ReactNative.Uwp.CSharpLib.targets',
+    return (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Uwp.CSharpLib.targets',
+      ) ||
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Composition.CSharpLib.targets',
+      )
     );
   } else if (projectLang === 'cpp') {
     return (
@@ -198,9 +204,15 @@ function isRnwAppProject(filePath: string): boolean {
 
   const projectLang = getProjectLanguage(filePath);
   if (projectLang === 'cs') {
-    return importProjectExists(
-      projectContents,
-      'Microsoft.ReactNative.Uwp.CSharpApp.targets',
+    return (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Uwp.CSharpApp.targets',
+      ) ||
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Composition.CSharpApp.targets',
+      )
     );
   } else if (projectLang === 'cpp') {
     return (
@@ -352,10 +364,17 @@ export function importProjectExists(
   projectContents: Node,
   projectName: string,
 ): boolean {
-  const nodes = msbuildSelect(
+  let nodes = msbuildSelect(
     `//msbuild:Import[contains(@Project,'${projectName}')]`,
     projectContents,
   );
+
+  if (nodes.length === 0) {
+    nodes = msbuildSelect(
+      `//Import[contains(@Project,'${projectName}')]`,
+      projectContents,
+    );
+  }
 
   return nodes.length > 0;
 }

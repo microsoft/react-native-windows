@@ -41,6 +41,10 @@
     <file src="$nugetroot$\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-x64\native" />
     <file src="$nugetroot$\x64\Release\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\x64" />
 
+    <file src="$nugetroot$\AnyCPU\Release\Microsoft.ReactNative.CsWinRT\Microsoft.ReactNative.Projection.dll" target="lib\net6.0-windows10.0.22621.0" />
+    <file src="$nugetroot$\AnyCPU\Release\Microsoft.ReactNative.CsWinRT\Microsoft.ReactNative.Projection.pdb" target="lib\net6.0-windows10.0.22621.0" />
+    <file src="$nugetroot$\AnyCPU\Release\Microsoft.ReactNative.CsWinRT\Microsoft.ReactNative.Projection.pri" target="lib\net6.0-windows10.0.22621.0" />
+
     <!-- Included in Microsoft.ReactNative.Debug -->
     <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.dll" target="runtimes\win10-arm64\native" />
     <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-arm64\native" />
@@ -56,6 +60,10 @@
     <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pdb" target="runtimes\win10-x64\native" />
     <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.pri" target="runtimes\win10-x64\native" />
     <file src="$nugetroot$\x64\Debug\Microsoft.ReactNative\Microsoft.ReactNative.lib" target="lib\x64" />
+
+    <file src="$nugetroot$\AnyCPU\Debug\Microsoft.ReactNative.CsWinRT\Microsoft.ReactNative.Projection.dll" target="lib\net6.0-windows10.0.22621.0" />
+    <file src="$nugetroot$\AnyCPU\Debug\Microsoft.ReactNative.CsWinRT\Microsoft.ReactNative.Projection.pdb" target="lib\net6.0-windows10.0.22621.0" />
+    <file src="$nugetroot$\AnyCPU\Debug\Microsoft.ReactNative.CsWinRT\Microsoft.ReactNative.Projection.pri" target="lib\net6.0-windows10.0.22621.0" />
 
     <!-- XBF files need to be included for Debug since they are not embedded in the PRI -->
     <file src="$nugetroot$\ARM64\Debug\Microsoft.ReactNative\**\*.xbf"  target="runtimes\win10-arm64\native" />
