@@ -88,10 +88,13 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
     ) => {
       const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
       const _accessibilityControls = ariaControls ?? accessibilityControls; // Win32
-      const _accessibilityDescribedBy = ariaDescribedBy ?? accessibilityDescribedBy; // Win32
-      const _accessibilityDescription = ariaDescription ?? accessibilityDescription; // Win32
+      const _accessibilityDescribedBy =
+        ariaDescribedBy ?? accessibilityDescribedBy; // Win32
+      const _accessibilityDescription =
+        ariaDescription ?? accessibilityDescription; // Win32
       const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Win32
-      const _accessibilityPositionInSet = ariaPosinset ?? accessibilityPositionInSet; // Win32
+      const _accessibilityPositionInSet =
+        ariaPosinset ?? accessibilityPositionInSet; // Win32
       const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Win32
 
       let _accessibilityState: ?TextProps['accessibilityState'] =
@@ -109,7 +112,8 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
             checked: ariaChecked ?? _accessibilityState.checked,
             disabled: ariaDisabled ?? _accessibilityState.disabled,
             expanded: ariaExpanded ?? _accessibilityState.expanded,
-            multiselectable: ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
+            multiselectable:
+              ariaMultiselectable ?? accessibilityState?.multiselectable, // Win32
             required: ariaRequired ?? accessibilityState?.required, // Win32
             selected: ariaSelected ?? _accessibilityState.selected,
           };
@@ -119,8 +123,8 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
             checked: ariaChecked,
             disabled: ariaDisabled,
             expanded: ariaExpanded,
-            multiselectable: ariaMultiselectable,  // Win32,
-            required: ariaRequired,  // Win32
+            multiselectable: ariaMultiselectable, // Win32,
+            required: ariaRequired, // Win32
             selected: ariaSelected,
           };
         }
@@ -374,7 +378,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
       return (
         <TextAncestor.Provider value={true}>{nativeText}</TextAncestor.Provider>
       );
-    }
+    },
   );
 
 Text.displayName = 'Text';

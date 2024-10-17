@@ -70,34 +70,43 @@ interface AliasCodeMap {
 }
 
 function getArrayTypeName(
-  type: Nullable<NativeModuleBaseTypeAnnotation>): string {
-    if (type.type === 'ArrayTypeAnnotation' && type.elementType.type === 'TypeAliasTypeAnnotation') {
-      return  type.elementType.name;
-    }
+  type: Nullable<NativeModuleBaseTypeAnnotation>,
+): string {
+  if (
+    type.type === 'ArrayTypeAnnotation' &&
+    type.elementType.type === 'TypeAliasTypeAnnotation'
+  ) {
+    return type.elementType.name;
+  }
 
-    return '';
+  return '';
 }
 
 function checkTypes(
   aliases: AliasMap,
   type: NativeModuleObjectTypeAnnotation,
-  aliasOrder: string[]): void {
-    for (const prop of type.properties) {
-      const propType = prop.typeAnnotation;
-      let propName = '';
+  aliasOrder: string[],
+): void {
+  for (const prop of type.properties) {
+    const propType = prop.typeAnnotation;
+    let propName = '';
 
-      if (propType.type === 'TypeAliasTypeAnnotation') {
-        propName = propType.name;
-      }
-
-      if (propType.type === 'ArrayTypeAnnotation') {
-        propName = getArrayTypeName(propType);
-      }
-
-      if (propName !== '' && !aliasOrder.includes(prop.name) && !aliases.jobs.includes(propName)) {
-        aliases.jobs.push(propName);
-      }
+    if (propType.type === 'TypeAliasTypeAnnotation') {
+      propName = propType.name;
     }
+
+    if (propType.type === 'ArrayTypeAnnotation') {
+      propName = getArrayTypeName(propType);
+    }
+
+    if (
+      propName !== '' &&
+      !aliasOrder.includes(prop.name) &&
+      !aliases.jobs.includes(propName)
+    ) {
+      aliases.jobs.push(propName);
+    }
+  }
 }
 
 function generateSingleAlias(

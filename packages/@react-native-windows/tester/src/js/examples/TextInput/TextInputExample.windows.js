@@ -807,24 +807,24 @@ const examples: Array<RNTesterModuleExample> = [
         <View accessible testID="textinput-set">
           <ExampleTextInput
             style={styles.singleLine}
-            placeholder='TextInput 1 in Set of 3'
+            placeholder="TextInput 1 in Set of 3"
             accessibilityPosInSet={1}
             accessibilitySetSize={3}
-            accessibilityLiveRegion='none'
+            accessibilityLiveRegion="none"
           />
           <ExampleTextInput
             style={styles.singleLine}
-            placeholder='TextInput 2 in Set of 3'
+            placeholder="TextInput 2 in Set of 3"
             accessibilityPosInSet={2}
             accessibilitySetSize={3}
-            accessibilityLiveRegion='polite'
+            accessibilityLiveRegion="polite"
           />
           <ExampleTextInput
             style={styles.singleLine}
-            placeholder='TextInput 3 in Set of 3'
+            placeholder="TextInput 3 in Set of 3"
             accessibilityPosInSet={3}
             accessibilitySetSize={3}
-            accessibilityLiveRegion='assertive'
+            accessibilityLiveRegion="assertive"
           />
         </View>
       );

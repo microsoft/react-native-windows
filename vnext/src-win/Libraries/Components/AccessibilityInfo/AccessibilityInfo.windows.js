@@ -55,21 +55,21 @@ const EventNames: Map<
       ['accessibilityServiceChanged', 'accessibilityServiceDidChange'],
     ])
   : Platform.OS === 'windows'
-  ? new Map([
-      ['change', 'TOUCH_EXPLORATION_EVENT'],
-      ['reduceMotionChanged', 'REDUCE_MOTION_EVENT'],
-      ['screenReaderChanged', 'TOUCH_EXPLORATION_EVENT'],
-    ])
-  : new Map([
-      ['announcementFinished', 'announcementFinished'],
-      ['boldTextChanged', 'boldTextChanged'],
-      ['change', 'screenReaderChanged'],
-      ['grayscaleChanged', 'grayscaleChanged'],
-      ['invertColorsChanged', 'invertColorsChanged'],
-      ['reduceMotionChanged', 'reduceMotionChanged'],
-      ['reduceTransparencyChanged', 'reduceTransparencyChanged'],
-      ['screenReaderChanged', 'screenReaderChanged'],
-    ]);
+    ? new Map([
+        ['change', 'TOUCH_EXPLORATION_EVENT'],
+        ['reduceMotionChanged', 'REDUCE_MOTION_EVENT'],
+        ['screenReaderChanged', 'TOUCH_EXPLORATION_EVENT'],
+      ])
+    : new Map([
+        ['announcementFinished', 'announcementFinished'],
+        ['boldTextChanged', 'boldTextChanged'],
+        ['change', 'screenReaderChanged'],
+        ['grayscaleChanged', 'grayscaleChanged'],
+        ['invertColorsChanged', 'invertColorsChanged'],
+        ['reduceMotionChanged', 'reduceMotionChanged'],
+        ['reduceTransparencyChanged', 'reduceTransparencyChanged'],
+        ['screenReaderChanged', 'screenReaderChanged'],
+      ]);
 
 /**
  * Sometimes it's useful to know whether or not the device has a screen reader

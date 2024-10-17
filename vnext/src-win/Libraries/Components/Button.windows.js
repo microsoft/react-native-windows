@@ -407,10 +407,10 @@ const Button: React.AbstractComponent<
           color
             ? {borderRadius: 3}
             : pressed
-            ? [buttonStyles, styles.buttonPressed]
-            : hover
-            ? [buttonStyles, styles.buttonHover]
-            : buttonStyles
+              ? [buttonStyles, styles.buttonPressed]
+              : hover
+                ? [buttonStyles, styles.buttonHover]
+                : buttonStyles
         }
         onMouseEnter={() => {
           if (!disabled) setHover(true);
@@ -445,20 +445,20 @@ const Button: React.AbstractComponent<
                 color
                   ? textStyles
                   : pressed
-                  ? [
-                      textStyles,
-                      {
-                        color: PlatformColor('ButtonForegroundPressed'),
-                      },
-                    ]
-                  : hover
-                  ? [
-                      textStyles,
-                      {
-                        color: PlatformColor('ButtonForegroundPointerOver'),
-                      },
-                    ]
-                  : textStyles
+                    ? [
+                        textStyles,
+                        {
+                          color: PlatformColor('ButtonForegroundPressed'),
+                        },
+                      ]
+                    : hover
+                      ? [
+                          textStyles,
+                          {
+                            color: PlatformColor('ButtonForegroundPointerOver'),
+                          },
+                        ]
+                      : textStyles
               }
               disabled={disabled}>
               {formattedTitle}

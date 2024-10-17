@@ -112,9 +112,8 @@ async function runNpmInstall(config = {}, options = {}) {
 
 async function updateProjectPackageJson(config = {}, options = {}, props = {}) {
   const projectRoot = config?.root ?? process.cwd();
-  const projectPackage = await pkgUtils.WritableNpmPackage.fromPath(
-    projectRoot,
-  );
+  const projectPackage =
+    await pkgUtils.WritableNpmPackage.fromPath(projectRoot);
 
   if (!projectPackage) {
     throw new Error(

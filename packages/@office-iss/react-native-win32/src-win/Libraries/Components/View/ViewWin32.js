@@ -113,9 +113,9 @@ const ViewWin32: React.AbstractComponent<
           ? // $FlowFixMe[exponential-spread]
             {accessibilityDescribedBy: describedByTarget}
           : // $FlowFixMe[exponential-spread]
-          typeof accessibilityDescribedBy === 'string'
-          ? {accessibilityDescribedBy}
-          : {})}
+            typeof accessibilityDescribedBy === 'string'
+            ? {accessibilityDescribedBy}
+            : {})}
         {...(typeof accessibilityControls === 'string'
           ? {accessibilityControls}
           : {})}

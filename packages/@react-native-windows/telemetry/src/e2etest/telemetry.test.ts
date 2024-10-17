@@ -78,11 +78,11 @@ export class TelemetryTest extends Telemetry {
 
   /** Adds a telemetry processor, usually for verifying the envelope. */
   static addTelemetryInitializer(
-    telemetryInitializer: (
-      envelope: coreOneDS.ITelemetryItem
-    ) => boolean,
+    telemetryInitializer: (envelope: coreOneDS.ITelemetryItem) => boolean,
   ): void {
-    TelemetryTest.appInsightsCore?.addTelemetryInitializer(telemetryInitializer);
+    TelemetryTest.appInsightsCore?.addTelemetryInitializer(
+      telemetryInitializer,
+    );
     TelemetryTest.hasTestTelemetryProviders = true;
   }
 }
@@ -341,10 +341,8 @@ function verifyTestCommandTelemetryProcessor(
   caughtErrors: Error[],
   expectedResultCode?: errorUtils.CodedErrorType,
   expectedError?: Error,
-): (
-  envelope: coreOneDS.ITelemetryItem
-) => boolean {
-  return (envelope) => {
+): (envelope: coreOneDS.ITelemetryItem) => boolean {
+  return envelope => {
     TelemetryTest.setTestTelemetryProvidersRan();
 
     try {
@@ -601,16 +599,14 @@ function a(s: string) {
 function getVerifyStackTelemetryProcessor(
   caughtErrors: Error[],
   expectedError: Error,
-): (
-  envelope: coreOneDS.ITelemetryItem,
-) => boolean {
-  return (envelope) => {
+): (envelope: coreOneDS.ITelemetryItem) => boolean {
+  return envelope => {
     try {
       // Processor has run, so the test can (potentially) pass
       TelemetryTest.setTestTelemetryProvidersRan();
 
       if (envelope.name === CodedErrorEventName) {
-        const data = (envelope.data as any);
+        const data = envelope.data as any;
         expect(data.exceptionData).toBeDefined();
         expect(data.exceptionData.message).toBeDefined();
         expect(data.exceptionData.message).not.toBe('');

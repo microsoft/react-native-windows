@@ -14,21 +14,25 @@ import osLocale from 'os-locale';
 const DeviceIdRegPath = 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\SQMClient';
 const DeviceIdRegKey = 'MachineId';
 
-const DeviceIdBuildPath = '"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"';
+const DeviceIdBuildPath =
+  '"HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Windows NT\\CurrentVersion"';
 const DeviceIdBuildKey = 'BuildLabEx';
 
 /**
  * Given a path and a key, retrieves the value from the Registry.
  * @returns If the path and key exist, the requested value from the Registry; empty string otherwise.
  */
-export async function getValueFromRegistry(path: string, key: string): Promise<string> {
+export async function getValueFromRegistry(
+  path: string,
+  key: string,
+): Promise<string> {
   try {
     let regCommand = `${process.env.windir}\\System32\\reg.exe query ${path} /v ${key}`;
     if (deviceArchitecture() === 'x64') {
       // Ensure we query the correct registry
       regCommand += ' /reg:64';
     }
-    
+
     const output = execSync(regCommand).toString();
     return output;
   } catch {}
@@ -42,7 +46,10 @@ export async function getValueFromRegistry(path: string, key: string): Promise<s
  */
 export async function deviceId(): Promise<string> {
   try {
-    const deviceIdValue = await getValueFromRegistry(DeviceIdRegPath, DeviceIdRegKey);
+    const deviceIdValue = await getValueFromRegistry(
+      DeviceIdRegPath,
+      DeviceIdRegKey,
+    );
 
     const result = deviceIdValue.match(/\{([0-9A-Fa-f-]{36})\}/);
     if (result && result.length > 1) {
@@ -59,7 +66,10 @@ export async function deviceId(): Promise<string> {
  */
 export async function fullBuildInfo(): Promise<string> {
   try {
-    const fullBuildValue = await getValueFromRegistry(DeviceIdBuildPath, DeviceIdBuildKey);
+    const fullBuildValue = await getValueFromRegistry(
+      DeviceIdBuildPath,
+      DeviceIdBuildKey,
+    );
 
     // Retrieve the build info
     const match = fullBuildValue.match(/BuildLabEx\s+REG_SZ\s+([^\r\n]+)/);

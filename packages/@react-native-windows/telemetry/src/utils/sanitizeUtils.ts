@@ -27,7 +27,6 @@ export function getAnonymizedPath(
   filepath: string | undefined,
   projectRoot?: string,
 ): string {
-
   if (filepath === undefined) {
     return '[path]';
   }

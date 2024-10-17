@@ -12,8 +12,8 @@
   },
   "dependencies": {
     "@react-native/tester": "0.76.0-main",
-    "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.57.1",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
     "flow-enums-runtime": "^0.0.5"
   },
   "peerDependencies": {

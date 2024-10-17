@@ -5,7 +5,7 @@
  * @format
  */
 
-import { Minimatch } from 'minimatch';
+import {Minimatch} from 'minimatch';
 
 import FileRepository, {
   ReactFileRepository,

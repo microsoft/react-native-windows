@@ -368,7 +368,7 @@ describe('TextInput Tests', () => {
         timeoutMsg: `Unable to enter correct text.`,
       },
     );
-    
+
     // Click on another textInput to move focus away from the one tested (clearTextOnFocus={false})
     const componentFocusTrue = await app.findElementByTestID(
       'clear-text-on-focus-true',
@@ -399,7 +399,7 @@ describe('TextInput Tests', () => {
         timeoutMsg: `Unable to enter correct text.`,
       },
     );
-    
+
     // Click on another textInput to move focus away from the one tested (clearTextOnFocus={true})
     const componentFocusFalse = await app.findElementByTestID(
       'clear-text-on-focus-false',
@@ -409,7 +409,7 @@ describe('TextInput Tests', () => {
 
     // Then click on the tested component
     await componentFocusTrue.click();
-  
+
     // Verify the textInput contents are cleared after regaining focus
     expect(await componentFocusTrue.getText()).toBe('');
   });

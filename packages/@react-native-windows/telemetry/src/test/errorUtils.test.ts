@@ -208,14 +208,14 @@ test('sanitizeErrorStackFrame() with empty frame', () => {
     functionName: '',
     filePath: '',
     lineNumber: 0,
-    columnNumber: 0
+    columnNumber: 0,
   };
   errorUtils.sanitizeErrorStackFrame(stackFrame);
   expect(stackFrame).toEqual({
     functionName: '',
     filePath: '[path]',
     lineNumber: 0,
-    columnNumber: 0
+    columnNumber: 0,
   });
 });
 
@@ -224,14 +224,14 @@ test('sanitizeErrorStackFrame() with assembly name', () => {
     functionName: '',
     filePath: `${process.cwd()}\\foo.js`,
     lineNumber: 10,
-    columnNumber: 14
+    columnNumber: 14,
   };
   errorUtils.sanitizeErrorStackFrame(stackFrame);
   expect(stackFrame).toEqual({
     functionName: '',
     filePath: '[project_dir]\\???.js(6)',
     lineNumber: 10,
-    columnNumber: 14
+    columnNumber: 14,
   });
 });
 
@@ -240,13 +240,13 @@ test('sanitizeErrorStackFrame() with method name', () => {
     functionName: `myMethod (something ${process.cwd()}`,
     filePath: `${process.cwd()}\\telemetry\\foo.js`,
     lineNumber: 10,
-    columnNumber: 14
+    columnNumber: 14,
   };
   errorUtils.sanitizeErrorStackFrame(stackFrame);
   expect(stackFrame).toEqual({
     functionName: 'myMethod',
     filePath: '[project_dir]\\???.js(16)',
     lineNumber: 10,
-    columnNumber: 14
+    columnNumber: 14,
   });
 });

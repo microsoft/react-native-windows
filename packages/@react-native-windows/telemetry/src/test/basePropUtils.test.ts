@@ -46,7 +46,6 @@ test('nodePlatform() is valid', () => {
   expect(value).not.toBeNull();
 });
 
-
 test('deviceLocale() is valid', async () => {
   const value = await basePropUtils.deviceLocale();
   expect(value).toBeDefined();

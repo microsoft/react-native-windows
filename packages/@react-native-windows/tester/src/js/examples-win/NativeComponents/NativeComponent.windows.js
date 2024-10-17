@@ -10,7 +10,7 @@
 
 'use strict';
 
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {Text, View} from 'react-native';
 import CustomXamlComponentWithNativeLayout from './CustomXamlComponentWithNativeLayoutNativeComponent';
 
@@ -36,7 +36,14 @@ const NativeComponentWithNativeLayout = () => {
       <CustomXamlComponentWithNativeLayout
         label="This is a Xaml Button set to ellipisify on truncation"
         style={{flexShrink: 1}}
-        onMyEvent={(arg) => {setLog(log + '\nRecieved MyEvent: ' + JSON.stringify(arg.nativeEvent) + '\n')}}
+        onMyEvent={arg => {
+          setLog(
+            log +
+              '\nRecieved MyEvent: ' +
+              JSON.stringify(arg.nativeEvent) +
+              '\n',
+          );
+        }}
       />
       <View style={{width: 100, height: 100, backgroundColor: 'green'}} />
       <View style={{width: 100, height: 100, backgroundColor: 'red'}} />
@@ -45,7 +52,7 @@ const NativeComponentWithNativeLayout = () => {
       <View style={{width: 100, height: 100, backgroundColor: 'gray'}} />
     </View>
   );
-}
+};
 
 exports.displayName = 'NativeFabricComponent';
 exports.framework = 'React';
@@ -59,9 +66,7 @@ exports.examples = [
   {
     title: 'Native Component',
     render: function (): React.Node {
-      return (
-        <NativeComponentWithNativeLayout />
-      );
+      return <NativeComponentWithNativeLayout />;
     },
-  }
+  },
 ];

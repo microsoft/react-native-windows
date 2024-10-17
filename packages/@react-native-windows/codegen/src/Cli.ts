@@ -76,10 +76,11 @@ const argv = yargs.options({
   },
   internalComponents: {
     type: 'boolean',
-    describe: 'generate non-ABI cpp/h for internal usage of built in native components [Only used within RNW itself]',
+    describe:
+      'generate non-ABI cpp/h for internal usage of built in native components [Only used within RNW itself]',
     default: false,
     hidden: true,
-  }
+  },
 }).argv;
 
 if ((argv.file && argv.files) || (!argv.file && !argv.files)) {

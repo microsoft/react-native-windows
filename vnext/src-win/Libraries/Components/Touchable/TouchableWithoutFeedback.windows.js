@@ -131,7 +131,10 @@ const PASSTHROUGH_PROPS = [
 const TouchableWithoutFeedback: React.AbstractComponent<
   Props,
   React.ElementRef<typeof Animated.View>,
-> = React.forwardRef(function TouchableWithoutFeedback(props: Props, ref): React.Node {
+> = React.forwardRef(function TouchableWithoutFeedback(
+  props: Props,
+  ref,
+): React.Node {
   const {
     disabled,
     rejectResponderTermination,
@@ -152,7 +155,6 @@ const TouchableWithoutFeedback: React.AbstractComponent<
     onMouseEnter, // [Windows]
     onMouseLeave, // [Windows]
   } = props;
-
 
   const pressabilityConfig = useMemo(
     () => ({
