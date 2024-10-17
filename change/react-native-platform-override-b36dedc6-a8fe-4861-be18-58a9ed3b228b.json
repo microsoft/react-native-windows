@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Fix repo linting with prettier",
+  "packageName": "react-native-platform-override",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}

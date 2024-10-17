@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix repo linting with prettier",
+  "packageName": "@react-native-windows/package-utils",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
