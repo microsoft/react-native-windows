@@ -1,8 +1,34 @@
 # Change Log - react-native-windows
 
-This log was last generated on Fri, 06 Sep 2024 17:54:26 GMT and should not be manually modified.
+This log was last generated on Thu, 17 Oct 2024 00:18:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.22
+
+Thu, 17 Oct 2024 00:18:07 GMT
+
+### Patches
+
+- [Fabric] Fix crash when running inspect (30809111+acoates-ms@users.noreply.github.com)
+- Support AccessibilityState: Busy (34109996+chiaramooney@users.noreply.github.com)
+- [Fabric] LogBox should destroy its window on instance shutdown (30809111+acoates-ms@users.noreply.github.com)
+- Use a legacy native module binding that always returns null in bridgeless mode (30809111+acoates-ms@users.noreply.github.com)
+- Fix RootComponentView leak (53619745+rnbot@users.noreply.github.com)
+- [Fabric] implement view tooltip property (30809111+acoates-ms@users.noreply.github.com)
+- Build arm64ec platform for desktop fabric dll (53619745+rnbot@users.noreply.github.com)
+- [Fabric] Add FocusNavigationDirection and allow overriding of default command handling (30809111+acoates-ms@users.noreply.github.com)
+- [Fabric] Enable ScrollView touch scrolling (30809111+acoates-ms@users.noreply.github.com)
+- Implement SampleTurboModule (jthysell@microsoft.com)
+- SampleTurboModule only works as a turbomodule, so do not install it when using web debugger (30809111+acoates-ms@users.noreply.github.com)
+- Implement IExpandCollapseProvider (34109996+chiaramooney@users.noreply.github.com)
+- Update SampleAppFabric to use ReactNativeAppBuilder (10109130+sharath2727@users.noreply.github.com)
+- Introduce ReactNativeAppBuilder.idl (10109130+sharath2727@users.noreply.github.com)
+- Add Implementation for accessibilityActions (34109996+chiaramooney@users.noreply.github.com)
+- Setup reactnativewin32 app (10109130+sharath2727@users.noreply.github.com)
+- [Fabric] LayoutDirection and FontSizeMultiplier support (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.74.6
+- Bump @react-native-windows/codegen to v0.74.4
 
 ## 0.74.21
 

@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Thu, 17 Oct 2024 00:18:07 GMT",
+      "version": "0.74.4",
+      "tag": "@react-native-windows/codegen_v0.74.4",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "cc7dea7380367fb57e252ba8d3b26671193dbdb5",
+            "comment": "[Fabric] Add FocusNavigationDirection and allow overriding of default command handling"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Sep 2024 17:54:26 GMT",
       "version": "0.74.3",
       "tag": "@react-native-windows/codegen_v0.74.3",

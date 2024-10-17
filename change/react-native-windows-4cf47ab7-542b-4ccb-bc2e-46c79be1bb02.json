@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "[Fabric] implement view tooltip property",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

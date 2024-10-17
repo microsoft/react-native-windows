@@ -2,6 +2,129 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 17 Oct 2024 00:18:07 GMT",
+      "version": "0.74.22",
+      "tag": "react-native-windows_v0.74.22",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cc7dea7380367fb57e252ba8d3b26671193dbdb5",
+            "comment": "[Fabric] Fix crash when running inspect"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6c9f279963fccac2de5cd3fa80aed88f273ce26f",
+            "comment": "Support AccessibilityState: Busy"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cc7dea7380367fb57e252ba8d3b26671193dbdb5",
+            "comment": "[Fabric] LogBox should destroy its window on instance shutdown"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cc7dea7380367fb57e252ba8d3b26671193dbdb5",
+            "comment": "Use a legacy native module binding that always returns null in bridgeless mode"
+          },
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6c9f279963fccac2de5cd3fa80aed88f273ce26f",
+            "comment": "Fix RootComponentView leak"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6c9f279963fccac2de5cd3fa80aed88f273ce26f",
+            "comment": "[Fabric] implement view tooltip property"
+          },
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "9d23f7a98200742e2d0cbe98d376301959909997",
+            "comment": "Build arm64ec platform for desktop fabric dll"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cc7dea7380367fb57e252ba8d3b26671193dbdb5",
+            "comment": "[Fabric] Add FocusNavigationDirection and allow overriding of default command handling"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cc7dea7380367fb57e252ba8d3b26671193dbdb5",
+            "comment": "[Fabric] Enable ScrollView touch scrolling"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cc7dea7380367fb57e252ba8d3b26671193dbdb5",
+            "comment": "Implement SampleTurboModule"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cc7dea7380367fb57e252ba8d3b26671193dbdb5",
+            "comment": "SampleTurboModule only works as a turbomodule, so do not install it when using web debugger"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6c9f279963fccac2de5cd3fa80aed88f273ce26f",
+            "comment": "Implement IExpandCollapseProvider"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cc7dea7380367fb57e252ba8d3b26671193dbdb5",
+            "comment": "Update SampleAppFabric to use ReactNativeAppBuilder"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cc7dea7380367fb57e252ba8d3b26671193dbdb5",
+            "comment": "Introduce ReactNativeAppBuilder.idl"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cc7dea7380367fb57e252ba8d3b26671193dbdb5",
+            "comment": "Add Implementation for accessibilityActions"
+          },
+          {
+            "author": "10109130+sharath2727@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cc7dea7380367fb57e252ba8d3b26671193dbdb5",
+            "comment": "Setup reactnativewin32 app"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "cc7dea7380367fb57e252ba8d3b26671193dbdb5",
+            "comment": "[Fabric] LayoutDirection and FontSizeMultiplier support"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.74.6",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.74.4",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Sep 2024 17:54:26 GMT",
       "version": "0.74.21",
       "tag": "react-native-windows_v0.74.21",
