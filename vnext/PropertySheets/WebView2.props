@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="WebView2 versioning">
+      <!-- WinAppSDK 1.6+ has a dependency on Microsoft.Web.WebView2, there are a few places we need to pull in this package explicitly. -->
+      <WebView2PackageVersion>1.0.2651.64</WebView2PackageVersion>
+  </PropertyGroup>
+</Project>
