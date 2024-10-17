@@ -25,6 +25,7 @@ function validateOptionName(
     case 'namespace':
     case 'overwrite':
     case 'telemetry':
+    case 'list':
       return true;
   }
   throw new Error(

@@ -13,6 +13,7 @@ export interface InitOptions {
   namespace?: string;
   overwrite?: boolean;
   telemetry?: boolean;
+  list?: boolean;
 }
 
 export const initOptions: CommandOption[] = [
@@ -45,5 +46,10 @@ export const initOptions: CommandOption[] = [
     name: '--no-telemetry',
     description:
       'Disables sending telemetry that allows analysis of usage and failures of the react-native-windows CLI',
+  },
+  {
+    name: '--list',
+    description:
+      'Shows a list with all available templates with their descriptions.',
   },
 ];
