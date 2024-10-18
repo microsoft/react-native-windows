@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241001-223e98cc4",
+  "baseVersion": "0.77.0-nightly-20241010-0d6908f4e",
   "overrides": [
     {
       "type": "derived",
@@ -19,7 +19,7 @@
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "70b04f859a60e3752e6937b9fc294ffee30e6366"
+      "baseHash": "ad455e241e35ebd718a6304f3de9d04c1f9e4f2b"
     },
     {
       "type": "platform",
@@ -35,13 +35,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/AccessibilityInfo/AccessibilityInfo.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.d.ts",
-      "baseHash": "f55fda723b8dc0f9836f2fa4a4a766ed45c71c00"
+      "baseHash": "30a3c7351c6a466e2ed95e9b416907ac677d71ca"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "163927cc271b53109f06eaf5fc6d30a9af8cb27e"
+      "baseHash": "af6ef360caf09cee7b488a3fa7439f749216c51c"
     },
     {
       "type": "copy",
@@ -60,7 +60,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Button.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "b59e0b119a7a930e835ff3eefa780e757a97b31f"
+      "baseHash": "e76f9ba2b411e43dbca14b7ce52bb429c8cab52d"
     },
     {
       "type": "platform",
@@ -109,13 +109,13 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "19224f9b870df6e0c82d8da36f1f7b22bdd6b596"
+      "baseHash": "82f76803236afa08c99beb8545a2a7fa4940b653"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInputState.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInputState.js",
-      "baseHash": "60655baaca427e1c7c1b8884833b848335c4033b"
+      "baseHash": "7a12ca2e17da0a0f487af5a27c120ef59b2ab9ef"
     },
     {
       "type": "platform",
@@ -331,7 +331,7 @@
       "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.win32.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
-      "baseHash": "af602af3c3acc6521f5535f2fe14bfe08cf1b5e9"
+      "baseHash": "51ae58fc739dc6c0679dc888550c2af41787b959"
     },
     {
       "type": "copy",
@@ -360,14 +360,14 @@
       "type": "patch",
       "file": "src-win/Libraries/Pressability/HoverState.win32.js",
       "baseFile": "packages/react-native/Libraries/Pressability/HoverState.js",
-      "baseHash": "50800642b413cb469ced8d1d6b32ee0e249f4d1e",
+      "baseHash": "8a97880597ea72d61464d07d1a082582320e7234",
       "issue": 6240
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Pressability/Pressability.win32.js",
       "baseFile": "packages/react-native/Libraries/Pressability/Pressability.js",
-      "baseHash": "8e70142f3acab570d188c617a1811da11b6e9da4",
+      "baseHash": "3be9533787a90b2fae462faee1bb8b692d025c31",
       "issue": 6240
     },
     {
@@ -426,7 +426,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "8ad2e56ba09c1b5428d50cfd71972c60502ed2e2"
+      "baseHash": "b4810991f6c983f1f155327e8bca865cf771ae84"
     },
     {
       "type": "derived",
@@ -445,7 +445,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Types/CoreEventTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Types/CoreEventTypes.js",
-      "baseHash": "7fe2b87cf49f4674d731d07f0883bab2f5cfc356",
+      "baseHash": "87532a8f108dad9c3ae07b911dd7344e7c244c20",
       "issue": 6240
     },
     {
@@ -485,7 +485,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Utilities/Platform.flow.win32.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.flow.js",
-      "baseHash": "f38efa527b9426ae0178bb2336be2e93af0392ba"
+      "baseHash": "ae1dbc0afd40655cb18e00eecf21b7ca5db538f2"
     },
     {
       "type": "derived",
@@ -503,14 +503,21 @@
       "type": "patch",
       "file": "src-win/src/private/animated/NativeAnimatedHelper.win32.js",
       "baseFile": "packages/react-native/src/private/animated/NativeAnimatedHelper.js",
-      "baseHash": "bc63f57b28f1e98755101f650a2c15b6aa263abf",
+      "baseHash": "96fb410d7d408c49297f9f99a760f954264bce91",
       "issue": 11041
+    },
+    {
+      "type": "copy",
+      "file": "src-win/src/private/debugging/ReactDevToolsSettingsManager.win32.js",
+      "baseFile": "packages/react-native/src/private/debugging/ReactDevToolsSettingsManager.android.js",
+      "baseVersion": "0.77.0-nightly-20241001-223e98cc4",
+      "baseHash": "df41b76dc3d2df9455fae588748261d7b0a22d01"
     },
     {
       "type": "derived",
       "file": "src-win/src/private/specs/modules/NativeAccessibilityInfoWin32.js",
       "baseFile": "packages/react-native/src/private/specs/modules/NativeAccessibilityInfo.js",
-      "baseHash": "3c15b48f632de6b939697ae114734cc54e003027"
+      "baseHash": "f719796211617b9fd439f74622757e2af5288281"
     },
     {
       "type": "derived",
@@ -523,12 +530,6 @@
       "file": "src-win/src/private/specs/modules/NativePlatformConstantsWin.js",
       "baseFile": "packages/react-native/src/private/specs/modules/NativePlatformConstantsAndroid.js",
       "baseHash": "fa0f34a2de33b641bd63863629087644796d8b59"
-    },
-    {
-      "type": "copy",
-      "file": "src-win/src/private/reactdevtools/ReactDevToolsSettingsManager.win32.js",
-      "baseFile": "packages/react-native/src/private/reactdevtools/ReactDevToolsSettingsManager.android.js",
-      "baseHash": "df41b76dc3d2df9455fae588748261d7b0a22d01"
     }
   ]
 }

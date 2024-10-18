@@ -290,6 +290,17 @@ type ButtonProps = $ReadOnly<{|
   ```
  */
 
+<<<<<<< Upstream
+const Touchable: typeof TouchableNativeFeedback | typeof TouchableOpacity =
+  Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
+
+type ButtonRef = React.ElementRef<typeof Touchable>;
+
+const Button: component(
+  ref: React.RefSetter<ButtonRef>,
+  ...props: ButtonProps
+) = React.forwardRef((props: ButtonProps, ref: React.RefSetter<ButtonRef>) => {
+=======
 const Button: React.AbstractComponent<
   ButtonProps,
   React.ElementRef<typeof TouchableHighlight>,
@@ -299,6 +310,7 @@ const Button: React.AbstractComponent<
   const [hover, setHover] = React.useState(false);
   const [pressed, setPressed] = React.useState(false);
   // Windows]
+>>>>>>> Override
   const {
     accessibilityLabel,
     accessibilityState,
