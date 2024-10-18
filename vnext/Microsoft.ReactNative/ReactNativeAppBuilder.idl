@@ -9,60 +9,39 @@ import "IReactPackageProvider.idl";
 namespace Microsoft.ReactNative {
 
      [experimental]
-     DOC_STRING("ReactNativeWin32App is used to manage resources appropriately to be able to host ReactNative component in a contentIsland.")
+     DOC_STRING("ReactNativeWin32App sets up the infrastructure for the default experience of a ReactNative application filling a WinAppSDK window.")
      runtimeclass ReactNativeWin32App {
         // Properties
         Microsoft.UI.Windowing.AppWindow AppWindow {get;};
 
-        Microsoft.UI.Composition.Compositor Compositor {get;};
-
-        Microsoft.UI.Content.DesktopChildSiteBridge DesktopChildSiteBridge {get;};
-
         ReactNativeHost ReactNativeHost {get;};
 
-        ReactNativeIsland ReactNativeIsland {get;};
+        ReactViewOptions ReactViewOptions {get;};
+
+        // TODO: Hide these APIs for now until we're sure we need to expose them and can do so safely
+        // Microsoft.UI.Composition.Compositor Compositor {get;};
+        // Microsoft.UI.Content.DesktopChildSiteBridge DesktopChildSiteBridge {get;};
+        // Microsoft.UI.Dispatching DispatcherQueueController {get;};
+        // ReactNativeIsland ReactNativeIsland {get;};
 
         // Methods
         void Start();
      }
 
     [experimental]
-    DOC_STRING("This is the builder for creating ReactInstanceSettings.")
-    runtimeclass ReactInstanceSettingsBuilder
-    {
-        ReactInstanceSettingsBuilder();
-
-        // Properties
-        ReactInstanceSettings ReactInstanceSettings {get;};
-
-        // Methods
-        ReactInstanceSettingsBuilder UseDirectDebugger(Boolean state);
-
-        ReactInstanceSettingsBuilder UseDeveloperSupport(Boolean state);
-    
-        ReactInstanceSettingsBuilder BundleRootPath(String path);
-
-        ReactInstanceSettingsBuilder DebugBundlePath(String path);
-
-        ReactInstanceSettingsBuilder JavaScriptBundleFile(String file);
-
-        ReactInstanceSettingsBuilder UseFastRefresh(Boolean state);
-    }
-
-    [experimental]
-    DOC_STRING("ReactNativeAppBuilder initializes all the required infrastructure for a Win32 Fabric Application.")
+    DOC_STRING("ReactNativeAppBuilder builds a ReactNativeWin32App with the base WinAppSDK infrastructure.")
     runtimeclass ReactNativeAppBuilder
     {
         ReactNativeAppBuilder();
 
         // Methods
-        ReactNativeAppBuilder AddPackageProviders(Windows.Foundation.Collections.IVector<Microsoft.ReactNative.IReactPackageProvider> packageProviders);
-
-        ReactNativeAppBuilder SetReactInstanceSettings(ReactInstanceSettings settings);
 
         ReactNativeAppBuilder SetAppWindow(Microsoft.UI.Windowing.AppWindow appWindow);
 
-        ReactNativeAppBuilder SetReactViewOptions(Microsoft.ReactNative.ReactViewOptions reactViewOptions);
+        // TODO: Hide these APIs for now until we're sure we need to expose them and can do so safely
+        // Compositor depends on the DispatcherQueue created by DispatcherQueueController
+        // ReactNativeAppBuilder SetCompositor(Microsoft.UI.Composition.Compositor compositor);
+        // ReactNativeAppBuilder SetDispatcherQueueController(Microsoft.UI.Dispatching DispatcherQueueController);
 
         ReactNativeWin32App Build();
     }
