@@ -141,6 +141,19 @@ bool expandableControl(const facebook::react::SharedViewProps props) {
   return false;
 }
 
+bool togglableControl(const facebook::react::SharedViewProps props){
+  if (props->accessibilityState.has_value() && props->accessibilityState->checked != facebook::react::AccessibilityState::None){
+    return true;
+  }
+  auto accessibilityActions = props->accessibilityActions;
+  for (size_t i = 0; i < accessibilityActions.size(); i++) {
+    if (accessibilityActions[i].name == "toggle") {
+      return true;
+    }
+  }
+  return false;
+}
+
 HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTERNID patternId, IUnknown **pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
@@ -189,9 +202,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   }
 
   if (patternId == UIA_TogglePatternId &&
-      (accessibilityRole == "switch" || accessibilityRole == "checkbox" ||
-       (props->accessibilityState.has_value() &&
-        props->accessibilityState->checked != facebook::react::AccessibilityState::None))) {
+      (accessibilityRole == "switch" || accessibilityRole == "checkbox" || togglableControl(props))) {
     *pRetVal = static_cast<IToggleProvider *>(this);
     AddRef();
   }
