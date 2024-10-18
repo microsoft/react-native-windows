@@ -125,10 +125,28 @@ export class InitWindows {
     return name;
   }
 
+  protected printTemplateList() {
+    if (this.templates.size === 0) {
+      console.log('\nNo templates found.\n');
+      return;
+    }
+
+    for (const [key, value] of this.templates.entries()) {
+      const defaultLabel = value.isDefault ? chalk.yellow('[Default] ') : '';
+      console.log(`\n${key} - ${value.name}\n    ${defaultLabel}${value.description}`);      
+    }
+    console.log(`\n`)
+  }
+
   public async run(spinner: Ora) {
     await this.loadTemplates();
 
     spinner.info();
+
+    if (this.options.list) {
+      this.printTemplateList();
+      return;
+    }
 
     this.options.template ??= this.getDefaultTemplateName();
 
@@ -259,6 +277,7 @@ function optionSanitizer(key: keyof InitOptions, value: any): any {
     case 'template':
     case 'overwrite':
     case 'telemetry':
+    case 'list':
       return value === undefined ? false : value; // Return value
   }
 }
