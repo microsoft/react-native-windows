@@ -162,7 +162,7 @@ class TouchableFeedbackEvents extends React.Component<{...}, $FlowFixMeState> {
             testID="touchable_feedback_events_button"
             accessibilityLabel="touchable feedback events"
             accessibilityRole="button"
-            accessibilityValue={{text: "Press Me"}}
+            accessibilityValue={{text: 'Press Me'}}
             onPress={() => this._appendEvent('press')}
             onPressIn={() => this._appendEvent('pressIn')}
             onPressOut={() => this._appendEvent('pressOut')}
@@ -581,20 +581,29 @@ function TouchableOnFocus<T: React.AbstractComponent<any, any>>() {
 // $FlowFixMe[missing-local-annot]
 function TouchableSet<T: React.AbstractComponent<any, any>>() {
   return (
-    <View accessible testID='touchable_set'>
-      <TouchableHighlight onPress={()=>{}} accessibilityPosInSet={1} accessibilitySetSize={3} accessibilityLiveRegion='none'>
-        <Text>
-          Touchable Highlight (Control 1 in Set of 3)
-        </Text>
+    <View accessible testID="touchable_set">
+      <TouchableHighlight
+        onPress={() => {}}
+        accessibilityPosInSet={1}
+        accessibilitySetSize={3}
+        accessibilityLiveRegion="none">
+        <Text>Touchable Highlight (Control 1 in Set of 3)</Text>
       </TouchableHighlight>
-      <TouchableOpacity onPress={()=>{}} accessibilityPosInSet={2} accessibilitySetSize={3} accessibilityLiveRegion='polite'>
+      <TouchableOpacity
+        onPress={() => {}}
+        accessibilityPosInSet={2}
+        accessibilitySetSize={3}
+        accessibilityLiveRegion="polite">
         <Text>Touchable Opacity (Control 2 in Set of 3)</Text>
       </TouchableOpacity>
-      <TouchableWithoutFeedback onPress={()=>{}} accessibilityPosInSet={3} accessibilitySetSize={3} accessibilityLiveRegion='assertive'>
+      <TouchableWithoutFeedback
+        onPress={() => {}}
+        accessibilityPosInSet={3}
+        accessibilitySetSize={3}
+        accessibilityLiveRegion="assertive">
         <Text>TouchableWithoutFeedback (Control 3 in Set of 3)</Text>
       </TouchableWithoutFeedback>
     </View>
-
   );
 }
 // Windows]
@@ -809,8 +818,7 @@ exports.examples = [
   },
   {
     title: 'Set of Touchables',
-    description:
-      ('Touchables can be defined as a set': string),
+    description: ('Touchables can be defined as a set': string),
     render: function (): React.Element<any> {
       return <TouchableSet />;
     },

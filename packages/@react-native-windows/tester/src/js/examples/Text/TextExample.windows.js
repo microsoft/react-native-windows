@@ -266,7 +266,7 @@ function TextTransformExample(props: {}): React.Node {
           a<Text style={{textTransform: 'none'}}>b</Text>c
         </Text>
       </Text>
-{/* [Windows - This tests makes e2e tests hang indefinitely]
+      {/* [Windows - This tests makes e2e tests hang indefinitely]
       <Text style={{textTransform: 'none'}}>
         {
           '.aa\tbb\t\tcc  dd EE \r\nZZ I like to eat apples. \n中文éé 我喜欢吃苹果。awdawd   '
@@ -455,7 +455,10 @@ function AllowFontScalingExample(props: {}): React.Node {
 function NumberOfLinesExample(props: {}): React.Node {
   return (
     <>
-      <Text numberOfLines={1} style={styles.wrappedText} testID={'text-one-line'}>
+      <Text
+        numberOfLines={1}
+        style={styles.wrappedText}
+        testID={'text-one-line'}>
         Maximum of one line no matter now much I write here. If I keep writing
         it{"'"}ll just truncate after one line
       </Text>
@@ -974,7 +977,7 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
         {texts}
         {marker}
       </View>
-{/* [Windows #12997 - This tests renders <View> nested within <Text> which is not supported yet]
+      {/* [Windows #12997 - This tests renders <View> nested within <Text> which is not supported yet]
       <Text style={subtitleStyle}>{'Interleaving <View> and <Text>:'}</Text>
       <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
         {marker}
@@ -1050,9 +1053,7 @@ function TextBaseLineLayoutExample(props: {}): React.Node {
 
 function TextBorderExample(props: {}): React.Node {
   return (
-    <View testID={'text-border'}
-      accessible
-      accessibilityLabel="Border Example">
+    <View testID={'text-border'} accessible accessibilityLabel="Border Example">
       <Text style={styles.borderedTextSimple}>
         Sample bordered text with default styling.
       </Text>
@@ -1069,12 +1070,11 @@ function TextBorderExample(props: {}): React.Node {
 
       <Text>
         This text is{' '}
-        <Text
-          style={{color: 'red', borderWidth: 1, borderColor: 'black'}}>
+        <Text style={{color: 'red', borderWidth: 1, borderColor: 'black'}}>
           outlined{' '}
         </Text>
-        and laid out within the normal text run, so will wrap etc as
-        normal text.
+        and laid out within the normal text run, so will wrap etc as normal
+        text.
       </Text>
     </View>
   );
@@ -1082,7 +1082,8 @@ function TextBorderExample(props: {}): React.Node {
 
 function AdvancedBordersExample(props: {}): React.Node {
   return (
-    <View testID={'advanced-borders'}
+    <View
+      testID={'advanced-borders'}
       accessible
       accessibilityLabel="Advanced Border Example">
       <Text
@@ -1283,7 +1284,9 @@ const examples = [
     render(): React.Node {
       return (
         <>
-          <Text style={{fontSize: 23}} testID={'text-size'}>Size 23</Text>
+          <Text style={{fontSize: 23}} testID={'text-size'}>
+            Size 23
+          </Text>
           <Text style={{fontSize: 8}}>Size 8</Text>
         </>
       );
@@ -1295,7 +1298,9 @@ const examples = [
     render(): React.Node {
       return (
         <>
-          <Text style={{color: 'red'}} testID={'text-color'}>Red color</Text>
+          <Text style={{color: 'red'}} testID={'text-color'}>
+            Red color
+          </Text>
           <Text style={{color: 'blue'}}>Blue color</Text>
         </>
       );
@@ -1443,13 +1448,16 @@ const examples = [
     name: 'selectionColor',
     render(): React.Node {
       return (
-        <Text selectable selectionColor="orange" testID={'text-selection-color'}>
+        <Text
+          selectable
+          selectionColor="orange"
+          testID={'text-selection-color'}>
           This text will have a orange highlight on selection.
         </Text>
       );
     },
   },
-/* [Windows #12997 - This tests renders <View> nested within <Text> which is not supported yet]
+  /* [Windows #12997 - This tests renders <View> nested within <Text> which is not supported yet]
   {
     title: 'Inline views',
     name: 'inlineViewsBasic',
@@ -1528,7 +1536,7 @@ const examples = [
       return <TextTransformExample />;
     },
   },
-/* [Windows
+  /* [Windows
     Emoji gets rendered on windows which causes issues with e2e tests.
     It seems they can't deal with the character properly which makes them always fail]
   {
@@ -1643,12 +1651,12 @@ const examples = [
             accessibilityHint="Text"
             accessibilityPosInSet={1}
             accessibilitySetSize={1}
-            accessibilityLiveRegion='polite'>
+            accessibilityLiveRegion="polite">
             This text has customized accessibility.
           </Text>
         </View>
       );
-    }
+    },
   },
   {
     title: 'Text with Border',
@@ -1668,8 +1676,8 @@ const examples = [
     title: 'Opacity',
     name: 'textOpacity',
     render: function (): React.Node {
-      return <TextOpacityExample />
-    }
+      return <TextOpacityExample />;
+    },
   },
   {
     title: 'Height and Width',
@@ -1682,8 +1690,8 @@ const examples = [
           </Text>
         </View>
       );
-    }
-  }
+    },
+  },
 ];
 
 const styles = StyleSheet.create({
