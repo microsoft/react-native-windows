@@ -178,7 +178,7 @@ const API = {
         /* [Windows #11041
         // TODO: (T136971132)
         invariant(
-          NativeAnimatedModule || process.env.NODE_ENV === 'test',
+          NativeAnimatedModule,
           'Native animated module is not available',
         );
         Windows] */
@@ -199,9 +199,8 @@ const API = {
         singleOpQueue.length = 0;
       }
     : (): void => {
-        // TODO: (T136971132)
         invariant(
-          NativeAnimatedModule || process.env.NODE_ENV === 'test',
+          NativeAnimatedModule,
           'Native animated module is not available',
         );
         flushQueueImmediate = null;

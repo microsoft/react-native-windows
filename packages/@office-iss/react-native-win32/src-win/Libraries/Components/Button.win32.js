@@ -283,11 +283,23 @@ type ButtonProps = $ReadOnly<{|
   ```
  */
 
+<<<<<<< Upstream
+const Touchable: typeof TouchableNativeFeedback | typeof TouchableOpacity =
+  Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
+
+type ButtonRef = React.ElementRef<typeof Touchable>;
+
+const Button: component(
+  ref: React.RefSetter<ButtonRef>,
+  ...props: ButtonProps
+) = React.forwardRef((props: ButtonProps, ref: React.RefSetter<ButtonRef>) => {
+=======
 const Button: React.AbstractComponent<
   ButtonProps,
   React.ElementRef<typeof TouchableNativeFeedback | typeof TouchableOpacity>,
 > = React.forwardRef((props: ButtonProps, ref) => {
   // Win32
+>>>>>>> Override
   const {
     accessibilityLabel,
     accessibilityState,
