@@ -133,9 +133,11 @@ export class InitWindows {
 
     for (const [key, value] of this.templates.entries()) {
       const defaultLabel = value.isDefault ? chalk.yellow('[Default] ') : '';
-      console.log(`\n${key} - ${value.name}\n    ${defaultLabel}${value.description}`);      
+      console.log(
+        `\n${key} - ${value.name}\n    ${defaultLabel}${value.description}`,
+      );
     }
-    console.log(`\n`)
+    console.log(`\n`);
   }
 
   public async run(spinner: Ora) {
