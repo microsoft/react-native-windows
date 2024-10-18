@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
+#include <Fabric/Composition/SwitchComponentView.h>
+#include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
 #include <Unicode.h>
 #include "RootComponentView.h"
 #include "UiaHelpers.h"
@@ -162,10 +164,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
       props->accessibilityRole.empty() ? compositionView->DefaultControlType() : props->accessibilityRole;
   // Invoke control pattern is used to support controls that do not maintain state
   // when activated but rather initiate or perform a single, unambiguous action.
-  if (patternId == UIA_InvokePatternId &&
-      (accessibilityRole == "button" || accessibilityRole == "imagebutton" || accessibilityRole == "link" ||
-       accessibilityRole == "splitbutton" || (accessibilityRole == "menuitem" && props->onAccessibilityTap) ||
-       (accessibilityRole == "treeitem" && props->onAccessibilityTap))) {
+  if (patternId == UIA_InvokePatternId && (props->onAccessibilityTap)) {
     *pRetVal = static_cast<IInvokeProvider *>(this);
     AddRef();
   }
@@ -176,28 +175,19 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   }
 
   if (patternId == UIA_ValuePatternId &&
-      (accessibilityRole == "textinput" || accessibilityRole == "searchbox" ||
-       (accessibilityRole == "button" && accessibilityValueHasValue(props->accessibilityValue)) ||
-       (accessibilityRole == "combobox" && accessibilityValueHasValue(props->accessibilityValue)) ||
-       (accessibilityRole == "link" && accessibilityValueHasValue(props->accessibilityValue)) ||
-       (accessibilityRole == "listitem" && accessibilityValueHasValue(props->accessibilityValue)) ||
-       (accessibilityRole == "progressbar" && accessibilityValueHasValue(props->accessibilityValue)) ||
-       (accessibilityRole == "adjustable" && accessibilityValueHasValue(props->accessibilityValue)) ||
-       (accessibilityRole == "spinbutton" && accessibilityValueHasValue(props->accessibilityValue)))) {
+      (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
+       accessibilityValueHasValue(props->accessibilityValue))) {
     *pRetVal = static_cast<IValueProvider *>(this);
     AddRef();
   }
 
-  if (patternId == UIA_TogglePatternId && (accessibilityRole == "switch" || accessibilityRole == "checkbox")) {
+  if (patternId == UIA_TogglePatternId &&
+      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::SwitchComponentView>()) {
     *pRetVal = static_cast<IToggleProvider *>(this);
     AddRef();
   }
 
-  if (patternId == UIA_ExpandCollapsePatternId &&
-      (accessibilityRole == "combobox" || accessibilityRole == "splitbutton" || accessibilityRole == "treeitem" ||
-       (expandableControl(props) &&
-        (accessibilityRole == "toolbar" || accessibilityRole == "menuitem" || accessibilityRole == "menubar" ||
-         accessibilityRole == "listitem" || accessibilityRole == "group" || accessibilityRole == "button")))) {
+  if (patternId == UIA_ExpandCollapsePatternId && expandableControl(props)) {
     *pRetVal = static_cast<IExpandCollapseProvider *>(this);
     AddRef();
   }
