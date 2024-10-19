@@ -870,6 +870,7 @@ void WindowsTextInputComponentView::OnCharacterReceived(
   emitter->onKeyPress(onKeyPressArgs);
 
   WPARAM wParam = static_cast<WPARAM>(args.KeyCode());
+
   LPARAM lParam = 0;
   lParam = args.KeyStatus().RepeatCount; // bits 0-15
   lParam |= args.KeyStatus().ScanCode << 16; // bits 16-23
@@ -1020,6 +1021,10 @@ void WindowsTextInputComponentView::updateProps(
     m_submitKeyEvents = newTextInputProps.submitKeyEvents;
   } else {
     m_submitKeyEvents.clear();
+  }
+
+  if (oldTextInputProps.autoCapitalize != newTextInputProps.autoCapitalize) {
+    autoCapitalizeOnUpdateProps(oldTextInputProps.autoCapitalize, newTextInputProps.autoCapitalize);
   }
 
   UpdatePropertyBits();
@@ -1474,6 +1479,31 @@ winrt::Microsoft::ReactNative::ComponentView WindowsTextInputComponentView::Crea
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<WindowsTextInputComponentView>(compContext, tag, reactContext);
+}
+
+// This function assumes that previous and new capitalization types are different.
+void WindowsTextInputComponentView::autoCapitalizeOnUpdateProps(
+    const std::string &previousCapitalizationType,
+    const std::string &newCapitalizationType) noexcept {
+  /*
+    Possible values are:
+     Characters - All characters.
+     Words - First letter of each word.
+     Sentences - First letter of each sentence.
+     None - Do not autocapitalize anything.
+
+     For now, only characters and none are supported.
+  */
+
+  if (previousCapitalizationType == "characters") {
+    winrt::check_hresult(m_textServices->TxSendMessage(
+        EM_SETEDITSTYLE, 0 /* disable */, SES_UPPERCASE /* flag affected */, nullptr /* LRESULT */));
+  }
+
+  if (newCapitalizationType == "characters") {
+    winrt::check_hresult(m_textServices->TxSendMessage(
+        EM_SETEDITSTYLE, SES_UPPERCASE /* enable */, SES_UPPERCASE /* flag affected */, nullptr /* LRESULT */));
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
