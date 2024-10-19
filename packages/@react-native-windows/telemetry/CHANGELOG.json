@@ -2,6 +2,39 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Sat, 19 Oct 2024 05:29:47 GMT",
+      "version": "0.0.0-canary.111",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.111",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "d0c7fa8199238da974905788351a45694fa39e57",
+            "comment": "Fix repo linting with prettier"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.59",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.30",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/telemetry",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.47",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 12 Oct 2024 05:22:56 GMT",
       "version": "0.0.0-canary.110",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.110",

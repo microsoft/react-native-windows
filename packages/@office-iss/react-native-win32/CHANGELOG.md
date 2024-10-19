@@ -1,8 +1,20 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Wed, 16 Oct 2024 05:20:54 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 19 Oct 2024 05:29:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.268
+
+Sat, 19 Oct 2024 05:29:45 GMT
+
+### Changes
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.34
+- Bump @rnw-scripts/just-task to v2.3.47
+- Bump react-native-platform-override to v1.9.49
 
 ## 0.0.0-canary.267
 

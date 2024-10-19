@@ -2,6 +2,39 @@
   "name": "@rnw-scripts/take-screenshot",
   "entries": [
     {
+      "date": "Sat, 19 Oct 2024 05:29:48 GMT",
+      "version": "1.1.54",
+      "tag": "@rnw-scripts/take-screenshot_v1.1.54",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@rnw-scripts/take-screenshot",
+            "commit": "d0c7fa8199238da974905788351a45694fa39e57",
+            "comment": "Fix repo linting with prettier"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.59",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.30",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/take-screenshot",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.47",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Oct 2024 19:54:27 GMT",
       "version": "1.1.53",
       "tag": "@rnw-scripts/take-screenshot_v1.1.53",

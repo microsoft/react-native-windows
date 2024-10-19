@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 16 Oct 2024 05:20:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 19 Oct 2024 05:29:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.878
+
+Sat, 19 Oct 2024 05:29:45 GMT
+
+### Changes
+
+- Update WinAppSDK from 1.5 to 1.6 (1.6.240923002) (winappsdkdata_bot@microsoft.com)
+- Introduced autocapitalize prop in TextInput (14967941+danielayala94@users.noreply.github.com)
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.242
+- Bump @react-native-windows/codegen to v0.0.0-canary.108
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.34
+- Bump @rnw-scripts/just-task to v2.3.47
+- Bump react-native-platform-override to v1.9.49
 
 ## 0.0.0-canary.877
 

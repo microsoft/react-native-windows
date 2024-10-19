@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Fix repo linting with prettier",
-  "packageName": "@rnw-scripts/promote-release",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
