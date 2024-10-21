@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Fri, 11 Oct 2024 20:17:23 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 21 Oct 2024 15:36:46 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.0-preview.3
+
+Mon, 21 Oct 2024 15:36:46 GMT
+
+### Changes
+
+- Introducing `--list` option to `init-windows` (#13986) (14967941+danielayala94@users.noreply.github.com)
 
 ## 0.76.0-preview.2
 

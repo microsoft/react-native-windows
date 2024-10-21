@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 21 Oct 2024 15:36:46 GMT",
+      "version": "0.76.0-preview.3",
+      "tag": "@react-native-windows/cli_v0.76.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "c147dcb404ad758a03db0a8e1733cf30ef60ff4b",
+            "comment": "Introducing `--list` option to `init-windows` (#13986)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Oct 2024 20:17:23 GMT",
       "version": "0.76.0-preview.2",
       "tag": "@react-native-windows/cli_v0.76.0-preview.2",

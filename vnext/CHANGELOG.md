@@ -1,8 +1,23 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 11 Oct 2024 20:17:23 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 21 Oct 2024 15:36:47 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.0-preview.3
+
+Mon, 21 Oct 2024 15:36:47 GMT
+
+### Changes
+
+- Support AccessibilityState: Busy (34109996+chiaramooney@users.noreply.github.com)
+- Use a legacy native module binding that always returns null in bridgeless mode (30809111+acoates-ms@users.noreply.github.com)
+- Fix RootComponentView leak (53619745+rnbot@users.noreply.github.com)
+- [Fabric] implement view tooltip property (30809111+acoates-ms@users.noreply.github.com)
+- SampleTurboModule only works as a turbomodule, so do not install it when using web debugger (30809111+acoates-ms@users.noreply.github.com)
+- Implement IExpandCollapseProvider (34109996+chiaramooney@users.noreply.github.com)
+- integrate 0.76.0-rc.6 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.76.0-preview.3
 
 ## 0.76.0-preview.2
 

@@ -2,6 +2,63 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 21 Oct 2024 15:36:47 GMT",
+      "version": "0.76.0-preview.3",
+      "tag": "react-native-windows_v0.76.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "37e97c23ac5dccb945d3dfa137ba9dd810dda72c",
+            "comment": "Support AccessibilityState: Busy"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e6a4c813c682b9341af7d07880ca390609f217e6",
+            "comment": "Use a legacy native module binding that always returns null in bridgeless mode"
+          },
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "37e97c23ac5dccb945d3dfa137ba9dd810dda72c",
+            "comment": "Fix RootComponentView leak"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "37e97c23ac5dccb945d3dfa137ba9dd810dda72c",
+            "comment": "[Fabric] implement view tooltip property"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "e6a4c813c682b9341af7d07880ca390609f217e6",
+            "comment": "SampleTurboModule only works as a turbomodule, so do not install it when using web debugger"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "37e97c23ac5dccb945d3dfa137ba9dd810dda72c",
+            "comment": "Implement IExpandCollapseProvider"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "8bf96071813e2c3ba9c6c72d97ee41f31a24fbdc",
+            "comment": "integrate 0.76.0-rc.6"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.76.0-preview.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 11 Oct 2024 20:17:23 GMT",
       "version": "0.76.0-preview.2",
       "tag": "react-native-windows_v0.76.0-preview.2",
