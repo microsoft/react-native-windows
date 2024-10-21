@@ -13,8 +13,8 @@
   },
   "dependencies": {
     "@types/react": "^18.2.6",
-    "@typescript-eslint/eslint-plugin": "^5.21.0",
-    "@typescript-eslint/parser": "^5.21.0",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
     "react": "^18.2.0",
     "react-native": "0.76.0-rc.6",
     "react-native-windows": "0.76.0-preview.3"
@@ -27,7 +27,7 @@
     "@babel/runtime": "^7.20.0",
     "@jest/globals": "^29.7.0",
     "@react-native-community/cli": "15.0.0-alpha.2",
-    "@react-native/metro-config": "0.76.0-nightly-20240701-9f6cb21ed",
+    "@react-native/metro-config": "0.76.0-rc.6",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.27",

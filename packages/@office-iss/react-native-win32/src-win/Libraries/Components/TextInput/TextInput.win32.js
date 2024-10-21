@@ -1328,14 +1328,15 @@ function InternalTextInput(props: Props): React.Node {
     typeof props.value === 'string'
       ? props.value
       : typeof props.defaultValue === 'string'
-      ? props.defaultValue
-      : '';
+        ? props.defaultValue
+        : '';
 
   const viewCommands =
-    WindowsTextInputCommands || AndroidTextInputCommands || // [Windows]
+    WindowsTextInputCommands ||
+    AndroidTextInputCommands || // [Windows]
     (props.multiline === true
       ? RCTMultilineTextInputNativeCommands
-      : RCTSinglelineTextInputNativeCommands)
+      : RCTSinglelineTextInputNativeCommands);
 
   const [mostRecentEventCount, setMostRecentEventCount] = useState<number>(0);
   const useTextInputStateSynchronization =
@@ -1409,8 +1410,12 @@ function InternalTextInput(props: Props): React.Node {
             }
           },
           isFocused(): boolean {
-            const currentlyFocusedInput = TextInputState.currentlyFocusedInput();
-            return currentlyFocusedInput !== null && currentlyFocusedInput === inputRef.current;
+            const currentlyFocusedInput =
+              TextInputState.currentlyFocusedInput();
+            return (
+              currentlyFocusedInput !== null &&
+              currentlyFocusedInput === inputRef.current
+            );
           },
           getNativeRef(): ?React.ElementRef<HostComponent<mixed>> {
             return inputRef.current;
@@ -1954,12 +1959,12 @@ const ExportedForwardRef: React.AbstractComponent<
         textContentType != null
           ? textContentType
           : Platform.OS === 'ios' &&
-            autoComplete &&
-            autoComplete in autoCompleteWebToTextContentTypeMap
-          ? // $FlowFixMe[invalid-computed-prop]
-            // $FlowFixMe[prop-missing]
-            autoCompleteWebToTextContentTypeMap[autoComplete]
-          : textContentType
+              autoComplete &&
+              autoComplete in autoCompleteWebToTextContentTypeMap
+            ? // $FlowFixMe[invalid-computed-prop]
+              // $FlowFixMe[prop-missing]
+              autoCompleteWebToTextContentTypeMap[autoComplete]
+            : textContentType
       }
       {...restProps}
       forwardedRef={forwardedRef}
