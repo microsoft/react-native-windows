@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 14 Oct 2024 15:28:33 GMT and should not be manually modified.
+This log was last generated on Mon, 21 Oct 2024 15:28:27 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.6
+
+Mon, 21 Oct 2024 15:28:27 GMT
+
+### Patches
+
+- Support AccessibilityState: Busy (34109996+chiaramooney@users.noreply.github.com)
+- Fix RootComponentView leak (53619745+rnbot@users.noreply.github.com)
+- [Fabric] implement view tooltip property (30809111+acoates-ms@users.noreply.github.com)
+- Implement IExpandCollapseProvider (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.75.5
 

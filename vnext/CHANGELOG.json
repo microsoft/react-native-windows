@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 21 Oct 2024 15:28:27 GMT",
+      "version": "0.75.6",
+      "tag": "react-native-windows_v0.75.6",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "499b89b7e5c209d97efd981342b953b75854c903",
+            "comment": "Support AccessibilityState: Busy"
+          },
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "499b89b7e5c209d97efd981342b953b75854c903",
+            "comment": "Fix RootComponentView leak"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "499b89b7e5c209d97efd981342b953b75854c903",
+            "comment": "[Fabric] implement view tooltip property"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "499b89b7e5c209d97efd981342b953b75854c903",
+            "comment": "Implement IExpandCollapseProvider"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 14 Oct 2024 15:28:33 GMT",
       "version": "0.75.5",
       "tag": "react-native-windows_v0.75.5",
