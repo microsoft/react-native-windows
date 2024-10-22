@@ -33,6 +33,13 @@ struct WindowsModalHostComponentView
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
 
+  void AdjustWindowSize() noexcept;
+  void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept override;
+
+  void updateLayoutMetrics(
+      facebook::react::LayoutMetrics const &layoutMetrics,
+      facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
+
   void updateProps(facebook::react::Props::Shared const &props, facebook::react::Props::Shared const &oldProps) noexcept
       override;
   static facebook::react::SharedViewProps defaultProps() noexcept;
@@ -56,6 +63,7 @@ struct WindowsModalHostComponentView
  private:
   HWND m_hwnd{nullptr};
   uint64_t m_prevWindowID;
+  bool m_isVisible{false};
   winrt::Microsoft::ReactNative::ReactNativeIsland m_reactNativeIsland;
 };
 

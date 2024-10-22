@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
   },
   centeredView: {
-    flex: 1,
+    // flex: 1, [Windows]
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -129,8 +129,8 @@ const styles = StyleSheet.create({
   },
   // [Windows
   widthHeight: {
-    width: 500, 
-    height: 500
+    width: 300, 
+    height: 400,
   }
   // Windows]
 });

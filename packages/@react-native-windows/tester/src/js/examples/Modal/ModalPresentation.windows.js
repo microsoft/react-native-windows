@@ -224,7 +224,7 @@ function ModalPresentation() {
         {...props}
         onRequestClose={onRequestClose}
         onOrientationChange={onOrientationChange}>
-        <View style={[styles.modalContainer, styles.widthHeight]}>
+        <View style={[styles.modalContainer]}>
           <View style={styles.modalInnerContainer}>
             <Text testID="modal_animationType_text">
               This modal was presented with animationType: '
@@ -293,9 +293,13 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   modalContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    padding: 20,
+    // [Windows
+    width: 500, 
+    height: 500,
+    // flex: 1,
+    // justifyContent: 'center',
+    // padding: 20,
+    // Windows ]
   },
   modalInnerContainer: {
     borderRadius: 10,
@@ -307,12 +311,6 @@ const styles = StyleSheet.create({
     fontSize: 12,
     color: 'red',
   },
-  // [Windows
-  widthHeight: {
-    width: 500, 
-    height: 500
-  },
-  // Windows]
 });
 
 export default ({

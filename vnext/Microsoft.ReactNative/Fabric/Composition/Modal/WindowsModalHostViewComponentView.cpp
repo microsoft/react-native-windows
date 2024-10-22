@@ -23,6 +23,7 @@
 #include "IReactContext.h"
 #include "ReactHost/ReactInstanceWin.h"
 #include "ReactNativeHost.h"
+#include <Fabric/Composition/ReactNativeIsland.h>
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 WindowsModalHostComponentView::WindowsModalHostComponentView(
@@ -50,8 +51,8 @@ winrt::Microsoft::ReactNative::ComponentView WindowsModalHostComponentView::Crea
 // constants for creating a new windows
 constexpr PCWSTR c_modalWindowClassName = L"MS_REACTNATIVE_MODAL";
 constexpr auto CompHostProperty = L"CompHost";
-const int MODAL_DEFAULT_WIDTH = 500;
-const int MODAL_DEFAULT_HEIGHT = 500;
+const int MODAL_MIN_WIDTH = 50;
+const int MODAL_MIN_HEIGHT = 50;
 
 float ScaleFactor(HWND hwnd) noexcept {
   return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
@@ -83,8 +84,8 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
       WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT,
       CW_USEDEFAULT,
-      MODAL_DEFAULT_WIDTH,
-      MODAL_DEFAULT_HEIGHT,
+      MODAL_MIN_WIDTH,
+      MODAL_MIN_HEIGHT,
       roothwnd, // parent
       nullptr,
       hInstance,
@@ -119,7 +120,12 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   // set layout contraints
   winrt::Microsoft::ReactNative::LayoutConstraints constraints;
   constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
-  constraints.MaximumSize = constraints.MinimumSize = {500 / ScaleFactor(m_hwnd), 500 / ScaleFactor(m_hwnd)};
+
+  RECT rc;
+  GetClientRect(roothwnd, &rc);
+  // Maximum size is set to size of parent hwnd
+  constraints.MaximumSize = {(rc.right - rc.left) * ScaleFactor(m_hwnd), (rc.bottom - rc.top) / ScaleFactor(m_hwnd)};
+  constraints.MinimumSize = {MODAL_MIN_WIDTH * ScaleFactor(m_hwnd), MODAL_MIN_HEIGHT * ScaleFactor(m_hwnd)};
   m_reactNativeIsland.Arrange(constraints, {0, 0});
   bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
 
@@ -236,6 +242,7 @@ void WindowsModalHostComponentView::MountChildComponentView(
     uint32_t index) noexcept {
   EnsureModalCreated();
   base_type::MountChildComponentView(childComponentView, index);
+  auto test = childComponentView.LayoutMetrics();
 }
 
 void WindowsModalHostComponentView::UnmountChildComponentView(
@@ -244,6 +251,51 @@ void WindowsModalHostComponentView::UnmountChildComponentView(
   base_type::UnmountChildComponentView(childComponentView, index);
 }
 
+void WindowsModalHostComponentView::FinalizeUpdates(
+    winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
+  // Modal needs to be shown in FinalizeUpdates so that m_layoutMetrics is set
+  if (m_isVisible) {
+    EnsureModalCreated();
+    AdjustWindowSize();
+    ShowOnUIThread();
+  }
+}
+
+void WindowsModalHostComponentView::updateLayoutMetrics(
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
+  base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(m_reactNativeIsland)->NotifySizeChanged();
+  
+}
+
+void WindowsModalHostComponentView::AdjustWindowSize() noexcept {
+  // Modal's size is based on it's children, use the overflow to calculate the width/height 
+  float xPos = (-m_layoutMetrics.overflowInset.right * (m_layoutMetrics.pointScaleFactor));
+  float yPos = (-m_layoutMetrics.overflowInset.bottom * (m_layoutMetrics.pointScaleFactor));
+  RECT rc;
+  GetClientRect(m_hwnd, &rc);
+  RECT rect = {0, 0, (int)xPos, (int)yPos};
+  AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE); // Adjust for title bar and borders
+  MoveWindow(
+      m_hwnd,
+      0,
+      0,
+      (int)(rect.right - rect.left),
+      (int)(rect.bottom - rect.top),
+      true);
+
+  // set the layoutMetrics
+  m_layoutMetrics.frame.size = {
+      (float)rect.right - rect.left + m_layoutMetrics.frame.origin.x,
+      (float)rect.bottom - rect.top + m_layoutMetrics.frame.origin.y};
+  m_layoutMetrics.overflowInset.right = 0;
+  m_layoutMetrics.overflowInset.bottom = 0;
+
+  // Let RNWIsland know that Modal's size has changed
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(m_reactNativeIsland)->NotifySizeChanged();
+};
+
 void WindowsModalHostComponentView::updateProps(
     facebook::react::Props::Shared const &props,
     facebook::react::Props::Shared const &oldProps) noexcept {
@@ -251,10 +303,7 @@ void WindowsModalHostComponentView::updateProps(
       *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(oldProps ? oldProps : viewProps());
   const auto &newModalProps = *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(props);
 
-  if (newModalProps.visible) {
-    EnsureModalCreated();
-    ShowOnUIThread();
-  }
+  newModalProps.visible ? m_isVisible = true : m_isVisible = false;
 
   base_type::updateProps(props, oldProps);
 }
