@@ -141,8 +141,9 @@ bool expandableControl(const facebook::react::SharedViewProps props) {
   return false;
 }
 
-bool togglableControl(const facebook::react::SharedViewProps props){
-  if (props->accessibilityState.has_value() && props->accessibilityState->checked != facebook::react::AccessibilityState::None){
+bool togglableControl(const facebook::react::SharedViewProps props) {
+  if (props->accessibilityState.has_value() &&
+      props->accessibilityState->checked != facebook::react::AccessibilityState::None) {
     return true;
   }
   auto accessibilityActions = props->accessibilityActions;
