@@ -91,7 +91,6 @@ const backgroundForLevel = (level: LogLevel) =>
     },
   })[level];
 
-
 const styles = StyleSheet.create({
   syntax: {
     backgroundColor: LogBoxStyle.getFatalColor(),

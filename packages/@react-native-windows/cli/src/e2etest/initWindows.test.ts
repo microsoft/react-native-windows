@@ -89,7 +89,9 @@ test('nameHelpers - cleanNamespace', () => {
   expect(nameHelpers.cleanNamespace('com.company.app-name.other')).toBe(
     'Com.Company.AppName.Other',
   );
-  expect(nameHelpers.cleanNamespace('com::company::app')).toBe('Com.Company.App');
+  expect(nameHelpers.cleanNamespace('com::company::app')).toBe(
+    'Com.Company.App',
+  );
   expect(nameHelpers.cleanNamespace('com::company::app-name')).toBe(
     'Com.Company.AppName',
   );
@@ -105,11 +107,21 @@ test('nameHelpers - isValidProjectNamespace', () => {
   expect(nameHelpers.isValidProjectNamespace('Package-name')).toBe(false);
   expect(nameHelpers.isValidProjectNamespace('Package-Name')).toBe(false);
   expect(nameHelpers.isValidProjectNamespace('@scope/package')).toBe(false);
-  expect(nameHelpers.isValidProjectNamespace('@scope/package-name')).toBe(false);
+  expect(nameHelpers.isValidProjectNamespace('@scope/package-name')).toBe(
+    false,
+  );
   expect(nameHelpers.isValidProjectNamespace('com.company.app')).toBe(true);
-  expect(nameHelpers.isValidProjectNamespace('com.company.app-name')).toBe(false);
-  expect(nameHelpers.isValidProjectNamespace('com.company.app-name.other')).toBe(false);
+  expect(nameHelpers.isValidProjectNamespace('com.company.app-name')).toBe(
+    false,
+  );
+  expect(
+    nameHelpers.isValidProjectNamespace('com.company.app-name.other'),
+  ).toBe(false);
   expect(nameHelpers.isValidProjectNamespace('com::company::app')).toBe(false);
-  expect(nameHelpers.isValidProjectNamespace('com::company::app-name')).toBe(false);
-  expect(nameHelpers.isValidProjectNamespace('com::company::app-name::other')).toBe(false);
+  expect(nameHelpers.isValidProjectNamespace('com::company::app-name')).toBe(
+    false,
+  );
+  expect(
+    nameHelpers.isValidProjectNamespace('com::company::app-name::other'),
+  ).toBe(false);
 });

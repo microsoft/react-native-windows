@@ -110,8 +110,8 @@ const Text: React.AbstractComponent<
         checked: ariaChecked,
         disabled: ariaDisabled,
         expanded: ariaExpanded,
-        multiselectable: ariaMultiselectable,  // Win32,
-        required: ariaRequired,  // Win32
+        multiselectable: ariaMultiselectable, // Win32,
+        required: ariaRequired, // Win32
         selected: ariaSelected,
       };
     }

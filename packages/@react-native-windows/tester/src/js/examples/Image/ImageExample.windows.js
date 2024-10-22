@@ -898,7 +898,7 @@ exports.examples = [
     description: ('If the `source` prop `uri` property is an object URL, ' +
       'then it will be resolved using `BlobProvider` (Android) or `RCTBlobManager` (iOS).': string),
     render: function (): React.Node {
-      return <BlobImageExample urls={[IMAGE1, IMAGE2]} />
+      return <BlobImageExample urls={[IMAGE1, IMAGE2]} />;
     },
   },
   {
@@ -1463,7 +1463,7 @@ exports.examples = [
       return <MultipleSourcesExample />;
     },
   },
-/*
+  /*
   // Windows doesn't support legacy image format.
   {
     title: 'Legacy local image',

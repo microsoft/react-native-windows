@@ -13,8 +13,8 @@
     "@react-native-picker/picker": "^2.5.1",
     "@react-native-windows/tester": "0.0.1",
     "@types/react": "^18.2.6",
-    "@typescript-eslint/eslint-plugin": "^5.21.0",
-    "@typescript-eslint/parser": "^5.21.0",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
     "react": "^18.2.0",
     "react-native": "0.75.3",
     "react-native-windows": "0.75.6"

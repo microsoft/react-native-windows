@@ -20,13 +20,14 @@
     "@rnw-scripts/jest-e2e-config": "1.4.8",
     "@rnw-scripts/jest-unittest-config": "1.5.8",
     "depcheck": "^1.4.1",
+    "find-up": "^4.1.0",
     "glob": "^7.1.6",
     "just-scripts": "^1.3.3"
   },
   "devDependencies": {
     "@rnw-scripts/eslint-config": "1.2.23",
     "@types/node": "^18.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.30.5",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^5.57.1"
   },
   "peerDependencies": {
