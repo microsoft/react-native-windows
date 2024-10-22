@@ -214,4 +214,24 @@ ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept {
   }
 }
 
+void AddSelectionItemsToContainer(CompositionDynamicAutomationProvider *provider) noexcept {
+  IRawElementProviderSimple *selectionContainer;
+  provider->get_SelectionContainer(&selectionContainer);
+  if (!selectionContainer)
+    return;
+  auto selectionContainerProvider = static_cast<CompositionDynamicAutomationProvider *>(selectionContainer);
+  auto simpleProvider = static_cast<IRawElementProviderSimple *>(provider);
+  selectionContainerProvider->AddToSelectionItems(simpleProvider);
+}
+
+void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *provider) noexcept {
+  IRawElementProviderSimple *selectionContainer;
+  provider->get_SelectionContainer(&selectionContainer);
+  if (!selectionContainer)
+    return;
+  auto selectionContainerProvider = static_cast<CompositionDynamicAutomationProvider *>(selectionContainer);
+  auto simpleProvider = static_cast<IRawElementProviderSimple *>(provider);
+  selectionContainerProvider->RemoveFromSelectionItems(simpleProvider);
+}
+
 } // namespace winrt::Microsoft::ReactNative::implementation

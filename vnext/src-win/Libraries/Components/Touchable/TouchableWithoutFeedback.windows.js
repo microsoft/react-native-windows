@@ -59,6 +59,8 @@ type Props = $ReadOnly<{|
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
+  'aria-multiselectable'?: ?boolean, // Windows
+  'aria-required'?: ?boolean, // Windows
   'aria-hidden'?: ?boolean,
   'aria-live'?: ?('polite' | 'assertive' | 'off'),
   'aria-label'?: ?Stringish,
@@ -219,6 +221,8 @@ const TouchableWithoutFeedback: React.AbstractComponent<
     disabled: props['aria-disabled'] ?? props.accessibilityState?.disabled,
     expanded: props['aria-expanded'] ?? props.accessibilityState?.expanded,
     selected: props['aria-selected'] ?? props.accessibilityState?.selected,
+    multiselectable: props['aria-multiselectable'] ?? props.accessibilityState?.multiselectable, // Windows
+    required: props['aria-required'] ?? props.accessibilityState?.required, // Windows
   };
 
   // BACKWARD-COMPATIBILITY: Focus and blur events were never supported before

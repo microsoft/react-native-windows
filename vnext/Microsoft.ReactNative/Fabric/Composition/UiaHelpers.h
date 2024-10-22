@@ -3,6 +3,7 @@
 #include <Fabric/ComponentView.h>
 #include <Fabric/ReactTaggedView.h>
 #include <UIAutomation.h>
+#include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 
 namespace Microsoft::ReactNative {
 struct winrt::Microsoft::ReactNative::implementation::ComponentView;
@@ -36,4 +37,9 @@ std::string extractAccessibilityValue(const facebook::react::AccessibilityValue 
 void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view, const std::string &action) noexcept;
 
 ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept;
-} // namespace winrt::Microsoft::ReactNative::implementation
+
+void AddSelectionItemsToContainer(CompositionDynamicAutomationProvider *provider) noexcept;
+
+void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *provider) noexcept;
+
+}// namespace winrt::Microsoft::ReactNative::implementation
