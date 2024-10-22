@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "[0.75] Fix repo linting with up-to-date eslint and prettier configuration",
+  "packageName": "@react-native-windows/package-utils",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
