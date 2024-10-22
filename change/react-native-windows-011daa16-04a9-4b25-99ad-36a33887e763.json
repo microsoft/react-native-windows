@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix ignore files and update cli timeout",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
