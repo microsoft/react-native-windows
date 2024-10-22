@@ -242,7 +242,6 @@ void WindowsModalHostComponentView::MountChildComponentView(
     uint32_t index) noexcept {
   EnsureModalCreated();
   base_type::MountChildComponentView(childComponentView, index);
-  auto test = childComponentView.LayoutMetrics();
 }
 
 void WindowsModalHostComponentView::UnmountChildComponentView(

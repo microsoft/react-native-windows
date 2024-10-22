@@ -1,8 +1,59 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 10 Oct 2024 18:14:31 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 22 Oct 2024 05:26:27 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.879
+
+Tue, 22 Oct 2024 05:26:27 GMT
+
+### Changes
+
+- Cleanup ReactNativeAppBuilder and ReactNativeWin32App (jthysell@microsoft.com)
+
+## 0.0.0-canary.878
+
+Sat, 19 Oct 2024 05:29:45 GMT
+
+### Changes
+
+- Update WinAppSDK from 1.5 to 1.6 (1.6.240923002) (winappsdkdata_bot@microsoft.com)
+- Introduced autocapitalize prop in TextInput (14967941+danielayala94@users.noreply.github.com)
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.242
+- Bump @react-native-windows/codegen to v0.0.0-canary.108
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.34
+- Bump @rnw-scripts/just-task to v2.3.47
+- Bump react-native-platform-override to v1.9.49
+
+## 0.0.0-canary.877
+
+Wed, 16 Oct 2024 05:20:55 GMT
+
+### Changes
+
+- integrate rn nightly 0.77.0-nightly-20241001-223e98cc4 (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.241
+- Bump @react-native-windows/codegen to v0.0.0-canary.107
+
+## 0.0.0-canary.876
+
+Tue, 15 Oct 2024 05:26:25 GMT
+
+### Changes
+
+- Support AccessibilityState: Busy (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.875
+
+Sat, 12 Oct 2024 05:22:56 GMT
+
+### Changes
+
+- Fix RootComponentView leak (53619745+rnbot@users.noreply.github.com)
+- [Fabric] implement view tooltip property (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.874
 

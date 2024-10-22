@@ -1,8 +1,30 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Thu, 10 Oct 2024 18:14:30 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 19 Oct 2024 05:29:46 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.242
+
+Sat, 19 Oct 2024 05:29:46 GMT
+
+### Changes
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.108
+- Bump @react-native-windows/fs to v0.0.0-canary.59
+- Bump @react-native-windows/package-utils to v0.0.0-canary.85
+- Bump @react-native-windows/telemetry to v0.0.0-canary.111
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
+
+## 0.0.0-canary.241
+
+Wed, 16 Oct 2024 05:20:55 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.107
 
 ## 0.0.0-canary.240
 

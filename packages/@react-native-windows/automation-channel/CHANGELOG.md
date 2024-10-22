@@ -1,8 +1,52 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Thu, 10 Oct 2024 18:14:31 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 22 Oct 2024 05:26:28 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.219
+
+Tue, 22 Oct 2024 05:26:28 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.879
+
+## 0.12.218
+
+Sat, 19 Oct 2024 05:29:45 GMT
+
+### Patches
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
+- Bump react-native-windows to v0.0.0-canary.878
+
+## 0.12.217
+
+Wed, 16 Oct 2024 05:20:54 GMT
+
+### Patches
+
+- integrate rn nightly 0.77.0-nightly-20241001-223e98cc4 (tatianakapos@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.877
+
+## 0.12.216
+
+Tue, 15 Oct 2024 05:26:26 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.876
+
+## 0.12.215
+
+Sat, 12 Oct 2024 05:22:56 GMT
+
+### Patches
+
+- Bump react-native-windows to v0.0.0-canary.875
 
 ## 0.12.214
 

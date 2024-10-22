@@ -2,6 +2,54 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Sat, 19 Oct 2024 05:29:46 GMT",
+      "version": "0.0.0-canary.108",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.108",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "d0c7fa8199238da974905788351a45694fa39e57",
+            "comment": "Fix repo linting with prettier"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.59",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.30",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.47",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 16 Oct 2024 05:20:54 GMT",
+      "version": "0.0.0-canary.107",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.107",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "e265163b8cab921b5643d552775403b45c01bf6f",
+            "comment": "0.77.0-nightly-20241001-223e98cc4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Oct 2024 19:54:26 GMT",
       "version": "0.0.0-canary.106",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.106",

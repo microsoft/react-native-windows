@@ -1,6 +1,6 @@
 {
   "name": "@react-native-windows/package-utils",
-  "version": "0.0.0-canary.84",
+  "version": "0.0.0-canary.85",
   "license": "MIT",
   "scripts": {
     "build": "rnw-scripts build",
@@ -16,19 +16,19 @@
     "directory": "packages/@react-native-windows/package-utils"
   },
   "dependencies": {
-    "@react-native-windows/find-repo-root": "^0.0.0-canary.87",
-    "@react-native-windows/fs": "^0.0.0-canary.58",
+    "@react-native-windows/find-repo-root": "^0.0.0-canary.88",
+    "@react-native-windows/fs": "^0.0.0-canary.59",
     "get-monorepo-packages": "^1.2.0",
     "lodash": "^4.17.15"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.2.29",
-    "@rnw-scripts/just-task": "2.3.46",
+    "@rnw-scripts/eslint-config": "1.2.30",
+    "@rnw-scripts/just-task": "2.3.47",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/lodash": "^4.14.168",
     "@types/node": "^18.0.0",
-    "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.57.1",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
     "eslint": "^8.19.0",
     "prettier": "2.8.8",
     "typescript": "5.0.4"
