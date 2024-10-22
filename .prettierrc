@@ -4,7 +4,6 @@
   "trailingComma": "all",
   "bracketSameLine": true,
   "bracketSpacing": false,
-  "jsxBracketSameLine": true,
   "arrowParens": "avoid",
   "overrides": [
     {

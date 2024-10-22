@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Mon, 07 Oct 2024 19:54:25 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 19 Oct 2024 05:29:47 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.111
+
+Sat, 19 Oct 2024 05:29:47 GMT
+
+### Changes
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.59
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
 
 ## 0.0.0-canary.110
 

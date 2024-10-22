@@ -221,8 +221,8 @@ exports.examples = [
                 accessibilityHint="Submit Button"
                 accessibilityPosInSet={1}
                 accessibilitySetSize={1}
-                accessibilityLiveRegion='assertive'
-                accessibilityValue={{Text: "Submit Application"}}
+                accessibilityLiveRegion="assertive"
+                accessibilityValue={{Text: 'Submit Application'}}
               />
             );
           }}

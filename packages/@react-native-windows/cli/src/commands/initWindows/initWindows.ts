@@ -133,9 +133,11 @@ export class InitWindows {
 
     for (const [key, value] of this.templates.entries()) {
       const defaultLabel = value.isDefault ? chalk.yellow('[Default] ') : '';
-      console.log(`\n${key} - ${value.name}\n    ${defaultLabel}${value.description}`);      
+      console.log(
+        `\n${key} - ${value.name}\n    ${defaultLabel}${value.description}`,
+      );
     }
-    console.log(`\n`)
+    console.log(`\n`);
   }
 
   public async run(spinner: Ora) {
@@ -160,7 +162,10 @@ export class InitWindows {
     const templateConfig = this.templates.get(this.options.template)!;
 
     // Check if there's a passed-in project name and if it's valid
-    if (this.options.name && !nameHelpers.isValidProjectName(this.options.name)) {
+    if (
+      this.options.name &&
+      !nameHelpers.isValidProjectName(this.options.name)
+    ) {
       throw new CodedError(
         'InvalidProjectName',
         `The specified name '${this.options.name}' is not a valid identifier`,
@@ -184,7 +189,10 @@ export class InitWindows {
     }
 
     // Check if there's a passed-in project namespace and if it's valid
-    if (this.options.namespace && !nameHelpers.isValidProjectNamespace(this.options.namespace)) {
+    if (
+      this.options.namespace &&
+      !nameHelpers.isValidProjectNamespace(this.options.namespace)
+    ) {
       throw new CodedError(
         'InvalidProjectNamespace',
         `The specified namespace '${this.options.namespace}' is not a valid identifier`,

@@ -2,6 +2,84 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 22 Oct 2024 05:26:27 GMT",
+      "version": "0.0.0-canary.879",
+      "tag": "react-native-windows_v0.0.0-canary.879",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e1b07c7a8f64463f68ec0c7f214dce410d7ee1f9",
+            "comment": "Cleanup ReactNativeAppBuilder and ReactNativeWin32App"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 19 Oct 2024 05:29:45 GMT",
+      "version": "0.0.0-canary.878",
+      "tag": "react-native-windows_v0.0.0-canary.878",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "winappsdkdata_bot@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "598f233843eede440e280890bab2a26e3a1fe610",
+            "comment": "Update WinAppSDK from 1.5 to 1.6 (1.6.240923002)"
+          },
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "905d445833ffea4811ec72f74591cc19c52062c8",
+            "comment": "Introduced autocapitalize prop in TextInput"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d0c7fa8199238da974905788351a45694fa39e57",
+            "comment": "Fix repo linting with prettier"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.242",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.108",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.30",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.34",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.47",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.49",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 16 Oct 2024 05:20:55 GMT",
       "version": "0.0.0-canary.877",
       "tag": "react-native-windows_v0.0.0-canary.877",
