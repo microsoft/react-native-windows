@@ -224,12 +224,20 @@ void ComponentView::updateFocusLayoutMetrics(facebook::react::LayoutMetrics cons
     m_focusInnerPrimitive->RootVisual().Size(
         {innerFocusMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
          innerFocusMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+    m_focusInnerPrimitive->RootVisual().Offset(
+        {-FOCUS_VISUAL_WIDTH * layoutMetrics.pointScaleFactor,
+         -FOCUS_VISUAL_WIDTH * layoutMetrics.pointScaleFactor,
+         0.0f});
   }
   if (m_focusOuterPrimitive) {
     auto outerFocusMetrics = focusLayoutMetrics(false /*inner*/);
     m_focusOuterPrimitive->RootVisual().Size(
         {outerFocusMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
          outerFocusMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+    m_focusOuterPrimitive->RootVisual().Offset(
+        {-(FOCUS_VISUAL_WIDTH * 2 * m_layoutMetrics.pointScaleFactor),
+         -(FOCUS_VISUAL_WIDTH * 2 * m_layoutMetrics.pointScaleFactor),
+         0.0f});
   }
 }
 
@@ -485,7 +493,7 @@ facebook::react::BorderMetrics ComponentView::focusBorderMetrics(
   metrics.borderStyles.bottom = metrics.borderStyles.left = metrics.borderStyles.right = metrics.borderStyles.top =
       facebook::react::BorderStyle::Solid;
   metrics.borderWidths.bottom = metrics.borderWidths.left = metrics.borderWidths.right = metrics.borderWidths.top =
-      FOCUS_VISUAL_WIDTH;
+      FOCUS_VISUAL_WIDTH * layoutMetrics.pointScaleFactor;
   return metrics;
 }
 
@@ -498,18 +506,10 @@ void ComponentView::showFocusVisual(bool show) noexcept {
       assert(viewProps()->enableFocusRing);
       if (!m_focusInnerPrimitive) {
         m_focusInnerPrimitive = std::make_shared<BorderPrimitive>(*this);
-        m_focusInnerPrimitive->RootVisual().Offset(
-            {-FOCUS_VISUAL_WIDTH * m_layoutMetrics.pointScaleFactor,
-             -FOCUS_VISUAL_WIDTH * m_layoutMetrics.pointScaleFactor,
-             0.0f});
         m_focusVisual.InsertAt(m_focusInnerPrimitive->RootVisual(), 0);
       }
       if (!m_focusOuterPrimitive) {
         m_focusOuterPrimitive = std::make_shared<BorderPrimitive>(*this);
-        m_focusOuterPrimitive->RootVisual().Offset(
-            {-(FOCUS_VISUAL_WIDTH * 2 * m_layoutMetrics.pointScaleFactor),
-             -(FOCUS_VISUAL_WIDTH * 2 * m_layoutMetrics.pointScaleFactor),
-             0.0f});
         m_focusVisual.InsertAt(m_focusOuterPrimitive->RootVisual(), 0);
       }
       updateFocusLayoutMetrics(m_layoutMetrics);
