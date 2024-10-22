@@ -112,54 +112,66 @@ export function getRawTemplateInfo(filePath: string): RawTemplateInfo {
   const result: RawTemplateInfo = {
     projectLang: getProjectLanguage(filePath),
     projectType: null,
-    projectArch: null
+    projectArch: null,
   };
 
   if (result.projectLang === 'cs') {
-    if (importProjectExists(
-      projectContents,
-      'Microsoft.ReactNative.Uwp.CSharpApp.targets',
-    )) {
+    if (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Uwp.CSharpApp.targets',
+      )
+    ) {
       result.projectType = 'app';
       result.projectArch = 'old';
-    }
-    else if (importProjectExists(
-      projectContents,
-      'Microsoft.ReactNative.Uwp.CSharpLib.targets',
-    )) {
+    } else if (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Uwp.CSharpLib.targets',
+      )
+    ) {
       result.projectType = 'lib';
       result.projectArch = 'old';
     }
   } else if (result.projectLang === 'cpp') {
-    if (importProjectExists(
-      projectContents,
-      'Microsoft.ReactNative.Uwp.CppApp.targets',
-    )) {
+    if (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Uwp.CppApp.targets',
+      )
+    ) {
       result.projectType = 'app';
       result.projectArch = 'old';
-    }
-    else if (importProjectExists(
-      projectContents,
-      'Microsoft.ReactNative.Uwp.CppLib.targets',
-    )) {
+    } else if (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Uwp.CppLib.targets',
+      )
+    ) {
       result.projectType = 'lib';
       result.projectArch = 'old';
-    }else if (importProjectExists(
-      projectContents,
-      'Microsoft.ReactNative.Composition.CppApp.targets',
-    )) {
+    } else if (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Composition.CppApp.targets',
+      )
+    ) {
       result.projectType = 'app';
       result.projectArch = 'new';
-    }else if (importProjectExists(
-      projectContents,
-      'Microsoft.ReactNative.Composition.CppLib.targets',
-    )) {
+    } else if (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.Composition.CppLib.targets',
+      )
+    ) {
       result.projectType = 'lib';
       result.projectArch = 'new';
-    } else if (importProjectExists(
-      projectContents,
-      'Microsoft.ReactNative.CppLib.targets',
-    )) {
+    } else if (
+      importProjectExists(
+        projectContents,
+        'Microsoft.ReactNative.CppLib.targets',
+      )
+    ) {
       result.projectType = 'lib';
       result.projectArch = 'mixed';
     }
@@ -515,7 +527,6 @@ export function getRnwConfig(
   root: string,
   projectFile: string,
 ): Record<string, any> | undefined {
-
   const pkgJson = require(path.join(root, 'package.json'));
 
   const config: Record<string, any> = pkgJson['react-native-windows'] ?? {};
@@ -525,7 +536,9 @@ export function getRnwConfig(
   if (!config['init-windows'].template) {
     const info = getRawTemplateInfo(projectFile);
     if (info.projectArch && info.projectLang && info.projectType) {
-      config['init-windows'].template = `${info.projectArch === 'old' ? 'old/uwp-' : ''}${info.projectLang}-${info.projectType}`;
+      config['init-windows'].template = `${
+        info.projectArch === 'old' ? 'old/uwp-' : ''
+      }${info.projectLang}-${info.projectType}`;
     }
   }
 
