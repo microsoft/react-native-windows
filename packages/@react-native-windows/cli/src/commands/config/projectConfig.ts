@@ -237,8 +237,7 @@ export function projectConfigWindows(
       result.experimentalFeatures.UseExperimentalNuget = useExperimentalNuget;
     }
 
-    result.rnwConfig = configUtils.getRnwConfig(folder,
-      projectFile);
+    result.rnwConfig = configUtils.getRnwConfig(folder, projectFile);
   }
 
   return result as WindowsProjectConfig;

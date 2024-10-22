@@ -110,7 +110,12 @@ async function runNpmInstall(config = {}, options = {}) {
   }
 }
 
-async function updateProjectPackageJson(config = {}, options = {}, props = {}, saveOptions = true) {
+async function updateProjectPackageJson(
+  config = {},
+  options = {},
+  props = {},
+  saveOptions = true,
+) {
   const projectRoot = config?.root ?? process.cwd();
   const projectPackage =
     await pkgUtils.WritableNpmPackage.fromPath(projectRoot);
@@ -127,7 +132,7 @@ async function updateProjectPackageJson(config = {}, options = {}, props = {}, s
         name: options.name,
         namespace: options.namespace,
         template: options.template,
-      }
+      },
     };
   }
 

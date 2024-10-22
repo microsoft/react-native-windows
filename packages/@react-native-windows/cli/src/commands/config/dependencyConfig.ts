@@ -326,10 +326,8 @@ export function dependencyConfigWindows(
         });
 
         if (directDependency) {
-          result.rnwConfig = configUtils.getRnwConfig(folder,
-            projectFile);
+          result.rnwConfig = configUtils.getRnwConfig(folder, projectFile);
         }
-
       } else {
         const projectPath = path.relative(sourceDir, projectFile);
         result.projects.push({
