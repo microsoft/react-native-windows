@@ -2301,7 +2301,7 @@
   dependencies:
     "@react-native/codegen" "0.76.0-rc.6"
 
-"@react-native/babel-preset@0.76.0-rc.6":
+"@react-native/babel-preset@0.76.0-rc.6", "@react-native/babel-preset@^0.76.0-rc.2":
   version "0.76.0-rc.6"
   resolved "https://registry.yarnpkg.com/@react-native/babel-preset/-/babel-preset-0.76.0-rc.6.tgz#56ba8de0fdaab91e2679adcd718e9489687a1233"
   integrity sha512-/ffHCxtc7KiNCDqxR0DVlXdgAkb56velLrx0j//l5SFr0f4pZYIpovEM0Y3u72ayLBVD4Wlj68rrv0BDUnsaUA==
