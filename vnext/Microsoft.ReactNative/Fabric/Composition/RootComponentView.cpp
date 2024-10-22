@@ -24,7 +24,7 @@ RootComponentView::RootComponentView(
           reactContext,
           ComponentViewFeatures::Default &
               ~(ComponentViewFeatures::Background | ComponentViewFeatures::ShadowProps |
-                ComponentViewFeatures::NativeBorder)) {}
+                ComponentViewFeatures::NativeBorder | ComponentViewFeatures::FocusVisual)) {}
 
 RootComponentView::~RootComponentView() {
   if (auto rootView = m_wkRootView.get()) {
