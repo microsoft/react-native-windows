@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 22 Oct 2024 05:26:27 GMT",
+      "version": "0.0.0-canary.879",
+      "tag": "react-native-windows_v0.0.0-canary.879",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e1b07c7a8f64463f68ec0c7f214dce410d7ee1f9",
+            "comment": "Cleanup ReactNativeAppBuilder and ReactNativeWin32App"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 19 Oct 2024 05:29:45 GMT",
       "version": "0.0.0-canary.878",
       "tag": "react-native-windows_v0.0.0-canary.878",
