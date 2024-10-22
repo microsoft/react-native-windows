@@ -11,12 +11,14 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
 // Ideally isColorMeaningful would be sufficient here.  But it appears to detect platformColors as not meaningful
 // https://github.com/microsoft/react-native-windows/issues/14006
-bool isColorMeaningful(const facebook::react::SharedColor& color, winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme) noexcept {
-    if (!color) {
-        return false;
-    }
+bool isColorMeaningful(
+    const facebook::react::SharedColor &color,
+    winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme) noexcept {
+  if (!color) {
+    return false;
+  }
 
-    return theme->Color(*color).A > 0;
+  return theme->Color(*color).A > 0;
 }
 
 // We don't want half pixel borders, or border radii - they lead to blurry borders
@@ -257,14 +259,12 @@ static winrt::com_ptr<ID2D1PathGeometry> GenerateRoundedRectPathGeometry(
 }
 
 RoundedPathParameters GenerateRoundedPathParameters(
-  const facebook::react::RectangleCorners<facebook::react::CornerRadii>& baseRadius,
-  const facebook::react::RectangleEdges<float>& inset,
-  const facebook::react::Size& pathSize) noexcept
-{
+    const facebook::react::RectangleCorners<facebook::react::CornerRadii> &baseRadius,
+    const facebook::react::RectangleEdges<float> &inset,
+    const facebook::react::Size &pathSize) noexcept {
   RoundedPathParameters result;
 
-  if (pathSize.width == 0 || pathSize.height == 0)
-  {
+  if (pathSize.width == 0 || pathSize.height == 0) {
     return result;
   }
 
@@ -301,13 +301,13 @@ winrt::com_ptr<ID2D1PathGeometry> BorderPrimitive::GenerateRoundedRectPathGeomet
     const facebook::react::RectangleCorners<facebook::react::CornerRadii> &baseRadius,
     const facebook::react::RectangleEdges<float> &inset,
     const facebook::react::RectangleEdges<float> &rectPathGeometry) noexcept {
+  RoundedPathParameters params = GenerateRoundedPathParameters(
+      baseRadius,
+      inset,
+      {rectPathGeometry.right - rectPathGeometry.left, rectPathGeometry.bottom - rectPathGeometry.top});
 
-    RoundedPathParameters params = GenerateRoundedPathParameters(
-        baseRadius,
-        inset,
-        {rectPathGeometry.right - rectPathGeometry.left, rectPathGeometry.bottom - rectPathGeometry.top});
-
-    return winrt::Microsoft::ReactNative::Composition::implementation::GenerateRoundedRectPathGeometry(compContext, params, rectPathGeometry);
+  return winrt::Microsoft::ReactNative::Composition::implementation::GenerateRoundedRectPathGeometry(
+      compContext, params, rectPathGeometry);
 }
 
 void DrawShape(
@@ -370,8 +370,7 @@ void SetBorderLayerPropertiesCommon(
     // Clear with transparency
     pRT->Clear();
 
-    if (!isColorMeaningful(borderColor, theme))
-    {
+    if (!isColorMeaningful(borderColor, theme)) {
       return;
     }
 
@@ -674,7 +673,7 @@ winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
     const facebook::react::RectangleEdges<float> &thickness,
     const facebook::react::RectangleEdges<float> &rectPathGeometry) noexcept {
   winrt::com_ptr<ID2D1PathGeometry> outerPathGeometry =
-    BorderPrimitive::GenerateRoundedRectPathGeometry(compContext, radius, inset, rectPathGeometry);
+      BorderPrimitive::GenerateRoundedRectPathGeometry(compContext, radius, inset, rectPathGeometry);
 
   if (outerPathGeometry == nullptr) {
     assert(false);
@@ -735,38 +734,34 @@ winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
   return nullptr;
 }
 
-  BorderPrimitive::BorderPrimitive(
-      winrt::Microsoft::ReactNative::Composition::implementation::ComponentView& outer,
-      const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual& rootVisual) 
-    : m_outer(&outer)
-    , m_rootVisual(rootVisual)
-     {}
+BorderPrimitive::BorderPrimitive(
+    winrt::Microsoft::ReactNative::Composition::implementation::ComponentView &outer,
+    const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &rootVisual)
+    : m_outer(&outer), m_rootVisual(rootVisual) {}
 
-  BorderPrimitive::BorderPrimitive(
-      winrt::Microsoft::ReactNative::Composition::implementation::ComponentView& outer)
-    : m_outer(&outer)
-    , m_rootVisual(outer.CompositionContext().CreateSpriteVisual())
-     {}
+BorderPrimitive::BorderPrimitive(winrt::Microsoft::ReactNative::Composition::implementation::ComponentView &outer)
+    : m_outer(&outer), m_rootVisual(outer.CompositionContext().CreateSpriteVisual()) {}
 
-  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual BorderPrimitive::RootVisual() const noexcept {
-    return m_rootVisual;
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual BorderPrimitive::RootVisual() const noexcept {
+  return m_rootVisual;
+}
+
+bool BorderPrimitive::requiresBorder(
+    const facebook::react::BorderMetrics &borderMetrics,
+    winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme) noexcept {
+  // We only handle a single borderStyle for now
+  auto borderStyle = borderMetrics.borderStyles.left;
+
+  bool hasMeaningfulColor =
+      !borderMetrics.borderColors.isUniform() || !isColorMeaningful(borderMetrics.borderColors.left, theme);
+  bool hasMeaningfulWidth = !borderMetrics.borderWidths.isUniform() || (borderMetrics.borderWidths.left != 0);
+  if (!hasMeaningfulColor && !hasMeaningfulWidth) {
+    return false;
   }
+  return true;
+}
 
-  bool BorderPrimitive::requiresBorder(const facebook::react::BorderMetrics& borderMetrics, winrt::Microsoft::ReactNative::Composition::implementation::Theme* theme) noexcept {
-    // We only handle a single borderStyle for now
-    auto borderStyle = borderMetrics.borderStyles.left;
-
-    bool hasMeaningfulColor =
-        !borderMetrics.borderColors.isUniform() || !isColorMeaningful(borderMetrics.borderColors.left, theme);
-    bool hasMeaningfulWidth = !borderMetrics.borderWidths.isUniform() || (borderMetrics.borderWidths.left != 0);
-    if (!hasMeaningfulColor && !hasMeaningfulWidth) {
-      return false;
-    }
-    return true;
-  }
-
-
-    void BorderPrimitive::updateProps(
+void BorderPrimitive::updateProps(
     const facebook::react::ViewProps &oldViewProps,
     const facebook::react::ViewProps &newViewProps) noexcept {
   if (oldViewProps.borderColors != newViewProps.borderColors || oldViewProps.borderRadii != newViewProps.borderRadii ||
@@ -775,138 +770,114 @@ winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
       oldViewProps.borderStyles != newViewProps.borderStyles) {
     m_needsUpdate = true;
   }
+}
 
-    }
+void BorderPrimitive::markNeedsUpdate() noexcept {
+  m_needsUpdate = true;
+}
 
-  void BorderPrimitive::markNeedsUpdate() noexcept {
-    m_needsUpdate = true;
+void BorderPrimitive::finalize(
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    const facebook::react::BorderMetrics &borderMetrics) noexcept {
+  if (!m_needsUpdate) {
+    return;
   }
 
-  void BorderPrimitive::finalize(facebook::react::LayoutMetrics const &layoutMetrics, const facebook::react::BorderMetrics& borderMetrics) noexcept {
-    if (!m_needsUpdate) {
-      return;
-    }
+  auto theme = m_outer->theme();
+  if (!theme || theme->IsEmpty()) {
+    return;
+  }
 
-    auto theme = m_outer->theme();
-    if (!theme || theme->IsEmpty()) {
-      return;
-    }
+  m_needsUpdate = false;
+  auto spBorderLayers = FindSpecialBorderLayers();
 
-    m_needsUpdate = false;
-    auto spBorderLayers = FindSpecialBorderLayers();
-
-    if (!TryUpdateSpecialBorderLayers(m_outer->theme(), spBorderLayers, layoutMetrics, borderMetrics)) {
-      for (auto &spBorderLayer : spBorderLayers) {
-        if (spBorderLayer) {
-          spBorderLayer.as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Brush(nullptr);
-        }
+  if (!TryUpdateSpecialBorderLayers(m_outer->theme(), spBorderLayers, layoutMetrics, borderMetrics)) {
+    for (auto &spBorderLayer : spBorderLayers) {
+      if (spBorderLayer) {
+        spBorderLayer.as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Brush(nullptr);
       }
     }
   }
+}
 
-    void BorderPrimitive::onThemeChanged(facebook::react::LayoutMetrics const& layoutMetrics, const facebook::react::BorderMetrics& borderMetrics) noexcept {
-        m_needsUpdate = true;
-        finalize(layoutMetrics, borderMetrics);
-    }
+void BorderPrimitive::onThemeChanged(
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    const facebook::react::BorderMetrics &borderMetrics) noexcept {
+  m_needsUpdate = true;
+  finalize(layoutMetrics, borderMetrics);
+}
 
-  std::array<
-      winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual,
+std::array<
+    winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual,
     BorderPrimitive::SpecialBorderLayerCount>
-  BorderPrimitive::FindSpecialBorderLayers() const noexcept {
-    std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount> layers{
-        nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
+BorderPrimitive::FindSpecialBorderLayers() const noexcept {
+  std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount> layers{
+      nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
 
-    if (m_numBorderVisuals) {
-      for (uint8_t i = 0; i < m_numBorderVisuals; i++) {
-        auto visual = m_rootVisual.GetAt(i);
-        layers[i] = visual.as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>();
-      }
+  if (m_numBorderVisuals) {
+    for (uint8_t i = 0; i < m_numBorderVisuals; i++) {
+      auto visual = m_rootVisual.GetAt(i);
+      layers[i] = visual.as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>();
     }
-
-    return layers;
   }
 
+  return layers;
+}
 
-  uint8_t BorderPrimitive::numberOfVisuals() const noexcept {
-    return m_numBorderVisuals;
+uint8_t BorderPrimitive::numberOfVisuals() const noexcept {
+  return m_numBorderVisuals;
+}
+
+bool BorderPrimitive::TryUpdateSpecialBorderLayers(
+    winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
+    std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
+        &spBorderVisuals,
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    const facebook::react::BorderMetrics &borderMetrics) noexcept {
+  // We only handle a single borderStyle for now
+  auto borderStyle = borderMetrics.borderStyles.left;
+
+  bool hasMeaningfulColor =
+      !borderMetrics.borderColors.isUniform() || !isColorMeaningful(borderMetrics.borderColors.left, theme);
+  bool hasMeaningfulWidth = !borderMetrics.borderWidths.isUniform() || (borderMetrics.borderWidths.left != 0);
+  if (!hasMeaningfulColor && !hasMeaningfulWidth) {
+    return false;
   }
 
-  bool BorderPrimitive::TryUpdateSpecialBorderLayers(
-        winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
-        std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
-            &spBorderVisuals,
-        facebook::react::LayoutMetrics const &layoutMetrics,
-        const facebook::react::BorderMetrics& borderMetrics) noexcept {
-
-    // We only handle a single borderStyle for now
-    auto borderStyle = borderMetrics.borderStyles.left;
-
-    bool hasMeaningfulColor =
-        !borderMetrics.borderColors.isUniform() || !isColorMeaningful(borderMetrics.borderColors.left, theme);
-    bool hasMeaningfulWidth = !borderMetrics.borderWidths.isUniform() || (borderMetrics.borderWidths.left != 0);
-    if (!hasMeaningfulColor && !hasMeaningfulWidth) {
-      return false;
+  // Create the special border layers if they don't exist yet
+  if (!spBorderVisuals[0]) {
+    for (uint8_t i = 0; i < SpecialBorderLayerCount; i++) {
+      auto visual = m_outer->CompositionContext().CreateSpriteVisual();
+      m_rootVisual.InsertAt(visual, i);
+      spBorderVisuals[i] = std::move(visual);
+      m_numBorderVisuals++;
     }
+  }
 
-    // Create the special border layers if they don't exist yet
-    if (!spBorderVisuals[0]) {
-      for (uint8_t i = 0; i < SpecialBorderLayerCount; i++) {
-        auto visual = m_outer->CompositionContext().CreateSpriteVisual();
-        m_rootVisual.InsertAt(visual, i);
-        spBorderVisuals[i] = std::move(visual);
-        m_numBorderVisuals++;
-      }
-    }
+  float extentWidth = layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor;
+  float extentHeight = layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor;
 
-    float extentWidth = layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor;
-    float extentHeight = layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor;
+  if (borderMetrics.borderRadii.topLeft.horizontal != 0 || borderMetrics.borderRadii.topRight.horizontal != 0 ||
+      borderMetrics.borderRadii.bottomLeft.horizontal != 0 || borderMetrics.borderRadii.bottomRight.horizontal != 0 ||
+      borderMetrics.borderRadii.topLeft.vertical != 0 || borderMetrics.borderRadii.topRight.vertical != 0 ||
+      borderMetrics.borderRadii.bottomLeft.vertical != 0 || borderMetrics.borderRadii.bottomRight.vertical != 0) {
+    auto compContext = m_outer->CompositionContext();
+    if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
+      // Because in DirectX geometry starts at the center of the stroke, we need to deflate
+      // rectangle by half the stroke width to render correctly.
+      facebook::react::RectangleEdges<float> rectPathGeometry = {
+          borderMetrics.borderWidths.left / 2.0f,
+          borderMetrics.borderWidths.top / 2.0f,
+          extentWidth - borderMetrics.borderWidths.right / 2.0f,
+          extentHeight - borderMetrics.borderWidths.bottom / 2.0f};
 
-    if (borderMetrics.borderRadii.topLeft.horizontal != 0 || borderMetrics.borderRadii.topRight.horizontal != 0 ||
-        borderMetrics.borderRadii.bottomLeft.horizontal != 0 || borderMetrics.borderRadii.bottomRight.horizontal != 0 ||
-        borderMetrics.borderRadii.topLeft.vertical != 0 || borderMetrics.borderRadii.topRight.vertical != 0 ||
-        borderMetrics.borderRadii.bottomLeft.vertical != 0 || borderMetrics.borderRadii.bottomRight.vertical != 0) {
+      winrt::com_ptr<ID2D1PathGeometry> pathGeometry =
+          GenerateRoundedRectPathGeometry(compContext, borderMetrics.borderRadii, {0, 0, 0, 0}, rectPathGeometry);
 
-      auto compContext = m_outer->CompositionContext();
-      if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
-        // Because in DirectX geometry starts at the center of the stroke, we need to deflate
-        // rectangle by half the stroke width to render correctly.
-        facebook::react::RectangleEdges<float> rectPathGeometry = {
-            borderMetrics.borderWidths.left / 2.0f,
-            borderMetrics.borderWidths.top / 2.0f,
-            extentWidth - borderMetrics.borderWidths.right / 2.0f,
-            extentHeight - borderMetrics.borderWidths.bottom / 2.0f};
-
-        winrt::com_ptr<ID2D1PathGeometry> pathGeometry =
-            GenerateRoundedRectPathGeometry(compContext, borderMetrics.borderRadii, {0, 0, 0, 0}, rectPathGeometry);
-
-        if (pathGeometry) {
-          DrawAllBorderLayers(
-              theme,
-            compContext,
-              spBorderVisuals,
-              *pathGeometry,
-              borderMetrics.borderWidths,
-              borderMetrics.borderRadii,
-              extentWidth,
-              extentHeight,
-              borderMetrics.borderColors,
-              borderStyle);
-        } else {
-          assert(false);
-        }
-      } else {
-        facebook::react::RectangleEdges<float> rectPathGeometry = {0, 0, extentWidth, extentHeight};
-
-        winrt::com_ptr<ID2D1GeometryGroup> pathGeometry = GetGeometryForRoundedBorder(
-          compContext,
-            borderMetrics.borderRadii,
-            {0, 0, 0, 0}, // inset
-            borderMetrics.borderWidths,
-            rectPathGeometry);
-
+      if (pathGeometry) {
         DrawAllBorderLayers(
             theme,
-          compContext,
+            compContext,
             spBorderVisuals,
             *pathGeometry,
             borderMetrics.borderWidths,
@@ -915,21 +886,24 @@ winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
             extentHeight,
             borderMetrics.borderColors,
             borderStyle);
+      } else {
+        assert(false);
       }
     } else {
-      auto compContext = m_outer->CompositionContext();
-      // Because in DirectX geometry starts at the center of the stroke, we need to deflate rectangle by half the stroke
-      // width / height to render correctly.
-      D2D1_RECT_F rectShape{
-          borderMetrics.borderWidths.left / 2.0f,
-          borderMetrics.borderWidths.top / 2.0f,
-          extentWidth - (borderMetrics.borderWidths.right / 2.0f),
-          extentHeight - (borderMetrics.borderWidths.bottom / 2.0f)};
+      facebook::react::RectangleEdges<float> rectPathGeometry = {0, 0, extentWidth, extentHeight};
+
+      winrt::com_ptr<ID2D1GeometryGroup> pathGeometry = GetGeometryForRoundedBorder(
+          compContext,
+          borderMetrics.borderRadii,
+          {0, 0, 0, 0}, // inset
+          borderMetrics.borderWidths,
+          rectPathGeometry);
+
       DrawAllBorderLayers(
           theme,
-        compContext,
+          compContext,
           spBorderVisuals,
-          rectShape,
+          *pathGeometry,
           borderMetrics.borderWidths,
           borderMetrics.borderRadii,
           extentWidth,
@@ -937,8 +911,28 @@ winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
           borderMetrics.borderColors,
           borderStyle);
     }
-    return true;
+  } else {
+    auto compContext = m_outer->CompositionContext();
+    // Because in DirectX geometry starts at the center of the stroke, we need to deflate rectangle by half the stroke
+    // width / height to render correctly.
+    D2D1_RECT_F rectShape{
+        borderMetrics.borderWidths.left / 2.0f,
+        borderMetrics.borderWidths.top / 2.0f,
+        extentWidth - (borderMetrics.borderWidths.right / 2.0f),
+        extentHeight - (borderMetrics.borderWidths.bottom / 2.0f)};
+    DrawAllBorderLayers(
+        theme,
+        compContext,
+        spBorderVisuals,
+        rectShape,
+        borderMetrics.borderWidths,
+        borderMetrics.borderRadii,
+        extentWidth,
+        extentHeight,
+        borderMetrics.borderColors,
+        borderStyle);
   }
-
-
+  return true;
 }
+
+} // namespace winrt::Microsoft::ReactNative::Composition::implementation
