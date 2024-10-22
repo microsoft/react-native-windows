@@ -1,9 +1,9 @@
 #pragma once
 
 #include <Fabric/ComponentView.h>
+#include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Fabric/ReactTaggedView.h>
 #include <UIAutomation.h>
-#include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 
 namespace Microsoft::ReactNative {
 struct winrt::Microsoft::ReactNative::implementation::ComponentView;
@@ -42,4 +42,4 @@ void AddSelectionItemsToContainer(CompositionDynamicAutomationProvider *provider
 
 void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *provider) noexcept;
 
-}// namespace winrt::Microsoft::ReactNative::implementation
+} // namespace winrt::Microsoft::ReactNative::implementation
