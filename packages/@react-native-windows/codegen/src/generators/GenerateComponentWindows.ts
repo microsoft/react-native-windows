@@ -6,9 +6,19 @@
 
 'use strict';
 
-import type {SchemaType, EventTypeAnnotation, PropTypeAnnotation, ObjectTypeAnnotation, CommandParamTypeAnnotation} from '@react-native/codegen/lib/CodegenSchema';
+import type {
+  SchemaType,
+  EventTypeAnnotation,
+  PropTypeAnnotation,
+  ObjectTypeAnnotation,
+  CommandParamTypeAnnotation,
+} from '@react-native/codegen/lib/CodegenSchema';
 import {getAliasCppName, setPreferredModuleName} from './AliasManaging';
-import {translateComponentPropsFieldType, translateComponentEventType, translateCommandParamType} from './PropObjectTypes';
+import {
+  translateComponentPropsFieldType,
+  translateComponentEventType,
+  translateCommandParamType,
+} from './PropObjectTypes';
 import type {CppStringTypes} from './ObjectTypes';
 import type {AliasMap} from './AliasManaging';
 
@@ -24,8 +34,7 @@ const headerTemplate = `/*
 #include <JSValueComposition.h>
 #include <NativeModules.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
-#include <winrt/Microsoft.UI.Composition.h>`
-
+#include <winrt/Microsoft.UI.Composition.h>`;
 
 const propsTemplate = `REACT_STRUCT(::_PROPS_NAME_::)
 struct ::_PROPS_NAME_:: : winrt::implements<::_PROPS_NAME_::, winrt::Microsoft::ReactNative::IComponentProps> {
@@ -37,23 +46,22 @@ struct ::_PROPS_NAME_:: : winrt::implements<::_PROPS_NAME_::, winrt::Microsoft::
 
 ::_PROPS_FIELDS_::
   const winrt::Microsoft::ReactNative::ViewProps ViewProps;
-};`
+};`;
 
 const propsObjectTemplate = `REACT_STRUCT(::_OBJECT_NAME_::)
 struct ::_OBJECT_NAME_:: {
 ::_OBJECT_FIELDS_::};
-`
+`;
 const eventsObjectTemplate = `REACT_STRUCT(::_OBJECT_NAME_::)
 struct ::_OBJECT_NAME_:: {
 ::_OBJECT_FIELDS_::};
-`
+`;
 
 const eventEmitterMethodTemplate = `  void ::_EVENT_NAME_::(::_EVENT_OBJECT_TYPE_:: &value) const {
     m_eventEmitter.DispatchEvent(L"::_EVENT_NAME_NO_ON_::", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
       winrt::Microsoft::ReactNative::WriteValue(writer, value);
     });
   }`;
-
 
 const eventEmitterTemplate = `::_COMPONENT_EVENT_OBJECT_TYPES_::
 
@@ -67,7 +75,7 @@ struct ::_EVENT_EMITTER_NAME_:: {
 
  private:
   winrt::Microsoft::ReactNative::EventEmitter m_eventEmitter{nullptr};
-};`
+};`;
 
 const baseStructTemplate = `
 template<typename TUserData>
@@ -227,7 +235,7 @@ namespace ::_NAMESPACE_:: {
 
 function capitalizeFirstLetter(s: string) {
   return s.charAt(0).toUpperCase() + s.slice(1);
-  }
+}
 
 export function createComponentGenerator({
   namespace,
@@ -255,114 +263,241 @@ export function createComponentGenerator({
         const componentShape = component.components[componentName];
 
         componentShape.extendsProps.forEach(propsBaseType => {
-          // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-          if (propsBaseType.type !== 'ReactNativeBuiltInType' || propsBaseType.knownTypeName !== 'ReactNativeCoreViewProps') {
-            throw new Error('Currently only supports props extending from ViewProps');
+          if (
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            propsBaseType.type !== 'ReactNativeBuiltInType' ||
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            propsBaseType.knownTypeName !== 'ReactNativeCoreViewProps'
+          ) {
+            throw new Error(
+              'Currently only supports props extending from ViewProps',
+            );
           }
         });
 
         // Props
-        const propObjectAliases: AliasMap<ObjectTypeAnnotation<PropTypeAnnotation>> = {types:{}, jobs: []};
+        const propObjectAliases: AliasMap<
+          ObjectTypeAnnotation<PropTypeAnnotation>
+        > = {types: {}, jobs: []};
         const propsName = `${componentName}Props`;
-        const propsFields = componentShape.props.map(prop => {
-          const propType = translateComponentPropsFieldType(prop.typeAnnotation, propObjectAliases, `${propsName}_${prop.name}`, cppCodegenOptions);
-          return `  REACT_FIELD(${prop.name})\n  ${(prop.optional && !propType.alreadySupportsOptionalOrHasDefault) ? `std::optional<${propType.type}>` : propType.type} ${prop.name}${propType.initializer};\n`;
-        }).join('\n');
+        const propsFields = componentShape.props
+          .map(prop => {
+            const propType = translateComponentPropsFieldType(
+              prop.typeAnnotation,
+              propObjectAliases,
+              `${propsName}_${prop.name}`,
+              cppCodegenOptions,
+            );
+            return `  REACT_FIELD(${prop.name})\n  ${
+              prop.optional && !propType.alreadySupportsOptionalOrHasDefault
+                ? `std::optional<${propType.type}>`
+                : propType.type
+            } ${prop.name}${propType.initializer};\n`;
+          })
+          .join('\n');
 
-        const propObjectTypes = propObjectAliases.jobs.map(propObjectTypeName => {
-          const propObjectType = propObjectAliases.types[propObjectTypeName]!;
-          const propsObjectFields = propObjectType.properties.map(property => {
-            const propType = translateComponentPropsFieldType(property.typeAnnotation, propObjectAliases, `${propsName}_${property.name}`, cppCodegenOptions);
-            return `  REACT_FIELD(${property.name})\n  ${(property.optional && !propType.alreadySupportsOptionalOrHasDefault) ? `std::optional<${propType.type}>` : propType.type} ${property.name}${propType.initializer};\n`;
-          }).join('\n');
+        const propObjectTypes = propObjectAliases.jobs
+          .map(propObjectTypeName => {
+            const propObjectType = propObjectAliases.types[propObjectTypeName]!;
+            const propsObjectFields = propObjectType.properties
+              .map(property => {
+                const propType = translateComponentPropsFieldType(
+                  property.typeAnnotation,
+                  propObjectAliases,
+                  `${propsName}_${property.name}`,
+                  cppCodegenOptions,
+                );
+                return `  REACT_FIELD(${property.name})\n  ${
+                  property.optional &&
+                  !propType.alreadySupportsOptionalOrHasDefault
+                    ? `std::optional<${propType.type}>`
+                    : propType.type
+                } ${property.name}${propType.initializer};\n`;
+              })
+              .join('\n');
 
-          return propsObjectTemplate.replace(/::_OBJECT_NAME_::/g, getAliasCppName(propObjectTypeName)).replace(/::_OBJECT_FIELDS_::/g, propsObjectFields);
-        }).join('\n');
-
+            return propsObjectTemplate
+              .replace(
+                /::_OBJECT_NAME_::/g,
+                getAliasCppName(propObjectTypeName),
+              )
+              .replace(/::_OBJECT_FIELDS_::/g, propsObjectFields);
+          })
+          .join('\n');
 
         // Events
-        const eventObjectAliases: AliasMap<ObjectTypeAnnotation<EventTypeAnnotation>> = {types:{}, jobs: []};
+        const eventObjectAliases: AliasMap<
+          ObjectTypeAnnotation<EventTypeAnnotation>
+        > = {types: {}, jobs: []};
         const eventEmitterName = `${componentName}EventEmitter`;
-        const eventEmitterMethods = componentShape.events.filter(event => event.typeAnnotation.argument).map(event => {
-          if (event.typeAnnotation.argument?.baseTypes) {
-            throw new Error('Events with base type arguments not currently supported');
-          }
+        const eventEmitterMethods = componentShape.events
+          .filter(event => event.typeAnnotation.argument)
+          .map(event => {
+            if (event.typeAnnotation.argument?.baseTypes) {
+              throw new Error(
+                'Events with base type arguments not currently supported',
+              );
+            }
 
-          // Called to collect the eventObjectAliases
-          translateComponentEventType(event.typeAnnotation.argument!, eventObjectAliases, `${event.name}`, cppCodegenOptions);
+            // Called to collect the eventObjectAliases
+            translateComponentEventType(
+              event.typeAnnotation.argument!,
+              eventObjectAliases,
+              `${event.name}`,
+              cppCodegenOptions,
+            );
 
-          // onSomething -> something
-          let eventNameLower = event.name.replace('on', '');
-          eventNameLower = eventNameLower[0].toLowerCase() + eventNameLower.slice(1);
+            // onSomething -> something
+            let eventNameLower = event.name.replace('on', '');
+            eventNameLower =
+              eventNameLower[0].toLowerCase() + eventNameLower.slice(1);
 
-          return eventEmitterMethodTemplate
-                      .replace(/::_EVENT_NAME_::/g,event.name)
-                      .replace(/::_EVENT_NAME_NO_ON_::/g,eventNameLower)
-                      .replace(/::_EVENT_OBJECT_TYPE_::/g, event.name.replace('on', 'On'));
-        }).join('\n\n');
-        
-        const eventObjects = eventObjectAliases.jobs.map(eventObjectTypeName => {
-          const eventObjectType = eventObjectAliases.types[eventObjectTypeName]!;
-          const eventObjectFields = eventObjectType.properties.map(property => {
-            const eventPropType = translateComponentEventType(property.typeAnnotation, eventObjectAliases, eventObjectTypeName, cppCodegenOptions);
-            return `  REACT_FIELD(${property.name})\n  ${(property.optional && !eventPropType.alreadySupportsOptionalOrHasDefault) ? `std::optional<${eventPropType.type}>` : eventPropType.type} ${property.name}${eventPropType.initializer};\n`;
-          }).join('\n');
-          return eventsObjectTemplate.replace(/::_OBJECT_NAME_::/g, `${componentName}_${eventObjectTypeName.replace('on', 'On')}`).replace(/::_OBJECT_FIELDS_::/g, eventObjectFields);
-        }).join('\n');
+            return eventEmitterMethodTemplate
+              .replace(/::_EVENT_NAME_::/g, event.name)
+              .replace(/::_EVENT_NAME_NO_ON_::/g, eventNameLower)
+              .replace(
+                /::_EVENT_OBJECT_TYPE_::/g,
+                event.name.replace('on', 'On'),
+              );
+          })
+          .join('\n\n');
 
-        const eventObjectUsings = eventObjectAliases.jobs.map(eventObjectTypeName => {
-          return `  using ${eventObjectTypeName.replace('on', 'On')} = ${componentName}_${eventObjectTypeName.replace('on', 'On')};`
-        }).join('\n');
-        
+        const eventObjects = eventObjectAliases.jobs
+          .map(eventObjectTypeName => {
+            const eventObjectType =
+              eventObjectAliases.types[eventObjectTypeName]!;
+            const eventObjectFields = eventObjectType.properties
+              .map(property => {
+                const eventPropType = translateComponentEventType(
+                  property.typeAnnotation,
+                  eventObjectAliases,
+                  eventObjectTypeName,
+                  cppCodegenOptions,
+                );
+                return `  REACT_FIELD(${property.name})\n  ${
+                  property.optional &&
+                  !eventPropType.alreadySupportsOptionalOrHasDefault
+                    ? `std::optional<${eventPropType.type}>`
+                    : eventPropType.type
+                } ${property.name}${eventPropType.initializer};\n`;
+              })
+              .join('\n');
+            return eventsObjectTemplate
+              .replace(
+                /::_OBJECT_NAME_::/g,
+                `${componentName}_${eventObjectTypeName.replace('on', 'On')}`,
+              )
+              .replace(/::_OBJECT_FIELDS_::/g, eventObjectFields);
+          })
+          .join('\n');
+
+        const eventObjectUsings = eventObjectAliases.jobs
+          .map(eventObjectTypeName => {
+            return `  using ${eventObjectTypeName.replace(
+              'on',
+              'On',
+            )} = ${componentName}_${eventObjectTypeName.replace('on', 'On')};`;
+          })
+          .join('\n');
+
         const eventEmitter = eventEmitterTemplate
-                              .replace(/::_COMPONENT_EVENT_OBJECT_TYPES_::/g, eventObjects)
-                              .replace(/::_EVENT_EMITTER_METHODS_::/g, eventEmitterMethods)
-                              .replace(/::_EVENT_EMITTER_USINGS_::/g, eventObjectUsings);
-
+          .replace(/::_COMPONENT_EVENT_OBJECT_TYPES_::/g, eventObjects)
+          .replace(/::_EVENT_EMITTER_METHODS_::/g, eventEmitterMethods)
+          .replace(/::_EVENT_EMITTER_USINGS_::/g, eventObjectUsings);
 
         // Commands
-        const commandAliases: AliasMap<ObjectTypeAnnotation<CommandParamTypeAnnotation>> = {types:{}, jobs: []};
-        const hasAnyCommands = (componentShape.commands.length !== 0);
-        const commandHandlers = hasAnyCommands ? componentShape.commands.map(command => {
-          const commandArgs = command.typeAnnotation.params.map(param => {
-            const commandArgType = translateCommandParamType(param.typeAnnotation, commandAliases, `${componentName}_${command.name}`, cppCodegenOptions);
-            return `${(param.optional && !commandArgType.alreadySupportsOptionalOrHasDefault) ? `std::optional<${commandArgType.type}>` : commandArgType.type} ${param.name}`;
-          }).join(', ');
+        const commandAliases: AliasMap<
+          ObjectTypeAnnotation<CommandParamTypeAnnotation>
+        > = {types: {}, jobs: []};
+        const hasAnyCommands = componentShape.commands.length !== 0;
+        const commandHandlers = hasAnyCommands
+          ? componentShape.commands
+              .map(command => {
+                const commandArgs = command.typeAnnotation.params
+                  .map(param => {
+                    const commandArgType = translateCommandParamType(
+                      param.typeAnnotation,
+                      commandAliases,
+                      `${componentName}_${command.name}`,
+                      cppCodegenOptions,
+                    );
+                    return `${
+                      param.optional &&
+                      !commandArgType.alreadySupportsOptionalOrHasDefault
+                        ? `std::optional<${commandArgType.type}>`
+                        : commandArgType.type
+                    } ${param.name}`;
+                  })
+                  .join(', ');
 
-          return `  // You must provide an implementation of this method to handle the "${command.name}" command
-  virtual void Handle${capitalizeFirstLetter(command.name)}Command(${commandArgs}) noexcept = 0;`;
-        }).join('\n\n') : '';
+                return `  // You must provide an implementation of this method to handle the "${
+                  command.name
+                }" command
+  virtual void Handle${capitalizeFirstLetter(
+    command.name,
+  )}Command(${commandArgs}) noexcept = 0;`;
+              })
+              .join('\n\n')
+          : '';
 
-
-        const commandHandler = hasAnyCommands ? `void HandleCommand(const winrt::Microsoft::ReactNative::ComponentView &view, const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
+        const commandHandler = hasAnyCommands
+          ? `void HandleCommand(const winrt::Microsoft::ReactNative::ComponentView &view, const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
     auto userData = view.UserData().as<TUserData>();
     auto commandName = args.CommandName();
-${componentShape.commands.map(command => {
-      const commaSeparatedCommandArgs = command.typeAnnotation.params.map(param => param.name).join(', ');
-      return `    if (commandName == L"${command.name}") {
-${command.typeAnnotation.params.length !== 0 ? `      ${command.typeAnnotation.params.map(param => {
-            const commandArgType = translateCommandParamType(param.typeAnnotation, commandAliases, `${componentName}_${command.name}`, cppCodegenOptions);
-            return `${(param.optional && !commandArgType.alreadySupportsOptionalOrHasDefault) ? `std::optional<${commandArgType.type}>` : commandArgType.type} ${param.name};`;
-      }).join('\n')}
-      winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), ${commaSeparatedCommandArgs});` : ''}
-      userData->Handle${capitalizeFirstLetter(command.name)}Command(${commaSeparatedCommandArgs});
+${componentShape.commands
+  .map(command => {
+    const commaSeparatedCommandArgs = command.typeAnnotation.params
+      .map(param => param.name)
+      .join(', ');
+    return `    if (commandName == L"${command.name}") {
+${
+  command.typeAnnotation.params.length !== 0
+    ? `      ${command.typeAnnotation.params
+        .map(param => {
+          const commandArgType = translateCommandParamType(
+            param.typeAnnotation,
+            commandAliases,
+            `${componentName}_${command.name}`,
+            cppCodegenOptions,
+          );
+          return `${
+            param.optional &&
+            !commandArgType.alreadySupportsOptionalOrHasDefault
+              ? `std::optional<${commandArgType.type}>`
+              : commandArgType.type
+          } ${param.name};`;
+        })
+        .join('\n')}
+      winrt::Microsoft::ReactNative::ReadArgs(args.CommandArgs(), ${commaSeparatedCommandArgs});`
+    : ''
+}
+      userData->Handle${capitalizeFirstLetter(
+        command.name,
+      )}Command(${commaSeparatedCommandArgs});
       return;
-    }`
-    }).join('\n\n')}
-  }` : '';
+    }`;
+  })
+  .join('\n\n')}
+  }`
+          : '';
 
-      const registerCommandHandler = hasAnyCommands ? `        builder.SetCustomCommandHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+        const registerCommandHandler = hasAnyCommands
+          ? `        builder.SetCustomCommandHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                           const winrt::Microsoft::ReactNative::HandleCommandArgs& args) noexcept {
           auto userData = view.UserData().as<TUserData>();
           userData->HandleCommand(view, args);
-        });` : '';
+        });`
+          : '';
 
         const baseType = baseStructTemplate
-        .replace(/::_COMPONENT_VIEW_COMMAND_HANDLERS_::/g, commandHandlers)
-        .replace(/::_COMPONENT_VIEW_COMMAND_HANDLER_::/g, commandHandler);
+          .replace(/::_COMPONENT_VIEW_COMMAND_HANDLERS_::/g, commandHandlers)
+          .replace(/::_COMPONENT_VIEW_COMMAND_HANDLER_::/g, commandHandler);
 
         // Registration
-        const componentRegistration = registerTemplate.replace(/::_REGISTER_CUSTOM_COMMAND_HANDLER_::/g, registerCommandHandler);
+        const componentRegistration = registerTemplate.replace(
+          /::_REGISTER_CUSTOM_COMMAND_HANDLER_::/g,
+          registerCommandHandler,
+        );
 
         // Final output
         const replaceContent = function (template: string): string {
@@ -380,10 +515,7 @@ ${command.typeAnnotation.params.length !== 0 ? `      ${command.typeAnnotation.p
             .replace(/\n\n\n+/g, '\n\n');
         };
 
-        files.set(
-          `${componentName}.g.h`,
-          replaceContent(fileTemplate),
-        );
+        files.set(`${componentName}.g.h`, replaceContent(fileTemplate));
       }
     }
 

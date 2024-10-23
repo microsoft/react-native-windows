@@ -76,7 +76,10 @@ async function getFileMappings(config = {}, options = {}) {
   );
 
   const projectRoot = libConfig.root ?? process.cwd();
-  const {rnwPath, rnwVersion, devMode, isCanary} = templateUtils.getRnwInfo(libConfig, libOptions);
+  const {rnwPath, rnwVersion, devMode, isCanary} = templateUtils.getRnwInfo(
+    libConfig,
+    libOptions,
+  );
 
   const projectName =
     libConfig?.project?.windows?.projects[0]?.projectName ??
@@ -102,7 +105,9 @@ async function getFileMappings(config = {}, options = {}) {
     namespaceCpp: namespaceCpp,
 
     rnwVersion: rnwVersion,
-    rnwPathFromProjectRoot: path.relative(projectRoot, rnwPath).replace(/\//g, '\\'),
+    rnwPathFromProjectRoot: path
+      .relative(projectRoot, rnwPath)
+      .replace(/\//g, '\\'),
 
     // Visual Studio is very picky about the casing of the guids for projects, project references and the solution
     // https://www.bing.com/search?q=visual+studio+project+guid+casing&cvid=311a5ad7f9fc41089507b24600d23ee7&FORM=ANAB01&PC=U531
