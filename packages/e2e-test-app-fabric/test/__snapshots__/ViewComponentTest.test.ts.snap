@@ -1121,6 +1121,7 @@ exports[`View Tests Views can have customized accessibility 1`] = `
         "AutomationId": "",
         "ControlType": 50026,
         "LocalizedControlType": "group",
+        "ValuePattern.Value": "0",
         "__Children": [
           {
             "AutomationId": "",
