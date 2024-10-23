@@ -34,7 +34,6 @@ struct WindowsModalHostComponentView
       uint32_t index) noexcept override;
 
   void AdjustWindowSize() noexcept;
-  void FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept override;
 
   void updateLayoutMetrics(
       facebook::react::LayoutMetrics const &layoutMetrics,

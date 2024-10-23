@@ -48,6 +48,10 @@ struct ReactNativeIsland
   ~ReactNativeIsland() noexcept;
 
   ReactNativeIsland(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept;
+  ReactNativeIsland(
+      const winrt::Microsoft::UI::Composition::Compositor &compositor,
+      winrt::Microsoft::ReactNative::IReactContext context,
+      winrt::Microsoft::ReactNative::ComponentView componentView) noexcept;
   winrt::Microsoft::UI::Content::ContentIsland Island();
 
   // property ReactViewHost
@@ -140,6 +144,7 @@ struct ReactNativeIsland
 #endif
 
   HWND m_hwnd{0};
+  bool m_isFragment{false};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
   bool m_hasRenderedVisual{false};

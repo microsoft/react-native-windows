@@ -127,6 +127,20 @@ ReactNativeIsland::ReactNativeIsland(const winrt::Microsoft::UI::Composition::Co
   InitTextScaleMultiplier();
 }
 
+// Constructor to initialize ReactNativeIsland with context and componentView
+ReactNativeIsland::ReactNativeIsland(
+    const winrt::Microsoft::UI::Composition::Compositor &compositor,
+    winrt::Microsoft::ReactNative::IReactContext context,
+    winrt::Microsoft::ReactNative::ComponentView componentView) noexcept
+    : m_compositor(compositor),
+      m_context(context),
+      m_layoutConstraints({{0, 0}, {0, 0}, winrt::Microsoft::ReactNative::LayoutDirection::Undefined}) {
+  m_rootTag = componentView.Tag();
+  m_isFragment = true;
+  InitTextScaleMultiplier();
+  AddFragmentCompositionEventHandler(context, componentView);
+}
+
 ReactNativeIsland::ReactNativeIsland() noexcept : ReactNativeIsland(nullptr) {}
 
 ReactNativeIsland::~ReactNativeIsland() noexcept {
@@ -152,6 +166,7 @@ ReactNative::IReactViewHost ReactNativeIsland::ReactViewHost() noexcept {
 }
 
 void ReactNativeIsland::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewHost const &value) noexcept {
+  assert(!m_isFragment); // make sure this isn't a FragmentIsalnd
   if (m_reactViewHost == value) {
     return;
   }
@@ -419,11 +434,9 @@ void ReactNativeIsland::AddFragmentCompositionEventHandler(
                        .Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
                        .try_as<IReactDispatcher>();
   VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
+  VerifyElseCrash(m_rootTag != -1);
   auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
       winrt::Microsoft::ReactNative::ReactPropertyBag(context.Properties()));
-
-  m_rootTag = componentView.Tag();
-  assert(m_rootTag != -1);
 
   if (!m_CompositionEventHandler) {
     // Create CompositionEventHandler if not already created
