@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     // [Windows
-    width: 500, 
+    width: 500,
     height: 500,
     // flex: 1,
     // justifyContent: 'center',
