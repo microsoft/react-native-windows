@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 22 Oct 2024 05:26:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 23 Oct 2024 05:31:16 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.880
+
+Wed, 23 Oct 2024 05:31:16 GMT
+
+### Changes
+
+- Fix ignore files and update cli timeout (jthysell@microsoft.com)
+- Update Provider Guardrails (34109996+chiaramooney@users.noreply.github.com)
 
 ## 0.0.0-canary.879
 

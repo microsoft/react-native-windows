@@ -16,6 +16,7 @@ packages/@office-iss/react-native-win32/Libraries
 packages/@office-iss/react-native-win32/packages
 packages/@office-iss/react-native-win32/ReactCopies
 packages/@office-iss/react-native-win32/rntypes
+packages/@office-iss/react-native-win32/src
 packages/@office-iss/react-native-win32/src-win/rntypes
 packages/@office-iss/react-native-win32/types
 packages/@office-iss/react-native-win32/flow-typed
@@ -49,6 +50,7 @@ vnext/packages
 vnext/Microsoft.ReactNative.IntegrationTests/SyntaxError.js
 vnext/ReactCopies
 vnext/RNTester.d.ts
+vnext/src
 vnext/src-win/rntypes
 vnext/rntypes
 vnext/target

@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 23 Oct 2024 05:31:16 GMT",
+      "version": "0.0.0-canary.880",
+      "tag": "react-native-windows_v0.0.0-canary.880",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4d45e818929692b0bd4e3f836c190a94c616587b",
+            "comment": "Fix ignore files and update cli timeout"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "098541518a576a482dd2ccba17ab0f072132ac4c",
+            "comment": "Update Provider Guardrails"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Oct 2024 05:26:27 GMT",
       "version": "0.0.0-canary.879",
       "tag": "react-native-windows_v0.0.0-canary.879",
