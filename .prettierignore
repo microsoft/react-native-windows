@@ -1,0 +1,57 @@
+# all
+.vscode/
+
+# packages/*
+packages/**/lib
+packages/**/lib-commonjs
+
+# packages/@office-iss/react-native-win32
+packages/@office-iss/react-native-win32/dist
+packages/@office-iss/react-native-win32/flow
+packages/@office-iss/react-native-win32/index.*
+packages/@office-iss/react-native-win32/IntegrationTests
+packages/@office-iss/react-native-win32/jest
+packages/@office-iss/react-native-win32/lib
+packages/@office-iss/react-native-win32/Libraries
+packages/@office-iss/react-native-win32/packages
+packages/@office-iss/react-native-win32/ReactCopies
+packages/@office-iss/react-native-win32/rntypes
+packages/@office-iss/react-native-win32/src
+packages/@office-iss/react-native-win32/src-win/rntypes
+packages/@office-iss/react-native-win32/types
+packages/@office-iss/react-native-win32/flow-typed
+
+# packages/@office-iss/react-native-win32-tester
+packages/@office-iss/react-native-win32-tester/js
+
+# @react-native-windows/automation
+packages/@react-native-windows/automation/src/index.ts
+
+# @react-native-windows/tester
+packages/@react-native-windows/tester/js
+
+# packages/react-native-platform-override
+packages/react-native-platform-override/src/e2etest/collateral
+
+# packages/react-native-windows-init
+packages/react-native-windows-init/src/GenerateWindowsType.ts
+
+# vnext
+vnext/dist
+vnext/flow
+vnext/index.*
+vnext/IntegrationTests
+vnext/jest
+vnext/lib
+vnext/Libraries
+vnext/local-cli/lib
+vnext/local-cli/lib-commonjs
+vnext/packages
+vnext/Microsoft.ReactNative.IntegrationTests/SyntaxError.js
+vnext/ReactCopies
+vnext/RNTester.d.ts
+vnext/src
+vnext/src-win/rntypes
+vnext/rntypes
+vnext/target
+vnext/flow-typed

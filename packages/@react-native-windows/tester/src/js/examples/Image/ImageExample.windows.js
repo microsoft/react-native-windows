@@ -945,7 +945,7 @@ exports.examples = [
     description: ('If the `source` prop `uri` property is an object URL, ' +
       'then it will be resolved using `BlobProvider` (Android) or `RCTBlobManager` (iOS).': string),
     render: function (): React.Node {
-      return <BlobImageExample urls={[IMAGE1, IMAGE2]} />
+      return <BlobImageExample urls={[IMAGE1, IMAGE2]} />;
     },
   },
   {
@@ -1122,7 +1122,10 @@ exports.examples = [
     name: 'background-color',
     render: function (): React.Node {
       return (
-        <View style={styles.horizontal} testID="background-color-example" accessible>
+        <View
+          style={styles.horizontal}
+          testID="background-color-example"
+          accessible>
           <Image source={smallImage} style={styles.base} />
           <Image
             style={[styles.base, styles.backgroundColor1]}
@@ -1544,7 +1547,7 @@ exports.examples = [
       return <MultipleSourcesExample />;
     },
   },
-/*
+  /*
   // Windows doesn't support legacy image format.
   {
     title: 'Legacy local image',
@@ -1658,23 +1661,23 @@ exports.examples = [
       'When their are a set of elements the acessibilityPosInSet and accessibilitySetSize props should be used to alert UIA of the set structure',
     render: function (): React.Node {
       return (
-        <View accessible testID='image-set'>
+        <View accessible testID="image-set">
           <Image
-          source={fullImage}
-          style={styles.base}
-          accessible
-          accessibilityPosInSet={1}
-          accessibilitySetSize={2}
-          accessibilityLiveRegion='polite'
-        />
-        <Image
-          source={fullImage}
-          style={styles.base}
-          accessible
-          accessibilityPosInSet={2}
-          accessibilitySetSize={2}
-          accessibilityLiveRegion='assertive'
-        />
+            source={fullImage}
+            style={styles.base}
+            accessible
+            accessibilityPosInSet={1}
+            accessibilitySetSize={2}
+            accessibilityLiveRegion="polite"
+          />
+          <Image
+            source={fullImage}
+            style={styles.base}
+            accessible
+            accessibilityPosInSet={2}
+            accessibilitySetSize={2}
+            accessibilityLiveRegion="assertive"
+          />
         </View>
       );
     },

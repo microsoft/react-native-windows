@@ -79,7 +79,7 @@ exports.examples = [
           accessibilityLabel="Wait for content to load!"
           accessibilityPosInSet={1}
           accessibilitySetSize={1}
-          accessibilityLiveRegion='polite'
+          accessibilityLiveRegion="polite"
           accessible
         />
       );
