@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Default scroll to bring a component into view should have padding around the viewport",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
