@@ -1233,18 +1233,26 @@ void ComponentView::updateShadowProps(
   // Shadow Properties
   if (oldViewProps.shadowOffset != newViewProps.shadowOffset || oldViewProps.shadowColor != newViewProps.shadowColor ||
       oldViewProps.shadowOpacity != newViewProps.shadowOpacity ||
-      oldViewProps.shadowRadius != newViewProps.shadowRadius) {
+      oldViewProps.shadowRadius != newViewProps.shadowRadius || oldViewProps.boxShadow != newViewProps.boxShadow) {
     applyShadowProps(newViewProps);
   }
 }
 
 void ComponentView::applyShadowProps(const facebook::react::ViewProps &viewProps) noexcept {
   auto shadow = m_compContext.CreateDropShadow();
-  shadow.Offset({viewProps.shadowOffset.width, viewProps.shadowOffset.height, 0});
-  shadow.Opacity(viewProps.shadowOpacity);
-  shadow.BlurRadius(viewProps.shadowRadius);
-  if (viewProps.shadowColor)
-    shadow.Color(theme()->Color(*viewProps.shadowColor));
+  if (!viewProps.boxShadow.empty()) {
+    shadow.Offset({viewProps.boxShadow[0].offsetX, viewProps.boxShadow[0].offsetY, 0});
+    shadow.Opacity(1);
+    shadow.BlurRadius(viewProps.boxShadow[0].blurRadius);
+    shadow.Color(theme()->Color(*viewProps.boxShadow[0].color));
+  } else {
+    shadow.Offset({viewProps.shadowOffset.width, viewProps.shadowOffset.height, 0});
+    shadow.Opacity(viewProps.shadowOpacity);
+    shadow.BlurRadius(viewProps.shadowRadius);
+    if (viewProps.shadowColor)
+      shadow.Color(theme()->Color(*viewProps.shadowColor));
+  }
+
   Visual().as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Shadow(shadow);
 }
 
