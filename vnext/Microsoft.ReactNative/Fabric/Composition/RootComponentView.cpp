@@ -7,6 +7,7 @@
 #include "RootComponentView.h"
 
 #include <Fabric/FabricUIManagerModule.h>
+#include <winrt/Microsoft.UI.Input.h>
 #include "CompositionRootAutomationProvider.h"
 #include "ReactNativeIsland.h"
 #include "Theme.h"
@@ -106,7 +107,10 @@ bool RootComponentView::TrySetFocusedComponent(
   auto target = view;
   auto selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(target);
   if (selfView && !selfView->focusable()) {
-    target = FocusManager::FindFirstFocusableElement(target);
+    target = (direction == winrt::Microsoft::ReactNative::FocusNavigationDirection::Last ||
+              direction == winrt::Microsoft::ReactNative::FocusNavigationDirection::Previous)
+        ? FocusManager::FindLastFocusableElement(target)
+        : FocusManager::FindFirstFocusableElement(target);
     if (!target)
       return false;
     selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(target);
@@ -147,6 +151,9 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
       [currentlyFocused = m_focusedComponent, next](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
         if (view == currentlyFocused)
           return false;
+        auto selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view);
+        if (!selfView->focusable())
+          return false;
 
         return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)
             ->rootComponentView()
@@ -156,7 +163,28 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
                      : winrt::Microsoft::ReactNative::FocusNavigationDirection::Previous);
       };
 
-  return winrt::Microsoft::ReactNative::implementation::walkTree(m_focusedComponent, next, fn);
+  if (winrt::Microsoft::ReactNative::implementation::walkTree(m_focusedComponent, next, fn)) {
+    return true;
+  }
+
+  // We reached the end of the focus loop.  Notify the island in case the host wants to move focus somewhere outside the
+  // island.
+  auto island = parentContentIsland();
+  if (island) {
+    auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(island);
+    auto request = winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(
+        next ? winrt::Microsoft::UI::Input::FocusNavigationReason::Last
+             : winrt::Microsoft::UI::Input::FocusNavigationReason::First);
+    auto result = focusController.DepartFocus(request);
+    if (result == winrt::Microsoft::UI::Input::FocusNavigationResult::Moved) {
+      return true;
+    }
+  }
+
+  // Wrap focus around if nothing outside the island takes focus
+  return NavigateFocus(winrt::Microsoft::ReactNative::FocusNavigationRequest(
+      next ? winrt::Microsoft::ReactNative::FocusNavigationReason::First
+           : winrt::Microsoft::ReactNative::FocusNavigationReason::Last));
 }
 
 HRESULT RootComponentView::GetFragmentRoot(IRawElementProviderFragmentRoot **pRetVal) noexcept {
