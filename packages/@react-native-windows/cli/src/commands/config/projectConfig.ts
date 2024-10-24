@@ -240,5 +240,15 @@ export function projectConfigWindows(
     result.rnwConfig = configUtils.getRnwConfig(folder, projectFile);
   }
 
+  if (!result.rnwConfig) {
+    // No rnwConfig, maybe it's actually a lib, try to get some info from it
+    let projectFile = '';
+    const foundProjects = configUtils.findDependencyProjectFiles(sourceDir);
+    if (foundProjects.length > 0) {
+      projectFile = path.join(sourceDir, foundProjects[0]);
+    }
+    result.rnwConfig = configUtils.getRnwConfig(folder, projectFile);
+  }
+  
   return result as WindowsProjectConfig;
 }

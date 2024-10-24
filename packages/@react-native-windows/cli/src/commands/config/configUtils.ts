@@ -107,13 +107,19 @@ export interface RawTemplateInfo {
  * @return The RawTemplateInfo for the specific project.
  */
 export function getRawTemplateInfo(filePath: string): RawTemplateInfo {
-  const projectContents = readProjectFile(filePath);
-
   const result: RawTemplateInfo = {
-    projectLang: getProjectLanguage(filePath),
+    projectLang: null,
     projectType: null,
     projectArch: null,
   };
+
+  if (!fs.existsSync(filePath)) {
+    return result;
+  }
+
+  result.projectLang = getProjectLanguage(filePath);
+
+  const projectContents = readProjectFile(filePath);
 
   if (result.projectLang === 'cs') {
     if (
