@@ -1,5 +1,5 @@
 {
-  "type": "patch",
+  "type": "prerelease",
   "comment": "[0.76] Temporarily disable code-signing of NuGet packages",
   "packageName": "react-native-windows",
   "email": "jthysell@microsoft.com",
