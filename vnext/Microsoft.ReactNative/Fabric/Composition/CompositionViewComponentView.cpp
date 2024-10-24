@@ -1906,6 +1906,9 @@ winrt::Microsoft::ReactNative::ComponentView lastDeepChild(
   return current;
 }
 
+// Walks the tree calling the function fn on each node.
+// If fn returns true, then walkTree stops itterating over the tree, and returns true.
+// If the tree walk completes without fn returning true, then walkTree returns false.
 bool walkTree(
     const winrt::Microsoft::ReactNative::ComponentView &view,
     bool forward,
