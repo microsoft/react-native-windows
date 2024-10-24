@@ -2,6 +2,33 @@
   "name": "@rnw-scripts/format-files",
   "entries": [
     {
+      "date": "Sat, 19 Oct 2024 05:29:47 GMT",
+      "version": "1.1.50",
+      "tag": "@rnw-scripts/format-files_v1.1.50",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@rnw-scripts/format-files",
+            "commit": "d0c7fa8199238da974905788351a45694fa39e57",
+            "comment": "Fix repo linting with prettier"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/format-files",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.30",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/format-files",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.47",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Oct 2024 19:54:27 GMT",
       "version": "1.1.49",
       "tag": "@rnw-scripts/format-files_v1.1.49",

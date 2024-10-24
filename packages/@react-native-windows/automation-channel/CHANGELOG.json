@@ -2,6 +2,69 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Wed, 23 Oct 2024 05:31:16 GMT",
+      "version": "0.12.220",
+      "tag": "@react-native-windows/automation-channel_v0.12.220",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.880",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Oct 2024 05:26:28 GMT",
+      "version": "0.12.219",
+      "tag": "@react-native-windows/automation-channel_v0.12.219",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.879",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 19 Oct 2024 05:29:45 GMT",
+      "version": "0.12.218",
+      "tag": "@react-native-windows/automation-channel_v0.12.218",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "d0c7fa8199238da974905788351a45694fa39e57",
+            "comment": "Fix repo linting with prettier"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.30",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.47",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.878",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 16 Oct 2024 05:20:54 GMT",
       "version": "0.12.217",
       "tag": "@react-native-windows/automation-channel_v0.12.217",

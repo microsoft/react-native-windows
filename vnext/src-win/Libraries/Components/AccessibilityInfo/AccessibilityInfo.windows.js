@@ -56,7 +56,7 @@ const EventNames: Map<
       ['screenReaderChanged', 'touchExplorationDidChange'],
       ['accessibilityServiceChanged', 'accessibilityServiceDidChange'],
     ])
-  : Platform.OS === 'windows'
+  : Platform.OS === 'windows
   ? new Map([
       ['change', 'TOUCH_EXPLORATION_EVENT'],
       ['reduceMotionChanged', 'REDUCE_MOTION_EVENT'],

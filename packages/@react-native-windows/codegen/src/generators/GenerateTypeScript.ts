@@ -62,11 +62,13 @@ function optionalSign<T>(obj: NamedShape<T>): string {
 }
 
 function translateType(
-  type: Nullable<
-    | NativeModuleBaseTypeAnnotation
-    | NativeModuleParamTypeAnnotation
-    | NativeModuleReturnTypeAnnotation
-  > | UnsafeAnyTypeAnnotation,
+  type:
+    | Nullable<
+        | NativeModuleBaseTypeAnnotation
+        | NativeModuleParamTypeAnnotation
+        | NativeModuleReturnTypeAnnotation
+      >
+    | UnsafeAnyTypeAnnotation,
 ): string {
   // avoid: Property 'type' does not exist on type 'never'
   const returnType = type.type;

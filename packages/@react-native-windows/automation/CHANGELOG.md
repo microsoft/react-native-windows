@@ -1,8 +1,36 @@
 # Change Log - @react-native-windows/automation
 
-<!-- This log was last generated on Wed, 16 Oct 2024 05:20:55 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 23 Oct 2024 05:31:16 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.3.302
+
+Wed, 23 Oct 2024 05:31:16 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.220
+
+## 0.3.301
+
+Tue, 22 Oct 2024 05:26:28 GMT
+
+### Patches
+
+- Bump @react-native-windows/automation-channel to v0.12.219
+
+## 0.3.300
+
+Sat, 19 Oct 2024 05:29:45 GMT
+
+### Patches
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/automation-channel to v0.12.218
+- Bump @react-native-windows/fs to v0.0.0-canary.59
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
 
 ## 0.3.299
 

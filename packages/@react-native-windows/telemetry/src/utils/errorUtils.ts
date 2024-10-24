@@ -160,17 +160,17 @@ export function sanitizeErrorMessage(msg: string): string {
  * Sanitizes an error stack frame.
  * @param frame
  */
-export function sanitizeErrorStackFrame(
-  frame: ErrorStackFrame): void {
-
+export function sanitizeErrorStackFrame(frame: ErrorStackFrame): void {
   if (frame.functionName) {
     const leftParenthesisIndex = frame.functionName.indexOf('(');
     if (leftParenthesisIndex !== -1) {
       // case 1: method === 'methodName (rootOfThePath'
-      frame.functionName = frame.functionName.substr(0, leftParenthesisIndex).trim();
+      frame.functionName = frame.functionName
+        .substr(0, leftParenthesisIndex)
+        .trim();
     } else {
       // case 2: method === <no_method> or something without '(', fileName is full path
-    }  
+    }
   }
 
   // anonymize the filePath

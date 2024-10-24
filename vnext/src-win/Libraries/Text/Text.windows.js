@@ -552,9 +552,9 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
           styleProps.borderTopWidth != null)
       ) {
         let textStyleProps = Array.isArray(styleProps)
-        ? // $FlowFixMe[underconstrained-implicit-instantiation]
-          flattenStyle(styleProps)
-        : styleProps;
+          ? // $FlowFixMe[underconstrained-implicit-instantiation]
+            flattenStyle(styleProps)
+          : styleProps;
         let {
           // $FlowFixMe[prop-missing]
           margin,
@@ -594,11 +594,15 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
           paddingVertical,
           // $FlowFixMe[not-an-object]
           ...rest
-        } = textStyleProps != null ? textStyleProps : {}
-      return (
-        <View style={styleProps}><TextAncestor.Provider value={true}>{nativeText}</TextAncestor.Provider></View>
-      );
-      };
+        } = textStyleProps != null ? textStyleProps : {};
+        return (
+          <View style={styleProps}>
+            <TextAncestor.Provider value={true}>
+              {nativeText}
+            </TextAncestor.Provider>
+          </View>
+        );
+      }
       // Windows]
 
       if (children == null) {

@@ -104,6 +104,10 @@ struct WindowsTextInputComponentView
   void InternalFinalize() noexcept;
   void UpdatePropertyBits() noexcept;
 
+  void autoCapitalizeOnUpdateProps(
+      const std::string &previousCapitalizationType,
+      const std::string &newcapitalizationType) noexcept;
+
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface{nullptr};

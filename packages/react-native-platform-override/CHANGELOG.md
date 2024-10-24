@@ -1,8 +1,20 @@
 # Change Log - react-native-platform-override
 
-<!-- This log was last generated on Mon, 07 Oct 2024 19:54:24 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 19 Oct 2024 05:29:44 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.9.49
+
+Sat, 19 Oct 2024 05:29:44 GMT
+
+### Patches
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.59
+- Bump @react-native-windows/package-utils to v0.0.0-canary.85
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
 
 ## 1.9.48
 

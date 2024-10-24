@@ -568,23 +568,23 @@ class AccessibilityExample extends React.Component<
         accessibilityState={{expanded: this.state.expanded, busy: true}}
         accessibilityPosInSet={1}
         accessibilitySetSize={1}
-        accessibilityLiveRegion='polite'
+        accessibilityLiveRegion="polite"
         testID="accessibility"
         accessible
         focusable
         onAccessibilityAction={event => {
           switch (event.nativeEvent.actionName) {
             case 'expand':
-              this.setState({expanded: true})
+              this.setState({expanded: true});
               break;
             case 'collapse':
-              this.setState({expanded: false})
+              this.setState({expanded: false});
           }
         }}
         onAccessibilityTap={() => {
           this.setState({tap: this.state.tap + 1});
         }}
-        onPress={()=>{
+        onPress={() => {
           this.setState({expanded: !this.state.expanded});
           console.log('Pressed');
         }}>
@@ -594,7 +594,10 @@ class AccessibilityExample extends React.Component<
           <Text>This element should be hidden from accessibility.</Text>
         </View>
         <View accessible accessibilityValue={{now: this.state.tap}}>
-          <Text>This sub-view should not have an accessibility value. It's control type does not support the value pattern.</Text>
+          <Text>
+            This sub-view should not have an accessibility value. It's control
+            type does not support the value pattern.
+          </Text>
         </View>
       </View>
     );

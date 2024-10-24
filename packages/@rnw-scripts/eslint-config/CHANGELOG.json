@@ -2,6 +2,21 @@
   "name": "@rnw-scripts/eslint-config",
   "entries": [
     {
+      "date": "Sat, 19 Oct 2024 05:29:47 GMT",
+      "version": "1.2.30",
+      "tag": "@rnw-scripts/eslint-config_v1.2.30",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@rnw-scripts/eslint-config",
+            "commit": "d0c7fa8199238da974905788351a45694fa39e57",
+            "comment": "Fix repo linting with prettier"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Oct 2024 19:54:25 GMT",
       "version": "1.2.29",
       "tag": "@rnw-scripts/eslint-config_v1.2.29",

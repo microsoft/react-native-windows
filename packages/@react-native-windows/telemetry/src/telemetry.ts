@@ -37,7 +37,7 @@ interface CommandInfo {
 }
 
 // 1DS instrumentation key
-const RNW_1DS_INSTRUMENTATION_KEY = ""
+const RNW_1DS_INSTRUMENTATION_KEY = '';
 
 // Environment variable to override the default setup string
 const ENV_SETUP_OVERRIDE = 'RNW_TELEMETRY_SETUP';
@@ -138,7 +138,11 @@ export class Telemetry {
     }
 
     // Bail if we're in CI and not capturing CI
-    if (!Telemetry.isTestEnvironment && basePropUtils.isCI() && !basePropUtils.captureCI()) {
+    if (
+      !Telemetry.isTestEnvironment &&
+      basePropUtils.isCI() &&
+      !basePropUtils.captureCI()
+    ) {
       return;
     }
 
@@ -150,8 +154,9 @@ export class Telemetry {
     await Telemetry.setupBaseProperties();
   }
 
-  private static basicTelemetryInitializer(envelope: coreOneDS.ITelemetryItem) : boolean
-  {    
+  private static basicTelemetryInitializer(
+    envelope: coreOneDS.ITelemetryItem,
+  ): boolean {
     // Filter out "legacy" events from older stable branches
     if (envelope.name && EventNamesWeTrack.includes(envelope.name)) {
       return true;
@@ -165,41 +170,44 @@ export class Telemetry {
     const postChannel: PostChannel = new PostChannel();
 
     const coreConfiguration: coreOneDS.IExtendedConfiguration = {
-      instrumentationKey: Telemetry.getDefaultSetupString()
-    }
+      instrumentationKey: Telemetry.getDefaultSetupString(),
+    };
 
     const postChannelConfig: IChannelConfiguration = {
-      eventsLimitInMem: 5000
+      eventsLimitInMem: 5000,
     };
 
     coreConfiguration.extensionConfig = {};
-    coreConfiguration.extensionConfig[postChannel.identifier] = postChannelConfig;
+    coreConfiguration.extensionConfig[postChannel.identifier] =
+      postChannelConfig;
 
     // Allow overriding the endpoint URL via an environment variable.
     if (process.env[ENV_PROXY_OVERRIDE] !== undefined) {
       coreConfiguration.endpointUrl = process.env[ENV_PROXY_OVERRIDE];
     }
-  
-    Telemetry.appInsightsCore = new coreOneDS.AppInsightsCore();
-    Telemetry.appInsightsCore.initialize(coreConfiguration, [postChannel] /* extensions */);
 
-    Telemetry.appInsightsCore.addTelemetryInitializer(Telemetry.basicTelemetryInitializer);
+    Telemetry.appInsightsCore = new coreOneDS.AppInsightsCore();
+    Telemetry.appInsightsCore.initialize(
+      coreConfiguration,
+      [postChannel] /* extensions */,
+    );
+
+    Telemetry.appInsightsCore.addTelemetryInitializer(
+      Telemetry.basicTelemetryInitializer,
+    );
   }
 
   /** Sets up any base properties that all telemetry events require. */
   private static async setupBaseProperties() {
-    Telemetry.commonProperties.deviceId =
-      await basePropUtils.deviceId();
+    Telemetry.commonProperties.deviceId = await basePropUtils.deviceId();
     Telemetry.commonProperties.fullBuildInfo =
       await basePropUtils.fullBuildInfo();
     Telemetry.commonProperties.deviceArchitecture =
       basePropUtils.deviceArchitecture();
     Telemetry.commonProperties.nodeArchitecture =
       basePropUtils.nodeArchitecture();
-    Telemetry.commonProperties.nodePlatform =
-      basePropUtils.nodePlatform();
-    Telemetry.commonProperties.deviceClass =
-      basePropUtils.deviceClass();
+    Telemetry.commonProperties.nodePlatform = basePropUtils.nodePlatform();
+    Telemetry.commonProperties.deviceClass = basePropUtils.deviceClass();
     Telemetry.commonProperties.deviceLocale =
       await basePropUtils.deviceLocale();
     Telemetry.commonProperties.deviceNumCPUs = basePropUtils
@@ -346,7 +354,7 @@ export class Telemetry {
 
   private static trackEvent(telemetryItem: coreOneDS.ITelemetryItem) {
     // Populate Part A
-    telemetryItem.ver = "4.0"; // Current Common Schema version
+    telemetryItem.ver = '4.0'; // Current Common Schema version
     telemetryItem.time = new Date().toISOString();
     telemetryItem.iKey = RNW_1DS_INSTRUMENTATION_KEY;
 
@@ -354,7 +362,7 @@ export class Telemetry {
     telemetryItem.ext = {};
     telemetryItem.ext.device = {
       id: Telemetry.commonProperties.deviceId,
-      deviceClass: Telemetry.commonProperties.deviceClass
+      deviceClass: Telemetry.commonProperties.deviceClass,
     };
     telemetryItem.ext.os = {
       locale: Telemetry.commonProperties.deviceLocale,
@@ -368,7 +376,7 @@ export class Telemetry {
           architecture: Telemetry.commonProperties.deviceArchitecture,
           numCPUs: Telemetry.commonProperties.numCPUs,
           totalMemory: Telemetry.commonProperties.totalMemory,
-          diskFreeSpace: Telemetry.commonProperties.deviceDiskFreeSpace
+          diskFreeSpace: Telemetry.commonProperties.deviceDiskFreeSpace,
         },
         nodePlatform: Telemetry.commonProperties.nodePlatform,
         nodeArchitecture: Telemetry.commonProperties.nodeArchitecture,
@@ -377,11 +385,11 @@ export class Telemetry {
         isMsftInternal: Telemetry.commonProperties.isMsftInternal,
         isCliTest: Telemetry.commonProperties.isTest,
         sessionId: Telemetry.commonProperties.sessionId,
-        commandName: Telemetry.commonProperties.commandName
+        commandName: Telemetry.commonProperties.commandName,
       },
       // Set project and versions props, belonging to Part B.
       project: Telemetry.projectProp,
-      versions: Telemetry.versionsProp
+      versions: Telemetry.versionsProp,
     };
 
     // Send and post the telemetry event!
@@ -404,7 +412,7 @@ export class Telemetry {
     };
 
     telemetryItem.data = {
-      command: command
+      command: command,
     };
 
     if (extraProps) {
@@ -463,18 +471,17 @@ export class Telemetry {
 
     telemetryItem.data = {
       codedError: codedErrorStruct,
-      exceptionData: exceptionData
+      exceptionData: exceptionData,
     };
 
     Telemetry.trackEvent(telemetryItem);
   }
 
-  static convertErrorIntoExceptionData(error: Error) : Record<string, any> {
-
+  static convertErrorIntoExceptionData(error: Error): Record<string, any> {
     const exceptionData = {
       hasFullStack: false,
       message: error.message,
-      parsedStack: {}
+      parsedStack: {},
     };
 
     exceptionData.message = exceptionData.message || '[None]';
@@ -491,17 +498,21 @@ export class Telemetry {
 
     const lines = error.stack?.split('\n');
 
-    const parsedStack = lines?.slice(1).map(line => {      
-      const errorStackFrame : errorUtils.ErrorStackFrame = {};
+    const parsedStack = lines?.slice(1).map(line => {
+      const errorStackFrame: errorUtils.ErrorStackFrame = {};
 
-      const match = line.trim().match(/^\s*at\s+(?:(.*?)\s+\((.*):(\d+):(\d+)\)|(.*):(\d+):(\d+))$/);
+      const match = line
+        .trim()
+        .match(/^\s*at\s+(?:(.*?)\s+\((.*):(\d+):(\d+)\)|(.*):(\d+):(\d+))$/);
       if (match) {
-          errorStackFrame.functionName = match[1] || "N/A"; // Use a default value if no function name
-          errorStackFrame.filePath = match[2] || match[5];
-          errorStackFrame.lineNumber = parseInt(match[3], 10) || parseInt(match[6], 10);
-          errorStackFrame.columnNumber = parseInt(match[4], 10) || parseInt(match[7], 10);
+        errorStackFrame.functionName = match[1] || 'N/A'; // Use a default value if no function name
+        errorStackFrame.filePath = match[2] || match[5];
+        errorStackFrame.lineNumber =
+          parseInt(match[3], 10) || parseInt(match[6], 10);
+        errorStackFrame.columnNumber =
+          parseInt(match[4], 10) || parseInt(match[7], 10);
       }
-  
+
       return errorStackFrame;
     });
 

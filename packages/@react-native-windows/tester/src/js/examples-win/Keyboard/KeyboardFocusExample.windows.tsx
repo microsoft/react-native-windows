@@ -61,8 +61,10 @@ const pickerRef = React.createRef<Picker<string>>();
 const viewWindowsRef = React.createRef<ViewWindows>();
 const textInputRef = React.createRef<TextInput>();
 const textInputRef2 = React.createRef<any>();
-const touchableHighlightRef = React.createRef<React.ElementRef<typeof TouchableHighlight>>();
-const touchableOpacityRef = React.createRef<React.ElementRef<typeof TouchableOpacity>>();
+const touchableHighlightRef =
+  React.createRef<React.ElementRef<typeof TouchableHighlight>>();
+const touchableOpacityRef =
+  React.createRef<React.ElementRef<typeof TouchableOpacity>>();
 const touchableWithoutFeedbackRef = React.createRef<TouchableWithoutFeedback>();
 
 class KeyboardFocusExample extends React.Component<
