@@ -19,7 +19,7 @@ export type PlatformSelectSpec<T> = {
 
 type IOSPlatform = {
   __constants: null,
-  OS: $TEMPORARY$string<'ios'>,
+  OS: 'ios',
   // $FlowFixMe[unsafe-getters-setters]
   get Version(): number,
   // $FlowFixMe[unsafe-getters-setters]
@@ -55,7 +55,7 @@ type IOSPlatform = {
 
 type AndroidPlatform = {
   __constants: null,
-  OS: $TEMPORARY$string<'android'>,
+  OS: 'android',
   // $FlowFixMe[unsafe-getters-setters]
   get Version(): number,
   // $FlowFixMe[unsafe-getters-setters]
