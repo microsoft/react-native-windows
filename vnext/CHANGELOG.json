@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 24 Oct 2024 20:02:32 GMT",
+      "version": "0.74.23",
+      "tag": "react-native-windows_v0.74.23",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d524e2adb548a01f40b7deaa871421769ac147f1",
+            "comment": "Temporarily disable code-signing of NuGet packages"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.74.7",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 17 Oct 2024 00:18:07 GMT",
       "version": "0.74.22",
       "tag": "react-native-windows_v0.74.22",
