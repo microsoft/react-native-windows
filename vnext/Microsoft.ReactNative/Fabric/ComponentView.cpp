@@ -342,10 +342,13 @@ bool ComponentView::runOnChildren(
         return true;
     }
   } else {
-    // TODO is this conversion from rend correct?
-    for (auto it = m_children.end(); it != m_children.begin(); --it) {
-      if (fn(*winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)))
-        return true;
+    if (m_children.Size()) {
+      auto it = m_children.end();
+      do {
+        it--;
+        if (fn(*winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)))
+          return true;
+      } while (it != m_children.begin());
     }
   }
   return false;
