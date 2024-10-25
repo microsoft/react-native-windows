@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "adds default modal that hosts fabric components",
+  "packageName": "react-native-windows",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}

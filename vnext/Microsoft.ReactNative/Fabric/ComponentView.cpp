@@ -73,6 +73,10 @@ void ComponentView::onMounted() noexcept {
   m_mountedEvent(*this, *this);
 }
 
+bool ComponentView::isMounted() noexcept {
+  return m_mounted;
+}
+
 winrt::event_token ComponentView::Mounted(
     winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::ComponentView> const &handler) noexcept {
   return m_mountedEvent.add(handler);

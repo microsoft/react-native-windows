@@ -507,6 +507,12 @@
       "issue": 11041
     },
     {
+      "type": "copy",
+      "file": "src-win/src/private/reactdevtools/ReactDevToolsSettingsManager.win32.js",
+      "baseFile": "packages/react-native/src/private/reactdevtools/ReactDevToolsSettingsManager.android.js",
+      "baseHash": "df41b76dc3d2df9455fae588748261d7b0a22d01"
+    },
+    {
       "type": "derived",
       "file": "src-win/src/private/specs/modules/NativeAccessibilityInfoWin32.js",
       "baseFile": "packages/react-native/src/private/specs/modules/NativeAccessibilityInfo.js",
@@ -523,12 +529,6 @@
       "file": "src-win/src/private/specs/modules/NativePlatformConstantsWin.js",
       "baseFile": "packages/react-native/src/private/specs/modules/NativePlatformConstantsAndroid.js",
       "baseHash": "fa0f34a2de33b641bd63863629087644796d8b59"
-    },
-    {
-      "type": "copy",
-      "file": "src-win/src/private/reactdevtools/ReactDevToolsSettingsManager.win32.js",
-      "baseFile": "packages/react-native/src/private/reactdevtools/ReactDevToolsSettingsManager.android.js",
-      "baseHash": "df41b76dc3d2df9455fae588748261d7b0a22d01"
     }
   ]
 }
