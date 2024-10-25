@@ -233,11 +233,6 @@
       <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeAppBuilder.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
-	<ClCompile Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactInstanceSettingsBuilder.cpp">
-      <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
-      <DependentUpon>$(ReactNativeWindowsDir)Microsoft.ReactNative\ReactNativeAppBuilder.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseFileReaderResource.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)BaseScriptStoreImpl.cpp" />
     <ClCompile Include="$(MSBuildThisFileDirectory)ChakraRuntimeHolder.cpp" />
@@ -347,11 +342,6 @@
     </ClInclude>
     <ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeAppBuilder.h">
       <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
-      <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeAppBuilder.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-	<ClInclude Include="$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactInstanceSettingsBuilder.h">
-     <ExcludedFromBuild Condition="'$(UseFabric)' != 'true'">true</ExcludedFromBuild>
       <DependentUpon>$(MSBuildThisFileDirectory)..\Microsoft.ReactNative\ReactNativeAppBuilder.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>

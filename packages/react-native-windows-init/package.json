@@ -24,8 +24,8 @@
   "dependencies": {
     "@react-native-windows/fs": "0.76.0-preview.1",
     "@react-native-windows/telemetry": "0.76.0-preview.1",
-    "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.57.1",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
     "chalk": "^4.1.0",
     "find-up": "^4.1.0",
     "mustache": "^4.0.1",
