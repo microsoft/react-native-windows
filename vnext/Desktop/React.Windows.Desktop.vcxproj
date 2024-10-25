@@ -62,6 +62,8 @@
     <HermesCompileRtti>false</HermesCompileRtti>
     <IncludeFabricInterface Condition="'$(IncludeFabricInterface)' == ''">true</IncludeFabricInterface>
     <UseWinUI3 Condition="'$(UseWinUI3)' == ''">true</UseWinUI3>
+    <!-- Prevents Microsoft.Web.WebView2.Core.dll from being added to ReferenceCopyLocalPaths -->
+    <WebView2EnableCsWinRTProjectionExcludeCoreRef>true</WebView2EnableCsWinRTProjectionExcludeCoreRef>
   </PropertyGroup>
   <PropertyGroup Label="Permissive">
     <ENABLEPermissive>true</ENABLEPermissive>
@@ -87,6 +89,7 @@
   <ImportGroup Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
     <Import Project="..\PropertySheets\WinUI.props" Condition="'$(UseWinUI3)'=='true'" />
+    <Import Project="..\PropertySheets\WebView2.props" Condition="'$(UseWinUI3)'=='true'" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
@@ -285,6 +288,7 @@
     <PackageReference Include="Microsoft.JavaScript.Hermes" Version="$(HermesVersion)" />
     <PackageReference Include="$(V8PackageName)" Version="$(V8Version)" Condition="'$(UseV8)' == 'true'" />
     <PackageReference Include="$(WinUIPackageName)" Version="$(WinUIPackageVersion)" Condition="'$(UseWinUI3)'=='true'" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="$(WebView2PackageVersion)" Condition="'$(UseWinUI3)'=='true'" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(EnableSourceLink)' == 'true'">
