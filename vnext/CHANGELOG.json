@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 25 Oct 2024 05:21:20 GMT",
+      "version": "0.0.0-canary.881",
+      "tag": "react-native-windows_v0.0.0-canary.881",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3becf03c41cdb278b26e6b24e5eb7c3b2daeb40a",
+            "comment": "Focus should notify island host when tab loop wraps to give host oportunity to take focus"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "daa77099627821382932db595ca5b17045297fd0",
+            "comment": "Default scroll to bring a component into view should have padding around the viewport"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "19b6aba8340e92c0f5a0fb31bdc1ac33da0846b3",
+            "comment": "Add very basic box-shadow support"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a3850c30b209e2487010a4ffb768fc493e279b0e",
+            "comment": "Update focus visuals to use cornerRadius and inner/outer strokes."
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 23 Oct 2024 05:31:16 GMT",
       "version": "0.0.0-canary.880",
       "tag": "react-native-windows_v0.0.0-canary.880",
