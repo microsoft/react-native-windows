@@ -120,7 +120,7 @@ async function getFileMappings(config = {}, options = {}) {
     devMode,
 
     useNuGets: !devMode, // default is to use published NuGets except in devMode, change to true here if you want to test devMode and nugets simultaneously
-    addReactNativePublicAdoFeed: isCanary,
+    addReactNativePublicAdoFeed: true || isCanary, // Temporary true for all new projects until code-signing is restored, see issue #14030
 
     cppNugetPackages,
   };
