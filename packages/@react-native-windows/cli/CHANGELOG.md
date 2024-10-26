@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Sat, 19 Oct 2024 05:29:46 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 26 Oct 2024 05:28:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.243
+
+Sat, 26 Oct 2024 05:28:06 GMT
+
+### Changes
+
+- Temporarily disable code-signing of NuGet packages (jthysell@microsoft.com)
 
 ## 0.0.0-canary.242
 
