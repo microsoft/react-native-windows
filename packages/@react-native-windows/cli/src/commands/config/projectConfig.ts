@@ -249,6 +249,6 @@ export function projectConfigWindows(
     }
     result.rnwConfig = configUtils.getRnwConfig(folder, projectFile);
   }
-  
+
   return result as WindowsProjectConfig;
 }
