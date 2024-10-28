@@ -1,8 +1,22 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 21 Oct 2024 15:36:47 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 28 Oct 2024 15:29:53 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.0-preview.4
+
+Mon, 28 Oct 2024 15:29:53 GMT
+
+### Changes
+
+- Create hybrid CppLib props/targets (jthysell@microsoft.com)
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Cleanup ReactNativeAppBuilder and ReactNativeWin32App (jthysell@microsoft.com)
+- Temporarily disable code-signing of NuGet packages (jthysell@microsoft.com)
+- Update WinAppSDK from 1.5 to 1.6 (1.6.240923002) (winappsdkdata_bot@microsoft.com)
+- Bump @react-native-windows/cli to v0.76.0-preview.4
+- Bump @react-native-windows/codegen to v0.76.0-preview.2
 
 ## 0.76.0-preview.3
 

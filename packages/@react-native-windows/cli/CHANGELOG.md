@@ -1,8 +1,22 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Mon, 21 Oct 2024 15:36:46 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 28 Oct 2024 15:29:52 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.0-preview.4
+
+Mon, 28 Oct 2024 15:29:52 GMT
+
+### Changes
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Temporarily disable code-signing of NuGet packages (jthysell@microsoft.com)
+- Create hybrid CppLib props/targets (jthysell@microsoft.com)
+- Bump @react-native-windows/codegen to v0.76.0-preview.2
+- Bump @react-native-windows/fs to v0.76.0-preview.2
+- Bump @react-native-windows/package-utils to v0.76.0-preview.2
+- Bump @react-native-windows/telemetry to v0.76.0-preview.2
 
 ## 0.76.0-preview.3
 

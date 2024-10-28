@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update WinAppSDK from 1.5 to 1.6 (1.6.240923002)",
-  "packageName": "react-native-windows",
-  "email": "winappsdkdata_bot@microsoft.com",
-  "dependentChangeType": "patch"
-}

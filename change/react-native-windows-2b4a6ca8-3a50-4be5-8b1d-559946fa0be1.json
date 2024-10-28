@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "[0.76] Cleanup ReactNativeAppBuilder and ReactNativeWin32App",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}
