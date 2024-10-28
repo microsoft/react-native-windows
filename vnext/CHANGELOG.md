@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 21 Oct 2024 15:28:27 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Oct 2024 15:28:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.7
+
+Mon, 28 Oct 2024 15:28:48 GMT
+
+### Patches
+
+- Fix repo linting with up-to-date eslint and prettier configuration (jthysell@microsoft.com)
+- Temporarily disable code-signing of NuGet packages (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.75.5
+- Bump @react-native-windows/codegen to v0.75.3
 
 ## 0.75.6
 

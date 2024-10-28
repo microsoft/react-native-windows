@@ -2,6 +2,27 @@
   "name": "@react-native-windows/find-repo-root",
   "entries": [
     {
+      "date": "Mon, 28 Oct 2024 15:28:48 GMT",
+      "version": "0.75.1",
+      "tag": "@react-native-windows/find-repo-root_v0.75.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/find-repo-root",
+            "commit": "714778b20b204a62c3a1aa00bb63028a2f67ea46",
+            "comment": "Fix repo linting with up-to-date eslint and prettier configuration"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/find-repo-root",
+            "comment": "Bump @react-native-windows/fs to v0.75.1",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 19 Aug 2024 20:18:57 GMT",
       "version": "0.75.0",
       "tag": "@react-native-windows/find-repo-root_v0.75.0",

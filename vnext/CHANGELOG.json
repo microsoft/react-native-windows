@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Oct 2024 15:28:48 GMT",
+      "version": "0.75.7",
+      "tag": "react-native-windows_v0.75.7",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "714778b20b204a62c3a1aa00bb63028a2f67ea46",
+            "comment": "Fix repo linting with up-to-date eslint and prettier configuration"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b4bb6c6d999fceeaf2316b86283310e8f6dbca28",
+            "comment": "Temporarily disable code-signing of NuGet packages"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.75.5",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.75.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Oct 2024 15:28:27 GMT",
       "version": "0.75.6",
       "tag": "react-native-windows_v0.75.6",

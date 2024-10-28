@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Mon, 14 Oct 2024 15:28:33 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Oct 2024 15:28:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.3
+
+Mon, 28 Oct 2024 15:28:48 GMT
+
+### Patches
+
+- Fix repo linting with up-to-date eslint and prettier configuration (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v0.75.1
 
 ## 0.75.2
 

@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/fs
 
-This log was last generated on Mon, 19 Aug 2024 20:18:58 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Oct 2024 15:28:48 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.1
+
+Mon, 28 Oct 2024 15:28:48 GMT
+
+### Patches
+
+- Fix repo linting with up-to-date eslint and prettier configuration (jthysell@microsoft.com)
 
 ## 0.75.0
 

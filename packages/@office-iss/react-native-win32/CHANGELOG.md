@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 30 Sep 2024 16:40:50 GMT and should not be manually modified.
+This log was last generated on Mon, 28 Oct 2024 15:28:47 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.3
+
+Mon, 28 Oct 2024 15:28:47 GMT
+
+### Patches
+
+- Fix repo linting with up-to-date eslint and prettier configuration (jthysell@microsoft.com)
 
 ## 0.75.2
 
