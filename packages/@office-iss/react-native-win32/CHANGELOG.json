@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 28 Oct 2024 15:29:51 GMT",
+      "version": "0.76.0-preview.4",
+      "tag": "@office-iss/react-native-win32_v0.76.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "3aa853272cbdc109f14e38511c0cae9f8243872f",
+            "comment": "Fix repo linting with prettier"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Oct 2024 15:36:46 GMT",
       "version": "0.76.0-preview.3",
       "tag": "@office-iss/react-native-win32_v0.76.0-preview.3",

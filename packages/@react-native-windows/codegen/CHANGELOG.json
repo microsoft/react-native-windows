@@ -2,6 +2,27 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Mon, 28 Oct 2024 15:29:52 GMT",
+      "version": "0.76.0-preview.2",
+      "tag": "@react-native-windows/codegen_v0.76.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "3aa853272cbdc109f14e38511c0cae9f8243872f",
+            "comment": "Fix repo linting with prettier"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.76.0-preview.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 30 Sep 2024 23:20:38 GMT",
       "version": "0.76.0-preview.1",
       "tag": "@react-native-windows/codegen_v0.76.0-preview.1",

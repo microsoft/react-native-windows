@@ -2,6 +2,57 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 28 Oct 2024 15:29:52 GMT",
+      "version": "0.76.0-preview.4",
+      "tag": "@react-native-windows/cli_v0.76.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "3aa853272cbdc109f14e38511c0cae9f8243872f",
+            "comment": "Fix repo linting with prettier"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "5b950cfec87e5ce5e60f7762619f9acdd33c63d2",
+            "comment": "Temporarily disable code-signing of NuGet packages"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "1154dfef9c00d4cfb62324ec5262a0431c196ee7",
+            "comment": "Create hybrid CppLib props/targets"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.76.0-preview.2",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.76.0-preview.2",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.76.0-preview.2",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.76.0-preview.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Oct 2024 15:36:46 GMT",
       "version": "0.76.0-preview.3",
       "tag": "@react-native-windows/cli_v0.76.0-preview.3",

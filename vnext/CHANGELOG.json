@@ -2,6 +2,57 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 28 Oct 2024 15:29:53 GMT",
+      "version": "0.76.0-preview.4",
+      "tag": "react-native-windows_v0.76.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "1154dfef9c00d4cfb62324ec5262a0431c196ee7",
+            "comment": "Create hybrid CppLib props/targets"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3aa853272cbdc109f14e38511c0cae9f8243872f",
+            "comment": "Fix repo linting with prettier"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "591db2c06d5297a16e6354d479bc9969bbff01ac",
+            "comment": "Cleanup ReactNativeAppBuilder and ReactNativeWin32App"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5b950cfec87e5ce5e60f7762619f9acdd33c63d2",
+            "comment": "Temporarily disable code-signing of NuGet packages"
+          },
+          {
+            "author": "winappsdkdata_bot@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "fb7e5d9c1616d0bf686b823fbe7518485b00be70",
+            "comment": "Update WinAppSDK from 1.5 to 1.6 (1.6.240923002)"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.76.0-preview.4",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.76.0-preview.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 21 Oct 2024 15:36:47 GMT",
       "version": "0.76.0-preview.3",
       "tag": "react-native-windows_v0.76.0-preview.3",
