@@ -15,7 +15,8 @@
     "jsSrcsDir": "src",
     "windows": {
       "generators": "componentsWindows",
-      "namespace": "winrt::SampleCustomComponent::Codegen"
+      "namespace": "winrt::SampleCustomComponent::Codegen",
+      "outputDirectory": "windows/SampleCustomComponent/codegen"
     }
   },
   "dependencies": {

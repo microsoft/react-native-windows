@@ -7,19 +7,25 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <RnwReactTagAPI>true</RnwReactTagAPI>
+    <RnwReactTagAPI Condition="'$(RnwReactTagAPI)'==''">true</RnwReactTagAPI>
+
+    <RnwNewArch Condition="'$(UseFabric)'=='true'">true</RnwNewArch>
+    <RnwNewArch Condition="'$(RnwNewArch)'==''">false</RnwNewArch>
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefineConstants>RNW_REACTTAG_API;$(DefineConstants)</DefineConstants>
+    <DefineConstants Condition="'$(RnwReactTagAPI)'=='true'">RNW_REACTTAG_API;$(DefineConstants)</DefineConstants>
+    <DefineConstants Condition="'$(RnwNewArch)'=='true'">RNW_NEW_ARCH;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
     <ClCompile>
-      <PreprocessorDefinitions>RNW_REACTTAG_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(RnwReactTagAPI)'=='true'">RNW_REACTTAG_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(RnwNewArch)'=='true'">RNW_NEW_ARCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Midl>
-      <PreprocessorDefinitions>RNW_REACTTAG_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(RnwReactTagAPI)'=='true'">RNW_REACTTAG_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions Condition="'$(RnwNewArch)'=='true'">RNW_NEW_ARCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
   </ItemDefinitionGroup>
 </Project>

@@ -56,10 +56,7 @@
         }
       },
       "common": {
-        "type": "Project",
-        "dependencies": {
-          "boost": "[1.83.0, )"
-        }
+        "type": "Project"
       },
       "fmt": {
         "type": "Project"
@@ -67,7 +64,6 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.83.0, )",
           "fmt": "[1.0.0, )"
         }
       },
@@ -86,8 +82,7 @@
       "reactcommon": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )",
-          "boost": "[1.83.0, )"
+          "Folly": "[1.0.0, )"
         }
       },
       "sampleappfabric": {
