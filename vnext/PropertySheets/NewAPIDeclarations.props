@@ -9,7 +9,7 @@
   <PropertyGroup>
     <RnwReactTagAPI Condition="'$(RnwReactTagAPI)'==''">true</RnwReactTagAPI>
 
-    <RnwNewArch Condition="'$(UseFabric)'=='true'">true</RnwNewArch>
+    <RnwNewArch Condition="'$(RnwNewArch)'=='' and '$(UseFabric)'=='true'">true</RnwNewArch>
     <RnwNewArch Condition="'$(RnwNewArch)'==''">false</RnwNewArch>
   </PropertyGroup>
 

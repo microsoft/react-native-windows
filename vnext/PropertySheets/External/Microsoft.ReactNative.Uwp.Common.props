@@ -8,5 +8,13 @@
   Do not make any changes here unless it applies to ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="EnsureRnwNewArch" BeforeTargets="PrepareForBuild" Condition="'$(RnwNewArch)' == 'true'">
+    <Warning Text="Property 'RnwNewArch' was set to 'true'. Projects built against Microsoft.ReactNative.Uwp require RnwNewArch to be disabled so it will be set to false." />
+  </Target>
+
+  <PropertyGroup>
+    <RnwNewArch>false</RnwNewArch>
+  </PropertyGroup>
+
   <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Common.props" />
 </Project>
