@@ -196,7 +196,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   }
 
   if (patternId == UIA_TogglePatternId &&
-      (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::SwitchComponentView>() || togglableControl(props))) {
+      (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::SwitchComponentView>() ||
+       togglableControl(props))) {
     *pRetVal = static_cast<IToggleProvider *>(this);
     AddRef();
   }
