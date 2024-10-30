@@ -37,8 +37,7 @@ AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutCon
 
   auto attributedString = AttributedString{};
   auto attachments = BaseTextShadowNode::Attachments{};
-  BaseTextShadowNode::buildAttributedString(
-      childTextAttributes, *this, attributedString, attachments);
+  BaseTextShadowNode::buildAttributedString(childTextAttributes, *this, attributedString, attachments);
   attributedString.setBaseTextAttributes(childTextAttributes);
 
   // BaseTextShadowNode only gets children. We must detect and prepend text

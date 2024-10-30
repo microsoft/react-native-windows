@@ -35,7 +35,6 @@ void AccessibilityInfo::isHighTextContrastEnabled(std::function<void(bool)> cons
   onSuccess(false);
 }
 
-
 void AccessibilityInfo::isTouchExplorationEnabled(std::function<void(bool)> const &onSuccess) noexcept {
   onSuccess(UiaClientsAreListening());
 }
