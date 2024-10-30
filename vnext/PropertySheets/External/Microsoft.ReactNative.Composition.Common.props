@@ -8,37 +8,8 @@
   Do not make any changes here unless it applies to ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Target Name="EnsureRnwNewArch" BeforeTargets="PrepareForBuild" Condition="'$(RnwNewArch)' != 'true'">
-    <Warning Text="Property 'RnwNewArch' was not set to 'true'. Projects built against Microsoft.ReactNative.Composition require RnwNewArch so it will be set to true." />
+  <Target Name="EnsureRnwNewArch" BeforeTargets="PrepareForBuild" Condition="'$(RnwNewArch)'!='true'">
+    <Error Text="Property 'RnwNewArch' was not set to 'true'. Projects built against Microsoft.ReactNative.Composition require 'RnwNewArch' to be 'true'." />
   </Target>
-
-  <PropertyGroup>
-    <RnwNewArch>true</RnwNewArch>
-  </PropertyGroup>
-
-  <Target Name="EnsureUseHermes" BeforeTargets="PrepareForBuild" Condition="'$(UseHermes)' != 'true'">
-    <Warning Text="Property 'UseHermes' was not set to 'true'. Projects built against Microsoft.ReactNative.Composition require UseHermes so it will be set to true." />
-  </Target>
-
-  <PropertyGroup>
-    <UseHermes>true</UseHermes>
-  </PropertyGroup>
-
-  <Target Name="EnsureUseFabric" BeforeTargets="PrepareForBuild" Condition="'$(UseFabric)' != 'true'">
-    <Warning Text="Property 'UseFabric' was not set to 'true'. Projects built against Microsoft.ReactNative.Composition require UseFabric so it will be set to true." />
-  </Target>
-
-  <PropertyGroup>
-    <UseFabric>true</UseFabric>
-  </PropertyGroup>
-
-  <Target Name="EnsureUseWinUI3" BeforeTargets="PrepareForBuild" Condition="'$(UseWinUI3)' != 'true'">
-    <Warning Text="Property 'UseWinUI3' was not set to 'true'. Projects built against Microsoft.ReactNative.Composition require UseWinUI3 so it will be set to true." />
-  </Target>
-
-  <PropertyGroup>
-    <UseWinUI3>true</UseWinUI3>
-  </PropertyGroup>
-
   <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Common.props" />
 </Project>
