@@ -19,6 +19,7 @@
 
   <PropertyGroup Label="WinUI3 for fabric" Condition="'$(SolutionName)'=='playground-composition'">
     <RnwNewArch>true</RnwNewArch>
+    <UseExperimentalNuget>false</UseExperimentalNuget>
   </PropertyGroup>
 
 </Project>
