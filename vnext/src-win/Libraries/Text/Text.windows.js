@@ -8,6 +8,8 @@
  * @format
  */
 
+import type {TextStyleProp} from '../StyleSheet/StyleSheet';
+import type {____TextStyle_Internal as TextStyleInternal} from '../StyleSheet/StyleSheetTypes';
 import type {PressEvent} from '../Types/CoreEventTypes';
 import type {NativeTextProps} from './TextNativeComponent';
 import type {PressRetentionOffset, TextProps} from './TextProps';
@@ -23,7 +25,7 @@ import * as React from 'react';
 import {useContext, useMemo, useState} from 'react';
 
 const View = require('../Components/View/View'); // [Windows]
-import {type TextStyleProp, type ViewStyleProp} from '../StyleSheet/StyleSheet'; // [Windows]
+import {type ViewStyleProp} from '../StyleSheet/StyleSheet'; // [Windows]
 
 type TextForwardRef = React.ElementRef<
   typeof NativeText | typeof NativeVirtualText,
@@ -144,25 +146,32 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
 
       let _selectable = selectable;
 
-      const processedStyle = flattenStyle(_style);
+      let processedStyle = flattenStyle<TextStyleProp>(_style);
       if (processedStyle != null) {
+        let overrides: ?{...TextStyleInternal} = null;
         if (typeof processedStyle.fontWeight === 'number') {
-          // $FlowFixMe[cannot-write]
-          processedStyle.fontWeight = processedStyle.fontWeight.toString();
+          overrides = overrides || ({}: {...TextStyleInternal});
+          overrides.fontWeight =
+            // $FlowFixMe[incompatible-cast]
+            (processedStyle.fontWeight.toString(): TextStyleInternal['fontWeight']);
         }
 
         if (processedStyle.userSelect != null) {
           _selectable = userSelectToSelectableMap[processedStyle.userSelect];
-          // $FlowFixMe[cannot-write]
-          delete processedStyle.userSelect;
+          overrides = overrides || ({}: {...TextStyleInternal});
+          overrides.userSelect = undefined;
         }
 
         if (processedStyle.verticalAlign != null) {
-          // $FlowFixMe[cannot-write]
-          processedStyle.textAlignVertical =
+          overrides = overrides || ({}: {...TextStyleInternal});
+          overrides.textAlignVertical =
             verticalAlignToTextAlignVerticalMap[processedStyle.verticalAlign];
-          // $FlowFixMe[cannot-write]
-          delete processedStyle.verticalAlign;
+          overrides.verticalAlign = undefined;
+        }
+
+        if (overrides != null) {
+          // $FlowFixMe[incompatible-type]
+          _style = [_style, overrides];
         }
       }
 
@@ -185,7 +194,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
                 numberOfLines: _numberOfLines,
                 selectable: _selectable,
                 selectionColor: _selectionColor,
-                style: processedStyle,
+                style: _style,
                 disabled: disabled,
                 children,
               }}
@@ -222,7 +231,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
             ref={forwardedRef}
             selectable={_selectable}
             selectionColor={_selectionColor}
-            style={processedStyle}
+            style={_style}
             disabled={disabled}>
             {children}
           </NativeVirtualText>
@@ -269,7 +278,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
               numberOfLines: _numberOfLines,
               selectable: _selectable,
               selectionColor: _selectionColor,
-              style: processedStyle,
+              style: _style,
               children,
             }}
             textPressabilityProps={{
@@ -307,7 +316,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
             ref={forwardedRef}
             selectable={_selectable}
             selectionColor={_selectionColor}
-            style={processedStyle}>
+            style={_style}>
             {children}
           </NativeText>
         );
@@ -328,50 +337,6 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
           styleProps.borderStartWidth != null ||
           styleProps.borderTopWidth != null)
       ) {
-        let textStyleProps = Array.isArray(styleProps)
-          ? // $FlowFixMe[underconstrained-implicit-instantiation]
-            flattenStyle(styleProps)
-          : styleProps;
-        let {
-          // $FlowFixMe[prop-missing]
-          margin,
-          // $FlowFixMe[prop-missing]
-          marginBottom,
-          // $FlowFixMe[prop-missing]
-          marginEnd,
-          // $FlowFixMe[prop-missing]
-          marginHorizontal,
-          // $FlowFixMe[prop-missing]
-          marginLeft,
-          // $FlowFixMe[prop-missing]
-          marginRight,
-          // $FlowFixMe[prop-missing]
-          marginStart,
-          // $FlowFixMe[prop-missing]
-          marginTop,
-          // $FlowFixMe[prop-missing]
-          marginVertical,
-          // $FlowFixMe[prop-missing]
-          padding,
-          // $FlowFixMe[prop-missing]
-          paddingBottom,
-          // $FlowFixMe[prop-missing]
-          paddingEnd,
-          // $FlowFixMe[prop-missing]
-          paddingHorizontal,
-          // $FlowFixMe[prop-missing]
-          paddingLeft,
-          // $FlowFixMe[prop-missing]
-          paddingRight,
-          // $FlowFixMe[prop-missing]
-          paddingStart,
-          // $FlowFixMe[prop-missing]
-          paddingTop,
-          // $FlowFixMe[prop-missing]
-          paddingVertical,
-          // $FlowFixMe[not-an-object]
-          ...rest
-        } = textStyleProps != null ? textStyleProps : {};
         return (
           <View style={styleProps}>
             <TextAncestor.Provider value={true}>
