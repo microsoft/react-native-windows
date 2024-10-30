@@ -14,6 +14,10 @@
   </Target>
 
   <!-- Starting with the base of the UWP Cpp targets for now (until we need to start differentiating). -->
+  <PropertyGroup>
+    <!-- Set this to avoid the warning about loading the wrong target file. -->
+    <RnwExternalPropsLoaded>Microsoft.ReactNative.Uwp.CppLib.props</RnwExternalPropsLoaded>
+  </PropertyGroup>
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppLib.targets" />
 
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Codegen.targets" />
