@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fix flatten style running multiple times\"",
+  "comment": "backport Fix Text running flattenStyle multiple times #14041",
   "packageName": "react-native-windows",
   "email": "tatianakapos@microsoft.com",
   "dependentChangeType": "patch"
