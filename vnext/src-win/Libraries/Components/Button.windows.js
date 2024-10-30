@@ -23,9 +23,9 @@ import Text from '../Text/Text';
 // [Windows
 // import TouchableNativeFeedback from './Touchable/TouchableNativeFeedback';
 // import TouchableOpacity from './Touchable/TouchableOpacity';
+// Windows]
 import TouchableHighlight from './Touchable/TouchableHighlight';
 import {PlatformColor} from '../StyleSheet/PlatformColorValueTypes';
-// Windows]
 import Platform from '../Utilities/Platform';
 import View from './View/View';
 import invariant from 'invariant';
@@ -290,10 +290,7 @@ type ButtonProps = $ReadOnly<{|
   ```
  */
 
-const Touchable: typeof TouchableNativeFeedback | typeof TouchableOpacity =
-  Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
-
-type ButtonRef = React.ElementRef<typeof Touchable>;
+type ButtonRef = React.ElementRef<typeof TouchableHighlight>;
 
 const Button: component(
   ref: React.RefSetter<ButtonRef>,

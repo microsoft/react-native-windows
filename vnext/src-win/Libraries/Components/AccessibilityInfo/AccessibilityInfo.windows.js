@@ -15,7 +15,10 @@ import RCTDeviceEventEmitter from '../../EventEmitter/RCTDeviceEventEmitter';
 import {sendAccessibilityEvent} from '../../ReactNative/RendererProxy';
 import Platform from '../../Utilities/Platform';
 import legacySendAccessibilityEvent from './legacySendAccessibilityEvent';
-import NativeAccessibilityInfo from './NativeAccessibilityInfo';
+import {
+  NativeAccessibilityInfo,
+  NativeAccessibilityInfoAndroid,
+} from './NativeAccessibilityInfo';
 import NativeAccessibilityManagerIOS from './NativeAccessibilityManager';
 
 // Events that are only supported on Android.
