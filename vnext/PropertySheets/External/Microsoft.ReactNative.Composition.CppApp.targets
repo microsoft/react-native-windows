@@ -8,6 +8,11 @@
   Do not make any changes here unless it applies to ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Check that the correct props have already been imported. -->
+  <Target Name="EnsureRnwExternalPropsLoadedTarget" BeforeTargets="PrepareForBuild" Condition="'$(RnwExternalPropsLoaded)'!='Microsoft.ReactNative.Composition.CppApp.props'">
+    <Warning Text="Property `RnwExternalPropsLoaded` was incorrectly set to '$(RnwExternalPropsLoaded)'. Please ensure your project imports 'Microsoft.ReactNative.Composition.CppApp.props' before importing this prop sheet." />
+  </Target>
+
   <!-- Starting with the base of the UWP Cpp targets for now (until we need to start differentiating). -->
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\External\Microsoft.ReactNative.Uwp.CppApp.targets" />
 

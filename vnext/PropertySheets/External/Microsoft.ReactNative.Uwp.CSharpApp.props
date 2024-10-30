@@ -14,7 +14,7 @@
           Condition="Exists('$(ProjectDir)\AutolinkedNativeModules.g.props')" />
 
   <!-- Check that Microsoft.ReactNative.WindowsSdk.Default.props has already been imported. -->
-  <Target Name="EnsureRnwSdkDefaultsSetTarget" BeforeTargets="PrepareForBuild" Condition="'$(RnwSdkDefaultsSet)' != 'true'">
+  <Target Name="EnsureRnwSdkDefaultsSetTarget" BeforeTargets="PrepareForBuild" Condition="'$(RnwSdkDefaultsSet)'!='true'">
     <Warning Text="Property `RnwSdkDefaultsSet` was not set. Please ensure your project imports 'Microsoft.ReactNative.WindowsSdk.Default.props' before importing this prop sheet." />
   </Target>
 
@@ -31,4 +31,8 @@
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\Codegen.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\NuGet.CSharp.props" />
   <Import Project="$(ReactNativeWindowsDir)\PropertySheets\WinUI.props" />
+
+  <PropertyGroup>
+    <RnwExternalPropsLoaded>$(MSBuildThisFile)</RnwExternalPropsLoaded>
+  </PropertyGroup>
 </Project>
