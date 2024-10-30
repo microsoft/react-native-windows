@@ -377,7 +377,7 @@ export class AutoLinkWindows {
     if (cppPackageProviders === '') {
       // There are no windows dependencies, this would result in warning. C4100: 'packageProviders': unreferenced formal parameter.
       // therefore add a usage.
-      cppPackageProviders = '\n    UNREFERENCED_PARAMETER(packageProviders);'; // CODESYNC: @react-native-windpows\cli\src\generator-windows\index.ts
+      cppPackageProviders = '\n    UNREFERENCED_PARAMETER(packageProviders);'; // CODESYNC: @react-native-windows\cli\src\generator-windows\index.ts
     }
     return {cppPackageProviders, cppIncludes};
   }

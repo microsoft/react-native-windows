@@ -81,7 +81,7 @@ async function getFileMappings(config = {}, options = {}) {
     autolinkProjectReferencesForTargets: '',
     autolinkCppIncludes: '',
     autolinkCppPackageProviders:
-      '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: @react-native-windpows\cli\src\commands\autolinkWindows\autolinkWindows.ts
+      '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: @react-native-windows\cli\src\commands\autolinkWindows\autolinkWindows.ts
   };
 
   let fileMappings = [];

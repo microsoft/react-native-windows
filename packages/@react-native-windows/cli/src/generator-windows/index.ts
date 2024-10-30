@@ -227,7 +227,7 @@ export async function copyProjectTemplateAndReplace(
     autolinkCsReactPackageProviders: '',
     autolinkCppIncludes: '',
     autolinkCppPackageProviders:
-      '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: @react-native-windpows\cli\src\commands\autolinkWindows\autolinkWindows.ts
+      '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: @react-native-windows\cli\src\commands\autolinkWindows\autolinkWindows.ts
   };
 
   const commonMappings =
