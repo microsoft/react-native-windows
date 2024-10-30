@@ -20,7 +20,7 @@
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "react": "^18.2.0",
-    "react-native": "0.76.0-rc.6",
+    "react-native": "0.76.0",
     "react-native-windows": "0.76.0-preview.4",
     "react-native-xaml": "^0.0.78"
   },
@@ -33,7 +33,7 @@
     "@react-native-community/cli": "15.0.0-alpha.2",
     "@react-native-windows/automation": "^0.3.291",
     "@react-native-windows/automation-commands": "^0.1.312",
-    "@react-native/metro-config": "0.76.0-rc.6",
+    "@react-native/metro-config": "0.76.0",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.27",
