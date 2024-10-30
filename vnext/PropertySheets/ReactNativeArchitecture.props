@@ -31,7 +31,18 @@
 
     <!-- Default this to true if not specified but allow it to be false. -->
     <UseExperimentalNuget Condition="'$(UseExperimentalNuget)'==''">true</UseExperimentalNuget>
+
+    <DefineConstants>RNW_NEW_ARCH;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
+
+  <ItemDefinitionGroup Condition="'$(RnwNewArch)'=='true'">
+    <ClCompile>
+      <PreprocessorDefinitions>RNW_NEW_ARCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Midl>
+      <PreprocessorDefinitions>RNW_NEW_ARCH;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+  </ItemDefinitionGroup>
 
   <!-- Check Old Architecture properties and gently warn if they're misconfigured. -->
   <Target Name="EnsureUseFabricForOldArch" BeforeTargets="PrepareForBuild" Condition="'$(RnwNewArch)'=='false' and '$(UseFabric)'=='true'">

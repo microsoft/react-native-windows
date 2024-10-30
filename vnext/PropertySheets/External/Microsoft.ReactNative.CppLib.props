@@ -14,10 +14,10 @@
     <Warning Text="Property `RnwSdkDefaultsSet` was not set. Please ensure your project imports 'Microsoft.ReactNative.WindowsSdk.Default.props' before importing this prop sheet." />
   </Target>
   
-  <ImportGroup Condition="'$(UseFabric)' == 'true'">
+  <ImportGroup Condition="'$(RnwNewArch)'=='true'">
     <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Composition.CppLib.props" />
   </ImportGroup>
-  <ImportGroup Condition="'$(UseFabric)' != 'true'">
+  <ImportGroup Condition="'$(RnwNewArch)'!='true'">
     <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.CppLib.props" />
   </ImportGroup>
 </Project>
