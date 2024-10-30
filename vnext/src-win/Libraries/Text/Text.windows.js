@@ -146,7 +146,6 @@ const Text: component(
       _numberOfLines = 0;
     }
 
-
     let _selectable = selectable;
 
     let processedStyle = flattenStyle<TextStyleProp>(_style);
@@ -270,9 +269,9 @@ const Text: component(
             ...restProps,
             accessibilityLabel: _accessibilityLabel,
             accessibilityState: _accessibilityState,
-            accessibilityLevel={_accessibilityLevel}, // Windows
-            accessibilityPosInSet={_accessibilityPosInSet}, // Windows
-            accessibilitySetSize={_accessibilitySetSize}, // Windows
+            accessibilityLevel: _accessibilityLevel, // Windows
+            accessibilityPosInSet: _accessibilityPosInSet, // Windows
+            accessibilitySetSize: _accessibilitySetSize, // Windows
             accessible: _accessible,
             allowFontScaling: allowFontScaling !== false,
             disabled: _disabled,
@@ -326,29 +325,29 @@ const Text: component(
     }
 
     // [Windows
-      // $FlowFixMe[unclear-type]
-      let styleProps: ViewStyleProp = (style: any); // Flow style type casting
-      if (
-        global.RN$Bridgeless !== true && // [Windows] Fabric text handles borders, but on paper we need to wrap it in an extra view
-        styleProps &&
-        styleProps.borderColor != null &&
-        (styleProps.borderWidth != null ||
-          styleProps.borderBottomWidth != null ||
-          styleProps.borderEndWidth != null ||
-          styleProps.borderLeftWidth != null ||
-          styleProps.borderRightWidth != null ||
-          styleProps.borderStartWidth != null ||
-          styleProps.borderTopWidth != null)
-      ) {
-        return (
-          <View style={styleProps}>
-            <TextAncestor.Provider value={true}>
-              {nativeText}
-            </TextAncestor.Provider>
-          </View>
-        );
-      }
-      // Windows]
+    // $FlowFixMe[unclear-type]
+    let styleProps: ViewStyleProp = (style: any); // Flow style type casting
+    if (
+      global.RN$Bridgeless !== true && // [Windows] Fabric text handles borders, but on paper we need to wrap it in an extra view
+      styleProps &&
+      styleProps.borderColor != null &&
+      (styleProps.borderWidth != null ||
+        styleProps.borderBottomWidth != null ||
+        styleProps.borderEndWidth != null ||
+        styleProps.borderLeftWidth != null ||
+        styleProps.borderRightWidth != null ||
+        styleProps.borderStartWidth != null ||
+        styleProps.borderTopWidth != null)
+    ) {
+      return (
+        <View style={styleProps}>
+          <TextAncestor.Provider value={true}>
+            {nativeText}
+          </TextAncestor.Provider>
+        </View>
+      );
+    }
+    // Windows]
 
     if (children == null) {
       return nativeText;
@@ -370,15 +369,15 @@ const Text: component(
       }
       if (!hasNonTextChild) {
         return nativeText;
+      } else if (typeof children !== 'object') {
+        return nativeText;
       }
-      else if (typeof children !== 'object') {
-      return nativeText;
     }
 
     return (
       <TextAncestor.Provider value={true}>{nativeText}</TextAncestor.Provider>
     );
-  }
+  },
 );
 
 Text.displayName = 'Text';
