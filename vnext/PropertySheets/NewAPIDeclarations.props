@@ -7,19 +7,19 @@
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <RnwReactTagAPI Condition="'$(RnwReactTagAPI)'==''">true</RnwReactTagAPI>
+    <RnwReactTagAPI>true</RnwReactTagAPI>
   </PropertyGroup>
 
   <PropertyGroup>
-    <DefineConstants Condition="'$(RnwReactTagAPI)'=='true'">RNW_REACTTAG_API;$(DefineConstants)</DefineConstants>
+    <DefineConstants>RNW_REACTTAG_API;$(DefineConstants)</DefineConstants>
   </PropertyGroup>
 
   <ItemDefinitionGroup>
     <ClCompile>
-      <PreprocessorDefinitions Condition="'$(RnwReactTagAPI)'=='true'">RNW_REACTTAG_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>RNW_REACTTAG_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Midl>
-      <PreprocessorDefinitions Condition="'$(RnwReactTagAPI)'=='true'">RNW_REACTTAG_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>RNW_REACTTAG_API;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
   </ItemDefinitionGroup>
 </Project>
