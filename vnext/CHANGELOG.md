@@ -1,8 +1,28 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 23 Oct 2024 05:31:16 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 26 Oct 2024 05:28:07 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.882
+
+Sat, 26 Oct 2024 05:28:07 GMT
+
+### Changes
+
+- Temporarily disable code-signing of NuGet packages (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.243
+
+## 0.0.0-canary.881
+
+Fri, 25 Oct 2024 05:21:20 GMT
+
+### Changes
+
+- Focus should notify island host when tab loop wraps to give host oportunity to take focus (30809111+acoates-ms@users.noreply.github.com)
+- Default scroll to bring a component into view should have padding around the viewport (30809111+acoates-ms@users.noreply.github.com)
+- Add very basic box-shadow support (30809111+acoates-ms@users.noreply.github.com)
+- Update focus visuals to use cornerRadius and inner/outer strokes. (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.880
 
