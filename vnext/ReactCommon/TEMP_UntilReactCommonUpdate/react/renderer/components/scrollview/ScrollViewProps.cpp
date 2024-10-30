@@ -117,13 +117,7 @@ ScrollViewProps::ScrollViewProps(
                     rawProps,
                     "endDraggingSensitivityMultiplier",
                     sourceProps.endDraggingSensitivityMultiplier,
-<<<<<<< Upstream
                     (Float)1)),
-=======
-                    // [Windows fix
-                    (Float)1)),
-                    // Windows]
->>>>>>> Override
       enableSyncOnScroll(
           CoreFeatures::enablePropIteratorSetter
               ? sourceProps.enableSyncOnScroll

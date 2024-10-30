@@ -34,7 +34,6 @@ type TextForwardRef = React.ElementRef<
  *
  * @see https://reactnative.dev/docs/text
  */
-<<<<<<< Upstream
 const Text: component(
   ref: React.RefSetter<TextForwardRef>,
   ...props: TextProps
@@ -43,6 +42,9 @@ const Text: component(
     {
       accessible,
       accessibilityLabel,
+      accessibilityLevel, // Windows
+      accessibilityPosInSet, // Windows
+      accessibilitySetSize, // Windows
       accessibilityState,
       allowFontScaling,
       'aria-busy': ariaBusy,
@@ -50,6 +52,9 @@ const Text: component(
       'aria-disabled': ariaDisabled,
       'aria-expanded': ariaExpanded,
       'aria-label': ariaLabel,
+      'aria-level': ariaLevel, // Windows
+      'aria-posinset': ariaPosinset, // Windows
+      'aria-setsize': ariaSetsize, // Windows
       'aria-selected': ariaSelected,
       children,
       ellipsizeMode,
@@ -77,6 +82,9 @@ const Text: component(
     forwardedRef,
   ) => {
     const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
+    const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Windows
+    const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet; // Windows
+    const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Windows
 
     let _accessibilityState: ?TextProps['accessibilityState'] =
       accessibilityState;
@@ -103,84 +111,6 @@ const Text: component(
           expanded: ariaExpanded,
           selected: ariaSelected,
         };
-=======
-const Text: React.AbstractComponent<TextProps, TextForwardRef> =
-  React.forwardRef(
-    (
-      {
-        accessible,
-        accessibilityLabel,
-        accessibilityLevel, // Windows
-        accessibilityPosInSet, // Windows
-        accessibilitySetSize, // Windows
-        accessibilityState,
-        allowFontScaling,
-        'aria-busy': ariaBusy,
-        'aria-checked': ariaChecked,
-        'aria-disabled': ariaDisabled,
-        'aria-expanded': ariaExpanded,
-        'aria-label': ariaLabel,
-        'aria-level': ariaLevel, // Windows
-        'aria-posinset': ariaPosinset, // Windows
-        'aria-setsize': ariaSetsize, // Windows
-        'aria-selected': ariaSelected,
-        children,
-        ellipsizeMode,
-        disabled,
-        id,
-        nativeID,
-        numberOfLines,
-        onLongPress,
-        onPress,
-        onPressIn,
-        onPressOut,
-        onResponderGrant,
-        onResponderMove,
-        onResponderRelease,
-        onResponderTerminate,
-        onResponderTerminationRequest,
-        onStartShouldSetResponder,
-        pressRetentionOffset,
-        selectable,
-        selectionColor,
-        suppressHighlighting,
-        style,
-        ...restProps
-      }: TextProps,
-      forwardedRef,
-    ) => {
-      const _accessibilityLabel = ariaLabel ?? accessibilityLabel;
-      const _accessibilityLevel = ariaLevel ?? accessibilityLevel; // Windows
-      const _accessibilityPosInSet = ariaPosinset ?? accessibilityPosInSet; // Windows
-      const _accessibilitySetSize = ariaSetsize ?? accessibilitySetSize; // Windows
-
-      let _accessibilityState: ?TextProps['accessibilityState'] =
-        accessibilityState;
-      if (
-        ariaBusy != null ||
-        ariaChecked != null ||
-        ariaDisabled != null ||
-        ariaExpanded != null ||
-        ariaSelected != null
-      ) {
-        if (_accessibilityState != null) {
-          _accessibilityState = {
-            busy: ariaBusy ?? _accessibilityState.busy,
-            checked: ariaChecked ?? _accessibilityState.checked,
-            disabled: ariaDisabled ?? _accessibilityState.disabled,
-            expanded: ariaExpanded ?? _accessibilityState.expanded,
-            selected: ariaSelected ?? _accessibilityState.selected,
-          };
-        } else {
-          _accessibilityState = {
-            busy: ariaBusy,
-            checked: ariaChecked,
-            disabled: ariaDisabled,
-            expanded: ariaExpanded,
-            selected: ariaSelected,
-          };
-        }
->>>>>>> Override
       }
     }
 
@@ -214,7 +144,6 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
       _numberOfLines = 0;
     }
 
-<<<<<<< Upstream
     let _selectable = selectable;
 
     let processedStyle = flattenStyle<TextStyleProp>(_style);
@@ -238,93 +167,6 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
         overrides.textAlignVertical =
           verticalAlignToTextAlignVerticalMap[processedStyle.verticalAlign];
         overrides.verticalAlign = undefined;
-=======
-      let _selectable = selectable;
-
-      const processedStyle = flattenStyle(_style);
-      if (processedStyle != null) {
-        if (typeof processedStyle.fontWeight === 'number') {
-          // $FlowFixMe[cannot-write]
-          processedStyle.fontWeight = processedStyle.fontWeight.toString();
-        }
-
-        if (processedStyle.userSelect != null) {
-          _selectable = userSelectToSelectableMap[processedStyle.userSelect];
-          // $FlowFixMe[cannot-write]
-          delete processedStyle.userSelect;
-        }
-
-        if (processedStyle.verticalAlign != null) {
-          // $FlowFixMe[cannot-write]
-          processedStyle.textAlignVertical =
-            verticalAlignToTextAlignVerticalMap[processedStyle.verticalAlign];
-          // $FlowFixMe[cannot-write]
-          delete processedStyle.verticalAlign;
-        }
-      }
-
-      const _nativeID = id ?? nativeID;
-
-      const hasTextAncestor = useContext(TextAncestor);
-      if (hasTextAncestor) {
-        if (isPressable) {
-          return (
-            <NativePressableVirtualText
-              ref={forwardedRef}
-              textProps={{
-                ...restProps,
-                accessibilityLabel: _accessibilityLabel,
-                accessibilityState: _accessibilityState,
-                accessibilityLevel: _accessibilityLevel, // Windows
-                accessibilityPosInSet: _accessibilityPosInSet, // Windows
-                accessibilitySetSize: _accessibilitySetSize, // Windows
-                nativeID: _nativeID,
-                numberOfLines: _numberOfLines,
-                selectable: _selectable,
-                selectionColor: _selectionColor,
-                style: processedStyle,
-                disabled: disabled,
-                children,
-              }}
-              textPressabilityProps={{
-                onLongPress,
-                onPress,
-                onPressIn,
-                onPressOut,
-                onResponderGrant,
-                onResponderMove,
-                onResponderRelease,
-                onResponderTerminate,
-                onResponderTerminationRequest,
-                onStartShouldSetResponder,
-                pressRetentionOffset,
-                suppressHighlighting,
-              }}
-            />
-          );
-        }
-
-        return (
-          <NativeVirtualText
-            {...restProps}
-            accessibilityLabel={_accessibilityLabel}
-            accessibilityState={_accessibilityState}
-            accessibilityLevel={_accessibilityLevel} // Windows
-            accessibilityPosInSet={_accessibilityPosInSet} // Windows
-            accessibilitySetSize={_accessibilitySetSize} // Windows
-            isHighlighted={false}
-            isPressable={false}
-            nativeID={_nativeID}
-            numberOfLines={_numberOfLines}
-            ref={forwardedRef}
-            selectable={_selectable}
-            selectionColor={_selectionColor}
-            style={processedStyle}
-            disabled={disabled}>
-            {children}
-          </NativeVirtualText>
-        );
->>>>>>> Override
       }
 
       if (overrides != null) {
@@ -333,18 +175,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
       }
     }
 
-<<<<<<< Upstream
     const _nativeID = id ?? nativeID;
-=======
-      const _accessible = Platform.select({
-        ios: accessible !== false,
-        android:
-          accessible == null
-            ? onPress != null || onLongPress != null
-            : accessible,
-        default: accessible !== false, // [Windows]
-      });
->>>>>>> Override
 
     const hasTextAncestor = useContext(TextAncestor);
     if (hasTextAncestor) {
@@ -356,26 +187,15 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
               ...restProps,
               accessibilityLabel: _accessibilityLabel,
               accessibilityState: _accessibilityState,
-<<<<<<< Upstream
-=======
               accessibilityLevel: _accessibilityLevel, // Windows
               accessibilityPosInSet: _accessibilityPosInSet, // Windows
               accessibilitySetSize: _accessibilitySetSize, // Windows
-              accessible: _accessible,
-              allowFontScaling: allowFontScaling !== false,
-              disabled: _disabled,
-              ellipsizeMode: ellipsizeMode ?? 'tail',
->>>>>>> Override
               nativeID: _nativeID,
               numberOfLines: _numberOfLines,
               selectable: _selectable,
               selectionColor: _selectionColor,
-<<<<<<< Upstream
-              style: _style,
-              disabled: disabled,
-=======
               style: processedStyle,
->>>>>>> Override
+              disabled: disabled,
               children,
             }}
             textPressabilityProps={{
@@ -394,7 +214,6 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
             }}
           />
         );
-<<<<<<< Upstream
       }
 
       return (
@@ -402,6 +221,9 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
           {...restProps}
           accessibilityLabel={_accessibilityLabel}
           accessibilityState={_accessibilityState}
+          accessibilityLevel={_accessibilityLevel} // Windows
+          accessibilityPosInSet={_accessibilityPosInSet} // Windows
+          accessibilitySetSize={_accessibilitySetSize} // Windows
           isHighlighted={false}
           isPressable={false}
           nativeID={_nativeID}
@@ -445,6 +267,9 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
             ...restProps,
             accessibilityLabel: _accessibilityLabel,
             accessibilityState: _accessibilityState,
+            accessibilityLevel={_accessibilityLevel}, // Windows
+            accessibilityPosInSet={_accessibilityPosInSet}, // Windows
+            accessibilitySetSize={_accessibilitySetSize}, // Windows
             accessible: _accessible,
             allowFontScaling: allowFontScaling !== false,
             disabled: _disabled,
@@ -478,6 +303,9 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
           {...restProps}
           accessibilityLabel={_accessibilityLabel}
           accessibilityState={_accessibilityState}
+          accessibilityLevel={_accessibilityLevel} // Windows
+          accessibilityPosInSet={_accessibilityPosInSet} // Windows
+          accessibilitySetSize={_accessibilitySetSize} // Windows
           accessible={_accessible}
           allowFontScaling={allowFontScaling !== false}
           disabled={_disabled}
@@ -494,49 +322,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
       );
     }
 
-    if (children == null) {
-      return nativeText;
-    }
-
-    // If the children do not contain a JSX element it would not be possible to have a
-    // nested `Text` component so we can skip adding the `TextAncestor` context wrapper
-    // which has a performance overhead. Since we do this for performance reasons we need
-    // to keep the check simple to avoid regressing overall perf. For this reason the
-    // `children.length` constant is set to `3`, this should be a reasonable tradeoff
-    // to capture the majority of `Text` uses but also not make this check too expensive.
-    if (Array.isArray(children) && children.length <= 3) {
-      let hasNonTextChild = false;
-      for (let child of children) {
-        if (child != null && typeof child === 'object') {
-          hasNonTextChild = true;
-          break;
-=======
-      } else {
-        nativeText = (
-          <NativeText
-            {...restProps}
-            accessibilityLabel={_accessibilityLabel}
-            accessibilityState={_accessibilityState}
-            accessibilityLevel={_accessibilityLevel} // Windows
-            accessibilityPosInSet={_accessibilityPosInSet} // Windows
-            accessibilitySetSize={_accessibilitySetSize} // Windows
-            accessible={_accessible}
-            allowFontScaling={allowFontScaling !== false}
-            disabled={_disabled}
-            ellipsizeMode={ellipsizeMode ?? 'tail'}
-            isHighlighted={false}
-            nativeID={_nativeID}
-            numberOfLines={_numberOfLines}
-            ref={forwardedRef}
-            selectable={_selectable}
-            selectionColor={_selectionColor}
-            style={processedStyle}>
-            {children}
-          </NativeText>
-        );
-      }
-
-      // [Windows
+    // [Windows
       // $FlowFixMe[unclear-type]
       let styleProps: ViewStyleProp = (style: any); // Flow style type casting
       if (
@@ -605,45 +391,35 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
       }
       // Windows]
 
-      if (children == null) {
-        return nativeText;
-      }
+    if (children == null) {
+      return nativeText;
+    }
 
-      // If the children do not contain a JSX element it would not be possible to have a
-      // nested `Text` component so we can skip adding the `TextAncestor` context wrapper
-      // which has a performance overhead. Since we do this for performance reasons we need
-      // to keep the check simple to avoid regressing overall perf. For this reason the
-      // `children.length` constant is set to `3`, this should be a reasonable tradeoff
-      // to capture the majority of `Text` uses but also not make this check too expensive.
-      /*
-      if (Array.isArray(children) && children.length <= 3) {
-        let hasNonTextChild = false;
-        for (let child of children) {
-          if (child != null && typeof child === 'object') {
-            hasNonTextChild = true;
-            break;
-          }
-        }
-        if (!hasNonTextChild) {
-          return nativeText;
->>>>>>> Override
+    // If the children do not contain a JSX element it would not be possible to have a
+    // nested `Text` component so we can skip adding the `TextAncestor` context wrapper
+    // which has a performance overhead. Since we do this for performance reasons we need
+    // to keep the check simple to avoid regressing overall perf. For this reason the
+    // `children.length` constant is set to `3`, this should be a reasonable tradeoff
+    // to capture the majority of `Text` uses but also not make this check too expensive.
+    if (Array.isArray(children) && children.length <= 3) {
+      let hasNonTextChild = false;
+      for (let child of children) {
+        if (child != null && typeof child === 'object') {
+          hasNonTextChild = true;
+          break;
         }
       }
       if (!hasNonTextChild) {
         return nativeText;
       }
-<<<<<<< Upstream
-    } else if (typeof children !== 'object') {
+      else if (typeof children !== 'object') {
       return nativeText;
     }
-=======
-      */
->>>>>>> Override
 
     return (
       <TextAncestor.Provider value={true}>{nativeText}</TextAncestor.Provider>
     );
-  },
+  }
 );
 
 Text.displayName = 'Text';
