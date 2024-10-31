@@ -50,6 +50,8 @@ struct Color : ColorT<Color, Composition::Experimental::IInternalColor> {
   winrt::Microsoft::ReactNative::Composition::Experimental::IBrush AsInternalBrush(
       const winrt::Microsoft::ReactNative::Composition::Theme theme) noexcept;
 
+  bool Equals(const winrt::Microsoft::ReactNative::Color& color) const noexcept;
+
   static winrt::Microsoft::ReactNative::Color ReadValue(
       const winrt::Microsoft::ReactNative::IJSValueReader &reader) noexcept;
   static void WriteValue(

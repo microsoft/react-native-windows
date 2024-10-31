@@ -42,11 +42,11 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
  public: // Composition::IReactCompositionViewComponentBuilder
   void SetViewComponentViewInitializer(const ViewComponentViewInitializer &initializer) noexcept;
   void SetContentIslandComponentViewInitializer(const ComponentIslandComponentViewInitializer &initializer) noexcept;
-
   void SetCreateVisualHandler(CreateVisualDelegate impl) noexcept;
+  void SetViewFeatures(ComponentViewFeatures viewFeatures) noexcept;
 
  public:
-  IComponentProps CreateProps(ViewProps props) noexcept;
+  IComponentProps CreateProps(ViewProps props, const IComponentProps& cloneFrom) noexcept;
   void CreateShadowNode(ShadowNode shadowNode) noexcept;
   void CloneShadowNode(ShadowNode shadowNode, ShadowNode sourceShadowNode) noexcept;
   winrt::Windows::Foundation::IInspectable InitialStateData(
@@ -69,10 +69,12 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   InitialStateDataFactory m_initialStateDataFactory;
   winrt::Microsoft::ReactNative::MeasureContentHandler m_measureContent;
   winrt::Microsoft::ReactNative::LayoutHandler m_layoutHandler;
+  ComponentViewFeatures m_features{ComponentViewFeatures::Default};
   std::function<winrt::Microsoft::ReactNative::ComponentView(
       const IReactContext &reactContext,
       int32_t tag,
-      const Experimental::ICompositionContext &context)>
+      const Experimental::ICompositionContext &context,
+      ComponentViewFeatures features)>
       m_fnCreateView;
   std::function<facebook::react::ComponentDescriptorConstructor *()> m_descriptorConstructorFactory;
   winrt::Microsoft::ReactNative::HandleCommandDelegate m_customCommandHandler;
