@@ -324,7 +324,7 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
 
       // [Windows
       // $FlowFixMe[unclear-type]
-      let styleProps: ViewStyleProp = (style: any); // Flow style type casting
+      let styleProps: ViewStyleProp = (processedStyle: any); // Flow style type casting
       if (
         global.RN$Bridgeless !== true && // [Windows] Fabric text handles borders, but on paper we need to wrap it in an extra view
         styleProps &&
