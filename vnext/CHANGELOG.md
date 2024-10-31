@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 26 Oct 2024 05:28:07 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 31 Oct 2024 05:28:13 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.883
+
+Thu, 31 Oct 2024 05:28:13 GMT
+
+### Changes
+
+- Fix flatten style running multiple times" (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.882
 

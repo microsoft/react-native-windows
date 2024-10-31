@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 31 Oct 2024 05:28:13 GMT",
+      "version": "0.0.0-canary.883",
+      "tag": "react-native-windows_v0.0.0-canary.883",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d929b3fe4ff0f773fa2459908de54d83cabf04b8",
+            "comment": "Fix flatten style running multiple times\""
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 26 Oct 2024 05:28:07 GMT",
       "version": "0.0.0-canary.882",
       "tag": "react-native-windows_v0.0.0-canary.882",
