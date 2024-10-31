@@ -96,6 +96,9 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
     throw std::exception("Failed to create new hwnd for Modal: " + GetLastError());
   }
 
+  // Disable user sizing of the hwnd
+  ::SetWindowLong(m_hwnd, GWL_STYLE, GetWindowLong(m_hwnd, GWL_STYLE) & ~WS_SIZEBOX);
+
   // set the top-level windows as the new hwnd
   winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
       host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(m_hwnd));
@@ -289,9 +292,7 @@ void WindowsModalHostComponentView::updateProps(
   const auto &oldModalProps =
       *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(oldProps ? oldProps : viewProps());
   const auto &newModalProps = *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(props);
-
   newModalProps.visible ? m_isVisible = true : m_isVisible = false;
-
   base_type::updateProps(props, oldProps);
 }
 

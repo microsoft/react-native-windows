@@ -134,9 +134,9 @@ ReactNativeIsland::ReactNativeIsland(
     winrt::Microsoft::ReactNative::ComponentView componentView) noexcept
     : m_compositor(compositor),
       m_context(context),
-      m_layoutConstraints({{0, 0}, {0, 0}, winrt::Microsoft::ReactNative::LayoutDirection::Undefined}) {
+      m_layoutConstraints({{0, 0}, {0, 0}, winrt::Microsoft::ReactNative::LayoutDirection::Undefined}),
+      m_isFragment(true) {
   m_rootTag = componentView.Tag();
-  m_isFragment = true;
   InitTextScaleMultiplier();
   AddFragmentCompositionEventHandler(context, componentView);
 }
@@ -440,7 +440,7 @@ void ReactNativeIsland::AddFragmentCompositionEventHandler(
 
   if (!m_CompositionEventHandler) {
     // Create CompositionEventHandler if not already created
-    m_context = winrt::Microsoft::ReactNative::ReactContext(std::move(context));
+    m_context = winrt::Microsoft::ReactNative::ReactContext(context);
     m_CompositionEventHandler =
         std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this, componentView.Tag());
     m_CompositionEventHandler->Initialize();

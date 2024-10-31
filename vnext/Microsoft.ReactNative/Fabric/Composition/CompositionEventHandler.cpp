@@ -147,7 +147,6 @@ void CompositionEventHandler::Initialize() noexcept {
 #ifdef USE_WINUI3
   if (auto island = m_wkRootView.get().Island()) {
     auto pointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(island);
-    auto SurfaceID = SurfaceId();
 
     m_pointerPressedToken =
         pointerSource.PointerPressed([wkThis = weak_from_this()](
