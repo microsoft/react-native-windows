@@ -14,14 +14,6 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "LocalizedControlType": "group",
         "PositionInSet": 1,
         "SizeofSet": 3,
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Pressable 1 of 3",
-          },
-        ],
       },
       {
         "AutomationId": "",
@@ -31,14 +23,6 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "LocalizedControlType": "group",
         "PositionInSet": 2,
         "SizeofSet": 3,
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Pressable 2 of 3",
-          },
-        ],
       },
       {
         "AutomationId": "",
@@ -48,14 +32,6 @@ exports[`Pressable Tests Pressables can be defined as a set using accessibilityP
         "LocalizedControlType": "group",
         "PositionInSet": 3,
         "SizeofSet": 3,
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Pressable 3 of 3",
-          },
-        ],
       },
     ],
   },
@@ -223,14 +199,6 @@ exports[`Pressable Tests Pressables can be disabled, disabled = {false} 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Enabled Pressable",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -280,14 +248,6 @@ exports[`Pressable Tests Pressables can be disabled, disabled = {true} 1`] = `
     "IsEnabled": false,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Disabled Pressable",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -339,14 +299,6 @@ exports[`Pressable Tests Pressables can change style when pressed 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Me",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -445,14 +397,6 @@ exports[`Pressable Tests Pressables can have advanced borders 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Outside This View",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -505,14 +449,6 @@ exports[`Pressable Tests Pressables can have delayed event handlers 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Me",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -560,20 +496,6 @@ exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
     "AutomationId": "pressable_delay_events_console",
     "ControlType": 50026,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "pressOut",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "pressIn",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -689,14 +611,6 @@ exports[`Pressable Tests Pressables can have event handlers 1`] = `
     "LocalizedControlType": "button",
     "Name": "pressable feedback events",
     "ValuePattern.Value": "Press Me",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Me",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -745,32 +659,6 @@ exports[`Pressable Tests Pressables can have event handlers 2`] = `
     "AutomationId": "pressable_feedback_events_console",
     "ControlType": 50026,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "pressOut",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "press",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "pressIn",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "hover in",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -926,14 +814,6 @@ exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Press Outside This View",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -1390,39 +1270,11 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Pressable with accessible=true and focusable=true",
-          },
-        ],
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Pressable with accessible=false",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
         "LocalizedControlType": "group",
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Pressable with focusable=false",
-          },
-        ],
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Pressable with accessible=false and focusable=false",
       },
     ],
   },
@@ -1636,14 +1488,6 @@ exports[`Pressable Tests Pressables can have tooltips 1`] = `
     "ControlType": 50026,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "group",
-    "__Children": [
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "Pressable with ToolTip "Pressable"",
-      },
-    ],
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
@@ -1694,71 +1538,27 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
     "__Children": [
       {
         "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "View #1, front is visible, back is hidden.",
+        "ControlType": 50026,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "group",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Front",
-          },
-        ],
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Back (You should not see this)",
-          },
-        ],
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50020,
-        "LocalizedControlType": "text",
-        "Name": "View #2, front is hidden, back is visible.",
       },
       {
         "AutomationId": "",
         "ControlType": 50026,
         "IsKeyboardFocusable": true,
         "LocalizedControlType": "group",
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Front (You should not see this)",
-          },
-        ],
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50026,
-        "IsKeyboardFocusable": true,
-        "LocalizedControlType": "group",
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "Back",
-          },
-        ],
       },
     ],
   },
