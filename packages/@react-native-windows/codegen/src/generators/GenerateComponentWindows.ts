@@ -305,8 +305,7 @@ export function createComponentGenerator({
           })
           .join('\n');
 
-
-          const propInitializers = componentShape.props
+        const propInitializers = componentShape.props
           .map(prop => {
             return `       ${prop.name} = cloneFromProps->${prop.name};`;
           })
