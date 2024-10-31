@@ -75,6 +75,13 @@ async function getFileMappings(config = {}, options = {}) {
     addReactNativePublicAdoFeed: true || isCanary, // Temporary true for all new projects until code-signing is restored, see issue #14030
 
     cppNugetPackages,
+
+    // autolinking template variables
+    autolinkPropertiesForProps: '',
+    autolinkProjectReferencesForTargets: '',
+    autolinkCppIncludes: '',
+    autolinkCppPackageProviders:
+      '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: @react-native-windows\cli\src\commands\autolinkWindows\autolinkWindows.ts
   };
 
   let fileMappings = [];
