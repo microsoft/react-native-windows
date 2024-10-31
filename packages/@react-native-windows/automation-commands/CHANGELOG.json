@@ -2,6 +2,66 @@
   "name": "@react-native-windows/automation-commands",
   "entries": [
     {
+      "date": "Thu, 31 Oct 2024 05:28:13 GMT",
+      "version": "0.1.326",
+      "tag": "@react-native-windows/automation-commands_v0.1.326",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.223",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 26 Oct 2024 05:28:07 GMT",
+      "version": "0.1.325",
+      "tag": "@react-native-windows/automation-commands_v0.1.325",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.222",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Oct 2024 05:21:21 GMT",
+      "version": "0.1.324",
+      "tag": "@react-native-windows/automation-commands_v0.1.324",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.221",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 23 Oct 2024 05:31:16 GMT",
+      "version": "0.1.323",
+      "tag": "@react-native-windows/automation-commands_v0.1.323",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-commands",
+            "comment": "Bump @react-native-windows/automation-channel to v0.12.220",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Oct 2024 05:26:28 GMT",
       "version": "0.1.322",
       "tag": "@react-native-windows/automation-commands_v0.1.322",

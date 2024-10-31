@@ -2,6 +2,96 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 31 Oct 2024 05:28:13 GMT",
+      "version": "0.0.0-canary.883",
+      "tag": "react-native-windows_v0.0.0-canary.883",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d929b3fe4ff0f773fa2459908de54d83cabf04b8",
+            "comment": "Fix flatten style running multiple times\""
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 26 Oct 2024 05:28:07 GMT",
+      "version": "0.0.0-canary.882",
+      "tag": "react-native-windows_v0.0.0-canary.882",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2557b61dae29657b1aa7ef80b8919878eaee65cb",
+            "comment": "Temporarily disable code-signing of NuGet packages"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.243",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Oct 2024 05:21:20 GMT",
+      "version": "0.0.0-canary.881",
+      "tag": "react-native-windows_v0.0.0-canary.881",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3becf03c41cdb278b26e6b24e5eb7c3b2daeb40a",
+            "comment": "Focus should notify island host when tab loop wraps to give host oportunity to take focus"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "daa77099627821382932db595ca5b17045297fd0",
+            "comment": "Default scroll to bring a component into view should have padding around the viewport"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "19b6aba8340e92c0f5a0fb31bdc1ac33da0846b3",
+            "comment": "Add very basic box-shadow support"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a3850c30b209e2487010a4ffb768fc493e279b0e",
+            "comment": "Update focus visuals to use cornerRadius and inner/outer strokes."
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 23 Oct 2024 05:31:16 GMT",
+      "version": "0.0.0-canary.880",
+      "tag": "react-native-windows_v0.0.0-canary.880",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4d45e818929692b0bd4e3f836c190a94c616587b",
+            "comment": "Fix ignore files and update cli timeout"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "098541518a576a482dd2ccba17ab0f072132ac4c",
+            "comment": "Update Provider Guardrails"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 22 Oct 2024 05:26:27 GMT",
       "version": "0.0.0-canary.879",
       "tag": "react-native-windows_v0.0.0-canary.879",

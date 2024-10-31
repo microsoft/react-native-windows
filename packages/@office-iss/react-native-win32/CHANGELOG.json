@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Wed, 23 Oct 2024 05:31:16 GMT",
+      "version": "0.0.0-canary.269",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.269",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "4d45e818929692b0bd4e3f836c190a94c616587b",
+            "comment": "Fix ignore files and update cli timeout"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 19 Oct 2024 05:29:45 GMT",
       "version": "0.0.0-canary.268",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.268",

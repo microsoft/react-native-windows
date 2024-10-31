@@ -164,14 +164,20 @@ describe('TextInput Tests', () => {
 
     await app.waitUntil(
       async () => {
-        await component.setValue('hi i am setting up this whole UPPERCASE sentence.');
-        return (await component.getText()) === 'HI I AM SETTING UP THIS WHOLE UPPERCASE SENTENCE.';
+        await component.setValue(
+          'hi i am setting up this whole UPPERCASE sentence.',
+        );
+        return (
+          (await component.getText()) ===
+          'HI I AM SETTING UP THIS WHOLE UPPERCASE SENTENCE.'
+        );
       },
       {
         interval: 1500,
         timeout: 5000,
         timeoutMsg: `Unable to enter correct text.`,
-      });
+      },
+    );
   });
   test('TextInputs can have attributed text', async () => {
     const component = await app.findElementByTestID('text-input');

@@ -119,18 +119,12 @@ export class AutoLinkWindows {
     // Generating cs/cpp files for app code consumption
     if (projectLang === 'cs') {
       this.changesNecessary =
-        (await this.generateCSAutolinking(
-          templateRoot,
-          projectLang,
-          projectDir,
-        )) || this.changesNecessary;
+        (await this.generateCSAutolinking(templateRoot, projectDir)) ||
+        this.changesNecessary;
     } else if (projectLang === 'cpp') {
       this.changesNecessary =
-        (await this.generateCppAutolinking(
-          templateRoot,
-          projectLang,
-          projectDir,
-        )) || this.changesNecessary;
+        (await this.generateCppAutolinking(templateRoot, projectDir)) ||
+        this.changesNecessary;
     }
 
     // Generating props for app project consumption
@@ -284,23 +278,51 @@ export class AutoLinkWindows {
     });
   }
 
+  private getAutolinkTemplateFile(
+    templateRoot: string,
+    targetFile: string,
+  ): string {
+    if (templateRoot.endsWith('\\template')) {
+      // Old template split into different folders
+      switch (path.extname(targetFile)) {
+        case '.cpp':
+        case '.h':
+          templateRoot = path.join(templateRoot, 'cpp-app', 'src');
+          break;
+        case '.cs':
+          templateRoot = path.join(templateRoot, 'cs-app', 'src');
+          break;
+        case '.props':
+        case '.targets':
+        default:
+          templateRoot = path.join(templateRoot, 'shared-app', 'src');
+          break;
+      }
+    } else {
+      // New template with projected layout
+      templateRoot = path.join(templateRoot, 'windows', 'MyApp');
+    }
+
+    return path.join(templateRoot, targetFile);
+  }
+
   private async generateCppAutolinking(
     templateRoot: string,
-    projectLang: string,
     projectDir: string,
   ) {
     const {cppPackageProviders, cppIncludes} = this.getCppReplacements();
 
     const cppFileName = 'AutolinkedNativeModules.g.cpp';
+    const headerFileName = 'AutolinkedNativeModules.g.h';
 
-    const srcCppFile = path.join(
+    const srcCppFile = this.getAutolinkTemplateFile(templateRoot, cppFileName);
+    const srcHeaderFile = this.getAutolinkTemplateFile(
       templateRoot,
-      `${projectLang}-app`,
-      'src',
-      cppFileName,
+      headerFileName,
     );
 
     const destCppFile = path.join(projectDir, cppFileName);
+    const destHeaderFile = path.join(projectDir, headerFileName);
 
     verboseMessage(
       `Calculating ${chalk.bold(path.basename(destCppFile))}...`,
@@ -313,7 +335,22 @@ export class AutoLinkWindows {
       autolinkCppPackageProviders: cppPackageProviders,
     });
 
-    return await this.updateFile(destCppFile, cppContents);
+    const cppChanged = await this.updateFile(destCppFile, cppContents);
+
+    verboseMessage(
+      `Calculating ${chalk.bold(path.basename(destHeaderFile))}...`,
+      this.options.logging,
+    );
+
+    const headerContents = generatorCommon.resolveContents(srcHeaderFile, {
+      useMustache: true,
+      autolinkCppIncludes: cppIncludes,
+      autolinkCppPackageProviders: cppPackageProviders,
+    });
+
+    const headerChanged = await this.updateFile(destHeaderFile, headerContents);
+
+    return cppChanged || headerChanged;
   }
 
   public getCppReplacements() {
@@ -340,14 +377,13 @@ export class AutoLinkWindows {
     if (cppPackageProviders === '') {
       // There are no windows dependencies, this would result in warning. C4100: 'packageProviders': unreferenced formal parameter.
       // therefore add a usage.
-      cppPackageProviders = '\n    UNREFERENCED_PARAMETER(packageProviders);'; // CODESYNC: vnext\local-cli\generator-windows\index.js
+      cppPackageProviders = '\n    UNREFERENCED_PARAMETER(packageProviders);'; // CODESYNC: @react-native-windows\cli\src\generator-windows\index.ts
     }
     return {cppPackageProviders, cppIncludes};
   }
 
-  private generateCSAutolinking(
+  private async generateCSAutolinking(
     templateRoot: string,
-    projectLang: string,
     projectDir: string,
   ) {
     const {csUsingNamespaces, csReactPackageProviders} =
@@ -355,12 +391,7 @@ export class AutoLinkWindows {
 
     const csFileName = 'AutolinkedNativeModules.g.cs';
 
-    const srcCsFile = path.join(
-      templateRoot,
-      `${projectLang}-app`,
-      'src',
-      csFileName,
-    );
+    const srcCsFile = this.getAutolinkTemplateFile(templateRoot, csFileName);
 
     const destCsFile = path.join(projectDir, csFileName);
 
@@ -375,7 +406,7 @@ export class AutoLinkWindows {
       autolinkCsReactPackageProviders: csReactPackageProviders,
     });
 
-    return this.updateFile(destCsFile, csContents);
+    return await this.updateFile(destCsFile, csContents);
   }
 
   public getCsReplacements() {
@@ -505,7 +536,10 @@ export class AutoLinkWindows {
     return contentsChanged;
   }
 
-  private generateAutolinkTargets(projectDir: string, templateRoot: string) {
+  private async generateAutolinkTargets(
+    projectDir: string,
+    templateRoot: string,
+  ) {
     let projectReferencesForTargets = '';
 
     const windowsDependencies = this.getWindowsDependencies();
@@ -534,10 +568,8 @@ export class AutoLinkWindows {
 
     const targetFileName = 'AutolinkedNativeModules.g.targets';
 
-    const srcTargetFile = path.join(
+    const srcTargetFile = this.getAutolinkTemplateFile(
       templateRoot,
-      `shared-app`,
-      'src',
       targetFileName,
     );
 
@@ -553,20 +585,18 @@ export class AutoLinkWindows {
       autolinkProjectReferencesForTargets: projectReferencesForTargets,
     });
 
-    return this.updateFile(destTargetFile, targetContents);
+    return await this.updateFile(destTargetFile, targetContents);
   }
 
-  private generateAutolinkProps(
+  private async generateAutolinkProps(
     templateRoot: string,
     projectDir: string,
     propertiesForProps: string,
   ) {
     const propsFileName = 'AutolinkedNativeModules.g.props';
 
-    const srcPropsFile = path.join(
+    const srcPropsFile = this.getAutolinkTemplateFile(
       templateRoot,
-      `shared-app`,
-      'src',
       propsFileName,
     );
 
@@ -582,7 +612,7 @@ export class AutoLinkWindows {
       autolinkPropertiesForProps: propertiesForProps,
     });
 
-    return this.updateFile(destPropsFile, propsContents);
+    return await this.updateFile(destPropsFile, propsContents);
   }
 
   private getCSModules() {
@@ -863,6 +893,16 @@ function resolveRnwRoot(projectConfig: WindowsProjectConfig) {
  */
 function resolveTemplateRoot(projectConfig: WindowsProjectConfig) {
   const rnwPackage = resolveRnwRoot(projectConfig);
+  const template = projectConfig.rnwConfig?.['init-windows']?.template as
+    | string
+    | undefined;
+
+  // For new templates, return the template's root path
+  if (template && !template.startsWith('old/')) {
+    return path.join(rnwPackage, 'templates', template);
+  }
+
+  // For old (unknown templates) fall back to old behavior
   return path.join(rnwPackage, 'template');
 }
 

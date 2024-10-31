@@ -32,6 +32,23 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
+constexpr float FOCUS_VISUAL_WIDTH = 2.0f;
+
+// m_outerVisual
+//   |
+//   |
+//   ----- m_visual <-- Background / clip - Can be a custom visual depending on Component type
+//            |
+//            ----- Border Visuals x N (BorderPrimitive attached to m_visual)
+//   ------Focus Visual Container
+//           |
+//           |------Inner Focus Visual
+//                     |
+//                     ------ Border Visuals x N (BorderPrimitive)
+//           |------Outer Focus Visual
+//                     |
+//                     ------ Border Visuals x N (BorderPrimitive)
+
 ComponentView::ComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
@@ -40,8 +57,9 @@ ComponentView::ComponentView(
     : base_type(tag, reactContext), m_compContext(compContext), m_flags(flags) {
   m_outerVisual = compContext.CreateSpriteVisual(); // TODO could be a raw ContainerVisual if we had a
                                                     // CreateContainerVisual in ICompositionContext
-  m_focusVisual = compContext.CreateFocusVisual();
-  m_outerVisual.InsertAt(m_focusVisual.InnerVisual(), 0);
+  m_focusVisual = compContext.CreateSpriteVisual(); // TODO could be a raw ContainerVisual if we had a
+                                                    // CreateContainerVisual in ICompositionContext
+  m_outerVisual.InsertAt(m_focusVisual, 0);
 }
 
 ComponentView::~ComponentView() {
@@ -68,9 +86,17 @@ void ComponentView::onThemeChanged() noexcept {
     }
   }
 
-  if ((m_flags & ComponentViewFeatures::NativeBorder) == ComponentViewFeatures::NativeBorder) {
-    m_needsBorderUpdate = true;
-    finalizeBorderUpdates(m_layoutMetrics, *viewProps());
+  if (m_borderPrimitive) {
+    m_borderPrimitive->onThemeChanged(
+        m_layoutMetrics, BorderPrimitive::resolveAndAlignBorderMetrics(m_layoutMetrics, *viewProps()));
+  }
+  if (m_focusInnerPrimitive) {
+    auto innerFocusMetrics = focusLayoutMetrics(true /*inner*/);
+    m_focusInnerPrimitive->onThemeChanged(innerFocusMetrics, focusBorderMetrics(true /*inner*/, innerFocusMetrics));
+  }
+  if (m_focusOuterPrimitive) {
+    auto outerFocusMetrics = focusLayoutMetrics(true /*inner*/);
+    m_focusOuterPrimitive->onThemeChanged(outerFocusMetrics, focusBorderMetrics(false /*inner*/, outerFocusMetrics));
   }
 
   if ((m_flags & ComponentViewFeatures::ShadowProps) == ComponentViewFeatures::ShadowProps) {
@@ -131,13 +157,21 @@ void ComponentView::updateProps(
     }
   }
 
-  if ((m_flags & ComponentViewFeatures::NativeBorder) == ComponentViewFeatures::NativeBorder) {
-    updateBorderProps(oldViewProps, newViewProps);
+  if (m_borderPrimitive) {
+    m_borderPrimitive->updateProps(oldViewProps, newViewProps);
+  }
+  if (!newViewProps.enableFocusRing) {
+    showFocusVisual(false);
+  }
+  if (m_focusInnerPrimitive) {
+    m_focusInnerPrimitive->updateProps(oldViewProps, newViewProps);
+  }
+  if (m_focusOuterPrimitive) {
+    m_focusOuterPrimitive->updateProps(oldViewProps, newViewProps);
   }
   if ((m_flags & ComponentViewFeatures::ShadowProps) == ComponentViewFeatures::ShadowProps) {
     updateShadowProps(oldViewProps, newViewProps);
   }
-
   if (oldViewProps.tooltip != newViewProps.tooltip) {
     if (!m_tooltipTracked && newViewProps.tooltip) {
       TooltipService::GetCurrent(m_reactContext.Properties())->StartTracking(*this);
@@ -155,11 +189,56 @@ void ComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
   if ((m_flags & ComponentViewFeatures::NativeBorder) == ComponentViewFeatures::NativeBorder) {
-    updateBorderLayoutMetrics(layoutMetrics, *viewProps());
+    updateClippingPath(layoutMetrics, *viewProps());
+    OuterVisual().Size(
+        {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
+         layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+    OuterVisual().Offset({
+        layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
+        layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
+        0.0f,
+    });
+  }
+
+  updateFocusLayoutMetrics(layoutMetrics);
+
+  if (layoutMetrics != oldLayoutMetrics) {
+    if (m_borderPrimitive) {
+      m_borderPrimitive->markNeedsUpdate();
+    }
+    if (m_focusInnerPrimitive) {
+      m_focusInnerPrimitive->markNeedsUpdate();
+    }
+    if (m_focusOuterPrimitive) {
+      m_focusOuterPrimitive->markNeedsUpdate();
+    }
   }
 
   base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
   UpdateCenterPropertySet();
+}
+
+void ComponentView::updateFocusLayoutMetrics(facebook::react::LayoutMetrics const &layoutMetrics) noexcept {
+  if (m_focusInnerPrimitive) {
+    auto innerFocusMetrics = focusLayoutMetrics(true /*inner*/);
+    m_focusInnerPrimitive->RootVisual().Size(
+        {innerFocusMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
+         innerFocusMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+    m_focusInnerPrimitive->RootVisual().Offset(
+        {-FOCUS_VISUAL_WIDTH * layoutMetrics.pointScaleFactor,
+         -FOCUS_VISUAL_WIDTH * layoutMetrics.pointScaleFactor,
+         0.0f});
+  }
+  if (m_focusOuterPrimitive) {
+    auto outerFocusMetrics = focusLayoutMetrics(false /*inner*/);
+    m_focusOuterPrimitive->RootVisual().Size(
+        {outerFocusMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
+         outerFocusMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
+    m_focusOuterPrimitive->RootVisual().Offset(
+        {-(FOCUS_VISUAL_WIDTH * 2 * m_layoutMetrics.pointScaleFactor),
+         -(FOCUS_VISUAL_WIDTH * 2 * m_layoutMetrics.pointScaleFactor),
+         0.0f});
+  }
 }
 
 const facebook::react::LayoutMetrics &ComponentView::layoutMetrics() const noexcept {
@@ -199,7 +278,23 @@ void ComponentView::FinalizeTransform(
 
 void ComponentView::FinalizeUpdates(winrt::Microsoft::ReactNative::ComponentViewUpdateMask updateMask) noexcept {
   if ((m_flags & ComponentViewFeatures::NativeBorder) == ComponentViewFeatures::NativeBorder) {
-    finalizeBorderUpdates(m_layoutMetrics, *viewProps());
+    auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(m_layoutMetrics, *viewProps());
+    if (!m_borderPrimitive && BorderPrimitive::requiresBorder(borderMetrics, theme())) {
+      m_borderPrimitive = std::make_shared<BorderPrimitive>(*this, Visual());
+    }
+
+    if (m_borderPrimitive) {
+      m_borderPrimitive->finalize(m_layoutMetrics, borderMetrics);
+    }
+  }
+
+  if (m_focusInnerPrimitive) {
+    auto innerFocusMetrics = focusLayoutMetrics(true /*inner*/);
+    m_focusInnerPrimitive->finalize(innerFocusMetrics, focusBorderMetrics(true /*inner*/, innerFocusMetrics));
+  }
+  if (m_focusOuterPrimitive) {
+    auto outerFocusMetrics = focusLayoutMetrics(false /*inner*/);
+    m_focusOuterPrimitive->finalize(outerFocusMetrics, focusBorderMetrics(false /*inner*/, outerFocusMetrics));
   }
 
   if (m_FinalizeTransform) {
@@ -226,7 +321,7 @@ void ComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
   if (args.OriginalSource() == Tag()) {
     m_eventEmitter->onFocus();
-    if (m_enableFocusVisual) {
+    if (viewProps()->enableFocusRing) {
       showFocusVisual(true);
     }
     if (m_uiaProvider) {
@@ -356,886 +451,86 @@ const facebook::react::SharedViewEventEmitter &ComponentView::GetEventEmitter() 
   return m_eventEmitter;
 }
 
-std::array<
-    winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual,
-    ComponentView::SpecialBorderLayerCount>
-ComponentView::FindSpecialBorderLayers() const noexcept {
-  std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount> layers{
-      nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr};
-
-  if (m_numBorderVisuals) {
-    for (uint8_t i = 0; i < m_numBorderVisuals; i++) {
-      auto visual = Visual().GetAt(i);
-      layers[i] = visual.as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>();
-    }
-  }
-
-  return layers;
-}
-
-struct RoundedPathParameters {
-  float topLeftRadiusX = 0;
-  float topLeftRadiusY = 0;
-  float topRightRadiusX = 0;
-  float topRightRadiusY = 0;
-  float bottomRightRadiusX = 0;
-  float bottomRightRadiusY = 0;
-  float bottomLeftRadiusX = 0;
-  float bottomLeftRadiusY = 0;
-};
-
-/*
- * Creates and returns a PathGeometry object used to clip the visuals of an element when a BorderRadius is set.
- * Can also be used as part of a GeometryGroup for drawing a rounded border / innerstroke when called from
- * GetGeometryForRoundedBorder. "params" defines the radii (horizontal and vertical) for each corner (top left, top
- * right, bottom right, bottom left). "rectPathGeometry" defines the bounding box of the generated shape.
- */
-static winrt::com_ptr<ID2D1PathGeometry> GenerateRoundedRectPathGeometry(
-    winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
-    const RoundedPathParameters &params,
-    const facebook::react::RectangleEdges<float> &rectPathGeometry) noexcept {
-  winrt::com_ptr<ID2D1PathGeometry> pathGeometry;
-  winrt::com_ptr<ID2D1Factory1> spD2dFactory;
-  compContext.as<::Microsoft::ReactNative::Composition::Experimental::ICompositionContextInterop>()->D2DFactory(
-      spD2dFactory.put());
-
-  // Create a path geometry.
-  HRESULT hr = spD2dFactory->CreatePathGeometry(pathGeometry.put());
-  if (FAILED(hr)) {
-    assert(false);
-    return nullptr;
-  }
-
-  // Write to the path geometry using the geometry sink.
-  winrt::com_ptr<ID2D1GeometrySink> spSink = nullptr;
-  hr = pathGeometry->Open(spSink.put());
-
-  if (FAILED(hr)) {
-    assert(false);
-    return nullptr;
-  }
-
-  float left = rectPathGeometry.left;
-  float right = rectPathGeometry.right;
-  float top = rectPathGeometry.top;
-  float bottom = rectPathGeometry.bottom;
-
-  // This function uses Cubic Beziers to approximate Arc segments, even though D2D supports arcs.
-  // This is INTENTIONAL. D2D Arc Segments are eventually converted into cubic beziers, but this
-  // is done in such a way that we don't have control over how many bezier curve segments are used
-  // for each arc. We need to ensure that we always use the same number of control points so that
-  // our paths can be used in a PathKeyFrameAnimation.
-  // Value for control point scale factor derived from methods described in:
-  // https://web.archive.org/web/20200322075504/http://itc.ktu.lt/index.php/ITC/article/download/11812/6479
-  constexpr float controlPointScaleFactor = 0.44771528244f; // 1 - (4 * (sqrtf(2.0f) - 1) / 3.0f);
-
-#ifdef DEBUG
-  // std::sqrtf is not constexpr, so we precalculated this and wrote it in a constexpr form above.
-  // On debug, we should still check that the values are equivalent, though.
-  static float calculatedScaleFactor = 1 - (4 * (sqrtf(2.0f) - 1) / 3.0f);
-  assert(controlPointScaleFactor == calculatedScaleFactor);
-#endif // DEBUG
-
-  bool needsConsistentNumberOfControlPoints = true; // VisualVersion::IsUseWinCompClippingRegionEnabled();
-
-  if (needsConsistentNumberOfControlPoints || (params.topLeftRadiusX != 0.0 && params.topLeftRadiusY != 0.0)) {
-    spSink->BeginFigure(D2D1::Point2F(left + params.topLeftRadiusX, top), D2D1_FIGURE_BEGIN_FILLED);
-  } else {
-    spSink->BeginFigure(D2D1::Point2F(left, top), D2D1_FIGURE_BEGIN_FILLED);
-  }
-
-  // Move to the top right corner
-  spSink->AddLine(D2D1::Point2F(right - params.topRightRadiusX, top));
-  if (needsConsistentNumberOfControlPoints) {
-    D2D1_BEZIER_SEGMENT arcSegmentTopRight = {
-        D2D1::Point2F(right - controlPointScaleFactor * params.topRightRadiusX, top),
-        D2D1::Point2F(right, top + controlPointScaleFactor * params.topRightRadiusY),
-        D2D1::Point2F(right, top + params.topRightRadiusY)};
-
-    spSink->AddBezier(&arcSegmentTopRight);
-  } else if (params.topRightRadiusX != 0.0 && params.topRightRadiusY != 0.0) {
-    D2D1_ARC_SEGMENT arcSegmentTopRight = {
-        D2D1::Point2F(right, top + params.topRightRadiusY),
-        D2D1::SizeF(params.topRightRadiusX, params.topRightRadiusY),
-        0.0f,
-        D2D1_SWEEP_DIRECTION_CLOCKWISE,
-        D2D1_ARC_SIZE_SMALL};
-
-    spSink->AddArc(&arcSegmentTopRight);
-  } else {
-    spSink->AddLine(D2D1::Point2F(right, top));
-  }
-
-  // Move to the bottom right corner
-  spSink->AddLine(D2D1::Point2F(right, bottom - params.bottomRightRadiusY));
-  if (needsConsistentNumberOfControlPoints) {
-    D2D1_BEZIER_SEGMENT arcSegmentBottomRight = {
-        D2D1::Point2F(right, bottom - controlPointScaleFactor * params.bottomRightRadiusY),
-        D2D1::Point2F(right - controlPointScaleFactor * params.bottomRightRadiusX, bottom),
-        D2D1::Point2F(right - params.bottomRightRadiusX, bottom)};
-
-    spSink->AddBezier(&arcSegmentBottomRight);
-  } else if (params.bottomRightRadiusX != 0.0 && params.bottomRightRadiusY != 0.0) {
-    D2D1_ARC_SEGMENT arcSegmentBottomRight = {
-        D2D1::Point2F(right - params.bottomRightRadiusX, bottom),
-        D2D1::SizeF(params.bottomRightRadiusX, params.bottomRightRadiusY),
-        0.0f,
-        D2D1_SWEEP_DIRECTION_CLOCKWISE,
-        D2D1_ARC_SIZE_SMALL};
-
-    spSink->AddArc(&arcSegmentBottomRight);
-  } else {
-    spSink->AddLine(D2D1::Point2F(right, bottom));
-  }
-
-  // Move to the bottom left corner
-  spSink->AddLine(D2D1::Point2F(left + params.bottomLeftRadiusX, bottom));
-  if (needsConsistentNumberOfControlPoints) {
-    D2D1_BEZIER_SEGMENT arcSegmentBottomLeft = {
-        D2D1::Point2F(left + controlPointScaleFactor * params.bottomLeftRadiusX, bottom),
-        D2D1::Point2F(left, bottom - controlPointScaleFactor * params.bottomLeftRadiusY),
-        D2D1::Point2F(left, bottom - params.bottomLeftRadiusY)};
-
-    spSink->AddBezier(&arcSegmentBottomLeft);
-  } else if (params.bottomLeftRadiusX != 0.0 && params.bottomLeftRadiusY != 0.0) {
-    D2D1_ARC_SEGMENT arcSegmentBottomLeft = {
-        D2D1::Point2F(left, bottom - params.bottomLeftRadiusY),
-        D2D1::SizeF(params.bottomLeftRadiusX, params.bottomLeftRadiusY),
-        0.0f,
-        D2D1_SWEEP_DIRECTION_CLOCKWISE,
-        D2D1_ARC_SIZE_SMALL};
-
-    spSink->AddArc(&arcSegmentBottomLeft);
-  } else {
-    spSink->AddLine(D2D1::Point2F(left, bottom));
-  }
-
-  // Move to the top left corner
-  spSink->AddLine(D2D1::Point2F(left, top + params.topLeftRadiusY));
-  if (needsConsistentNumberOfControlPoints) {
-    D2D1_BEZIER_SEGMENT arcSegmentTopLeft = {
-        D2D1::Point2F(left, top + controlPointScaleFactor * params.topLeftRadiusY),
-        D2D1::Point2F(left + controlPointScaleFactor * params.topLeftRadiusX, top),
-        D2D1::Point2F(left + params.topLeftRadiusX, top)};
-
-    spSink->AddBezier(&arcSegmentTopLeft);
-  } else if (params.topLeftRadiusX != 0.0 && params.topLeftRadiusY != 0.0) {
-    D2D1_ARC_SEGMENT arcSegmentTopLeft = {
-        D2D1::Point2F(left + params.topLeftRadiusX, top),
-        D2D1::SizeF(params.topLeftRadiusX, params.topLeftRadiusY),
-        0.0f,
-        D2D1_SWEEP_DIRECTION_CLOCKWISE,
-        D2D1_ARC_SIZE_SMALL};
-
-    spSink->AddArc(&arcSegmentTopLeft);
-  } else {
-    spSink->AddLine(D2D1::Point2F(left, top));
-  }
-
-  spSink->EndFigure(D2D1_FIGURE_END_CLOSED);
-  spSink->Close();
-
-  return pathGeometry;
-}
-
-RoundedPathParameters GenerateRoundedPathParameters(
-    const facebook::react::RectangleCorners<facebook::react::CornerRadii> &baseRadius,
-    const facebook::react::RectangleEdges<float> &inset,
-    const facebook::react::Size &pathSize) noexcept {
-  RoundedPathParameters result;
-
-  if (pathSize.width == 0 || pathSize.height == 0) {
-    return result;
-  }
-
-  float totalTopRadius = baseRadius.topLeft.horizontal + baseRadius.topRight.horizontal;
-  float totalRightRadius = baseRadius.topRight.vertical + baseRadius.bottomRight.vertical;
-  float totalBottomRadius = baseRadius.bottomRight.horizontal + baseRadius.bottomLeft.horizontal;
-  float totalLeftRadius = baseRadius.bottomLeft.vertical + baseRadius.topLeft.vertical;
-
-  float maxHorizontalRadius = std::max(totalTopRadius, totalBottomRadius);
-  float maxVerticalRadius = std::max(totalLeftRadius, totalRightRadius);
-
-  double totalWidth = inset.left + inset.right + pathSize.width;
-  double totalHeight = inset.top + inset.bottom + pathSize.height;
-
-  float scaleHoriz = static_cast<float>(maxHorizontalRadius / totalWidth);
-  float scaleVert = static_cast<float>(maxVerticalRadius / totalHeight);
-
-  float maxScale = std::max(1.0f, std::max(scaleHoriz, scaleVert));
-
-  result.topLeftRadiusX = std::max(0.0f, baseRadius.topLeft.horizontal / maxScale - inset.left);
-  result.topLeftRadiusY = std::max(0.0f, baseRadius.topLeft.vertical / maxScale - inset.top);
-  result.topRightRadiusX = std::max(0.0f, baseRadius.topRight.horizontal / maxScale - inset.right);
-  result.topRightRadiusY = std::max(0.0f, baseRadius.topRight.vertical / maxScale - inset.top);
-  result.bottomRightRadiusX = std::max(0.0f, baseRadius.bottomRight.horizontal / maxScale - inset.right);
-  result.bottomRightRadiusY = std::max(0.0f, baseRadius.bottomRight.vertical / maxScale - inset.bottom);
-  result.bottomLeftRadiusX = std::max(0.0f, baseRadius.bottomLeft.horizontal / maxScale - inset.left);
-  result.bottomLeftRadiusY = std::max(0.0f, baseRadius.bottomLeft.vertical / maxScale - inset.bottom);
-
-  return result;
-}
-
-static winrt::com_ptr<ID2D1PathGeometry> GenerateRoundedRectPathGeometry(
-    winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
-    const facebook::react::RectangleCorners<facebook::react::CornerRadii> &baseRadius,
-    const facebook::react::RectangleEdges<float> &inset,
-    const facebook::react::RectangleEdges<float> &rectPathGeometry) noexcept {
-  RoundedPathParameters params = GenerateRoundedPathParameters(
-      baseRadius,
-      inset,
-      {rectPathGeometry.right - rectPathGeometry.left, rectPathGeometry.bottom - rectPathGeometry.top});
-
-  return GenerateRoundedRectPathGeometry(compContext, params, rectPathGeometry);
-}
-
-void DrawShape(
-    ID2D1RenderTarget *pRT,
-    const D2D1_RECT_F &rect,
-    ID2D1Brush *brush,
-    FLOAT strokeWidth,
-    ID2D1StrokeStyle *strokeStyle) {
-  pRT->DrawRectangle(rect, brush, strokeWidth, strokeStyle);
-}
-
-void DrawShape(ID2D1RenderTarget *pRT, ID2D1GeometryGroup &geometry, ID2D1Brush *brush, FLOAT, ID2D1StrokeStyle *) {
-  pRT->FillGeometry(&geometry, brush);
-}
-
-void DrawShape(
-    ID2D1RenderTarget *pRT,
-    ID2D1PathGeometry &geometry,
-    ID2D1Brush *brush,
-    FLOAT strokeWidth,
-    ID2D1StrokeStyle *strokeStyle) {
-  pRT->DrawGeometry(&geometry, brush, strokeWidth, strokeStyle);
-}
-
-template <typename TShape>
-void SetBorderLayerPropertiesCommon(
-    winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
-    winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
-    winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual &layer,
-    TShape &shape,
-    winrt::com_ptr<::Microsoft::ReactNative::Composition::Experimental::ICompositionDrawingSurfaceInterop>
-        &borderTexture,
-    const D2D1_RECT_F &textureRect,
-    facebook::react::Point anchorPoint,
-    facebook::react::Point anchorOffset,
-    winrt::Windows::Foundation::Numerics::float2 size,
-    winrt::Windows::Foundation::Numerics::float2 relativeSizeAdjustment,
-    FLOAT strokeWidth,
-    const facebook::react::SharedColor &borderColor,
-    facebook::react::BorderStyle borderStyle) {
-  layer.Offset({anchorOffset.x, anchorOffset.y, 0}, {anchorPoint.x, anchorPoint.y, 0});
-  layer.RelativeSizeWithOffset(size, relativeSizeAdjustment);
-  layer.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
-
-  if ((textureRect.right - textureRect.left) <= 0 || (textureRect.bottom - textureRect.top) <= 0)
-    return;
-
-  auto surface = compContext.CreateDrawingSurfaceBrush(
-      {(textureRect.right - textureRect.left), (textureRect.bottom - textureRect.top)},
-      winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-      winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
-  surface.as(borderTexture);
-
-  layer.Brush(surface);
-
-  POINT offset;
-  ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(
-      surface, 1.0f /* We have already done the dpi scaling */, &offset);
-  if (auto pRT = autoDraw.GetRenderTarget()) {
-    // Clear with transparency
-    pRT->Clear();
-
-    if (!facebook::react::isColorMeaningful(borderColor)) {
-      return;
-    }
-
-    winrt::com_ptr<ID2D1Factory> spFactory;
-    pRT->GetFactory(spFactory.put());
-    assert(spFactory);
-    if (spFactory == nullptr)
-      return;
-
-    winrt::com_ptr<ID2D1SolidColorBrush> spBorderBrush;
-    pRT->CreateSolidColorBrush(theme->D2DColor(*borderColor), spBorderBrush.put());
-    assert(spBorderBrush);
-    if (spBorderBrush == nullptr)
-      return;
-
-    winrt::com_ptr<ID2D1StrokeStyle> spStrokeStyle;
-
-    enum class BorderStyle { Solid, Dotted, Dashed };
-
-    if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
-      const auto capStyle =
-          borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_CAP_STYLE_FLAT : D2D1_CAP_STYLE_ROUND;
-      const auto strokeStyleProps = D2D1::StrokeStyleProperties(
-          capStyle,
-          capStyle,
-          capStyle,
-          D2D1_LINE_JOIN_MITER,
-          10.0f,
-          borderStyle == facebook::react::BorderStyle::Dashed ? D2D1_DASH_STYLE_DASH : D2D1_DASH_STYLE_DOT,
-          0.0f);
-      spFactory->CreateStrokeStyle(&strokeStyleProps, nullptr, 0, spStrokeStyle.put());
-    }
-    D2D1::Matrix3x2F originalTransform;
-    D2D1::Matrix3x2F translationTransform =
-        D2D1::Matrix3x2F::Translation(-textureRect.left + offset.x, -textureRect.top + offset.y);
-
-    pRT->GetTransform(&originalTransform);
-    translationTransform = originalTransform * translationTransform;
-
-    pRT->SetTransform(translationTransform);
-
-    DrawShape(pRT, shape, spBorderBrush.get(), strokeWidth, spStrokeStyle.get());
-
-    pRT->SetTransform(originalTransform);
-  }
-}
-
-template <typename TShape>
-void SetBorderLayerProperties(
-    winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
-    winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
-    winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual &layer,
-    TShape &shape,
-    winrt::com_ptr<::Microsoft::ReactNative::Composition::Experimental::ICompositionDrawingSurfaceInterop>
-        &borderTexture,
-    const D2D1_RECT_F &textureRect,
-    facebook::react::Point anchorPoint,
-    facebook::react::Point anchorOffset,
-    winrt::Windows::Foundation::Numerics::float2 size,
-    winrt::Windows::Foundation::Numerics::float2 relativeSizeAdjustment,
-    FLOAT strokeWidth,
-    const facebook::react::SharedColor &borderColor,
-    facebook::react::BorderStyle borderStyle) {
-  if constexpr (!std::is_base_of_v<ID2D1GeometryGroup, TShape>) {
-    SetBorderLayerPropertiesCommon(
-        theme,
-        compContext,
-        layer,
-        shape,
-        borderTexture,
-        textureRect,
-        anchorPoint,
-        anchorOffset,
-        size,
-        relativeSizeAdjustment,
-        strokeWidth,
-        borderColor,
-        borderStyle);
-  } else {
-    // if (VisualVersion::IsUseWinCompClippingRegionEnabled())
-    {
-      layer.Offset({anchorOffset.x, anchorOffset.y, 0}, {anchorPoint.x, anchorPoint.y, 0});
-      layer.RelativeSizeWithOffset(
-          {textureRect.right - textureRect.left, textureRect.bottom - textureRect.top}, {0.0f, 0.0f});
-
-      layer.Brush(theme->Brush(*borderColor));
-
-      winrt::com_ptr<ID2D1Factory1> spD2dFactory;
-      compContext.as<::Microsoft::ReactNative::Composition::Experimental::ICompositionContextInterop>()->D2DFactory(
-          spD2dFactory.put());
-
-      winrt::com_ptr<ID2D1TransformedGeometry> transformedShape;
-      D2D1::Matrix3x2F translationTransform = D2D1::Matrix3x2F::Translation(-textureRect.left, -textureRect.top);
-      winrt::check_hresult(
-          spD2dFactory->CreateTransformedGeometry(&shape, &translationTransform, transformedShape.put()));
-
-      layer.as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
-          transformedShape.get());
-    }
-    /*
-                else
-                {
-                        SetBorderLayerPropertiesCommon(theme, comContext, layer, shape, borderTexture, textureRect,
-       anchorPoint, anchorOffset, strokeWidth, borderColor, borderStyle);
-                }
-    */
-  }
-}
-
-namespace AnchorPosition {
-const float Left = 0.0;
-const float Center = 0.5;
-const float Right = 1.0;
-const float Top = 0.0;
-const float Bottom = 1.0;
-} // namespace AnchorPosition
-
-template <typename TShape>
-void DrawAllBorderLayers(
-    winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
-    winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
-    std::array<
-        winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual,
-        ComponentView::SpecialBorderLayerCount> &spBorderLayers,
-    TShape &shape,
-    const facebook::react::BorderWidths &borderWidths,
-    const facebook::react::BorderRadii &borderRadii,
-    float textureWidth,
-    float textureHeight,
-    const facebook::react::BorderColors &borderColors,
-    facebook::react::BorderStyle borderStyle) {
-  // Now that we've drawn our nice border in one layer, split it into its component layers
-  winrt::com_ptr<::Microsoft::ReactNative::Composition::Experimental::ICompositionDrawingSurfaceInterop>
-      spTextures[ComponentView::SpecialBorderLayerCount];
-
-  // Set component border properties
-  // Top Left Corner
-  SetBorderLayerProperties(
-      theme,
-      compContext,
-      spBorderLayers[0],
-      shape,
-      spTextures[0], // Target Layer, Source Texture, Target Texture
-      {0,
-       0,
-       borderRadii.topLeft.vertical + borderWidths.left,
-       borderRadii.topLeft.horizontal + borderWidths.top}, // Texture Left, Top, Width, Height
-      {AnchorPosition::Left, AnchorPosition::Top}, // Layer Anchor Point
-      {0, 0}, // Layer Anchor Offset
-      {borderRadii.topLeft.vertical + borderWidths.left, borderRadii.topLeft.horizontal + borderWidths.top}, // size
-      {0.0f, 0.0f}, // relativeSize
-      std::max(borderWidths.left, borderWidths.top),
-      borderColors.left ? borderColors.left : borderColors.top,
-      borderStyle);
-
-  // Top Edge Border
-  SetBorderLayerProperties(
-      theme,
-      compContext,
-      spBorderLayers[1],
-      shape,
-      spTextures[1],
-      {borderRadii.topLeft.vertical + borderWidths.left,
-       0,
-       textureWidth - (borderRadii.topRight.vertical + borderWidths.right),
-       borderWidths.top},
-      {AnchorPosition::Left, AnchorPosition::Top},
-      {borderRadii.topLeft.vertical + borderWidths.left, 0},
-      {-(borderRadii.topLeft.vertical + borderWidths.left + borderRadii.topRight.vertical + borderWidths.right),
-       borderWidths.top}, // size
-      {1.0f, 0.0f}, // relativeSize
-      borderWidths.top,
-      borderColors.top,
-      borderStyle);
-
-  // Top Right Corner Border
-  SetBorderLayerProperties(
-      theme,
-      compContext,
-      spBorderLayers[2],
-      shape,
-      spTextures[2],
-      {textureWidth - (borderRadii.topRight.vertical + borderWidths.right),
-       0,
-       textureWidth,
-       borderRadii.topRight.horizontal + borderWidths.top},
-      {AnchorPosition::Right, AnchorPosition::Top},
-      {-(borderRadii.topRight.vertical + borderWidths.right), 0},
-      {borderRadii.topRight.vertical + borderWidths.right, borderRadii.topRight.horizontal + borderWidths.top},
-      {0.0f, 0.0f},
-      std::max(borderWidths.right, borderWidths.top),
-      borderColors.right ? borderColors.right : borderColors.top,
-      borderStyle);
-
-  // Right Edge Border
-  SetBorderLayerProperties(
-      theme,
-      compContext,
-      spBorderLayers[3],
-      shape,
-      spTextures[3],
-      {textureWidth - borderWidths.right,
-       borderWidths.top + borderRadii.topRight.horizontal,
-       textureWidth,
-       textureHeight - (borderWidths.bottom + borderRadii.bottomRight.horizontal)},
-      {AnchorPosition::Right, AnchorPosition::Top},
-      {-borderWidths.right, borderWidths.top + borderRadii.topRight.horizontal},
-      {borderWidths.right,
-       -(borderWidths.top + borderRadii.topRight.horizontal + borderWidths.bottom +
-         borderRadii.bottomRight.horizontal)}, // size
-      {0.0f, 1.0f},
-      borderWidths.right,
-      borderColors.right,
-      borderStyle);
-
-  // Bottom Right Corner Border
-  SetBorderLayerProperties(
-      theme,
-      compContext,
-      spBorderLayers[4],
-      shape,
-      spTextures[4],
-      {textureWidth - (borderWidths.right + borderRadii.bottomRight.vertical),
-       textureHeight - (borderWidths.bottom + borderRadii.bottomRight.horizontal),
-       textureWidth,
-       textureHeight},
-      {AnchorPosition::Right, AnchorPosition::Bottom},
-      {-(borderWidths.right + borderRadii.bottomRight.vertical),
-       -(borderWidths.bottom + borderRadii.bottomRight.horizontal)},
-      {borderWidths.right + borderRadii.bottomRight.vertical, borderWidths.bottom + borderRadii.bottomRight.horizontal},
-      {0, 0},
-      std::max(borderWidths.right, borderWidths.bottom),
-      borderColors.right ? borderColors.right : borderColors.bottom,
-      borderStyle);
-
-  // Bottom Edge Border
-  SetBorderLayerProperties(
-      theme,
-      compContext,
-      spBorderLayers[5],
-      shape,
-      spTextures[5],
-      {borderWidths.left + borderRadii.bottomLeft.vertical,
-       textureHeight - borderWidths.bottom,
-       textureWidth - (borderWidths.right + borderRadii.bottomRight.vertical),
-       textureHeight},
-      {AnchorPosition::Left, AnchorPosition::Bottom},
-      {borderWidths.left + borderRadii.bottomLeft.vertical, -borderWidths.bottom},
-      {-(borderWidths.right + borderRadii.bottomLeft.vertical + borderWidths.left + borderRadii.bottomRight.vertical),
-       borderWidths.bottom},
-      {1.0f, 0.0f},
-      borderWidths.bottom,
-      borderColors.bottom,
-      borderStyle);
-
-  // Bottom Left Corner Border
-  SetBorderLayerProperties(
-      theme,
-      compContext,
-      spBorderLayers[6],
-      shape,
-      spTextures[6],
-      {0,
-       textureHeight - (borderWidths.bottom + borderRadii.bottomLeft.horizontal),
-       borderWidths.left + borderRadii.bottomLeft.vertical,
-       textureHeight},
-      {AnchorPosition::Left, AnchorPosition::Bottom},
-      {0, -(borderWidths.bottom + borderRadii.bottomLeft.horizontal)},
-      {borderWidths.left + borderRadii.bottomLeft.vertical, borderWidths.bottom + borderRadii.bottomLeft.horizontal},
-      {0, 0},
-      std::max(borderWidths.left, borderWidths.bottom),
-      borderColors.left ? borderColors.left : borderColors.bottom,
-      borderStyle);
-
-  // Left Edge Border
-  SetBorderLayerProperties(
-      theme,
-      compContext,
-      spBorderLayers[7],
-      shape,
-      spTextures[7],
-      {0,
-       borderWidths.top + borderRadii.topLeft.horizontal,
-       borderWidths.left,
-       textureHeight - (borderWidths.bottom + borderRadii.bottomLeft.horizontal)},
-      {AnchorPosition::Left, AnchorPosition::Top},
-      {0, borderWidths.top + borderRadii.topLeft.horizontal},
-      {borderWidths.left,
-       -(borderWidths.top + borderRadii.topLeft.horizontal + borderWidths.bottom + borderRadii.bottomLeft.horizontal)},
-      {0, 1},
-      borderWidths.left,
-      borderColors.left,
-      borderStyle);
-}
-
-winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
-    winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
-    const facebook::react::RectangleCorners<facebook::react::CornerRadii> &radius,
-    const facebook::react::RectangleEdges<float> &inset,
-    const facebook::react::RectangleEdges<float> &thickness,
-    const facebook::react::RectangleEdges<float> &rectPathGeometry) noexcept {
-  winrt::com_ptr<ID2D1PathGeometry> outerPathGeometry =
-      GenerateRoundedRectPathGeometry(compContext, radius, inset, rectPathGeometry);
-
-  if (outerPathGeometry == nullptr) {
-    assert(false);
-    return nullptr;
-  }
-
-  facebook::react::RectangleEdges<float> rectInnerPathGeometry = {
-      rectPathGeometry.left + thickness.left,
-      rectPathGeometry.top + thickness.top,
-      rectPathGeometry.right - thickness.right,
-      rectPathGeometry.bottom - thickness.bottom};
-
-  // Total thickness is larger than original element size.
-  // Clamp inner rect to have a width/height of 0, but placed such that the ratio of side-thicknesses is respected.
-  // We need to respect this ratio so that any animations work properly.
-
-  if (rectInnerPathGeometry.left > rectInnerPathGeometry.right) {
-    float leftRatio = thickness.left / (thickness.left + thickness.right);
-    auto x = std::floor(rectPathGeometry.left + ((rectPathGeometry.right - rectPathGeometry.left) * leftRatio));
-    rectInnerPathGeometry.left = x;
-    rectInnerPathGeometry.right = x;
-  }
-
-  if (rectInnerPathGeometry.top > rectInnerPathGeometry.bottom) {
-    float topRatio = thickness.top / (thickness.top + thickness.bottom);
-    auto y = rectPathGeometry.top + std::floor((rectPathGeometry.top - rectPathGeometry.bottom) * topRatio);
-    rectInnerPathGeometry.top = y;
-    rectInnerPathGeometry.bottom = y;
-  }
-
-  facebook::react::RectangleEdges<float> innerInset = {
-      inset.left + thickness.left,
-      inset.top + thickness.top,
-      inset.right + thickness.right,
-      inset.bottom + thickness.bottom};
-
-  winrt::com_ptr<ID2D1PathGeometry> innerPathGeometry =
-      GenerateRoundedRectPathGeometry(compContext, radius, innerInset, rectInnerPathGeometry);
-
-  if (innerPathGeometry == nullptr) {
-    assert(false); // Failed to create inner pathGeometry for rounded border
-    return nullptr;
-  }
-
-  ID2D1Geometry *ppGeometries[] = {outerPathGeometry.get(), innerPathGeometry.get()};
-  winrt::com_ptr<ID2D1Factory1> spD2dFactory;
-  compContext.as<::Microsoft::ReactNative::Composition::Experimental::ICompositionContextInterop>()->D2DFactory(
-      spD2dFactory.put());
-
-  winrt::com_ptr<ID2D1GeometryGroup> geometryGroup = nullptr;
-  // Create a geometry group.
-  HRESULT hr = spD2dFactory->CreateGeometryGroup(
-      D2D1_FILL_MODE_ALTERNATE, ppGeometries, ARRAYSIZE(ppGeometries), geometryGroup.put());
-
-  if (SUCCEEDED(hr)) {
-    return geometryGroup;
-  }
-  return nullptr;
-}
-
-// We don't want half pixel borders, or border radii - they lead to blurry borders
-// Also apply scale factor to the radii at this point
-void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scaleFactor) noexcept {
-  // Always round radii down to avoid spikey circles
-  borderRadii.topLeft = {
-      std::floor(borderRadii.topLeft.horizontal * scaleFactor), std::floor(borderRadii.topLeft.vertical * scaleFactor)};
-  borderRadii.topRight = {
-      std::floor(borderRadii.topRight.horizontal * scaleFactor),
-      std::floor(borderRadii.topRight.vertical * scaleFactor)};
-  borderRadii.bottomLeft = {
-      std::floor(borderRadii.bottomLeft.horizontal * scaleFactor),
-      std::floor(borderRadii.bottomLeft.vertical * scaleFactor)};
-  borderRadii.bottomRight = {
-      std::floor(borderRadii.bottomRight.horizontal * scaleFactor),
-      std::floor(borderRadii.bottomRight.vertical * scaleFactor)};
-}
-
-void scaleAndPixelRoundBorderWidths(
-    facebook::react::LayoutMetrics const &layoutMetrics,
-    facebook::react::BorderMetrics &borderMetrics,
-    float scaleFactor) noexcept {
-  borderMetrics.borderWidths.left = (borderMetrics.borderWidths.left == 0)
-      ? 0.f
-      : std::max(1.f, std::round(borderMetrics.borderWidths.left * scaleFactor));
-  borderMetrics.borderWidths.top = (borderMetrics.borderWidths.top == 0)
-      ? 0.f
-      : std::max(1.f, std::round(borderMetrics.borderWidths.top * scaleFactor));
-  borderMetrics.borderWidths.right = (borderMetrics.borderWidths.right == 0)
-      ? 0.f
-      : std::max(1.f, std::round(borderMetrics.borderWidths.right * scaleFactor));
-  borderMetrics.borderWidths.bottom = (borderMetrics.borderWidths.bottom == 0)
-      ? 0.f
-      : std::max(1.f, std::round(borderMetrics.borderWidths.bottom * scaleFactor));
-
-  // If we rounded both sides of the borderWidths up, we may have made the borderWidths larger than the total
-  if (layoutMetrics.frame.size.width * scaleFactor <
-      (borderMetrics.borderWidths.left + borderMetrics.borderWidths.right)) {
-    borderMetrics.borderWidths.right--;
-  }
-  if (layoutMetrics.frame.size.height * scaleFactor <
-      (borderMetrics.borderWidths.top + borderMetrics.borderWidths.bottom)) {
-    borderMetrics.borderWidths.bottom--;
-  }
-}
-
-// react-native uses black as a default color when none is specified.
-void assignDefaultBlackBorders(facebook::react::BorderMetrics &borderMetrics) noexcept {
-  if (!borderMetrics.borderColors.left) {
-    borderMetrics.borderColors.left = facebook::react::blackColor();
-  }
-  if (!borderMetrics.borderColors.top) {
-    borderMetrics.borderColors.top = facebook::react::blackColor();
-  }
-  if (!borderMetrics.borderColors.right) {
-    borderMetrics.borderColors.right = facebook::react::blackColor();
-  }
-  if (!borderMetrics.borderColors.bottom) {
-    borderMetrics.borderColors.bottom = facebook::react::blackColor();
-  }
-}
-
-facebook::react::BorderMetrics resolveAndAlignBorderMetrics(
-    facebook::react::LayoutMetrics const &layoutMetrics,
-    const facebook::react::ViewProps &viewProps) noexcept {
-  auto borderMetrics = viewProps.resolveBorderMetrics(layoutMetrics);
-
-  pixelRoundBorderRadii(borderMetrics.borderRadii, layoutMetrics.pointScaleFactor);
-  scaleAndPixelRoundBorderWidths(layoutMetrics, borderMetrics, layoutMetrics.pointScaleFactor);
-  assignDefaultBlackBorders(borderMetrics);
-  return borderMetrics;
-}
-
-bool ComponentView::TryUpdateSpecialBorderLayers(
-    winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
-    std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
-        &spBorderVisuals,
-    facebook::react::LayoutMetrics const &layoutMetrics,
-    const facebook::react::ViewProps &viewProps) noexcept {
-  auto borderMetrics = resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
-  // We only handle a single borderStyle for now
-  auto borderStyle = borderMetrics.borderStyles.left;
-
-  bool hasMeaningfulColor =
-      !borderMetrics.borderColors.isUniform() || !facebook::react::isColorMeaningful(borderMetrics.borderColors.left);
-  bool hasMeaningfulWidth = !borderMetrics.borderWidths.isUniform() || (borderMetrics.borderWidths.left != 0);
-  if (!hasMeaningfulColor && !hasMeaningfulWidth) {
-    return false;
-  }
-
-  // Create the special border layers if they don't exist yet
-  if (!spBorderVisuals[0]) {
-    for (uint8_t i = 0; i < SpecialBorderLayerCount; i++) {
-      auto visual = m_compContext.CreateSpriteVisual();
-      Visual().InsertAt(visual, i);
-      spBorderVisuals[i] = std::move(visual);
-      m_numBorderVisuals++;
-    }
-  }
-
-  float extentWidth = layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor;
-  float extentHeight = layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor;
-
-  if (borderMetrics.borderRadii.topLeft.horizontal != 0 || borderMetrics.borderRadii.topRight.horizontal != 0 ||
-      borderMetrics.borderRadii.bottomLeft.horizontal != 0 || borderMetrics.borderRadii.bottomRight.horizontal != 0 ||
-      borderMetrics.borderRadii.topLeft.vertical != 0 || borderMetrics.borderRadii.topRight.vertical != 0 ||
-      borderMetrics.borderRadii.bottomLeft.vertical != 0 || borderMetrics.borderRadii.bottomRight.vertical != 0) {
-    if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
-      // Because in DirectX geometry starts at the center of the stroke, we need to deflate
-      // rectangle by half the stroke width to render correctly.
-      facebook::react::RectangleEdges<float> rectPathGeometry = {
-          borderMetrics.borderWidths.left / 2.0f,
-          borderMetrics.borderWidths.top / 2.0f,
-          extentWidth - borderMetrics.borderWidths.right / 2.0f,
-          extentHeight - borderMetrics.borderWidths.bottom / 2.0f};
-
-      winrt::com_ptr<ID2D1PathGeometry> pathGeometry =
-          GenerateRoundedRectPathGeometry(m_compContext, borderMetrics.borderRadii, {0, 0, 0, 0}, rectPathGeometry);
-
-      if (pathGeometry) {
-        DrawAllBorderLayers(
-            theme,
-            m_compContext,
-            spBorderVisuals,
-            *pathGeometry,
-            borderMetrics.borderWidths,
-            borderMetrics.borderRadii,
-            extentWidth,
-            extentHeight,
-            borderMetrics.borderColors,
-            borderStyle);
-      } else {
-        assert(false);
-      }
-    } else {
-      facebook::react::RectangleEdges<float> rectPathGeometry = {0, 0, extentWidth, extentHeight};
-
-      winrt::com_ptr<ID2D1GeometryGroup> pathGeometry = GetGeometryForRoundedBorder(
-          m_compContext,
-          borderMetrics.borderRadii,
-          {0, 0, 0, 0}, // inset
-          borderMetrics.borderWidths,
-          rectPathGeometry);
-
-      DrawAllBorderLayers(
-          theme,
-          m_compContext,
-          spBorderVisuals,
-          *pathGeometry,
-          borderMetrics.borderWidths,
-          borderMetrics.borderRadii,
-          extentWidth,
-          extentHeight,
-          borderMetrics.borderColors,
-          borderStyle);
-    }
-  } else {
-    // Because in DirectX geometry starts at the center of the stroke, we need to deflate rectangle by half the stroke
-    // width / height to render correctly.
-    D2D1_RECT_F rectShape{
-        borderMetrics.borderWidths.left / 2.0f,
-        borderMetrics.borderWidths.top / 2.0f,
-        extentWidth - (borderMetrics.borderWidths.right / 2.0f),
-        extentHeight - (borderMetrics.borderWidths.bottom / 2.0f)};
-    DrawAllBorderLayers(
-        theme,
-        m_compContext,
-        spBorderVisuals,
-        rectShape,
-        borderMetrics.borderWidths,
-        borderMetrics.borderRadii,
-        extentWidth,
-        extentHeight,
-        borderMetrics.borderColors,
-        borderStyle);
-  }
-  return true;
-}
-
-void ComponentView::finalizeBorderUpdates(
-    facebook::react::LayoutMetrics const &layoutMetrics,
-    const facebook::react::ViewProps &viewProps) noexcept {
-  if (!m_needsBorderUpdate || theme()->IsEmpty()) {
-    return;
-  }
-
-  m_needsBorderUpdate = false;
-  auto spBorderLayers = FindSpecialBorderLayers();
-
-  if (!TryUpdateSpecialBorderLayers(theme(), spBorderLayers, layoutMetrics, viewProps)) {
-    for (auto &spBorderLayer : spBorderLayers) {
-      if (spBorderLayer) {
-        spBorderLayer.as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Brush(nullptr);
-      }
-    }
-  }
-}
-
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ComponentView::OuterVisual() const noexcept {
   return m_outerVisual ? m_outerVisual : Visual();
 }
 
-void ComponentView::showFocusVisual(bool show) noexcept {
-  if (show) {
-    assert(m_enableFocusVisual);
-    m_focusVisual.IsFocused(true);
-  } else {
-    m_focusVisual.IsFocused(false);
-  }
+facebook::react::LayoutMetrics ComponentView::focusLayoutMetrics(bool inner) const noexcept {
+  facebook::react::LayoutMetrics layoutMetrics = m_layoutMetrics;
+  layoutMetrics.frame.origin.x -= FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  layoutMetrics.frame.origin.y -= FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  layoutMetrics.frame.size.height += FOCUS_VISUAL_WIDTH * (inner ? 2 : 4);
+  layoutMetrics.frame.size.width += FOCUS_VISUAL_WIDTH * (inner ? 2 : 4);
+  return layoutMetrics;
 }
 
-void ComponentView::updateBorderProps(
-    const facebook::react::ViewProps &oldViewProps,
-    const facebook::react::ViewProps &newViewProps) noexcept {
-  if (oldViewProps.borderColors != newViewProps.borderColors || oldViewProps.borderRadii != newViewProps.borderRadii ||
-      !(oldViewProps.yogaStyle.border(facebook::yoga::Edge::All) ==
-        newViewProps.yogaStyle.border(facebook::yoga::Edge::All)) ||
-      oldViewProps.borderStyles != newViewProps.borderStyles) {
-    m_needsBorderUpdate = true;
-  }
+facebook::react::BorderMetrics ComponentView::focusBorderMetrics(
+    bool inner,
+    const facebook::react::LayoutMetrics &layoutMetrics) const noexcept {
+  facebook::react::BorderMetrics metrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, *viewProps());
+  facebook::react::Color innerColor;
+  innerColor.m_color = {1, 0, 0, 0};
+  innerColor.m_platformColor.push_back(inner ? "FocusVisualSecondary" : "FocusVisualPrimary");
+  metrics.borderColors.bottom = metrics.borderColors.left = metrics.borderColors.right = metrics.borderColors.top =
+      innerColor;
+  if (metrics.borderRadii.bottomLeft.horizontal != 0)
+    metrics.borderRadii.bottomLeft.horizontal += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  if (metrics.borderRadii.bottomLeft.vertical != 0)
+    metrics.borderRadii.bottomLeft.vertical += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  if (metrics.borderRadii.bottomRight.horizontal != 0)
+    metrics.borderRadii.bottomRight.horizontal += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  if (metrics.borderRadii.bottomRight.vertical != 0)
+    metrics.borderRadii.bottomRight.vertical += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  if (metrics.borderRadii.topLeft.horizontal != 0)
+    metrics.borderRadii.topLeft.horizontal += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  if (metrics.borderRadii.topLeft.vertical != 0)
+    metrics.borderRadii.topLeft.vertical += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  if (metrics.borderRadii.topRight.horizontal != 0)
+    metrics.borderRadii.topRight.horizontal += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  if (metrics.borderRadii.topRight.vertical != 0)
+    metrics.borderRadii.topRight.vertical += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
 
-  m_enableFocusVisual = newViewProps.enableFocusRing;
-  if (!m_enableFocusVisual) {
-    showFocusVisual(false);
+  metrics.borderStyles.bottom = metrics.borderStyles.left = metrics.borderStyles.right = metrics.borderStyles.top =
+      facebook::react::BorderStyle::Solid;
+  metrics.borderWidths.bottom = metrics.borderWidths.left = metrics.borderWidths.right = metrics.borderWidths.top =
+      FOCUS_VISUAL_WIDTH * layoutMetrics.pointScaleFactor;
+  return metrics;
+}
+
+void ComponentView::showFocusVisual(bool show) noexcept {
+  if ((m_flags & ComponentViewFeatures::FocusVisual) == ComponentViewFeatures::FocusVisual) {
+    if (show && !m_showingFocusVisual) {
+      m_showingFocusVisual = true;
+
+      m_focusVisual.IsVisible(true);
+      assert(viewProps()->enableFocusRing);
+      if (!m_focusInnerPrimitive) {
+        m_focusInnerPrimitive = std::make_shared<BorderPrimitive>(*this);
+        m_focusVisual.InsertAt(m_focusInnerPrimitive->RootVisual(), 0);
+      }
+      if (!m_focusOuterPrimitive) {
+        m_focusOuterPrimitive = std::make_shared<BorderPrimitive>(*this);
+        m_focusVisual.InsertAt(m_focusOuterPrimitive->RootVisual(), 0);
+      }
+      updateFocusLayoutMetrics(m_layoutMetrics);
+      auto innerFocusMetrics = focusLayoutMetrics(true /*inner*/);
+      m_focusInnerPrimitive->finalize(innerFocusMetrics, focusBorderMetrics(true /*inner*/, innerFocusMetrics));
+      auto outerFocusMetrics = focusLayoutMetrics(false /*inner*/);
+      m_focusOuterPrimitive->finalize(outerFocusMetrics, focusBorderMetrics(false /*inner*/, outerFocusMetrics));
+    } else if (!show && m_showingFocusVisual) {
+      m_showingFocusVisual = false;
+      m_focusVisual.IsVisible(false);
+      if (m_focusInnerPrimitive) {
+        m_focusInnerPrimitive->markNeedsUpdate();
+        auto innerFocusMetrics = focusLayoutMetrics(true /*inner*/);
+        m_focusInnerPrimitive->finalize(innerFocusMetrics, focusBorderMetrics(true /*inner*/, innerFocusMetrics));
+      }
+      if (m_focusOuterPrimitive) {
+        m_focusOuterPrimitive->markNeedsUpdate();
+        auto outerFocusMetrics = focusLayoutMetrics(false /*inner*/);
+        m_focusOuterPrimitive->finalize(outerFocusMetrics, focusBorderMetrics(false /*inner*/, outerFocusMetrics));
+      }
+    }
   }
 }
 
@@ -1245,18 +540,26 @@ void ComponentView::updateShadowProps(
   // Shadow Properties
   if (oldViewProps.shadowOffset != newViewProps.shadowOffset || oldViewProps.shadowColor != newViewProps.shadowColor ||
       oldViewProps.shadowOpacity != newViewProps.shadowOpacity ||
-      oldViewProps.shadowRadius != newViewProps.shadowRadius) {
+      oldViewProps.shadowRadius != newViewProps.shadowRadius || oldViewProps.boxShadow != newViewProps.boxShadow) {
     applyShadowProps(newViewProps);
   }
 }
 
 void ComponentView::applyShadowProps(const facebook::react::ViewProps &viewProps) noexcept {
   auto shadow = m_compContext.CreateDropShadow();
-  shadow.Offset({viewProps.shadowOffset.width, viewProps.shadowOffset.height, 0});
-  shadow.Opacity(viewProps.shadowOpacity);
-  shadow.BlurRadius(viewProps.shadowRadius);
-  if (viewProps.shadowColor)
-    shadow.Color(theme()->Color(*viewProps.shadowColor));
+  if (!viewProps.boxShadow.empty()) {
+    shadow.Offset({viewProps.boxShadow[0].offsetX, viewProps.boxShadow[0].offsetY, 0});
+    shadow.Opacity(1);
+    shadow.BlurRadius(viewProps.boxShadow[0].blurRadius);
+    shadow.Color(theme()->Color(*viewProps.boxShadow[0].color));
+  } else {
+    shadow.Offset({viewProps.shadowOffset.width, viewProps.shadowOffset.height, 0});
+    shadow.Opacity(viewProps.shadowOpacity);
+    shadow.BlurRadius(viewProps.shadowRadius);
+    if (viewProps.shadowColor)
+      shadow.Color(theme()->Color(*viewProps.shadowColor));
+  }
+
   Visual().as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Shadow(shadow);
 }
 
@@ -1370,10 +673,10 @@ void ComponentView::Toggle() noexcept {
   // no-op
 }
 
-void ComponentView::updateBorderLayoutMetrics(
+void ComponentView::updateClippingPath(
     facebook::react::LayoutMetrics const &layoutMetrics,
     const facebook::react::ViewProps &viewProps) noexcept {
-  auto borderMetrics = resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
+  auto borderMetrics = BorderPrimitive::resolveAndAlignBorderMetrics(layoutMetrics, viewProps);
 
   if (borderMetrics.borderRadii.topLeft.horizontal == 0 && borderMetrics.borderRadii.topRight.horizontal == 0 &&
       borderMetrics.borderRadii.bottomLeft.horizontal == 0 && borderMetrics.borderRadii.bottomRight.horizontal == 0 &&
@@ -1381,7 +684,7 @@ void ComponentView::updateBorderLayoutMetrics(
       borderMetrics.borderRadii.bottomLeft.vertical == 0 && borderMetrics.borderRadii.bottomRight.vertical == 0) {
     Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(nullptr);
   } else {
-    winrt::com_ptr<ID2D1PathGeometry> pathGeometry = GenerateRoundedRectPathGeometry(
+    winrt::com_ptr<ID2D1PathGeometry> pathGeometry = BorderPrimitive::GenerateRoundedRectPathGeometry(
         m_compContext,
         borderMetrics.borderRadii,
         {0, 0, 0, 0},
@@ -1393,24 +696,12 @@ void ComponentView::updateBorderLayoutMetrics(
     Visual().as<::Microsoft::ReactNative::Composition::Experimental::IVisualInterop>()->SetClippingPath(
         pathGeometry.get());
   }
-
-  if (m_layoutMetrics != layoutMetrics) {
-    m_needsBorderUpdate = true;
-  }
-
-  m_focusVisual.ScaleFactor(layoutMetrics.pointScaleFactor);
-  OuterVisual().Size(
-      {layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor,
-       layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor});
-  OuterVisual().Offset({
-      layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
-      layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
-      0.0f,
-  });
 }
 
 void ComponentView::indexOffsetForBorder(uint32_t &index) const noexcept {
-  index += m_numBorderVisuals;
+  if (m_borderPrimitive) {
+    index += m_borderPrimitive->numberOfVisuals();
+  }
 }
 
 void ComponentView::OnRenderingDeviceLost() noexcept {}
@@ -1918,6 +1209,9 @@ winrt::Microsoft::ReactNative::ComponentView lastDeepChild(
   return current;
 }
 
+// Walks the tree calling the function fn on each node.
+// If fn returns true, then walkTree stops itterating over the tree, and returns true.
+// If the tree walk completes without fn returning true, then walkTree returns false.
 bool walkTree(
     const winrt::Microsoft::ReactNative::ComponentView &view,
     bool forward,

@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Sat, 19 Oct 2024 05:29:45 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 23 Oct 2024 05:31:16 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.269
+
+Wed, 23 Oct 2024 05:31:16 GMT
+
+### Changes
+
+- Fix ignore files and update cli timeout (jthysell@microsoft.com)
 
 ## 0.0.0-canary.268
 
