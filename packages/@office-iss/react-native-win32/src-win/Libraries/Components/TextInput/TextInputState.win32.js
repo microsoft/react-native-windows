@@ -176,7 +176,7 @@ function blurTextInput(textField: ?HostInstance) {
  * Should be called after the view has received focus and fired the onFocus event
  * noop if the focused text field is same
  */
-function setFocusedTextInput(textField: ComponentRef) {
+function setFocusedTextInput(textField: HostInstance) {
   if (currentlyFocusedInputRef !== textField && textField !== null) {
     currentlyFocusedInputRef = textField;
   }
@@ -187,7 +187,7 @@ function setFocusedTextInput(textField: ComponentRef) {
  * Should be called after the view has cleared focus and fired the onFocus event
  * noop if the focused text field is not same
  */
-function clearFocusedTextInput(textField: ComponentRef) {
+function clearFocusedTextInput(textField: HostInstance) {
   if (currentlyFocusedInputRef === textField && textField !== null) {
     currentlyFocusedInputRef = null;
   }
