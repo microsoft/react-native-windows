@@ -65,7 +65,7 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IBrush Color::AsIntern
   return winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(theme)->Brush(*m_color);
 }
 
-bool Color::Equals(const winrt::Microsoft::ReactNative::Color& color) const noexcept {
+bool Color::Equals(const winrt::Microsoft::ReactNative::Color &color) const noexcept {
   if (!color) {
     return false;
   }

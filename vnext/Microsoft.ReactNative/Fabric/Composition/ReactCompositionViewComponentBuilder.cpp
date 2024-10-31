@@ -21,7 +21,9 @@ void ReactCompositionViewComponentBuilder::SetCreateProps(ViewPropsFactory impl)
   m_propsFactory = impl;
 }
 
-IComponentProps ReactCompositionViewComponentBuilder::CreateProps(ViewProps props, const IComponentProps& cloneFrom) noexcept {
+IComponentProps ReactCompositionViewComponentBuilder::CreateProps(
+    ViewProps props,
+    const IComponentProps &cloneFrom) noexcept {
   return m_propsFactory(props, cloneFrom);
 }
 
@@ -72,12 +74,15 @@ void ReactCompositionViewComponentBuilder::InitializeComponentView(
 
 void ReactCompositionViewComponentBuilder::SetComponentViewInitializer(
     const ComponentViewInitializer &initializer) noexcept {
-  m_fnCreateView =
-      [initializer](const IReactContext &reactContext, int32_t tag, const Experimental::ICompositionContext &context, ComponentViewFeatures) {
-        auto view = winrt::make<winrt::Microsoft::ReactNative::implementation::ComponentView>(tag, reactContext);
-        initializer(view);
-        return view;
-      };
+  m_fnCreateView = [initializer](
+                       const IReactContext &reactContext,
+                       int32_t tag,
+                       const Experimental::ICompositionContext &context,
+                       ComponentViewFeatures) {
+    auto view = winrt::make<winrt::Microsoft::ReactNative::implementation::ComponentView>(tag, reactContext);
+    initializer(view);
+    return view;
+  };
   m_descriptorConstructorFactory = []() {
     return &facebook::react::concreteComponentDescriptorConstructor<::Microsoft::ReactNative::AbiComponentDescriptor>;
   };
@@ -85,13 +90,16 @@ void ReactCompositionViewComponentBuilder::SetComponentViewInitializer(
 
 void ReactCompositionViewComponentBuilder::SetViewComponentViewInitializer(
     const ViewComponentViewInitializer &initializer) noexcept {
-  m_fnCreateView =
-      [initializer](const IReactContext &reactContext, int32_t tag, const Experimental::ICompositionContext &context, ComponentViewFeatures features) {
+  m_fnCreateView = [initializer](
+                       const IReactContext &reactContext,
+                       int32_t tag,
+                       const Experimental::ICompositionContext &context,
+                       ComponentViewFeatures features) {
     auto view = winrt::make<implementation::ViewComponentView>(
         implementation::ViewComponentView::defaultProps(), context, tag, reactContext, features);
-        initializer(view);
-        return view;
-      };
+    initializer(view);
+    return view;
+  };
   m_descriptorConstructorFactory = []() {
     return &facebook::react::concreteComponentDescriptorConstructor<
         ::Microsoft::ReactNative::AbiViewComponentDescriptor>;
@@ -100,9 +108,12 @@ void ReactCompositionViewComponentBuilder::SetViewComponentViewInitializer(
 
 void ReactCompositionViewComponentBuilder::SetContentIslandComponentViewInitializer(
     const ComponentIslandComponentViewInitializer &initializer) noexcept {
-  m_fnCreateView = [initializer](
-                       const IReactContext &reactContext, int32_t tag, const Experimental::ICompositionContext &context, ComponentViewFeatures)
-      -> winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView {
+  m_fnCreateView =
+      [initializer](
+          const IReactContext &reactContext,
+          int32_t tag,
+          const Experimental::ICompositionContext &context,
+          ComponentViewFeatures) -> winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView {
     auto view = winrt::make<winrt::Microsoft::ReactNative::Composition::implementation::ContentIslandComponentView>(
         context, tag, reactContext);
     initializer(view);

@@ -46,7 +46,7 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
   void SetViewFeatures(ComponentViewFeatures viewFeatures) noexcept;
 
  public:
-  IComponentProps CreateProps(ViewProps props, const IComponentProps& cloneFrom) noexcept;
+  IComponentProps CreateProps(ViewProps props, const IComponentProps &cloneFrom) noexcept;
   void CreateShadowNode(ShadowNode shadowNode) noexcept;
   void CloneShadowNode(ShadowNode shadowNode, ShadowNode sourceShadowNode) noexcept;
   winrt::Windows::Foundation::IInspectable InitialStateData(
