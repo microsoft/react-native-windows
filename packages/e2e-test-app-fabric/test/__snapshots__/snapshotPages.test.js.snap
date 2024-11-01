@@ -22119,6 +22119,1442 @@ exports[`snapshotAllPages Linking 2`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Modal 1`] = `
+<View>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "alignItems": "center",
+          "backgroundColor": "#d3d3d3",
+          "borderColor": "#696969",
+          "borderRadius": 8,
+          "borderWidth": 1,
+          "justifyContent": "center",
+          "margin": 5,
+          "padding": 10,
+        },
+        false,
+      ]
+    }
+  >
+    <Text>
+      Show Modal
+    </Text>
+  </View>
+  <View
+    style={
+      {
+        "borderBottomWidth": 1,
+        "borderColor": "rgba(0,0,0, 0.1)",
+        "padding": 6,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "fontWeight": "bold",
+          "margin": 3,
+        }
+      }
+    >
+      Animation Type
+    </Text>
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              null,
+              null,
+              null,
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            slide
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": true,
+            "expanded": undefined,
+            "selected": true,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={true}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              {
+                "backgroundColor": "rgba(100,215,255,.3)",
+                "borderColor": "rgba(100,215,255,.3)",
+              },
+              null,
+              null,
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            none
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              null,
+              null,
+              null,
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            fade
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "borderBottomWidth": 1,
+        "borderColor": "rgba(0,0,0, 0.1)",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "padding": 6,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "fontWeight": "bold",
+          "margin": 3,
+        }
+      }
+    >
+      Status Bar Translucent 🟢
+    </Text>
+    <RCTSwitch
+      accessibilityRole="switch"
+      accessible={true}
+      focusable={true}
+      onChange={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "height": 31,
+          "width": 51,
+        }
+      }
+      value={false}
+    />
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "borderBottomWidth": 1,
+        "borderColor": "rgba(0,0,0, 0.1)",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "padding": 6,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "fontWeight": "bold",
+          "margin": 3,
+        }
+      }
+    >
+      Hardware Acceleration 🟢
+    </Text>
+    <RCTSwitch
+      accessibilityRole="switch"
+      accessible={true}
+      focusable={true}
+      onChange={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "height": 31,
+          "width": 51,
+        }
+      }
+      value={false}
+    />
+  </View>
+  <View
+    style={
+      {
+        "borderBottomWidth": 1,
+        "borderColor": "rgba(0,0,0, 0.1)",
+        "padding": 6,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "fontWeight": "bold",
+          "margin": 3,
+        }
+      }
+    >
+      Presentation Style ⚫️
+    </Text>
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              null,
+              null,
+              [
+                {
+                  "borderWidth": 0,
+                },
+                {
+                  "backgroundColor": "#7676801e",
+                },
+              ],
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            fullScreen
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              null,
+              null,
+              [
+                {
+                  "borderWidth": 0,
+                },
+                {
+                  "backgroundColor": "#7676801e",
+                },
+              ],
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            pageSheet
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              null,
+              null,
+              [
+                {
+                  "borderWidth": 0,
+                },
+                {
+                  "backgroundColor": "#7676801e",
+                },
+              ],
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            formSheet
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              null,
+              null,
+              [
+                {
+                  "borderWidth": 0,
+                },
+                {
+                  "backgroundColor": "#7676801e",
+                },
+              ],
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            overFullScreen
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "borderBottomWidth": 1,
+        "borderColor": "rgba(0,0,0, 0.1)",
+        "padding": 6,
+      }
+    }
+  >
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "justifyContent": "space-between",
+        }
+      }
+    >
+      <Text
+        style={
+          {
+            "fontWeight": "bold",
+            "margin": 3,
+          }
+        }
+      >
+        Transparent
+      </Text>
+      <RCTSwitch
+        accessibilityRole="switch"
+        accessible={true}
+        focusable={true}
+        onChange={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          {
+            "height": 31,
+            "width": 51,
+          }
+        }
+        value={false}
+      />
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "borderBottomWidth": 1,
+        "borderColor": "rgba(0,0,0, 0.1)",
+        "padding": 6,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "fontWeight": "bold",
+          "margin": 3,
+        }
+      }
+    >
+      Supported Orientation ⚫️
+    </Text>
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              null,
+              null,
+              [
+                {
+                  "borderWidth": 0,
+                },
+                {
+                  "backgroundColor": "#7676801e",
+                },
+              ],
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            portrait
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              null,
+              null,
+              [
+                {
+                  "borderWidth": 0,
+                },
+                {
+                  "backgroundColor": "#7676801e",
+                },
+              ],
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            portrait-upside-down
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              null,
+              null,
+              [
+                {
+                  "borderWidth": 0,
+                },
+                {
+                  "backgroundColor": "#7676801e",
+                },
+              ],
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            landscape
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              null,
+              null,
+              [
+                {
+                  "borderWidth": 0,
+                },
+                {
+                  "backgroundColor": "#7676801e",
+                },
+              ],
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            landscape-left
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              null,
+              null,
+              [
+                {
+                  "borderWidth": 0,
+                },
+                {
+                  "backgroundColor": "#7676801e",
+                },
+              ],
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            landscape-right
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      {
+        "borderBottomWidth": 1,
+        "borderColor": "rgba(0,0,0, 0.1)",
+        "padding": 6,
+      }
+    }
+  >
+    <Text
+      style={
+        {
+          "fontWeight": "bold",
+          "margin": 3,
+        }
+      }
+    >
+      Actions
+    </Text>
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              null,
+              null,
+              null,
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            onShow
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              null,
+              null,
+              [
+                {
+                  "borderWidth": 0,
+                },
+                {
+                  "backgroundColor": "#7676801e",
+                },
+              ],
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            onDismiss ⚫️
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Modal 2`] = `
+<View
+  style={
+    {
+      "alignItems": "center",
+      "display": "flex",
+      "paddingVertical": 30,
+    }
+  }
+>
+  <Text
+    testID="on-show-count"
+  >
+    onShow is called 
+    0
+     times
+  </Text>
+  <Text
+    testID="on-dismiss-count"
+  >
+    onDismiss is called 
+    0
+     times
+  </Text>
+  <View
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    disabled={false}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "borderRadius": 20,
+          "elevation": 2,
+          "marginVertical": 20,
+          "padding": 10,
+        },
+        {
+          "backgroundColor": "#F194FF",
+        },
+      ]
+    }
+  >
+    <Text
+      style={
+        {
+          "color": "white",
+          "fontWeight": "bold",
+          "textAlign": "center",
+        }
+      }
+      testID="open-modal"
+    >
+      Show Modal
+    </Text>
+  </View>
+</View>
+`;
+
 exports[`snapshotAllPages Mouse Click Events 1`] = `
 <View
   style={

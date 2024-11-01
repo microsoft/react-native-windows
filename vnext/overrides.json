@@ -646,6 +646,12 @@
       "baseHash": "33f07d6fddb5290d05c8d4cc490312e3af88c70b"
     },
     {
+      "type": "copy",
+      "file": "src-win/src/private/reactdevtools/ReactDevToolsSettingsManager.windows.js",
+      "baseFile": "packages/react-native/src/private/reactdevtools/ReactDevToolsSettingsManager.android.js",
+      "baseHash": "df41b76dc3d2df9455fae588748261d7b0a22d01"
+    },
+    {
       "type": "platform",
       "file": "src-win/src/private/specs/modules/NativeAppTheme.js"
     },
