@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fixing text components not rendering a border with Paper",
+  "packageName": "react-native-windows",
+  "email": "sawalker@microsoft.com",
+  "dependentChangeType": "patch"
+}
