@@ -186,7 +186,7 @@ steps:
       ${{ else }}:
         workingDirectory: $(Agent.BuildDirectory)\testcli
       restoreLockedMode: false # Allow new lockfile to be created
-      moreMSBuildProps: ',BundleCommandTimeoutMs=30000' # Reduce bundle timeout
+      moreMSBuildProps: ',BundleCommandTimeoutMs=60000' # Reduce bundle timeout to 1m
 
   - template: upload-build-logs.yml
     parameters:
