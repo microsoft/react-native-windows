@@ -79199,6 +79199,7 @@ exports[`snapshotAllPages View 22`] = `
   accessibilityState={
     {
       "busy": true,
+      "checked": true,
       "expanded": true,
     }
   }

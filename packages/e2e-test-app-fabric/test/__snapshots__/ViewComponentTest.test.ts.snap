@@ -1103,6 +1103,7 @@ exports[`View Tests Views can have customized accessibility 1`] = `
     "Name": "A View with accessibility values",
     "PositionInSet": 1,
     "SizeofSet": 1,
+    "TogglePattern.ToggleState": "On",
     "ValuePattern.Value": "0",
     "__Children": [
       {

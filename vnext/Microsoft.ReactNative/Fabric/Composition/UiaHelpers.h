@@ -36,4 +36,6 @@ std::string extractAccessibilityValue(const facebook::react::AccessibilityValue 
 void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view, const std::string &action) noexcept;
 
 ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept;
+
+ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept;
 } // namespace winrt::Microsoft::ReactNative::implementation
