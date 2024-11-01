@@ -85213,6 +85213,7 @@ exports[`snapshotAllPages View 20`] = `
   accessibilityState={
     {
       "busy": true,
+      "checked": true,
       "expanded": true,
     }
   }
