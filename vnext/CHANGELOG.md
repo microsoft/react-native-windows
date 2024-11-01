@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 31 Oct 2024 05:28:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 01 Nov 2024 05:22:37 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.884
+
+Fri, 01 Nov 2024 05:22:37 GMT
+
+### Changes
+
+- Update RNW CLI to preserve and re-use `init-windows` arguments (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.244
 
 ## 0.0.0-canary.883
 
