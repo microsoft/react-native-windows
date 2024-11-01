@@ -1,6 +1,7 @@
 <Project>
   <PropertyGroup Condition="'$(SolutionName)'=='ReactWindows-Desktop'">
     <RnwNewArch>false</RnwNewArch>
+    <UseFabric>false</UseFabric>
   </PropertyGroup>
   <PropertyGroup>
     <ReactExperimentalFeaturesSet>true</ReactExperimentalFeaturesSet>
