@@ -127,6 +127,20 @@ ReactNativeIsland::ReactNativeIsland(const winrt::Microsoft::UI::Composition::Co
   InitTextScaleMultiplier();
 }
 
+// Constructor to initialize ReactNativeIsland with context and componentView
+ReactNativeIsland::ReactNativeIsland(
+    const winrt::Microsoft::UI::Composition::Compositor &compositor,
+    winrt::Microsoft::ReactNative::IReactContext context,
+    winrt::Microsoft::ReactNative::ComponentView componentView) noexcept
+    : m_compositor(compositor),
+      m_context(context),
+      m_layoutConstraints({{0, 0}, {0, 0}, winrt::Microsoft::ReactNative::LayoutDirection::Undefined}),
+      m_isFragment(true) {
+  m_rootTag = componentView.Tag();
+  InitTextScaleMultiplier();
+  AddFragmentCompositionEventHandler(context, componentView);
+}
+
 ReactNativeIsland::ReactNativeIsland() noexcept : ReactNativeIsland(nullptr) {}
 
 ReactNativeIsland::~ReactNativeIsland() noexcept {
@@ -152,6 +166,7 @@ ReactNative::IReactViewHost ReactNativeIsland::ReactViewHost() noexcept {
 }
 
 void ReactNativeIsland::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewHost const &value) noexcept {
+  assert(!m_isFragment); // make sure this isn't a FragmentIsalnd
   if (m_reactViewHost == value) {
     return;
   }
@@ -404,12 +419,33 @@ void ReactNativeIsland::InitRootView(
 
   m_context = winrt::Microsoft::ReactNative::ReactContext(std::move(context));
   m_reactViewOptions = std::move(viewOptions);
-  m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this);
+  m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this, -1);
   m_CompositionEventHandler->Initialize();
 
   UpdateRootViewInternal();
 
   m_isInitialized = true;
+}
+
+void ReactNativeIsland::AddFragmentCompositionEventHandler(
+    winrt::Microsoft::ReactNative::IReactContext context,
+    winrt::Microsoft::ReactNative::ComponentView componentView) noexcept {
+  m_uiDispatcher = context.Properties()
+                       .Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
+                       .try_as<IReactDispatcher>();
+  VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
+  VerifyElseCrash(m_rootTag != -1);
+  auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+      winrt::Microsoft::ReactNative::ReactPropertyBag(context.Properties()));
+
+  if (!m_CompositionEventHandler) {
+    // Create CompositionEventHandler if not already created
+    m_context = winrt::Microsoft::ReactNative::ReactContext(context);
+    m_CompositionEventHandler =
+        std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this, componentView.Tag());
+    m_CompositionEventHandler->Initialize();
+    m_isInitialized = true;
+  }
 }
 
 void ReactNativeIsland::UpdateRootView() noexcept {
@@ -834,7 +870,9 @@ void ReactNativeIsland::OnMounted() noexcept {
     return;
   m_mounted = true;
   if (auto componentView = GetComponentView()) {
-    componentView->onMounted();
+    if (!componentView->isMounted()) {
+      componentView->onMounted();
+    }
   }
 }
 
