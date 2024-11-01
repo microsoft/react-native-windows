@@ -48,6 +48,10 @@ struct ReactNativeIsland
   ~ReactNativeIsland() noexcept;
 
   ReactNativeIsland(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept;
+  ReactNativeIsland(
+      const winrt::Microsoft::UI::Composition::Compositor &compositor,
+      winrt::Microsoft::ReactNative::IReactContext context,
+      winrt::Microsoft::ReactNative::ComponentView componentView) noexcept;
   winrt::Microsoft::UI::Content::ContentIsland Island();
 
   // property ReactViewHost
@@ -120,6 +124,10 @@ struct ReactNativeIsland
       const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
       facebook::react::Tag tag) noexcept;
 
+  void AddFragmentCompositionEventHandler(
+      winrt::Microsoft::ReactNative::IReactContext context,
+      winrt::Microsoft::ReactNative::ComponentView componentView) noexcept;
+
  public: // IReactViewInstance UI-thread implementation
   void InitRootView(
       winrt::Microsoft::ReactNative::IReactContext &&context,
@@ -139,6 +147,7 @@ struct ReactNativeIsland
 #endif
 
   HWND m_hwnd{0};
+  bool m_isFragment{false};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
   bool m_hasRenderedVisual{false};

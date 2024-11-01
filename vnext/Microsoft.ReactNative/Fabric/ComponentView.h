@@ -117,6 +117,7 @@ struct ComponentView
   virtual void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept;
   void MarkAsCustomComponent() noexcept;
   virtual void onMounted() noexcept;
+  bool isMounted() noexcept;
   virtual void onUnmounted() noexcept;
   void onDestroying() noexcept;
 
