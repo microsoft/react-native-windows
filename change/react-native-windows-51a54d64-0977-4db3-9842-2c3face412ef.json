@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Add timeout to JS bundle creation in release builds",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
