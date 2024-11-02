@@ -25,17 +25,10 @@ bool isColorMeaningful(
 // Also apply scale factor to the radii at this point
 void pixelRoundBorderRadii(facebook::react::BorderRadii &borderRadii, float scaleFactor) noexcept {
   // Always round radii down to avoid spikey circles
-  borderRadii.topLeft = {
-      std::floor(borderRadii.topLeft.horizontal * scaleFactor), std::floor(borderRadii.topLeft.vertical * scaleFactor)};
-  borderRadii.topRight = {
-      std::floor(borderRadii.topRight.horizontal * scaleFactor),
-      std::floor(borderRadii.topRight.vertical * scaleFactor)};
-  borderRadii.bottomLeft = {
-      std::floor(borderRadii.bottomLeft.horizontal * scaleFactor),
-      std::floor(borderRadii.bottomLeft.vertical * scaleFactor)};
-  borderRadii.bottomRight = {
-      std::floor(borderRadii.bottomRight.horizontal * scaleFactor),
-      std::floor(borderRadii.bottomRight.vertical * scaleFactor)};
+  borderRadii.topLeft = std::floor(borderRadii.topLeft * scaleFactor);
+  borderRadii.topRight = std::floor(borderRadii.topRight * scaleFactor);
+  borderRadii.bottomLeft = std::floor(borderRadii.bottomLeft * scaleFactor);
+  borderRadii.bottomRight = std::floor(borderRadii.bottomRight * scaleFactor);
 }
 
 void scaleAndPixelRoundBorderWidths(
@@ -259,7 +252,7 @@ static winrt::com_ptr<ID2D1PathGeometry> GenerateRoundedRectPathGeometry(
 }
 
 RoundedPathParameters GenerateRoundedPathParameters(
-    const facebook::react::RectangleCorners<facebook::react::CornerRadii> &baseRadius,
+    const facebook::react::RectangleCorners<float> &baseRadius,
     const facebook::react::RectangleEdges<float> &inset,
     const facebook::react::Size &pathSize) noexcept {
   RoundedPathParameters result;
@@ -268,10 +261,10 @@ RoundedPathParameters GenerateRoundedPathParameters(
     return result;
   }
 
-  float totalTopRadius = baseRadius.topLeft.horizontal + baseRadius.topRight.horizontal;
-  float totalRightRadius = baseRadius.topRight.vertical + baseRadius.bottomRight.vertical;
-  float totalBottomRadius = baseRadius.bottomRight.horizontal + baseRadius.bottomLeft.horizontal;
-  float totalLeftRadius = baseRadius.bottomLeft.vertical + baseRadius.topLeft.vertical;
+  float totalTopRadius = baseRadius.topLeft + baseRadius.topRight;
+  float totalRightRadius = baseRadius.topRight + baseRadius.bottomRight;
+  float totalBottomRadius = baseRadius.bottomRight + baseRadius.bottomLeft;
+  float totalLeftRadius = baseRadius.bottomLeft + baseRadius.topLeft;
 
   float maxHorizontalRadius = std::max(totalTopRadius, totalBottomRadius);
   float maxVerticalRadius = std::max(totalLeftRadius, totalRightRadius);
@@ -284,21 +277,21 @@ RoundedPathParameters GenerateRoundedPathParameters(
 
   float maxScale = std::max(1.0f, std::max(scaleHoriz, scaleVert));
 
-  result.topLeftRadiusX = std::max(0.0f, baseRadius.topLeft.horizontal / maxScale - inset.left);
-  result.topLeftRadiusY = std::max(0.0f, baseRadius.topLeft.vertical / maxScale - inset.top);
-  result.topRightRadiusX = std::max(0.0f, baseRadius.topRight.horizontal / maxScale - inset.right);
-  result.topRightRadiusY = std::max(0.0f, baseRadius.topRight.vertical / maxScale - inset.top);
-  result.bottomRightRadiusX = std::max(0.0f, baseRadius.bottomRight.horizontal / maxScale - inset.right);
-  result.bottomRightRadiusY = std::max(0.0f, baseRadius.bottomRight.vertical / maxScale - inset.bottom);
-  result.bottomLeftRadiusX = std::max(0.0f, baseRadius.bottomLeft.horizontal / maxScale - inset.left);
-  result.bottomLeftRadiusY = std::max(0.0f, baseRadius.bottomLeft.vertical / maxScale - inset.bottom);
+  result.topLeftRadiusX = std::max(0.0f, baseRadius.topLeft / maxScale - inset.left);
+  result.topLeftRadiusY = std::max(0.0f, baseRadius.topLeft / maxScale - inset.top);
+  result.topRightRadiusX = std::max(0.0f, baseRadius.topRight / maxScale - inset.right);
+  result.topRightRadiusY = std::max(0.0f, baseRadius.topRight / maxScale - inset.top);
+  result.bottomRightRadiusX = std::max(0.0f, baseRadius.bottomRight / maxScale - inset.right);
+  result.bottomRightRadiusY = std::max(0.0f, baseRadius.bottomRight / maxScale - inset.bottom);
+  result.bottomLeftRadiusX = std::max(0.0f, baseRadius.bottomLeft / maxScale - inset.left);
+  result.bottomLeftRadiusY = std::max(0.0f, baseRadius.bottomLeft / maxScale - inset.bottom);
 
   return result;
 }
 
 winrt::com_ptr<ID2D1PathGeometry> BorderPrimitive::GenerateRoundedRectPathGeometry(
     winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
-    const facebook::react::RectangleCorners<facebook::react::CornerRadii> &baseRadius,
+    const facebook::react::RectangleCorners<float> &baseRadius,
     const facebook::react::RectangleEdges<float> &inset,
     const facebook::react::RectangleEdges<float> &rectPathGeometry) noexcept {
   RoundedPathParameters params = GenerateRoundedPathParameters(
@@ -516,11 +509,11 @@ void DrawAllBorderLayers(
       spTextures[0], // Target Layer, Source Texture, Target Texture
       {0,
        0,
-       borderRadii.topLeft.vertical + borderWidths.left,
-       borderRadii.topLeft.horizontal + borderWidths.top}, // Texture Left, Top, Width, Height
+       borderRadii.topLeft + borderWidths.left,
+       borderRadii.topLeft + borderWidths.top}, // Texture Left, Top, Width, Height
       {AnchorPosition::Left, AnchorPosition::Top}, // Layer Anchor Point
       {0, 0}, // Layer Anchor Offset
-      {borderRadii.topLeft.vertical + borderWidths.left, borderRadii.topLeft.horizontal + borderWidths.top}, // size
+      {borderRadii.topLeft + borderWidths.left, borderRadii.topLeft + borderWidths.top}, // size
       {0.0f, 0.0f}, // relativeSize
       std::max(borderWidths.left, borderWidths.top),
       borderColors.left ? borderColors.left : borderColors.top,
@@ -533,13 +526,13 @@ void DrawAllBorderLayers(
       spBorderLayers[1],
       shape,
       spTextures[1],
-      {borderRadii.topLeft.vertical + borderWidths.left,
+      {borderRadii.topLeft + borderWidths.left,
        0,
-       textureWidth - (borderRadii.topRight.vertical + borderWidths.right),
+       textureWidth - (borderRadii.topRight + borderWidths.right),
        borderWidths.top},
       {AnchorPosition::Left, AnchorPosition::Top},
-      {borderRadii.topLeft.vertical + borderWidths.left, 0},
-      {-(borderRadii.topLeft.vertical + borderWidths.left + borderRadii.topRight.vertical + borderWidths.right),
+      {borderRadii.topLeft + borderWidths.left, 0},
+      {-(borderRadii.topLeft + borderWidths.left + borderRadii.topRight + borderWidths.right),
        borderWidths.top}, // size
       {1.0f, 0.0f}, // relativeSize
       borderWidths.top,
@@ -553,13 +546,13 @@ void DrawAllBorderLayers(
       spBorderLayers[2],
       shape,
       spTextures[2],
-      {textureWidth - (borderRadii.topRight.vertical + borderWidths.right),
+      {textureWidth - (borderRadii.topRight + borderWidths.right),
        0,
        textureWidth,
-       borderRadii.topRight.horizontal + borderWidths.top},
+       borderRadii.topRight + borderWidths.top},
       {AnchorPosition::Right, AnchorPosition::Top},
-      {-(borderRadii.topRight.vertical + borderWidths.right), 0},
-      {borderRadii.topRight.vertical + borderWidths.right, borderRadii.topRight.horizontal + borderWidths.top},
+      {-(borderRadii.topRight + borderWidths.right), 0},
+      {borderRadii.topRight + borderWidths.right, borderRadii.topRight + borderWidths.top},
       {0.0f, 0.0f},
       std::max(borderWidths.right, borderWidths.top),
       borderColors.right ? borderColors.right : borderColors.top,
@@ -573,14 +566,13 @@ void DrawAllBorderLayers(
       shape,
       spTextures[3],
       {textureWidth - borderWidths.right,
-       borderWidths.top + borderRadii.topRight.horizontal,
+       borderWidths.top + borderRadii.topRight,
        textureWidth,
-       textureHeight - (borderWidths.bottom + borderRadii.bottomRight.horizontal)},
+       textureHeight - (borderWidths.bottom + borderRadii.bottomRight)},
       {AnchorPosition::Right, AnchorPosition::Top},
-      {-borderWidths.right, borderWidths.top + borderRadii.topRight.horizontal},
+      {-borderWidths.right, borderWidths.top + borderRadii.topRight},
       {borderWidths.right,
-       -(borderWidths.top + borderRadii.topRight.horizontal + borderWidths.bottom +
-         borderRadii.bottomRight.horizontal)}, // size
+       -(borderWidths.top + borderRadii.topRight + borderWidths.bottom + borderRadii.bottomRight)}, // size
       {0.0f, 1.0f},
       borderWidths.right,
       borderColors.right,
@@ -593,14 +585,13 @@ void DrawAllBorderLayers(
       spBorderLayers[4],
       shape,
       spTextures[4],
-      {textureWidth - (borderWidths.right + borderRadii.bottomRight.vertical),
-       textureHeight - (borderWidths.bottom + borderRadii.bottomRight.horizontal),
+      {textureWidth - (borderWidths.right + borderRadii.bottomRight),
+       textureHeight - (borderWidths.bottom + borderRadii.bottomRight),
        textureWidth,
        textureHeight},
       {AnchorPosition::Right, AnchorPosition::Bottom},
-      {-(borderWidths.right + borderRadii.bottomRight.vertical),
-       -(borderWidths.bottom + borderRadii.bottomRight.horizontal)},
-      {borderWidths.right + borderRadii.bottomRight.vertical, borderWidths.bottom + borderRadii.bottomRight.horizontal},
+      {-(borderWidths.right + borderRadii.bottomRight), -(borderWidths.bottom + borderRadii.bottomRight)},
+      {borderWidths.right + borderRadii.bottomRight, borderWidths.bottom + borderRadii.bottomRight},
       {0, 0},
       std::max(borderWidths.right, borderWidths.bottom),
       borderColors.right ? borderColors.right : borderColors.bottom,
@@ -613,13 +604,13 @@ void DrawAllBorderLayers(
       spBorderLayers[5],
       shape,
       spTextures[5],
-      {borderWidths.left + borderRadii.bottomLeft.vertical,
+      {borderWidths.left + borderRadii.bottomLeft,
        textureHeight - borderWidths.bottom,
-       textureWidth - (borderWidths.right + borderRadii.bottomRight.vertical),
+       textureWidth - (borderWidths.right + borderRadii.bottomRight),
        textureHeight},
       {AnchorPosition::Left, AnchorPosition::Bottom},
-      {borderWidths.left + borderRadii.bottomLeft.vertical, -borderWidths.bottom},
-      {-(borderWidths.right + borderRadii.bottomLeft.vertical + borderWidths.left + borderRadii.bottomRight.vertical),
+      {borderWidths.left + borderRadii.bottomLeft, -borderWidths.bottom},
+      {-(borderWidths.right + borderRadii.bottomLeft + borderWidths.left + borderRadii.bottomRight),
        borderWidths.bottom},
       {1.0f, 0.0f},
       borderWidths.bottom,
@@ -634,12 +625,12 @@ void DrawAllBorderLayers(
       shape,
       spTextures[6],
       {0,
-       textureHeight - (borderWidths.bottom + borderRadii.bottomLeft.horizontal),
-       borderWidths.left + borderRadii.bottomLeft.vertical,
+       textureHeight - (borderWidths.bottom + borderRadii.bottomLeft),
+       borderWidths.left + borderRadii.bottomLeft,
        textureHeight},
       {AnchorPosition::Left, AnchorPosition::Bottom},
-      {0, -(borderWidths.bottom + borderRadii.bottomLeft.horizontal)},
-      {borderWidths.left + borderRadii.bottomLeft.vertical, borderWidths.bottom + borderRadii.bottomLeft.horizontal},
+      {0, -(borderWidths.bottom + borderRadii.bottomLeft)},
+      {borderWidths.left + borderRadii.bottomLeft, borderWidths.bottom + borderRadii.bottomLeft},
       {0, 0},
       std::max(borderWidths.left, borderWidths.bottom),
       borderColors.left ? borderColors.left : borderColors.bottom,
@@ -653,13 +644,12 @@ void DrawAllBorderLayers(
       shape,
       spTextures[7],
       {0,
-       borderWidths.top + borderRadii.topLeft.horizontal,
+       borderWidths.top + borderRadii.topLeft,
        borderWidths.left,
-       textureHeight - (borderWidths.bottom + borderRadii.bottomLeft.horizontal)},
+       textureHeight - (borderWidths.bottom + borderRadii.bottomLeft)},
       {AnchorPosition::Left, AnchorPosition::Top},
-      {0, borderWidths.top + borderRadii.topLeft.horizontal},
-      {borderWidths.left,
-       -(borderWidths.top + borderRadii.topLeft.horizontal + borderWidths.bottom + borderRadii.bottomLeft.horizontal)},
+      {0, borderWidths.top + borderRadii.topLeft},
+      {borderWidths.left, -(borderWidths.top + borderRadii.topLeft + borderWidths.bottom + borderRadii.bottomLeft)},
       {0, 1},
       borderWidths.left,
       borderColors.left,
@@ -668,7 +658,7 @@ void DrawAllBorderLayers(
 
 winrt::com_ptr<ID2D1GeometryGroup> GetGeometryForRoundedBorder(
     winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
-    const facebook::react::RectangleCorners<facebook::react::CornerRadii> &radius,
+    const facebook::react::RectangleCorners<float> &radius,
     const facebook::react::RectangleEdges<float> &inset,
     const facebook::react::RectangleEdges<float> &thickness,
     const facebook::react::RectangleEdges<float> &rectPathGeometry) noexcept {
@@ -862,10 +852,8 @@ bool BorderPrimitive::TryUpdateSpecialBorderLayers(
   float extentWidth = layoutMetrics.frame.size.width * layoutMetrics.pointScaleFactor;
   float extentHeight = layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor;
 
-  if (borderMetrics.borderRadii.topLeft.horizontal != 0 || borderMetrics.borderRadii.topRight.horizontal != 0 ||
-      borderMetrics.borderRadii.bottomLeft.horizontal != 0 || borderMetrics.borderRadii.bottomRight.horizontal != 0 ||
-      borderMetrics.borderRadii.topLeft.vertical != 0 || borderMetrics.borderRadii.topRight.vertical != 0 ||
-      borderMetrics.borderRadii.bottomLeft.vertical != 0 || borderMetrics.borderRadii.bottomRight.vertical != 0) {
+  if (borderMetrics.borderRadii.topLeft != 0 || borderMetrics.borderRadii.bottomLeft != 0 ||
+      borderMetrics.borderRadii.topLeft != 0 || borderMetrics.borderRadii.bottomLeft != 0) {
     auto compContext = m_outer->CompositionContext();
     if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
       // Because in DirectX geometry starts at the center of the stroke, we need to deflate
