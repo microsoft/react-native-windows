@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Fix issue with prop cloning with custom native props",
   "packageName": "react-native-windows",
   "email": "53619745+rnbot@users.noreply.github.com",
