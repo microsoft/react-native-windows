@@ -420,6 +420,10 @@ void ComponentView::ReleasePointerCapture(
       ->ReleasePointerCapture(pointer, static_cast<facebook::react::Tag>(Tag()));
 }
 
+void ComponentView::SetViewFeatures(ComponentViewFeatures viewFeatures) noexcept {
+  m_flags = viewFeatures;
+}
+
 RECT ComponentView::getClientRect() const noexcept {
   RECT rc{0};
   facebook::react::Point parentOffset{0};
