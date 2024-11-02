@@ -26,7 +26,15 @@ namespace winrt::PlaygroundApp::implementation {
 REACT_STRUCT(CustomXamlComponentProps)
 struct CustomXamlComponentProps
     : winrt::implements<CustomXamlComponentProps, winrt::Microsoft::ReactNative::IComponentProps> {
-  CustomXamlComponentProps(winrt::Microsoft::ReactNative::ViewProps props) : m_props(props) {}
+  CustomXamlComponentProps(
+      winrt::Microsoft::ReactNative::ViewProps props,
+      const winrt::Microsoft::ReactNative::IComponentProps &cloneFrom)
+      : m_props(props) {
+    if (cloneFrom) {
+      auto cloneFromProps = cloneFrom.as<CustomXamlComponentProps>();
+      label = cloneFromProps->label;
+    }
+  }
 
   void SetProp(uint32_t hash, winrt::hstring propName, winrt::Microsoft::ReactNative::IJSValueReader value) noexcept {
     winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
@@ -139,8 +147,9 @@ struct CustomComponentUserData : winrt::implements<CustomComponentUserData, winr
   static void ConfigureBuilderForCustomComponent(
       winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder,
       bool nativeLayout) {
-    builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props) noexcept {
-      return winrt::make<CustomXamlComponentProps>(props);
+    builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props,
+                              const winrt::Microsoft::ReactNative::IComponentProps &cloneFrom) noexcept {
+      return winrt::make<CustomXamlComponentProps>(props, cloneFrom);
     });
 
     builder.SetFinalizeUpdateHandler([](const winrt::Microsoft::ReactNative::ComponentView &source,
