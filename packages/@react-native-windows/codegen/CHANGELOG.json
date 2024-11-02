@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Sat, 02 Nov 2024 05:28:15 GMT",
+      "version": "0.0.0-canary.109",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.109",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "db9324004cdb212294ff21b8c953680cddc07fda",
+            "comment": "Implement accessibilityState checked"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 19 Oct 2024 05:29:46 GMT",
       "version": "0.0.0-canary.108",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.108",

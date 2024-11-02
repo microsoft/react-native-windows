@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Fri, 01 Nov 2024 05:22:37 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 02 Nov 2024 05:28:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.225
+
+Sat, 02 Nov 2024 05:28:14 GMT
+
+### Patches
+
+- Update some packages*.json files after the WinAppSDK udpate (50150435+JesseCol@users.noreply.github.com)
+- Bump react-native-windows to v0.0.0-canary.885
 
 ## 0.12.224
 

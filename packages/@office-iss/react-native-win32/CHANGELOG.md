@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-<!-- This log was last generated on Wed, 23 Oct 2024 05:31:16 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 02 Nov 2024 05:28:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.270
+
+Sat, 02 Nov 2024 05:28:14 GMT
+
+### Changes
+
+- adds default Modal (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.269
 
