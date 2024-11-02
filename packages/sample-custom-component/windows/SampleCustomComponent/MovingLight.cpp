@@ -18,8 +18,6 @@ struct MovingLight : public winrt::implements<MovingLight, winrt::IInspectable>,
     auto view = sender.as<winrt::Microsoft::ReactNative::Composition::ViewComponentView>();
     if (!oldProps || oldProps->color != newProps->color) {
       m_spotlight.InnerConeColor(newProps->color.AsWindowsColor(view.Theme()));
-    } else {
-      m_spotlight.InnerConeColor(winrt::Windows::UI::Colors::FloralWhite());
     }
 
     if (!oldProps || oldProps->size != newProps->size) {
