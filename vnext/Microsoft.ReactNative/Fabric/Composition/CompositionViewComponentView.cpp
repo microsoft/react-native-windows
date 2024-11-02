@@ -477,22 +477,14 @@ facebook::react::BorderMetrics ComponentView::focusBorderMetrics(
   innerColor.m_platformColor.push_back(inner ? "FocusVisualSecondary" : "FocusVisualPrimary");
   metrics.borderColors.bottom = metrics.borderColors.left = metrics.borderColors.right = metrics.borderColors.top =
       innerColor;
-  if (metrics.borderRadii.bottomLeft.horizontal != 0)
-    metrics.borderRadii.bottomLeft.horizontal += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  if (metrics.borderRadii.bottomLeft.vertical != 0)
-    metrics.borderRadii.bottomLeft.vertical += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  if (metrics.borderRadii.bottomRight.horizontal != 0)
-    metrics.borderRadii.bottomRight.horizontal += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  if (metrics.borderRadii.bottomRight.vertical != 0)
-    metrics.borderRadii.bottomRight.vertical += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  if (metrics.borderRadii.topLeft.horizontal != 0)
-    metrics.borderRadii.topLeft.horizontal += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  if (metrics.borderRadii.topLeft.vertical != 0)
-    metrics.borderRadii.topLeft.vertical += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  if (metrics.borderRadii.topRight.horizontal != 0)
-    metrics.borderRadii.topRight.horizontal += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
-  if (metrics.borderRadii.topRight.vertical != 0)
-    metrics.borderRadii.topRight.vertical += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  if (metrics.borderRadii.bottomLeft != 0)
+    metrics.borderRadii.bottomLeft += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  if (metrics.borderRadii.bottomRight != 0)
+    metrics.borderRadii.bottomRight += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  if (metrics.borderRadii.topLeft != 0)
+    metrics.borderRadii.topLeft += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
+  if (metrics.borderRadii.topRight != 0)
+    metrics.borderRadii.topRight += FOCUS_VISUAL_WIDTH * (inner ? 1 : 2);
 
   metrics.borderStyles.bottom = metrics.borderStyles.left = metrics.borderStyles.right = metrics.borderStyles.top =
       facebook::react::BorderStyle::Solid;
@@ -544,25 +536,19 @@ void ComponentView::updateShadowProps(
   // Shadow Properties
   if (oldViewProps.shadowOffset != newViewProps.shadowOffset || oldViewProps.shadowColor != newViewProps.shadowColor ||
       oldViewProps.shadowOpacity != newViewProps.shadowOpacity ||
-      oldViewProps.shadowRadius != newViewProps.shadowRadius || oldViewProps.boxShadow != newViewProps.boxShadow) {
+      oldViewProps.shadowRadius != newViewProps.shadowRadius) {
     applyShadowProps(newViewProps);
   }
 }
 
 void ComponentView::applyShadowProps(const facebook::react::ViewProps &viewProps) noexcept {
   auto shadow = m_compContext.CreateDropShadow();
-  if (!viewProps.boxShadow.empty()) {
-    shadow.Offset({viewProps.boxShadow[0].offsetX, viewProps.boxShadow[0].offsetY, 0});
-    shadow.Opacity(1);
-    shadow.BlurRadius(viewProps.boxShadow[0].blurRadius);
-    shadow.Color(theme()->Color(*viewProps.boxShadow[0].color));
-  } else {
-    shadow.Offset({viewProps.shadowOffset.width, viewProps.shadowOffset.height, 0});
-    shadow.Opacity(viewProps.shadowOpacity);
-    shadow.BlurRadius(viewProps.shadowRadius);
-    if (viewProps.shadowColor)
-      shadow.Color(theme()->Color(*viewProps.shadowColor));
-  }
+
+  shadow.Offset({viewProps.shadowOffset.width, viewProps.shadowOffset.height, 0});
+  shadow.Opacity(viewProps.shadowOpacity);
+  shadow.BlurRadius(viewProps.shadowRadius);
+  if (viewProps.shadowColor)
+    shadow.Color(theme()->Color(*viewProps.shadowColor));
 
   Visual().as<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual>().Shadow(shadow);
 }

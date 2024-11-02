@@ -52,7 +52,7 @@ struct BorderPrimitive {
 
   static winrt::com_ptr<ID2D1PathGeometry> GenerateRoundedRectPathGeometry(
       winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
-      const facebook::react::RectangleCorners<facebook::react::CornerRadii> &baseRadius,
+      const facebook::react::RectangleCorners<float> &baseRadius,
       const facebook::react::RectangleEdges<float> &inset,
       const facebook::react::RectangleEdges<float> &rectPathGeometry) noexcept;
 
