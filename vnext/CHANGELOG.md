@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 02 Nov 2024 05:28:15 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 03 Nov 2024 05:28:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.886
+
+Sun, 03 Nov 2024 05:28:15 GMT
+
+### Changes
+
+- Fix issue with prop cloning with custom native props (53619745+rnbot@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.246
+- Bump @react-native-windows/codegen to v0.0.0-canary.110
 
 ## 0.0.0-canary.885
 

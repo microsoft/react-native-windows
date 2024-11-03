@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Sun, 03 Nov 2024 05:28:15 GMT",
+      "version": "0.0.0-canary.110",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.110",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "59443c8e34ed03de9e77e931e59c54816a56b1ae",
+            "comment": "Fix issue with prop cloning with custom native props"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 02 Nov 2024 05:28:15 GMT",
       "version": "0.0.0-canary.109",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.109",

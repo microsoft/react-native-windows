@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Fix issue with prop cloning with custom native props",
-  "packageName": "@react-native-windows/codegen",
-  "email": "53619745+rnbot@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
