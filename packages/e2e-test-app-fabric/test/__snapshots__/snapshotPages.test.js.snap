@@ -30414,10 +30414,8 @@ exports[`snapshotAllPages Modal 1`] = `
           style={
             [
               {
-                "borderColor": "#005dffff",
-              },
-              {
                 "alignItems": "center",
+                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -30436,7 +30434,7 @@ exports[`snapshotAllPages Modal 1`] = `
           <Text
             style={
               {
-                "color": "#3c3c4399",
+                "color": "black",
               }
             }
           >
@@ -30484,10 +30482,8 @@ exports[`snapshotAllPages Modal 1`] = `
           style={
             [
               {
-                "borderColor": "#005dffff",
-              },
-              {
                 "alignItems": "center",
+                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -30509,7 +30505,7 @@ exports[`snapshotAllPages Modal 1`] = `
           <Text
             style={
               {
-                "color": "#3c3c4399",
+                "color": "black",
               }
             }
           >
@@ -30557,10 +30553,8 @@ exports[`snapshotAllPages Modal 1`] = `
           style={
             [
               {
-                "borderColor": "#005dffff",
-              },
-              {
                 "alignItems": "center",
+                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -30579,7 +30573,7 @@ exports[`snapshotAllPages Modal 1`] = `
           <Text
             style={
               {
-                "color": "#3c3c4399",
+                "color": "black",
               }
             }
           >
@@ -30613,7 +30607,6 @@ exports[`snapshotAllPages Modal 1`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
-      accessible={true}
       focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
@@ -30651,7 +30644,6 @@ exports[`snapshotAllPages Modal 1`] = `
     </Text>
     <RCTSwitch
       accessibilityRole="switch"
-      accessible={true}
       focusable={true}
       onChange={[Function]}
       onResponderTerminationRequest={[Function]}
@@ -30732,10 +30724,8 @@ exports[`snapshotAllPages Modal 1`] = `
           style={
             [
               {
-                "borderColor": "#005dffff",
-              },
-              {
                 "alignItems": "center",
+                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -30761,7 +30751,7 @@ exports[`snapshotAllPages Modal 1`] = `
           <Text
             style={
               {
-                "color": "#3c3c4399",
+                "color": "black",
               }
             }
           >
@@ -30809,10 +30799,8 @@ exports[`snapshotAllPages Modal 1`] = `
           style={
             [
               {
-                "borderColor": "#005dffff",
-              },
-              {
                 "alignItems": "center",
+                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -30838,7 +30826,7 @@ exports[`snapshotAllPages Modal 1`] = `
           <Text
             style={
               {
-                "color": "#3c3c4399",
+                "color": "black",
               }
             }
           >
@@ -30886,10 +30874,8 @@ exports[`snapshotAllPages Modal 1`] = `
           style={
             [
               {
-                "borderColor": "#005dffff",
-              },
-              {
                 "alignItems": "center",
+                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -30915,7 +30901,7 @@ exports[`snapshotAllPages Modal 1`] = `
           <Text
             style={
               {
-                "color": "#3c3c4399",
+                "color": "black",
               }
             }
           >
@@ -30963,10 +30949,8 @@ exports[`snapshotAllPages Modal 1`] = `
           style={
             [
               {
-                "borderColor": "#005dffff",
-              },
-              {
                 "alignItems": "center",
+                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -30992,7 +30976,7 @@ exports[`snapshotAllPages Modal 1`] = `
           <Text
             style={
               {
-                "color": "#3c3c4399",
+                "color": "black",
               }
             }
           >
@@ -31031,7 +31015,6 @@ exports[`snapshotAllPages Modal 1`] = `
       </Text>
       <RCTSwitch
         accessibilityRole="switch"
-        accessible={true}
         focusable={true}
         onChange={[Function]}
         onResponderTerminationRequest={[Function]}
@@ -31113,10 +31096,8 @@ exports[`snapshotAllPages Modal 1`] = `
           style={
             [
               {
-                "borderColor": "#005dffff",
-              },
-              {
                 "alignItems": "center",
+                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -31142,7 +31123,7 @@ exports[`snapshotAllPages Modal 1`] = `
           <Text
             style={
               {
-                "color": "#3c3c4399",
+                "color": "black",
               }
             }
           >
@@ -31190,10 +31171,8 @@ exports[`snapshotAllPages Modal 1`] = `
           style={
             [
               {
-                "borderColor": "#005dffff",
-              },
-              {
                 "alignItems": "center",
+                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -31219,7 +31198,7 @@ exports[`snapshotAllPages Modal 1`] = `
           <Text
             style={
               {
-                "color": "#3c3c4399",
+                "color": "black",
               }
             }
           >
@@ -31267,10 +31246,8 @@ exports[`snapshotAllPages Modal 1`] = `
           style={
             [
               {
-                "borderColor": "#005dffff",
-              },
-              {
                 "alignItems": "center",
+                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -31296,7 +31273,7 @@ exports[`snapshotAllPages Modal 1`] = `
           <Text
             style={
               {
-                "color": "#3c3c4399",
+                "color": "black",
               }
             }
           >
@@ -31344,10 +31321,8 @@ exports[`snapshotAllPages Modal 1`] = `
           style={
             [
               {
-                "borderColor": "#005dffff",
-              },
-              {
                 "alignItems": "center",
+                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -31373,7 +31348,7 @@ exports[`snapshotAllPages Modal 1`] = `
           <Text
             style={
               {
-                "color": "#3c3c4399",
+                "color": "black",
               }
             }
           >
@@ -31421,10 +31396,8 @@ exports[`snapshotAllPages Modal 1`] = `
           style={
             [
               {
-                "borderColor": "#005dffff",
-              },
-              {
                 "alignItems": "center",
+                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -31450,7 +31423,7 @@ exports[`snapshotAllPages Modal 1`] = `
           <Text
             style={
               {
-                "color": "#3c3c4399",
+                "color": "black",
               }
             }
           >
@@ -31527,10 +31500,8 @@ exports[`snapshotAllPages Modal 1`] = `
           style={
             [
               {
-                "borderColor": "#005dffff",
-              },
-              {
                 "alignItems": "center",
+                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -31549,7 +31520,7 @@ exports[`snapshotAllPages Modal 1`] = `
           <Text
             style={
               {
-                "color": "#3c3c4399",
+                "color": "black",
               }
             }
           >
@@ -31597,10 +31568,8 @@ exports[`snapshotAllPages Modal 1`] = `
           style={
             [
               {
-                "borderColor": "#005dffff",
-              },
-              {
                 "alignItems": "center",
+                "borderColor": "rgba(0,0,0, 0.1)",
                 "borderRadius": 16,
                 "borderWidth": 1,
                 "padding": 6,
@@ -31626,7 +31595,7 @@ exports[`snapshotAllPages Modal 1`] = `
           <Text
             style={
               {
-                "color": "#3c3c4399",
+                "color": "black",
               }
             }
           >
