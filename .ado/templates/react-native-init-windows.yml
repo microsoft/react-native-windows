@@ -135,7 +135,7 @@ steps:
       parameters:
         package: ..\testcli
         feature: UseHermes
-        value: ${{ not(parameters.UseChakra) }}
+        value: false
 
   - ${{ if or(endsWith(parameters.template, '-app'), and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old')))) }}:
     - powershell: |
