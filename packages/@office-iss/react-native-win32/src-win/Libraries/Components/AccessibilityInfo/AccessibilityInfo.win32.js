@@ -15,10 +15,7 @@ import RCTDeviceEventEmitter from '../../EventEmitter/RCTDeviceEventEmitter';
 import {sendAccessibilityEvent} from '../../ReactNative/RendererProxy';
 import Platform from '../../Utilities/Platform';
 import legacySendAccessibilityEvent from './legacySendAccessibilityEvent';
-import {
-  NativeAccessibilityInfo,
-  NativeAccessibilityInfoAndroid,
-} from './NativeAccessibilityInfo';
+import NativeAccessibilityInfo from './NativeAccessibilityInfo';
 import NativeAccessibilityInfoWin32 from './NativeAccessibilityInfoWin32';
 import NativeAccessibilityManagerIOS from './NativeAccessibilityManager';
 
@@ -207,8 +204,8 @@ const AccessibilityInfo = {
   isHighTextContrastEnabled(): Promise<boolean> {
     return new Promise((resolve, reject) => {
       if (Platform.OS === 'android') {
-        if (NativeAccessibilityInfoAndroid?.isHighTextContrastEnabled != null) {
-          NativeAccessibilityInfoAndroid.isHighTextContrastEnabled(resolve);
+        if (NativeAccessibilityInfo?.isHighTextContrastEnabled != null) {
+          NativeAccessibilityInfo.isHighTextContrastEnabled(resolve);
         } else {
           reject(null);
         }
