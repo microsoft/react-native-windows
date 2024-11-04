@@ -143,6 +143,20 @@ bool expandableControl(const facebook::react::SharedViewProps props) {
   return false;
 }
 
+bool togglableControl(const facebook::react::SharedViewProps props) {
+  if (props->accessibilityState.has_value() &&
+      props->accessibilityState->checked != facebook::react::AccessibilityState::None) {
+    return true;
+  }
+  auto accessibilityActions = props->accessibilityActions;
+  for (size_t i = 0; i < accessibilityActions.size(); i++) {
+    if (accessibilityActions[i].name == "toggle") {
+      return true;
+    }
+  }
+  return false;
+}
+
 HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTERNID patternId, IUnknown **pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
@@ -182,7 +196,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   }
 
   if (patternId == UIA_TogglePatternId &&
-      strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::SwitchComponentView>()) {
+      (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::SwitchComponentView>() ||
+       togglableControl(props))) {
     *pRetVal = static_cast<IToggleProvider *>(this);
     AddRef();
   }
@@ -498,8 +513,13 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_ToggleState(ToggleSt
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  *pRetVal =
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->getToggleState();
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+
+  *pRetVal = (props->accessibilityState.has_value() &&
+              props->accessibilityState->checked != facebook::react::AccessibilityState::None)
+      ? GetToggleState(props->accessibilityState)
+      : winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->getToggleState();
   return S_OK;
 }
 

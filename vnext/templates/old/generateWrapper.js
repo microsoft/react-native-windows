@@ -55,6 +55,8 @@ function makeGenerateWindowsWrapper(
       options.namespace,
       generateOptions,
     );
+
+    await templateUtils.updateProjectPackageJson(config, options);
   };
 
   return {

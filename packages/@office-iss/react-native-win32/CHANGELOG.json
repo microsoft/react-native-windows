@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Sat, 02 Nov 2024 05:28:14 GMT",
+      "version": "0.0.0-canary.270",
+      "tag": "@office-iss/react-native-win32_v0.0.0-canary.270",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "15e5afbf41a7b58eb98bc47eb58db530d9daa9ff",
+            "comment": "adds default Modal"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 23 Oct 2024 05:31:16 GMT",
       "version": "0.0.0-canary.269",
       "tag": "@office-iss/react-native-win32_v0.0.0-canary.269",

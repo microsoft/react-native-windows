@@ -1,8 +1,40 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 31 Oct 2024 05:28:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sun, 03 Nov 2024 05:28:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.886
+
+Sun, 03 Nov 2024 05:28:15 GMT
+
+### Changes
+
+- Fix issue with prop cloning with custom native props (53619745+rnbot@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.246
+- Bump @react-native-windows/codegen to v0.0.0-canary.110
+
+## 0.0.0-canary.885
+
+Sat, 02 Nov 2024 05:28:15 GMT
+
+### Changes
+
+- Fixing text components not rendering a border with Paper (sawalker@microsoft.com)
+- Implement accessibilityState checked (34109996+chiaramooney@users.noreply.github.com)
+- adds default modal that hosts fabric components (tatianakapos@microsoft.com)
+- Update some packages*.json files after the WinAppSDK udpate (50150435+JesseCol@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.245
+- Bump @react-native-windows/codegen to v0.0.0-canary.109
+
+## 0.0.0-canary.884
+
+Fri, 01 Nov 2024 05:22:37 GMT
+
+### Changes
+
+- Update RNW CLI to preserve and re-use `init-windows` arguments (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.244
 
 ## 0.0.0-canary.883
 
