@@ -24,6 +24,8 @@ namespace Microsoft.ReactNative {
     Microsoft.UI.Composition.CompositionBrush AsBrush(Microsoft.ReactNative.Composition.Theme theme);
 #endif
 
+    Boolean Equals(Color color);
+
     static Color Black();
     static Color Transparent();
     static Color ReadValue(IJSValueReader reader);

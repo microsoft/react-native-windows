@@ -2,6 +2,99 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sun, 03 Nov 2024 05:28:15 GMT",
+      "version": "0.0.0-canary.886",
+      "tag": "react-native-windows_v0.0.0-canary.886",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "59443c8e34ed03de9e77e931e59c54816a56b1ae",
+            "comment": "Fix issue with prop cloning with custom native props"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.246",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.110",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 02 Nov 2024 05:28:15 GMT",
+      "version": "0.0.0-canary.885",
+      "tag": "react-native-windows_v0.0.0-canary.885",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "sawalker@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dc70ca2393eb7c9229cb52e499f4b4f3ea390bfc",
+            "comment": "Fixing text components not rendering a border with Paper"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "db9324004cdb212294ff21b8c953680cddc07fda",
+            "comment": "Implement accessibilityState checked"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "15e5afbf41a7b58eb98bc47eb58db530d9daa9ff",
+            "comment": "adds default modal that hosts fabric components"
+          },
+          {
+            "author": "50150435+JesseCol@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "032b7f40e4a1fbebfecf5b12078f02a5c6df51c7",
+            "comment": "Update some packages*.json files after the WinAppSDK udpate"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.245",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.109",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 01 Nov 2024 05:22:37 GMT",
+      "version": "0.0.0-canary.884",
+      "tag": "react-native-windows_v0.0.0-canary.884",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a9afb5fddac4fb8741bb27de14aa563ddb35c254",
+            "comment": "Update RNW CLI to preserve and re-use `init-windows` arguments"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.244",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 31 Oct 2024 05:28:13 GMT",
       "version": "0.0.0-canary.883",
       "tag": "react-native-windows_v0.0.0-canary.883",

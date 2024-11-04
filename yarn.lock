@@ -1769,32 +1769,32 @@
   resolved "https://registry.yarnpkg.com/@kwsites/promise-deferred/-/promise-deferred-1.1.1.tgz#8ace5259254426ccef57f3175bc64ed7095ed919"
   integrity sha512-GaHYm+c0O9MjZRu0ongGBRbinu8gVAMd2UZjji6jVmqKtZluZnptXGWhz1E8j8D2HJ3f/yMxKAUC0b+57wncIw==
 
-"@microsoft/1ds-core-js@4.3.3", "@microsoft/1ds-core-js@^4.3.0":
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/@microsoft/1ds-core-js/-/1ds-core-js-4.3.3.tgz#f8702418ddef79b1417f040d946a49e173a50454"
-  integrity sha512-d49z99OKT1FvPI82P3DeIE5jG+gUSfTZ0ZHuDKj3hyMwdgCUJLnyd9vcL/1nSS/dFM0Sq8DAqbVI8kx/MEFv7w==
+"@microsoft/1ds-core-js@4.3.4", "@microsoft/1ds-core-js@^4.3.0":
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@microsoft/1ds-core-js/-/1ds-core-js-4.3.4.tgz#836cf13f0acd6deeada8414137fc89e7b46c5fc8"
+  integrity sha512-3gbDUQgAO8EoyQTNcAEkxpuPnioC0May13P1l1l0NKZ128L9Ts/sj8QsfwCRTjHz0HThlA+4FptcAJXNYUy3rg==
   dependencies:
-    "@microsoft/applicationinsights-core-js" "3.3.3"
+    "@microsoft/applicationinsights-core-js" "3.3.4"
     "@microsoft/applicationinsights-shims" "3.0.1"
     "@microsoft/dynamicproto-js" "^2.0.3"
     "@nevware21/ts-async" ">= 0.5.2 < 2.x"
     "@nevware21/ts-utils" ">= 0.11.3 < 2.x"
 
 "@microsoft/1ds-post-js@^4.3.0":
-  version "4.3.3"
-  resolved "https://registry.yarnpkg.com/@microsoft/1ds-post-js/-/1ds-post-js-4.3.3.tgz#151f5a743d5998e802919208ef0a9c5f55eff874"
-  integrity sha512-daRzjbi6rqhXW718I5e8+s7j1Fb1mrPL1ADOZsPvL2TGLE2dcyByVh5yvt33UI2eT6BA4uf2F+AiyGUkW4Hvqw==
+  version "4.3.4"
+  resolved "https://registry.yarnpkg.com/@microsoft/1ds-post-js/-/1ds-post-js-4.3.4.tgz#e4ed1c3691c7b2dd33f8dd78bed97303a9bc550c"
+  integrity sha512-nlKjWricDj0Tn68Dt0P8lX9a+X7LYrqJ6/iSfQwMfDhRIGLqW+wxx8gxS+iGWC/oc8zMQAeiZaemUpCwQcwpRQ==
   dependencies:
-    "@microsoft/1ds-core-js" "4.3.3"
+    "@microsoft/1ds-core-js" "4.3.4"
     "@microsoft/applicationinsights-shims" "3.0.1"
     "@microsoft/dynamicproto-js" "^2.0.3"
     "@nevware21/ts-async" ">= 0.5.2 < 2.x"
     "@nevware21/ts-utils" ">= 0.11.3 < 2.x"
 
-"@microsoft/applicationinsights-core-js@3.3.3":
-  version "3.3.3"
-  resolved "https://registry.yarnpkg.com/@microsoft/applicationinsights-core-js/-/applicationinsights-core-js-3.3.3.tgz#67e0bacbb830bfb758cc4a37061a82df52a40914"
-  integrity sha512-U+IaAx/RS60jl8TAgtKzAeojbJgI+eCnYQGSvVE7IxdHgsmQ3hV3IYrBEf98q5nZD4U1zGoKtI8VEpkepoaYhQ==
+"@microsoft/applicationinsights-core-js@3.3.4":
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/@microsoft/applicationinsights-core-js/-/applicationinsights-core-js-3.3.4.tgz#af9c2b53086478a0539ff0b46a9f68199f919ac2"
+  integrity sha512-MummANF0mgKIkdvVvfmHQTBliK114IZLRhTL0X0Ep+zjDwWMHqYZgew0nlFKAl6ggu42abPZFK5afpE7qjtYJA==
   dependencies:
     "@microsoft/applicationinsights-shims" "3.0.1"
     "@microsoft/dynamicproto-js" "^2.0.3"
@@ -2829,9 +2829,9 @@
   integrity sha512-fAtCfv4jJg+ExtXhvCkCqUKZ+4ok/JQk01qDKhL5BDDoS3AxKXhV5/MAVUZyQnSEd2GT92fkgZl0pz0Q0AzcIQ==
 
 "@types/node@^18.0.0":
-  version "18.19.59"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.59.tgz#2de1b95b0b468089b616b2feb809755d70a74949"
-  integrity sha512-vizm2EqwV/7Zay+A6J3tGl9Lhr7CjZe2HmWS988sefiEmsyP9CeXEleho6i4hJk/8UtZAo0bWN4QPZZr83RxvQ==
+  version "18.19.63"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.63.tgz#2b2cdb8b3bd2b739ae38c5676cd012c80568022f"
+  integrity sha512-hcUB7THvrGmaEcPcvUZCZtQ2Z3C+UR/aOcraBLCvTsFMh916Gc1kCCYcfcMuB76HM2pSerxl1PoP3KnmHzd9Lw==
   dependencies:
     undici-types "~5.26.4"
 
@@ -8164,9 +8164,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 lage@^2.7.1:
-  version "2.11.9"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-2.11.9.tgz#681ff868dc8b4dcc5d2925459134a11cf827d035"
-  integrity sha512-hWE2PghytEq8nZS5FCI7OuEd9K14iqXqg3UIuYd04e5Jfo3mlC0vR9hRF1e7KujBhJBsnITWsPYK5/JHcWJq3A==
+  version "2.11.10"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-2.11.10.tgz#a73e7cd5135a3cee3a759191058028a64826d122"
+  integrity sha512-RunX77zFn2cJbFuljQwpr0MPloGpAENFn04A3f2pYKwiQTXdFiXfnQJiQ5VF202ESf9Uefyn3gcHecN14+4PBA==
   dependencies:
     glob-hasher "^1.4.2"
   optionalDependencies:

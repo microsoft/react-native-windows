@@ -2,6 +2,51 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sun, 03 Nov 2024 05:28:15 GMT",
+      "version": "0.0.0-canary.246",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.246",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.110",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 02 Nov 2024 05:28:15 GMT",
+      "version": "0.0.0-canary.245",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.245",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.109",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 01 Nov 2024 05:22:36 GMT",
+      "version": "0.0.0-canary.244",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.244",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "a9afb5fddac4fb8741bb27de14aa563ddb35c254",
+            "comment": "Update RNW CLI to preserve and re-use `init-windows` arguments"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 26 Oct 2024 05:28:06 GMT",
       "version": "0.0.0-canary.243",
       "tag": "@react-native-windows/cli_v0.0.0-canary.243",
