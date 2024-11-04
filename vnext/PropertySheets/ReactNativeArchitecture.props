@@ -24,7 +24,7 @@
   </Target>
 
   <PropertyGroup Condition="'$(RnwNewArch)'=='true'">
-    <!-- Every New Architecture project requries these to be true. -->
+    <!-- Every New Architecture project requires these to be true. -->
     <UseHermes>true</UseHermes>
     <UseFabric>true</UseFabric>
     <UseWinUI3>true</UseWinUI3>
@@ -49,14 +49,22 @@
     <Warning Text="Property 'UseFabric' was set to 'true'. Projects built against the Old Architecture do not support Fabric so it will be set to 'false'." />
   </Target>
 
-  <Target Name="EnsureUseWinUI3ForOldArch" BeforeTargets="PrepareForBuild" Condition="'$(RnwNewArch)'=='false' and '$(UseWinUI3)' == 'true'">
-    <Warning Text="Property 'UseWinUI3' was set to 'true'. Projects built against the Old Architecture do not support WinUI3 so it will be set to 'false'." />
+  <!-- Set ForcePaperUseWinUI3 to true to support the Fabric interface in the Desktop build. -->
+  <PropertyGroup Condition="'$(RnwNewArch)'=='false' and '$(IncludeFabricInterface)'=='true'">
+    <ForcePaperUseWinUI3>true</ForcePaperUseWinUI3>
+  </PropertyGroup>
+
+  <Target Name="EnsureUseWinUI3ForOldArch" BeforeTargets="PrepareForBuild" Condition="'$(RnwNewArch)'=='false' and '$(UseWinUI3)' == 'true' and '$(ForcePaperUseWinUI3)'!='true'">
+    <Warning Text="Property 'UseWinUI3' was set to 'true'. Projects built against the Old Architecture do not support WinUI3 so it will be set to 'false'. You may set 'ForcePaperUseWinUI3' to 'true' override this at your own risk." />
   </Target>
 
   <PropertyGroup Condition="'$(RnwNewArch)'=='false'">
-    <!-- Every Old Architecture project requries these to be false. -->
+    <!-- Every Old Architecture project requires these to be false. -->
     <UseFabric>false</UseFabric>
-    <UseWinUI3>false</UseWinUI3>
+
+    <!-- Set UseWinUI3 to false unless 'ForcePaperUseWinUI3'. -->
+    <UseWinUI3 Condition="'$(ForcePaperUseWinUI3)'=='true'">true</UseWinUI3>
+    <UseWinUI3 Condition="'$(ForcePaperUseWinUI3)'!='true'">false</UseWinUI3>
   </PropertyGroup>
 
   <PropertyGroup>
