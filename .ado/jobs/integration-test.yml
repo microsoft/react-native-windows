@@ -86,7 +86,10 @@ jobs:
               parameters:
                 package: packages/integration-test-app
                 feature: UseHermes
-                value: ${{ not(coalesce(matrix.UseChakra, false))}}
+                ${{ if eq(matrix.UseChakra, true) }}:
+                  value: false
+                ${{ else }}:
+                  value: true
 
             - ${{ if eq(matrix.BuildConfiguration, 'Debug') }}:
               # The build is more likely to crash after we've started other bits that
