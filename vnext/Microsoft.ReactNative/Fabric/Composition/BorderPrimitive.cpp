@@ -848,7 +848,7 @@ bool BorderPrimitive::TryUpdateSpecialBorderLayers(
   float extentHeight = layoutMetrics.frame.size.height * layoutMetrics.pointScaleFactor;
 
   if (borderMetrics.borderRadii.topLeft != 0 || borderMetrics.borderRadii.bottomLeft != 0 ||
-      borderMetrics.borderRadii.topLeft != 0 || borderMetrics.borderRadii.bottomLeft != 0) {
+      borderMetrics.borderRadii.topRight != 0 || borderMetrics.borderRadii.bottomRight != 0) {
     auto compContext = m_outer->CompositionContext();
     if (borderStyle == facebook::react::BorderStyle::Dotted || borderStyle == facebook::react::BorderStyle::Dashed) {
       // Because in DirectX geometry starts at the center of the stroke, we need to deflate
