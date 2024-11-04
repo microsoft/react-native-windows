@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "integrate RN 0.76.0 and fix babel.config",
-  "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}

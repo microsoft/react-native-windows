@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 04 Nov 2024 16:28:49 GMT",
+      "version": "0.76.0-preview.5",
+      "tag": "@office-iss/react-native-win32_v0.76.0-preview.5",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "80dbd3740b4183dc8c898a89923f784f13996c35",
+            "comment": "integrate RN 0.76.0 and fix babel.config"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Oct 2024 15:29:51 GMT",
       "version": "0.76.0-preview.4",
       "tag": "@office-iss/react-native-win32_v0.76.0-preview.4",
