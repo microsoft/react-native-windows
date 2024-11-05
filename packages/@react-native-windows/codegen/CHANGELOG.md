@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Thu, 17 Oct 2024 00:18:07 GMT and should not be manually modified.
+This log was last generated on Tue, 05 Nov 2024 21:10:07 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.5
+
+Tue, 05 Nov 2024 21:10:07 GMT
+
+### Patches
+
+- Implement accessibilityState checked (34109996+chiaramooney@users.noreply.github.com)
+- Fix issue with prop cloning with custom native props (53619745+rnbot@users.noreply.github.com)
 
 ## 0.74.4
 
