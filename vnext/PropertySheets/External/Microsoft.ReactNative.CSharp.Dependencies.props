@@ -11,7 +11,7 @@
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 
   <PropertyGroup Label="NetCoreUniversalWindowsPlatform">
-    <NETCoreUWPVersion Condition="'$(NETCoreUWPVersion)' == '' Or $([MSBuild]::VersionLessThan('$(NETCoreUWPVersion)', '6.2.9'))">6.2.9</NETCoreUWPVersion>
+    <NETCoreUWPVersion Condition="'$(NETCoreUWPVersion)' == '' Or $([MSBuild]::VersionLessThan('$(NETCoreUWPVersion)', '6.2.14'))">6.2.14</NETCoreUWPVersion>
   </PropertyGroup>
 
 </Project>

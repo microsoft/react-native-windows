@@ -10,13 +10,13 @@
       },
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
-        "requested": "[6.2.9, )",
-        "resolved": "6.2.9",
-        "contentHash": "QcNHcEvhO0bMhF1LW7Ebn1f6wrzvbkloRsZSrAZsGbAAqdhmfuZcD3VVeVCL8VWsBXRlhdb3+0Y7HLxvnMTpZA==",
+        "requested": "[6.2.14, )",
+        "resolved": "6.2.14",
+        "contentHash": "20T91+/vQhL8c//GFU9qkNnys2BVdzAr9smULuP4p9csXwYjuoqxwAjNxLH0FvApGdB3s0sGhHkSeLg3IQBdMw==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.1.0",
-          "Microsoft.Net.Native.Compiler": "2.2.7-rel-27913-00",
-          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.9",
+          "Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00",
+          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.14",
           "NETStandard.Library": "2.0.3"
         }
       },
@@ -47,23 +47,23 @@
       },
       "Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
-        "resolved": "2.2.7-rel-27913-00",
-        "contentHash": "EtGDVRBaNWEqQDJTfkeHOLiiKUOzlr4UVK2KciIt3zYOZeLEnhsshTR6D+1ADetJRKluYR7s0HruAtw1kbc0Xg==",
+        "resolved": "2.2.12-rel-31116-00",
+        "contentHash": "91INue1M3Zap/S6yaglXMEq1UvirknZmzwFZiP0fs3Su5MhWUEJoBJK3BsPsiImnII2NGhrYKrJd+QW7zfClyA==",
         "dependencies": {
-          "runtime.win10-arm.Microsoft.Net.Native.Compiler": "2.2.7-rel-27913-00",
-          "runtime.win10-arm64.Microsoft.Net.Native.Compiler": "2.2.7-rel-27913-00",
-          "runtime.win10-x64.Microsoft.Net.Native.Compiler": "2.2.7-rel-27913-00",
-          "runtime.win10-x86.Microsoft.Net.Native.Compiler": "2.2.7-rel-27913-00"
+          "runtime.win10-arm.Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00",
+          "runtime.win10-arm64.Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00",
+          "runtime.win10-x64.Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00",
+          "runtime.win10-x86.Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00"
         }
       },
       "Microsoft.Net.UWPCoreRuntimeSdk": {
         "type": "Transitive",
-        "resolved": "2.2.9",
-        "contentHash": "4N6mDdolISwxqM9yT0qptgCoxq+C4Z8CdQD/dpp0bb5egIda5LZ36Pg3nGKmBtU28PVYEljGsUCjRcWYBBXh2Q==",
+        "resolved": "2.2.14",
+        "contentHash": "qPR/lie8X3I82ZnZbdqyl27Z/J9mJapSEbnz7CX4kGgc5LNwjoLlUnaQjilDQsTcYfmSg8EcvcLJy9mBSY+GVA==",
         "dependencies": {
-          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.2.9",
-          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.2.9",
-          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.2.9"
+          "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": "2.2.14",
+          "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": "2.2.14",
+          "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": "2.2.14"
         }
       },
       "Microsoft.NETCore.Platforms": {
@@ -100,70 +100,70 @@
       },
       "runtime.win10-arm.Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
-        "resolved": "2.2.7-rel-27913-00",
-        "contentHash": "7MmoGge/BtJAHCnnV1LqjT2Yvnxlsm/8+4C2ASK819zq+pGSloeNwJtVxyM3okA9T4/1jKr+JpQsfis4F/KSKg==",
+        "resolved": "2.2.12-rel-31116-00",
+        "contentHash": "s2CrbBYdAZa9aR4dlq2sOfJrRf4uOZHgEYGmWyxW4mz+//0vlGSJxUYAiKUotMwa4+fu+PAh2ANKRdU9o06C3w==",
         "dependencies": {
-          "runtime.win10-arm.Microsoft.Net.Native.SharedLibrary": "2.2.7-rel-27913-00"
+          "runtime.win10-arm.Microsoft.Net.Native.SharedLibrary": "2.2.8-rel-31116-00"
         }
       },
       "runtime.win10-arm.Microsoft.Net.Native.SharedLibrary": {
         "type": "Transitive",
-        "resolved": "2.2.7-rel-27913-00",
-        "contentHash": "ifk8FQ8srunhdyo0QQe8H+36as9/wiQKXq1aXJ+6YeGyx0UjrTSyNx/zq6eThJfjRz9VyoomR+LZVhuXK+QKYw=="
+        "resolved": "2.2.8-rel-31116-00",
+        "contentHash": "3F8B17d60HssS/BBlmRs4X8TuvOVRRQjSP8uOhTweZS1ZsmlreKqV9YPXwyN0kpu32StTdqYIt1i9vV4nZZoOQ=="
       },
       "runtime.win10-arm.Microsoft.Net.UWPCoreRuntimeSdk": {
         "type": "Transitive",
-        "resolved": "2.2.9",
-        "contentHash": "viBS+DhSzl2JZYC/88uhlWi4DutSIFy32ocoRsdi5RsPLG50XTqq6w0traHQuuqLLJ4gwswlNXO9AD4J0+zvIQ=="
+        "resolved": "2.2.14",
+        "contentHash": "gr1abg5qNrM14Ng9NTFuzY/A3BLDQFfWrKgjmzr6AlhUsq/QZ7Hny62rLZ3ONVHSN0Bo0QuwKe2KLmBTLTyItg=="
       },
       "runtime.win10-arm64.Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
-        "resolved": "2.2.7-rel-27913-00",
-        "contentHash": "5Pt/M1mMmvYQUGWEn33V9SnZtTDUeLvfKPsd71GwedZOh7MDSRuLZqSPG7P3ElOforh4nXlG6x8lcaE9Kauebg==",
+        "resolved": "2.2.12-rel-31116-00",
+        "contentHash": "ELSl50UCnJSPeSfwRnXe4S+Ito58dpWhm6pEyxtIMiiuLcJsfr7rTxPR05Pijta5ru4KZu0or5PUePjGgKyC2A==",
         "dependencies": {
-          "runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary": "2.2.7-rel-27913-00"
+          "runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary": "2.2.8-rel-31116-00"
         }
       },
       "runtime.win10-arm64.Microsoft.Net.Native.SharedLibrary": {
         "type": "Transitive",
-        "resolved": "2.2.7-rel-27913-00",
-        "contentHash": "Bl0tXHiEko11FYLmumjPRQQl/w3wlGEXvYDpdvWSuC9Ty4YCGNHOUXzPaTMP2dv2GikTv8RYy4m1m5lbUNDa3g=="
+        "resolved": "2.2.8-rel-31116-00",
+        "contentHash": "mkSKguVkHl8W7/uS8SgXz5t7aI4QvF7BPd+WzcdOdMU5g/gnXmcWZAlSr1RrSTjTS1P3sxOE15XMFJs0nPCI8w=="
       },
       "runtime.win10-x64.Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
-        "resolved": "2.2.7-rel-27913-00",
-        "contentHash": "aF94Kjb29+SkvySs07Ztq0cVZObv4Totcek8vCL+Xn1D6GN34PrKR2P+A17yAEbey3q4K3U8XZDybsJwoSbWFA==",
+        "resolved": "2.2.12-rel-31116-00",
+        "contentHash": "ZRYTWtC+lManfqDHmIpqlv/UG6nQfn4URqMEmoc1k/DI1pMBo4jCov5VoFIGHHd1/AXXsK6Hdd2TDbexH0PozQ==",
         "dependencies": {
-          "runtime.win10-x64.Microsoft.Net.Native.SharedLibrary": "2.2.7-rel-27913-00"
+          "runtime.win10-x64.Microsoft.Net.Native.SharedLibrary": "2.2.8-rel-31116-00"
         }
       },
       "runtime.win10-x64.Microsoft.Net.Native.SharedLibrary": {
         "type": "Transitive",
-        "resolved": "2.2.7-rel-27913-00",
-        "contentHash": "Hr1dSHwWQ78yFMqZuh3J0brY886r4pPBblIy6JcgAFZUFM4FaDr9T1KPSYavlPBtHMPBzrHUfsQ3Bh3STzhMLA=="
+        "resolved": "2.2.8-rel-31116-00",
+        "contentHash": "pt7vQLpa95Cpif7oHXkLPsvcJ6tfdc8bvOxiJzjXlTTOjefsX4xmkSU+buuu/KbE8YDs1VEyxu0zcjpIMuVkmQ=="
       },
       "runtime.win10-x64.Microsoft.Net.UWPCoreRuntimeSdk": {
         "type": "Transitive",
-        "resolved": "2.2.9",
-        "contentHash": "QNZQ79gG3rIpaIoYbnIQCsh8Be8CzwnqDZCUZ/UGr+CfUrypGUthAxJzwitATopzonqCqPxgEnsV0ZiH8XGn8w=="
+        "resolved": "2.2.14",
+        "contentHash": "LQ+8pXMZVsd1yEzcYHZvSKTbjjnLZYj5tWCOAOcgzF9ojX8+geT35rAcndhCRJAeAvARgv9/7yapnK86UPzpyQ=="
       },
       "runtime.win10-x86.Microsoft.Net.Native.Compiler": {
         "type": "Transitive",
-        "resolved": "2.2.7-rel-27913-00",
-        "contentHash": "jxyZhYtJS9AmOvsNghtxeN6RYxHN73LnzBX3ir0cBQ5LlsNUsf6GgiJvZoeYPJLt/9fsPONhBciHpwLXWFkJkw==",
+        "resolved": "2.2.12-rel-31116-00",
+        "contentHash": "hVlpnwSdqYizm+nigl3t3/fVd/D0COJ4doLJIa66GkNmPSL5VeHCPAynZi+oO9rqCFKDX+Tmbn+NO9zygWJB/A==",
         "dependencies": {
-          "runtime.win10-x86.Microsoft.Net.Native.SharedLibrary": "2.2.7-rel-27913-00"
+          "runtime.win10-x86.Microsoft.Net.Native.SharedLibrary": "2.2.8-rel-31116-00"
         }
       },
       "runtime.win10-x86.Microsoft.Net.Native.SharedLibrary": {
         "type": "Transitive",
-        "resolved": "2.2.7-rel-27913-00",
-        "contentHash": "LL5bMKQkVUlY5rbupMC+MJ4tCOz3hb4HVKGTmyb18Jwziv5h9QbJgRVPjiAZf9W2YroZaG+VYr1iI1Ig2bco2w=="
+        "resolved": "2.2.8-rel-31116-00",
+        "contentHash": "A7J5S5ZZZCXexFp6xXG2CaMwZPSahpPdorzx6VbWJzfHDU0x1VvulYd8hSfi/KtJ/fG0tr8mpdnT7NZsrXP7+g=="
       },
       "runtime.win10-x86.Microsoft.Net.UWPCoreRuntimeSdk": {
         "type": "Transitive",
-        "resolved": "2.2.9",
-        "contentHash": "qF6RRZKaflI+LR1YODNyWYjq5YoX8IJ2wx5y8O+AW2xO+1t/Q6Mm+jQ38zJbWnmXbrcOqUYofn7Y3/KC6lTLBQ=="
+        "resolved": "2.2.14",
+        "contentHash": "3JRNswnc8LnxAofuv5hq9iRAnZ49w2J5DK/JaLL2uSFRRnaCS9atpXBG+EdpbJHyJxRxDPslkRLkH5ZUOIaCwQ=="
       },
       "automationchannel": {
         "type": "Project",
@@ -203,7 +203,7 @@
       "microsoft.reactnative.managed": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.NETCore.UniversalWindowsPlatform": "[6.2.9, )",
+          "Microsoft.NETCore.UniversalWindowsPlatform": "[6.2.14, )",
           "Microsoft.ReactNative": "[1.0.0, )"
         }
       },
@@ -232,15 +232,15 @@
     "UAP,Version=v10.0.17763/win10-arm": {
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
-        "requested": "[6.2.9, )",
-        "resolved": "6.2.9",
-        "contentHash": "QcNHcEvhO0bMhF1LW7Ebn1f6wrzvbkloRsZSrAZsGbAAqdhmfuZcD3VVeVCL8VWsBXRlhdb3+0Y7HLxvnMTpZA==",
+        "requested": "[6.2.14, )",
+        "resolved": "6.2.14",
+        "contentHash": "20T91+/vQhL8c//GFU9qkNnys2BVdzAr9smULuP4p9csXwYjuoqxwAjNxLH0FvApGdB3s0sGhHkSeLg3IQBdMw==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.1.0",
-          "Microsoft.Net.Native.Compiler": "2.2.7-rel-27913-00",
-          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.9",
+          "Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00",
+          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.14",
           "NETStandard.Library": "2.0.3",
-          "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
+          "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.14"
         }
       },
       "Microsoft.Web.WebView2": {
@@ -250,22 +250,22 @@
       },
       "runtime.win10-arm.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
-        "resolved": "6.2.9",
-        "contentHash": "/q9U+SqJTVrocU7CHFd1D4ac2jqPc4U8kPy8F147Li3XGf0Ce9v6UKJqf7nskR+XgVi3IVfUJUcjWLVskG5ZKw=="
+        "resolved": "6.2.14",
+        "contentHash": "PXwPeV73TQGLoREzwlZd/FT/xxb3tV6OpjRQdymOPJfMQme/ST9sX3OZAmmIUdio1LaWnNbB600Vtg2XvRItzw=="
       }
     },
     "UAP,Version=v10.0.17763/win10-arm-aot": {
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
-        "requested": "[6.2.9, )",
-        "resolved": "6.2.9",
-        "contentHash": "QcNHcEvhO0bMhF1LW7Ebn1f6wrzvbkloRsZSrAZsGbAAqdhmfuZcD3VVeVCL8VWsBXRlhdb3+0Y7HLxvnMTpZA==",
+        "requested": "[6.2.14, )",
+        "resolved": "6.2.14",
+        "contentHash": "20T91+/vQhL8c//GFU9qkNnys2BVdzAr9smULuP4p9csXwYjuoqxwAjNxLH0FvApGdB3s0sGhHkSeLg3IQBdMw==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.1.0",
-          "Microsoft.Net.Native.Compiler": "2.2.7-rel-27913-00",
-          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.9",
+          "Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00",
+          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.14",
           "NETStandard.Library": "2.0.3",
-          "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
+          "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.14"
         }
       },
       "Microsoft.Web.WebView2": {
@@ -275,22 +275,22 @@
       },
       "runtime.win10-arm-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
-        "resolved": "6.2.9",
-        "contentHash": "tN7AmnRPUuu29nh9ulL/UGMdzayAe/AQNhM7+fQNKuT4jUlxc61Ilf2djKNJ5MvK8wY69KH0Iz9Yy5+95rB+DQ=="
+        "resolved": "6.2.14",
+        "contentHash": "+CthZPP4ssmK5j7NC0S+nqvjJkL0qZ3Z5E272Bhl44GT1qPJzt/jL1rkeA2y2+Qy5YAWe5SRoOhbTzmK1hzxwA=="
       }
     },
     "UAP,Version=v10.0.17763/win10-arm64-aot": {
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
-        "requested": "[6.2.9, )",
-        "resolved": "6.2.9",
-        "contentHash": "QcNHcEvhO0bMhF1LW7Ebn1f6wrzvbkloRsZSrAZsGbAAqdhmfuZcD3VVeVCL8VWsBXRlhdb3+0Y7HLxvnMTpZA==",
+        "requested": "[6.2.14, )",
+        "resolved": "6.2.14",
+        "contentHash": "20T91+/vQhL8c//GFU9qkNnys2BVdzAr9smULuP4p9csXwYjuoqxwAjNxLH0FvApGdB3s0sGhHkSeLg3IQBdMw==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.1.0",
-          "Microsoft.Net.Native.Compiler": "2.2.7-rel-27913-00",
-          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.9",
+          "Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00",
+          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.14",
           "NETStandard.Library": "2.0.3",
-          "runtime.win10-arm64-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
+          "runtime.win10-arm64-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.14"
         }
       },
       "Microsoft.Web.WebView2": {
@@ -300,22 +300,22 @@
       },
       "runtime.win10-arm64-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
-        "resolved": "6.2.9",
-        "contentHash": "gupfeyxXmaOyqLps1gGLh4Lzh5Wee6iuKpgZ70l2nmoHtzqCdk9aK4i+03259M6X2r7BXoIjJJml0paXBQY1kw=="
+        "resolved": "6.2.14",
+        "contentHash": "evExmzlwZuWfzNvu+HAKQ8sWg5BKqWqvShpFPs6V72s78BzC+8Wl6T+H0rmuF3fZ+W6yhlM8dfusaj+w9D0GhA=="
       }
     },
     "UAP,Version=v10.0.17763/win10-x64": {
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
-        "requested": "[6.2.9, )",
-        "resolved": "6.2.9",
-        "contentHash": "QcNHcEvhO0bMhF1LW7Ebn1f6wrzvbkloRsZSrAZsGbAAqdhmfuZcD3VVeVCL8VWsBXRlhdb3+0Y7HLxvnMTpZA==",
+        "requested": "[6.2.14, )",
+        "resolved": "6.2.14",
+        "contentHash": "20T91+/vQhL8c//GFU9qkNnys2BVdzAr9smULuP4p9csXwYjuoqxwAjNxLH0FvApGdB3s0sGhHkSeLg3IQBdMw==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.1.0",
-          "Microsoft.Net.Native.Compiler": "2.2.7-rel-27913-00",
-          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.9",
+          "Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00",
+          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.14",
           "NETStandard.Library": "2.0.3",
-          "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
+          "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.14"
         }
       },
       "Microsoft.Web.WebView2": {
@@ -325,22 +325,22 @@
       },
       "runtime.win10-x64.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
-        "resolved": "6.2.9",
-        "contentHash": "JjnUToWq2LQfNKtiqld4YYkgUcC3tCQ0RvRKiut0B7AgS+Eo/HnI/viFiH4FoNG7pFvcWoKimLctj06IgJoiyA=="
+        "resolved": "6.2.14",
+        "contentHash": "snth4i/ok+LqSSqK5tLVFSbe8RDzIvfJabMXMPoYI+NQCi91mR+7tsTHk3gNEojuZT0i4g1EaFrIwqaW9bmEYA=="
       }
     },
     "UAP,Version=v10.0.17763/win10-x64-aot": {
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
-        "requested": "[6.2.9, )",
-        "resolved": "6.2.9",
-        "contentHash": "QcNHcEvhO0bMhF1LW7Ebn1f6wrzvbkloRsZSrAZsGbAAqdhmfuZcD3VVeVCL8VWsBXRlhdb3+0Y7HLxvnMTpZA==",
+        "requested": "[6.2.14, )",
+        "resolved": "6.2.14",
+        "contentHash": "20T91+/vQhL8c//GFU9qkNnys2BVdzAr9smULuP4p9csXwYjuoqxwAjNxLH0FvApGdB3s0sGhHkSeLg3IQBdMw==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.1.0",
-          "Microsoft.Net.Native.Compiler": "2.2.7-rel-27913-00",
-          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.9",
+          "Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00",
+          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.14",
           "NETStandard.Library": "2.0.3",
-          "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
+          "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.14"
         }
       },
       "Microsoft.Web.WebView2": {
@@ -350,22 +350,22 @@
       },
       "runtime.win10-x64-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
-        "resolved": "6.2.9",
-        "contentHash": "XTmgQZIB3JbzwVE0h+GN//VniFM4MmSWjxjtK7g5zypTwtpuj68oulxWqN5R3F19GaUzT+EFdfKXKEWI73/qwQ=="
+        "resolved": "6.2.14",
+        "contentHash": "/aFe5hqDpWSiGwM71GI9z6PLa+bxddXmuMWLZ3yVSv2nAJi50WtStB/RnLdXasTNH4JtYpWjQ1tT/fpwRNvFTQ=="
       }
     },
     "UAP,Version=v10.0.17763/win10-x86": {
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
-        "requested": "[6.2.9, )",
-        "resolved": "6.2.9",
-        "contentHash": "QcNHcEvhO0bMhF1LW7Ebn1f6wrzvbkloRsZSrAZsGbAAqdhmfuZcD3VVeVCL8VWsBXRlhdb3+0Y7HLxvnMTpZA==",
+        "requested": "[6.2.14, )",
+        "resolved": "6.2.14",
+        "contentHash": "20T91+/vQhL8c//GFU9qkNnys2BVdzAr9smULuP4p9csXwYjuoqxwAjNxLH0FvApGdB3s0sGhHkSeLg3IQBdMw==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.1.0",
-          "Microsoft.Net.Native.Compiler": "2.2.7-rel-27913-00",
-          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.9",
+          "Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00",
+          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.14",
           "NETStandard.Library": "2.0.3",
-          "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
+          "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.14"
         }
       },
       "Microsoft.Web.WebView2": {
@@ -375,22 +375,22 @@
       },
       "runtime.win10-x86.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
-        "resolved": "6.2.9",
-        "contentHash": "BckZHjaqBTSEtvzj0aliq3DQvLOT7C4ei4L8pCgcD3k/MZpECBg8kUsixDanwYtRot+jNXxc6LF5J87cyigGfA=="
+        "resolved": "6.2.14",
+        "contentHash": "GaJmbZkhVAMCNvDSshqXzpTxWPKhENV+Q6A/Z7/lYeywczdCSlExJo+1aJ8/eh9bwKhxRvIj3OZH4JsQsYpRaA=="
       }
     },
     "UAP,Version=v10.0.17763/win10-x86-aot": {
       "Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Direct",
-        "requested": "[6.2.9, )",
-        "resolved": "6.2.9",
-        "contentHash": "QcNHcEvhO0bMhF1LW7Ebn1f6wrzvbkloRsZSrAZsGbAAqdhmfuZcD3VVeVCL8VWsBXRlhdb3+0Y7HLxvnMTpZA==",
+        "requested": "[6.2.14, )",
+        "resolved": "6.2.14",
+        "contentHash": "20T91+/vQhL8c//GFU9qkNnys2BVdzAr9smULuP4p9csXwYjuoqxwAjNxLH0FvApGdB3s0sGhHkSeLg3IQBdMw==",
         "dependencies": {
           "Microsoft.NETCore.Platforms": "2.1.0",
-          "Microsoft.Net.Native.Compiler": "2.2.7-rel-27913-00",
-          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.9",
+          "Microsoft.Net.Native.Compiler": "2.2.12-rel-31116-00",
+          "Microsoft.Net.UWPCoreRuntimeSdk": "2.2.14",
           "NETStandard.Library": "2.0.3",
-          "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.9"
+          "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform": "6.2.14"
         }
       },
       "Microsoft.Web.WebView2": {
@@ -400,8 +400,8 @@
       },
       "runtime.win10-x86-aot.Microsoft.NETCore.UniversalWindowsPlatform": {
         "type": "Transitive",
-        "resolved": "6.2.9",
-        "contentHash": "/FxhZW8KuY7aiRcC1Opk5+48Meg1PYj36LcLVuX6Ty+n4HpMf7xxvNvp0EzSLzW/Ibzqt+iaRWqfOZqiTFZG5g=="
+        "resolved": "6.2.14",
+        "contentHash": "Z8Y39jw4fACg2/spREHZp2Edeay/nv2ZCXpk9IE1C7QwLSe7lQ6B05Lpq84fFCwwV+z6NiAPIdivj03LLEGv7A=="
       }
     }
   }
