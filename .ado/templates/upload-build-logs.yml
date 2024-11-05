@@ -14,25 +14,25 @@ steps:
         pathtoPublish: '${{ parameters.buildLogDirectory }}'
         artifactName: 'Build logs - ${{ parameters.artifactName }}'
 
-  - task: PowerShell@2
-    displayName: Cleanup ProcDump
-    condition:  succeededOrFailed()
-    inputs:
-      targetType: inline # filePath | inline
-      script: |
-        Write-Host "Looking for procdump64 processes...";
-        Get-Process | ForEach-Object {
-          if ($_.ProcessName -eq 'procdump64') {
-            try {
-              Write-Host "Waiting on process $($_.Id)...";
-              Wait-Process -Id $_.Id -Timeout 360;
-            } catch { }
-          }
-        }
-        if (Test-Path '$(ProcDumpPath)') {
-          Write-Host "Uninstalling ProcDump as AeDebug";
-          & $(ProcDumpPath)\procdump64.exe -u
-        }
+  # - task: PowerShell@2
+  #   displayName: Cleanup ProcDump
+  #   condition:  succeededOrFailed()
+  #   inputs:
+  #     targetType: inline # filePath | inline
+  #     script: |
+  #       Write-Host "Looking for procdump64 processes...";
+  #       Get-Process | ForEach-Object {
+  #         if ($_.ProcessName -eq 'procdump64') {
+  #           try {
+  #             Write-Host "Waiting on process $($_.Id)...";
+  #             Wait-Process -Id $_.Id -Timeout 360;
+  #           } catch { }
+  #         }
+  #       }
+  #       if (Test-Path '$(ProcDumpPath)') {
+  #         Write-Host "Uninstalling ProcDump as AeDebug";
+  #         & $(ProcDumpPath)\procdump64.exe -u
+  #       }
   
   - task: PowerShell@2
     displayName: List crash dumps
