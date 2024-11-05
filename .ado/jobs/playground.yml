@@ -190,9 +190,9 @@ jobs:
                     New-Item -Path '$(Build.StagingDirectory)\DebugTestCrashDumps' -ItemType Directory
                 displayName: Set CrashDumpRootPath
 
-              # - powershell: |
-              #     & $(Build.SourcesDirectory)\.ado\scripts\RunProcDump.ps1 -ProcDumpArgs @("-mm", "-i", "$(CrashDumpRootPath)") -ProcDumpInstallPath "$(ProcDumpPath)" -Verbose
-              #   displayName: Setup ProcDump as AeDebug
+              - powershell: |
+                  & $(Build.SourcesDirectory)\.ado\scripts\RunProcDump.ps1 -ProcDumpArgs @("-mm", "-i", "$(CrashDumpRootPath)") -ProcDumpInstallPath "$(ProcDumpPath)" -Verbose
+                displayName: Setup ProcDump as AeDebug
 
               # This step loose-file-deploys the UWP Playground app and uses it as an RNW host for a series
               # of debug feature tests. In the future, these tests should be performed against a host app
