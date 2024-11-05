@@ -49,11 +49,6 @@
     <Warning Text="Property 'UseFabric' was set to 'true'. Projects built against the Old Architecture do not support Fabric so it will be set to 'false'." />
   </Target>
 
-  <!-- Set ForcePaperUseWinUI3 to true to support the Fabric interface in the Desktop build. -->
-  <PropertyGroup Condition="'$(RnwNewArch)'=='false' and '$(IncludeFabricInterface)'=='true'">
-    <ForcePaperUseWinUI3>true</ForcePaperUseWinUI3>
-  </PropertyGroup>
-
   <Target Name="EnsureUseWinUI3ForOldArch" BeforeTargets="PrepareForBuild" Condition="'$(RnwNewArch)'=='false' and '$(UseWinUI3)' == 'true' and '$(ForcePaperUseWinUI3)'!='true'">
     <Warning Text="Property 'UseWinUI3' was set to 'true'. Projects built against the Old Architecture do not support WinUI3 so it will be set to 'false'. You may set 'ForcePaperUseWinUI3' to 'true' override this at your own risk." />
   </Target>
