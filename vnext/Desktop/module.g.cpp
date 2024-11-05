@@ -6,6 +6,7 @@
 #include "pch.h"
 #include "winrt/base.h"
 void* winrt_make_Microsoft_Internal_TestController();
+void* winrt_make_Microsoft_ReactNative_Color();
 void* winrt_make_Microsoft_ReactNative_ReactNativeIsland();
 #ifdef USE_WINUI3
 void *winrt_make_Microsoft_ReactNative_Composition_ImageFailedResponse();
@@ -39,6 +40,9 @@ void *winrt_make_Microsoft_ReactNative_Composition_StreamImageResponse() {
 void *winrt_make_Microsoft_ReactNative_Composition_Experimental_UriBrushFactoryImageResponse() {
     winrt::throw_hresult(E_NOTIMPL);
 }
+void* winrt_make_Microsoft_ReactNative_Color() {
+    winrt::throw_hresult(E_NOTIMPL);
+}
 void* winrt_make_Microsoft_ReactNative_ReactNativeIsland() {
     winrt::throw_hresult(E_NOTIMPL);
 }
@@ -68,6 +72,9 @@ void* __stdcall winrt_get_activation_factory([[maybe_unused]] std::wstring_view 
     if (requal(name, L"Microsoft.Internal.TestController"))
     {
         return winrt_make_Microsoft_Internal_TestController();
+    }
+    if (requal(name, L"Microsoft.ReactNative.Color")) {
+      return winrt_make_Microsoft_ReactNative_Color();
     }
     if (requal(name, L"Microsoft.ReactNative.ReactNativeIsland")) {
       return winrt_make_Microsoft_ReactNative_ReactNativeIsland();
