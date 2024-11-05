@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Export MS.RN.Color ctor in Office dll",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
