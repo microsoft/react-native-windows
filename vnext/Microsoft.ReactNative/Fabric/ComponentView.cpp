@@ -73,6 +73,10 @@ void ComponentView::onMounted() noexcept {
   m_mountedEvent(*this, *this);
 }
 
+bool ComponentView::isMounted() noexcept {
+  return m_mounted;
+}
+
 winrt::event_token ComponentView::Mounted(
     winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::ComponentView> const &handler) noexcept {
   return m_mountedEvent.add(handler);
@@ -342,10 +346,13 @@ bool ComponentView::runOnChildren(
         return true;
     }
   } else {
-    // TODO is this conversion from rend correct?
-    for (auto it = m_children.end(); it != m_children.begin(); --it) {
-      if (fn(*winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)))
-        return true;
+    if (m_children.Size()) {
+      auto it = m_children.end();
+      do {
+        it--;
+        if (fn(*winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)))
+          return true;
+      } while (it != m_children.begin());
     }
   }
   return false;

@@ -106,7 +106,10 @@ facebook::react::Props::Shared AbiComponentDescriptor::cloneProps(
       rawProps);
   auto userProps =
       winrt::get_self<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder>(m_builder)
-          ->CreateProps(nullptr);
+          ->CreateProps(
+              nullptr,
+              props ? static_cast<winrt::Microsoft::ReactNative::implementation::AbiProps const &>(*props).UserProps()
+                    : nullptr);
   shadowNodeProps->SetUserProps(userProps);
 
   rawProps.iterateOverValues(

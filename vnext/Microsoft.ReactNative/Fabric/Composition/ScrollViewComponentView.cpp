@@ -1108,9 +1108,9 @@ void ScrollViewComponentView::StartBringIntoView(
         options.TargetRect->origin.y > m_scrollVisual.ScrollPosition().y) {
       needsScroll = true;
       if (options.TargetRect->size.height > viewerHeight) {
-        scrollToVertical = options.TargetRect->origin.y + options.VerticalOffset;
+        scrollToVertical = options.TargetRect->origin.y + options.VerticalOffset * m_layoutMetrics.pointScaleFactor;
       } else {
-        scrollToVertical = (targetBottom - viewerHeight) + options.VerticalOffset;
+        scrollToVertical = (targetBottom - viewerHeight) + options.VerticalOffset * m_layoutMetrics.pointScaleFactor;
       }
       // Scroll Up
     } else if (
@@ -1118,9 +1118,9 @@ void ScrollViewComponentView::StartBringIntoView(
         targetBottom < (m_scrollVisual.ScrollPosition().y + viewerHeight)) {
       needsScroll = true;
       if (options.TargetRect->size.height > viewerHeight) {
-        scrollToVertical = targetBottom - viewerHeight - options.VerticalOffset;
+        scrollToVertical = targetBottom - viewerHeight - options.VerticalOffset * m_layoutMetrics.pointScaleFactor;
       } else {
-        scrollToVertical = options.TargetRect->origin.y - options.VerticalOffset;
+        scrollToVertical = options.TargetRect->origin.y - options.VerticalOffset * m_layoutMetrics.pointScaleFactor;
       }
     }
   } else {
@@ -1134,9 +1134,9 @@ void ScrollViewComponentView::StartBringIntoView(
         options.TargetRect->origin.x > m_scrollVisual.ScrollPosition().x) {
       needsScroll = true;
       if (options.TargetRect->size.width > viewerWidth) {
-        scrollToHorizontal = options.TargetRect->origin.x + options.HorizontalOffset;
+        scrollToHorizontal = options.TargetRect->origin.x + options.HorizontalOffset * m_layoutMetrics.pointScaleFactor;
       } else {
-        scrollToHorizontal = (targetRight - viewerWidth) + options.HorizontalOffset;
+        scrollToHorizontal = (targetRight - viewerWidth) + options.HorizontalOffset * m_layoutMetrics.pointScaleFactor;
       }
       // Scroll Left
     } else if (
@@ -1144,9 +1144,9 @@ void ScrollViewComponentView::StartBringIntoView(
         targetRight < (m_scrollVisual.ScrollPosition().x + viewerWidth)) {
       needsScroll = true;
       if (options.TargetRect->size.width > viewerWidth) {
-        scrollToHorizontal = targetRight - viewerWidth - options.HorizontalOffset;
+        scrollToHorizontal = targetRight - viewerWidth - options.HorizontalOffset * m_layoutMetrics.pointScaleFactor;
       } else {
-        scrollToHorizontal = options.TargetRect->origin.x - options.HorizontalOffset;
+        scrollToHorizontal = options.TargetRect->origin.x - options.HorizontalOffset * m_layoutMetrics.pointScaleFactor;
       }
     }
   } else {

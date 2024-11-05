@@ -937,7 +937,10 @@ void DrawingIsland::Window_OnStateChanged(winrt::ContentIslandEnvironment const 
 REACT_STRUCT(DrawingIslandComponentProps)
 struct DrawingIslandComponentProps
     : winrt::implements<DrawingIslandComponentProps, winrt::Microsoft::ReactNative::IComponentProps> {
-  DrawingIslandComponentProps(winrt::Microsoft::ReactNative::ViewProps props) : m_props(props) {}
+  DrawingIslandComponentProps(
+      winrt::Microsoft::ReactNative::ViewProps props,
+      const winrt::Microsoft::ReactNative::IComponentProps &)
+      : m_props(props) {}
 
   void SetProp(uint32_t hash, winrt::hstring propName, winrt::Microsoft::ReactNative::IJSValueReader value) noexcept {
     winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
@@ -953,8 +956,9 @@ void RegisterDrawingIslandComponentView(winrt::Microsoft::ReactNative::IReactPac
   packageBuilder.as<winrt::Microsoft::ReactNative::IReactPackageBuilderFabric>().AddViewComponent(
       L"CustomXamlComponentWithYogaLayout",
       [](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
-        builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props) noexcept {
-          return winrt::make<winrt::PlaygroundApp::implementation::DrawingIslandComponentProps>(props);
+        builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props,
+                                  const winrt::Microsoft::ReactNative::IComponentProps &cloneFrom) noexcept {
+          return winrt::make<winrt::PlaygroundApp::implementation::DrawingIslandComponentProps>(props, cloneFrom);
         });
         auto compBuilder =
             builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
