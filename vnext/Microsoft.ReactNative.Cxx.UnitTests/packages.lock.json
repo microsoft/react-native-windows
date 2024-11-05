@@ -4,9 +4,9 @@
     "native,Version=v0.0": {
       "Microsoft.googletest.v140.windesktop.msvcstl.static.rt-dyn": {
         "type": "Direct",
-        "requested": "[1.8.1.4, )",
-        "resolved": "1.8.1.4",
-        "contentHash": "1vJEC/sW3Y/H6W3T1xqOHd7phQru847pQHSWl+Hgt/tPJU776m7PUJeShjRjIq/kgnW+9mwoyMk38eZZsfzo9w=="
+        "requested": "[1.8.1.7, )",
+        "resolved": "1.8.1.7",
+        "contentHash": "FxNwT4YpsGdqforqFSTGc5f/e+qfRJ+1wf5G1w0nEEkT5pr5M95E5+fOuswpPUGXPZIXM+M7BSVGnCRcQZjomA=="
       },
       "Microsoft.Windows.CppWinRT": {
         "type": "Direct",
