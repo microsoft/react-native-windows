@@ -8,6 +8,7 @@
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 #include <react/renderer/components/view/ViewEventEmitter.h>
 #include <react/renderer/components/view/ViewProps.h>
+#include "BorderPrimitive.h"
 #include "CompositionHelpers.h"
 
 #include "Composition.ComponentView.g.h"
@@ -23,8 +24,6 @@ struct ComponentView : public ComponentViewT<
                            ComponentView,
                            winrt::Microsoft::ReactNative::implementation::ComponentView,
                            winrt::Microsoft::ReactNative::Composition::Experimental::IInternalComponentView> {
-  static constexpr size_t SpecialBorderLayerCount = 8;
-
   ComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
@@ -56,6 +55,7 @@ struct ComponentView : public ComponentViewT<
   void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
   bool CapturePointer(const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer) noexcept;
   void ReleasePointerCapture(const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer) noexcept;
+  void SetViewFeatures(ComponentViewFeatures viewFeatures) noexcept;
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
@@ -123,39 +123,33 @@ struct ComponentView : public ComponentViewT<
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compContext;
   comp::CompositionPropertySet m_centerPropSet{nullptr};
   facebook::react::SharedViewEventEmitter m_eventEmitter;
-  bool m_needsBorderUpdate{false};
-  bool m_hasTransformMatrixFacade{false};
-  bool m_enableFocusVisual{false};
-  uint8_t m_numBorderVisuals{0};
 
  private:
-  void updateBorderProps(
-      const facebook::react::ViewProps &oldViewProps,
-      const facebook::react::ViewProps &newViewProps) noexcept;
-  void updateBorderLayoutMetrics(
+  void updateFocusLayoutMetrics(facebook::react::LayoutMetrics const &layoutMetrics) noexcept;
+  void updateClippingPath(
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
-  void finalizeBorderUpdates(
+  void finalizeFocusVisual(
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
-  bool TryUpdateSpecialBorderLayers(
-      winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
-      std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
-          &spBorderVisuals,
-      facebook::react::LayoutMetrics const &layoutMetrics,
-      const facebook::react::ViewProps &viewProps) noexcept;
-  std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
-  FindSpecialBorderLayers() const noexcept;
   void UpdateCenterPropertySet() noexcept;
   void FinalizeTransform(
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
+  facebook::react::LayoutMetrics focusLayoutMetrics(bool inner) const noexcept;
+  facebook::react::BorderMetrics focusBorderMetrics(bool inner, const facebook::react::LayoutMetrics &layoutMetrics)
+      const noexcept;
 
-  bool m_FinalizeTransform{false};
-  bool m_tooltipTracked{false};
+  bool m_hasTransformMatrixFacade : 1 {false};
+  bool m_showingFocusVisual : 1 {false};
+  bool m_FinalizeTransform : 1 {false};
+  bool m_tooltipTracked : 1 {false};
   ComponentViewFeatures m_flags;
   void showFocusVisual(bool show) noexcept;
-  winrt::Microsoft::ReactNative::Composition::Experimental::IFocusVisual m_focusVisual{nullptr};
+  std::shared_ptr<BorderPrimitive> m_borderPrimitive;
+  std::shared_ptr<BorderPrimitive> m_focusInnerPrimitive;
+  std::shared_ptr<BorderPrimitive> m_focusOuterPrimitive;
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_focusVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_outerVisual{nullptr};
   winrt::event<winrt::Windows::Foundation::EventHandler<winrt::IInspectable>> m_themeChangedEvent;
 };
@@ -169,6 +163,7 @@ struct ViewComponentView : public ViewComponentViewT<
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
+  virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual VisualToMountChildrenInto() noexcept;
   void MountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;

@@ -1,8 +1,27 @@
 # Change Log - react-native-windows
 
-This log was last generated on Thu, 24 Oct 2024 20:02:32 GMT and should not be manually modified.
+This log was last generated on Tue, 05 Nov 2024 21:10:08 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.24
+
+Tue, 05 Nov 2024 21:10:08 GMT
+
+### Patches
+
+- Update Provider Guardrails (34109996+chiaramooney@users.noreply.github.com)
+- Implement accessibilityState checked (34109996+chiaramooney@users.noreply.github.com)
+- adds default modal that hosts fabric components (tatianakapos@microsoft.com)
+- Cleanup ReactNativeAppBuilder and ReactNativeWin32App (jthysell@microsoft.com)
+- Focus should notify island host when tab loop wraps to give host oportunity to take focus (30809111+acoates-ms@users.noreply.github.com)
+- Fix issue with prop cloning with custom native props (53619745+rnbot@users.noreply.github.com)
+- Default scroll to bring a component into view should have padding around the viewport (30809111+acoates-ms@users.noreply.github.com)
+- Add very basic box-shadow support (30809111+acoates-ms@users.noreply.github.com)
+- Introduced autocapitalize prop in TextInput (14967941+danielayala94@users.noreply.github.com)
+- Update focus visuals to use cornerRadius and inner/outer strokes. (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.74.8
+- Bump @react-native-windows/codegen to v0.74.5
 
 ## 0.74.23
 

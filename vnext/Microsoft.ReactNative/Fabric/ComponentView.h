@@ -37,11 +37,11 @@ struct BringIntoViewOptions {
   bool AnimationDesired{false};
   // NaN will bring the element fully into view aligned to the nearest edge of the viewport
   float HorizontalAlignmentRatio{std::numeric_limits<float>::quiet_NaN()};
-  float HorizontalOffset{0};
+  float HorizontalOffset{20};
   std::optional<facebook::react::Rect> TargetRect;
   // NaN will bring the element fully into view aligned to the nearest edge of the viewport
   float VerticalAlignmentRatio{std::numeric_limits<float>::quiet_NaN()};
-  float VerticalOffset{0};
+  float VerticalOffset{20};
 };
 
 struct LayoutMetricsChangedArgs : public LayoutMetricsChangedArgsT<LayoutMetricsChangedArgs> {
@@ -113,6 +113,7 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   virtual void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept;
   void MarkAsCustomComponent() noexcept;
   virtual void onMounted() noexcept;
+  bool isMounted() noexcept;
   virtual void onUnmounted() noexcept;
   void onDestroying() noexcept;
 
