@@ -135,7 +135,7 @@ steps:
       parameters:
         package: ..\testcli
         feature: UseHermes
-        value: ${{ not(parameters.UseChakra) }}
+        value: false
 
   - ${{ if or(endsWith(parameters.template, '-app'), and(endsWith(parameters.template, '-lib'), not(startsWith(parameters.template, 'old')))) }}:
     - powershell: |
@@ -186,6 +186,7 @@ steps:
       ${{ else }}:
         workingDirectory: $(Agent.BuildDirectory)\testcli
       restoreLockedMode: false # Allow new lockfile to be created
+      moreMSBuildProps: ',BundleCommandTimeoutMs=60000' # Reduce bundle timeout to 1m
 
   - template: upload-build-logs.yml
     parameters:
