@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 05 Nov 2024 06:27:17 GMT",
+      "version": "0.0.0-canary.887",
+      "tag": "react-native-windows_v0.0.0-canary.887",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "914b6b7261a9299caa5b4cb008f1d0ba130f3b77",
+            "comment": "Add timeout to JS bundle creation in release builds"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 03 Nov 2024 05:28:15 GMT",
       "version": "0.0.0-canary.886",
       "tag": "react-native-windows_v0.0.0-canary.886",

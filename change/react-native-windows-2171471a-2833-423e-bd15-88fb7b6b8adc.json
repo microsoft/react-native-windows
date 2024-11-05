@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Add timeout to JS bundle creation in release builds",
+  "comment": "Update to the latest Microsoft.NETCore.UniversalWindowsPlatform",
   "packageName": "react-native-windows",
   "email": "jthysell@microsoft.com",
   "dependentChangeType": "patch"
