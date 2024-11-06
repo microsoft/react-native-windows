@@ -38,6 +38,9 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
 
   RootComponentView *rootComponentView() const noexcept override;
 
+  winrt::Windows::Foundation::Point ConvertScreenToLocal(winrt::Windows::Foundation::Point pt) noexcept;
+  winrt::Windows::Foundation::Point ConvertLocalToScreen(winrt::Windows::Foundation::Point pt) noexcept;
+
   winrt::Microsoft::UI::Content::ContentIsland parentContentIsland() noexcept;
 
   // Index that visuals can be inserted into OuterVisual for debugging UI

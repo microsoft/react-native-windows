@@ -237,14 +237,20 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Converts screen coordinates of a specified point to the client coordinates
   BOOL TxScreenToClient(LPPOINT lppt) override {
-    assert(false);
-    return {};
+    winrt::Windows::Foundation::Point pt{static_cast<float>(lppt->x), static_cast<float>(lppt->y)};
+    auto localpt = m_outer->ScreenToLocal(pt);
+    lppt->x = static_cast<LONG>(localpt.X);
+    lppt->y = static_cast<LONG>(localpt.Y);
+    return true;
   }
 
   //@cmember Converts the client coordinates of a specified point to screen coordinates
   BOOL TxClientToScreen(LPPOINT lppt) override {
-    assert(false);
-    return {};
+    winrt::Windows::Foundation::Point pt{static_cast<float>(lppt->x), static_cast<float>(lppt->y)};
+    auto screenpt = m_outer->LocalToScreen(pt);
+    lppt->x = static_cast<LONG>(screenpt.X);
+    lppt->y = static_cast<LONG>(screenpt.Y);
+    return true;
   }
 
   //@cmember Request host to activate text services

@@ -64,8 +64,10 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   CompositionHwndHost.as(spunk);
 
   // get the root hwnd
-  auto roothwnd = reinterpret_cast<HWND>(
-      winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(m_context.Properties().Handle()));
+  m_prevWindowID =
+      winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(m_reactContext.Properties().Handle());
+
+  auto roothwnd = GetHwndForParenting();
 
   m_hwnd = CreateWindow(
       c_modalWindowClassName,

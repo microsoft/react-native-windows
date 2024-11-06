@@ -356,6 +356,14 @@ RECT ComponentView::getClientRect() const noexcept {
   return {};
 }
 
+winrt::Windows::Foundation::Point ComponentView::ScreenToLocal(winrt::Windows::Foundation::Point pt) noexcept {
+  return rootComponentView()->ConvertScreenToLocal(pt);
+}
+
+winrt::Windows::Foundation::Point ComponentView::LocalToScreen(winrt::Windows::Foundation::Point pt) noexcept {
+  return rootComponentView()->ConvertLocalToScreen(pt);
+}
+
 // The offset from this elements parent to its children (accounts for things like scroll position)
 facebook::react::Point ComponentView::getClientOffset() const noexcept {
   assert(false);
