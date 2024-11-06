@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 06 Nov 2024 21:53:05 GMT",
+      "version": "0.74.25",
+      "tag": "react-native-windows_v0.74.25",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2e28f8d8f0aede05636f66371fbe9cf2565ef07b",
+            "comment": "Update to the latest Microsoft.NETCore.UniversalWindowsPlatform"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "15286b6547fe52ab5ae6d98e442a52ca1627d0e9",
+            "comment": "Export MS.RN.Color ctor in Office dll"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 05 Nov 2024 21:10:08 GMT",
       "version": "0.74.24",
       "tag": "react-native-windows_v0.74.24",

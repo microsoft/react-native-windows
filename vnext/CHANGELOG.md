@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 05 Nov 2024 21:10:08 GMT and should not be manually modified.
+This log was last generated on Wed, 06 Nov 2024 21:53:05 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.25
+
+Wed, 06 Nov 2024 21:53:05 GMT
+
+### Patches
+
+- Update to the latest Microsoft.NETCore.UniversalWindowsPlatform (jthysell@microsoft.com)
+- Export MS.RN.Color ctor in Office dll (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.24
 
