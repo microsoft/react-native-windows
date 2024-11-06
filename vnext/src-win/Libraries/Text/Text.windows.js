@@ -257,7 +257,7 @@ const Text: component(
         accessible == null
           ? onPress != null || onLongPress != null
           : accessible,
-      default: accessible !== false,
+      default: accessible !== false, // [Windows #13996 - default value is accessible !== false]
     });
 
     let nativeText = null;
