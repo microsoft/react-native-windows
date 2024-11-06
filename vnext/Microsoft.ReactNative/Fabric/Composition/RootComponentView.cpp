@@ -248,6 +248,26 @@ float RootComponentView::FontSizeMultiplier() const noexcept {
   return 1.0f;
 }
 
+winrt::Windows::Foundation::Point RootComponentView::ConvertScreenToLocal(
+    winrt::Windows::Foundation::Point pt) noexcept {
+  if (auto rootView = m_wkRootView.get()) {
+    return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)
+        ->ConvertScreenToLocal(pt);
+  }
+  assert(false);
+  return {};
+}
+
+winrt::Windows::Foundation::Point RootComponentView::ConvertLocalToScreen(
+    winrt::Windows::Foundation::Point pt) noexcept {
+  if (auto rootView = m_wkRootView.get()) {
+    return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)
+        ->ConvertLocalToScreen(pt);
+  }
+  assert(false);
+  return {};
+}
+
 winrt::Microsoft::UI::Content::ContentIsland RootComponentView::parentContentIsland() noexcept {
   if (auto rootView = m_wkRootView.get()) {
     return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->Island();
