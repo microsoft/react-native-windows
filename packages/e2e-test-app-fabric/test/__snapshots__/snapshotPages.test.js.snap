@@ -62515,6 +62515,80 @@ exports[`snapshotAllPages Switch 8`] = `
 
 exports[`snapshotAllPages Text 1`] = `
 <View
+  testID="background-border-width"
+>
+  <Text
+    style={
+      {
+        "backgroundColor": "#F000F0",
+        "padding": 10,
+      }
+    }
+  >
+    Text with background color only
+  </Text>
+  <Text
+    style={
+      {
+        "backgroundColor": "#F000F0",
+        "borderRadius": 10,
+        "marginTop": 10,
+        "padding": 10,
+      }
+    }
+  >
+    Text with background color and uniform borderRadii
+  </Text>
+  <Text
+    style={
+      {
+        "backgroundColor": "#F000F0",
+        "borderBottomLeftRadius": 10,
+        "borderBottomRightRadius": 20,
+        "borderTopLeftRadius": 20,
+        "borderTopRightRadius": 10,
+        "marginTop": 10,
+        "padding": 10,
+      }
+    }
+  >
+    Text with background color and non-uniform borders
+  </Text>
+  <Text
+    style={
+      {
+        "borderBottomLeftRadius": 10,
+        "borderBottomRightRadius": 20,
+        "borderColor": "red",
+        "borderTopLeftRadius": 20,
+        "borderTopRightRadius": 10,
+        "borderWidth": 1,
+        "marginTop": 10,
+        "padding": 10,
+      }
+    }
+  >
+    Text with borderWidth
+  </Text>
+  <Text
+    style={
+      {
+        "backgroundColor": "#00AA00",
+        "borderColor": "blue",
+        "borderRadius": 10,
+        "borderWidth": 2,
+        "marginTop": 10,
+        "padding": 10,
+      }
+    }
+  >
+    Text with background AND borderWidth
+  </Text>
+</View>
+`;
+
+exports[`snapshotAllPages Text 2`] = `
+<View
   testID="text-ellipsize"
 >
   <Text
@@ -62650,7 +62724,7 @@ exports[`snapshotAllPages Text 1`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 2`] = `
+exports[`snapshotAllPages Text 3`] = `
 [
   <View>
     <View
@@ -62953,7 +63027,7 @@ exports[`snapshotAllPages Text 2`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 3`] = `
+exports[`snapshotAllPages Text 4`] = `
 <Text
   style={
     {
@@ -62966,7 +63040,7 @@ exports[`snapshotAllPages Text 3`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 4`] = `
+exports[`snapshotAllPages Text 5`] = `
 [
   <Text
     android_hyphenationFrequency="normal"
@@ -63028,7 +63102,7 @@ exports[`snapshotAllPages Text 4`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 5`] = `
+exports[`snapshotAllPages Text 6`] = `
 <Text
   style={
     {
@@ -63041,7 +63115,7 @@ exports[`snapshotAllPages Text 5`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 6`] = `
+exports[`snapshotAllPages Text 7`] = `
 <View>
   <Text
     onPress={[Function]}
@@ -64568,7 +64642,7 @@ exports[`snapshotAllPages Text 6`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 7`] = `
+exports[`snapshotAllPages Text 8`] = `
 [
   <Text
     style={
@@ -64640,7 +64714,7 @@ exports[`snapshotAllPages Text 7`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 8`] = `
+exports[`snapshotAllPages Text 9`] = `
 <View
   style={
     {
@@ -64797,7 +64871,7 @@ exports[`snapshotAllPages Text 8`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 9`] = `
+exports[`snapshotAllPages Text 10`] = `
 <View
   style={
     {
@@ -64898,7 +64972,7 @@ exports[`snapshotAllPages Text 9`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 10`] = `
+exports[`snapshotAllPages Text 11`] = `
 [
   <Text
     style={
@@ -64922,7 +64996,7 @@ exports[`snapshotAllPages Text 10`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 11`] = `
+exports[`snapshotAllPages Text 12`] = `
 [
   <Text
     style={
@@ -64946,7 +65020,7 @@ exports[`snapshotAllPages Text 11`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 12`] = `
+exports[`snapshotAllPages Text 13`] = `
 [
   <Text
     style={
@@ -65131,7 +65205,7 @@ exports[`snapshotAllPages Text 12`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 13`] = `
+exports[`snapshotAllPages Text 14`] = `
 [
   <Text
     style={
@@ -65154,7 +65228,7 @@ exports[`snapshotAllPages Text 13`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 14`] = `
+exports[`snapshotAllPages Text 15`] = `
 <Text
   style={
     {
@@ -65167,7 +65241,7 @@ exports[`snapshotAllPages Text 14`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 15`] = `
+exports[`snapshotAllPages Text 16`] = `
 [
   <Text
     style={
@@ -65237,7 +65311,7 @@ exports[`snapshotAllPages Text 15`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 16`] = `
+exports[`snapshotAllPages Text 17`] = `
 [
   <Text
     onPress={[Function]}
@@ -65503,7 +65577,7 @@ exports[`snapshotAllPages Text 16`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 17`] = `
+exports[`snapshotAllPages Text 18`] = `
 <View
   testID="text-align"
 >
@@ -65554,7 +65628,7 @@ exports[`snapshotAllPages Text 17`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 18`] = `
+exports[`snapshotAllPages Text 19`] = `
 <View
   testID="text-unicode"
 >
@@ -65617,7 +65691,7 @@ exports[`snapshotAllPages Text 18`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 19`] = `
+exports[`snapshotAllPages Text 20`] = `
 <Text>
   A 
   generated
@@ -65627,7 +65701,7 @@ exports[`snapshotAllPages Text 19`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 20`] = `
+exports[`snapshotAllPages Text 21`] = `
 <View
   testID="text-line-height"
 >
@@ -65659,7 +65733,7 @@ exports[`snapshotAllPages Text 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 21`] = `
+exports[`snapshotAllPages Text 22`] = `
 <View
   testID="text-letter-spacing"
 >
@@ -65756,9 +65830,9 @@ exports[`snapshotAllPages Text 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 22`] = `<Text />`;
+exports[`snapshotAllPages Text 23`] = `<Text />`;
 
-exports[`snapshotAllPages Text 23`] = `
+exports[`snapshotAllPages Text 24`] = `
 <View>
   <Text
     style={
@@ -65803,7 +65877,7 @@ exports[`snapshotAllPages Text 23`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 24`] = `
+exports[`snapshotAllPages Text 25`] = `
 <View
   testID="text-background-color"
 >
@@ -65864,7 +65938,7 @@ exports[`snapshotAllPages Text 24`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 25`] = `
+exports[`snapshotAllPages Text 26`] = `
 [
   <View
     style={
@@ -65925,7 +65999,7 @@ exports[`snapshotAllPages Text 25`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 26`] = `
+exports[`snapshotAllPages Text 27`] = `
 [
   <Text
     numberOfLines={1}
@@ -65993,7 +66067,7 @@ exports[`snapshotAllPages Text 26`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 27`] = `
+exports[`snapshotAllPages Text 28`] = `
 [
   <Text>
     By default, text will respect Text Size accessibility setting on Android. It means that all font sizes will be increased or decreased depending on the value of the Text Size setting in the OS's Settings app.
@@ -66037,7 +66111,7 @@ exports[`snapshotAllPages Text 27`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 28`] = `
+exports[`snapshotAllPages Text 29`] = `
 <Text
   selectable={true}
   testID="text-selectable"
@@ -66046,7 +66120,7 @@ exports[`snapshotAllPages Text 28`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 29`] = `
+exports[`snapshotAllPages Text 30`] = `
 <Text
   selectable={true}
   selectionColor="orange"
@@ -66056,7 +66130,7 @@ exports[`snapshotAllPages Text 29`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 30`] = `
+exports[`snapshotAllPages Text 31`] = `
 <Text
   style={
     {
@@ -66075,7 +66149,7 @@ exports[`snapshotAllPages Text 30`] = `
 </Text>
 `;
 
-exports[`snapshotAllPages Text 31`] = `
+exports[`snapshotAllPages Text 32`] = `
 [
   <Text
     numberOfLines={1}
@@ -66123,7 +66197,7 @@ exports[`snapshotAllPages Text 31`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 32`] = `
+exports[`snapshotAllPages Text 33`] = `
 <View
   testID="font-variants"
 >
@@ -66209,7 +66283,7 @@ exports[`snapshotAllPages Text 32`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 33`] = `
+exports[`snapshotAllPages Text 34`] = `
 [
   <View
     style={
@@ -66284,7 +66358,7 @@ exports[`snapshotAllPages Text 33`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 34`] = `
+exports[`snapshotAllPages Text 35`] = `
 <View
   testID="text-transform"
 >
@@ -66431,7 +66505,7 @@ exports[`snapshotAllPages Text 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 35`] = `
+exports[`snapshotAllPages Text 36`] = `
 [
   <Text
     dataDetectorType="phoneNumber"
@@ -66461,7 +66535,7 @@ exports[`snapshotAllPages Text 35`] = `
 ]
 `;
 
-exports[`snapshotAllPages Text 36`] = `
+exports[`snapshotAllPages Text 37`] = `
 <View>
   <Text
     style={
@@ -66764,7 +66838,7 @@ exports[`snapshotAllPages Text 36`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 37`] = `
+exports[`snapshotAllPages Text 38`] = `
 <View>
   <Text
     style={
@@ -66778,7 +66852,7 @@ exports[`snapshotAllPages Text 37`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 38`] = `
+exports[`snapshotAllPages Text 39`] = `
 <View>
   <Text
     style={
@@ -66827,7 +66901,7 @@ exports[`snapshotAllPages Text 38`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 39`] = `
+exports[`snapshotAllPages Text 40`] = `
 <View>
   <Text
     style={
@@ -66847,7 +66921,7 @@ exports[`snapshotAllPages Text 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 40`] = `
+exports[`snapshotAllPages Text 41`] = `
 <View>
   <Text
     style={
@@ -66863,7 +66937,7 @@ exports[`snapshotAllPages Text 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 41`] = `
+exports[`snapshotAllPages Text 42`] = `
 <View
   accessible={true}
   testID="text-accessibility"
@@ -66881,7 +66955,7 @@ exports[`snapshotAllPages Text 41`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 42`] = `
+exports[`snapshotAllPages Text 43`] = `
 <View
   accessibilityLabel="Border Example"
   accessible={true}
@@ -66958,7 +67032,7 @@ exports[`snapshotAllPages Text 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 43`] = `
+exports[`snapshotAllPages Text 44`] = `
 <View
   accessibilityLabel="Advanced Border Example"
   accessible={true}
@@ -67014,7 +67088,7 @@ exports[`snapshotAllPages Text 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 44`] = `
+exports[`snapshotAllPages Text 45`] = `
 <View
   testID="text-opacity"
 >
@@ -67121,7 +67195,7 @@ exports[`snapshotAllPages Text 44`] = `
 </View>
 `;
 
-exports[`snapshotAllPages Text 45`] = `
+exports[`snapshotAllPages Text 46`] = `
 <View
   accessible={true}
   testID="text-height-width"
@@ -79183,6 +79257,73 @@ exports[`snapshotAllPages View 20`] = `
 
 exports[`snapshotAllPages View 21`] = `
 <View
+  testID="view-test-box-sizing"
+>
+  <Text>
+    Content box 50x25
+  </Text>
+  <View
+    style={
+      [
+        {
+          "backgroundColor": "green",
+          "borderWidth": 5,
+          "height": 25,
+          "margin": 10,
+          "padding": 5,
+          "width": 50,
+        },
+        {
+          "boxSizing": "content-box",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "red",
+          "height": "100%",
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+  <Text>
+    Border box 50x25
+  </Text>
+  <View
+    style={
+      [
+        {
+          "backgroundColor": "green",
+          "borderWidth": 5,
+          "height": 25,
+          "margin": 10,
+          "padding": 5,
+          "width": 50,
+        },
+        {
+          "boxSizing": "border-box",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "backgroundColor": "red",
+          "height": "100%",
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages View 22`] = `
+<View
   accessibilityLabel="NativeID Example"
   accessible={true}
   nativeID="native-id-view"
@@ -79194,7 +79335,7 @@ exports[`snapshotAllPages View 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 22`] = `
+exports[`snapshotAllPages View 23`] = `
 <View
   accessibilityActions={
     [
@@ -79262,7 +79403,7 @@ exports[`snapshotAllPages View 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 23`] = `
+exports[`snapshotAllPages View 24`] = `
 <View
   accessibilityLabel="Shadow Example"
   accessible={true}
@@ -79283,7 +79424,7 @@ exports[`snapshotAllPages View 23`] = `
 />
 `;
 
-exports[`snapshotAllPages View 24`] = `
+exports[`snapshotAllPages View 25`] = `
 <View
   accessibilityLabel="HitSlop Example"
   accessible={true}
@@ -79308,7 +79449,7 @@ exports[`snapshotAllPages View 24`] = `
 />
 `;
 
-exports[`snapshotAllPages View 25`] = `
+exports[`snapshotAllPages View 26`] = `
 <View
   accessibilityLabel="Tooltip Example"
   accessible={true}
