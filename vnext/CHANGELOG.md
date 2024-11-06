@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Tue, 05 Nov 2024 06:27:17 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 06 Nov 2024 06:26:31 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.888
+
+Wed, 06 Nov 2024 06:26:31 GMT
+
+### Changes
+
+- Update to the latest Microsoft.NETCore.UniversalWindowsPlatform (jthysell@microsoft.com)
 
 ## 0.0.0-canary.887
 
