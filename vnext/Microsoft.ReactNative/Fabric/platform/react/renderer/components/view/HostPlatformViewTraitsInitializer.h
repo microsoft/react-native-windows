@@ -9,7 +9,7 @@
 namespace facebook::react::HostPlatformViewTraitsInitializer {
 
 inline bool formsStackingContext(ViewProps const &viewProps) {
-  return !keyDownEvents.empty() || !keyUpEvents.empty() || viewProps.tooltip;
+  return !viewProps.keyDownEvents.empty() || !viewProps.keyUpEvents.empty() || viewProps.tooltip;
 }
 
 inline bool formsView(ViewProps const &viewProps) {
