@@ -360,6 +360,29 @@ winrt::IInspectable ReactNativeIsland::GetUiaProvider() noexcept {
   return m_uiaProvider;
 }
 
+winrt::Windows::Foundation::Point ReactNativeIsland::ConvertScreenToLocal(
+    winrt::Windows::Foundation::Point pt) noexcept {
+  if (m_island) {
+    auto pp = m_island.CoordinateConverter().ConvertScreenToLocal(
+        winrt::Windows::Graphics::PointInt32{static_cast<int32_t>(pt.X), static_cast<int32_t>(pt.Y)});
+    return {static_cast<float>(pp.X), static_cast<float>(pp.Y)};
+  }
+  POINT p{static_cast<LONG>(pt.X), static_cast<LONG>(pt.Y)};
+  ScreenToClient(m_hwnd, &p);
+  return {static_cast<float>(p.x) / m_scaleFactor, static_cast<float>(p.y) / m_scaleFactor};
+}
+
+winrt::Windows::Foundation::Point ReactNativeIsland::ConvertLocalToScreen(
+    winrt::Windows::Foundation::Point pt) noexcept {
+  if (m_island) {
+    auto pp = m_island.CoordinateConverter().ConvertLocalToScreen(pt);
+    return {static_cast<float>(pp.X), static_cast<float>(pp.Y)};
+  }
+  POINT p{static_cast<LONG>(pt.X * m_scaleFactor), static_cast<LONG>(pt.Y * m_scaleFactor)};
+  ClientToScreen(m_hwnd, &p);
+  return {static_cast<float>(p.x), static_cast<float>(p.y)};
+}
+
 void ReactNativeIsland::SetWindow(uint64_t hwnd) noexcept {
   m_hwnd = reinterpret_cast<HWND>(hwnd);
 }
