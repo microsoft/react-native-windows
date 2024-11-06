@@ -78,7 +78,10 @@ jobs:
               parameters:
                 package: packages/e2e-test-app
                 feature: UseHermes
-                value: ${{ not(coalesce(matrix.UseChakra, false)) }}
+                ${{ if eq(matrix.UseChakra, true) }}:
+                  value: false
+                ${{ else }}:
+                  value: true
 
             - template: ../templates/run-windows-with-certificates.yml
               parameters:
