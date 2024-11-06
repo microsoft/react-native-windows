@@ -11,6 +11,7 @@
 #include <react/renderer/components/view/ViewProps.h>
 #include <react/renderer/core/LayoutMetrics.h>
 
+#include <ComponentView.Experimental.interop.h>
 #include <Fabric/Composition/Theme.h>
 #include <uiautomationcore.h>
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
@@ -77,7 +78,8 @@ struct UnmountChildComponentViewArgs : public UnmountChildComponentViewArgsT<Unm
   uint32_t m_index;
 };
 
-struct ComponentView : public ComponentViewT<ComponentView> {
+struct ComponentView
+    : public ComponentViewT<ComponentView, ::Microsoft::ReactNative::Composition::Experimental::IComponentViewInterop> {
   ComponentView(facebook::react::Tag tag, winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   virtual std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept;
@@ -105,6 +107,8 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   // returns true if the fn ever returned true
   bool runOnChildren(bool forward, Mso::Functor<bool(ComponentView &)> &fn) noexcept;
   virtual RECT getClientRect() const noexcept;
+  winrt::Windows::Foundation::Point ScreenToLocal(winrt::Windows::Foundation::Point pt) noexcept;
+  winrt::Windows::Foundation::Point LocalToScreen(winrt::Windows::Foundation::Point pt) noexcept;
   // The offset from this elements parent to its children (accounts for things like scroll position)
   virtual facebook::react::Point getClientOffset() const noexcept;
   virtual void onLosingFocus(const winrt::Microsoft::ReactNative::LosingFocusEventArgs &args) noexcept;
