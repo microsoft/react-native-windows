@@ -279,7 +279,7 @@ const Text: component(
         accessible == null
           ? onPress != null || onLongPress != null
           : accessible,
-      default: accessible,
+      default: accessible !== false,
     });
 
     let nativeText = null;
