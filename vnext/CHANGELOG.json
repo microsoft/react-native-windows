@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 07 Nov 2024 06:24:18 GMT",
+      "version": "0.0.0-canary.889",
+      "tag": "react-native-windows_v0.0.0-canary.889",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "346ba4e17efa3d1cf2481f7b998eb4de1ab8f073",
+            "comment": "Integrate 10/10"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f22d85a0779c93aec0d4bbe2b5d2679c42d1f82a",
+            "comment": "Export MS.RN.Color ctor in Office dll"
+          },
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "84761b7215027cd2977756bc6b2d70d5491eda7f",
+            "comment": "TextInput caret becomes visible on non-focused TextInputs on resize"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Nov 2024 06:26:31 GMT",
       "version": "0.0.0-canary.888",
       "tag": "react-native-windows_v0.0.0-canary.888",
