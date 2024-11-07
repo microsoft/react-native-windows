@@ -124,6 +124,7 @@ struct WindowsTextInputComponentView
   int m_cDrawBlock{0};
   bool m_needsRedraw{false};
   bool m_drawing{false};
+  bool m_hasFocus{false};
   bool m_clearTextOnSubmit{false};
   bool m_multiline{false};
   DWORD m_propBitsMask{0};
