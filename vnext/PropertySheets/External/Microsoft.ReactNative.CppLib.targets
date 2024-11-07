@@ -8,10 +8,10 @@
   Do not make any changes here unless it applies to ALL such projects.
 -->
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <ImportGroup Condition="'$(UseFabric)' == 'true'">
+  <ImportGroup Condition="'$(RnwNewArch)'=='true'">
     <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Composition.CppLib.targets" />
   </ImportGroup>
-  <ImportGroup Condition="'$(UseFabric)' != 'true'">
+  <ImportGroup Condition="'$(RnwNewArch)'!='true'">
     <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.CppLib.targets" />
   </ImportGroup>
 </Project>

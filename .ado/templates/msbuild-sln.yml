@@ -15,6 +15,7 @@ parameters:
   msbuildArguments: ''
   warnAsError: true
   oneESMode: false
+  parallelBuild: true
 
 steps:
   - powershell: |
@@ -36,7 +37,7 @@ steps:
       platform: ${{ parameters.buildPlatform }}
       configuration: ${{ parameters.buildConfiguration }}
       clean: false # Optional
-      maximumCpuCount: true
+      maximumCpuCount: ${{parameters.parallelBuild}}
       restoreNugetPackages: false # Optional
       createLogFile: true
       logFileVerbosity: detailed
