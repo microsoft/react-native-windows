@@ -67,11 +67,6 @@ exports[`Touchable Tests TouchableWithoutFeedback components should not give vis
             "Size": "904, 22",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
     ],
@@ -189,19 +184,9 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
                     "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -225,19 +210,9 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
                     "Size": "916, 19",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -249,11 +224,6 @@ exports[`Touchable Tests Touchables can be defined in a set using accessibilityP
           {
             "Offset": "0, 0, 0",
             "Size": "916, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -307,11 +277,6 @@ exports[`Touchable Tests Touchables can contain a Text component 1`] = `
             "Size": "224, 22",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
     ],
@@ -360,11 +325,6 @@ exports[`Touchable Tests Touchables can contain an Image component 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "50, 50",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -416,11 +376,6 @@ exports[`Touchable Tests Touchables can delay events 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "56, 19",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -478,11 +433,6 @@ exports[`Touchable Tests Touchables can enable a hit slop region 1`] = `
             "Size": "146, 20",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
     ],
@@ -535,11 +485,6 @@ exports[`Touchable Tests Touchables can register feedback events 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "56, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
