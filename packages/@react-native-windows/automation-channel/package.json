@@ -22,8 +22,14 @@
     "jsonrpc-lite": "^2.2.0"
   },
   "devDependencies": {
+<<<<<<< HEAD
     "@rnw-scripts/eslint-config": "1.2.27",
     "@rnw-scripts/just-task": "2.3.44",
+=======
+    "@react-native-community/cli": "15.0.0-alpha.2",
+    "@rnw-scripts/eslint-config": "1.2.30",
+    "@rnw-scripts/just-task": "2.3.47",
+>>>>>>> 6faf5685d4 (Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture (#14042))
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/find-up": "^4.0.0",
     "@types/node": "^18.0.0",
@@ -43,6 +49,11 @@
   ],
   "engines": {
     "node": ">= 18"
+<<<<<<< HEAD
   },
   "private": true
 }
+=======
+  }
+}
+>>>>>>> 6faf5685d4 (Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture (#14042))
