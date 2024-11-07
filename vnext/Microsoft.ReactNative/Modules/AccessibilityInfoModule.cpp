@@ -30,6 +30,11 @@ void AccessibilityInfo::isReduceMotionEnabled(std::function<void(bool)> const &o
   });
 }
 
+void AccessibilityInfo::isHighTextContrastEnabled(std::function<void(bool)> const &onSuccess) noexcept {
+  // TODO: implement
+  onSuccess(false);
+}
+
 void AccessibilityInfo::isTouchExplorationEnabled(std::function<void(bool)> const &onSuccess) noexcept {
   onSuccess(UiaClientsAreListening());
 }

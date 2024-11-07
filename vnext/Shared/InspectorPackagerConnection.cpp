@@ -78,7 +78,7 @@ struct InspectorProtocol {
     for (const facebook::react::jsinspector_modern::InspectorPage &page : pages) {
       folly::dynamic pageDyn = folly::dynamic::object;
       pageDyn["id"] = page.id;
-      pageDyn["title"] = page.title;
+      pageDyn["title"] = page.description;
       pageDyn["vm"] = page.vm;
 
       pageDyn["isLastBundleDownloadSuccess"] = bundleStatus.m_isLastDownloadSuccess;

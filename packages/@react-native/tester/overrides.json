@@ -1,25 +1,26 @@
 {
-  "baseVersion": "0.77.0-nightly-20241001-223e98cc4",
+  "baseVersion": "0.77.0-nightly-20241010-0d6908f4e",
   "overrides": [
     {
       "type": "copy",
       "directory": "js/assets",
       "baseDirectory": "packages/rn-tester/js/assets",
-      "baseHash": "0231cc3333fc491c6530739c43f7837c7cff7aeb",
+      "baseHash": "9499399c37a4cb1fabfd8db277153485c1f769f9",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "8d837becbbb8ef21afef3533a8f8b0a2c0f8fab1",
+      "baseHash": "5449c93e34459bdb1ef6ccc20e58b2b480474e47",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
-      "baseHash": "8679456302662e4ce453c6bb41740a8739d3b5f0",
+      "baseVersion": "0.77.0-nightly-20241008-40a4feb68",
+      "baseHash": "78c66578fd61f2d5275bb5d80b95bb12ea9f9a8a",
       "issue": 4054
     },
     {
@@ -124,7 +125,8 @@
       "type": "copy",
       "directory": "js/examples/Experimental",
       "baseDirectory": "packages/rn-tester/js/examples/Experimental",
-      "baseHash": "42ede921918c1af679048a0b7f6d575db40c1008",
+      "baseVersion": "0.77.0-nightly-20241008-40a4feb68",
+      "baseHash": "52ae47ac0833ef1ca25d1faff5ddb7a0ed739ec8",
       "issue": 4054
     },
     {
@@ -145,7 +147,7 @@
       "type": "copy",
       "directory": "js/examples/Image",
       "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseHash": "52c008e059a1385dc9a49b5f773ca1f1f4389b61",
+      "baseHash": "0571e9c660e4c98e48965fe394781b5851db3f97",
       "issue": 4054
     },
     {
@@ -257,7 +259,8 @@
       "type": "copy",
       "directory": "js/examples/Performance",
       "baseDirectory": "packages/rn-tester/js/examples/Performance",
-      "baseHash": "137f30e3d9a29dc4f0076d8e479b8daffdb79f08",
+      "baseVersion": "0.77.0-nightly-20241008-40a4feb68",
+      "baseHash": "2c332605adeebafdd69ab7de4b2bf24c05f5a0bc",
       "issue": 0
     },
     {
@@ -397,7 +400,8 @@
       "type": "copy",
       "directory": "js/examples/Text",
       "baseDirectory": "packages/rn-tester/js/examples/Text",
-      "baseHash": "528bba6e7f5938ec8c81c54471962883047e68f3",
+      "baseVersion": "0.77.0-nightly-20241008-40a4feb68",
+      "baseHash": "de75e9307939f43d15de38dc1225ab5e7f88ed9e",
       "issue": 4054
     },
     {
@@ -460,7 +464,8 @@
       "type": "copy",
       "directory": "js/examples/View",
       "baseDirectory": "packages/rn-tester/js/examples/View",
-      "baseHash": "f348591a6bbd8c0dca7bf64229ba256515c94231",
+      "baseVersion": "0.77.0-nightly-20241008-40a4feb68",
+      "baseHash": "ba536e488fd779585176f79ca2cdeb020d6e9de6",
       "issue": 4054
     },
     {
@@ -474,7 +479,7 @@
       "type": "copy",
       "directory": "js/examples/XHR",
       "baseDirectory": "packages/rn-tester/js/examples/XHR",
-      "baseHash": "b7dfda5f6ff304b4760e3eaa3db8d50ba2eee18f",
+      "baseHash": "08c153b4d63efa4404f0a307339d02beaa69759d",
       "issue": 4054
     },
     {

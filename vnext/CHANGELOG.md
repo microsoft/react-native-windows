@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 06 Nov 2024 06:26:31 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 07 Nov 2024 06:24:18 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.889
+
+Thu, 07 Nov 2024 06:24:18 GMT
+
+### Changes
+
+- Integrate 10/10 (yajurgrover24@gmail.com)
+- Export MS.RN.Color ctor in Office dll (30809111+acoates-ms@users.noreply.github.com)
+- TextInput caret becomes visible on non-focused TextInputs on resize (53619745+rnbot@users.noreply.github.com)
 
 ## 0.0.0-canary.888
 
