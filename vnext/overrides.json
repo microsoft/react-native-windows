@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241010-0d6908f4e",
+  "baseVersion": "0.77.0-nightly-20241020-e7a3f479f",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "0ef50a705dc56608e4a8bd11d3b0d3daedfc0012"
+      "baseHash": "d824685eb9983c3aecb6d8207eeb0312f3d5a743"
     },
     {
       "type": "derived",
@@ -207,7 +207,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "9c601d50675d25b9ff75b9ebe684f98a229416e3",
+      "baseHash": "2affb38652fbd0bf6bde8a36e9ec7592982f2eb6",
       "issue": 13172
     },
     {
@@ -221,7 +221,7 @@
       "type": "derived",
       "file": "src-win/index.windows.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "ad455e241e35ebd718a6304f3de9d04c1f9e4f2b"
+      "baseHash": "2c80856075b7979d9119fb5e2b4b66b43456c068"
     },
     {
       "type": "platform",
@@ -305,7 +305,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Button.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "e76f9ba2b411e43dbca14b7ce52bb429c8cab52d"
+      "baseHash": "e1464525e6950f773370855ccbe60217ef638613"
     },
     {
       "type": "platform",
@@ -355,7 +355,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Pressable/Pressable.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "77ec40a2f6a75280b170fe839813d8712c90fbfb"
+      "baseHash": "5f8baef36e1cbba73ff2c21b0ccbf310d125b334"
     },
     {
       "type": "patch",
@@ -379,7 +379,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "82f76803236afa08c99beb8545a2a7fa4940b653"
+      "baseHash": "87f676e0bfd031b3dd8c79cf78b64af3c525b151"
     },
     {
       "type": "patch",
@@ -404,13 +404,13 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableHighlight.js",
-      "baseHash": "61a20bbe5190cfdbb38949d3397808034afb46c9"
+      "baseHash": "3079fa1dd3a9fb070fb45de3e63d871a4f9854d2"
     },
     {
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableOpacity.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableOpacity.js",
-      "baseHash": "d23a9ecca6a82a2e0de2473a7ca7d8ad613053ef"
+      "baseHash": "fe76189a48b240c95e11a1916260b557521cee2d"
     },
     {
       "type": "patch",
@@ -429,7 +429,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/View.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "1905f72f4d202d466ea7d8ed4b36df0845f2c310"
+      "baseHash": "85d97fc0638ce73353898f67d0f891a86ee83f3f"
     },
     {
       "type": "derived",
@@ -476,7 +476,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Image/Image.windows.js",
       "baseFile": "packages/react-native/Libraries/Image/Image.ios.js",
-      "baseHash": "e5cd104f5060ad354072889937ea92d508a32490",
+      "baseHash": "a5abee6de7dca3cb043b834925de3f6f0443c738",
       "issue": 4590
     },
     {
@@ -572,7 +572,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.windows.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "b4810991f6c983f1f155327e8bca865cf771ae84"
+      "baseHash": "64cdf1c520112ead78e348bc306c208f212ac3c5"
     },
     {
       "type": "derived",
@@ -615,7 +615,6 @@
       "type": "copy",
       "file": "src-win/src/private/debugging/ReactDevToolsSettingsManager.windows.js",
       "baseFile": "packages/react-native/src/private/debugging/ReactDevToolsSettingsManager.android.js",
-      "baseVersion": "0.77.0-nightly-20241001-223e98cc4",
       "baseHash": "df41b76dc3d2df9455fae588748261d7b0a22d01"
     },
     {

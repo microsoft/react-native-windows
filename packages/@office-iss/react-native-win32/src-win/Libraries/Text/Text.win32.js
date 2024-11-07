@@ -143,7 +143,7 @@ const Text: component(
 
     // TODO: Move this processing to the view configuration.
     const _selectionColor =
-      selectionColor == null ? null : processColor(selectionColor);
+      selectionColor != null ? processColor(selectionColor) : undefined;
 
     let _style = style;
     if (__DEV__) {
@@ -248,8 +248,6 @@ const Text: component(
           accessibilityLevel={_accessibilityLevel} // Win32
           accessibilityPositionInSet={_accessibilityPositionInSet} // Win32
           accessibilitySetSize={_accessibilitySetSize} // Win32
-          isHighlighted={false}
-          isPressable={false}
           nativeID={_nativeID}
           numberOfLines={_numberOfLines}
           ref={forwardedRef}
@@ -328,7 +326,6 @@ const Text: component(
           allowFontScaling={allowFontScaling !== false}
           disabled={_disabled}
           ellipsizeMode={ellipsizeMode ?? 'tail'}
-          isHighlighted={false}
           nativeID={_nativeID}
           numberOfLines={_numberOfLines}
           ref={forwardedRef}

@@ -190,6 +190,8 @@ function translateParam(
   const paramType = param.type;
   switch (param.type) {
     case 'StringTypeAnnotation':
+    case 'StringLiteralTypeAnnotation':
+    case 'StringLiteralUnionTypeAnnotation':
       return options.cppStringType;
     case 'NumberTypeAnnotation':
     case 'FloatTypeAnnotation':
