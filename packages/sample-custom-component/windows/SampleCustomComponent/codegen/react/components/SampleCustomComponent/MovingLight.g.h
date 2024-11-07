@@ -4,10 +4,16 @@
  */
 #pragma once
 
-#include <JSValueComposition.h>
 #include <NativeModules.h>
+
+#ifdef RNW_NEW_ARCH
+#include <JSValueComposition.h>
+
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.UI.Composition.h>
+#endif // #ifdef RNW_NEW_ARCH
+
+#ifdef RNW_NEW_ARCH
 
 namespace winrt::SampleCustomComponent::Codegen {
 
@@ -231,3 +237,5 @@ void RegisterMovingLightNativeComponent(
 }
 
 } // namespace winrt::SampleCustomComponent::Codegen
+
+#endif // #ifdef RNW_NEW_ARCH

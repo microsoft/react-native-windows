@@ -31,10 +31,14 @@ const headerTemplate = `/*
  */
 #pragma once
 
-#include <JSValueComposition.h>
 #include <NativeModules.h>
+
+#ifdef RNW_NEW_ARCH
+#include <JSValueComposition.h>
+
 #include <winrt/Microsoft.ReactNative.Composition.h>
-#include <winrt/Microsoft.UI.Composition.h>`;
+#include <winrt/Microsoft.UI.Composition.h>
+#endif // #ifdef RNW_NEW_ARCH`;
 
 const propsTemplate = `REACT_STRUCT(::_PROPS_NAME_::)
 struct ::_PROPS_NAME_:: : winrt::implements<::_PROPS_NAME_::, winrt::Microsoft::ReactNative::IComponentProps> {
@@ -229,6 +233,8 @@ void Register::_COMPONENT_NAME_::NativeComponent(
 const fileTemplate = `
 ${headerTemplate}
 
+#ifdef RNW_NEW_ARCH
+
 namespace ::_NAMESPACE_:: {
 
 ::_COMPONENT_PROP_OBJECT_TYPES_::
@@ -240,6 +246,8 @@ namespace ::_NAMESPACE_:: {
 
 ::_COMPONENT_REGISTRATION_::
 } // namespace ::_NAMESPACE_::
+
+#endif // #ifdef RNW_NEW_ARCH
 `;
 
 function capitalizeFirstLetter(s: string) {

@@ -1,4 +1,17 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+#pragma once
+
 #include "pch.h"
+#include "resource.h"
+
+#include "DrawingIsland.g.h"
+
+#include "NativeModules.h"
+
+#include "codegen/react/components/SampleCustomComponent/DrawingIsland.g.h"
+
+#ifdef RNW_NEW_ARCH
 
 #include <strsafe.h>
 #include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
@@ -11,11 +24,6 @@
 #include <winrt/Microsoft.UI.interop.h>
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.UI.h>
-
-#include "../../codegen/react/components/SampleCustomComponent/DrawingIsland.g.h"
-
-#include "DrawingIsland.g.h"
-#include <NativeModules.h>
 
 namespace winrt {
 using namespace winrt::Windows::Foundation;
@@ -250,3 +258,5 @@ struct DrawingIsland : DrawingIslandT<DrawingIsland, implementation::DrawingIsla
 } // namespace winrt::SampleCustomComponent::factory_implementation
 
 void RegisterDrawingIslandComponentView(winrt::Microsoft::ReactNative::IReactPackageBuilder const &packageBuilder);
+
+#endif // #ifdef RNW_NEW_ARCH
