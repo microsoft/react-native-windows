@@ -165,6 +165,10 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Show the caret
   BOOL TxShowCaret(BOOL fShow) override {
+    // Only show the caret if we have focus
+    if (fShow && !m_outer->m_hasFocus) {
+      return false;
+    }
     m_outer->ShowCaret(m_outer->windowsTextInputProps().caretHidden ? false : fShow);
     return true;
   }
@@ -915,6 +919,7 @@ void WindowsTextInputComponentView::UnmountChildComponentView(
 
 void WindowsTextInputComponentView::onLostFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
+  m_hasFocus = false;
   Super::onLostFocus(args);
   if (m_textServices) {
     LRESULT lresult;
@@ -926,6 +931,7 @@ void WindowsTextInputComponentView::onLostFocus(
 
 void WindowsTextInputComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
+  m_hasFocus = true;
   Super::onGotFocus(args);
   if (m_textServices) {
     LRESULT lresult;
