@@ -1,9 +1,10 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 #include "pch.h"
 
 #include "MovingLight.h"
 
-#include "../../codegen/react/components/SampleCustomComponent/MovingLight.g.h"
-
+#ifdef RNW_NEW_ARCH
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Windows.UI.h>
@@ -102,3 +103,5 @@ void RegisterMovingLightNativeComponent(
 }
 
 } // namespace winrt::SampleCustomComponent
+
+#endif // #ifdef RNW_NEW_ARCH

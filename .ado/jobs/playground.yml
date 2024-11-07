@@ -183,6 +183,8 @@ jobs:
                   msbuildArgs:
                     /p:PackageCertificateKeyFile=$(Build.SourcesDirectory)\EncodedKey.pfx
                     /p:PackageCertificatePassword=${{ parameters.certificatePassword }}
+                ${{if eq(matrix.SolutionFile, 'Playground-Composition.sln')}}:
+                  parallelBuild: false # required to workaround issue #13599
 
             - ${{if and(false, endsWith(matrix.Name, 'Universal'), eq(matrix.BuildConfiguration, 'Debug')) }}: # Disabled as debugging doesn't work,remove false after issue is resolved, see https://github.com/microsoft/react-native-windows/issues/13543
               # Execute debug feature tests (skip this step for the Win32 Playground app and for release builds)

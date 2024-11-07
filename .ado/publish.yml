@@ -190,9 +190,6 @@ extends:
 
           - template: .ado/templates/run-compliance-prebuild.yml@self
 
-          - script: if not exist %USERPROFILE%\AppData\Roaming\npm (mkdir %USERPROFILE%\AppData\Roaming\npm)
-            displayName: Fix missing npm config
-
           - pwsh: |
               npx beachball check --verbose 2>&1 | Tee-Object -Variable beachballOutput
               $beachballErrors = $beachballOutput | Where-Object { $_ -match "ERROR: *"}

@@ -1,6 +1,13 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 #include "pch.h"
 
-#include <NativeModules.h>
+#include "DrawingIsland.h"
+
+#include "DrawingIsland.g.cpp"
+
+#ifdef RNW_NEW_ARCH
+
 #include <strsafe.h>
 #include <winrt/Microsoft.UI.Composition.SystemBackdrops.h>
 #include <winrt/Microsoft.UI.Composition.h>
@@ -10,10 +17,6 @@
 #include <winrt/Windows.System.h>
 #include <winrt/Windows.UI.Composition.h>
 #include <winrt/Windows.UI.h>
-
-#include "DrawingIsland.h"
-
-#include "DrawingIsland.g.cpp"
 
 namespace winrt {
 using namespace winrt::Windows::Foundation;
@@ -967,3 +970,5 @@ void RegisterDrawingIslandComponentView(winrt::Microsoft::ReactNative::IReactPac
             });
       });
 }
+
+#endif // #ifdef RNW_NEW_ARCH
