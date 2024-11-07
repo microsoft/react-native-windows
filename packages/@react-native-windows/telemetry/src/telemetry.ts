@@ -37,7 +37,8 @@ interface CommandInfo {
 }
 
 // 1DS instrumentation key
-const RNW_1DS_INSTRUMENTATION_KEY = ""
+const RNW_1DS_INSTRUMENTATION_KEY =
+  '49ff6d3ef12f4578a7b75a2573d9dba8-026332b2-2d50-452f-ad0d-50f921c97a9d-7145';
 
 // Environment variable to override the default setup string
 const ENV_SETUP_OVERRIDE = 'RNW_TELEMETRY_SETUP';
