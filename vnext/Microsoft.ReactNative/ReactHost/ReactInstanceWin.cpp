@@ -1269,7 +1269,12 @@ void ReactInstanceWin::OnJSError(const facebook::react::JsErrorHandler::ParsedEr
   auto errorCode = Mso::React::ReactErrorProvider().MakeErrorCode(Mso::React::ReactError{errorInfo.Message.c_str()});
 
   for (const facebook::react::JsErrorHandler::ParsedError::StackFrame &frame : error.stack) {
-    errorInfo.Callstack.push_back({frame.file, frame.methodName, frame.lineNumber, frame.column});
+    facebook::react::JsErrorHandler::ParsedError::StackFrame newFrame;
+    newFrame.file = frame.file;
+    newFrame.methodName = frame.methodName;
+    newFrame.lineNumber = frame.lineNumber;
+    newFrame.column = frame.column;
+    errorInfo.Callstack.push_back(newFrame);
   }
 
   errorInfo.Id = error.id;
