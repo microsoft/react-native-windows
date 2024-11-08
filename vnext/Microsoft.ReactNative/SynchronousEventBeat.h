@@ -16,7 +16,7 @@ class SynchronousEventBeat final : public facebook::react::EventBeat {
       facebook::react::RuntimeExecutor runtimeExecutor,
       std::shared_ptr<facebook::react::RuntimeScheduler> runtimeScheduler);
 
-  void beat(facebook::jsi::Runtime& runtime) const;
+  void beat(facebook::jsi::Runtime &runtime) const;
 
   void induce() const;
 
