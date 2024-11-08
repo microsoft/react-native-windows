@@ -3,10 +3,10 @@
 namespace Microsoft::ReactNative {
 
 AsynchronousEventBeat::AsynchronousEventBeat(
-    facebook::react::EventBeat::SharedOwnerBox const &ownerBox,
+    std::shared_ptr<facebook::react::EventBeat::OwnerBox> const ownerBox,
     const winrt::Microsoft::ReactNative::ReactContext &context,
     facebook::react::RuntimeExecutor runtimeExecutor)
-    : EventBeat(ownerBox), m_context(context), m_runtimeExecutor(runtimeExecutor) {}
+    : EventBeat(ownerBox, runtimeExecutor), m_context(context), m_runtimeExecutor(runtimeExecutor) {}
 
 void AsynchronousEventBeat::induce() const {
   if (!isRequested_ || m_isBeatCallbackScheduled) {

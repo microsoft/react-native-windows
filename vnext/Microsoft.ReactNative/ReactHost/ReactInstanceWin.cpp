@@ -1268,11 +1268,11 @@ void ReactInstanceWin::OnJSError(const facebook::react::JsErrorHandler::ParsedEr
   errorInfo.Message = error.message;
   auto errorCode = Mso::React::ReactErrorProvider().MakeErrorCode(Mso::React::ReactError{errorInfo.Message.c_str()});
 
-  for (const facebook::react::JsErrorHandler::ParsedError::StackFrame &frame : error.frames) {
-    errorInfo.Callstack.push_back({frame.fileName, frame.methodName, frame.lineNumber, frame.columnNumber});
+  for (const facebook::react::JsErrorHandler::ParsedError::StackFrame &frame : error.stack) {
+    errorInfo.Callstack.push_back({frame.file, frame.methodName, frame.lineNumber, frame.column});
   }
 
-  errorInfo.Id = error.exceptionId;
+  errorInfo.Id = error.id;
 
   bool isFatal = error.isFatal;
 
