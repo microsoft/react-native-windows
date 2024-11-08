@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 Nov 2024 06:20:38 GMT",
+      "version": "0.0.0-canary.890",
+      "tag": "react-native-windows_v0.0.0-canary.890",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6faf5685d469886b1fb4a18512529b13ba7477bd",
+            "comment": "Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.247",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.111",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 07 Nov 2024 06:24:18 GMT",
       "version": "0.0.0-canary.889",
       "tag": "react-native-windows_v0.0.0-canary.889",
