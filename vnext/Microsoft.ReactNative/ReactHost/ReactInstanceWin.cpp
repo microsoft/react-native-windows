@@ -641,8 +641,10 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
               auto timerManager = std::make_shared<facebook::react::TimerManager>(std::move(timerRegistry));
               timerRegistryRaw->setTimerManager(timerManager);
 
-              auto jsErrorHandlingFunc = [this](const facebook::react::JsErrorHandler::ParsedError &error) noexcept {
-                OnJSError(std::move(error));
+              auto jsErrorHandlingFunc = [this](
+                                             facebook::jsi::Runtime &runtime,
+                                             const facebook::react::JsErrorHandler::ParsedError &error) noexcept {
+                OnJSError(runtime, std::move(error));
               };
 
               if (devSettings->useDirectDebugger) {
@@ -1263,13 +1265,16 @@ void ReactInstanceWin::OnError(const Mso::ErrorCode &errorCode) noexcept {
 }
 
 #ifdef USE_FABRIC
-void ReactInstanceWin::OnJSError(const facebook::react::JsErrorHandler::ParsedError &error) noexcept {
+void ReactInstanceWin::OnJSError(
+    facebook::jsi::Runtime &runtime,
+    const facebook::react::JsErrorHandler::ParsedError &error) noexcept {
   ErrorInfo errorInfo;
   errorInfo.Message = error.message;
   auto errorCode = Mso::React::ReactErrorProvider().MakeErrorCode(Mso::React::ReactError{errorInfo.Message.c_str()});
 
   for (const facebook::react::JsErrorHandler::ParsedError::StackFrame &frame : error.stack) {
-    errorInfo.Callstack.push_back({frame.file.value(), frame.methodName, frame.lineNumber.value(), frame.column.value()});
+    errorInfo.Callstack.push_back(
+        {frame.file.value(), frame.methodName, frame.lineNumber.value(), frame.column.value()});
   }
 
   errorInfo.Id = error.id;
