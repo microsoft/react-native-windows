@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/automation-channel
 
-<!-- This log was last generated on Thu, 07 Nov 2024 06:24:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 08 Nov 2024 06:20:37 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.12.230
+
+Fri, 08 Nov 2024 06:20:37 GMT
+
+### Patches
+
+- Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture (jthysell@microsoft.com)
+- Bump react-native-windows to v0.0.0-canary.890
 
 ## 0.12.229
 

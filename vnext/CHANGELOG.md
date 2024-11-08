@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Thu, 07 Nov 2024 06:24:18 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 08 Nov 2024 06:20:38 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.890
+
+Fri, 08 Nov 2024 06:20:38 GMT
+
+### Changes
+
+- Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.247
+- Bump @react-native-windows/codegen to v0.0.0-canary.111
 
 ## 0.0.0-canary.889
 
