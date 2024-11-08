@@ -60,8 +60,12 @@
     <UseV8>true</UseV8>
     <V8AppPlatform>win32</V8AppPlatform>
     <HermesCompileRtti>false</HermesCompileRtti>
-    <IncludeFabricInterface Condition="'$(IncludeFabricInterface)' == ''">true</IncludeFabricInterface>
-    <UseWinUI3 Condition="'$(UseWinUI3)' == ''">true</UseWinUI3>
+    <!-- Default include the Fabric interface. -->
+    <IncludeFabricInterface Condition="'$(IncludeFabricInterface)'==''">true</IncludeFabricInterface>
+    <!-- Default enable WinUI3, if unset but also check for IncludeFabricInterface as it requires WinUI3 now to compile. -->
+    <UseWinUI3 Condition="'$(IncludeFabricInterface)'=='true' or '$(UseWinUI3)'==''">true</UseWinUI3>
+    <!-- Desktop can use WinUI3 in Old Arch so disable the check. -->
+    <ForcePaperUseWinUI3 Condition="'$(UseWinUI3)'=='true'">true</ForcePaperUseWinUI3>
     <!-- Prevents Microsoft.Web.WebView2.Core.dll from being added to ReferenceCopyLocalPaths -->
     <WebView2EnableCsWinRTProjectionExcludeCoreRef>true</WebView2EnableCsWinRTProjectionExcludeCoreRef>
   </PropertyGroup>
