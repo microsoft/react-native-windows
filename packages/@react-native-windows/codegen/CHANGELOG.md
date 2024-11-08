@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Mon, 28 Oct 2024 15:29:52 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 08 Nov 2024 00:51:11 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.0-preview.3
+
+Fri, 08 Nov 2024 00:51:11 GMT
+
+### Changes
+
+- Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture (jthysell@microsoft.com)
 
 ## 0.76.0-preview.2
 

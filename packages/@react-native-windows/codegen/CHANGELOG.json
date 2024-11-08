@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 08 Nov 2024 00:51:11 GMT",
+      "version": "0.76.0-preview.3",
+      "tag": "@react-native-windows/codegen_v0.76.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "28e050fa3962152708e992b519e89a553634ebfb",
+            "comment": "Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Oct 2024 15:29:52 GMT",
       "version": "0.76.0-preview.2",
       "tag": "@react-native-windows/codegen_v0.76.0-preview.2",
