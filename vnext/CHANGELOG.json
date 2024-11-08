@@ -2,6 +2,51 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 08 Nov 2024 00:51:11 GMT",
+      "version": "0.76.0-preview.6",
+      "tag": "react-native-windows_v0.76.0-preview.6",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "316973a0d0b3ea57ac19879d34a6c6cc9fd864d1",
+            "comment": "Update to the latest Microsoft.NETCore.UniversalWindowsPlatform"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "28e050fa3962152708e992b519e89a553634ebfb",
+            "comment": "Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture"
+          },
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "2bb47d5f918add687aa1ef20c522b5d1ceb38c24",
+            "comment": "Update some packages*.json files after the WinAppSDK udpate (#14056)"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5e26d6e863715fc25bbcb6ec6e42d9b65f7baa0c",
+            "comment": "Update RNW CLI to preserve and re-use `init-windows` arguments"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.76.0-preview.5",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.76.0-preview.3",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 04 Nov 2024 16:28:49 GMT",
       "version": "0.76.0-preview.5",
       "tag": "react-native-windows_v0.76.0-preview.5",

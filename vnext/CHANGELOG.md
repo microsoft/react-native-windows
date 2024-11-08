@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 04 Nov 2024 16:28:49 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 08 Nov 2024 00:51:11 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.0-preview.6
+
+Fri, 08 Nov 2024 00:51:11 GMT
+
+### Changes
+
+- Update to the latest Microsoft.NETCore.UniversalWindowsPlatform (jthysell@microsoft.com)
+- Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture (jthysell@microsoft.com)
+- Update some packages*.json files after the WinAppSDK udpate (#14056) (yajurgrover24@gmail.com)
+- Update RNW CLI to preserve and re-use `init-windows` arguments (jthysell@microsoft.com)
+- Bump @react-native-windows/cli to v0.76.0-preview.5
+- Bump @react-native-windows/codegen to v0.76.0-preview.3
 
 ## 0.76.0-preview.5
 

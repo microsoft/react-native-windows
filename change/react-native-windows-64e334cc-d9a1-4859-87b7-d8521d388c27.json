@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "Update some packages*.json files after the WinAppSDK udpate (#14056)",
-  "packageName": "react-native-windows",
-  "email": "yajurgrover24@gmail.com",
-  "dependentChangeType": "patch"
-}
