@@ -32,8 +32,15 @@ test('nodeArchitecture() is valid', () => {
   expect(value).not.toBeNull();
 });
 
-test('devicePlatform() is valid', () => {
-  const value = basePropUtils.devicePlatform();
+test('deviceClass() is valid', () => {
+  const value = basePropUtils.deviceClass();
+  expect(value).toBeDefined();
+  expect(value).not.toBe('');
+  expect(value).not.toBeNull();
+});
+
+test('nodePlatform() is valid', () => {
+  const value = basePropUtils.nodePlatform();
   expect(value).toBeDefined();
   expect(value).not.toBe('');
   expect(value).not.toBeNull();
@@ -65,12 +72,6 @@ test('deviceTotalMemory() is valid', () => {
 test('deviceDiskFreeSpace() is valid', () => {
   const value = basePropUtils.deviceDiskFreeSpace();
   expect(value).toBeGreaterThanOrEqual(0);
-});
-
-test('sampleRate() is within valid range', () => {
-  const value = basePropUtils.sampleRate();
-  expect(value).toBeGreaterThanOrEqual(0);
-  expect(value).toBeLessThanOrEqual(100);
 });
 
 test('ciType() is valid', () => {
@@ -134,4 +135,11 @@ test('getSessionId() is a guid', () => {
 
 test('getSessionId() does not change', () => {
   expect(basePropUtils.getSessionId()).toBe(basePropUtils.getSessionId());
+});
+
+test('fullBuildInfo() is valid', () => {
+  const value = basePropUtils.fullBuildInfo();
+  expect(value).toBeDefined();
+  expect(value).not.toBe('');
+  expect(value).not.toBeNull();
 });
