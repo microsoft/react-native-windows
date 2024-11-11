@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Adding quotes around codegen tool executeable path and response file path so that users with spaces in their user directory can build cs projects",
+  "packageName": "react-native-windows",
+  "email": "6237394+Swinkid@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
