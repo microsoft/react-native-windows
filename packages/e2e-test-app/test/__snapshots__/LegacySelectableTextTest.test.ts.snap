@@ -35,7 +35,7 @@ exports[`LegacySelectableTextTest DoubleClickWhenSelectable 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 100,
+  "Width": 103,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -55,7 +55,7 @@ exports[`LegacySelectableTextTest PressableWhenNotSelectable 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 100,
+  "Width": 103,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
@@ -75,7 +75,7 @@ exports[`LegacySelectableTextTest PressableWhenSelectable 1`] = `
   "Top": 0,
   "VerticalAlignment": "Stretch",
   "Visibility": "Visible",
-  "Width": 100,
+  "Width": 103,
   "XamlType": "Windows.UI.Xaml.Controls.TextBlock",
 }
 `;
