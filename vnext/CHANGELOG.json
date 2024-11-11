@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 11 Nov 2024 22:53:44 GMT",
+      "version": "0.75.9",
+      "tag": "react-native-windows_v0.75.9",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "3be2698eb57eff3f51efed5d4bf4b2d07bddb7cf",
+            "comment": "Promote 0.75 to legacy"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.75.6",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.75.4",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Nov 2024 16:29:50 GMT",
       "version": "0.75.8",
       "tag": "react-native-windows_v0.75.8",

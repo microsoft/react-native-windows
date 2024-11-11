@@ -11,14 +11,14 @@
   },
   "dependencies": {
     "@react-native-windows/automation-channel": "^0.12.174",
-    "@react-native-windows/fs": "0.75.1",
+    "@react-native-windows/fs": "0.75.2",
     "@types/react": "^18.2.6",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "chai": "^4.2.0",
     "react": "^18.2.0",
     "react-native": "0.75.3",
-    "react-native-windows": "0.75.8"
+    "react-native-windows": "0.75.9"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
