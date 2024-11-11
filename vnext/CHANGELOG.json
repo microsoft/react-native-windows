@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 11 Nov 2024 16:29:50 GMT",
+      "version": "0.75.8",
+      "tag": "react-native-windows_v0.75.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "41e4ed8d3b3a4c14c7c98666957811201ab7b14c",
+            "comment": "Update to the latest Microsoft.NETCore.UniversalWindowsPlatform"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Oct 2024 15:28:48 GMT",
       "version": "0.75.7",
       "tag": "react-native-windows_v0.75.7",
