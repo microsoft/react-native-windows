@@ -71,7 +71,8 @@ function ModalPresentation() {
   const hardwareAccelerated = props.hardwareAccelerated;
   const statusBarTranslucent = props.statusBarTranslucent;
   const backdropColor = props.backdropColor;
-  const backgroundColor = React.useContext(RNTesterThemeContext).BackgroundColor;
+  const backgroundColor =
+    React.useContext(RNTesterThemeContext).BackgroundColor;
 
   const [currentOrientation, setCurrentOrientation] = React.useState('unknown');
 

@@ -600,9 +600,13 @@ class AccessibilityExample extends React.Component<
           console.log('Pressed');
         }}>
         <RNTesterText>A View with accessibility values.</RNTesterText>
-        <RNTesterText>Current Number of Accessibility Taps: {this.state.tap}</RNTesterText>
+        <RNTesterText>
+          Current Number of Accessibility Taps: {this.state.tap}
+        </RNTesterText>
         <View importantForAccessibility="no-hide-descendants">
-          <RNTesterText>This element should be hidden from accessibility.</RNTesterText>
+          <RNTesterText>
+            This element should be hidden from accessibility.
+          </RNTesterText>
         </View>
         <View accessible accessibilityValue={{now: this.state.tap}}>
           <RNTesterText>

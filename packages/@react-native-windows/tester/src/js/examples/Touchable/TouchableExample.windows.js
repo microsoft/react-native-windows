@@ -619,7 +619,9 @@ function TouchableSet<T: React.AbstractComponent<any, any>>() {
         accessibilityPosInSet={3}
         accessibilitySetSize={3}
         accessibilityLiveRegion="assertive">
-        <RNTesterText>TouchableWithoutFeedback (Control 3 in Set of 3)</RNTesterText>
+        <RNTesterText>
+          TouchableWithoutFeedback (Control 3 in Set of 3)
+        </RNTesterText>
       </TouchableWithoutFeedback>
     </View>
   );
