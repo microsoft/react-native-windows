@@ -420,6 +420,9 @@ const Button: component(
         onMouseLeave={() => {
           if (!disabled) setHover(false);
         }}
+        // $FlowFixMe[incompatible-exact]
+        // $FlowFixMe[prop-missing]
+        // $FlowFixMe[incompatible-type-arg]
         ref={ref}>
         <View
           style={

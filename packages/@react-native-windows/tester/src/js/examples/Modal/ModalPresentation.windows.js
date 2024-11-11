@@ -35,6 +35,8 @@ const supportedOrientations = [
   'landscape-right',
 ];
 
+const backdropColors = ['red', 'blue', undefined];
+
 function ModalPresentation() {
   const onDismiss = React.useCallback(() => {
     alert('onDismiss');

@@ -1651,7 +1651,7 @@ exports[`SwitchTests Switches can be disabled, initial false 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "Background": "#00000034",
+              "Background": "#00000040",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
               "Clip": null,
@@ -1879,7 +1879,7 @@ exports[`SwitchTests Switches can be disabled, initial true 1`] = `
           "XamlType": "Windows.UI.Xaml.Controls.Grid",
           "children": [
             {
-              "Background": "#00000034",
+              "Background": "#00000040",
               "BorderBrush": null,
               "BorderThickness": "0,0,0,0",
               "Clip": null,
