@@ -606,21 +606,21 @@ function TouchableSet<T: React.AbstractComponent<any, any>>() {
         accessibilityPosInSet={1}
         accessibilitySetSize={3}
         accessibilityLiveRegion="none">
-        <Text>Touchable Highlight (Control 1 in Set of 3)</Text>
+        <RNTesterText>Touchable Highlight (Control 1 in Set of 3)</RNTesterText>
       </TouchableHighlight>
       <TouchableOpacity
         onPress={() => {}}
         accessibilityPosInSet={2}
         accessibilitySetSize={3}
         accessibilityLiveRegion="polite">
-        <Text>Touchable Opacity (Control 2 in Set of 3)</Text>
+        <RNTesterText>Touchable Opacity (Control 2 in Set of 3)</RNTesterText>
       </TouchableOpacity>
       <TouchableWithoutFeedback
         onPress={() => {}}
         accessibilityPosInSet={3}
         accessibilitySetSize={3}
         accessibilityLiveRegion="assertive">
-        <Text>TouchableWithoutFeedback (Control 3 in Set of 3)</Text>
+        <RNTesterText>TouchableWithoutFeedback (Control 3 in Set of 3)</RNTesterText>
       </TouchableWithoutFeedback>
     </View>
   );
