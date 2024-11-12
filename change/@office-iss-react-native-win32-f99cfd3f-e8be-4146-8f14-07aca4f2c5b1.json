@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "adds default Modal",
   "packageName": "@office-iss/react-native-win32",
   "email": "tatianakapos@microsoft.com",
