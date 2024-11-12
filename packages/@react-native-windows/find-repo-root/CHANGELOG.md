@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/find-repo-root
 
-<!-- This log was last generated on Mon, 28 Oct 2024 15:29:52 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 12 Nov 2024 00:02:26 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.0
+
+Tue, 12 Nov 2024 00:02:26 GMT
+
+### Patches
+
+- Promote 0.76 to latest (tatianakapos@microsoft.com)
+- Bump @react-native-windows/fs to v0.76.0
 
 ## 0.76.0-preview.2
 

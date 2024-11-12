@@ -2,6 +2,45 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Tue, 12 Nov 2024 00:02:25 GMT",
+      "version": "0.76.0",
+      "tag": "@react-native-windows/cli_v0.76.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "1d9e51e78069deb922129373406cacd33817d29e",
+            "comment": "Promote 0.76 to latest"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.76.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.76.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.76.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.76.0",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 08 Nov 2024 00:51:11 GMT",
       "version": "0.76.0-preview.5",
       "tag": "@react-native-windows/cli_v0.76.0-preview.5",
