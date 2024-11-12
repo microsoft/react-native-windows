@@ -2,6 +2,75 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 12 Nov 2024 06:27:59 GMT",
+      "version": "0.0.0-canary.891",
+      "tag": "react-native-windows_v0.0.0-canary.891",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "6237394+Swinkid@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a900eedcb961291de8f04096e7acb801cfa84f0e",
+            "comment": "Adding quotes around codegen tool executeable path and response file path so that users with spaces in their user directory can build cs projects"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 Nov 2024 06:20:38 GMT",
+      "version": "0.0.0-canary.890",
+      "tag": "react-native-windows_v0.0.0-canary.890",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6faf5685d469886b1fb4a18512529b13ba7477bd",
+            "comment": "Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.247",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.111",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 Nov 2024 06:24:18 GMT",
+      "version": "0.0.0-canary.889",
+      "tag": "react-native-windows_v0.0.0-canary.889",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "346ba4e17efa3d1cf2481f7b998eb4de1ab8f073",
+            "comment": "Integrate 10/10"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f22d85a0779c93aec0d4bbe2b5d2679c42d1f82a",
+            "comment": "Export MS.RN.Color ctor in Office dll"
+          },
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "84761b7215027cd2977756bc6b2d70d5491eda7f",
+            "comment": "TextInput caret becomes visible on non-focused TextInputs on resize"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Nov 2024 06:26:31 GMT",
       "version": "0.0.0-canary.888",
       "tag": "react-native-windows_v0.0.0-canary.888",

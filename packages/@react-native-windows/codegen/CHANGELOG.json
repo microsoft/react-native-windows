@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Fri, 08 Nov 2024 06:20:37 GMT",
+      "version": "0.0.0-canary.111",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.111",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "6faf5685d469886b1fb4a18512529b13ba7477bd",
+            "comment": "Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sun, 03 Nov 2024 05:28:15 GMT",
       "version": "0.0.0-canary.110",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.110",
