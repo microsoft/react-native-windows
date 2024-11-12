@@ -33,6 +33,15 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
     : Super(compContext, tag, reactContext) {}
 
 WindowsModalHostComponentView::~WindowsModalHostComponentView() {
+  // reset the topWindowID
+  if (m_prevWindowID) {
+    auto host =
+        winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(m_reactContext.Properties());
+    winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
+        host.InstanceSettings().Properties(), m_prevWindowID);
+    m_prevWindowID = 0;
+  }
+
   // Check if the window handle (m_hwnd) exists and destroy it if necessary
   if (m_hwnd) {
     // Close/Destroy the modal window
@@ -77,7 +86,7 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   m_prevWindowID =
       winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(m_reactContext.Properties().Handle());
 
-  auto roothwnd = GetHwndForParenting();
+  m_parentHwnd = GetHwndForParenting();
 
   m_hwnd = CreateWindow(
       c_modalWindowClassName,
@@ -87,7 +96,7 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
       CW_USEDEFAULT,
       MODAL_MIN_WIDTH,
       MODAL_MIN_HEIGHT,
-      roothwnd, // parent
+      m_parentHwnd, // parent
       nullptr,
       hInstance,
       spunk.get());
@@ -126,7 +135,7 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
 
   RECT rc;
-  GetClientRect(roothwnd, &rc);
+  GetClientRect(m_parentHwnd, &rc);
   // Maximum size is set to size of parent hwnd
   constraints.MaximumSize = {(rc.right - rc.left) * ScaleFactor(m_hwnd), (rc.bottom - rc.top) / ScaleFactor(m_hwnd)};
   constraints.MinimumSize = {MODAL_MIN_WIDTH * ScaleFactor(m_hwnd), MODAL_MIN_HEIGHT * ScaleFactor(m_hwnd)};
@@ -155,6 +164,7 @@ void WindowsModalHostComponentView::HideOnUIThread() noexcept {
         winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(m_reactContext.Properties());
     winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
         host.InstanceSettings().Properties(), m_prevWindowID);
+    m_prevWindowID = 0;
   }
 }
 
@@ -266,6 +276,7 @@ void WindowsModalHostComponentView::AdjustWindowSize() noexcept {
   if (m_layoutMetrics.overflowInset.right == 0 && m_layoutMetrics.overflowInset.bottom == 0) {
     return;
   }
+
   // Modal's size is based on it's children, use the overflow to calculate the width/height
   float xPos = (-m_layoutMetrics.overflowInset.right * (m_layoutMetrics.pointScaleFactor));
   float yPos = (-m_layoutMetrics.overflowInset.bottom * (m_layoutMetrics.pointScaleFactor));
@@ -273,14 +284,20 @@ void WindowsModalHostComponentView::AdjustWindowSize() noexcept {
   GetClientRect(m_hwnd, &rc);
   RECT rect = {0, 0, (int)xPos, (int)yPos};
   AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE); // Adjust for title bar and borders
-  MoveWindow(m_hwnd, 0, 0, (int)(rect.right - rect.left), (int)(rect.bottom - rect.top), true);
 
   // set the layoutMetrics
-  m_layoutMetrics.frame.size = {
-      (float)rect.right - rect.left + m_layoutMetrics.frame.origin.x,
-      (float)rect.bottom - rect.top + m_layoutMetrics.frame.origin.y};
+  m_layoutMetrics.frame.size = {(float)rect.right - rect.left, (float)rect.bottom - rect.top};
   m_layoutMetrics.overflowInset.right = 0;
   m_layoutMetrics.overflowInset.bottom = 0;
+
+  // get Modal's position based on parent
+  RECT parentRC;
+  GetWindowRect(m_parentHwnd, &parentRC);
+  float xCor = (parentRC.left + parentRC.right - m_layoutMetrics.frame.size.width) / 2; // midpointx - width / 2
+  float yCor = (parentRC.top + parentRC.bottom - m_layoutMetrics.frame.size.height) / 2; // midpointy - height / 2
+
+  // Adjust window position and size
+  MoveWindow(m_hwnd, (int)xCor, (int)yCor, (int)(rect.right - rect.left), (int)(rect.bottom - rect.top), true);
 
   // Let RNWIsland know that Modal's size has changed
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(m_reactNativeIsland)
