@@ -73,11 +73,6 @@ exports[`View Tests Views can have a nativeid 1`] = `
             "Size": "916, 20",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
     ],
@@ -207,19 +202,9 @@ exports[`View Tests Views can have a z-index 1`] = `
                     "Size": "100, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -231,11 +216,6 @@ exports[`View Tests Views can have a z-index 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "916, 30",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -264,19 +244,9 @@ exports[`View Tests Views can have a z-index 1`] = `
                     "Size": "100, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -304,19 +274,9 @@ exports[`View Tests Views can have a z-index 1`] = `
                     "Size": "100, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -344,19 +304,9 @@ exports[`View Tests Views can have a z-index 1`] = `
                     "Size": "100, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -412,11 +362,6 @@ exports[`View Tests Views can have aria-labels 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "906, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -539,11 +484,6 @@ exports[`View Tests Views can have backface visibility 1`] = `
             "Size": "916, 29",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -560,11 +500,6 @@ exports[`View Tests Views can have backface visibility 1`] = `
             "Size": "150, 150",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -575,11 +510,6 @@ exports[`View Tests Views can have backface visibility 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "34, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -608,19 +538,9 @@ exports[`View Tests Views can have backface visibility 1`] = `
                     "Size": "130, 38",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -632,11 +552,6 @@ exports[`View Tests Views can have backface visibility 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "916, 40",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -655,11 +570,6 @@ exports[`View Tests Views can have backface visibility 1`] = `
             "Size": "150, 150",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -670,11 +580,6 @@ exports[`View Tests Views can have backface visibility 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "134, 38",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -693,11 +598,6 @@ exports[`View Tests Views can have backface visibility 1`] = `
             "Size": "150, 150",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -708,11 +608,6 @@ exports[`View Tests Views can have backface visibility 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "30, 19",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -769,11 +664,6 @@ exports[`View Tests Views can have background color 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "906, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -887,11 +777,6 @@ exports[`View Tests Views can have border styles 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -902,11 +787,6 @@ exports[`View Tests Views can have border styles 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "904, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -963,11 +843,6 @@ exports[`View Tests Views can have border styles 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -978,11 +853,6 @@ exports[`View Tests Views can have border styles 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "904, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1075,11 +945,6 @@ exports[`View Tests Views can have borders 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "886, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1180,11 +1045,6 @@ exports[`View Tests Views can have customized accessibility 1`] = `
             "Size": "916, 20",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1197,11 +1057,6 @@ exports[`View Tests Views can have customized accessibility 1`] = `
             "Size": "916, 19",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1212,11 +1067,6 @@ exports[`View Tests Views can have customized accessibility 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "916, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1241,19 +1091,9 @@ exports[`View Tests Views can have customized accessibility 1`] = `
                     "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1426,19 +1266,9 @@ exports[`View Tests Views can have customized opacity 1`] = `
                     "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1463,19 +1293,9 @@ exports[`View Tests Views can have customized opacity 1`] = `
                     "Size": "916, 19",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1500,19 +1320,9 @@ exports[`View Tests Views can have customized opacity 1`] = `
                     "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1537,19 +1347,9 @@ exports[`View Tests Views can have customized opacity 1`] = `
                     "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1574,19 +1374,9 @@ exports[`View Tests Views can have customized opacity 1`] = `
                     "Size": "916, 19",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1611,19 +1401,9 @@ exports[`View Tests Views can have customized opacity 1`] = `
                     "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1635,11 +1415,6 @@ exports[`View Tests Views can have customized opacity 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "916, 19",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1822,11 +1597,6 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1837,11 +1607,6 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "903, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1902,11 +1667,6 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1917,11 +1677,6 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "903, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1982,11 +1737,6 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1999,11 +1749,6 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
             "Size": "123, 15",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2014,11 +1759,6 @@ exports[`View Tests Views can have customized pasdding and margins 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "123, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2070,11 +1810,6 @@ exports[`View Tests Views can have display: none 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "916, 30",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2205,11 +1940,6 @@ exports[`View Tests Views can have flexgap 1`] = `
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2224,11 +1954,6 @@ exports[`View Tests Views can have flexgap 1`] = `
             },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2247,11 +1972,6 @@ exports[`View Tests Views can have flexgap 1`] = `
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2266,11 +1986,6 @@ exports[`View Tests Views can have flexgap 1`] = `
             },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2289,11 +2004,6 @@ exports[`View Tests Views can have flexgap 1`] = `
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2308,11 +2018,6 @@ exports[`View Tests Views can have flexgap 1`] = `
             },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2331,11 +2036,6 @@ exports[`View Tests Views can have flexgap 1`] = `
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2350,11 +2050,6 @@ exports[`View Tests Views can have flexgap 1`] = `
             },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2373,11 +2068,6 @@ exports[`View Tests Views can have flexgap 1`] = `
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2394,11 +2084,6 @@ exports[`View Tests Views can have flexgap 1`] = `
             "Size": "30, 30",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2413,11 +2098,6 @@ exports[`View Tests Views can have flexgap 1`] = `
             },
             "Offset": "0, 0, 0",
             "Size": "30, 30",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2628,11 +2308,6 @@ exports[`View Tests Views can have insets 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2649,11 +2324,6 @@ exports[`View Tests Views can have insets 1`] = `
             "Size": "904, 28",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2664,11 +2334,6 @@ exports[`View Tests Views can have insets 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "894, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2725,11 +2390,6 @@ exports[`View Tests Views can have insets 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2746,11 +2406,6 @@ exports[`View Tests Views can have insets 1`] = `
             "Size": "68, 28",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2761,11 +2416,6 @@ exports[`View Tests Views can have insets 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "58, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2822,11 +2472,6 @@ exports[`View Tests Views can have insets 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2843,11 +2488,6 @@ exports[`View Tests Views can have insets 1`] = `
             "Size": "86, 25",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2858,11 +2498,6 @@ exports[`View Tests Views can have insets 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "77, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2919,11 +2554,6 @@ exports[`View Tests Views can have insets 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2940,11 +2570,6 @@ exports[`View Tests Views can have insets 1`] = `
             "Size": "90, 24",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -2955,11 +2580,6 @@ exports[`View Tests Views can have insets 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "81, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3016,11 +2636,6 @@ exports[`View Tests Views can have insets 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3037,11 +2652,6 @@ exports[`View Tests Views can have insets 1`] = `
             "Size": "904, 24",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3052,11 +2662,6 @@ exports[`View Tests Views can have insets 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "894, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3113,11 +2718,6 @@ exports[`View Tests Views can have insets 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3134,11 +2734,6 @@ exports[`View Tests Views can have insets 1`] = `
             "Size": "87, 24",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3149,11 +2744,6 @@ exports[`View Tests Views can have insets 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "77, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3210,11 +2800,6 @@ exports[`View Tests Views can have insets 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3231,11 +2816,6 @@ exports[`View Tests Views can have insets 1`] = `
             "Size": "91, 24",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3246,11 +2826,6 @@ exports[`View Tests Views can have insets 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "81, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3349,11 +2924,6 @@ exports[`View Tests Views can have layout conformance 1`] = `
             "Size": "60, 19",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3368,11 +2938,6 @@ exports[`View Tests Views can have layout conformance 1`] = `
             },
             "Offset": "0, 0, 0",
             "Size": "60, 60",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3391,11 +2956,6 @@ exports[`View Tests Views can have layout conformance 1`] = `
             "Size": "60, 30",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3406,11 +2966,6 @@ exports[`View Tests Views can have layout conformance 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "60, 19",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3429,11 +2984,6 @@ exports[`View Tests Views can have layout conformance 1`] = `
             "Size": "60, 60",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3450,11 +3000,6 @@ exports[`View Tests Views can have layout conformance 1`] = `
             "Size": "60, 30",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3465,11 +3010,6 @@ exports[`View Tests Views can have layout conformance 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "60, 19",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3488,11 +3028,6 @@ exports[`View Tests Views can have layout conformance 1`] = `
             "Size": "60, 60",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3507,11 +3042,6 @@ exports[`View Tests Views can have layout conformance 1`] = `
             },
             "Offset": "0, 0, 0",
             "Size": "0, 30",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3644,11 +3174,6 @@ exports[`View Tests Views can have logical border colors 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3703,11 +3228,6 @@ exports[`View Tests Views can have logical border colors 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3718,11 +3238,6 @@ exports[`View Tests Views can have logical border colors 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "884, 16",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3779,11 +3294,6 @@ exports[`View Tests Views can have logical border colors 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3838,11 +3348,6 @@ exports[`View Tests Views can have logical border colors 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3855,11 +3360,6 @@ exports[`View Tests Views can have logical border colors 1`] = `
             "Size": "884, 16",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3870,11 +3370,6 @@ exports[`View Tests Views can have logical border colors 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "884, 15",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3972,11 +3467,6 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
             "Size": "916, 30",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -3991,11 +3481,6 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
             },
             "Offset": "0, 0, 0",
             "Size": "100, 50",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4014,11 +3499,6 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
             "Size": "100, 50",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -4031,11 +3511,6 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
             "Size": "916, 29",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -4046,11 +3521,6 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "916, 30",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4080,11 +3550,6 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
                     "Size": "100, 50",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
               {
@@ -4101,19 +3566,9 @@ exports[`View Tests Views can have offscreen alpha compositing 1`] = `
                     "Size": "100, 50",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -4247,11 +3702,6 @@ exports[`View Tests Views can have overflow 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -4262,11 +3712,6 @@ exports[`View Tests Views can have overflow 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "200, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4323,11 +3768,6 @@ exports[`View Tests Views can have overflow 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -4350,19 +3790,9 @@ exports[`View Tests Views can have overflow 1`] = `
                     "Size": "200, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -4418,11 +3848,6 @@ exports[`View Tests Views can have overflow 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -4433,11 +3858,6 @@ exports[`View Tests Views can have overflow 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "200, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4586,11 +4006,6 @@ exports[`View Tests Views can have rounded borders 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -4676,11 +4091,6 @@ exports[`View Tests Views can have rounded borders 1`] = `
                 "Visual Type": "SpriteVisual",
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -4768,11 +4178,6 @@ exports[`View Tests Views can have rounded borders 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -4858,11 +4263,6 @@ exports[`View Tests Views can have rounded borders 1`] = `
                 "Visual Type": "SpriteVisual",
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -4950,11 +4350,6 @@ exports[`View Tests Views can have rounded borders 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -5040,11 +4435,6 @@ exports[`View Tests Views can have rounded borders 1`] = `
                 "Visual Type": "SpriteVisual",
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -5132,11 +4522,6 @@ exports[`View Tests Views can have rounded borders 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -5222,11 +4607,6 @@ exports[`View Tests Views can have rounded borders 1`] = `
                 "Visual Type": "SpriteVisual",
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -5374,11 +4754,6 @@ exports[`View Tests Views can have rounded borders 2`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -5464,11 +4839,6 @@ exports[`View Tests Views can have rounded borders 2`] = `
                 "Visual Type": "SpriteVisual",
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -5556,11 +4926,6 @@ exports[`View Tests Views can have rounded borders 2`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -5646,11 +5011,6 @@ exports[`View Tests Views can have rounded borders 2`] = `
                 "Visual Type": "SpriteVisual",
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -5738,11 +5098,6 @@ exports[`View Tests Views can have rounded borders 2`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -5828,11 +5183,6 @@ exports[`View Tests Views can have rounded borders 2`] = `
                 "Visual Type": "SpriteVisual",
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -5920,11 +5270,6 @@ exports[`View Tests Views can have rounded borders 2`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -6010,11 +5355,6 @@ exports[`View Tests Views can have rounded borders 2`] = `
                 "Visual Type": "SpriteVisual",
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -6124,11 +5464,6 @@ exports[`View Tests Views can have tooltips 1`] = `
             "Size": "916, 16",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -6151,19 +5486,9 @@ exports[`View Tests Views can have tooltips 1`] = `
                     "Size": "916, 15",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -6187,19 +5512,9 @@ exports[`View Tests Views can have tooltips 1`] = `
                     "Size": "916, 16",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },

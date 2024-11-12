@@ -1062,11 +1062,6 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1131,11 +1126,6 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1199,11 +1189,6 @@ exports[`TextInput Tests TextInputs can be defined as a set using accessibilityP
                 "Visual Type": "SpriteVisual",
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -5892,11 +5877,6 @@ exports[`TextInput Tests TextInputs which have a searchbox role should also supp
                 "Visual Type": "SpriteVisual",
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
