@@ -2286,11 +2286,6 @@ exports[`View Tests Views can have insets 1`] = `
             "Size": "884, 16",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
