@@ -44,11 +44,6 @@ exports[`Pressable Tests Pressables can be disabled, disabled = {false} 1`] = `
             "Size": "112, 19",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
     ],
@@ -104,11 +99,6 @@ exports[`Pressable Tests Pressables can be disabled, disabled = {true} 1`] = `
             "Size": "116, 20",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
     ],
@@ -162,11 +152,6 @@ exports[`Pressable Tests Pressables can change style when pressed 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "64, 22",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -270,11 +255,6 @@ exports[`Pressable Tests Pressables can have advanced borders 1`] = `
             "Size": "146, 20",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
     ],
@@ -324,11 +304,6 @@ exports[`Pressable Tests Pressables can have delayed event handlers 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "56, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -435,11 +410,6 @@ exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
             "Size": "874, 19",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -450,11 +420,6 @@ exports[`Pressable Tests Pressables can have delayed event handlers 2`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "874, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -508,11 +473,6 @@ exports[`Pressable Tests Pressables can have event handlers 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "56, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -639,11 +599,6 @@ exports[`Pressable Tests Pressables can have event handlers 2`] = `
             "Size": "874, 19",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -654,11 +609,6 @@ exports[`Pressable Tests Pressables can have event handlers 2`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "874, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -673,11 +623,6 @@ exports[`Pressable Tests Pressables can have event handlers 2`] = `
             "Size": "874, 20",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -688,11 +633,6 @@ exports[`Pressable Tests Pressables can have event handlers 2`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "874, 19",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -748,11 +688,6 @@ exports[`Pressable Tests Pressables can have hit slop functionality 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "146, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -930,11 +865,6 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -950,11 +880,6 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
             "Offset": "0, 0, 0",
             "Opacity": 0.10000000149011612,
             "Size": "50, 50",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -974,11 +899,6 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -994,11 +914,6 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
             "Offset": "0, 0, 0",
             "Opacity": 0.30000001192092896,
             "Size": "50, 50",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1018,11 +933,6 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1038,11 +948,6 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
             "Offset": "0, 0, 0",
             "Opacity": 0.5,
             "Size": "50, 50",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1062,11 +967,6 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1082,11 +982,6 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
             "Offset": "0, 0, 0",
             "Opacity": 0.699999988079071,
             "Size": "50, 50",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1106,11 +1001,6 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1128,11 +1018,6 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
             "Size": "50, 50",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1147,11 +1032,6 @@ exports[`Pressable Tests Pressables can have ranging opacity 1`] = `
             },
             "Offset": "0, 0, 0",
             "Size": "50, 50",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1283,19 +1163,9 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
                     "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1319,19 +1189,9 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
                     "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1355,19 +1215,9 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
                     "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1391,19 +1241,9 @@ exports[`Pressable Tests Pressables can have their accessibility and keyboard fo
                     "Size": "916, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1454,11 +1294,6 @@ exports[`Pressable Tests Pressables can have tooltips 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "916, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1617,11 +1452,6 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
             "Size": "916, 30",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -1648,19 +1478,9 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
                     "Size": "34, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1688,19 +1508,9 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
                     "Size": "184, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1712,11 +1522,6 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "916, 39",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1745,19 +1550,9 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
                     "Size": "188, 19",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1785,19 +1580,9 @@ exports[`Pressable Tests Pressables can hide their backface 1`] = `
                     "Size": "30, 19",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
