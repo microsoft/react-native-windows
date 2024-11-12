@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241010-0d6908f4e",
+  "baseVersion": "0.77.0-nightly-20241015-3485e9ed8",
   "overrides": [
     {
       "type": "derived",
@@ -17,7 +17,7 @@
       "type": "derived",
       "file": "src/js/examples-win/Switch/SwitchExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Switch/SwitchExample.js",
-      "baseHash": "a2b2cc1f89348b999a886e2a11ff4e0ed66f9a5c"
+      "baseHash": "30cd53b51d41dfdd9d2268921a4280038b470995"
     },
     {
       "type": "patch",
@@ -38,26 +38,26 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "afa69970a9b2366c034141561fd259ab96904fdb",
+      "baseHash": "1c153f8b041749b012470f47811b5f97ce5b2502",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/Modal/ModalOnShow.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Modal/ModalOnShow.js",
-      "baseHash": "d442625a5c03de1ea78a43385c8f60dd9b4da68c"
+      "baseHash": "c40af9ce3741cdaf040bcebf845cb482f2ccd197"
     },
     {
       "type": "patch",
       "file": "src/js/examples/Modal/ModalPresentation.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Modal/ModalPresentation.js",
-      "baseHash": "1e3d81c2a1f6e5a05747244a4efd18548d88051d"
+      "baseHash": "d25e22b917ec92b9e792bf3d0663c8a1b2bba14d"
     },
     {
       "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
-      "baseHash": "624fc96b5b81572b905c52518e8c5b7a2dfb78b5",
+      "baseHash": "63fce542a05c17e8115c03ab81b3d633083ff08c",
       "issue": 6240
     },
     {
@@ -77,20 +77,20 @@
       "type": "derived",
       "file": "src/js/examples/Touchable/TouchableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Touchable/TouchableExample.js",
-      "baseHash": "d277813f801c1d961f11f220e8cf7c74ab9b9e63"
+      "baseHash": "727e3386abd5bd793225c2f7c4e7a273b6a8ff19"
     },
     {
       "type": "patch",
       "file": "src/js/examples/TurboModule/SampleTurboModuleExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
-      "baseHash": "1fbce13cfa80201b10ce55bd05add3addb45d5a5",
+      "baseHash": "e4030ff7f2c505bd76020105b047c0a9cf9ecaff",
       "issue": 0
     },
     {
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "c7e6aecc204cd3d9e85c4a2564d0837179aae46f"
+      "baseHash": "dd78c35a737bcbfb8b2732d16f5c06c77b895ffc"
     },
     {
       "type": "copy",

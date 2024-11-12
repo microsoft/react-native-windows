@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241010-0d6908f4e",
+  "baseVersion": "0.77.0-nightly-20241015-3485e9ed8",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "0ef50a705dc56608e4a8bd11d3b0d3daedfc0012"
+      "baseHash": "fa800520804222b3f944f7ffbb6a82f5ad89dc76"
     },
     {
       "type": "derived",
@@ -60,7 +60,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Button.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Button.js",
-      "baseHash": "e76f9ba2b411e43dbca14b7ce52bb429c8cab52d"
+      "baseHash": "e1464525e6950f773370855ccbe60217ef638613"
     },
     {
       "type": "platform",
@@ -85,7 +85,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/Pressable/Pressable.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/Pressable/Pressable.js",
-      "baseHash": "77ec40a2f6a75280b170fe839813d8712c90fbfb",
+      "baseHash": "5f8baef36e1cbba73ff2c21b0ccbf310d125b334",
       "issue": 6240
     },
     {
@@ -99,7 +99,7 @@
       "type": "copy",
       "file": "src-win/Libraries/Components/SafeAreaView/SafeAreaView.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/SafeAreaView/SafeAreaView.js",
-      "baseHash": "ae5845b576484b3600e395d3b1ee03223530b8f7"
+      "baseHash": "e1372371cf14c8abd4fb5f2328513596f6553497"
     },
     {
       "type": "platform",
@@ -109,7 +109,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "82f76803236afa08c99beb8545a2a7fa4940b653"
+      "baseHash": "d7364ef8dd1c0bc25cc189d135e846522b02b3a7"
     },
     {
       "type": "patch",
@@ -173,7 +173,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/View.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/View.js",
-      "baseHash": "1905f72f4d202d466ea7d8ed4b36df0845f2c310"
+      "baseHash": "85d97fc0638ce73353898f67d0f891a86ee83f3f"
     },
     {
       "type": "derived",
@@ -426,7 +426,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/Text.win32.js",
       "baseFile": "packages/react-native/Libraries/Text/Text.js",
-      "baseHash": "b4810991f6c983f1f155327e8bca865cf771ae84"
+      "baseHash": "64cdf1c520112ead78e348bc306c208f212ac3c5"
     },
     {
       "type": "derived",
@@ -510,7 +510,6 @@
       "type": "copy",
       "file": "src-win/src/private/debugging/ReactDevToolsSettingsManager.win32.js",
       "baseFile": "packages/react-native/src/private/debugging/ReactDevToolsSettingsManager.android.js",
-      "baseVersion": "0.77.0-nightly-20241001-223e98cc4",
       "baseHash": "df41b76dc3d2df9455fae588748261d7b0a22d01"
     },
     {
