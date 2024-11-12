@@ -145,7 +145,7 @@ struct ComponentView : public ComponentViewT<
       const noexcept;
 
   virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual visualToHostFocus() noexcept;
-  virtual winrt::com_ptr<ComponentView> focusVisualRoot(facebook::react::Rect focusRect) noexcept;
+  virtual winrt::com_ptr<ComponentView> focusVisualRoot(const facebook::react::Rect &focusRect) noexcept;
 
   bool m_hasTransformMatrixFacade : 1 {false};
   bool m_FinalizeTransform : 1 {false};

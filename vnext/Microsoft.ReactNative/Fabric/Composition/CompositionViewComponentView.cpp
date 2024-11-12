@@ -365,7 +365,7 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ComponentView:
 // past the bounds of the component, in cases where additional components are positioned directly next to this one, we'd
 // get zorder issues causing most of the focus rect to be obscured. So we go up the tree until we find a component who's
 // bounds will fix the entire focus rect.
-winrt::com_ptr<ComponentView> ComponentView::focusVisualRoot(facebook::react::Rect focusRect) noexcept {
+winrt::com_ptr<ComponentView> ComponentView::focusVisualRoot(const facebook::react::Rect &focusRect) noexcept {
   auto compVisual =
       winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(OuterVisual());
   if (!compVisual) {

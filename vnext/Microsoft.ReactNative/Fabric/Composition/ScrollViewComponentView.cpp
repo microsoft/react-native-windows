@@ -1262,7 +1262,8 @@ std::string ScrollViewComponentView::DefaultControlType() const noexcept {
   return "scrollbar";
 }
 
-winrt::com_ptr<ComponentView> ScrollViewComponentView::focusVisualRoot(facebook::react::Rect focusRect) noexcept {
+winrt::com_ptr<ComponentView> ScrollViewComponentView::focusVisualRoot(
+    const facebook::react::Rect &focusRect) noexcept {
   return get_strong();
 }
 
