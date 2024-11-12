@@ -29,6 +29,10 @@ struct BorderPrimitive {
 
   void markNeedsUpdate() noexcept;
 
+  // We hoist focus visuals up the tree to allow them to be higher in the z-order.
+  // This means a single BorderPrimitive may change the owning ComponentView as focus moves around
+  void setOuter(winrt::Microsoft::ReactNative::Composition::implementation::ComponentView *outer) noexcept;
+
   void updateProps(
       const facebook::react::ViewProps &oldViewProps,
       const facebook::react::ViewProps &newViewProps) noexcept;
