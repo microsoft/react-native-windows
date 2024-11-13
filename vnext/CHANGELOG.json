@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 12 Nov 2024 06:27:59 GMT",
+      "version": "0.0.0-canary.891",
+      "tag": "react-native-windows_v0.0.0-canary.891",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "6237394+Swinkid@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a900eedcb961291de8f04096e7acb801cfa84f0e",
+            "comment": "Adding quotes around codegen tool executeable path and response file path so that users with spaces in their user directory can build cs projects"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 08 Nov 2024 06:20:38 GMT",
       "version": "0.0.0-canary.890",
       "tag": "react-native-windows_v0.0.0-canary.890",

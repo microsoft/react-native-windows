@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 08 Nov 2024 06:20:38 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 12 Nov 2024 06:27:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.891
+
+Tue, 12 Nov 2024 06:27:59 GMT
+
+### Changes
+
+- Adding quotes around codegen tool executeable path and response file path so that users with spaces in their user directory can build cs projects (6237394+Swinkid@users.noreply.github.com)
 
 ## 0.0.0-canary.890
 

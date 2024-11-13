@@ -1262,4 +1262,14 @@ std::string ScrollViewComponentView::DefaultControlType() const noexcept {
   return "scrollbar";
 }
 
+winrt::com_ptr<ComponentView> ScrollViewComponentView::focusVisualRoot(
+    const facebook::react::Rect &focusRect) noexcept {
+  return get_strong();
+}
+
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
+ScrollViewComponentView::visualToHostFocus() noexcept {
+  return m_scrollVisual;
+}
+
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

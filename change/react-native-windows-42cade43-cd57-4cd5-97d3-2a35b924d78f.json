@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Fix focus visuals being obscured by adjacent views",
+  "packageName": "react-native-windows",
+  "email": "53619745+rnbot@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

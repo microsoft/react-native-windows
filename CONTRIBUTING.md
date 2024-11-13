@@ -88,8 +88,14 @@ Here's what the contribution process looks like:
 1. Create & push a feature branch.
 1. Make the desired changes.
 1. Test your changes.
-1. Make sure you run `yarn change` at the root of the repo to create "change files"; these should be checked into your branch.
-1. Ensure your code passes linting; for C++, we use clang-tidy, you can run `yarn format` at the root of the repo to automatically reformat your code. For JavaScript/TypeScript, you can run `yarn lint:fix` at the root of the repo.
+1. Ensure your code passes linting checks:
+    1. For C++ changes, you can run `yarn format` at the root of the repo to automatically reformat your code.
+    1. For JavaScript/TypeScript, you can run `yarn lint:fix` at the root of the repo.
+1. After you've created your commits, make sure to run `yarn change` at the root of the repo to create "change files":
+    1. When prompted for `Change type`, the first option (usually `Prerelease` or `Patch`) is correct 99% of the time (don't select `None`).
+    1. When prompted to `Describe changes`, please provide a descriptive message (defaults to your commit message).
+    1. The command will automatically create a new commit with the change files, make sure they're included in your PR.
+    1. **Note:** You may be prompted multiple times or not at all (depending on *which* packages you modified).
 1. Open a Pull Request (PR) and address any feedback.
 
 > 👉 If this is your first time working with forks, you may find [GitHub's reference on forks](https://docs.github.com/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks) helpful. If this is your first time working with git or GitHub altogether, see the [GitHub Quickstart guide](https://docs.github.com/get-started/quickstart) for a walkthrough of setting up git, contributing to projects, and explanations of commonly used terms. 
