@@ -43,6 +43,9 @@ WindowsModalHostComponentView::~WindowsModalHostComponentView() {
     m_prevWindowID = 0;
   }
 
+  // enable input to parent
+  EnableWindow(m_parentHwnd, true);
+
   // Check if the window handle (m_hwnd) exists and destroy it if necessary
   if (m_hwnd) {
     // Close/Destroy the modal window
@@ -152,6 +155,9 @@ void WindowsModalHostComponentView::ShowOnUIThread() {
     BringWindowToTop(m_hwnd);
     SetFocus(m_hwnd);
 
+    // disable input to parent
+    EnableWindow(m_parentHwnd, false);
+
     // dispatch onShow event
     auto emitter = std::static_pointer_cast<const facebook::react::ModalHostViewEventEmitter>(m_eventEmitter);
     facebook::react::ModalHostViewEventEmitter::OnShow onShowArgs;
@@ -163,6 +169,9 @@ void WindowsModalHostComponentView::HideOnUIThread() noexcept {
   if (m_hwnd) {
     SendMessage(m_hwnd, WM_CLOSE, 0, 0);
   }
+
+  // enable input to parent
+  EnableWindow(m_parentHwnd, true);
 
   // reset the topWindowID
   if (m_prevWindowID) {
