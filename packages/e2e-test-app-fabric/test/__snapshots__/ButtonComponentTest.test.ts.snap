@@ -126,11 +126,6 @@ exports[`Button Tests Buttons can be disabled 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -141,11 +136,6 @@ exports[`Button Tests Buttons can be disabled 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "898, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -283,11 +273,6 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -298,11 +283,6 @@ exports[`Button Tests Buttons can have accessibility labels 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "898, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -429,11 +409,6 @@ exports[`Button Tests Buttons can have accessibility props 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "898, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -569,11 +544,6 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -584,11 +554,6 @@ exports[`Button Tests Buttons can have accessibility states 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "898, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -726,11 +691,6 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -741,11 +701,6 @@ exports[`Button Tests Buttons can have custom colors 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "898, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -857,11 +812,6 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 1`]
           {
             "Offset": "0, 0, 0",
             "Size": "898, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -989,11 +939,6 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 2`]
             "Size": "898, 20",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
     ],
@@ -1103,11 +1048,6 @@ exports[`Button Tests Buttons can have custom focusable and accessible props 3`]
           {
             "Offset": "0, 0, 0",
             "Size": "898, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -1303,11 +1243,6 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       },
                     ],
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
               {
@@ -1320,19 +1255,9 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                     "Size": "41, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1435,11 +1360,6 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                       },
                     ],
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
               {
@@ -1452,19 +1372,9 @@ exports[`Button Tests Buttons can have flexbox styling 1`] = `
                     "Size": "44, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1691,11 +1601,6 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       },
                     ],
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
               {
@@ -1708,19 +1613,9 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                     "Size": "41, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1823,11 +1718,6 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       },
                     ],
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
               {
@@ -1840,19 +1730,9 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                     "Size": "87, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -1955,11 +1835,6 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                       },
                     ],
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
               {
@@ -1972,19 +1847,9 @@ exports[`Button Tests Buttons can have flexbox styling with three buttons 1`] = 
                     "Size": "44, 20",
                     "Visual Type": "SpriteVisual",
                   },
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "0, 0",
-                    "Visual Type": "SpriteVisual",
-                  },
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -2109,11 +1974,6 @@ exports[`Button Tests Buttons have default styling 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "898, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],

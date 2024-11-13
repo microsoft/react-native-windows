@@ -818,6 +818,11 @@ uint8_t BorderPrimitive::numberOfVisuals() const noexcept {
   return m_numBorderVisuals;
 }
 
+void BorderPrimitive::setOuter(
+    winrt::Microsoft::ReactNative::Composition::implementation::ComponentView *outer) noexcept {
+  m_outer = outer;
+}
+
 bool BorderPrimitive::TryUpdateSpecialBorderLayers(
     winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
     std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
