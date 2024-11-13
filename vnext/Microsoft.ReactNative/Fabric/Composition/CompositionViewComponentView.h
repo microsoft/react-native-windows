@@ -20,6 +20,13 @@ struct CompContext;
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
+struct FocusPrimitive {
+  std::shared_ptr<BorderPrimitive> m_focusInnerPrimitive;
+  std::shared_ptr<BorderPrimitive> m_focusOuterPrimitive;
+  winrt::com_ptr<ComponentView> m_focusVisualComponent{nullptr}; // The owning component of focus visuals being hosted
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_focusVisual{nullptr};
+};
+
 struct ComponentView : public ComponentViewT<
                            ComponentView,
                            winrt::Microsoft::ReactNative::implementation::ComponentView,
@@ -125,11 +132,8 @@ struct ComponentView : public ComponentViewT<
   facebook::react::SharedViewEventEmitter m_eventEmitter;
 
  private:
-  void updateFocusLayoutMetrics(facebook::react::LayoutMetrics const &layoutMetrics) noexcept;
+  void updateFocusLayoutMetrics() noexcept;
   void updateClippingPath(
-      facebook::react::LayoutMetrics const &layoutMetrics,
-      const facebook::react::ViewProps &viewProps) noexcept;
-  void finalizeFocusVisual(
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
   void UpdateCenterPropertySet() noexcept;
@@ -140,16 +144,18 @@ struct ComponentView : public ComponentViewT<
   facebook::react::BorderMetrics focusBorderMetrics(bool inner, const facebook::react::LayoutMetrics &layoutMetrics)
       const noexcept;
 
+  virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual visualToHostFocus() noexcept;
+  virtual winrt::com_ptr<ComponentView> focusVisualRoot(const facebook::react::Rect &focusRect) noexcept;
+
   bool m_hasTransformMatrixFacade : 1 {false};
-  bool m_showingFocusVisual : 1 {false};
   bool m_FinalizeTransform : 1 {false};
   bool m_tooltipTracked : 1 {false};
   ComponentViewFeatures m_flags;
-  void showFocusVisual(bool show) noexcept;
+  void hostFocusVisual(bool show, winrt::com_ptr<ComponentView> view) noexcept;
+  winrt::com_ptr<ComponentView>
+      m_componentHostingFocusVisual; // The component that we are showing our focus visuals within
   std::shared_ptr<BorderPrimitive> m_borderPrimitive;
-  std::shared_ptr<BorderPrimitive> m_focusInnerPrimitive;
-  std::shared_ptr<BorderPrimitive> m_focusOuterPrimitive;
-  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_focusVisual{nullptr};
+  std::unique_ptr<FocusPrimitive> m_focusPrimitive{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_outerVisual{nullptr};
   winrt::event<winrt::Windows::Foundation::EventHandler<winrt::IInspectable>> m_themeChangedEvent;
 };
@@ -176,7 +182,6 @@ struct ViewComponentView : public ViewComponentViewT<
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void prepareForRecycle() noexcept override;
-  bool TryFocus() noexcept;
   bool focusable() const noexcept override;
   void OnKeyDown(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   void OnKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
