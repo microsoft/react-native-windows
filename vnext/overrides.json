@@ -211,6 +211,13 @@
       "issue": 13172
     },
     {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/TimerManager.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/runtime/TimerManager.cpp",
+      "baseHash": "7feb945df51867302f00be6e020c4ad57a72c9da",
+      "issue": 14150
+    },
+    {
       "type": "copy",
       "directory": "ReactCopies/IntegrationTests",
       "baseDirectory": "packages/rn-tester/IntegrationTests",
