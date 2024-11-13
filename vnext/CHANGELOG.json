@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 13 Nov 2024 06:21:47 GMT",
+      "version": "0.0.0-canary.892",
+      "tag": "react-native-windows_v0.0.0-canary.892",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b8d22a959267d14201a8e77f8baa8e2f13b6c2cc",
+            "comment": "Fix focus visuals being obscured by adjacent views"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Nov 2024 06:27:59 GMT",
       "version": "0.0.0-canary.891",
       "tag": "react-native-windows_v0.0.0-canary.891",
