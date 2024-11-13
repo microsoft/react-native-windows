@@ -24,6 +24,7 @@
 #include "IReactContext.h"
 #include "ReactHost/ReactInstanceWin.h"
 #include "ReactNativeHost.h"
+#include "WindowsModalHostViewShadowNode.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 WindowsModalHostComponentView::WindowsModalHostComponentView(
@@ -150,6 +151,11 @@ void WindowsModalHostComponentView::ShowOnUIThread() {
     ShowWindow(m_hwnd, SW_NORMAL);
     BringWindowToTop(m_hwnd);
     SetFocus(m_hwnd);
+
+    // dispatch onShow event
+    auto emitter = std::static_pointer_cast<const facebook::react::ModalHostViewEventEmitter>(m_eventEmitter);
+    facebook::react::ModalHostViewEventEmitter::OnShow onShowArgs;
+    emitter->onShow(onShowArgs);
   }
 }
 
