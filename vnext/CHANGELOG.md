@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 06 Nov 2024 21:53:05 GMT and should not be manually modified.
+This log was last generated on Wed, 13 Nov 2024 20:44:24 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.26
+
+Wed, 13 Nov 2024 20:44:24 GMT
+
+### Patches
+
+- Fix focus visuals being obscured by adjacent views (53619745+rnbot@users.noreply.github.com)
+- TextInput caret becomes visible on non-focused TextInputs on resize (53619745+rnbot@users.noreply.github.com)
 
 ## 0.74.25
 

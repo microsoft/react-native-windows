@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 13 Nov 2024 20:44:24 GMT",
+      "version": "0.74.26",
+      "tag": "react-native-windows_v0.74.26",
+      "comments": {
+        "patch": [
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "242effb4b70c5c442b0568203fb2de1818b9f8a3",
+            "comment": "Fix focus visuals being obscured by adjacent views"
+          },
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "242effb4b70c5c442b0568203fb2de1818b9f8a3",
+            "comment": "TextInput caret becomes visible on non-focused TextInputs on resize"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 06 Nov 2024 21:53:05 GMT",
       "version": "0.74.25",
       "tag": "react-native-windows_v0.74.25",
