@@ -48,11 +48,6 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to bottom butto
             "Size": "102, 19",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
     ],
@@ -106,11 +101,6 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to end button 1
           {
             "Offset": "0, 0, 0",
             "Size": "78, 19",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -168,11 +158,6 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to start button
             "Size": "82, 20",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
     ],
@@ -228,11 +213,6 @@ exports[`ScrollView Tests ScrollView has scrollTo method, scroll to top button 1
             "Size": "76, 20",
             "Visual Type": "SpriteVisual",
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
     ],
@@ -286,11 +266,6 @@ exports[`ScrollView Tests ScrollViews has flash scroll indicators 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "132, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],
