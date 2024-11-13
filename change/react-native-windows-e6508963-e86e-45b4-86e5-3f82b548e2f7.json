@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fix Modal position and add onShow",
+  "comment": "Fix Modal position, disable input to parent hwnd, and add onShow",
   "packageName": "react-native-windows",
   "email": "tatianakapos@microsoft.com",
   "dependentChangeType": "patch"
