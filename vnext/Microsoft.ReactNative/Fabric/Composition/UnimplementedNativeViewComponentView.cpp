@@ -26,7 +26,7 @@ UnimplementedNativeViewComponentView::UnimplementedNativeViewComponentView(
               ~(ComponentViewFeatures::Background | ComponentViewFeatures::ShadowProps |
                 ComponentViewFeatures::NativeBorder)) {
   m_labelVisual = compContext.CreateSpriteVisual();
-  OuterVisual().InsertAt(m_labelVisual, 1);
+  OuterVisual().InsertAt(m_labelVisual, 0);
 }
 
 winrt::Microsoft::ReactNative::ComponentView UnimplementedNativeViewComponentView::Create(
