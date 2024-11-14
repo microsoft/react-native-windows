@@ -88,6 +88,7 @@ type AndroidPlatform = {
 
 type WindowsPlatform = {
   __constants: null,
+  // $FlowFixMe[cannot-resolve-name]
   OS: $TEMPORARY$string<'windows'>,
   // $FlowFixMe[unsafe-getters-setters]
   get Version(): number,
