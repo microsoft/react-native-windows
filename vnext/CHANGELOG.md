@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 13 Nov 2024 06:21:47 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 14 Nov 2024 06:22:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.893
+
+Thu, 14 Nov 2024 06:22:59 GMT
+
+### Changes
+
+- bump dotnet target version (yajurgrover24@gmail.com)
 
 ## 0.0.0-canary.892
 
