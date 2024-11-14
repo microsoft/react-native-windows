@@ -309,6 +309,24 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["useTurboModuleInterop"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useTurboModuleInterop};
   methodMap_["useTurboModules"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_useTurboModules};
 }
+static jsi::Value __hostFunction_NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI_setReloadAndProfileConfig(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI *>(&turboModule)->setReloadAndProfileConfig(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt)
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI_getReloadAndProfileConfig(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI *>(&turboModule)->getReloadAndProfileConfig(
+    rt
+  );
+}
+
+NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI::NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("ReactDevToolsRuntimeSettingsModule", jsInvoker) {
+  methodMap_["setReloadAndProfileConfig"] = MethodMetadata {1, __hostFunction_NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI_setReloadAndProfileConfig};
+  methodMap_["getReloadAndProfileConfig"] = MethodMetadata {0, __hostFunction_NativeReactDevToolsRuntimeSettingsModuleCxxSpecJSI_getReloadAndProfileConfig};
+}
 static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isReduceMotionEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->isReduceMotionEnabled(
     rt,

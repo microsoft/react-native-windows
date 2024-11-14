@@ -31,7 +31,7 @@ void AccessibilityInfo::isReduceMotionEnabled(std::function<void(bool)> const &o
 }
 
 void AccessibilityInfo::isHighTextContrastEnabled(std::function<void(bool)> const &onSuccess) noexcept {
-  // TODO: implement
+  // TODO: implement (#14099)
   onSuccess(false);
 }
 

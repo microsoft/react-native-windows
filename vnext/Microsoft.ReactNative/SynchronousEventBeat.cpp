@@ -15,6 +15,16 @@ SynchronousEventBeat::SynchronousEventBeat(
       m_runtimeExecutor(runtimeExecutor),
       m_runtimeScheduler(std::move(runtimeScheduler)) {}
 
+void SynchronousEventBeat::beat(facebook::jsi::Runtime &runtime) const {
+  if (!this->isRequested_) {
+    return;
+  }
+  isRequested_ = false;
+  if (beatCallback_) {
+    beatCallback_(runtime);
+  }
+}
+
 void SynchronousEventBeat::induce() const {
   if (!isRequested_) {
     return;
