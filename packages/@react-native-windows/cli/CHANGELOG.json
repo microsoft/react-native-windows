@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Fri, 15 Nov 2024 06:22:29 GMT",
+      "version": "0.0.0-canary.248",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.248",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.112",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 08 Nov 2024 06:20:38 GMT",
       "version": "0.0.0-canary.247",
       "tag": "@react-native-windows/cli_v0.0.0-canary.247",

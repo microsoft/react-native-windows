@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Fri, 08 Nov 2024 06:20:37 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 15 Nov 2024 06:22:29 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.112
+
+Fri, 15 Nov 2024 06:22:29 GMT
+
+### Changes
+
+- test integrate 10/15 (yajurgrover24@gmail.com)
 
 ## 0.0.0-canary.111
 
