@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 18 Nov 2024 16:29:10 GMT",
+      "version": "0.76.1",
+      "tag": "react-native-windows_v0.76.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "244b8a1b45a3b4f2577b794b55ca2a00de0eb273",
+            "comment": "Bump .NET Target version in Microsoft.ReactNative.Test.Website.csproj (#14108)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Nov 2024 00:02:27 GMT",
       "version": "0.76.0",
       "tag": "react-native-windows_v0.76.0",
