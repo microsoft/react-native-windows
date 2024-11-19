@@ -100,7 +100,7 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
   m_hwnd = CreateWindow(
       c_modalWindowClassName,
       L"React-Native Modal",
-      WS_OVERLAPPEDWINDOW,
+      (WS_POPUP),
       CW_USEDEFAULT,
       CW_USEDEFAULT,
       MODAL_MIN_WIDTH,
@@ -308,7 +308,6 @@ void WindowsModalHostComponentView::AdjustWindowSize() noexcept {
   RECT rc;
   GetClientRect(m_hwnd, &rc);
   RECT rect = {0, 0, (int)xPos, (int)yPos};
-  AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE); // Adjust for title bar and borders
 
   // set the layoutMetrics
   m_layoutMetrics.frame.size = {(float)rect.right - rect.left, (float)rect.bottom - rect.top};
