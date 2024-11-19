@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 19 Nov 2024 06:29:47 GMT",
+      "version": "0.0.0-canary.895",
+      "tag": "react-native-windows_v0.0.0-canary.895",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "83ac05d14f13fb5ad2f0f00db3fd6f5b903821f4",
+            "comment": "Fix Modal position, disable input to parent hwnd, and add onShow"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Nov 2024 06:22:29 GMT",
       "version": "0.0.0-canary.894",
       "tag": "react-native-windows_v0.0.0-canary.894",
