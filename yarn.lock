@@ -8170,9 +8170,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 lage@^2.7.1:
-  version "2.11.12"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-2.11.12.tgz#2c5d0a5c7e1f18e4d747b16f34c93e0382085bdd"
-  integrity sha512-U94Gx8LWrKAzbZD80tsyCCBeFGZe8x4IeBqipiQDa7fbRXQGOmW5PK5Phi8WNRZwk5yMV5gLUe4b/N+hIBwMPg==
+  version "2.11.13"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-2.11.13.tgz#8de0e23e3f231453f4eae9392d26ff4d8dea92db"
+  integrity sha512-FLFMn4lGvbobbYMUfOTxhxlJFsnJqd61hgUy9DZYJfO9GkaAx/wmKtE++y4JXMjnYDKGS/cW41/M9f1FmLLOwA==
   dependencies:
     glob-hasher "^1.4.2"
   optionalDependencies:
