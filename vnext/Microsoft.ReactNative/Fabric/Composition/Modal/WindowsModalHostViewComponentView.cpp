@@ -34,6 +34,11 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
     : Super(compContext, tag, reactContext) {}
 
 WindowsModalHostComponentView::~WindowsModalHostComponentView() {
+  // dispatch onDismiss event
+  auto emitter = std::static_pointer_cast<const facebook::react::ModalHostViewEventEmitter>(m_eventEmitter);
+  facebook::react::ModalHostViewEventEmitter::OnDismiss onDismissArgs;
+  emitter->onDismiss(onDismissArgs);
+
   // reset the topWindowID
   if (m_prevWindowID) {
     auto host =
@@ -169,6 +174,11 @@ void WindowsModalHostComponentView::HideOnUIThread() noexcept {
   if (m_hwnd) {
     SendMessage(m_hwnd, WM_CLOSE, 0, 0);
   }
+
+  // dispatch onDismiss event
+  auto emitter = std::static_pointer_cast<const facebook::react::ModalHostViewEventEmitter>(m_eventEmitter);
+  facebook::react::ModalHostViewEventEmitter::OnDismiss onDismissArgs;
+  emitter->onDismiss(onDismissArgs);
 
   // enable input to parent
   EnableWindow(m_parentHwnd, true);
@@ -326,6 +336,9 @@ void WindowsModalHostComponentView::updateProps(
       *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(oldProps ? oldProps : viewProps());
   const auto &newModalProps = *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(props);
   newModalProps.visible ? m_isVisible = true : m_isVisible = false;
+  if (!m_isVisible) {
+    HideOnUIThread();
+  }
   base_type::updateProps(props, oldProps);
 }
 
