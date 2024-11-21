@@ -4,9 +4,9 @@
 #pragma once
 
 #include <Logging.h>
-#include <react/bridging/LongLivedObject.h>
 #include <cxxreact/CxxModule.h>
 #include <cxxreact/JSBigString.h>
+#include <react/bridging/LongLivedObject.h>
 #include <map>
 #include <memory>
 #include <string>
