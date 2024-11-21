@@ -17,6 +17,7 @@ import NativeCxxModuleExample, {
 } from '../../../NativeCxxModuleExample/NativeCxxModuleExample';
 import RNTesterText from '../../components/RNTesterText';
 import styles from './TurboModuleExampleCommon';
+import RNTesterText from '../../components/RNTesterText';
 import * as React from 'react';
 import {
   DeviceEventEmitter,

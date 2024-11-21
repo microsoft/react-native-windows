@@ -13,6 +13,7 @@ import type {EventSubscription} from 'react-native/Libraries/vendor/emitter/Even
 
 import RNTesterText from '../../components/RNTesterText';
 import styles from './TurboModuleExampleCommon';
+import RNTesterText from '../../components/RNTesterText';
 import * as React from 'react';
 import {FlatList, RootTagContext, TouchableOpacity, View} from 'react-native';
 import NativeSampleTurboModule from 'react-native/Libraries/TurboModule/samples/NativeSampleTurboModule';

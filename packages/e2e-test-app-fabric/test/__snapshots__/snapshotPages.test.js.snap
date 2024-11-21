@@ -7343,17 +7343,46 @@ exports[`snapshotAllPages Animated 13`] = `
 </View>
 `;
 
-exports[`snapshotAllPages AppState 1`] = `<Text />`;
+exports[`snapshotAllPages AppState 1`] = `
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
+/>
+`;
 
 exports[`snapshotAllPages AppState 2`] = `
 <View>
-  <Text />
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  />
 </View>
 `;
 
 exports[`snapshotAllPages AppState 3`] = `
 <View>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     []
   </Text>
 </View>
@@ -7361,7 +7390,16 @@ exports[`snapshotAllPages AppState 3`] = `
 
 exports[`snapshotAllPages AppState 4`] = `
 <View>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     0
   </Text>
 </View>
@@ -7369,7 +7407,16 @@ exports[`snapshotAllPages AppState 4`] = `
 
 exports[`snapshotAllPages AppState 5`] = `
 <View>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     []
   </Text>
 </View>
@@ -10435,7 +10482,16 @@ exports[`snapshotAllPages DevSettings 2`] = `
 `;
 
 exports[`snapshotAllPages Dimensions 1`] = `
-<Text>
+<Text
+  style={
+    [
+      {
+        "color": "#3c3c4399",
+      },
+      undefined,
+    ]
+  }
+>
   {
   "fontScale": 2,
   "height": 1334,
@@ -10446,7 +10502,16 @@ exports[`snapshotAllPages Dimensions 1`] = `
 `;
 
 exports[`snapshotAllPages Dimensions 2`] = `
-<Text>
+<Text
+  style={
+    [
+      {
+        "color": "#3c3c4399",
+      },
+      undefined,
+    ]
+  }
+>
   {
   "fontScale": 2,
   "height": 1334,
@@ -10457,7 +10522,16 @@ exports[`snapshotAllPages Dimensions 2`] = `
 `;
 
 exports[`snapshotAllPages Dimensions 3`] = `
-<Text>
+<Text
+  style={
+    [
+      {
+        "color": "#3c3c4399",
+      },
+      undefined,
+    ]
+  }
+>
   {
   "fontScale": 2,
   "height": 1334,
@@ -23434,15 +23508,38 @@ exports[`snapshotAllPages Glyph UWP 1`] = `
 
 exports[`snapshotAllPages Keyboard 1`] = `
 <View>
-  <Text>
-    <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Keyboard is 
     </Text>
     <Text
       style={
-        {
-          "color": "red",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "red",
+          },
+        ]
       }
     >
       closed
@@ -23457,7 +23554,16 @@ exports[`snapshotAllPages Keyboard 1`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       No events observed
     </Text>
   </View>
@@ -23466,15 +23572,38 @@ exports[`snapshotAllPages Keyboard 1`] = `
 
 exports[`snapshotAllPages Keyboard 2`] = `
 <View>
-  <Text>
-    <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Keyboard is 
     </Text>
     <Text
       style={
-        {
-          "color": "red",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "red",
+          },
+        ]
       }
     >
       closed
@@ -23489,7 +23618,16 @@ exports[`snapshotAllPages Keyboard 2`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       No events observed
     </Text>
   </View>
@@ -24303,7 +24441,16 @@ exports[`snapshotAllPages Layout - Flexbox 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             row
           </Text>
           <View
@@ -24378,7 +24525,16 @@ exports[`snapshotAllPages Layout - Flexbox 1`] = `
               }
             />
           </View>
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             row-reverse
           </Text>
           <View
@@ -24453,7 +24609,16 @@ exports[`snapshotAllPages Layout - Flexbox 1`] = `
               }
             />
           </View>
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             column
           </Text>
           <View
@@ -24528,7 +24693,16 @@ exports[`snapshotAllPages Layout - Flexbox 1`] = `
               }
             />
           </View>
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             column-reverse
           </Text>
           <View
@@ -24621,7 +24795,18 @@ exports[`snapshotAllPages Layout - Flexbox 1`] = `
               ]
             }
           >
-            <Text>
+            <Text
+              style={
+                [
+                  {
+                    "color": "#000000ff",
+                  },
+                  {
+                    "color": "black",
+                  },
+                ]
+              }
+            >
               top: 15, left: 160
             </Text>
           </View>
@@ -24678,7 +24863,16 @@ exports[`snapshotAllPages Layout - Flexbox 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             flex-start
           </Text>
           <View
@@ -24753,7 +24947,16 @@ exports[`snapshotAllPages Layout - Flexbox 1`] = `
               }
             />
           </View>
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             center
           </Text>
           <View
@@ -24828,7 +25031,16 @@ exports[`snapshotAllPages Layout - Flexbox 1`] = `
               }
             />
           </View>
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             flex-end
           </Text>
           <View
@@ -24903,7 +25115,16 @@ exports[`snapshotAllPages Layout - Flexbox 1`] = `
               }
             />
           </View>
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             space-between
           </Text>
           <View
@@ -24978,7 +25199,16 @@ exports[`snapshotAllPages Layout - Flexbox 1`] = `
               }
             />
           </View>
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             space-around
           </Text>
           <View
@@ -25106,7 +25336,16 @@ exports[`snapshotAllPages Layout - Flexbox 1`] = `
             }
           }
         >
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             flex-start
           </Text>
           <View
@@ -25314,7 +25553,16 @@ exports[`snapshotAllPages Layout - Flexbox 1`] = `
               }
             />
           </View>
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             center
           </Text>
           <View
@@ -25522,7 +25770,16 @@ exports[`snapshotAllPages Layout - Flexbox 1`] = `
               }
             />
           </View>
-          <Text>
+          <Text
+            style={
+              [
+                {
+                  "color": "#000000ff",
+                },
+                undefined,
+              ]
+            }
+          >
             flex-end
           </Text>
           <View
@@ -25985,14 +26242,28 @@ exports[`snapshotAllPages Layout - Flexbox 1`] = `
 
 exports[`snapshotAllPages Layout Events 1`] = `
 <View>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     layout events are called on mount and whenever layout is recalculated. Note that the layout event will typically be received
      
     <Text
       style={
-        {
-          "fontStyle": "italic",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontStyle": "italic",
+          },
+        ]
       }
     >
       before
@@ -26002,9 +26273,14 @@ exports[`snapshotAllPages Layout Events 1`] = `
     <Text
       onPress={[Function]}
       style={
-        {
-          "fontWeight": "bold",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontWeight": "bold",
+          },
+        ]
       }
     >
       Press here to change layout.
@@ -26042,7 +26318,16 @@ exports[`snapshotAllPages Layout Events 1`] = `
         }
       }
     />
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       ViewLayout:
        
       undefined
@@ -26052,16 +26337,30 @@ exports[`snapshotAllPages Layout Events 1`] = `
     <Text
       onLayout={[Function]}
       style={
-        {
-          "alignSelf": "flex-start",
-          "borderColor": "rgba(0, 0, 255, 0.2)",
-          "borderWidth": 0.5,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignSelf": "flex-start",
+            "borderColor": "rgba(0, 0, 255, 0.2)",
+            "borderWidth": 0.5,
+          },
+        ]
       }
     >
       A simple piece of text.
     </Text>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       
 
       Text w/h: 
@@ -27274,9 +27573,14 @@ exports[`snapshotAllPages Linking 1`] = `
       >
         <Text
           style={
-            {
-              "color": "white",
-            }
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "color": "white",
+              },
+            ]
           }
         >
           Open 
@@ -27335,9 +27639,14 @@ exports[`snapshotAllPages Linking 1`] = `
       >
         <Text
           style={
-            {
-              "color": "white",
-            }
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "color": "white",
+              },
+            ]
           }
         >
           Open 
@@ -27396,9 +27705,14 @@ exports[`snapshotAllPages Linking 1`] = `
       >
         <Text
           style={
-            {
-              "color": "white",
-            }
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "color": "white",
+              },
+            ]
           }
         >
           Open 
@@ -27457,9 +27771,14 @@ exports[`snapshotAllPages Linking 1`] = `
       >
         <Text
           style={
-            {
-              "color": "white",
-            }
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "color": "white",
+              },
+            ]
           }
         >
           Open 
@@ -27518,9 +27837,14 @@ exports[`snapshotAllPages Linking 1`] = `
       >
         <Text
           style={
-            {
-              "color": "white",
-            }
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "color": "white",
+              },
+            ]
           }
         >
           Open 
@@ -27579,9 +27903,14 @@ exports[`snapshotAllPages Linking 1`] = `
       >
         <Text
           style={
-            {
-              "color": "white",
-            }
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "color": "white",
+              },
+            ]
           }
         >
           Open 
@@ -27745,10 +28074,15 @@ exports[`snapshotAllPages Modal 1`] = `
   >
     <Text
       style={
-        {
-          "fontWeight": "bold",
-          "margin": 3,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontWeight": "bold",
+            "margin": 3,
+          },
+        ]
       }
     >
       Animation Type
@@ -27990,10 +28324,15 @@ exports[`snapshotAllPages Modal 1`] = `
   >
     <Text
       style={
-        {
-          "fontWeight": "bold",
-          "margin": 3,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontWeight": "bold",
+            "margin": 3,
+          },
+        ]
       }
     >
       Status Bar Translucent 🟢
@@ -28028,10 +28367,15 @@ exports[`snapshotAllPages Modal 1`] = `
   >
     <Text
       style={
-        {
-          "fontWeight": "bold",
-          "margin": 3,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontWeight": "bold",
+            "margin": 3,
+          },
+        ]
       }
     >
       Hardware Acceleration 🟢
@@ -28063,10 +28407,15 @@ exports[`snapshotAllPages Modal 1`] = `
   >
     <Text
       style={
-        {
-          "fontWeight": "bold",
-          "margin": 3,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontWeight": "bold",
+            "margin": 3,
+          },
+        ]
       }
     >
       Presentation Style ⚫️
@@ -28408,10 +28757,15 @@ exports[`snapshotAllPages Modal 1`] = `
     >
       <Text
         style={
-          {
-            "fontWeight": "bold",
-            "margin": 3,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+              "margin": 3,
+            },
+          ]
         }
       >
         Transparent
@@ -28444,10 +28798,15 @@ exports[`snapshotAllPages Modal 1`] = `
   >
     <Text
       style={
-        {
-          "fontWeight": "bold",
-          "margin": 3,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontWeight": "bold",
+            "margin": 3,
+          },
+        ]
       }
     >
       Supported Orientation ⚫️
@@ -28858,10 +29217,15 @@ exports[`snapshotAllPages Modal 1`] = `
   >
     <Text
       style={
-        {
-          "fontWeight": "bold",
-          "margin": 3,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontWeight": "bold",
+            "margin": 3,
+          },
+        ]
       }
     >
       Actions
@@ -29023,6 +29387,253 @@ exports[`snapshotAllPages Modal 1`] = `
       </View>
     </View>
   </View>
+  <View
+    style={
+      {
+        "borderBottomWidth": 1,
+        "borderColor": "rgba(0,0,0, 0.1)",
+        "padding": 6,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontWeight": "bold",
+            "margin": 3,
+          },
+        ]
+      }
+    >
+      Backdrop Color ⚫️
+    </Text>
+    <View
+      style={
+        {
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              null,
+              null,
+              null,
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            red
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": false,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              null,
+              null,
+              null,
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            blue
+          </Text>
+        </View>
+      </View>
+      <View
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": false,
+            "expanded": undefined,
+            "selected": true,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        disabled={false}
+        focusable={true}
+        hitSlop={4}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+      >
+        <View
+          style={
+            [
+              {
+                "borderColor": "#005dffff",
+              },
+              {
+                "alignItems": "center",
+                "borderRadius": 16,
+                "borderWidth": 1,
+                "padding": 6,
+                "paddingHorizontal": 10,
+              },
+              {
+                "backgroundColor": "rgba(100,215,255,.3)",
+                "borderColor": "rgba(100,215,255,.3)",
+              },
+              null,
+              null,
+              {
+                "marginRight": 8,
+                "marginTop": 6,
+              },
+            ]
+          }
+        >
+          <Text
+            style={
+              {
+                "color": "#3c3c4399",
+              }
+            }
+          >
+            default
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
 </View>
 `;
 
@@ -29037,6 +29648,14 @@ exports[`snapshotAllPages Modal 2`] = `
   }
 >
   <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
     testID="on-show-count"
   >
     onShow is called 
@@ -29044,6 +29663,14 @@ exports[`snapshotAllPages Modal 2`] = `
      times
   </Text>
   <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
     testID="on-dismiss-count"
   >
     onDismiss is called 
@@ -29629,7 +30256,16 @@ exports[`snapshotAllPages Native Animated Example 1`] = `
   onStartShouldSetResponder={[Function]}
 >
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Native:
     </Text>
   </View>
@@ -29665,7 +30301,16 @@ exports[`snapshotAllPages Native Animated Example 1`] = `
     />
   </View>
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       JavaScript
       :
     </Text>
@@ -29730,7 +30375,16 @@ exports[`snapshotAllPages Native Animated Example 2`] = `
   onStartShouldSetResponder={[Function]}
 >
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Native:
     </Text>
   </View>
@@ -29763,7 +30417,16 @@ exports[`snapshotAllPages Native Animated Example 2`] = `
     />
   </View>
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       JavaScript
       :
     </Text>
@@ -29825,7 +30488,16 @@ exports[`snapshotAllPages Native Animated Example 3`] = `
   onStartShouldSetResponder={[Function]}
 >
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Native:
     </Text>
   </View>
@@ -29858,7 +30530,16 @@ exports[`snapshotAllPages Native Animated Example 3`] = `
     />
   </View>
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       JavaScript
       :
     </Text>
@@ -29920,7 +30601,16 @@ exports[`snapshotAllPages Native Animated Example 4`] = `
   onStartShouldSetResponder={[Function]}
 >
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Native:
     </Text>
   </View>
@@ -29949,7 +30639,16 @@ exports[`snapshotAllPages Native Animated Example 4`] = `
     />
   </View>
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       JavaScript
       :
     </Text>
@@ -30007,7 +30706,16 @@ exports[`snapshotAllPages Native Animated Example 5`] = `
   onStartShouldSetResponder={[Function]}
 >
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Native:
     </Text>
   </View>
@@ -30032,7 +30740,16 @@ exports[`snapshotAllPages Native Animated Example 5`] = `
     />
   </View>
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       JavaScript
       :
     </Text>
@@ -30086,7 +30803,16 @@ exports[`snapshotAllPages Native Animated Example 6`] = `
   onStartShouldSetResponder={[Function]}
 >
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Native:
     </Text>
   </View>
@@ -30115,7 +30841,16 @@ exports[`snapshotAllPages Native Animated Example 6`] = `
     />
   </View>
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       JavaScript
       :
     </Text>
@@ -30173,7 +30908,16 @@ exports[`snapshotAllPages Native Animated Example 7`] = `
   onStartShouldSetResponder={[Function]}
 >
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Native:
     </Text>
   </View>
@@ -30202,7 +30946,16 @@ exports[`snapshotAllPages Native Animated Example 7`] = `
     />
   </View>
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       JavaScript
       :
     </Text>
@@ -30260,7 +31013,16 @@ exports[`snapshotAllPages Native Animated Example 8`] = `
   onStartShouldSetResponder={[Function]}
 >
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Native:
     </Text>
   </View>
@@ -30289,7 +31051,16 @@ exports[`snapshotAllPages Native Animated Example 8`] = `
     />
   </View>
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       JavaScript
       :
     </Text>
@@ -30347,7 +31118,16 @@ exports[`snapshotAllPages Native Animated Example 9`] = `
   onStartShouldSetResponder={[Function]}
 >
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Native:
     </Text>
   </View>
@@ -30376,7 +31156,16 @@ exports[`snapshotAllPages Native Animated Example 9`] = `
     />
   </View>
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       JavaScript
       :
     </Text>
@@ -30453,7 +31242,16 @@ exports[`snapshotAllPages Native Animated Example 10`] = `
       }
     />
   </View>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     Value: 
     0
   </Text>
@@ -30523,7 +31321,18 @@ exports[`snapshotAllPages Native Animated Example 12`] = `
           }
         }
       >
-        <Text>
+        <Text
+          style={
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "color": "black",
+              },
+            ]
+          }
+        >
           Scroll me sideways!
         </Text>
       </View>
@@ -30558,7 +31367,16 @@ exports[`snapshotAllPages Native Animated Example 13`] = `
   onStartShouldSetResponder={[Function]}
 >
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Native:
     </Text>
   </View>
@@ -30605,7 +31423,16 @@ exports[`snapshotAllPages Native Animated Example 13`] = `
     />
   </View>
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       JavaScript
       :
     </Text>
@@ -30666,7 +31493,16 @@ exports[`snapshotAllPages Native Animated Example 14`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Force JS Stalls
     </Text>
     <RCTSwitch
@@ -30694,7 +31530,16 @@ exports[`snapshotAllPages Native Animated Example 14`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Track JS Stalls
     </Text>
     <RCTSwitch
@@ -30915,27 +31760,36 @@ exports[`snapshotAllPages Performance API Examples 1`] = `
   <View>
     <Text
       style={
-        {
-          "color": "#000000ff",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
       }
     >
       jsHeapSizeLimit: undefined bytes
     </Text>
     <Text
       style={
-        {
-          "color": "#000000ff",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
       }
     >
       totalJSHeapSize: undefined bytes
     </Text>
     <Text
       style={
-        {
-          "color": "#000000ff",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
       }
     >
       usedJSHeapSize: undefined bytes
@@ -31037,54 +31891,72 @@ exports[`snapshotAllPages Performance API Examples 2`] = `
   <View>
     <Text
       style={
-        {
-          "color": "#000000ff",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
       }
     >
       startTime: undefined ms
     </Text>
     <Text
       style={
-        {
-          "color": "#000000ff",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
       }
     >
       initializeRuntimeStart: undefined ms
     </Text>
     <Text
       style={
-        {
-          "color": "#000000ff",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
       }
     >
       executeJavaScriptBundleEntryPointStart: undefined ms
     </Text>
     <Text
       style={
-        {
-          "color": "#000000ff",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
       }
     >
       executeJavaScriptBundleEntryPointEnd: undefined ms
     </Text>
     <Text
       style={
-        {
-          "color": "#000000ff",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
       }
     >
       initializeRuntimeEnd: undefined ms
     </Text>
     <Text
       style={
-        {
-          "color": "#000000ff",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
       }
     >
       endTime: undefined ms
@@ -32268,7 +33140,6 @@ exports[`snapshotAllPages PixelRatio 1`] = `
       {
         "alignItems": "center",
         "backfaceVisibility": "hidden",
-        "height": 200,
         "justifyContent": "center",
         "width": 200,
       }
@@ -32375,7 +33246,6 @@ exports[`snapshotAllPages PixelRatio 2`] = `
       {
         "alignItems": "center",
         "backfaceVisibility": "hidden",
-        "height": 200,
         "justifyContent": "center",
         "width": 200,
       }
@@ -32482,7 +33352,6 @@ exports[`snapshotAllPages PixelRatio 3`] = `
       {
         "alignItems": "center",
         "backfaceVisibility": "hidden",
-        "height": 200,
         "justifyContent": "center",
         "width": 200,
       }
@@ -32498,12 +33367,18 @@ exports[`snapshotAllPages PixelRatio 3`] = `
     >
       <Text
         style={
-          {
-            "fontWeight": "bold",
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
         }
       >
-        Layout Size(dp): 
+        Layout Size(dp):
+         
       </Text>
       <TextInput
         keyboardType="numeric"
@@ -32538,14 +33413,28 @@ exports[`snapshotAllPages PixelRatio 3`] = `
     >
       <Text
         style={
-          {
-            "fontWeight": "bold",
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
         }
       >
         Pixel Size: 
       </Text>
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         0
         px
       </Text>
@@ -32569,7 +33458,6 @@ exports[`snapshotAllPages PixelRatio 4`] = `
       {
         "alignItems": "center",
         "backfaceVisibility": "hidden",
-        "height": 200,
         "justifyContent": "center",
         "width": 200,
       }
@@ -32585,12 +33473,18 @@ exports[`snapshotAllPages PixelRatio 4`] = `
     >
       <Text
         style={
-          {
-            "fontWeight": "bold",
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
         }
       >
-        Layout Size(dp): 
+        Layout Size(dp):
+         
       </Text>
       <TextInput
         keyboardType="numeric"
@@ -32625,14 +33519,29 @@ exports[`snapshotAllPages PixelRatio 4`] = `
     >
       <Text
         style={
-          {
-            "fontWeight": "bold",
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontWeight": "bold",
+            },
+          ]
         }
       >
-        Nearest Layout Size: 
+        Nearest Layout Size:
+         
       </Text>
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         0
         dp
       </Text>
@@ -32671,11 +33580,15 @@ exports[`snapshotAllPages PlatformColor 2`] = `
   >
     <Text
       style={
-        {
-          "alignItems": "stretch",
-          "color": "black",
-          "flex": 1,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
       }
     >
       Unexpected Platform.OS: windows
@@ -32697,11 +33610,15 @@ exports[`snapshotAllPages PlatformColor 2`] = `
 exports[`snapshotAllPages PlatformColor 3`] = `
 <Text
   style={
-    {
-      "alignItems": "stretch",
-      "color": "black",
-      "flex": 1,
-    }
+    [
+      {
+        "color": "#000000ff",
+      },
+      {
+        "alignItems": "stretch",
+        "flex": 1,
+      },
+    ]
   }
 >
   Not applicable on this platform
@@ -32727,11 +33644,15 @@ exports[`snapshotAllPages PlatformColor 4`] = `
   >
     <Text
       style={
-        {
-          "alignItems": "stretch",
-          "color": "black",
-          "flex": 1,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "alignItems": "stretch",
+            "flex": 1,
+          },
+        ]
       }
     >
       Unexpected Platform.OS: windows
@@ -34390,7 +35311,7 @@ exports[`snapshotAllPages Pressable 1`] = `
       <Text
         style={
           {
-            "fontSize": 16,
+            "color": "#007AFF",
           }
         }
         testID="one_press_me_button"
@@ -35337,7 +36258,13 @@ exports[`snapshotAllPages Pressable 11`] = `
   >
     <View />
   </View>
-  <Text>
+  <Text
+    style={
+      {
+        "color": "#007AFF",
+      }
+    }
+  >
     Native Methods Exist
   </Text>
 </View>
@@ -40030,11 +40957,16 @@ exports[`snapshotAllPages ScrollView 2`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 16,
-          "fontWeight": "bold",
-          "margin": 5,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 16,
+            "fontWeight": "bold",
+            "margin": 5,
+          },
+        ]
       }
     >
       LTR Layout
@@ -40389,11 +41321,16 @@ exports[`snapshotAllPages ScrollView 3`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 16,
-          "fontWeight": "bold",
-          "margin": 5,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 16,
+            "fontWeight": "bold",
+            "margin": 5,
+          },
+        ]
       }
     >
       RTL Layout
@@ -40969,8 +41906,18 @@ exports[`snapshotAllPages ScrollView 4`] = `
       </View>
     </View>
   </RCTScrollView>
-  <Text>
-    Scrolling enabled = true
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
+    Scrolling enabled = 
+    true
   </Text>
   <View
     accessibilityState={
@@ -43952,11 +44899,16 @@ exports[`snapshotAllPages ScrollView 11`] = `
   </RCTScrollView>
   <Text
     style={
-      {
-        "alignSelf": "center",
-        "flex": 1,
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "alignSelf": "center",
+          "flex": 1,
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Keyboard Dismiss Mode
@@ -44070,11 +45022,16 @@ exports[`snapshotAllPages ScrollView 11`] = `
   </View>
   <Text
     style={
-      {
-        "alignSelf": "center",
-        "flex": 1,
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "alignSelf": "center",
+          "flex": 1,
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Keyboard Should Persist taps
@@ -44240,7 +45197,16 @@ exports[`snapshotAllPages ScrollView 11`] = `
 
 exports[`snapshotAllPages ScrollView 12`] = `
 <View>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     Content Size Changed: 
     original
   </Text>
@@ -44532,7 +45498,16 @@ exports[`snapshotAllPages ScrollView 12`] = `
 
 exports[`snapshotAllPages ScrollView 13`] = `
 <View>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     Scroll State: 
     none
   </Text>
@@ -44776,7 +45751,16 @@ exports[`snapshotAllPages ScrollView 13`] = `
 
 exports[`snapshotAllPages ScrollView 14`] = `
 <View>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     onScroll: 
     none
   </Text>
@@ -61136,16 +62120,30 @@ exports[`snapshotAllPages Share 1`] = `
 >
   <Text
     style={
-      {
-        "fontSize": 30,
-        "margin": 10,
-        "textAlign": "center",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 30,
+          "margin": 10,
+          "textAlign": "center",
+        },
+      ]
     }
   >
     Native Experience
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     Our top priority for React Native is to match the expectations people have for each platform. This is why React Native renders to platform primitives. We value native look-and-feel over cross-platform consistency. For example, the TextInput in React Native renders to a UITextField on iOS. This ensures that integration with password managers and keyboard controls work out of the box. By using platform primitives, React Native apps are also able to stay up-to-date with design and behavior changes from new releases of Android and iOS.
   </Text>
   <View
@@ -61245,16 +62243,30 @@ exports[`snapshotAllPages Share 2`] = `
 >
   <Text
     style={
-      {
-        "fontSize": 30,
-        "margin": 10,
-        "textAlign": "center",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 30,
+          "margin": 10,
+          "textAlign": "center",
+        },
+      ]
     }
   >
     Massive Scale
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     Hundreds of screens in the Facebook app are implemented with React Native. The Facebook app is used by billions of people on a huge range of devices. This is why we invest in the most challenging problems at scale. Deploying React Native in our apps lets us identify problems that we wouldn’t see at a smaller scale. For example, Facebook focuses on improving performance across a broad spectrum of devices from the newest iPhone to many older generations of Android devices. This focus informs our architecture projects such as Hermes, Fabric, and TurboModules.
   </Text>
   <View
@@ -61352,22 +62364,45 @@ exports[`snapshotAllPages Share 3`] = `
     }
   }
 >
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     action: 
     null
   </Text>
   <Text
     style={
-      {
-        "fontSize": 30,
-        "margin": 10,
-        "textAlign": "center",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 30,
+          "margin": 10,
+          "textAlign": "center",
+        },
+      ]
     }
   >
     Create native apps
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     React Native combines the best parts of native development with React, a best-in-class JavaScript library for building user interfaces.
   </Text>
   <View
@@ -62069,6 +63104,14 @@ exports[`snapshotAllPages Switch 1`] = `
       value={false}
     />
     <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
       testID="on-off-initial-off-indicator"
     >
       Off
@@ -62101,6 +63144,14 @@ exports[`snapshotAllPages Switch 1`] = `
       value={true}
     />
     <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
       testID="on-off-initial-on-indicator"
     >
       On
@@ -62139,6 +63190,14 @@ exports[`snapshotAllPages Switch 2`] = `
       value={false}
     />
     <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
       testID="disabled-initial-off-indicator"
     >
       Off
@@ -62172,6 +63231,14 @@ exports[`snapshotAllPages Switch 2`] = `
       value={true}
     />
     <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
       testID="disabled-initial-on-indicator"
     >
       On
@@ -62233,6 +63300,14 @@ exports[`snapshotAllPages Switch 3`] = `
       value={false}
     />
     <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
       testID="event-switch-indicator"
     >
       Off
@@ -62282,6 +63357,14 @@ exports[`snapshotAllPages Switch 3`] = `
       value={true}
     />
     <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
       testID="event-switch-regression-indicator"
     >
       On
@@ -75247,7 +76330,16 @@ exports[`snapshotAllPages Timers 3`] = `
         Stop background task
       </Text>
     </View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       -
     </Text>
   </View>
@@ -75588,9 +76680,14 @@ exports[`snapshotAllPages Touchable* and onPress 1`] = `
       >
         <Text
           style={
-            {
-              "fontSize": 16,
-            }
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "fontSize": 16,
+              },
+            ]
           }
         >
           Tap Here For Custom Highlight!
@@ -75601,7 +76698,6 @@ exports[`snapshotAllPages Touchable* and onPress 1`] = `
   <View
     style={
       {
-        "backgroundColor": "#f9f9f9",
         "borderColor": "#f0f0f0",
         "borderWidth": 0.5,
         "margin": 10,
@@ -75610,6 +76706,14 @@ exports[`snapshotAllPages Touchable* and onPress 1`] = `
     }
   >
     <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
       testID="touchable_highlight_console"
     />
   </View>
@@ -75651,9 +76755,14 @@ exports[`snapshotAllPages Touchable* and onPress 2`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 16,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 16,
+          },
+        ]
       }
     >
       Tap Here For No Feedback!
@@ -75662,7 +76771,6 @@ exports[`snapshotAllPages Touchable* and onPress 2`] = `
   <View
     style={
       {
-        "backgroundColor": "#f9f9f9",
         "borderColor": "#f0f0f0",
         "borderWidth": 0.5,
         "margin": 10,
@@ -75671,6 +76779,14 @@ exports[`snapshotAllPages Touchable* and onPress 2`] = `
     }
   >
     <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
       testID="touchable_without_feedback_console"
     />
   </View>
@@ -75763,7 +76879,6 @@ exports[`snapshotAllPages Touchable* and onPress 4`] = `
   onStartShouldSetResponder={[Function]}
   style={
     {
-      "backgroundColor": "#f9f9f9",
       "borderColor": "#f0f0f0",
       "borderWidth": 0.5,
       "margin": 10,
@@ -75773,10 +76888,15 @@ exports[`snapshotAllPages Touchable* and onPress 4`] = `
 >
   <Text
     style={
-      {
-        "color": "blue",
-        "fontWeight": "500",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "color": "blue",
+          "fontWeight": "500",
+        },
+      ]
     }
   >
     Underlay not visible
@@ -75812,7 +76932,16 @@ exports[`snapshotAllPages Touchable* and onPress 6`] = `
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
 >
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     This touchable is not focused.
     
 
@@ -75826,10 +76955,15 @@ exports[`snapshotAllPages Touchable* and onPress 7`] = `
   <Text
     onPress={[Function]}
     style={
-      {
-        "color": "blue",
-        "fontWeight": "500",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "color": "blue",
+          "fontWeight": "500",
+        },
+      ]
     }
     testID="tappable_text"
   >
@@ -75838,7 +76972,6 @@ exports[`snapshotAllPages Touchable* and onPress 7`] = `
   <View
     style={
       {
-        "backgroundColor": "#f9f9f9",
         "borderColor": "#f0f0f0",
         "borderWidth": 0.5,
         "margin": 10,
@@ -75847,6 +76980,14 @@ exports[`snapshotAllPages Touchable* and onPress 7`] = `
     }
   >
     <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
       testID="tappable_text_console"
     />
   </View>
@@ -75916,9 +77057,14 @@ exports[`snapshotAllPages Touchable* and onPress 8`] = `
     >
       <Text
         style={
-          {
-            "color": "#007AFF",
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "color": "#007AFF",
+            },
+          ]
         }
       >
         Press Me
@@ -75928,7 +77074,6 @@ exports[`snapshotAllPages Touchable* and onPress 8`] = `
   <View
     style={
       {
-        "backgroundColor": "#f9f9f9",
         "borderColor": "#f0f0f0",
         "borderWidth": 0.5,
         "height": 120,
@@ -76002,9 +77147,14 @@ exports[`snapshotAllPages Touchable* and onPress 9`] = `
     >
       <Text
         style={
-          {
-            "color": "#007AFF",
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "color": "#007AFF",
+            },
+          ]
         }
       >
         Press Me
@@ -76014,7 +77164,6 @@ exports[`snapshotAllPages Touchable* and onPress 9`] = `
   <View
     style={
       {
-        "backgroundColor": "#f9f9f9",
         "borderColor": "#f0f0f0",
         "borderWidth": 0.5,
         "height": 120,
@@ -76044,7 +77193,16 @@ exports[`snapshotAllPages Touchable* and onPress 10`] = `
     }
     testID="touchable_3dtouch_output"
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       3D Touch is not available on this device
     </Text>
   </View>
@@ -76074,9 +77232,14 @@ exports[`snapshotAllPages Touchable* and onPress 10`] = `
     >
       <Text
         style={
-          {
-            "color": "#007AFF",
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "color": "#007AFF",
+            },
+          ]
         }
       >
         Press Me
@@ -76156,9 +77319,14 @@ exports[`snapshotAllPages Touchable* and onPress 11`] = `
     >
       <Text
         style={
-          {
-            "color": "white",
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "color": "white",
+            },
+          ]
         }
       >
         Press Outside This View
@@ -76168,7 +77336,6 @@ exports[`snapshotAllPages Touchable* and onPress 11`] = `
   <View
     style={
       {
-        "backgroundColor": "#f9f9f9",
         "borderColor": "#f0f0f0",
         "borderWidth": 0.5,
         "margin": 10,
@@ -76176,7 +77343,16 @@ exports[`snapshotAllPages Touchable* and onPress 11`] = `
       }
     }
   >
-    <Text />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    />
   </View>
 </View>
 `;
@@ -76223,7 +77399,16 @@ exports[`snapshotAllPages Touchable* and onPress 12`] = `
     >
       <View />
     </View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       TouchableHighlight: 
       Native Methods Exist
     </Text>
@@ -76283,7 +77468,16 @@ exports[`snapshotAllPages Touchable* and onPress 12`] = `
     >
       <View />
     </View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       TouchableOpacity: 
       Native Methods Exist
     </Text>
@@ -76341,10 +77535,15 @@ exports[`snapshotAllPages Touchable* and onPress 14`] = `
   >
     <Text
       style={
-        {
-          "color": "#007AFF",
-          "opacity": 0.5,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "#007AFF",
+            "opacity": 0.5,
+          },
+        ]
       }
     >
       Disabled TouchableOpacity
@@ -76396,9 +77595,14 @@ exports[`snapshotAllPages Touchable* and onPress 14`] = `
   >
     <Text
       style={
-        {
-          "color": "#007AFF",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "#007AFF",
+          },
+        ]
       }
     >
       Enabled TouchableOpacity
@@ -76448,10 +77652,15 @@ exports[`snapshotAllPages Touchable* and onPress 14`] = `
   >
     <Text
       style={
-        {
-          "color": "#007AFF",
-          "opacity": 0.5,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "#007AFF",
+            "opacity": 0.5,
+          },
+        ]
       }
     >
       Disabled TouchableHighlight
@@ -76495,9 +77704,14 @@ exports[`snapshotAllPages Touchable* and onPress 14`] = `
   >
     <Text
       style={
-        {
-          "color": "#007AFF",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "#007AFF",
+          },
+        ]
       }
     >
       Enabled TouchableHighlight
@@ -76537,16 +77751,21 @@ exports[`snapshotAllPages Touchable* and onPress 14`] = `
       style={
         [
           {
-            "color": "#007AFF",
+            "color": "#000000ff",
           },
-          {
-            "margin": 10,
-            "textAlign": "center",
-          },
-          {
-            "color": "#007AFF",
-            "opacity": 0.5,
-          },
+          [
+            {
+              "color": "#007AFF",
+            },
+            {
+              "margin": 10,
+              "textAlign": "center",
+            },
+            {
+              "color": "#007AFF",
+              "opacity": 0.5,
+            },
+          ],
         ]
       }
     >
@@ -76587,12 +77806,17 @@ exports[`snapshotAllPages Touchable* and onPress 14`] = `
       style={
         [
           {
-            "color": "#007AFF",
+            "color": "#000000ff",
           },
-          {
-            "margin": 10,
-            "textAlign": "center",
-          },
+          [
+            {
+              "color": "#007AFF",
+            },
+            {
+              "margin": 10,
+              "textAlign": "center",
+            },
+          ],
         ]
       }
     >
@@ -76635,7 +77859,16 @@ exports[`snapshotAllPages Touchable* and onPress 15`] = `
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Touchable Highlight (Control 1 in Set of 3)
     </Text>
   </View>
@@ -76682,7 +77915,16 @@ exports[`snapshotAllPages Touchable* and onPress 15`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Touchable Opacity (Control 2 in Set of 3)
     </Text>
   </View>
@@ -76712,6 +77954,14 @@ exports[`snapshotAllPages Touchable* and onPress 15`] = `
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
   >
     TouchableWithoutFeedback (Control 3 in Set of 3)
   </Text>
@@ -77188,9 +78438,14 @@ exports[`snapshotAllPages View 1`] = `
 >
   <Text
     style={
-      {
-        "fontSize": 11,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 11,
+        },
+      ]
     }
   >
     Blue background
@@ -77213,9 +78468,14 @@ exports[`snapshotAllPages View 2`] = `
 >
   <Text
     style={
-      {
-        "fontSize": 11,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 11,
+        },
+      ]
     }
   >
     5px blue border
@@ -77251,9 +78511,14 @@ exports[`snapshotAllPages View 3`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 11,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
       }
     >
       5px padding
@@ -77275,9 +78540,14 @@ exports[`snapshotAllPages View 3`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 11,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
       }
     >
       5px margin
@@ -77301,18 +78571,28 @@ exports[`snapshotAllPages View 3`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 11,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
       }
     >
       5px margin and padding,
     </Text>
     <Text
       style={
-        {
-          "fontSize": 11,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
       }
     >
       widthAutonomous=true
@@ -77338,9 +78618,14 @@ exports[`snapshotAllPages View 4`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 11,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
       }
     >
       Too much use of \`borderRadius\` (especially large radii) on anything which is scrolling may result in dropped frames. Use sparingly.
@@ -77402,9 +78687,14 @@ exports[`snapshotAllPages View 5`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 11,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 11,
+            },
+          ]
         }
       >
         Dashed border style
@@ -77427,9 +78717,14 @@ exports[`snapshotAllPages View 5`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 11,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 11,
+            },
+          ]
         }
       >
         Dotted border style
@@ -77725,10 +79020,15 @@ exports[`snapshotAllPages View 8`] = `
     >
       <Text
         style={
-          {
-            "height": 20,
-            "width": 200,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "height": 20,
+              "width": 200,
+            },
+          ]
         }
       >
         undefined
@@ -77764,10 +79064,15 @@ exports[`snapshotAllPages View 8`] = `
     >
       <Text
         style={
-          {
-            "height": 20,
-            "width": 200,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "height": 20,
+              "width": 200,
+            },
+          ]
         }
       >
         hidden
@@ -77803,10 +79108,15 @@ exports[`snapshotAllPages View 8`] = `
     >
       <Text
         style={
-          {
-            "height": 20,
-            "width": 200,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "height": 20,
+              "width": 200,
+            },
+          ]
         }
       >
         visible
@@ -77829,7 +79139,16 @@ exports[`snapshotAllPages View 9`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Opacity 0
     </Text>
   </View>
@@ -77840,7 +79159,16 @@ exports[`snapshotAllPages View 9`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Opacity 0.1
     </Text>
   </View>
@@ -77851,7 +79179,16 @@ exports[`snapshotAllPages View 9`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Opacity 0.3
     </Text>
   </View>
@@ -77862,7 +79199,16 @@ exports[`snapshotAllPages View 9`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Opacity 0.5
     </Text>
   </View>
@@ -77873,7 +79219,16 @@ exports[`snapshotAllPages View 9`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Opacity 0.7
     </Text>
   </View>
@@ -77884,7 +79239,16 @@ exports[`snapshotAllPages View 9`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Opacity 0.9
     </Text>
   </View>
@@ -77895,7 +79259,16 @@ exports[`snapshotAllPages View 9`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Opacity 1
     </Text>
   </View>
@@ -77942,9 +79315,14 @@ exports[`snapshotAllPages View 10`] = `
   <View>
     <Text
       style={
-        {
-          "paddingBottom": 10,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "paddingBottom": 10,
+          },
+        ]
       }
     >
       Blobs
@@ -77995,18 +79373,28 @@ exports[`snapshotAllPages View 10`] = `
     </View>
     <Text
       style={
-        {
-          "paddingBottom": 10,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "paddingBottom": 10,
+          },
+        ]
       }
     >
       Same blobs, but their shared container have 0.5 opacity
     </Text>
     <Text
       style={
-        {
-          "paddingBottom": 10,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "paddingBottom": 10,
+          },
+        ]
       }
     >
       Tap to 
@@ -78101,9 +79489,14 @@ exports[`snapshotAllPages View 11`] = `
   <View>
     <Text
       style={
-        {
-          "paddingBottom": 10,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "paddingBottom": 10,
+          },
+        ]
       }
     >
       Tap to flip sorting order
@@ -78126,7 +79519,16 @@ exports[`snapshotAllPages View 11`] = `
         ]
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         ZIndex 
         2
       </Text>
@@ -78149,7 +79551,16 @@ exports[`snapshotAllPages View 11`] = `
         ]
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         ZIndex 
         1
       </Text>
@@ -78172,7 +79583,16 @@ exports[`snapshotAllPages View 11`] = `
         ]
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         ZIndex 
         0
       </Text>
@@ -78195,7 +79615,16 @@ exports[`snapshotAllPages View 11`] = `
         ]
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         ZIndex 
         -1
       </Text>
@@ -78337,9 +79766,14 @@ exports[`snapshotAllPages View 13`] = `
   <View>
     <Text
       style={
-        {
-          "paddingBottom": 10,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "paddingBottom": 10,
+          },
+        ]
       }
     >
       Press to toggle \`display: none\`
@@ -78407,9 +79841,14 @@ exports[`snapshotAllPages View 14`] = `
 >
   <Text
     style={
-      {
-        "paddingBottom": 10,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "paddingBottom": 10,
+        },
+      ]
     }
   >
     View #1, front is visible, back is hidden.
@@ -78434,7 +79873,16 @@ exports[`snapshotAllPages View 14`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         Front
       </Text>
     </View>
@@ -78457,16 +79905,30 @@ exports[`snapshotAllPages View 14`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         Back (You should not see this)
       </Text>
     </View>
   </View>
   <Text
     style={
-      {
-        "paddingVertical": 10,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "paddingVertical": 10,
+        },
+      ]
     }
   >
     View #2, front is hidden, back is visible.
@@ -78491,7 +79953,16 @@ exports[`snapshotAllPages View 14`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         Front (You should not see this)
       </Text>
     </View>
@@ -78509,7 +79980,16 @@ exports[`snapshotAllPages View 14`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         Back
       </Text>
     </View>
@@ -78532,9 +80012,14 @@ exports[`snapshotAllPages View 15`] = `
 >
   <Text
     style={
-      {
-        "fontSize": 11,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 11,
+        },
+      ]
     }
   >
     Blue background
@@ -78690,9 +80175,14 @@ exports[`snapshotAllPages View 17`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 11,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 11,
+            },
+          ]
         }
       >
         inset 5
@@ -78720,9 +80210,14 @@ exports[`snapshotAllPages View 17`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 11,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 11,
+            },
+          ]
         }
       >
         insetBlock 5
@@ -78750,9 +80245,14 @@ exports[`snapshotAllPages View 17`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 11,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 11,
+            },
+          ]
         }
       >
         insetBlockEnd 5
@@ -78780,9 +80280,14 @@ exports[`snapshotAllPages View 17`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 11,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 11,
+            },
+          ]
         }
       >
         insetBlockStart 5
@@ -78810,9 +80315,14 @@ exports[`snapshotAllPages View 17`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 11,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 11,
+            },
+          ]
         }
       >
         insetInline 5
@@ -78840,9 +80350,14 @@ exports[`snapshotAllPages View 17`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 11,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 11,
+            },
+          ]
         }
       >
         insetInlineEnd 5
@@ -78870,9 +80385,14 @@ exports[`snapshotAllPages View 17`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 11,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 11,
+            },
+          ]
         }
       >
         insetInlineStart 5
@@ -78917,9 +80437,14 @@ exports[`snapshotAllPages View 18`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 11,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 11,
+            },
+          ]
         }
       >
         borderBlockColor orange
@@ -78951,18 +80476,28 @@ exports[`snapshotAllPages View 18`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 11,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 11,
+            },
+          ]
         }
       >
         borderBlockStartColor purple
       </Text>
       <Text
         style={
-          {
-            "fontSize": 11,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 11,
+            },
+          ]
         }
       >
         borderBlockEndColor green
@@ -78985,7 +80520,16 @@ exports[`snapshotAllPages View 19`] = `
   testID="view-test-layout-conformance"
 >
   <View>
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Unset
     </Text>
     <View
@@ -79021,7 +80565,16 @@ exports[`snapshotAllPages View 19`] = `
   <View
     experimental_layoutConformance="classic"
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Classic
     </Text>
     <View
@@ -79057,7 +80610,16 @@ exports[`snapshotAllPages View 19`] = `
   <View
     experimental_layoutConformance="strict"
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Strict
     </Text>
     <View
@@ -79259,7 +80821,16 @@ exports[`snapshotAllPages View 21`] = `
 <View
   testID="view-test-box-sizing"
 >
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     Content box 50x25
   </Text>
   <View
@@ -79289,7 +80860,16 @@ exports[`snapshotAllPages View 21`] = `
       }
     />
   </View>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     Border box 50x25
   </Text>
   <View
@@ -79506,21 +81086,34 @@ exports[`snapshotAllPages WebSocket 1`] = `
     <View
       style={
         {
-          "backgroundColor": "white",
           "margin": 4,
           "padding": 8,
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         To start the WS test server:
       </Text>
       <Text
         style={
-          {
-            "fontFamily": "courier",
-            "fontSize": 11,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontFamily": "courier",
+              "fontSize": 11,
+            },
+          ]
         }
       >
         ./RNTester/js/examples/WebSocket/websocket_test_server.js
@@ -79530,7 +81123,6 @@ exports[`snapshotAllPages WebSocket 1`] = `
       style={
         {
           "alignItems": "center",
-          "backgroundColor": "white",
           "borderBottomWidth": 0.5,
           "borderColor": "grey",
           "flexDirection": "row",
@@ -79540,10 +81132,28 @@ exports[`snapshotAllPages WebSocket 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         Current WebSocket state
       </Text>
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         (no value)
       </Text>
     </View>
@@ -79551,7 +81161,6 @@ exports[`snapshotAllPages WebSocket 1`] = `
       style={
         {
           "alignItems": "center",
-          "backgroundColor": "white",
           "borderBottomWidth": 0.5,
           "borderColor": "grey",
           "flexDirection": "row",
@@ -79561,10 +81170,28 @@ exports[`snapshotAllPages WebSocket 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         Last WebSocket event
       </Text>
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         (no value)
       </Text>
     </View>
@@ -79572,7 +81199,6 @@ exports[`snapshotAllPages WebSocket 1`] = `
       style={
         {
           "alignItems": "center",
-          "backgroundColor": "white",
           "borderBottomWidth": 0.5,
           "borderColor": "grey",
           "flexDirection": "row",
@@ -79582,10 +81208,28 @@ exports[`snapshotAllPages WebSocket 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         Last message received
       </Text>
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         (no value)
       </Text>
     </View>
@@ -79593,7 +81237,6 @@ exports[`snapshotAllPages WebSocket 1`] = `
       style={
         {
           "alignItems": "center",
-          "backgroundColor": "white",
           "borderBottomWidth": 0.5,
           "borderColor": "grey",
           "flexDirection": "row",
@@ -79603,7 +81246,16 @@ exports[`snapshotAllPages WebSocket 1`] = `
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         Last image received
       </Text>
     </View>
@@ -79676,9 +81328,14 @@ exports[`snapshotAllPages WebSocket 1`] = `
       >
         <Text
           style={
-            {
-              "color": "white",
-            }
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "color": "white",
+              },
+            ]
           }
         >
           Connect
@@ -79702,9 +81359,14 @@ exports[`snapshotAllPages WebSocket 1`] = `
       >
         <Text
           style={
-            {
-              "color": "white",
-            }
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "color": "white",
+              },
+            ]
           }
         >
           Disconnect
@@ -79751,9 +81413,14 @@ exports[`snapshotAllPages WebSocket 1`] = `
       >
         <Text
           style={
-            {
-              "color": "white",
-            }
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "color": "white",
+              },
+            ]
           }
         >
           Send as text
@@ -79777,9 +81444,14 @@ exports[`snapshotAllPages WebSocket 1`] = `
       >
         <Text
           style={
-            {
-              "color": "white",
-            }
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "color": "white",
+              },
+            ]
           }
         >
           Send as binary
@@ -79789,21 +81461,34 @@ exports[`snapshotAllPages WebSocket 1`] = `
     <View
       style={
         {
-          "backgroundColor": "white",
           "margin": 4,
           "padding": 8,
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         To start the HTTP test server:
       </Text>
       <Text
         style={
-          {
-            "fontFamily": "courier",
-            "fontSize": 11,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontFamily": "courier",
+              "fontSize": 11,
+            },
+          ]
         }
       >
         ./RNTester/js/examples/WebSocket/http_test_server.js
@@ -79878,9 +81563,14 @@ exports[`snapshotAllPages WebSocket 1`] = `
       >
         <Text
           style={
-            {
-              "color": "white",
-            }
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "color": "white",
+              },
+            ]
           }
         >
           Send HTTP request to set cookie
@@ -79890,13 +81580,21 @@ exports[`snapshotAllPages WebSocket 1`] = `
     <View
       style={
         {
-          "backgroundColor": "white",
           "margin": 4,
           "padding": 8,
         }
       }
     >
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         -
       </Text>
     </View>

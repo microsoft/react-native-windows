@@ -12,6 +12,7 @@ import type {ColorSchemeName} from 'react-native/Libraries/Utilities/NativeAppea
 
 import RNTesterText from '../../components/RNTesterText';
 import {RNTesterThemeContext, themes} from '../../components/RNTesterTheme';
+import RNTesterText from '../../components/RNTesterText';
 import * as React from 'react';
 import {useEffect, useState} from 'react';
 import {Appearance, Button, Text, View, useColorScheme} from 'react-native';

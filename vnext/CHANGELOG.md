@@ -1,8 +1,34 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 13 Nov 2024 06:21:47 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 19 Nov 2024 06:29:47 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.895
+
+Tue, 19 Nov 2024 06:29:47 GMT
+
+### Changes
+
+- Fix Modal position, disable input to parent hwnd, and add onShow (tatianakapos@microsoft.com)
+
+## 0.0.0-canary.894
+
+Fri, 15 Nov 2024 06:22:29 GMT
+
+### Changes
+
+- test integrate 10/15 (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.248
+- Bump @react-native-windows/codegen to v0.0.0-canary.112
+
+## 0.0.0-canary.893
+
+Thu, 14 Nov 2024 06:22:59 GMT
+
+### Changes
+
+- bump dotnet target version (yajurgrover24@gmail.com)
 
 ## 0.0.0-canary.892
 
