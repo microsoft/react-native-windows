@@ -79,6 +79,12 @@
       <PreprocessorDefinitions>_WINRT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalUsingDirectories>$(WindowsSDK_WindowsMetadata);$(AdditionalUsingDirectories)</AdditionalUsingDirectories>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <!-- The files being used from ReactCommon should be availiable from MS.RN.Cxx, so the additionalIncludeDir should't be needed, but they get moved there when creating the nuget, and are not part of MS.RN.Cxx locally within the RNW repo -->
+      <AdditionalIncludeDirectories>
+        $(ReactNativeDir)\ReactCommon;
+        $(ReactNativeWindowsDir)stubs;
+        %(AdditionalIncludeDirectories);
+      </AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>shell32.lib;user32.lib;windowsapp.lib;%(AdditionalDependenices)</AdditionalDependencies>

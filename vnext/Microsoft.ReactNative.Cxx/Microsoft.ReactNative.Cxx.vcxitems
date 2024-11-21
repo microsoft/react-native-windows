@@ -146,7 +146,7 @@
     </ClCompile>
     <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100;4127</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
