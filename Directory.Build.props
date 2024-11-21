@@ -22,6 +22,15 @@
     <BaseOutDir Condition="'$(Platform)' == 'Win32'">$(RootOutDir)\x86\$(Configuration)</BaseOutDir>
     <BaseOutDir Condition="'$(Platform)' != 'Win32'">$(RootOutDir)\$(Platform)\$(Configuration)</BaseOutDir>
 
+    <!-- When consuming RNW externally MS.RN.Cxx should contain all the headers needed to consume RN.  But internal to the RNW repo, MS.RN.Cxx is incomplete, so we use files directly from RN -->
+    <!-- We override these paths here so that the MS.RN.Cxx.vcxitems will correctly setup include paths -->
+    <ReactNativeDir Condition="'$(ReactNativeDir)' == ''">$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), 'node_modules\react-native\package.json'))\node_modules\react-native\</ReactNativeDir>
+    <JSI_SourcePath Condition="'$(JSI_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_SourcePath>
+    <CallInvoker_SourcePath Condition="'$(CallInvoker_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\callinvoker</CallInvoker_SourcePath>
+    <TurboModule_SourcePath Condition="'$(TurboModule_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\react\nativemodule\core</TurboModule_SourcePath>
+    <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon</Bridging_SourcePath>
+
+
     <ReactNativeYarnIntDir>$(RootIntDir)\yarn_install\</ReactNativeYarnIntDir>
   </PropertyGroup>
 

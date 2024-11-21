@@ -4,7 +4,7 @@
 #pragma once
 
 #include <Logging.h>
-#include <ReactCommon/LongLivedObject.h>
+#include <react/bridging/LongLivedObject.h>
 #include <cxxreact/CxxModule.h>
 #include <cxxreact/JSBigString.h>
 #include <map>
