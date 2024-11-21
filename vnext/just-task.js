@@ -42,10 +42,10 @@ function codegen(test) {
 }
 
 function layoutMSRNCxx() {
-  if (require('os').platform === 'win32') {
+  if (require('os').platform() === 'win32') {
     const powershell = `${process.env.SystemRoot}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
     execSync(
-      `${powershell} -NoProfile Unblock-File .\\Scripts\\Tfs\\Layout-MSRN-Headers.ps1 -GenerateLocalCxx`,
+      `${powershell} -NoProfile .\\Scripts\\Tfs\\Layout-MSRN-Headers.ps1 -GenerateLocalCxx`,
       {
         env: process.env,
       },
