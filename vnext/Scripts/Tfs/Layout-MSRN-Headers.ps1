@@ -63,9 +63,7 @@ if (!($GenerateLocalCxx)) {
 }
 
 # Overwrite temporary ReactCommon files (since this script can runs on a different machine than where ReactCommon was built)
-if (!($GenerateLocalCxx)) {
-	Copy-Item -Force -Recurse -Path $ReactCommonOverrideRoot\* -Destination $ReactNativeRoot\ReactCommon\
-}
+Copy-Item -Force -Recurse -Path $ReactCommonOverrideRoot\* -Destination $ReactNativeRoot\ReactCommon\
 
 # Microsoft.ReactNative.CXX project JSI files
 Copy-Item -Force -Path $NodeApiJsiRoot\jsi\jsi\decorator.h -Destination $MSRNCxxTargetRoot\jsi\
