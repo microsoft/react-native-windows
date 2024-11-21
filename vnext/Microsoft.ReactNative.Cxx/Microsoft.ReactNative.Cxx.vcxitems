@@ -9,7 +9,7 @@
     <JSI_SourcePath Condition="'$(JSI_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)jsi\jsi.h')">$(MSBuildThisFileDirectory)</JSI_SourcePath>
     <CallInvoker_SourcePath Condition="'$(CallInvoker_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\CallInvoker.h')">$(MSBuildThisFileDirectory)</CallInvoker_SourcePath>
     <TurboModule_SourcePath Condition="'$(TurboModule_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\TurboModule.h')">$(MSBuildThisFileDirectory)</TurboModule_SourcePath>
-    <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\CallbackWrapper.h')">$(MSBuildThisFileDirectory)ReactCommon</Bridging_SourcePath>
+    <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\react\bridging\LongLivedObject.cpp')">$(MSBuildThisFileDirectory)ReactCommon</Bridging_SourcePath>
 
     <!-- If your project is using glog, then GLog_IncludeDir could be set to include the actual location of glog -->
     <GLog_IncludeDir Condition="'$(GLog_IncludeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)..\stubs\glog\logging.h')">$(MSBuildThisFileDirectory)..\stubs</GLog_IncludeDir>

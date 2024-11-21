@@ -93,6 +93,18 @@ temp
 /third-party
 /packages/
 
+# These files are copied to Microsoft.ReactNative.Cxx during build
+/Microsoft.ReactNative.Cxx/ApiLoaders
+/Microsoft.ReactNative.Cxx/ReactCommon
+/Microsoft.ReactNative.Cxx/node-api
+/Microsoft.ReactNative.Cxx/NodeApiJsiRuntime.*
+/Microsoft.ReactNative.Cxx/JSI/decorator.h
+/Microsoft.ReactNative.Cxx/JSI/instrumentation.h
+/Microsoft.ReactNative.Cxx/JSI/jsi-inl.h
+/Microsoft.ReactNative.Cxx/JSI/jsi.cpp
+/Microsoft.ReactNative.Cxx/JSI/jsi.h
+/Microsoft.ReactNative.Cxx/JSI/threadsafe.h
+
 # Copied from root as part of build
 /README.md
 /LICENCE
