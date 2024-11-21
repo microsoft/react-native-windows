@@ -12,7 +12,6 @@ import type {RNTesterModule} from '../../types/RNTesterTypes';
 
 import RNTesterText from '../../components/RNTesterText';
 import {RNTesterThemeContext} from '../../components/RNTesterTheme';
-import RNTesterText from '../../components/RNTesterText';
 import * as React from 'react';
 import {Alert, Pressable, StyleSheet, Text, View} from 'react-native';
 
