@@ -104,6 +104,7 @@ temp
 /Microsoft.ReactNative.Cxx/JSI/jsi.cpp
 /Microsoft.ReactNative.Cxx/JSI/jsi.h
 /Microsoft.ReactNative.Cxx/JSI/threadsafe.h
+/Microsoft.ReactNative.Cxx/stubs/glog/logging.h
 
 # Copied from root as part of build
 /README.md
