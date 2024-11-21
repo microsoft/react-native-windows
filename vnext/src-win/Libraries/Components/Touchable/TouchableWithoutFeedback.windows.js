@@ -91,7 +91,7 @@ type Props = $ReadOnly<{|
   onMouseLeave?: ?(event: MouseEvent) => void, // [Windows]
   tabIndex?: ?number, // [Windows]
   tooltip?: ?Stringish, // [Windows]
-  hostRef?: ?React.Ref<typeof Animated.View>, // [Windows]
+  hostRef?: React.RefSetter<React.ElementRef<typeof Animated.View>>, // [Windows]
 |}>;
 
 const PASSTHROUGH_PROPS = [

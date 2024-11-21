@@ -16,13 +16,12 @@ namespace facebook::react {
 NativeMicrotasks::NativeMicrotasks(std::shared_ptr<CallInvoker> jsInvoker)
     : NativeMicrotasksCxxSpec(std::move(jsInvoker)) {}
 
-void NativeMicrotasks::queueMicrotask(
-    jsi::Runtime& runtime,
-    jsi::Function callback) {
+void NativeMicrotasks::queueMicrotask(jsi::Runtime &runtime, jsi::Function callback) {
   assert(false);
   // Currently using a version of hermes/jsi without queueMicrotask
-  // When we update JSI we can remove all the Microtask code from here, and just rely on the implementation of DefaultTurboModules
-  //runtime.queueMicrotask(callback); 
+  // When we update JSI we can remove all the Microtask code from here, and just rely on the implementation of
+  // the NativeMicrotasks TurboModule from the core NativeMicrotasks.cpp file
+  // runtime.queueMicrotask(callback);
 }
 
 #endif

@@ -80,7 +80,7 @@
     "@types/node": "^18.0.0",
     "@types/react": "^18.2.6",
     "eslint": "^8.19.0",
-    "flow-bin": "^0.245.2",
+    "flow-bin": "^0.250.0",
     "jscodeshift": "^0.14.0",
     "just-scripts": "^1.3.3",
     "prettier": "2.8.8",
