@@ -14,7 +14,7 @@
 #include <jsi/jsi.h>
 
 #include <ReactCommon/CallInvoker.h>
-#include <EventEmitter.h> // [Windows #13391]
+#include <react/bridging/EventEmitter.h>
 
 namespace facebook::react {
 
@@ -61,10 +61,13 @@ class JSI_EXPORT TurboModule : public jsi::HostObject {
     // If we have a JS wrapper, cache the result of this lookup
     // We don't cache misses, to allow for methodMap_ to dynamically be
     // extended
+    // [Windows] Reenable once https://github.com/microsoft/react-native-windows/issues/14128 is fixed
+#ifndef WINAPI_FAMILY
     if (jsRepresentation_ && !prop.isUndefined()) {
       jsRepresentation_->lock(runtime).asObject(runtime).setProperty(
           runtime, propName, prop);
     }
+#endif
     return prop;
   }
 

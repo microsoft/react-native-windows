@@ -13,10 +13,9 @@
 import type {RNTesterModule} from '../../types/RNTesterTypes';
 
 import RNTesterText from '../../components/RNTesterText';
-
 import * as React from 'react';
 
-import {Alert, Platform, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Alert, Platform, Pressable, StyleSheet, View} from 'react-native';
 
 class ViewBorderStyleExample extends React.Component<
   $ReadOnly<{||}>,
@@ -600,16 +599,20 @@ class AccessibilityExample extends React.Component<
           this.setState({expanded: !this.state.expanded});
           console.log('Pressed');
         }}>
-        <Text>A View with accessibility values.</Text>
-        <Text>Current Number of Accessibility Taps: {this.state.tap}</Text>
+        <RNTesterText>A View with accessibility values.</RNTesterText>
+        <RNTesterText>
+          Current Number of Accessibility Taps: {this.state.tap}
+        </RNTesterText>
         <View importantForAccessibility="no-hide-descendants">
-          <Text>This element should be hidden from accessibility.</Text>
+          <RNTesterText>
+            This element should be hidden from accessibility.
+          </RNTesterText>
         </View>
         <View accessible accessibilityValue={{now: this.state.tap}}>
-          <Text>
+          <RNTesterText>
             This sub-view should not have an accessibility value. It's control
             type does not support the value pattern.
-          </Text>
+          </RNTesterText>
         </View>
       </View>
     );
@@ -1379,7 +1382,7 @@ export default ({
             testID="nativeid"
             accessible
             accessibilityLabel="NativeID Example">
-            <Text>A View with a nativeID "native-id-view"</Text>
+            <RNTesterText>A View with a nativeID "native-id-view"</RNTesterText>
           </View>
         );
       },
@@ -1425,18 +1428,18 @@ export default ({
             testID="tool-tip"
             accessible
             accessibilityLabel="Tooltip Example">
-            <Text style={{fontSize: 11}}>
+            <RNTesterText style={{fontSize: 11}}>
               This Parent View has tooltip "Parent View"
-            </Text>
+            </RNTesterText>
             <View tooltip="Child View 1">
-              <Text style={{fontSize: 11}}>
+              <RNTesterText style={{fontSize: 11}}>
                 This view has tooltip "Child View 1"
-              </Text>
+              </RNTesterText>
             </View>
             <View tooltip="Child View 2">
-              <Text style={{fontSize: 11}}>
+              <RNTesterText style={{fontSize: 11}}>
                 This view has tooltip "Child View 2"
-              </Text>
+              </RNTesterText>
             </View>
           </View>
         );
