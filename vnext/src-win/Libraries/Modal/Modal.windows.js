@@ -346,6 +346,7 @@ const styles = StyleSheet.create({
 
 const ExportedModal: React.AbstractComponent<
   React.ElementConfig<typeof Modal>,
+  // $FlowFixMe[incompatible-type-arg]
 > = ModalInjection.unstable_Modal ?? Modal;
 
 module.exports = ExportedModal;
