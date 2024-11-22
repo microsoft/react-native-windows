@@ -969,7 +969,6 @@ exports[`View Tests Views can have customized accessibility 1`] = `
     "PositionInSet": 1,
     "SizeofSet": 1,
     "TogglePattern.ToggleState": "On",
-    "ValuePattern.Value": "0",
     "__Children": [
       {
         "AutomationId": "",
@@ -982,20 +981,6 @@ exports[`View Tests Views can have customized accessibility 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Current Number of Accessibility Taps: 0",
-      },
-      {
-        "AutomationId": "",
-        "ControlType": 50026,
-        "LocalizedControlType": "group",
-        "ValuePattern.Value": "0",
-        "__Children": [
-          {
-            "AutomationId": "",
-            "ControlType": 50020,
-            "LocalizedControlType": "text",
-            "Name": "This sub-view should not have an accessibility value. It's control type does not support the value pattern.",
-          },
-        ],
       },
     ],
   },
@@ -1059,32 +1044,6 @@ exports[`View Tests Views can have customized accessibility 1`] = `
             "Offset": "0, 0, 0",
             "Size": "916, 20",
             "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "0, 56, 0",
-        "Size": "916, 19",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "916, 19",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "916, 20",
-                "Visual Type": "SpriteVisual",
-                "__Children": [
-                  {
-                    "Offset": "0, 0, 0",
-                    "Size": "916, 20",
-                    "Visual Type": "SpriteVisual",
-                  },
-                ],
-              },
-            ],
           },
         ],
       },
