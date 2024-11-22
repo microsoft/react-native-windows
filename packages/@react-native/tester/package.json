@@ -23,7 +23,7 @@
     "clean-ios": "rm -rf build/generated/ios Pods Podfile.lock"
   },
   "dependencies": {
-    "@react-native/popup-menu-android": "0.76.0",
+    "@react-native/popup-menu-android": "0.76.2",
     "flow-enums-runtime": "^0.0.6",
     "invariant": "^2.2.4",
     "nullthrows": "^1.1.1"
@@ -41,8 +41,8 @@
     }
   },
   "devDependencies": {
-    "@react-native-community/cli": "15.0.0-alpha.2",
-    "@react-native-community/cli-platform-android": "15.0.0-alpha.2",
-    "@react-native-community/cli-platform-ios": "15.0.0-alpha.2"
+    "@react-native-community/cli": "15.0.1",
+    "@react-native-community/cli-platform-android": "15.0.1",
+    "@react-native-community/cli-platform-ios": "15.0.1"
   }
 }
