@@ -6,17 +6,13 @@
     <ItemsProjectGuid>{da8b35b3-da00-4b02-bde6-6a397b3fd46b}</ItemsProjectGuid>
     <ReactNativeDir Condition="'$(ReactNativeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)..\..\node_modules\react-native\package.json')">$(MSBuildThisFileDirectory)..\..\node_modules\react-native</ReactNativeDir>
     <ReactNativeDir Condition="'$(ReactNativeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)..\..\..\node_modules\react-native\package.json')">$(MSBuildThisFileDirectory)..\..\..\node_modules\react-native</ReactNativeDir>
-    <JSI_SourcePath Condition="'$(JSI_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\jsi</JSI_SourcePath>
     <JSI_SourcePath Condition="'$(JSI_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)jsi\jsi.h')">$(MSBuildThisFileDirectory)</JSI_SourcePath>
-    <JSIExecutor_SourcePath Condition="'$(JSIExecutor_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\jsiexecutor</JSIExecutor_SourcePath>
-    <JSIExecutor_SourcePath Condition="'$(JSIExecutor_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)jsireact\JSIExecutor.h')">$(MSBuildThisFileDirectory)</JSIExecutor_SourcePath>
-    <CallInvoker_SourcePath Condition="'$(CallInvoker_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\callinvoker</CallInvoker_SourcePath>
     <CallInvoker_SourcePath Condition="'$(CallInvoker_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\CallInvoker.h')">$(MSBuildThisFileDirectory)</CallInvoker_SourcePath>
-    <CallInvoker_SourcePath Condition="'$(CallInvoker_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\SchedulerPriority.h')">$(MSBuildThisFileDirectory)</CallInvoker_SourcePath>
-    <TurboModule_SourcePath Condition="'$(TurboModule_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\react\nativemodule\core</TurboModule_SourcePath>
     <TurboModule_SourcePath Condition="'$(TurboModule_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\TurboModule.h')">$(MSBuildThisFileDirectory)</TurboModule_SourcePath>
-    <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND '$(ReactNativeDir)' != ''">$(ReactNativeDir)\ReactCommon\react\bridging</Bridging_SourcePath>
-    <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\CallbackWrapper.h')">$(MSBuildThisFileDirectory)ReactCommon</Bridging_SourcePath>
+    <Bridging_SourcePath Condition="'$(Bridging_SourcePath)' == '' AND Exists('$(MSBuildThisFileDirectory)ReactCommon\react\bridging\LongLivedObject.cpp')">$(MSBuildThisFileDirectory)ReactCommon</Bridging_SourcePath>
+
+    <!-- If your project is using glog, then GLog_IncludeDir could be set to include the actual location of glog -->
+    <GLog_IncludeDir Condition="'$(GLog_IncludeDir)' == '' AND Exists('$(MSBuildThisFileDirectory)stubs\glog\logging.h')">$(MSBuildThisFileDirectory)stubs</GLog_IncludeDir>
 
     <NodeApiJsiCommitHash>83cfef428a97627c9185c73da097e42742de56eb</NodeApiJsiCommitHash>
     <NodeApiJsiLocal Condition="Exists('$(MSBuildThisFileDirectory)NodeApiJsiRuntime.cpp')">true</NodeApiJsiLocal>
@@ -31,10 +27,10 @@
       <AdditionalIncludeDirectories>
         $(MSBuildThisFileDirectory);
         $(JSI_SourcePath);
-        $(JSIExecutor_SourcePath);
         $(CallInvoker_SourcePath);
         $(TurboModule_SourcePath);
         $(Bridging_SourcePath);
+        $(GLog_IncludeDir);
         $(NodeApiDir);
         $(NodeApiJsiSrcDir);
         %(AdditionalIncludeDirectories)
@@ -140,13 +136,13 @@
       This is because msbuild has to invoke different cl.exe invocations for each
       set of flags and msbuild inside a project is single threaded.
     -->
-    <ClCompile Include="$(Bridging_SourcePath)\LongLivedObject.cpp">
+    <ClCompile Include="$(Bridging_SourcePath)\react\bridging\LongLivedObject.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModule.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
-      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100</DisableSpecificWarnings>
+      <DisableSpecificWarnings>%(DisableSpecificWarnings);4100;4127</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="$(TurboModule_SourcePath)\ReactCommon\TurboModuleUtils.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>

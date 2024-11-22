@@ -7,19 +7,19 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241015-3485e9ed8",
+  "baseVersion": "0.77.0-nightly-20241020-e7a3f479f",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "fa800520804222b3f944f7ffbb6a82f5ad89dc76"
+      "baseHash": "d824685eb9983c3aecb6d8207eeb0312f3d5a743"
     },
     {
       "type": "derived",
       "file": "src-win/index.win32.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "ad455e241e35ebd718a6304f3de9d04c1f9e4f2b"
+      "baseHash": "2c80856075b7979d9119fb5e2b4b66b43456c068"
     },
     {
       "type": "platform",
@@ -109,7 +109,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "d7364ef8dd1c0bc25cc189d135e846522b02b3a7"
+      "baseHash": "87f676e0bfd031b3dd8c79cf78b64af3c525b151"
     },
     {
       "type": "patch",
@@ -232,7 +232,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Image/Image.win32.js",
       "baseFile": "packages/react-native/Libraries/Image/Image.ios.js",
-      "baseHash": "e5cd104f5060ad354072889937ea92d508a32490",
+      "baseHash": "a5abee6de7dca3cb043b834925de3f6f0443c738",
       "issue": 4320
     },
     {
@@ -286,7 +286,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Inspector/Inspector.win32.js",
       "baseFile": "packages/react-native/Libraries/Inspector/Inspector.js",
-      "baseHash": "ac4d1824877906651f2d82ab7910dda3ecb2bd80"
+      "baseHash": "ad3ed5cb941f304f5751c6d12274ffe81753162c"
     },
     {
       "type": "patch",
@@ -497,13 +497,13 @@
       "type": "copy",
       "file": "src-win/Libraries/Utilities/useMergeRefs.js",
       "baseFile": "packages/react-native/Libraries/Utilities/useMergeRefs.js",
-      "baseHash": "1f1ca637132e6e0fe1549ba520d98508269ca2bd"
+      "baseHash": "4ba42e1b43ef55a1a9e3095336979fa712f4dc8d"
     },
     {
       "type": "patch",
       "file": "src-win/src/private/animated/NativeAnimatedHelper.win32.js",
       "baseFile": "packages/react-native/src/private/animated/NativeAnimatedHelper.js",
-      "baseHash": "96fb410d7d408c49297f9f99a760f954264bce91",
+      "baseHash": "8c67d57575cccb7281b15ca2591e4edf5c5c36dd",
       "issue": 11041
     },
     {

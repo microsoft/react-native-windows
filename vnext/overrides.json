@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241015-3485e9ed8",
+  "baseVersion": "0.77.0-nightly-20241020-e7a3f479f",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "fa800520804222b3f944f7ffbb6a82f5ad89dc76"
+      "baseHash": "d824685eb9983c3aecb6d8207eeb0312f3d5a743"
     },
     {
       "type": "derived",
@@ -131,7 +131,7 @@
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/Base.h",
       "baseFile": "packages/react-native/ReactCommon/react/bridging/Base.h",
       "baseHash": "e85dc01810f13f0891dfeb0bad43efda7402a145",
-      "issue": 13391
+      "issue": 14130
     },
     {
       "type": "patch",
@@ -142,45 +142,10 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/CallbackWrapper.h",
-      "baseFile": "packages/react-native/ReactCommon/react/bridging/CallbackWrapper.h",
-      "baseHash": "a214254313c48192384b74c0e4cd50b967e16dad",
-      "issue": 12195
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/Convert.h",
-      "baseFile": "packages/react-native/ReactCommon/react/bridging/Convert.h",
-      "baseHash": "3bcf618bef5574c4fbd88d1c7f754f4077adef84",
-      "issue": 13391
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/EventEmitter.h",
-      "baseFile": "packages/react-native/ReactCommon/react/bridging/EventEmitter.h",
-      "baseHash": "49b637948a5ae388b07b6af92f7331d741c07986",
-      "issue": 13391
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/Function.h",
-      "baseFile": "packages/react-native/ReactCommon/react/bridging/Function.h",
-      "baseHash": "8798e0e9a8114a61cba5b9710dcd482d16acda5a",
-      "issue": 13391
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModule.h",
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModule.h",
       "baseHash": "e82eb139eab8a6e122421416fb724811bfadd6fb",
-      "issue": 13391
-    },
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModuleUtils.h",
-      "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModuleUtils.h",
-      "baseHash": "aa60f41597ea70b11c1f0ec68f1c0b8d2b327df3",
-      "issue": 12195
+      "issue": 14128
     },
     {
       "type": "patch",
@@ -188,6 +153,13 @@
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/LayoutableShadowNode.cpp",
       "baseHash": "d66daa36deef63d32e164dd26cfc76ad09569169",
       "issue": 13644
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/runtimescheduler/SchedulerPriorityUtils.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/runtimescheduler/SchedulerPriorityUtils.h",
+      "baseHash": "370715ca801b8652080a1c9ccb705b11875b4990",
+      "issue": 14131
     },
     {
       "type": "patch",
@@ -207,7 +179,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "1b0c0f69d1414477aac3cfb8e6746d94beb6bfdf",
+      "baseHash": "2affb38652fbd0bf6bde8a36e9ec7592982f2eb6",
       "issue": 13172
     },
     {
@@ -221,7 +193,7 @@
       "type": "derived",
       "file": "src-win/index.windows.js",
       "baseFile": "packages/react-native/index.js",
-      "baseHash": "ad455e241e35ebd718a6304f3de9d04c1f9e4f2b"
+      "baseHash": "2c80856075b7979d9119fb5e2b4b66b43456c068"
     },
     {
       "type": "platform",
@@ -379,7 +351,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "d7364ef8dd1c0bc25cc189d135e846522b02b3a7"
+      "baseHash": "87f676e0bfd031b3dd8c79cf78b64af3c525b151"
     },
     {
       "type": "patch",
@@ -476,7 +448,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Image/Image.windows.js",
       "baseFile": "packages/react-native/Libraries/Image/Image.ios.js",
-      "baseHash": "e5cd104f5060ad354072889937ea92d508a32490",
+      "baseHash": "a5abee6de7dca3cb043b834925de3f6f0443c738",
       "issue": 4590
     },
     {

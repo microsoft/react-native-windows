@@ -21,9 +21,11 @@ protected:
 
 public:
   virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
+  virtual bool commonTestFlagWithoutNativeImplementation(jsi::Runtime &rt) = 0;
   virtual bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
   virtual bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) = 0;
+  virtual bool disableEventLoopOnBridgeless(jsi::Runtime &rt) = 0;
   virtual bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) = 0;
   virtual bool enableAndroidLineHeightCentering(jsi::Runtime &rt) = 0;
   virtual bool enableBridgelessArchitecture(jsi::Runtime &rt) = 0;
@@ -48,7 +50,6 @@ public:
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
   virtual bool enableViewRecycling(jsi::Runtime &rt) = 0;
   virtual bool excludeYogaFromRawProps(jsi::Runtime &rt) = 0;
-  virtual bool fetchImagesInViewPreallocation(jsi::Runtime &rt) = 0;
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
   virtual bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
@@ -57,7 +58,6 @@ public:
   virtual bool initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime &rt) = 0;
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
   virtual bool loadVectorDrawablesOnImages(jsi::Runtime &rt) = 0;
-  virtual bool removeNestedCallsToDispatchMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool setAndroidLayoutDirection(jsi::Runtime &rt) = 0;
   virtual bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useFabricInterop(jsi::Runtime &rt) = 0;
@@ -107,6 +107,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::commonTestFlag, jsInvoker_, instance_);
     }
+    bool commonTestFlagWithoutNativeImplementation(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::commonTestFlagWithoutNativeImplementation) == 1,
+          "Expected commonTestFlagWithoutNativeImplementation(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::commonTestFlagWithoutNativeImplementation, jsInvoker_, instance_);
+    }
     bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::allowRecursiveCommitsWithSynchronousMountOnAndroid) == 1,
@@ -130,6 +138,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::completeReactInstanceCreationOnBgThreadOnAndroid, jsInvoker_, instance_);
+    }
+    bool disableEventLoopOnBridgeless(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::disableEventLoopOnBridgeless) == 1,
+          "Expected disableEventLoopOnBridgeless(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::disableEventLoopOnBridgeless, jsInvoker_, instance_);
     }
     bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) override {
       static_assert(
@@ -323,14 +339,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::excludeYogaFromRawProps, jsInvoker_, instance_);
     }
-    bool fetchImagesInViewPreallocation(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::fetchImagesInViewPreallocation) == 1,
-          "Expected fetchImagesInViewPreallocation(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::fetchImagesInViewPreallocation, jsInvoker_, instance_);
-    }
     bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::fixMappingOfEventPrioritiesBetweenFabricAndReact) == 1,
@@ -394,14 +402,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::loadVectorDrawablesOnImages, jsInvoker_, instance_);
-    }
-    bool removeNestedCallsToDispatchMountItemsOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::removeNestedCallsToDispatchMountItemsOnAndroid) == 1,
-          "Expected removeNestedCallsToDispatchMountItemsOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::removeNestedCallsToDispatchMountItemsOnAndroid, jsInvoker_, instance_);
     }
     bool setAndroidLayoutDirection(jsi::Runtime &rt) override {
       static_assert(
@@ -8791,6 +8791,8 @@ public:
   virtual double now(jsi::Runtime &rt) = 0;
   virtual void mark(jsi::Runtime &rt, jsi::String name, double startTime) = 0;
   virtual void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
+  virtual double markWithResult(jsi::Runtime &rt, jsi::String name, std::optional<double> startTime) = 0;
+  virtual jsi::Array measureWithResult(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
   virtual void clearMarks(jsi::Runtime &rt, std::optional<jsi::String> entryName) = 0;
   virtual void clearMeasures(jsi::Runtime &rt, std::optional<jsi::String> entryName) = 0;
   virtual jsi::Array getEntries(jsi::Runtime &rt) = 0;
@@ -8858,6 +8860,22 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::measure, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(endTime), std::move(duration), std::move(startMark), std::move(endMark));
+    }
+    double markWithResult(jsi::Runtime &rt, jsi::String name, std::optional<double> startTime) override {
+      static_assert(
+          bridging::getParameterCount(&T::markWithResult) == 3,
+          "Expected markWithResult(...) to have 3 parameters");
+
+      return bridging::callFromJs<double>(
+          rt, &T::markWithResult, jsInvoker_, instance_, std::move(name), std::move(startTime));
+    }
+    jsi::Array measureWithResult(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
+      static_assert(
+          bridging::getParameterCount(&T::measureWithResult) == 7,
+          "Expected measureWithResult(...) to have 7 parameters");
+
+      return bridging::callFromJs<jsi::Array>(
+          rt, &T::measureWithResult, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(endTime), std::move(duration), std::move(startMark), std::move(endMark));
     }
     void clearMarks(jsi::Runtime &rt, std::optional<jsi::String> entryName) override {
       static_assert(
