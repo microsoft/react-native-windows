@@ -277,11 +277,6 @@ exports[`Text Tests Text can have advanced borders 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -368,11 +363,6 @@ exports[`Text Tests Text can have advanced borders 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -458,11 +448,6 @@ exports[`Text Tests Text can have advanced borders 1`] = `
                 "Visual Type": "SpriteVisual",
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -603,11 +588,6 @@ exports[`Text Tests Text can have borders 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -662,11 +642,6 @@ exports[`Text Tests Text can have borders 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -677,11 +652,6 @@ exports[`Text Tests Text can have borders 1`] = `
           {
             "Offset": "0, 0, 0",
             "Size": "916, 20",
-            "Visual Type": "SpriteVisual",
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
             "Visual Type": "SpriteVisual",
           },
         ],

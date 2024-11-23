@@ -78,11 +78,12 @@ namespace Microsoft.ReactNative
   DOC_STRING("A windows composition component that hosts React Native UI elements.")
   runtimeclass ReactNativeIsland
   {
-    DOC_STRING("Creates a new instance of @ReactNativeIsland.")
+    DOC_STRING("Creates a new instance of @ReactNativeIsland. Can be implemented with a ReactViewHost or a ComponentView with reactContext")
     ReactNativeIsland();
 
 #ifdef USE_WINUI3
     ReactNativeIsland(Microsoft.UI.Composition.Compositor compositor);
+    ReactNativeIsland(Microsoft.UI.Composition.Compositor compositor, Microsoft.ReactNative.IReactContext context, Microsoft.ReactNative.ComponentView componentView);
 #endif
 
     DOC_STRING(
@@ -97,7 +98,7 @@ namespace Microsoft.ReactNative
 
     DOC_STRING("ScaleFactor for this windows (DPI/96)")
     Single ScaleFactor {get; set;};
-
+  
     Single FontSizeMultiplier { get; };
 
     DOC_STRING("Move focus to this @ReactNativeIsland")

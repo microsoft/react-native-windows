@@ -38,7 +38,14 @@ const headerTemplate = `/*
 
 const propsTemplate = `REACT_STRUCT(::_PROPS_NAME_::)
 struct ::_PROPS_NAME_:: : winrt::implements<::_PROPS_NAME_::, winrt::Microsoft::ReactNative::IComponentProps> {
-  ::_PROPS_NAME_::(winrt::Microsoft::ReactNative::ViewProps props) : ViewProps(props) {}
+  ::_PROPS_NAME_::(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
+    : ViewProps(props)
+  {
+     if (cloneFrom) {
+       auto cloneFromProps = cloneFrom.as<::_PROPS_NAME_::>();
+::_PROP_INITIALIZERS_::  
+     }
+  }
 
   void SetProp(uint32_t hash, winrt::hstring propName, winrt::Microsoft::ReactNative::IJSValueReader value) noexcept {
     winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
@@ -144,8 +151,10 @@ void Register::_COMPONENT_NAME_::NativeComponent(
       L"::_COMPONENT_NAME_::", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
         auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
 
-        builder.SetCreateProps(
-            [](winrt::Microsoft::ReactNative::ViewProps props) noexcept { return winrt::make<::_COMPONENT_NAME_::Props>(props); });
+        builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props,
+                              const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom) noexcept {
+            return winrt::make<::_COMPONENT_NAME_::Props>(props, cloneFrom); 
+        });
 
         builder.SetUpdatePropsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentProps &newProps,
@@ -293,6 +302,12 @@ export function createComponentGenerator({
                 ? `std::optional<${propType.type}>`
                 : propType.type
             } ${prop.name}${propType.initializer};\n`;
+          })
+          .join('\n');
+
+        const propInitializers = componentShape.props
+          .map(prop => {
+            return `       ${prop.name} = cloneFromProps->${prop.name};`;
           })
           .join('\n');
 
@@ -510,6 +525,7 @@ ${
             .replace(/::_EVENT_EMITTER_NAME_::/g, eventEmitterName)
             .replace(/::_PROPS_NAME_::/g, propsName)
             .replace(/::_COMPONENT_NAME_::/g, componentName)
+            .replace(/::_PROP_INITIALIZERS_::/g, propInitializers)
             .replace(/::_PROPS_FIELDS_::/g, propsFields)
             .replace(/::_NAMESPACE_::/g, namespace)
             .replace(/\n\n\n+/g, '\n\n');
