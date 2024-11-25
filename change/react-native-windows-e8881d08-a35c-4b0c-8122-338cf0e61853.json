@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "integrate rn 76.2",
-  "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}

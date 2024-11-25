@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 25 Nov 2024 16:29:57 GMT",
+      "version": "0.76.1",
+      "tag": "@office-iss/react-native-win32_v0.76.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "435591fdfc78e5847bb9dd9bd36c20352c2d3385",
+            "comment": "integrate rn 76.2"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Nov 2024 00:02:25 GMT",
       "version": "0.76.0",
       "tag": "@office-iss/react-native-win32_v0.76.0",
