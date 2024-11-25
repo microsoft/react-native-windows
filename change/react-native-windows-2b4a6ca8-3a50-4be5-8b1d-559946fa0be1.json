@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Cleanup ReactNativeAppBuilder and ReactNativeWin32App",
-  "packageName": "react-native-windows",
-  "email": "jthysell@microsoft.com",
-  "dependentChangeType": "patch"
-}

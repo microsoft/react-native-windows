@@ -2,6 +2,21 @@
   "name": "@office-iss/react-native-win32",
   "entries": [
     {
+      "date": "Mon, 25 Nov 2024 16:28:03 GMT",
+      "version": "0.75.5",
+      "tag": "@office-iss/react-native-win32_v0.75.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@office-iss/react-native-win32",
+            "commit": "e50e19a6194476bc11e0e4dccb12f2d84bc12737",
+            "comment": "adds default Modal"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Nov 2024 22:53:43 GMT",
       "version": "0.75.4",
       "tag": "@office-iss/react-native-win32_v0.75.4",

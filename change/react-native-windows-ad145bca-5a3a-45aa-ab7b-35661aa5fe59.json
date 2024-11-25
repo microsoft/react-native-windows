@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "TextInput caret becomes visible on non-focused TextInputs on resize",
-  "packageName": "react-native-windows",
-  "email": "53619745+rnbot@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

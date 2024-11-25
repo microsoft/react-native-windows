@@ -1,8 +1,30 @@
 # Change Log - react-native-windows
 
-This log was last generated on Mon, 11 Nov 2024 22:53:44 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Nov 2024 16:28:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.10
+
+Mon, 25 Nov 2024 16:28:02 GMT
+
+### Patches
+
+- TextInput caret becomes visible on non-focused TextInputs on resize (53619745+rnbot@users.noreply.github.com)
+- Update focus visuals to use cornerRadius and inner/outer strokes. (30809111+acoates-ms@users.noreply.github.com)
+- Update Provider Guardrails (34109996+chiaramooney@users.noreply.github.com)
+- Implement accessibilityState checked (34109996+chiaramooney@users.noreply.github.com)
+- Export MS.RN.Color ctor in Office dll (30809111+acoates-ms@users.noreply.github.com)
+- adds default modal that hosts fabric components (tatianakapos@microsoft.com)
+- Cleanup ReactNativeAppBuilder and ReactNativeWin32App (jthysell@microsoft.com)
+- Fix focus visuals being obscured by adjacent views (53619745+rnbot@users.noreply.github.com)
+- Focus should notify island host when tab loop wraps to give host oportunity to take focus (30809111+acoates-ms@users.noreply.github.com)
+- Fix issue with prop cloning with custom native props (53619745+rnbot@users.noreply.github.com)
+- Default scroll to bring a component into view should have padding around the viewport (30809111+acoates-ms@users.noreply.github.com)
+- Add very basic box-shadow support (30809111+acoates-ms@users.noreply.github.com)
+- Introduced autocapitalize prop in TextInput (14967941+danielayala94@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.75.7
+- Bump @react-native-windows/codegen to v0.75.5
 
 ## 0.75.9
 

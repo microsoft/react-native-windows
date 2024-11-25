@@ -2,6 +2,27 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Mon, 25 Nov 2024 16:28:03 GMT",
+      "version": "0.75.5",
+      "tag": "@react-native-windows/codegen_v0.75.5",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "e50e19a6194476bc11e0e4dccb12f2d84bc12737",
+            "comment": "Implement accessibilityState checked"
+          },
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "e50e19a6194476bc11e0e4dccb12f2d84bc12737",
+            "comment": "Fix issue with prop cloning with custom native props"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 11 Nov 2024 22:53:43 GMT",
       "version": "0.75.4",
       "tag": "@react-native-windows/codegen_v0.75.4",
