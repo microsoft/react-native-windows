@@ -2,6 +2,21 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Sat, 23 Nov 2024 06:23:15 GMT",
+      "version": "0.0.0-canary.113",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.113",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "8be39042bf044cb756904b4750f10cb0725bb36b",
+            "comment": "Integrate 10/20"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Nov 2024 06:22:29 GMT",
       "version": "0.0.0-canary.112",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.112",

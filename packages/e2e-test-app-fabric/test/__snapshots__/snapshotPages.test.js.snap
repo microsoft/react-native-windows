@@ -12960,6 +12960,666 @@ exports[`snapshotAllPages FlatList 1`] = `
 <View
   style={
     {
+      "gap": 16,
+      "paddingHorizontal": 16,
+    }
+  }
+>
+  <RCTScrollView
+    data={
+      [
+        {
+          "id": "0",
+        },
+        {
+          "id": "1",
+        },
+        {
+          "id": "2",
+        },
+        {
+          "id": "3",
+        },
+        {
+          "id": "4",
+        },
+        {
+          "id": "5",
+        },
+        {
+          "id": "6",
+        },
+        {
+          "id": "7",
+        },
+        {
+          "id": "8",
+        },
+        {
+          "id": "9",
+        },
+        {
+          "id": "10",
+        },
+        {
+          "id": "11",
+        },
+        {
+          "id": "12",
+        },
+        {
+          "id": "13",
+        },
+        {
+          "id": "14",
+        },
+        {
+          "id": "15",
+        },
+        {
+          "id": "16",
+        },
+        {
+          "id": "17",
+        },
+        {
+          "id": "18",
+        },
+        {
+          "id": "19",
+        },
+      ]
+    }
+    decelerationRate="fast"
+    getItem={[Function]}
+    getItemCount={[Function]}
+    keyExtractor={[Function]}
+    maintainVisibleContentPosition={
+      {
+        "minIndexForVisible": 0,
+      }
+    }
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    pagingEnabled={true}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={0.0001}
+    showsVerticalScrollIndicator={false}
+    snapToAlignment="center"
+    stickyHeaderIndices={[]}
+    style={
+      {
+        "height": 200,
+      }
+    }
+    viewabilityConfigCallbackPairs={[]}
+  >
+    <View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "height": 168,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#4CAF50",
+                "borderRadius": 16,
+                "flex": 1,
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#fff",
+                  "fontSize": 24,
+                }
+              }
+            >
+              0
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "height": 168,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#4CAF50",
+                "borderRadius": 16,
+                "flex": 1,
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#fff",
+                  "fontSize": 24,
+                }
+              }
+            >
+              1
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "height": 168,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#4CAF50",
+                "borderRadius": 16,
+                "flex": 1,
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#fff",
+                  "fontSize": 24,
+                }
+              }
+            >
+              2
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "height": 168,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#4CAF50",
+                "borderRadius": 16,
+                "flex": 1,
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#fff",
+                  "fontSize": 24,
+                }
+              }
+            >
+              3
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "height": 168,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#4CAF50",
+                "borderRadius": 16,
+                "flex": 1,
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#fff",
+                  "fontSize": 24,
+                }
+              }
+            >
+              4
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "height": 168,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#4CAF50",
+                "borderRadius": 16,
+                "flex": 1,
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#fff",
+                  "fontSize": 24,
+                }
+              }
+            >
+              5
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "height": 168,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#4CAF50",
+                "borderRadius": 16,
+                "flex": 1,
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#fff",
+                  "fontSize": 24,
+                }
+              }
+            >
+              6
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "height": 168,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#4CAF50",
+                "borderRadius": 16,
+                "flex": 1,
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#fff",
+                  "fontSize": 24,
+                }
+              }
+            >
+              7
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "height": 168,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#4CAF50",
+                "borderRadius": 16,
+                "flex": 1,
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#fff",
+                  "fontSize": 24,
+                }
+              }
+            >
+              8
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={null}
+      >
+        <View
+          style={
+            {
+              "height": 168,
+              "paddingVertical": 8,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "backgroundColor": "#4CAF50",
+                "borderRadius": 16,
+                "flex": 1,
+                "justifyContent": "center",
+              }
+            }
+          >
+            <Text
+              style={
+                {
+                  "color": "#fff",
+                  "fontSize": 24,
+                }
+              }
+            >
+              9
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "height": 0,
+          }
+        }
+      />
+    </View>
+  </RCTScrollView>
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+      }
+    }
+  >
+    <View
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "backgroundColor": {
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
+            },
+            "borderBottomWidth": 1.5,
+            "borderColor": {
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
+            },
+            "borderRadius": 3,
+            "borderWidth": 1,
+          },
+        ]
+      }
+    >
+      <View
+        style={{}}
+      >
+        <View
+          style={{}}
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": {
+                    "windowsbrush": [
+                      "ButtonForeground",
+                    ],
+                  },
+                  "fontSize": 14,
+                  "fontWeight": "400",
+                  "margin": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Change height
+          </Text>
+        </View>
+      </View>
+    </View>
+    <View
+      accessibilityRole="button"
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        [
+          {
+            "backgroundColor": {
+              "windowsbrush": [
+                "ButtonBackground",
+              ],
+            },
+            "borderBottomWidth": 1.5,
+            "borderColor": {
+              "windowsbrush": [
+                "ButtonBorderBrush",
+              ],
+            },
+            "borderRadius": 3,
+            "borderWidth": 1,
+          },
+        ]
+      }
+    >
+      <View
+        style={{}}
+      >
+        <View
+          style={{}}
+        >
+          <Text
+            style={
+              [
+                {
+                  "color": {
+                    "windowsbrush": [
+                      "ButtonForeground",
+                    ],
+                  },
+                  "fontSize": 14,
+                  "fontWeight": "400",
+                  "margin": 8,
+                  "textAlign": "center",
+                },
+              ]
+            }
+          >
+            Make item non-responsive
+          </Text>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages FlatList 2`] = `
+<View
+  style={
+    {
       "flex": 1,
     }
   }
@@ -13514,7 +14174,7 @@ exports[`snapshotAllPages FlatList 1`] = `
 </View>
 `;
 
-exports[`snapshotAllPages FlatList 2`] = `
+exports[`snapshotAllPages FlatList 3`] = `
 <View
   style={
     {
@@ -14340,7 +15000,7 @@ exports[`snapshotAllPages FlatList 2`] = `
 </View>
 `;
 
-exports[`snapshotAllPages FlatList 3`] = `
+exports[`snapshotAllPages FlatList 4`] = `
 [
   <View
     style={
@@ -15211,7 +15871,7 @@ exports[`snapshotAllPages FlatList 3`] = `
 ]
 `;
 
-exports[`snapshotAllPages FlatList 4`] = `
+exports[`snapshotAllPages FlatList 5`] = `
 <View
   style={
     {
@@ -16040,7 +16700,7 @@ exports[`snapshotAllPages FlatList 4`] = `
 </View>
 `;
 
-exports[`snapshotAllPages FlatList 5`] = `
+exports[`snapshotAllPages FlatList 6`] = `
 <View
   style={
     {
@@ -16800,7 +17460,7 @@ exports[`snapshotAllPages FlatList 5`] = `
 </View>
 `;
 
-exports[`snapshotAllPages FlatList 6`] = `
+exports[`snapshotAllPages FlatList 7`] = `
 <View
   style={
     {
@@ -17750,7 +18410,7 @@ exports[`snapshotAllPages FlatList 6`] = `
 </View>
 `;
 
-exports[`snapshotAllPages FlatList 7`] = `
+exports[`snapshotAllPages FlatList 8`] = `
 <RCTScrollView
   data={
     [
@@ -18056,7 +18716,7 @@ exports[`snapshotAllPages FlatList 7`] = `
 </RCTScrollView>
 `;
 
-exports[`snapshotAllPages FlatList 8`] = `
+exports[`snapshotAllPages FlatList 9`] = `
 <View
   style={
     [
@@ -18231,7 +18891,7 @@ exports[`snapshotAllPages FlatList 8`] = `
 </View>
 `;
 
-exports[`snapshotAllPages FlatList 9`] = `
+exports[`snapshotAllPages FlatList 10`] = `
 <View
   style={
     {
@@ -18313,766 +18973,6 @@ exports[`snapshotAllPages FlatList 9`] = `
             "minimumViewTime": 1000,
             "viewAreaCoveragePercentThreshold": 100,
             "waitForInteraction": true,
-          },
-        },
-      ]
-    }
-  >
-    <View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          disabled={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            [
-              {
-                "backgroundColor": "pink",
-                "height": 70,
-                "justifyContent": "center",
-                "marginVertical": 8,
-                "paddingHorizontal": 20,
-              },
-              {
-                "backgroundColor": "pink",
-              },
-            ]
-          }
-          testID="Pizza"
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Pizza
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          disabled={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            [
-              {
-                "backgroundColor": "pink",
-                "height": 70,
-                "justifyContent": "center",
-                "marginVertical": 8,
-                "paddingHorizontal": 20,
-              },
-              {
-                "backgroundColor": "pink",
-              },
-            ]
-          }
-          testID="Burger"
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Burger
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          disabled={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            [
-              {
-                "backgroundColor": "pink",
-                "height": 70,
-                "justifyContent": "center",
-                "marginVertical": 8,
-                "paddingHorizontal": 20,
-              },
-              {
-                "backgroundColor": "pink",
-              },
-            ]
-          }
-          testID="Risotto"
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Risotto
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          disabled={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            [
-              {
-                "backgroundColor": "pink",
-                "height": 70,
-                "justifyContent": "center",
-                "marginVertical": 8,
-                "paddingHorizontal": 20,
-              },
-              {
-                "backgroundColor": "pink",
-              },
-            ]
-          }
-          testID="French Fries"
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            French Fries
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          disabled={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            [
-              {
-                "backgroundColor": "pink",
-                "height": 70,
-                "justifyContent": "center",
-                "marginVertical": 8,
-                "paddingHorizontal": 20,
-              },
-              {
-                "backgroundColor": "pink",
-              },
-            ]
-          }
-          testID="Onion Rings"
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Onion Rings
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          disabled={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            [
-              {
-                "backgroundColor": "pink",
-                "height": 70,
-                "justifyContent": "center",
-                "marginVertical": 8,
-                "paddingHorizontal": 20,
-              },
-              {
-                "backgroundColor": "pink",
-              },
-            ]
-          }
-          testID="Fried Shrimps"
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Fried Shrimps
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          disabled={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            [
-              {
-                "backgroundColor": "pink",
-                "height": 70,
-                "justifyContent": "center",
-                "marginVertical": 8,
-                "paddingHorizontal": 20,
-              },
-              {
-                "backgroundColor": "pink",
-              },
-            ]
-          }
-          testID="Water"
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Water
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          disabled={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            [
-              {
-                "backgroundColor": "pink",
-                "height": 70,
-                "justifyContent": "center",
-                "marginVertical": 8,
-                "paddingHorizontal": 20,
-              },
-              {
-                "backgroundColor": "pink",
-              },
-            ]
-          }
-          testID="Coke"
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Coke
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          disabled={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            [
-              {
-                "backgroundColor": "pink",
-                "height": 70,
-                "justifyContent": "center",
-                "marginVertical": 8,
-                "paddingHorizontal": 20,
-              },
-              {
-                "backgroundColor": "pink",
-              },
-            ]
-          }
-          testID="Beer"
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Beer
-          </Text>
-        </View>
-      </View>
-      <View
-        onFocusCapture={[Function]}
-        onLayout={[Function]}
-        style={null}
-      >
-        <View
-          accessibilityState={
-            {
-              "busy": undefined,
-              "checked": undefined,
-              "disabled": undefined,
-              "expanded": undefined,
-              "selected": undefined,
-            }
-          }
-          accessibilityValue={
-            {
-              "max": undefined,
-              "min": undefined,
-              "now": undefined,
-              "text": undefined,
-            }
-          }
-          accessible={true}
-          disabled={false}
-          focusable={true}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            [
-              {
-                "backgroundColor": "pink",
-                "height": 70,
-                "justifyContent": "center",
-                "marginVertical": 8,
-                "paddingHorizontal": 20,
-              },
-              {
-                "backgroundColor": "pink",
-              },
-            ]
-          }
-          testID="Cheesecake"
-        >
-          <Text
-            style={
-              {
-                "fontSize": 24,
-              }
-            }
-          >
-            Cheesecake
-          </Text>
-        </View>
-      </View>
-      <View
-        style={
-          {
-            "height": 0,
-          }
-        }
-      />
-    </View>
-  </RCTScrollView>
-</View>
-`;
-
-exports[`snapshotAllPages FlatList 10`] = `
-<View
-  style={
-    {
-      "flex": 1,
-    }
-  }
->
-  <View
-    style={
-      {
-        "alignItems": "center",
-        "backgroundColor": "#f2f2f7ff",
-        "flexDirection": "row",
-        "height": 40,
-        "justifyContent": "space-between",
-      }
-    }
-    testID="test_container"
-  >
-    <Text
-      numberOfLines={1}
-      style={
-        {
-          "fontSize": 12,
-        }
-      }
-      testID="output"
-    />
-  </View>
-  <RCTScrollView
-    data={
-      [
-        "Pizza",
-        "Burger",
-        "Risotto",
-        "French Fries",
-        "Onion Rings",
-        "Fried Shrimps",
-        "Water",
-        "Coke",
-        "Beer",
-        "Cheesecake",
-        "Brownie",
-      ]
-    }
-    getItem={[Function]}
-    getItemCount={[Function]}
-    keyExtractor={[Function]}
-    onContentSizeChange={[Function]}
-    onLayout={[Function]}
-    onMomentumScrollBegin={[Function]}
-    onMomentumScrollEnd={[Function]}
-    onScroll={[Function]}
-    onScrollBeginDrag={[Function]}
-    onScrollEndDrag={[Function]}
-    onViewableItemsChanged={[Function]}
-    removeClippedSubviews={false}
-    renderItem={[Function]}
-    scrollEventThrottle={0.0001}
-    stickyHeaderIndices={[]}
-    style={
-      {
-        "flex": 1,
-      }
-    }
-    testID="flat_list"
-    viewabilityConfig={
-      {
-        "minimumViewTime": 1000,
-        "viewAreaCoveragePercentThreshold": 100,
-        "waitForInteraction": false,
-      }
-    }
-    viewabilityConfigCallbackPairs={
-      [
-        {
-          "onViewableItemsChanged": [Function],
-          "viewabilityConfig": {
-            "minimumViewTime": 1000,
-            "viewAreaCoveragePercentThreshold": 100,
-            "waitForInteraction": false,
           },
         },
       ]
@@ -19799,7 +19699,6 @@ exports[`snapshotAllPages FlatList 11`] = `
     }
     getItem={[Function]}
     getItemCount={[Function]}
-    horizontal={true}
     keyExtractor={[Function]}
     onContentSizeChange={[Function]}
     onLayout={[Function]}
@@ -19823,7 +19722,7 @@ exports[`snapshotAllPages FlatList 11`] = `
       {
         "minimumViewTime": 1000,
         "viewAreaCoveragePercentThreshold": 100,
-        "waitForInteraction": true,
+        "waitForInteraction": false,
       }
     }
     viewabilityConfigCallbackPairs={
@@ -19833,7 +19732,7 @@ exports[`snapshotAllPages FlatList 11`] = `
           "viewabilityConfig": {
             "minimumViewTime": 1000,
             "viewAreaCoveragePercentThreshold": 100,
-            "waitForInteraction": true,
+            "waitForInteraction": false,
           },
         },
       ]
@@ -19843,14 +19742,7 @@ exports[`snapshotAllPages FlatList 11`] = `
       <View
         onFocusCapture={[Function]}
         onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
+        style={null}
       >
         <View
           accessibilityState={
@@ -19916,14 +19808,7 @@ exports[`snapshotAllPages FlatList 11`] = `
       <View
         onFocusCapture={[Function]}
         onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
+        style={null}
       >
         <View
           accessibilityState={
@@ -19989,14 +19874,7 @@ exports[`snapshotAllPages FlatList 11`] = `
       <View
         onFocusCapture={[Function]}
         onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
+        style={null}
       >
         <View
           accessibilityState={
@@ -20062,14 +19940,7 @@ exports[`snapshotAllPages FlatList 11`] = `
       <View
         onFocusCapture={[Function]}
         onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
+        style={null}
       >
         <View
           accessibilityState={
@@ -20135,14 +20006,7 @@ exports[`snapshotAllPages FlatList 11`] = `
       <View
         onFocusCapture={[Function]}
         onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
+        style={null}
       >
         <View
           accessibilityState={
@@ -20208,14 +20072,7 @@ exports[`snapshotAllPages FlatList 11`] = `
       <View
         onFocusCapture={[Function]}
         onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
+        style={null}
       >
         <View
           accessibilityState={
@@ -20281,14 +20138,7 @@ exports[`snapshotAllPages FlatList 11`] = `
       <View
         onFocusCapture={[Function]}
         onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
+        style={null}
       >
         <View
           accessibilityState={
@@ -20354,14 +20204,7 @@ exports[`snapshotAllPages FlatList 11`] = `
       <View
         onFocusCapture={[Function]}
         onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
+        style={null}
       >
         <View
           accessibilityState={
@@ -20427,14 +20270,7 @@ exports[`snapshotAllPages FlatList 11`] = `
       <View
         onFocusCapture={[Function]}
         onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
+        style={null}
       >
         <View
           accessibilityState={
@@ -20500,14 +20336,7 @@ exports[`snapshotAllPages FlatList 11`] = `
       <View
         onFocusCapture={[Function]}
         onLayout={[Function]}
-        style={
-          [
-            {
-              "flexDirection": "row",
-            },
-            null,
-          ]
-        }
+        style={null}
       >
         <View
           accessibilityState={
@@ -20573,7 +20402,7 @@ exports[`snapshotAllPages FlatList 11`] = `
       <View
         style={
           {
-            "width": 0,
+            "height": 0,
           }
         }
       />
@@ -20654,7 +20483,7 @@ exports[`snapshotAllPages FlatList 12`] = `
       {
         "minimumViewTime": 1000,
         "viewAreaCoveragePercentThreshold": 100,
-        "waitForInteraction": false,
+        "waitForInteraction": true,
       }
     }
     viewabilityConfigCallbackPairs={
@@ -20664,7 +20493,7 @@ exports[`snapshotAllPages FlatList 12`] = `
           "viewabilityConfig": {
             "minimumViewTime": 1000,
             "viewAreaCoveragePercentThreshold": 100,
-            "waitForInteraction": false,
+            "waitForInteraction": true,
           },
         },
       ]
@@ -21443,6 +21272,837 @@ exports[`snapshotAllPages FlatList 13`] = `
       testID="output"
     />
   </View>
+  <RCTScrollView
+    data={
+      [
+        "Pizza",
+        "Burger",
+        "Risotto",
+        "French Fries",
+        "Onion Rings",
+        "Fried Shrimps",
+        "Water",
+        "Coke",
+        "Beer",
+        "Cheesecake",
+        "Brownie",
+      ]
+    }
+    getItem={[Function]}
+    getItemCount={[Function]}
+    horizontal={true}
+    keyExtractor={[Function]}
+    onContentSizeChange={[Function]}
+    onLayout={[Function]}
+    onMomentumScrollBegin={[Function]}
+    onMomentumScrollEnd={[Function]}
+    onScroll={[Function]}
+    onScrollBeginDrag={[Function]}
+    onScrollEndDrag={[Function]}
+    onViewableItemsChanged={[Function]}
+    removeClippedSubviews={false}
+    renderItem={[Function]}
+    scrollEventThrottle={0.0001}
+    stickyHeaderIndices={[]}
+    style={
+      {
+        "flex": 1,
+      }
+    }
+    testID="flat_list"
+    viewabilityConfig={
+      {
+        "minimumViewTime": 1000,
+        "viewAreaCoveragePercentThreshold": 100,
+        "waitForInteraction": false,
+      }
+    }
+    viewabilityConfigCallbackPairs={
+      [
+        {
+          "onViewableItemsChanged": [Function],
+          "viewabilityConfig": {
+            "minimumViewTime": 1000,
+            "viewAreaCoveragePercentThreshold": 100,
+            "waitForInteraction": false,
+          },
+        },
+      ]
+    }
+  >
+    <View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "backgroundColor": "pink",
+                "height": 70,
+                "justifyContent": "center",
+                "marginVertical": 8,
+                "paddingHorizontal": 20,
+              },
+              {
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="Pizza"
+        >
+          <Text
+            style={
+              {
+                "fontSize": 24,
+              }
+            }
+          >
+            Pizza
+          </Text>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "backgroundColor": "pink",
+                "height": 70,
+                "justifyContent": "center",
+                "marginVertical": 8,
+                "paddingHorizontal": 20,
+              },
+              {
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="Burger"
+        >
+          <Text
+            style={
+              {
+                "fontSize": 24,
+              }
+            }
+          >
+            Burger
+          </Text>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "backgroundColor": "pink",
+                "height": 70,
+                "justifyContent": "center",
+                "marginVertical": 8,
+                "paddingHorizontal": 20,
+              },
+              {
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="Risotto"
+        >
+          <Text
+            style={
+              {
+                "fontSize": 24,
+              }
+            }
+          >
+            Risotto
+          </Text>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "backgroundColor": "pink",
+                "height": 70,
+                "justifyContent": "center",
+                "marginVertical": 8,
+                "paddingHorizontal": 20,
+              },
+              {
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="French Fries"
+        >
+          <Text
+            style={
+              {
+                "fontSize": 24,
+              }
+            }
+          >
+            French Fries
+          </Text>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "backgroundColor": "pink",
+                "height": 70,
+                "justifyContent": "center",
+                "marginVertical": 8,
+                "paddingHorizontal": 20,
+              },
+              {
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="Onion Rings"
+        >
+          <Text
+            style={
+              {
+                "fontSize": 24,
+              }
+            }
+          >
+            Onion Rings
+          </Text>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "backgroundColor": "pink",
+                "height": 70,
+                "justifyContent": "center",
+                "marginVertical": 8,
+                "paddingHorizontal": 20,
+              },
+              {
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="Fried Shrimps"
+        >
+          <Text
+            style={
+              {
+                "fontSize": 24,
+              }
+            }
+          >
+            Fried Shrimps
+          </Text>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "backgroundColor": "pink",
+                "height": 70,
+                "justifyContent": "center",
+                "marginVertical": 8,
+                "paddingHorizontal": 20,
+              },
+              {
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="Water"
+        >
+          <Text
+            style={
+              {
+                "fontSize": 24,
+              }
+            }
+          >
+            Water
+          </Text>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "backgroundColor": "pink",
+                "height": 70,
+                "justifyContent": "center",
+                "marginVertical": 8,
+                "paddingHorizontal": 20,
+              },
+              {
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="Coke"
+        >
+          <Text
+            style={
+              {
+                "fontSize": 24,
+              }
+            }
+          >
+            Coke
+          </Text>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "backgroundColor": "pink",
+                "height": 70,
+                "justifyContent": "center",
+                "marginVertical": 8,
+                "paddingHorizontal": 20,
+              },
+              {
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="Beer"
+        >
+          <Text
+            style={
+              {
+                "fontSize": 24,
+              }
+            }
+          >
+            Beer
+          </Text>
+        </View>
+      </View>
+      <View
+        onFocusCapture={[Function]}
+        onLayout={[Function]}
+        style={
+          [
+            {
+              "flexDirection": "row",
+            },
+            null,
+          ]
+        }
+      >
+        <View
+          accessibilityState={
+            {
+              "busy": undefined,
+              "checked": undefined,
+              "disabled": undefined,
+              "expanded": undefined,
+              "selected": undefined,
+            }
+          }
+          accessibilityValue={
+            {
+              "max": undefined,
+              "min": undefined,
+              "now": undefined,
+              "text": undefined,
+            }
+          }
+          accessible={true}
+          disabled={false}
+          focusable={true}
+          onBlur={[Function]}
+          onClick={[Function]}
+          onFocus={[Function]}
+          onKeyDown={[Function]}
+          onKeyUp={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            [
+              {
+                "backgroundColor": "pink",
+                "height": 70,
+                "justifyContent": "center",
+                "marginVertical": 8,
+                "paddingHorizontal": 20,
+              },
+              {
+                "backgroundColor": "pink",
+              },
+            ]
+          }
+          testID="Cheesecake"
+        >
+          <Text
+            style={
+              {
+                "fontSize": 24,
+              }
+            }
+          >
+            Cheesecake
+          </Text>
+        </View>
+      </View>
+      <View
+        style={
+          {
+            "width": 0,
+          }
+        }
+      />
+    </View>
+  </RCTScrollView>
+</View>
+`;
+
+exports[`snapshotAllPages FlatList 14`] = `
+<View
+  style={
+    {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "backgroundColor": "#f2f2f7ff",
+        "flexDirection": "row",
+        "height": 40,
+        "justifyContent": "space-between",
+      }
+    }
+    testID="test_container"
+  >
+    <Text
+      numberOfLines={1}
+      style={
+        {
+          "fontSize": 12,
+        }
+      }
+      testID="output"
+    />
+  </View>
   <View
     style={
       {
@@ -22180,7 +22840,7 @@ exports[`snapshotAllPages FlatList 13`] = `
 </View>
 `;
 
-exports[`snapshotAllPages FlatList 14`] = `
+exports[`snapshotAllPages FlatList 15`] = `
 <View
   style={
     {
@@ -80902,7 +81562,16 @@ exports[`snapshotAllPages View 22`] = `
   nativeID="native-id-view"
   testID="nativeid"
 >
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     A View with a nativeID "native-id-view"
   </Text>
 </View>
@@ -80947,17 +81616,44 @@ exports[`snapshotAllPages View 23`] = `
   onPress={[Function]}
   testID="accessibility"
 >
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     A View with accessibility values.
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     Current Number of Accessibility Taps: 
     0
   </Text>
   <View
     importantForAccessibility="no-hide-descendants"
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       This element should be hidden from accessibility.
     </Text>
   </View>
@@ -80969,7 +81665,16 @@ exports[`snapshotAllPages View 23`] = `
     }
     accessible={true}
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       This sub-view should not have an accessibility value. It's control type does not support the value pattern.
     </Text>
   </View>
@@ -81031,9 +81736,14 @@ exports[`snapshotAllPages View 26`] = `
 >
   <Text
     style={
-      {
-        "fontSize": 11,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 11,
+        },
+      ]
     }
   >
     This Parent View has tooltip "Parent View"
@@ -81043,9 +81753,14 @@ exports[`snapshotAllPages View 26`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 11,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
       }
     >
       This view has tooltip "Child View 1"
@@ -81056,9 +81771,14 @@ exports[`snapshotAllPages View 26`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 11,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 11,
+          },
+        ]
       }
     >
       This view has tooltip "Child View 2"

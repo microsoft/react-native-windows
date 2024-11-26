@@ -7,11 +7,11 @@ namespace Microsoft::ReactNative {
 class AsynchronousEventBeat final : public facebook::react::EventBeat {
  public:
   AsynchronousEventBeat(
-      facebook::react::EventBeat::SharedOwnerBox const &ownerBox,
+      std::shared_ptr<facebook::react::EventBeat::OwnerBox> const ownerBox,
       const winrt::Microsoft::ReactNative::ReactContext &context,
       facebook::react::RuntimeExecutor runtimeExecutor);
 
-  void induce() const override;
+  void induce() const;
   void request() const override;
 
  private:

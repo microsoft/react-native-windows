@@ -11,14 +11,14 @@ namespace Microsoft::ReactNative {
 class SynchronousEventBeat final : public facebook::react::EventBeat {
  public:
   SynchronousEventBeat(
-      facebook::react::EventBeat::SharedOwnerBox const &ownerBox,
+      std::shared_ptr<facebook::react::EventBeat::OwnerBox> const ownerBox,
       const winrt::Microsoft::ReactNative::ReactContext &context,
       facebook::react::RuntimeExecutor runtimeExecutor,
       std::shared_ptr<facebook::react::RuntimeScheduler> runtimeScheduler);
 
   void beat(facebook::jsi::Runtime &runtime) const;
 
-  void induce() const override;
+  void induce() const;
 
   void lockExecutorAndBeat() const;
 
