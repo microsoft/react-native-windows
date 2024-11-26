@@ -146,7 +146,6 @@
     "/metro.config.js",
     "/react-native.config.js",
     "/rn-get-polyfills.js",
-    "/windows",
     "!packages.lock.json",
     "!packages.fabric.lock.json"
   ],
