@@ -87,7 +87,7 @@ void FabricUIManager::installFabricUIManager() noexcept {
   }
 
   facebook::react::EventBeat::Factory asynchronousBeatFactory =
-      [runtimeExecutor, context = m_context](facebook::react::EventBeat::SharedOwnerBox const &ownerBox) {
+      [runtimeExecutor, context = m_context](std::shared_ptr<facebook::react::EventBeat::OwnerBox> const &ownerBox) {
         return std::make_unique<AsynchronousEventBeat>(ownerBox, context, runtimeExecutor);
       };
 
@@ -111,7 +111,7 @@ void FabricUIManager::installFabricUIManager() noexcept {
     return registry;
   };
   toolbox.runtimeExecutor = runtimeExecutor;
-  toolbox.asynchronousEventBeatFactory = asynchronousBeatFactory;
+  toolbox.eventBeatFactory = asynchronousBeatFactory;
 
   m_scheduler = std::make_shared<facebook::react::Scheduler>(
       toolbox, (/*animationDriver_ ? animationDriver_.get() :*/ nullptr), this);

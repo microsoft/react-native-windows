@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241015-3485e9ed8",
+  "baseVersion": "0.77.0-nightly-20241020-e7a3f479f",
   "overrides": [
     {
       "type": "derived",
@@ -38,20 +38,20 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "1c153f8b041749b012470f47811b5f97ce5b2502",
+      "baseHash": "7ec07d02972bb0ad7248d84cbe135c636d61dd6b",
       "issue": 12869
     },
     {
       "type": "patch",
       "file": "src/js/examples/Modal/ModalOnShow.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Modal/ModalOnShow.js",
-      "baseHash": "c40af9ce3741cdaf040bcebf845cb482f2ccd197"
+      "baseHash": "911507abcf9172b5fdd1bb68faaf02562df704d4"
     },
     {
       "type": "patch",
       "file": "src/js/examples/Modal/ModalPresentation.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Modal/ModalPresentation.js",
-      "baseHash": "d25e22b917ec92b9e792bf3d0663c8a1b2bba14d"
+      "baseHash": "236557b5a3db2a29f82b0c3c2672dfb81a2e4d96"
     },
     {
       "type": "patch",
@@ -77,20 +77,20 @@
       "type": "derived",
       "file": "src/js/examples/Touchable/TouchableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Touchable/TouchableExample.js",
-      "baseHash": "727e3386abd5bd793225c2f7c4e7a273b6a8ff19"
+      "baseHash": "19ff0caab9ea1a766b7c72566c4b08e7aaf338c1"
     },
     {
       "type": "patch",
       "file": "src/js/examples/TurboModule/SampleTurboModuleExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/TurboModule/SampleTurboModuleExample.js",
-      "baseHash": "e4030ff7f2c505bd76020105b047c0a9cf9ecaff",
+      "baseHash": "10d44f85e6fbdab7620a7ce4f6ca2d8f43e8de19",
       "issue": 0
     },
     {
       "type": "patch",
       "file": "src/js/examples/View/ViewExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/View/ViewExample.js",
-      "baseHash": "dd78c35a737bcbfb8b2732d16f5c06c77b895ffc"
+      "baseHash": "3ba083555cbf2bed28a325f7d91b2c9a3250dedc"
     },
     {
       "type": "copy",
@@ -103,7 +103,7 @@
       "type": "derived",
       "file": "src/js/utils/RNTesterList.windows.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "a4a186470316624bcd693e7f8b67739f87e5729c"
+      "baseHash": "27576bedd435d2e9f130ebfdf8e872d30f0b7855"
     }
   ]
 }
