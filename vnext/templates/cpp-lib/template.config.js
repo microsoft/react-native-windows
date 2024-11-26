@@ -199,15 +199,21 @@ async function postInstall(config = {}, options = {}) {
   const namespaceCpp = namespace.replace(/\./g, '::');
 
   // Update package.json codegen
-  await templateUtils.updateProjectPackageJson(libConfig, libOptions, {
-    codegenConfig: {
-      windows: {
-        namespace: namespaceCpp + 'Codegen',
-        outputDirectory: `windows/${projectName}/codegen`,
-        separateDataTypes: true,
+  await templateUtils.updateProjectPackageJson(
+    libConfig,
+    libOptions,
+    {
+      codegenConfig: {
+        windows: {
+          namespace: namespaceCpp + 'Codegen',
+          outputDirectory: `windows/${projectName}/codegen`,
+          separateDataTypes: true,
+        },
       },
     },
-  });
+    true,
+    true,
+  );
 
   if (exExists) {
     const {rnwVersion} = templateUtils.getRnwInfo(exConfig, exOptions);
