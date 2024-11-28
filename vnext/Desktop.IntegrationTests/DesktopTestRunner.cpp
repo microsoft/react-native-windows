@@ -72,7 +72,7 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
   devSettings->platformName = "windows";
 
   // Set to JSIEngineOverride::Chakra when testing the Chakra.dll JSI runtime.
-  devSettings->jsiEngineOverride = JSIEngineOverride::Chakra;
+  devSettings->jsiEngineOverride = JSIEngineOverride::V8;
 
   auto instanceWrapper = CreateReactInstance(
       std::make_shared<facebook::react::Instance>(),
