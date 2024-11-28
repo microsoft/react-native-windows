@@ -91,12 +91,6 @@ jobs:
             #12714 -  Disable for first deployment of test website.
             #         RNTesterIntegrationTests::WebSocket
             #         RNTesterIntegrationTests::WebSocketBlob
-            ##13897 - Reneable RNTesterIntegrationTests
-            #         RNTesterIntegrationTests::Dummy
-            #         RNTesterIntegrationTests::Fetch
-            #         RNTesterIntegrationTests::XHRSample
-            #         RNTesterIntegrationTests::Blob
-            #         RNTesterIntegrationTests::Logging
             - name: Desktop.IntegrationTests.Filter
               value: >
                 (FullyQualifiedName!=RNTesterIntegrationTests::IntegrationTestHarness)&
