@@ -63,8 +63,7 @@ struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(std::string, std::vector<ExceptionsManagerSpec_StackFrame>, double) noexcept>{0, L"reportFatalException"},
       Method<void(std::string, std::vector<ExceptionsManagerSpec_StackFrame>, double) noexcept>{1, L"reportSoftException"},
       Method<void(ExceptionsManagerSpec_ExceptionData) noexcept>{2, L"reportException"},
-      Method<void(std::string, std::vector<ExceptionsManagerSpec_StackFrame>, double) noexcept>{3, L"updateExceptionMessage"},
-      Method<void() noexcept>{4, L"dismissRedbox"},
+      Method<void() noexcept>{3, L"dismissRedbox"},
   };
 
   template <class TModule>
@@ -88,11 +87,6 @@ struct ExceptionsManagerSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "    REACT_METHOD(reportException) static void reportException(ExceptionsManagerSpec_ExceptionData && data) noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           3,
-          "updateExceptionMessage",
-          "    REACT_METHOD(updateExceptionMessage) void updateExceptionMessage(std::string message, std::vector<ExceptionsManagerSpec_StackFrame> const & stack, double exceptionId) noexcept { /* implementation */ }\n"
-          "    REACT_METHOD(updateExceptionMessage) static void updateExceptionMessage(std::string message, std::vector<ExceptionsManagerSpec_StackFrame> const & stack, double exceptionId) noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          4,
           "dismissRedbox",
           "    REACT_METHOD(dismissRedbox) void dismissRedbox() noexcept { /* implementation */ }\n"
           "    REACT_METHOD(dismissRedbox) static void dismissRedbox() noexcept { /* implementation */ }\n");

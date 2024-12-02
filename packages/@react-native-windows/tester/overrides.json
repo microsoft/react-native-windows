@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241020-e7a3f479f",
+  "baseVersion": "0.77.0-nightly-20241031-3a01a0c9c",
   "overrides": [
     {
       "type": "derived",
@@ -64,7 +64,7 @@
       "type": "derived",
       "file": "src/js/examples/Text/TextExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Text/TextExample.android.js",
-      "baseHash": "a424cc0287a78d55f78de8c19cbde0f4ba56d28e"
+      "baseHash": "4a4b00574c473a730168785dc0ec9dfa3f89f5e5"
     },
     {
       "type": "patch",
@@ -77,7 +77,7 @@
       "type": "derived",
       "file": "src/js/examples/Touchable/TouchableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Touchable/TouchableExample.js",
-      "baseHash": "19ff0caab9ea1a766b7c72566c4b08e7aaf338c1"
+      "baseHash": "fdc30510eb983f28aaf6beba11b9e52c06493ff5"
     },
     {
       "type": "patch",
