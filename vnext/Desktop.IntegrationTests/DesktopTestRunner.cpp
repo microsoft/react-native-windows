@@ -5,7 +5,6 @@
 
 #include <Threading/MessageQueueThreadFactory.h>
 #include <cxxreact/Instance.h>
-#include "ChakraRuntimeHolder.h"
 #include "DesktopTestInstance.h"
 #include "Modules/TestDevSettingsModule.h"
 #include "Modules/TestImageLoaderModule.h"
@@ -70,8 +69,6 @@ shared_ptr<ITestInstance> TestRunner::GetInstance(
 
   // Update settings.
   devSettings->platformName = "windows";
-
-  // Set to JSIEngineOverride::Chakra when testing the Chakra.dll JSI runtime.
   devSettings->jsiEngineOverride = JSIEngineOverride::V8;
 
   auto instanceWrapper = CreateReactInstance(
