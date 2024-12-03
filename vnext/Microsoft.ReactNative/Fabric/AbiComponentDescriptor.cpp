@@ -7,10 +7,10 @@
 
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
 #include <ReactContext.h>
-#include <react/utils/CoreFeatures.h>
 #include <type_traits>
 #include "DynamicReader.h"
 
+#include <react/featureflags/ReactNativeFeatureFlags.h>
 namespace Microsoft::ReactNative {
 
 AbiComponentDescriptor::AbiComponentDescriptor(facebook::react::ComponentDescriptorParameters const &parameters)
@@ -90,7 +90,7 @@ facebook::react::Props::Shared AbiComponentDescriptor::cloneProps(
   }
 
   if constexpr (std::is_base_of_v<facebook::react::YogaLayoutableShadowNode, ShadowNodeT>) {
-    if (facebook::react::CoreFeatures::excludeYogaFromRawProps) {
+    if (facebook::react::ReactNativeFeatureFlags::excludeYogaFromRawProps) {
       rawProps.filterYogaStylePropsInDynamicConversion();
     }
   }

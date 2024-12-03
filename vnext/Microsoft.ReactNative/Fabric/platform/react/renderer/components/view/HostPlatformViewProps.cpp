@@ -6,7 +6,7 @@
 #include <react/renderer/components/view/conversions.h>
 #include <react/renderer/core/graphicsConversions.h>
 #include <react/renderer/core/propsConversions.h>
-#include <react/utils/CoreFeatures.h>
+#include <react/featureflags/ReactNativeFeatureFlags.h>
 
 namespace facebook::react {
 
@@ -17,30 +17,30 @@ HostPlatformViewProps::HostPlatformViewProps(
     bool shouldSetRawProps)
     : BaseViewProps(context, sourceProps, rawProps),
       windowsEvents(
-          CoreFeatures::enablePropIteratorSetter ? sourceProps.windowsEvents
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter() ? sourceProps.windowsEvents
                                                  : convertRawProp(context, rawProps, sourceProps.windowsEvents, {})),
       enableFocusRing(
-          CoreFeatures::enablePropIteratorSetter
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.enableFocusRing
               : convertRawProp(context, rawProps, "enableFocusRing", sourceProps.enableFocusRing, true)),
       focusable(
-          CoreFeatures::enablePropIteratorSetter
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.focusable
               : convertRawProp(context, rawProps, "focusable", sourceProps.focusable, {})),
       tooltip(
-          CoreFeatures::enablePropIteratorSetter
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.tooltip
               : convertRawProp(context, rawProps, "tooltip", sourceProps.tooltip, {})),
       accessibilityPosInSet(
-          CoreFeatures::enablePropIteratorSetter
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.accessibilityPosInSet
               : convertRawProp(context, rawProps, "accessibilityPosInSet", sourceProps.accessibilityPosInSet, 0)),
       accessibilitySetSize(
-          CoreFeatures::enablePropIteratorSetter
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.accessibilitySetSize
               : convertRawProp(context, rawProps, "accessibilitySetSize", sourceProps.accessibilitySetSize, 0)),
       accessibilityLiveRegion(
-          CoreFeatures::enablePropIteratorSetter ? sourceProps.accessibilityLiveRegion
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter() ? sourceProps.accessibilityLiveRegion
                                                  : convertRawProp(
                                                        context,
                                                        rawProps,
