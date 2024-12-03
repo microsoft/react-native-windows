@@ -106,6 +106,8 @@ struct ComponentView : public ComponentViewT<
   void Toggle() noexcept override;
   virtual winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept;
 
+  virtual std::pair<facebook::react::Cursor, HCURSOR> cursor() const noexcept;
+
   const facebook::react::LayoutMetrics &layoutMetrics() const noexcept;
 
   virtual std::string DefaultControlType() const noexcept;
