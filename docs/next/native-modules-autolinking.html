@@ -78,7 +78,7 @@ npx react-native run-windows
 <ol>
 <li>At build time, autolinking is performed first, before <code>msbuild.exe</code> is invoked and the build actually started. It uses the information provided by <code>config</code> to both generate and modify certain native files consumed by your app project.
 <ol>
-<li><p>The <code>AutolinkedNativeModules.g.targets</code> file contains the necessary references to the dependency projects that must be built.</p>
+<li><p>The <code>AutolinkedNativeModules.g.props</code> and <code>AutolinkedNativeModules.g.targets</code> file contains the necessary references to the dependency projects that must be built.</p>
 <blockquote>
 <p>Your app's solution file may also be modified to ensure the dependency projects will be built.</p>
 </blockquote></li>
