@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 23 Nov 2024 06:23:16 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 04 Dec 2024 06:26:56 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.897
+
+Wed, 04 Dec 2024 06:26:56 GMT
+
+### Changes
+
+- implement onDismiss and remove titlebar from Modal (tatianakapos@microsoft.com)
+- Re-enable most Desktop integration tests (julio.rocha@microsoft.com)
+- Implement cursor property (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.896
 
