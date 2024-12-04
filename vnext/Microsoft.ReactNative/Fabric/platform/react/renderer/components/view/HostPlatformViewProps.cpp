@@ -3,10 +3,10 @@
 
 #include "HostPlatformViewProps.h"
 
+#include <react/featureflags/ReactNativeFeatureFlags.h>
 #include <react/renderer/components/view/conversions.h>
 #include <react/renderer/core/graphicsConversions.h>
 #include <react/renderer/core/propsConversions.h>
-#include <react/featureflags/ReactNativeFeatureFlags.h>
 
 namespace facebook::react {
 
@@ -17,8 +17,9 @@ HostPlatformViewProps::HostPlatformViewProps(
     bool shouldSetRawProps)
     : BaseViewProps(context, sourceProps, rawProps),
       windowsEvents(
-          ReactNativeFeatureFlags::enableCppPropsIteratorSetter() ? sourceProps.windowsEvents
-                                                 : convertRawProp(context, rawProps, sourceProps.windowsEvents, {})),
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
+              ? sourceProps.windowsEvents
+              : convertRawProp(context, rawProps, sourceProps.windowsEvents, {})),
       enableFocusRing(
           ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.enableFocusRing
@@ -41,12 +42,12 @@ HostPlatformViewProps::HostPlatformViewProps(
               : convertRawProp(context, rawProps, "accessibilitySetSize", sourceProps.accessibilitySetSize, 0)),
       accessibilityLiveRegion(
           ReactNativeFeatureFlags::enableCppPropsIteratorSetter() ? sourceProps.accessibilityLiveRegion
-                                                 : convertRawProp(
-                                                       context,
-                                                       rawProps,
-                                                       "accessibilityLiveRegion",
-                                                       sourceProps.accessibilityLiveRegion,
-                                                       "none")) {}
+                                                                  : convertRawProp(
+                                                                        context,
+                                                                        rawProps,
+                                                                        "accessibilityLiveRegion",
+                                                                        sourceProps.accessibilityLiveRegion,
+                                                                        "none")) {}
 
 #define WINDOWS_VIEW_EVENT_CASE(eventType)                    \
   case CONSTEXPR_RAW_PROPS_KEY_HASH("on" #eventType): {       \

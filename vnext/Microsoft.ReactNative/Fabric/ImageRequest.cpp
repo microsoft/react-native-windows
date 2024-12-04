@@ -13,8 +13,8 @@ ImageRequest::ImageRequest(
     SharedFunction<> resumeFunction,
     SharedFunction<> cancelationFunction)
     : imageSource_(std::move(imageSource)), telemetry_(std::move(telemetry)) {
-  coordinator_ = std::make_shared<ImageResponseObserverCoordinator>(
-      std::move(resumeFunction), std::move(cancelationFunction));
+  coordinator_ =
+      std::make_shared<ImageResponseObserverCoordinator>(std::move(resumeFunction), std::move(cancelationFunction));
 }
 
 const ImageSource &ImageRequest::getImageSource() const {

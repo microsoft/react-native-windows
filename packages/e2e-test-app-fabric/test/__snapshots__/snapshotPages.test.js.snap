@@ -67483,7 +67483,7 @@ exports[`snapshotAllPages Text 17`] = `
 
 exports[`snapshotAllPages Text 18`] = `
 <View
-  testID="text-align-example"
+  testID="text-align"
 >
   <Text>
     auto (default) - english LTR

@@ -17,18 +17,17 @@ void AsynchronousEventBeat::induce() const {
   m_isBeatCallbackScheduled = true;
 
   facebook::react::RuntimeScheduler &schedulerRef = *m_runtimeScheduler.get();
-  schedulerRef.scheduleWork(
-    [this, ownerBox = ownerBox_](facebook::jsi::Runtime &runtime) {
-      auto owner = ownerBox->owner.lock();
-      if (!owner) {
-        return;
-      }
+  schedulerRef.scheduleWork([this, ownerBox = ownerBox_](facebook::jsi::Runtime &runtime) {
+    auto owner = ownerBox->owner.lock();
+    if (!owner) {
+      return;
+    }
 
-      m_isBeatCallbackScheduled = false;
-      if (beatCallback_) {
-        beatCallback_(runtime);
-      }
-    });
+    m_isBeatCallbackScheduled = false;
+    if (beatCallback_) {
+      beatCallback_(runtime);
+    }
+  });
 }
 
 void AsynchronousEventBeat::request() const {
