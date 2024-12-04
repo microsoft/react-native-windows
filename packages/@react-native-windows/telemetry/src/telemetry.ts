@@ -442,6 +442,16 @@ export class Telemetry {
       data: codedError?.data ?? {},
     };
 
+    // Scrub any potential PII present in codedError.data array, as long as the data is a string.
+    if (Object.keys(codedErrorStruct.data).length > 0) {
+      for (const field in codedErrorStruct.data) {
+        if (codedErrorStruct.data.hasOwnProperty(field) && typeof codedErrorStruct.data[field] === "string") {
+          const sanitizedError = errorUtils.sanitizeErrorMessage(codedErrorStruct.data[field]);
+          codedErrorStruct.data[field] = sanitizedError;
+        }
+      }
+    }
+
     // Copy msBuildErrorMessages into the codedError.data object
     if ((error as any).msBuildErrorMessages) {
       // Always grab MSBuild error codes if possible
