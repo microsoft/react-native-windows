@@ -391,6 +391,7 @@ function verifyTestCommandTelemetryProcessor(
             : 'Unknown',
         );
 
+        // NOTE: At this point, expectedError has been modified by trackException().
         expect(codedError.data).toStrictEqual(
           (expectedError as errorUtils.CodedError).data ?? {},
         );
@@ -704,13 +705,12 @@ test.each(testTelemetryOptions)(
       'MSBuildError', // type
       'test error', // message
       {
-        fieldWithPath: 'Test Error occurred at C:\\some\\file\\path\\project.build.appxrecipe', // expectation: replace the path with "[path]".
+        fieldWithPath: 'Test Error occurred at C:\\some\\file\\path\\project.build.appxrecipe', // expectation: replace the whole C:\\... thing with "[path]".
         fieldWithNoPath: 'Test Error data', // expectation: no changes to this string.
         fieldWithNoString: 14, // expectation: no changes to this value.
       } // data
     );
 
-    // AI eats errors thrown in telemetry processors
     const caughtErrors: Error[] = [];
     TelemetryTest.addTelemetryInitializer(
       verifyTestCommandTelemetryProcessor(
