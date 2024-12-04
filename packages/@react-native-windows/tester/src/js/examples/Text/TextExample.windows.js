@@ -713,7 +713,7 @@ function NestedExample(props: {}): React.Node {
 
 function TextAlignExample(props: {}): React.Node {
   return (
-    <View testID={'text-align-example'}>
+    <View testID={'text-align'}>
       <Text>auto (default) - english LTR</Text>
       <Text>أحب اللغة العربية auto (default) - arabic RTL</Text>
       <Text style={{textAlign: 'left'}}>

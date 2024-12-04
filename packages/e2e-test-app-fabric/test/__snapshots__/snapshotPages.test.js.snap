@@ -42328,6 +42328,174 @@ exports[`snapshotAllPages ScrollView 3`] = `
 `;
 
 exports[`snapshotAllPages ScrollView 4`] = `
+<View
+  testID="stubby-horizontal-rtl-scrollview"
+>
+  <View
+    style={
+      {
+        "direction": "rtl",
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 16,
+            "fontWeight": "bold",
+            "margin": 5,
+          },
+        ]
+      }
+    >
+      RTL Layout
+    </Text>
+    <RCTScrollView
+      automaticallyAdjustContentInsets={false}
+      horizontal={true}
+      style={
+        [
+          {
+            "backgroundColor": "#eeeeee",
+            "height": 300,
+          },
+          {
+            "height": 106,
+          },
+        ]
+      }
+      testID="scroll_horizontal"
+    >
+      <View>
+        <View
+          style={
+            [
+              {
+                "backgroundColor": "#cccccc",
+                "borderRadius": 3,
+                "margin": 5,
+                "minWidth": 96,
+                "padding": 5,
+              },
+              undefined,
+            ]
+          }
+        >
+          <Text>
+            Item 0
+          </Text>
+        </View>
+      </View>
+    </RCTScrollView>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#cccccc",
+          "borderRadius": 3,
+          "margin": 5,
+          "opacity": 1,
+          "padding": 5,
+        }
+      }
+      testID="scroll_to_start_button"
+    >
+      <Text>
+        Scroll to start
+      </Text>
+    </View>
+    <View
+      accessibilityState={
+        {
+          "busy": undefined,
+          "checked": undefined,
+          "disabled": undefined,
+          "expanded": undefined,
+          "selected": undefined,
+        }
+      }
+      accessibilityValue={
+        {
+          "max": undefined,
+          "min": undefined,
+          "now": undefined,
+          "text": undefined,
+        }
+      }
+      accessible={true}
+      collapsable={false}
+      focusable={true}
+      onBlur={[Function]}
+      onClick={[Function]}
+      onFocus={[Function]}
+      onKeyDown={[Function]}
+      onKeyUp={[Function]}
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      onResponderGrant={[Function]}
+      onResponderMove={[Function]}
+      onResponderRelease={[Function]}
+      onResponderTerminate={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "alignItems": "center",
+          "backgroundColor": "#cccccc",
+          "borderRadius": 3,
+          "margin": 5,
+          "opacity": 1,
+          "padding": 5,
+        }
+      }
+      testID="scroll_to_end_button"
+    >
+      <Text>
+        Scroll to end
+      </Text>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages ScrollView 5`] = `
 <View>
   <RCTScrollView
     automaticallyAdjustContentInsets={false}
@@ -42673,7 +42841,7 @@ exports[`snapshotAllPages ScrollView 4`] = `
 </View>
 `;
 
-exports[`snapshotAllPages ScrollView 5`] = `
+exports[`snapshotAllPages ScrollView 6`] = `
 <View>
   <RCTScrollView
     canCancelContentTouches={false}
@@ -43021,7 +43189,7 @@ exports[`snapshotAllPages ScrollView 5`] = `
 </View>
 `;
 
-exports[`snapshotAllPages ScrollView 6`] = `
+exports[`snapshotAllPages ScrollView 7`] = `
 <View>
   <RCTScrollView
     decelerationRate="normal"
@@ -43311,7 +43479,7 @@ exports[`snapshotAllPages ScrollView 6`] = `
 </View>
 `;
 
-exports[`snapshotAllPages ScrollView 7`] = `
+exports[`snapshotAllPages ScrollView 8`] = `
 <View>
   <RCTScrollView
     contentInset={
@@ -43661,7 +43829,7 @@ exports[`snapshotAllPages ScrollView 7`] = `
 </View>
 `;
 
-exports[`snapshotAllPages ScrollView 8`] = `
+exports[`snapshotAllPages ScrollView 9`] = `
 <View>
   <RCTScrollView
     invertStickyHeaders={false}
@@ -44060,7 +44228,7 @@ exports[`snapshotAllPages ScrollView 8`] = `
 </View>
 `;
 
-exports[`snapshotAllPages ScrollView 9`] = `
+exports[`snapshotAllPages ScrollView 10`] = `
 <View>
   <RCTScrollView
     nestedScrollEnabled={true}
@@ -44900,7 +45068,7 @@ exports[`snapshotAllPages ScrollView 9`] = `
 </View>
 `;
 
-exports[`snapshotAllPages ScrollView 10`] = `
+exports[`snapshotAllPages ScrollView 11`] = `
 <View
   style={
     {
@@ -45253,7 +45421,7 @@ exports[`snapshotAllPages ScrollView 10`] = `
 </View>
 `;
 
-exports[`snapshotAllPages ScrollView 11`] = `
+exports[`snapshotAllPages ScrollView 12`] = `
 <View>
   <TextInput
     onChangeText={[Function]}
@@ -45848,7 +46016,7 @@ exports[`snapshotAllPages ScrollView 11`] = `
 </View>
 `;
 
-exports[`snapshotAllPages ScrollView 12`] = `
+exports[`snapshotAllPages ScrollView 13`] = `
 <View>
   <Text
     style={
@@ -46149,7 +46317,7 @@ exports[`snapshotAllPages ScrollView 12`] = `
 </View>
 `;
 
-exports[`snapshotAllPages ScrollView 13`] = `
+exports[`snapshotAllPages ScrollView 14`] = `
 <View>
   <Text
     style={
@@ -46402,7 +46570,7 @@ exports[`snapshotAllPages ScrollView 13`] = `
 </View>
 `;
 
-exports[`snapshotAllPages ScrollView 14`] = `
+exports[`snapshotAllPages ScrollView 15`] = `
 <View>
   <Text
     style={
@@ -46657,7 +46825,7 @@ exports[`snapshotAllPages ScrollView 14`] = `
 </View>
 `;
 
-exports[`snapshotAllPages ScrollView 15`] = `
+exports[`snapshotAllPages ScrollView 16`] = `
 <View>
   <RCTScrollView
     nestedScrollEnabled={true}
@@ -46945,7 +47113,7 @@ exports[`snapshotAllPages ScrollView 15`] = `
 </View>
 `;
 
-exports[`snapshotAllPages ScrollView 16`] = `
+exports[`snapshotAllPages ScrollView 17`] = `
 <View>
   <RCTScrollView
     contentInset={
@@ -47341,7 +47509,7 @@ exports[`snapshotAllPages ScrollView 16`] = `
 </View>
 `;
 
-exports[`snapshotAllPages ScrollView 17`] = `
+exports[`snapshotAllPages ScrollView 18`] = `
 <View>
   <RCTScrollView
     nestedScrollEnabled={true}
@@ -47780,7 +47948,7 @@ exports[`snapshotAllPages ScrollView 17`] = `
 </View>
 `;
 
-exports[`snapshotAllPages ScrollView 18`] = `
+exports[`snapshotAllPages ScrollView 19`] = `
 <RCTScrollView
   contentOffset={
     {
@@ -48022,7 +48190,7 @@ exports[`snapshotAllPages ScrollView 18`] = `
 </RCTScrollView>
 `;
 
-exports[`snapshotAllPages ScrollView 19`] = `
+exports[`snapshotAllPages ScrollView 20`] = `
 <View>
   <RCTScrollView
     automaticallyAdjustContentInsets={false}
@@ -48598,7 +48766,7 @@ exports[`snapshotAllPages ScrollView 19`] = `
 </View>
 `;
 
-exports[`snapshotAllPages ScrollView 20`] = `
+exports[`snapshotAllPages ScrollView 21`] = `
 <RCTScrollView
   nestedScrollEnabled={true}
   style={
@@ -48838,7 +49006,7 @@ exports[`snapshotAllPages ScrollView 20`] = `
 </RCTScrollView>
 `;
 
-exports[`snapshotAllPages ScrollView 21`] = `
+exports[`snapshotAllPages ScrollView 22`] = `
 <RCTScrollView
   horizontal={true}
   nestedScrollEnabled={true}
@@ -67315,7 +67483,7 @@ exports[`snapshotAllPages Text 17`] = `
 
 exports[`snapshotAllPages Text 18`] = `
 <View
-  testID="text-align"
+  testID="text-align-example"
 >
   <Text>
     auto (default) - english LTR
@@ -67438,20 +67606,23 @@ exports[`snapshotAllPages Text 20`] = `
 `;
 
 exports[`snapshotAllPages Text 21`] = `
-<View
-  testID="text-line-height"
->
+[
   <Text
     style={
       [
         {
+          "borderColor": "black",
+          "borderWidth": 1,
+          "fontSize": 16,
           "lineHeight": 35,
+          "marginBottom": 5,
         },
         {
           "maxWidth": 300,
         },
       ]
     }
+    testID="line-height-greater-than-font-size"
   >
     Holisticly formulate inexpensive ideas before best-of-breed benefits.
      
@@ -67465,8 +67636,74 @@ exports[`snapshotAllPages Text 21`] = `
       Continually
     </Text>
      expedite magnetic potentialities rather than client-focused interfaces.
-  </Text>
-</View>
+  </Text>,
+  <Text
+    style={
+      [
+        {
+          "borderColor": "black",
+          "borderWidth": 1,
+          "fontSize": 16,
+          "lineHeight": 8,
+          "marginBottom": 5,
+        },
+        {
+          "maxWidth": 300,
+        },
+      ]
+    }
+    testID="line-height-less-than-font-size"
+  >
+    Holisticly formulate inexpensive ideas before best-of-breed benefits.
+     
+    <Text
+      style={
+        {
+          "fontSize": 20,
+        }
+      }
+    >
+      Continually
+    </Text>
+     expedite magnetic potentialities rather than client-focused interfaces.
+  </Text>,
+  <Text
+    style={
+      [
+        {
+          "borderColor": "black",
+          "borderWidth": 1,
+          "fontSize": 24,
+          "lineHeight": 8,
+        },
+        {
+          "maxWidth": 300,
+        },
+      ]
+    }
+    testID="line-height-single-line-less-than-font-size"
+  >
+    Holisticly formulate
+  </Text>,
+  <Text
+    style={
+      [
+        {
+          "borderColor": "black",
+          "borderWidth": 1,
+          "fontSize": 16,
+          "lineHeight": 20,
+        },
+        {
+          "maxWidth": 300,
+        },
+      ]
+    }
+    testID="line-height-single-line-greater-than-font-size"
+  >
+    Holisticly formulate
+  </Text>,
+]
 `;
 
 exports[`snapshotAllPages Text 22`] = `
@@ -73180,6 +73417,121 @@ exports[`snapshotAllPages TextInput 19`] = `
 exports[`snapshotAllPages TextInput 20`] = `
 <View>
   <Text>
+    Uncontrolled:
+  </Text>
+  <TextInput
+    placeholder="Type..."
+    style={
+      {
+        "alignSelf": "center",
+        "backgroundColor": "orange",
+        "fontSize": 16,
+      }
+    }
+  />
+  <Text>
+    Controlled:
+  </Text>
+  <TextInput
+    onChangeText={[Function]}
+    placeholder="..."
+    style={
+      {
+        "alignSelf": "center",
+        "backgroundColor": "orange",
+        "fontSize": 16,
+      }
+    }
+    value=""
+  />
+  <View
+    accessibilityRole="button"
+    accessibilityState={
+      {
+        "busy": undefined,
+        "checked": undefined,
+        "disabled": undefined,
+        "expanded": undefined,
+        "selected": undefined,
+      }
+    }
+    accessibilityValue={
+      {
+        "max": undefined,
+        "min": undefined,
+        "now": undefined,
+        "text": undefined,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onBlur={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onKeyDown={[Function]}
+    onKeyUp={[Function]}
+    onMouseEnter={[Function]}
+    onMouseLeave={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      [
+        {
+          "backgroundColor": {
+            "windowsbrush": [
+              "ButtonBackground",
+            ],
+          },
+          "borderBottomWidth": 1.5,
+          "borderColor": {
+            "windowsbrush": [
+              "ButtonBorderBrush",
+            ],
+          },
+          "borderRadius": 3,
+          "borderWidth": 1,
+        },
+      ]
+    }
+  >
+    <View
+      style={{}}
+    >
+      <View
+        style={{}}
+      >
+        <Text
+          style={
+            [
+              {
+                "color": {
+                  "windowsbrush": [
+                    "ButtonForeground",
+                  ],
+                },
+                "fontSize": 14,
+                "fontWeight": "400",
+                "margin": 8,
+                "textAlign": "center",
+              },
+            ]
+          }
+        >
+          Update controlled Input
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 21`] = `
+<View>
+  <Text>
     Do not clear text on focus:
   </Text>
   <TextInput
@@ -73233,7 +73585,7 @@ exports[`snapshotAllPages TextInput 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 21`] = `
+exports[`snapshotAllPages TextInput 22`] = `
 <View>
   <TextInput
     defaultValue="Default color text"
@@ -73493,7 +73845,7 @@ exports[`snapshotAllPages TextInput 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 22`] = `
+exports[`snapshotAllPages TextInput 23`] = `
 <View>
   <TextInput
     defaultValue="Font Weight (default)"
@@ -73831,7 +74183,7 @@ exports[`snapshotAllPages TextInput 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 23`] = `
+exports[`snapshotAllPages TextInput 24`] = `
 <TextInput
   placeholder="If you set height, beware of padding set from themes"
   style={
@@ -73859,7 +74211,7 @@ exports[`snapshotAllPages TextInput 23`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 24`] = `
+exports[`snapshotAllPages TextInput 25`] = `
 <View>
   <TextInput
     placeholder="letterSpacing = 0"
@@ -73976,7 +74328,7 @@ exports[`snapshotAllPages TextInput 24`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 25`] = `
+exports[`snapshotAllPages TextInput 26`] = `
 <View>
   <TextInput
     defaultValue="iloveturtles"
@@ -74035,7 +74387,7 @@ exports[`snapshotAllPages TextInput 25`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 26`] = `
+exports[`snapshotAllPages TextInput 27`] = `
 <TextInput
   defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
   editable={false}
@@ -74062,7 +74414,7 @@ exports[`snapshotAllPages TextInput 26`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 27`] = `
+exports[`snapshotAllPages TextInput 28`] = `
 <View>
   <TextInput
     autoCorrect={true}
@@ -74178,7 +74530,7 @@ exports[`snapshotAllPages TextInput 27`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 28`] = `
+exports[`snapshotAllPages TextInput 29`] = `
 <View>
   <TextInput
     editable={true}
@@ -74271,7 +74623,7 @@ exports[`snapshotAllPages TextInput 28`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 29`] = `
+exports[`snapshotAllPages TextInput 30`] = `
 <View
   style={
     {
@@ -74370,7 +74722,7 @@ exports[`snapshotAllPages TextInput 29`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 30`] = `
+exports[`snapshotAllPages TextInput 31`] = `
 <View
   style={
     {
@@ -74488,7 +74840,7 @@ exports[`snapshotAllPages TextInput 30`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 31`] = `
+exports[`snapshotAllPages TextInput 32`] = `
 <View>
   <TextInput
     autoComplete="country"
@@ -74602,7 +74954,7 @@ exports[`snapshotAllPages TextInput 31`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 32`] = `
+exports[`snapshotAllPages TextInput 33`] = `
 <View>
   <TextInput
     placeholder="returnKeyType: none"
@@ -74823,7 +75175,7 @@ exports[`snapshotAllPages TextInput 32`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 33`] = `
+exports[`snapshotAllPages TextInput 34`] = `
 <View>
   <TextInput
     inlineImageLeft="ic_menu_black_24dp"
@@ -74900,7 +75252,7 @@ exports[`snapshotAllPages TextInput 33`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 34`] = `
+exports[`snapshotAllPages TextInput 35`] = `
 <View>
   <TextInput
     style={
@@ -74930,7 +75282,7 @@ exports[`snapshotAllPages TextInput 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 35`] = `
+exports[`snapshotAllPages TextInput 36`] = `
 <View>
   <Text>
     PressIn/PressOut message
@@ -74965,7 +75317,7 @@ exports[`snapshotAllPages TextInput 35`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 36`] = `
+exports[`snapshotAllPages TextInput 37`] = `
 <View>
   <Text>
     Default submit key (Enter):
@@ -75101,7 +75453,7 @@ exports[`snapshotAllPages TextInput 36`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 37`] = `
+exports[`snapshotAllPages TextInput 38`] = `
 [
   <View
     focusable={true}
@@ -75167,7 +75519,7 @@ exports[`snapshotAllPages TextInput 37`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 38`] = `
+exports[`snapshotAllPages TextInput 39`] = `
 [
   <Text>
     Spell Check Enabled:
@@ -75216,7 +75568,7 @@ exports[`snapshotAllPages TextInput 38`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 39`] = `
+exports[`snapshotAllPages TextInput 40`] = `
 <View>
   <Text>
     CaretHidden
@@ -75248,7 +75600,7 @@ exports[`snapshotAllPages TextInput 39`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 40`] = `
+exports[`snapshotAllPages TextInput 41`] = `
 <View>
   <Text>
     Cursorcolor
@@ -75280,7 +75632,7 @@ exports[`snapshotAllPages TextInput 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 41`] = `
+exports[`snapshotAllPages TextInput 42`] = `
 <View>
   <Text>
     Shadow
@@ -75318,7 +75670,7 @@ exports[`snapshotAllPages TextInput 41`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 42`] = `
+exports[`snapshotAllPages TextInput 43`] = `
 <View
   accessible={true}
   testID="textinput-set"
@@ -75401,7 +75753,7 @@ exports[`snapshotAllPages TextInput 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 43`] = `
+exports[`snapshotAllPages TextInput 44`] = `
 <View
   accessible={true}
   testID="textinput-searchbox"
@@ -82597,7 +82949,7 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
       }
     >
       <Text>
-        Download 19KB pdf File
+        Download 3KB TXT File
       </Text>
     </View>
   </View>
