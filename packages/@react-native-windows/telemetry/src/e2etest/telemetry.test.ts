@@ -705,10 +705,11 @@ test.each(testTelemetryOptions)(
       'MSBuildError', // type
       'test error', // message
       {
-        fieldWithPath: 'Test Error occurred at C:\\some\\file\\path\\project.build.appxrecipe', // expectation: replace the whole C:\\... thing with "[path]".
+        fieldWithPath:
+          'Test Error occurred at C:\\some\\file\\path\\project.build.appxrecipe', // expectation: replace the whole C:\\... thing with "[path]".
         fieldWithNoPath: 'Test Error data', // expectation: no changes to this string.
         fieldWithNoString: 14, // expectation: no changes to this value.
-      } // data
+      }, // data
     );
 
     const caughtErrors: Error[] = [];
