@@ -84,12 +84,16 @@ describe('TextTest', () => {
   });
 
   test('Text single line height less than font size', async () => {
-    const dump = await dumpVisualTree('line-height-single-line-less-than-font-size');
+    const dump = await dumpVisualTree(
+      'line-height-single-line-less-than-font-size',
+    );
     expect(dump).toMatchSnapshot();
   });
 
   test('Text single line height greater than font size', async () => {
-    const dump = await dumpVisualTree('line-height-single-line-greater-than-font-size');
+    const dump = await dumpVisualTree(
+      'line-height-single-line-greater-than-font-size',
+    );
     expect(dump).toMatchSnapshot();
   });
 

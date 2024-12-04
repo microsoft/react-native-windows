@@ -128,6 +128,7 @@ const PASSTHROUGH_PROPS = [
 ];
 
 // Modify the function to accept the ref prop and forward it
+// $FlowFixMe[prop-missing]
 const TouchableWithoutFeedback: React.AbstractComponent<
   Props,
   React.ElementRef<typeof Animated.View>,

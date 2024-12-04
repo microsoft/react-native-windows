@@ -344,6 +344,7 @@ const styles = StyleSheet.create({
   },
 });
 
+// $FlowFixMe[prop-missing]
 const ExportedModal: React.AbstractComponent<
   React.ElementConfig<typeof Modal>,
   // $FlowFixMe[incompatible-type-arg]
