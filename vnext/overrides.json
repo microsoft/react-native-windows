@@ -501,6 +501,12 @@
     },
     {
       "type": "derived",
+      "file": "src-win/Libraries/Modal/Modal.windows.js",
+      "baseFile": "packages/react-native/Libraries/Modal/Modal.js",
+      "baseHash": "ab5b48312e287809327d494e7a9542f2f178d94b"
+    },
+    {
+      "type": "derived",
       "file": "src-win/Libraries/NativeComponent/BaseViewConfig.windows.js",
       "baseFile": "packages/react-native/Libraries/NativeComponent/BaseViewConfig.ios.js",
       "baseHash": "ae7bdcfff1117d4a349b7b9bcc108a22ae7099ae"

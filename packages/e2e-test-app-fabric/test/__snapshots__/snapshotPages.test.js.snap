@@ -31577,14 +31577,7 @@ exports[`snapshotAllPages Modal 1`] = `
               },
               null,
               null,
-              [
-                {
-                  "borderWidth": 0,
-                },
-                {
-                  "backgroundColor": "#7676801e",
-                },
-              ],
+              null,
               {
                 "marginRight": 8,
                 "marginTop": 6,
