@@ -90,7 +90,7 @@ facebook::react::Props::Shared AbiComponentDescriptor::cloneProps(
   }
 
   if constexpr (std::is_base_of_v<facebook::react::YogaLayoutableShadowNode, ShadowNodeT>) {
-    if (facebook::react::ReactNativeFeatureFlags::excludeYogaFromRawProps) {
+    if (facebook::react::ReactNativeFeatureFlags::excludeYogaFromRawProps()) {
       rawProps.filterYogaStylePropsInDynamicConversion();
     }
   }

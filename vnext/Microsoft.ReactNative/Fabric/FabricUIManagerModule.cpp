@@ -51,9 +51,7 @@ FabicUIManagerProperty() noexcept {
   return props.Get(FabicUIManagerProperty()).Value();
 }
 
-FabricUIManager::FabricUIManager() {
-  facebook::react::ReactNativeFeatureFlags::enableCppPropsIteratorSetter();
-}
+FabricUIManager::FabricUIManager() {}
 
 FabricUIManager::~FabricUIManager() {
   // Make sure that we destroy UI components on UI thread.
@@ -75,8 +73,9 @@ void FabricUIManager::installFabricUIManager() noexcept {
 
   facebook::react::RuntimeExecutor runtimeExecutor;
   auto toolbox = facebook::react::SchedulerToolbox{};
+  auto runtimeScheduler = SchedulerSettings::RuntimeSchedulerFromProperties(m_context.Properties());
 
-  if (auto runtimeScheduler = SchedulerSettings::RuntimeSchedulerFromProperties(m_context.Properties())) {
+  if (runtimeScheduler) {
     contextContainer->insert("RuntimeScheduler", runtimeScheduler);
     runtimeExecutor = [runtimeScheduler](std::function<void(facebook::jsi::Runtime & runtime)> &&callback) {
       runtimeScheduler->scheduleWork(std::move(callback));
@@ -86,8 +85,8 @@ void FabricUIManager::installFabricUIManager() noexcept {
   }
 
   facebook::react::EventBeat::Factory asynchronousBeatFactory =
-      [runtimeExecutor, context = m_context](std::shared_ptr<facebook::react::EventBeat::OwnerBox> const &ownerBox) {
-        return std::make_unique<AsynchronousEventBeat>(ownerBox, context, runtimeExecutor);
+      [runtimeScheduler, context = m_context](std::shared_ptr<facebook::react::EventBeat::OwnerBox> const &ownerBox) {
+        return std::make_unique<AsynchronousEventBeat>(ownerBox, context, runtimeScheduler);
       };
 
   contextContainer->insert("ReactNativeConfig", config);
