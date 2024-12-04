@@ -486,7 +486,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Modal/Modal.windows.js",
       "baseFile": "packages/react-native/Libraries/Modal/Modal.js",
-      "baseHash": "ab5b48312e287809327d494e7a9542f2f178d94b"
+      "baseHash": "f1d449a8125318b0a8087f46d0eb75b3c0198e1b"
     },
     {
       "type": "derived",
