@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 05 Dec 2024 06:20:53 GMT",
+      "version": "0.0.0-canary.898",
+      "tag": "react-native-windows_v0.0.0-canary.898",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d2ae666aa5e7fa1fecbb5e1517f4092767ec2bd4",
+            "comment": "Key and mouse events require a stacking context"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 04 Dec 2024 06:26:56 GMT",
       "version": "0.0.0-canary.897",
       "tag": "react-native-windows_v0.0.0-canary.897",
