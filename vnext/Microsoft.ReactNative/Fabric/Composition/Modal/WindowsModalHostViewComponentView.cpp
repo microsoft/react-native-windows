@@ -10,8 +10,16 @@
 #include "../CompositionDynamicAutomationProvider.h"
 #include "Unicode.h"
 
+#include <DispatcherQueue.h>
+#include <Fabric/ComponentView.h>
 #include <Fabric/Composition/CompositionContextHelper.h>
 #include <Fabric/Composition/CompositionUIService.h>
+#include <Fabric/Composition/ReactNativeIsland.h>
+#include <windows.ui.composition.interop.h>
+#include <winrt/Microsoft.ReactNative.Composition.Experimental.h>
+#include <winrt/Microsoft.UI.Content.h>
+#include <winrt/Microsoft.UI.interop.h>
+#include <winrt/Windows.UI.Composition.Desktop.h>
 #include <winrt/Windows.UI.Composition.h>
 #include "IReactContext.h"
 #include "ReactHost/ReactInstanceWin.h"
@@ -22,13 +30,15 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : Super(
-          WindowsModalHostComponentView::defaultProps(),
-          compContext,
-          tag,
-          reactContext,
-          ComponentViewFeatures::Default & ~ComponentViewFeatures::Background) {
-  m_context = reactContext; // save context
+    : Super(compContext, tag, reactContext) {}
+
+WindowsModalHostComponentView::~WindowsModalHostComponentView() {
+  // Check if the window handle (m_hwnd) exists and destroy it if necessary
+  if (m_hwnd) {
+    // Close/Destroy the modal window
+    SendMessage(m_hwnd, WM_DESTROY, 0, 0);
+    m_hwnd = nullptr;
+  }
 }
 
 winrt::Microsoft::ReactNative::ComponentView WindowsModalHostComponentView::Create(
@@ -38,34 +48,36 @@ winrt::Microsoft::ReactNative::ComponentView WindowsModalHostComponentView::Crea
   return winrt::make<WindowsModalHostComponentView>(compContext, tag, reactContext);
 }
 
-// constants for creating a new windows (code mostly taken from LogBox)
+// constants for creating a new windows
 constexpr PCWSTR c_modalWindowClassName = L"MS_REACTNATIVE_MODAL";
 constexpr auto CompHostProperty = L"CompHost";
-const int MODAL_DEFAULT_WIDTH = 500;
-const int MODAL_DEFAULT_HEIGHT = 500;
+const int MODAL_MIN_WIDTH = 50;
+const int MODAL_MIN_HEIGHT = 50;
+
+float ScaleFactor(HWND hwnd) noexcept {
+  return GetDpiForWindow(hwnd) / static_cast<float>(USER_DEFAULT_SCREEN_DPI);
+}
 
 // creates a new modal window
 void WindowsModalHostComponentView::EnsureModalCreated() {
   auto host =
-      winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(m_context.Properties());
+      winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(m_reactContext.Properties());
+
   // return if hwnd already exists
   if (!host || m_hwnd) {
     return;
   }
 
-  RegisterWndClass(); // creates and register a windows class
-  auto CompositionHwndHost = winrt::Microsoft::ReactNative::CompositionHwndHost();
-  winrt::Microsoft::ReactNative::ReactViewOptions viewOptions;
-  viewOptions.ComponentName(L"Modal");
-  CompositionHwndHost.ReactViewHost(winrt::Microsoft::ReactNative::ReactCoreInjection::MakeViewHost(host, viewOptions));
+  RegisterWndClass();
+
   HINSTANCE hInstance = GetModuleHandle(NULL);
-  winrt::impl::abi<winrt::Microsoft::ReactNative::ICompositionHwndHost>::type *pHost{nullptr};
   winrt::com_ptr<::IUnknown> spunk;
-  CompositionHwndHost.as(spunk);
 
   // get the root hwnd
-  auto roothwnd = reinterpret_cast<HWND>(
-      winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(m_context.Properties().Handle()));
+  m_prevWindowID =
+      winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(m_reactContext.Properties().Handle());
+
+  auto roothwnd = GetHwndForParenting();
 
   m_hwnd = CreateWindow(
       c_modalWindowClassName,
@@ -73,8 +85,8 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
       WS_OVERLAPPEDWINDOW,
       CW_USEDEFAULT,
       CW_USEDEFAULT,
-      MODAL_DEFAULT_WIDTH,
-      MODAL_DEFAULT_HEIGHT,
+      MODAL_MIN_WIDTH,
+      MODAL_MIN_HEIGHT,
       roothwnd, // parent
       nullptr,
       hInstance,
@@ -85,11 +97,47 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
     throw std::exception("Failed to create new hwnd for Modal: " + GetLastError());
   }
 
+  // Disable user sizing of the hwnd
+  ::SetWindowLong(m_hwnd, GWL_STYLE, GetWindowLong(m_hwnd, GWL_STYLE) & ~WS_SIZEBOX);
+
+  // set the top-level windows as the new hwnd
+  winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
+      host.InstanceSettings().Properties(), reinterpret_cast<uint64_t>(m_hwnd));
+
+  // get current compositor - handles the creation/manipulation of visual objects
+  auto compositionContext = CompositionContext();
+  auto compositor =
+      winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::InnerCompositor(
+          compositionContext);
+
+  // create a react native island - code taken from CompositionHwndHost
+  auto bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
+      compositor, winrt::Microsoft::UI::GetWindowIdFromWindow(m_hwnd));
+  m_reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland(compositor, m_reactContext.Handle(), *this);
+  auto contentIsland = m_reactNativeIsland.Island();
+  bridge.Connect(contentIsland);
+  bridge.Show();
+
+  // set ScaleFactor
+  ScaleFactor(m_hwnd);
+
+  // set layout contraints
+  winrt::Microsoft::ReactNative::LayoutConstraints constraints;
+  constraints.LayoutDirection = winrt::Microsoft::ReactNative::LayoutDirection::Undefined;
+
+  RECT rc;
+  GetClientRect(roothwnd, &rc);
+  // Maximum size is set to size of parent hwnd
+  constraints.MaximumSize = {(rc.right - rc.left) * ScaleFactor(m_hwnd), (rc.bottom - rc.top) / ScaleFactor(m_hwnd)};
+  constraints.MinimumSize = {MODAL_MIN_WIDTH * ScaleFactor(m_hwnd), MODAL_MIN_HEIGHT * ScaleFactor(m_hwnd)};
+  m_reactNativeIsland.Arrange(constraints, {0, 0});
+  bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
+
   spunk.detach();
 }
 
 void WindowsModalHostComponentView::ShowOnUIThread() {
-  if (m_hwnd) {
+  if (m_hwnd && !IsWindowVisible(m_hwnd)) {
     ShowWindow(m_hwnd, SW_NORMAL);
     BringWindowToTop(m_hwnd);
     SetFocus(m_hwnd);
@@ -98,7 +146,15 @@ void WindowsModalHostComponentView::ShowOnUIThread() {
 
 void WindowsModalHostComponentView::HideOnUIThread() noexcept {
   if (m_hwnd) {
-    ::ShowWindow(m_hwnd, SW_HIDE);
+    SendMessage(m_hwnd, WM_CLOSE, 0, 0);
+  }
+
+  // reset the topWindowID
+  if (m_prevWindowID) {
+    auto host =
+        winrt::Microsoft::ReactNative::implementation::ReactNativeHost::GetReactNativeHost(m_reactContext.Properties());
+    winrt::Microsoft::ReactNative::ReactCoreInjection::SetTopLevelWindowId(
+        host.InstanceSettings().Properties(), m_prevWindowID);
   }
 }
 
@@ -121,14 +177,10 @@ LRESULT CALLBACK ModalBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM 
   }
 
   switch (message) {
-    case WM_NCCREATE: { // sent before WM_CREATE, lparam should be identical to members of CreateWindowEx
+    case WM_NCCREATE: { // called before WM_CREATE, lparam should be identical to members of CreateWindowEx
       auto createStruct = reinterpret_cast<CREATESTRUCT *>(lparam); // CreateStruct
       data = static_cast<::IUnknown *>(createStruct->lpCreateParams);
       SetProp(hwnd, CompHostProperty, data); // adds new properties to window
-      break;
-    }
-    case WM_CREATE: { // recieves after window is created but before visible
-      // host.Initialize((uint64_t)hwnd); cause Modal to throw a not registered error
       break;
     }
     case WM_CLOSE: {
@@ -137,7 +189,10 @@ LRESULT CALLBACK ModalBoxWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM 
       return 0;
     }
     case WM_DESTROY: { // called when we want to destroy the window
-      data->Release();
+      ::ShowWindow(hwnd, SW_HIDE);
+      if (data) {
+        data->Release();
+      }
       SetProp(hwnd, CompHostProperty, nullptr);
       break;
     }
@@ -174,26 +229,63 @@ void WindowsModalHostComponentView::RegisterWndClass() noexcept {
   registered = true;
 }
 
+winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
+WindowsModalHostComponentView::VisualToMountChildrenInto() noexcept {
+  return m_reactNativeIsland
+      .as<winrt::Microsoft::ReactNative::Composition::Experimental::IInternalCompositionRootView>()
+      .InternalRootVisual();
+}
+
+// childComponentView - reference to the child component view
+// index - the position in which the childComponentView should be mounted
 void WindowsModalHostComponentView::MountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  // Disabled due to partial Modal implementation. Tracking re-enablement with task list here:
-  // https://github.com/microsoft/react-native-windows/issues/11157 assert(false);
+  EnsureModalCreated();
   base_type::MountChildComponentView(childComponentView, index);
 }
 
 void WindowsModalHostComponentView::UnmountChildComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
     uint32_t index) noexcept {
-  // Disabled due to partial Modal implementation.Tracking re-enablement with task list here : https : //
-  // github.com/microsoft/react-native-windows/issues/11157 assert(false);
   base_type::UnmountChildComponentView(childComponentView, index);
 }
 
-void WindowsModalHostComponentView::HandleCommand(
-    const winrt::Microsoft::ReactNative::HandleCommandArgs &args) noexcept {
-  Super::HandleCommand(args);
+void WindowsModalHostComponentView::updateLayoutMetrics(
+    facebook::react::LayoutMetrics const &layoutMetrics,
+    facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
+  base_type::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
+  if (m_hwnd) {
+    EnsureModalCreated();
+    AdjustWindowSize();
+    ShowOnUIThread();
+  }
 }
+
+void WindowsModalHostComponentView::AdjustWindowSize() noexcept {
+  if (m_layoutMetrics.overflowInset.right == 0 && m_layoutMetrics.overflowInset.bottom == 0) {
+    return;
+  }
+  // Modal's size is based on it's children, use the overflow to calculate the width/height
+  float xPos = (-m_layoutMetrics.overflowInset.right * (m_layoutMetrics.pointScaleFactor));
+  float yPos = (-m_layoutMetrics.overflowInset.bottom * (m_layoutMetrics.pointScaleFactor));
+  RECT rc;
+  GetClientRect(m_hwnd, &rc);
+  RECT rect = {0, 0, (int)xPos, (int)yPos};
+  AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE); // Adjust for title bar and borders
+  MoveWindow(m_hwnd, 0, 0, (int)(rect.right - rect.left), (int)(rect.bottom - rect.top), true);
+
+  // set the layoutMetrics
+  m_layoutMetrics.frame.size = {
+      (float)rect.right - rect.left + m_layoutMetrics.frame.origin.x,
+      (float)rect.bottom - rect.top + m_layoutMetrics.frame.origin.y};
+  m_layoutMetrics.overflowInset.right = 0;
+  m_layoutMetrics.overflowInset.bottom = 0;
+
+  // Let RNWIsland know that Modal's size has changed
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(m_reactNativeIsland)
+      ->NotifySizeChanged();
+};
 
 void WindowsModalHostComponentView::updateProps(
     facebook::react::Props::Shared const &props,
@@ -201,93 +293,9 @@ void WindowsModalHostComponentView::updateProps(
   const auto &oldModalProps =
       *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(oldProps ? oldProps : viewProps());
   const auto &newModalProps = *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(props);
-
-  // currently Modal only gets Destroyed by closing the window
-  if (newModalProps.visible) {
-    EnsureModalCreated();
-    ShowOnUIThread();
-  }
-
+  newModalProps.visible ? m_isVisible = true : m_isVisible = false;
   base_type::updateProps(props, oldProps);
 }
-
-void WindowsModalHostComponentView::updateLayoutMetrics(
-    facebook::react::LayoutMetrics const &layoutMetrics,
-    facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
-  Super::updateLayoutMetrics(layoutMetrics, oldLayoutMetrics);
-
-  // Temporary placeholder for Modal, draws on main hwnd
-  if (m_layoutMetrics.frame.size != layoutMetrics.frame.size ||
-      m_layoutMetrics.pointScaleFactor != layoutMetrics.pointScaleFactor || m_layoutMetrics.frame.size.width == 0) {
-    // Always make visual a min size, so that even if its laid out at zero size, its clear an unimplemented view was
-    // rendered
-    float width = std::max(m_layoutMetrics.frame.size.width, 200.0f);
-    float height = std::max(m_layoutMetrics.frame.size.width, 50.0f);
-
-    winrt::Windows::Foundation::Size surfaceSize = {
-        width * m_layoutMetrics.pointScaleFactor, height * m_layoutMetrics.pointScaleFactor};
-    auto drawingSurface = m_compContext.CreateDrawingSurfaceBrush(
-        surfaceSize,
-        winrt::Windows::Graphics::DirectX::DirectXPixelFormat::B8G8R8A8UIntNormalized,
-        winrt::Windows::Graphics::DirectX::DirectXAlphaMode::Premultiplied);
-
-    drawingSurface.HorizontalAlignmentRatio(0.f);
-    drawingSurface.VerticalAlignmentRatio(0.f);
-    drawingSurface.Stretch(winrt::Microsoft::ReactNative::Composition::Experimental::CompositionStretch::None);
-    Visual().as<Experimental::ISpriteVisual>().Brush(drawingSurface);
-    Visual().Size(surfaceSize);
-    Visual().Offset({
-        layoutMetrics.frame.origin.x * layoutMetrics.pointScaleFactor,
-        layoutMetrics.frame.origin.y * layoutMetrics.pointScaleFactor,
-        0.0f,
-    });
-
-    POINT offset;
-    {
-      ::Microsoft::ReactNative::Composition::AutoDrawDrawingSurface autoDraw(
-          drawingSurface, m_layoutMetrics.pointScaleFactor, &offset);
-      if (auto d2dDeviceContext = autoDraw.GetRenderTarget()) {
-        d2dDeviceContext->Clear(D2D1::ColorF(D2D1::ColorF::Blue, 0.3f));
-        assert(d2dDeviceContext->GetUnitMode() == D2D1_UNIT_MODE_DIPS);
-
-        float offsetX = static_cast<float>(offset.x / m_layoutMetrics.pointScaleFactor);
-        float offsetY = static_cast<float>(offset.y / m_layoutMetrics.pointScaleFactor);
-
-        winrt::com_ptr<IDWriteTextFormat> spTextFormat;
-        winrt::check_hresult(::Microsoft::ReactNative::DWriteFactory()->CreateTextFormat(
-            L"Segoe UI",
-            nullptr, // Font collection (nullptr sets it to use the system font collection).
-            DWRITE_FONT_WEIGHT_REGULAR,
-            DWRITE_FONT_STYLE_NORMAL,
-            DWRITE_FONT_STRETCH_NORMAL,
-            12,
-            L"",
-            spTextFormat.put()));
-
-        winrt::com_ptr<ID2D1SolidColorBrush> textBrush;
-        winrt::check_hresult(
-            d2dDeviceContext->CreateSolidColorBrush(D2D1::ColorF(D2D1::ColorF::White), textBrush.put()));
-
-        const D2D1_RECT_F rect = {
-            static_cast<float>(offset.x), static_cast<float>(offset.y), width + offset.x, height + offset.y};
-
-        auto label = ::Microsoft::Common::Unicode::Utf8ToUtf16(std::string("This is a Modal"));
-        d2dDeviceContext->DrawText(
-            label.c_str(),
-            static_cast<UINT32>(label.length()),
-            spTextFormat.get(),
-            rect,
-            textBrush.get(),
-            D2D1_DRAW_TEXT_OPTIONS_NONE,
-            DWRITE_MEASURING_MODE_NATURAL);
-      }
-    }
-  }
-}
-
-void WindowsModalHostComponentView::updateState(
-    facebook::react::State::Shared const &state,
-    facebook::react::State::Shared const &oldState) noexcept {}
 
 facebook::react::SharedViewProps WindowsModalHostComponentView::defaultProps() noexcept {
   static auto const defaultProps = std::make_shared<facebook::react::ModalHostViewProps const>();

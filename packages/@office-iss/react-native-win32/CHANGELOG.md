@@ -1,8 +1,16 @@
 # Change Log - @office-iss/react-native-win32
 
-This log was last generated on Mon, 11 Nov 2024 22:53:43 GMT and should not be manually modified.
+This log was last generated on Mon, 25 Nov 2024 16:28:03 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.5
+
+Mon, 25 Nov 2024 16:28:03 GMT
+
+### Patches
+
+- adds default Modal (tatianakapos@microsoft.com)
 
 ## 0.75.4
 

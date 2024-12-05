@@ -104,6 +104,10 @@ struct WindowsTextInputComponentView
   void InternalFinalize() noexcept;
   void UpdatePropertyBits() noexcept;
 
+  void autoCapitalizeOnUpdateProps(
+      const std::string &previousCapitalizationType,
+      const std::string &newcapitalizationType) noexcept;
+
   winrt::Windows::UI::Composition::CompositionSurfaceBrush m_brush{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::ICaretVisual m_caretVisual{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::IDrawingSurfaceBrush m_drawingSurface{nullptr};
@@ -124,6 +128,7 @@ struct WindowsTextInputComponentView
   int m_cDrawBlock{0};
   bool m_needsRedraw{false};
   bool m_drawing{false};
+  bool m_hasFocus{false};
   bool m_clearTextOnSubmit{false};
   bool m_multiline{false};
   DWORD m_propBitsMask{0};
