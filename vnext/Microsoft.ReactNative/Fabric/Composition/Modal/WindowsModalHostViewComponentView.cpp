@@ -34,6 +34,11 @@ WindowsModalHostComponentView::WindowsModalHostComponentView(
     : Super(compContext, tag, reactContext) {}
 
 WindowsModalHostComponentView::~WindowsModalHostComponentView() {
+  // dispatch onDismiss event
+  auto emitter = std::static_pointer_cast<const facebook::react::ModalHostViewEventEmitter>(m_eventEmitter);
+  facebook::react::ModalHostViewEventEmitter::OnDismiss onDismissArgs;
+  emitter->onDismiss(onDismissArgs);
+
   // reset the topWindowID
   if (m_prevWindowID) {
     auto host =
@@ -92,10 +97,12 @@ void WindowsModalHostComponentView::EnsureModalCreated() {
 
   m_parentHwnd = GetHwndForParenting();
 
+  auto windowsStyle = m_showTitleBar ? WS_OVERLAPPEDWINDOW : WS_POPUP;
+
   m_hwnd = CreateWindow(
       c_modalWindowClassName,
       L"React-Native Modal",
-      WS_OVERLAPPEDWINDOW,
+      windowsStyle,
       CW_USEDEFAULT,
       CW_USEDEFAULT,
       MODAL_MIN_WIDTH,
@@ -169,6 +176,11 @@ void WindowsModalHostComponentView::HideOnUIThread() noexcept {
   if (m_hwnd) {
     SendMessage(m_hwnd, WM_CLOSE, 0, 0);
   }
+
+  // dispatch onDismiss event
+  auto emitter = std::static_pointer_cast<const facebook::react::ModalHostViewEventEmitter>(m_eventEmitter);
+  facebook::react::ModalHostViewEventEmitter::OnDismiss onDismissArgs;
+  emitter->onDismiss(onDismissArgs);
 
   // enable input to parent
   EnableWindow(m_parentHwnd, true);
@@ -298,7 +310,10 @@ void WindowsModalHostComponentView::AdjustWindowSize() noexcept {
   RECT rc;
   GetClientRect(m_hwnd, &rc);
   RECT rect = {0, 0, (int)xPos, (int)yPos};
-  AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE); // Adjust for title bar and borders
+
+  if (m_showTitleBar) {
+    AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE); // Adjust for title bar and borders
+  }
 
   // set the layoutMetrics
   m_layoutMetrics.frame.size = {(float)rect.right - rect.left, (float)rect.bottom - rect.top};
@@ -326,6 +341,9 @@ void WindowsModalHostComponentView::updateProps(
       *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(oldProps ? oldProps : viewProps());
   const auto &newModalProps = *std::static_pointer_cast<const facebook::react::ModalHostViewProps>(props);
   newModalProps.visible ? m_isVisible = true : m_isVisible = false;
+  if (!m_isVisible) {
+    HideOnUIThread();
+  }
   base_type::updateProps(props, oldProps);
 }
 
