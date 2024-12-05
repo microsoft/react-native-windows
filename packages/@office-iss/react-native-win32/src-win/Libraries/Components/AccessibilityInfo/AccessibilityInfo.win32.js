@@ -16,6 +16,7 @@ import {sendAccessibilityEvent} from '../../ReactNative/RendererProxy';
 import Platform from '../../Utilities/Platform';
 import legacySendAccessibilityEvent from './legacySendAccessibilityEvent';
 import NativeAccessibilityInfo from './NativeAccessibilityInfo';
+import NativeAccessibilityInfoAndroid from './NativeAccessibilityInfo';
 import NativeAccessibilityInfoWin32 from './NativeAccessibilityInfoWin32';
 import NativeAccessibilityManagerIOS from './NativeAccessibilityManager';
 

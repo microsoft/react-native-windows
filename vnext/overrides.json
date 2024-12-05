@@ -100,6 +100,27 @@
     },
     {
       "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/decorator.h",
+      "baseFile": "packages/react-native/ReactCommon/jsi/jsi/decorator.h",
+      "baseHash": "9aa72b95b38e82951dfacae5a356a9cf92c7c048",
+      "issue": 12210
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.cpp",
+      "baseFile": "packages/react-native/ReactCommon/jsi/jsi/jsi.cpp",
+      "baseHash": "3219c89e262d5bbfb3931d097a34ef2c22f351bf",
+      "issue": 12210
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/jsi.h",
+      "baseFile": "packages/react-native/ReactCommon/jsi/jsi/jsi.h",
+      "baseHash": "e041e41d5f99ccdf69ab46b54912b803b89a0b44",
+      "issue": 12210
+    },
+    {
+      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
       "baseHash": "dfe475b567eb377514970f9563bfafae8b8b6ef9",
