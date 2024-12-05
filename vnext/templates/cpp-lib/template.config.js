@@ -211,8 +211,8 @@ async function postInstall(config = {}, options = {}) {
         },
       },
     },
-    true,
-    true,
+    true, // save options from command
+    true, // if a "files" property exists, make sure "windows" is included
   );
 
   if (exExists) {

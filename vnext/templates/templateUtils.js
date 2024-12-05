@@ -141,9 +141,9 @@ async function updateProjectPackageJson(
     console.log(`Modifying ${path.join(projectRoot, 'package.json')}...`);
   }
 
-  // add "windows" to files if not already included
-  if (ensureWindowsInFiles) {
-    props.files = projectPackage.json.files || [];
+  // add "windows" to files if property exists
+  if (ensureWindowsInFiles && projectPackage.json.files !== undefined) {
+    props.files = projectPackage.json.files;
     if (!props.files.includes('windows')) {
       props.files.push('windows');
     }
