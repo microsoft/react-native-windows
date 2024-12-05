@@ -30,7 +30,6 @@
 #include <react/renderer/scheduler/Scheduler.h>
 #include <react/renderer/scheduler/SchedulerToolbox.h>
 #include <react/utils/ContextContainer.h>
-#include <react/utils/CoreFeatures.h>
 #include <winrt/Windows.Graphics.Display.h>
 #include <winrt/Windows.UI.Composition.Desktop.h>
 #include "DynamicReader.h"
@@ -52,9 +51,7 @@ FabicUIManagerProperty() noexcept {
   return props.Get(FabicUIManagerProperty()).Value();
 }
 
-FabricUIManager::FabricUIManager() {
-  facebook::react::CoreFeatures::enablePropIteratorSetter = true;
-}
+FabricUIManager::FabricUIManager() {}
 
 FabricUIManager::~FabricUIManager() {
   // Make sure that we destroy UI components on UI thread.
@@ -76,8 +73,9 @@ void FabricUIManager::installFabricUIManager() noexcept {
 
   facebook::react::RuntimeExecutor runtimeExecutor;
   auto toolbox = facebook::react::SchedulerToolbox{};
+  auto runtimeScheduler = SchedulerSettings::RuntimeSchedulerFromProperties(m_context.Properties());
 
-  if (auto runtimeScheduler = SchedulerSettings::RuntimeSchedulerFromProperties(m_context.Properties())) {
+  if (runtimeScheduler) {
     contextContainer->insert("RuntimeScheduler", runtimeScheduler);
     runtimeExecutor = [runtimeScheduler](std::function<void(facebook::jsi::Runtime & runtime)> &&callback) {
       runtimeScheduler->scheduleWork(std::move(callback));
@@ -87,8 +85,8 @@ void FabricUIManager::installFabricUIManager() noexcept {
   }
 
   facebook::react::EventBeat::Factory asynchronousBeatFactory =
-      [runtimeExecutor, context = m_context](std::shared_ptr<facebook::react::EventBeat::OwnerBox> const &ownerBox) {
-        return std::make_unique<AsynchronousEventBeat>(ownerBox, context, runtimeExecutor);
+      [runtimeScheduler, context = m_context](std::shared_ptr<facebook::react::EventBeat::OwnerBox> const &ownerBox) {
+        return std::make_unique<AsynchronousEventBeat>(ownerBox, context, runtimeScheduler);
       };
 
   contextContainer->insert("ReactNativeConfig", config);
@@ -299,7 +297,8 @@ void FabricUIManager::RCTPerformMountInstructions(
   }
 }
 
-void FabricUIManager::performTransaction(facebook::react::MountingCoordinator::Shared const &mountingCoordinator) {
+void FabricUIManager::performTransaction(
+    std::shared_ptr<const facebook::react::MountingCoordinator> const &mountingCoordinator) {
   auto surfaceId = mountingCoordinator->getSurfaceId();
 
   mountingCoordinator->getTelemetryController().pullTransaction(
@@ -321,7 +320,8 @@ void FabricUIManager::performTransaction(facebook::react::MountingCoordinator::S
       });
 }
 
-void FabricUIManager::initiateTransaction(facebook::react::MountingCoordinator::Shared mountingCoordinator) {
+void FabricUIManager::initiateTransaction(
+    std::shared_ptr<const facebook::react::MountingCoordinator> mountingCoordinator) {
   if (m_transactionInFlight) {
     m_followUpTransactionRequired = true;
     return;
@@ -336,7 +336,7 @@ void FabricUIManager::initiateTransaction(facebook::react::MountingCoordinator::
 }
 
 void FabricUIManager::schedulerDidFinishTransaction(
-    const facebook::react::MountingCoordinator::Shared &mountingCoordinator) {
+    const std::shared_ptr<const facebook::react::MountingCoordinator> &mountingCoordinator) {
   // Should cache this locally
 
   if (m_context.UIDispatcher().HasThreadAccess()) {
@@ -348,7 +348,7 @@ void FabricUIManager::schedulerDidFinishTransaction(
 }
 
 void FabricUIManager::schedulerShouldRenderTransactions(
-    const facebook::react::MountingCoordinator::Shared &mountingCoordinator) {
+    const std::shared_ptr<const facebook::react::MountingCoordinator> &mountingCoordinator) {
   if (m_context.UIDispatcher().HasThreadAccess()) {
     initiateTransaction(mountingCoordinator);
   } else {

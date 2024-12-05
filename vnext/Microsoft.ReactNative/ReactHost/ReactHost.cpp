@@ -285,6 +285,10 @@ class ReactNativeWindowsFeatureFlags : public facebook::react::ReactNativeFeatur
   bool disableEventLoopOnBridgeless() override {
     return true; // Disable event loop until we are on a JSI version that supports microtasks
   }
+
+  bool enableCppPropsIteratorSetter() override {
+    return true;
+  }
 };
 
 std::once_flag g_FlagInitFeatureFlags;
