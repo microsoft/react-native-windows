@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241031-3a01a0c9c",
+  "baseVersion": "0.77.0-nightly-20241109-7794d7af4",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "16d33187350d986e6c2fd343ff06f8f1c6f64ebf"
+      "baseHash": "24b7990b43fc55aa1664d98bc4a8babcea245ffa"
     },
     {
       "type": "derived",
@@ -102,7 +102,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
-      "baseHash": "4cab1f3169cfe38e0bf7933406dd960fda2e5d28",
+      "baseHash": "dfe475b567eb377514970f9563bfafae8b8b6ef9",
       "issue": 12210
     },
     {
@@ -179,7 +179,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "57798eaa8719baef4d8fa0f25571418c75ce7c10",
+      "baseHash": "30cd21d2e8a6004ca9ee1be2811b63fe449a5fea",
       "issue": 13172
     },
     {
@@ -263,7 +263,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "af6ef360caf09cee7b488a3fa7439f749216c51c",
+      "baseHash": "760292e859c2ff52ee99b7b633513014a75e707c",
       "issue": 4578
     },
     {
@@ -339,7 +339,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/ScrollView/ScrollViewNativeComponent.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/ScrollView/ScrollViewNativeComponent.js",
-      "baseHash": "21f339b78c92e68ed9ed34c36bee75bc27949060"
+      "baseHash": "4561c64c57947840869dfb09e8a22873bfc06eab"
     },
     {
       "type": "derived",
@@ -419,7 +419,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "8e33800dfdd3b50e26c3331abb8b4682c091602f"
+      "baseHash": "050f28e7caeef2e52717a7c43c6964612eb75ee9"
     },
     {
       "type": "patch",
@@ -462,7 +462,7 @@
       "type": "derived",
       "file": "src-win/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.windows.js",
       "baseFile": "packages/react-native/Libraries/LogBox/UI/LogBoxInspectorCodeFrame.js",
-      "baseHash": "dff994bb88b8c91090c381c871e6dc83d2511004"
+      "baseHash": "c4ffa785bf199918400e4f569849b73187f4b3cc"
     },
     {
       "type": "derived",
@@ -486,7 +486,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Modal/Modal.windows.js",
       "baseFile": "packages/react-native/Libraries/Modal/Modal.js",
-      "baseHash": "f1d449a8125318b0a8087f46d0eb75b3c0198e1b"
+      "baseHash": "5afe34e4a59a012ae2b815d9f61ddc18165326d2"
     },
     {
       "type": "derived",

@@ -687,6 +687,7 @@ protected:
 
 public:
   virtual void isReduceMotionEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
+  virtual void isInvertColorsEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
   virtual void isHighTextContrastEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
   virtual void isTouchExplorationEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
   virtual void isAccessibilityServiceEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
@@ -730,6 +731,14 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::isReduceMotionEnabled, jsInvoker_, instance_, std::move(onSuccess));
+    }
+    void isInvertColorsEnabled(jsi::Runtime &rt, jsi::Function onSuccess) override {
+      static_assert(
+          bridging::getParameterCount(&T::isInvertColorsEnabled) == 2,
+          "Expected isInvertColorsEnabled(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::isInvertColorsEnabled, jsInvoker_, instance_, std::move(onSuccess));
     }
     void isHighTextContrastEnabled(jsi::Runtime &rt, jsi::Function onSuccess) override {
       static_assert(

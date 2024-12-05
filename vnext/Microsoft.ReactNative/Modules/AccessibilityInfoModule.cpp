@@ -30,6 +30,11 @@ void AccessibilityInfo::isReduceMotionEnabled(std::function<void(bool)> const &o
   });
 }
 
+void AccessibilityInfo::isInvertColorsEnabled(std::function<void(bool)> const &onSuccess) noexcept {
+  // TODO: implement #ISSUENUMBER
+  onSuccess(false);
+}
+
 void AccessibilityInfo::isHighTextContrastEnabled(std::function<void(bool)> const &onSuccess) noexcept {
   // TODO: implement #14099
   onSuccess(false);
