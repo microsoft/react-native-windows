@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 04 Dec 2024 06:26:56 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 05 Dec 2024 06:20:53 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.898
+
+Thu, 05 Dec 2024 06:20:53 GMT
+
+### Changes
+
+- Key and mouse events require a stacking context (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.897
 
