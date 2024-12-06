@@ -149,7 +149,9 @@ function translateArray(
 function translateEventEmitterArray(
   param: {
     readonly type: 'ArrayTypeAnnotation';
-    readonly elementType: NativeModuleEventEmitterBaseTypeAnnotation | {type: string};
+    readonly elementType:
+      | NativeModuleEventEmitterBaseTypeAnnotation
+      | {type: string};
   },
   aliases: AliasMap,
   baseAliasName: string,
@@ -188,6 +190,8 @@ function translateParam(
   const paramType = param.type;
   switch (param.type) {
     case 'StringTypeAnnotation':
+    case 'StringLiteralTypeAnnotation':
+    case 'StringLiteralUnionTypeAnnotation':
       return options.cppStringType;
     case 'NumberTypeAnnotation':
     case 'FloatTypeAnnotation':
@@ -254,7 +258,13 @@ function translateEventEmitterParam(
     case 'BooleanTypeAnnotation':
       return 'bool';
     case 'ArrayTypeAnnotation':
-      return translateEventEmitterArray(param, aliases, baseAliasName, target, options);
+      return translateEventEmitterArray(
+        param,
+        aliases,
+        baseAliasName,
+        target,
+        options,
+      );
     case 'TypeAliasTypeAnnotation':
       return decorateType(getAliasCppName(param.name), target);
     case 'VoidTypeAnnotation':
@@ -265,7 +275,9 @@ function translateEventEmitterParam(
 }
 
 function translateNullableParamType(
-  paramType: Nullable<NativeModuleParamTypeAnnotation> | UnsafeAnyTypeAnnotation,
+  paramType:
+    | Nullable<NativeModuleParamTypeAnnotation>
+    | UnsafeAnyTypeAnnotation,
   aliases: AliasMap,
   baseAliasName: string,
   nullableTarget: ParamTarget,
@@ -357,14 +369,14 @@ export function translateEventEmitterArgs(
   baseAliasName: string,
   options: CppCodegenOptions,
 ) {
-    const translatedParam = translateEventEmitterParam(
-      params,
-      aliases,
-      baseAliasName,
-      'spec',
-      options,
-    );
-    return `${translatedParam}`;
+  const translatedParam = translateEventEmitterParam(
+    params,
+    aliases,
+    baseAliasName,
+    'spec',
+    options,
+  );
+  return `${translatedParam}`;
 }
 
 export function translateArgs(

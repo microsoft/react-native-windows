@@ -21,7 +21,10 @@ async function preInstall(config = {}, options = {}) {}
 
 async function getFileMappings(config = {}, options = {}) {
   const projectRoot = config?.root ?? process.cwd();
-  const {rnwPath, rnwVersion, devMode, isCanary} = templateUtils.getRnwInfo(config, options);
+  const {rnwPath, rnwVersion, devMode, isCanary} = templateUtils.getRnwInfo(
+    config,
+    options,
+  );
 
   const projectName =
     config?.project?.windows?.project?.projectName ?? options?.name ?? 'MyApp';
@@ -49,7 +52,9 @@ async function getFileMappings(config = {}, options = {}) {
     namespaceCpp: namespaceCpp,
 
     rnwVersion: rnwVersion,
-    rnwPathFromProjectRoot: path.relative(projectRoot, rnwPath).replace(/\//g, '\\'),
+    rnwPathFromProjectRoot: path
+      .relative(projectRoot, rnwPath)
+      .replace(/\//g, '\\'),
 
     mainComponentName,
 
@@ -67,9 +72,16 @@ async function getFileMappings(config = {}, options = {}) {
     devMode,
 
     useNuGets: !devMode, // default is to use published NuGets except in devMode, change to true here if you want to test devMode and nugets simultaneously
-    addReactNativePublicAdoFeed: isCanary,
+    addReactNativePublicAdoFeed: true || isCanary, // Temporary true for all new projects until code-signing is restored, see issue #14030
 
     cppNugetPackages,
+
+    // autolinking template variables
+    autolinkPropertiesForProps: '',
+    autolinkProjectReferencesForTargets: '',
+    autolinkCppIncludes: '',
+    autolinkCppPackageProviders:
+      '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: @react-native-windows\cli\src\commands\autolinkWindows\autolinkWindows.ts
   };
 
   let fileMappings = [];

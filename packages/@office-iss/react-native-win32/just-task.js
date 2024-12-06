@@ -44,4 +44,4 @@ task(
 
 task('clean', series('cleanRNLibraries'));
 
-task('lint', series('eslint', 'flow-check'));
+task('lint', series('prettier', 'eslint', 'flow-check'));

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Copyright (c) Microsoft Corporation.
+  Licensed under the MIT License.
+
+  This file will be consumed by ALL C++ module projects (both inside
+  and outside of this repo) that build on top of Microsoft.ReactNative.
+  Do not make any changes here unless it applies to ALL such projects.
+-->
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Check that Microsoft.ReactNative.WindowsSdk.Default.props has already been imported. -->
+  <Target Name="EnsureRnwSdkDefaultsSetTarget" BeforeTargets="PrepareForBuild" Condition="'$(RnwSdkDefaultsSet)' != 'true'">
+    <Warning Text="Property `RnwSdkDefaultsSet` was not set. Please ensure your project imports 'Microsoft.ReactNative.WindowsSdk.Default.props' before importing this prop sheet." />
+  </Target>
+  
+  <ImportGroup Condition="'$(RnwNewArch)'=='true'">
+    <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Composition.CppLib.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(RnwNewArch)'!='true'">
+    <Import Project="$(MSBuildThisFileDirectory)Microsoft.ReactNative.Uwp.CppLib.props" />
+  </ImportGroup>
+</Project>

@@ -73,7 +73,10 @@ import typeof I18nManager from './Libraries/ReactNative/I18nManager';
 import typeof {RootTagContext} from './Libraries/ReactNative/RootTag';
 import typeof UIManager from './Libraries/ReactNative/UIManager';
 import typeof ReactNative from './Libraries/Renderer/shims/ReactNative';
-import type {HostComponent as _HostComponentInternal} from './Libraries/Renderer/shims/ReactNativeTypes';
+import type {
+  HostComponent,
+  HostInstance,
+} from './Libraries/Renderer/shims/ReactNativeTypes';
 import typeof Settings from './Libraries/Settings/Settings';
 import typeof Share from './Libraries/Share/Share';
 import typeof {PlatformColor} from './Libraries/StyleSheet/PlatformColorValueTypes';
@@ -95,11 +98,12 @@ import typeof useColorScheme from './Libraries/Utilities/useColorScheme';
 import typeof useWindowDimensions from './Libraries/Utilities/useWindowDimensions';
 import typeof Vibration from './Libraries/Vibration/Vibration';
 import typeof YellowBox from './Libraries/YellowBox/YellowBoxDeprecated';
+import typeof DevMenu from './src/private/devmenu/DevMenu';
 
 const warnOnce = require('./Libraries/Utilities/warnOnce');
 const invariant = require('invariant');
 
-export type HostComponent<T> = _HostComponentInternal<T>;
+export type {HostComponent, HostInstance};
 
 module.exports = {
   // Components
@@ -237,6 +241,9 @@ module.exports = {
   get DeviceInfo(): DeviceInfo {
     return require('./Libraries/Utilities/DeviceInfo');
   },
+  get DevMenu(): DevMenu {
+    return require('./src/private/devmenu/DevMenu');
+  },
   get DevSettings(): DevSettings {
     return require('./Libraries/Utilities/DevSettings');
   },
@@ -369,7 +376,7 @@ module.exports = {
   get processColor(): processColor {
     return require('./Libraries/StyleSheet/processColor').default;
   },
-  get requireNativeComponent(): <T>(
+  get requireNativeComponent(): <T: {...}>(
     uiViewClassName: string,
   ) => HostComponent<T> {
     return require('./Libraries/ReactNative/requireNativeComponent').default;

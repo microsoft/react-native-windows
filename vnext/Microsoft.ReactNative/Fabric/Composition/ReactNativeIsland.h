@@ -48,6 +48,10 @@ struct ReactNativeIsland
   ~ReactNativeIsland() noexcept;
 
   ReactNativeIsland(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept;
+  ReactNativeIsland(
+      const winrt::Microsoft::UI::Composition::Compositor &compositor,
+      winrt::Microsoft::ReactNative::IReactContext context,
+      winrt::Microsoft::ReactNative::ComponentView componentView) noexcept;
   winrt::Microsoft::UI::Content::ContentIsland Island();
 
   // property ReactViewHost
@@ -82,6 +86,7 @@ struct ReactNativeIsland
   void AddRenderedVisual(const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept;
   void RemoveRenderedVisual(const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept;
   bool TrySetFocus() noexcept;
+  HWND GetHwndForParenting() noexcept;
 
   winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader Resources() noexcept;
   void Resources(const winrt::Microsoft::ReactNative::Composition::ICustomResourceLoader &resources) noexcept;
@@ -109,12 +114,19 @@ struct ReactNativeIsland
   void SetWindow(uint64_t hwnd) noexcept;
   int64_t SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept;
 
+  winrt::Windows::Foundation::Point ConvertScreenToLocal(winrt::Windows::Foundation::Point pt) noexcept;
+  winrt::Windows::Foundation::Point ConvertLocalToScreen(winrt::Windows::Foundation::Point pt) noexcept;
+
   bool CapturePointer(
       const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
       facebook::react::Tag tag) noexcept;
   void ReleasePointerCapture(
       const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
       facebook::react::Tag tag) noexcept;
+
+  void AddFragmentCompositionEventHandler(
+      winrt::Microsoft::ReactNative::IReactContext context,
+      winrt::Microsoft::ReactNative::ComponentView componentView) noexcept;
 
  public: // IReactViewInstance UI-thread implementation
   void InitRootView(
@@ -135,6 +147,7 @@ struct ReactNativeIsland
 #endif
 
   HWND m_hwnd{0};
+  bool m_isFragment{false};
   bool m_isInitialized{false};
   bool m_isJSViewAttached{false};
   bool m_hasRenderedVisual{false};

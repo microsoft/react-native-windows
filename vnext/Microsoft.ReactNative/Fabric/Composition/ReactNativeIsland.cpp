@@ -127,6 +127,20 @@ ReactNativeIsland::ReactNativeIsland(const winrt::Microsoft::UI::Composition::Co
   InitTextScaleMultiplier();
 }
 
+// Constructor to initialize ReactNativeIsland with context and componentView
+ReactNativeIsland::ReactNativeIsland(
+    const winrt::Microsoft::UI::Composition::Compositor &compositor,
+    winrt::Microsoft::ReactNative::IReactContext context,
+    winrt::Microsoft::ReactNative::ComponentView componentView) noexcept
+    : m_compositor(compositor),
+      m_context(context),
+      m_layoutConstraints({{0, 0}, {0, 0}, winrt::Microsoft::ReactNative::LayoutDirection::Undefined}),
+      m_isFragment(true) {
+  m_rootTag = componentView.Tag();
+  InitTextScaleMultiplier();
+  AddFragmentCompositionEventHandler(context, componentView);
+}
+
 ReactNativeIsland::ReactNativeIsland() noexcept : ReactNativeIsland(nullptr) {}
 
 ReactNativeIsland::~ReactNativeIsland() noexcept {
@@ -152,11 +166,13 @@ ReactNative::IReactViewHost ReactNativeIsland::ReactViewHost() noexcept {
 }
 
 void ReactNativeIsland::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewHost const &value) noexcept {
+  assert(!m_isFragment); // make sure this isn't a FragmentIsalnd
   if (m_reactViewHost == value) {
     return;
   }
 
   if (m_reactViewHost) {
+    UninitRootView();
     m_reactViewHost.DetachViewInstance();
   }
 
@@ -332,7 +348,7 @@ winrt::IInspectable ReactNativeIsland::GetUiaProvider() noexcept {
   if (m_uiaProvider == nullptr) {
     m_uiaProvider =
         winrt::make<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider>(*this);
-    if (m_hwnd) {
+    if (m_hwnd && !m_island) {
       auto pRootProvider =
           static_cast<winrt::Microsoft::ReactNative::implementation::CompositionRootAutomationProvider *>(
               m_uiaProvider.as<IRawElementProviderSimple>().get());
@@ -344,8 +360,35 @@ winrt::IInspectable ReactNativeIsland::GetUiaProvider() noexcept {
   return m_uiaProvider;
 }
 
+winrt::Windows::Foundation::Point ReactNativeIsland::ConvertScreenToLocal(
+    winrt::Windows::Foundation::Point pt) noexcept {
+  if (m_island) {
+    auto pp = m_island.CoordinateConverter().ConvertScreenToLocal(
+        winrt::Windows::Graphics::PointInt32{static_cast<int32_t>(pt.X), static_cast<int32_t>(pt.Y)});
+    return {static_cast<float>(pp.X), static_cast<float>(pp.Y)};
+  }
+  POINT p{static_cast<LONG>(pt.X), static_cast<LONG>(pt.Y)};
+  ScreenToClient(m_hwnd, &p);
+  return {static_cast<float>(p.x) / m_scaleFactor, static_cast<float>(p.y) / m_scaleFactor};
+}
+
+winrt::Windows::Foundation::Point ReactNativeIsland::ConvertLocalToScreen(
+    winrt::Windows::Foundation::Point pt) noexcept {
+  if (m_island) {
+    auto pp = m_island.CoordinateConverter().ConvertLocalToScreen(pt);
+    return {static_cast<float>(pp.X), static_cast<float>(pp.Y)};
+  }
+  POINT p{static_cast<LONG>(pt.X * m_scaleFactor), static_cast<LONG>(pt.Y * m_scaleFactor)};
+  ClientToScreen(m_hwnd, &p);
+  return {static_cast<float>(p.x), static_cast<float>(p.y)};
+}
+
 void ReactNativeIsland::SetWindow(uint64_t hwnd) noexcept {
   m_hwnd = reinterpret_cast<HWND>(hwnd);
+}
+
+HWND ReactNativeIsland::GetHwndForParenting() noexcept {
+  return m_hwnd;
 }
 
 int64_t ReactNativeIsland::SendMessage(uint32_t msg, uint64_t wParam, int64_t lParam) noexcept {
@@ -367,7 +410,7 @@ int64_t ReactNativeIsland::SendMessage(uint32_t msg, uint64_t wParam, int64_t lP
 bool ReactNativeIsland::CapturePointer(
     const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
     facebook::react::Tag tag) noexcept {
-  if (m_hwnd) {
+  if (m_hwnd && !m_island) {
     SetCapture(m_hwnd);
   }
   return m_CompositionEventHandler->CapturePointer(pointer, tag);
@@ -377,7 +420,7 @@ void ReactNativeIsland::ReleasePointerCapture(
     const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer,
     facebook::react::Tag tag) noexcept {
   if (m_CompositionEventHandler->ReleasePointerCapture(pointer, tag)) {
-    if (m_hwnd) {
+    if (m_hwnd && !m_island) {
       if (m_hwnd == GetCapture()) {
         ReleaseCapture();
       }
@@ -399,12 +442,33 @@ void ReactNativeIsland::InitRootView(
 
   m_context = winrt::Microsoft::ReactNative::ReactContext(std::move(context));
   m_reactViewOptions = std::move(viewOptions);
-  m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this);
+  m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this, -1);
   m_CompositionEventHandler->Initialize();
 
   UpdateRootViewInternal();
 
   m_isInitialized = true;
+}
+
+void ReactNativeIsland::AddFragmentCompositionEventHandler(
+    winrt::Microsoft::ReactNative::IReactContext context,
+    winrt::Microsoft::ReactNative::ComponentView componentView) noexcept {
+  m_uiDispatcher = context.Properties()
+                       .Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
+                       .try_as<IReactDispatcher>();
+  VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
+  VerifyElseCrash(m_rootTag != -1);
+  auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
+      winrt::Microsoft::ReactNative::ReactPropertyBag(context.Properties()));
+
+  if (!m_CompositionEventHandler) {
+    // Create CompositionEventHandler if not already created
+    m_context = winrt::Microsoft::ReactNative::ReactContext(context);
+    m_CompositionEventHandler =
+        std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this, componentView.Tag());
+    m_CompositionEventHandler->Initialize();
+    m_isInitialized = true;
+  }
 }
 
 void ReactNativeIsland::UpdateRootView() noexcept {
@@ -829,7 +893,9 @@ void ReactNativeIsland::OnMounted() noexcept {
     return;
   m_mounted = true;
   if (auto componentView = GetComponentView()) {
-    componentView->onMounted();
+    if (!componentView->isMounted()) {
+      componentView->onMounted();
+    }
   }
 }
 

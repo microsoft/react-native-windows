@@ -11,6 +11,7 @@
 #include <react/renderer/components/view/ViewProps.h>
 #include <react/renderer/core/LayoutMetrics.h>
 
+#include <ComponentView.Experimental.interop.h>
 #include <Fabric/Composition/Theme.h>
 #include <uiautomationcore.h>
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
@@ -37,11 +38,11 @@ struct BringIntoViewOptions {
   bool AnimationDesired{false};
   // NaN will bring the element fully into view aligned to the nearest edge of the viewport
   float HorizontalAlignmentRatio{std::numeric_limits<float>::quiet_NaN()};
-  float HorizontalOffset{0};
+  float HorizontalOffset{20};
   std::optional<facebook::react::Rect> TargetRect;
   // NaN will bring the element fully into view aligned to the nearest edge of the viewport
   float VerticalAlignmentRatio{std::numeric_limits<float>::quiet_NaN()};
-  float VerticalOffset{0};
+  float VerticalOffset{20};
 };
 
 struct LayoutMetricsChangedArgs : public LayoutMetricsChangedArgsT<LayoutMetricsChangedArgs> {
@@ -77,7 +78,8 @@ struct UnmountChildComponentViewArgs : public UnmountChildComponentViewArgsT<Unm
   uint32_t m_index;
 };
 
-struct ComponentView : public ComponentViewT<ComponentView> {
+struct ComponentView
+    : public ComponentViewT<ComponentView, ::Microsoft::ReactNative::Composition::Experimental::IComponentViewInterop> {
   ComponentView(facebook::react::Tag tag, winrt::Microsoft::ReactNative::ReactContext const &reactContext);
 
   virtual std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept;
@@ -105,6 +107,8 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   // returns true if the fn ever returned true
   bool runOnChildren(bool forward, Mso::Functor<bool(ComponentView &)> &fn) noexcept;
   virtual RECT getClientRect() const noexcept;
+  winrt::Windows::Foundation::Point ScreenToLocal(winrt::Windows::Foundation::Point pt) noexcept;
+  winrt::Windows::Foundation::Point LocalToScreen(winrt::Windows::Foundation::Point pt) noexcept;
   // The offset from this elements parent to its children (accounts for things like scroll position)
   virtual facebook::react::Point getClientOffset() const noexcept;
   virtual void onLosingFocus(const winrt::Microsoft::ReactNative::LosingFocusEventArgs &args) noexcept;
@@ -113,6 +117,7 @@ struct ComponentView : public ComponentViewT<ComponentView> {
   virtual void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept;
   void MarkAsCustomComponent() noexcept;
   virtual void onMounted() noexcept;
+  bool isMounted() noexcept;
   virtual void onUnmounted() noexcept;
   void onDestroying() noexcept;
 
@@ -208,6 +213,9 @@ struct ComponentView : public ComponentViewT<ComponentView> {
 
   // Notify up the tree to bring the rect into view by scrolling as needed
   virtual void StartBringIntoView(BringIntoViewOptions &&args) noexcept;
+
+  // Eventually PopupContentLink and similar APIs will remove the need for this.
+  virtual HWND GetHwndForParenting() noexcept;
 
   virtual const winrt::Microsoft::ReactNative::IComponentProps userProps(
       facebook::react::Props::Shared const &props) noexcept;

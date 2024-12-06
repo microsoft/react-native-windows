@@ -88,7 +88,6 @@ HRESULT UiaNavigateHelper(
   auto spFragment = uiaProvider.try_as<IRawElementProviderFragment>();
   if (spFragment != nullptr) {
     retVal = spFragment.detach();
-    retVal->AddRef();
   }
 
   return S_OK;
@@ -233,6 +232,17 @@ void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *pro
   auto selectionContainerProvider = static_cast<CompositionDynamicAutomationProvider *>(selectionContainer);
   auto simpleProvider = static_cast<IRawElementProviderSimple *>(provider);
   selectionContainerProvider->RemoveFromSelectionItems(simpleProvider);
+}
+
+ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept {
+  if (state.has_value()) {
+    if (state->checked == facebook::react::AccessibilityState::Checked) {
+      return ToggleState::ToggleState_On;
+    } else if (state->checked == facebook::react::AccessibilityState::Mixed) {
+      return ToggleState::ToggleState_Indeterminate;
+    }
+  }
+  return ToggleState::ToggleState_Off;
 }
 
 } // namespace winrt::Microsoft::ReactNative::implementation

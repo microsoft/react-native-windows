@@ -164,9 +164,7 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
     'aria-multiselectable': ariaMultiselectable, // Win32
     'aria-required': ariaRequired, // Win32
     'aria-selected': ariaSelected,
-    height,
     src,
-    width,
     ...restProps
   } = props;
 

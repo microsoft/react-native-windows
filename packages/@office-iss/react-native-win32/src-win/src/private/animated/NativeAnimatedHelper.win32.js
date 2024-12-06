@@ -8,7 +8,6 @@
  * @format
  */
 
-import type {EventSubscription} from '../../../Libraries/vendor/emitter/EventEmitter';
 import type {EventConfig} from '../../../Libraries/Animated/AnimatedEvent';
 import type {
   AnimationConfig,
@@ -18,13 +17,14 @@ import type {
   AnimatedNodeConfig,
   EventMapping,
 } from '../../../Libraries/Animated/NativeAnimatedModule';
+import type {EventSubscription} from '../../../Libraries/vendor/emitter/EventEmitter';
 
-import * as ReactNativeFeatureFlags from '../featureflags/ReactNativeFeatureFlags';
+import NativeAnimatedNonTurboModule from '../../../Libraries/Animated/NativeAnimatedModule';
+import NativeAnimatedTurboModule from '../../../Libraries/Animated/NativeAnimatedTurboModule';
 import NativeEventEmitter from '../../../Libraries/EventEmitter/NativeEventEmitter';
 import RCTDeviceEventEmitter from '../../../Libraries/EventEmitter/RCTDeviceEventEmitter';
 import Platform from '../../../Libraries/Utilities/Platform';
-import NativeAnimatedNonTurboModule from '../../../Libraries/Animated/NativeAnimatedModule';
-import NativeAnimatedTurboModule from '../../../Libraries/Animated/NativeAnimatedTurboModule';
+import * as ReactNativeFeatureFlags from '../featureflags/ReactNativeFeatureFlags';
 import invariant from 'invariant';
 import nullthrows from 'nullthrows';
 
@@ -178,7 +178,7 @@ const API = {
         /* [Windows #11041
         // TODO: (T136971132)
         invariant(
-          NativeAnimatedModule || process.env.NODE_ENV === 'test',
+          NativeAnimatedModule,
           'Native animated module is not available',
         );
         Windows] */
@@ -199,9 +199,8 @@ const API = {
         singleOpQueue.length = 0;
       }
     : (): void => {
-        // TODO: (T136971132)
         invariant(
-          NativeAnimatedModule || process.env.NODE_ENV === 'test',
+          NativeAnimatedModule,
           'Native animated module is not available',
         );
         flushQueueImmediate = null;

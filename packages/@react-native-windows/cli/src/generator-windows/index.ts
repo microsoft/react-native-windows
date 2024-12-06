@@ -189,7 +189,9 @@ export async function copyProjectTemplateAndReplace(
     languageIsCpp: language === 'cpp',
 
     rnwVersion: await getVersionOfNpmPackage('react-native-windows'),
-    rnwPathFromProjectRoot: path.relative(destPath, rnwPath).replace(/\//g, '\\'),
+    rnwPathFromProjectRoot: path
+      .relative(destPath, rnwPath)
+      .replace(/\//g, '\\'),
 
     mainComponentName: mainComponentName,
 
@@ -207,7 +209,8 @@ export async function copyProjectTemplateAndReplace(
 
     useExperimentalNuget: options.experimentalNuGetDependency,
     nuGetTestFeed: options.nuGetTestFeed,
-    nuGetADOFeed: nugetVersion.startsWith('0.0.0-'),
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    nuGetADOFeed: true || nugetVersion.startsWith('0.0.0-'), // Temporary true for all new projects until code-signing is restored, see issue #14030
 
     // cpp template variables
     useWinUI3: options.useWinUI3,
@@ -224,7 +227,7 @@ export async function copyProjectTemplateAndReplace(
     autolinkCsReactPackageProviders: '',
     autolinkCppIncludes: '',
     autolinkCppPackageProviders:
-      '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: vnext\local-cli\runWindows\utils\autolink.js
+      '\n    UNREFERENCED_PARAMETER(packageProviders);', // CODESYNC: @react-native-windows\cli\src\commands\autolinkWindows\autolinkWindows.ts
   };
 
   const commonMappings =

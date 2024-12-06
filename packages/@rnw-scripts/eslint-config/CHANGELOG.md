@@ -1,8 +1,16 @@
 # Change Log - @rnw-scripts/eslint-config
 
-<!-- This log was last generated on Mon, 07 Oct 2024 19:54:25 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 19 Oct 2024 05:29:47 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 1.2.30
+
+Sat, 19 Oct 2024 05:29:47 GMT
+
+### Patches
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
 
 ## 1.2.29
 

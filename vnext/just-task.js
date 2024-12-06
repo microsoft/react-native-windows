@@ -41,6 +41,20 @@ function codegen(test) {
   );
 }
 
+function layoutMSRNCxx() {
+  if (require('os').platform() === 'win32') {
+    const powershell = `${process.env.SystemRoot}\\System32\\WindowsPowerShell\\v1.0\\powershell.exe`;
+    execSync(
+      `${powershell} -NoProfile .\\Scripts\\Tfs\\Layout-MSRN-Headers.ps1 -GenerateLocalCxx`,
+      {
+        env: process.env,
+      },
+    );
+  }
+}
+
+task('layoutMSRNCxx', layoutMSRNCxx);
+
 task('codegen', () => codegen(false));
 task('codegen:check', () => codegen(true));
 
@@ -63,6 +77,7 @@ task(
     condition('clean', () => argv().clean),
     'copyRNLibraries',
     'copyReadmeAndLicenseFromRoot',
+    'layoutMSRNCxx',
     'compileTsPlatformOverrides',
     'codegen',
   ),
@@ -70,4 +85,4 @@ task(
 
 task('clean', series('cleanRNLibraries'));
 
-task('lint', series('eslint', 'codegen:check', 'flow-check'));
+task('lint', series('prettier', 'eslint', 'codegen:check', 'flow-check'));

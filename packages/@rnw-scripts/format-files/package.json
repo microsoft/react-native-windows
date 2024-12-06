@@ -1,6 +1,6 @@
 {
   "name": "@rnw-scripts/format-files",
-  "version": "1.1.49",
+  "version": "1.1.50",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,15 +18,15 @@
     "format-files": "./bin.js"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.57.1",
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1",
     "async": "^3.2.3",
     "clang-format": "^1.7.0",
     "source-map-support": "^0.5.19"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.2.29",
-    "@rnw-scripts/just-task": "2.3.46",
+    "@rnw-scripts/eslint-config": "1.2.30",
+    "@rnw-scripts/just-task": "2.3.47",
     "@rnw-scripts/ts-config": "2.0.5",
     "@types/async": "^3.2.5",
     "@types/node": "^18.0.0",

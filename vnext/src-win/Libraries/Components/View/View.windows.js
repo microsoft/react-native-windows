@@ -33,9 +33,7 @@ const childrenWithImportantForAccessibility = children => {
         // $FlowFixMe[incompatible-call]
         return React.cloneElement(child, {
           accessible: false,
-          children: childrenWithImportantForAccessibility(
-            child.props.children,
-          ),
+          children: childrenWithImportantForAccessibility(child.props.children),
         });
       } else {
         // $FlowFixMe[incompatible-call]
@@ -59,10 +57,10 @@ const childrenWithImportantForAccessibility = children => {
  *
  * @see https://reactnative.dev/docs/view
  */
-const View: React.AbstractComponent<
-  ViewProps,
-  React.ElementRef<typeof ViewNativeComponent>,
-> = React.forwardRef(
+const View: component(
+  ref: React.RefSetter<React.ElementRef<typeof ViewNativeComponent>>,
+  ...props: ViewProps
+) = React.forwardRef(
   (
     {
       accessibilityElementsHidden,
@@ -142,65 +140,89 @@ const View: React.AbstractComponent<
       };
     }
 
-    const _keyDown = (event: KeyEvent) => {
-      if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyDownEvents was already checked to not be undefined
-        for (const el of otherProps.keyDownEvents) {
-          if (
-            event.nativeEvent.code === el.code &&
-            el.handledEventPhase === 3
-          ) {
-            event.stopPropagation();
+    const _keyDown =
+      otherProps.keyDownEvents || otherProps.onKeyDown
+        ? (event: KeyEvent) => {
+            if (
+              otherProps.keyDownEvents &&
+              event.isPropagationStopped() !== true
+            ) {
+              // $FlowFixMe - keyDownEvents was already checked to not be undefined
+              for (const el of otherProps.keyDownEvents) {
+                if (
+                  event.nativeEvent.code === el.code &&
+                  el.handledEventPhase === 3
+                ) {
+                  event.stopPropagation();
+                }
+              }
+            }
+            otherProps.onKeyDown && otherProps.onKeyDown(event);
           }
-        }
-      }
-      otherProps.onKeyDown && otherProps.onKeyDown(event);
-    };
+        : undefined;
 
-    const _keyUp = (event: KeyEvent) => {
-      if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyDownEvents was already checked to not be undefined
-        for (const el of otherProps.keyUpEvents) {
-          if (
-            event.nativeEvent.code === el.code &&
-            el.handledEventPhase === 3
-          ) {
-            event.stopPropagation();
+    const _keyUp =
+      otherProps.keyUpEvents || otherProps.onKeyUp
+        ? (event: KeyEvent) => {
+            if (
+              otherProps.keyUpEvents &&
+              event.isPropagationStopped() !== true
+            ) {
+              // $FlowFixMe - keyUpEvents was already checked to not be undefined
+              for (const el of otherProps.keyUpEvents) {
+                if (
+                  event.nativeEvent.code === el.code &&
+                  el.handledEventPhase === 3
+                ) {
+                  event.stopPropagation();
+                }
+              }
+            }
+            otherProps.onKeyUp && otherProps.onKeyUp(event);
           }
-        }
-      }
-      otherProps.onKeyUp && otherProps.onKeyUp(event);
-    };
+        : undefined;
 
-    const _keyDownCapture = (event: KeyEvent) => {
-      if (otherProps.keyDownEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyDownEvents was already checked to not be undefined
-        for (const el of otherProps.keyDownEvents) {
-          if (
-            event.nativeEvent.code === el.code &&
-            el.handledEventPhase === 1
-          ) {
-            event.stopPropagation();
+    const _keyDownCapture =
+      otherProps.keyDownEvents || otherProps.onKeyDownCapture
+        ? (event: KeyEvent) => {
+            if (
+              otherProps.keyDownEvents &&
+              event.isPropagationStopped() !== true
+            ) {
+              // $FlowFixMe - keyDownEvents was already checked to not be undefined
+              for (const el of otherProps.keyDownEvents) {
+                if (
+                  event.nativeEvent.code === el.code &&
+                  el.handledEventPhase === 1
+                ) {
+                  event.stopPropagation();
+                }
+              }
+            }
+            otherProps.onKeyDownCapture && otherProps.onKeyDownCapture(event);
           }
-        }
-      }
-      otherProps.onKeyDownCapture && otherProps.onKeyDownCapture(event);
-    };
+        : undefined;
 
-    const _keyUpCapture = (event: KeyEvent) => {
-      if (otherProps.keyUpEvents && event.isPropagationStopped() !== true) {
-        // $FlowFixMe - keyDownEvents was already checked to not be undefined
-        for (const el of otherProps.keyUpEvents) {
-          if (
-            event.nativeEvent.code === el.code &&
-            el.handledEventPhase === 1
-          ) {
-            event.stopPropagation();
+    const _keyUpCapture =
+      otherProps.keyUpEvents || otherProps.onKeyUpCapture
+        ? (event: KeyEvent) => {
+            if (
+              otherProps.keyUpEvents &&
+              event.isPropagationStopped() !== true
+            ) {
+              // $FlowFixMe - keyUpEvents was already checked to not be undefined
+              for (const el of otherProps.keyUpEvents) {
+                if (
+                  event.nativeEvent.code === el.code &&
+                  el.handledEventPhase === 1
+                ) {
+                  event.stopPropagation();
+                }
+              }
+            }
+            otherProps.onKeyUpCapture && otherProps.onKeyUpCapture(event);
           }
-        }
-      }
-      otherProps.onKeyUpCapture && otherProps.onKeyUpCapture(event);
-    };
+        : undefined;
 
     // [Windows
     const _focusable = tabIndex !== undefined ? !tabIndex : focusable;

@@ -17,16 +17,16 @@
     "lint:fix": "rnw-scripts lint:fix"
   },
   "dependencies": {
-    "@react-native/metro-config": "0.76.0-nightly-20240701-9f6cb21ed",
+    "@react-native/metro-config": "0.77.0-nightly-20241001-223e98cc4",
     "@rnx-kit/metro-config": "^1.3.5",
     "@rnx-kit/metro-plugin-duplicates-checker": "^2.1.0",
     "@rnx-kit/metro-serializer": "^1.0.11",
-    "@typescript-eslint/eslint-plugin": "^5.30.5",
-    "@typescript-eslint/parser": "^5.57.1"
+    "@typescript-eslint/eslint-plugin": "^7.1.1",
+    "@typescript-eslint/parser": "^7.1.1"
   },
   "devDependencies": {
-    "@rnw-scripts/eslint-config": "1.2.29",
-    "@rnw-scripts/just-task": "2.3.46",
+    "@rnw-scripts/eslint-config": "1.2.30",
+    "@rnw-scripts/just-task": "2.3.47",
     "eslint": "^8.19.0",
     "prettier": "2.8.8"
   },

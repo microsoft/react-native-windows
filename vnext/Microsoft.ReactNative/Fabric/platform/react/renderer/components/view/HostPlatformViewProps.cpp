@@ -3,10 +3,10 @@
 
 #include "HostPlatformViewProps.h"
 
+#include <react/featureflags/ReactNativeFeatureFlags.h>
 #include <react/renderer/components/view/conversions.h>
 #include <react/renderer/core/graphicsConversions.h>
 #include <react/renderer/core/propsConversions.h>
-#include <react/utils/CoreFeatures.h>
 
 namespace facebook::react {
 
@@ -17,32 +17,37 @@ HostPlatformViewProps::HostPlatformViewProps(
     bool shouldSetRawProps)
     : BaseViewProps(context, sourceProps, rawProps),
       windowsEvents(
-          CoreFeatures::enablePropIteratorSetter ? sourceProps.windowsEvents
-                                                 : convertRawProp(context, rawProps, sourceProps.windowsEvents, {})),
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
+              ? sourceProps.windowsEvents
+              : convertRawProp(context, rawProps, sourceProps.windowsEvents, {})),
       enableFocusRing(
-          CoreFeatures::enablePropIteratorSetter
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.enableFocusRing
               : convertRawProp(context, rawProps, "enableFocusRing", sourceProps.enableFocusRing, true)),
       focusable(
-          CoreFeatures::enablePropIteratorSetter
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.focusable
               : convertRawProp(context, rawProps, "focusable", sourceProps.focusable, {})),
+      tooltip(
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
+              ? sourceProps.tooltip
+              : convertRawProp(context, rawProps, "tooltip", sourceProps.tooltip, {})),
       accessibilityPosInSet(
-          CoreFeatures::enablePropIteratorSetter
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.accessibilityPosInSet
               : convertRawProp(context, rawProps, "accessibilityPosInSet", sourceProps.accessibilityPosInSet, 0)),
       accessibilitySetSize(
-          CoreFeatures::enablePropIteratorSetter
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter()
               ? sourceProps.accessibilitySetSize
               : convertRawProp(context, rawProps, "accessibilitySetSize", sourceProps.accessibilitySetSize, 0)),
       accessibilityLiveRegion(
-          CoreFeatures::enablePropIteratorSetter ? sourceProps.accessibilityLiveRegion
-                                                 : convertRawProp(
-                                                       context,
-                                                       rawProps,
-                                                       "accessibilityLiveRegion",
-                                                       sourceProps.accessibilityLiveRegion,
-                                                       "none")) {}
+          ReactNativeFeatureFlags::enableCppPropsIteratorSetter() ? sourceProps.accessibilityLiveRegion
+                                                                  : convertRawProp(
+                                                                        context,
+                                                                        rawProps,
+                                                                        "accessibilityLiveRegion",
+                                                                        sourceProps.accessibilityLiveRegion,
+                                                                        "none")) {}
 
 #define WINDOWS_VIEW_EVENT_CASE(eventType)                    \
   case CONSTEXPR_RAW_PROPS_KEY_HASH("on" #eventType): {       \
@@ -82,6 +87,7 @@ void HostPlatformViewProps::setProp(
     RAW_SET_PROP_SWITCH_CASE_BASIC(accessibilityLiveRegion);
     RAW_SET_PROP_SWITCH_CASE_BASIC(keyDownEvents);
     RAW_SET_PROP_SWITCH_CASE_BASIC(keyUpEvents);
+    RAW_SET_PROP_SWITCH_CASE_BASIC(tooltip);
   }
 }
 

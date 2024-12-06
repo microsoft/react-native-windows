@@ -93,7 +93,7 @@ type Props = $ReadOnly<{|
   onMouseLeave?: ?(event: MouseEvent) => void, // [Windows]
   tabIndex?: ?number, // [Windows]
   tooltip?: ?Stringish, // [Windows]
-  hostRef?: ?React.Ref<typeof Animated.View>, // [Windows]
+  hostRef?: React.RefSetter<React.ElementRef<typeof Animated.View>>, // [Windows]
 |}>;
 
 const PASSTHROUGH_PROPS = [
@@ -130,10 +130,14 @@ const PASSTHROUGH_PROPS = [
 ];
 
 // Modify the function to accept the ref prop and forward it
+// $FlowFixMe[prop-missing]
 const TouchableWithoutFeedback: React.AbstractComponent<
   Props,
   React.ElementRef<typeof Animated.View>,
-> = React.forwardRef(function TouchableWithoutFeedback(props: Props, ref): React.Node {
+> = React.forwardRef(function TouchableWithoutFeedback(
+  props: Props,
+  ref,
+): React.Node {
   const {
     disabled,
     rejectResponderTermination,
@@ -154,7 +158,6 @@ const TouchableWithoutFeedback: React.AbstractComponent<
     onMouseEnter, // [Windows]
     onMouseLeave, // [Windows]
   } = props;
-
 
   const pressabilityConfig = useMemo(
     () => ({

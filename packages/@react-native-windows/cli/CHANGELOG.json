@@ -2,6 +2,213 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Sat, 23 Nov 2024 06:23:16 GMT",
+      "version": "0.0.0-canary.249",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.249",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.113",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 15 Nov 2024 06:22:29 GMT",
+      "version": "0.0.0-canary.248",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.248",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.112",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 Nov 2024 06:20:38 GMT",
+      "version": "0.0.0-canary.247",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.247",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.111",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 03 Nov 2024 05:28:15 GMT",
+      "version": "0.0.0-canary.246",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.246",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.110",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 02 Nov 2024 05:28:15 GMT",
+      "version": "0.0.0-canary.245",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.245",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.109",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 01 Nov 2024 05:22:36 GMT",
+      "version": "0.0.0-canary.244",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.244",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "a9afb5fddac4fb8741bb27de14aa563ddb35c254",
+            "comment": "Update RNW CLI to preserve and re-use `init-windows` arguments"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 26 Oct 2024 05:28:06 GMT",
+      "version": "0.0.0-canary.243",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.243",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "2557b61dae29657b1aa7ef80b8919878eaee65cb",
+            "comment": "Temporarily disable code-signing of NuGet packages"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 19 Oct 2024 05:29:46 GMT",
+      "version": "0.0.0-canary.242",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.242",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "d0c7fa8199238da974905788351a45694fa39e57",
+            "comment": "Fix repo linting with prettier"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.108",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.59",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.85",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/telemetry to v0.0.0-canary.111",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.30",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.47",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 17 Oct 2024 05:26:54 GMT",
+      "version": "0.0.0-canary.241",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.241",
+      "comments": {
+        "none": [
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "@react-native-windows/cli",
+            "commit": "916e2de162039c5678f80744f047698caba66460",
+            "comment": "Added --list option to init-windows"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 16 Oct 2024 05:20:55 GMT",
+      "version": "0.0.0-canary.241",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.241",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.107",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 10 Oct 2024 18:14:30 GMT",
+      "version": "0.0.0-canary.240",
+      "tag": "@react-native-windows/cli_v0.0.0-canary.240",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "61bde52b38ce5f74aa09d68974dcda306023f378",
+            "comment": "Update to @react-native-community/cli@15.0.0-alpha.2"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/cli",
+            "commit": "d1f46f7a19b38d8ea60fcb697dae154849ec7520",
+            "comment": "Create hybrid CppLib props/targets"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Oct 2024 19:54:26 GMT",
       "version": "0.0.0-canary.239",
       "tag": "@react-native-windows/cli_v0.0.0-canary.239",

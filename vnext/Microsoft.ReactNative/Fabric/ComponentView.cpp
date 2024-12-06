@@ -14,6 +14,7 @@
 #include <Fabric/Composition/RootComponentView.h>
 #include "AbiEventEmitter.h"
 #include "AbiShadowNode.h"
+#include "ReactCoreInjection.h"
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 struct RootComponentView;
@@ -70,6 +71,10 @@ void ComponentView::onMounted() noexcept {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)->onMounted();
   }
   m_mountedEvent(*this, *this);
+}
+
+bool ComponentView::isMounted() noexcept {
+  return m_mounted;
 }
 
 winrt::event_token ComponentView::Mounted(
@@ -262,6 +267,17 @@ void ComponentView::HandleCommand(const winrt::Microsoft::ReactNative::HandleCom
   }
 }
 
+HWND ComponentView::GetHwndForParenting() noexcept {
+  if (m_parent) {
+    return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_parent)
+        ->GetHwndForParenting();
+  }
+
+  // Fallback if we do not know any more specific HWND
+  return reinterpret_cast<HWND>(winrt::Microsoft::ReactNative::implementation::ReactCoreInjection::GetTopLevelWindowId(
+      m_reactContext.Properties().Handle()));
+}
+
 winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *ComponentView::rootComponentView()
     const noexcept {
   if (m_rootView)
@@ -330,10 +346,13 @@ bool ComponentView::runOnChildren(
         return true;
     }
   } else {
-    // TODO is this conversion from rend correct?
-    for (auto it = m_children.end(); it != m_children.begin(); --it) {
-      if (fn(*winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)))
-        return true;
+    if (m_children.Size()) {
+      auto it = m_children.end();
+      do {
+        it--;
+        if (fn(*winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(*it)))
+          return true;
+      } while (it != m_children.begin());
     }
   }
   return false;
@@ -342,6 +361,14 @@ bool ComponentView::runOnChildren(
 RECT ComponentView::getClientRect() const noexcept {
   assert(false);
   return {};
+}
+
+winrt::Windows::Foundation::Point ComponentView::ScreenToLocal(winrt::Windows::Foundation::Point pt) noexcept {
+  return rootComponentView()->ConvertScreenToLocal(pt);
+}
+
+winrt::Windows::Foundation::Point ComponentView::LocalToScreen(winrt::Windows::Foundation::Point pt) noexcept {
+  return rootComponentView()->ConvertLocalToScreen(pt);
 }
 
 // The offset from this elements parent to its children (accounts for things like scroll position)

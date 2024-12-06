@@ -110,16 +110,30 @@ async function runNpmInstall(config = {}, options = {}) {
   }
 }
 
-async function updateProjectPackageJson(config = {}, options = {}, props = {}) {
+async function updateProjectPackageJson(
+  config = {},
+  options = {},
+  props = {},
+  saveOptions = true,
+) {
   const projectRoot = config?.root ?? process.cwd();
-  const projectPackage = await pkgUtils.WritableNpmPackage.fromPath(
-    projectRoot,
-  );
+  const projectPackage =
+    await pkgUtils.WritableNpmPackage.fromPath(projectRoot);
 
   if (!projectPackage) {
     throw new Error(
       `The directory '${projectRoot}' is not the root of an npm package`,
     );
+  }
+
+  if (saveOptions) {
+    props['react-native-windows'] = {
+      'init-windows': {
+        name: options.name,
+        namespace: options.namespace,
+        template: options.template,
+      },
+    };
   }
 
   if (options?.logging) {

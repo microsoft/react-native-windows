@@ -12,6 +12,8 @@ import type {
   NativeModuleUnionTypeAnnotation,
   NativeModuleStringTypeAnnotation,
   NativeModuleFunctionTypeAnnotation,
+  NativeModuleStringLiteralTypeAnnotation,
+  NativeModuleStringLiteralUnionTypeAnnotation,
   UnsafeAnyTypeAnnotation,
   Nullable,
 } from '@react-native/codegen/lib/CodegenSchema';
@@ -46,12 +48,17 @@ function translateUnionReturnType(
   }
 }
 
+// eslint-disable-next-line complexity
 export function translateFieldOrReturnType(
-  type: Nullable<
-    | NativeModuleBaseTypeAnnotation
-    | NativeModuleStringTypeAnnotation
-    | NativeModuleFunctionTypeAnnotation
-  > | UnsafeAnyTypeAnnotation,
+  type:
+    | Nullable<
+        | NativeModuleBaseTypeAnnotation
+        | NativeModuleStringTypeAnnotation
+        | NativeModuleFunctionTypeAnnotation
+        | NativeModuleStringLiteralTypeAnnotation
+        | NativeModuleStringLiteralUnionTypeAnnotation
+      >
+    | UnsafeAnyTypeAnnotation,
   aliases: AliasMap,
   baseAliasName: string,
   callerName: 'translateField' | 'translateReturnType',
@@ -61,6 +68,8 @@ export function translateFieldOrReturnType(
   const returnType = type.type;
   switch (type.type) {
     case 'StringTypeAnnotation':
+    case 'StringLiteralTypeAnnotation':
+    case 'StringLiteralUnionTypeAnnotation':
       return options.cppStringType;
     case 'NumberTypeAnnotation':
     case 'FloatTypeAnnotation':

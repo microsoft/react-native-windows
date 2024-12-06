@@ -2,6 +2,626 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 06 Dec 2024 06:22:27 GMT",
+      "version": "0.0.0-canary.899",
+      "tag": "react-native-windows_v0.0.0-canary.899",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "40c1c59be8c9046213d5eeffae7dfe45caedcb5a",
+            "comment": "Integrate 10/31"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Dec 2024 06:20:53 GMT",
+      "version": "0.0.0-canary.898",
+      "tag": "react-native-windows_v0.0.0-canary.898",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d2ae666aa5e7fa1fecbb5e1517f4092767ec2bd4",
+            "comment": "Key and mouse events require a stacking context"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 04 Dec 2024 06:26:56 GMT",
+      "version": "0.0.0-canary.897",
+      "tag": "react-native-windows_v0.0.0-canary.897",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d7b4b485f7b217ead23cba9eadc2d087865cbe7e",
+            "comment": "implement onDismiss and remove titlebar from Modal"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2d6e2d5a8237a837eeb1d4a7fe6e0954201d6f2a",
+            "comment": "Re-enable most Desktop integration tests"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f4dd6f95eaf0ac58d5cb00144839179efdb7e363",
+            "comment": "Implement cursor property"
+          }
+        ],
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "be12738fe919d13191cebf0f3349006f034d02b3",
+            "comment": "Disable failing UT"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 23 Nov 2024 06:23:16 GMT",
+      "version": "0.0.0-canary.896",
+      "tag": "react-native-windows_v0.0.0-canary.896",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "8be39042bf044cb756904b4750f10cb0725bb36b",
+            "comment": "Integrate 10/20"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.249",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.113",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 19 Nov 2024 06:29:47 GMT",
+      "version": "0.0.0-canary.895",
+      "tag": "react-native-windows_v0.0.0-canary.895",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "83ac05d14f13fb5ad2f0f00db3fd6f5b903821f4",
+            "comment": "Fix Modal position, disable input to parent hwnd, and add onShow"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 15 Nov 2024 06:22:29 GMT",
+      "version": "0.0.0-canary.894",
+      "tag": "react-native-windows_v0.0.0-canary.894",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "9576b188ef25b0ed64643cd9bb3f411e790a1862",
+            "comment": "test integrate 10/15"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.248",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.112",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 14 Nov 2024 06:22:59 GMT",
+      "version": "0.0.0-canary.893",
+      "tag": "react-native-windows_v0.0.0-canary.893",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "47d59da1d2dae6ad9e45054f216c8efeaedad742",
+            "comment": "bump dotnet target version"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 13 Nov 2024 06:21:47 GMT",
+      "version": "0.0.0-canary.892",
+      "tag": "react-native-windows_v0.0.0-canary.892",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "b8d22a959267d14201a8e77f8baa8e2f13b6c2cc",
+            "comment": "Fix focus visuals being obscured by adjacent views"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 12 Nov 2024 06:27:59 GMT",
+      "version": "0.0.0-canary.891",
+      "tag": "react-native-windows_v0.0.0-canary.891",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "6237394+Swinkid@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a900eedcb961291de8f04096e7acb801cfa84f0e",
+            "comment": "Adding quotes around codegen tool executeable path and response file path so that users with spaces in their user directory can build cs projects"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 Nov 2024 06:20:38 GMT",
+      "version": "0.0.0-canary.890",
+      "tag": "react-native-windows_v0.0.0-canary.890",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6faf5685d469886b1fb4a18512529b13ba7477bd",
+            "comment": "Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.247",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.111",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 07 Nov 2024 06:24:18 GMT",
+      "version": "0.0.0-canary.889",
+      "tag": "react-native-windows_v0.0.0-canary.889",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "346ba4e17efa3d1cf2481f7b998eb4de1ab8f073",
+            "comment": "Integrate 10/10"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f22d85a0779c93aec0d4bbe2b5d2679c42d1f82a",
+            "comment": "Export MS.RN.Color ctor in Office dll"
+          },
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "84761b7215027cd2977756bc6b2d70d5491eda7f",
+            "comment": "TextInput caret becomes visible on non-focused TextInputs on resize"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 06 Nov 2024 06:26:31 GMT",
+      "version": "0.0.0-canary.888",
+      "tag": "react-native-windows_v0.0.0-canary.888",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "845aad2404af15767d5328d8c148d397bc51af02",
+            "comment": "Update to the latest Microsoft.NETCore.UniversalWindowsPlatform"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 05 Nov 2024 06:27:17 GMT",
+      "version": "0.0.0-canary.887",
+      "tag": "react-native-windows_v0.0.0-canary.887",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "914b6b7261a9299caa5b4cb008f1d0ba130f3b77",
+            "comment": "Add timeout to JS bundle creation in release builds"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 03 Nov 2024 05:28:15 GMT",
+      "version": "0.0.0-canary.886",
+      "tag": "react-native-windows_v0.0.0-canary.886",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "59443c8e34ed03de9e77e931e59c54816a56b1ae",
+            "comment": "Fix issue with prop cloning with custom native props"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.246",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.110",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 02 Nov 2024 05:28:15 GMT",
+      "version": "0.0.0-canary.885",
+      "tag": "react-native-windows_v0.0.0-canary.885",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "sawalker@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "dc70ca2393eb7c9229cb52e499f4b4f3ea390bfc",
+            "comment": "Fixing text components not rendering a border with Paper"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "db9324004cdb212294ff21b8c953680cddc07fda",
+            "comment": "Implement accessibilityState checked"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "15e5afbf41a7b58eb98bc47eb58db530d9daa9ff",
+            "comment": "adds default modal that hosts fabric components"
+          },
+          {
+            "author": "50150435+JesseCol@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "032b7f40e4a1fbebfecf5b12078f02a5c6df51c7",
+            "comment": "Update some packages*.json files after the WinAppSDK udpate"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.245",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.109",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 01 Nov 2024 05:22:37 GMT",
+      "version": "0.0.0-canary.884",
+      "tag": "react-native-windows_v0.0.0-canary.884",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "a9afb5fddac4fb8741bb27de14aa563ddb35c254",
+            "comment": "Update RNW CLI to preserve and re-use `init-windows` arguments"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.244",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 31 Oct 2024 05:28:13 GMT",
+      "version": "0.0.0-canary.883",
+      "tag": "react-native-windows_v0.0.0-canary.883",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d929b3fe4ff0f773fa2459908de54d83cabf04b8",
+            "comment": "Fix flatten style running multiple times\""
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 26 Oct 2024 05:28:07 GMT",
+      "version": "0.0.0-canary.882",
+      "tag": "react-native-windows_v0.0.0-canary.882",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2557b61dae29657b1aa7ef80b8919878eaee65cb",
+            "comment": "Temporarily disable code-signing of NuGet packages"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.243",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 25 Oct 2024 05:21:20 GMT",
+      "version": "0.0.0-canary.881",
+      "tag": "react-native-windows_v0.0.0-canary.881",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3becf03c41cdb278b26e6b24e5eb7c3b2daeb40a",
+            "comment": "Focus should notify island host when tab loop wraps to give host oportunity to take focus"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "daa77099627821382932db595ca5b17045297fd0",
+            "comment": "Default scroll to bring a component into view should have padding around the viewport"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "19b6aba8340e92c0f5a0fb31bdc1ac33da0846b3",
+            "comment": "Add very basic box-shadow support"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a3850c30b209e2487010a4ffb768fc493e279b0e",
+            "comment": "Update focus visuals to use cornerRadius and inner/outer strokes."
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 23 Oct 2024 05:31:16 GMT",
+      "version": "0.0.0-canary.880",
+      "tag": "react-native-windows_v0.0.0-canary.880",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "4d45e818929692b0bd4e3f836c190a94c616587b",
+            "comment": "Fix ignore files and update cli timeout"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "098541518a576a482dd2ccba17ab0f072132ac4c",
+            "comment": "Update Provider Guardrails"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 22 Oct 2024 05:26:27 GMT",
+      "version": "0.0.0-canary.879",
+      "tag": "react-native-windows_v0.0.0-canary.879",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e1b07c7a8f64463f68ec0c7f214dce410d7ee1f9",
+            "comment": "Cleanup ReactNativeAppBuilder and ReactNativeWin32App"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 19 Oct 2024 05:29:45 GMT",
+      "version": "0.0.0-canary.878",
+      "tag": "react-native-windows_v0.0.0-canary.878",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "winappsdkdata_bot@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "598f233843eede440e280890bab2a26e3a1fe610",
+            "comment": "Update WinAppSDK from 1.5 to 1.6 (1.6.240923002)"
+          },
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "905d445833ffea4811ec72f74591cc19c52062c8",
+            "comment": "Introduced autocapitalize prop in TextInput"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d0c7fa8199238da974905788351a45694fa39e57",
+            "comment": "Fix repo linting with prettier"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.242",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.108",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.30",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.34",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.47",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.49",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 16 Oct 2024 05:20:55 GMT",
+      "version": "0.0.0-canary.877",
+      "tag": "react-native-windows_v0.0.0-canary.877",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "e265163b8cab921b5643d552775403b45c01bf6f",
+            "comment": "integrate rn nightly 0.77.0-nightly-20241001-223e98cc4"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.241",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.107",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 15 Oct 2024 05:26:25 GMT",
+      "version": "0.0.0-canary.876",
+      "tag": "react-native-windows_v0.0.0-canary.876",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "37e15f19e90697f8756068713b79df5bf0cdf474",
+            "comment": "Support AccessibilityState: Busy"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 12 Oct 2024 05:22:56 GMT",
+      "version": "0.0.0-canary.875",
+      "tag": "react-native-windows_v0.0.0-canary.875",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "10f9674e959fbb16b79cf2fe1773e12a3b4743b6",
+            "comment": "Fix RootComponentView leak"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "efcfebfb6485ed5a3f7ba5de175d0ca1af7965ce",
+            "comment": "[Fabric] implement view tooltip property"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 10 Oct 2024 18:14:31 GMT",
+      "version": "0.0.0-canary.874",
+      "tag": "react-native-windows_v0.0.0-canary.874",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d1f46f7a19b38d8ea60fcb697dae154849ec7520",
+            "comment": "Create hybrid CppLib props/targets"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "61bde52b38ce5f74aa09d68974dcda306023f378",
+            "comment": "Update to @react-native-community/cli@15.0.0-alpha.2"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "bba47ee2319246d6f4cfe947418dc589a2e423a8",
+            "comment": "Implement IExpandCollapseProvider"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.240",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Oct 2024 19:23:40 GMT",
       "version": "0.0.0-canary.873",
       "tag": "react-native-windows_v0.0.0-canary.873",

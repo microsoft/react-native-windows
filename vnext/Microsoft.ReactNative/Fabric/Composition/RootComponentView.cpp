@@ -7,6 +7,7 @@
 #include "RootComponentView.h"
 
 #include <Fabric/FabricUIManagerModule.h>
+#include <winrt/Microsoft.UI.Input.h>
 #include "CompositionRootAutomationProvider.h"
 #include "ReactNativeIsland.h"
 #include "Theme.h"
@@ -24,7 +25,7 @@ RootComponentView::RootComponentView(
           reactContext,
           ComponentViewFeatures::Default &
               ~(ComponentViewFeatures::Background | ComponentViewFeatures::ShadowProps |
-                ComponentViewFeatures::NativeBorder)) {}
+                ComponentViewFeatures::NativeBorder | ComponentViewFeatures::FocusVisual)) {}
 
 RootComponentView::~RootComponentView() {
   if (auto rootView = m_wkRootView.get()) {
@@ -106,7 +107,10 @@ bool RootComponentView::TrySetFocusedComponent(
   auto target = view;
   auto selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(target);
   if (selfView && !selfView->focusable()) {
-    target = FocusManager::FindFirstFocusableElement(target);
+    target = (direction == winrt::Microsoft::ReactNative::FocusNavigationDirection::Last ||
+              direction == winrt::Microsoft::ReactNative::FocusNavigationDirection::Previous)
+        ? FocusManager::FindLastFocusableElement(target)
+        : FocusManager::FindFirstFocusableElement(target);
     if (!target)
       return false;
     selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(target);
@@ -147,6 +151,9 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
       [currentlyFocused = m_focusedComponent, next](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
         if (view == currentlyFocused)
           return false;
+        auto selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view);
+        if (!selfView->focusable())
+          return false;
 
         return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)
             ->rootComponentView()
@@ -156,7 +163,28 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
                      : winrt::Microsoft::ReactNative::FocusNavigationDirection::Previous);
       };
 
-  return winrt::Microsoft::ReactNative::implementation::walkTree(m_focusedComponent, next, fn);
+  if (winrt::Microsoft::ReactNative::implementation::walkTree(m_focusedComponent, next, fn)) {
+    return true;
+  }
+
+  // We reached the end of the focus loop.  Notify the island in case the host wants to move focus somewhere outside the
+  // island.
+  auto island = parentContentIsland();
+  if (island) {
+    auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(island);
+    auto request = winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(
+        next ? winrt::Microsoft::UI::Input::FocusNavigationReason::Last
+             : winrt::Microsoft::UI::Input::FocusNavigationReason::First);
+    auto result = focusController.DepartFocus(request);
+    if (result == winrt::Microsoft::UI::Input::FocusNavigationResult::Moved) {
+      return true;
+    }
+  }
+
+  // Wrap focus around if nothing outside the island takes focus
+  return NavigateFocus(winrt::Microsoft::ReactNative::FocusNavigationRequest(
+      next ? winrt::Microsoft::ReactNative::FocusNavigationReason::First
+           : winrt::Microsoft::ReactNative::FocusNavigationReason::Last));
 }
 
 HRESULT RootComponentView::GetFragmentRoot(IRawElementProviderFragmentRoot **pRetVal) noexcept {
@@ -220,6 +248,26 @@ float RootComponentView::FontSizeMultiplier() const noexcept {
   return 1.0f;
 }
 
+winrt::Windows::Foundation::Point RootComponentView::ConvertScreenToLocal(
+    winrt::Windows::Foundation::Point pt) noexcept {
+  if (auto rootView = m_wkRootView.get()) {
+    return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)
+        ->ConvertScreenToLocal(pt);
+  }
+  assert(false);
+  return {};
+}
+
+winrt::Windows::Foundation::Point RootComponentView::ConvertLocalToScreen(
+    winrt::Windows::Foundation::Point pt) noexcept {
+  if (auto rootView = m_wkRootView.get()) {
+    return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)
+        ->ConvertLocalToScreen(pt);
+  }
+  assert(false);
+  return {};
+}
+
 winrt::Microsoft::UI::Content::ContentIsland RootComponentView::parentContentIsland() noexcept {
   if (auto rootView = m_wkRootView.get()) {
     return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->Island();
@@ -229,6 +277,17 @@ winrt::Microsoft::UI::Content::ContentIsland RootComponentView::parentContentIsl
 
 winrt::Microsoft::ReactNative::implementation::ClipState RootComponentView::getClipState() noexcept {
   return winrt::Microsoft::ReactNative::implementation::ClipState::NoClip;
+}
+
+HWND RootComponentView::GetHwndForParenting() noexcept {
+  if (auto rootView = m_wkRootView.get()) {
+    auto hwnd = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)
+                    ->GetHwndForParenting();
+    if (hwnd)
+      return hwnd;
+  }
+
+  return base_type::GetHwndForParenting();
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

@@ -23,9 +23,9 @@ import Text from '../Text/Text';
 // [Windows
 // import TouchableNativeFeedback from './Touchable/TouchableNativeFeedback';
 // import TouchableOpacity from './Touchable/TouchableOpacity';
+// Windows]
 import TouchableHighlight from './Touchable/TouchableHighlight';
 import {PlatformColor} from '../StyleSheet/PlatformColorValueTypes';
-// Windows]
 import Platform from '../Utilities/Platform';
 import View from './View/View';
 import invariant from 'invariant';
@@ -292,10 +292,12 @@ type ButtonProps = $ReadOnly<{|
   ```
  */
 
-const Button: React.AbstractComponent<
-  ButtonProps,
-  React.ElementRef<typeof TouchableHighlight>,
-> = React.forwardRef((props: ButtonProps, ref) => {
+type ButtonRef = React.ElementRef<typeof TouchableHighlight>;
+
+const Button: component(
+  ref: React.RefSetter<ButtonRef>,
+  ...props: ButtonProps
+) = React.forwardRef((props: ButtonProps, ref: React.RefSetter<ButtonRef>) => {
   // Windows
   // [Windows
   const [hover, setHover] = React.useState(false);
@@ -413,10 +415,10 @@ const Button: React.AbstractComponent<
           color
             ? {borderRadius: 3}
             : pressed
-            ? [buttonStyles, styles.buttonPressed]
-            : hover
-            ? [buttonStyles, styles.buttonHover]
-            : buttonStyles
+              ? [buttonStyles, styles.buttonPressed]
+              : hover
+                ? [buttonStyles, styles.buttonHover]
+                : buttonStyles
         }
         onMouseEnter={() => {
           if (!disabled) setHover(true);
@@ -424,6 +426,9 @@ const Button: React.AbstractComponent<
         onMouseLeave={() => {
           if (!disabled) setHover(false);
         }}
+        // $FlowFixMe[incompatible-exact]
+        // $FlowFixMe[prop-missing]
+        // $FlowFixMe[incompatible-type-arg]
         ref={ref}>
         <View
           style={
@@ -451,20 +456,20 @@ const Button: React.AbstractComponent<
                 color
                   ? textStyles
                   : pressed
-                  ? [
-                      textStyles,
-                      {
-                        color: PlatformColor('ButtonForegroundPressed'),
-                      },
-                    ]
-                  : hover
-                  ? [
-                      textStyles,
-                      {
-                        color: PlatformColor('ButtonForegroundPointerOver'),
-                      },
-                    ]
-                  : textStyles
+                    ? [
+                        textStyles,
+                        {
+                          color: PlatformColor('ButtonForegroundPressed'),
+                        },
+                      ]
+                    : hover
+                      ? [
+                          textStyles,
+                          {
+                            color: PlatformColor('ButtonForegroundPointerOver'),
+                          },
+                        ]
+                      : textStyles
               }
               disabled={disabled}>
               {formattedTitle}
@@ -495,6 +500,9 @@ const Button: React.AbstractComponent<
         disabled={disabled}
         onPress={onPress}
         touchSoundDisabled={touchSoundDisabled}
+        // $FlowFixMe[incompatible-exact]
+        // $FlowFixMe[prop-missing]
+        // $FlowFixMe[incompatible-type-arg]
         ref={ref}>
         <View style={buttonStyles}>
           <Text style={textStyles} disabled={disabled}>

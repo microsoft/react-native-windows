@@ -310,7 +310,7 @@ jobs:
               pool: ${{ parameters.AgentPool.Small }}
             ${{ else }}:
               pool: ${{ parameters.AgentPool.Medium }}
-            timeoutInMinutes: 60
+            timeoutInMinutes: 40
             cancelTimeoutInMinutes: 5
 
             steps:
@@ -325,12 +325,6 @@ jobs:
                   platform: ${{ parameters.platform }}
                   configuration: ${{ parameters.configuration }}
                   buildEnvironment: ${{ parameters.buildEnvironment }}
-
-              - task: CmdLine@2
-                displayName: Create npm directory
-                name: createNpmDirectory
-                inputs:
-                  script: mkdir %APPDATA%\npm
                   
               - template: ../templates/react-native-init-windows.yml
                 parameters:

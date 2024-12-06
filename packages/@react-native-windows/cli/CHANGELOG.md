@@ -1,8 +1,95 @@
 # Change Log - @react-native-windows/cli
 
-<!-- This log was last generated on Mon, 07 Oct 2024 19:54:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 23 Nov 2024 06:23:16 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.249
+
+Sat, 23 Nov 2024 06:23:16 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.113
+
+## 0.0.0-canary.248
+
+Fri, 15 Nov 2024 06:22:29 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.112
+
+## 0.0.0-canary.247
+
+Fri, 08 Nov 2024 06:20:38 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.111
+
+## 0.0.0-canary.246
+
+Sun, 03 Nov 2024 05:28:15 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.110
+
+## 0.0.0-canary.245
+
+Sat, 02 Nov 2024 05:28:15 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.109
+
+## 0.0.0-canary.244
+
+Fri, 01 Nov 2024 05:22:36 GMT
+
+### Changes
+
+- Update RNW CLI to preserve and re-use `init-windows` arguments (jthysell@microsoft.com)
+
+## 0.0.0-canary.243
+
+Sat, 26 Oct 2024 05:28:06 GMT
+
+### Changes
+
+- Temporarily disable code-signing of NuGet packages (jthysell@microsoft.com)
+
+## 0.0.0-canary.242
+
+Sat, 19 Oct 2024 05:29:46 GMT
+
+### Changes
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/codegen to v0.0.0-canary.108
+- Bump @react-native-windows/fs to v0.0.0-canary.59
+- Bump @react-native-windows/package-utils to v0.0.0-canary.85
+- Bump @react-native-windows/telemetry to v0.0.0-canary.111
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
+
+## 0.0.0-canary.241
+
+Wed, 16 Oct 2024 05:20:55 GMT
+
+### Changes
+
+- Bump @react-native-windows/codegen to v0.0.0-canary.107
+
+## 0.0.0-canary.240
+
+Thu, 10 Oct 2024 18:14:30 GMT
+
+### Changes
+
+- Update to @react-native-community/cli@15.0.0-alpha.2 (jthysell@microsoft.com)
+- Create hybrid CppLib props/targets (jthysell@microsoft.com)
 
 ## 0.0.0-canary.239
 

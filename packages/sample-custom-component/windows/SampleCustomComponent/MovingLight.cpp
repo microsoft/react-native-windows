@@ -1,9 +1,10 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 #include "pch.h"
 
 #include "MovingLight.h"
 
-#include "../../codegen/react/components/SampleCustomComponent/MovingLight.g.h"
-
+#ifdef RNW_NEW_ARCH
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
 #include <winrt/Microsoft.UI.Composition.h>
 #include <winrt/Windows.UI.h>
@@ -18,8 +19,6 @@ struct MovingLight : public winrt::implements<MovingLight, winrt::IInspectable>,
     auto view = sender.as<winrt::Microsoft::ReactNative::Composition::ViewComponentView>();
     if (!oldProps || oldProps->color != newProps->color) {
       m_spotlight.InnerConeColor(newProps->color.AsWindowsColor(view.Theme()));
-    } else {
-      m_spotlight.InnerConeColor(winrt::Windows::UI::Colors::FloralWhite());
     }
 
     if (!oldProps || oldProps->size != newProps->size) {
@@ -102,3 +101,5 @@ void RegisterMovingLightNativeComponent(
 }
 
 } // namespace winrt::SampleCustomComponent
+
+#endif // #ifdef RNW_NEW_ARCH

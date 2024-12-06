@@ -56,8 +56,8 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
 
  private:
   void installFabricUIManager() noexcept;
-  void initiateTransaction(facebook::react::MountingCoordinator::Shared mountingCoordinator);
-  void performTransaction(facebook::react::MountingCoordinator::Shared const &mountingCoordinator);
+  void initiateTransaction(std::shared_ptr<const facebook::react::MountingCoordinator> mountingCoordinator);
+  void performTransaction(std::shared_ptr<const facebook::react::MountingCoordinator> const &mountingCoordinator);
   void RCTPerformMountInstructions(
       facebook::react::ShadowViewMutationList const &mutations,
       // facebook::react::RCTComponentViewRegistry* registry,
@@ -82,9 +82,9 @@ struct FabricUIManager final : public std::enable_shared_from_this<FabricUIManag
 
   // Inherited via SchedulerDelegate
   virtual void schedulerDidFinishTransaction(
-      const facebook::react::MountingCoordinator::Shared &mountingCoordinator) override;
+      const std::shared_ptr<const facebook::react::MountingCoordinator> &mountingCoordinator) override;
   virtual void schedulerShouldRenderTransactions(
-      const facebook::react::MountingCoordinator::Shared &mountingCoordinator) override;
+      const std::shared_ptr<const facebook::react::MountingCoordinator> &mountingCoordinator) override;
   virtual void schedulerDidRequestPreliminaryViewAllocation(const facebook::react::ShadowNode &shadowView) override;
   virtual void schedulerDidDispatchCommand(
       facebook::react::ShadowView const &shadowView,

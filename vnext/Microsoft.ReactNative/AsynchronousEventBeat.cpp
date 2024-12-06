@@ -3,10 +3,10 @@
 namespace Microsoft::ReactNative {
 
 AsynchronousEventBeat::AsynchronousEventBeat(
-    facebook::react::EventBeat::SharedOwnerBox const &ownerBox,
+    std::shared_ptr<facebook::react::EventBeat::OwnerBox> const ownerBox,
     const winrt::Microsoft::ReactNative::ReactContext &context,
-    facebook::react::RuntimeExecutor runtimeExecutor)
-    : EventBeat(ownerBox), m_context(context), m_runtimeExecutor(runtimeExecutor) {}
+    std::shared_ptr<facebook::react::RuntimeScheduler> runtimeScheduler)
+    : EventBeat(ownerBox, *runtimeScheduler), m_context(context), m_runtimeScheduler(std::move(runtimeScheduler)) {}
 
 void AsynchronousEventBeat::induce() const {
   if (!isRequested_ || m_isBeatCallbackScheduled) {
@@ -16,7 +16,8 @@ void AsynchronousEventBeat::induce() const {
   isRequested_ = false;
   m_isBeatCallbackScheduled = true;
 
-  m_runtimeExecutor([this, ownerBox = ownerBox_](facebook::jsi::Runtime &runtime) {
+  facebook::react::RuntimeScheduler &schedulerRef = *m_runtimeScheduler.get();
+  schedulerRef.scheduleWork([this, ownerBox = ownerBox_](facebook::jsi::Runtime &runtime) {
     auto owner = ownerBox->owner.lock();
     if (!owner) {
       return;

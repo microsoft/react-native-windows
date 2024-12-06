@@ -97,26 +97,24 @@ virtual State::Shared createInitialState(
           !textInputProps.hasPaddingHorizontal) {
         changedPadding = true;
         style.setPadding(
-            YGEdgeStart, yoga::CompactValue::of<YGUnitPoint>(theme.start));
+            yoga::Edge::Start, yoga::StyleLength::points(theme.start));
       }
       if (!textInputProps.hasPadding && !textInputProps.hasPaddingEnd &&
           !textInputProps.hasPaddingRight &&
           !textInputProps.hasPaddingHorizontal) {
         changedPadding = true;
-        style.setPadding(
-            YGEdgeEnd, yoga::CompactValue::of<YGUnitPoint>(theme.end));
+        style.setPadding(yoga::Edge::End, yoga::StyleLength::points(theme.end));
       }
       if (!textInputProps.hasPadding && !textInputProps.hasPaddingTop &&
           !textInputProps.hasPaddingVertical) {
         changedPadding = true;
-        style.setPadding(
-            YGEdgeTop, yoga::CompactValue::of<YGUnitPoint>(theme.top));
+        style.setPadding(yoga::Edge::Top, yoga::StyleLength::points(theme.top));
       }
       if (!textInputProps.hasPadding && !textInputProps.hasPaddingBottom &&
           !textInputProps.hasPaddingVertical) {
         changedPadding = true;
         style.setPadding(
-            YGEdgeBottom, yoga::CompactValue::of<YGUnitPoint>(theme.bottom));
+            yoga::Edge::Bottom, yoga::StyleLength::points(theme.bottom));
       }
 
       // If the TextInput initially does not have paddingLeft or paddingStart, a
@@ -127,12 +125,12 @@ virtual State::Shared createInitialState(
       if ((textInputProps.hasPadding || textInputProps.hasPaddingLeft ||
            textInputProps.hasPaddingHorizontal) &&
           !textInputProps.hasPaddingStart) {
-        style.setPadding(YGEdgeStart, yoga::CompactValue::ofUndefined());
+        style.setPadding(yoga::Edge::Start, yoga::StyleLength::undefined());
       }
       if ((textInputProps.hasPadding || textInputProps.hasPaddingRight ||
            textInputProps.hasPaddingHorizontal) &&
           !textInputProps.hasPaddingEnd) {
-        style.setPadding(YGEdgeEnd, yoga::CompactValue::ofUndefined());
+        style.setPadding(yoga::Edge::End, yoga::StyleLength::undefined());
       }
 
       // Note that this is expensive: on every adopt, we need to set the Yoga

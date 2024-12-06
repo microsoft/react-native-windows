@@ -151,7 +151,6 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
     'aria-required': ariaRequired, // Windows
     height,
     src,
-    width,
     ...restProps
   } = props;
 
@@ -161,7 +160,8 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
     disabled: ariaDisabled ?? props.accessibilityState?.disabled,
     expanded: ariaExpanded ?? props.accessibilityState?.expanded,
     selected: ariaSelected ?? props.accessibilityState?.selected,
-    multiselectable: ariaMultiselectable ?? props.accessibilityState?.multiselectable, // Windows
+    multiselectable:
+      ariaMultiselectable ?? props.accessibilityState?.multiselectable, // Windows
     required: ariaRequired ?? props.accessibilityState?.required, // Windows
   };
   const accessibilityLabel = props['aria-label'] ?? props.accessibilityLabel;

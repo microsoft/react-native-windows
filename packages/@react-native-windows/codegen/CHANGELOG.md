@@ -1,8 +1,67 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Mon, 07 Oct 2024 19:54:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 23 Nov 2024 06:23:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.113
+
+Sat, 23 Nov 2024 06:23:15 GMT
+
+### Changes
+
+- Integrate 10/20 (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.112
+
+Fri, 15 Nov 2024 06:22:29 GMT
+
+### Changes
+
+- test integrate 10/15 (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.111
+
+Fri, 08 Nov 2024 06:20:37 GMT
+
+### Changes
+
+- Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture (jthysell@microsoft.com)
+
+## 0.0.0-canary.110
+
+Sun, 03 Nov 2024 05:28:15 GMT
+
+### Changes
+
+- Fix issue with prop cloning with custom native props (53619745+rnbot@users.noreply.github.com)
+
+## 0.0.0-canary.109
+
+Sat, 02 Nov 2024 05:28:15 GMT
+
+### Changes
+
+- Implement accessibilityState checked (34109996+chiaramooney@users.noreply.github.com)
+
+## 0.0.0-canary.108
+
+Sat, 19 Oct 2024 05:29:46 GMT
+
+### Changes
+
+- Fix repo linting with prettier (jthysell@microsoft.com)
+- Bump @react-native-windows/fs to v0.0.0-canary.59
+- Bump @rnw-scripts/eslint-config to v1.2.30
+- Bump @rnw-scripts/just-task to v2.3.47
+
+## 0.0.0-canary.107
+
+Wed, 16 Oct 2024 05:20:54 GMT
+
+### Changes
+
+- 0.77.0-nightly-20241001-223e98cc4 (tatianakapos@microsoft.com)
 
 ## 0.0.0-canary.106
 

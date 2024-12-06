@@ -2,6 +2,129 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Sat, 23 Nov 2024 06:23:15 GMT",
+      "version": "0.0.0-canary.113",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.113",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "8be39042bf044cb756904b4750f10cb0725bb36b",
+            "comment": "Integrate 10/20"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 15 Nov 2024 06:22:29 GMT",
+      "version": "0.0.0-canary.112",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.112",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "9576b188ef25b0ed64643cd9bb3f411e790a1862",
+            "comment": "test integrate 10/15"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 08 Nov 2024 06:20:37 GMT",
+      "version": "0.0.0-canary.111",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.111",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "6faf5685d469886b1fb4a18512529b13ba7477bd",
+            "comment": "Add RnwNewArch property and RNW_NEW_ARCH constants when building projects for the new architecture"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sun, 03 Nov 2024 05:28:15 GMT",
+      "version": "0.0.0-canary.110",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.110",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "59443c8e34ed03de9e77e931e59c54816a56b1ae",
+            "comment": "Fix issue with prop cloning with custom native props"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 02 Nov 2024 05:28:15 GMT",
+      "version": "0.0.0-canary.109",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.109",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "db9324004cdb212294ff21b8c953680cddc07fda",
+            "comment": "Implement accessibilityState checked"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 19 Oct 2024 05:29:46 GMT",
+      "version": "0.0.0-canary.108",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.108",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "d0c7fa8199238da974905788351a45694fa39e57",
+            "comment": "Fix repo linting with prettier"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.59",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.30",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/codegen",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.47",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 16 Oct 2024 05:20:54 GMT",
+      "version": "0.0.0-canary.107",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.107",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "e265163b8cab921b5643d552775403b45c01bf6f",
+            "comment": "0.77.0-nightly-20241001-223e98cc4"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 07 Oct 2024 19:54:26 GMT",
       "version": "0.0.0-canary.106",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.106",

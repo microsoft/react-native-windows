@@ -10,12 +10,13 @@
 
 'use strict';
 
-const React = require('react');
-const {Platform, Switch, Text, View} = require('react-native');
+import RNTesterText from '../../components/RNTesterText';
+import React from 'react';
+import {Platform, Switch, View} from 'react-native';
 
 type OnOffIndicatorProps = $ReadOnly<{|on: boolean, testID: string|}>;
 function OnOffIndicator({on, testID}: OnOffIndicatorProps) {
-  return <Text testID={testID}>{on ? 'On' : 'Off'}</Text>;
+  return <RNTesterText testID={testID}>{on ? 'On' : 'Off'}</RNTesterText>;
 }
 
 type ExampleRowProps = $ReadOnly<{|children: React.Node|}>;
@@ -183,9 +184,9 @@ class EventSwitchExample extends React.Component<{...}, $FlowFixMeState> {
             style={{marginBottom: 10}}
             value={this.state.eventSwitchIsOn}
           />
-          <Text testID="event-switch-indicator">
+          <RNTesterText testID="event-switch-indicator">
             {this.state.eventSwitchIsOn ? 'On' : 'Off'}
-          </Text>
+          </RNTesterText>
         </View>
         <View>
           <Switch
@@ -204,9 +205,9 @@ class EventSwitchExample extends React.Component<{...}, $FlowFixMeState> {
             style={{marginBottom: 10}}
             value={this.state.eventSwitchRegressionIsOn}
           />
-          <Text testID="event-switch-regression-indicator">
+          <RNTesterText testID="event-switch-regression-indicator">
             {this.state.eventSwitchRegressionIsOn ? 'On' : 'Off'}
-          </Text>
+          </RNTesterText>
         </View>
       </View>
     );
@@ -226,10 +227,10 @@ class IOSBackgroundColEx extends React.Component<{...}, $FlowFixMeState> {
           ios_backgroundColor={this.state.iosBackgroundColor}
           style={{marginBottom: 20}}
         />
-        <Text>
+        <RNTesterText>
           The background color can be seen either when the switch value is false
           or when the switch is disabled (and the switch is translucent).{' '}
-        </Text>
+        </RNTesterText>
       </View>
     );
   }
@@ -303,7 +304,7 @@ class AccessibilitySwitchExample extends React.Component<
             accessibilityHint="Switch"
             accessibilityPosInSet={2}
             accessibilitySetSize={4}
-            accessibilityLiveRegion='none'
+            accessibilityLiveRegion="none"
             // focusable={false}
             onValueChange={value => this.setState({noFocusableValue: value})}
             value={this.state.noFocusableValue}
@@ -315,7 +316,7 @@ class AccessibilitySwitchExample extends React.Component<
             accessibilityHint="Switch"
             accessibilityPosInSet={3}
             accessibilitySetSize={4}
-            accessibilityLiveRegion='polite'
+            accessibilityLiveRegion="polite"
             // accessible={false}
             onValueChange={value => this.setState({noAccessibleValue: value})}
             value={this.state.noAccessibleValue}
@@ -325,7 +326,7 @@ class AccessibilitySwitchExample extends React.Component<
             accessibilityHint="Switch"
             accessibilityPosInSet={4}
             accessibilitySetSize={4}
-            accessibilityLiveRegion='assertive'
+            accessibilityLiveRegion="assertive"
             // focusable={false}
             // accessible={false}
             onValueChange={value => this.setState({noFocusValue: value})}

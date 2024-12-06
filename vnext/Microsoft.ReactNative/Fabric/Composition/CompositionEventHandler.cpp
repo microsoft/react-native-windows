@@ -12,15 +12,18 @@
 #include <Views/ShadowNodeBase.h>
 #include <windows.h>
 #include <windowsx.h>
+#include <winrt/Windows.UI.Core.h>
 #include <winrt/Windows.UI.Input.h>
 #include "Composition.Input.h"
 #include "CompositionViewComponentView.h"
 #include "ReactNativeIsland.h"
 #include "RootComponentView.h"
 
-#ifdef USE_WINUI3
-#include <winrt/Microsoft.UI.Input.h>
-#endif
+namespace ABI::Microsoft::UI::Input {
+struct IInputCursor;
+}
+
+#include <Microsoft.UI.Input.InputCursor.Interop.h>
 
 namespace Microsoft::ReactNative {
 
@@ -139,8 +142,9 @@ struct CompositionInputKeyboardSource : winrt::implements<
 
 CompositionEventHandler::CompositionEventHandler(
     const winrt::Microsoft::ReactNative::ReactContext &context,
-    const winrt::Microsoft::ReactNative::ReactNativeIsland &reactNativeIsland)
-    : m_context(context), m_wkRootView(reactNativeIsland) {}
+    const winrt::Microsoft::ReactNative::ReactNativeIsland &reactNativeIsland,
+    const int fragmentTag)
+    : m_fragmentTag(fragmentTag), m_context(context), m_wkRootView(reactNativeIsland) {}
 
 void CompositionEventHandler::Initialize() noexcept {
 #ifdef USE_WINUI3
@@ -327,6 +331,11 @@ CompositionEventHandler::~CompositionEventHandler() {
     }
   }
 #endif
+
+  if (m_hcursorOwned) {
+    ::DestroyCursor(m_hcursor);
+    m_hcursor = nullptr;
+  }
 }
 
 facebook::react::SurfaceId CompositionEventHandler::SurfaceId() const noexcept {
@@ -505,6 +514,10 @@ int64_t CompositionEventHandler::SendMessage(HWND hwnd, uint32_t msg, uint64_t w
         winrt::get_self<CompositionKeyboardSource>(keyboardSource)->Disconnect();
       }
       break;
+    }
+    case WM_SETCURSOR: {
+      UpdateCursor();
+      return 1;
     }
   }
 
@@ -752,6 +765,151 @@ void CompositionEventHandler::HandleIncomingPointerEvent(
     hoveredViews.emplace_back(ReactTaggedView(componentViewDescriptor.view));
   }
   m_currentlyHoveredViewsPerPointer[pointerId] = std::move(hoveredViews);
+
+  if (IsMousePointerEvent(event)) {
+    UpdateCursor();
+  }
+}
+
+void CompositionEventHandler::UpdateCursor() noexcept {
+  for (auto &taggedView : m_currentlyHoveredViewsPerPointer[MOUSE_POINTER_ID]) {
+    if (auto view = taggedView.view()) {
+      if (auto viewcomponent =
+              view.try_as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()) {
+        auto cursorInfo = viewcomponent->cursor();
+        if (cursorInfo.first != facebook::react::Cursor::Auto || cursorInfo.second != nullptr) {
+          SetCursor(cursorInfo.first, cursorInfo.second);
+          return;
+        }
+      }
+    }
+  }
+
+  SetCursor(facebook::react::Cursor::Auto, nullptr);
+}
+
+void CompositionEventHandler::SetCursor(facebook::react::Cursor cursor, HCURSOR hcur) noexcept {
+  if (m_currentCursor == cursor && m_hcursor == hcur)
+    return;
+
+  if (auto strongRootView = m_wkRootView.get()) {
+    if (auto island = strongRootView.Island()) {
+      auto pointerSource = winrt::Microsoft::UI::Input::InputPointerSource::GetForIsland(island);
+
+      if (!hcur) {
+        winrt::Windows::UI::Core::CoreCursorType type = winrt::Windows::UI::Core::CoreCursorType::Arrow;
+        switch (cursor) {
+          case facebook::react::Cursor::Pointer:
+            type = winrt::Windows::UI::Core::CoreCursorType::Hand;
+            break;
+          case facebook::react::Cursor::Help:
+            type = winrt::Windows::UI::Core::CoreCursorType::Help;
+            break;
+          case facebook::react::Cursor::NotAllowed:
+            type = winrt::Windows::UI::Core::CoreCursorType::UniversalNo;
+            break;
+          case facebook::react::Cursor::Wait:
+            type = winrt::Windows::UI::Core::CoreCursorType::Wait;
+            break;
+          case facebook::react::Cursor::Move:
+            type = winrt::Windows::UI::Core::CoreCursorType::SizeAll;
+            break;
+          case facebook::react::Cursor::NESWResize:
+            type = winrt::Windows::UI::Core::CoreCursorType::SizeNortheastSouthwest;
+            break;
+          case facebook::react::Cursor::NSResize:
+            type = winrt::Windows::UI::Core::CoreCursorType::SizeNorthSouth;
+            break;
+          case facebook::react::Cursor::NWSEResize:
+            type = winrt::Windows::UI::Core::CoreCursorType::SizeNorthwestSoutheast;
+            break;
+          case facebook::react::Cursor::EWResize:
+            type = winrt::Windows::UI::Core::CoreCursorType::SizeWestEast;
+            break;
+          case facebook::react::Cursor::Text:
+            type = winrt::Windows::UI::Core::CoreCursorType::IBeam;
+            break;
+          case facebook::react::Cursor::Progress:
+            type = winrt::Windows::UI::Core::CoreCursorType::Wait; // IDC_APPSTARTING not mapped to CoreCursor?
+            break;
+          case facebook::react::Cursor::Crosshair:
+            type = winrt::Windows::UI::Core::CoreCursorType::Cross;
+            break;
+          default:
+            break;
+        }
+
+        m_inputCursor = winrt::Microsoft::UI::Input::InputCursor::CreateFromCoreCursor(
+            winrt::Windows::UI::Core::CoreCursor(type, 0));
+        m_hcursor = hcur;
+      } else {
+        auto cursorInterop = winrt::get_activation_factory<
+            winrt::Microsoft::UI::Input::InputCursor,
+            ABI::Microsoft::UI::Input::IInputCursorStaticsInterop>();
+        winrt::com_ptr<IUnknown> spunk;
+        winrt::check_hresult(cursorInterop->CreateFromHCursor(
+            hcur, reinterpret_cast<ABI::Microsoft::UI::Input::IInputCursor **>(spunk.put_void())));
+        m_hcursor = hcur;
+        m_inputCursor = spunk.as<winrt::Microsoft::UI::Input::InputCursor>();
+      }
+
+      pointerSource.Cursor(m_inputCursor);
+    } else {
+      if (m_hcursorOwned) {
+        ::DestroyCursor(m_hcursor);
+        m_hcursorOwned = false;
+      }
+      if (hcur == nullptr) {
+        const WCHAR *idc = IDC_ARROW;
+        switch (cursor) {
+          case facebook::react::Cursor::Pointer:
+            idc = IDC_HAND;
+            break;
+          case facebook::react::Cursor::Help:
+            idc = IDC_HELP;
+            break;
+          case facebook::react::Cursor::NotAllowed:
+            idc = IDC_NO;
+            break;
+          case facebook::react::Cursor::Wait:
+            idc = IDC_WAIT;
+            break;
+          case facebook::react::Cursor::Move:
+            idc = IDC_SIZEALL;
+            break;
+          case facebook::react::Cursor::NESWResize:
+            idc = IDC_SIZENESW;
+            break;
+          case facebook::react::Cursor::NSResize:
+            idc = IDC_SIZENS;
+            break;
+          case facebook::react::Cursor::NWSEResize:
+            idc = IDC_SIZENWSE;
+            break;
+          case facebook::react::Cursor::EWResize:
+            idc = IDC_SIZEWE;
+            break;
+          case facebook::react::Cursor::Text:
+            idc = IDC_IBEAM;
+            break;
+          case facebook::react::Cursor::Progress:
+            idc = IDC_APPSTARTING;
+            break;
+          case facebook::react::Cursor::Crosshair:
+            idc = IDC_CROSS;
+            break;
+          default:
+            break;
+        }
+        m_hcursor = ::LoadCursor(nullptr, idc);
+        m_hcursorOwned = true;
+      } else {
+        m_hcursor = hcur;
+      }
+      ::SetCursor(m_hcursor);
+    }
+    m_currentCursor = cursor;
+  }
 }
 
 void CompositionEventHandler::UpdateActiveTouch(
@@ -831,7 +989,30 @@ void CompositionEventHandler::getTargetPointerArgs(
       ptLocal.y = ptScaled.y - (clientRect.top / strongRootView.ScaleFactor());
     }
   } else {
-    tag = RootComponentView().hitTest(ptScaled, ptLocal);
+    if (m_fragmentTag == -1) {
+      tag = RootComponentView().hitTest(ptScaled, ptLocal);
+      return;
+    }
+
+    // check if the fragment tag exists
+    if (!fabricuiManager->GetViewRegistry().findComponentViewWithTag(m_fragmentTag)) {
+      return;
+    }
+
+    auto fagmentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_fragmentTag).view;
+    auto fagmentchildren = fagmentView.Children();
+
+    // call the hitTest with the fargment as the RootComponent
+    for (auto index = fagmentchildren.Size(); index > 0; index--) {
+      auto childView = fagmentchildren.GetAt(index - 1);
+      auto targetTag =
+          winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childView)->hitTest(
+              ptScaled, ptLocal);
+      if (targetTag != -1) {
+        tag = targetTag;
+        break;
+      }
+    }
   }
 }
 

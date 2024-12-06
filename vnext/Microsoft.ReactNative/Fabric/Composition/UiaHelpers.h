@@ -42,4 +42,5 @@ void AddSelectionItemsToContainer(CompositionDynamicAutomationProvider *provider
 
 void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *provider) noexcept;
 
+ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept;
 } // namespace winrt::Microsoft::ReactNative::implementation

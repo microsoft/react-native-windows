@@ -56,7 +56,7 @@ namespace Microsoft.ReactNative
 
   [experimental]
   DOC_STRING("A delegate that creates a @IComponentProps object for an instance of @ViewProps. See @IReactViewComponentBuilder.SetCreateProps")
-  delegate IComponentProps ViewPropsFactory(ViewProps props);
+  delegate IComponentProps ViewPropsFactory(ViewProps props, IComponentProps cloneFrom);
 
   [experimental]
   delegate Windows.Foundation.Size MeasureContentHandler(ShadowNode shadowNode, LayoutContext layoutContext, LayoutConstraints layoutConstraints);

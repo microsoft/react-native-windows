@@ -7,7 +7,7 @@
 
 'use strict';
 
-import type {RNTesterModuleInfo} from '../types/RNTesterTypes';
+import type {RNTesterModule, RNTesterModuleInfo} from '../types/RNTesterTypes';
 
 import ReactNativeFeatureFlags from 'react-native/Libraries/ReactNative/ReactNativeFeatureFlags';
 
@@ -63,11 +63,11 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'UI',
     module: require('../examples-win/Glyph/GlyphExample'),
   },
-  // {
-  //   key: 'ModalExample',
-  //   category: 'UI',
-  //   module: require('../examples/Modal/ModalExample'),
-  // },
+  {
+    key: 'ModalExample',
+    category: 'UI',
+    module: require('../examples/Modal/ModalExample'),
+  },
   {
     key: 'Drawing Island',
     module: require('../examples-win/NativeComponents/DrawingIsland'),
@@ -458,9 +458,16 @@ if (ReactNativeFeatureFlags.shouldEmitW3CPointerEvents()) {
   });
 }
 
-const Modules: any = {};
+const Playgrounds: Array<RNTesterModuleInfo> = [
+  {
+    key: 'PlaygroundExample',
+    module: require('../examples/Playground/PlaygroundExample'),
+  },
+];
 
-APIs.concat(Components).forEach(Example => {
+const Modules: {[key: string]: RNTesterModule} = {};
+
+[...APIs, ...Components, ...Playgrounds].forEach(Example => {
   Modules[Example.key] = Example.module;
 });
 

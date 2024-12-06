@@ -303,6 +303,7 @@ class TouchableOpacity extends React.Component<Props, State> {
           this.props.onPress !== undefined &&
           !this.props.disabled
         }
+        // $FlowFixMe[prop-missing]
         ref={this.props.hostRef}
         accessibilityPosInSet={this.props.accessibilityPosInSet} // [Windows]
         accessibilitySetSize={this.props.accessibilitySetSize} // [Windows]
@@ -345,10 +346,10 @@ class TouchableOpacity extends React.Component<Props, State> {
   }
 }
 
-const Touchable: React.AbstractComponent<
-  Props,
-  React.ElementRef<typeof Animated.View>,
-> = React.forwardRef((props, ref) => (
+const Touchable: component(
+  ref: React.RefSetter<React.ElementRef<typeof Animated.View>>,
+  ...props: Props
+) = React.forwardRef((props, ref) => (
   <TouchableOpacity {...props} hostRef={ref} />
 ));
 
