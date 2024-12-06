@@ -30,7 +30,6 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
     IRawElementProviderFragment **pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
-  AddRef();
   return UiaNavigateHelper(m_view.view(), direction, *pRetVal);
 }
 
@@ -591,7 +590,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_CanSelectMultiple(BO
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
-      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+      winrt::get_self<ComponentView>(strongView)->props());
 
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
@@ -630,45 +629,39 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY *
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  std::vector<int> m_selectedItems;
+  std::vector<int> selectedItems;
   for (size_t i = 0; i < m_selectionItems.size(); i++) {
     auto selectionItem = m_selectionItems.at(i);
     auto provider = static_cast<CompositionDynamicAutomationProvider *>(selectionItem);
     BOOL selected;
     auto hr = provider->get_IsSelected(&selected);
     if (hr == S_OK && selected) {
-      m_selectedItems.push_back(i);
+      selectedItems.push_back(i);
     }
   }
 
-  *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, m_selectedItems.size());
+  *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, selectedItems.size());
   if (*pRetVal == nullptr)
     return E_OUTOFMEMORY;
 
-  for (size_t i = 0; i < m_selectedItems.size(); i++) {
+  for (size_t i = 0; i < selectedItems.size(); i++) {
     auto pos = static_cast<long>(i);
-    SafeArrayPutElement(*pRetVal, &pos, m_selectionItems.at(m_selectedItems.at(i)));
-    AddRef();
+    auto item = m_selectionItems.at(selectedItems.at(i));
+    SafeArrayPutElement(*pRetVal, &pos, item);
+    item->AddRef();
   }
   return S_OK;
 }
 
 void CompositionDynamicAutomationProvider::AddToSelectionItems(IRawElementProviderSimple *item) {
-  for (size_t i = 0; i < m_selectionItems.size(); i++) {
-    if (m_selectionItems.at(i) == item) {
-      return;
-    }
+  if (std::find(m_selectionItems.begin(), m_selectionItems.end(), item) != m_selectionItems.end()) {
+    return;
   }
   m_selectionItems.push_back(item);
 }
 
 void CompositionDynamicAutomationProvider::RemoveFromSelectionItems(IRawElementProviderSimple *item) {
-  for (size_t i = 0; i < m_selectionItems.size(); i++) {
-    if (m_selectionItems.at(i) == item) {
-      m_selectionItems.erase(m_selectionItems.begin() + i);
-      return;
-    }
-  }
+  std::erase(m_selectionItems, item);
 }
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::AddToSelection() {
@@ -732,6 +725,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_SelectionContainer(I
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   *pRetVal = findSelectionContainer(strongView.Parent());
+  (*pRetVal)->AddRef();
   return S_OK;
 }
 

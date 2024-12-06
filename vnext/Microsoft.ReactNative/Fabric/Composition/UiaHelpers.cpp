@@ -88,6 +88,7 @@ HRESULT UiaNavigateHelper(
   auto spFragment = uiaProvider.try_as<IRawElementProviderFragment>();
   if (spFragment != nullptr) {
     retVal = spFragment.detach();
+    retVal->AddRef();
   }
 
   return S_OK;
