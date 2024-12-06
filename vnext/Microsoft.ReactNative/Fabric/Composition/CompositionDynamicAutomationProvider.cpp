@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "CompositionDynamicAutomationProvider.h"
 #include <Fabric/ComponentView.h>
+#include <Fabric/Composition/SwitchComponentView.h>
+#include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
 #include <Unicode.h>
 #include "RootComponentView.h"
 #include "UiaHelpers.h"
