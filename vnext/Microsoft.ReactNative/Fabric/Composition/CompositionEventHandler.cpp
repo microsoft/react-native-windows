@@ -802,39 +802,41 @@ void CompositionEventHandler::SetCursor(facebook::react::Cursor cursor, HCURSOR 
           case facebook::react::Cursor::Pointer:
             type = winrt::Windows::UI::Core::CoreCursorType::Hand;
             break;
-          case facebook::react::Cursor::Help:
-            type = winrt::Windows::UI::Core::CoreCursorType::Help;
-            break;
-          case facebook::react::Cursor::NotAllowed:
-            type = winrt::Windows::UI::Core::CoreCursorType::UniversalNo;
-            break;
-          case facebook::react::Cursor::Wait:
-            type = winrt::Windows::UI::Core::CoreCursorType::Wait;
-            break;
-          case facebook::react::Cursor::Move:
-            type = winrt::Windows::UI::Core::CoreCursorType::SizeAll;
-            break;
-          case facebook::react::Cursor::NESWResize:
-            type = winrt::Windows::UI::Core::CoreCursorType::SizeNortheastSouthwest;
-            break;
-          case facebook::react::Cursor::NSResize:
-            type = winrt::Windows::UI::Core::CoreCursorType::SizeNorthSouth;
-            break;
-          case facebook::react::Cursor::NWSEResize:
-            type = winrt::Windows::UI::Core::CoreCursorType::SizeNorthwestSoutheast;
-            break;
-          case facebook::react::Cursor::EWResize:
-            type = winrt::Windows::UI::Core::CoreCursorType::SizeWestEast;
-            break;
-          case facebook::react::Cursor::Text:
-            type = winrt::Windows::UI::Core::CoreCursorType::IBeam;
-            break;
-          case facebook::react::Cursor::Progress:
-            type = winrt::Windows::UI::Core::CoreCursorType::Wait; // IDC_APPSTARTING not mapped to CoreCursor?
-            break;
-          case facebook::react::Cursor::Crosshair:
-            type = winrt::Windows::UI::Core::CoreCursorType::Cross;
-            break;
+            /* -- Additional cursors not added in core until later version
+              case facebook::react::Cursor::Help:
+                type = winrt::Windows::UI::Core::CoreCursorType::Help;
+                break;
+              case facebook::react::Cursor::NotAllowed:
+                type = winrt::Windows::UI::Core::CoreCursorType::UniversalNo;
+                break;
+              case facebook::react::Cursor::Wait:
+                type = winrt::Windows::UI::Core::CoreCursorType::Wait;
+                break;
+              case facebook::react::Cursor::Move:
+                type = winrt::Windows::UI::Core::CoreCursorType::SizeAll;
+                break;
+              case facebook::react::Cursor::NESWResize:
+                type = winrt::Windows::UI::Core::CoreCursorType::SizeNortheastSouthwest;
+                break;
+              case facebook::react::Cursor::NSResize:
+                type = winrt::Windows::UI::Core::CoreCursorType::SizeNorthSouth;
+                break;
+              case facebook::react::Cursor::NWSEResize:
+                type = winrt::Windows::UI::Core::CoreCursorType::SizeNorthwestSoutheast;
+                break;
+              case facebook::react::Cursor::EWResize:
+                type = winrt::Windows::UI::Core::CoreCursorType::SizeWestEast;
+                break;
+              case facebook::react::Cursor::Text:
+                type = winrt::Windows::UI::Core::CoreCursorType::IBeam;
+                break;
+              case facebook::react::Cursor::Progress:
+                type = winrt::Windows::UI::Core::CoreCursorType::Wait; // IDC_APPSTARTING not mapped to CoreCursor?
+                break;
+              case facebook::react::Cursor::Crosshair:
+                type = winrt::Windows::UI::Core::CoreCursorType::Cross;
+                break;
+                */
           default:
             break;
         }
@@ -865,6 +867,7 @@ void CompositionEventHandler::SetCursor(facebook::react::Cursor cursor, HCURSOR 
           case facebook::react::Cursor::Pointer:
             idc = IDC_HAND;
             break;
+            /* -- Additional cursors not added in core until later version
           case facebook::react::Cursor::Help:
             idc = IDC_HELP;
             break;
@@ -898,6 +901,7 @@ void CompositionEventHandler::SetCursor(facebook::react::Cursor cursor, HCURSOR 
           case facebook::react::Cursor::Crosshair:
             idc = IDC_CROSS;
             break;
+            */
           default:
             break;
         }
