@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.77.0-nightly-20241109-7794d7af4",
+  "baseVersion": "0.77.0-nightly-20241118-3986eefed",
   "overrides": [
     {
       "type": "copy",
@@ -19,14 +19,14 @@
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
-      "baseHash": "4389553ddf936bf890650e25e6758f8b816b52f7",
+      "baseHash": "434664d5613e7c89ec06087f48290d6759529d8b",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/ActionSheetIOS",
       "baseDirectory": "packages/rn-tester/js/examples/ActionSheetIOS",
-      "baseHash": "3f5517b09a904c640e00f0f8fd325ed43fe0084c",
+      "baseHash": "a346f2ad86ee36c62870e8ce442c921c930b693a",
       "issue": 4054
     },
     {
@@ -159,7 +159,7 @@
       "type": "copy",
       "directory": "js/examples/Image",
       "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseHash": "c97ef3a87ca07264cd5de34d2e43afe525c55493",
+      "baseHash": "872cbc658a19ea1ed3a952859b055a9368c0ef42",
       "issue": 4054
     },
     {
@@ -306,7 +306,7 @@
       "type": "copy",
       "directory": "js/examples/PixelRatio",
       "baseDirectory": "packages/rn-tester/js/examples/PixelRatio",
-      "baseHash": "290a1a5d12e85afd47909ee26135ad0951081928",
+      "baseHash": "7799fe6812dfbdc50257b59e6c6ace94cc186429",
       "issue": 4054
     },
     {
@@ -446,7 +446,7 @@
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "b22e7d0601e36acd257bd24832944bed0b5046af",
+      "baseHash": "0a16660c5859076cf463c784bc640e8631d8b2c6",
       "issue": 4054
     },
     {
@@ -537,7 +537,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "b80b7e1c245c2c0890f31e84e91920425a6eefe8",
+      "baseHash": "8381b2c2e97bd18b48ac04c7a058a636d0b58a90",
       "issue": 4054
     },
     {
@@ -621,7 +621,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "ec13cb3d6187051b5846e841b97b175a0a1bb002",
+      "baseHash": "def24c1467f07cda8e7b367beb30c0a513871b26",
       "issue": 13228
     }
   ]

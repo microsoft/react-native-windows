@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241109-7794d7af4",
+  "baseVersion": "0.77.0-nightly-20241118-3986eefed",
   "overrides": [
     {
       "type": "derived",
@@ -38,7 +38,7 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "e3e0936eb55d98d78cda8d307d3f991f7668102f",
+      "baseHash": "c7bd8835ffb3a6747a70d86548735028da793335",
       "issue": 12869
     },
     {

@@ -24,6 +24,7 @@ struct AccessibilityInfoSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
       Method<void(double) noexcept>{5, L"setAccessibilityFocus"},
       Method<void(std::string) noexcept>{6, L"announceForAccessibility"},
       Method<void(double, Callback<double>) noexcept>{7, L"getRecommendedTimeoutMillis"},
+      Method<void(Callback<bool>) noexcept>{8, L"isGrayscaleEnabled"},
   };
 
   template <class TModule>
@@ -70,6 +71,11 @@ struct AccessibilityInfoSpec : winrt::Microsoft::ReactNative::TurboModuleSpec {
           "getRecommendedTimeoutMillis",
           "    REACT_METHOD(getRecommendedTimeoutMillis) void getRecommendedTimeoutMillis(double mSec, std::function<void(double)> const & onSuccess) noexcept { /* implementation */ }\n"
           "    REACT_METHOD(getRecommendedTimeoutMillis) static void getRecommendedTimeoutMillis(double mSec, std::function<void(double)> const & onSuccess) noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          8,
+          "isGrayscaleEnabled",
+          "    REACT_METHOD(isGrayscaleEnabled) void isGrayscaleEnabled(std::function<void(bool)> const & onSuccess) noexcept { /* implementation */ }\n"
+          "    REACT_METHOD(isGrayscaleEnabled) static void isGrayscaleEnabled(std::function<void(bool)> const & onSuccess) noexcept { /* implementation */ }\n");
   }
 };
 

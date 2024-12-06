@@ -58,6 +58,7 @@ const EventNames: Map<
       ['screenReaderChanged', 'touchExplorationDidChange'],
       ['accessibilityServiceChanged', 'accessibilityServiceDidChange'],
       ['invertColorsChanged', 'invertColorDidChange'],
+      ['grayscaleChanged', 'grayscaleModeDidChange'],
     ])
   : Platform.OS === 'win32'
     ? new Map([
@@ -121,7 +122,15 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo#isGrayscaleEnabled
    */
   isGrayscaleEnabled(): Promise<boolean> {
-    if (Platform.OS === 'android' || Platform.OS === 'win32') {
+    if (Platform.OS === 'android') {
+      return new Promise((resolve, reject) => {
+        if (NativeAccessibilityInfoAndroid?.isGrayscaleEnabled != null) {
+          NativeAccessibilityInfoAndroid.isGrayscaleEnabled(resolve);
+        } else {
+          reject(null);
+        }
+      });
+    } else if (Platform.OS === 'win32') {
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {

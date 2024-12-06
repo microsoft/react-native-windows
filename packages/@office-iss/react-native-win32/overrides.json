@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241109-7794d7af4",
+  "baseVersion": "0.77.0-nightly-20241118-3986eefed",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "24b7990b43fc55aa1664d98bc4a8babcea245ffa"
+      "baseHash": "afa414432bb8dae6ce606a148b74f85fcef8a59d"
     },
     {
       "type": "derived",
@@ -41,7 +41,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/AccessibilityInfo/AccessibilityInfo.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "760292e859c2ff52ee99b7b633513014a75e707c"
+      "baseHash": "e91ae4454ae1301d97a60755ecc863bf738542e3"
     },
     {
       "type": "copy",
@@ -109,7 +109,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "87f676e0bfd031b3dd8c79cf78b64af3c525b151"
+      "baseHash": "1f9adcb7ca64fa536372ed28b7af5e03b05458ac"
     },
     {
       "type": "patch",
@@ -452,7 +452,7 @@
       "type": "copy",
       "file": "src-win/Libraries/Utilities/BackHandler.win32.js",
       "baseFile": "packages/react-native/Libraries/Utilities/BackHandler.android.js",
-      "baseHash": "796868f6764037baf433afd88053bb51f3194ddc",
+      "baseHash": "b5972a6f2b9da718f57eb7dd9f20b4d67164c980",
       "issue": 4629
     },
     {
@@ -516,7 +516,7 @@
       "type": "derived",
       "file": "src-win/src/private/specs/modules/NativeAccessibilityInfoWin32.js",
       "baseFile": "packages/react-native/src/private/specs/modules/NativeAccessibilityInfo.js",
-      "baseHash": "a5e688b1713a860719f584c8f61b10ed7cd0271e"
+      "baseHash": "82fc086f675dec489e485c3aabaabe1225ef5f36"
     },
     {
       "type": "derived",

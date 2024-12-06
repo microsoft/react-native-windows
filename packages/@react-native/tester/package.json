@@ -42,6 +42,11 @@
     "jsSrcsDir": ".",
     "android": {
       "javaPackageName": "com.facebook.fbreact.specs"
+    },
+    "ios": {
+      "componentProvider": {
+        "RNTMyNativeView": "RNTMyNativeViewComponentView"
+      }
     }
   },
   "devDependencies": {
