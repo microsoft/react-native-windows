@@ -200,7 +200,7 @@ function ModalPresentation() {
             key="onDismiss"
             style={styles.option}
             label="onDismiss ⚫️"
-            disabled={Platform.OS !== 'ios'}
+            disabled={Platform.OS !== 'ios' && Platform.OS !== 'windows'}
             onPress={() =>
               setProps(prev => ({
                 ...prev,
