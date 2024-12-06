@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Update focus visuals to use cornerRadius and inner/outer strokes.",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
