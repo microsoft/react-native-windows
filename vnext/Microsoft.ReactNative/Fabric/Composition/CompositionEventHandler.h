@@ -147,6 +147,9 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
   static void
   UpdateActiveTouch(ActiveTouch &activeTouch, facebook::react::Point ptScaled, facebook::react::Point ptLocal) noexcept;
 
+  void UpdateCursor() noexcept;
+  void SetCursor(facebook::react::Cursor cursor, HCURSOR hcur) noexcept;
+
   std::map<PointerId, ActiveTouch> m_activeTouches; // iOS is map of touch event args to ActiveTouch..?
   PointerId m_touchId = 0;
   int m_fragmentTag = -1;
@@ -157,6 +160,10 @@ class CompositionEventHandler : public std::enable_shared_from_this<CompositionE
 
   facebook::react::Tag m_pointerCapturingComponentTag{-1}; // Component that has captured input
   std::vector<PointerId> m_capturedPointers;
+  HCURSOR m_hcursor{nullptr};
+  bool m_hcursorOwned{false}; // If we create the cursor, so we need to destroy it
+  facebook::react::Cursor m_currentCursor{facebook::react::Cursor::Auto};
+  winrt::Microsoft::UI::Input::InputCursor m_inputCursor{nullptr};
 
 #ifdef USE_WINUI3
   winrt::event_token m_pointerPressedToken;

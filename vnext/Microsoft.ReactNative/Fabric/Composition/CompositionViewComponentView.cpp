@@ -791,6 +791,10 @@ void ComponentView::updateClippingPath(
   }
 }
 
+std::pair<facebook::react::Cursor, HCURSOR> ComponentView::cursor() const noexcept {
+  return {viewProps()->cursor, nullptr};
+}
+
 void ComponentView::indexOffsetForBorder(uint32_t &index) const noexcept {
   if (m_borderPrimitive) {
     index += m_borderPrimitive->numberOfVisuals();
