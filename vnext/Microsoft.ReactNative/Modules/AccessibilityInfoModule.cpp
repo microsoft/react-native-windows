@@ -86,8 +86,7 @@ void AccessibilityInfo::getRecommendedTimeoutMillis(
   onSuccess(mSec);
 }
 
-void AccessibilityInfo::isGrayscaleEnabled(
-    std::function<void(bool)> const &onSuccess) noexcept {
+void AccessibilityInfo::isGrayscaleEnabled(std::function<void(bool)> const &onSuccess) noexcept {
   // TODO: implement #ISSUENUMBER
   onSuccess(false);
 }
