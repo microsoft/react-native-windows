@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "implement onDismiss and remove titlebar from Modal",
   "packageName": "react-native-windows",
   "email": "tatianakapos@microsoft.com",
