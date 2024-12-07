@@ -470,12 +470,6 @@
       "issue": 12704
     },
     {
-      "type": "copy",
-      "file": "src-win/Libraries/DevToolsSettings/DevToolsSettingsManager.windows.js",
-      "baseFile": "packages/react-native/Libraries/DevToolsSettings/DevToolsSettingsManager.android.js",
-      "baseHash": "1c9eb481e8ed077fa650e3ea34837e2a31310366"
-    },
-    {
       "type": "platform",
       "file": "src-win/Libraries/Image/assetPaths.js"
     },
@@ -527,7 +521,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Modal/Modal.windows.js",
       "baseFile": "packages/react-native/Libraries/Modal/Modal.js",
-      "baseHash": "ab5b48312e287809327d494e7a9542f2f178d94b"
+      "baseHash": "a887112b31f2de073514971d0aa71d4eabdddc20"
     },
     {
       "type": "derived",
