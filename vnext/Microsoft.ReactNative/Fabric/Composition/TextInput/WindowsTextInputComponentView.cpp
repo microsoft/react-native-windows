@@ -165,6 +165,10 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Show the caret
   BOOL TxShowCaret(BOOL fShow) override {
+    // Only show the caret if we have focus
+    if (fShow && !m_outer->m_hasFocus) {
+      return false;
+    }
     m_outer->ShowCaret(m_outer->windowsTextInputProps().caretHidden ? false : fShow);
     return true;
   }
@@ -232,19 +236,25 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Establish a new cursor shape
   void TxSetCursor(HCURSOR hcur, BOOL fText) override {
-    assert(false);
+    m_outer->m_hcursor = hcur;
   }
 
   //@cmember Converts screen coordinates of a specified point to the client coordinates
   BOOL TxScreenToClient(LPPOINT lppt) override {
-    assert(false);
-    return {};
+    winrt::Windows::Foundation::Point pt{static_cast<float>(lppt->x), static_cast<float>(lppt->y)};
+    auto localpt = m_outer->ScreenToLocal(pt);
+    lppt->x = static_cast<LONG>(localpt.X);
+    lppt->y = static_cast<LONG>(localpt.Y);
+    return true;
   }
 
   //@cmember Converts the client coordinates of a specified point to screen coordinates
   BOOL TxClientToScreen(LPPOINT lppt) override {
-    assert(false);
-    return {};
+    winrt::Windows::Foundation::Point pt{static_cast<float>(lppt->x), static_cast<float>(lppt->y)};
+    auto screenpt = m_outer->LocalToScreen(pt);
+    lppt->x = static_cast<LONG>(screenpt.X);
+    lppt->y = static_cast<LONG>(screenpt.Y);
+    return true;
   }
 
   //@cmember Request host to activate text services
@@ -722,6 +732,9 @@ void WindowsTextInputComponentView::OnPointerMoved(
     auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
     args.Handled(hr != S_FALSE);
   }
+
+  m_textServices->OnTxSetCursor(
+      DVASPECT_CONTENT, -1, nullptr, nullptr, nullptr, nullptr, nullptr, ptContainer.x, ptContainer.y);
 }
 
 void WindowsTextInputComponentView::OnKeyDown(
@@ -870,6 +883,7 @@ void WindowsTextInputComponentView::OnCharacterReceived(
   emitter->onKeyPress(onKeyPressArgs);
 
   WPARAM wParam = static_cast<WPARAM>(args.KeyCode());
+
   LPARAM lParam = 0;
   lParam = args.KeyStatus().RepeatCount; // bits 0-15
   lParam |= args.KeyStatus().ScanCode << 16; // bits 16-23
@@ -908,6 +922,7 @@ void WindowsTextInputComponentView::UnmountChildComponentView(
 
 void WindowsTextInputComponentView::onLostFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
+  m_hasFocus = false;
   Super::onLostFocus(args);
   if (m_textServices) {
     LRESULT lresult;
@@ -919,6 +934,7 @@ void WindowsTextInputComponentView::onLostFocus(
 
 void WindowsTextInputComponentView::onGotFocus(
     const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept {
+  m_hasFocus = true;
   Super::onGotFocus(args);
   if (m_textServices) {
     LRESULT lresult;
@@ -1020,6 +1036,10 @@ void WindowsTextInputComponentView::updateProps(
     m_submitKeyEvents = newTextInputProps.submitKeyEvents;
   } else {
     m_submitKeyEvents.clear();
+  }
+
+  if (oldTextInputProps.autoCapitalize != newTextInputProps.autoCapitalize) {
+    autoCapitalizeOnUpdateProps(oldTextInputProps.autoCapitalize, newTextInputProps.autoCapitalize);
   }
 
   UpdatePropertyBits();
@@ -1462,6 +1482,10 @@ WindowsTextInputComponentView::createVisual() noexcept {
   return visual;
 }
 
+std::pair<facebook::react::Cursor, HCURSOR> WindowsTextInputComponentView::cursor() const noexcept {
+  return {viewProps()->cursor, m_hcursor};
+}
+
 void WindowsTextInputComponentView::onThemeChanged() noexcept {
   const auto &props = windowsTextInputProps();
   updateCursorColor(props.cursorColor, props.textAttributes.foregroundColor);
@@ -1474,6 +1498,31 @@ winrt::Microsoft::ReactNative::ComponentView WindowsTextInputComponentView::Crea
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
   return winrt::make<WindowsTextInputComponentView>(compContext, tag, reactContext);
+}
+
+// This function assumes that previous and new capitalization types are different.
+void WindowsTextInputComponentView::autoCapitalizeOnUpdateProps(
+    const std::string &previousCapitalizationType,
+    const std::string &newCapitalizationType) noexcept {
+  /*
+    Possible values are:
+     Characters - All characters.
+     Words - First letter of each word.
+     Sentences - First letter of each sentence.
+     None - Do not autocapitalize anything.
+
+     For now, only characters and none are supported.
+  */
+
+  if (previousCapitalizationType == "characters") {
+    winrt::check_hresult(m_textServices->TxSendMessage(
+        EM_SETEDITSTYLE, 0 /* disable */, SES_UPPERCASE /* flag affected */, nullptr /* LRESULT */));
+  }
+
+  if (newCapitalizationType == "characters") {
+    winrt::check_hresult(m_textServices->TxSendMessage(
+        EM_SETEDITSTYLE, SES_UPPERCASE /* enable */, SES_UPPERCASE /* flag affected */, nullptr /* LRESULT */));
+  }
 }
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

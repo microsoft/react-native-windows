@@ -189,40 +189,16 @@ HRESULT __stdcall CompositionRootAutomationProvider::ElementProviderFromPoint(
   *pRetVal = nullptr;
 
   if (auto rootView = rootComponentView()) {
-#ifdef USE_WINUI3
-    if (m_island) {
-      auto cc = m_island.CoordinateConverter();
-      auto local = cc.ConvertScreenToLocal(
-          winrt::Windows::Graphics::PointInt32{static_cast<int32_t>(x), static_cast<int32_t>(y)});
-      auto provider = rootView->UiaProviderFromPoint(
-          {static_cast<LONG>(local.X * m_island.RasterizationScale()),
-           static_cast<LONG>(local.Y * m_island.RasterizationScale())});
-      auto spFragment = provider.try_as<IRawElementProviderFragment>();
-      if (spFragment) {
-        *pRetVal = spFragment.detach();
-      }
-
-      return S_OK;
+    auto local = rootView->ConvertScreenToLocal({static_cast<float>(x), static_cast<float>(y)});
+    auto provider = rootView->UiaProviderFromPoint(
+        {static_cast<LONG>(local.X * rootView->LayoutMetrics().PointScaleFactor),
+         static_cast<LONG>(local.Y * rootView->LayoutMetrics().PointScaleFactor)});
+    auto spFragment = provider.try_as<IRawElementProviderFragment>();
+    if (spFragment) {
+      *pRetVal = spFragment.detach();
     }
-#endif
 
-    if (m_hwnd) {
-      if (!IsWindow(m_hwnd)) {
-        // TODO: Add support for non-HWND based hosting
-        assert(false);
-        return E_FAIL;
-      }
-
-      POINT clientPoint{static_cast<LONG>(x), static_cast<LONG>(y)};
-      ScreenToClient(m_hwnd, &clientPoint);
-
-      auto provider = rootView->UiaProviderFromPoint(clientPoint);
-      auto spFragment = provider.try_as<IRawElementProviderFragment>();
-      if (spFragment) {
-        *pRetVal = spFragment.detach();
-        return S_OK;
-      }
-    }
+    return S_OK;
   }
 
   AddRef();

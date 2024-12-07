@@ -65,6 +65,13 @@ winrt::Microsoft::ReactNative::Composition::Experimental::IBrush Color::AsIntern
   return winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(theme)->Brush(*m_color);
 }
 
+bool Color::Equals(const winrt::Microsoft::ReactNative::Color &color) const noexcept {
+  if (!color) {
+    return false;
+  }
+  return m_color == winrt::get_self<Color>(color)->m_color;
+}
+
 winrt::Microsoft::ReactNative::Color Color::ReadValue(
     const winrt::Microsoft::ReactNative::IJSValueReader &reader) noexcept {
   switch (reader.ValueType()) {

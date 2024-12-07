@@ -88,11 +88,6 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors 1`]
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -123,11 +118,6 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors 1`]
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -160,11 +150,6 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors 1`]
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -195,11 +180,6 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors 1`]
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -296,11 +276,6 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors and
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -331,11 +306,6 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors and
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -368,11 +338,6 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors and
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -403,11 +368,6 @@ exports[`ActivityIndicator Tests An ActivityIndicator can have custom colors and
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },

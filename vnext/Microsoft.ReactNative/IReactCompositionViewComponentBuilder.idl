@@ -33,6 +33,7 @@ namespace Microsoft.ReactNative.Composition
     void SetViewComponentViewInitializer(ViewComponentViewInitializer initializer);
     void SetContentIslandComponentViewInitializer(ComponentIslandComponentViewInitializer initializer);
     void SetCreateVisualHandler(CreateVisualDelegate impl);
+    void SetViewFeatures(ComponentViewFeatures viewFeatures);
   };
 
 } // namespace Microsoft.ReactNative

@@ -19,7 +19,14 @@ namespace winrt::SampleCustomComponent::Codegen {
 
 REACT_STRUCT(DrawingIslandProps)
 struct DrawingIslandProps : winrt::implements<DrawingIslandProps, winrt::Microsoft::ReactNative::IComponentProps> {
-  DrawingIslandProps(winrt::Microsoft::ReactNative::ViewProps props) : ViewProps(props) {}
+  DrawingIslandProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
+    : ViewProps(props)
+  {
+     if (cloneFrom) {
+       auto cloneFromProps = cloneFrom.as<DrawingIslandProps>();
+  
+     }
+  }
 
   void SetProp(uint32_t hash, winrt::hstring propName, winrt::Microsoft::ReactNative::IJSValueReader value) noexcept {
     winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
@@ -98,8 +105,10 @@ void RegisterDrawingIslandNativeComponent(
       L"DrawingIsland", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
         auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
 
-        builder.SetCreateProps(
-            [](winrt::Microsoft::ReactNative::ViewProps props) noexcept { return winrt::make<DrawingIslandProps>(props); });
+        builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props,
+                              const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom) noexcept {
+            return winrt::make<DrawingIslandProps>(props, cloneFrom); 
+        });
 
         builder.SetUpdatePropsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentProps &newProps,

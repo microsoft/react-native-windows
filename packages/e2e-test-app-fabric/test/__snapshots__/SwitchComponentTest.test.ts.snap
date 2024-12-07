@@ -528,11 +528,6 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -558,11 +553,6 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },
@@ -590,11 +580,6 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
               },
             ],
           },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
-          },
         ],
       },
       {
@@ -620,11 +605,6 @@ exports[`SwitchTests Switches can have customized accessibility 1`] = `
                 ],
               },
             ],
-          },
-          {
-            "Offset": "0, 0, 0",
-            "Size": "0, 0",
-            "Visual Type": "SpriteVisual",
           },
         ],
       },

@@ -28,7 +28,17 @@ struct MovingLightSpec_MovingLightProps_objectProp {
 
 REACT_STRUCT(MovingLightProps)
 struct MovingLightProps : winrt::implements<MovingLightProps, winrt::Microsoft::ReactNative::IComponentProps> {
-  MovingLightProps(winrt::Microsoft::ReactNative::ViewProps props) : ViewProps(props) {}
+  MovingLightProps(winrt::Microsoft::ReactNative::ViewProps props, const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom)
+    : ViewProps(props)
+  {
+     if (cloneFrom) {
+       auto cloneFromProps = cloneFrom.as<MovingLightProps>();
+       size = cloneFromProps->size;
+       color = cloneFromProps->color;
+       eventParam = cloneFromProps->eventParam;
+       objectProp = cloneFromProps->objectProp;  
+     }
+  }
 
   void SetProp(uint32_t hash, winrt::hstring propName, winrt::Microsoft::ReactNative::IJSValueReader value) noexcept {
     winrt::Microsoft::ReactNative::ReadProp(hash, propName, value, *this);
@@ -148,8 +158,10 @@ void RegisterMovingLightNativeComponent(
       L"MovingLight", [builderCallback](winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) noexcept {
         auto compBuilder = builder.as<winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder>();
 
-        builder.SetCreateProps(
-            [](winrt::Microsoft::ReactNative::ViewProps props) noexcept { return winrt::make<MovingLightProps>(props); });
+        builder.SetCreateProps([](winrt::Microsoft::ReactNative::ViewProps props,
+                              const winrt::Microsoft::ReactNative::IComponentProps& cloneFrom) noexcept {
+            return winrt::make<MovingLightProps>(props, cloneFrom); 
+        });
 
         builder.SetUpdatePropsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
                                      const winrt::Microsoft::ReactNative::IComponentProps &newProps,

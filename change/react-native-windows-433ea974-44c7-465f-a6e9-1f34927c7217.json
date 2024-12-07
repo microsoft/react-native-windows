@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Focus should notify island host when tab loop wraps to give host oportunity to take focus",
+  "packageName": "react-native-windows",
+  "email": "30809111+acoates-ms@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

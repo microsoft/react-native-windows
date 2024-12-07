@@ -330,7 +330,9 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
           {"AcrylicInAppFillColorDefault", {0x9E, 0xFF, 0xFF, 0xFF}},
           {"SystemChromeMediumLowColor", {0xFF, 0xF2, 0xF2, 0xF2}},
           {"SystemControlForegroundBaseHighColor", {0xFF, 0x00, 0x00, 0x00}},
-          {"SystemControlTransientBorderColor", {0x24, 0x00, 0x00, 0x00}}};
+          {"SystemControlTransientBorderColor", {0x24, 0x00, 0x00, 0x00}},
+          {"FocusVisualPrimary", {0xFF, 0x00, 0x00, 0x00}},
+          {"FocusVisualSecondary", {0x99, 0xFF, 0xFF, 0xFF}}};
 
   static std::unordered_map<std::string, winrt::Windows::UI::Color, std::hash<std::string_view>, std::equal_to<>>
       s_darkColors = {
@@ -362,7 +364,9 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
           {"AcrylicInAppFillColorDefault", {0x9E, 0x00, 0x00, 0x00}},
           {"SystemChromeMediumLowColor", {0xFF, 0x2B, 0x2B, 0x2B}},
           {"SystemControlForegroundBaseHighColor", {0xFF, 0xFF, 0xFF, 0xFF}},
-          {"SystemControlTransientBorderColor", {0x5C, 0x00, 0x00, 0x00}}};
+          {"SystemControlTransientBorderColor", {0x5C, 0x00, 0x00, 0x00}},
+          {"FocusVisualPrimary", {0xFF, 0xFF, 0xFF, 0xFF}},
+          {"FocusVisualSecondary", {0x99, 0x00, 0x00, 0x00F}}};
 
   static std::unordered_map<
       std::string,
@@ -399,7 +403,9 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
           {"ControlStrongFillColorDisabled", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
           {"SystemChromeMediumLowColor", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}},
           {"SystemControlForegroundBaseHighColor", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonText, {}}},
-          {"SystemControlTransientBorderColor", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonText, {}}}};
+          {"SystemControlTransientBorderColor", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonText, {}}},
+          {"FocusVisualPrimary", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonText, {}}},
+          {"FocusVisualSecondary", {winrt::Windows::UI::ViewManagement::UIElementType::ButtonFace, {}}}};
 
   auto alias = s_xamlAliasedColors.find(platformColor);
   if (alias != s_xamlAliasedColors.end()) {
