@@ -117,6 +117,7 @@ ModalHostViewProps::ModalHostViewProps(
     presentationStyle(convertRawProp(context, rawProps, "presentationStyle", sourceProps.presentationStyle, {ModalHostViewPresentationStyle::FullScreen})),
     transparent(convertRawProp(context, rawProps, "transparent", sourceProps.transparent, {false})),
     statusBarTranslucent(convertRawProp(context, rawProps, "statusBarTranslucent", sourceProps.statusBarTranslucent, {false})),
+    navigationBarTranslucent(convertRawProp(context, rawProps, "navigationBarTranslucent", sourceProps.navigationBarTranslucent, {false})),
     hardwareAccelerated(convertRawProp(context, rawProps, "hardwareAccelerated", sourceProps.hardwareAccelerated, {false})),
     visible(convertRawProp(context, rawProps, "visible", sourceProps.visible, {false})),
     animated(convertRawProp(context, rawProps, "animated", sourceProps.animated, {false})),

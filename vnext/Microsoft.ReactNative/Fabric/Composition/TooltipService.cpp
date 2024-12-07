@@ -49,7 +49,7 @@ facebook::react::AttributedStringBox CreateTooltipAttributedString(const std::st
   auto fragment = facebook::react::AttributedString::Fragment{};
   fragment.string = tooltip;
   fragment.textAttributes.fontSize = tooltipFontSize;
-  attributedString.appendFragment(fragment);
+  attributedString.appendFragment(std::move(fragment));
   return facebook::react::AttributedStringBox{attributedString};
 }
 

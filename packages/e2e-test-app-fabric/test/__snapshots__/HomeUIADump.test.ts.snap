@@ -1502,6 +1502,85 @@ exports[`Home UIA Tree Dump Dimensions 1`] = `
 }
 `;
 
+exports[`Home UIA Tree Dump Display: contents 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "Display: contents",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "Display: contents Demonstrates various ways display: contents may be used in the tree",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Display: contents",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Demonstrates various ways display: contents may be used in the tree",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Display: contents Demonstrates various ways display: contents may be used in the tree",
+      "TestId": "Display: contents",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Comment": "Display: contents",
+    "Offset": "0, 0, 0",
+    "Size": "966, 78",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "16, 16, 0",
+        "Size": "135, 25",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "135, 25",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "16, 45, 0",
+        "Size": "934, 17",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "934, 17",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
 exports[`Home UIA Tree Dump Display:none Style 1`] = `
 {
   "Automation Tree": {
@@ -2356,12 +2435,12 @@ exports[`Home UIA Tree Dump Keyboard 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "934, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "934, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2435,12 +2514,12 @@ exports[`Home UIA Tree Dump Keyboard 2`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "934, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "934, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -2813,7 +2892,7 @@ exports[`Home UIA Tree Dump Legacy Native Module 1`] = `
     },
     "Comment": "Legacy Native Module",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "966, 77",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3366,7 +3445,7 @@ exports[`Home UIA Tree Dump Linking 1`] = `
     },
     "Comment": "Linking",
     "Offset": "0, 0, 0",
-    "Size": "966, 77",
+    "Size": "966, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3936,12 +4015,12 @@ exports[`Home UIA Tree Dump PanResponder Sample 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 17",
+        "Size": "934, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 17",
+            "Size": "934, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -4015,12 +4094,12 @@ exports[`Home UIA Tree Dump Performance API Examples 1`] = `
       },
       {
         "Offset": "16, 45, 0",
-        "Size": "934, 16",
+        "Size": "934, 17",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "934, 16",
+            "Size": "934, 17",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -5056,7 +5135,7 @@ exports[`Home UIA Tree Dump Share 1`] = `
     },
     "Comment": "Share",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "966, 77",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5530,7 +5609,7 @@ exports[`Home UIA Tree Dump Timers 1`] = `
     },
     "Comment": "Timers",
     "Offset": "0, 0, 0",
-    "Size": "966, 77",
+    "Size": "966, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {

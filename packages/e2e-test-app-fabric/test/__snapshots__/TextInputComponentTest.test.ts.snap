@@ -2513,7 +2513,7 @@ exports[`TextInput Tests TextInputs can have attributed text 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "ValuePattern.IsReadOnly": false,
-    "ValuePattern.Value": "Hello",
+    "ValuePattern.Value": "Hello ",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3856,7 +3856,8 @@ exports[`TextInput Tests TextInputs can have customized line height 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "ValuePattern.IsReadOnly": false,
-    "ValuePattern.Value": "Hel",
+    "ValuePattern.Value": "Hel
+",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
