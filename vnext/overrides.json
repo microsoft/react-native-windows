@@ -470,6 +470,12 @@
       "issue": 12704
     },
     {
+      "type": "copy",
+      "file": "src-win/Libraries/DevToolsSettings/DevToolsSettingsManager.windows.js",
+      "baseFile": "packages/react-native/Libraries/DevToolsSettings/DevToolsSettingsManager.android.js",
+      "baseHash": "1c9eb481e8ed077fa650e3ea34837e2a31310366"
+    },
+    {
       "type": "platform",
       "file": "src-win/Libraries/Image/assetPaths.js"
     },
@@ -623,12 +629,6 @@
       "file": "src-win/Libraries/Utilities/Platform.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
       "baseHash": "33f07d6fddb5290d05c8d4cc490312e3af88c70b"
-    },
-    {
-      "type": "copy",
-      "file": "src-win/src/private/reactdevtools/ReactDevToolsSettingsManager.windows.js",
-      "baseFile": "packages/react-native/src/private/reactdevtools/ReactDevToolsSettingsManager.android.js",
-      "baseHash": "df41b76dc3d2df9455fae588748261d7b0a22d01"
     },
     {
       "type": "platform",
