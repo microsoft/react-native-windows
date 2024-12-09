@@ -24,7 +24,8 @@ const headerTemplate = `/*
  * in a way that also verifies at compile time that the native module matches the interface required
  * by the TurboModule JS spec.
  */
-#pragma once`;
+#pragma once
+// clang-format off`;
 
 const specTemplate = `::_MODULE_CUSTPM_TYPES_REFLECTION_::
 struct ::_MODULE_NAME_::Spec : winrt::Microsoft::ReactNative::TurboModuleSpec {
