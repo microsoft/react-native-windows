@@ -63,11 +63,11 @@ const Components: Array<RNTesterModuleInfo> = [
     category: 'UI',
     module: require('../examples-win/Glyph/GlyphExample'),
   },
-  // {
-  //   key: 'ModalExample',
-  //   category: 'UI',
-  //   module: require('../examples/Modal/ModalExample'),
-  // },
+  {
+    key: 'ModalExample',
+    category: 'UI',
+    module: require('../examples/Modal/ModalExample'),
+  },
   {
     key: 'Drawing Island',
     module: require('../examples-win/NativeComponents/DrawingIsland'),

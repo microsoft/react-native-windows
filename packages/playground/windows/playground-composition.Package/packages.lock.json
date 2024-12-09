@@ -56,10 +56,7 @@
         }
       },
       "common": {
-        "type": "Project",
-        "dependencies": {
-          "boost": "[1.83.0, )"
-        }
+        "type": "Project"
       },
       "fmt": {
         "type": "Project"
@@ -67,7 +64,6 @@
       "folly": {
         "type": "Project",
         "dependencies": {
-          "boost": "[1.83.0, )",
           "fmt": "[1.0.0, )"
         }
       },
@@ -86,7 +82,6 @@
       "playground-composition": {
         "type": "Project",
         "dependencies": {
-          "Microsoft.JavaScript.Hermes": "[0.1.23, )",
           "Microsoft.ReactNative": "[1.0.0, )",
           "Microsoft.VCRTForwarders.140": "[1.0.2-rc, )",
           "Microsoft.WindowsAppSDK": "[1.6.240923002, )",
@@ -97,8 +92,7 @@
       "reactcommon": {
         "type": "Project",
         "dependencies": {
-          "Folly": "[1.0.0, )",
-          "boost": "[1.83.0, )"
+          "Folly": "[1.0.0, )"
         }
       },
       "samplecustomcomponent": {

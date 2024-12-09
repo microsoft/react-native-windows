@@ -43,6 +43,18 @@
     },
     {
       "type": "patch",
+      "file": "src/js/examples/Modal/ModalOnShow.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Modal/ModalOnShow.js",
+      "baseHash": "5098723f16d232ef3c5971a6f153522f42f87f61"
+    },
+    {
+      "type": "patch",
+      "file": "src/js/examples/Modal/ModalPresentation.windows.js",
+      "baseFile": "packages/rn-tester/js/examples/Modal/ModalPresentation.js",
+      "baseHash": "97e0408dad28bd62e6ec22a8454af764d69d8ed5"
+    },
+    {
+      "type": "patch",
       "file": "src/js/examples/Pressable/PressableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Pressable/PressableExample.js",
       "baseHash": "624fc96b5b81572b905c52518e8c5b7a2dfb78b5",

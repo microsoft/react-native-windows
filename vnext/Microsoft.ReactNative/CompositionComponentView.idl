@@ -22,8 +22,9 @@ namespace Microsoft.ReactNative.Composition
     NativeBorder  = 0x00000001,
     ShadowProps   = 0x00000002,
     Background    = 0x00000004,
+    FocusVisual   = 0x00000008,
 
-    Default       = 0x00000007, // ShadowProps | NativeBorder | Background
+    Default       = 0x0000000F, // ShadowProps | NativeBorder | Background | FocusVisual
   };
 
   namespace Experimental {

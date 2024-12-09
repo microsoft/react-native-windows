@@ -8,6 +8,7 @@
 #include <Microsoft.ReactNative.Cxx/ReactContext.h>
 #include <react/renderer/components/view/ViewEventEmitter.h>
 #include <react/renderer/components/view/ViewProps.h>
+#include "BorderPrimitive.h"
 #include "CompositionHelpers.h"
 
 #include "Composition.ComponentView.g.h"
@@ -19,12 +20,17 @@ struct CompContext;
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
+struct FocusPrimitive {
+  std::shared_ptr<BorderPrimitive> m_focusInnerPrimitive;
+  std::shared_ptr<BorderPrimitive> m_focusOuterPrimitive;
+  winrt::com_ptr<ComponentView> m_focusVisualComponent{nullptr}; // The owning component of focus visuals being hosted
+  winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_focusVisual{nullptr};
+};
+
 struct ComponentView : public ComponentViewT<
                            ComponentView,
                            winrt::Microsoft::ReactNative::implementation::ComponentView,
                            winrt::Microsoft::ReactNative::Composition::Experimental::IInternalComponentView> {
-  static constexpr size_t SpecialBorderLayerCount = 8;
-
   ComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
@@ -56,6 +62,7 @@ struct ComponentView : public ComponentViewT<
   void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept override;
   bool CapturePointer(const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer) noexcept;
   void ReleasePointerCapture(const winrt::Microsoft::ReactNative::Composition::Input::Pointer &pointer) noexcept;
+  void SetViewFeatures(ComponentViewFeatures viewFeatures) noexcept;
 
   std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept
       override;
@@ -99,6 +106,8 @@ struct ComponentView : public ComponentViewT<
   void Toggle() noexcept override;
   virtual winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept;
 
+  virtual std::pair<facebook::react::Cursor, HCURSOR> cursor() const noexcept;
+
   const facebook::react::LayoutMetrics &layoutMetrics() const noexcept;
 
   virtual std::string DefaultControlType() const noexcept;
@@ -123,39 +132,32 @@ struct ComponentView : public ComponentViewT<
   winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext m_compContext;
   comp::CompositionPropertySet m_centerPropSet{nullptr};
   facebook::react::SharedViewEventEmitter m_eventEmitter;
-  bool m_needsBorderUpdate{false};
-  bool m_hasTransformMatrixFacade{false};
-  bool m_enableFocusVisual{false};
-  uint8_t m_numBorderVisuals{0};
 
  private:
-  void updateBorderProps(
-      const facebook::react::ViewProps &oldViewProps,
-      const facebook::react::ViewProps &newViewProps) noexcept;
-  void updateBorderLayoutMetrics(
+  void updateFocusLayoutMetrics() noexcept;
+  void updateClippingPath(
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
-  void finalizeBorderUpdates(
-      facebook::react::LayoutMetrics const &layoutMetrics,
-      const facebook::react::ViewProps &viewProps) noexcept;
-  bool TryUpdateSpecialBorderLayers(
-      winrt::Microsoft::ReactNative::Composition::implementation::Theme *theme,
-      std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
-          &spBorderVisuals,
-      facebook::react::LayoutMetrics const &layoutMetrics,
-      const facebook::react::ViewProps &viewProps) noexcept;
-  std::array<winrt::Microsoft::ReactNative::Composition::Experimental::ISpriteVisual, SpecialBorderLayerCount>
-  FindSpecialBorderLayers() const noexcept;
   void UpdateCenterPropertySet() noexcept;
   void FinalizeTransform(
       facebook::react::LayoutMetrics const &layoutMetrics,
       const facebook::react::ViewProps &viewProps) noexcept;
+  facebook::react::LayoutMetrics focusLayoutMetrics(bool inner) const noexcept;
+  facebook::react::BorderMetrics focusBorderMetrics(bool inner, const facebook::react::LayoutMetrics &layoutMetrics)
+      const noexcept;
 
-  bool m_FinalizeTransform{false};
-  bool m_tooltipTracked{false};
+  virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual visualToHostFocus() noexcept;
+  virtual winrt::com_ptr<ComponentView> focusVisualRoot(const facebook::react::Rect &focusRect) noexcept;
+
+  bool m_hasTransformMatrixFacade : 1 {false};
+  bool m_FinalizeTransform : 1 {false};
+  bool m_tooltipTracked : 1 {false};
   ComponentViewFeatures m_flags;
-  void showFocusVisual(bool show) noexcept;
-  winrt::Microsoft::ReactNative::Composition::Experimental::IFocusVisual m_focusVisual{nullptr};
+  void hostFocusVisual(bool show, winrt::com_ptr<ComponentView> view) noexcept;
+  winrt::com_ptr<ComponentView>
+      m_componentHostingFocusVisual; // The component that we are showing our focus visuals within
+  std::shared_ptr<BorderPrimitive> m_borderPrimitive;
+  std::unique_ptr<FocusPrimitive> m_focusPrimitive{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_outerVisual{nullptr};
   winrt::event<winrt::Windows::Foundation::EventHandler<winrt::IInspectable>> m_themeChangedEvent;
 };
@@ -169,6 +171,7 @@ struct ViewComponentView : public ViewComponentViewT<
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept;
 
+  virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual VisualToMountChildrenInto() noexcept;
   void MountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept override;
@@ -181,7 +184,6 @@ struct ViewComponentView : public ViewComponentViewT<
       facebook::react::LayoutMetrics const &layoutMetrics,
       facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept override;
   void prepareForRecycle() noexcept override;
-  bool TryFocus() noexcept;
   bool focusable() const noexcept override;
   void OnKeyDown(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
   void OnKeyUp(const winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs &args) noexcept override;
