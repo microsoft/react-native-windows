@@ -33,9 +33,13 @@ namespace Microsoft.ReactNative.Composition
   delegate Microsoft.UI.Composition.Visual VisualToMountChildrenIntoDelegate(Microsoft.ReactNative.ComponentView view);
 
   namespace Experimental {
+    [experimental]
+    [webhosthidden]
     DOC_STRING("This type will be removed in future versions")
     delegate Microsoft.ReactNative.Composition.Experimental.IVisual IVisualToMountChildrenIntoDelegate(Microsoft.ReactNative.ComponentView view);
 
+    [experimental]
+    [webhosthidden]
     DOC_STRING("This interface is for use when running react-native-windows using a custom compositor. "
       "This interface will be removed in future versions")
     interface IReactCompositionViewComponentInternalBuilder
