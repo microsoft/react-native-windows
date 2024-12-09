@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto",
   "packageName": "@react-native-windows/codegen",
   "email": "30809111+acoates-ms@users.noreply.github.com",
