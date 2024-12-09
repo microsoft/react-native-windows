@@ -231,12 +231,12 @@ void ReactCompositionViewComponentBuilder::SetVisualToMountChildrenIntoHandler(
 }
 
 void ReactCompositionViewComponentBuilder::SetIVisualToMountChildrenIntoHandler(
-  winrt::Microsoft::ReactNative::Composition::Experimental::IVisualToMountChildrenIntoDelegate impl) noexcept {
+    winrt::Microsoft::ReactNative::Composition::Experimental::IVisualToMountChildrenIntoDelegate impl) noexcept {
   m_visualToMountChildrenIntoHandler = impl;
 }
 
 const winrt::Microsoft::ReactNative::Composition::Experimental::IVisualToMountChildrenIntoDelegate &
-  ReactCompositionViewComponentBuilder::VisualToMountChildrenIntoHandler() const noexcept {
+ReactCompositionViewComponentBuilder::VisualToMountChildrenIntoHandler() const noexcept {
   return m_visualToMountChildrenIntoHandler;
 }
 
