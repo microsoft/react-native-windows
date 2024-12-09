@@ -32,6 +32,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
     IRawElementProviderFragment **pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
+
   return UiaNavigateHelper(m_view.view(), direction, *pRetVal);
 }
 
@@ -684,6 +685,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::AddToSelection() {
 
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
+
   DispatchAccessibilityAction(m_view, "addToSelection");
   return S_OK;
 }

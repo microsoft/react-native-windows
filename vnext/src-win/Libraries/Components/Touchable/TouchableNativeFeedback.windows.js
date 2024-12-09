@@ -266,7 +266,8 @@ class TouchableNativeFeedback extends React.Component<Props, State> {
       selected:
         this.props['aria-selected'] ?? this.props.accessibilityState?.selected,
       multiselectable:
-        this.props['aria-multiselectable'] ?? this.props.accessibilityState?.multiselectable, // Windows
+        this.props['aria-multiselectable'] ??
+        this.props.accessibilityState?.multiselectable, // Windows
       required:
         this.props['aria-required'] ?? this.props.accessibilityState?.required, // Windows
     };

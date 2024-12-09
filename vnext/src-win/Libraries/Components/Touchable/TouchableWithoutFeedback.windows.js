@@ -224,7 +224,9 @@ const TouchableWithoutFeedback: React.AbstractComponent<
     disabled: props['aria-disabled'] ?? props.accessibilityState?.disabled,
     expanded: props['aria-expanded'] ?? props.accessibilityState?.expanded,
     selected: props['aria-selected'] ?? props.accessibilityState?.selected,
-    multiselectable: props['aria-multiselectable'] ?? props.accessibilityState?.multiselectable, // Windows
+    multiselectable:
+      props['aria-multiselectable'] ??
+      props.accessibilityState?.multiselectable, // Windows
     required: props['aria-required'] ?? props.accessibilityState?.required, // Windows
   };
 

@@ -120,7 +120,8 @@ const View: component(
         disabled: ariaDisabled ?? accessibilityState?.disabled,
         expanded: ariaExpanded ?? accessibilityState?.expanded,
         selected: ariaSelected ?? accessibilityState?.selected,
-        multiselectable: ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
+        multiselectable:
+          ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
         required: ariaRequired ?? accessibilityState?.required, // Windows
       };
     }

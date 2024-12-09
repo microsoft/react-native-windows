@@ -350,7 +350,7 @@ const Button: component(
     expanded: ariaExpanded ?? accessibilityState?.expanded,
     selected: ariaSelected ?? accessibilityState?.selected,
     multiselectable: ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
-    required: ariaRequired ?? accessibilityState?.required // Windows
+    required: ariaRequired ?? accessibilityState?.required, // Windows
   };
 
   const disabled =
