@@ -12,6 +12,7 @@
 #include <react/renderer/core/LayoutMetrics.h>
 
 #include <ComponentView.Experimental.interop.h>
+#include <Fabric/Composition/ReactCompositionViewComponentBuilder.h>
 #include <Fabric/Composition/Theme.h>
 #include <uiautomationcore.h>
 #include <winrt/Microsoft.ReactNative.Composition.Input.h>
@@ -80,7 +81,10 @@ struct UnmountChildComponentViewArgs : public UnmountChildComponentViewArgsT<Unm
 
 struct ComponentView
     : public ComponentViewT<ComponentView, ::Microsoft::ReactNative::Composition::Experimental::IComponentViewInterop> {
-  ComponentView(facebook::react::Tag tag, winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+  ComponentView(
+      facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+      winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder *builder);
 
   virtual std::vector<facebook::react::ComponentDescriptorProvider> supplementalComponentDescriptorProviders() noexcept;
   virtual void updateProps(
@@ -115,7 +119,6 @@ struct ComponentView
   virtual void onGettingFocus(const winrt::Microsoft::ReactNative::GettingFocusEventArgs &args) noexcept;
   virtual void onLostFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept;
   virtual void onGotFocus(const winrt::Microsoft::ReactNative::Composition::Input::RoutedEventArgs &args) noexcept;
-  void MarkAsCustomComponent() noexcept;
   virtual void onMounted() noexcept;
   bool isMounted() noexcept;
   virtual void onUnmounted() noexcept;
@@ -223,14 +226,6 @@ struct ComponentView
   void UserData(const winrt::IInspectable &userData) noexcept;
   winrt::IInspectable UserData() const noexcept;
 
-  void CustomCommandHandler(const HandleCommandDelegate &handler) noexcept;
-  void UpdatePropsHandler(const UpdatePropsDelegate &handler) noexcept;
-  void UpdateStateHandler(const UpdateStateDelegate &handler) noexcept;
-  void UpdateEventEmitterHandler(const UpdateEventEmitterDelegate &handler) noexcept;
-  void MountChildComponentViewHandler(const MountChildComponentViewDelegate &handler) noexcept;
-  void UnmountChildComponentViewHandler(const UnmountChildComponentViewDelegate &handler) noexcept;
-  void FinalizeUpdateHandler(const UpdateFinalizerDelegate &handler) noexcept;
-
   virtual void MountChildComponentView(
       const winrt::Microsoft::ReactNative::ComponentView &childComponentView,
       uint32_t index) noexcept;
@@ -258,7 +253,7 @@ struct ComponentView
       const winrt::Microsoft::ReactNative::Composition::Input::CharacterReceivedRoutedEventArgs &args) noexcept;
 
  protected:
-  bool m_customComponent : 1 {false}; // Is a user custom component, and so needs to call external override functions
+  winrt::com_ptr<winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder> m_builder;
   bool m_mounted : 1 {false};
   const facebook::react::Tag m_tag;
   winrt::IInspectable m_userData;
@@ -269,14 +264,6 @@ struct ComponentView
   facebook::react::LayoutMetrics m_layoutMetrics;
   winrt::Windows::Foundation::Collections::IVector<winrt::Microsoft::ReactNative::ComponentView> m_children{
       winrt::single_threaded_vector<winrt::Microsoft::ReactNative::ComponentView>()};
-
-  UpdatePropsDelegate m_updatePropsDelegate{nullptr};
-  UpdateStateDelegate m_updateStateDelegate{nullptr};
-  HandleCommandDelegate m_customCommandHandler{nullptr};
-  UpdateFinalizerDelegate m_finalizeUpdateHandler{nullptr};
-  MountChildComponentViewDelegate m_mountChildComponentViewHandler{nullptr};
-  UnmountChildComponentViewDelegate m_unmountChildComponentViewHandler{nullptr};
-  UpdateEventEmitterDelegate m_updateEventEmitterHandler{nullptr};
 
   winrt::event<
       winrt::Windows::Foundation::EventHandler<winrt::Microsoft::ReactNative::Composition::Input::KeyRoutedEventArgs>>

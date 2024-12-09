@@ -25,6 +25,29 @@ namespace Microsoft.ReactNative.Composition
   [webhosthidden]
   delegate Microsoft.UI.Composition.Visual CreateVisualDelegate(Microsoft.ReactNative.ComponentView view);
 
+  [experimental]
+  delegate void UpdateLayoutMetricsDelegate(Microsoft.ReactNative.ComponentView source, Microsoft.ReactNative.LayoutMetrics newLayoutMetrics, Microsoft.ReactNative.LayoutMetrics oldLayoutMetrics);
+
+  [experimental]
+  [webhosthidden]
+  delegate Microsoft.UI.Composition.Visual VisualToMountChildrenIntoDelegate(Microsoft.ReactNative.ComponentView view);
+
+  namespace Experimental {
+    [experimental]
+    [webhosthidden]
+    DOC_STRING("This type will be removed in future versions")
+    delegate Microsoft.ReactNative.Composition.Experimental.IVisual IVisualToMountChildrenIntoDelegate(Microsoft.ReactNative.ComponentView view);
+
+    [experimental]
+    [webhosthidden]
+    DOC_STRING("This interface is for use when running react-native-windows using a custom compositor. "
+      "This interface will be removed in future versions")
+    interface IReactCompositionViewComponentInternalBuilder
+    {
+      void SetIVisualToMountChildrenIntoHandler(IVisualToMountChildrenIntoDelegate impl);
+    };
+  }
+
   [webhosthidden]
   [experimental]
   DOC_STRING(".")
@@ -34,6 +57,8 @@ namespace Microsoft.ReactNative.Composition
     void SetContentIslandComponentViewInitializer(ComponentIslandComponentViewInitializer initializer);
     void SetCreateVisualHandler(CreateVisualDelegate impl);
     void SetViewFeatures(ComponentViewFeatures viewFeatures);
+    void SetUpdateLayoutMetricsHandler(UpdateLayoutMetricsDelegate impl);
+    void SetVisualToMountChildrenIntoHandler(VisualToMountChildrenIntoDelegate impl);
   };
 
 } // namespace Microsoft.ReactNative
