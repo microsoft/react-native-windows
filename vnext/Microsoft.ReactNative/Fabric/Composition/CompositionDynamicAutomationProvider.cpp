@@ -606,8 +606,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_CanSelectMultiple(BO
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
-      winrt::get_self<ComponentView>(strongView)->props());
+  auto props =
+      std::static_pointer_cast<const facebook::react::ViewProps>(winrt::get_self<ComponentView>(strongView)->props());
 
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
@@ -649,7 +649,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY *
   std::vector<int> selectedItems;
   for (size_t i = 0; i < m_selectionItems.size(); i++) {
     auto selectionItem = m_selectionItems.at(i);
-    auto provider = static_cast<CompositionDynamicAutomationProvider *>(selectionItem);
+    auto provider = selectionItem.as<CompositionDynamicAutomationProvider>();
     BOOL selected;
     auto hr = provider->get_IsSelected(&selected);
     if (hr == S_OK && selected) {
@@ -663,21 +663,19 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY *
 
   for (size_t i = 0; i < selectedItems.size(); i++) {
     auto pos = static_cast<long>(i);
-    auto item = m_selectionItems.at(selectedItems.at(i));
-    SafeArrayPutElement(*pRetVal, &pos, item);
-    item->AddRef();
+    SafeArrayPutElement(*pRetVal, &pos, m_selectionItems.at(selectedItems.at(i)).get());
   }
   return S_OK;
 }
 
-void CompositionDynamicAutomationProvider::AddToSelectionItems(IRawElementProviderSimple *item) {
+void CompositionDynamicAutomationProvider::AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> item) {
   if (std::find(m_selectionItems.begin(), m_selectionItems.end(), item) != m_selectionItems.end()) {
     return;
   }
   m_selectionItems.push_back(item);
 }
 
-void CompositionDynamicAutomationProvider::RemoveFromSelectionItems(IRawElementProviderSimple *item) {
+void CompositionDynamicAutomationProvider::RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> item) {
   std::erase(m_selectionItems, item);
 }
 

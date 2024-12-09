@@ -71,12 +71,12 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall RemoveFromSelection() override;
   virtual HRESULT __stdcall Select() override;
 
-  void AddToSelectionItems(IRawElementProviderSimple *item);
-  void RemoveFromSelectionItems(IRawElementProviderSimple *item);
+  void AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> item);
+  void RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> item);
 
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
-  std::vector<IRawElementProviderSimple*> m_selectionItems;
+  std::vector<winrt::com_ptr<IRawElementProviderSimple>> m_selectionItems;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

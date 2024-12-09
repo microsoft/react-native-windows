@@ -215,23 +215,27 @@ ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept {
 }
 
 void AddSelectionItemsToContainer(CompositionDynamicAutomationProvider *provider) noexcept {
-  IRawElementProviderSimple *selectionContainer;
-  provider->get_SelectionContainer(&selectionContainer);
+  winrt::com_ptr<IRawElementProviderSimple> selectionContainer;
+  provider->get_SelectionContainer(selectionContainer.put());
   if (!selectionContainer)
     return;
-  auto selectionContainerProvider = static_cast<CompositionDynamicAutomationProvider *>(selectionContainer);
+  auto selectionContainerProvider = selectionContainer.as<CompositionDynamicAutomationProvider>();
   auto simpleProvider = static_cast<IRawElementProviderSimple *>(provider);
-  selectionContainerProvider->AddToSelectionItems(simpleProvider);
+  winrt::com_ptr<IRawElementProviderSimple> simpleProviderPtr;
+  simpleProviderPtr.copy_from(simpleProvider);
+  selectionContainerProvider->AddToSelectionItems(simpleProviderPtr);
 }
 
 void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *provider) noexcept {
-  IRawElementProviderSimple *selectionContainer;
-  provider->get_SelectionContainer(&selectionContainer);
+  winrt::com_ptr<IRawElementProviderSimple> selectionContainer;
+  provider->get_SelectionContainer(selectionContainer.put());
   if (!selectionContainer)
     return;
-  auto selectionContainerProvider = static_cast<CompositionDynamicAutomationProvider *>(selectionContainer);
+  auto selectionContainerProvider = selectionContainer.as<CompositionDynamicAutomationProvider>();
   auto simpleProvider = static_cast<IRawElementProviderSimple *>(provider);
-  selectionContainerProvider->RemoveFromSelectionItems(simpleProvider);
+  winrt::com_ptr<IRawElementProviderSimple> simpleProviderPtr;
+  simpleProviderPtr.copy_from(simpleProvider);
+  selectionContainerProvider->RemoveFromSelectionItems(simpleProviderPtr);
 }
 
 ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept {
