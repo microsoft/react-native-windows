@@ -29,6 +29,7 @@ type FilesOutput = Map<string, string>;
 const headerTemplate = `/*
  * This file is auto-generated from ::_COMPONENT_NAME_::NativeComponent spec file in flow / TypeScript.
  */
+// clang-format off
 #pragma once
 
 #include <JSValueComposition.h>
@@ -93,6 +94,13 @@ struct Base::_COMPONENT_NAME_:: {
     const winrt::com_ptr<::_COMPONENT_NAME_::Props> &newProps,
     const winrt::com_ptr<::_COMPONENT_NAME_::Props> &/*oldProps*/) noexcept {
     m_props = newProps;
+  }
+
+  // UpdateLayoutMetrics will only be called if this method is overridden
+  virtual void UpdateLayoutMetrics(
+    const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
+    const winrt::Microsoft::ReactNative::LayoutMetrics &/*newLayoutMetrics*/,
+    const winrt::Microsoft::ReactNative::LayoutMetrics &/*oldLayoutMetrics*/) noexcept {
   }
 
   // UpdateState will only be called if this method is overridden
@@ -161,6 +169,13 @@ void Register::_COMPONENT_NAME_::NativeComponent(
                                      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) noexcept {
             auto userData = view.UserData().as<TUserData>();
             userData->UpdateProps(view, newProps ? newProps.as<::_COMPONENT_NAME_::Props>() : nullptr, oldProps ? oldProps.as<::_COMPONENT_NAME_::Props>() : nullptr);
+        });
+
+        compBuilder.SetUpdateLayoutMetricsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                      const winrt::Microsoft::ReactNative::LayoutMetrics &newLayoutMetrics,
+                                      const winrt::Microsoft::ReactNative::LayoutMetrics &oldLayoutMetrics) noexcept {
+            auto userData = view.UserData().as<TUserData>();
+            userData->UpdateLayoutMetrics(view, newLayoutMetrics, oldLayoutMetrics);
         });
 
         builder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
