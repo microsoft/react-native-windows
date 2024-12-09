@@ -60,9 +60,11 @@ struct WindowsModalHostComponentView
   static void RegisterWndClass() noexcept;
 
  private:
+  HWND m_parentHwnd{nullptr};
   HWND m_hwnd{nullptr};
   uint64_t m_prevWindowID;
   bool m_isVisible{false};
+  bool m_showTitleBar{false};
   winrt::Microsoft::ReactNative::ReactNativeIsland m_reactNativeIsland;
 };
 

@@ -236,7 +236,7 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Establish a new cursor shape
   void TxSetCursor(HCURSOR hcur, BOOL fText) override {
-    assert(false);
+    m_outer->m_hcursor = hcur;
   }
 
   //@cmember Converts screen coordinates of a specified point to the client coordinates
@@ -732,6 +732,9 @@ void WindowsTextInputComponentView::OnPointerMoved(
     auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
     args.Handled(hr != S_FALSE);
   }
+
+  m_textServices->OnTxSetCursor(
+      DVASPECT_CONTENT, -1, nullptr, nullptr, nullptr, nullptr, nullptr, ptContainer.x, ptContainer.y);
 }
 
 void WindowsTextInputComponentView::OnKeyDown(
@@ -1477,6 +1480,10 @@ WindowsTextInputComponentView::createVisual() noexcept {
   m_caretVisual.IsVisible(false);
 
   return visual;
+}
+
+std::pair<facebook::react::Cursor, HCURSOR> WindowsTextInputComponentView::cursor() const noexcept {
+  return {viewProps()->cursor, m_hcursor};
 }
 
 void WindowsTextInputComponentView::onThemeChanged() noexcept {

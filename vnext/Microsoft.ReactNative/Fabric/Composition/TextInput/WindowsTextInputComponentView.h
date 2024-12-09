@@ -78,6 +78,8 @@ struct WindowsTextInputComponentView
 
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual createVisual() noexcept;
 
+  std::pair<facebook::react::Cursor, HCURSOR> cursor() const noexcept override;
+
  private:
   struct DrawBlock {
     DrawBlock(WindowsTextInputComponentView &view);
@@ -133,6 +135,7 @@ struct WindowsTextInputComponentView
   bool m_multiline{false};
   DWORD m_propBitsMask{0};
   DWORD m_propBits{0};
+  HCURSOR m_hcursor{nullptr};
   std::vector<facebook::react::CompWindowsTextInputSubmitKeyEventsStruct> m_submitKeyEvents;
 };
 
