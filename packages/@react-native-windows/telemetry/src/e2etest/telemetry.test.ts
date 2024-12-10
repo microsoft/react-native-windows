@@ -716,7 +716,7 @@ test.each(testTelemetryOptions)(
 );
 
 test.each(testTelemetryOptions)(
-  'Any non CodedError objects with MS Build error info must be processed appropriately by trackException()', // improve description?
+  'A custom Error-based object with MS Build error info is copied into codedError.data appropriately by trackException()',
   async options => {
     await TelemetryTest.startTest(options);
 
