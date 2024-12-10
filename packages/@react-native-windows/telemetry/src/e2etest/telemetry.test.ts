@@ -709,6 +709,23 @@ test.each(testTelemetryOptions)(
           'Test Error occurred at C:\\some\\file\\path\\project.build.appxrecipe', // expectation: replace the whole C:\\... thing with "[path]".
         fieldWithNoPath: 'Test Error data', // expectation: no changes to this string.
         fieldWithNoString: 14, // expectation: no changes to this value.
+        arrayField: [
+          'No path',
+          15,
+          'Clean this path: C:\\some\\file\\path2\\project.build.appxrecipe',
+        ],
+        nestedField: {
+          fieldWithPath:
+            'Test Error occurred at C:\\some\\file\\path3\\project.build.appxrecipe', // expectation: replace the whole C:\\... thing with "[path]".
+          fieldWithNoPath: 'Test Error data 2', // expectation: no changes to this string.
+          fieldWithNoString: 16, // expectation: no changes to this value.
+          anotherNestedField: {
+            fieldWithPath:
+              'Test Error occurred at C:\\some\\file\\path4\\project.build.appxrecipe', // expectation: replace the whole C:\\... thing with "[path]".
+            fieldWithNoPath: 'Test Error data 3', // expectation: no changes to this string.
+            fieldWithNoString: 17, // expectation: no changes to this value.
+          },
+        },
       }, // data
     );
 

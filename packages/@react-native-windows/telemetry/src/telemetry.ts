@@ -442,21 +442,6 @@ export class Telemetry {
       data: codedError?.data ?? {},
     };
 
-    // Scrub any potential PII present in codedError.data array, as long as the data is a string.
-    if (Object.keys(codedErrorStruct.data).length > 0) {
-      for (const field in codedErrorStruct.data) {
-        if (
-          codedErrorStruct.data.hasOwnProperty(field) &&
-          typeof codedErrorStruct.data[field] === 'string'
-        ) {
-          const sanitizedError = errorUtils.sanitizeErrorMessage(
-            codedErrorStruct.data[field],
-          );
-          codedErrorStruct.data[field] = sanitizedError;
-        }
-      }
-    }
-
     // Copy msBuildErrorMessages into the codedError.data object
     if ((error as any).msBuildErrorMessages) {
       // Always grab MSBuild error codes if possible
@@ -481,6 +466,9 @@ export class Telemetry {
         codedErrorStruct.data.codedError.data[f] = (error as any)[f];
       }
     }
+
+    // Scrub any potential PII present in codedError.data array, as long as the data is a string.
+    Telemetry.traverseCodedErrorStruct(codedErrorStruct.data);
 
     // Break down TS Error object into Exception Data
     const exceptionData = Telemetry.convertErrorIntoExceptionData(error);
@@ -545,5 +533,31 @@ export class Telemetry {
     }
 
     return exceptionData;
+  }
+
+  static traverseCodedErrorStruct(
+    data: Record<string, any>,
+    path: string[] = [],
+  ) {
+    for (const key in data) {
+      if (Object.prototype.hasOwnProperty.call(data, key)) {
+        const value = data[key];
+        const currentPath = [...path, key];
+
+        if (Array.isArray(value)) {
+          // Replace the array by reading all elements in it,
+          // then check if they are strings. If that's the case, sanitize.
+          data[key] = value.map(item =>
+            typeof item === 'string'
+              ? errorUtils.sanitizeErrorMessage(item)
+              : item,
+          );
+        } else if (typeof value === 'object' && value !== null) {
+          Telemetry.traverseCodedErrorStruct(value, currentPath);
+        } else if (typeof value === 'string') {
+          data[key] = errorUtils.sanitizeErrorMessage(value);
+        }
+      }
+    }
   }
 }
