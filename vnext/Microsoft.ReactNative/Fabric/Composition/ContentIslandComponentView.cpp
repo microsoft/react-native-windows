@@ -22,8 +22,15 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 ContentIslandComponentView::ContentIslandComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
-    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
-    : base_type(ViewComponentView::defaultProps(), compContext, tag, reactContext, ComponentViewFeatures::Default) {
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+    ReactCompositionViewComponentBuilder *builder)
+    : base_type(
+          ViewComponentView::defaultProps(),
+          compContext,
+          tag,
+          reactContext,
+          ComponentViewFeatures::Default,
+          builder) {
   m_mountedToken = Mounted([](const winrt::IInspectable &, const winrt::Microsoft::ReactNative::ComponentView &view) {
     view.as<ContentIslandComponentView>()->OnMounted();
   });

@@ -6,6 +6,7 @@
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/ContentIslandComponentView.h>
 #include <strsafe.h>
+#include "CompositionContextHelper.h"
 #include "DynamicWriter.h"
 #include "ReactHost/MsoUtils.h"
 
@@ -52,24 +53,6 @@ LayoutHandler ReactCompositionViewComponentBuilder::LayoutHandler() const noexce
 void ReactCompositionViewComponentBuilder::InitializeComponentView(
     const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
   auto self = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view);
-  self->MarkAsCustomComponent();
-  if (m_customCommandHandler)
-    self->CustomCommandHandler(m_customCommandHandler);
-  if (m_finalizeUpdateHandler)
-    self->FinalizeUpdateHandler(m_finalizeUpdateHandler);
-  if (m_updatePropsHandler)
-    self->UpdatePropsHandler(m_updatePropsHandler);
-  if (m_updateStateHandler)
-    self->UpdateStateHandler(m_updateStateHandler);
-  if (m_updateEventEmitterHandler)
-    self->UpdateEventEmitterHandler(m_updateEventEmitterHandler);
-  if (m_mountChildComponentViewHandler)
-    self->MountChildComponentViewHandler(m_mountChildComponentViewHandler);
-  if (m_unmountChildComponentViewHandler)
-    self->UnmountChildComponentViewHandler(m_unmountChildComponentViewHandler);
-  if (m_createVisualHandler)
-    view.as<winrt::Microsoft::ReactNative::Composition::implementation::ViewComponentView>()->CreateVisualHandler(
-        m_createVisualHandler);
 }
 
 void ReactCompositionViewComponentBuilder::SetComponentViewInitializer(
@@ -78,8 +61,9 @@ void ReactCompositionViewComponentBuilder::SetComponentViewInitializer(
                        const IReactContext &reactContext,
                        int32_t tag,
                        const Experimental::ICompositionContext &context,
-                       ComponentViewFeatures) {
-    auto view = winrt::make<winrt::Microsoft::ReactNative::implementation::ComponentView>(tag, reactContext);
+                       ComponentViewFeatures,
+                       ReactCompositionViewComponentBuilder &builder) {
+    auto view = winrt::make<winrt::Microsoft::ReactNative::implementation::ComponentView>(tag, reactContext, &builder);
     initializer(view);
     return view;
   };
@@ -94,9 +78,10 @@ void ReactCompositionViewComponentBuilder::SetViewComponentViewInitializer(
                        const IReactContext &reactContext,
                        int32_t tag,
                        const Experimental::ICompositionContext &context,
-                       ComponentViewFeatures features) {
+                       ComponentViewFeatures features,
+                       ReactCompositionViewComponentBuilder &builder) {
     auto view = winrt::make<implementation::ViewComponentView>(
-        implementation::ViewComponentView::defaultProps(), context, tag, reactContext, features);
+        implementation::ViewComponentView::defaultProps(), context, tag, reactContext, features, &builder);
     initializer(view);
     return view;
   };
@@ -108,14 +93,15 @@ void ReactCompositionViewComponentBuilder::SetViewComponentViewInitializer(
 
 void ReactCompositionViewComponentBuilder::SetContentIslandComponentViewInitializer(
     const ComponentIslandComponentViewInitializer &initializer) noexcept {
-  m_fnCreateView =
-      [initializer](
-          const IReactContext &reactContext,
-          int32_t tag,
-          const Experimental::ICompositionContext &context,
-          ComponentViewFeatures) -> winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView {
+  m_fnCreateView = [initializer](
+                       const IReactContext &reactContext,
+                       int32_t tag,
+                       const Experimental::ICompositionContext &context,
+                       ComponentViewFeatures /*features*/,
+                       ReactCompositionViewComponentBuilder &builder)
+      -> winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView {
     auto view = winrt::make<winrt::Microsoft::ReactNative::Composition::implementation::ContentIslandComponentView>(
-        context, tag, reactContext);
+        context, tag, reactContext, &builder);
     initializer(view);
     return view;
   };
@@ -166,20 +152,42 @@ void ReactCompositionViewComponentBuilder::SetCustomCommandHandler(HandleCommand
   m_customCommandHandler = impl;
 }
 
+const HandleCommandDelegate &ReactCompositionViewComponentBuilder::CustomCommandHandler() const noexcept {
+  return m_customCommandHandler;
+}
+
 void ReactCompositionViewComponentBuilder::SetFinalizeUpdateHandler(UpdateFinalizerDelegate impl) noexcept {
   m_finalizeUpdateHandler = impl;
+}
+
+const UpdateFinalizerDelegate &ReactCompositionViewComponentBuilder::FinalizeUpdateHandler() const noexcept {
+  return m_finalizeUpdateHandler;
 }
 
 void ReactCompositionViewComponentBuilder::SetUpdatePropsHandler(UpdatePropsDelegate impl) noexcept {
   m_updatePropsHandler = impl;
 }
 
+const winrt::Microsoft::ReactNative::UpdatePropsDelegate &ReactCompositionViewComponentBuilder::UpdatePropsHandler()
+    const noexcept {
+  return m_updatePropsHandler;
+}
+
 void ReactCompositionViewComponentBuilder::SetUpdateStateHandler(UpdateStateDelegate impl) noexcept {
   m_updateStateHandler = impl;
 }
 
+const winrt::Microsoft::ReactNative::UpdateStateDelegate &ReactCompositionViewComponentBuilder::UpdateStateHandler()
+    const noexcept {
+  return m_updateStateHandler;
+}
+
 void ReactCompositionViewComponentBuilder::SetUpdateEventEmitterHandler(UpdateEventEmitterDelegate impl) noexcept {
   m_updateEventEmitterHandler = impl;
+}
+
+const UpdateEventEmitterDelegate &ReactCompositionViewComponentBuilder::UpdateEventEmitterHandler() const noexcept {
+  return m_updateEventEmitterHandler;
 }
 
 void ReactCompositionViewComponentBuilder::SetMountChildComponentViewHandler(
@@ -187,17 +195,57 @@ void ReactCompositionViewComponentBuilder::SetMountChildComponentViewHandler(
   m_mountChildComponentViewHandler = impl;
 }
 
+const MountChildComponentViewDelegate &ReactCompositionViewComponentBuilder::MountChildComponentViewHandler()
+    const noexcept {
+  return m_mountChildComponentViewHandler;
+}
+
 void ReactCompositionViewComponentBuilder::SetUnmountChildComponentViewHandler(
     UnmountChildComponentViewDelegate impl) noexcept {
   m_unmountChildComponentViewHandler = impl;
+}
+
+const UnmountChildComponentViewDelegate &ReactCompositionViewComponentBuilder::UnmountChildComponentViewHandler()
+    const noexcept {
+  return m_unmountChildComponentViewHandler;
 }
 
 void ReactCompositionViewComponentBuilder::SetCreateVisualHandler(CreateVisualDelegate impl) noexcept {
   m_createVisualHandler = impl;
 }
 
+const CreateVisualDelegate &ReactCompositionViewComponentBuilder::CreateVisualHandler() const noexcept {
+  return m_createVisualHandler;
+}
+
 void ReactCompositionViewComponentBuilder::SetViewFeatures(ComponentViewFeatures viewFeatures) noexcept {
   m_features = viewFeatures;
+}
+
+void ReactCompositionViewComponentBuilder::SetVisualToMountChildrenIntoHandler(
+    VisualToMountChildrenIntoDelegate impl) noexcept {
+  m_visualToMountChildrenIntoHandler = [impl](const winrt::Microsoft::ReactNative::ComponentView &view) {
+    return winrt::Microsoft::ReactNative::Composition::Experimental::implementation::MicrosoftCompositionContextHelper::
+        CreateVisual(impl(view));
+  };
+}
+
+void ReactCompositionViewComponentBuilder::SetIVisualToMountChildrenIntoHandler(
+    winrt::Microsoft::ReactNative::Composition::Experimental::IVisualToMountChildrenIntoDelegate impl) noexcept {
+  m_visualToMountChildrenIntoHandler = impl;
+}
+
+const winrt::Microsoft::ReactNative::Composition::Experimental::IVisualToMountChildrenIntoDelegate &
+ReactCompositionViewComponentBuilder::VisualToMountChildrenIntoHandler() const noexcept {
+  return m_visualToMountChildrenIntoHandler;
+}
+
+void ReactCompositionViewComponentBuilder::SetUpdateLayoutMetricsHandler(UpdateLayoutMetricsDelegate impl) noexcept {
+  m_updateLayoutMetricsHandler = impl;
+}
+
+const UpdateLayoutMetricsDelegate &ReactCompositionViewComponentBuilder::UpdateLayoutMetricsHandler() const noexcept {
+  return m_updateLayoutMetricsHandler;
 }
 
 winrt::Microsoft::ReactNative::ComponentView ReactCompositionViewComponentBuilder::CreateView(
@@ -205,7 +253,7 @@ winrt::Microsoft::ReactNative::ComponentView ReactCompositionViewComponentBuilde
     int32_t tag,
     const Experimental::ICompositionContext &context) noexcept {
   assert(m_fnCreateView);
-  auto view = m_fnCreateView(reactContext, tag, context, m_features);
+  auto view = m_fnCreateView(reactContext, tag, context, m_features, *this);
   InitializeComponentView(view);
   return view;
 }
