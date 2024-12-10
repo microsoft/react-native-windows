@@ -463,13 +463,7 @@ export class Telemetry {
     const syscallExceptionFieldsToCopy = ['errno', 'syscall', 'code'];
     for (const f of syscallExceptionFieldsToCopy) {
       if ((error as any)[f]) {
-        // If error is not of CodedError type, then codedErrorStruct.data.codedError is undefined.
-        // But now we want to copy some info from the error object into codedErrorStruct.
-        if (codedErrorStruct.data.codedError === undefined) {
-          codedErrorStruct.data = {codedError: {data: {}}};
-        }
-
-        codedErrorStruct.data.codedError.data[f] = (error as any)[f];
+        codedErrorStruct.data[f] = (error as any)[f];
       }
     }
 
