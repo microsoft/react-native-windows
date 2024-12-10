@@ -10541,6 +10541,471 @@ exports[`snapshotAllPages Dimensions 3`] = `
 </Text>
 `;
 
+exports[`snapshotAllPages Display: contents 1`] = `
+<View
+  style={
+    [
+      {
+        "height": 100,
+        "width": 200,
+      },
+      {
+        "borderColor": "brown",
+        "borderWidth": 1,
+      },
+    ]
+  }
+  testID="display-contents-test-single-node-root"
+>
+  <View
+    style={
+      [
+        {
+          "height": 100,
+          "width": 200,
+        },
+        {
+          "borderColor": "magenta",
+          "borderWidth": 1,
+        },
+        {
+          "flexDirection": "row",
+        },
+        {
+          "display": "contents",
+        },
+      ]
+    }
+    testID="display-contents-test-single-node-child"
+  >
+    <View
+      style={
+        [
+          {
+            "height": 25,
+            "width": 50,
+          },
+          {
+            "borderColor": "green",
+            "borderWidth": 1,
+          },
+        ]
+      }
+      testID="display-contents-test-single-node-grandchild-1"
+    />
+    <View
+      style={
+        [
+          {
+            "height": 25,
+            "width": 50,
+          },
+          {
+            "borderColor": "green",
+            "borderWidth": 1,
+          },
+        ]
+      }
+      testID="display-contents-test-single-node-grandchild-2"
+    />
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Display: contents 2`] = `
+<View
+  style={
+    [
+      {
+        "height": 100,
+        "width": 200,
+      },
+      {
+        "borderColor": "brown",
+        "borderWidth": 1,
+      },
+      {
+        "flexWrap": "wrap",
+      },
+    ]
+  }
+  testID="display-contents-test-multiple-node-root"
+>
+  <View
+    style={
+      [
+        {
+          "height": 100,
+          "width": 200,
+        },
+        {
+          "borderColor": "magenta",
+          "borderWidth": 1,
+        },
+        {
+          "flexDirection": "row",
+        },
+        {
+          "display": "contents",
+        },
+      ]
+    }
+    testID="display-contents-test-single-node-child-1"
+  >
+    <View
+      style={
+        [
+          {
+            "height": 25,
+            "width": 50,
+          },
+          {
+            "borderColor": "green",
+            "borderWidth": 1,
+          },
+        ]
+      }
+      testID="display-contents-test-single-node-grandchild-1"
+    />
+    <View
+      style={
+        [
+          {
+            "height": 25,
+            "width": 50,
+          },
+          {
+            "borderColor": "green",
+            "borderWidth": 1,
+          },
+        ]
+      }
+      testID="display-contents-test-single-node-grandchild-2"
+    />
+  </View>
+  <View
+    style={
+      [
+        {
+          "height": 100,
+          "width": 200,
+        },
+        {
+          "borderColor": "magenta",
+          "borderWidth": 1,
+        },
+        {
+          "flexDirection": "row",
+        },
+        {
+          "display": "contents",
+        },
+      ]
+    }
+    testID="display-contents-test-single-node-child-2"
+  >
+    <View
+      style={
+        [
+          {
+            "height": 25,
+            "width": 50,
+          },
+          {
+            "borderColor": "magenta",
+            "borderWidth": 1,
+          },
+        ]
+      }
+      testID="display-contents-test-single-node-grandchild-3"
+    />
+    <View
+      style={
+        [
+          {
+            "height": 25,
+            "width": 50,
+          },
+          {
+            "borderColor": "magenta",
+            "borderWidth": 1,
+          },
+        ]
+      }
+      testID="display-contents-test-single-node-grandchild-4"
+    />
+  </View>
+  <View
+    style={
+      [
+        {
+          "height": 100,
+          "width": 200,
+        },
+        {
+          "borderColor": "magenta",
+          "borderWidth": 1,
+        },
+        {
+          "flexDirection": "row",
+        },
+        {
+          "display": "contents",
+        },
+      ]
+    }
+    testID="display-contents-test-single-node-child-3"
+  >
+    <View
+      style={
+        [
+          {
+            "height": 25,
+            "width": 50,
+          },
+          {
+            "borderColor": "green",
+            "borderWidth": 1,
+          },
+        ]
+      }
+      testID="display-contents-test-single-node-grandchild-5"
+    />
+    <View
+      style={
+        [
+          {
+            "height": 25,
+            "width": 50,
+          },
+          {
+            "borderColor": "green",
+            "borderWidth": 1,
+          },
+        ]
+      }
+      testID="display-contents-test-single-node-grandchild-6"
+    />
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Display: contents 3`] = `
+<View
+  style={
+    [
+      {
+        "height": 100,
+        "width": 200,
+      },
+      {
+        "borderColor": "brown",
+        "borderWidth": 1,
+      },
+      {
+        "flexWrap": "wrap",
+      },
+    ]
+  }
+  testID="display-contents-test-multiple-node-root"
+>
+  <View
+    style={
+      [
+        {
+          "height": 100,
+          "width": 200,
+        },
+        {
+          "borderColor": "magenta",
+          "borderWidth": 1,
+        },
+        {
+          "flexDirection": "row",
+        },
+        {
+          "display": "contents",
+        },
+      ]
+    }
+    testID="display-contents-test-single-node-child-1"
+  >
+    <View
+      style={
+        [
+          {
+            "height": 25,
+            "width": 50,
+          },
+          {
+            "borderColor": "magenta",
+            "borderWidth": 1,
+          },
+        ]
+      }
+      testID="display-contents-test-single-node-grandchild-1"
+    />
+    <View
+      style={
+        [
+          {
+            "height": 25,
+            "width": 50,
+          },
+          {
+            "borderColor": "brown",
+            "borderWidth": 1,
+          },
+          {
+            "display": "contents",
+          },
+        ]
+      }
+      testID="display-contents-test-single-node-grandchild-2"
+    >
+      <View
+        style={
+          [
+            {
+              "height": 25,
+              "width": 50,
+            },
+            {
+              "borderColor": "green",
+              "borderWidth": 1,
+            },
+          ]
+        }
+        testID="display-contents-test-single-node-great-grandchild-1"
+      />
+      <View
+        style={
+          [
+            {
+              "height": 25,
+              "width": 50,
+            },
+            {
+              "borderColor": "green",
+              "borderWidth": 1,
+            },
+          ]
+        }
+        testID="display-contents-test-single-node-great-grandchild-2"
+      />
+    </View>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages Display: contents 4`] = `
+<View
+  style={
+    [
+      {
+        "height": 100,
+        "width": 200,
+      },
+      {
+        "borderColor": "brown",
+        "borderWidth": 1,
+      },
+    ]
+  }
+  testID="display-contents-test-single-node-root"
+>
+  <View
+    style={
+      [
+        {
+          "height": 25,
+          "width": 50,
+        },
+        {
+          "borderColor": "magenta",
+          "borderWidth": 1,
+        },
+        {
+          "display": "contents",
+        },
+      ]
+    }
+    testID="display-contents-test-single-node-child"
+  />
+</View>
+`;
+
+exports[`snapshotAllPages Display: contents 5`] = `
+<View
+  style={
+    [
+      {
+        "height": 100,
+        "width": 200,
+      },
+      {
+        "borderColor": "brown",
+        "borderWidth": 1,
+      },
+      {
+        "flexWrap": "wrap",
+      },
+    ]
+  }
+  testID="display-contents-textinput-root"
+>
+  <TextInput
+    style={
+      [
+        {
+          "height": 25,
+          "width": 50,
+        },
+        {
+          "borderColor": "magenta",
+          "borderWidth": 1,
+        },
+        {
+          "flexDirection": "row",
+        },
+        {
+          "display": "contents",
+        },
+      ]
+    }
+    testID="display-contents-textinput"
+  />
+  <TextInput
+    style={
+      [
+        {
+          "height": 25,
+          "width": 50,
+        },
+        {
+          "borderColor": "magenta",
+          "borderWidth": 1,
+        },
+        {
+          "flexDirection": "row",
+        },
+        {
+          "display": "contents",
+        },
+      ]
+    }
+    testID="display-contents-textinput2"
+  >
+    <Text>
+      Text1
+    </Text>
+    <Text>
+      Text2
+    </Text>
+  </TextInput>
+</View>
+`;
+
 exports[`snapshotAllPages Display:none Style 1`] = `
 <View
   style={
@@ -29038,6 +29503,49 @@ exports[`snapshotAllPages Modal 1`] = `
         ]
       }
     >
+      Navigation Bar Translucent 🟢
+    </Text>
+    <RCTSwitch
+      accessibilityRole="switch"
+      accessible={true}
+      focusable={true}
+      onChange={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "height": 31,
+          "width": 51,
+        }
+      }
+      value={false}
+    />
+  </View>
+  <View
+    style={
+      {
+        "alignItems": "center",
+        "borderBottomWidth": 1,
+        "borderColor": "rgba(0,0,0, 0.1)",
+        "flexDirection": "row",
+        "justifyContent": "space-between",
+        "padding": 6,
+      }
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontWeight": "bold",
+            "margin": 3,
+          },
+        ]
+      }
+    >
       Hardware Acceleration 🟢
     </Text>
     <RCTSwitch
@@ -32217,106 +32725,49 @@ exports[`snapshotAllPages Native Animated Example 14`] = `
 exports[`snapshotAllPages PanResponder Sample 1`] = `
 <View
   style={
-    [
-      {
-        "flex": 1,
-      },
-      {
-        "backgroundColor": "#f2f2f7ff",
-      },
-    ]
+    {
+      "flex": 1,
+      "height": 500,
+    }
   }
 >
   <View
+    onMoveShouldSetResponder={[Function]}
+    onMoveShouldSetResponderCapture={[Function]}
+    onResponderEnd={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderReject={[Function]}
+    onResponderRelease={[Function]}
+    onResponderStart={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    onStartShouldSetResponderCapture={[Function]}
     style={
       [
         {
-          "borderRadius": 4,
-          "borderWidth": 0.5,
-          "height": 45,
-          "margin": 10,
-          "marginBottom": 0,
-          "padding": 10,
+          "borderRadius": 40,
+          "height": 80,
+          "left": 0,
+          "position": "absolute",
+          "top": 0,
+          "width": 80,
         },
         {
-          "backgroundColor": "#f2f2f7ff",
-          "borderColor": "#3c3c4349",
+          "backgroundColor": "green",
+          "transform": [
+            {
+              "translateX": 20,
+            },
+            {
+              "translateY": 84,
+            },
+          ],
         },
       ]
     }
-  >
-    <Text
-      style={
-        [
-          {
-            "fontSize": 19,
-            "fontWeight": "500",
-          },
-          {
-            "color": "#000000ff",
-          },
-        ]
-      }
-    >
-      Basic gesture handling
-    </Text>
-  </View>
-  <View
-    style={
-      {
-        "flex": 1,
-        "rowGap": 30,
-      }
-    }
-  >
-    <View
-      style={
-        {
-          "flex": 1,
-          "height": 500,
-        }
-      }
-    >
-      <View
-        onMoveShouldSetResponder={[Function]}
-        onMoveShouldSetResponderCapture={[Function]}
-        onResponderEnd={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderReject={[Function]}
-        onResponderRelease={[Function]}
-        onResponderStart={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        onStartShouldSetResponderCapture={[Function]}
-        style={
-          [
-            {
-              "backgroundColor": "green",
-              "borderRadius": 40,
-              "height": 80,
-              "left": 0,
-              "position": "absolute",
-              "top": 0,
-              "width": 80,
-            },
-            {
-              "backgroundColor": "green",
-              "transform": [
-                {
-                  "translateX": 20,
-                },
-                {
-                  "translateY": 84,
-                },
-              ],
-            },
-          ]
-        }
-      />
-    </View>
-  </View>
+  />
 </View>
 `;
 
@@ -34037,16 +34488,22 @@ exports[`snapshotAllPages PixelRatio 3`] = `
         keyboardType="numeric"
         onChangeText={[Function]}
         style={
-          {
-            "alignSelf": "center",
-            "borderRadius": 6,
-            "borderWidth": 1,
-            "height": 30,
-            "marginLeft": 14,
-            "paddingHorizontal": 8,
-            "paddingVertical": 0,
-            "width": 200,
-          }
+          [
+            {
+              "alignSelf": "center",
+              "borderRadius": 6,
+              "borderWidth": 1,
+              "height": 30,
+              "marginLeft": 14,
+              "paddingHorizontal": 8,
+              "paddingVertical": 0,
+              "width": 200,
+            },
+            {
+              "borderColor": "#3c3c4349",
+              "color": "#000000ff",
+            },
+          ]
         }
         value=""
       />
@@ -34143,16 +34600,22 @@ exports[`snapshotAllPages PixelRatio 4`] = `
         keyboardType="numeric"
         onChangeText={[Function]}
         style={
-          {
-            "alignSelf": "center",
-            "borderRadius": 6,
-            "borderWidth": 1,
-            "height": 30,
-            "marginLeft": 14,
-            "paddingHorizontal": 8,
-            "paddingVertical": 0,
-            "width": 200,
-          }
+          [
+            {
+              "alignSelf": "center",
+              "borderRadius": 6,
+              "borderWidth": 1,
+              "height": 30,
+              "marginLeft": 14,
+              "paddingHorizontal": 8,
+              "paddingVertical": 0,
+              "width": 200,
+            },
+            {
+              "borderColor": "#3c3c4349",
+              "color": "#000000ff",
+            },
+          ]
         }
         value=""
       />
