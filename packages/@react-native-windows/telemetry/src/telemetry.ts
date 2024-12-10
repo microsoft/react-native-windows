@@ -455,7 +455,7 @@ export class Telemetry {
     const syscallExceptionFieldsToCopy = ['errno', 'syscall', 'code'];
     for (const f of syscallExceptionFieldsToCopy) {
       if ((error as any)[f]) {
-        codedErrorStruct.data.codedError.data[f] = (error as any)[f];
+        codedErrorStruct.data[f] = (error as any)[f];
       }
     }
 
