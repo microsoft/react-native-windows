@@ -2,6 +2,65 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 10 Dec 2024 04:12:33 GMT",
+      "version": "0.74.27",
+      "tag": "react-native-windows_v0.74.27",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "5f0857c2d08f0d185763f6ec786c26a9c441d783",
+            "comment": "Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d89f916a6893a9cd9751d94608d1666806ee8c82",
+            "comment": "implement onDismiss and remove titlebar from Modal"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d89f916a6893a9cd9751d94608d1666806ee8c82",
+            "comment": "Implement cursor property"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d89f916a6893a9cd9751d94608d1666806ee8c82",
+            "comment": "Fix Modal position, disable input to parent hwnd, and add onShow"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.74.9",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.74.6",
+            "commit": "not available"
+          }
+        ],
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d89f916a6893a9cd9751d94608d1666806ee8c82",
+            "comment": "Disable failing UT"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "5f0857c2d08f0d185763f6ec786c26a9c441d783",
+            "comment": "add the new generated headers"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 13 Nov 2024 20:44:24 GMT",
       "version": "0.74.26",
       "tag": "react-native-windows_v0.74.26",

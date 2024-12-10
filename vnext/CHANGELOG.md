@@ -1,8 +1,21 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 13 Nov 2024 20:44:24 GMT and should not be manually modified.
+This log was last generated on Tue, 10 Dec 2024 04:12:33 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.27
+
+Tue, 10 Dec 2024 04:12:33 GMT
+
+### Patches
+
+- Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto (30809111+acoates-ms@users.noreply.github.com)
+- implement onDismiss and remove titlebar from Modal (tatianakapos@microsoft.com)
+- Implement cursor property (30809111+acoates-ms@users.noreply.github.com)
+- Fix Modal position, disable input to parent hwnd, and add onShow (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.74.9
+- Bump @react-native-windows/codegen to v0.74.6
 
 ## 0.74.26
 
