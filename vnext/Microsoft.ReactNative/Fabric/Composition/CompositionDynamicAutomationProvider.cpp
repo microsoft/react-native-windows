@@ -654,11 +654,11 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY *
     BOOL selected;
     auto hr = provider->get_IsSelected(&selected);
     if (hr == S_OK && selected) {
-      selectedItems.push_back(i);
+      selectedItems.push_back(int(i));
     }
   }
 
-  *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, selectedItems.size());
+  *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, ULONG(selectedItems.size()));
   if (*pRetVal == nullptr)
     return E_OUTOFMEMORY;
 
