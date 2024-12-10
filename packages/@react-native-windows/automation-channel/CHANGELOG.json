@@ -2,6 +2,29 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Tue, 10 Dec 2024 06:29:29 GMT",
+      "version": "0.12.240",
+      "tag": "@react-native-windows/automation-channel_v0.12.240",
+      "comments": {
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "048ab132db83e8b11c5332c7b872ae0387589453",
+            "comment": "add the new generated headers"
+          }
+        ],
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.900",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 06 Dec 2024 06:22:27 GMT",
       "version": "0.12.239",
       "tag": "@react-native-windows/automation-channel_v0.12.239",

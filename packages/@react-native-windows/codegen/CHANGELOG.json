@@ -2,6 +2,27 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Tue, 10 Dec 2024 06:29:30 GMT",
+      "version": "0.0.0-canary.114",
+      "tag": "@react-native-windows/codegen_v0.0.0-canary.114",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/codegen",
+            "commit": "048ab132db83e8b11c5332c7b872ae0387589453",
+            "comment": "Add linter exception to generated headers for Office builds"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "91ad48ead0ca4670c1a48938dd1fc57308ce8a14",
+            "comment": "Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Nov 2024 06:23:15 GMT",
       "version": "0.0.0-canary.113",
       "tag": "@react-native-windows/codegen_v0.0.0-canary.113",
