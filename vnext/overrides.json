@@ -148,6 +148,18 @@
       "issue": 14128
     },
     {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityPrimitives.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityPrimitives.h",
+      "baseHash": "6db5b174fe1dc7d108ae7f9e730decfe5f633bd8"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/accessibilityPropsConversions.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/accessibilityPropsConversions.h",
+      "baseHash": "4b2822199233e660f36c01df18fbbff7799968cc"
+    },
+    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/LayoutableShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/LayoutableShadowNode.cpp",
@@ -373,10 +385,22 @@
       "issue": 0
     },
     {
+      "type": "derived",
+      "file": "src-win/Libraries/Components/Touchable/TouchableBounce.windows.js",
+      "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableBounce.js",
+      "baseHash": "39541effd705b515e24600d5bc984542a5cd668b"
+    },
+    {
       "type": "patch",
       "file": "src-win/Libraries/Components/Touchable/TouchableHighlight.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableHighlight.js",
       "baseHash": "3079fa1dd3a9fb070fb45de3e63d871a4f9854d2"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/Libraries/Components/Touchable/TouchableNativeFeedback.windows.js",
+      "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableNativeFeedback.js",
+      "baseHash": "8a1cc3c55ca3af68c5627479b3614fa44a1ffbea"
     },
     {
       "type": "patch",
@@ -450,6 +474,13 @@
       "baseFile": "packages/react-native/Libraries/Image/Image.ios.js",
       "baseHash": "a5abee6de7dca3cb043b834925de3f6f0443c738",
       "issue": 4590
+    },
+    {
+      "type": "derived",
+      "file": "src-win/Libraries/Image/ImageProps.windows.js",
+      "baseFile": "packages/react-native/Libraries/Image/ImageProps.js",
+      "baseHash": "3798c116eaa675aaf0344024a2816cbee3ae8263",
+      "issue": 0
     },
     {
       "type": "patch",

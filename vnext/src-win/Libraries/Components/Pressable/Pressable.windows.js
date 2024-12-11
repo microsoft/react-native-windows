@@ -75,6 +75,8 @@ type Props = $ReadOnly<{|
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
+  'aria-multiselectable'?: ?boolean, // Windows
+  'aria-required'?: ?boolean, // Windows
   /**
    * A value indicating whether the accessibility elements contained within
    * this accessibility element are hidden.
@@ -262,6 +264,8 @@ function Pressable(
     'aria-expanded': ariaExpanded,
     'aria-label': ariaLabel,
     'aria-selected': ariaSelected,
+    'aria-multiselectable': ariaMultiselectable, // Windows
+    'aria-required': ariaRequired, // Windows
     cancelable,
     children,
     delayHoverIn,
@@ -305,6 +309,8 @@ function Pressable(
     disabled: ariaDisabled ?? accessibilityState?.disabled,
     expanded: ariaExpanded ?? accessibilityState?.expanded,
     selected: ariaSelected ?? accessibilityState?.selected,
+    multiselectable: ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
+    required: ariaRequired ?? accessibilityState?.required, // Windows
   };
 
   _accessibilityState =

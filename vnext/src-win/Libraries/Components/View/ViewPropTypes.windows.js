@@ -626,6 +626,8 @@ export type ViewProps = $ReadOnly<{|
    * See https://reactnative.dev/docs/view#aria-hidden
    */
   'aria-hidden'?: ?boolean,
+  'aria-multiselectable'?: ?boolean, // Windows
+  'aria-required'?: ?boolean, // Windows
 
   /**
    * Views that are only used to layout their children or otherwise don't draw

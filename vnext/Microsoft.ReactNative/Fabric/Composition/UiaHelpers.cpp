@@ -214,6 +214,30 @@ ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept {
   }
 }
 
+void AddSelectionItemsToContainer(CompositionDynamicAutomationProvider *provider) noexcept {
+  winrt::com_ptr<IRawElementProviderSimple> selectionContainer;
+  provider->get_SelectionContainer(selectionContainer.put());
+  if (!selectionContainer)
+    return;
+  auto selectionContainerProvider = selectionContainer.as<CompositionDynamicAutomationProvider>();
+  auto simpleProvider = static_cast<IRawElementProviderSimple *>(provider);
+  winrt::com_ptr<IRawElementProviderSimple> simpleProviderPtr;
+  simpleProviderPtr.copy_from(simpleProvider);
+  selectionContainerProvider->AddToSelectionItems(simpleProviderPtr);
+}
+
+void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *provider) noexcept {
+  winrt::com_ptr<IRawElementProviderSimple> selectionContainer;
+  provider->get_SelectionContainer(selectionContainer.put());
+  if (!selectionContainer)
+    return;
+  auto selectionContainerProvider = selectionContainer.as<CompositionDynamicAutomationProvider>();
+  auto simpleProvider = static_cast<IRawElementProviderSimple *>(provider);
+  winrt::com_ptr<IRawElementProviderSimple> simpleProviderPtr;
+  simpleProviderPtr.copy_from(simpleProvider);
+  selectionContainerProvider->RemoveFromSelectionItems(simpleProviderPtr);
+}
+
 ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept {
   if (state.has_value()) {
     if (state->checked == facebook::react::AccessibilityState::Checked) {
