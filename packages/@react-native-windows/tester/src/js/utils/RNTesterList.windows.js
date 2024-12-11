@@ -24,6 +24,10 @@ const Components: Array<RNTesterModuleInfo> = [
     module: require('../examples/XHR/XHRExample'),
   },
   {
+    key: 'Test',
+    module: require('../examples/Test/Test'),
+  },
+  {
     key: 'ActivityIndicatorExample',
     category: 'UI',
     module: require('../examples/ActivityIndicator/ActivityIndicatorExample'),
