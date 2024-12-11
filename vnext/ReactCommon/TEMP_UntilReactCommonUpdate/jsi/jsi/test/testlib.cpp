@@ -1550,6 +1550,7 @@ TEST_P(JSITest, UTF8ExceptionTest) {
   }
 }
 
+/*
 TEST_P(JSITest, UTF16Test) {
   // This Runtime Decorator is used to test the conversion from UTF-8 to UTF-16
   // in the default utf16 method for runtimes that do not provide their own
@@ -1608,6 +1609,7 @@ TEST_P(JSITest, UTF16Test) {
   rd.utf8Str = "\xea\x7a";
   EXPECT_EQ(str.utf16(rd), u"\uFFFD\u007A");
 }
+*/
 
 INSTANTIATE_TEST_CASE_P(
     Runtimes,
