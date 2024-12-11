@@ -151,15 +151,13 @@
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityPrimitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityPrimitives.h",
-      "baseHash": "6db5b174fe1dc7d108ae7f9e730decfe5f633bd8",
-      "issue": 0
+      "baseHash": "6db5b174fe1dc7d108ae7f9e730decfe5f633bd8"
     },
     {
       "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/accessibilityPropsConversions.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/accessibilityPropsConversions.h",
-      "baseHash": "4b2822199233e660f36c01df18fbbff7799968cc",
-      "issue": 0
+      "baseHash": "4b2822199233e660f36c01df18fbbff7799968cc"
     },
     {
       "type": "patch",
@@ -390,8 +388,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Touchable/TouchableBounce.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableBounce.js",
-      "baseHash": "be638b955fd4b85c2e94231db2ccb642b39e2795",
-      "issue": 0
+      "baseHash": "39541effd705b515e24600d5bc984542a5cd668b"
     },
     {
       "type": "patch",
@@ -403,8 +400,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Touchable/TouchableNativeFeedback.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableNativeFeedback.js",
-      "baseHash": "8a1cc3c55ca3af68c5627479b3614fa44a1ffbea",
-      "issue": 0
+      "baseHash": "8a1cc3c55ca3af68c5627479b3614fa44a1ffbea"
     },
     {
       "type": "patch",
@@ -482,8 +478,8 @@
     {
       "type": "derived",
       "file": "src-win/Libraries/Image/ImageProps.windows.js",
-      "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableBounce.js",
-      "baseHash": "39541effd705b515e24600d5bc984542a5cd668b",
+      "baseFile": "packages/react-native/Libraries/Image/ImageProps.js",
+      "baseHash": "3798c116eaa675aaf0344024a2816cbee3ae8263",
       "issue": 0
     },
     {
