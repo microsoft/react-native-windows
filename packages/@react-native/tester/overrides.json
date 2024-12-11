@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.77.0-nightly-20241031-3a01a0c9c",
+  "baseVersion": "0.77.0-nightly-20241103-7211119d2",
   "overrides": [
     {
       "type": "copy",
@@ -12,7 +12,7 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "f2f5d75e1c233d391df8a6f246d883460b3a6afb",
+      "baseHash": "d3365287a327b8ea5cf2bb45f86fbbc5343dda21",
       "issue": 4054
     },
     {
@@ -122,6 +122,13 @@
     },
     {
       "type": "copy",
+      "directory": "js/examples/DisplayContents",
+      "baseDirectory": "packages/rn-tester/js/examples/DisplayContents",
+      "baseHash": "d4976497a0120350f329b460d3c1ff41567ec906",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
       "directory": "js/examples/DrawerLayoutAndroid",
       "baseDirectory": "packages/rn-tester/js/examples/DrawerLayoutAndroid",
       "baseHash": "fca543d89350c3f00c081d9b42447c683fd5430a",
@@ -145,14 +152,14 @@
       "type": "copy",
       "directory": "js/examples/FlatList",
       "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "cbcb494838536a0bcb00c20ec4397e3fd93e168a",
+      "baseHash": "bae5fe1b1eac3ede4b52b24eb9f5b262f1559e95",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Image",
       "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseHash": "856dbcae5fb30064bb2c55440652476f442204e2",
+      "baseHash": "ec1829bd49ca5e103f93ab4588c1dce0f2a79a97",
       "issue": 4054
     },
     {
@@ -313,7 +320,7 @@
       "type": "copy",
       "directory": "js/examples/Playground",
       "baseDirectory": "packages/rn-tester/js/examples/Playground",
-      "baseHash": "e47040a1660aa6acaf06e912226c0e2a78dd7760",
+      "baseHash": "3a5d3afe8a387b32015195cf09ca7291c071a428",
       "issue": 4054
     },
     {
@@ -383,7 +390,7 @@
       "type": "copy",
       "directory": "js/examples/SectionList",
       "baseDirectory": "packages/rn-tester/js/examples/SectionList",
-      "baseHash": "a84e4801fd9dfc6a7ee1f00770fe3d635d105f2d",
+      "baseHash": "83d03b093f6490240217137f5f6eef5994ac8ae8",
       "issue": 4054
     },
     {
@@ -418,7 +425,7 @@
       "type": "copy",
       "directory": "js/examples/SwipeableCardExample",
       "baseDirectory": "packages/rn-tester/js/examples/SwipeableCardExample",
-      "baseHash": "77b040aec05b417ccb985bacec4245a42d023b47",
+      "baseHash": "6fdea3ff7e2486b9e2eebc8ccb7c54ead7dd3de5",
       "issue": 4054
     },
     {
@@ -544,14 +551,14 @@
       "type": "patch",
       "file": "js/utils/RNTesterList.android.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "27576bedd435d2e9f130ebfdf8e872d30f0b7855",
+      "baseHash": "301bbd0e30ee3a41e7a0455de5d55f119ed70855",
       "issue": 13228
     },
     {
       "type": "patch",
       "file": "js/utils/RNTesterList.ios.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.ios.js",
-      "baseHash": "63a12b27edb4226a2a341636077495ac26be7761",
+      "baseHash": "29a41208e4316ee685bac0804ef7dfd21b5b6145",
       "issue": 13228
     },
     {
