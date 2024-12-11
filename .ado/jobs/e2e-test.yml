@@ -197,8 +197,14 @@ jobs:
                 displayName: Set StartedFabricTests
 
               - script: |
-                  yarn e2etest
-                displayName: yarn e2etest
+                  yarn e2etest1
+                displayName: yarn e2etest:test1
+                workingDirectory: packages/e2e-test-app-fabric
+                timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
+
+              - script: |
+                  yarn e2etest2
+                displayName: yarn e2etest:test2
                 workingDirectory: packages/e2e-test-app-fabric
                 timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
 
@@ -207,7 +213,13 @@ jobs:
                 workingDirectory: packages/e2e-test-app-fabric
                 condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
 
-              - script: yarn e2etest -u
+              - script: yarn e2etest:test1 -u
+                displayName: Update snapshots
+                workingDirectory: packages/e2e-test-app-fabric
+                condition: and(failed(), eq(variables.StartedFabricTests, 'true'))
+                timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
+
+              - script: yarn e2etest:test2 -u
                 displayName: Update snapshots
                 workingDirectory: packages/e2e-test-app-fabric
                 condition: and(failed(), eq(variables.StartedFabricTests, 'true'))

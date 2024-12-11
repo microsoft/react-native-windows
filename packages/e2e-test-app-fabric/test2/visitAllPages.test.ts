@@ -4,8 +4,8 @@
  *
  * @format
  */
-import {goToComponentExample} from './RNTesterNavigation';
-import {verifyNoErrorLogs} from './Helpers';
+import {goToComponentExample} from '../test/RNTesterNavigation';
+import {verifyNoErrorLogs} from '../test/Helpers';
 import {app} from '@react-native-windows/automation';
 
 beforeAll(async () => {
