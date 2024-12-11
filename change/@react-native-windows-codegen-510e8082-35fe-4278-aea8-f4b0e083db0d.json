@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "Cherry pick #14157 Add linter exception to generated headers for Office builds",
+  "packageName": "@react-native-windows/codegen",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
