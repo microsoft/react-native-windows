@@ -480,6 +480,13 @@
       "issue": 4590
     },
     {
+      "type": "derived",
+      "file": "src-win/Libraries/Image/ImageProps.windows.js",
+      "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableBounce.js",
+      "baseHash": "39541effd705b515e24600d5bc984542a5cd668b",
+      "issue": 0
+    },
+    {
       "type": "patch",
       "file": "src-win/Libraries/Image/resolveAssetSource.windows.js",
       "baseFile": "packages/react-native/Libraries/Image/resolveAssetSource.js",
