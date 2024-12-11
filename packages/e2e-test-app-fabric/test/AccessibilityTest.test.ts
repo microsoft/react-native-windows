@@ -38,14 +38,14 @@ const searchBox = async (input: string) => {
 
 describe('Accessibility Tests', () => {
   test('Elements can set accessibilityState:selected to false', async () => {
-    await searchBox('States');
+    await searchBox('Sta');
     const component = await app.findElementByTestID('Selectable item 1');
     await component.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('Selectable item 1');
     expect(dump).toMatchSnapshot();
   });
   test('Elements can set accessibilityState:selected to true', async () => {
-    await searchBox('States');
+    await searchBox('Sta');
     const component = await app.findElementByTestID('Selectable item 1');
     await component.waitForDisplayed({timeout: 5000});
     await component.click();
@@ -53,7 +53,7 @@ describe('Accessibility Tests', () => {
     expect(dump).toMatchSnapshot();
   });
   test('Selectable items must have a Selection Container. Elements can set accessibilityState:multiselectable and accessibilityState:required to true', async () => {
-    await searchBox('States');
+    await searchBox('Sta');
     const componentsTab = await app.findElementByTestID('selection-container');
     await componentsTab.waitForDisplayed({timeout: 5000});
     const dump = await dumpVisualTree('selection-container');
