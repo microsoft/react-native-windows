@@ -3029,9 +3029,9 @@
     "@types/react" "^18"
 
 "@types/react@*", "@types/react@^18", "@types/react@^18.2.6":
-  version "18.3.15"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.3.15.tgz#14674f041072c2b17062ae2edb0eb95a45787f98"
-  integrity sha512-XQzbwkCwrsabawgWsvDDwsDTRuH1sf6Uj1fnFYoG03ZXfT54/aBvlylKR9ix70pXAtTn8dFzj358zVcZN4m83w==
+  version "18.3.16"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.3.16.tgz#5326789125fac98b718d586ad157442ceb44ff28"
+  integrity sha512-oh8AMIC4Y2ciKufU8hnKgs+ufgbA/dhPTACaZPM86AbwX9QwnFtSoPWEeRUj8fge+v6kFt78BXcDhAU1SrrAsw==
   dependencies:
     "@types/prop-types" "*"
     csstype "^3.0.2"
