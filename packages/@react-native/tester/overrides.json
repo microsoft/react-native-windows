@@ -122,13 +122,6 @@
     },
     {
       "type": "copy",
-      "directory": "js/examples/DisplayContents",
-      "baseDirectory": "packages/rn-tester/js/examples/DisplayContents",
-      "baseHash": "d4976497a0120350f329b460d3c1ff41567ec906",
-      "issue": 4054
-    },
-    {
-      "type": "copy",
       "directory": "js/examples/DrawerLayoutAndroid",
       "baseDirectory": "packages/rn-tester/js/examples/DrawerLayoutAndroid",
       "baseHash": "fca543d89350c3f00c081d9b42447c683fd5430a",
