@@ -51,7 +51,7 @@ function ContentPress() {
           }}>
           {({pressed}) => (
             <Text testID="one_press_me_button" style={styles.button}>
-              {pressed ? 'Oneline Change' : 'Oneline Change'}
+              {pressed ? 'Pressed!' : 'Press Me'}
             </Text>
           )}
         </Pressable>

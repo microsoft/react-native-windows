@@ -75784,6 +75784,37 @@ exports[`snapshotAllPages TextInput 44`] = `
 </View>
 `;
 
+exports[`snapshotAllPages TextInput 45`] = `
+<View
+  accessible={true}
+  testID="test"
+>
+  <TextInput
+    accessibilityRole="searchbox"
+    defaultValue="test"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+  />
+</View>
+`;
+
 exports[`snapshotAllPages TextInputs with key prop 1`] = `
 <View>
   <TextInput
