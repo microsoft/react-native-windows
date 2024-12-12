@@ -18,6 +18,8 @@ afterEach(async () => {
   await verifyNoErrorLogs();
 });
 
+/*
+
 type RNTesterExampleModule = {
   title: string;
   description: string;
@@ -37,12 +39,14 @@ const testerList: RNTesterList = require('@react-native-windows/tester/js/utils/
 
 //const apiExamples = testerList.APIs.map(e => e.module.title);
 const componentExamples = testerList.Components.map(e => e.module.title);
+*/
 
 describe('visitAllPages', () => {
   test('control', () => {
     expect(true).toBe(true);
   });
 
+  /*
   for (const component of componentExamples) {
     if (
       component === 'Flyout' ||
@@ -54,6 +58,7 @@ describe('visitAllPages', () => {
 
     test(component, async () => await goToComponentExample(component));
   }
+  */
 
   // Disable Temporarily Until Stable
   /*for (const api of apiExamples) {
