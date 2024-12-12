@@ -248,8 +248,10 @@
       "baseHash": "173b99e6ae120f14176cf3425877728787d3feed"
     },
     {
-      "type": "platform",
-      "file": "src-win/Libraries/Animated/NativeAnimatedAllowList.windows.js"
+      "type": "derived",
+      "file": "src-win/Libraries/Animated/NativeAnimatedAllowlist.windows.js",
+      "baseFile": "packages/react-native/Animated/NativeAnimatedAllowlist.js",
+      "baseHash": "b1c052ae3653d5771b75aa96afc49cddd794f1bd"
     },
     {
       "type": "derived",
