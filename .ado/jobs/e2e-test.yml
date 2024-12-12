@@ -197,13 +197,13 @@ jobs:
                 displayName: Set StartedFabricTests
 
               - script: |
-                  yarn e2etest1
+                  yarn e2etest:test1
                 displayName: yarn e2etest:test1
                 workingDirectory: packages/e2e-test-app-fabric
                 timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
 
               - script: |
-                  yarn e2etest2
+                  e2etest:test2
                 displayName: yarn e2etest:test2
                 workingDirectory: packages/e2e-test-app-fabric
                 timeoutInMinutes: 10 # Time to wait for this task to complete before the server kills it.
