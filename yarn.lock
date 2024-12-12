@@ -2944,9 +2944,9 @@
   integrity sha512-fAtCfv4jJg+ExtXhvCkCqUKZ+4ok/JQk01qDKhL5BDDoS3AxKXhV5/MAVUZyQnSEd2GT92fkgZl0pz0Q0AzcIQ==
 
 "@types/node@^18.0.0":
-  version "18.19.67"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.67.tgz#77c4b01641a1e3e1509aff7e10d39e4afd5ae06d"
-  integrity sha512-wI8uHusga+0ZugNp0Ol/3BqQfEcCCNfojtO6Oou9iVNGPTL6QNSdnUdqq85fRgIorLhLMuPIKpsN98QE9Nh+KQ==
+  version "18.19.68"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.19.68.tgz#f4f10d9927a7eaf3568c46a6d739cc0967ccb701"
+  integrity sha512-QGtpFH1vB99ZmTa63K4/FU8twThj4fuVSBkGddTp7uIL/cuoLWIUSL2RcOaigBhfR+hg5pgGkBnkoOxrTVBMKw==
   dependencies:
     undici-types "~5.26.4"
 
@@ -3029,9 +3029,9 @@
     "@types/react" "^18"
 
 "@types/react@*", "@types/react@^18", "@types/react@^18.2.6":
-  version "18.3.15"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.3.15.tgz#14674f041072c2b17062ae2edb0eb95a45787f98"
-  integrity sha512-XQzbwkCwrsabawgWsvDDwsDTRuH1sf6Uj1fnFYoG03ZXfT54/aBvlylKR9ix70pXAtTn8dFzj358zVcZN4m83w==
+  version "18.3.16"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.3.16.tgz#5326789125fac98b718d586ad157442ceb44ff28"
+  integrity sha512-oh8AMIC4Y2ciKufU8hnKgs+ufgbA/dhPTACaZPM86AbwX9QwnFtSoPWEeRUj8fge+v6kFt78BXcDhAU1SrrAsw==
   dependencies:
     "@types/prop-types" "*"
     csstype "^3.0.2"
@@ -8267,9 +8267,9 @@ kleur@^3.0.3:
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
 lage@^2.7.1:
-  version "2.12.3"
-  resolved "https://registry.yarnpkg.com/lage/-/lage-2.12.3.tgz#44e22bf243d2a750bc4af7d8774facb98a90f9aa"
-  integrity sha512-3IcBpmS/wGZJeyg/SCwM9x0z6VCvtWjcCykHd4kkS7fLGUCzrKh4Q79etG24aqjSSBGcenCrmSS4fHqZjYcvBQ==
+  version "2.12.4"
+  resolved "https://registry.yarnpkg.com/lage/-/lage-2.12.4.tgz#3ad9a13f0dc8cbd6a90e271be5a5f7311a7e8163"
+  integrity sha512-To94fAOzLL6ujKuLvQji3gKdhmLAkjJ4wqQnLCFTtEgRYNwcy8dvrR9LVhgh+jCDL9l9t95VX1swdalumiV7eg==
   dependencies:
     glob-hasher "^1.4.2"
   optionalDependencies:

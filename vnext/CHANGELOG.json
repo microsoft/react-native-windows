@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 11 Dec 2024 06:21:14 GMT",
+      "version": "0.0.0-canary.901",
+      "tag": "react-native-windows_v0.0.0-canary.901",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6d890d4c0c103c65ef6845350cd83467a331abea",
+            "comment": "add windows folder to file list"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.251",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Dec 2024 06:29:30 GMT",
       "version": "0.0.0-canary.900",
       "tag": "react-native-windows_v0.0.0-canary.900",

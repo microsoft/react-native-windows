@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "add windows folder to file list",
-  "packageName": "react-native-windows",
-  "email": "tatianakapos@microsoft.com",
-  "dependentChangeType": "patch"
-}
