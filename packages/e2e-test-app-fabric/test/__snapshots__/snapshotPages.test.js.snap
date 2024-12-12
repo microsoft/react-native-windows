@@ -64417,6 +64417,18 @@ exports[`snapshotAllPages Switch 8`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Test 1`] = `
+<Text>
+  Testing
+</Text>
+`;
+
+exports[`snapshotAllPages Test 2`] = `
+<Text>
+  Testing
+</Text>
+`;
+
 exports[`snapshotAllPages Text 1`] = `
 <View
   testID="background-border-width"
