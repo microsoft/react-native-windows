@@ -250,8 +250,8 @@
     {
       "type": "derived",
       "file": "src-win/Libraries/Animated/NativeAnimatedAllowlist.windows.js",
-      "baseFile": "packages/react-native/Animated/NativeAnimatedAllowlist.js",
-      "baseHash": "b1c052ae3653d5771b75aa96afc49cddd794f1bd"
+      "baseFile": "packages/react-native/Libraries/Animated/NativeAnimatedAllowlist.js",
+      "baseHash": "337dfc9001bc8967ca8c5da7f09ddde463d29b54"
     },
     {
       "type": "derived",
