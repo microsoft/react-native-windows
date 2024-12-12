@@ -5246,6 +5246,85 @@ exports[`Home UIA Tree Dump Switch 1`] = `
 }
 `;
 
+exports[`Home UIA Tree Dump Test 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "Test",
+    "ControlType": 50026,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "group",
+    "Name": "Test Test",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Test",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "Test",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "AccessibilityLabel": "Test Test",
+      "TestId": "Test",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(255, 255, 255, 255)",
+    },
+    "Comment": "Test",
+    "Offset": "0, 0, 0",
+    "Size": "966, 78",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "16, 16, 0",
+        "Size": "31, 25",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "31, 25",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "16, 45, 0",
+        "Size": "934, 17",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "934, 17",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
 exports[`Home UIA Tree Dump Text 1`] = `
 {
   "Automation Tree": {
@@ -5372,7 +5451,7 @@ exports[`Home UIA Tree Dump TextInput 1`] = `
     },
     "Comment": "TextInput",
     "Offset": "0, 0, 0",
-    "Size": "966, 78",
+    "Size": "966, 77",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5451,7 +5530,7 @@ exports[`Home UIA Tree Dump TextInputs with key prop 1`] = `
     },
     "Comment": "TextInputs with key prop",
     "Offset": "0, 0, 0",
-    "Size": "966, 77",
+    "Size": "966, 78",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -6009,12 +6088,12 @@ exports[`Home UIA Tree Dump View 1`] = `
     "__Children": [
       {
         "Offset": "16, 16, 0",
-        "Size": "38, 25",
+        "Size": "38, 24",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "38, 25",
+            "Size": "38, 24",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -6167,12 +6246,12 @@ exports[`Home UIA Tree Dump XAML 1`] = `
     "__Children": [
       {
         "Offset": "16, 16, 0",
-        "Size": "47, 24",
+        "Size": "47, 25",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "47, 24",
+            "Size": "47, 25",
             "Visual Type": "SpriteVisual",
           },
         ],

@@ -64417,6 +64417,18 @@ exports[`snapshotAllPages Switch 8`] = `
 </View>
 `;
 
+exports[`snapshotAllPages Test 1`] = `
+<Text>
+  Testing
+</Text>
+`;
+
+exports[`snapshotAllPages Test 2`] = `
+<Text>
+  Testing
+</Text>
+`;
+
 exports[`snapshotAllPages Text 1`] = `
 <View
   testID="background-border-width"
@@ -75761,6 +75773,37 @@ exports[`snapshotAllPages TextInput 44`] = `
   <TextInput
     accessibilityRole="searchbox"
     defaultValue="Search"
+    style={
+      [
+        {
+          "backgroundColor": "#ffffffff",
+          "borderColor": "#3c3c432d",
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "flexGrow": 1,
+          "flexShrink": 1,
+          "fontSize": 13,
+          "padding": 4,
+        },
+        {
+          "fontSize": 16,
+        },
+      ]
+    }
+  />
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 45`] = `
+<View
+  accessible={true}
+  testID="test"
+>
+  <TextInput
+    accessibilityRole="searchbox"
+    defaultValue="test"
     style={
       [
         {

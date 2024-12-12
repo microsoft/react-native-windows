@@ -844,6 +844,20 @@ const examples: Array<RNTesterModuleExample> = [
       );
     },
   },
+  {
+    title: 'Testing',
+    render: function (): React.Node {
+      return (
+        <View accessible testID="test">
+          <ExampleTextInput
+            style={styles.singleLine}
+            accessibilityRole="searchbox"
+            defaultValue="test"
+          />
+        </View>
+      );
+    },
+  },
   // Windows]
 ];
 
