@@ -249,6 +249,22 @@
     },
     {
       "type": "platform",
+      "file": "src-win/Libraries/Animated/NativeAnimatedAllowList.windows.js"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/Libraries/Animated/nodes/AnimatedProps.windows.js",
+      "baseFile": "packages/react-native/Libraries/Animated/nodes/AnimatedProps.js",
+      "baseHash": "9157901b6382c2a936010d0d34ec4f33a8baf70b"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/Libraries/Animated/nodes/AnimatedStyle.windows.js",
+      "baseFile": "packages/react-native/Libraries/Animated/nodes/AnimatedStyle.js",
+      "baseHash": "477711c8194a5ea843ec907c2d97fbed83b94028"
+    },
+    {
+      "type": "platform",
       "file": "src-win/Libraries/AppTheme/AppTheme.js"
     },
     {
@@ -588,6 +604,12 @@
       "file": "src-win/Libraries/Utilities/Platform.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
       "baseHash": "33f07d6fddb5290d05c8d4cc490312e3af88c70b"
+    },
+    {
+      "type": "derived",
+      "file": "src-win/src/private/animated/useAnimatedPropsMemo.windows.js",
+      "baseFile": "packages/react-native/src/private/animated/useAnimatedPropsMemo.js",
+      "baseHash": "b1c052ae3653d5771b75aa96afc49cddd794f1bd"
     },
     {
       "type": "copy",
