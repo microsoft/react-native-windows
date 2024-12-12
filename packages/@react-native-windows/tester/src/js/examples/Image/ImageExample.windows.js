@@ -692,6 +692,20 @@ function CacheControlAndroidExample(): React.Node {
             key={reload}
           />
         </View>
+        <View style={styles.leftMargin}>
+          <RNTesterText style={styles.resizeModeText}>
+            Only-if-cached
+          </RNTesterText>
+          <Image
+            source={{
+              uri: fullImage.uri + '?cacheBust=only-if-cached',
+              cache: 'only-if-cached',
+            }}
+            style={styles.base}
+            key={reload}
+            onError={e => console.log(e.nativeEvent.error)}
+          />
+        </View>
       </View>
 
       <View style={styles.horizontal}>
@@ -843,6 +857,9 @@ const styles = StyleSheet.create({
   },
   objectFitScaleDown: {
     objectFit: 'scale-down',
+  },
+  objectFitNone: {
+    objectFit: 'none',
   },
   imageInBundle: {
     borderColor: 'yellow',
@@ -1142,9 +1159,10 @@ exports.examples = [
   },
   {
     title: 'Cache Policy',
-    description: ('First image will be loaded and will be cached. ' +
-      'Second image is the same but will be reloaded if re-rendered ' +
-      'as the cache policy is set to reload.': string),
+    description: `- First image will be loaded and cached.
+- Second image is the same but will be reloaded if re-rendered as the cache policy is set to reload.
+- Third image will never be loaded as the cache policy is set to only-if-cached and the image has not been loaded before.
+  `,
     render: function (): React.Node {
       return <CacheControlAndroidExample />;
     },
@@ -1507,6 +1525,17 @@ exports.examples = [
                     />
                   </View>
                 </View>
+                <View style={styles.horizontal}>
+                  <View>
+                    <RNTesterText style={styles.resizeModeText}>
+                      None
+                    </RNTesterText>
+                    <Image
+                      style={[styles.resizeMode, styles.objectFitNone]}
+                      source={image}
+                    />
+                  </View>
+                </View>
               </View>
             );
           })}
@@ -1574,6 +1603,18 @@ exports.examples = [
                     <Image
                       style={styles.resizeMode}
                       resizeMode="center"
+                      source={image}
+                    />
+                  </View>
+                </View>
+                <View style={styles.horizontal}>
+                  <View>
+                    <RNTesterText style={styles.resizeModeText}>
+                      None
+                    </RNTesterText>
+                    <Image
+                      style={styles.resizeMode}
+                      resizeMode="none"
                       source={image}
                     />
                   </View>

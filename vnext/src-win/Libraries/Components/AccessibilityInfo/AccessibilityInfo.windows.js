@@ -55,6 +55,7 @@ const EventNames: Map<
       ['highTextContrastChanged', 'highTextContrastDidChange'],
       ['screenReaderChanged', 'touchExplorationDidChange'],
       ['accessibilityServiceChanged', 'accessibilityServiceDidChange'],
+      ['invertColorsChanged', 'invertColorDidChange'],
     ])
   : Platform.OS === 'windows'
     ? new Map([
@@ -143,7 +144,15 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo#isInvertColorsEnabled
    */
   isInvertColorsEnabled(): Promise<boolean> {
-    if (Platform.OS === 'android' || Platform.OS === 'windows') {
+    if (Platform.OS === 'android') {
+      return new Promise((resolve, reject) => {
+        if (NativeAccessibilityInfoAndroid?.isInvertColorsEnabled != null) {
+          NativeAccessibilityInfoAndroid.isInvertColorsEnabled(resolve);
+        } else {
+          reject(null);
+        }
+      });
+    } else if (Platform.OS === 'windows') {
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {

@@ -346,6 +346,13 @@ static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isReduceMotio
   );
   return jsi::Value::undefined();
 }
+static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isInvertColorsEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->isInvertColorsEnabled(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asObject(rt).asFunction(rt)
+  );
+  return jsi::Value::undefined();
+}
 static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isHighTextContrastEnabled(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeAccessibilityInfoCxxSpecJSI *>(&turboModule)->isHighTextContrastEnabled(
     rt,
@@ -393,6 +400,7 @@ static jsi::Value __hostFunction_NativeAccessibilityInfoCxxSpecJSI_getRecommende
 NativeAccessibilityInfoCxxSpecJSI::NativeAccessibilityInfoCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
   : TurboModule("AccessibilityInfo", jsInvoker) {
   methodMap_["isReduceMotionEnabled"] = MethodMetadata {1, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isReduceMotionEnabled};
+  methodMap_["isInvertColorsEnabled"] = MethodMetadata {1, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isInvertColorsEnabled};
   methodMap_["isHighTextContrastEnabled"] = MethodMetadata {1, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isHighTextContrastEnabled};
   methodMap_["isTouchExplorationEnabled"] = MethodMetadata {1, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isTouchExplorationEnabled};
   methodMap_["isAccessibilityServiceEnabled"] = MethodMetadata {1, __hostFunction_NativeAccessibilityInfoCxxSpecJSI_isAccessibilityServiceEnabled};

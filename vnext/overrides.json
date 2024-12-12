@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241103-7211119d2",
+  "baseVersion": "0.77.0-nightly-20241106-b7ec7523c",
   "overrides": [
     {
       "type": "derived",
@@ -263,7 +263,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/AccessibilityInfo/AccessibilityInfo.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/AccessibilityInfo/AccessibilityInfo.js",
-      "baseHash": "af6ef360caf09cee7b488a3fa7439f749216c51c",
+      "baseHash": "760292e859c2ff52ee99b7b633513014a75e707c",
       "issue": 4578
     },
     {
@@ -419,7 +419,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/View/ViewPropTypes.d.ts",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.d.ts",
-      "baseHash": "8e33800dfdd3b50e26c3331abb8b4682c091602f"
+      "baseHash": "050f28e7caeef2e52717a7c43c6964612eb75ee9"
     },
     {
       "type": "patch",

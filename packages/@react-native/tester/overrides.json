@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.77.0-nightly-20241103-7211119d2",
+  "baseVersion": "0.77.0-nightly-20241106-b7ec7523c",
   "overrides": [
     {
       "type": "copy",
@@ -19,7 +19,7 @@
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
-      "baseHash": "d55eb5993fff3e78fa67621fca12e4bc4ac58d64",
+      "baseHash": "ce8a8c22e8faf06aec514a6a1ee52d7f1b9854de",
       "issue": 4054
     },
     {
@@ -159,7 +159,7 @@
       "type": "copy",
       "directory": "js/examples/Image",
       "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseHash": "ec1829bd49ca5e103f93ab4588c1dce0f2a79a97",
+      "baseHash": "3213dd845f41db274aeb0b119185a8049c98c34a",
       "issue": 4054
     },
     {
@@ -285,7 +285,7 @@
       "type": "copy",
       "directory": "js/examples/PanResponder",
       "baseDirectory": "packages/rn-tester/js/examples/PanResponder",
-      "baseHash": "76d06b278e87aaaf2a1f9f17db5d315f2de2d7ec",
+      "baseHash": "70e9ae1244f50e113cb5911d2b3d6f4f4ab7756e",
       "issue": 4054
     },
     {
