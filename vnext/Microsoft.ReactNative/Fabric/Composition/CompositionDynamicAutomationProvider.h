@@ -16,6 +16,7 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
                                                  IInvokeProvider,
                                                  IScrollItemProvider,
                                                  IValueProvider,
+                                                 IRangeValueProvider,
                                                  IToggleProvider,
                                                  IExpandCollapseProvider> {
  public:
@@ -47,6 +48,14 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall SetValue(LPCWSTR val) override;
   virtual HRESULT __stdcall get_Value(BSTR *pRetVal) override;
   virtual HRESULT __stdcall get_IsReadOnly(BOOL *pRetVal) override;
+
+  // inherited via IRangeValueProvider
+  virtual HRESULT __stdcall get_LargeChange(double *pRetVal) override;
+  virtual HRESULT __stdcall get_Maximum(double *pRetVal) override;
+  virtual HRESULT __stdcall get_Minimum(double *pRetVal) override;
+  virtual HRESULT __stdcall get_SmallChange(double *pRetVal) override;
+  virtual HRESULT __stdcall get_Value(double *pRetVal) override;
+  virtual HRESULT __stdcall SetValue(double val) override;
 
   // inherited via IToggleProvider
   virtual HRESULT __stdcall get_ToggleState(ToggleState *pRetVal) override;

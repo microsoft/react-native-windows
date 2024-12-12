@@ -97,6 +97,7 @@ export type TextProps = $ReadOnly<{
   'aria-posinset'?: ?number, // Windows
   'aria-setsize'?: ?number, // Windows
   'aria-level'?: ?number, // Windows
+  'aria-readonly'?: ?boolean, // Windows
 
   /**
    * Represents the nativeID of the associated label text. When the assistive technology focuses on the component with this props, the text is read aloud.

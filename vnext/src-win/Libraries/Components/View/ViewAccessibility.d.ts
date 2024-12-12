@@ -183,6 +183,11 @@ export interface AccessibilityState {
    *  When present, informs accessible tools the element is expanded or collapsed
    */
   expanded?: boolean | undefined;
+  /**
+   * When present, informs accessible tools the element is read only
+   * @platform windows
+   */
+  readOnly?: boolean | undefined;
 }
 
 export interface AccessibilityValue {

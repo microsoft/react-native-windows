@@ -58,6 +58,7 @@ const Text: component(
       'aria-posinset': ariaPosinset, // Windows
       'aria-setsize': ariaSetsize, // Windows
       'aria-selected': ariaSelected,
+      'aria-readonly': ariaReadOnly, //Windows
       children,
       ellipsizeMode,
       disabled,
@@ -95,7 +96,8 @@ const Text: component(
       ariaChecked != null ||
       ariaDisabled != null ||
       ariaExpanded != null ||
-      ariaSelected != null
+      ariaSelected != null ||
+      ariaReadOnly != null // Windows
     ) {
       if (_accessibilityState != null) {
         _accessibilityState = {
@@ -104,6 +106,7 @@ const Text: component(
           disabled: ariaDisabled ?? _accessibilityState.disabled,
           expanded: ariaExpanded ?? _accessibilityState.expanded,
           selected: ariaSelected ?? _accessibilityState.selected,
+          readOnly: ariaReadOnly ?? _accessibilityState.readOnly, // Windows
         };
       } else {
         _accessibilityState = {
@@ -112,6 +115,7 @@ const Text: component(
           disabled: ariaDisabled,
           expanded: ariaExpanded,
           selected: ariaSelected,
+          readOnly: ariaReadOnly, // Windows
         };
       }
     }

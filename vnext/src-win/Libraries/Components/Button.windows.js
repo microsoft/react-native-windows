@@ -164,6 +164,7 @@ type ButtonProps = $ReadOnly<{|
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
+  'aria-readonly'?: ?boolean, // Windows
 
   /**
    * [Android] Controlling if a view fires accessibility events and if it is reported to accessibility services.
@@ -310,6 +311,7 @@ const Button: component(
     'aria-expanded': ariaExpanded,
     'aria-label': ariaLabel,
     'aria-selected': ariaSelected,
+    'aria-readonly': ariaReadOnly, // Windows
     importantForAccessibility,
     color,
     onPress,
@@ -345,6 +347,7 @@ const Button: component(
     disabled: ariaDisabled ?? accessibilityState?.disabled,
     expanded: ariaExpanded ?? accessibilityState?.expanded,
     selected: ariaSelected ?? accessibilityState?.selected,
+    readOnly: ariaReadOnly ?? accessibilityState?.readOnly, // Windows
   };
 
   const disabled =
