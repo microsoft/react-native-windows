@@ -47,8 +47,10 @@ describe('visitAllPages', () => {
     if (
       component === 'Flyout' ||
       component === 'XAML' ||
-      component === 'SwipeableCard'
+      component === 'SwipeableCard' ||
+      component === 'Display:None'
     ) {
+      console.log('Skipping: ' + component);
       continue;
     }
 

@@ -2225,6 +2225,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
+        "Name": "None",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
         "Name": "Contain",
       },
       {
@@ -2244,6 +2250,12 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Scale Down",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "None",
       },
     ],
   },
@@ -2323,6 +2335,36 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
           "Sources": [
             {
               "Type": "Remote",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
               "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
@@ -2378,7 +2420,7 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
   "Visual Tree": {
     "Comment": "image-object-fit",
     "Offset": "0, 0, 0",
-    "Size": "916, 311",
+    "Size": "916, 466",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2712,72 +2754,6 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
         ],
       },
       {
-        "Offset": "100, 155, 0",
-        "Size": "90, 15",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "90, 15",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "100, 173, 0",
-        "Size": "90, 60",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "90, 60",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, 0, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, -1, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
         "Offset": "0, 233, 0",
         "Size": "90, 16",
         "Visual Type": "SpriteVisual",
@@ -2857,6 +2833,204 @@ exports[`Image Tests An Image customized how it is rendered within the frame usi
       },
       {
         "Offset": "100, 251, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 311, 0",
+        "Size": "90, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 16",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 329, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "100, 311, 0",
+        "Size": "90, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 16",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "100, 329, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 388, 0",
+        "Size": "90, 15",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 15",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 406, 0",
         "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -3045,6 +3219,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "AutomationId": "",
         "ControlType": 50020,
         "LocalizedControlType": "text",
+        "Name": "None",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
         "Name": "Contain",
       },
       {
@@ -3070,6 +3250,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         "ControlType": 50020,
         "LocalizedControlType": "text",
         "Name": "Center",
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "None",
       },
     ],
   },
@@ -3164,6 +3350,36 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
           "Sources": [
             {
               "Type": "Remote",
+              "Uri": "https://www.facebook.com/assets/fb_lite_messaging/E2EE-settings@3x.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
+              "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
+            },
+          ],
+        },
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.ImageComponentView",
+        "_Props": {
+          "Sources": [
+            {
+              "Type": "Remote",
               "Uri": "https://www.facebook.com/ar_effect/external_textures/648609739826677.png",
             },
           ],
@@ -3234,7 +3450,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
   "Visual Tree": {
     "Comment": "image-resize-mode",
     "Offset": "0, 0, 0",
-    "Size": "916, 311",
+    "Size": "916, 465",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3634,79 +3850,13 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         ],
       },
       {
-        "Offset": "100, 155, 0",
+        "Offset": "0, 233, 0",
         "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
             "Size": "90, 16",
-            "Visual Type": "SpriteVisual",
-          },
-        ],
-      },
-      {
-        "Offset": "100, 173, 0",
-        "Size": "90, 60",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "90, 60",
-            "Visual Type": "SpriteVisual",
-            "__Children": [
-              {
-                "Offset": "0, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, 0, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 0, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "-1, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "1, -1, 0",
-                "Size": "-2, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, -1, 0",
-                "Size": "1, 1",
-                "Visual Type": "SpriteVisual",
-              },
-              {
-                "Offset": "0, 1, 0",
-                "Size": "1, -2",
-                "Visual Type": "SpriteVisual",
-              },
-            ],
-          },
-        ],
-      },
-      {
-        "Offset": "0, 233, 0",
-        "Size": "90, 15",
-        "Visual Type": "SpriteVisual",
-        "__Children": [
-          {
-            "Offset": "0, 0, 0",
-            "Size": "90, 15",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3767,12 +3917,12 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
       },
       {
         "Offset": "100, 233, 0",
-        "Size": "90, 15",
+        "Size": "90, 16",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "90, 15",
+            "Size": "90, 16",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -3832,7 +3982,7 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         ],
       },
       {
-        "Offset": "200, 233, 0",
+        "Offset": "0, 311, 0",
         "Size": "90, 15",
         "Visual Type": "SpriteVisual",
         "__Children": [
@@ -3844,7 +3994,205 @@ exports[`Image Tests Images have multiple resize modes 1`] = `
         ],
       },
       {
-        "Offset": "200, 251, 0",
+        "Offset": "0, 329, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "100, 311, 0",
+        "Size": "90, 15",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 15",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "100, 329, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "200, 311, 0",
+        "Size": "90, 15",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 15",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "200, 329, 0",
+        "Size": "90, 60",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 60",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 388, 0",
+        "Size": "90, 16",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "90, 16",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+      {
+        "Offset": "0, 406, 0",
         "Size": "90, 60",
         "Visual Type": "SpriteVisual",
         "__Children": [

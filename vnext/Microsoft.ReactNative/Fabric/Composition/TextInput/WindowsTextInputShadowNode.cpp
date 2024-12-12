@@ -54,7 +54,7 @@ AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutCon
     // that effect.
     fragment.textAttributes.backgroundColor = clearColor();
     fragment.parentShadowView = ShadowView(*this);
-    attributedString.prependFragment(fragment);
+    attributedString.prependFragment(std::move(fragment));
   }
 
   return attributedString;
@@ -84,7 +84,7 @@ AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(cons
   // appended to the AttributedString (see implementation of appendFragment)
   fragment.textAttributes = textAttributes;
   fragment.parentShadowView = ShadowView(*this);
-  textAttributedString.appendFragment(fragment);
+  textAttributedString.appendFragment(std::move(fragment));
 
   return textAttributedString;
 }

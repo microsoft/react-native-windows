@@ -487,7 +487,7 @@ facebook::react::AttributedString WindowsTextInputComponentView::getAttributedSt
     // that effect.
     fragment.textAttributes.backgroundColor = facebook::react::clearColor();
     // fragment.parentShadowView = facebook::react::ShadowView(*this);
-    attributedString.prependFragment(fragment);
+    attributedString.prependFragment(std::move(fragment));
   }
 
   return attributedString;
@@ -1366,7 +1366,7 @@ winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceho
   textAttributes.fontSizeMultiplier = m_fontSizeMultiplier;
   fragment1.string = props.placeholder;
   fragment1.textAttributes = textAttributes;
-  attributedString.appendFragment(fragment1);
+  attributedString.appendFragment(std::move(fragment1));
 
   facebook::react::LayoutConstraints constraints;
   constraints.maximumSize.width = static_cast<FLOAT>(m_imgWidth);
