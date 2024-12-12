@@ -1,8 +1,27 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 06 Dec 2024 06:22:27 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 11 Dec 2024 06:21:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.901
+
+Wed, 11 Dec 2024 06:21:14 GMT
+
+### Changes
+
+- add windows folder to file list (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.251
+
+## 0.0.0-canary.900
+
+Tue, 10 Dec 2024 06:29:30 GMT
+
+### Changes
+
+- Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.250
+- Bump @react-native-windows/codegen to v0.0.0-canary.114
 
 ## 0.0.0-canary.899
 

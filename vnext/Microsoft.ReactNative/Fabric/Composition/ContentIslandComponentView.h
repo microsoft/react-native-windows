@@ -40,7 +40,8 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   ContentIslandComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
-      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+      ReactCompositionViewComponentBuilder *builder);
   ~ContentIslandComponentView() noexcept;
 
  private:
