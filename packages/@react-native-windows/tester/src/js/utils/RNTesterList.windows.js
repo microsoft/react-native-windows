@@ -25,6 +25,7 @@ const Components: Array<RNTesterModuleInfo> = [
   },
   {
     key: 'Test',
+    category: 'UI',
     module: require('../examples/Test/Test'),
   },
   {
