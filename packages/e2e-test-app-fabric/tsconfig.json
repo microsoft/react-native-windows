@@ -1,11 +1,15 @@
 {
   "extends": "@rnw-scripts/ts-config",
   "compilerOptions": {
-    "types": ["jest"]
+    "types": [
+      "jest"
+    ]
   },
   "include": [
     "app",
-    "test", "index.js",
+    "test",
+    "index.js",
+    "test2/visitAllPages.test.ts",
   ],
   "exclude": [
     "node_modules"
