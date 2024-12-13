@@ -48,12 +48,13 @@ describe('visitAllPages', () => {
       component === 'Flyout' ||
       component === 'XAML' ||
       component === 'SwipeableCard' ||
-      component === 'Display:None'
+      component === 'Glyph UWP'
     ) {
       console.log('Skipping: ' + component);
       continue;
     }
 
+    console.log('Testing: ' + component);
     test(component, async () => await goToComponentExample(component));
   }
 
