@@ -251,19 +251,22 @@
       "type": "derived",
       "file": "src-win/Libraries/Animated/NativeAnimatedAllowlist.windows.js",
       "baseFile": "packages/react-native/Libraries/Animated/NativeAnimatedAllowlist.js",
-      "baseHash": "337dfc9001bc8967ca8c5da7f09ddde463d29b54"
+      "baseHash": "337dfc9001bc8967ca8c5da7f09ddde463d29b54",
+      "issue": 14205
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Animated/nodes/AnimatedProps.windows.js",
       "baseFile": "packages/react-native/Libraries/Animated/nodes/AnimatedProps.js",
-      "baseHash": "9157901b6382c2a936010d0d34ec4f33a8baf70b"
+      "baseHash": "9157901b6382c2a936010d0d34ec4f33a8baf70b",
+      "issue": 14205
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Animated/nodes/AnimatedStyle.windows.js",
       "baseFile": "packages/react-native/Libraries/Animated/nodes/AnimatedStyle.js",
-      "baseHash": "477711c8194a5ea843ec907c2d97fbed83b94028"
+      "baseHash": "477711c8194a5ea843ec907c2d97fbed83b94028",
+      "issue": 14205
     },
     {
       "type": "platform",
@@ -611,7 +614,8 @@
       "type": "derived",
       "file": "src-win/src/private/animated/useAnimatedPropsMemo.windows.js",
       "baseFile": "packages/react-native/src/private/animated/useAnimatedPropsMemo.js",
-      "baseHash": "b1c052ae3653d5771b75aa96afc49cddd794f1bd"
+      "baseHash": "b1c052ae3653d5771b75aa96afc49cddd794f1bd",
+      "issue": 14205
     },
     {
       "type": "copy",

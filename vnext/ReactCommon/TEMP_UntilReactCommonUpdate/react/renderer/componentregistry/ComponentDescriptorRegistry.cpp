@@ -84,6 +84,7 @@ const ComponentDescriptor& ComponentDescriptorRegistry::at(
   }
 
   if (it == _registryByName.end()) {
+  // [Windows ##14204
     auto reactNativeConfig_ =
         contextContainer_->at<std::shared_ptr<const ReactNativeConfig>>(
             "ReactNativeConfig");
@@ -101,6 +102,7 @@ const ComponentDescriptor& ComponentDescriptorRegistry::at(
     } else {
       return *_fallbackComponentDescriptor.get();
     }
+  // Windows]
   }
 
   return *it->second;

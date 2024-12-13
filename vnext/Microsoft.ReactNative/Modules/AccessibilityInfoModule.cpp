@@ -31,7 +31,7 @@ void AccessibilityInfo::isReduceMotionEnabled(std::function<void(bool)> const &o
 }
 
 void AccessibilityInfo::isInvertColorsEnabled(std::function<void(bool)> const &onSuccess) noexcept {
-  // TODO: implement #ISSUENUMBER
+  // TODO: implement ##14206
   onSuccess(false);
 }
 
@@ -87,7 +87,7 @@ void AccessibilityInfo::getRecommendedTimeoutMillis(
 }
 
 void AccessibilityInfo::isGrayscaleEnabled(std::function<void(bool)> const &onSuccess) noexcept {
-  // TODO: implement #ISSUENUMBER
+  // TODO: implement #14207
   onSuccess(false);
 }
 
