@@ -476,13 +476,6 @@
       "issue": 4590
     },
     {
-      "type": "derived",
-      "file": "src-win/Libraries/Image/ImageProps.windows.js",
-      "baseFile": "packages/react-native/Libraries/Image/ImageProps.js",
-      "baseHash": "3798c116eaa675aaf0344024a2816cbee3ae8263",
-      "issue": 0
-    },
-    {
       "type": "patch",
       "file": "src-win/Libraries/Image/resolveAssetSource.windows.js",
       "baseFile": "packages/react-native/Libraries/Image/resolveAssetSource.js",
