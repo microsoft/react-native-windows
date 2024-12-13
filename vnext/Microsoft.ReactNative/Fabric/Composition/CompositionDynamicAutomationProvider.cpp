@@ -669,14 +669,14 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY *
   return S_OK;
 }
 
-void CompositionDynamicAutomationProvider::AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> item) {
+void CompositionDynamicAutomationProvider::AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item) {
   if (std::find(m_selectionItems.begin(), m_selectionItems.end(), item) != m_selectionItems.end()) {
     return;
   }
   m_selectionItems.push_back(item);
 }
 
-void CompositionDynamicAutomationProvider::RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> item) {
+void CompositionDynamicAutomationProvider::RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item) {
   std::erase(m_selectionItems, item);
 }
 
@@ -724,6 +724,7 @@ IRawElementProviderSimple *findSelectionContainer(winrt::Microsoft::ReactNative:
     if (uiaProvider != nullptr) {
       auto spProviderSimple = uiaProvider.try_as<IRawElementProviderSimple>();
       if (spProviderSimple != nullptr) {
+        spProviderSimple->AddRef();
         return spProviderSimple.get();
       }
     }
@@ -742,7 +743,6 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_SelectionContainer(I
     return UIA_E_ELEMENTNOTAVAILABLE;
 
   *pRetVal = findSelectionContainer(strongView.Parent());
-  (*pRetVal)->AddRef();
   return S_OK;
 }
 
