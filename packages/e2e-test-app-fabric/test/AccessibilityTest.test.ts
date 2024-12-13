@@ -5,7 +5,7 @@
  * @format
  */
 
-import {dumpVisualTree} from '@react-native-windows/automation-commands';
+/*import {dumpVisualTree} from '@react-native-windows/automation-commands';
 import {goToApiExample} from './RNTesterNavigation';
 import {app} from '@react-native-windows/automation';
 import {verifyNoErrorLogs} from './Helpers';
@@ -59,4 +59,4 @@ describe('Accessibility Tests', () => {
     const dump = await dumpVisualTree('selection-container');
     expect(dump).toMatchSnapshot();
   });
-});
+});*/

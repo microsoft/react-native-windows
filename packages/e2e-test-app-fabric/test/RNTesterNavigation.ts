@@ -55,7 +55,7 @@ async function goToExample(example: string) {
   await exampleButton.waitForDisplayed({timeout: 5000});
   await exampleButton.click();
 
-  const componentsTab = await app.findElementByTestID('example_search');
+  const componentsTab = await app.findElementByTestID('components-tab');
   await componentsTab.waitForDisplayed({timeout: 5000});
   expect(await componentsTab.isDisplayed()).toBe(true);
 }
