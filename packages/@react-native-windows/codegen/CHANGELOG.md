@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Sat, 23 Nov 2024 06:23:15 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 10 Dec 2024 06:29:30 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.114
+
+Tue, 10 Dec 2024 06:29:30 GMT
+
+### Changes
+
+- Add linter exception to generated headers for Office builds (email not defined)
+- Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.113
 
