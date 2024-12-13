@@ -15,6 +15,7 @@ import RCTDeviceEventEmitter from '../../EventEmitter/RCTDeviceEventEmitter';
 import {sendAccessibilityEvent} from '../../ReactNative/RendererProxy';
 import Platform from '../../Utilities/Platform';
 import legacySendAccessibilityEvent from './legacySendAccessibilityEvent';
+import NativeAccessibilityInfoAndroid from './NativeAccessibilityInfo';
 import NativeAccessibilityInfo from './NativeAccessibilityInfo';
 import NativeAccessibilityManagerIOS from './NativeAccessibilityManager';
 
@@ -55,6 +56,8 @@ const EventNames: Map<
       ['highTextContrastChanged', 'highTextContrastDidChange'],
       ['screenReaderChanged', 'touchExplorationDidChange'],
       ['accessibilityServiceChanged', 'accessibilityServiceDidChange'],
+      ['invertColorsChanged', 'invertColorDidChange'],
+      ['grayscaleChanged', 'grayscaleModeDidChange'],
     ])
   : Platform.OS === 'windows'
     ? new Map([
@@ -118,7 +121,15 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo#isGrayscaleEnabled
    */
   isGrayscaleEnabled(): Promise<boolean> {
-    if (Platform.OS === 'android' || Platform.OS === 'windows') {
+    if (Platform.OS === 'android') {
+      return new Promise((resolve, reject) => {
+        if (NativeAccessibilityInfoAndroid?.isGrayscaleEnabled != null) {
+          NativeAccessibilityInfoAndroid.isGrayscaleEnabled(resolve);
+        } else {
+          reject(null);
+        }
+      });
+    } else if (Platform.OS === 'windows') {
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {
@@ -143,7 +154,15 @@ const AccessibilityInfo = {
    * See https://reactnative.dev/docs/accessibilityinfo#isInvertColorsEnabled
    */
   isInvertColorsEnabled(): Promise<boolean> {
-    if (Platform.OS === 'android' || Platform.OS === 'windows') {
+    if (Platform.OS === 'android') {
+      return new Promise((resolve, reject) => {
+        if (NativeAccessibilityInfoAndroid?.isInvertColorsEnabled != null) {
+          NativeAccessibilityInfoAndroid.isInvertColorsEnabled(resolve);
+        } else {
+          reject(null);
+        }
+      });
+    } else if (Platform.OS === 'windows') {
       return Promise.resolve(false);
     } else {
       return new Promise((resolve, reject) => {

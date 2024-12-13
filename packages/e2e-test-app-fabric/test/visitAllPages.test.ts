@@ -49,9 +49,11 @@ describe('visitAllPages', () => {
       component === 'XAML' ||
       component === 'SwipeableCard'
     ) {
+      console.log('Skipping: ' + component);
       continue;
     }
 
+    console.log('Testing: ' + component);
     test(component, async () => await goToComponentExample(component));
   }
 

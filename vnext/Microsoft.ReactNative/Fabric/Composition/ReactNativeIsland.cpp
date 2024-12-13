@@ -577,7 +577,7 @@ facebook::react::AttributedStringBox CreateLoadingAttributedString() noexcept {
   auto fragment = facebook::react::AttributedString::Fragment{};
   fragment.string = "Loading";
   fragment.textAttributes.fontSize = loadingBarFontSize;
-  attributedString.appendFragment(fragment);
+  attributedString.appendFragment(std::move(fragment));
   return facebook::react::AttributedStringBox{attributedString};
 }
 

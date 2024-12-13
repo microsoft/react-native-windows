@@ -1,7 +1,7 @@
 {
   "version": 1,
   "dependencies": {
-    "UAP,Version=v7.0": {
+    "UAP,Version=v10.0.17763": {
       "common": {
         "type": "Project"
       },
@@ -42,12 +42,12 @@
         }
       }
     },
-    "UAP,Version=v7.0/win10-arm": {},
-    "UAP,Version=v7.0/win10-arm-aot": {},
-    "UAP,Version=v7.0/win10-arm64-aot": {},
-    "UAP,Version=v7.0/win10-x64": {},
-    "UAP,Version=v7.0/win10-x64-aot": {},
-    "UAP,Version=v7.0/win10-x86": {},
-    "UAP,Version=v7.0/win10-x86-aot": {}
+    "UAP,Version=v10.0.17763/win10-arm": {},
+    "UAP,Version=v10.0.17763/win10-arm-aot": {},
+    "UAP,Version=v10.0.17763/win10-arm64-aot": {},
+    "UAP,Version=v10.0.17763/win10-x64": {},
+    "UAP,Version=v10.0.17763/win10-x64-aot": {},
+    "UAP,Version=v10.0.17763/win10-x86": {},
+    "UAP,Version=v10.0.17763/win10-x86-aot": {}
   }
 }

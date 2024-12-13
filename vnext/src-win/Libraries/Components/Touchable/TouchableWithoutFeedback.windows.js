@@ -232,8 +232,7 @@ const TouchableWithoutFeedback: React.AbstractComponent<
 
   // BACKWARD-COMPATIBILITY: Focus and blur events were never supported before
   // adopting `Pressability`, so preserve that behavior.
-  const {onBlur, onFocus, ...eventHandlersWithoutBlurAndFocus} =
-    eventHandlers || {};
+  const {onBlur, onFocus, ...eventHandlersWithoutBlurAndFocus} = eventHandlers;
 
   const elementProps: {[string]: mixed, ...} = {
     ...eventHandlersWithoutBlurAndFocus,
