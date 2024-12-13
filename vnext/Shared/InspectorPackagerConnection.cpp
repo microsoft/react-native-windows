@@ -148,8 +148,7 @@ InspectorPackagerConnection::InspectorPackagerConnection(
 winrt::fire_and_forget InspectorPackagerConnection::disconnectAsync() {
   co_await winrt::resume_background();
   std::string reason("Explicit close");
-  m_packagerWebSocketConnection->Close(
-      Microsoft::React::Networking::IWebSocketResource::CloseCode::GoingAway, reason);
+  m_packagerWebSocketConnection->Close(Microsoft::React::Networking::IWebSocketResource::CloseCode::GoingAway, reason);
   co_return;
 }
 
