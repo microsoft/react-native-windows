@@ -83,6 +83,166 @@ auto resume_in_queue(const Mso::DispatchQueue &queue) noexcept {
 
 namespace Microsoft::React::Networking {
 
+#pragma region WinRTWebSocketResource2
+
+
+
+WinRTWebSocketResource2::WinRTWebSocketResource2(
+  IMessageWebSocket &&socket,
+  IDataWriter &&writer,
+  vector<ChainValidationResult>&& certExceptions)
+    : m_socket{std::move(socket)}, m_writer(std::move(writer)) {
+  for (const auto &certException : certExceptions) {
+    m_socket.Control().IgnorableServerCertificateErrors().Append(certException);
+  }
+}
+
+WinRTWebSocketResource2::~WinRTWebSocketResource2() noexcept /*override*/
+{
+
+}
+
+void WinRTWebSocketResource2::OnMessageReceived(
+  IMessageWebSocket const&,
+  IMessageWebSocketMessageReceivedEventArgs const& args) {
+
+  string response;
+
+  IDataReader reader{nullptr};
+  // Use WinRT ABI to avoid throwing exceptions on expected code paths
+  HRESULT hr =
+      reinterpret_cast<ABI::Windows::Networking::Sockets::IMessageWebSocketMessageReceivedEventArgs *>(
+          winrt::get_abi(args))
+          ->GetDataReader(reinterpret_cast<ABI::Windows::Storage::Streams::IDataReader **>(winrt::put_abi(reader)));
+
+  if (FAILED(hr)) {
+    // See
+    // https://docs.microsoft.com/uwp/api/windows.networking.sockets.messagewebsocketmessagereceivedeventargs.getdatareader?view=winrt-22621#remarks
+    if (hr == WININET_E_CONNECTION_ABORTED) {
+      string errorMessage{"[0x80072EFE] Underlying TCP connection suddenly terminated"};
+      m_errorHandler({errorMessage, ErrorType::Connection});
+      // Note: We are not clear whether all read-related errors should close the socket.
+      Close(CloseCode::BadPayload, std::move(errorMessage));
+    } else {
+      m_errorHandler({Utilities::HResultToString(hr), ErrorType::Receive});
+    }
+
+    return;
+  }
+
+  auto len = reader.UnconsumedBufferLength();
+  if (args.MessageType() == SocketMessageType::Utf8) {
+    reader.UnicodeEncoding(UnicodeEncoding::Utf8);
+    vector<uint8_t> data(len);
+    reader.ReadBytes(data);
+
+    response = string(CheckedReinterpretCast<char *>(data.data()), data.size());
+  } else {
+    auto buffer = reader.ReadBuffer(len);
+    winrt::hstring data = CryptographicBuffer::EncodeToBase64String(buffer);
+
+    response = winrt::to_string(std::wstring_view(data));
+  }
+
+  if (m_readHandler) {
+    m_readHandler(response.length(), response, args.MessageType() == SocketMessageType::Binary);
+  }
+
+  //TODO: try-catch?
+}
+
+#pragma region IWebSocketResource
+
+void WinRTWebSocketResource2::Connect(string &&url, const Protocols &protocols, const Options &options) noexcept {
+
+  // Register MessageReceived BEFORE calling Connect
+  // https://learn.microsoft.com/en-us/uwp/api/windows.networking.sockets.messagewebsocket.messagereceived?view=winrt-26100
+  m_socket.MessageReceived({this, &WinRTWebSocketResource2::OnMessageReceived});
+
+  //TODO: readyState
+
+  bool hasOriginHeader = false;
+  for (const auto &header : options) {
+    m_socket.SetRequestHeader(header.first, winrt::to_hstring(header.second));
+    if (boost::iequals(header.first, L"Origin")) {
+      hasOriginHeader = true;
+    }
+  }
+
+  winrt::Windows::Foundation::Collections::IVector<winrt::hstring> supportedProtocols =
+      m_socket.Control().SupportedProtocols();
+  for (const auto &protocol : protocols) {
+    supportedProtocols.Append(winrt::to_hstring(protocol));
+  }
+
+  Uri uri{nullptr};
+  try {
+    uri = Uri{winrt::to_hstring(url)};
+
+    // #12626 - If Origin header is not provided, set to connect endpoint.
+    if (!hasOriginHeader) {
+      auto scheme = uri.SchemeName();
+      auto host = uri.Host();
+      auto port = uri.Port();
+
+      if (scheme == L"ws") {
+        scheme = L"http";
+      } else if (scheme == L"wss") {
+        scheme = L"https";
+      }
+
+      // Only add a port if a port is defined.
+      winrt::hstring originPort = port != 0 ? L":" + winrt::to_hstring(port) : L"";
+      auto origin = winrt::hstring{scheme + L"://" + host + originPort};
+
+      m_socket.SetRequestHeader(L"Origin", std::move(origin));
+    }
+  } catch (hresult_error const &e) {
+    if (m_errorHandler) {
+      m_errorHandler({Utilities::HResultToString(e), ErrorType::Connection});
+    }
+
+    // Abort - Mark connection as concluded.
+    //TODO:SetEvent(m_connectionPerformed.get())
+    //m_connectPerformedPromise.set_value();
+    //m_connectRequested = false;
+
+    return;
+  }
+
+  //TODO: m_connectrequested
+
+  //TODO: Perform ConnectS
+}
+
+void WinRTWebSocketResource2::Ping() noexcept {}
+
+void WinRTWebSocketResource2::Send(string &&message) noexcept {}
+
+void WinRTWebSocketResource2::SendBinary(string &&base64String) noexcept {}
+
+void WinRTWebSocketResource2::Close(CloseCode code, const string &reason) noexcept {}
+
+IWebSocketResource::ReadyState WinRTWebSocketResource2::GetReadyState() const noexcept {
+  return IWebSocketResource::ReadyState::Closed;
+}
+
+void WinRTWebSocketResource2::SetOnConnect(function<void()> &&handler) noexcept {}
+
+void WinRTWebSocketResource2::SetOnPing(function<void()> &&handler) noexcept {}
+
+void WinRTWebSocketResource2::SetOnSend(function<void(size_t)> &&handler) noexcept {}
+
+void WinRTWebSocketResource2::SetOnMessage(function<void(size_t, const string &, bool isBinary)> &&handler) noexcept {}
+
+void WinRTWebSocketResource2::SetOnClose(function<void(CloseCode, const string &)> &&handler) noexcept {}
+
+void WinRTWebSocketResource2::SetOnError(function<void(Error &&)> &&handler) noexcept {}
+
+#pragma endregion IWebSocketResource
+
+#pragma endregion WinRTWebSocketResource2
+
 // private
 WinRTWebSocketResource::WinRTWebSocketResource(
     IMessageWebSocket &&socket,
