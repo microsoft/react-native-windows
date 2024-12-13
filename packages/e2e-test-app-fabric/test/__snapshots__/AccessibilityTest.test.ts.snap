@@ -37,17 +37,17 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to fal
     },
     "Comment": "Selectable item 1",
     "Offset": "0, 0, 0",
-    "Size": "150, 75",
+    "Size": "100, 50",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "150, 29.000015",
+        "Size": "100, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "150, 29.000015",
+            "Size": "100, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -95,17 +95,17 @@ exports[`Accessibility Tests Elements can set accessibilityState:selected to tru
     },
     "Comment": "Selectable item 1",
     "Offset": "0, 0, 0",
-    "Size": "150, 75",
+    "Size": "100, 50",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "150, 29.000015",
+        "Size": "100, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "150, 29.000015",
+            "Size": "100, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -237,17 +237,17 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
   "Visual Tree": {
     "Comment": "selection-container",
     "Offset": "0, 0, 0",
-    "Size": "873, 225",
+    "Size": "916, 150",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "873, 225",
+        "Size": "916, 150",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "873, 225",
+            "Size": "916, 150",
             "Visual Type": "SpriteVisual",
             "__Children": [
               {
@@ -256,7 +256,7 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
                   "Color": "rgba(0, 0, 0, 0)",
                 },
                 "Offset": "0, 0, 0",
-                "Size": "873, 225",
+                "Size": "916, 150",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
@@ -265,22 +265,22 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
                       "Color": "rgba(0, 0, 0, 0)",
                     },
                     "Offset": "0, 0, 0",
-                    "Size": "873, 225",
+                    "Size": "916, 150",
                     "Visual Type": "SpriteVisual",
                     "__Children": [
                       {
                         "Offset": "0, 0, 0",
-                        "Size": "873, 225",
+                        "Size": "916, 150",
                         "Visual Type": "SpriteVisual",
                         "__Children": [
                           {
                             "Offset": "0, 0, 0",
-                            "Size": "873, 225",
+                            "Size": "916, 150",
                             "Visual Type": "SpriteVisual",
                             "__Children": [
                               {
                                 "Offset": "0, 0, 0",
-                                "Size": "150, 75",
+                                "Size": "100, 50",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
@@ -290,17 +290,17 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
                                     },
                                     "Comment": "Selectable item 1",
                                     "Offset": "0, 0, 0",
-                                    "Size": "150, 75",
+                                    "Size": "100, 50",
                                     "Visual Type": "SpriteVisual",
                                     "__Children": [
                                       {
                                         "Offset": "0, 0, 0",
-                                        "Size": "150, 29.000015",
+                                        "Size": "100, 20",
                                         "Visual Type": "SpriteVisual",
                                         "__Children": [
                                           {
                                             "Offset": "0, 0, 0",
-                                            "Size": "150, 29.000015",
+                                            "Size": "100, 20",
                                             "Visual Type": "SpriteVisual",
                                           },
                                         ],
@@ -310,8 +310,8 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
                                 ],
                               },
                               {
-                                "Offset": "0, 75, 0",
-                                "Size": "150, 75",
+                                "Offset": "0, 50, 0",
+                                "Size": "100, 50",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
@@ -321,17 +321,17 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
                                     },
                                     "Comment": "Selectable item 2",
                                     "Offset": "0, 0, 0",
-                                    "Size": "150, 75",
+                                    "Size": "100, 50",
                                     "Visual Type": "SpriteVisual",
                                     "__Children": [
                                       {
                                         "Offset": "0, 0, 0",
-                                        "Size": "150, 29.000015",
+                                        "Size": "100, 20",
                                         "Visual Type": "SpriteVisual",
                                         "__Children": [
                                           {
                                             "Offset": "0, 0, 0",
-                                            "Size": "150, 29.000015",
+                                            "Size": "100, 20",
                                             "Visual Type": "SpriteVisual",
                                           },
                                         ],
@@ -341,8 +341,8 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
                                 ],
                               },
                               {
-                                "Offset": "0, 150, 0",
-                                "Size": "150, 75",
+                                "Offset": "0, 100, 0",
+                                "Size": "100, 50",
                                 "Visual Type": "SpriteVisual",
                                 "__Children": [
                                   {
@@ -352,17 +352,17 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
                                     },
                                     "Comment": "Selectable item 3",
                                     "Offset": "0, 0, 0",
-                                    "Size": "150, 75",
+                                    "Size": "100, 50",
                                     "Visual Type": "SpriteVisual",
                                     "__Children": [
                                       {
                                         "Offset": "0, 0, 0",
-                                        "Size": "150, 29.000015",
+                                        "Size": "100, 20",
                                         "Visual Type": "SpriteVisual",
                                         "__Children": [
                                           {
                                             "Offset": "0, 0, 0",
-                                            "Size": "150, 29.000015",
+                                            "Size": "100, 20",
                                             "Visual Type": "SpriteVisual",
                                           },
                                         ],
@@ -380,61 +380,61 @@ exports[`Accessibility Tests Selectable items must have a Selection Container. E
                 ],
               },
               {
-                "Offset": "-19.5, 0, 0",
-                "Size": "18, 0",
+                "Offset": "-13, 0, 0",
+                "Size": "12, 0",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
-                    "Offset": "-18, 4.5, 0",
+                    "Offset": "-12, 3, 0",
                     "Opacity": 0,
-                    "Size": "18, 216",
+                    "Size": "12, 144",
                     "Visual Type": "Visual",
                   },
                   {
-                    "Offset": "0, 6, 0",
+                    "Offset": "0, 4, 0",
                     "Opacity": 0,
-                    "Size": "18, 18",
+                    "Size": "12, 12",
                     "Visual Type": "SpriteVisual",
                   },
                   {
-                    "Offset": "0, -24, 0",
+                    "Offset": "0, -16, 0",
                     "Opacity": 0,
-                    "Size": "18, 18",
+                    "Size": "12, 12",
                     "Visual Type": "SpriteVisual",
                   },
                   {
-                    "Offset": "-7.5, 24, 0",
-                    "Size": "9, 177",
+                    "Offset": "-5, 16, 0",
+                    "Size": "6, 118",
                     "Visual Type": "Visual",
                   },
                 ],
               },
               {
-                "Offset": "0, -19.5, 0",
-                "Size": "0, 18",
+                "Offset": "0, -13, 0",
+                "Size": "0, 12",
                 "Visual Type": "SpriteVisual",
                 "__Children": [
                   {
-                    "Offset": "4.5, -18, 0",
+                    "Offset": "3, -12, 0",
                     "Opacity": 0,
-                    "Size": "864, 18",
+                    "Size": "910, 12",
                     "Visual Type": "Visual",
                   },
                   {
-                    "Offset": "6, 0, 0",
+                    "Offset": "4, 0, 0",
                     "Opacity": 0,
-                    "Size": "18, 18",
+                    "Size": "12, 12",
                     "Visual Type": "SpriteVisual",
                   },
                   {
-                    "Offset": "-24, 0, 0",
+                    "Offset": "-16, 0, 0",
                     "Opacity": 0,
-                    "Size": "18, 18",
+                    "Size": "12, 12",
                     "Visual Type": "SpriteVisual",
                   },
                   {
-                    "Offset": "24, -7.5, 0",
-                    "Size": "825, 9",
+                    "Offset": "16, -5, 0",
+                    "Size": "884, 6",
                     "Visual Type": "Visual",
                   },
                 ],
