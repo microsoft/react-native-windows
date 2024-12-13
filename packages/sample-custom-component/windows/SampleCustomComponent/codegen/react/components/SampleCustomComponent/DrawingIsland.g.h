@@ -2,6 +2,7 @@
 /*
  * This file is auto-generated from DrawingIslandNativeComponent spec file in flow / TypeScript.
  */
+// clang-format off
 #pragma once
 
 #include <NativeModules.h>
@@ -51,6 +52,13 @@ struct BaseDrawingIsland {
     const winrt::com_ptr<DrawingIslandProps> &newProps,
     const winrt::com_ptr<DrawingIslandProps> &/*oldProps*/) noexcept {
     m_props = newProps;
+  }
+
+  // UpdateLayoutMetrics will only be called if this method is overridden
+  virtual void UpdateLayoutMetrics(
+    const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
+    const winrt::Microsoft::ReactNative::LayoutMetrics &/*newLayoutMetrics*/,
+    const winrt::Microsoft::ReactNative::LayoutMetrics &/*oldLayoutMetrics*/) noexcept {
   }
 
   // UpdateState will only be called if this method is overridden
@@ -115,6 +123,13 @@ void RegisterDrawingIslandNativeComponent(
                                      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) noexcept {
             auto userData = view.UserData().as<TUserData>();
             userData->UpdateProps(view, newProps ? newProps.as<DrawingIslandProps>() : nullptr, oldProps ? oldProps.as<DrawingIslandProps>() : nullptr);
+        });
+
+        compBuilder.SetUpdateLayoutMetricsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                      const winrt::Microsoft::ReactNative::LayoutMetrics &newLayoutMetrics,
+                                      const winrt::Microsoft::ReactNative::LayoutMetrics &oldLayoutMetrics) noexcept {
+            auto userData = view.UserData().as<TUserData>();
+            userData->UpdateLayoutMetrics(view, newLayoutMetrics, oldLayoutMetrics);
         });
 
         builder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,

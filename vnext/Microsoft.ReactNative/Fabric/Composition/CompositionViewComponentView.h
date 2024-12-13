@@ -35,7 +35,8 @@ struct ComponentView : public ComponentViewT<
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext,
-      ComponentViewFeatures flags);
+      ComponentViewFeatures flags,
+      winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder *builder);
   virtual ~ComponentView();
 
   virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual Visual() const noexcept {
@@ -105,6 +106,8 @@ struct ComponentView : public ComponentViewT<
   ToggleState getToggleState() noexcept override;
   void Toggle() noexcept override;
   virtual winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept;
+
+  virtual std::pair<facebook::react::Cursor, HCURSOR> cursor() const noexcept;
 
   const facebook::react::LayoutMetrics &layoutMetrics() const noexcept;
 
@@ -206,7 +209,8 @@ struct ViewComponentView : public ViewComponentViewT<
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext,
-      ComponentViewFeatures flags);
+      ComponentViewFeatures flags,
+      winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder *builder = nullptr);
 
   virtual winrt::Microsoft::ReactNative::Composition::Experimental::IVisual createVisual() noexcept;
 
@@ -224,7 +228,6 @@ struct ViewComponentView : public ViewComponentViewT<
   bool m_hasNonVisualChildren{false};
   facebook::react::SharedViewProps m_props;
   winrt::Microsoft::ReactNative::Composition::Experimental::IVisual m_visual{nullptr};
-  winrt::Microsoft::ReactNative::Composition::CreateVisualDelegate m_createVisualHandler{nullptr};
   winrt::Microsoft::ReactNative::Composition::Experimental::CreateInternalVisualDelegate m_createInternalVisualHandler{
       nullptr};
 };

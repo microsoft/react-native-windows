@@ -1,8 +1,53 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 23 Nov 2024 06:23:16 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 11 Dec 2024 06:21:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.901
+
+Wed, 11 Dec 2024 06:21:14 GMT
+
+### Changes
+
+- add windows folder to file list (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.251
+
+## 0.0.0-canary.900
+
+Tue, 10 Dec 2024 06:29:30 GMT
+
+### Changes
+
+- Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.250
+- Bump @react-native-windows/codegen to v0.0.0-canary.114
+
+## 0.0.0-canary.899
+
+Fri, 06 Dec 2024 06:22:27 GMT
+
+### Changes
+
+- Integrate 10/31 (yajurgrover24@gmail.com)
+
+## 0.0.0-canary.898
+
+Thu, 05 Dec 2024 06:20:53 GMT
+
+### Changes
+
+- Key and mouse events require a stacking context (30809111+acoates-ms@users.noreply.github.com)
+
+## 0.0.0-canary.897
+
+Wed, 04 Dec 2024 06:26:56 GMT
+
+### Changes
+
+- implement onDismiss and remove titlebar from Modal (tatianakapos@microsoft.com)
+- Re-enable most Desktop integration tests (julio.rocha@microsoft.com)
+- Implement cursor property (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.0.0-canary.896
 

@@ -1,6 +1,6 @@
 #include <NativeModules.h>
-#include <ReactCommon/RuntimeExecutor.h>
 #include <react/renderer/core/EventBeat.h>
+#include <react/renderer/runtimescheduler/RuntimeScheduler.h>
 
 namespace Microsoft::ReactNative {
 
@@ -9,7 +9,7 @@ class AsynchronousEventBeat final : public facebook::react::EventBeat {
   AsynchronousEventBeat(
       std::shared_ptr<facebook::react::EventBeat::OwnerBox> const ownerBox,
       const winrt::Microsoft::ReactNative::ReactContext &context,
-      facebook::react::RuntimeExecutor runtimeExecutor);
+      std::shared_ptr<facebook::react::RuntimeScheduler> runtimeScheduler);
 
   void induce() const;
   void request() const override;
@@ -17,7 +17,7 @@ class AsynchronousEventBeat final : public facebook::react::EventBeat {
  private:
   mutable std::atomic<bool> m_isBeatCallbackScheduled{false};
   winrt::Microsoft::ReactNative::ReactContext m_context;
-  facebook::react::RuntimeExecutor m_runtimeExecutor;
+  std::shared_ptr<facebook::react::RuntimeScheduler> m_runtimeScheduler;
 };
 
 } // namespace Microsoft::ReactNative

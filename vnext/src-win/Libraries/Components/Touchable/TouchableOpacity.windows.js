@@ -299,6 +299,7 @@ class TouchableOpacity extends React.Component<Props, State> {
           this.props.onPress !== undefined &&
           !this.props.disabled
         }
+        // $FlowFixMe[prop-missing]
         ref={this.props.hostRef}
         accessibilityPosInSet={this.props.accessibilityPosInSet} // [Windows]
         accessibilitySetSize={this.props.accessibilitySetSize} // [Windows]

@@ -115,6 +115,7 @@ async function updateProjectPackageJson(
   options = {},
   props = {},
   saveOptions = true,
+  ensureWindowsInFiles = false,
 ) {
   const projectRoot = config?.root ?? process.cwd();
   const projectPackage =
@@ -139,6 +140,15 @@ async function updateProjectPackageJson(
   if (options?.logging) {
     console.log(`Modifying ${path.join(projectRoot, 'package.json')}...`);
   }
+
+  // add "windows" to files if property exists
+  if (ensureWindowsInFiles && projectPackage.json.files !== undefined) {
+    props.files = projectPackage.json.files;
+    if (!props.files.includes('windows')) {
+      props.files.push('windows');
+    }
+  }
+
   await projectPackage.mergeProps(props);
 }
 

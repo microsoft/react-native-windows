@@ -10,7 +10,7 @@ SynchronousEventBeat::SynchronousEventBeat(
     const winrt::Microsoft::ReactNative::ReactContext &context,
     facebook::react::RuntimeExecutor runtimeExecutor,
     std::shared_ptr<facebook::react::RuntimeScheduler> runtimeScheduler)
-    : EventBeat(ownerBox, runtimeExecutor),
+    : EventBeat(ownerBox, *runtimeScheduler),
       m_context(context),
       m_runtimeExecutor(runtimeExecutor),
       m_runtimeScheduler(std::move(runtimeScheduler)) {}
