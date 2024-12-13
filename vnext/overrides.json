@@ -148,6 +148,12 @@
       "issue": 14128
     },
     {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/componentregistry/ComponentDescriptorRegistry.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/componentregistry/ComponentDescriptorRegistry.cpp",
+      "baseHash": "b15afcf4971fd2c9c9a9859ffcb2113bec28fc35"
+    },
+    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/core/LayoutableShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/LayoutableShadowNode.cpp",
@@ -251,22 +257,19 @@
       "type": "derived",
       "file": "src-win/Libraries/Animated/NativeAnimatedAllowlist.windows.js",
       "baseFile": "packages/react-native/Libraries/Animated/NativeAnimatedAllowlist.js",
-      "baseHash": "337dfc9001bc8967ca8c5da7f09ddde463d29b54",
-      "issue": 14205
+      "baseHash": "337dfc9001bc8967ca8c5da7f09ddde463d29b54"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Animated/nodes/AnimatedProps.windows.js",
       "baseFile": "packages/react-native/Libraries/Animated/nodes/AnimatedProps.js",
-      "baseHash": "9157901b6382c2a936010d0d34ec4f33a8baf70b",
-      "issue": 14205
+      "baseHash": "9157901b6382c2a936010d0d34ec4f33a8baf70b"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Animated/nodes/AnimatedStyle.windows.js",
       "baseFile": "packages/react-native/Libraries/Animated/nodes/AnimatedStyle.js",
-      "baseHash": "477711c8194a5ea843ec907c2d97fbed83b94028",
-      "issue": 14205
+      "baseHash": "477711c8194a5ea843ec907c2d97fbed83b94028"
     },
     {
       "type": "platform",
@@ -614,8 +617,7 @@
       "type": "derived",
       "file": "src-win/src/private/animated/useAnimatedPropsMemo.windows.js",
       "baseFile": "packages/react-native/src/private/animated/useAnimatedPropsMemo.js",
-      "baseHash": "b1c052ae3653d5771b75aa96afc49cddd794f1bd",
-      "issue": 14205
+      "baseHash": "b1c052ae3653d5771b75aa96afc49cddd794f1bd"
     },
     {
       "type": "copy",
