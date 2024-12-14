@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "integrate RN Nightly 0.77.0-nightly-20241118-3986eefed",
+  "packageName": "@office-iss/react-native-win32",
+  "email": "tatianakapos@microsoft.com",
+  "dependentChangeType": "patch"
+}
