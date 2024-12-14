@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 14 Dec 2024 06:29:13 GMT",
+      "version": "0.0.0-canary.902",
+      "tag": "react-native-windows_v0.0.0-canary.902",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b4fd3e881a30dca95e834a7d0b046765622446d9",
+            "comment": "Use WebSocket factory in PkgInspectorConnection"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "13d41421a38fa7ebe4c08a8f421baffebf14dac5",
+            "comment": "Integrate RN Nighlty 0.77.0-nightly-20241118-3986eefed"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Dec 2024 06:21:14 GMT",
       "version": "0.0.0-canary.901",
       "tag": "react-native-windows_v0.0.0-canary.901",
