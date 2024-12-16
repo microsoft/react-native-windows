@@ -1,8 +1,19 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Tue, 12 Nov 2024 00:02:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 16 Dec 2024 16:31:12 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.1
+
+Mon, 16 Dec 2024 16:31:12 GMT
+
+### Patches
+
+- Implement accessibilityState checked (34109996+chiaramooney@users.noreply.github.com)
+- Add linter exception to generated headers for Office builds (email not defined)
+- Fix issue with prop cloning with custom native props (53619745+rnbot@users.noreply.github.com)
+- Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.76.0
 

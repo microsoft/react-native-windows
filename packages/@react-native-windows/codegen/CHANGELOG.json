@@ -2,6 +2,39 @@
   "name": "@react-native-windows/codegen",
   "entries": [
     {
+      "date": "Mon, 16 Dec 2024 16:31:12 GMT",
+      "version": "0.76.1",
+      "tag": "@react-native-windows/codegen_v0.76.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Implement accessibilityState checked"
+          },
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/codegen",
+            "commit": "199b031a6ade89e4f3668a84d65d427ba2b73169",
+            "comment": "Add linter exception to generated headers for Office builds"
+          },
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Fix issue with prop cloning with custom native props"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "@react-native-windows/codegen",
+            "commit": "199b031a6ade89e4f3668a84d65d427ba2b73169",
+            "comment": "Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Nov 2024 00:02:26 GMT",
       "version": "0.76.0",
       "tag": "@react-native-windows/codegen_v0.76.0",

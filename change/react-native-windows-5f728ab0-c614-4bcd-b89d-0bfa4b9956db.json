@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Key and mouse events require a stacking context",
-  "packageName": "react-native-windows",
-  "email": "30809111+acoates-ms@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

@@ -2,6 +2,149 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 16 Dec 2024 16:31:12 GMT",
+      "version": "0.76.3",
+      "tag": "react-native-windows_v0.76.3",
+      "comments": {
+        "patch": [
+          {
+            "author": "sawalker@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Fixing text components not rendering a border with Paper"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Implement accessibilityState checked"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Export MS.RN.Color ctor in Office dll"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "adds default modal that hosts fabric components"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "199b031a6ade89e4f3668a84d65d427ba2b73169",
+            "comment": "Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "implement onDismiss and remove titlebar from Modal"
+          },
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Fix focus visuals being obscured by adjacent views"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Focus should notify island host when tab loop wraps to give host oportunity to take focus"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Implement cursor property"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Key and mouse events require a stacking context"
+          },
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Fix issue with prop cloning with custom native props"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Default scroll to bring a component into view should have padding around the viewport"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Fix flatten style running multiple times\""
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Add very basic box-shadow support"
+          },
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Introduced autocapitalize prop in TextInput"
+          },
+          {
+            "author": "53619745+rnbot@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "TextInput caret becomes visible on non-focused TextInputs on resize"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Update focus visuals to use cornerRadius and inner/outer strokes."
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Fix Modal position, disable input to parent hwnd, and add onShow"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.76.1",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.76.1",
+            "commit": "not available"
+          }
+        ],
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "41f26e2a668c97f30134adfe73706d49ca7ab1cb",
+            "comment": "Disable failing UT"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "199b031a6ade89e4f3668a84d65d427ba2b73169",
+            "comment": "add the new generated headers"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Nov 2024 16:29:57 GMT",
       "version": "0.76.2",
       "tag": "react-native-windows_v0.76.2",

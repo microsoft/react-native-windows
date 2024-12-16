@@ -1,8 +1,35 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 25 Nov 2024 16:29:57 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 16 Dec 2024 16:31:12 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.3
+
+Mon, 16 Dec 2024 16:31:12 GMT
+
+### Patches
+
+- Fixing text components not rendering a border with Paper (sawalker@microsoft.com)
+- Implement accessibilityState checked (34109996+chiaramooney@users.noreply.github.com)
+- Export MS.RN.Color ctor in Office dll (30809111+acoates-ms@users.noreply.github.com)
+- adds default modal that hosts fabric components (tatianakapos@microsoft.com)
+- Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto (30809111+acoates-ms@users.noreply.github.com)
+- implement onDismiss and remove titlebar from Modal (tatianakapos@microsoft.com)
+- Fix focus visuals being obscured by adjacent views (53619745+rnbot@users.noreply.github.com)
+- Focus should notify island host when tab loop wraps to give host oportunity to take focus (30809111+acoates-ms@users.noreply.github.com)
+- Implement cursor property (30809111+acoates-ms@users.noreply.github.com)
+- Key and mouse events require a stacking context (30809111+acoates-ms@users.noreply.github.com)
+- Fix issue with prop cloning with custom native props (53619745+rnbot@users.noreply.github.com)
+- Default scroll to bring a component into view should have padding around the viewport (30809111+acoates-ms@users.noreply.github.com)
+- Fix flatten style running multiple times" (tatianakapos@microsoft.com)
+- Add very basic box-shadow support (30809111+acoates-ms@users.noreply.github.com)
+- Introduced autocapitalize prop in TextInput (14967941+danielayala94@users.noreply.github.com)
+- TextInput caret becomes visible on non-focused TextInputs on resize (53619745+rnbot@users.noreply.github.com)
+- Update focus visuals to use cornerRadius and inner/outer strokes. (30809111+acoates-ms@users.noreply.github.com)
+- Fix Modal position, disable input to parent hwnd, and add onShow (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.76.1
+- Bump @react-native-windows/codegen to v0.76.1
 
 ## 0.76.2
 
