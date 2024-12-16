@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/codegen
 
-This log was last generated on Mon, 25 Nov 2024 16:28:03 GMT and should not be manually modified.
+This log was last generated on Mon, 16 Dec 2024 16:30:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.75.6
+
+Mon, 16 Dec 2024 16:30:59 GMT
+
+### Patches
+
+- Add linter exception to generated headers for Office builds (email not defined)
+- Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.75.5
 

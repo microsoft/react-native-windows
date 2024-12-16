@@ -2,6 +2,21 @@
   "name": "@react-native-windows/cli",
   "entries": [
     {
+      "date": "Mon, 16 Dec 2024 16:31:00 GMT",
+      "version": "0.75.8",
+      "tag": "@react-native-windows/cli_v0.75.8",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/cli",
+            "comment": "Bump @react-native-windows/codegen to v0.75.6",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 25 Nov 2024 16:28:05 GMT",
       "version": "0.75.7",
       "tag": "@react-native-windows/cli_v0.75.7",
