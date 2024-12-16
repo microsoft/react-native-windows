@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241118-3986eefed",
+  "baseVersion": "0.77.0-nightly-20241125-4cffff35e",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "afa414432bb8dae6ce606a148b74f85fcef8a59d"
+      "baseHash": "168a2b4bcf33aba4727eb608902b17b4eb74c95d"
     },
     {
       "type": "derived",
@@ -128,13 +128,6 @@
     },
     {
       "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/Base.h",
-      "baseFile": "packages/react-native/ReactCommon/react/bridging/Base.h",
-      "baseHash": "e85dc01810f13f0891dfeb0bad43efda7402a145",
-      "issue": 14130
-    },
-    {
-      "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/bridging/Bridging.h",
       "baseFile": "packages/react-native/ReactCommon/react/bridging/Bridging.h",
       "baseHash": "41cd230ece3cc4ab7bb939bf4dcfcd07918d1ab1",
@@ -185,7 +178,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "847ac68f0dbcacdd5a47a244bd57c93da2226d04",
+      "baseHash": "240a49c5f5bd67f35e79dcbe9a9c6e7f6e6e2a32",
       "issue": 13172
     },
     {
@@ -449,7 +442,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/ViewPropTypes.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "a742b26e4c96fdefb07779e40bc58cd1cc872675"
+      "baseHash": "994aead3d5ab49e6bd34a497094a4bc131a8bdb1"
     },
     {
       "type": "patch",

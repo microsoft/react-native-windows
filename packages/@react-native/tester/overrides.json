@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.77.0-nightly-20241118-3986eefed",
+  "baseVersion": "0.77.0-nightly-20241125-4cffff35e",
   "overrides": [
     {
       "type": "copy",
@@ -173,7 +173,7 @@
       "type": "copy",
       "directory": "js/examples/IntersectionObserver",
       "baseDirectory": "packages/rn-tester/js/examples/IntersectionObserver",
-      "baseHash": "ace636ea59030d802cee26ba49d7417f8ee3630e",
+      "baseHash": "18fa6bfda63981e386186916fd7a0f7530015b89",
       "issue": 4054
     },
     {
@@ -215,7 +215,7 @@
       "type": "copy",
       "directory": "js/examples/LinearGradient",
       "baseDirectory": "packages/rn-tester/js/examples/LinearGradient/",
-      "baseHash": "1818fa64f944095d532d9e75d3937884392d7826",
+      "baseHash": "f7dda687686dfa4f255046878140b5224d3da937",
       "issue": 4054
     },
     {
