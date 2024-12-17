@@ -53,17 +53,16 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{33, L"initEagerTurboModulesOnNativeModulesQueueAndroid"},
       SyncMethod<bool() noexcept>{34, L"lazyAnimationCallbacks"},
       SyncMethod<bool() noexcept>{35, L"loadVectorDrawablesOnImages"},
-      SyncMethod<bool() noexcept>{36, L"setAndroidLayoutDirection"},
-      SyncMethod<bool() noexcept>{37, L"traceTurboModulePromiseRejectionsOnAndroid"},
-      SyncMethod<bool() noexcept>{38, L"useAlwaysAvailableJSErrorHandling"},
-      SyncMethod<bool() noexcept>{39, L"useFabricInterop"},
-      SyncMethod<bool() noexcept>{40, L"useImmediateExecutorInAndroidBridgeless"},
-      SyncMethod<bool() noexcept>{41, L"useNativeViewConfigsInBridgelessMode"},
-      SyncMethod<bool() noexcept>{42, L"useOptimisedViewPreallocationOnAndroid"},
-      SyncMethod<bool() noexcept>{43, L"useOptimizedEventBatchingOnAndroid"},
-      SyncMethod<bool() noexcept>{44, L"useRuntimeShadowNodeReferenceUpdate"},
-      SyncMethod<bool() noexcept>{45, L"useTurboModuleInterop"},
-      SyncMethod<bool() noexcept>{46, L"useTurboModules"},
+      SyncMethod<bool() noexcept>{36, L"traceTurboModulePromiseRejectionsOnAndroid"},
+      SyncMethod<bool() noexcept>{37, L"useAlwaysAvailableJSErrorHandling"},
+      SyncMethod<bool() noexcept>{38, L"useFabricInterop"},
+      SyncMethod<bool() noexcept>{39, L"useImmediateExecutorInAndroidBridgeless"},
+      SyncMethod<bool() noexcept>{40, L"useNativeViewConfigsInBridgelessMode"},
+      SyncMethod<bool() noexcept>{41, L"useOptimisedViewPreallocationOnAndroid"},
+      SyncMethod<bool() noexcept>{42, L"useOptimizedEventBatchingOnAndroid"},
+      SyncMethod<bool() noexcept>{43, L"useRuntimeShadowNodeReferenceUpdate"},
+      SyncMethod<bool() noexcept>{44, L"useTurboModuleInterop"},
+      SyncMethod<bool() noexcept>{45, L"useTurboModules"},
   };
 
   template <class TModule>
@@ -252,56 +251,51 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(loadVectorDrawablesOnImages) static bool loadVectorDrawablesOnImages() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           36,
-          "setAndroidLayoutDirection",
-          "    REACT_SYNC_METHOD(setAndroidLayoutDirection) bool setAndroidLayoutDirection() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(setAndroidLayoutDirection) static bool setAndroidLayoutDirection() noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          37,
           "traceTurboModulePromiseRejectionsOnAndroid",
           "    REACT_SYNC_METHOD(traceTurboModulePromiseRejectionsOnAndroid) bool traceTurboModulePromiseRejectionsOnAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(traceTurboModulePromiseRejectionsOnAndroid) static bool traceTurboModulePromiseRejectionsOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          38,
+          37,
           "useAlwaysAvailableJSErrorHandling",
           "    REACT_SYNC_METHOD(useAlwaysAvailableJSErrorHandling) bool useAlwaysAvailableJSErrorHandling() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useAlwaysAvailableJSErrorHandling) static bool useAlwaysAvailableJSErrorHandling() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          39,
+          38,
           "useFabricInterop",
           "    REACT_SYNC_METHOD(useFabricInterop) bool useFabricInterop() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useFabricInterop) static bool useFabricInterop() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          40,
+          39,
           "useImmediateExecutorInAndroidBridgeless",
           "    REACT_SYNC_METHOD(useImmediateExecutorInAndroidBridgeless) bool useImmediateExecutorInAndroidBridgeless() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useImmediateExecutorInAndroidBridgeless) static bool useImmediateExecutorInAndroidBridgeless() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          41,
+          40,
           "useNativeViewConfigsInBridgelessMode",
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useNativeViewConfigsInBridgelessMode) static bool useNativeViewConfigsInBridgelessMode() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          42,
+          41,
           "useOptimisedViewPreallocationOnAndroid",
           "    REACT_SYNC_METHOD(useOptimisedViewPreallocationOnAndroid) bool useOptimisedViewPreallocationOnAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useOptimisedViewPreallocationOnAndroid) static bool useOptimisedViewPreallocationOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          43,
+          42,
           "useOptimizedEventBatchingOnAndroid",
           "    REACT_SYNC_METHOD(useOptimizedEventBatchingOnAndroid) bool useOptimizedEventBatchingOnAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useOptimizedEventBatchingOnAndroid) static bool useOptimizedEventBatchingOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          44,
+          43,
           "useRuntimeShadowNodeReferenceUpdate",
           "    REACT_SYNC_METHOD(useRuntimeShadowNodeReferenceUpdate) bool useRuntimeShadowNodeReferenceUpdate() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useRuntimeShadowNodeReferenceUpdate) static bool useRuntimeShadowNodeReferenceUpdate() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          45,
+          44,
           "useTurboModuleInterop",
           "    REACT_SYNC_METHOD(useTurboModuleInterop) bool useTurboModuleInterop() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useTurboModuleInterop) static bool useTurboModuleInterop() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          46,
+          45,
           "useTurboModules",
           "    REACT_SYNC_METHOD(useTurboModules) bool useTurboModules() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(useTurboModules) static bool useTurboModules() noexcept { /* implementation */ }\n");

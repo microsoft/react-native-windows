@@ -56,7 +56,6 @@ public:
   virtual bool initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime &rt) = 0;
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
   virtual bool loadVectorDrawablesOnImages(jsi::Runtime &rt) = 0;
-  virtual bool setAndroidLayoutDirection(jsi::Runtime &rt) = 0;
   virtual bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useAlwaysAvailableJSErrorHandling(jsi::Runtime &rt) = 0;
   virtual bool useFabricInterop(jsi::Runtime &rt) = 0;
@@ -384,14 +383,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::loadVectorDrawablesOnImages, jsInvoker_, instance_);
-    }
-    bool setAndroidLayoutDirection(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::setAndroidLayoutDirection) == 1,
-          "Expected setAndroidLayoutDirection(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::setAndroidLayoutDirection, jsInvoker_, instance_);
     }
     bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -8213,13 +8204,14 @@ struct NativeIntersectionObserverNativeIntersectionObserverEntryBridging {
 
 #pragma mark - NativeIntersectionObserverNativeIntersectionObserverObserveOptions
 
-template <typename P0, typename P1, typename P2>
+template <typename P0, typename P1, typename P2, typename P3>
 struct NativeIntersectionObserverNativeIntersectionObserverObserveOptions {
   P0 intersectionObserverId;
   P1 targetShadowNode;
   P2 thresholds;
+  P3 rootThresholds;
   bool operator==(const NativeIntersectionObserverNativeIntersectionObserverObserveOptions &other) const {
-    return intersectionObserverId == other.intersectionObserverId && targetShadowNode == other.targetShadowNode && thresholds == other.thresholds;
+    return intersectionObserverId == other.intersectionObserverId && targetShadowNode == other.targetShadowNode && thresholds == other.thresholds && rootThresholds == other.rootThresholds;
   }
 };
 
@@ -8234,7 +8226,8 @@ struct NativeIntersectionObserverNativeIntersectionObserverObserveOptionsBridgin
     T result{
       bridging::fromJs<decltype(types.intersectionObserverId)>(rt, value.getProperty(rt, "intersectionObserverId"), jsInvoker),
       bridging::fromJs<decltype(types.targetShadowNode)>(rt, value.getProperty(rt, "targetShadowNode"), jsInvoker),
-      bridging::fromJs<decltype(types.thresholds)>(rt, value.getProperty(rt, "thresholds"), jsInvoker)};
+      bridging::fromJs<decltype(types.thresholds)>(rt, value.getProperty(rt, "thresholds"), jsInvoker),
+      bridging::fromJs<decltype(types.rootThresholds)>(rt, value.getProperty(rt, "rootThresholds"), jsInvoker)};
     return result;
   }
 
@@ -8250,6 +8243,10 @@ struct NativeIntersectionObserverNativeIntersectionObserverObserveOptionsBridgin
   static jsi::Array thresholdsToJs(jsi::Runtime &rt, decltype(types.thresholds) value) {
     return bridging::toJs(rt, value);
   }
+
+  static std::optional<jsi::Array> rootThresholdsToJs(jsi::Runtime &rt, decltype(types.rootThresholds) value) {
+    return bridging::toJs(rt, value);
+  }
 #endif
 
   static jsi::Object toJs(
@@ -8260,6 +8257,9 @@ struct NativeIntersectionObserverNativeIntersectionObserverObserveOptionsBridgin
     result.setProperty(rt, "intersectionObserverId", bridging::toJs(rt, value.intersectionObserverId, jsInvoker));
     result.setProperty(rt, "targetShadowNode", bridging::toJs(rt, value.targetShadowNode, jsInvoker));
     result.setProperty(rt, "thresholds", bridging::toJs(rt, value.thresholds, jsInvoker));
+    if (value.rootThresholds) {
+      result.setProperty(rt, "rootThresholds", bridging::toJs(rt, value.rootThresholds.value(), jsInvoker));
+    }
     return result;
   }
 };

@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241118-3986eefed",
+  "baseVersion": "0.77.0-nightly-20241125-4cffff35e",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "afa414432bb8dae6ce606a148b74f85fcef8a59d"
+      "baseHash": "168a2b4bcf33aba4727eb608902b17b4eb74c95d"
     },
     {
       "type": "derived",
@@ -197,7 +197,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/View/ViewPropTypes.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/View/ViewPropTypes.js",
-      "baseHash": "a742b26e4c96fdefb07779e40bc58cd1cc872675",
+      "baseHash": "994aead3d5ab49e6bd34a497094a4bc131a8bdb1",
       "issue": 6240
     },
     {
