@@ -496,7 +496,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(LPCWSTR val) {
 
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
       ->setAcccessiblityValue(winrt::to_string(val));
-  // TODO: Edit once/if onAccessibilityAction props supports returning UIA event data. See <>.
+  // TODO: Edit once/if onAccessibilityAction props supports returning UIA event data. See
+  // https://github.com/react-native-community/discussions-and-proposals/issues/843.
   DispatchAccessibilityAction(m_view, "setValue");
   return S_OK;
 }
@@ -602,7 +603,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(double val) {
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  // TODO: Edit once/if onAccessibilityAction props supports returning UIA event data. See <>.
+  // TODO: Edit once/if onAccessibilityAction props supports returning UIA event data. See
+  // https://github.com/react-native-community/discussions-and-proposals/issues/843.
   DispatchAccessibilityAction(m_view, "setValue");
   return S_OK;
 }

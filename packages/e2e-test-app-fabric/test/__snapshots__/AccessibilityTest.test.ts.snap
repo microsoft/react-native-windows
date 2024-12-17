@@ -39,17 +39,17 @@ exports[`Accessibility Tests Components can store range data by setting the min,
     },
     "Comment": "accessibilityValue-number",
     "Offset": "0, 0, 0",
-    "Size": "852, 87.999985",
+    "Size": "916, 50",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "853.99994, 65.99991",
+        "Size": "916, 19",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "853.99994, 65.99991",
+            "Size": "916, 19",
             "Visual Type": "SpriteVisual",
           },
         ],
@@ -95,17 +95,17 @@ exports[`Accessibility Tests Components can store value data by setting the text
     },
     "Comment": "accessibilityValue-text",
     "Offset": "0, 0, 0",
-    "Size": "852, 87.999985",
+    "Size": "916, 50",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
         "Offset": "0, 0, 0",
-        "Size": "853.99994, 32.999954",
+        "Size": "916, 20",
         "Visual Type": "SpriteVisual",
         "__Children": [
           {
             "Offset": "0, 0, 0",
-            "Size": "853.99994, 32.999954",
+            "Size": "916, 20",
             "Visual Type": "SpriteVisual",
           },
         ],
