@@ -51,6 +51,8 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
         'aria-checked': ariaChecked,
         'aria-disabled': ariaDisabled,
         'aria-expanded': ariaExpanded,
+        'aria-multiselectable': ariaMultiselectable, // Windows
+        'aria-required': ariaRequired, // Windows
         'aria-label': ariaLabel,
         'aria-level': ariaLevel, // Windows
         'aria-posinset': ariaPosinset, // Windows
@@ -102,6 +104,9 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
             disabled: ariaDisabled ?? _accessibilityState.disabled,
             expanded: ariaExpanded ?? _accessibilityState.expanded,
             selected: ariaSelected ?? _accessibilityState.selected,
+            multiselectable:
+              ariaMultiselectable ?? _accessibilityState.multiselectable, // Windows
+            required: ariaRequired ?? _accessibilityState.required, // Windows
           };
         } else {
           _accessibilityState = {
@@ -110,6 +115,8 @@ const Text: React.AbstractComponent<TextProps, TextForwardRef> =
             disabled: ariaDisabled,
             expanded: ariaExpanded,
             selected: ariaSelected,
+            multiselectable: ariaMultiselectable, // Windows
+            required: ariaRequired, // Windows
           };
         }
       }
