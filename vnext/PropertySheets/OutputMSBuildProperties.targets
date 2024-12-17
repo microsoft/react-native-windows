@@ -19,6 +19,7 @@
         "UseExperimentalNuGet": "$(UseExperimentalNuGet)",
         "UseHermes": "$(UseHermes)",
         "UseWinUI3": "$(UseWinUI3)",
+        "UseFabric": "$(UseFabric)",
         "RnwNewArch": "$(RnwNewArch)"
       }
       </MSBuildPropertiesJSON>
