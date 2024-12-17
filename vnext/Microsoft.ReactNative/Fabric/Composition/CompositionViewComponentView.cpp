@@ -761,6 +761,19 @@ void ComponentView::updateAccessibilityProps(
       UIA_LiveSettingPropertyId,
       oldViewProps.accessibilityLiveRegion,
       newViewProps.accessibilityLiveRegion);
+
+  if ((oldViewProps.accessibilityState.has_value() && oldViewProps.accessibilityState->selected.has_value()) !=
+      ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value()))) {
+    auto compProvider =
+        m_uiaProvider.try_as<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>();
+    if (compProvider) {
+      if ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value())) {
+        winrt::Microsoft::ReactNative::implementation::AddSelectionItemsToContainer(compProvider.get());
+      } else {
+        winrt::Microsoft::ReactNative::implementation::RemoveSelectionItemsFromContainer(compProvider.get());
+      }
+    }
+  }
 }
 
 std::optional<std::string> ComponentView::getAccessiblityValue() noexcept {

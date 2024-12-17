@@ -76,6 +76,8 @@ const View: component(
       'aria-checked': ariaChecked,
       'aria-disabled': ariaDisabled,
       'aria-expanded': ariaExpanded,
+      'aria-multiselectable': ariaMultiselectable, // Windows
+      'aria-required': ariaRequired, // Windows
       'aria-hidden': ariaHidden,
       'aria-label': ariaLabel,
       'aria-labelledby': ariaLabelledBy,
@@ -110,7 +112,9 @@ const View: component(
       ariaDisabled != null ||
       ariaExpanded != null ||
       ariaSelected != null ||
-      ariaReadOnly != null // Windows
+      ariaReadOnly != null || // Windows
+      ariaMultiselectable != null || // Windows
+      ariaRequired != null // Windows
     ) {
       _accessibilityState = {
         busy: ariaBusy ?? accessibilityState?.busy,
@@ -119,6 +123,9 @@ const View: component(
         expanded: ariaExpanded ?? accessibilityState?.expanded,
         selected: ariaSelected ?? accessibilityState?.selected,
         readOnly: ariaReadOnly ?? accessibilityState?.readOnly, // Windows
+        multiselectable:
+          ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
+        required: ariaRequired ?? accessibilityState?.required, // Windows
       };
     }
     let _accessibilityValue;

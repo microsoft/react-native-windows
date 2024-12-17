@@ -60,6 +60,8 @@ type Props = $ReadOnly<{|
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
   'aria-readonly'?: ?boolean, // Windows
+  'aria-multiselectable'?: ?boolean, // Windows
+  'aria-required'?: ?boolean, // Windows
   'aria-hidden'?: ?boolean,
   'aria-live'?: ?('polite' | 'assertive' | 'off'),
   'aria-label'?: ?Stringish,
@@ -224,12 +226,15 @@ const TouchableWithoutFeedback: React.AbstractComponent<
     expanded: props['aria-expanded'] ?? props.accessibilityState?.expanded,
     selected: props['aria-selected'] ?? props.accessibilityState?.selected,
     readonly: props['aria-readonly'] ?? props.accessibilityState?.readOnly, // Windows
+    multiselectable:
+      props['aria-multiselectable'] ??
+      props.accessibilityState?.multiselectable, // Windows
+    required: props['aria-required'] ?? props.accessibilityState?.required, // Windows
   };
 
   // BACKWARD-COMPATIBILITY: Focus and blur events were never supported before
   // adopting `Pressability`, so preserve that behavior.
-  const {onBlur, onFocus, ...eventHandlersWithoutBlurAndFocus} =
-    eventHandlers || {};
+  const {onBlur, onFocus, ...eventHandlersWithoutBlurAndFocus} = eventHandlers;
 
   const elementProps: {[string]: mixed, ...} = {
     ...eventHandlersWithoutBlurAndFocus,

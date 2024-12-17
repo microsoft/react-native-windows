@@ -11,7 +11,21 @@ namespace winrt::Microsoft::ReactNative::implementation {
 
 CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
     const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept
-    : m_view{componentView} {}
+    : m_view{componentView} {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+  if (!props)
+    return;
+
+  if (props->accessibilityState.has_value() && props->accessibilityState->selected.has_value()) {
+    AddSelectionItemsToContainer(this);
+  }
+}
 
 HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
     NavigateDirection direction,
@@ -218,6 +232,18 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
     AddRef();
   }
 
+  if (patternId == UIA_SelectionPatternId && props->accessibilityState.has_value() &&
+      props->accessibilityState->multiselectable.has_value() && props->accessibilityState->required.has_value()) {
+    *pRetVal = static_cast<ISelectionProvider *>(this);
+    AddRef();
+  }
+
+  if (patternId == UIA_SelectionItemPatternId && props->accessibilityState.has_value() &&
+      props->accessibilityState->selected.has_value()) {
+    *pRetVal = static_cast<ISelectionItemProvider *>(this);
+    AddRef();
+  }
+
   return S_OK;
 }
 
@@ -361,6 +387,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPropertyValue(PROPERT
     case UIA_IsOffscreenPropertyId: {
       pRetVal->vt = VT_BOOL;
       pRetVal->boolVal = (compositionView->getClipState() == ClipState::FullyClipped) ? VARIANT_TRUE : VARIANT_FALSE;
+      break;
     }
     case UIA_HelpTextPropertyId: {
       pRetVal->vt = VT_BSTR;
@@ -647,6 +674,171 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::Collapse() {
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
   DispatchAccessibilityAction(m_view, "collapse");
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_CanSelectMultiple(BOOL *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props =
+      std::static_pointer_cast<const facebook::react::ViewProps>(winrt::get_self<ComponentView>(strongView)->props());
+
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = (props->accessibilityState.has_value() && props->accessibilityState->multiselectable.has_value())
+      ? props->accessibilityState->multiselectable.value()
+      : false;
+
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsSelectionRequired(BOOL *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = (props->accessibilityState.has_value() && props->accessibilityState->required.has_value())
+      ? props->accessibilityState->required.value()
+      : false;
+
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::GetSelection(SAFEARRAY **pRetVal) {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  std::vector<int> selectedItems;
+  for (size_t i = 0; i < m_selectionItems.size(); i++) {
+    auto selectionItem = m_selectionItems.at(i);
+    auto provider = selectionItem.as<CompositionDynamicAutomationProvider>();
+    BOOL selected;
+    auto hr = provider->get_IsSelected(&selected);
+    if (hr == S_OK && selected) {
+      selectedItems.push_back(int(i));
+    }
+  }
+
+  *pRetVal = SafeArrayCreateVector(VT_UNKNOWN, 0, ULONG(selectedItems.size()));
+  if (*pRetVal == nullptr)
+    return E_OUTOFMEMORY;
+
+  for (size_t i = 0; i < selectedItems.size(); i++) {
+    auto pos = static_cast<long>(i);
+    SafeArrayPutElement(*pRetVal, &pos, m_selectionItems.at(selectedItems.at(i)).get());
+  }
+  return S_OK;
+}
+
+void CompositionDynamicAutomationProvider::AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item) {
+  if (std::find(m_selectionItems.begin(), m_selectionItems.end(), item) != m_selectionItems.end()) {
+    return;
+  }
+  m_selectionItems.push_back(item);
+}
+
+void CompositionDynamicAutomationProvider::RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item) {
+  std::erase(m_selectionItems, item);
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::AddToSelection() {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  DispatchAccessibilityAction(m_view, "addToSelection");
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsSelected(BOOL *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = (props->accessibilityState.has_value() && props->accessibilityState->selected.has_value())
+      ? props->accessibilityState->selected.value()
+      : false;
+
+  return S_OK;
+}
+
+IRawElementProviderSimple *findSelectionContainer(winrt::Microsoft::ReactNative::ComponentView current) {
+  if (!current)
+    return nullptr;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(current)->props());
+  if (props->accessibilityState.has_value() && props->accessibilityState->multiselectable.has_value() &&
+      props->accessibilityState->required.has_value()) {
+    auto uiaProvider =
+        current.as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>()->EnsureUiaProvider();
+    if (uiaProvider != nullptr) {
+      auto spProviderSimple = uiaProvider.try_as<IRawElementProviderSimple>();
+      if (spProviderSimple != nullptr) {
+        spProviderSimple->AddRef();
+        return spProviderSimple.get();
+      }
+    }
+  } else {
+    return findSelectionContainer(current.Parent());
+  }
+  return nullptr;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_SelectionContainer(IRawElementProviderSimple **pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = findSelectionContainer(strongView.Parent());
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::RemoveFromSelection() {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  DispatchAccessibilityAction(m_view, "removeFromSelection");
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::Select() {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  DispatchAccessibilityAction(m_view, "select");
   return S_OK;
 }
 

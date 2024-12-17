@@ -323,6 +323,12 @@ type IOSProps = $ReadOnly<{|
   inputAccessoryViewID?: ?string,
 
   /**
+   * An optional label that overrides the default input accessory view button label.
+   * @platform ios
+   */
+  inputAccessoryViewButtonLabel?: ?string,
+
+  /**
    * Determines the color of the keyboard.
    * @platform ios
    */
@@ -1355,6 +1361,8 @@ function InternalTextInput(props: Props): React.Node {
     'aria-expanded': ariaExpanded,
     'aria-selected': ariaSelected,
     'aria-readonly': ariaReadOnly, // Windows
+    'aria-multiselectable': ariaMultiselectable, // Windows
+    'aria-required': ariaRequired, // Windows
     accessibilityState,
     id,
     tabIndex,
@@ -1623,7 +1631,7 @@ function InternalTextInput(props: Props): React.Node {
 
   // TextInput handles onBlur and onFocus events
   // so omitting onBlur and onFocus pressability handlers here.
-  const {onBlur, onFocus, ...eventHandlers} = usePressability(config) || {};
+  const {onBlur, onFocus, ...eventHandlers} = usePressability(config);
   const eventPhase = Object.freeze({Capturing: 1, Bubbling: 3});
   const _keyDown = (event: KeyEvent) => {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {
@@ -1684,7 +1692,9 @@ function InternalTextInput(props: Props): React.Node {
     ariaDisabled != null ||
     ariaExpanded != null ||
     ariaSelected != null ||
-    ariaReadOnly != null // Windows
+    ariaReadOnly != null || // Windows
+    ariaMultiselectable != null || // Windows
+    ariaRequired != null // Windows
   ) {
     _accessibilityState = {
       busy: ariaBusy ?? accessibilityState?.busy,
@@ -1693,6 +1703,9 @@ function InternalTextInput(props: Props): React.Node {
       expanded: ariaExpanded ?? accessibilityState?.expanded,
       selected: ariaSelected ?? accessibilityState?.selected,
       readOnly: ariaReadOnly ?? accessibilityState?.readOnly, // Windows
+      multiselectable:
+        ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
+      required: ariaRequired ?? accessibilityState?.required, // Windows
     };
   }
 

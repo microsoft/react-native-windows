@@ -184,10 +184,20 @@ export interface AccessibilityState {
    */
   expanded?: boolean | undefined;
   /**
-   * When present, informs accessible tools the element is read only
-   * @platform windows
+   *  When present, informs accessible tools the element is read only
+   *  @platform windows
    */
   readOnly?: boolean | undefined;
+  /**
+   *  When present, informs accessible tools the element can have multiple items selected
+   *  @platform windows
+   */
+  multiselectable?: boolean | undefined;
+  /**
+   *  When present, informs accessible tools the element requires selection
+   *  @platform windows
+   */
+  required?: boolean | undefined;
 }
 
 export interface AccessibilityValue {

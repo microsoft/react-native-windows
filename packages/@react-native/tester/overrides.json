@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.77.0-nightly-20241031-3a01a0c9c",
+  "baseVersion": "0.77.0-nightly-20241125-4cffff35e",
   "overrides": [
     {
       "type": "copy",
@@ -12,21 +12,21 @@
       "type": "copy",
       "directory": "js/components",
       "baseDirectory": "packages/rn-tester/js/components",
-      "baseHash": "f2f5d75e1c233d391df8a6f246d883460b3a6afb",
+      "baseHash": "e7012fe1efaff2b2884e29e0195125fed43f8103",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Accessibility",
       "baseDirectory": "packages/rn-tester/js/examples/Accessibility",
-      "baseHash": "d55eb5993fff3e78fa67621fca12e4bc4ac58d64",
+      "baseHash": "434664d5613e7c89ec06087f48290d6759529d8b",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/ActionSheetIOS",
       "baseDirectory": "packages/rn-tester/js/examples/ActionSheetIOS",
-      "baseHash": "3f5517b09a904c640e00f0f8fd325ed43fe0084c",
+      "baseHash": "a346f2ad86ee36c62870e8ce442c921c930b693a",
       "issue": 4054
     },
     {
@@ -122,6 +122,13 @@
     },
     {
       "type": "copy",
+      "directory": "js/examples/DisplayContents",
+      "baseDirectory": "packages/rn-tester/js/examples/DisplayContents",
+      "baseHash": "d4976497a0120350f329b460d3c1ff41567ec906",
+      "issue": 4054
+    },
+    {
+      "type": "copy",
       "directory": "js/examples/DrawerLayoutAndroid",
       "baseDirectory": "packages/rn-tester/js/examples/DrawerLayoutAndroid",
       "baseHash": "fca543d89350c3f00c081d9b42447c683fd5430a",
@@ -145,14 +152,14 @@
       "type": "copy",
       "directory": "js/examples/FlatList",
       "baseDirectory": "packages/rn-tester/js/examples/FlatList",
-      "baseHash": "cbcb494838536a0bcb00c20ec4397e3fd93e168a",
+      "baseHash": "9e4fb11d6bceb00f85ba5c319e047e9d7bdd8d05",
       "issue": 4054
     },
     {
       "type": "copy",
       "directory": "js/examples/Image",
       "baseDirectory": "packages/rn-tester/js/examples/Image",
-      "baseHash": "856dbcae5fb30064bb2c55440652476f442204e2",
+      "baseHash": "872cbc658a19ea1ed3a952859b055a9368c0ef42",
       "issue": 4054
     },
     {
@@ -166,7 +173,7 @@
       "type": "copy",
       "directory": "js/examples/IntersectionObserver",
       "baseDirectory": "packages/rn-tester/js/examples/IntersectionObserver",
-      "baseHash": "ace636ea59030d802cee26ba49d7417f8ee3630e",
+      "baseHash": "18fa6bfda63981e386186916fd7a0f7530015b89",
       "issue": 4054
     },
     {
@@ -208,7 +215,7 @@
       "type": "copy",
       "directory": "js/examples/LinearGradient",
       "baseDirectory": "packages/rn-tester/js/examples/LinearGradient/",
-      "baseHash": "1818fa64f944095d532d9e75d3937884392d7826",
+      "baseHash": "f7dda687686dfa4f255046878140b5224d3da937",
       "issue": 4054
     },
     {
@@ -229,7 +236,7 @@
       "type": "copy",
       "directory": "js/examples/Modal",
       "baseDirectory": "packages/rn-tester/js/examples/Modal",
-      "baseHash": "91bcec66e92702183818ecc453652b0a7a730739",
+      "baseHash": "bec272a54741b3047be30e3401c61767622df600",
       "issue": 4054
     },
     {
@@ -278,7 +285,7 @@
       "type": "copy",
       "directory": "js/examples/PanResponder",
       "baseDirectory": "packages/rn-tester/js/examples/PanResponder",
-      "baseHash": "76d06b278e87aaaf2a1f9f17db5d315f2de2d7ec",
+      "baseHash": "70e9ae1244f50e113cb5911d2b3d6f4f4ab7756e",
       "issue": 4054
     },
     {
@@ -299,7 +306,7 @@
       "type": "copy",
       "directory": "js/examples/PixelRatio",
       "baseDirectory": "packages/rn-tester/js/examples/PixelRatio",
-      "baseHash": "290a1a5d12e85afd47909ee26135ad0951081928",
+      "baseHash": "7799fe6812dfbdc50257b59e6c6ace94cc186429",
       "issue": 4054
     },
     {
@@ -313,7 +320,7 @@
       "type": "copy",
       "directory": "js/examples/Playground",
       "baseDirectory": "packages/rn-tester/js/examples/Playground",
-      "baseHash": "e47040a1660aa6acaf06e912226c0e2a78dd7760",
+      "baseHash": "3a5d3afe8a387b32015195cf09ca7291c071a428",
       "issue": 4054
     },
     {
@@ -383,7 +390,7 @@
       "type": "copy",
       "directory": "js/examples/SectionList",
       "baseDirectory": "packages/rn-tester/js/examples/SectionList",
-      "baseHash": "a84e4801fd9dfc6a7ee1f00770fe3d635d105f2d",
+      "baseHash": "83d03b093f6490240217137f5f6eef5994ac8ae8",
       "issue": 4054
     },
     {
@@ -418,7 +425,7 @@
       "type": "copy",
       "directory": "js/examples/SwipeableCardExample",
       "baseDirectory": "packages/rn-tester/js/examples/SwipeableCardExample",
-      "baseHash": "77b040aec05b417ccb985bacec4245a42d023b47",
+      "baseHash": "6fdea3ff7e2486b9e2eebc8ccb7c54ead7dd3de5",
       "issue": 4054
     },
     {
@@ -439,7 +446,7 @@
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "b22e7d0601e36acd257bd24832944bed0b5046af",
+      "baseHash": "0a16660c5859076cf463c784bc640e8631d8b2c6",
       "issue": 4054
     },
     {
@@ -460,7 +467,7 @@
       "type": "copy",
       "directory": "js/examples/Touchable",
       "baseDirectory": "packages/rn-tester/js/examples/Touchable",
-      "baseHash": "56024bc8da00ab203d2c89672fcf1b930e0f10f0",
+      "baseHash": "52a2b499a11de425d423a2f51097e34cfe10b7b0",
       "issue": 4054
     },
     {
@@ -530,7 +537,7 @@
       "type": "copy",
       "file": "js/RNTesterAppShared.js",
       "baseFile": "packages/rn-tester/js/RNTesterAppShared.js",
-      "baseHash": "b80b7e1c245c2c0890f31e84e91920425a6eefe8",
+      "baseHash": "8381b2c2e97bd18b48ac04c7a058a636d0b58a90",
       "issue": 4054
     },
     {
@@ -544,14 +551,14 @@
       "type": "patch",
       "file": "js/utils/RNTesterList.android.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.android.js",
-      "baseHash": "27576bedd435d2e9f130ebfdf8e872d30f0b7855",
+      "baseHash": "301bbd0e30ee3a41e7a0455de5d55f119ed70855",
       "issue": 13228
     },
     {
       "type": "patch",
       "file": "js/utils/RNTesterList.ios.js",
       "baseFile": "packages/rn-tester/js/utils/RNTesterList.ios.js",
-      "baseHash": "63a12b27edb4226a2a341636077495ac26be7761",
+      "baseHash": "29a41208e4316ee685bac0804ef7dfd21b5b6145",
       "issue": 13228
     },
     {
@@ -614,7 +621,7 @@
       "type": "patch",
       "file": "package.json",
       "baseFile": "packages/rn-tester/package.json",
-      "baseHash": "77fd235a74287fea760daf65a013839724cd9e03",
+      "baseHash": "def24c1467f07cda8e7b367beb30c0a513871b26",
       "issue": 13228
     }
   ]

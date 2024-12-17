@@ -22,8 +22,6 @@ protected:
 public:
   virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
   virtual bool commonTestFlagWithoutNativeImplementation(jsi::Runtime &rt) = 0;
-  virtual bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) = 0;
-  virtual bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) = 0;
   virtual bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool disableEventLoopOnBridgeless(jsi::Runtime &rt) = 0;
   virtual bool disableMountItemReorderingAndroid(jsi::Runtime &rt) = 0;
@@ -37,12 +35,12 @@ public:
   virtual bool enableFabricLogs(jsi::Runtime &rt) = 0;
   virtual bool enableFabricRenderer(jsi::Runtime &rt) = 0;
   virtual bool enableFabricRendererExclusively(jsi::Runtime &rt) = 0;
+  virtual bool enableFixForViewCommandRace(jsi::Runtime &rt) = 0;
   virtual bool enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt) = 0;
   virtual bool enableIOSViewClipToPaddingBox(jsi::Runtime &rt) = 0;
   virtual bool enableLayoutAnimationsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableLayoutAnimationsOnIOS(jsi::Runtime &rt) = 0;
   virtual bool enableLongTaskAPI(jsi::Runtime &rt) = 0;
-  virtual bool enableMicrotasks(jsi::Runtime &rt) = 0;
   virtual bool enableNewBackgroundAndBorderDrawables(jsi::Runtime &rt) = 0;
   virtual bool enablePreciseSchedulingForPremountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enablePropsUpdateReconciliationAndroid(jsi::Runtime &rt) = 0;
@@ -53,18 +51,15 @@ public:
   virtual bool excludeYogaFromRawProps(jsi::Runtime &rt) = 0;
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
   virtual bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) = 0;
-  virtual bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledDebug(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledRelease(jsi::Runtime &rt) = 0;
   virtual bool initEagerTurboModulesOnNativeModulesQueueAndroid(jsi::Runtime &rt) = 0;
   virtual bool lazyAnimationCallbacks(jsi::Runtime &rt) = 0;
   virtual bool loadVectorDrawablesOnImages(jsi::Runtime &rt) = 0;
-  virtual bool setAndroidLayoutDirection(jsi::Runtime &rt) = 0;
   virtual bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useAlwaysAvailableJSErrorHandling(jsi::Runtime &rt) = 0;
   virtual bool useFabricInterop(jsi::Runtime &rt) = 0;
   virtual bool useImmediateExecutorInAndroidBridgeless(jsi::Runtime &rt) = 0;
-  virtual bool useModernRuntimeScheduler(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
   virtual bool useOptimisedViewPreallocationOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useOptimizedEventBatchingOnAndroid(jsi::Runtime &rt) = 0;
@@ -116,22 +111,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::commonTestFlagWithoutNativeImplementation, jsInvoker_, instance_);
-    }
-    bool allowRecursiveCommitsWithSynchronousMountOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::allowRecursiveCommitsWithSynchronousMountOnAndroid) == 1,
-          "Expected allowRecursiveCommitsWithSynchronousMountOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::allowRecursiveCommitsWithSynchronousMountOnAndroid, jsInvoker_, instance_);
-    }
-    bool batchRenderingUpdatesInEventLoop(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::batchRenderingUpdatesInEventLoop) == 1,
-          "Expected batchRenderingUpdatesInEventLoop(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::batchRenderingUpdatesInEventLoop, jsInvoker_, instance_);
     }
     bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -237,6 +216,14 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableFabricRendererExclusively, jsInvoker_, instance_);
     }
+    bool enableFixForViewCommandRace(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableFixForViewCommandRace) == 1,
+          "Expected enableFixForViewCommandRace(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableFixForViewCommandRace, jsInvoker_, instance_);
+    }
     bool enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableGranularShadowTreeStateReconciliation) == 1,
@@ -276,14 +263,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableLongTaskAPI, jsInvoker_, instance_);
-    }
-    bool enableMicrotasks(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::enableMicrotasks) == 1,
-          "Expected enableMicrotasks(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::enableMicrotasks, jsInvoker_, instance_);
     }
     bool enableNewBackgroundAndBorderDrawables(jsi::Runtime &rt) override {
       static_assert(
@@ -365,14 +344,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::fixMountingCoordinatorReportedPendingTransactionsOnAndroid, jsInvoker_, instance_);
     }
-    bool forceBatchingMountItemsOnAndroid(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::forceBatchingMountItemsOnAndroid) == 1,
-          "Expected forceBatchingMountItemsOnAndroid(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::forceBatchingMountItemsOnAndroid, jsInvoker_, instance_);
-    }
     bool fuseboxEnabledDebug(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::fuseboxEnabledDebug) == 1,
@@ -413,14 +384,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::loadVectorDrawablesOnImages, jsInvoker_, instance_);
     }
-    bool setAndroidLayoutDirection(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::setAndroidLayoutDirection) == 1,
-          "Expected setAndroidLayoutDirection(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::setAndroidLayoutDirection, jsInvoker_, instance_);
-    }
     bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::traceTurboModulePromiseRejectionsOnAndroid) == 1,
@@ -452,14 +415,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useImmediateExecutorInAndroidBridgeless, jsInvoker_, instance_);
-    }
-    bool useModernRuntimeScheduler(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::useModernRuntimeScheduler) == 1,
-          "Expected useModernRuntimeScheduler(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::useModernRuntimeScheduler, jsInvoker_, instance_);
     }
     bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) override {
       static_assert(
@@ -687,12 +642,14 @@ protected:
 
 public:
   virtual void isReduceMotionEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
+  virtual void isInvertColorsEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
   virtual void isHighTextContrastEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
   virtual void isTouchExplorationEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
   virtual void isAccessibilityServiceEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
   virtual void setAccessibilityFocus(jsi::Runtime &rt, double reactTag) = 0;
   virtual void announceForAccessibility(jsi::Runtime &rt, jsi::String announcement) = 0;
   virtual void getRecommendedTimeoutMillis(jsi::Runtime &rt, double mSec, jsi::Function onSuccess) = 0;
+  virtual void isGrayscaleEnabled(jsi::Runtime &rt, jsi::Function onSuccess) = 0;
 
 };
 
@@ -730,6 +687,14 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::isReduceMotionEnabled, jsInvoker_, instance_, std::move(onSuccess));
+    }
+    void isInvertColorsEnabled(jsi::Runtime &rt, jsi::Function onSuccess) override {
+      static_assert(
+          bridging::getParameterCount(&T::isInvertColorsEnabled) == 2,
+          "Expected isInvertColorsEnabled(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::isInvertColorsEnabled, jsInvoker_, instance_, std::move(onSuccess));
     }
     void isHighTextContrastEnabled(jsi::Runtime &rt, jsi::Function onSuccess) override {
       static_assert(
@@ -778,6 +743,14 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::getRecommendedTimeoutMillis, jsInvoker_, instance_, std::move(mSec), std::move(onSuccess));
+    }
+    void isGrayscaleEnabled(jsi::Runtime &rt, jsi::Function onSuccess) override {
+      static_assert(
+          bridging::getParameterCount(&T::isGrayscaleEnabled) == 2,
+          "Expected isGrayscaleEnabled(...) to have 2 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::isGrayscaleEnabled, jsInvoker_, instance_, std::move(onSuccess));
     }
 
   private:
@@ -8231,13 +8204,14 @@ struct NativeIntersectionObserverNativeIntersectionObserverEntryBridging {
 
 #pragma mark - NativeIntersectionObserverNativeIntersectionObserverObserveOptions
 
-template <typename P0, typename P1, typename P2>
+template <typename P0, typename P1, typename P2, typename P3>
 struct NativeIntersectionObserverNativeIntersectionObserverObserveOptions {
   P0 intersectionObserverId;
   P1 targetShadowNode;
   P2 thresholds;
+  P3 rootThresholds;
   bool operator==(const NativeIntersectionObserverNativeIntersectionObserverObserveOptions &other) const {
-    return intersectionObserverId == other.intersectionObserverId && targetShadowNode == other.targetShadowNode && thresholds == other.thresholds;
+    return intersectionObserverId == other.intersectionObserverId && targetShadowNode == other.targetShadowNode && thresholds == other.thresholds && rootThresholds == other.rootThresholds;
   }
 };
 
@@ -8252,7 +8226,8 @@ struct NativeIntersectionObserverNativeIntersectionObserverObserveOptionsBridgin
     T result{
       bridging::fromJs<decltype(types.intersectionObserverId)>(rt, value.getProperty(rt, "intersectionObserverId"), jsInvoker),
       bridging::fromJs<decltype(types.targetShadowNode)>(rt, value.getProperty(rt, "targetShadowNode"), jsInvoker),
-      bridging::fromJs<decltype(types.thresholds)>(rt, value.getProperty(rt, "thresholds"), jsInvoker)};
+      bridging::fromJs<decltype(types.thresholds)>(rt, value.getProperty(rt, "thresholds"), jsInvoker),
+      bridging::fromJs<decltype(types.rootThresholds)>(rt, value.getProperty(rt, "rootThresholds"), jsInvoker)};
     return result;
   }
 
@@ -8268,6 +8243,10 @@ struct NativeIntersectionObserverNativeIntersectionObserverObserveOptionsBridgin
   static jsi::Array thresholdsToJs(jsi::Runtime &rt, decltype(types.thresholds) value) {
     return bridging::toJs(rt, value);
   }
+
+  static std::optional<jsi::Array> rootThresholdsToJs(jsi::Runtime &rt, decltype(types.rootThresholds) value) {
+    return bridging::toJs(rt, value);
+  }
 #endif
 
   static jsi::Object toJs(
@@ -8278,6 +8257,9 @@ struct NativeIntersectionObserverNativeIntersectionObserverObserveOptionsBridgin
     result.setProperty(rt, "intersectionObserverId", bridging::toJs(rt, value.intersectionObserverId, jsInvoker));
     result.setProperty(rt, "targetShadowNode", bridging::toJs(rt, value.targetShadowNode, jsInvoker));
     result.setProperty(rt, "thresholds", bridging::toJs(rt, value.thresholds, jsInvoker));
+    if (value.rootThresholds) {
+      result.setProperty(rt, "rootThresholds", bridging::toJs(rt, value.rootThresholds.value(), jsInvoker));
+    }
     return result;
   }
 };

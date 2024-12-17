@@ -18,7 +18,9 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
                                                  IValueProvider,
                                                  IRangeValueProvider,
                                                  IToggleProvider,
-                                                 IExpandCollapseProvider> {
+                                                 IExpandCollapseProvider,
+                                                 ISelectionProvider,
+                                                 ISelectionItemProvider> {
  public:
   CompositionDynamicAutomationProvider(
       const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept;
@@ -66,8 +68,24 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   virtual HRESULT __stdcall Expand() override;
   virtual HRESULT __stdcall Collapse() override;
 
+  // inherited via ISelectionProvider
+  virtual HRESULT __stdcall get_CanSelectMultiple(BOOL *pRetVal) override;
+  virtual HRESULT __stdcall get_IsSelectionRequired(BOOL *pRetVal) override;
+  virtual HRESULT __stdcall GetSelection(SAFEARRAY **pRetVal) override;
+
+  // inherited via ISelectionItemProvider
+  virtual HRESULT __stdcall AddToSelection() override;
+  virtual HRESULT __stdcall get_IsSelected(BOOL *pRetVal) override;
+  virtual HRESULT __stdcall get_SelectionContainer(IRawElementProviderSimple **pRetVal) override;
+  virtual HRESULT __stdcall RemoveFromSelection() override;
+  virtual HRESULT __stdcall Select() override;
+
+  void AddToSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
+  void RemoveFromSelectionItems(winrt::com_ptr<IRawElementProviderSimple> &item);
+
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
+  std::vector<winrt::com_ptr<IRawElementProviderSimple>> m_selectionItems;
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation

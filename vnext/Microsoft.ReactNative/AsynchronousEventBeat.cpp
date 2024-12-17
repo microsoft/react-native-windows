@@ -9,11 +9,11 @@ AsynchronousEventBeat::AsynchronousEventBeat(
     : EventBeat(ownerBox, *runtimeScheduler), m_context(context), m_runtimeScheduler(std::move(runtimeScheduler)) {}
 
 void AsynchronousEventBeat::induce() const {
-  if (!isRequested_ || m_isBeatCallbackScheduled) {
-    isRequested_ = false;
+  if (!isEventBeatRequested_ || m_isBeatCallbackScheduled) {
+    isEventBeatRequested_ = false;
     return;
   }
-  isRequested_ = false;
+  isEventBeatRequested_ = false;
   m_isBeatCallbackScheduled = true;
 
   facebook::react::RuntimeScheduler &schedulerRef = *m_runtimeScheduler.get();
@@ -31,7 +31,7 @@ void AsynchronousEventBeat::induce() const {
 }
 
 void AsynchronousEventBeat::request() const {
-  bool alreadyRequested = isRequested_.exchange(true);
+  bool alreadyRequested = isEventBeatRequested_.exchange(true);
   if (!alreadyRequested) {
     if (m_context.UIDispatcher().HasThreadAccess()) {
       induce();
