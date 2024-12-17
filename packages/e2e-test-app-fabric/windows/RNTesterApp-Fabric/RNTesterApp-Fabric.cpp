@@ -346,14 +346,17 @@ winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::Js
 }
 
 void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Data::Json::JsonObject &result) {
-  BSTR value;
+  BSTR value = nullptr;
   BOOL isReadOnly;
   ToggleState toggleState;
-  IValueProvider *valuePattern;
   ExpandCollapseState expandCollapseState;
   HRESULT hr;
+  BOOL isSelected;
+  BOOL multipleSelection;
+  BOOL selectionRequired;
 
   // Dump IValueProvider Information
+  IValueProvider *valuePattern;
   hr = pTarget->GetCurrentPattern(UIA_ValuePatternId, reinterpret_cast<IUnknown **>(&valuePattern));
   if (SUCCEEDED(hr) && valuePattern) {
     hr = valuePattern->get_Value(&value);
@@ -389,6 +392,34 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
     }
     expandCollapsePattern->Release();
   }
+
+  // Dump ISelectionItemProvider Information
+  ISelectionItemProvider *selectionItemPattern;
+  hr = pTarget->GetCurrentPattern(UIA_SelectionItemPatternId, reinterpret_cast<IUnknown **>(&selectionItemPattern));
+  if (SUCCEEDED(hr) && selectionItemPattern) {
+    hr = selectionItemPattern->get_IsSelected(&isSelected);
+    if (SUCCEEDED(hr)) {
+      InsertBooleanValueIfNotDefault(result, L"SelectionItemPattern.IsSelected", isSelected);
+    }
+    selectionItemPattern->Release();
+  }
+
+  // Dump ISelectionProvider Information
+  ISelectionProvider *selectionPattern;
+  hr = pTarget->GetCurrentPattern(UIA_SelectionPatternId, reinterpret_cast<IUnknown **>(&selectionPattern));
+  if (SUCCEEDED(hr) && selectionPattern) {
+    hr = selectionPattern->get_CanSelectMultiple(&multipleSelection);
+    if (SUCCEEDED(hr)) {
+      InsertBooleanValueIfNotDefault(result, L"SelectionPattern.CanSelectMultiple", multipleSelection, false);
+    }
+    hr = selectionPattern->get_IsSelectionRequired(&selectionRequired);
+    if (SUCCEEDED(hr)) {
+      InsertBooleanValueIfNotDefault(result, L"SelectionPattern.IsSelectionRequired", selectionRequired, false);
+    }
+    selectionPattern->Release();
+  }
+
+  ::SysFreeString(value);
 }
 
 winrt::Windows::Data::Json::JsonObject DumpUIATreeRecurse(
