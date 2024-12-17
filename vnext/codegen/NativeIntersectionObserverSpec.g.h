@@ -7,6 +7,7 @@
  * by the TurboModule JS spec.
  */
 #pragma once
+// clang-format off
 
 #include <NativeModules.h>
 #include <tuple>
@@ -27,6 +28,7 @@ struct IntersectionObserverSpec_NativeIntersectionObserverObserveOptions {
     double intersectionObserverId;
      targetShadowNode;
     std::vector<double> thresholds;
+    std::optional<std::vector<double>> rootThresholds;
 };
 
 
@@ -48,6 +50,7 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(IntersectionObserve
         {L"intersectionObserverId", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::intersectionObserverId},
         {L"targetShadowNode", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::targetShadowNode},
         {L"thresholds", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::thresholds},
+        {L"rootThresholds", &IntersectionObserverSpec_NativeIntersectionObserverObserveOptions::rootThresholds},
     };
     return fieldMap;
 }

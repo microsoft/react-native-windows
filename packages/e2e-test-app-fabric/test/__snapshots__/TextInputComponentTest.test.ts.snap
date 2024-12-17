@@ -331,7 +331,7 @@ exports[`TextInput Tests Text have cursorColor 1`] = `
   "Visual Tree": {
     "Comment": "textinput-cursorColor",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -717,7 +717,7 @@ exports[`TextInput Tests TextInputs can autocomplete, one-time-code 1`] = `
   "Visual Tree": {
     "Comment": "textinput-autocomplete-one-time-code",
     "Offset": "0, 0, 0",
-    "Size": "916, 29",
+    "Size": "916, 28",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -795,7 +795,7 @@ exports[`TextInput Tests TextInputs can autocomplete, sms-otp 1`] = `
   "Visual Tree": {
     "Comment": "textinput-autocomplete-sms-otp",
     "Offset": "0, 0, 0",
-    "Size": "916, 28",
+    "Size": "916, 29",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -1831,7 +1831,7 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
   "Visual Tree": {
     "Comment": "textinput-clear-on-submit-2",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -2513,7 +2513,7 @@ exports[`TextInput Tests TextInputs can have attributed text 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "ValuePattern.IsReadOnly": false,
-    "ValuePattern.Value": "Hello",
+    "ValuePattern.Value": "Hello ",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2759,7 +2759,7 @@ exports[`TextInput Tests TextInputs can have custom return key label, React Nati
   "Visual Tree": {
     "Comment": "textinput-return-React Native",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3383,7 +3383,7 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=-1
   "Visual Tree": {
     "Comment": "textinput-letterspacing--1",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -3856,7 +3856,8 @@ exports[`TextInput Tests TextInputs can have customized line height 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "ValuePattern.IsReadOnly": false,
-    "ValuePattern.Value": "Hel",
+    "ValuePattern.Value": "Hel
+",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3945,7 +3946,7 @@ exports[`TextInput Tests TextInputs can have inline images 1`] = `
   "Visual Tree": {
     "Comment": "textinput-inline-images",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5335,7 +5336,7 @@ exports[`TextInput Tests TextInputs have a custom underline color 1`] = `
   "Visual Tree": {
     "Comment": "textinput-custom-underline-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5568,7 +5569,7 @@ exports[`TextInput Tests TextInputs have a default underline color 1`] = `
   "Visual Tree": {
     "Comment": "textinput-default-underline-color",
     "Offset": "0, 0, 0",
-    "Size": "916, 33",
+    "Size": "916, 32",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {
@@ -5645,7 +5646,7 @@ exports[`TextInput Tests TextInputs support secure entry 1`] = `
   "Visual Tree": {
     "Comment": "textinput-password",
     "Offset": "0, 0, 0",
-    "Size": "916, 32",
+    "Size": "916, 33",
     "Visual Type": "SpriteVisual",
     "__Children": [
       {

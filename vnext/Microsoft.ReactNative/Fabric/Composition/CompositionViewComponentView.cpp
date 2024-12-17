@@ -53,8 +53,9 @@ ComponentView::ComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,
-    ComponentViewFeatures flags)
-    : base_type(tag, reactContext), m_compContext(compContext), m_flags(flags) {
+    ComponentViewFeatures flags,
+    winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder *builder)
+    : base_type(tag, reactContext, builder), m_compContext(compContext), m_flags(flags) {
   m_outerVisual = compContext.CreateSpriteVisual(); // TODO could be a raw ContainerVisual if we had a
                                                     // CreateContainerVisual in ICompositionContext
 }
@@ -760,6 +761,19 @@ void ComponentView::updateAccessibilityProps(
       UIA_LiveSettingPropertyId,
       oldViewProps.accessibilityLiveRegion,
       newViewProps.accessibilityLiveRegion);
+
+  if ((oldViewProps.accessibilityState.has_value() && oldViewProps.accessibilityState->selected.has_value()) !=
+      ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value()))) {
+    auto compProvider =
+        m_uiaProvider.try_as<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>();
+    if (compProvider) {
+      if ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value())) {
+        winrt::Microsoft::ReactNative::implementation::AddSelectionItemsToContainer(compProvider.get());
+      } else {
+        winrt::Microsoft::ReactNative::implementation::RemoveSelectionItemsFromContainer(compProvider.get());
+      }
+    }
+  }
 }
 
 std::optional<std::string> ComponentView::getAccessiblityValue() noexcept {
@@ -933,22 +947,13 @@ ViewComponentView::ViewComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext,
-    ComponentViewFeatures flags)
-    : base_type(compContext, tag, reactContext, flags),
+    ComponentViewFeatures flags,
+    winrt::Microsoft::ReactNative::Composition::ReactCompositionViewComponentBuilder *builder)
+    : base_type(compContext, tag, reactContext, flags, builder),
       m_props(defaultProps ? defaultProps : ViewComponentView::defaultProps()) {}
 
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual ViewComponentView::createVisual() noexcept {
   return m_compContext.CreateSpriteVisual();
-}
-
-void ViewComponentView::CreateVisualHandler(
-    const winrt::Microsoft::ReactNative::Composition::CreateVisualDelegate &handler) {
-  m_createVisualHandler = handler;
-}
-
-winrt::Microsoft::ReactNative::Composition::CreateVisualDelegate ViewComponentView::CreateVisualHandler()
-    const noexcept {
-  return m_createVisualHandler;
 }
 
 void ViewComponentView::CreateInternalVisualHandler(
@@ -965,10 +970,10 @@ void ViewComponentView::ensureVisual() noexcept {
   if (!m_visual) {
     if (m_createInternalVisualHandler) {
       m_visual = m_createInternalVisualHandler(*this);
-    } else if (m_createVisualHandler) {
+    } else if (m_builder && m_builder->CreateVisualHandler()) {
       m_visual =
           winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateVisual(
-              m_createVisualHandler(*this));
+              m_builder->CreateVisualHandler()(*this));
     } else {
       m_visual = createVisual();
     }
@@ -986,6 +991,8 @@ winrt::Microsoft::ReactNative::ComponentView ViewComponentView::Create(
 
 winrt::Microsoft::ReactNative::Composition::Experimental::IVisual
 ViewComponentView::VisualToMountChildrenInto() noexcept {
+  if (m_builder && m_builder->VisualToMountChildrenIntoHandler())
+    return m_builder->VisualToMountChildrenIntoHandler()(*this);
   return Visual();
 }
 
@@ -1233,7 +1240,7 @@ winrt::Microsoft::ReactNative::ViewProps ViewComponentView::ViewProps() noexcept
 
 winrt::Microsoft::ReactNative::ViewProps ViewComponentView::ViewPropsInner() noexcept {
   // If we have AbiViewProps, then we dont need to new up a props wrapper
-  if (m_customComponent) {
+  if (m_builder) {
     const auto &abiViewProps = *std::static_pointer_cast<const ::Microsoft::ReactNative::AbiViewProps>(m_props);
     return abiViewProps.ViewProps();
   }

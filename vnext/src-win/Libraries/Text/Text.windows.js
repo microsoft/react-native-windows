@@ -53,6 +53,8 @@ const Text: component(
       'aria-checked': ariaChecked,
       'aria-disabled': ariaDisabled,
       'aria-expanded': ariaExpanded,
+      'aria-multiselectable': ariaMultiselectable, // Windows
+      'aria-required': ariaRequired, // Windows
       'aria-label': ariaLabel,
       'aria-level': ariaLevel, // Windows
       'aria-posinset': ariaPosinset, // Windows
@@ -95,7 +97,9 @@ const Text: component(
       ariaChecked != null ||
       ariaDisabled != null ||
       ariaExpanded != null ||
-      ariaSelected != null
+      ariaSelected != null ||
+      ariaMultiselectable != null || // Windows
+      ariaRequired != null // Windows
     ) {
       if (_accessibilityState != null) {
         _accessibilityState = {
@@ -104,6 +108,9 @@ const Text: component(
           disabled: ariaDisabled ?? _accessibilityState.disabled,
           expanded: ariaExpanded ?? _accessibilityState.expanded,
           selected: ariaSelected ?? _accessibilityState.selected,
+          multiselectable:
+            ariaMultiselectable ?? _accessibilityState.multiselectable, // Windows
+          required: ariaRequired ?? _accessibilityState.required, // Windows
         };
       } else {
         _accessibilityState = {
@@ -112,6 +119,8 @@ const Text: component(
           disabled: ariaDisabled,
           expanded: ariaExpanded,
           selected: ariaSelected,
+          multiselectable: ariaMultiselectable, // Windows
+          required: ariaRequired, // Windows
         };
       }
     }
