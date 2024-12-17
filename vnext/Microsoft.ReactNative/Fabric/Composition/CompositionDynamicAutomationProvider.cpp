@@ -515,7 +515,7 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_Value(BSTR *pRetVal)
   return S_OK;
 }
 
-HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRetVal) { // TODO
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
   auto strongView = m_view.view();
@@ -528,14 +528,11 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRe
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
   auto accessibilityRole = props->accessibilityRole;
-  if (accessibilityRole.empty()) {
-    // Control is using default control type. Use default IsReadOnly value.
-    *pRetVal = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
-                   ->getAcccessiblityIsReadOnly();
+  if (props->accessibilityState.has_value() && props->accessibilityState->readOnly.has_value()) {
+    *pRetVal = props->accessibilityState->readOnly.value();
   } else {
-    *pRetVal =
-        (props->accessibilityState.has_value() && props->accessibilityState->readOnly.has_value() &&
-         props->accessibilityState->readOnly.value());
+    // Use default IsReadOnly value.
+    *pRetVal = false;
   }
   return S_OK;
 }
