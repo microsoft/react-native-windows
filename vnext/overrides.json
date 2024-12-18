@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241125-4cffff35e",
+  "baseVersion": "0.77.0-rc.0",
   "overrides": [
     {
       "type": "derived",
@@ -142,6 +142,12 @@
     },
     {
       "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/componentregistry/ComponentDescriptorRegistry.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/componentregistry/ComponentDescriptorRegistry.cpp",
+      "baseHash": "b15afcf4971fd2c9c9a9859ffcb2113bec28fc35"
+    },
+    {
+      "type": "derived",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityPrimitives.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityPrimitives.h",
       "baseHash": "6db5b174fe1dc7d108ae7f9e730decfe5f633bd8"
@@ -151,12 +157,6 @@
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/accessibilityPropsConversions.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/accessibilityPropsConversions.h",
       "baseHash": "4b2822199233e660f36c01df18fbbff7799968cc"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/componentregistry/ComponentDescriptorRegistry.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/componentregistry/ComponentDescriptorRegistry.cpp",
-      "baseHash": "b15afcf4971fd2c9c9a9859ffcb2113bec28fc35"
     },
     {
       "type": "patch",
