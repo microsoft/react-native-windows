@@ -59,4 +59,22 @@ describe('Accessibility Tests', () => {
     const dump = await dumpVisualTree('selection-container');
     expect(dump).toMatchSnapshot();
   });
+  test('Components can store range data by setting the min, max, and now of accessibilityValue', async () => {
+    await searchBox('Sta');
+    const componentsTab = await app.findElementByTestID(
+      'accessibilityValue-number',
+    );
+    await componentsTab.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('accessibilityValue-number');
+    expect(dump).toMatchSnapshot();
+  });
+  test('Components can store value data by setting the text of accessibilityValue', async () => {
+    await searchBox('Sta');
+    const componentsTab = await app.findElementByTestID(
+      'accessibilityValue-text',
+    );
+    await componentsTab.waitForDisplayed({timeout: 5000});
+    const dump = await dumpVisualTree('accessibilityValue-text');
+    expect(dump).toMatchSnapshot();
+  });
 });

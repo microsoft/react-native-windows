@@ -171,6 +171,10 @@ inline void fromRawValue(
     fromRawValue(context, expanded->second, result.expanded);
   }
   // [Windows] - DO NOT REMOVE - required for Windows ISelectionProvider Implementation
+  auto readOnly = map.find("readOnly");
+  if (readOnly != map.end()) {
+    fromRawValue(context, readOnly->second, result.readOnly);
+  }
   auto multiselectable = map.find("multiselectable");
   if (multiselectable != map.end()) {
     fromRawValue(context, multiselectable->second, result.multiselectable);

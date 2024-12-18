@@ -436,7 +436,8 @@ class AccessibilityStateExamples extends React.Component {
         </Text>
         <TouchableHighlight
           style={{width: 100, height: 50, backgroundColor: 'blue'}}
-          onPress={this.rangePress}>
+          onPress={this.rangePress}
+          testID="accessibilityValue-increment">
           <Text>Range value increment</Text>
         </TouchableHighlight>
         <View
@@ -451,7 +452,9 @@ class AccessibilityStateExamples extends React.Component {
             min: this.state.viewRangeMin,
             max: this.state.viewRangeMax,
             now: this.state.viewRangeNow,
-          }}>
+          }}
+          testID="accessibilityValue-number"
+          accessibilityState={{readOnly: true}}>
           <Text>
             The View's (accessibilityRole == adjustable, ie. Slider) properties
             should be the following according to UIA: Min-{' '}
@@ -472,7 +475,10 @@ class AccessibilityStateExamples extends React.Component {
           accessibilityValue={{
             text: this.state.viewValueText,
           }}
-          accessibilityRole="combobox">
+          accessibilityRole="combobox"
+          testID="accessibilityValue-text"
+          accessible
+          aria-readonly>
           <Text>
             The View's properties should be the following according to UIA:
             Text- {this.state.viewValueText}

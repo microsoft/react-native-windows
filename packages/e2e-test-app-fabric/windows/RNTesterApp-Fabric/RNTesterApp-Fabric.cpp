@@ -354,6 +354,9 @@ winrt::Windows::Data::Json::JsonObject ListErrors(winrt::Windows::Data::Json::Js
 void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Data::Json::JsonObject &result) {
   BSTR value = nullptr;
   BOOL isReadOnly;
+  double now;
+  double min;
+  double max;
   ToggleState toggleState;
   ExpandCollapseState expandCollapseState;
   HRESULT hr;
@@ -371,9 +374,32 @@ void DumpUIAPatternInfo(IUIAutomationElement *pTarget, const winrt::Windows::Dat
     }
     hr = valuePattern->get_IsReadOnly(&isReadOnly);
     if (SUCCEEDED(hr)) {
-      InsertBooleanValueIfNotDefault(result, L"ValuePattern.IsReadOnly", isReadOnly, true);
+      InsertBooleanValueIfNotDefault(result, L"ValuePattern.IsReadOnly", isReadOnly, false);
     }
     valuePattern->Release();
+  }
+
+  // Dump IRangeValueProvider Information
+  IRangeValueProvider *rangeValuePattern;
+  hr = pTarget->GetCurrentPattern(UIA_RangeValuePatternId, reinterpret_cast<IUnknown **>(&rangeValuePattern));
+  if (SUCCEEDED(hr) && rangeValuePattern) {
+    hr = rangeValuePattern->get_Value(&now);
+    if (SUCCEEDED(hr)) {
+      result.Insert(L"RangeValuePattern.Value", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(now));
+    }
+    hr = rangeValuePattern->get_Minimum(&min);
+    if (SUCCEEDED(hr)) {
+      result.Insert(L"RangeValuePattern.Minimum", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(min));
+    }
+    hr = rangeValuePattern->get_Maximum(&max);
+    if (SUCCEEDED(hr)) {
+      result.Insert(L"RangeValuePattern.Maximum", winrt::Windows::Data::Json::JsonValue::CreateNumberValue(max));
+    }
+    hr = rangeValuePattern->get_IsReadOnly(&isReadOnly);
+    if (SUCCEEDED(hr)) {
+      InsertBooleanValueIfNotDefault(result, L"RangeValuePattern.IsReadOnly", isReadOnly, false);
+    }
+    rangeValuePattern->Release();
   }
 
   // Dump IToggleProvider Information
