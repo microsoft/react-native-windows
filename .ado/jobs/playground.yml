@@ -48,7 +48,7 @@ parameters:
           - Name: X64ReleaseWin32
             BuildConfiguration: Release
             BuildPlatform: x64
-            SolutionFile: Playground-Win32.slnsln
+            SolutionFile: Playground-Win32.sln
       - BuildEnvironment: SecurePullRequest
         Matrix:
           - Name: X86DebugCompositionExperimentalWinUI3
