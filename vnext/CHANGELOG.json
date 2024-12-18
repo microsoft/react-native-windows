@@ -2,6 +2,35 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 18 Dec 2024 06:22:24 GMT",
+      "version": "0.0.0-canary.903",
+      "tag": "react-native-windows_v0.0.0-canary.903",
+      "comments": {
+        "none": [
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1289e05b0568ebca946e025911ea93ef89014443",
+            "comment": "Add RnwNewArch to MSBuildProperties"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3388c98195063ba9ba3aed580f2be04f6f1486fa",
+            "comment": "Implement ISelectionProvider and ISelectionItemProvider"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "d669d78450c97decf9f9f5acc09e526ddf8dd911",
+            "comment": "integrate RN-Nightly 0.77.0-nightly-20241125-4cffff35e"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 14 Dec 2024 06:29:13 GMT",
       "version": "0.0.0-canary.902",
       "tag": "react-native-windows_v0.0.0-canary.902",

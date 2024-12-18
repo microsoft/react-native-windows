@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "integrate RN-Nightly 0.77.0-nightly-20241125-4cffff35e",
-  "packageName": "react-native-windows",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}

@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 14 Dec 2024 06:29:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 18 Dec 2024 06:22:24 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.903
+
+Wed, 18 Dec 2024 06:22:24 GMT
+
+### Changes
+
+- Implement ISelectionProvider and ISelectionItemProvider (34109996+chiaramooney@users.noreply.github.com)
+- integrate RN-Nightly 0.77.0-nightly-20241125-4cffff35e (email not defined)
 
 ## 0.0.0-canary.902
 
