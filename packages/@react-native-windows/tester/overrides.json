@@ -5,7 +5,7 @@
   "excludePatterns": [
     "src/js/examples-win/**"
   ],
-  "baseVersion": "0.77.0-nightly-20241125-4cffff35e",
+  "baseVersion": "0.78.0-nightly-20241201-91e217ff5",
   "overrides": [
     {
       "type": "derived",
@@ -23,7 +23,7 @@
       "type": "patch",
       "file": "src/js/examples/ActivityIndicator/ActivityIndicatorExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/ActivityIndicator/ActivityIndicatorExample.js",
-      "baseHash": "31eeee8ffdda9f3f235d2d3100ac3641ea4f4e4a",
+      "baseHash": "4dbb1a7e0f970ab6987d83899b4c87b6408c7e2c",
       "issue": 12869
     },
     {
@@ -38,7 +38,7 @@
       "type": "patch",
       "file": "src/js/examples/Image/ImageExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Image/ImageExample.js",
-      "baseHash": "c7bd8835ffb3a6747a70d86548735028da793335",
+      "baseHash": "8583dee020400ce4d2754c3e04fd08dfde341c49",
       "issue": 12869
     },
     {
@@ -77,7 +77,7 @@
       "type": "derived",
       "file": "src/js/examples/Touchable/TouchableExample.windows.js",
       "baseFile": "packages/rn-tester/js/examples/Touchable/TouchableExample.js",
-      "baseHash": "ed764ba55d692ae744e2b76a373ade039752a705"
+      "baseHash": "c1e71d618beb2c2abaacae346d9a74e671330ce1"
     },
     {
       "type": "patch",

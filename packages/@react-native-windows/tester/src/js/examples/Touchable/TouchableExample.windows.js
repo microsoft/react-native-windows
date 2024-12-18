@@ -8,6 +8,8 @@
  * @flow
  */
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
+
 import RNTesterText from '../../components/RNTesterText';
 import React from 'react';
 import {useEffect, useRef, useState} from 'react';
@@ -833,6 +835,9 @@ exports.examples = [
       return <TouchableDisabled />;
     },
   },
+<<<<<<< Upstream
+] as Array<RNTesterModuleExample>;
+=======
   {
     title: 'Set of Touchables',
     description: ('Touchables can be defined as a set': string),
@@ -841,3 +846,4 @@ exports.examples = [
     },
   },
 ];
+>>>>>>> Override
