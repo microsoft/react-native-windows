@@ -403,6 +403,7 @@ function verifyTestCommandTelemetryProcessor(
             : 'Unknown',
         );
 
+        // NOTE: At this point, expectedError has been modified by trackException().
         // If the exception type is not CodedError but any data got copied into envelope.CodedError.data,
         // for instance autolinking error info, build the expected CodedError.data.
         let expectedCodedErrorData = {};
@@ -728,6 +729,57 @@ test.each(testTelemetryOptions)(
       verifyTestCommandTelemetryProcessor(
         caughtErrors,
         'Unknown',
+        expectedError,
+      ),
+    );
+
+    await runTestCommandE2E(() => testCommandBody(expectedError));
+
+    TelemetryTest.endTest(() => {
+      // Check if any errors were thrown
+      expect(caughtErrors).toHaveLength(0);
+    });
+  },
+);
+
+test.each(testTelemetryOptions)(
+  'Telemetry run test command end to end with CodedError, verifies PII is scrubbed if present in CodedError.',
+  async options => {
+    await TelemetryTest.startTest(options);
+
+    const expectedError = new errorUtils.CodedError(
+      'MSBuildError', // type
+      'test error', // message
+      {
+        fieldWithPath:
+          'Test Error occurred at C:\\some\\file\\path\\project.build.appxrecipe', // expectation: replace the whole C:\\... thing with "[path]".
+        fieldWithNoPath: 'Test Error data', // expectation: no changes to this string.
+        fieldWithNoString: 14, // expectation: no changes to this value.
+        arrayField: [
+          'No path',
+          15,
+          'Clean this path: C:\\some\\file\\path2\\project.build.appxrecipe',
+        ],
+        nestedField: {
+          fieldWithPath:
+            'Test Error occurred at C:\\some\\file\\path3\\project.build.appxrecipe', // expectation: replace the whole C:\\... thing with "[path]".
+          fieldWithNoPath: 'Test Error data 2', // expectation: no changes to this string.
+          fieldWithNoString: 16, // expectation: no changes to this value.
+          anotherNestedField: {
+            fieldWithPath:
+              'Test Error occurred at C:\\some\\file\\path4\\project.build.appxrecipe', // expectation: replace the whole C:\\... thing with "[path]".
+            fieldWithNoPath: 'Test Error data 3', // expectation: no changes to this string.
+            fieldWithNoString: 17, // expectation: no changes to this value.
+          },
+        },
+      }, // data
+    );
+
+    const caughtErrors: Error[] = [];
+    TelemetryTest.addTelemetryInitializer(
+      verifyTestCommandTelemetryProcessor(
+        caughtErrors,
+        expectedError.type,
         expectedError,
       ),
     );
