@@ -835,9 +835,6 @@ exports.examples = [
       return <TouchableDisabled />;
     },
   },
-<<<<<<< Upstream
-] as Array<RNTesterModuleExample>;
-=======
   {
     title: 'Set of Touchables',
     description: ('Touchables can be defined as a set': string),
@@ -845,5 +842,4 @@ exports.examples = [
       return <TouchableSet />;
     },
   },
-];
->>>>>>> Override
+] as Array<RNTesterModuleExample>;
