@@ -606,6 +606,7 @@ export type ViewProps = $ReadOnly<{|
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
+  'aria-readonly'?: ?boolean, // Windows
   /** A value indicating whether the accessibility elements contained within
    * this accessibility element are hidden.
    *

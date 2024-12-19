@@ -148,6 +148,7 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
     'aria-selected': ariaSelected,
+    'aria-readonly': ariaReadOnly, // Windows
     'aria-multiselectable': ariaMultiselectable, // Windows
     'aria-required': ariaRequired, // Windows
     height,
@@ -162,6 +163,7 @@ let BaseImage: AbstractImageIOS = React.forwardRef((props, forwardedRef) => {
     disabled: ariaDisabled ?? props.accessibilityState?.disabled,
     expanded: ariaExpanded ?? props.accessibilityState?.expanded,
     selected: ariaSelected ?? props.accessibilityState?.selected,
+    readOnly: ariaReadOnly ?? props.accessibilityState?.readOnly, // Windows
     multiselectable:
       ariaMultiselectable ?? props.accessibilityState?.multiselectable, // Windows
     required: ariaRequired ?? props.accessibilityState?.required, // Windows

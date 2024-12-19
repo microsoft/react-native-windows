@@ -75,6 +75,7 @@ type Props = $ReadOnly<{|
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
+  'aria-readonly'?: ?boolean, // Windows
   'aria-multiselectable'?: ?boolean, // Windows
   'aria-required'?: ?boolean, // Windows
   /**
@@ -261,6 +262,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
     'aria-expanded': ariaExpanded,
     'aria-label': ariaLabel,
     'aria-selected': ariaSelected,
+    'aria-readonly': ariaReadOnly,
     'aria-multiselectable': ariaMultiselectable, // Windows
     'aria-required': ariaRequired, // Windows
     cancelable,
@@ -303,6 +305,7 @@ function Pressable(props: Props, forwardedRef): React.Node {
     disabled: ariaDisabled ?? accessibilityState?.disabled,
     expanded: ariaExpanded ?? accessibilityState?.expanded,
     selected: ariaSelected ?? accessibilityState?.selected,
+    readOnly: ariaReadOnly ?? accessibilityState?.readOnly,
     multiselectable: ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
     required: ariaRequired ?? accessibilityState?.required, // Windows
   };

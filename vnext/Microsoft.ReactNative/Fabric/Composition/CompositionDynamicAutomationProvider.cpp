@@ -141,8 +141,12 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_ProviderOptions(Prov
   return S_OK;
 }
 
-bool accessibilityValueHasValue(const facebook::react::AccessibilityValue &value) {
-  return (value.min.has_value() && value.max.has_value()) || value.now.has_value() || value.text.has_value();
+bool accessibilityValueHasTextValue(const facebook::react::AccessibilityValue &value) {
+  return value.text.has_value();
+}
+
+bool accessibilityValueHasNumericValue(const facebook::react::AccessibilityValue &value) {
+  return (value.min.has_value() && value.max.has_value() && value.now.has_value());
 }
 
 bool expandableControl(const facebook::react::SharedViewProps props) {
@@ -199,8 +203,15 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
   }
 
   if (patternId == UIA_ValuePatternId &&
-      (strongView.try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() ||
-       accessibilityValueHasValue(props->accessibilityValue))) {
+      ((strongView
+            .try_as<winrt::Microsoft::ReactNative::Composition::implementation::WindowsTextInputComponentView>() &&
+        !accessibilityValueHasNumericValue(props->accessibilityValue)) ||
+       accessibilityValueHasTextValue(props->accessibilityValue))) {
+    *pRetVal = static_cast<IValueProvider *>(this);
+    AddRef();
+  }
+
+  if (patternId == UIA_RangeValuePatternId && accessibilityValueHasNumericValue(props->accessibilityValue)) {
     *pRetVal = static_cast<IValueProvider *>(this);
     AddRef();
   }
@@ -481,6 +492,8 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(LPCWSTR val) {
 
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
       ->setAcccessiblityValue(winrt::to_string(val));
+  // TODO: Edit once/if onAccessibilityAction props supports returning UIA event data. See
+  // https://github.com/react-native-community/discussions-and-proposals/issues/843.
   DispatchAccessibilityAction(m_view, "setValue");
   return S_OK;
 }
@@ -507,8 +520,88 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::get_IsReadOnly(BOOL *pRe
   if (!strongView)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  *pRetVal = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)
-                 ->getAcccessiblityIsReadOnly();
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+  auto accessibilityRole = props->accessibilityRole;
+  if (props->accessibilityState.has_value() && props->accessibilityState->readOnly.has_value()) {
+    *pRetVal = props->accessibilityState->readOnly.value();
+  } else {
+    // Use default IsReadOnly value.
+    *pRetVal = false;
+  }
+  return S_OK;
+}
+
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_LargeChange(double *pRetVal) {
+  // no-op
+  return S_OK;
+}
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Maximum(double *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = props->accessibilityValue.max.value();
+  return S_OK;
+}
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Minimum(double *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = props->accessibilityValue.min.value();
+  return S_OK;
+}
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_SmallChange(double *pRetVal) {
+  // no-op
+  return S_OK;
+}
+HRESULT __stdcall CompositionDynamicAutomationProvider::get_Value(double *pRetVal) {
+  if (pRetVal == nullptr)
+    return E_POINTER;
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  auto props = std::static_pointer_cast<const facebook::react::ViewProps>(
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
+
+  if (props == nullptr)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  *pRetVal = props->accessibilityValue.now.value();
+  return S_OK;
+}
+HRESULT __stdcall CompositionDynamicAutomationProvider::SetValue(double val) {
+  auto strongView = m_view.view();
+
+  if (!strongView)
+    return UIA_E_ELEMENTNOTAVAILABLE;
+
+  // TODO: Edit once/if onAccessibilityAction props supports returning UIA event data. See
+  // https://github.com/react-native-community/discussions-and-proposals/issues/843.
+  DispatchAccessibilityAction(m_view, "setValue");
   return S_OK;
 }
 

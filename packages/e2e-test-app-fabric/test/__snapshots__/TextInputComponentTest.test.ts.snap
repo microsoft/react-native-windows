@@ -7,7 +7,6 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection (Impera
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "multiline text selection
 can also be changed imperatively",
   },
@@ -85,7 +84,6 @@ exports[`TextInput Tests Multi-line TextInputs can enable text selection 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "multiline text selection
 can also be changed",
   },
@@ -163,7 +161,6 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection (Imper
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "text selection can be changed imperatively",
   },
   "Component Tree": {
@@ -240,7 +237,6 @@ exports[`TextInput Tests Single-line TextInputs can enable text selection 1`] = 
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "text selection can be changed",
   },
   "Component Tree": {
@@ -319,7 +315,6 @@ exports[`TextInput Tests Text have cursorColor 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "cursorColor={"green"}",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "Hello World",
   },
   "Component Tree": {
@@ -356,7 +351,6 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Character
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -432,7 +426,6 @@ exports[`TextInput Tests TextInputs can autocapitalize: Autocapitalize Turned Of
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -510,7 +503,6 @@ exports[`TextInput Tests TextInputs can autocomplete, address country 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "postal-address-country",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -588,7 +580,6 @@ exports[`TextInput Tests TextInputs can autocomplete, country 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "country",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -666,7 +657,6 @@ exports[`TextInput Tests TextInputs can autocomplete, one-time-code 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "one-time-code",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -744,7 +734,6 @@ exports[`TextInput Tests TextInputs can autocomplete, sms-otp 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "sms-otp",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -754,6 +743,423 @@ exports[`TextInput Tests TextInputs can autocomplete, sms-otp 1`] = `
   },
   "Visual Tree": {
     "Comment": "textinput-autocomplete-sms-otp",
+    "Offset": "0, 0, 0",
+    "Size": "916, 29",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
+}
+`;
+
+exports[`TextInput Tests TextInputs can autogrow 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-autogrow",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "ValuePattern.Value": "small small small small small small",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-autogrow",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-autogrow",
+    "Offset": "0, 0, 0",
+    "Size": "300, 131",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
+}
+`;
+
+exports[`TextInput Tests TextInputs can be defined as a set using accessibilityPosInSet and accessibilitySetSize 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-set",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50004,
+        "HelpText": "TextInput 1 in Set of 3",
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "edit",
+        "Name": "TextInput 1 in Set of 3",
+        "PositionInSet": 1,
+        "SizeofSet": 3,
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50004,
+        "HelpText": "TextInput 2 in Set of 3",
+        "IsKeyboardFocusable": true,
+        "LiveSetting": "Polite",
+        "LocalizedControlType": "edit",
+        "Name": "TextInput 2 in Set of 3",
+        "PositionInSet": 2,
+        "SizeofSet": 3,
+      },
+      {
+        "AutomationId": "",
+        "ControlType": 50004,
+        "HelpText": "TextInput 3 in Set of 3",
+        "IsKeyboardFocusable": true,
+        "LiveSetting": "Assertive",
+        "LocalizedControlType": "edit",
+        "Name": "TextInput 3 in Set of 3",
+        "PositionInSet": 3,
+        "SizeofSet": 3,
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "textinput-set",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+        "_Props": {},
+      },
+      {
+        "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "textinput-set",
+    "Offset": "0, 0, 0",
+    "Size": "916, 94",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "916, 33",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 33",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Opacity": 0,
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 31, 0",
+        "Size": "916, 32",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 32",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Opacity": 0,
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+      {
+        "Offset": "0, 62, 0",
+        "Size": "916, 32",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 32",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Opacity": 0,
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`TextInput Tests TextInputs can be editable 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-editable",
+    "ControlType": 50004,
+    "HelpText": "editable text input using editable prop",
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "Name": "editable text input using editable prop",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "textinput-editable",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "textinput-editable",
     "Offset": "0, 0, 0",
     "Size": "916, 28",
     "Visual Type": "SpriteVisual",
@@ -820,8 +1226,7 @@ exports[`TextInput Tests TextInputs can autogrow 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
-    "ValuePattern.Value": "small small small small small small",
+    "ValuePattern.Value": "multiline with children, aligned bottom-right",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -974,7 +1379,6 @@ exports[`TextInput Tests TextInputs can be multiline, center alignment 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "multiline, aligned center",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1012,7 +1416,6 @@ exports[`TextInput Tests TextInputs can be multiline, topleft alignment 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "multiline, aligned top-left",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1161,7 +1564,6 @@ exports[`TextInput Tests TextInputs can clear on submit 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1197,7 +1599,6 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1233,7 +1634,6 @@ exports[`TextInput Tests TextInputs can clear on submit with custom submit key e
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1269,7 +1669,6 @@ exports[`TextInput Tests TextInputs can customize its padding 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1307,7 +1706,6 @@ exports[`TextInput Tests TextInputs can enable spellcheck 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "Type text to test spell check functionality.",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1343,7 +1741,6 @@ exports[`TextInput Tests TextInputs can have a background color 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -1420,7 +1817,6 @@ exports[`TextInput Tests TextInputs can have a color 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -1497,7 +1893,6 @@ exports[`TextInput Tests TextInputs can have a font family 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -1574,7 +1969,6 @@ exports[`TextInput Tests TextInputs can have a font size 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -1651,7 +2045,6 @@ exports[`TextInput Tests TextInputs can have a font style 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -1728,7 +2121,6 @@ exports[`TextInput Tests TextInputs can have a font weight 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -1805,8 +2197,7 @@ exports[`TextInput Tests TextInputs can have attributed text 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
-    "ValuePattern.Value": "Hello",
+    "ValuePattern.Value": "Hello ",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1884,7 +2275,6 @@ exports[`TextInput Tests TextInputs can have caretHidden 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "caretHidden={true}",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "Hello World",
   },
   "Component Tree": {
@@ -1923,7 +2313,6 @@ exports[`TextInput Tests TextInputs can have custom return key label, Compile 1`
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "returnKeyLabel: Compile",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1961,7 +2350,6 @@ exports[`TextInput Tests TextInputs can have custom return key label, React Nati
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "returnKeyLabel: React Native",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -1999,7 +2387,6 @@ exports[`TextInput Tests TextInputs can have custom return key type, done 1`] = 
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "returnKeyType: done",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2037,7 +2424,6 @@ exports[`TextInput Tests TextInputs can have custom return key type, go 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "returnKeyType: go",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2075,7 +2461,6 @@ exports[`TextInput Tests TextInputs can have custom return key type, next 1`] = 
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "returnKeyType: next",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2113,7 +2498,6 @@ exports[`TextInput Tests TextInputs can have custom return key type, none 1`] = 
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "returnKeyType: none",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2151,7 +2535,6 @@ exports[`TextInput Tests TextInputs can have custom return key type, previous 1`
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "returnKeyType: previous",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2189,7 +2572,6 @@ exports[`TextInput Tests TextInputs can have custom return key type, search 1`] 
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "returnKeyType: search",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2227,7 +2609,6 @@ exports[`TextInput Tests TextInputs can have custom return key type, send 1`] = 
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "returnKeyType: send",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2265,7 +2646,6 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=-1
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "letterSpacing = -1",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2303,7 +2683,6 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=0 
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "letterSpacing = 0",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2341,7 +2720,6 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=2 
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "letterSpacing = 2",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2379,7 +2757,6 @@ exports[`TextInput Tests TextInputs can have customer letter spacing, spacing=9 
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "letterSpacing = 9",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2511,7 +2888,6 @@ exports[`TextInput Tests TextInputs can have customized letter spacing 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -2588,8 +2964,8 @@ exports[`TextInput Tests TextInputs can have customized line height 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
-    "ValuePattern.Value": "Hel",
+    "ValuePattern.Value": "Hel
+",
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2667,7 +3043,6 @@ exports[`TextInput Tests TextInputs can have inline images 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "This has drawableLeft set",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2705,7 +3080,6 @@ exports[`TextInput Tests TextInputs can have inline images, drawable props not s
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "This does not have drawable props set",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2743,7 +3117,6 @@ exports[`TextInput Tests TextInputs can have inline images, drawableLeft and dra
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "This has drawableLeft and drawablePadding set",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2781,7 +3154,6 @@ exports[`TextInput Tests TextInputs can have shadows 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "shadowColor: purple",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -2817,7 +3189,6 @@ exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "He",
   },
   "Component Tree": {
@@ -2828,6 +3199,82 @@ exports[`TextInput Tests TextInputs can have text decoration lines 1`] = `
   },
   "Visual Tree": {
     "Comment": "style-textDecorationLine",
+    "Offset": "0, 0, 0",
+    "Size": "791, 28",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, 0, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 0, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "-1, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "1, -1, 0",
+        "Size": "-2, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, -1, 0",
+        "Size": "1, 1",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Offset": "0, 1, 0",
+        "Size": "1, -2",
+        "Visual Type": "SpriteVisual",
+      },
+      {
+        "Brush": {
+          "Brush Type": "ColorBrush",
+          "Color": "rgba(0, 0, 0, 255)",
+        },
+        "Offset": "0, 0, 0",
+        "Opacity": 0,
+        "Size": "0, 0",
+        "Visual Type": "SpriteVisual",
+      },
+    ],
+  },
+}
+`;
+
+exports[`TextInput Tests TextInputs can have text shadows 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "style-textShadow",
+    "ControlType": 50004,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "edit",
+    "ValuePattern.Value": "He",
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+    "_Props": {
+      "TestId": "style-textShadow",
+    },
+  },
+  "Visual Tree": {
+    "Comment": "style-textShadow",
     "Offset": "0, 0, 0",
     "Size": "791, 29",
     "Visual Type": "SpriteVisual",
@@ -2973,7 +3420,6 @@ exports[`TextInput Tests TextInputs can propagate events 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "Click inside the box to observe events being fired.",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3011,7 +3457,6 @@ exports[`TextInput Tests TextInputs can register press events 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "Click inside the box to observe events being fired.",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3047,7 +3492,6 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with C
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3123,7 +3567,6 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with N
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3199,7 +3642,6 @@ exports[`TextInput Tests TextInputs can rewrite characters: Replace Space with U
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3277,7 +3719,6 @@ exports[`TextInput Tests TextInputs can set their readOnly prop to false 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "editable text input using readOnly prop",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3430,7 +3871,6 @@ exports[`TextInput Tests TextInputs can submit with custom key, multilined and s
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3466,7 +3906,6 @@ exports[`TextInput Tests TextInputs have a custom background color 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "Same BackgroundColor as View ",
   },
   "Component Tree": {
@@ -3503,7 +3942,6 @@ exports[`TextInput Tests TextInputs have a custom highlight color 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "Selection Color is red",
   },
   "Component Tree": {
@@ -3542,7 +3980,6 @@ exports[`TextInput Tests TextInputs have a custom placeholder text color 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "Red placeholder text color",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3578,7 +4015,6 @@ exports[`TextInput Tests TextInputs have a custom text color 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "Green Text",
   },
   "Component Tree": {
@@ -3617,7 +4053,6 @@ exports[`TextInput Tests TextInputs have a custom underline color 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "Blue underline color",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3655,7 +4090,6 @@ exports[`TextInput Tests TextInputs have a default placeholder text color 1`] = 
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "Default placeholder text color",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3691,7 +4125,6 @@ exports[`TextInput Tests TextInputs have a default text color 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "Default color text",
   },
   "Component Tree": {
@@ -3730,7 +4163,6 @@ exports[`TextInput Tests TextInputs have a default underline color 1`] = `
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "Default underline color",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3766,7 +4198,6 @@ exports[`TextInput Tests TextInputs support secure entry 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "iloveturtles",
   },
   "Component Tree": {
@@ -3805,7 +4236,6 @@ exports[`TextInput Tests TextInputs support secure entry, with placeholder text 
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "color is supported too",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3834,6 +4264,109 @@ exports[`TextInput Tests TextInputs support secure entry, with placeholder text 
 }
 `;
 
+exports[`TextInput Tests TextInputs which have a searchbox role should also support the value pattern. 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "textinput-searchbox",
+    "ControlType": 50026,
+    "LocalizedControlType": "group",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50004,
+        "IsKeyboardFocusable": true,
+        "LocalizedControlType": "edit",
+        "ValuePattern.Value": "Search",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "textinput-searchbox",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Comment": "textinput-searchbox",
+    "Offset": "0, 0, 0",
+    "Size": "916, 31",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "916, 32",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 32",
+            "Visual Type": "SpriteVisual",
+            "__Children": [
+              {
+                "Offset": "0, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, 0, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 0, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "-1, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "1, -1, 0",
+                "Size": "-2, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, -1, 0",
+                "Size": "1, 1",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Offset": "0, 1, 0",
+                "Size": "1, -2",
+                "Visual Type": "SpriteVisual",
+              },
+              {
+                "Brush": {
+                  "Brush Type": "ColorBrush",
+                  "Color": "rgba(0, 0, 0, 255)",
+                },
+                "Offset": "0, 0, 0",
+                "Opacity": 0,
+                "Size": "0, 0",
+                "Visual Type": "SpriteVisual",
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
 exports[`TextInput Tests TextInputs with set height and padding from theme 1`] = `
 {
   "Automation Tree": {
@@ -3843,7 +4376,6 @@ exports[`TextInput Tests TextInputs with set height and padding from theme 1`] =
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
     "Name": "If you set height, beware of padding set from themes",
-    "ValuePattern.IsReadOnly": false,
   },
   "Component Tree": {
     "Type": "Microsoft.ReactNative.Composition.WindowsTextInputComponentView",
@@ -3879,7 +4411,6 @@ exports[`TextInput Tests Uncontrolled TextInput 1`] = `
     "ControlType": 50004,
     "IsKeyboardFocusable": true,
     "LocalizedControlType": "edit",
-    "ValuePattern.IsReadOnly": false,
     "ValuePattern.Value": "Hello World!",
   },
   "Component Tree": {

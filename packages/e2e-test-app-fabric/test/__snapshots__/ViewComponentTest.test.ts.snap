@@ -982,6 +982,19 @@ exports[`View Tests Views can have customized accessibility 1`] = `
         "LocalizedControlType": "text",
         "Name": "Current Number of Accessibility Taps: 0",
       },
+      {
+        "AutomationId": "",
+        "ControlType": 50026,
+        "LocalizedControlType": "group",
+        "__Children": [
+          {
+            "AutomationId": "",
+            "ControlType": 50020,
+            "LocalizedControlType": "text",
+            "Name": "This sub-view should not have an accessibility value. It's control type does not support the value pattern.",
+          },
+        ],
+      },
     ],
   },
   "Component Tree": {

@@ -59,6 +59,7 @@ type Props = $ReadOnly<{|
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
+  'aria-readonly'?: ?boolean, // Windows
   'aria-multiselectable'?: ?boolean, // Windows
   'aria-required'?: ?boolean, // Windows
   'aria-hidden'?: ?boolean,
@@ -160,7 +161,8 @@ class TouchableWithoutFeedback extends React.Component<Props, State> {
         this.props['aria-expanded'] ?? this.props.accessibilityState?.expanded,
       selected:
         this.props['aria-selected'] ?? this.props.accessibilityState?.selected,
-        multiselectable:
+      readonly: this.props['aria-readonly'] ?? this.props.accessibilityState?.readOnly, // Windows
+      multiselectable:
         this.props['aria-multiselectable'] ??
         this.props.accessibilityState?.multiselectable, // Windows
       required: this.props['aria-required'] ?? this.props.accessibilityState?.required, // Windows
