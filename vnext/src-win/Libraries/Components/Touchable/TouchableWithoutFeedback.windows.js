@@ -59,6 +59,7 @@ type Props = $ReadOnly<{|
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
+  'aria-readonly'?: ?boolean, // Windows
   'aria-multiselectable'?: ?boolean, // Windows
   'aria-required'?: ?boolean, // Windows
   'aria-hidden'?: ?boolean,
@@ -223,6 +224,7 @@ const TouchableWithoutFeedback: React.AbstractComponent<
     disabled: props['aria-disabled'] ?? props.accessibilityState?.disabled,
     expanded: props['aria-expanded'] ?? props.accessibilityState?.expanded,
     selected: props['aria-selected'] ?? props.accessibilityState?.selected,
+    readonly: props['aria-readonly'] ?? props.accessibilityState?.readOnly, // Windows
     multiselectable:
       props['aria-multiselectable'] ??
       props.accessibilityState?.multiselectable, // Windows

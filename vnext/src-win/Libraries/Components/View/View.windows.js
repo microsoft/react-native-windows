@@ -84,6 +84,7 @@ const View: React.AbstractComponent<
       'aria-level': ariaLevel,
       'aria-live': ariaLive,
       'aria-posinset': ariaPosinset, // Windows
+      'aria-readonly': ariaReadOnly, // Windows
       'aria-selected': ariaSelected,
       'aria-setsize': ariaSetsize, // Windows
       'aria-valuemax': ariaValueMax,
@@ -111,6 +112,7 @@ const View: React.AbstractComponent<
       ariaDisabled != null ||
       ariaExpanded != null ||
       ariaSelected != null ||
+      ariaReadOnly != null || // Windows
       ariaMultiselectable != null || // Windows
       ariaRequired != null // Windows
     ) {
@@ -120,6 +122,7 @@ const View: React.AbstractComponent<
         disabled: ariaDisabled ?? accessibilityState?.disabled,
         expanded: ariaExpanded ?? accessibilityState?.expanded,
         selected: ariaSelected ?? accessibilityState?.selected,
+        readOnly: ariaReadOnly ?? accessibilityState?.readOnly, // Windows
         multiselectable:
           ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
         required: ariaRequired ?? accessibilityState?.required, // Windows
