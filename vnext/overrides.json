@@ -85,13 +85,6 @@
       "issue": 13172
     },
     {
-      "type": "copy",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/imagemanager/ImageRequestParams.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/platform/cxx/react/renderer/imagemanager/ImageRequestParams.h",
-      "baseHash": "c31a1255751a31c465236402a481b263050d39a2",
-      "issue": 13172
-    },
-    {
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/JSExecutor.h",
       "baseFile": "packages/react-native/ReactCommon/cxxreact/JSExecutor.h",
@@ -171,6 +164,20 @@
       "baseFile": "packages/react-native/ReactCommon/react/renderer/core/LayoutableShadowNode.cpp",
       "baseHash": "d66daa36deef63d32e164dd26cfc76ad09569169",
       "issue": 13644
+    },
+    {
+      "type": "copy",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/imagemanager/ImageManager.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/platform/cxx/react/renderer/imagemanager/ImageManager.cpp",
+      "baseHash": "eb19ca208de53aed3f34ffc1c44cb9305a3049fc",
+      "issue": 14216
+    },
+    {
+      "type": "copy",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/imagemanager/ImageRequestParams.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/platform/cxx/react/renderer/imagemanager/ImageRequestParams.h",
+      "baseHash": "2b7c528622a247f45f4fe01660583bd7cfa4db56",
+      "issue": 14216
     },
     {
       "type": "patch",
