@@ -1,5 +1,120 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`Accessibility Tests Components can store range data by setting the min, max, and now of accessibilityValue 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "accessibilityValue-number",
+    "ControlType": 50015,
+    "IsKeyboardFocusable": true,
+    "LocalizedControlType": "slider",
+    "RangeValuePattern.IsReadOnly": true,
+    "RangeValuePattern.Maximum": 125,
+    "RangeValuePattern.Minimum": 5,
+    "RangeValuePattern.Value": 10,
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "The View's (accessibilityRole == adjustable, ie. Slider) properties should be the following according to UIA: Min- 5Max- 125Now- 10",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "accessibilityValue-number",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(128, 128, 128, 255)",
+    },
+    "Comment": "accessibilityValue-number",
+    "Offset": "0, 0, 0",
+    "Size": "916, 50",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "916, 19",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 19",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
+exports[`Accessibility Tests Components can store value data by setting the text of accessibilityValue 1`] = `
+{
+  "Automation Tree": {
+    "AutomationId": "accessibilityValue-text",
+    "ControlType": 50003,
+    "LocalizedControlType": "combo box",
+    "ValuePattern.IsReadOnly": true,
+    "ValuePattern.Value": "testText",
+    "__Children": [
+      {
+        "AutomationId": "",
+        "ControlType": 50020,
+        "LocalizedControlType": "text",
+        "Name": "The View's properties should be the following according to UIA: Text- testText",
+      },
+    ],
+  },
+  "Component Tree": {
+    "Type": "Microsoft.ReactNative.Composition.ViewComponentView",
+    "_Props": {
+      "TestId": "accessibilityValue-text",
+    },
+    "__Children": [
+      {
+        "Type": "Microsoft.ReactNative.Composition.ParagraphComponentView",
+        "_Props": {},
+      },
+    ],
+  },
+  "Visual Tree": {
+    "Brush": {
+      "Brush Type": "ColorBrush",
+      "Color": "rgba(128, 128, 128, 255)",
+    },
+    "Comment": "accessibilityValue-text",
+    "Offset": "0, 0, 0",
+    "Size": "916, 50",
+    "Visual Type": "SpriteVisual",
+    "__Children": [
+      {
+        "Offset": "0, 0, 0",
+        "Size": "916, 20",
+        "Visual Type": "SpriteVisual",
+        "__Children": [
+          {
+            "Offset": "0, 0, 0",
+            "Size": "916, 20",
+            "Visual Type": "SpriteVisual",
+          },
+        ],
+      },
+    ],
+  },
+}
+`;
+
 exports[`Accessibility Tests Elements can set accessibilityState:selected to false 1`] = `
 {
   "Automation Tree": {

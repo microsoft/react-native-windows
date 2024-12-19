@@ -60,6 +60,7 @@ const Text: component(
       'aria-posinset': ariaPosinset, // Windows
       'aria-setsize': ariaSetsize, // Windows
       'aria-selected': ariaSelected,
+      'aria-readonly': ariaReadOnly, //Windows
       children,
       ellipsizeMode,
       disabled,
@@ -98,6 +99,7 @@ const Text: component(
       ariaDisabled != null ||
       ariaExpanded != null ||
       ariaSelected != null ||
+      ariaReadOnly != null || // Windows
       ariaMultiselectable != null || // Windows
       ariaRequired != null // Windows
     ) {
@@ -108,6 +110,7 @@ const Text: component(
           disabled: ariaDisabled ?? _accessibilityState.disabled,
           expanded: ariaExpanded ?? _accessibilityState.expanded,
           selected: ariaSelected ?? _accessibilityState.selected,
+          readOnly: ariaReadOnly ?? _accessibilityState.readOnly, // Windows
           multiselectable:
             ariaMultiselectable ?? _accessibilityState.multiselectable, // Windows
           required: ariaRequired ?? _accessibilityState.required, // Windows
@@ -119,6 +122,7 @@ const Text: component(
           disabled: ariaDisabled,
           expanded: ariaExpanded,
           selected: ariaSelected,
+          readOnly: ariaReadOnly, // Windows
           multiselectable: ariaMultiselectable, // Windows
           required: ariaRequired, // Windows
         };
