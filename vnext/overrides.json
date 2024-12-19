@@ -167,13 +167,6 @@
     },
     {
       "type": "copy",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/imagemanager/ImageManager.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/platform/cxx/react/renderer/imagemanager/ImageManager.cpp",
-      "baseHash": "eb19ca208de53aed3f34ffc1c44cb9305a3049fc",
-      "issue": 14216
-    },
-    {
-      "type": "copy",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/imagemanager/ImageRequestParams.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/platform/cxx/react/renderer/imagemanager/ImageRequestParams.h",
       "baseHash": "2b7c528622a247f45f4fe01660583bd7cfa4db56",
