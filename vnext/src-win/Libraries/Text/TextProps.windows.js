@@ -97,6 +97,7 @@ export type TextProps = $ReadOnly<{
   'aria-posinset'?: ?number, // Windows
   'aria-setsize'?: ?number, // Windows
   'aria-level'?: ?number, // Windows
+  'aria-readonly'?: ?boolean, // Windows
   'aria-multiselectable'?: ?boolean, // Windows
   'aria-required'?: ?boolean, // Windows
 
