@@ -13,6 +13,10 @@ class REACTWINDOWS_EXPORT FrameworkElementViewManager : public ViewManagerBase {
  public:
   FrameworkElementViewManager(const Mso::React::IReactContext &context);
 
+  static winrt::hstring getControlTypeFromAccessibilityRole(winrt::Microsoft::ReactNative::AccessibilityRoles role);
+
+  void setLocalizedControlTypeFromAccessibilityRole(xaml::UIElement element, winrt::hstring value);
+
   void GetNativeProps(const winrt::Microsoft::ReactNative::IJSValueWriter &writer) const override;
 
   // Helper functions related to setting/updating TransformMatrix

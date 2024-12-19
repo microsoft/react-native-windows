@@ -25,6 +25,7 @@
 #include "DynamicAutomationProperties.h"
 
 #include <Views/ViewPanel.h>
+#include "FrameworkElementViewManager.h"
 #include "Unicode.h"
 #include "cdebug.h"
 
@@ -248,7 +249,7 @@ bool FrameworkElementViewManager::UpdateProperty(
           }
 
           if (!element.IsLoaded()) {
-            element.Loaded([=](auto sender, auto &&) -> auto{
+            element.Loaded([=](auto sender, auto &&) -> auto {
               ApplyTransformMatrix(sender.as<xaml::UIElement>(), nodeToUpdate, transformMatrix);
             });
           } else {
@@ -422,13 +423,24 @@ bool FrameworkElementViewManager::UpdateProperty(
         else if (role == "toolbar")
           DynamicAutomationProperties::SetAccessibilityRole(
               element, winrt::Microsoft::ReactNative::AccessibilityRoles::ToolBar);
-        else if (role == "list")
+        else if (role == "list") {
           DynamicAutomationProperties::SetAccessibilityRole(
               element, winrt::Microsoft::ReactNative::AccessibilityRoles::List);
-        else if (role == "listitem")
+          if (propertyValue.Type() == winrt::Microsoft::ReactNative::JSValueType::String) {
+            winrt::hstring controlType = FrameworkElementViewManager::getControlTypeFromAccessibilityRole(
+                winrt::Microsoft::ReactNative::AccessibilityRoles::List);
+            FrameworkElementViewManager::setLocalizedControlTypeFromAccessibilityRole(element, controlType);
+          }
+        } else if (role == "listitem") {
           DynamicAutomationProperties::SetAccessibilityRole(
               element, winrt::Microsoft::ReactNative::AccessibilityRoles::ListItem);
-        else
+          if (propertyValue.Type() ==
+              winrt::Microsoft::ReactNative::JSValueType::String) { // Set localized control type
+            winrt::hstring controlType = FrameworkElementViewManager::getControlTypeFromAccessibilityRole(
+                winrt::Microsoft::ReactNative::AccessibilityRoles::ListItem);
+            FrameworkElementViewManager::setLocalizedControlTypeFromAccessibilityRole(element, controlType);
+          }
+        } else
           DynamicAutomationProperties::SetAccessibilityRole(
               element, winrt::Microsoft::ReactNative::AccessibilityRoles::Unknown);
       } else if (propertyValue.IsNull()) {
@@ -821,6 +833,79 @@ bool FrameworkElementViewManager::UpdateProperty(
     }
   }
   return true;
+}
+
+winrt::hstring FrameworkElementViewManager::getControlTypeFromAccessibilityRole(
+    winrt::Microsoft::ReactNative::AccessibilityRoles role) {
+  switch (role) {
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Button:
+      return winrt::to_hstring("button");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Link:
+      return winrt::to_hstring("link");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Search:
+      return winrt::to_hstring("search");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Image:
+      return winrt::to_hstring("image");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::KeyboardKey:
+      return winrt::to_hstring("keyboardkey");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Text:
+      return winrt::to_hstring("text");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Adjustable:
+      return winrt::to_hstring("adjustable");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ImageButton:
+      return winrt::to_hstring("imagebutton");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Header:
+      return winrt::to_hstring("header");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Summary:
+      return winrt::to_hstring("summary");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Alert:
+      return winrt::to_hstring("alert");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::CheckBox:
+      return winrt::to_hstring("checkbox");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ComboBox:
+      return winrt::to_hstring("combobox");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Menu:
+      return winrt::to_hstring("menu");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::MenuBar:
+      return winrt::to_hstring("menubar");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::MenuItem:
+      return winrt::to_hstring("menuitem");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ProgressBar:
+      return winrt::to_hstring("progressbar");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Radio:
+      return winrt::to_hstring("radio");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::RadioGroup:
+      return winrt::to_hstring("radiogroup");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ScrollBar:
+      return winrt::to_hstring("scrollbar");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::SpinButton:
+      return winrt::to_hstring("spinbutton");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Switch:
+      return winrt::to_hstring("switch");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Tab:
+      return winrt::to_hstring("tab");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::TabList:
+      return winrt::to_hstring("tablist");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Timer:
+      return winrt::to_hstring("timer");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ToggleButton:
+      return winrt::to_hstring("togglebutton");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ToolBar:
+      return winrt::to_hstring("toolbar");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::List:
+      return winrt::to_hstring("list");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ListItem:
+      return winrt::to_hstring("listitem");
+    default:
+      return winrt::to_hstring("unknown");
+  }
+}
+
+void FrameworkElementViewManager::setLocalizedControlTypeFromAccessibilityRole(
+    xaml::UIElement element,
+    winrt::hstring value) {
+  auto controlTypeBoxedValue = winrt::Windows::Foundation::PropertyValue::CreateString(value);
+  element.SetValue(xaml::Automation::AutomationProperties::LocalizedControlTypeProperty(), controlTypeBoxedValue);
 }
 
 // Applies a TransformMatrix to the backing UIElement.
