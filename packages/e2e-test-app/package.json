@@ -14,14 +14,14 @@
   },
   "dependencies": {
     "@react-native-picker/picker": "^2.5.1",
-    "@react-native-windows/automation-channel": "^0.12.243",
+    "@react-native-windows/automation-channel": "^0.12.244",
     "@react-native-windows/tester": "0.0.1",
     "@types/react": "^18.2.6",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "react": "^18.2.0",
     "react-native": "0.78.0-nightly-20241201-91e217ff5",
-    "react-native-windows": "^0.0.0-canary.903",
+    "react-native-windows": "^0.0.0-canary.904",
     "react-native-xaml": "^0.0.78"
   },
   "devDependencies": {
@@ -31,8 +31,8 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "15.0.0-alpha.2",
-    "@react-native-windows/automation": "^0.3.325",
-    "@react-native-windows/automation-commands": "^0.1.346",
+    "@react-native-windows/automation": "^0.3.326",
+    "@react-native-windows/automation-commands": "^0.1.347",
     "@react-native/metro-config": "0.77.0-nightly-20241001-223e98cc4",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/babel-react-native-config": "0.0.0",

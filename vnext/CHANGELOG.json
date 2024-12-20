@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 20 Dec 2024 06:22:28 GMT",
+      "version": "0.0.0-canary.904",
+      "tag": "react-native-windows_v0.0.0-canary.904",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "9372e929083b78c3d8c05ee713a57537f864cdd9",
+            "comment": "integrate 0.78.0-nightly-20241201-91e217ff5"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7e4bcc6a84249e48ffabc0500360caae1a651e04",
+            "comment": "IRangeValue Provider"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Dec 2024 06:22:24 GMT",
       "version": "0.0.0-canary.903",
       "tag": "react-native-windows_v0.0.0-canary.903",

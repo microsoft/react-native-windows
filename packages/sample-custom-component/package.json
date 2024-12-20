@@ -23,7 +23,7 @@
     "@types/react": "^18.2.6",
     "react": "^18.2.0",
     "react-native": "0.78.0-nightly-20241201-91e217ff5",
-    "react-native-windows": "^0.0.0-canary.903"
+    "react-native-windows": "^0.0.0-canary.904"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

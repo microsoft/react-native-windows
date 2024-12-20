@@ -2,6 +2,27 @@
   "name": "@react-native-windows/automation-channel",
   "entries": [
     {
+      "date": "Fri, 20 Dec 2024 06:22:28 GMT",
+      "version": "0.12.244",
+      "tag": "@react-native-windows/automation-channel_v0.12.244",
+      "comments": {
+        "patch": [
+          {
+            "author": "email not defined",
+            "package": "@react-native-windows/automation-channel",
+            "commit": "9372e929083b78c3d8c05ee713a57537f864cdd9",
+            "comment": "integrate 0.78.0-nightly-20241201-91e217ff5"
+          },
+          {
+            "author": "beachball",
+            "package": "@react-native-windows/automation-channel",
+            "comment": "Bump react-native-windows to v0.0.0-canary.904",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 18 Dec 2024 06:22:23 GMT",
       "version": "0.12.243",
       "tag": "@react-native-windows/automation-channel_v0.12.243",
