@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Tue, 10 Dec 2024 06:29:30 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 20 Dec 2024 18:21:25 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.77.0-preview.1
+
+Fri, 20 Dec 2024 18:21:25 GMT
+
+### Changes
+
+- Promote 0.77 to preview (email not defined)
+- Bump @react-native-windows/fs to v0.77.0-preview.1
 
 ## 0.0.0-canary.114
 

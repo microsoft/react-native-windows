@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/package-utils
 
-<!-- This log was last generated on Sat, 19 Oct 2024 05:29:46 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 20 Dec 2024 18:21:25 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.77.0-preview.1
+
+Fri, 20 Dec 2024 18:21:25 GMT
+
+### Changes
+
+- Promote 0.77 to preview (email not defined)
+- Bump @react-native-windows/find-repo-root to v0.77.0-preview.1
+- Bump @react-native-windows/fs to v0.77.0-preview.1
 
 ## 0.0.0-canary.85
 
