@@ -403,7 +403,6 @@ function verifyTestCommandTelemetryProcessor(
             : 'Unknown',
         );
 
-        // NOTE: At this point, expectedError has been modified by trackException().
         // If the exception type is not CodedError but any data got copied into envelope.CodedError.data,
         // for instance autolinking error info, build the expected CodedError.data.
         let expectedCodedErrorData = {};
@@ -747,7 +746,7 @@ test.each(testTelemetryOptions)(
   async options => {
     await TelemetryTest.startTest(options);
 
-    const expectedError = new errorUtils.CodedError(
+    const codedErrorInfo = new errorUtils.CodedError(
       'MSBuildError', // type
       'test error', // message
       {
@@ -759,13 +758,14 @@ test.each(testTelemetryOptions)(
           'No path',
           15,
           'Clean this path: C:\\some\\file\\path2\\project.build.appxrecipe',
+          ['No path', 150, 'Also clean this: C:\\some\\file\\path2\\project.build.appxrecipe']
         ],
-        nestedField: {
+        someObject: {
           fieldWithPath:
             'Test Error occurred at C:\\some\\file\\path3\\project.build.appxrecipe', // expectation: replace the whole C:\\... thing with "[path]".
           fieldWithNoPath: 'Test Error data 2', // expectation: no changes to this string.
           fieldWithNoString: 16, // expectation: no changes to this value.
-          anotherNestedField: {
+          nestedObject: {
             fieldWithPath:
               'Test Error occurred at C:\\some\\file\\path4\\project.build.appxrecipe', // expectation: replace the whole C:\\... thing with "[path]".
             fieldWithNoPath: 'Test Error data 3', // expectation: no changes to this string.
@@ -774,6 +774,36 @@ test.each(testTelemetryOptions)(
         },
       }, // data
     );
+
+    const expectedError = new errorUtils.CodedError(
+      'MSBuildError', // type
+      'test error', // message
+      {
+        fieldWithPath:
+          'Test Error occurred at [path]',
+        fieldWithNoPath: 'Test Error data',
+        fieldWithNoString: 14,
+        arrayField: [
+          'No path',
+          15,
+          'Clean this path: [path]',
+          ['No path', 150, 'Also clean this: [path]']
+        ],
+        someObject: {
+          fieldWithPath:
+            'Test Error occurred at [path]',
+          fieldWithNoPath: 'Test Error data 2',
+          fieldWithNoString: 16,
+          nestedObject: {
+            fieldWithPath:
+              'Test Error occurred at [path]',
+            fieldWithNoPath: 'Test Error data 3',
+            fieldWithNoString: 17,
+          },
+        },
+      }, // data
+    );
+
 
     const caughtErrors: Error[] = [];
     TelemetryTest.addTelemetryInitializer(
@@ -784,7 +814,7 @@ test.each(testTelemetryOptions)(
       ),
     );
 
-    await runTestCommandE2E(() => testCommandBody(expectedError));
+    await runTestCommandE2E(() => testCommandBody(codedErrorInfo));
 
     TelemetryTest.endTest(() => {
       // Check if any errors were thrown
