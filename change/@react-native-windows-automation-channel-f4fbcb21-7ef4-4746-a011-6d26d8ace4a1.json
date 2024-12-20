@@ -1,0 +1,7 @@
+{
+  "type": "patch",
+  "comment": "integrate 0.78.0-nightly-20241201-91e217ff5",
+  "packageName": "@react-native-windows/automation-channel",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}

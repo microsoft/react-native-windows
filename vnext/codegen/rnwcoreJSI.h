@@ -38,6 +38,7 @@ public:
   virtual bool enableFixForViewCommandRace(jsi::Runtime &rt) = 0;
   virtual bool enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt) = 0;
   virtual bool enableIOSViewClipToPaddingBox(jsi::Runtime &rt) = 0;
+  virtual bool enableImagePrefetchingAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableLayoutAnimationsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableLayoutAnimationsOnIOS(jsi::Runtime &rt) = 0;
   virtual bool enableLongTaskAPI(jsi::Runtime &rt) = 0;
@@ -239,6 +240,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableIOSViewClipToPaddingBox, jsInvoker_, instance_);
+    }
+    bool enableImagePrefetchingAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableImagePrefetchingAndroid) == 1,
+          "Expected enableImagePrefetchingAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableImagePrefetchingAndroid, jsInvoker_, instance_);
     }
     bool enableLayoutAnimationsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
