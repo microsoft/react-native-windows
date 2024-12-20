@@ -839,27 +839,23 @@ winrt::hstring FrameworkElementViewManager::getControlTypeFromAccessibilityRole(
     winrt::Microsoft::ReactNative::AccessibilityRoles role) {
   switch (role) {
     case winrt::Microsoft::ReactNative::AccessibilityRoles::Button:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ImageButton:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Switch:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::ToggleButton:
       return winrt::to_hstring("button");
     case winrt::Microsoft::ReactNative::AccessibilityRoles::Link:
       return winrt::to_hstring("link");
-    case winrt::Microsoft::ReactNative::AccessibilityRoles::Search:
-      return winrt::to_hstring("search");
     case winrt::Microsoft::ReactNative::AccessibilityRoles::Image:
       return winrt::to_hstring("image");
     case winrt::Microsoft::ReactNative::AccessibilityRoles::KeyboardKey:
-      return winrt::to_hstring("keyboardkey");
+      return winrt::to_hstring("custom");
     case winrt::Microsoft::ReactNative::AccessibilityRoles::Text:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Header:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Summary:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Alert:
       return winrt::to_hstring("text");
     case winrt::Microsoft::ReactNative::AccessibilityRoles::Adjustable:
-      return winrt::to_hstring("adjustable");
-    case winrt::Microsoft::ReactNative::AccessibilityRoles::ImageButton:
-      return winrt::to_hstring("imagebutton");
-    case winrt::Microsoft::ReactNative::AccessibilityRoles::Header:
-      return winrt::to_hstring("header");
-    case winrt::Microsoft::ReactNative::AccessibilityRoles::Summary:
-      return winrt::to_hstring("summary");
-    case winrt::Microsoft::ReactNative::AccessibilityRoles::Alert:
-      return winrt::to_hstring("alert");
+      return winrt::to_hstring("slider");
     case winrt::Microsoft::ReactNative::AccessibilityRoles::CheckBox:
       return winrt::to_hstring("checkbox");
     case winrt::Microsoft::ReactNative::AccessibilityRoles::ComboBox:
@@ -873,31 +869,26 @@ winrt::hstring FrameworkElementViewManager::getControlTypeFromAccessibilityRole(
     case winrt::Microsoft::ReactNative::AccessibilityRoles::ProgressBar:
       return winrt::to_hstring("progressbar");
     case winrt::Microsoft::ReactNative::AccessibilityRoles::Radio:
-      return winrt::to_hstring("radio");
-    case winrt::Microsoft::ReactNative::AccessibilityRoles::RadioGroup:
-      return winrt::to_hstring("radiogroup");
+      return winrt::to_hstring("radiobutton");
     case winrt::Microsoft::ReactNative::AccessibilityRoles::ScrollBar:
       return winrt::to_hstring("scrollbar");
     case winrt::Microsoft::ReactNative::AccessibilityRoles::SpinButton:
-      return winrt::to_hstring("spinbutton");
-    case winrt::Microsoft::ReactNative::AccessibilityRoles::Switch:
-      return winrt::to_hstring("switch");
+      return winrt::to_hstring("spinner");
     case winrt::Microsoft::ReactNative::AccessibilityRoles::Tab:
-      return winrt::to_hstring("tab");
+      return winrt::to_hstring("tabitem");
     case winrt::Microsoft::ReactNative::AccessibilityRoles::TabList:
-      return winrt::to_hstring("tablist");
-    case winrt::Microsoft::ReactNative::AccessibilityRoles::Timer:
-      return winrt::to_hstring("timer");
-    case winrt::Microsoft::ReactNative::AccessibilityRoles::ToggleButton:
-      return winrt::to_hstring("togglebutton");
+      return winrt::to_hstring("tab");
     case winrt::Microsoft::ReactNative::AccessibilityRoles::ToolBar:
       return winrt::to_hstring("toolbar");
     case winrt::Microsoft::ReactNative::AccessibilityRoles::List:
       return winrt::to_hstring("list");
     case winrt::Microsoft::ReactNative::AccessibilityRoles::ListItem:
       return winrt::to_hstring("listitem");
-    default:
-      return winrt::to_hstring("unknown");
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::None:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Search:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::RadioGroup:
+    case winrt::Microsoft::ReactNative::AccessibilityRoles::Timer:
+      return winrt::to_hstring("group");
   }
 }
 
