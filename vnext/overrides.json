@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-rc.0",
+  "baseVersion": "0.77.0-rc.4",
   "overrides": [
     {
       "type": "derived",
@@ -190,7 +190,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "240a49c5f5bd67f35e79dcbe9a9c6e7f6e6e2a32",
+      "baseHash": "9bfade3d6a2e2df231bae88267cf1d9e59451533",
       "issue": 13172
     },
     {
@@ -262,19 +262,19 @@
       "type": "derived",
       "file": "src-win/Libraries/Animated/NativeAnimatedAllowlist.windows.js",
       "baseFile": "packages/react-native/Libraries/Animated/NativeAnimatedAllowlist.js",
-      "baseHash": "337dfc9001bc8967ca8c5da7f09ddde463d29b54"
+      "baseHash": "0d731685ff1ce7e4fc85000e341329387c603512"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Animated/nodes/AnimatedProps.windows.js",
       "baseFile": "packages/react-native/Libraries/Animated/nodes/AnimatedProps.js",
-      "baseHash": "9157901b6382c2a936010d0d34ec4f33a8baf70b"
+      "baseHash": "210b39d5e3ba0a0e338d6cdbffa9402b8ad52a6e"
     },
     {
       "type": "derived",
       "file": "src-win/Libraries/Animated/nodes/AnimatedStyle.windows.js",
       "baseFile": "packages/react-native/Libraries/Animated/nodes/AnimatedStyle.js",
-      "baseHash": "477711c8194a5ea843ec907c2d97fbed83b94028"
+      "baseHash": "8d506f2b8d8b2d9d0efdad1162314f884b9ab631"
     },
     {
       "type": "platform",
@@ -634,7 +634,7 @@
       "type": "derived",
       "file": "src-win/src/private/animated/useAnimatedPropsMemo.windows.js",
       "baseFile": "packages/react-native/src/private/animated/useAnimatedPropsMemo.js",
-      "baseHash": "b1c052ae3653d5771b75aa96afc49cddd794f1bd"
+      "baseHash": "c983a4da2ddd6ffcb37d39241c77149a24b68dbb"
     },
     {
       "type": "copy",
