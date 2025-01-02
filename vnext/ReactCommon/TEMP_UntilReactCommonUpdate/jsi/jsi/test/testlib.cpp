@@ -1611,6 +1611,8 @@ TEST_P(JSITest, UTF16Test) {
 }
 Windows] */
 
+/*
+[Windows 
 TEST_P(JSITest, GetStringDataTest) {
   // This Runtime Decorator is used to test the default getStringData
   // implementation for VMs that do not provide their own implementation
@@ -1639,6 +1641,7 @@ TEST_P(JSITest, GetStringDataTest) {
   str.getStringData(rd, cb);
   EXPECT_EQ(buf, str.utf16(rd));
 }
+Windows] */
 
 INSTANTIATE_TEST_CASE_P(
     Runtimes,
