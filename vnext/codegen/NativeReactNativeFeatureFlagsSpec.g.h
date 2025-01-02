@@ -31,22 +31,22 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
       SyncMethod<bool() noexcept>{11, L"enableEventEmitterRetentionDuringGesturesOnAndroid"},
       SyncMethod<bool() noexcept>{12, L"enableFabricLogs"},
       SyncMethod<bool() noexcept>{13, L"enableFabricRenderer"},
-      SyncMethod<bool() noexcept>{14, L"enableFabricRendererExclusively"},
-      SyncMethod<bool() noexcept>{15, L"enableFixForViewCommandRace"},
-      SyncMethod<bool() noexcept>{16, L"enableGranularShadowTreeStateReconciliation"},
-      SyncMethod<bool() noexcept>{17, L"enableIOSViewClipToPaddingBox"},
-      SyncMethod<bool() noexcept>{18, L"enableImagePrefetchingAndroid"},
-      SyncMethod<bool() noexcept>{19, L"enableLayoutAnimationsOnAndroid"},
-      SyncMethod<bool() noexcept>{20, L"enableLayoutAnimationsOnIOS"},
-      SyncMethod<bool() noexcept>{21, L"enableLongTaskAPI"},
-      SyncMethod<bool() noexcept>{22, L"enableNewBackgroundAndBorderDrawables"},
-      SyncMethod<bool() noexcept>{23, L"enablePreciseSchedulingForPremountItemsOnAndroid"},
-      SyncMethod<bool() noexcept>{24, L"enablePropsUpdateReconciliationAndroid"},
-      SyncMethod<bool() noexcept>{25, L"enableReportEventPaintTime"},
-      SyncMethod<bool() noexcept>{26, L"enableSynchronousStateUpdates"},
-      SyncMethod<bool() noexcept>{27, L"enableUIConsistency"},
-      SyncMethod<bool() noexcept>{28, L"enableViewRecycling"},
-      SyncMethod<bool() noexcept>{29, L"excludeYogaFromRawProps"},
+      SyncMethod<bool() noexcept>{14, L"enableFixForViewCommandRace"},
+      SyncMethod<bool() noexcept>{15, L"enableGranularShadowTreeStateReconciliation"},
+      SyncMethod<bool() noexcept>{16, L"enableIOSViewClipToPaddingBox"},
+      SyncMethod<bool() noexcept>{17, L"enableImagePrefetchingAndroid"},
+      SyncMethod<bool() noexcept>{18, L"enableLayoutAnimationsOnAndroid"},
+      SyncMethod<bool() noexcept>{19, L"enableLayoutAnimationsOnIOS"},
+      SyncMethod<bool() noexcept>{20, L"enableLongTaskAPI"},
+      SyncMethod<bool() noexcept>{21, L"enableNewBackgroundAndBorderDrawables"},
+      SyncMethod<bool() noexcept>{22, L"enablePreciseSchedulingForPremountItemsOnAndroid"},
+      SyncMethod<bool() noexcept>{23, L"enablePropsUpdateReconciliationAndroid"},
+      SyncMethod<bool() noexcept>{24, L"enableReportEventPaintTime"},
+      SyncMethod<bool() noexcept>{25, L"enableSynchronousStateUpdates"},
+      SyncMethod<bool() noexcept>{26, L"enableUIConsistency"},
+      SyncMethod<bool() noexcept>{27, L"enableViewRecycling"},
+      SyncMethod<bool() noexcept>{28, L"excludeYogaFromRawProps"},
+      SyncMethod<bool() noexcept>{29, L"fixDifferentiatorEmittingUpdatesWithWrongParentTag"},
       SyncMethod<bool() noexcept>{30, L"fixMappingOfEventPrioritiesBetweenFabricAndReact"},
       SyncMethod<bool() noexcept>{31, L"fixMountingCoordinatorReportedPendingTransactionsOnAndroid"},
       SyncMethod<bool() noexcept>{32, L"fuseboxEnabledDebug"},
@@ -142,84 +142,84 @@ struct ReactNativeFeatureFlagsSpec : winrt::Microsoft::ReactNative::TurboModuleS
           "    REACT_SYNC_METHOD(enableFabricRenderer) static bool enableFabricRenderer() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           14,
-          "enableFabricRendererExclusively",
-          "    REACT_SYNC_METHOD(enableFabricRendererExclusively) bool enableFabricRendererExclusively() noexcept { /* implementation */ }\n"
-          "    REACT_SYNC_METHOD(enableFabricRendererExclusively) static bool enableFabricRendererExclusively() noexcept { /* implementation */ }\n");
-    REACT_SHOW_METHOD_SPEC_ERRORS(
-          15,
           "enableFixForViewCommandRace",
           "    REACT_SYNC_METHOD(enableFixForViewCommandRace) bool enableFixForViewCommandRace() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableFixForViewCommandRace) static bool enableFixForViewCommandRace() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          16,
+          15,
           "enableGranularShadowTreeStateReconciliation",
           "    REACT_SYNC_METHOD(enableGranularShadowTreeStateReconciliation) bool enableGranularShadowTreeStateReconciliation() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableGranularShadowTreeStateReconciliation) static bool enableGranularShadowTreeStateReconciliation() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          17,
+          16,
           "enableIOSViewClipToPaddingBox",
           "    REACT_SYNC_METHOD(enableIOSViewClipToPaddingBox) bool enableIOSViewClipToPaddingBox() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableIOSViewClipToPaddingBox) static bool enableIOSViewClipToPaddingBox() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          18,
+          17,
           "enableImagePrefetchingAndroid",
           "    REACT_SYNC_METHOD(enableImagePrefetchingAndroid) bool enableImagePrefetchingAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableImagePrefetchingAndroid) static bool enableImagePrefetchingAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          19,
+          18,
           "enableLayoutAnimationsOnAndroid",
           "    REACT_SYNC_METHOD(enableLayoutAnimationsOnAndroid) bool enableLayoutAnimationsOnAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableLayoutAnimationsOnAndroid) static bool enableLayoutAnimationsOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          20,
+          19,
           "enableLayoutAnimationsOnIOS",
           "    REACT_SYNC_METHOD(enableLayoutAnimationsOnIOS) bool enableLayoutAnimationsOnIOS() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableLayoutAnimationsOnIOS) static bool enableLayoutAnimationsOnIOS() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          21,
+          20,
           "enableLongTaskAPI",
           "    REACT_SYNC_METHOD(enableLongTaskAPI) bool enableLongTaskAPI() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableLongTaskAPI) static bool enableLongTaskAPI() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          22,
+          21,
           "enableNewBackgroundAndBorderDrawables",
           "    REACT_SYNC_METHOD(enableNewBackgroundAndBorderDrawables) bool enableNewBackgroundAndBorderDrawables() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableNewBackgroundAndBorderDrawables) static bool enableNewBackgroundAndBorderDrawables() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          23,
+          22,
           "enablePreciseSchedulingForPremountItemsOnAndroid",
           "    REACT_SYNC_METHOD(enablePreciseSchedulingForPremountItemsOnAndroid) bool enablePreciseSchedulingForPremountItemsOnAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enablePreciseSchedulingForPremountItemsOnAndroid) static bool enablePreciseSchedulingForPremountItemsOnAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          24,
+          23,
           "enablePropsUpdateReconciliationAndroid",
           "    REACT_SYNC_METHOD(enablePropsUpdateReconciliationAndroid) bool enablePropsUpdateReconciliationAndroid() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enablePropsUpdateReconciliationAndroid) static bool enablePropsUpdateReconciliationAndroid() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          25,
+          24,
           "enableReportEventPaintTime",
           "    REACT_SYNC_METHOD(enableReportEventPaintTime) bool enableReportEventPaintTime() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableReportEventPaintTime) static bool enableReportEventPaintTime() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          26,
+          25,
           "enableSynchronousStateUpdates",
           "    REACT_SYNC_METHOD(enableSynchronousStateUpdates) bool enableSynchronousStateUpdates() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableSynchronousStateUpdates) static bool enableSynchronousStateUpdates() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          27,
+          26,
           "enableUIConsistency",
           "    REACT_SYNC_METHOD(enableUIConsistency) bool enableUIConsistency() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableUIConsistency) static bool enableUIConsistency() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          28,
+          27,
           "enableViewRecycling",
           "    REACT_SYNC_METHOD(enableViewRecycling) bool enableViewRecycling() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(enableViewRecycling) static bool enableViewRecycling() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
-          29,
+          28,
           "excludeYogaFromRawProps",
           "    REACT_SYNC_METHOD(excludeYogaFromRawProps) bool excludeYogaFromRawProps() noexcept { /* implementation */ }\n"
           "    REACT_SYNC_METHOD(excludeYogaFromRawProps) static bool excludeYogaFromRawProps() noexcept { /* implementation */ }\n");
+    REACT_SHOW_METHOD_SPEC_ERRORS(
+          29,
+          "fixDifferentiatorEmittingUpdatesWithWrongParentTag",
+          "    REACT_SYNC_METHOD(fixDifferentiatorEmittingUpdatesWithWrongParentTag) bool fixDifferentiatorEmittingUpdatesWithWrongParentTag() noexcept { /* implementation */ }\n"
+          "    REACT_SYNC_METHOD(fixDifferentiatorEmittingUpdatesWithWrongParentTag) static bool fixDifferentiatorEmittingUpdatesWithWrongParentTag() noexcept { /* implementation */ }\n");
     REACT_SHOW_METHOD_SPEC_ERRORS(
           30,
           "fixMappingOfEventPrioritiesBetweenFabricAndReact",

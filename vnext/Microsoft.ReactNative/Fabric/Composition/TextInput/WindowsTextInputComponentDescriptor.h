@@ -61,8 +61,7 @@ virtual State::Shared createInitialState(
       }
 
     return std::make_shared<AndroidTextInputShadowNode::ConcreteState>(
-        std::make_shared<const AndroidTextInputState>(AndroidTextInputState(
-            0, {}, {}, {}, theme.start, theme.end, theme.top, theme.bottom)),
+        std::make_shared<const TextInputState>(TextInputState({}, {}, {}, 0)),
         family);
   }
   */
@@ -71,11 +70,9 @@ virtual State::Shared createInitialState(
   void adopt(ShadowNode &shadowNode) const override {
     auto &textInputShadowNode = static_cast<WindowsTextInputShadowNode &>(shadowNode);
 
-    // `ParagraphShadowNode` uses `TextLayoutManager` to measure text content
+    // `TextInputShadowNode` uses `TextLayoutManager` to measure text content
     // and communicate text rendering metrics to mounting layer.
     textInputShadowNode.setTextLayoutManager(m_textLayoutManager);
-
-    textInputShadowNode.setContextContainer(const_cast<ContextContainer *>(getContextContainer().get()));
 
     /*
             int surfaceId = textInputShadowNode.getSurfaceId();
