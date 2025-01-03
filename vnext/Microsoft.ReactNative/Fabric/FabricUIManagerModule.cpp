@@ -230,9 +230,9 @@ void FabricUIManager::RCTPerformMountInstructions(
       case facebook::react::ShadowViewMutation::Insert: {
         auto &oldChildShadowView = mutation.oldChildShadowView;
         auto &newChildShadowView = mutation.newChildShadowView;
-        auto &parentShadowView = mutation.parentShadowView;
+        auto &parentTag = mutation.parentTag;
         auto &newChildViewDescriptor = m_registry.componentViewDescriptorWithTag(newChildShadowView.tag);
-        auto parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentShadowView.tag);
+        auto parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentTag);
         auto newChildComponentView =
             winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(newChildViewDescriptor.view);
 
@@ -249,9 +249,9 @@ void FabricUIManager::RCTPerformMountInstructions(
 
       case facebook::react::ShadowViewMutation::Remove: {
         auto &oldChildShadowView = mutation.oldChildShadowView;
-        auto &parentShadowView = mutation.parentShadowView;
+        auto &parentTag = mutation.parentTag;
         auto &oldChildViewDescriptor = m_registry.componentViewDescriptorWithTag(oldChildShadowView.tag);
-        auto &parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentShadowView.tag);
+        auto &parentViewDescriptor = m_registry.componentViewDescriptorWithTag(parentTag);
         winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(parentViewDescriptor.view)
             ->UnmountChildComponentView(oldChildViewDescriptor.view, mutation.index);
         break;

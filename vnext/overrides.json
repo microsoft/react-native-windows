@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.78.0-nightly-20241201-91e217ff5",
+  "baseVersion": "0.78.0-nightly-20241210-6d235853f",
   "overrides": [
     {
       "type": "derived",
@@ -38,31 +38,19 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputComponentDescriptor.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputComponentDescriptor.h",
-      "baseHash": "90409a2a287313a62c5c321cacac46421b43be4c"
+      "baseHash": "f03c434f1aa9bd962d9a204382dd7c6b809e0226"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
-      "baseHash": "13c001498a042f76910178d8138678a4f9fd86d6"
+      "baseHash": "6bbfb03fbf86318973fe40f50d907774ffeeeb9c"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.h",
-      "baseHash": "84efa5a6b9ca4ce72d39b5d31d58fa192073f284"
-    },
-    {
-      "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputState.cpp",
-      "baseHash": "3a170d866220fe9cbec2fa65ccb4a17023a3d51a"
-    },
-    {
-      "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputState.h",
-      "baseHash": "e0cb62818f80a458ef28430a08a6a685805d3a91"
+      "baseHash": "7c3e8d6647779eade9ebfe57f62f00f72ba0dfb0"
     },
     {
       "type": "derived",
@@ -102,7 +90,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/jsi/jsi/test/testlib.cpp",
       "baseFile": "packages/react-native/ReactCommon/jsi/jsi/test/testlib.cpp",
-      "baseHash": "dfe475b567eb377514970f9563bfafae8b8b6ef9",
+      "baseHash": "c13cfc9ae3660a729374a0027aada2f7bd6ad492",
       "issue": 12210
     },
     {
@@ -197,7 +185,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "240a49c5f5bd67f35e79dcbe9a9c6e7f6e6e2a32",
+      "baseHash": "035d7eb7f908cdf73356fdccd0ccc4a8afb6cf76",
       "issue": 13172
     },
     {
@@ -264,24 +252,6 @@
       "file": "src-win/Libraries/Alert/Alert.windows.js",
       "baseFile": "packages/react-native/Libraries/Alert/Alert.js",
       "baseHash": "173b99e6ae120f14176cf3425877728787d3feed"
-    },
-    {
-      "type": "derived",
-      "file": "src-win/Libraries/Animated/NativeAnimatedAllowlist.windows.js",
-      "baseFile": "packages/react-native/Libraries/Animated/NativeAnimatedAllowlist.js",
-      "baseHash": "337dfc9001bc8967ca8c5da7f09ddde463d29b54"
-    },
-    {
-      "type": "derived",
-      "file": "src-win/Libraries/Animated/nodes/AnimatedProps.windows.js",
-      "baseFile": "packages/react-native/Libraries/Animated/nodes/AnimatedProps.js",
-      "baseHash": "9157901b6382c2a936010d0d34ec4f33a8baf70b"
-    },
-    {
-      "type": "derived",
-      "file": "src-win/Libraries/Animated/nodes/AnimatedStyle.windows.js",
-      "baseFile": "packages/react-native/Libraries/Animated/nodes/AnimatedStyle.js",
-      "baseHash": "477711c8194a5ea843ec907c2d97fbed83b94028"
     },
     {
       "type": "platform",
@@ -604,7 +574,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Text/TextProps.windows.js",
       "baseFile": "packages/react-native/Libraries/Text/TextProps.js",
-      "baseHash": "8e56a028dee989ebb8b06f4c01a1d038f074597d"
+      "baseHash": "ef1efdc0fb302273cd98be71aef2986677dda184"
     },
     {
       "type": "patch",
@@ -636,12 +606,6 @@
       "file": "src-win/Libraries/Utilities/Platform.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/Platform.android.js",
       "baseHash": "33f07d6fddb5290d05c8d4cc490312e3af88c70b"
-    },
-    {
-      "type": "derived",
-      "file": "src-win/src/private/animated/useAnimatedPropsMemo.windows.js",
-      "baseFile": "packages/react-native/src/private/animated/useAnimatedPropsMemo.js",
-      "baseHash": "b1c052ae3653d5771b75aa96afc49cddd794f1bd"
     },
     {
       "type": "copy",

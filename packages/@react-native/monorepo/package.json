@@ -29,6 +29,7 @@
     "test-typescript-offline": "dtslint --localTs node_modules/typescript/lib  packages/react-native/types",
     "test-typescript": "dtslint packages/react-native/types",
     "test": "jest",
+    "fantom": "JS_DIR='..' yarn jest --config packages/react-native-fantom/config/jest.config.js",
     "trigger-react-native-release": "node ./scripts/releases-local/trigger-react-native-release.js",
     "update-lock": "npx yarn-deduplicate"
   },
@@ -47,8 +48,8 @@
     "@definitelytyped/dtslint": "^0.0.127",
     "@jest/create-cache-key-function": "^29.6.3",
     "@pkgjs/parseargs": "^0.11.0",
-    "@react-native/metro-babel-transformer": "0.78.0-nightly-20241201-91e217ff5",
-    "@react-native/metro-config": "0.78.0-nightly-20241201-91e217ff5",
+    "@react-native/metro-babel-transformer": "0.78.0-nightly-20241210-6d235853f",
+    "@react-native/metro-config": "0.78.0-nightly-20241210-6d235853f",
     "@tsconfig/node18": "1.0.1",
     "@types/react": "^18.2.6",
     "@typescript-eslint/parser": "^7.1.1",

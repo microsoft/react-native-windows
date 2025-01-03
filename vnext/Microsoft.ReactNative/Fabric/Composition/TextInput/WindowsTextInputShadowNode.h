@@ -7,12 +7,12 @@
 #include <unordered_map>
 #include "WindowsTextInputEventEmitter.h"
 #include "WindowsTextInputProps.h"
-#include "WindowsTextInputState.h"
 
+#include <react/renderer/attributedstring/AttributedString.h>
+#include <react/renderer/components/textinput/TextInputState.h>
 #include <react/renderer/components/view/ConcreteViewShadowNode.h>
 #include <react/utils/ContextContainer.h>
 
-#include <react/renderer/attributedstring/AttributedString.h>
 #include <react/renderer/textlayoutmanager/TextLayoutManager.h>
 
 namespace facebook::react {
@@ -26,7 +26,7 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
                                              WindowsTextInputComponentName,
                                              WindowsTextInputProps,
                                              WindowsTextInputEventEmitter,
-                                             WindowsTextInputState> {
+                                             TextInputState> {
  public:
   static ShadowNodeTraits BaseTraits() {
     auto traits = ConcreteViewShadowNode::BaseTraits();
@@ -37,8 +37,6 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
 
   using ConcreteViewShadowNode::ConcreteViewShadowNode;
 
-  void setContextContainer(ContextContainer *contextContainer);
-
   /*
    * Returns a `AttributedString` which represents text content of the node.
    */
@@ -47,8 +45,8 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
 
   /*
    * Associates a shared TextLayoutManager with the node.
-   * `ParagraphShadowNode` uses the manager to measure text content
-   * and construct `ParagraphState` objects.
+   * `TextInputShadowNode` uses the manager to measure text content
+   * and construct `TextInputState` objects.
    */
   void setTextLayoutManager(SharedTextLayoutManager textLayoutManager);
 
@@ -58,8 +56,6 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
   void layout(LayoutContext layoutContext) override;
 
  private:
-  ContextContainer *m_contextContainer{};
-
   /**
    * Get the most up-to-date attributed string for measurement and State.
    */
@@ -72,12 +68,6 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
   void updateStateIfNeeded(const LayoutContext &layoutContext);
 
   SharedTextLayoutManager m_textLayoutManager;
-
-  /*
-   * Cached attributed string that represents the content of the subtree started
-   * from the node.
-   */
-  mutable std::optional<AttributedString> m_cachedAttributedString{};
 };
 
 } // namespace facebook::react
