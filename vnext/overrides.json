@@ -54,18 +54,6 @@
     },
     {
       "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/TextInputState.cpp",
-      "baseHash": "b6d55e3e9c4071abf7ba0601f3688d3886621fb4"
-    },
-    {
-      "type": "derived",
-      "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputState.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/TextInputState.h",
-      "baseHash": "44d97403ef1124a493ac799a03077c0297f7be3f"
-    },
-    {
-      "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/ImageRequest.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/imagemanager/ImageRequest.cpp",
       "baseHash": "8ff58257e2af054b3c8367cad566abcaf36d7cba"

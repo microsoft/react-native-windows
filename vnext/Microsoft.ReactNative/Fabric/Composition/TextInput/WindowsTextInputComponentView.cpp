@@ -9,6 +9,7 @@
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Fabric/Composition/UiaHelpers.h>
 #include <Utils/ValueUtils.h>
+#include <react/renderer/components/textinput/TextInputState.h>
 #include <tom.h>
 #include <unicode.h>
 #include <winrt/Microsoft.UI.Input.h>
@@ -18,7 +19,6 @@
 #include "../RootComponentView.h"
 #include "JSValueReader.h"
 #include "WindowsTextInputShadowNode.h"
-#include "WindowsTextInputState.h"
 #include "guid/msoGuid.h"
 
 #include <unicode.h>
@@ -1133,7 +1133,7 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   // auto newAttributedString = getAttributedString();
   // if (data.attributedString == newAttributedString)
   //    return;
-  data.reactTreeAttributedString = getAttributedString(); // CHECK
+  data.attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
   data.mostRecentEventCount = m_nativeEventCount;
 
   m_state->updateState(std::move(data));
