@@ -22,6 +22,18 @@ import * as errorUtils from '../utils/errorUtils';
 import * as projectUtils from '../utils/projectUtils';
 import * as versionUtils from '../utils/versionUtils';
 
+class CustomTestError extends Error {
+  // Declare a mock errno field, so it is picked up by trackException() (see syscallExceptionFieldsToCopy)
+  // to copy it into codedError.data.
+  errno: string;
+
+  constructor(message: string) {
+    super(message);
+    this.name = 'CustomTestError';
+    this.errno = '123';
+  }
+}
+
 export class TelemetryTest extends Telemetry {
   protected static hasTestTelemetryProviders: boolean;
   protected static testTelemetryProvidersRan: boolean;
@@ -391,8 +403,16 @@ function verifyTestCommandTelemetryProcessor(
             : 'Unknown',
         );
 
+        // If the exception type is not CodedError but any data got copied into envelope.CodedError.data,
+        // for instance autolinking error info, build the expected CodedError.data.
+        let expectedCodedErrorData = {};
+        if (expectedError instanceof CustomTestError) {
+          expectedCodedErrorData = {errno: expectedError.errno};
+        }
+
         expect(codedError.data).toStrictEqual(
-          (expectedError as errorUtils.CodedError).data ?? {},
+          (expectedError as errorUtils.CodedError).data ??
+            expectedCodedErrorData,
         );
       } else {
         // If this is not error scenario, it must be a command successful event.
@@ -687,6 +707,32 @@ test.each(testTelemetryOptions)(
       await promiseDelay(100);
       a(process.cwd());
     });
+
+    TelemetryTest.endTest(() => {
+      // Check if any errors were thrown
+      expect(caughtErrors).toHaveLength(0);
+    });
+  },
+);
+
+test.each(testTelemetryOptions)(
+  'A custom Error-based object with MS Build error info is copied into codedError.data appropriately by trackException()',
+  async options => {
+    await TelemetryTest.startTest(options);
+
+    const expectedError = new CustomTestError('some message');
+
+    // AI eats errors thrown in telemetry processors
+    const caughtErrors: Error[] = [];
+    TelemetryTest.addTelemetryInitializer(
+      verifyTestCommandTelemetryProcessor(
+        caughtErrors,
+        'Unknown',
+        expectedError,
+      ),
+    );
+
+    await runTestCommandE2E(() => testCommandBody(expectedError));
 
     TelemetryTest.endTest(() => {
       // Check if any errors were thrown
