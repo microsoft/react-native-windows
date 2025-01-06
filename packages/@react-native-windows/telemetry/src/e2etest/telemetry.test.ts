@@ -758,7 +758,11 @@ test.each(testTelemetryOptions)(
           'No path',
           15,
           'Clean this path: C:\\some\\file\\path2\\project.build.appxrecipe',
-          ['No path', 150, 'Also clean this: C:\\some\\file\\path2\\project.build.appxrecipe']
+          [
+            'No path',
+            150,
+            'Also clean this: C:\\some\\file\\path2\\project.build.appxrecipe',
+          ],
         ],
         someObject: {
           fieldWithPath:
@@ -779,31 +783,27 @@ test.each(testTelemetryOptions)(
       'MSBuildError', // type
       'test error', // message
       {
-        fieldWithPath:
-          'Test Error occurred at [path]',
+        fieldWithPath: 'Test Error occurred at [path]',
         fieldWithNoPath: 'Test Error data',
         fieldWithNoString: 14,
         arrayField: [
           'No path',
           15,
           'Clean this path: [path]',
-          ['No path', 150, 'Also clean this: [path]']
+          ['No path', 150, 'Also clean this: [path]'],
         ],
         someObject: {
-          fieldWithPath:
-            'Test Error occurred at [path]',
+          fieldWithPath: 'Test Error occurred at [path]',
           fieldWithNoPath: 'Test Error data 2',
           fieldWithNoString: 16,
           nestedObject: {
-            fieldWithPath:
-              'Test Error occurred at [path]',
+            fieldWithPath: 'Test Error occurred at [path]',
             fieldWithNoPath: 'Test Error data 3',
             fieldWithNoString: 17,
           },
         },
       }, // data
     );
-
 
     const caughtErrors: Error[] = [];
     TelemetryTest.addTelemetryInitializer(
