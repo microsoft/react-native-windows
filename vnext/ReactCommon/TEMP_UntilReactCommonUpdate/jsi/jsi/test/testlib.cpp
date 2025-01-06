@@ -1611,6 +1611,38 @@ TEST_P(JSITest, UTF16Test) {
 }
 Windows] */
 
+/*
+[Windows 
+TEST_P(JSITest, GetStringDataTest) {
+  // This Runtime Decorator is used to test the default getStringData
+  // implementation for VMs that do not provide their own implementation
+  class RD : public RuntimeDecorator<Runtime, Runtime> {
+   public:
+    RD(Runtime& rt) : RuntimeDecorator(rt) {}
+
+    void getStringData(
+        const String& str,
+        void* ctx,
+        void (*cb)(void* ctx, bool ascii, const void* data, size_t num))
+        override {
+      Runtime::getStringData(str, ctx, cb);
+    }
+  };
+
+  RD rd = RD(rt);
+  String str = String::createFromUtf8(rd, "hello👋");
+
+  std::u16string buf;
+  auto cb = [&buf](bool ascii, const void* data, size_t num) {
+    assert(!ascii && "Default implementation is always utf16");
+    buf.append((const char16_t*)data, num);
+  };
+
+  str.getStringData(rd, cb);
+  EXPECT_EQ(buf, str.utf16(rd));
+}
+Windows] */
+
 INSTANTIATE_TEST_CASE_P(
     Runtimes,
     JSITest,

@@ -1,5 +1,5 @@
 {
-  "baseVersion": "0.78.0-nightly-20241201-91e217ff5",
+  "baseVersion": "0.78.0-nightly-20241210-6d235853f",
   "overrides": [
     {
       "type": "copy",
@@ -124,7 +124,7 @@
       "type": "copy",
       "directory": "js/examples/DisplayContents",
       "baseDirectory": "packages/rn-tester/js/examples/DisplayContents",
-      "baseHash": "d4976497a0120350f329b460d3c1ff41567ec906",
+      "baseHash": "c23c101587a77d4e96fca087eef9760792e23f4b",
       "issue": 4054
     },
     {
@@ -173,7 +173,7 @@
       "type": "copy",
       "directory": "js/examples/IntersectionObserver",
       "baseDirectory": "packages/rn-tester/js/examples/IntersectionObserver",
-      "baseHash": "18fa6bfda63981e386186916fd7a0f7530015b89",
+      "baseHash": "e472434c26d83ac79b0c56c84c5715a64e56fb00",
       "issue": 4054
     },
     {
@@ -446,7 +446,7 @@
       "type": "copy",
       "directory": "js/examples/TextInput",
       "baseDirectory": "packages/rn-tester/js/examples/TextInput",
-      "baseHash": "0a16660c5859076cf463c784bc640e8631d8b2c6",
+      "baseHash": "c39b13df578338a4bae259138e31b47e15e42c22",
       "issue": 4054
     },
     {
@@ -488,7 +488,7 @@
       "type": "copy",
       "directory": "js/examples/TurboModule",
       "baseDirectory": "packages/rn-tester/js/examples/TurboModule",
-      "baseHash": "a71adf0cb5d86bc8dfc6904f584f575ffbaa3f61",
+      "baseHash": "2f582e83efe8cb05db597f6bfb126f4de49e7836",
       "issue": 4054
     },
     {

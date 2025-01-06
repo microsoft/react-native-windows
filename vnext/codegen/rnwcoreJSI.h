@@ -34,7 +34,6 @@ public:
   virtual bool enableEventEmitterRetentionDuringGesturesOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableFabricLogs(jsi::Runtime &rt) = 0;
   virtual bool enableFabricRenderer(jsi::Runtime &rt) = 0;
-  virtual bool enableFabricRendererExclusively(jsi::Runtime &rt) = 0;
   virtual bool enableFixForViewCommandRace(jsi::Runtime &rt) = 0;
   virtual bool enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt) = 0;
   virtual bool enableIOSViewClipToPaddingBox(jsi::Runtime &rt) = 0;
@@ -50,6 +49,7 @@ public:
   virtual bool enableUIConsistency(jsi::Runtime &rt) = 0;
   virtual bool enableViewRecycling(jsi::Runtime &rt) = 0;
   virtual bool excludeYogaFromRawProps(jsi::Runtime &rt) = 0;
+  virtual bool fixDifferentiatorEmittingUpdatesWithWrongParentTag(jsi::Runtime &rt) = 0;
   virtual bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) = 0;
   virtual bool fixMountingCoordinatorReportedPendingTransactionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool fuseboxEnabledDebug(jsi::Runtime &rt) = 0;
@@ -209,14 +209,6 @@ private:
       return bridging::callFromJs<bool>(
           rt, &T::enableFabricRenderer, jsInvoker_, instance_);
     }
-    bool enableFabricRendererExclusively(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::enableFabricRendererExclusively) == 1,
-          "Expected enableFabricRendererExclusively(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::enableFabricRendererExclusively, jsInvoker_, instance_);
-    }
     bool enableFixForViewCommandRace(jsi::Runtime &rt) override {
       static_assert(
           bridging::getParameterCount(&T::enableFixForViewCommandRace) == 1,
@@ -336,6 +328,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::excludeYogaFromRawProps, jsInvoker_, instance_);
+    }
+    bool fixDifferentiatorEmittingUpdatesWithWrongParentTag(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::fixDifferentiatorEmittingUpdatesWithWrongParentTag) == 1,
+          "Expected fixDifferentiatorEmittingUpdatesWithWrongParentTag(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::fixDifferentiatorEmittingUpdatesWithWrongParentTag, jsInvoker_, instance_);
     }
     bool fixMappingOfEventPrioritiesBetweenFabricAndReact(jsi::Runtime &rt) override {
       static_assert(
@@ -8789,8 +8789,6 @@ protected:
 
 public:
   virtual double now(jsi::Runtime &rt) = 0;
-  virtual void mark(jsi::Runtime &rt, jsi::String name, double startTime) = 0;
-  virtual void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
   virtual double markWithResult(jsi::Runtime &rt, jsi::String name, std::optional<double> startTime) = 0;
   virtual jsi::Array measureWithResult(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) = 0;
   virtual void clearMarks(jsi::Runtime &rt, std::optional<jsi::String> entryName) = 0;
@@ -8844,22 +8842,6 @@ private:
 
       return bridging::callFromJs<double>(
           rt, &T::now, jsInvoker_, instance_);
-    }
-    void mark(jsi::Runtime &rt, jsi::String name, double startTime) override {
-      static_assert(
-          bridging::getParameterCount(&T::mark) == 3,
-          "Expected mark(...) to have 3 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::mark, jsInvoker_, instance_, std::move(name), std::move(startTime));
-    }
-    void measure(jsi::Runtime &rt, jsi::String name, double startTime, double endTime, std::optional<double> duration, std::optional<jsi::String> startMark, std::optional<jsi::String> endMark) override {
-      static_assert(
-          bridging::getParameterCount(&T::measure) == 7,
-          "Expected measure(...) to have 7 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::measure, jsInvoker_, instance_, std::move(name), std::move(startTime), std::move(endTime), std::move(duration), std::move(startMark), std::move(endMark));
     }
     double markWithResult(jsi::Runtime &rt, jsi::String name, std::optional<double> startTime) override {
       static_assert(
