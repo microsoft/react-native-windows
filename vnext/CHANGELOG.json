@@ -2,6 +2,27 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 07 Jan 2025 01:01:23 GMT",
+      "version": "0.77.0-preview.2",
+      "tag": "react-native-windows_v0.77.0-preview.2",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "e70d4987c0929e4eb4125342c53cf6566e19af00",
+            "comment": "integrate rn 0.77.0-rc.4"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "cfb57376a707daeb4e52a3506d45a14b3717ca2d",
+            "comment": "Fix calls to std::mutex::lock"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Dec 2024 18:21:26 GMT",
       "version": "0.77.0-preview.1",
       "tag": "react-native-windows_v0.77.0-preview.1",
