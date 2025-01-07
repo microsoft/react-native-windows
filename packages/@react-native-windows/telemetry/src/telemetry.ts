@@ -248,7 +248,9 @@ export class Telemetry {
     }
 
     // Convert the package name to comply with the backend requirements
-    const packageName = nameHelpers.isValidTelemetryPackageName(name) ? name : nameHelpers.cleanTelemetryPackageName(name);
+    const packageName = nameHelpers.isValidTelemetryPackageName(name)
+      ? name
+      : nameHelpers.cleanTelemetryPackageName(name);
 
     if (forceRefresh === true || !Telemetry.versionsProp[packageName]) {
       const value = await getValue();

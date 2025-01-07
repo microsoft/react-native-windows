@@ -78,14 +78,24 @@ test('Verify telemetry package name is valid', () => {
   expect(nameHelpers.isValidTelemetryPackageName('@react')).toBe(false);
   expect(nameHelpers.isValidTelemetryPackageName('react-native')).toBe(false);
   expect(nameHelpers.isValidTelemetryPackageName('react_native')).toBe(true);
-  expect(nameHelpers.isValidTelemetryPackageName('react_native/cli')).toBe(false);
+  expect(nameHelpers.isValidTelemetryPackageName('react_native/cli')).toBe(
+    false,
+  );
 });
 
 test('Verify telemetry package name cleaning', () => {
   expect(nameHelpers.cleanTelemetryPackageName('package')).toBe('package');
   expect(nameHelpers.cleanTelemetryPackageName('@react')).toBe('_react');
-  expect(nameHelpers.cleanTelemetryPackageName('react-native')).toBe('react_native');
-  expect(nameHelpers.cleanTelemetryPackageName('react_native')).toBe('react_native');
-  expect(nameHelpers.cleanTelemetryPackageName('react_native/cli')).toBe('react_native_cli');
-  expect(nameHelpers.cleanTelemetryPackageName('@react-native-windows/cli')).toBe('_react_native_windows_cli');
+  expect(nameHelpers.cleanTelemetryPackageName('react-native')).toBe(
+    'react_native',
+  );
+  expect(nameHelpers.cleanTelemetryPackageName('react_native')).toBe(
+    'react_native',
+  );
+  expect(nameHelpers.cleanTelemetryPackageName('react_native/cli')).toBe(
+    'react_native_cli',
+  );
+  expect(
+    nameHelpers.cleanTelemetryPackageName('@react-native-windows/cli'),
+  ).toBe('_react_native_windows_cli');
 });
