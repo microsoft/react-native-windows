@@ -459,6 +459,9 @@ export class Telemetry {
       }
     }
 
+    // Scrub any potential PII present in codedError.data array, as long as the data is a string.
+    codedErrorStruct.data = Telemetry.sanitizeAny(codedErrorStruct.data);
+
     // Break down TS Error object into Exception Data
     const exceptionData = Telemetry.convertErrorIntoExceptionData(error);
 
@@ -519,5 +522,27 @@ export class Telemetry {
     }
 
     return exceptionData;
+  }
+
+  static sanitizeAny(data: any): any {
+    if (Array.isArray(data)) {
+      // This is an array, sanitize each element recursively.
+      return data.map(item => Telemetry.sanitizeAny(item));
+    } else if (typeof data === 'object' && data !== null) {
+      // This is an object, sanitize each field recursively.
+      const sanitizedObject: Record<string, any> = {};
+      for (const key in data) {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
+          sanitizedObject[key] = Telemetry.sanitizeAny(data[key]);
+        }
+      }
+      return sanitizedObject;
+    } else if (typeof data === 'string') {
+      // The base case: this is a string, sanitize it.
+      return errorUtils.sanitizeErrorMessage(data);
+    }
+
+    // Not a string, return the data unchanged.
+    return data;
   }
 }
