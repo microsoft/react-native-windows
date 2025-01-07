@@ -20,11 +20,8 @@ namespace facebook::react {
 class WindowsTextInputComponentDescriptor final : public ConcreteComponentDescriptor<WindowsTextInputShadowNode> {
  public:
   WindowsTextInputComponentDescriptor(const ComponentDescriptorParameters &parameters)
-      : ConcreteComponentDescriptor<WindowsTextInputShadowNode>(parameters) {
-    // Every single `WindowsTextInputShadowNode` will have a reference to
-    // a shared `TextLayoutManager`.
-    m_textLayoutManager = std::make_shared<TextLayoutManager>(contextContainer_);
-  }
+      : ConcreteComponentDescriptor<WindowsTextInputShadowNode>(parameters),
+        textLayoutManager_(std::make_shared<TextLayoutManager>(contextContainer_)) {}
 
   /*
 virtual State::Shared createInitialState(
@@ -73,7 +70,7 @@ virtual State::Shared createInitialState(
 
     // `TextInputShadowNode` uses `TextLayoutManager` to measure text content
     // and communicate text rendering metrics to mounting layer.
-    textInputShadowNode.setTextLayoutManager(m_textLayoutManager);
+    textInputShadowNode.setTextLayoutManager(textLayoutManager_);
 
     /*
             int surfaceId = textInputShadowNode.getSurfaceId();
@@ -159,7 +156,7 @@ virtual State::Shared createInitialState(
   // TODO T68526882: Unify with Binding::UIManagerJavaDescriptor
   constexpr static auto UIManagerJavaDescriptor = "com/facebook/react/fabric/FabricUIManager";
 
-  SharedTextLayoutManager m_textLayoutManager;
+  const std::shared_ptr<TextLayoutManager> textLayoutManager_;
   mutable std::unordered_map<int, ThemePadding> surfaceIdToThemePaddingMap_;
 };
 

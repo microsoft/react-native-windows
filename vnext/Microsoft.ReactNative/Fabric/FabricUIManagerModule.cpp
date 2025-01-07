@@ -61,9 +61,6 @@ FabricUIManager::~FabricUIManager() {
 }
 
 void FabricUIManager::installFabricUIManager() noexcept {
-  std::shared_ptr<const facebook::react::ReactNativeConfig> config =
-      std::make_shared<const ReactNativeConfigProperties>(m_context.Properties());
-
   std::lock_guard<std::mutex> schedulerLock(m_schedulerMutex);
 
   facebook::react::ContextContainer::Shared contextContainer = std::make_shared<facebook::react::ContextContainer>();
@@ -88,8 +85,6 @@ void FabricUIManager::installFabricUIManager() noexcept {
       [runtimeScheduler, context = m_context](std::shared_ptr<facebook::react::EventBeat::OwnerBox> const &ownerBox) {
         return std::make_unique<AsynchronousEventBeat>(ownerBox, context, runtimeScheduler);
       };
-
-  contextContainer->insert("ReactNativeConfig", config);
 
   toolbox.contextContainer = contextContainer;
   toolbox.componentRegistryFactory = [](facebook::react::EventDispatcher::Weak const &eventDispatcher,

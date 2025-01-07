@@ -4,12 +4,11 @@
 #pragma once
 
 #include <nativeModules.h>
-#include <react/config/ReactNativeConfig.h>
 #include <string>
 
 namespace Microsoft::ReactNative {
 
-class ReactNativeConfigProperties final : public facebook::react::ReactNativeConfig {
+/* class ReactNativeConfigProperties final : public facebook::react::ReactNativeConfig {
  public:
   ReactNativeConfigProperties(winrt::Microsoft::ReactNative::ReactPropertyBag const &properties);
   virtual ~ReactNativeConfigProperties();
@@ -21,6 +20,6 @@ class ReactNativeConfigProperties final : public facebook::react::ReactNativeCon
 
  private:
   winrt::Microsoft::ReactNative::ReactPropertyBag m_properties;
-};
+};*/
 
 } // namespace Microsoft::ReactNative

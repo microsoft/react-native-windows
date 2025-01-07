@@ -7,7 +7,7 @@
 #include "unicode.h"
 
 namespace Microsoft::ReactNative {
-
+/*
 ReactNativeConfigProperties::ReactNativeConfigProperties(
     winrt::Microsoft::ReactNative::ReactPropertyBag const &properties)
     : m_properties(properties) {}
@@ -49,5 +49,5 @@ double ReactNativeConfigProperties::getDouble(const std::string &param) const {
 
   return winrt::unbox_value_or<double>(value, 0);
 }
-
+*/
 } // namespace Microsoft::ReactNative
