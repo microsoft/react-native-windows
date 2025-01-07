@@ -249,7 +249,7 @@ bool FrameworkElementViewManager::UpdateProperty(
           }
 
           if (!element.IsLoaded()) {
-            element.Loaded([=](auto sender, auto &&) -> auto {
+            element.Loaded([=](auto sender, auto &&) -> auto{
               ApplyTransformMatrix(sender.as<xaml::UIElement>(), nodeToUpdate, transformMatrix);
             });
           } else {
@@ -890,6 +890,7 @@ winrt::hstring FrameworkElementViewManager::getControlTypeFromAccessibilityRole(
     case winrt::Microsoft::ReactNative::AccessibilityRoles::Timer:
       return winrt::to_hstring("group");
   }
+  return winrt::to_hstring("custom");
 }
 
 void FrameworkElementViewManager::setLocalizedControlTypeFromAccessibilityRole(
