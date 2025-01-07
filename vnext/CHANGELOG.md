@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 10 Dec 2024 04:12:33 GMT and should not be manually modified.
+This log was last generated on Tue, 07 Jan 2025 22:01:59 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.28
+
+Tue, 07 Jan 2025 22:01:59 GMT
+
+### Patches
+
+- Fix calls to std::mutex::lock (vmorozov@microsoft.com)
 
 ## 0.74.27
 

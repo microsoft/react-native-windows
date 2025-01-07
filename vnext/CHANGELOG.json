@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Tue, 07 Jan 2025 22:01:59 GMT",
+      "version": "0.74.28",
+      "tag": "react-native-windows_v0.74.28",
+      "comments": {
+        "patch": [
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5ba9938ca2e5f47ca374e84cc22cfdd07b2eb634",
+            "comment": "Fix calls to std::mutex::lock"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 10 Dec 2024 04:12:33 GMT",
       "version": "0.74.27",
       "tag": "react-native-windows_v0.74.27",
