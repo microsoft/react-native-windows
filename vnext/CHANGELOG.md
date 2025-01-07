@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 20 Dec 2024 18:21:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 07 Jan 2025 01:01:23 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.77.0-preview.2
+
+Tue, 07 Jan 2025 01:01:23 GMT
+
+### Changes
+
+- integrate rn 0.77.0-rc.4 (email not defined)
+- Fix calls to std::mutex::lock (vmorozov@microsoft.com)
 
 ## 0.77.0-preview.1
 
