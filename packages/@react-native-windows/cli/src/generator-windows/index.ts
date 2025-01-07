@@ -18,7 +18,7 @@ import {
   findPropertyValue,
   tryFindPropertyValueAsBoolean,
 } from '../commands/config/configUtils';
-import * as nameHelpers from '../utils/nameHelpers';
+import * as nameHelpers from '@react-native-windows/telemetry/src/utils/nameHelpers';
 
 import {
   createDir,

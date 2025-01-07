@@ -8,10 +8,14 @@
       "DOM.Iterable",
       "ES2019.String"
     ],
-
     // Not clean
     "strictFunctionTypes": false,
   },
-  "include": ["src"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src",
+    "../telemetry/src/utils/nameHelpers.ts"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

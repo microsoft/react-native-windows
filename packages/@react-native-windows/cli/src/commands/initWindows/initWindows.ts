@@ -29,7 +29,7 @@ import {
   endTelemetrySession,
 } from '../../utils/telemetryHelpers';
 import {copyAndReplaceWithChangedCallback} from '../../generator-common';
-import * as nameHelpers from '../../utils/nameHelpers';
+import * as nameHelpers from '@react-native-windows/telemetry/src/utils/nameHelpers';
 import {InitOptions, initOptions} from './initWindowsOptions';
 
 export interface TemplateFileMapping {
