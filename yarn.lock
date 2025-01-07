@@ -8507,9 +8507,9 @@ loglevel@^1.6.0:
   integrity sha512-HgMmCqIJSAKqo68l0rS2AanEWfkxaZ5wNiEFb5ggm08lDs9Xl2KxBlX3PTcaD2chBM1gXAYf491/M2Rv8Jwayg==
 
 lookpath@^1.2.1:
-  version "1.2.2"
-  resolved "https://registry.yarnpkg.com/lookpath/-/lookpath-1.2.2.tgz#bddcd1440b6643e07495138376d43aed38bcd454"
-  integrity sha512-k2Gmn8iV6qdME3ztZC2spubmQISimFOPLuQKiPaLcVdRz0IpdxrNClVepMlyTJlhodm/zG/VfbkWERm3kUIh+Q==
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/lookpath/-/lookpath-1.2.3.tgz#681b26482d169515a348e76d7d189ff066a9aefa"
+  integrity sha512-kthRVhf4kH4+HW3anM4UBHxsw/XFESf13euCEldhXr6GpBdmBoa7rDd7WO5G0Mhd4G5XtKTcEy8OR0iRZXpS3Q==
 
 loose-envify@^1.0.0, loose-envify@^1.1.0, loose-envify@^1.4.0:
   version "1.4.0"
