@@ -11,6 +11,7 @@ import * as basePropUtils from './utils/basePropUtils';
 import * as versionUtils from './utils/versionUtils';
 import * as errorUtils from './utils/errorUtils';
 import * as projectUtils from './utils/projectUtils';
+import * as nameHelpers from './utils/nameHelpers';
 
 export interface TelemetryOptions {
   setupString: string;
@@ -246,10 +247,13 @@ export class Telemetry {
       return true;
     }
 
-    if (forceRefresh === true || !Telemetry.versionsProp[name]) {
+    // Convert the package name to comply with the backend requirements
+    const packageName = nameHelpers.isValidTelemetryPackageName(name) ? name : nameHelpers.cleanTelemetryPackageName(name);
+
+    if (forceRefresh === true || !Telemetry.versionsProp[packageName]) {
       const value = await getValue();
       if (value) {
-        Telemetry.versionsProp[name] = value;
+        Telemetry.versionsProp[packageName] = value;
         return true;
       }
     }

@@ -41,3 +41,16 @@ export function isValidProjectNamespace(namespace: string): boolean {
 export function cleanNamespace(str: string): string {
   return str.split(/[.:]+/).map(cleanName).join('.');
 }
+
+export function isValidTelemetryPackageName(name: string): boolean {
+  // Accepted characters: alphanumeric, underscore, dot, starts with letter.
+  // Size: 1-100 characters.
+  if (name.match(/^[a-zA-Z][a-zA-Z0-9_.]{0,99}$/gi)) {
+    return true;
+  }
+  return false;
+}
+
+export function cleanTelemetryPackageName(str: string): string {
+  return str.replace(/[^a-zA-Z0-9_.]/g, '_');
+}
