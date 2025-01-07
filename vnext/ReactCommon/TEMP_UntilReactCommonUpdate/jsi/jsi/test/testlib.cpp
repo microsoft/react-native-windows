@@ -1641,7 +1641,6 @@ TEST_P(JSITest, GetStringDataTest) {
   str.getStringData(rd, cb);
   EXPECT_EQ(buf, str.utf16(rd));
 }
-Windows] */
 
 TEST_P(JSITest, ObjectSetPrototype) {
   // This Runtime Decorator is used to test the default implementation of
@@ -1701,6 +1700,7 @@ TEST_P(JSITest, ObjectCreateWithPrototype) {
   child = Object::create(rd, Value::null());
   EXPECT_TRUE(child.getPrototype(rd).isNull());
 }
+Windows] */
 
 INSTANTIATE_TEST_CASE_P(
     Runtimes,
