@@ -5,18 +5,19 @@ namespace Microsoft::ReactNative {
 AsynchronousEventBeat::AsynchronousEventBeat(
     std::shared_ptr<facebook::react::EventBeat::OwnerBox> const ownerBox,
     const winrt::Microsoft::ReactNative::ReactContext &context,
-    facebook::react::RuntimeExecutor runtimeExecutor)
-    : EventBeat(ownerBox, runtimeExecutor), m_context(context), m_runtimeExecutor(runtimeExecutor) {}
+    std::shared_ptr<facebook::react::RuntimeScheduler> runtimeScheduler)
+    : EventBeat(ownerBox, *runtimeScheduler), m_context(context), m_runtimeScheduler(std::move(runtimeScheduler)) {}
 
 void AsynchronousEventBeat::induce() const {
-  if (!isRequested_ || m_isBeatCallbackScheduled) {
-    isRequested_ = false;
+  if (!isEventBeatRequested_ || m_isBeatCallbackScheduled) {
+    isEventBeatRequested_ = false;
     return;
   }
-  isRequested_ = false;
+  isEventBeatRequested_ = false;
   m_isBeatCallbackScheduled = true;
 
-  m_runtimeExecutor([this, ownerBox = ownerBox_](facebook::jsi::Runtime &runtime) {
+  facebook::react::RuntimeScheduler &schedulerRef = *m_runtimeScheduler.get();
+  schedulerRef.scheduleWork([this, ownerBox = ownerBox_](facebook::jsi::Runtime &runtime) {
     auto owner = ownerBox->owner.lock();
     if (!owner) {
       return;
@@ -30,7 +31,7 @@ void AsynchronousEventBeat::induce() const {
 }
 
 void AsynchronousEventBeat::request() const {
-  bool alreadyRequested = isRequested_.exchange(true);
+  bool alreadyRequested = isEventBeatRequested_.exchange(true);
   if (!alreadyRequested) {
     if (m_context.UIDispatcher().HasThreadAccess()) {
       induce();

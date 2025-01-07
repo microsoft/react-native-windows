@@ -322,6 +322,12 @@ type IOSProps = $ReadOnly<{|
   inputAccessoryViewID?: ?string,
 
   /**
+   * An optional label that overrides the default input accessory view button label.
+   * @platform ios
+   */
+  inputAccessoryViewButtonLabel?: ?string,
+
+  /**
    * Determines the color of the keyboard.
    * @platform ios
    */
@@ -1368,6 +1374,7 @@ function InternalTextInput(props: Props): React.Node {
       mostRecentEventCount,
       selection,
       text,
+      // $FlowFixMe[incompatible-call]
       viewCommands,
     });
 
@@ -1589,7 +1596,7 @@ function InternalTextInput(props: Props): React.Node {
 
   // TextInput handles onBlur and onFocus events
   // so omitting onBlur and onFocus pressability handlers here.
-  const {onBlur, onFocus, ...eventHandlers} = usePressability(config) || {};
+  const {onBlur, onFocus, ...eventHandlers} = usePressability(config);
   const eventPhase = Object.freeze({Capturing: 1, Bubbling: 3});
   const _keyDown = (event: KeyEvent) => {
     if (props.keyDownEvents && event.isPropagationStopped() !== true) {

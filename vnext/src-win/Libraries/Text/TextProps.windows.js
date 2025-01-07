@@ -17,7 +17,7 @@ import type {
   AccessibilityState,
   Role,
 } from '../Components/View/ViewAccessibility';
-import type {TextStyleProp} from '../StyleSheet/StyleSheet';
+import type {ColorValue, TextStyleProp} from '../StyleSheet/StyleSheet';
 import type {
   LayoutEvent,
   PointerEvent,
@@ -97,6 +97,9 @@ export type TextProps = $ReadOnly<{
   'aria-posinset'?: ?number, // Windows
   'aria-setsize'?: ?number, // Windows
   'aria-level'?: ?number, // Windows
+  'aria-readonly'?: ?boolean, // Windows
+  'aria-multiselectable'?: ?boolean, // Windows
+  'aria-required'?: ?boolean, // Windows
 
   /**
    * Represents the nativeID of the associated label text. When the assistive technology focuses on the component with this props, the text is read aloud.
@@ -219,7 +222,7 @@ export type TextProps = $ReadOnly<{
    *
    * See https://reactnative.dev/docs/text#selectioncolor
    */
-  selectionColor?: ?string,
+  selectionColor?: ?ColorValue,
 
   dataDetectorType?: ?('phoneNumber' | 'link' | 'email' | 'none' | 'all'),
 

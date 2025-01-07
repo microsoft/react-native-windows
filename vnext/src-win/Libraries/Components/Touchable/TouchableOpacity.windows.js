@@ -235,6 +235,13 @@ class TouchableOpacity extends React.Component<Props, State> {
         this.props['aria-expanded'] ?? this.props.accessibilityState?.expanded,
       selected:
         this.props['aria-selected'] ?? this.props.accessibilityState?.selected,
+      readOnly:
+        this.props['aria-readonly'] ?? this.props.accessibilityState?.readOnly, // Windows
+      multiselectable:
+        this.props['aria-multiselectable'] ??
+        this.props.accessibilityState?.multiselectable, // Windows
+      required:
+        this.props['aria-required'] ?? this.props.accessibilityState?.required, // Windows
     };
 
     _accessibilityState =
@@ -299,6 +306,7 @@ class TouchableOpacity extends React.Component<Props, State> {
           this.props.onPress !== undefined &&
           !this.props.disabled
         }
+        // $FlowFixMe[prop-missing]
         ref={this.props.hostRef}
         accessibilityPosInSet={this.props.accessibilityPosInSet} // [Windows]
         accessibilitySetSize={this.props.accessibilitySetSize} // [Windows]

@@ -174,16 +174,6 @@ long GetLiveSetting(const std::string &liveRegion) noexcept {
   return LiveSetting::Off;
 }
 
-std::string extractAccessibilityValue(const facebook::react::AccessibilityValue &value) noexcept {
-  if (value.now.has_value()) {
-    return std::to_string(value.now.value());
-  } else if (value.text.has_value()) {
-    return value.text.value();
-  } else {
-    return "";
-  }
-}
-
 void DispatchAccessibilityAction(::Microsoft::ReactNative::ReactTaggedView &view, const std::string &action) noexcept {
   auto strongView = view.view();
 
@@ -212,6 +202,30 @@ ExpandCollapseState GetExpandCollapseState(const bool &expanded) noexcept {
   } else {
     return ExpandCollapseState_Collapsed;
   }
+}
+
+void AddSelectionItemsToContainer(CompositionDynamicAutomationProvider *provider) noexcept {
+  winrt::com_ptr<IRawElementProviderSimple> selectionContainer;
+  provider->get_SelectionContainer(selectionContainer.put());
+  if (!selectionContainer)
+    return;
+  auto selectionContainerProvider = selectionContainer.as<CompositionDynamicAutomationProvider>();
+  auto simpleProvider = static_cast<IRawElementProviderSimple *>(provider);
+  winrt::com_ptr<IRawElementProviderSimple> simpleProviderPtr;
+  simpleProviderPtr.copy_from(simpleProvider);
+  selectionContainerProvider->AddToSelectionItems(simpleProviderPtr);
+}
+
+void RemoveSelectionItemsFromContainer(CompositionDynamicAutomationProvider *provider) noexcept {
+  winrt::com_ptr<IRawElementProviderSimple> selectionContainer;
+  provider->get_SelectionContainer(selectionContainer.put());
+  if (!selectionContainer)
+    return;
+  auto selectionContainerProvider = selectionContainer.as<CompositionDynamicAutomationProvider>();
+  auto simpleProvider = static_cast<IRawElementProviderSimple *>(provider);
+  winrt::com_ptr<IRawElementProviderSimple> simpleProviderPtr;
+  simpleProviderPtr.copy_from(simpleProvider);
+  selectionContainerProvider->RemoveFromSelectionItems(simpleProviderPtr);
 }
 
 ToggleState GetToggleState(const std::optional<facebook::react::AccessibilityState> &state) noexcept {

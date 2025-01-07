@@ -2,6 +2,198 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Fri, 20 Dec 2024 06:22:28 GMT",
+      "version": "0.0.0-canary.904",
+      "tag": "react-native-windows_v0.0.0-canary.904",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "9372e929083b78c3d8c05ee713a57537f864cdd9",
+            "comment": "integrate 0.78.0-nightly-20241201-91e217ff5"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "7e4bcc6a84249e48ffabc0500360caae1a651e04",
+            "comment": "IRangeValue Provider"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 18 Dec 2024 06:22:24 GMT",
+      "version": "0.0.0-canary.903",
+      "tag": "react-native-windows_v0.0.0-canary.903",
+      "comments": {
+        "none": [
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "1289e05b0568ebca946e025911ea93ef89014443",
+            "comment": "Add RnwNewArch to MSBuildProperties"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "3388c98195063ba9ba3aed580f2be04f6f1486fa",
+            "comment": "Implement ISelectionProvider and ISelectionItemProvider"
+          },
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "d669d78450c97decf9f9f5acc09e526ddf8dd911",
+            "comment": "integrate RN-Nightly 0.77.0-nightly-20241125-4cffff35e"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Sat, 14 Dec 2024 06:29:13 GMT",
+      "version": "0.0.0-canary.902",
+      "tag": "react-native-windows_v0.0.0-canary.902",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "b4fd3e881a30dca95e834a7d0b046765622446d9",
+            "comment": "Use WebSocket factory in PkgInspectorConnection"
+          },
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "13d41421a38fa7ebe4c08a8f421baffebf14dac5",
+            "comment": "Integrate RN Nighlty 0.77.0-nightly-20241118-3986eefed"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 11 Dec 2024 06:21:14 GMT",
+      "version": "0.0.0-canary.901",
+      "tag": "react-native-windows_v0.0.0-canary.901",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "6d890d4c0c103c65ef6845350cd83467a331abea",
+            "comment": "add windows folder to file list"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.251",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Tue, 10 Dec 2024 06:29:30 GMT",
+      "version": "0.0.0-canary.900",
+      "tag": "react-native-windows_v0.0.0-canary.900",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "91ad48ead0ca4670c1a48938dd1fc57308ce8a14",
+            "comment": "Add ability to override UpdateLayoutMetrics and VisualToMountChildrenInto"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.250",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.114",
+            "commit": "not available"
+          }
+        ],
+        "none": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "048ab132db83e8b11c5332c7b872ae0387589453",
+            "comment": "add the new generated headers"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Fri, 06 Dec 2024 06:22:27 GMT",
+      "version": "0.0.0-canary.899",
+      "tag": "react-native-windows_v0.0.0-canary.899",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "40c1c59be8c9046213d5eeffae7dfe45caedcb5a",
+            "comment": "Integrate 10/31"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Thu, 05 Dec 2024 06:20:53 GMT",
+      "version": "0.0.0-canary.898",
+      "tag": "react-native-windows_v0.0.0-canary.898",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "d2ae666aa5e7fa1fecbb5e1517f4092767ec2bd4",
+            "comment": "Key and mouse events require a stacking context"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Wed, 04 Dec 2024 06:26:56 GMT",
+      "version": "0.0.0-canary.897",
+      "tag": "react-native-windows_v0.0.0-canary.897",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "tatianakapos@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "d7b4b485f7b217ead23cba9eadc2d087865cbe7e",
+            "comment": "implement onDismiss and remove titlebar from Modal"
+          },
+          {
+            "author": "julio.rocha@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2d6e2d5a8237a837eeb1d4a7fe6e0954201d6f2a",
+            "comment": "Re-enable most Desktop integration tests"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "f4dd6f95eaf0ac58d5cb00144839179efdb7e363",
+            "comment": "Implement cursor property"
+          }
+        ],
+        "none": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "be12738fe919d13191cebf0f3349006f034d02b3",
+            "comment": "Disable failing UT"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 23 Nov 2024 06:23:16 GMT",
       "version": "0.0.0-canary.896",
       "tag": "react-native-windows_v0.0.0-canary.896",

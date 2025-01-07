@@ -9,6 +9,7 @@
 #include <Fabric/Composition/CompositionDynamicAutomationProvider.h>
 #include <Fabric/Composition/UiaHelpers.h>
 #include <Utils/ValueUtils.h>
+#include <react/renderer/components/textinput/TextInputState.h>
 #include <tom.h>
 #include <unicode.h>
 #include <winrt/Microsoft.UI.Input.h>
@@ -18,7 +19,6 @@
 #include "../RootComponentView.h"
 #include "JSValueReader.h"
 #include "WindowsTextInputShadowNode.h"
-#include "WindowsTextInputState.h"
 #include "guid/msoGuid.h"
 
 #include <unicode.h>
@@ -236,7 +236,7 @@ struct CompTextHost : public winrt::implements<CompTextHost, ITextHost> {
 
   //@cmember Establish a new cursor shape
   void TxSetCursor(HCURSOR hcur, BOOL fText) override {
-    assert(false);
+    m_outer->m_hcursor = hcur;
   }
 
   //@cmember Converts screen coordinates of a specified point to the client coordinates
@@ -487,7 +487,7 @@ facebook::react::AttributedString WindowsTextInputComponentView::getAttributedSt
     // that effect.
     fragment.textAttributes.backgroundColor = facebook::react::clearColor();
     // fragment.parentShadowView = facebook::react::ShadowView(*this);
-    attributedString.prependFragment(fragment);
+    attributedString.prependFragment(std::move(fragment));
   }
 
   return attributedString;
@@ -732,6 +732,9 @@ void WindowsTextInputComponentView::OnPointerMoved(
     auto hr = m_textServices->TxSendMessage(msg, static_cast<WPARAM>(wParam), static_cast<LPARAM>(lParam), &lresult);
     args.Handled(hr != S_FALSE);
   }
+
+  m_textServices->OnTxSetCursor(
+      DVASPECT_CONTENT, -1, nullptr, nullptr, nullptr, nullptr, nullptr, ptContainer.x, ptContainer.y);
 }
 
 void WindowsTextInputComponentView::OnKeyDown(
@@ -1067,7 +1070,7 @@ void WindowsTextInputComponentView::updateState(
 
   if (m_mostRecentEventCount == m_state->getData().mostRecentEventCount) {
     m_comingFromState = true;
-    auto &fragments = m_state->getData().attributedString.getFragments();
+    auto &fragments = m_state->getData().attributedStringBox.getValue().getFragments();
     UpdateText(fragments.size() ? fragments[0].string : "");
 
     m_comingFromState = false;
@@ -1130,7 +1133,7 @@ void WindowsTextInputComponentView::OnTextUpdated() noexcept {
   // auto newAttributedString = getAttributedString();
   // if (data.attributedString == newAttributedString)
   //    return;
-  data.attributedString = getAttributedString();
+  data.attributedStringBox = facebook::react::AttributedStringBox(getAttributedString());
   data.mostRecentEventCount = m_nativeEventCount;
 
   m_state->updateState(std::move(data));
@@ -1363,7 +1366,7 @@ winrt::com_ptr<::IDWriteTextLayout> WindowsTextInputComponentView::CreatePlaceho
   textAttributes.fontSizeMultiplier = m_fontSizeMultiplier;
   fragment1.string = props.placeholder;
   fragment1.textAttributes = textAttributes;
-  attributedString.appendFragment(fragment1);
+  attributedString.appendFragment(std::move(fragment1));
 
   facebook::react::LayoutConstraints constraints;
   constraints.maximumSize.width = static_cast<FLOAT>(m_imgWidth);
@@ -1477,6 +1480,10 @@ WindowsTextInputComponentView::createVisual() noexcept {
   m_caretVisual.IsVisible(false);
 
   return visual;
+}
+
+std::pair<facebook::react::Cursor, HCURSOR> WindowsTextInputComponentView::cursor() const noexcept {
+  return {viewProps()->cursor, m_hcursor};
 }
 
 void WindowsTextInputComponentView::onThemeChanged() noexcept {

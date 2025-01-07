@@ -30,6 +30,11 @@ void AccessibilityInfo::isReduceMotionEnabled(std::function<void(bool)> const &o
   });
 }
 
+void AccessibilityInfo::isInvertColorsEnabled(std::function<void(bool)> const &onSuccess) noexcept {
+  // TODO: implement ##14206
+  onSuccess(false);
+}
+
 void AccessibilityInfo::isHighTextContrastEnabled(std::function<void(bool)> const &onSuccess) noexcept {
   // TODO: implement #14099
   onSuccess(false);
@@ -79,6 +84,11 @@ void AccessibilityInfo::getRecommendedTimeoutMillis(
     double mSec,
     std::function<void(double)> const &onSuccess) noexcept {
   onSuccess(mSec);
+}
+
+void AccessibilityInfo::isGrayscaleEnabled(std::function<void(bool)> const &onSuccess) noexcept {
+  // TODO: implement #14207
+  onSuccess(false);
 }
 
 void AccessibilityInfo::isAccessibilityServiceEnabled(std::function<void(bool)> const &onSuccess) noexcept {

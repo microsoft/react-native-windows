@@ -10,9 +10,11 @@
 
 'use strict';
 
+import type {RNTesterModuleExample} from '../../types/RNTesterTypes';
 import type {ImageProps} from 'react-native/Libraries/Image/ImageProps';
 import type {LayoutEvent} from 'react-native/Libraries/Types/CoreEventTypes';
 
+import RNTesterButton from '../../components/RNTesterButton';
 import RNTesterText from '../../components/RNTesterText';
 import ImageCapInsetsExample from './ImageCapInsetsExample';
 import React from 'react';
@@ -138,6 +140,11 @@ class NetworkImageCallbackExample extends React.Component<
         <Image
           source={this.props.source}
           style={[styles.base, styles.visibleOverflow]}
+          onError={event => {
+            this._loadEventFired(
+              `✘ onError "${event.nativeEvent.error}" (+${Date.now() - mountTime}ms)`,
+            );
+          }}
           testID="image-network-callback"
           accessible
           onLoadStart={() =>
@@ -493,7 +500,9 @@ class FadeDurationExample extends React.Component<
           testID="image-fade-duration"
           accessible
         />
-        <Text>This image will fade in over the time of 1.5s.</Text>
+        <RNTesterText>
+          This image will fade in over the time of 1.5s.
+        </RNTesterText>
       </View>
     );
   }
@@ -659,6 +668,77 @@ class VectorDrawableExample extends React.Component<
   }
 }
 
+function CacheControlAndroidExample(): React.Node {
+  const [reload, setReload] = React.useState(0);
+
+  const onReload = () => {
+    setReload(prevReload => prevReload + 1);
+  };
+
+  return (
+    <>
+      <View style={styles.horizontal}>
+        <View>
+          <RNTesterText style={styles.resizeModeText}>Default</RNTesterText>
+          <Image
+            source={{
+              uri: fullImage.uri + '?cacheBust=default',
+              cache: 'default',
+            }}
+            style={styles.base}
+            key={reload}
+          />
+        </View>
+        <View style={styles.leftMargin}>
+          <RNTesterText style={styles.resizeModeText}>Reload</RNTesterText>
+          <Image
+            source={{
+              uri: fullImage.uri + '?cacheBust=reload',
+              cache: 'reload',
+            }}
+            style={styles.base}
+            key={reload}
+          />
+        </View>
+        <View style={styles.leftMargin}>
+          <RNTesterText style={styles.resizeModeText}>Force-cache</RNTesterText>
+          <Image
+            source={{
+              uri: fullImage.uri + '?cacheBust=force-cache',
+              cache: 'force-cache',
+            }}
+            style={styles.base}
+            key={reload}
+            onError={e => console.log(e.nativeEvent.error)}
+          />
+        </View>
+        <View style={styles.leftMargin}>
+          <RNTesterText style={styles.resizeModeText}>
+            Only-if-cached
+          </RNTesterText>
+          <Image
+            source={{
+              uri: fullImage.uri + '?cacheBust=only-if-cached',
+              cache: 'only-if-cached',
+            }}
+            style={styles.base}
+            key={reload}
+            onError={e => console.log(e.nativeEvent.error)}
+          />
+        </View>
+      </View>
+
+      <View style={styles.horizontal}>
+        <View style={styles.cachePolicyAndroidButtonContainer}>
+          <RNTesterButton onPress={onReload}>
+            Re-render image components
+          </RNTesterButton>
+        </View>
+      </View>
+    </>
+  );
+}
+
 const fullImage: ImageSource = {
   uri: IMAGE2,
 };
@@ -798,6 +878,9 @@ const styles = StyleSheet.create({
   objectFitScaleDown: {
     objectFit: 'scale-down',
   },
+  objectFitNone: {
+    objectFit: 'none',
+  },
   imageInBundle: {
     borderColor: 'yellow',
     borderWidth: 4,
@@ -895,6 +978,11 @@ const styles = StyleSheet.create({
   resizedImage: {
     height: 100,
     width: '500%',
+  },
+  cachePolicyAndroidButtonContainer: {
+    flex: 1,
+    alignItems: 'center',
+    marginTop: 10,
   },
 });
 
@@ -1088,6 +1176,17 @@ exports.examples = [
       );
     },
     platform: 'ios',
+  },
+  {
+    title: 'Cache Policy',
+    description: `- First image will be loaded and cached.
+- Second image is the same but will be reloaded if re-rendered as the cache policy is set to reload.
+- Third image will never be loaded as the cache policy is set to only-if-cached and the image has not been loaded before.
+  `,
+    render: function (): React.Node {
+      return <CacheControlAndroidExample />;
+    },
+    platform: 'android',
   },
   {
     title: 'Borders',
@@ -1446,6 +1545,17 @@ exports.examples = [
                     />
                   </View>
                 </View>
+                <View style={styles.horizontal}>
+                  <View>
+                    <RNTesterText style={styles.resizeModeText}>
+                      None
+                    </RNTesterText>
+                    <Image
+                      style={[styles.resizeMode, styles.objectFitNone]}
+                      source={image}
+                    />
+                  </View>
+                </View>
               </View>
             );
           })}
@@ -1513,6 +1623,18 @@ exports.examples = [
                     <Image
                       style={styles.resizeMode}
                       resizeMode="center"
+                      source={image}
+                    />
+                  </View>
+                </View>
+                <View style={styles.horizontal}>
+                  <View>
+                    <RNTesterText style={styles.resizeModeText}>
+                      None
+                    </RNTesterText>
+                    <Image
+                      style={styles.resizeMode}
+                      resizeMode="none"
                       source={image}
                     />
                   </View>
@@ -1809,4 +1931,4 @@ exports.examples = [
     },
     platform: 'android',
   },
-];
+] as Array<RNTesterModuleExample>;

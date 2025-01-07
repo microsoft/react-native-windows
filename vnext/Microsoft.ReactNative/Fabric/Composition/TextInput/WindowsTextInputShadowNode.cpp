@@ -3,7 +3,7 @@
 
 #include "WindowsTextInputShadowNode.h"
 
-#include <react/debug/react_native_assert.h>
+#include <react/featureflags/ReactNativeFeatureFlags.h>
 #include <react/renderer/attributedstring/AttributedStringBox.h>
 #include <react/renderer/attributedstring/TextAttributes.h>
 #include <react/renderer/components/text/BaseTextShadowNode.h>
@@ -12,16 +12,9 @@
 #include <react/renderer/core/conversions.h>
 #include <react/renderer/textlayoutmanager/TextLayoutContext.h>
 
-#include <utility>
-
 namespace facebook::react {
 
 extern const char WindowsTextInputComponentName[] = "WindowsTextInput";
-
-void WindowsTextInputShadowNode::setContextContainer(ContextContainer *contextContainer) {
-  ensureUnsealed();
-  m_contextContainer = contextContainer;
-}
 
 AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutContext &layoutContext) const {
   // Use BaseTextShadowNode to get attributed string from children
@@ -54,7 +47,7 @@ AttributedString WindowsTextInputShadowNode::getAttributedString(const LayoutCon
     // that effect.
     fragment.textAttributes.backgroundColor = clearColor();
     fragment.parentShadowView = ShadowView(*this);
-    attributedString.prependFragment(fragment);
+    attributedString.prependFragment(std::move(fragment));
   }
 
   return attributedString;
@@ -84,7 +77,7 @@ AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(cons
   // appended to the AttributedString (see implementation of appendFragment)
   fragment.textAttributes = textAttributes;
   fragment.parentShadowView = ShadowView(*this);
-  textAttributedString.appendFragment(fragment);
+  textAttributedString.appendFragment(std::move(fragment));
 
   return textAttributedString;
 }
@@ -106,7 +99,7 @@ AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString(const
   bool treeAttributedStringChanged =
       !state.reactTreeAttributedString.compareTextAttributesWithoutFrame(reactTreeAttributedString);
 
-  return (!treeAttributedStringChanged ? state.attributedString : reactTreeAttributedString);
+  return (!treeAttributedStringChanged ? state.attributedStringBox.getValue() : reactTreeAttributedString);
 }
 
 void WindowsTextInputShadowNode::updateStateIfNeeded(const LayoutContext &layoutContext) {
@@ -146,15 +139,8 @@ void WindowsTextInputShadowNode::updateStateIfNeeded(const LayoutContext &layout
   // current attributedString unchanged, and pass in zero for the "event count"
   // so no changes are applied There's no way to prevent a state update from
   // flowing to Java, so we just ensure it's a noop in those cases.
-  setStateData(facebook::react::WindowsTextInputState{
-      newEventCount,
-      newAttributedString,
-      reactTreeAttributedString,
-      {},
-      state.defaultThemePaddingStart,
-      state.defaultThemePaddingEnd,
-      state.defaultThemePaddingTop,
-      state.defaultThemePaddingBottom});
+  setStateData(facebook::react::TextInputState{
+      AttributedStringBox(newAttributedString), reactTreeAttributedString, {}, newEventCount});
 }
 
 #pragma mark - LayoutableShadowNode

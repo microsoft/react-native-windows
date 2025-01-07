@@ -2,6 +2,7 @@
 /*
  * This file is auto-generated from MovingLightNativeComponent spec file in flow / TypeScript.
  */
+// clang-format off
 #pragma once
 
 #include <NativeModules.h>
@@ -94,6 +95,13 @@ struct BaseMovingLight {
     m_props = newProps;
   }
 
+  // UpdateLayoutMetrics will only be called if this method is overridden
+  virtual void UpdateLayoutMetrics(
+    const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
+    const winrt::Microsoft::ReactNative::LayoutMetrics &/*newLayoutMetrics*/,
+    const winrt::Microsoft::ReactNative::LayoutMetrics &/*oldLayoutMetrics*/) noexcept {
+  }
+
   // UpdateState will only be called if this method is overridden
   virtual void UpdateState(
     const winrt::Microsoft::ReactNative::ComponentView &/*view*/,
@@ -168,6 +176,13 @@ void RegisterMovingLightNativeComponent(
                                      const winrt::Microsoft::ReactNative::IComponentProps &oldProps) noexcept {
             auto userData = view.UserData().as<TUserData>();
             userData->UpdateProps(view, newProps ? newProps.as<MovingLightProps>() : nullptr, oldProps ? oldProps.as<MovingLightProps>() : nullptr);
+        });
+
+        compBuilder.SetUpdateLayoutMetricsHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,
+                                      const winrt::Microsoft::ReactNative::LayoutMetrics &newLayoutMetrics,
+                                      const winrt::Microsoft::ReactNative::LayoutMetrics &oldLayoutMetrics) noexcept {
+            auto userData = view.UserData().as<TUserData>();
+            userData->UpdateLayoutMetrics(view, newLayoutMetrics, oldLayoutMetrics);
         });
 
         builder.SetUpdateEventEmitterHandler([](const winrt::Microsoft::ReactNative::ComponentView &view,

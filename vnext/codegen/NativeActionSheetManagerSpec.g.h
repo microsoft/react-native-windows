@@ -7,6 +7,7 @@
  * by the TurboModule JS spec.
  */
 #pragma once
+// clang-format off
 
 #include <NativeModules.h>
 #include <tuple>
@@ -22,6 +23,7 @@ struct ActionSheetManagerSpec_showActionSheetWithOptions_options {
     std::optional<double> anchor;
     std::optional<double> tintColor;
     std::optional<double> cancelButtonTintColor;
+    std::optional<double> disabledButtonTintColor;
     std::optional<std::string> userInterfaceStyle;
     std::optional<std::vector<double>> disabledButtonIndices;
 };
@@ -33,6 +35,7 @@ struct ActionSheetManagerSpec_showShareActionSheetWithOptions_options {
     std::optional<double> anchor;
     std::optional<double> tintColor;
     std::optional<double> cancelButtonTintColor;
+    std::optional<double> disabledButtonTintColor;
     std::optional<std::vector<std::string>> excludedActivityTypes;
     std::optional<std::string> userInterfaceStyle;
 };
@@ -55,6 +58,7 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ActionSheetManagerS
         {L"anchor", &ActionSheetManagerSpec_showActionSheetWithOptions_options::anchor},
         {L"tintColor", &ActionSheetManagerSpec_showActionSheetWithOptions_options::tintColor},
         {L"cancelButtonTintColor", &ActionSheetManagerSpec_showActionSheetWithOptions_options::cancelButtonTintColor},
+        {L"disabledButtonTintColor", &ActionSheetManagerSpec_showActionSheetWithOptions_options::disabledButtonTintColor},
         {L"userInterfaceStyle", &ActionSheetManagerSpec_showActionSheetWithOptions_options::userInterfaceStyle},
         {L"disabledButtonIndices", &ActionSheetManagerSpec_showActionSheetWithOptions_options::disabledButtonIndices},
     };
@@ -69,6 +73,7 @@ inline winrt::Microsoft::ReactNative::FieldMap GetStructInfo(ActionSheetManagerS
         {L"anchor", &ActionSheetManagerSpec_showShareActionSheetWithOptions_options::anchor},
         {L"tintColor", &ActionSheetManagerSpec_showShareActionSheetWithOptions_options::tintColor},
         {L"cancelButtonTintColor", &ActionSheetManagerSpec_showShareActionSheetWithOptions_options::cancelButtonTintColor},
+        {L"disabledButtonTintColor", &ActionSheetManagerSpec_showShareActionSheetWithOptions_options::disabledButtonTintColor},
         {L"excludedActivityTypes", &ActionSheetManagerSpec_showShareActionSheetWithOptions_options::excludedActivityTypes},
         {L"userInterfaceStyle", &ActionSheetManagerSpec_showShareActionSheetWithOptions_options::userInterfaceStyle},
     };

@@ -620,21 +620,21 @@ export type ViewProps = $ReadOnly<{|
   'aria-disabled'?: ?boolean,
   'aria-expanded'?: ?boolean,
   'aria-selected'?: ?boolean,
+  'aria-readonly'?: ?boolean, // Windows
   /** A value indicating whether the accessibility elements contained within
    * this accessibility element are hidden.
    *
    * See https://reactnative.dev/docs/view#aria-hidden
    */
   'aria-hidden'?: ?boolean,
+  'aria-multiselectable'?: ?boolean, // Windows
+  'aria-required'?: ?boolean, // Windows
 
   /**
    * Views that are only used to layout their children or otherwise don't draw
    * anything may be automatically removed from the native hierarchy as an
    * optimization. Set this property to `false` to disable this optimization and
    * ensure that this `View` exists in the native view hierarchy.
-   *
-   * @platform android
-   * In Fabric, this prop is used in ios as well.
    *
    * See https://reactnative.dev/docs/view#collapsable
    */
