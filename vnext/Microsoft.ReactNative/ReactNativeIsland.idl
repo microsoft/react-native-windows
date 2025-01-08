@@ -6,6 +6,8 @@ import "ReactCoreInjection.idl";
 import "ReactNativeHost.idl";
 import "Theme.idl";
 import "IReactViewComponentBuilder.idl";
+import "CompositionComponentView.idl";
+
 #include "NamespaceRedirect.h"
 #include "DocString.h"
 
@@ -83,7 +85,9 @@ namespace Microsoft.ReactNative
 
 #ifdef USE_WINUI3
     ReactNativeIsland(Microsoft.UI.Composition.Compositor compositor);
-    ReactNativeIsland(Microsoft.UI.Composition.Compositor compositor, Microsoft.ReactNative.IReactContext context, Microsoft.ReactNative.ComponentView componentView);
+
+    DOC_STRING("Used to create react portals, such as a native modal component.")
+    static ReactNativeIsland CreatePortal(Microsoft.ReactNative.Composition.RootComponentView componentView);
 #endif
 
     DOC_STRING(

@@ -124,8 +124,17 @@ winrt::Microsoft::ReactNative::implementation::ComponentView *NavigateFocusHelpe
       [reason, &toFocus](::winrt::Microsoft::ReactNative::implementation::ComponentView &v) noexcept
       -> bool { return (toFocus = NavigateFocusHelper(v, reason)); };
 
-  if (view.runOnChildren(reason == winrt::Microsoft::ReactNative::FocusNavigationReason::First, fn)) {
-    return toFocus;
+  // Do not iterate through sub rootviews when looking for somewhere to put focus.
+  // If the root view is focusable, we can set focus directly on that, and it can put focus in the  appropriate place.
+  if (view.Children().Size()) {
+    auto firstChild = view.Children().GetAt(0);
+    if (view.rootComponentView() ==
+        winrt::get_self<::winrt::Microsoft::ReactNative::implementation::ComponentView>(firstChild)
+            ->rootComponentView()) {
+      if (view.runOnChildren(reason == winrt::Microsoft::ReactNative::FocusNavigationReason::First, fn)) {
+        return toFocus;
+      }
+    }
   }
 
   if (reason == winrt::Microsoft::ReactNative::FocusNavigationReason::Last) {

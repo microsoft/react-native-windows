@@ -17,7 +17,8 @@ namespace winrt::Microsoft::ReactNative::Composition::implementation {
 RootComponentView::RootComponentView(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
-    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+    ReactCompositionViewComponentBuilder *builder)
     : base_type(
           {}, // default viewProps
           compContext,
@@ -25,7 +26,8 @@ RootComponentView::RootComponentView(
           reactContext,
           ComponentViewFeatures::Default &
               ~(ComponentViewFeatures::Background | ComponentViewFeatures::ShadowProps |
-                ComponentViewFeatures::NativeBorder | ComponentViewFeatures::FocusVisual)) {}
+                ComponentViewFeatures::NativeBorder | ComponentViewFeatures::FocusVisual),
+          builder) {}
 
 RootComponentView::~RootComponentView() {
   if (auto rootView = m_wkRootView.get()) {
@@ -38,7 +40,7 @@ winrt::Microsoft::ReactNative::ComponentView RootComponentView::Create(
     const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
     facebook::react::Tag tag,
     winrt::Microsoft::ReactNative::ReactContext const &reactContext) noexcept {
-  return winrt::make<RootComponentView>(compContext, tag, reactContext);
+  return winrt::make<RootComponentView>(compContext, tag, reactContext, nullptr);
 }
 
 RootComponentView *RootComponentView::rootComponentView() const noexcept {
@@ -84,13 +86,13 @@ void RootComponentView::SetFocusedComponent(const winrt::Microsoft::ReactNative:
 
 bool RootComponentView::NavigateFocus(const winrt::Microsoft::ReactNative::FocusNavigationRequest &request) noexcept {
   if (request.Reason() == winrt::Microsoft::ReactNative::FocusNavigationReason::Restore) {
-    // No-op for now
-    return m_focusedComponent != nullptr;
+    if (m_focusedComponent)
+      return true;
   }
 
-  auto view = (request.Reason() == winrt::Microsoft::ReactNative::FocusNavigationReason::First)
-      ? FocusManager::FindFirstFocusableElement(*this)
-      : FocusManager::FindLastFocusableElement(*this);
+  auto view = (request.Reason() == winrt::Microsoft::ReactNative::FocusNavigationReason::Last)
+      ? FocusManager::FindLastFocusableElement(*this)
+      : FocusManager::FindFirstFocusableElement(*this);
   if (view) {
     TrySetFocusedComponent(
         view,
@@ -116,8 +118,10 @@ bool RootComponentView::TrySetFocusedComponent(
     selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(target);
   }
 
-  if (selfView && selfView->rootComponentView() != this)
+  if (selfView && selfView->rootComponentView() != this) {
+    assert(false);
     return false;
+  }
 
   auto losingFocusArgs = winrt::make<winrt::Microsoft::ReactNative::implementation::LosingFocusEventArgs>(
       target, direction, m_focusedComponent, target);
@@ -148,12 +152,21 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
   }
 
   Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> fn =
-      [currentlyFocused = m_focusedComponent, next](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+      [currentlyFocused = m_focusedComponent,
+       next,
+       currentRootView =
+           winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_focusedComponent)
+               ->rootComponentView()](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
         if (view == currentlyFocused)
           return false;
         auto selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view);
         if (!selfView->focusable())
           return false;
+
+        // Do not move focus to another rootview
+        if (selfView->rootComponentView() != currentRootView) {
+          return false;
+        }
 
         return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)
             ->rootComponentView()
@@ -197,7 +210,7 @@ HRESULT RootComponentView::GetFragmentRoot(IRawElementProviderFragmentRoot **pRe
   if (uiManager == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
 
-  auto rootView{uiManager->GetReactNativeIsland(Tag())};
+  auto rootView = m_wkRootView.get();
   if (!rootView) {
     return UIA_E_ELEMENTNOTAVAILABLE;
   }
@@ -214,10 +227,37 @@ uint32_t RootComponentView::overlayIndex() noexcept {
   return 1;
 }
 
-void RootComponentView::start(const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept {
-  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->AddRenderedVisual(
+void RootComponentView::start(const winrt::Microsoft::ReactNative::ReactNativeIsland &island) noexcept {
+  winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(island)->AddRenderedVisual(
       OuterVisual());
-  m_wkRootView = rootView;
+  ReactNativeIsland(island);
+}
+
+void RootComponentView::ReactNativeIsland(const winrt::Microsoft::ReactNative::ReactNativeIsland &island) noexcept {
+  m_wkRootView = island;
+}
+
+winrt::Microsoft::ReactNative::ReactNativeIsland RootComponentView::ReactNativeIsland() noexcept {
+  return m_wkRootView.get();
+}
+
+// If this RootComponentView is part of a portal, then the default implementation might try to host our visuals
+// within a component ina different island.  -- This ensures that the focus visuals are never hosted outside our island
+winrt::com_ptr<ComponentView> RootComponentView::focusVisualRoot(const facebook::react::Rect &focusRect) noexcept {
+  // TODO we should be able to always return get_strong().
+  // But the focus visuals are getting messed up within modals if we return the portal directly.
+  // Using the first child should work in most cases, as most rootviews will have a first child that provides the
+  // background
+  if (m_parent) {
+    if (Children().Size())
+      return Children().GetAt(0).as<ComponentView>();
+  }
+
+  return get_strong();
+}
+
+facebook::react::Point RootComponentView::getClientOffset() const noexcept {
+  return {};
 }
 
 winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixels) noexcept {

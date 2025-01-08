@@ -127,21 +127,26 @@ ReactNativeIsland::ReactNativeIsland(const winrt::Microsoft::UI::Composition::Co
   InitTextScaleMultiplier();
 }
 
-// Constructor to initialize ReactNativeIsland with context and componentView
 ReactNativeIsland::ReactNativeIsland(
-    const winrt::Microsoft::UI::Composition::Compositor &compositor,
-    winrt::Microsoft::ReactNative::IReactContext context,
-    winrt::Microsoft::ReactNative::ComponentView componentView) noexcept
-    : m_compositor(compositor),
-      m_context(context),
+    const winrt::Microsoft::ReactNative::Composition::RootComponentView &componentView) noexcept
+    : m_compositor(componentView.Compositor()),
+      m_context(componentView.ReactContext()),
       m_layoutConstraints({{0, 0}, {0, 0}, winrt::Microsoft::ReactNative::LayoutDirection::Undefined}),
       m_isFragment(true) {
   m_rootTag = componentView.Tag();
   InitTextScaleMultiplier();
-  AddFragmentCompositionEventHandler(context, componentView);
+  AddFragmentCompositionEventHandler(m_context.Handle(), componentView);
+  winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>(componentView)
+      ->ReactNativeIsland(*this);
 }
 
-ReactNativeIsland::ReactNativeIsland() noexcept : ReactNativeIsland(nullptr) {}
+winrt::Microsoft::ReactNative::ReactNativeIsland ReactNativeIsland::CreatePortal(
+    const winrt::Microsoft::ReactNative::Composition::RootComponentView &componentView) noexcept {
+  return winrt::make<ReactNativeIsland>(componentView);
+}
+
+ReactNativeIsland::ReactNativeIsland() noexcept
+    : ReactNativeIsland(winrt::Microsoft::UI::Composition::Compositor{nullptr}) {}
 
 ReactNativeIsland::~ReactNativeIsland() noexcept {
 #ifdef USE_WINUI3
@@ -152,6 +157,8 @@ ReactNativeIsland::~ReactNativeIsland() noexcept {
     m_island.Connected(m_islandConnectedToken);
     m_island.Disconnected(m_islandDisconnectedToken);
 #endif
+
+    m_island.Close();
   }
 #endif
 
@@ -165,8 +172,10 @@ ReactNative::IReactViewHost ReactNativeIsland::ReactViewHost() noexcept {
   return m_reactViewHost;
 }
 
-void ReactNativeIsland::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewHost const &value) noexcept {
-  assert(!m_isFragment); // make sure this isn't a FragmentIsalnd
+void ReactNativeIsland::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewHost const &value) {
+  if (m_isFragment)
+    winrt::throw_hresult(E_ACCESSDENIED);
+
   if (m_reactViewHost == value) {
     return;
   }
@@ -217,6 +226,8 @@ void ReactNativeIsland::AddRenderedVisual(
 
 void ReactNativeIsland::RemoveRenderedVisual(
     const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept {
+  if (m_isFragment)
+    return;
   assert(m_hasRenderedVisual);
   InternalRootVisual().Remove(visual);
   m_hasRenderedVisual = false;
@@ -820,6 +831,23 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
             rootVisual));
     m_island = winrt::Microsoft::UI::Content::ContentIsland::Create(rootVisual);
 
+    auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
+    focusController.NavigateFocusRequested(
+        [weakThis = get_weak()](
+            const auto &sender, const winrt::Microsoft::UI::Input::FocusNavigationRequestEventArgs &args) {
+          if (auto pThis = weakThis.get()) {
+            if (auto rootView = pThis->GetComponentView()) {
+              args.Result(
+                  rootView->NavigateFocus(winrt::Microsoft::ReactNative::FocusNavigationRequest(
+                      winrt::Microsoft::ReactNative::FocusNavigationReason::First))
+                      ? winrt::Microsoft::UI::Input::FocusNavigationResult::Moved
+                      : winrt::Microsoft::UI::Input::FocusNavigationResult::NotMoved);
+            } else {
+              args.Result(winrt::Microsoft::UI::Input::FocusNavigationResult::NoFocusableElements);
+            }
+          }
+        });
+
     // ContentIsland does not support weak_ref, so we cannot use auto_revoke for these events
     m_islandAutomationProviderRequestedToken = m_island.AutomationProviderRequested(
         [weakThis = get_weak()](
@@ -903,6 +931,16 @@ void ReactNativeIsland::OnUnmounted() noexcept {
   if (!m_mounted)
     return;
   m_mounted = false;
+
+  if (m_island && m_island.IsConnected()) {
+    auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
+    auto request = winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(
+        winrt::Microsoft::UI::Input::FocusNavigationReason::Programmatic);
+    if (focusController.HasFocus()) {
+      focusController.DepartFocus(request);
+    }
+  }
+
   if (auto componentView = GetComponentView()) {
     componentView->onUnmounted();
   }

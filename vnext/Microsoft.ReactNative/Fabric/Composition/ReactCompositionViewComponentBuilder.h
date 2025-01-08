@@ -12,10 +12,12 @@
 
 namespace winrt::Microsoft::ReactNative::Composition {
 
-struct ReactCompositionViewComponentBuilder : winrt::implements<
-                                                  ReactCompositionViewComponentBuilder,
-                                                  IReactViewComponentBuilder,
-                                                  Composition::IReactCompositionViewComponentBuilder> {
+struct ReactCompositionViewComponentBuilder
+    : winrt::implements<
+          ReactCompositionViewComponentBuilder,
+          IReactViewComponentBuilder,
+          Composition::IReactCompositionViewComponentBuilder,
+          Composition::Experimental::IReactCompositionViewComponentInternalBuilder> {
   ReactCompositionViewComponentBuilder() noexcept;
 
  public: // IReactViewComponentBuilder
@@ -42,6 +44,7 @@ struct ReactCompositionViewComponentBuilder : winrt::implements<
  public: // Composition::IReactCompositionViewComponentBuilder
   void SetViewComponentViewInitializer(const ViewComponentViewInitializer &initializer) noexcept;
   void SetContentIslandComponentViewInitializer(const ComponentIslandComponentViewInitializer &initializer) noexcept;
+  void SetRootComponentViewInitializer(const RootComponentViewInitializer &initializer) noexcept;
   void SetCreateVisualHandler(CreateVisualDelegate impl) noexcept;
   void SetViewFeatures(ComponentViewFeatures viewFeatures) noexcept;
   void SetVisualToMountChildrenIntoHandler(VisualToMountChildrenIntoDelegate impl) noexcept;

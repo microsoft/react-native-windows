@@ -47,6 +47,12 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   uint32_t overlayIndex() noexcept;
   void start(const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept;
 
+  void ReactNativeIsland(const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept;
+  winrt::Microsoft::ReactNative::ReactNativeIsland ReactNativeIsland() noexcept;
+
+  winrt::com_ptr<ComponentView> focusVisualRoot(const facebook::react::Rect &focusRect) noexcept override;
+  facebook::react::Point getClientOffset() const noexcept override;
+
   HRESULT GetFragmentRoot(IRawElementProviderFragmentRoot **pRetVal) noexcept;
   winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept override;
   float FontSizeMultiplier() const noexcept;
@@ -60,7 +66,8 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   RootComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
-      winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+      ReactCompositionViewComponentBuilder *builder);
 
   virtual ~RootComponentView();
 

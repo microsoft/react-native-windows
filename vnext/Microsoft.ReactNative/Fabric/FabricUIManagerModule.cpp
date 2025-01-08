@@ -158,11 +158,6 @@ void FabricUIManager::stopSurface(facebook::react::SurfaceId surfaceId) noexcept
       facebook::react::RootShadowNode::Handle(), surfaceId, rootDescriptor);
 }
 
-winrt::Microsoft::ReactNative::ReactNativeIsland FabricUIManager::GetReactNativeIsland(
-    facebook::react::SurfaceId surfaceId) const noexcept {
-  return m_surfaceRegistry.at(surfaceId).wkRootView.get();
-}
-
 facebook::react::Size FabricUIManager::measureSurface(
     facebook::react::SurfaceId surfaceId,
     const facebook::react::LayoutConstraints &layoutConstraints,

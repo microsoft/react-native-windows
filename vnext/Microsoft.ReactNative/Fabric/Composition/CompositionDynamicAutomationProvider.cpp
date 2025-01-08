@@ -192,8 +192,6 @@ HRESULT __stdcall CompositionDynamicAutomationProvider::GetPatternProvider(PATTE
       winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(strongView)->props());
   if (props == nullptr)
     return UIA_E_ELEMENTNOTAVAILABLE;
-  auto accessibilityRole =
-      props->accessibilityRole.empty() ? compositionView->DefaultControlType() : props->accessibilityRole;
   // Invoke control pattern is used to support controls that do not maintain state
   // when activated but rather initiate or perform a single, unambiguous action.
   if (patternId == UIA_InvokePatternId && (props->onAccessibilityTap)) {

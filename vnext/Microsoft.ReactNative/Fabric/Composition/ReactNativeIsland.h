@@ -48,15 +48,15 @@ struct ReactNativeIsland
   ~ReactNativeIsland() noexcept;
 
   ReactNativeIsland(const winrt::Microsoft::UI::Composition::Compositor &compositor) noexcept;
-  ReactNativeIsland(
-      const winrt::Microsoft::UI::Composition::Compositor &compositor,
-      winrt::Microsoft::ReactNative::IReactContext context,
-      winrt::Microsoft::ReactNative::ComponentView componentView) noexcept;
+  ReactNativeIsland(const winrt::Microsoft::ReactNative::Composition::RootComponentView &componentView) noexcept;
+
+  static winrt::Microsoft::ReactNative::ReactNativeIsland CreatePortal(
+      const winrt::Microsoft::ReactNative::Composition::RootComponentView &componentView) noexcept;
   winrt::Microsoft::UI::Content::ContentIsland Island();
 
   // property ReactViewHost
   ReactNative::IReactViewHost ReactViewHost() noexcept;
-  void ReactViewHost(ReactNative::IReactViewHost const &value) noexcept;
+  void ReactViewHost(ReactNative::IReactViewHost const &value);
 
   winrt::Microsoft::UI::Composition::Visual RootVisual() noexcept;
 
