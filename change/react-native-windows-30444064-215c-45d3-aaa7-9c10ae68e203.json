@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Stop disabling warning 4244 because BinSkim fails if it sees one",
+  "packageName": "react-native-windows",
+  "email": "jthysell@microsoft.com",
+  "dependentChangeType": "patch"
+}
