@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Wed, 11 Dec 2024 06:21:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 08 Jan 2025 06:31:13 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.113
+
+Wed, 08 Jan 2025 06:31:13 GMT
+
+### Changes
+
+- Expand sanitization checks for error telemetry instances (14967941+danielayala94@users.noreply.github.com)
 
 ## 0.0.0-canary.112
 

@@ -740,3 +740,85 @@ test.each(testTelemetryOptions)(
     });
   },
 );
+
+test.each(testTelemetryOptions)(
+  'Telemetry run test command end to end with CodedError, verifies PII is scrubbed if present in CodedError.',
+  async options => {
+    await TelemetryTest.startTest(options);
+
+    const codedErrorInfo = new errorUtils.CodedError(
+      'MSBuildError', // type
+      'test error', // message
+      {
+        fieldWithPath:
+          'Test Error occurred at C:\\some\\file\\path\\project.build.appxrecipe', // expectation: replace the whole C:\\... thing with "[path]".
+        fieldWithNoPath: 'Test Error data', // expectation: no changes to this string.
+        fieldWithNoString: 14, // expectation: no changes to this value.
+        arrayField: [
+          'No path',
+          15,
+          'Clean this path: C:\\some\\file\\path2\\project.build.appxrecipe',
+          [
+            'No path',
+            150,
+            'Also clean this: C:\\some\\file\\path2\\project.build.appxrecipe',
+          ],
+        ],
+        someObject: {
+          fieldWithPath:
+            'Test Error occurred at C:\\some\\file\\path3\\project.build.appxrecipe', // expectation: replace the whole C:\\... thing with "[path]".
+          fieldWithNoPath: 'Test Error data 2', // expectation: no changes to this string.
+          fieldWithNoString: 16, // expectation: no changes to this value.
+          nestedObject: {
+            fieldWithPath:
+              'Test Error occurred at C:\\some\\file\\path4\\project.build.appxrecipe', // expectation: replace the whole C:\\... thing with "[path]".
+            fieldWithNoPath: 'Test Error data 3', // expectation: no changes to this string.
+            fieldWithNoString: 17, // expectation: no changes to this value.
+          },
+        },
+      }, // data
+    );
+
+    const expectedError = new errorUtils.CodedError(
+      'MSBuildError', // type
+      'test error', // message
+      {
+        fieldWithPath: 'Test Error occurred at [path]',
+        fieldWithNoPath: 'Test Error data',
+        fieldWithNoString: 14,
+        arrayField: [
+          'No path',
+          15,
+          'Clean this path: [path]',
+          ['No path', 150, 'Also clean this: [path]'],
+        ],
+        someObject: {
+          fieldWithPath: 'Test Error occurred at [path]',
+          fieldWithNoPath: 'Test Error data 2',
+          fieldWithNoString: 16,
+          nestedObject: {
+            fieldWithPath: 'Test Error occurred at [path]',
+            fieldWithNoPath: 'Test Error data 3',
+            fieldWithNoString: 17,
+          },
+        },
+      }, // data
+    );
+
+    const caughtErrors: Error[] = [];
+    TelemetryTest.addTelemetryInitializer(
+      verifyTestCommandTelemetryProcessor(
+        caughtErrors,
+        expectedError.type,
+        expectedError,
+      ),
+    );
+
+    await runTestCommandE2E(() => testCommandBody(codedErrorInfo));
+
+    TelemetryTest.endTest(() => {
+      // Check if any errors were thrown
+      expect(caughtErrors).toHaveLength(0);
+    });
+  },
+);

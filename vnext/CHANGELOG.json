@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Jan 2025 06:31:13 GMT",
+      "version": "0.0.0-canary.905",
+      "tag": "react-native-windows_v0.0.0-canary.905",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "533b3f2f8ef146c2dc807465aa948505c1f99ac2",
+            "comment": "Integrate 12/10"
+          },
+          {
+            "author": "vmorozov@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "12a642fe31fb2d20638e0948221ee988aeb6613e",
+            "comment": "Fix calls to std::mutex::lock"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.252",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 20 Dec 2024 06:22:28 GMT",
       "version": "0.0.0-canary.904",
       "tag": "react-native-windows_v0.0.0-canary.904",

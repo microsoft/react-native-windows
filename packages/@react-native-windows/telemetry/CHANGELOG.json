@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Wed, 08 Jan 2025 06:31:13 GMT",
+      "version": "0.0.0-canary.113",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.113",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "42ff8f3b2d53f5fd305580f3a0ebdc6b17c8bbb9",
+            "comment": "Expand sanitization checks for error telemetry instances"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 11 Dec 2024 06:21:14 GMT",
       "version": "0.0.0-canary.112",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.112",

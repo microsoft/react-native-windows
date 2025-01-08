@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 20 Dec 2024 06:22:28 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 08 Jan 2025 06:31:13 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.905
+
+Wed, 08 Jan 2025 06:31:13 GMT
+
+### Changes
+
+- Integrate 12/10 (34109996+chiaramooney@users.noreply.github.com)
+- Fix calls to std::mutex::lock (vmorozov@microsoft.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.252
 
 ## 0.0.0-canary.904
 
