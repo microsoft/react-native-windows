@@ -13,6 +13,18 @@ test('Verify telemetry package name is valid', () => {
   expect(nameUtils.isValidTelemetryPackageName('react-native')).toBe(false);
   expect(nameUtils.isValidTelemetryPackageName('react_native')).toBe(true);
   expect(nameUtils.isValidTelemetryPackageName('react_native/cli')).toBe(false);
+
+  // Check for size limits. A valid package name has 100 characters or less.
+  expect(
+    nameUtils.isValidTelemetryPackageName(
+      'react_native_react_native_react_native_react_native_react_native_react_native_react_native_react_nat',
+    ),
+  ).toBe(true);
+  expect(
+    nameUtils.isValidTelemetryPackageName(
+      'react_native_react_native_react_native_react_native_react_native_react_native_react_native_react_nati',
+    ),
+  ).toBe(false);
 });
 
 test('Verify telemetry package name cleaning', () => {
@@ -29,5 +41,22 @@ test('Verify telemetry package name cleaning', () => {
   );
   expect(nameUtils.cleanTelemetryPackageName('@react-native-windows/cli')).toBe(
     '_react_native_windows_cli',
+  );
+
+  expect(
+    nameUtils.cleanTelemetryPackageName(
+      'react_native_react_native_react_native_react_native_react_native_react_native_react_native_react_nat',
+    ),
+  ).toBe(
+    'react_native_react_native_react_native_react_native_react_native_react_native_react_native_react_nat',
+  );
+
+  // Truncate a package name with 101 characters, to the first 100.
+  expect(
+    nameUtils.cleanTelemetryPackageName(
+      'react_native_react_native_react_native_react_native_react_native_react_native_react_native_react_nati',
+    ),
+  ).toBe(
+    'react_native_react_native_react_native_react_native_react_native_react_native_react_native_react_nat',
   );
 });

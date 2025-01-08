@@ -14,5 +14,5 @@ export function isValidTelemetryPackageName(name: string): boolean {
 }
 
 export function cleanTelemetryPackageName(str: string): string {
-  return str.replace(/[^a-zA-Z0-9_.]/g, '_');
+  return str.replace(/[^a-zA-Z0-9_.]/g, '_').slice(0, 100);
 }
