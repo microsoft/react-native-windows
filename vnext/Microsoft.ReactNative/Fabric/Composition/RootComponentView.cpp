@@ -266,6 +266,10 @@ winrt::IInspectable RootComponentView::UiaProviderFromPoint(const POINT &ptPixel
       static_cast<facebook::react::Float>(ptPixels.y) / m_layoutMetrics.pointScaleFactor};
 
   facebook::react::Point localPt;
+
+  // In the case of a sub rootview, we may have a non-zero origin.  hitTest takes a pt in the parent coords, so we need
+  // to apply the current origin
+  ptDips += m_layoutMetrics.frame.origin;
   auto tag = hitTest(ptDips, localPt, true);
 
   auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(m_reactContext.Properties());

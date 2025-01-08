@@ -142,9 +142,8 @@ struct CompositionInputKeyboardSource : winrt::implements<
 
 CompositionEventHandler::CompositionEventHandler(
     const winrt::Microsoft::ReactNative::ReactContext &context,
-    const winrt::Microsoft::ReactNative::ReactNativeIsland &reactNativeIsland,
-    const int fragmentTag)
-    : m_fragmentTag(fragmentTag), m_context(context), m_wkRootView(reactNativeIsland) {}
+    const winrt::Microsoft::ReactNative::ReactNativeIsland &reactNativeIsland)
+    : m_context(context), m_wkRootView(reactNativeIsland) {}
 
 void CompositionEventHandler::Initialize() noexcept {
 #ifdef USE_WINUI3
@@ -365,6 +364,9 @@ void CompositionEventHandler::onPointerWheelChanged(
     facebook::react::Point ptLocal;
     facebook::react::Point ptScaled = {static_cast<float>(position.X), static_cast<float>(position.Y)};
 
+    // In the case of a sub rootview, we may have a non-zero origin.  hitTest takes a pt in the parent coords, so we
+    // need to apply the current origin
+    ptScaled += RootComponentView().layoutMetrics().frame.origin;
     auto tag = RootComponentView().hitTest(ptScaled, ptLocal);
 
     if (tag == -1)
@@ -977,6 +979,11 @@ void CompositionEventHandler::getTargetPointerArgs(
   tag = -1;
 
   ptScaled = {position.X, position.Y};
+
+  // In the case of a sub rootview, we may have a non-zero origin.  hitTest takes a pt in the parent coords, so we need
+  // to apply the current origin
+  ptScaled += RootComponentView().layoutMetrics().frame.origin;
+
   if (std::find(m_capturedPointers.begin(), m_capturedPointers.end(), pointerId) != m_capturedPointers.end()) {
     assert(m_pointerCapturingComponentTag != -1);
     tag = m_pointerCapturingComponentTag;
@@ -989,30 +996,7 @@ void CompositionEventHandler::getTargetPointerArgs(
       ptLocal.y = ptScaled.y - (clientRect.top / strongRootView.ScaleFactor());
     }
   } else {
-    if (m_fragmentTag == -1) {
-      tag = RootComponentView().hitTest(ptScaled, ptLocal);
-      return;
-    }
-
-    // check if the fragment tag exists
-    if (!fabricuiManager->GetViewRegistry().findComponentViewWithTag(m_fragmentTag)) {
-      return;
-    }
-
-    auto fagmentView = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(m_fragmentTag).view;
-    auto fagmentchildren = fagmentView.Children();
-
-    // call the hitTest with the fargment as the RootComponent
-    for (auto index = fagmentchildren.Size(); index > 0; index--) {
-      auto childView = fagmentchildren.GetAt(index - 1);
-      auto targetTag =
-          winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(childView)->hitTest(
-              ptScaled, ptLocal);
-      if (targetTag != -1) {
-        tag = targetTag;
-        break;
-      }
-    }
+    tag = RootComponentView().hitTest(ptScaled, ptLocal);
   }
 }
 
