@@ -154,7 +154,7 @@ export default class Bootstrap extends React.Component<
     };
   }
 
-  inputRef: React.RefObject<TextInput>;
+  inputRef: React.RefObject<TextInput | null>;
 
   render() {
     return (
