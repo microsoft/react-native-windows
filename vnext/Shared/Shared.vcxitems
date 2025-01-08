@@ -559,7 +559,7 @@
     <!-- Uncomment this when we move to a newer JSI -->
     <!-- <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\microtasks\NativeMicrotasks.cpp" /> -->
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\featureflags\NativeReactNativeFeatureFlags.cpp" />
-    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\dom\NativeDOM.cpp" DisableSpecificWarnings="4244;4715;%(DisableSpecificWarnings)" />
+    <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\dom\NativeDOM.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
     <CLCompile Include="$(ReactNativeDir)\ReactCommon\react\nativemodule\idlecallbacks\NativeIdleCallbacks.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\AttributedString.cpp" />
     <ClCompile Include="$(ReactNativeDir)\ReactCommon\react\renderer\attributedstring\AttributedStringBox.cpp" DisableSpecificWarnings="4715;%(DisableSpecificWarnings)" />
