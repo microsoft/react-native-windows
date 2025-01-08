@@ -14,7 +14,6 @@
 
 namespace winrt::Microsoft::ReactNative::Composition::implementation {
 
-
 struct ModalHostView : public winrt::implements<ModalHostView, winrt::IInspectable>,
                        ::Microsoft::ReactNativeSpecs::BaseModalHostView<ModalHostView> {
   ~ModalHostView() {
