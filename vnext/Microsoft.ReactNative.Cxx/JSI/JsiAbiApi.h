@@ -284,7 +284,7 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
     operator facebook::jsi::Value const &() const noexcept;
 
     struct alignas(std::max_align_t) StoreType {
-        std::byte buffer[sizeof(DataPointerValue)];
+      std::byte buffer[sizeof(DataPointerValue)];
     };
     static void InitValueRef(JsiValueRef const &data, facebook::jsi::Value *value, StoreType *store) noexcept;
 
@@ -310,7 +310,7 @@ struct JsiAbiRuntime : facebook::jsi::Runtime {
     operator facebook::jsi::PropNameID const &() const noexcept;
 
     struct alignas(std::max_align_t) StoreType {
-        std::byte buffer[sizeof(DataPointerValue)];
+      std::byte buffer[sizeof(DataPointerValue)];
     };
 
    private:
