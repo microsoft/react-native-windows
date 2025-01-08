@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 08 Jan 2025 20:05:17 GMT",
+      "version": "0.74.29",
+      "tag": "react-native-windows_v0.74.29",
+      "comments": {
+        "patch": [
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "c15cbb774b3faa73f63778955cc8a4085e39210e",
+            "comment": "std::aligned_storage is deprecated"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Jan 2025 22:01:59 GMT",
       "version": "0.74.28",
       "tag": "react-native-windows_v0.74.28",

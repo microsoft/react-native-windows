@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-This log was last generated on Tue, 07 Jan 2025 22:01:59 GMT and should not be manually modified.
+This log was last generated on Wed, 08 Jan 2025 20:05:17 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.29
+
+Wed, 08 Jan 2025 20:05:17 GMT
+
+### Patches
+
+- std::aligned_storage is deprecated (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.28
 
