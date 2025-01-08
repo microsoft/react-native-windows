@@ -13,7 +13,7 @@
 #include "CompositionViewComponentView.h"
 
 #pragma warning(push)
-#pragma warning(disable : 4244 4305)
+#pragma warning(disable : 4305)
 #include <react/renderer/components/view/ViewProps.h>
 #pragma warning(pop)
 #include "Composition.ContentIslandComponentView.g.h"
