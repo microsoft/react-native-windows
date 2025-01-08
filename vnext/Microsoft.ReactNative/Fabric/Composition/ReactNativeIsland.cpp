@@ -157,14 +157,16 @@ ReactNativeIsland::~ReactNativeIsland() noexcept {
     m_island.Connected(m_islandConnectedToken);
     m_island.Disconnected(m_islandDisconnectedToken);
 #endif
-
-    m_island.Close();
   }
 #endif
 
   if (m_uiDispatcher) {
     assert(m_uiDispatcher.HasThreadAccess());
     UninitRootView();
+  }
+
+  if (m_island) {
+    m_island.Close();
   }
 }
 
