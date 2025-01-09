@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 08 Jan 2025 06:31:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 09 Jan 2025 06:22:46 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.906
+
+Thu, 09 Jan 2025 06:22:46 GMT
+
+### Changes
+
+- Stop disabling warning 4244 because BinSkim fails if it sees one (jthysell@microsoft.com)
+- std::aligned_storage is deprecated (30809111+acoates-ms@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.253
 
 ## 0.0.0-canary.905
 
