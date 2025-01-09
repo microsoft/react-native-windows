@@ -9,7 +9,6 @@
 
 #include "componentNameByReactViewName.h"
 
-#include <react/config/ReactNativeConfig.h>
 #include <react/debug/react_native_assert.h>
 #include <react/renderer/componentregistry/ComponentDescriptorProviderRegistry.h>
 #include <react/renderer/components/legacyviewmanagerinterop/UnstableLegacyViewManagerAutomaticComponentDescriptor.h>
@@ -85,17 +84,7 @@ const ComponentDescriptor& ComponentDescriptorRegistry::at(
 
   if (it == _registryByName.end()) {
   // [Windows ##14204
-    auto reactNativeConfig_ =
-        contextContainer_->at<std::shared_ptr<const ReactNativeConfig>>(
-            "ReactNativeConfig");
-    if (reactNativeConfig_->getBool(
-            "react_fabric:enabled_automatic_interop_android")) {
-      auto componentDescriptor = std::make_shared<
-          const UnstableLegacyViewManagerAutomaticComponentDescriptor>(
-          parameters_, unifiedComponentName);
-      registerComponentDescriptor(componentDescriptor);
-      return *_registryByName.find(unifiedComponentName)->second;
-    } else if (_fallbackComponentDescriptor == nullptr) {
+    if (_fallbackComponentDescriptor == nullptr) {
       throw std::invalid_argument(
           ("Unable to find componentDescriptor for " + unifiedComponentName)
               .c_str());

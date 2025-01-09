@@ -20,9 +20,9 @@
     }
   },
   "dependencies": {
-    "@types/react": "^18.2.6",
-    "react": "^18.2.0",
-    "react-native": "0.78.0-nightly-20241210-6d235853f",
+    "@types/react": "^19.0.0",
+    "react": "^19.0.00",
+    "react-native": "0.78.0-nightly-20241221-66342d3cc",
     "react-native-windows": "^0.0.0-canary.906"
   },
   "devDependencies": {
@@ -32,7 +32,7 @@
     "@babel/preset-typescript": "^7.8.3",
     "@babel/runtime": "^7.20.0",
     "@react-native-community/cli": "15.0.0-alpha.2",
-    "@react-native/metro-config": "0.77.0-nightly-20241001-223e98cc4",
+    "@react-native/metro-config": "0.78.0-nightly-20241221-66342d3cc",
     "@rnw-scripts/babel-node-config": "2.3.2",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
     "@rnw-scripts/eslint-config": "1.2.30",
@@ -40,7 +40,7 @@
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnw-scripts/ts-config": "2.0.5",
     "@rnx-kit/jest-preset": "^0.1.16",
-    "@types/react": "^18.2.6",
+    "@types/react": "^19.0.0",
     "@typescript-eslint/eslint-plugin": "^7.1.1",
     "@typescript-eslint/parser": "^7.1.1",
     "babel-jest": "^29.6.3",

@@ -82,9 +82,9 @@ AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(cons
   return textAttributedString;
 }
 
-void WindowsTextInputShadowNode::setTextLayoutManager(SharedTextLayoutManager textLayoutManager) {
+void WindowsTextInputShadowNode::setTextLayoutManager(std::shared_ptr<const TextLayoutManager> textLayoutManager) {
   ensureUnsealed();
-  m_textLayoutManager = std::move(textLayoutManager);
+  textLayoutManager_ = std::move(textLayoutManager);
 }
 
 AttributedString WindowsTextInputShadowNode::getMostRecentAttributedString(const LayoutContext &layoutContext) const {
@@ -149,7 +149,7 @@ Size WindowsTextInputShadowNode::measureContent(
     const LayoutContext &layoutContext,
     const LayoutConstraints &layoutConstraints) const {
   if (getStateData().cachedAttributedStringId != 0) {
-    return m_textLayoutManager
+    return textLayoutManager_
         ->measureCachedSpannableById(
             getStateData().cachedAttributedStringId,
             {}, // TODO getConcreteProps().paragraphAttributes
@@ -174,7 +174,7 @@ Size WindowsTextInputShadowNode::measureContent(
 
   TextLayoutContext textLayoutContext;
   textLayoutContext.pointScaleFactor = layoutContext.pointScaleFactor;
-  return m_textLayoutManager
+  return textLayoutManager_
       ->measure(
           AttributedStringBox{attributedString},
           {}, // TODO getConcreteProps().paragraphAttributes,

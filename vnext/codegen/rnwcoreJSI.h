@@ -25,6 +25,7 @@ public:
   virtual bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool disableEventLoopOnBridgeless(jsi::Runtime &rt) = 0;
   virtual bool disableMountItemReorderingAndroid(jsi::Runtime &rt) = 0;
+  virtual bool enableAccumulatedUpdatesInRawPropsAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) = 0;
   virtual bool enableAndroidLineHeightCentering(jsi::Runtime &rt) = 0;
   virtual bool enableBridgelessArchitecture(jsi::Runtime &rt) = 0;
@@ -64,6 +65,7 @@ public:
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
   virtual bool useOptimisedViewPreallocationOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useOptimizedEventBatchingOnAndroid(jsi::Runtime &rt) = 0;
+  virtual bool useRawPropsJsiValue(jsi::Runtime &rt) = 0;
   virtual bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) = 0;
   virtual bool useTurboModuleInterop(jsi::Runtime &rt) = 0;
   virtual bool useTurboModules(jsi::Runtime &rt) = 0;
@@ -136,6 +138,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::disableMountItemReorderingAndroid, jsInvoker_, instance_);
+    }
+    bool enableAccumulatedUpdatesInRawPropsAndroid(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableAccumulatedUpdatesInRawPropsAndroid) == 1,
+          "Expected enableAccumulatedUpdatesInRawPropsAndroid(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableAccumulatedUpdatesInRawPropsAndroid, jsInvoker_, instance_);
     }
     bool enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt) override {
       static_assert(
@@ -448,6 +458,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useOptimizedEventBatchingOnAndroid, jsInvoker_, instance_);
+    }
+    bool useRawPropsJsiValue(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useRawPropsJsiValue) == 1,
+          "Expected useRawPropsJsiValue(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useRawPropsJsiValue, jsInvoker_, instance_);
     }
     bool useRuntimeShadowNodeReferenceUpdate(jsi::Runtime &rt) override {
       static_assert(
@@ -4881,60 +4899,6 @@ private:
 
   private:
     friend class NativeJSCHeapCaptureCxxSpec;
-    T *instance_;
-  };
-
-  Delegate delegate_;
-};
-
-
-  class JSI_EXPORT NativeJSCSamplingProfilerCxxSpecJSI : public TurboModule {
-protected:
-  NativeJSCSamplingProfilerCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker);
-
-public:
-  virtual void operationComplete(jsi::Runtime &rt, double token, std::optional<jsi::String> result, std::optional<jsi::String> error) = 0;
-
-};
-
-template <typename T>
-class JSI_EXPORT NativeJSCSamplingProfilerCxxSpec : public TurboModule {
-public:
-  jsi::Value create(jsi::Runtime &rt, const jsi::PropNameID &propName) override {
-    return delegate_.create(rt, propName);
-  }
-
-  std::vector<jsi::PropNameID> getPropertyNames(jsi::Runtime& runtime) override {
-    return delegate_.getPropertyNames(runtime);
-  }
-
-  static constexpr std::string_view kModuleName = "JSCSamplingProfiler";
-
-protected:
-  NativeJSCSamplingProfilerCxxSpec(std::shared_ptr<CallInvoker> jsInvoker)
-    : TurboModule(std::string{NativeJSCSamplingProfilerCxxSpec::kModuleName}, jsInvoker),
-      delegate_(reinterpret_cast<T*>(this), jsInvoker) {}
-
-
-private:
-  class Delegate : public NativeJSCSamplingProfilerCxxSpecJSI {
-  public:
-    Delegate(T *instance, std::shared_ptr<CallInvoker> jsInvoker) :
-      NativeJSCSamplingProfilerCxxSpecJSI(std::move(jsInvoker)), instance_(instance) {
-
-    }
-
-    void operationComplete(jsi::Runtime &rt, double token, std::optional<jsi::String> result, std::optional<jsi::String> error) override {
-      static_assert(
-          bridging::getParameterCount(&T::operationComplete) == 4,
-          "Expected operationComplete(...) to have 4 parameters");
-
-      return bridging::callFromJs<void>(
-          rt, &T::operationComplete, jsInvoker_, instance_, std::move(token), std::move(result), std::move(error));
-    }
-
-  private:
-    friend class NativeJSCSamplingProfilerCxxSpec;
     T *instance_;
   };
 
