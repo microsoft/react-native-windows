@@ -1,8 +1,16 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Wed, 08 Jan 2025 06:31:13 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 09 Jan 2025 06:22:46 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.114
+
+Thu, 09 Jan 2025 06:22:46 GMT
+
+### Changes
+
+- Address package name limitations for telemetry (14967941+danielayala94@users.noreply.github.com)
 
 ## 0.0.0-canary.113
 

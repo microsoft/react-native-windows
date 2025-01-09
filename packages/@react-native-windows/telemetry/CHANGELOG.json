@@ -2,6 +2,21 @@
   "name": "@react-native-windows/telemetry",
   "entries": [
     {
+      "date": "Thu, 09 Jan 2025 06:22:46 GMT",
+      "version": "0.0.0-canary.114",
+      "tag": "@react-native-windows/telemetry_v0.0.0-canary.114",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "14967941+danielayala94@users.noreply.github.com",
+            "package": "@react-native-windows/telemetry",
+            "commit": "1ccad10dedacbcd88a6b5c8359695b8c029d5616",
+            "comment": "Address package name limitations for telemetry"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Jan 2025 06:31:13 GMT",
       "version": "0.0.0-canary.113",
       "tag": "@react-native-windows/telemetry_v0.0.0-canary.113",

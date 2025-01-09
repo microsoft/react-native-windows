@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 09 Jan 2025 06:22:46 GMT",
+      "version": "0.0.0-canary.906",
+      "tag": "react-native-windows_v0.0.0-canary.906",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "5957d0af6944d64513cead28186dfbcc74bbfea0",
+            "comment": "Stop disabling warning 4244 because BinSkim fails if it sees one"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a8a7c00e220afaaf088a57dea5548e03938ab443",
+            "comment": "std::aligned_storage is deprecated"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.253",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 08 Jan 2025 06:31:13 GMT",
       "version": "0.0.0-canary.905",
       "tag": "react-native-windows_v0.0.0-canary.905",
