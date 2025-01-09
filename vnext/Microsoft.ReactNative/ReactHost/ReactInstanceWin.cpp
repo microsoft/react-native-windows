@@ -55,7 +55,6 @@
 #ifdef USE_FABRIC
 #include <Fabric/Composition/UriImageManager.h>
 #include <Fabric/FabricUIManagerModule.h>
-#include <Fabric/ReactNativeConfigProperties.h>
 #include <Fabric/WindowsComponentDescriptorRegistry.h>
 #include <SchedulerSettings.h>
 #include <jserrorhandler/JsErrorHandler.h>
