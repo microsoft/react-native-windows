@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.77.0-rc.4",
+  "baseVersion": "0.77.0-rc.6",
   "overrides": [
     {
       "type": "derived",
@@ -139,6 +139,13 @@
       "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModule.h",
       "baseHash": "e82eb139eab8a6e122421416fb724811bfadd6fb",
       "issue": 14128
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/dom/NativeDOM.cpp",
+      "baseFile": "packages/react-native/ReactCommon/react/nativemodule/dom/NativeDOM.cpp",
+      "baseHash": "d1424b3fbb7b7edd73c7a3e3ceb09b47c3953051",
+      "issue": 14257
     },
     {
       "type": "derived",
