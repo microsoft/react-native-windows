@@ -913,13 +913,10 @@ bool ComponentView::anyHitTestHelper(
   if (auto index = m_children.Size()) {
     do {
       index--;
-      auto child =
-          winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_children.GetAt(index));
-      if (child->rootComponentView() == rootComponentView()) {
-        targetTag = child->hitTest(ptContent, localPt);
-        if (targetTag != -1) {
-          return true;
-        }
+      targetTag = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_children.GetAt(index))
+                      ->hitTest(ptContent, localPt);
+      if (targetTag != -1) {
+        return true;
       }
     } while (index != 0);
   }

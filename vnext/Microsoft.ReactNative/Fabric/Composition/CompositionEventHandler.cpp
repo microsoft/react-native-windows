@@ -347,11 +347,8 @@ facebook::react::SurfaceId CompositionEventHandler::SurfaceId() const noexcept {
 
 winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView &
 CompositionEventHandler::RootComponentView() const noexcept {
-  auto rootComponentViewDescriptor = (::Microsoft::ReactNative::FabricUIManager::FromProperties(m_context.Properties()))
-                                         ->GetViewRegistry()
-                                         .componentViewDescriptorWithTag(SurfaceId());
-  return *rootComponentViewDescriptor.view
-              .as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
+  auto island = m_wkRootView.get();
+  return *winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(island)->GetComponentView();
 }
 
 void CompositionEventHandler::onPointerWheelChanged(

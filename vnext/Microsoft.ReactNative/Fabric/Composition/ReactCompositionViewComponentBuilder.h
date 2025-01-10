@@ -44,7 +44,7 @@ struct ReactCompositionViewComponentBuilder
  public: // Composition::IReactCompositionViewComponentBuilder
   void SetViewComponentViewInitializer(const ViewComponentViewInitializer &initializer) noexcept;
   void SetContentIslandComponentViewInitializer(const ComponentIslandComponentViewInitializer &initializer) noexcept;
-  void SetRootComponentViewInitializer(const RootComponentViewInitializer &initializer) noexcept;
+  void SetPortalComponentViewInitializer(const PortalComponentViewInitializer &initializer) noexcept;
   void SetCreateVisualHandler(CreateVisualDelegate impl) noexcept;
   void SetViewFeatures(ComponentViewFeatures viewFeatures) noexcept;
   void SetVisualToMountChildrenIntoHandler(VisualToMountChildrenIntoDelegate impl) noexcept;

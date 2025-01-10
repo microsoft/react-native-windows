@@ -111,10 +111,18 @@ namespace Microsoft.ReactNative.Composition
   [default_interface]
   runtimeclass RootComponentView : ViewComponentView {
     Microsoft.ReactNative.ComponentView GetFocusedComponent();
-
     Microsoft.ReactNative.ReactNativeIsland ReactNativeIsland { get; };
+    DOC_STRING("Is non-null if this RootComponentView is the content of a portal")
+    PortalComponentView Portal { get; };
   };
-  
+
+  [experimental]
+  [webhosthidden]
+  [default_interface]
+  runtimeclass PortalComponentView : Microsoft.ReactNative.ComponentView {
+    RootComponentView ContentRoot { get; };
+  };
+
   [experimental]
   [webhosthidden]
   [default_interface]

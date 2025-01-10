@@ -23,7 +23,7 @@ namespace Microsoft.ReactNative.Composition
 
   [webhosthidden]
   [experimental]
-  delegate void RootComponentViewInitializer(RootComponentView view);
+  delegate void PortalComponentViewInitializer(PortalComponentView view);
 
   [experimental]
   [webhosthidden]
@@ -59,7 +59,7 @@ namespace Microsoft.ReactNative.Composition
   {
     void SetViewComponentViewInitializer(ViewComponentViewInitializer initializer);
     void SetContentIslandComponentViewInitializer(ComponentIslandComponentViewInitializer initializer);
-    void SetRootComponentViewInitializer(RootComponentViewInitializer initializer);
+    void SetPortalComponentViewInitializer(PortalComponentViewInitializer initializer);
     void SetCreateVisualHandler(CreateVisualDelegate impl);
     void SetViewFeatures(ComponentViewFeatures viewFeatures);
     void SetUpdateLayoutMetricsHandler(UpdateLayoutMetricsDelegate impl);

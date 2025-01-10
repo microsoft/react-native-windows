@@ -26,7 +26,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     }
 
     if (m_bridge) {
-      if (m_departFocusToken) {
+      if (m_departFocusToken && !m_bridge.IsClosed()) {
         auto navHost = winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteBridge(m_bridge);
         navHost.DepartFocusRequested(m_departFocusToken);
       }
@@ -39,13 +39,13 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     }
   }
 
-  void InitializeRootViewComponent(
-      const winrt::Microsoft::ReactNative::Composition::RootComponentView &rootComponentView) noexcept {
-    m_reactContext = rootComponentView.ReactContext();
+  void InitializePortalViewComponent(
+      const winrt::Microsoft::ReactNative::Composition::PortalComponentView &portalComponentView) noexcept {
+    m_reactContext = portalComponentView.ReactContext();
 
-    rootComponentView.Mounted(
+    portalComponentView.Mounted(
         [](const auto & /*sender*/, const auto &view) { view.UserData().as<ModalHostView>()->OnMounted(view); });
-    rootComponentView.Unmounted(
+    portalComponentView.Unmounted(
         [](const auto & /*sender*/, const auto &view) { view.UserData().as<ModalHostView>()->OnUnmounted(view); });
   }
 
@@ -65,19 +65,11 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     ::Microsoft::ReactNativeSpecs::BaseModalHostView<ModalHostView>::UpdateProps(view, newProps, oldProps);
   }
 
-  void MountChildComponentView(
-      const winrt::Microsoft::ReactNative::ComponentView &view,
-      const winrt::Microsoft::ReactNative::MountChildComponentViewArgs &args) noexcept override {
-    EnsureModalCreated(view);
-    ::Microsoft::ReactNativeSpecs::BaseModalHostView<ModalHostView>::MountChildComponentView(view, args);
-  }
-
   void UpdateLayoutMetrics(
       const winrt::Microsoft::ReactNative::ComponentView &view,
       const winrt::Microsoft::ReactNative::LayoutMetrics &newLayoutMetrics,
       const winrt::Microsoft::ReactNative::LayoutMetrics & /*oldLayoutMetrics*/) noexcept override {
     if (m_window) {
-      EnsureModalCreated(view);
       AdjustWindowSize(newLayoutMetrics);
     }
   }
@@ -88,10 +80,6 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
     if (m_showQueued) {
       ShowOnUIThread(view);
     }
-  }
-
-  winrt::Microsoft::UI::Composition::Visual VisualToMountChildrenInto() noexcept {
-    return m_reactNativeIsland.RootVisual();
   }
 
  private:
@@ -132,6 +120,7 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
       return;
 
     m_showQueued = false;
+    EnsureModalCreated(view);
 
     if (m_window && !m_window.IsVisible()) {
       m_bridge.Enable();
@@ -200,9 +189,9 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
 
     // create a react native island - code taken from CompositionHwndHost
     m_bridge = winrt::Microsoft::UI::Content::DesktopChildSiteBridge::Create(
-        view.as<winrt::Microsoft::ReactNative::Composition::ComponentView>().Compositor(), m_window.Id());
+        view.Parent().as<winrt::Microsoft::ReactNative::Composition::ComponentView>().Compositor(), m_window.Id());
     m_reactNativeIsland = winrt::Microsoft::ReactNative::ReactNativeIsland::CreatePortal(
-        view.as<winrt::Microsoft::ReactNative::Composition::RootComponentView>());
+        view.as<winrt::Microsoft::ReactNative::Composition::PortalComponentView>());
     auto contentIsland = m_reactNativeIsland.Island();
 
     auto navHost = winrt::Microsoft::UI::Input::InputFocusNavigationHost::GetForSiteBridge(m_bridge);
@@ -213,6 +202,8 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
             TrySetFocus(strongView.Parent());
           }
         });
+
+    AdjustWindowSize(view.LayoutMetrics());
 
     m_bridge.Connect(contentIsland);
     m_bridge.Show();
@@ -244,16 +235,12 @@ void RegisterWindowsModalHostNativeComponent(
   ::Microsoft::ReactNativeSpecs::RegisterModalHostViewNativeComponent<ModalHostView>(
       packageBuilder,
       [](const winrt::Microsoft::ReactNative::Composition::IReactCompositionViewComponentBuilder &builder) {
-        builder.SetRootComponentViewInitializer(
-            [](const winrt::Microsoft::ReactNative::Composition::RootComponentView &rootComponentView) noexcept {
+        builder.SetPortalComponentViewInitializer(
+            [](const winrt::Microsoft::ReactNative::Composition::PortalComponentView &portalComponentView) noexcept {
               auto userData = winrt::make_self<ModalHostView>();
-              userData->InitializeRootViewComponent(rootComponentView);
-              rootComponentView.UserData(*userData);
+              userData->InitializePortalViewComponent(portalComponentView);
+              portalComponentView.UserData(*userData);
             });
-
-        builder.SetVisualToMountChildrenIntoHandler([](const winrt::Microsoft::ReactNative::ComponentView &view) {
-          return view.UserData().as<ModalHostView>()->VisualToMountChildrenInto();
-        });
       });
 }
 

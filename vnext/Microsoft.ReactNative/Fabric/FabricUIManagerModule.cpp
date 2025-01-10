@@ -134,7 +134,6 @@ void FabricUIManager::startSurface(
 
     auto root = rootComponentViewDescriptor.view
                     .as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
-    root->theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(rootView.Theme()));
     root->start(rootView);
   });
 

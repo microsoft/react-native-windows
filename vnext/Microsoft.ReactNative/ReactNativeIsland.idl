@@ -87,7 +87,7 @@ namespace Microsoft.ReactNative
     ReactNativeIsland(Microsoft.UI.Composition.Compositor compositor);
 
     DOC_STRING("Used to create react portals, such as a native modal component.")
-    static ReactNativeIsland CreatePortal(Microsoft.ReactNative.Composition.RootComponentView componentView);
+    static ReactNativeIsland CreatePortal(Microsoft.ReactNative.Composition.PortalComponentView portal);
 #endif
 
     DOC_STRING(

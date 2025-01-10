@@ -29,6 +29,22 @@ RootComponentView::RootComponentView(
                 ComponentViewFeatures::NativeBorder | ComponentViewFeatures::FocusVisual),
           builder) {}
 
+RootComponentView::RootComponentView(
+    const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
+    const winrt::Microsoft::ReactNative::Composition::PortalComponentView &portal,
+    winrt::Microsoft::ReactNative::ReactContext const &reactContext)
+    : base_type(
+          {}, // default viewProps
+          compContext,
+          -1,
+          reactContext,
+          ComponentViewFeatures::Default &
+              ~(ComponentViewFeatures::Background | ComponentViewFeatures::ShadowProps |
+                ComponentViewFeatures::NativeBorder | ComponentViewFeatures::FocusVisual),
+          nullptr // builder,
+          ),
+      m_wkPortal(portal) {}
+
 RootComponentView::~RootComponentView() {
   if (auto rootView = m_wkRootView.get()) {
     winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->RemoveRenderedVisual(
@@ -152,21 +168,12 @@ bool RootComponentView::TryMoveFocus(bool next) noexcept {
   }
 
   Mso::Functor<bool(const winrt::Microsoft::ReactNative::ComponentView &)> fn =
-      [currentlyFocused = m_focusedComponent,
-       next,
-       currentRootView =
-           winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(m_focusedComponent)
-               ->rootComponentView()](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
+      [currentlyFocused = m_focusedComponent, next](const winrt::Microsoft::ReactNative::ComponentView &view) noexcept {
         if (view == currentlyFocused)
           return false;
         auto selfView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view);
         if (!selfView->focusable())
           return false;
-
-        // Do not move focus to another rootview
-        if (selfView->rootComponentView() != currentRootView) {
-          return false;
-        }
 
         return winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)
             ->rootComponentView()
@@ -228,6 +235,8 @@ uint32_t RootComponentView::overlayIndex() noexcept {
 }
 
 void RootComponentView::start(const winrt::Microsoft::ReactNative::ReactNativeIsland &island) noexcept {
+  theme(winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::Theme>(island.Theme()));
+
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(island)->AddRenderedVisual(
       OuterVisual());
   ReactNativeIsland(island);
@@ -241,19 +250,8 @@ winrt::Microsoft::ReactNative::ReactNativeIsland RootComponentView::ReactNativeI
   return m_wkRootView.get();
 }
 
-// If this RootComponentView is part of a portal, then the default implementation might try to host our visuals
-// within a component ina different island.  -- This ensures that the focus visuals are never hosted outside our island
-winrt::com_ptr<ComponentView> RootComponentView::focusVisualRoot(const facebook::react::Rect &focusRect) noexcept {
-  // TODO we should be able to always return get_strong().
-  // But the focus visuals are getting messed up within modals if we return the portal directly.
-  // Using the first child should work in most cases, as most rootviews will have a first child that provides the
-  // background
-  if (m_parent) {
-    if (Children().Size())
-      return Children().GetAt(0).as<ComponentView>();
-  }
-
-  return get_strong();
+winrt::Microsoft::ReactNative::Composition::PortalComponentView RootComponentView::Portal() const noexcept {
+  return m_wkPortal.get();
 }
 
 facebook::react::Point RootComponentView::getClientOffset() const noexcept {

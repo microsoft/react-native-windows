@@ -22,37 +22,33 @@ HRESULT UiaNavigateHelper(
   switch (direction) {
     case NavigateDirection_Parent: {
       auto parentCV = view.Parent().as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
-      auto root =
-          winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->rootComponentView();
-      if (parentCV != nullptr && parentCV->rootComponentView() == root) {
+      if (parentCV != nullptr) {
         uiaProvider = parentCV->EnsureUiaProvider();
       } else {
-        winrt::com_ptr<IRawElementProviderFragmentRoot> spFragmentRoot;
-        auto hr = root->GetFragmentRoot(spFragmentRoot.put());
-        if (FAILED(hr)) {
-          return hr;
-        }
+        if (auto root = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)
+                            ->rootComponentView()) {
+          winrt::com_ptr<IRawElementProviderFragmentRoot> spFragmentRoot;
+          auto hr = root->GetFragmentRoot(spFragmentRoot.put());
+          if (FAILED(hr)) {
+            return hr;
+          }
 
-        auto spFragment = spFragmentRoot.try_as<IRawElementProviderFragment>();
-        if (spFragment != nullptr) {
-          retVal = spFragment.detach();
-          return S_OK;
+          auto spFragment = spFragmentRoot.try_as<IRawElementProviderFragment>();
+          if (spFragment != nullptr) {
+            retVal = spFragment.detach();
+            return S_OK;
+          }
         }
       }
-
     } break;
 
     case NavigateDirection_LastChild: {
       auto children = view.Children();
       if (children.Size() != 0) {
-        auto root =
-            winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->rootComponentView();
         uint32_t index = children.Size() - 1;
         do {
-          auto child =
-              children.GetAt(index).as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
-          if (child->rootComponentView() == root) {
-            uiaProvider = child->EnsureUiaProvider();
+          auto child = children.GetAt(index).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
+          if (uiaProvider = child->EnsureUiaProvider()) {
             break;
           }
         } while (index-- != 0);
@@ -61,31 +57,24 @@ HRESULT UiaNavigateHelper(
     case NavigateDirection_FirstChild: {
       auto children = view.Children();
       if (children.Size() != 0) {
-        auto root =
-            winrt::get_self<winrt::Microsoft::ReactNative::implementation::ComponentView>(view)->rootComponentView();
         uint32_t index = 0;
         do {
-          auto child =
-              children.GetAt(index).as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
-          if (child->rootComponentView() == root) {
-            uiaProvider = child->EnsureUiaProvider();
+          auto child = children.GetAt(index).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
+          if (uiaProvider = child->EnsureUiaProvider()) {
             break;
           }
         } while (++index != children.Size());
       }
     } break;
     case NavigateDirection_NextSibling: {
-      auto parentCV = view.Parent().as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+      auto parentCV = view.Parent().as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
       if (parentCV != nullptr) {
         auto children = parentCV->Children();
         auto it = std::find(children.begin(), children.end(), view);
 
-        auto child = (*it).as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
-
         while (++it != children.end()) {
-          auto nextchild = (*it).as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
-          if (nextchild->rootComponentView() == child->rootComponentView()) {
-            uiaProvider = nextchild->EnsureUiaProvider();
+          auto nextchild = (*it).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
+          if (uiaProvider = nextchild->EnsureUiaProvider()) {
             break;
           }
         }
@@ -93,19 +82,16 @@ HRESULT UiaNavigateHelper(
     } break;
 
     case NavigateDirection_PreviousSibling: {
-      auto parentCV = view.Parent().as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
+      auto parentCV = view.Parent().as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
       if (parentCV != nullptr) {
         auto children = parentCV->Children();
         auto it = std::find(children.begin(), children.end(), view);
 
-        auto child = (*it).as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
-
         if (it != children.begin()) {
           do {
             it--;
-            auto prevchild = (*it).as<winrt::Microsoft::ReactNative::Composition::implementation::ComponentView>();
-            if (prevchild->rootComponentView() == child->rootComponentView()) {
-              uiaProvider = prevchild->EnsureUiaProvider();
+            auto prevchild = (*it).as<winrt::Microsoft::ReactNative::implementation::ComponentView>();
+            if (uiaProvider = prevchild->EnsureUiaProvider()) {
               break;
             }
           } while (it != children.begin());
