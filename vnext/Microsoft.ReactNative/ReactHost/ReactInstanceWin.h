@@ -141,7 +141,9 @@ class ReactInstanceWin final : public Mso::ActiveObject<IReactInstanceInternal> 
   void OnError(const Mso::ErrorCode &errorcode) noexcept;
   void OnErrorWithMessage(const std::string &errorMessage) noexcept;
 #ifdef USE_FABRIC
-  void OnJSError(facebook::jsi::Runtime &runtime, const facebook::react::JsErrorHandler::ParsedError &error) noexcept;
+  void OnJSError(
+      facebook::jsi::Runtime &runtime,
+      const facebook::react::JsErrorHandler::ProcessedError &error) noexcept;
 #endif
   void OnLiveReload() noexcept;
   void OnWaitingForDebugger() noexcept;

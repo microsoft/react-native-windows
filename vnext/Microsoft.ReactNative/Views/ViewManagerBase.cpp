@@ -19,7 +19,7 @@
 #include <Utils/PropertyUtils.h>
 #include <Views/ExpressionAnimationStore.h>
 #include <Views/ShadowNodeBase.h>
-#include <cxxreact/SystraceSection.h>
+#include <cxxreact/TraceSection.h>
 
 namespace winrt {
 using namespace xaml;
@@ -308,7 +308,7 @@ void ViewManagerBase::UpdateProperties(
   }
 
   {
-    SystraceSection s("ViewManagerBase::OnPropertiesUpdated");
+    TraceSection s("ViewManagerBase::OnPropertiesUpdated");
     OnPropertiesUpdated(nodeToUpdate);
   }
 }
@@ -359,8 +359,8 @@ void ViewManagerBase::DispatchCommand(
 }
 
 static const winrt::Microsoft::ReactNative::ReactPropertyId<
-    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<ExpressionAnimationStore>>>
-    &ExpressionAnimationStorePropertyId() noexcept {
+    winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<ExpressionAnimationStore>>> &
+ExpressionAnimationStorePropertyId() noexcept {
   static const winrt::Microsoft::ReactNative::ReactPropertyId<
       winrt::Microsoft::ReactNative::ReactNonAbiValue<std::shared_ptr<ExpressionAnimationStore>>>
       prop{L"ReactNative.ViewManagerBase", L"ExpressionAnimationStore"};

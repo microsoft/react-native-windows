@@ -642,7 +642,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
 
               auto jsErrorHandlingFunc = [this](
                                              facebook::jsi::Runtime &runtime,
-                                             const facebook::react::JsErrorHandler::ParsedError &error) noexcept {
+                                             const facebook::react::JsErrorHandler::ProcessedError &error) noexcept {
                 OnJSError(runtime, std::move(error));
               };
 
@@ -1266,12 +1266,12 @@ void ReactInstanceWin::OnError(const Mso::ErrorCode &errorCode) noexcept {
 #ifdef USE_FABRIC
 void ReactInstanceWin::OnJSError(
     facebook::jsi::Runtime &runtime,
-    const facebook::react::JsErrorHandler::ParsedError &error) noexcept {
+    const facebook::react::JsErrorHandler::ProcessedError &error) noexcept {
   ErrorInfo errorInfo;
   errorInfo.Message = error.message;
   auto errorCode = Mso::React::ReactErrorProvider().MakeErrorCode(Mso::React::ReactError{errorInfo.Message.c_str()});
 
-  for (const facebook::react::JsErrorHandler::ParsedError::StackFrame &frame : error.stack) {
+  for (const facebook::react::JsErrorHandler::ProcessedError::StackFrame &frame : error.stack) {
     errorInfo.Callstack.push_back(
         {frame.file.value(), frame.methodName, frame.lineNumber.value(), frame.column.value()});
   }

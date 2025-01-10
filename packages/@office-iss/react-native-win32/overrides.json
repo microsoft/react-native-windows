@@ -7,7 +7,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.78.0-nightly-20241221-66342d3cc",
+  "baseVersion": "0.78.0-nightly-20241231-a3c8e2137",
   "overrides": [
     {
       "type": "derived",
@@ -452,7 +452,7 @@
       "type": "copy",
       "file": "src-win/Libraries/Utilities/BackHandler.win32.js",
       "baseFile": "packages/react-native/Libraries/Utilities/BackHandler.android.js",
-      "baseHash": "b5972a6f2b9da718f57eb7dd9f20b4d67164c980",
+      "baseHash": "c939a47e01b9b06d28d8c34a386abd024b1c0e5e",
       "issue": 4629
     },
     {
