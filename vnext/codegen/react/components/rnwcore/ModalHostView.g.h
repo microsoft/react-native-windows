@@ -5,16 +5,10 @@
 // clang-format off
 #pragma once
 
-#include <NativeModules.h>
-
-#ifdef RNW_NEW_ARCH
 #include <JSValueComposition.h>
-
+#include <NativeModules.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.UI.Composition.h>
-#endif // #ifdef RNW_NEW_ARCH
-
-#ifdef RNW_NEW_ARCH
 
 namespace Microsoft::ReactNativeSpecs {
 
@@ -29,7 +23,6 @@ struct ModalHostViewProps : winrt::implements<ModalHostViewProps, winrt::Microso
        presentationStyle = cloneFromProps->presentationStyle;
        transparent = cloneFromProps->transparent;
        statusBarTranslucent = cloneFromProps->statusBarTranslucent;
-       navigationBarTranslucent = cloneFromProps->navigationBarTranslucent;
        hardwareAccelerated = cloneFromProps->hardwareAccelerated;
        visible = cloneFromProps->visible;
        animated = cloneFromProps->animated;
@@ -53,9 +46,6 @@ struct ModalHostViewProps : winrt::implements<ModalHostViewProps, winrt::Microso
 
   REACT_FIELD(statusBarTranslucent)
   std::optional<bool> statusBarTranslucent{};
-
-  REACT_FIELD(navigationBarTranslucent)
-  std::optional<bool> navigationBarTranslucent{};
 
   REACT_FIELD(hardwareAccelerated)
   std::optional<bool> hardwareAccelerated{};
@@ -279,5 +269,3 @@ void RegisterModalHostViewNativeComponent(
 }
 
 } // namespace Microsoft::ReactNativeSpecs
-
-#endif // #ifdef RNW_NEW_ARCH

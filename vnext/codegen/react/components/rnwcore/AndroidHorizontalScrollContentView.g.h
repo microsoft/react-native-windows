@@ -5,16 +5,10 @@
 // clang-format off
 #pragma once
 
-#include <NativeModules.h>
-
-#ifdef RNW_NEW_ARCH
 #include <JSValueComposition.h>
-
+#include <NativeModules.h>
 #include <winrt/Microsoft.ReactNative.Composition.h>
 #include <winrt/Microsoft.UI.Composition.h>
-#endif // #ifdef RNW_NEW_ARCH
-
-#ifdef RNW_NEW_ARCH
 
 namespace Microsoft::ReactNativeSpecs {
 
@@ -196,5 +190,3 @@ void RegisterAndroidHorizontalScrollContentViewNativeComponent(
 }
 
 } // namespace Microsoft::ReactNativeSpecs
-
-#endif // #ifdef RNW_NEW_ARCH

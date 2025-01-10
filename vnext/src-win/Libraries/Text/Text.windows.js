@@ -92,10 +92,9 @@ const Text: React.AbstractComponent<
       disabled: ariaDisabled ?? accessibilityState?.disabled,
       expanded: ariaExpanded ?? accessibilityState?.expanded,
       selected: ariaSelected ?? accessibilityState?.selected,
-      readOnly: ariaReadOnly, // Windows
       readOnly: ariaReadOnly ?? accessibilityState?.readOnly, // Windows
       multiselectable:
-      ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
+        ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
       required: ariaRequired ?? accessibilityState?.required, // Windows
     };
   }
