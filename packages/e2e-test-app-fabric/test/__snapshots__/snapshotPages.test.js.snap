@@ -71797,13 +71797,18 @@ exports[`snapshotAllPages TextInput 5`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       none
@@ -71848,13 +71853,18 @@ exports[`snapshotAllPages TextInput 5`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       sentences
@@ -71899,13 +71909,18 @@ exports[`snapshotAllPages TextInput 5`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       words
@@ -71950,13 +71965,18 @@ exports[`snapshotAllPages TextInput 5`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       characters
@@ -72006,13 +72026,18 @@ exports[`snapshotAllPages TextInput 6`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       true
@@ -72056,13 +72081,18 @@ exports[`snapshotAllPages TextInput 6`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       false
@@ -72111,13 +72141,18 @@ exports[`snapshotAllPages TextInput 7`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       default
@@ -72161,13 +72196,18 @@ exports[`snapshotAllPages TextInput 7`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       ascii-capable
@@ -72211,13 +72251,18 @@ exports[`snapshotAllPages TextInput 7`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       numbers-and-punctuation
@@ -72261,13 +72306,18 @@ exports[`snapshotAllPages TextInput 7`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       url
@@ -72311,13 +72361,18 @@ exports[`snapshotAllPages TextInput 7`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       number-pad
@@ -72361,13 +72416,18 @@ exports[`snapshotAllPages TextInput 7`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       phone-pad
@@ -72411,13 +72471,18 @@ exports[`snapshotAllPages TextInput 7`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       name-phone-pad
@@ -72461,13 +72526,18 @@ exports[`snapshotAllPages TextInput 7`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       email-address
@@ -72511,13 +72581,18 @@ exports[`snapshotAllPages TextInput 7`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       decimal-pad
@@ -72561,13 +72636,18 @@ exports[`snapshotAllPages TextInput 7`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       twitter
@@ -72611,13 +72691,18 @@ exports[`snapshotAllPages TextInput 7`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       web-search
@@ -72661,13 +72746,18 @@ exports[`snapshotAllPages TextInput 7`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       ascii-capable-number-pad
@@ -72711,13 +72801,18 @@ exports[`snapshotAllPages TextInput 7`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       numeric
@@ -72766,13 +72861,18 @@ exports[`snapshotAllPages TextInput 8`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       none
@@ -72816,13 +72916,18 @@ exports[`snapshotAllPages TextInput 8`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       text
@@ -72866,13 +72971,18 @@ exports[`snapshotAllPages TextInput 8`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       decimal
@@ -72916,13 +73026,18 @@ exports[`snapshotAllPages TextInput 8`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       numeric
@@ -72966,13 +73081,18 @@ exports[`snapshotAllPages TextInput 8`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       tel
@@ -73016,13 +73136,18 @@ exports[`snapshotAllPages TextInput 8`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       search
@@ -73066,13 +73191,18 @@ exports[`snapshotAllPages TextInput 8`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       email
@@ -73116,13 +73246,18 @@ exports[`snapshotAllPages TextInput 8`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       url
@@ -73302,13 +73437,18 @@ exports[`snapshotAllPages TextInput 10`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       enter
@@ -73352,13 +73492,18 @@ exports[`snapshotAllPages TextInput 10`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       done
@@ -73402,13 +73547,18 @@ exports[`snapshotAllPages TextInput 10`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       go
@@ -73452,13 +73602,18 @@ exports[`snapshotAllPages TextInput 10`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       next
@@ -73502,13 +73657,18 @@ exports[`snapshotAllPages TextInput 10`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       previous
@@ -73552,13 +73712,18 @@ exports[`snapshotAllPages TextInput 10`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       search
@@ -73602,13 +73767,18 @@ exports[`snapshotAllPages TextInput 10`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       send
@@ -73929,10 +74099,15 @@ exports[`snapshotAllPages TextInput 12`] = `
   />
   <Text
     style={
-      {
-        "fontSize": 12,
-        "margin": 3,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 12,
+          "margin": 3,
+        },
+      ]
     }
   >
     &lt;No Event&gt;
@@ -74192,6 +74367,14 @@ exports[`snapshotAllPages TextInput 15`] = `
     </View>
     <View>
       <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="singleline-selection"
       >
         selection =
@@ -74200,12 +74383,28 @@ exports[`snapshotAllPages TextInput 15`] = `
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="singleline-cursor-start"
       >
         Place at Start (0, 0)
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="singleline-cursor-end"
       >
         Place at End (
@@ -74216,17 +74415,41 @@ exports[`snapshotAllPages TextInput 15`] = `
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
       >
         Place at Random
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="singleline-select-all"
       >
         Select All
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
       >
         Select Random
       </Text>
@@ -74277,6 +74500,14 @@ can also be changed"
     </View>
     <View>
       <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="multiline-selection"
       >
         selection =
@@ -74285,12 +74516,28 @@ can also be changed"
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="multiline-cursor-start"
       >
         Place at Start (0, 0)
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="multiline-cursor-end"
       >
         Place at End (
@@ -74301,17 +74548,41 @@ can also be changed"
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
       >
         Place at Random
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="multiline-select-all"
       >
         Select All
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
       >
         Select Random
       </Text>
@@ -74356,6 +74627,14 @@ exports[`snapshotAllPages TextInput 16`] = `
     </View>
     <View>
       <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="singlelineImperative-selection"
       >
         selection =
@@ -74364,12 +74643,28 @@ exports[`snapshotAllPages TextInput 16`] = `
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="singlelineImperative-cursor-start"
       >
         Place at Start (0, 0)
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="singlelineImperative-cursor-end"
       >
         Place at End (
@@ -74380,17 +74675,41 @@ exports[`snapshotAllPages TextInput 16`] = `
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
       >
         Place at Random
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="singlelineImperative-select-all"
       >
         Select All
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
       >
         Select Random
       </Text>
@@ -74435,6 +74754,14 @@ can also be changed imperatively"
     </View>
     <View>
       <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="multilineImperative-selection"
       >
         selection =
@@ -74443,12 +74770,28 @@ can also be changed imperatively"
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="multilineImperative-cursor-start"
       >
         Place at Start (0, 0)
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="multilineImperative-cursor-end"
       >
         Place at End (
@@ -74459,17 +74802,41 @@ can also be changed imperatively"
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
       >
         Place at Random
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
         testID="multilineImperative-select-all"
       >
         Select All
       </Text>
       <Text
         onPress={[Function]}
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
       >
         Select Random
       </Text>
@@ -74592,13 +74959,18 @@ exports[`snapshotAllPages TextInput 18`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 12,
-            "marginRight": 10,
-            "paddingTop": 2,
-            "textAlign": "right",
-            "width": 115,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 12,
+              "marginRight": 10,
+              "paddingTop": 2,
+              "textAlign": "right",
+              "width": 115,
+            },
+          ]
         }
       >
         backgroundColor
@@ -74702,13 +75074,18 @@ exports[`snapshotAllPages TextInput 18`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 12,
-            "marginRight": 10,
-            "paddingTop": 2,
-            "textAlign": "right",
-            "width": 115,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 12,
+              "marginRight": 10,
+              "paddingTop": 2,
+              "textAlign": "right",
+              "width": 115,
+            },
+          ]
         }
       >
         color
@@ -74812,13 +75189,18 @@ exports[`snapshotAllPages TextInput 18`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 12,
-            "marginRight": 10,
-            "paddingTop": 2,
-            "textAlign": "right",
-            "width": 115,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 12,
+              "marginRight": 10,
+              "paddingTop": 2,
+              "textAlign": "right",
+              "width": 115,
+            },
+          ]
         }
       >
         fontFamily
@@ -74922,13 +75304,18 @@ exports[`snapshotAllPages TextInput 18`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 12,
-            "marginRight": 10,
-            "paddingTop": 2,
-            "textAlign": "right",
-            "width": 115,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 12,
+              "marginRight": 10,
+              "paddingTop": 2,
+              "textAlign": "right",
+              "width": 115,
+            },
+          ]
         }
       >
         fontSize
@@ -75032,13 +75419,18 @@ exports[`snapshotAllPages TextInput 18`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 12,
-            "marginRight": 10,
-            "paddingTop": 2,
-            "textAlign": "right",
-            "width": 115,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 12,
+              "marginRight": 10,
+              "paddingTop": 2,
+              "textAlign": "right",
+              "width": 115,
+            },
+          ]
         }
       >
         fontStyle
@@ -75142,13 +75534,18 @@ exports[`snapshotAllPages TextInput 18`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 12,
-            "marginRight": 10,
-            "paddingTop": 2,
-            "textAlign": "right",
-            "width": 115,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 12,
+              "marginRight": 10,
+              "paddingTop": 2,
+              "textAlign": "right",
+              "width": 115,
+            },
+          ]
         }
       >
         fontWeight
@@ -75252,13 +75649,18 @@ exports[`snapshotAllPages TextInput 18`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 12,
-            "marginRight": 10,
-            "paddingTop": 2,
-            "textAlign": "right",
-            "width": 115,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 12,
+              "marginRight": 10,
+              "paddingTop": 2,
+              "textAlign": "right",
+              "width": 115,
+            },
+          ]
         }
       >
         letterSpacing
@@ -75362,13 +75764,18 @@ exports[`snapshotAllPages TextInput 18`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 12,
-            "marginRight": 10,
-            "paddingTop": 2,
-            "textAlign": "right",
-            "width": 115,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 12,
+              "marginRight": 10,
+              "paddingTop": 2,
+              "textAlign": "right",
+              "width": 115,
+            },
+          ]
         }
       >
         lineHeight
@@ -75452,13 +75859,18 @@ exports[`snapshotAllPages TextInput 18`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 12,
-            "marginRight": 10,
-            "paddingTop": 2,
-            "textAlign": "right",
-            "width": 115,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 12,
+              "marginRight": 10,
+              "paddingTop": 2,
+              "textAlign": "right",
+              "width": 115,
+            },
+          ]
         }
       >
         textDecorationLine
@@ -75562,13 +75974,18 @@ exports[`snapshotAllPages TextInput 18`] = `
     >
       <Text
         style={
-          {
-            "fontSize": 12,
-            "marginRight": 10,
-            "paddingTop": 2,
-            "textAlign": "right",
-            "width": 115,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 12,
+              "marginRight": 10,
+              "paddingTop": 2,
+              "textAlign": "right",
+              "width": 115,
+            },
+          ]
         }
       >
         textShadow
@@ -75713,13 +76130,18 @@ exports[`snapshotAllPages TextInput 19`] = `
   >
     <Text
       style={
-        {
-          "fontSize": 12,
-          "marginRight": 10,
-          "paddingTop": 2,
-          "textAlign": "right",
-          "width": 115,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 12,
+            "marginRight": 10,
+            "paddingTop": 2,
+            "textAlign": "right",
+            "width": 115,
+          },
+        ]
       }
     >
       showSoftInputOnFocus: false
@@ -75758,7 +76180,16 @@ exports[`snapshotAllPages TextInput 19`] = `
 
 exports[`snapshotAllPages TextInput 20`] = `
 <View>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     Uncontrolled:
   </Text>
   <TextInput
@@ -75771,7 +76202,16 @@ exports[`snapshotAllPages TextInput 20`] = `
       }
     }
   />
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     Controlled:
   </Text>
   <TextInput
@@ -83964,154 +84404,6 @@ exports[`snapshotAllPages View 18`] = `
 
 exports[`snapshotAllPages View 19`] = `
 <View
-  accessibilityLabel="Layout Conformance Example"
-  accessible={true}
-  style={
-    {
-      "flexDirection": "row",
-      "gap": 10,
-    }
-  }
-  testID="view-test-layout-conformance"
->
-  <View>
-    <Text
-      style={
-        [
-          {
-            "color": "#000000ff",
-          },
-          undefined,
-        ]
-      }
-    >
-      Unset
-    </Text>
-    <View
-      style={
-        {
-          "alignItems": "center",
-          "backgroundColor": "blue",
-          "flexDirection": "row",
-          "height": 60,
-          "width": 60,
-        }
-      }
-    >
-      <View
-        style={
-          {
-            "flexDirection": "row",
-          }
-        }
-      >
-        <View
-          style={
-            {
-              "backgroundColor": "red",
-              "flexGrow": 1,
-              "height": 30,
-            }
-          }
-        />
-      </View>
-    </View>
-  </View>
-  <View
-    experimental_layoutConformance="classic"
-  >
-    <Text
-      style={
-        [
-          {
-            "color": "#000000ff",
-          },
-          undefined,
-        ]
-      }
-    >
-      Classic
-    </Text>
-    <View
-      style={
-        {
-          "alignItems": "center",
-          "backgroundColor": "blue",
-          "flexDirection": "row",
-          "height": 60,
-          "width": 60,
-        }
-      }
-    >
-      <View
-        style={
-          {
-            "flexDirection": "row",
-          }
-        }
-      >
-        <View
-          style={
-            {
-              "backgroundColor": "red",
-              "flexGrow": 1,
-              "height": 30,
-            }
-          }
-        />
-      </View>
-    </View>
-  </View>
-  <View
-    experimental_layoutConformance="strict"
-  >
-    <Text
-      style={
-        [
-          {
-            "color": "#000000ff",
-          },
-          undefined,
-        ]
-      }
-    >
-      Strict
-    </Text>
-    <View
-      style={
-        {
-          "alignItems": "center",
-          "backgroundColor": "blue",
-          "flexDirection": "row",
-          "height": 60,
-          "width": 60,
-        }
-      }
-    >
-      <View
-        style={
-          {
-            "flexDirection": "row",
-          }
-        }
-      >
-        <View
-          style={
-            {
-              "backgroundColor": "red",
-              "flexGrow": 1,
-              "height": 30,
-            }
-          }
-        />
-      </View>
-    </View>
-  </View>
-</View>
-`;
-
-exports[`snapshotAllPages View 20`] = `
-<View
   style={
     {
       "gap": 20,
@@ -84272,7 +84564,7 @@ exports[`snapshotAllPages View 20`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 21`] = `
+exports[`snapshotAllPages View 20`] = `
 <View
   testID="view-test-box-sizing"
 >
@@ -84357,7 +84649,7 @@ exports[`snapshotAllPages View 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 22`] = `
+exports[`snapshotAllPages View 21`] = `
 <View
   accessibilityLabel="NativeID Example"
   accessible={true}
@@ -84379,7 +84671,7 @@ exports[`snapshotAllPages View 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 23`] = `
+exports[`snapshotAllPages View 22`] = `
 <View
   accessibilityActions={
     [
@@ -84483,7 +84775,7 @@ exports[`snapshotAllPages View 23`] = `
 </View>
 `;
 
-exports[`snapshotAllPages View 24`] = `
+exports[`snapshotAllPages View 23`] = `
 <View
   accessibilityLabel="Shadow Example"
   accessible={true}
@@ -84504,7 +84796,7 @@ exports[`snapshotAllPages View 24`] = `
 />
 `;
 
-exports[`snapshotAllPages View 25`] = `
+exports[`snapshotAllPages View 24`] = `
 <View
   accessibilityLabel="HitSlop Example"
   accessible={true}
@@ -84529,7 +84821,7 @@ exports[`snapshotAllPages View 25`] = `
 />
 `;
 
-exports[`snapshotAllPages View 26`] = `
+exports[`snapshotAllPages View 25`] = `
 <View
   accessibilityLabel="Tooltip Example"
   accessible={true}
@@ -85259,7 +85551,16 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       onreadystatechange handler
     </Text>
     <RCTSwitch
@@ -85288,7 +85589,16 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       onprogress handler
     </Text>
     <RCTSwitch
@@ -85317,7 +85627,16 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       download as arraybuffer
     </Text>
     <RCTSwitch
@@ -85346,7 +85665,16 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       transfer-encoding: chunked
     </Text>
     <RCTSwitch
@@ -85412,10 +85740,15 @@ exports[`snapshotAllPages XMLHttpRequest 1`] = `
   <View>
     <Text
       style={
-        {
-          "marginBottom": 8,
-          "marginTop": 12,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "marginBottom": 8,
+            "marginTop": 12,
+          },
+        ]
       }
     >
       onprogress: 
@@ -85442,9 +85775,14 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
   >
     <Text
       style={
-        {
-          "fontWeight": "bold",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontWeight": "bold",
+          },
+        ]
       }
     >
       Upload 255 bytes as ...
@@ -86387,7 +86725,7 @@ exports[`snapshotAllPages XMLHttpRequest 2`] = `
 `;
 
 exports[`snapshotAllPages XMLHttpRequest 3`] = `
-<View>
+[
   <View
     accessibilityRole="button"
     accessibilityState={
@@ -86472,7 +86810,7 @@ exports[`snapshotAllPages XMLHttpRequest 3`] = `
         </Text>
       </View>
     </View>
-  </View>
+  </View>,
   <Text
     style={
       {
@@ -86484,23 +86822,28 @@ exports[`snapshotAllPages XMLHttpRequest 3`] = `
     }
   >
     Edit URL to submit:
-  </Text>
+  </Text>,
   <TextInput
     defaultValue="http://www.posttestserver.com/post.php"
     onSubmitEditing={[Function]}
     returnKeyType="go"
     style={
-      {
-        "borderColor": "grey",
-        "borderRadius": 3,
-        "borderWidth": 1,
-        "flex": 1,
-        "height": 30,
-        "paddingLeft": 8,
-      }
+      [
+        {
+          "borderColor": "grey",
+          "borderRadius": 3,
+          "borderWidth": 1,
+          "flex": 1,
+          "height": 30,
+          "paddingLeft": 8,
+        },
+        {
+          "color": "#000000ff",
+        },
+      ]
     }
-  />
-</View>
+  />,
+]
 `;
 
 exports[`snapshotAllPages XMLHttpRequest 4`] = `
@@ -86549,7 +86892,16 @@ exports[`snapshotAllPages XMLHttpRequest 4`] = `
       </Text>
     </View>
   </View>
-  <Text />
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  />
 </View>
 `;
 
@@ -86599,7 +86951,16 @@ exports[`snapshotAllPages XMLHttpRequest 5`] = `
       </Text>
     </View>
   </View>
-  <Text />
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  />
 </View>
 `;
 

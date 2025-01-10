@@ -381,8 +381,6 @@ const validAttributesForNonEventProps = {
   enableFocusRing: true, // [Windows]
 
   style: ReactNativeStyleAttributes,
-
-  experimental_layoutConformance: true,
 };
 
 // Props for bubbling and direct events

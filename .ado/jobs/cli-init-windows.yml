@@ -118,6 +118,11 @@ parameters:
             platform: x64
             additionalRunArguments: --no-autolink
             useNuGet: true
+          - Name: PaperX64ReleaseCpp
+            template: old/uwp-cpp-app
+            configuration: Release
+            platform: x64
+            runWack: true
       - BuildEnvironment: Continuous
         Matrix:
           - Name: FabricX64Debug

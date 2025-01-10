@@ -28,14 +28,15 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
                                              WindowsTextInputEventEmitter,
                                              TextInputState> {
  public:
+  using ConcreteViewShadowNode::ConcreteViewShadowNode;
+
   static ShadowNodeTraits BaseTraits() {
     auto traits = ConcreteViewShadowNode::BaseTraits();
     traits.set(ShadowNodeTraits::Trait::LeafYogaNode);
+    traits.set(ShadowNodeTraits::Trait::MeasurableYogaNode);
     traits.set(ShadowNodeTraits::Trait::BaselineYogaNode);
     return traits;
   }
-
-  using ConcreteViewShadowNode::ConcreteViewShadowNode;
 
   /*
    * Returns a `AttributedString` which represents text content of the node.
@@ -48,7 +49,7 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
    * `TextInputShadowNode` uses the manager to measure text content
    * and construct `TextInputState` objects.
    */
-  void setTextLayoutManager(SharedTextLayoutManager textLayoutManager);
+  void setTextLayoutManager(std::shared_ptr<const TextLayoutManager> textLayoutManager);
 
 #pragma mark - LayoutableShadowNode
 
@@ -67,7 +68,7 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
    */
   void updateStateIfNeeded(const LayoutContext &layoutContext);
 
-  SharedTextLayoutManager m_textLayoutManager;
+  std::shared_ptr<const TextLayoutManager> textLayoutManager_;
 };
 
 } // namespace facebook::react

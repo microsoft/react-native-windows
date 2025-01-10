@@ -1,8 +1,18 @@
 # Change Log - @react-native-windows/codegen
 
-<!-- This log was last generated on Tue, 10 Dec 2024 06:29:30 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 10 Jan 2025 06:23:19 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.115
+
+Fri, 10 Jan 2025 06:23:19 GMT
+
+### Changes
+
+- Bump @react-native-windows/fs to v0.0.0-canary.60
+- Bump @rnw-scripts/eslint-config to v1.2.31
+- Bump @rnw-scripts/just-task to v2.3.48
 
 ## 0.0.0-canary.114
 
