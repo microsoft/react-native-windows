@@ -220,7 +220,7 @@ void Alert::ProcessPendingAlertRequests() noexcept {
   if (pendingAlerts.empty())
     return;
 
-  if (xaml::TryGetCurrentApplication()) {
+  if (xaml::TryGetCurrentUwpXamlApplication()) {
     ProcessPendingAlertRequestsXaml();
   }
 #ifdef USE_FABRIC
@@ -230,6 +230,7 @@ void Alert::ProcessPendingAlertRequests() noexcept {
   }
 #endif
 }
+
 Alert::Constants Alert::GetConstants() noexcept {
   return m_constants;
 }
