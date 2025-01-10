@@ -203,12 +203,10 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
           }
         });
 
-    AdjustWindowSize(view.LayoutMetrics());
-
-    m_bridge.Connect(contentIsland);
-    m_bridge.Show();
-
     m_bridge.ResizePolicy(winrt::Microsoft::UI::Content::ContentSizePolicy::ResizeContentToParentWindow);
+    m_bridge.Connect(contentIsland);
+    AdjustWindowSize(view.LayoutMetrics());
+    m_bridge.Show();
   }
 
   static void TrySetFocus(const winrt::Microsoft::ReactNative::ComponentView &view) {
