@@ -46,6 +46,7 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   // Index that visuals can be inserted into OuterVisual for debugging UI
   uint32_t overlayIndex() noexcept;
   void start(const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept;
+  void stop() noexcept;
 
   void ReactNativeIsland(const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept;
   winrt::Microsoft::ReactNative::ReactNativeIsland ReactNativeIsland() noexcept;
@@ -89,6 +90,7 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   winrt::Microsoft::ReactNative::ComponentView m_focusedComponent{nullptr};
   winrt::weak_ref<winrt::Microsoft::ReactNative::ReactNativeIsland> m_wkRootView{nullptr};
   winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::PortalComponentView> m_wkPortal{nullptr};
+  bool m_visualAddedToIsland{false};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation

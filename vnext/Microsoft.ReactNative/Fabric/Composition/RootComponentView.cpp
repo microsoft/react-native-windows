@@ -46,10 +46,7 @@ RootComponentView::RootComponentView(
       m_wkPortal(portal) {}
 
 RootComponentView::~RootComponentView() {
-  if (auto rootView = m_wkRootView.get()) {
-    winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->RemoveRenderedVisual(
-        OuterVisual());
-  }
+  stop();
 }
 
 winrt::Microsoft::ReactNative::ComponentView RootComponentView::Create(
@@ -239,7 +236,22 @@ void RootComponentView::start(const winrt::Microsoft::ReactNative::ReactNativeIs
 
   winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(island)->AddRenderedVisual(
       OuterVisual());
+  m_visualAddedToIsland = true;
   ReactNativeIsland(island);
+}
+
+void RootComponentView::stop() noexcept {
+  SetFocusedComponent(nullptr);
+  if (m_visualAddedToIsland) {
+    if (auto rootView = m_wkRootView.get()) {
+      winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView)->RemoveRenderedVisual(
+          OuterVisual());
+    }
+    m_visualAddedToIsland = false;
+  }
+  // Disconnect from the Island.  In case of an instance reload, the island may now
+  // be attached to a new RootComponentView, so we should stop interacting with it.
+  ReactNativeIsland(nullptr);
 }
 
 void RootComponentView::ReactNativeIsland(const winrt::Microsoft::ReactNative::ReactNativeIsland &island) noexcept {
