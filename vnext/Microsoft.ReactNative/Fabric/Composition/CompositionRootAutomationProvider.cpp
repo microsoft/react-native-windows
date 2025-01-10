@@ -167,7 +167,7 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_ProviderOptions(Provide
   return S_OK;
 }
 
-winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
+winrt::com_ptr<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>
 CompositionRootAutomationProvider::rootComponentView() noexcept {
   if (auto rootView = m_wkRootView.get()) {
     auto innerRootView = winrt::get_self<winrt::Microsoft::ReactNative::implementation::ReactNativeIsland>(rootView);
