@@ -8,7 +8,7 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.78.0-nightly-20241221-66342d3cc",
+  "baseVersion": "0.78.0-nightly-20241231-a3c8e2137",
   "overrides": [
     {
       "type": "derived",
@@ -83,7 +83,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/cxxreact/NativeToJsBridge.cpp",
       "baseFile": "packages/react-native/ReactCommon/cxxreact/NativeToJsBridge.cpp",
-      "baseHash": "a3a8c88dc1fd1202db586ccbc0e46501cd6cb0eb",
+      "baseHash": "e1317c960b04add1b13100df32bc73a9710dbacb",
       "issue": 13172
     },
     {
@@ -186,7 +186,7 @@
       "type": "patch",
       "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/runtime/ReactInstance.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/runtime/ReactInstance.cpp",
-      "baseHash": "035d7eb7f908cdf73356fdccd0ccc4a8afb6cf76",
+      "baseHash": "37468bc7c0950e33e66ccdab2a942d7619bba5e0",
       "issue": 13172
     },
     {
@@ -587,7 +587,7 @@
       "type": "copy",
       "file": "src-win/Libraries/Utilities/BackHandler.windows.js",
       "baseFile": "packages/react-native/Libraries/Utilities/BackHandler.android.js",
-      "baseHash": "b5972a6f2b9da718f57eb7dd9f20b4d67164c980",
+      "baseHash": "c939a47e01b9b06d28d8c34a386abd024b1c0e5e",
       "issue": 4629
     },
     {
