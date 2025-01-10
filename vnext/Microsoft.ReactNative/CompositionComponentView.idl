@@ -119,6 +119,7 @@ namespace Microsoft.ReactNative.Composition
   [experimental]
   [webhosthidden]
   [default_interface]
+  DOC_STRING("Used to implement UI that is hosted outside the main UI tree, such as modal.")
   runtimeclass PortalComponentView : Microsoft.ReactNative.ComponentView {
     RootComponentView ContentRoot { get; };
   };
