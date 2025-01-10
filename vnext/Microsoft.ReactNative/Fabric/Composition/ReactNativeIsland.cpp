@@ -127,21 +127,39 @@ ReactNativeIsland::ReactNativeIsland(const winrt::Microsoft::UI::Composition::Co
   InitTextScaleMultiplier();
 }
 
-// Constructor to initialize ReactNativeIsland with context and componentView
 ReactNativeIsland::ReactNativeIsland(
-    const winrt::Microsoft::UI::Composition::Compositor &compositor,
-    winrt::Microsoft::ReactNative::IReactContext context,
-    winrt::Microsoft::ReactNative::ComponentView componentView) noexcept
-    : m_compositor(compositor),
-      m_context(context),
+    const winrt::Microsoft::ReactNative::Composition::PortalComponentView &portal) noexcept
+    : m_compositor(portal.ContentRoot().Compositor()),
+      m_context(portal.ReactContext()),
       m_layoutConstraints({{0, 0}, {0, 0}, winrt::Microsoft::ReactNative::LayoutDirection::Undefined}),
       m_isFragment(true) {
-  m_rootTag = componentView.Tag();
+  m_portal = winrt::make_weak(portal);
+
+  auto trueRoot =
+      winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::PortalComponentView>(portal)
+          ->rootComponentView();
+  while (auto p = trueRoot->Portal()) {
+    trueRoot = winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::PortalComponentView>(p)
+                   ->rootComponentView();
+  };
+  m_rootTag = trueRoot->Tag();
+
   InitTextScaleMultiplier();
-  AddFragmentCompositionEventHandler(context, componentView);
+  AddFragmentCompositionEventHandler(m_context.Handle(), portal.ContentRoot());
+  auto selfPortal = winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>(
+      portal.ContentRoot());
+  selfPortal->ReactNativeIsland(*this);
+  NotifySizeChanged();
+  selfPortal->start(*this);
 }
 
-ReactNativeIsland::ReactNativeIsland() noexcept : ReactNativeIsland(nullptr) {}
+winrt::Microsoft::ReactNative::ReactNativeIsland ReactNativeIsland::CreatePortal(
+    const winrt::Microsoft::ReactNative::Composition::PortalComponentView &portal) noexcept {
+  return winrt::make<ReactNativeIsland>(portal);
+}
+
+ReactNativeIsland::ReactNativeIsland() noexcept
+    : ReactNativeIsland(winrt::Microsoft::UI::Composition::Compositor{nullptr}) {}
 
 ReactNativeIsland::~ReactNativeIsland() noexcept {
 #ifdef USE_WINUI3
@@ -159,14 +177,20 @@ ReactNativeIsland::~ReactNativeIsland() noexcept {
     assert(m_uiDispatcher.HasThreadAccess());
     UninitRootView();
   }
+
+  if (m_island) {
+    m_island.Close();
+  }
 }
 
 ReactNative::IReactViewHost ReactNativeIsland::ReactViewHost() noexcept {
   return m_reactViewHost;
 }
 
-void ReactNativeIsland::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewHost const &value) noexcept {
-  assert(!m_isFragment); // make sure this isn't a FragmentIsalnd
+void ReactNativeIsland::ReactViewHost(winrt::Microsoft::ReactNative::IReactViewHost const &value) {
+  if (m_isFragment)
+    winrt::throw_hresult(E_ACCESSDENIED);
+
   if (m_reactViewHost == value) {
     return;
   }
@@ -217,6 +241,8 @@ void ReactNativeIsland::AddRenderedVisual(
 
 void ReactNativeIsland::RemoveRenderedVisual(
     const winrt::Microsoft::ReactNative::Composition::Experimental::IVisual &visual) noexcept {
+  if (m_isFragment)
+    return;
   assert(m_hasRenderedVisual);
   InternalRootVisual().Remove(visual);
   m_hasRenderedVisual = false;
@@ -442,7 +468,7 @@ void ReactNativeIsland::InitRootView(
 
   m_context = winrt::Microsoft::ReactNative::ReactContext(std::move(context));
   m_reactViewOptions = std::move(viewOptions);
-  m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this, -1);
+  m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this);
   m_CompositionEventHandler->Initialize();
 
   UpdateRootViewInternal();
@@ -457,15 +483,13 @@ void ReactNativeIsland::AddFragmentCompositionEventHandler(
                        .Get(winrt::Microsoft::ReactNative::ReactDispatcherHelper::UIDispatcherProperty())
                        .try_as<IReactDispatcher>();
   VerifyElseCrash(m_uiDispatcher.HasThreadAccess());
-  VerifyElseCrash(m_rootTag != -1);
   auto uiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
       winrt::Microsoft::ReactNative::ReactPropertyBag(context.Properties()));
 
   if (!m_CompositionEventHandler) {
     // Create CompositionEventHandler if not already created
     m_context = winrt::Microsoft::ReactNative::ReactContext(context);
-    m_CompositionEventHandler =
-        std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this, componentView.Tag());
+    m_CompositionEventHandler = std::make_shared<::Microsoft::ReactNative::CompositionEventHandler>(m_context, *this);
     m_CompositionEventHandler->Initialize();
     m_isInitialized = true;
   }
@@ -538,6 +562,7 @@ void ReactNativeIsland::ClearLoadingUI() noexcept {
 void ReactNativeIsland::EnsureLoadingUI() noexcept {}
 
 void ReactNativeIsland::ShowInstanceLoaded() noexcept {
+  VerifyElseCrash(!m_isFragment);
   if (m_rootVisual) {
     ClearLoadingUI();
 
@@ -733,6 +758,9 @@ void ReactNativeIsland::InitTextScaleMultiplier() noexcept {
 winrt::Windows::Foundation::Size ReactNativeIsland::Measure(
     const winrt::Microsoft::ReactNative::LayoutConstraints &layoutConstraints,
     const winrt::Windows::Foundation::Point &viewportOffset) const {
+  if (m_isFragment)
+    winrt::throw_hresult(E_ILLEGAL_METHOD_CALL);
+
   facebook::react::Size size{0, 0};
 
   if (layoutConstraints.LayoutDirection != winrt::Microsoft::ReactNative::LayoutDirection::LeftToRight &&
@@ -774,7 +802,7 @@ void ReactNativeIsland::Arrange(
   facebook::react::LayoutConstraints fbLayoutConstraints;
   ApplyConstraints(layoutConstraints, fbLayoutConstraints);
 
-  if (m_isInitialized && m_rootTag != -1) {
+  if (m_isInitialized && m_rootTag != -1 && !m_isFragment) {
     if (auto fabricuiManager = ::Microsoft::ReactNative::FabricUIManager::FromProperties(
             winrt::Microsoft::ReactNative::ReactPropertyBag(m_context.Properties()))) {
       facebook::react::LayoutContext context;
@@ -812,6 +840,23 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
         winrt::Microsoft::ReactNative::Composition::Experimental::MicrosoftCompositionContextHelper::CreateVisual(
             rootVisual));
     m_island = winrt::Microsoft::UI::Content::ContentIsland::Create(rootVisual);
+
+    auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
+    focusController.NavigateFocusRequested(
+        [weakThis = get_weak()](
+            const auto &sender, const winrt::Microsoft::UI::Input::FocusNavigationRequestEventArgs &args) {
+          if (auto pThis = weakThis.get()) {
+            if (auto rootView = pThis->GetComponentView()) {
+              args.Result(
+                  rootView->NavigateFocus(winrt::Microsoft::ReactNative::FocusNavigationRequest(
+                      winrt::Microsoft::ReactNative::FocusNavigationReason::First))
+                      ? winrt::Microsoft::UI::Input::FocusNavigationResult::Moved
+                      : winrt::Microsoft::UI::Input::FocusNavigationResult::NotMoved);
+            } else {
+              args.Result(winrt::Microsoft::UI::Input::FocusNavigationResult::NoFocusableElements);
+            }
+          }
+        });
 
     // ContentIsland does not support weak_ref, so we cannot use auto_revoke for these events
     m_islandAutomationProviderRequestedToken = m_island.AutomationProviderRequested(
@@ -896,13 +941,29 @@ void ReactNativeIsland::OnUnmounted() noexcept {
   if (!m_mounted)
     return;
   m_mounted = false;
+
+  if (m_island && m_island.IsConnected()) {
+    auto focusController = winrt::Microsoft::UI::Input::InputFocusController::GetForIsland(m_island);
+    auto request = winrt::Microsoft::UI::Input::FocusNavigationRequest::Create(
+        winrt::Microsoft::UI::Input::FocusNavigationReason::Programmatic);
+    if (focusController.HasFocus()) {
+      focusController.DepartFocus(request);
+    }
+  }
+
   if (auto componentView = GetComponentView()) {
     componentView->onUnmounted();
   }
 }
 
-winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView *
+winrt::com_ptr<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>
 ReactNativeIsland::GetComponentView() noexcept {
+  if (auto portal = m_portal.get()) {
+    return winrt::get_self<winrt::Microsoft::ReactNative::Composition::implementation::PortalComponentView>(portal)
+        ->ContentRoot()
+        .as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
+  }
+
   if (!m_context || m_context.Handle().LoadingState() != winrt::Microsoft::ReactNative::LoadingState::Loaded ||
       m_rootTag == -1)
     return nullptr;
@@ -912,8 +973,7 @@ ReactNativeIsland::GetComponentView() noexcept {
     auto rootComponentViewDescriptor = fabricuiManager->GetViewRegistry().componentViewDescriptorWithTag(
         static_cast<facebook::react::SurfaceId>(m_rootTag));
     return rootComponentViewDescriptor.view
-        .as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>()
-        .get();
+        .as<winrt::Microsoft::ReactNative::Composition::implementation::RootComponentView>();
   }
   return nullptr;
 }

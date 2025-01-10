@@ -468,7 +468,7 @@ bool ComponentView::CapturePointer(const winrt::Microsoft::ReactNative::Composit
   if (!root)
     return false;
 
-  auto rootView{uiManager->GetReactNativeIsland(root->Tag())};
+  auto rootView{root->ReactNativeIsland()};
   if (!rootView) {
     return false;
   }
@@ -487,7 +487,7 @@ void ComponentView::ReleasePointerCapture(
   if (!root)
     return;
 
-  auto rootView{uiManager->GetReactNativeIsland(root->Tag())};
+  auto rootView{root->ReactNativeIsland()};
   if (!rootView) {
     return;
   }
@@ -1314,7 +1314,7 @@ winrt::Microsoft::ReactNative::ComponentView lastDeepChild(
 }
 
 // Walks the tree calling the function fn on each node.
-// If fn returns true, then walkTree stops itterating over the tree, and returns true.
+// If fn returns true, then walkTree stops iterating over the tree, and returns true.
 // If the tree walk completes without fn returning true, then walkTree returns false.
 bool walkTree(
     const winrt::Microsoft::ReactNative::ComponentView &view,
