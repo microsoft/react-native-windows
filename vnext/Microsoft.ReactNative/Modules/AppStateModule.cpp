@@ -21,7 +21,7 @@ void AppState::Initialize(winrt::Microsoft::ReactNative::ReactContext const &rea
   // We need to register for notifications from the XAML thread.
   if (auto dispatcher = reactContext.UIDispatcher()) {
     dispatcher.Post([this]() {
-      auto currentApp = xaml::TryGetCurrentApplication();
+      auto currentApp = xaml::TryGetCurrentUwpXamlApplication();
 
       if (!IsWinUI3Island() && currentApp != nullptr) {
 #ifndef USE_WINUI3

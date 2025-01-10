@@ -103,9 +103,10 @@ struct EllipseReactPackageProvider
 struct CompReactPackageProvider
     : winrt::implements<CompReactPackageProvider, winrt::Microsoft::ReactNative::IReactPackageProvider> {
  public: // IReactPackageProvider
-  void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const & /*packageBuilder*/) noexcept {
-    // Reenable RegisterCustomComponent when we have better XamlIsland hosting support
-    // RegisterCustomComponent(packageBuilder);
+  void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const & packageBuilder) noexcept {
+#ifdef USE_EXPERIMENTAL_WINUI3
+    RegisterCustomComponent(packageBuilder);
+#endif // USE_EXPERIMENTAL_WINUI3
   }
 };
 
@@ -739,7 +740,7 @@ _Use_decl_annotations_ int CALLBACK WinMain(HINSTANCE instance, HINSTANCE, PSTR 
 #ifdef USE_EXPERIMENTAL_WINUI3
   // Island-support: Create our custom Xaml App object. This is needed to properly use the controls and metadata
   // in Microsoft.ui.xaml.controls.dll.
-  // auto playgroundApp{winrt::make<winrt::Playground::implementation::App>()};
+  auto playgroundApp{winrt::make<winrt::Playground::implementation::App>()};
 #endif
 
   return RunPlayground(showCmd, false);
