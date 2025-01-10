@@ -46,6 +46,12 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   // Index that visuals can be inserted into OuterVisual for debugging UI
   uint32_t overlayIndex() noexcept;
   void start(const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept;
+  void stop() noexcept;
+
+  void ReactNativeIsland(const winrt::Microsoft::ReactNative::ReactNativeIsland &rootView) noexcept;
+  winrt::Microsoft::ReactNative::ReactNativeIsland ReactNativeIsland() noexcept;
+
+  facebook::react::Point getClientOffset() const noexcept override;
 
   HRESULT GetFragmentRoot(IRawElementProviderFragmentRoot **pRetVal) noexcept;
   winrt::Microsoft::ReactNative::implementation::ClipState getClipState() noexcept override;
@@ -60,7 +66,15 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   RootComponentView(
       const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
       facebook::react::Tag tag,
+      winrt::Microsoft::ReactNative::ReactContext const &reactContext,
+      ReactCompositionViewComponentBuilder *builder);
+
+  RootComponentView(
+      const winrt::Microsoft::ReactNative::Composition::Experimental::ICompositionContext &compContext,
+      const winrt::Microsoft::ReactNative::Composition::PortalComponentView &portal,
       winrt::Microsoft::ReactNative::ReactContext const &reactContext);
+
+  winrt::Microsoft::ReactNative::Composition::PortalComponentView Portal() const noexcept;
 
   virtual ~RootComponentView();
 
@@ -75,6 +89,8 @@ struct RootComponentView : RootComponentViewT<RootComponentView, ViewComponentVi
   // happening.
   winrt::Microsoft::ReactNative::ComponentView m_focusedComponent{nullptr};
   winrt::weak_ref<winrt::Microsoft::ReactNative::ReactNativeIsland> m_wkRootView{nullptr};
+  winrt::weak_ref<winrt::Microsoft::ReactNative::Composition::PortalComponentView> m_wkPortal{nullptr};
+  bool m_visualAddedToIsland{false};
 };
 
 } // namespace winrt::Microsoft::ReactNative::Composition::implementation
