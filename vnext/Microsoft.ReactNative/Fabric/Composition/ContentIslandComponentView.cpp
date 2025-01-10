@@ -42,13 +42,13 @@ ContentIslandComponentView::ContentIslandComponentView(
 
 void ContentIslandComponentView::OnMounted() noexcept {
 #ifdef USE_EXPERIMENTAL_WINUI3
-  m_childContentLink = winrt::Microsoft::UI::Content::ChildContentLink::Create(
+  m_childSiteLink = winrt::Microsoft::UI::Content::ChildSiteLink::Create(
       rootComponentView()->parentContentIsland(),
       winrt::Microsoft::ReactNative::Composition::Experimental::CompositionContextHelper::InnerVisual(Visual())
           .as<winrt::Microsoft::UI::Composition::ContainerVisual>());
-  m_childContentLink.ActualSize({m_layoutMetrics.frame.size.width, m_layoutMetrics.frame.size.height});
+  m_childSiteLink.ActualSize({m_layoutMetrics.frame.size.width, m_layoutMetrics.frame.size.height});
   if (m_islandToConnect) {
-    m_childContentLink.Connect(m_islandToConnect);
+    m_childSiteLink.Connect(m_islandToConnect);
     m_islandToConnect = nullptr;
   }
 
@@ -82,8 +82,10 @@ void ContentIslandComponentView::ParentLayoutChanged() noexcept {
     if (auto strongThis = wkThis.get()) {
       auto clientRect = strongThis->getClientRect();
 
-      strongThis->m_childContentLink.OffsetOverride(
-          {static_cast<float>(clientRect.left), static_cast<float>(clientRect.top)});
+      strongThis->m_childSiteLink.LocalToParentTransformMatrix(
+          winrt::Windows::Foundation::Numerics::make_float4x4_translation(
+              static_cast<float>(clientRect.left), static_cast<float>(clientRect.top), 0.0f));
+
       strongThis->m_layoutChangePosted = false;
     }
   });
@@ -114,8 +116,8 @@ void ContentIslandComponentView::updateLayoutMetrics(
     facebook::react::LayoutMetrics const &layoutMetrics,
     facebook::react::LayoutMetrics const &oldLayoutMetrics) noexcept {
 #ifdef USE_EXPERIMENTAL_WINUI3
-  if (m_childContentLink) {
-    m_childContentLink.ActualSize({layoutMetrics.frame.size.width, layoutMetrics.frame.size.height});
+  if (m_childSiteLink) {
+    m_childSiteLink.ActualSize({layoutMetrics.frame.size.width, layoutMetrics.frame.size.height});
     ParentLayoutChanged();
   }
 #endif
@@ -124,9 +126,9 @@ void ContentIslandComponentView::updateLayoutMetrics(
 
 void ContentIslandComponentView::Connect(const winrt::Microsoft::UI::Content::ContentIsland &contentIsland) noexcept {
 #ifdef USE_EXPERIMENTAL_WINUI3
-  if (m_childContentLink) {
+  if (m_childSiteLink) {
     m_islandToConnect = nullptr;
-    m_childContentLink.Connect(contentIsland);
+    m_childSiteLink.Connect(contentIsland);
   } else {
     m_islandToConnect = contentIsland;
   }

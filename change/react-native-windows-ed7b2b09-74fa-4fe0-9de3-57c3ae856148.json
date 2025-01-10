@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Update WinUI3ExperimentalVersion from 1.6.240701003-experimental2 to 1.7.250109001-experimental2",
+  "packageName": "react-native-windows",
+  "email": "50150435+JesseCol@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
