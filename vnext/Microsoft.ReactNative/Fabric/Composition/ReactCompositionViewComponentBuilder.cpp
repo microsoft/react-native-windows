@@ -5,6 +5,7 @@
 #include "ReactCompositionViewComponentBuilder.h"
 #include <Fabric/Composition/CompositionViewComponentView.h>
 #include <Fabric/Composition/ContentIslandComponentView.h>
+#include <Fabric/Composition/PortalComponentView.h>
 #include <strsafe.h>
 #include "CompositionContextHelper.h"
 #include "DynamicWriter.h"
@@ -101,6 +102,26 @@ void ReactCompositionViewComponentBuilder::SetContentIslandComponentViewInitiali
                        ReactCompositionViewComponentBuilder &builder)
       -> winrt::Microsoft::ReactNative::Composition::ContentIslandComponentView {
     auto view = winrt::make<winrt::Microsoft::ReactNative::Composition::implementation::ContentIslandComponentView>(
+        context, tag, reactContext, &builder);
+    initializer(view);
+    return view;
+  };
+  m_descriptorConstructorFactory = []() {
+    return &facebook::react::concreteComponentDescriptorConstructor<
+        ::Microsoft::ReactNative::AbiViewComponentDescriptor>;
+  };
+}
+
+void ReactCompositionViewComponentBuilder::SetPortalComponentViewInitializer(
+    const PortalComponentViewInitializer &initializer) noexcept {
+  m_fnCreateView = [initializer](
+                       const IReactContext &reactContext,
+                       int32_t tag,
+                       const Experimental::ICompositionContext &context,
+                       ComponentViewFeatures /*features*/,
+                       ReactCompositionViewComponentBuilder &builder)
+      -> winrt::Microsoft::ReactNative::Composition::PortalComponentView {
+    auto view = winrt::make<winrt::Microsoft::ReactNative::Composition::implementation::PortalComponentView>(
         context, tag, reactContext, &builder);
     initializer(view);
     return view;
