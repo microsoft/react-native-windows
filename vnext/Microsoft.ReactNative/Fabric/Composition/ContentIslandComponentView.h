@@ -55,7 +55,7 @@ struct ContentIslandComponentView : ContentIslandComponentViewT<ContentIslandCom
   winrt::event_token m_unmountedToken;
   std::vector<winrt::Microsoft::ReactNative::ComponentView::LayoutMetricsChanged_revoker> m_layoutMetricChangedRevokers;
 #ifdef USE_EXPERIMENTAL_WINUI3
-  winrt::Microsoft::UI::Content::ChildContentLink m_childContentLink{nullptr};
+  winrt::Microsoft::UI::Content::ChildSiteLink m_childSiteLink{nullptr};
 #endif
 };
 
