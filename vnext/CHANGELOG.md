@@ -1,8 +1,24 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Fri, 10 Jan 2025 06:23:19 GMT and should not be manually modified. -->
+<!-- This log was last generated on Sat, 11 Jan 2025 06:30:39 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.908
+
+Sat, 11 Jan 2025 06:30:39 GMT
+
+### Changes
+
+- Update WinUI3ExperimentalVersion from 1.6.240701003-experimental2 to 1.7.250109001-experimental2 (50150435+JesseCol@users.noreply.github.com)
+- Rework modal implementation to use public APIs (30809111+acoates-ms@users.noreply.github.com)
+- Integrate 12/31 (34109996+chiaramooney@users.noreply.github.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.255
+- Bump @react-native-windows/codegen to v0.0.0-canary.116
+- Bump @rnw-scripts/eslint-config to v1.2.32
+- Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.36
+- Bump @rnw-scripts/just-task to v2.3.49
+- Bump react-native-platform-override to v1.9.51
 
 ## 0.0.0-canary.907
 

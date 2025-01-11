@@ -2,6 +2,69 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Sat, 11 Jan 2025 06:30:39 GMT",
+      "version": "0.0.0-canary.908",
+      "tag": "react-native-windows_v0.0.0-canary.908",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "50150435+JesseCol@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a610c68ca0c7fb322b8b6c9256f68fb5a736bb5c",
+            "comment": "Update WinUI3ExperimentalVersion from 1.6.240701003-experimental2 to 1.7.250109001-experimental2"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "fb5c92bfd6d1cd5fad174d3a76466590d1388c6e",
+            "comment": "Rework modal implementation to use public APIs"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "a279e3762d4daae0b5bb22dea770a61c25edefcd",
+            "comment": "Integrate 12/31"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.0.0-canary.255",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/codegen to v0.0.0-canary.116",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.32",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/jest-out-of-tree-snapshot-resolver to v1.1.36",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.49",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump react-native-platform-override to v1.9.51",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Jan 2025 06:23:19 GMT",
       "version": "0.0.0-canary.907",
       "tag": "react-native-windows_v0.0.0-canary.907",

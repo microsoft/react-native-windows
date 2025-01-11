@@ -2,6 +2,45 @@
   "name": "@rnw-scripts/promote-release",
   "entries": [
     {
+      "date": "Sat, 11 Jan 2025 06:30:40 GMT",
+      "version": "2.1.56",
+      "tag": "@rnw-scripts/promote-release_v2.1.56",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @react-native-windows/find-repo-root to v0.0.0-canary.90",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @react-native-windows/fs to v0.0.0-canary.61",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @react-native-windows/package-utils to v0.0.0-canary.87",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @rnw-scripts/eslint-config to v1.2.32",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@rnw-scripts/promote-release",
+            "comment": "Bump @rnw-scripts/just-task to v2.3.49",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 10 Jan 2025 06:23:19 GMT",
       "version": "2.1.55",
       "tag": "@rnw-scripts/promote-release_v2.1.55",

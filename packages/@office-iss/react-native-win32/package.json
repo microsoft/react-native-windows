@@ -1,6 +1,6 @@
 {
   "name": "@office-iss/react-native-win32",
-  "version": "0.0.0-canary.279",
+  "version": "0.0.0-canary.280",
   "description": "Implementation of react native on top of Office's Win32 platform.",
   "repository": {
     "type": "git",
@@ -75,9 +75,9 @@
     "@babel/eslint-parser": "^7.25.1",
     "@react-native/metro-config": "0.77.0-nightly-20241001-223e98cc4",
     "@rnw-scripts/babel-react-native-config": "0.0.0",
-    "@rnw-scripts/eslint-config": "1.2.31",
-    "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.1.35",
-    "@rnw-scripts/just-task": "2.3.48",
+    "@rnw-scripts/eslint-config": "1.2.32",
+    "@rnw-scripts/jest-out-of-tree-snapshot-resolver": "^1.1.36",
+    "@rnw-scripts/just-task": "2.3.49",
     "@rnw-scripts/metro-dev-config": "0.0.0",
     "@rnx-kit/jest-preset": "^0.1.17",
     "@types/node": "^18.0.0",
@@ -90,7 +90,7 @@
     "prettier": "2.8.8",
     "react": "19.0.0",
     "react-native": "0.78.0-nightly-20241231-a3c8e2137",
-    "react-native-platform-override": "^1.9.50",
+    "react-native-platform-override": "^1.9.51",
     "typescript": "5.0.4"
   },
   "peerDependencies": {
