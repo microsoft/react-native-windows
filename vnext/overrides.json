@@ -79,31 +79,6 @@
       "baseFile": "packages/react-native/ReactCommon/react/bridging/CallbackWrapper.h",
       "baseHash": "fe1adea3ede6ed141bc6db212be72091722ffa02",
       "issue": 12195
-    }.
-    {
-      "type": "patch",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/nativemodule/core/ReactCommon/TurboModule.h",
-      "baseFile": "packages/react-native/ReactCommon/react/nativemodule/core/ReactCommon/TurboModule.h",
-      "baseHash": "e82eb139eab8a6e122421416fb724811bfadd6fb",
-      "issue": 14128
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityPrimitives.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityPrimitives.h",
-      "baseHash": "6db5b174fe1dc7d108ae7f9e730decfe5f633bd8"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/accessibilityPropsConversions.h",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/accessibilityPropsConversions.h",
-      "baseHash": "4b2822199233e660f36c01df18fbbff7799968cc"
-    },
-    {
-      "type": "derived",
-      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/componentregistry/ComponentDescriptorRegistry.cpp",
-      "baseFile": "packages/react-native/ReactCommon/react/renderer/componentregistry/ComponentDescriptorRegistry.cpp",
-      "baseHash": "b15afcf4971fd2c9c9a9859ffcb2113bec28fc35"
     },
     {
       "type": "patch",
@@ -125,6 +100,18 @@
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/scrollview/ScrollViewProps.cpp",
       "baseHash": "8f39e994dcc9dd871d502637f01fbcd6bfd2cccc",
       "issue": 12879
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/AccessibilityPrimitives.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/AccessibilityPrimitives.h",
+      "baseHash": "6db5b174fe1dc7d108ae7f9e730decfe5f633bd8"
+    },
+    {
+      "type": "derived",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/components/view/accessibilityPropsConversions.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/components/view/accessibilityPropsConversions.h",
+      "baseHash": "4b2822199233e660f36c01df18fbbff7799968cc"
     },
     {
       "type": "patch",
@@ -394,7 +381,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/Touchable/TouchableBounce.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/Touchable/TouchableBounce.js",
-      "baseHash": "39541effd705b515e24600d5bc984542a5cd668b"
+      "baseHash": "fe7993d9b32d795f70aa03c11c93842395147aee"
     },
     {
       "type": "patch",

@@ -1221,7 +1221,7 @@ void WindowsTextInputComponentView::onMounted() noexcept {
   InternalFinalize();
 }
 
-std::optional<std::string> WindowsTextInputComponentView::getAcccessiblityValue() noexcept {
+std::optional<std::string> WindowsTextInputComponentView::getAccessiblityValue() noexcept {
   return GetTextFromRichEdit();
 }
 

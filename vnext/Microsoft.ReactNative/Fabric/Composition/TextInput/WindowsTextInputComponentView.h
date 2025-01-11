@@ -67,7 +67,7 @@ struct WindowsTextInputComponentView
                                &args) noexcept override;
   void onMounted() noexcept override;
 
-  std::optional<std::string> getAcccessiblityValue() noexcept override;
+  std::optional<std::string> getAccessiblityValue() noexcept override;
   void setAcccessiblityValue(std::string &&value) noexcept override;
   bool getAcccessiblityIsReadOnly() noexcept override;
 
