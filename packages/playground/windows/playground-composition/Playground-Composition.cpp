@@ -106,6 +106,8 @@ struct CompReactPackageProvider
   void CreatePackage(winrt::Microsoft::ReactNative::IReactPackageBuilder const & packageBuilder) noexcept {
 #ifdef USE_EXPERIMENTAL_WINUI3
     RegisterCustomComponent(packageBuilder);
+#else
+    UNREFERENCED_PARAMETER(packageBuilder);
 #endif // USE_EXPERIMENTAL_WINUI3
   }
 };
