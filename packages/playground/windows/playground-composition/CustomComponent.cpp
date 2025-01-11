@@ -15,9 +15,9 @@
 #include <winrt/Windows.UI.h>
 
 // For converting wf::DateTime to string
+#include <strsafe.h>
 #include <ctime>
 #include <iomanip>
-#include <strsafe.h>
 #include <sstream>
 
 #include <NativeModules.h>
@@ -242,7 +242,6 @@ struct CustomComponentUserData : winrt::implements<CustomComponentUserData, winr
 #endif
 };
 
-
 #ifdef USE_EXPERIMENTAL_WINUI3
 
 // Should be codegen'd
@@ -263,9 +262,10 @@ struct XamlCalendarComponentEventEmitter {
       : m_eventEmitter(eventEmitter) {}
 
   void onSelectedDatesChanged(OnSelectedDatesChanged &value) const {
-    m_eventEmitter.DispatchEvent(L"SelectedDatesChanged", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
-      winrt::Microsoft::ReactNative::WriteValue(writer, value);
-    });
+    m_eventEmitter.DispatchEvent(
+        L"SelectedDatesChanged", [value](const winrt::Microsoft::ReactNative::IJSValueWriter writer) {
+          winrt::Microsoft::ReactNative::WriteValue(writer, value);
+        });
   }
 
  private:
@@ -278,31 +278,30 @@ struct XamlCalendarComponent : winrt::implements<XamlCalendarComponent, winrt::I
     m_calendarView = winrt::Microsoft::UI::Xaml::Controls::CalendarView{};
     m_xamlIsland.Content(m_calendarView);
     islandView.Connect(m_xamlIsland.ContentIsland());
-    m_calendarView.SelectedDatesChanged([this](auto &&, auto&&) {
-          if (m_eventEmitter) {
-            OnSelectedDatesChanged args;
-            auto selectedDates = m_calendarView.SelectedDates();
-            if (selectedDates.Size() == 0) {
-              args.startDate = L"(none)";
-            } else {
-              auto firstSelectedDate = selectedDates.GetAt(0);
+    m_calendarView.SelectedDatesChanged([this](auto &&, auto &&) {
+      if (m_eventEmitter) {
+        OnSelectedDatesChanged args;
+        auto selectedDates = m_calendarView.SelectedDates();
+        if (selectedDates.Size() == 0) {
+          args.startDate = L"(none)";
+        } else {
+          auto firstSelectedDate = selectedDates.GetAt(0);
 
-              auto tt = winrt::clock::to_time_t(firstSelectedDate);
-              tm local{};
-              localtime_s(&local, &tt);
-              auto timeStr = std::put_time(&local, "%F");
+          auto tt = winrt::clock::to_time_t(firstSelectedDate);
+          tm local{};
+          localtime_s(&local, &tt);
+          auto timeStr = std::put_time(&local, "%F");
 
-              std::wstringstream wss;
+          std::wstringstream wss;
 
-              wss << (timeStr._Tptr->tm_year + 1900) << L"-"
-                  << (timeStr._Tptr->tm_mon + 1) << L"-"
-                  << timeStr._Tptr->tm_mday;
+          wss << (timeStr._Tptr->tm_year + 1900) << L"-" << (timeStr._Tptr->tm_mon + 1) << L"-"
+              << timeStr._Tptr->tm_mday;
 
-              args.startDate = winrt::hstring(wss.str().c_str());
-            }
-            m_eventEmitter->onSelectedDatesChanged(args);
-          }
-        });
+          args.startDate = winrt::hstring(wss.str().c_str());
+        }
+        m_eventEmitter->onSelectedDatesChanged(args);
+      }
+    });
   }
 
   void PropsChanged(
@@ -310,8 +309,7 @@ struct XamlCalendarComponent : winrt::implements<XamlCalendarComponent, winrt::I
       const winrt::Microsoft::ReactNative::IComponentProps & /*newProps*/,
       const winrt::Microsoft::ReactNative::IComponentProps & /*oldProps*/) {}
 
-  void FinalizeUpdates() noexcept {
-  }
+  void FinalizeUpdates() noexcept {}
 
   static void ConfigureBuilderForCustomComponent(
       winrt::Microsoft::ReactNative::IReactViewComponentBuilder const &builder) {
