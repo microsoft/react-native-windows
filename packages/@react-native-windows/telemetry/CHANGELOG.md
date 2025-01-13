@@ -1,8 +1,17 @@
 # Change Log - @react-native-windows/telemetry
 
-<!-- This log was last generated on Fri, 20 Dec 2024 18:21:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 13 Jan 2025 16:31:20 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.77.0-preview.2
+
+Mon, 13 Jan 2025 16:31:20 GMT
+
+### Changes
+
+- Address package limitations for telemetry (14967941+danielayala94@users.noreply.github.com)
+- Expand telemetry field sanitization to codedError.data (14967941+danielayala94@users.noreply.github.com)
 
 ## 0.77.0-preview.1
 

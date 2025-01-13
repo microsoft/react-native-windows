@@ -1,7 +1,0 @@
-{
-  "type": "prerelease",
-  "comment": "integrate 0.77.0-rc.6",
-  "packageName": "@office-iss/react-native-win32",
-  "email": "email not defined",
-  "dependentChangeType": "patch"
-}

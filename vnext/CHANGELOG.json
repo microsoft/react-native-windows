@@ -2,6 +2,33 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 13 Jan 2025 16:31:20 GMT",
+      "version": "0.77.0-preview.3",
+      "tag": "react-native-windows_v0.77.0-preview.3",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "email not defined",
+            "package": "react-native-windows",
+            "commit": "3a58db4f992f73beeab329959e650a2b03df60c8",
+            "comment": "integrate 0.77.0-rc.6"
+          },
+          {
+            "author": "jthysell@microsoft.com",
+            "package": "react-native-windows",
+            "commit": "2a743bba73b0518fda06b08af5dd2432afd50f04",
+            "comment": "Stop disabling warning 4244 because BinSkim fails if it sees one"
+          },
+          {
+            "author": "beachball",
+            "package": "react-native-windows",
+            "comment": "Bump @react-native-windows/cli to v0.77.0-preview.2",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 07 Jan 2025 01:01:23 GMT",
       "version": "0.77.0-preview.2",
       "tag": "react-native-windows_v0.77.0-preview.2",
