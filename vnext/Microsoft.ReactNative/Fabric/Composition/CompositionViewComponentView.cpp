@@ -468,7 +468,7 @@ bool ComponentView::CapturePointer(const winrt::Microsoft::ReactNative::Composit
   if (!root)
     return false;
 
-  auto rootView{uiManager->GetReactNativeIsland(root->Tag())};
+  auto rootView{root->ReactNativeIsland()};
   if (!rootView) {
     return false;
   }
@@ -487,7 +487,7 @@ void ComponentView::ReleasePointerCapture(
   if (!root)
     return;
 
-  auto rootView{uiManager->GetReactNativeIsland(root->Tag())};
+  auto rootView{root->ReactNativeIsland()};
   if (!rootView) {
     return;
   }
@@ -747,10 +747,23 @@ void ComponentView::updateAccessibilityProps(
       UIA_LiveSettingPropertyId,
       oldViewProps.accessibilityLiveRegion,
       newViewProps.accessibilityLiveRegion);
+
+  if ((oldViewProps.accessibilityState.has_value() && oldViewProps.accessibilityState->selected.has_value()) !=
+      ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value()))) {
+    auto compProvider =
+        m_uiaProvider.try_as<winrt::Microsoft::ReactNative::implementation::CompositionDynamicAutomationProvider>();
+    if (compProvider) {
+      if ((newViewProps.accessibilityState.has_value() && newViewProps.accessibilityState->selected.has_value())) {
+        winrt::Microsoft::ReactNative::implementation::AddSelectionItemsToContainer(compProvider.get());
+      } else {
+        winrt::Microsoft::ReactNative::implementation::RemoveSelectionItemsFromContainer(compProvider.get());
+      }
+    }
+  }
 }
 
-std::optional<std::string> ComponentView::getAcccessiblityValue() noexcept {
-  return std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue.text;
+std::optional<std::string> ComponentView::getAccessiblityValue() noexcept {
+  return std::static_pointer_cast<const facebook::react::ViewProps>(props())->accessibilityValue.text.value();
 }
 
 void ComponentView::setAcccessiblityValue(std::string &&value) noexcept {
@@ -1301,7 +1314,7 @@ winrt::Microsoft::ReactNative::ComponentView lastDeepChild(
 }
 
 // Walks the tree calling the function fn on each node.
-// If fn returns true, then walkTree stops itterating over the tree, and returns true.
+// If fn returns true, then walkTree stops iterating over the tree, and returns true.
 // If the tree walk completes without fn returning true, then walkTree returns false.
 bool walkTree(
     const winrt::Microsoft::ReactNative::ComponentView &view,

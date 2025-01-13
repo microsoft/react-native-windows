@@ -293,13 +293,9 @@ const styles = StyleSheet.create({
     marginTop: 6,
   },
   modalContainer: {
-    // [Windows
-    width: 500,
-    height: 500,
-    // flex: 1,
-    // justifyContent: 'center',
-    // padding: 20,
-    // Windows ]
+    flex: 1,
+    justifyContent: 'center',
+    padding: 20,
   },
   modalInnerContainer: {
     borderRadius: 10,

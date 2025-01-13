@@ -639,11 +639,10 @@ facebook::react::Tag ComponentView::hitTest(
 }
 
 winrt::IInspectable ComponentView::EnsureUiaProvider() noexcept {
-  assert(false);
   return nullptr;
 }
 
-std::optional<std::string> ComponentView::getAcccessiblityValue() noexcept {
+std::optional<std::string> ComponentView::getAccessiblityValue() noexcept {
   return std::nullopt;
 }
 

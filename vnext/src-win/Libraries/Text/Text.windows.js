@@ -46,11 +46,14 @@ const Text: React.AbstractComponent<
     'aria-checked': ariaChecked,
     'aria-disabled': ariaDisabled,
     'aria-expanded': ariaExpanded,
+    'aria-multiselectable': ariaMultiselectable, // Windows
+    'aria-required': ariaRequired, // Windows
     'aria-label': ariaLabel,
     'aria-level': ariaLevel, // Windows
     'aria-posinset': ariaPosinset, // Windows
     'aria-setsize': ariaSetsize, // Windows
     'aria-selected': ariaSelected,
+    'aria-readonly': ariaReadOnly, //Windows
     ellipsizeMode,
     id,
     nativeID,
@@ -78,7 +81,10 @@ const Text: React.AbstractComponent<
     ariaChecked != null ||
     ariaDisabled != null ||
     ariaExpanded != null ||
-    ariaSelected != null
+    ariaSelected != null ||
+    ariaReadOnly != null || // Windows
+    ariaMultiselectable != null || // Windows
+    ariaRequired != null // Windows
   ) {
     _accessibilityState = {
       busy: ariaBusy ?? accessibilityState?.busy,
@@ -86,6 +92,10 @@ const Text: React.AbstractComponent<
       disabled: ariaDisabled ?? accessibilityState?.disabled,
       expanded: ariaExpanded ?? accessibilityState?.expanded,
       selected: ariaSelected ?? accessibilityState?.selected,
+      readOnly: ariaReadOnly ?? accessibilityState?.readOnly, // Windows
+      multiselectable:
+        ariaMultiselectable ?? accessibilityState?.multiselectable, // Windows
+      required: ariaRequired ?? accessibilityState?.required, // Windows
     };
   }
 
