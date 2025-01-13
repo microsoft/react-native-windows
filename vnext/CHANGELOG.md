@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Sat, 11 Jan 2025 06:30:39 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 13 Jan 2025 18:43:00 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.909
+
+Mon, 13 Jan 2025 18:43:00 GMT
+
+### Changes
+
+- update controltype with accessibilityRole (yajurgrover24@gmail.com)
 
 ## 0.0.0-canary.908
 

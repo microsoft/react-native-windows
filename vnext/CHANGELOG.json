@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 13 Jan 2025 18:43:00 GMT",
+      "version": "0.0.0-canary.909",
+      "tag": "react-native-windows_v0.0.0-canary.909",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "38f1cd051dbaf8a04e357a13b2538119e331595b",
+            "comment": "update controltype with accessibilityRole"
+          }
+        ]
+      }
+    },
+    {
       "date": "Sat, 11 Jan 2025 06:30:39 GMT",
       "version": "0.0.0-canary.908",
       "tag": "react-native-windows_v0.0.0-canary.908",
