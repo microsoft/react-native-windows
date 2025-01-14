@@ -13,7 +13,7 @@ import type {
   NativeModuleStringTypeAnnotation,
   NativeModuleFunctionTypeAnnotation,
   NativeModuleStringLiteralTypeAnnotation,
-  NativeModuleStringLiteralUnionTypeAnnotation,
+  StringLiteralUnionTypeAnnotation,
   UnsafeAnyTypeAnnotation,
   Nullable,
 } from '@react-native/codegen/lib/CodegenSchema';
@@ -56,7 +56,7 @@ export function translateFieldOrReturnType(
         | NativeModuleStringTypeAnnotation
         | NativeModuleFunctionTypeAnnotation
         | NativeModuleStringLiteralTypeAnnotation
-        | NativeModuleStringLiteralUnionTypeAnnotation
+        | StringLiteralUnionTypeAnnotation
       >
     | UnsafeAnyTypeAnnotation,
   aliases: AliasMap,
@@ -99,7 +99,7 @@ export function translateFieldOrReturnType(
       // avoid: Property 'name' does not exist on type 'never'
       const name = type.name;
       // (#6597)
-      // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+       
       if (name !== 'RootTag')
         throw new Error(`Unknown reserved function: ${name} in ${callerName}`);
       return 'double';
