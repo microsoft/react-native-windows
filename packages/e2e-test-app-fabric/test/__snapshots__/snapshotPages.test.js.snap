@@ -87138,3 +87138,204 @@ exports[`snapshotAllPages XMLHttpRequest 6`] = `
   </View>
 </View>
 `;
+
+exports[`snapshotAllPages Xaml WinUI3 (Experimental, for Fabric) 1`] = `
+<RCTScrollView>
+  <View>
+    <View
+      style={
+        {
+          "flexDirection": "column",
+          "gap": 5,
+          "margin": 20,
+        }
+      }
+    >
+      <View
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "backgroundColor": {
+                "windowsbrush": [
+                  "ButtonBackground",
+                ],
+              },
+              "borderBottomWidth": 1.5,
+              "borderColor": {
+                "windowsbrush": [
+                  "ButtonBorderBrush",
+                ],
+              },
+              "borderRadius": 3,
+              "borderWidth": 1,
+            },
+          ]
+        }
+      >
+        <View
+          style={{}}
+        >
+          <View
+            style={{}}
+          >
+            <Text
+              style={
+                [
+                  {
+                    "color": {
+                      "windowsbrush": [
+                        "ButtonForeground",
+                      ],
+                    },
+                    "fontSize": 14,
+                    "fontWeight": "400",
+                    "margin": 8,
+                    "textAlign": "center",
+                  },
+                ]
+              }
+            >
+              Before Button
+            </Text>
+          </View>
+        </View>
+      </View>
+      <Text>
+        Xaml CalendarView control. Selected date: 
+      </Text>
+      <CalendarView
+        onSelectedDatesChanged={[Function]}
+        style={
+          {
+            "height": 400,
+            "minHeight": 400,
+            "minWidth": 400,
+            "width": 400,
+          }
+        }
+      />
+      <View
+        accessibilityRole="button"
+        accessibilityState={
+          {
+            "busy": undefined,
+            "checked": undefined,
+            "disabled": undefined,
+            "expanded": undefined,
+            "multiselectable": undefined,
+            "readOnly": undefined,
+            "required": undefined,
+            "selected": undefined,
+          }
+        }
+        accessibilityValue={
+          {
+            "max": undefined,
+            "min": undefined,
+            "now": undefined,
+            "text": undefined,
+          }
+        }
+        accessible={true}
+        focusable={true}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          [
+            {
+              "backgroundColor": {
+                "windowsbrush": [
+                  "ButtonBackground",
+                ],
+              },
+              "borderBottomWidth": 1.5,
+              "borderColor": {
+                "windowsbrush": [
+                  "ButtonBorderBrush",
+                ],
+              },
+              "borderRadius": 3,
+              "borderWidth": 1,
+            },
+          ]
+        }
+      >
+        <View
+          style={{}}
+        >
+          <View
+            style={{}}
+          >
+            <Text
+              style={
+                [
+                  {
+                    "color": {
+                      "windowsbrush": [
+                        "ButtonForeground",
+                      ],
+                    },
+                    "fontSize": 14,
+                    "fontWeight": "400",
+                    "margin": 8,
+                    "textAlign": "center",
+                  },
+                ]
+              }
+            >
+              After Button
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</RCTScrollView>
+`;
