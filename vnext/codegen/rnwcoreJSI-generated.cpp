@@ -41,16 +41,6 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableA
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAlignItemsBaselineOnFabricIOS(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableAlignItemsBaselineOnFabricIOS(
-    rt
-  );
-}
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAndroidLineHeightCentering(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableAndroidLineHeightCentering(
-    rt
-  );
-}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableBridgelessArchitecture(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->enableBridgelessArchitecture(
     rt
@@ -176,11 +166,6 @@ static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMoun
     rt
   );
 }
-static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fuseboxEnabledDebug(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
-  return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->fuseboxEnabledDebug(
-    rt
-  );
-}
 static jsi::Value __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fuseboxEnabledRelease(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeReactNativeFeatureFlagsCxxSpecJSI *>(&turboModule)->fuseboxEnabledRelease(
     rt
@@ -265,8 +250,6 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["disableEventLoopOnBridgeless"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableEventLoopOnBridgeless};
   methodMap_["disableMountItemReorderingAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_disableMountItemReorderingAndroid};
   methodMap_["enableAccumulatedUpdatesInRawPropsAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAccumulatedUpdatesInRawPropsAndroid};
-  methodMap_["enableAlignItemsBaselineOnFabricIOS"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAlignItemsBaselineOnFabricIOS};
-  methodMap_["enableAndroidLineHeightCentering"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableAndroidLineHeightCentering};
   methodMap_["enableBridgelessArchitecture"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableBridgelessArchitecture};
   methodMap_["enableCppPropsIteratorSetter"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableCppPropsIteratorSetter};
   methodMap_["enableDeletionOfUnmountedViews"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_enableDeletionOfUnmountedViews};
@@ -292,7 +275,6 @@ NativeReactNativeFeatureFlagsCxxSpecJSI::NativeReactNativeFeatureFlagsCxxSpecJSI
   methodMap_["fixDifferentiatorEmittingUpdatesWithWrongParentTag"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixDifferentiatorEmittingUpdatesWithWrongParentTag};
   methodMap_["fixMappingOfEventPrioritiesBetweenFabricAndReact"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMappingOfEventPrioritiesBetweenFabricAndReact};
   methodMap_["fixMountingCoordinatorReportedPendingTransactionsOnAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fixMountingCoordinatorReportedPendingTransactionsOnAndroid};
-  methodMap_["fuseboxEnabledDebug"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fuseboxEnabledDebug};
   methodMap_["fuseboxEnabledRelease"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_fuseboxEnabledRelease};
   methodMap_["initEagerTurboModulesOnNativeModulesQueueAndroid"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_initEagerTurboModulesOnNativeModulesQueueAndroid};
   methodMap_["lazyAnimationCallbacks"] = MethodMetadata {0, __hostFunction_NativeReactNativeFeatureFlagsCxxSpecJSI_lazyAnimationCallbacks};
@@ -1165,6 +1147,22 @@ NativeClipboardCxxSpecJSI::NativeClipboardCxxSpecJSI(std::shared_ptr<CallInvoker
   methodMap_["getString"] = MethodMetadata {0, __hostFunction_NativeClipboardCxxSpecJSI_getString};
   methodMap_["setString"] = MethodMetadata {1, __hostFunction_NativeClipboardCxxSpecJSI_setString};
 }
+static jsi::Value __hostFunction_NativeCPUTimeCxxSpecJSI_getCPUTimeNanos(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeCPUTimeCxxSpecJSI *>(&turboModule)->getCPUTimeNanos(
+    rt
+  );
+}
+static jsi::Value __hostFunction_NativeCPUTimeCxxSpecJSI_hasAccurateCPUTimeNanosForBenchmarks(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeCPUTimeCxxSpecJSI *>(&turboModule)->hasAccurateCPUTimeNanosForBenchmarks(
+    rt
+  );
+}
+
+NativeCPUTimeCxxSpecJSI::NativeCPUTimeCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("CPUTimeCxx", jsInvoker) {
+  methodMap_["getCPUTimeNanos"] = MethodMetadata {0, __hostFunction_NativeCPUTimeCxxSpecJSI_getCPUTimeNanos};
+  methodMap_["hasAccurateCPUTimeNanosForBenchmarks"] = MethodMetadata {0, __hostFunction_NativeCPUTimeCxxSpecJSI_hasAccurateCPUTimeNanosForBenchmarks};
+}
 static jsi::Value __hostFunction_NativeDeviceEventManagerCxxSpecJSI_invokeDefaultBackPressHandler(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   static_cast<NativeDeviceEventManagerCxxSpecJSI *>(&turboModule)->invokeDefaultBackPressHandler(
     rt
@@ -1423,6 +1421,59 @@ NativeExceptionsManagerCxxSpecJSI::NativeExceptionsManagerCxxSpecJSI(std::shared
   methodMap_["reportSoftException"] = MethodMetadata {3, __hostFunction_NativeExceptionsManagerCxxSpecJSI_reportSoftException};
   methodMap_["reportException"] = MethodMetadata {1, __hostFunction_NativeExceptionsManagerCxxSpecJSI_reportException};
   methodMap_["dismissRedbox"] = MethodMetadata {0, __hostFunction_NativeExceptionsManagerCxxSpecJSI_dismissRedbox};
+}
+static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_startSurface(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->startSurface(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber(),
+    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asNumber(),
+    count <= 2 ? throw jsi::JSError(rt, "Expected argument in position 2 to be passed") : args[2].asNumber(),
+    count <= 3 ? throw jsi::JSError(rt, "Expected argument in position 3 to be passed") : args[3].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_stopSurface(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->stopSurface(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber()
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_getMountingManagerLogs(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->getMountingManagerLogs(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber()
+  );
+}
+static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_flushMessageQueue(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->flushMessageQueue(
+    rt
+  );
+  return jsi::Value::undefined();
+}
+static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_getRenderedOutput(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  return static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->getRenderedOutput(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asNumber(),
+    count <= 1 ? throw jsi::JSError(rt, "Expected argument in position 1 to be passed") : args[1].asObject(rt)
+  );
+}
+static jsi::Value __hostFunction_NativeFantomCxxSpecJSI_reportTestSuiteResultsJSON(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
+  static_cast<NativeFantomCxxSpecJSI *>(&turboModule)->reportTestSuiteResultsJSON(
+    rt,
+    count <= 0 ? throw jsi::JSError(rt, "Expected argument in position 0 to be passed") : args[0].asString(rt)
+  );
+  return jsi::Value::undefined();
+}
+
+NativeFantomCxxSpecJSI::NativeFantomCxxSpecJSI(std::shared_ptr<CallInvoker> jsInvoker)
+  : TurboModule("NativeFantomCxx", jsInvoker) {
+  methodMap_["startSurface"] = MethodMetadata {4, __hostFunction_NativeFantomCxxSpecJSI_startSurface};
+  methodMap_["stopSurface"] = MethodMetadata {1, __hostFunction_NativeFantomCxxSpecJSI_stopSurface};
+  methodMap_["getMountingManagerLogs"] = MethodMetadata {1, __hostFunction_NativeFantomCxxSpecJSI_getMountingManagerLogs};
+  methodMap_["flushMessageQueue"] = MethodMetadata {0, __hostFunction_NativeFantomCxxSpecJSI_flushMessageQueue};
+  methodMap_["getRenderedOutput"] = MethodMetadata {2, __hostFunction_NativeFantomCxxSpecJSI_getRenderedOutput};
+  methodMap_["reportTestSuiteResultsJSON"] = MethodMetadata {1, __hostFunction_NativeFantomCxxSpecJSI_reportTestSuiteResultsJSON};
 }
 static jsi::Value __hostFunction_NativeFileReaderModuleCxxSpecJSI_readAsDataURL(jsi::Runtime &rt, TurboModule &turboModule, const jsi::Value* args, size_t count) {
   return static_cast<NativeFileReaderModuleCxxSpecJSI *>(&turboModule)->readAsDataURL(

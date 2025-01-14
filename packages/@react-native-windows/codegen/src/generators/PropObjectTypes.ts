@@ -1,4 +1,4 @@
-import type { PropTypeAnnotation, ObjectTypeAnnotation, EventTypeAnnotation, CommandParamTypeAnnotation } from '@react-native/codegen/lib/CodegenSchema';
+import type { PropTypeAnnotation, ObjectTypeAnnotation, EventTypeAnnotation, CommandParamTypeAnnotation, ComponentArrayTypeAnnotation } from '@react-native/codegen/lib/CodegenSchema';
 import type { CppCodegenOptions } from './ObjectTypes';
 import {
   AliasMap,
@@ -200,18 +200,9 @@ export function translateCommandParamType(type: CommandParamTypeAnnotation,
           case 'StringTypeAnnotation':
             arrayTemplateArg = options.cppStringType;
             break;
-          case 'ArrayTypeAnnotation':
-            const innerType = translateCommandParamType(type.elementType, aliases, baseAliasName, options);
-            arrayTemplateArg = `std::vector<${innerType.type}>`;
-            break;
-          case 'ReservedPropTypeAnnotation':
+          case 'MixedTypeAnnotation':
+            // TODO - not sure what exact value to be used here
             arrayTemplateArg = 'winrt::Microsoft::ReactNative::JSValue';
-            break;
-          case 'ObjectTypeAnnotation':
-            arrayTemplateArg = 'winrt::Microsoft::ReactNative::JSValueObject'; // TODO - better typing
-            break;
-          case 'StringEnumTypeAnnotation':
-            arrayTemplateArg = options.cppStringType; // TODO - better enum type handling than just passing a string
             break;
           case 'GenericTypeAnnotation' as any: // TODO verify schema - Getting this type when running codegen on all the built in types
             arrayTemplateArg = 'winrt::Microsoft::ReactNative::JSValue';
@@ -231,3 +222,63 @@ export function translateCommandParamType(type: CommandParamTypeAnnotation,
       throw new Error(`Unhandled type: ${(type as any).type}`);
   }
 }
+
+export function translateComponentArrayPropType(type: ComponentArrayTypeAnnotation,
+  aliases: AliasMap<ObjectTypeAnnotation<ComponentArrayTypeAnnotation>>,
+  baseAliasName: string,
+  options: CppCodegenOptions): { type: string, initializer: string, alreadySupportsOptionalOrHasDefault?: boolean } {
+    switch (type.type) {
+      case 'ArrayTypeAnnotation':
+        {
+          let arrayTemplateArg = '';
+          switch (type.elementType.type) {
+            case 'BooleanTypeAnnotation':
+              arrayTemplateArg = 'bool';
+              break;
+            case 'DoubleTypeAnnotation':
+              arrayTemplateArg = 'double';
+              break;
+            case 'FloatTypeAnnotation':
+              arrayTemplateArg = 'float';
+              break;
+            case 'Int32TypeAnnotation':
+              arrayTemplateArg = 'int32_t';
+              break;
+            case 'StringTypeAnnotation':
+              arrayTemplateArg = options.cppStringType;
+              break;
+            case 'ArrayTypeAnnotation':
+              const innerType = translateComponentArrayPropType(type.elementType, aliases, baseAliasName, options);
+              arrayTemplateArg = `std::vector<${innerType.type}>`;
+              break;
+            case 'ObjectTypeAnnotation':
+              arrayTemplateArg = translateComponentPropsFieldType(type.elementType, aliases, baseAliasName, options).type;
+              break;
+            case 'ReservedPropTypeAnnotation':
+              switch (type.elementType.name) {
+                case 'ColorPrimitive':
+                  arrayTemplateArg = 'winrt::Microsoft::ReactNative::Color';
+                  break;
+                case 'DimensionPrimitive':
+                case 'EdgeInsetsPrimitive':
+                case 'ImageRequestPrimitive':
+                case 'ImageSourcePrimitive':
+                case 'PointPrimitive':
+                  arrayTemplateArg = 'winrt::Microsoft::ReactNative::JSValue'; // TODO - better handling for these types than JSValue
+                  break;
+                default:
+                  throw new Error(`Unhandled ReservedPropTypeAnnotation type: ${type.elementType.name}`);
+              }
+              break;
+            case 'StringEnumTypeAnnotation':
+              arrayTemplateArg = options.cppStringType; // TODO - better enum type handling than just passing a string
+              break;
+            default:
+              throw new Error(`Unhandled type: ${type.type}`);
+          }
+          return { type: `std::vector<${arrayTemplateArg}>`, initializer: '{}' };
+        }
+      default:
+        throw new Error(`Unhandled type: ${(type.elementType as any).type} - ${JSON.stringify(type.elementType, null, 2)}`);
+    }
+  }
