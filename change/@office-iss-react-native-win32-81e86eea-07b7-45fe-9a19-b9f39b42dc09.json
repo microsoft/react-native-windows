@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "fix tester examples and add support for new codegen type",
+  "comment": "Initial integrate",
   "packageName": "@office-iss/react-native-win32",
   "email": "yajurgrover24@gmail.com",
   "dependentChangeType": "patch"
