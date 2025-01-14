@@ -7,9 +7,9 @@
 #include "ReactPackageProvider.g.cpp"
 #endif
 
+#include "CalendarView.h"
 #include "DrawingIsland.h"
 #include "MovingLight.h"
-#include "CalendarView.h"
 
 using namespace winrt::Microsoft::ReactNative;
 
