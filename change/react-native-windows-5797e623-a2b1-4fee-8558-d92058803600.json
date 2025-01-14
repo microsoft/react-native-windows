@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "update controltype with accessibilityRole",
   "packageName": "react-native-windows",
   "email": "yajurgrover24@gmail.com",
