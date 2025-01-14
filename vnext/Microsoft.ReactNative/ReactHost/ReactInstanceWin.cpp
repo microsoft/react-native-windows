@@ -586,6 +586,24 @@ std::unique_ptr<facebook::jsi::PreparedScriptStore> CreatePreparedScriptStore() 
 }
 
 #ifdef USE_FABRIC
+
+typedef HRESULT(__stdcall *SetThreadDescriptionFn)(HANDLE, PCWSTR);
+void SetJSThreadDescription() noexcept {
+  // Office still supports Server 2016 so we need to use Run Time Dynamic Linking and cannot just use:
+  // ::SetThreadDescription(GetCurrentThread(), L"React-Native JavaScript Thread");
+
+  auto moduleHandle = GetModuleHandleW(L"kernelbase.dll");
+  // The description is just for developer experience, so we can skip it if kernelbase isn't already loaded
+  if (!moduleHandle)
+    return;
+
+  auto proc = GetProcAddress(moduleHandle, "SetThreadDescription");
+  if (!proc)
+    return;
+
+  reinterpret_cast<SetThreadDescriptionFn>(proc)(GetCurrentThread(), L"React-Native JavaScript Thread");
+}
+
 void ReactInstanceWin::InitializeBridgeless() noexcept {
   InitUIQueue();
 
@@ -634,7 +652,7 @@ void ReactInstanceWin::InitializeBridgeless() noexcept {
                 Mso::Copy(m_whenDestroyed)));
 
             m_jsMessageThread.Load()->runOnQueueSync([&]() {
-              ::SetThreadDescription(GetCurrentThread(), L"React-Native JavaScript Thread");
+              SetJSThreadDescription();
               auto timerRegistry =
                   ::Microsoft::ReactNative::TimerRegistry::CreateTimerRegistry(m_reactContext->Properties());
               auto timerRegistryRaw = timerRegistry.get();
