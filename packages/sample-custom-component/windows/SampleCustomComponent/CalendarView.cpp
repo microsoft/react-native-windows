@@ -51,8 +51,6 @@ struct CalendarViewComponentView : public winrt::implements<CalendarViewComponen
   }
 
  private:
-  winrt::Microsoft::UI::Xaml::Controls::TextBlock m_buttonLabelTextBlock{nullptr};
-  winrt::Microsoft::ReactNative::IComponentState m_state;
   winrt::Microsoft::UI::Xaml::XamlIsland m_xamlIsland{nullptr};
   winrt::Microsoft::UI::Xaml::Controls::CalendarView m_calendarView{nullptr};
 };
