@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 08 Jan 2025 20:05:17 GMT and should not be manually modified.
+This log was last generated on Tue, 14 Jan 2025 23:37:20 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.30
+
+Tue, 14 Jan 2025 23:37:20 GMT
+
+### Patches
+
+- Rework modal implementation to use public APIs (30809111+acoates-ms@users.noreply.github.com)
+- Implement ISelectionProvider and ISelectionItemProvider (34109996+chiaramooney@users.noreply.github.com)
+- IRangeValue Provider (34109996+chiaramooney@users.noreply.github.com)
+- Fix crash running on server 2016 (30809111+acoates-ms@users.noreply.github.com)
 
 ## 0.74.29
 
