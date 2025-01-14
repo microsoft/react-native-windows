@@ -54,6 +54,18 @@ inline Application TryGetCurrentApplication() noexcept {
   }
 }
 
+// In the legacy architecture, RNW uses a Uwp Xaml app as the groundwork for the UI.
+// In the new architecture, WinUI3 Xaml may be involved, but only as XamlIslands -- leaf nodes in the RNW content.
+// This function returns the Uwp/System Xaml Application if we're running in the legacy architecture and Xaml is
+// running, and null if otherwise.
+inline Application TryGetCurrentUwpXamlApplication() noexcept {
+#ifdef USE_WINUI3
+  return nullptr;
+#else
+  return TryGetCurrentApplication();
+#endif
+}
+
 // Using Windows::UI::ColorHelper causes the process to load Windows.UI.Xaml.dll which is not needed just to fill a
 // Color struct
 inline winrt::Windows::UI::Color FromArgb(uint8_t a, uint8_t r, uint8_t g, uint8_t b) {

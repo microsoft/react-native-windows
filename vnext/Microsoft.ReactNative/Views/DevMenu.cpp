@@ -397,7 +397,7 @@ std::shared_ptr<IDevMenu> GetOrCreateDevMenu(Mso::CntPtr<Mso::React::IReactConte
           DevMenuImplProperty(),
           [reactContext]() -> std::shared_ptr<IDevMenu> {
 #ifndef CORE_ABI
-            if (xaml::TryGetCurrentApplication()) {
+            if (xaml::TryGetCurrentUwpXamlApplication()) {
               auto devMenu = std::make_shared<InAppXamlDevMenu>(reactContext);
               return devMenu;
             } else
