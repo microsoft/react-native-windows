@@ -18,7 +18,7 @@ import type {
 import ExampleTextInput from './ExampleTextInput';
 import TextInputSharedExamples from './TextInputSharedExamples';
 import React from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {RNTesterText, StyleSheet, Switch, Text, View} from 'react-native';
 
 const ToggleDefaultPaddingExample = (): React.Node => {
   const [hasPadding, setHasPadding] = React.useState(false);
@@ -33,6 +33,43 @@ const ToggleDefaultPaddingExample = (): React.Node => {
     </View>
   );
 };
+
+function AutogrowingTextInputExample({
+  style,
+  ...props
+}: React.ElementConfig<typeof TextInput>) {
+  const [multiline, setMultiline] = React.useState(true);
+  const [fullWidth, setFullWidth] = React.useState(true);
+  const [text, setText] = React.useState('');
+  const [contentSize, setContentSize] = React.useState({width: 0, height: 0});
+
+  return (
+    <View>
+      <RNTesterText>Full width:</RNTesterText>
+      <Switch value={fullWidth} onValueChange={setFullWidth} />
+
+      <RNTesterText>Multiline:</RNTesterText>
+      <Switch value={multiline} onValueChange={setMultiline} />
+
+      <RNTesterText>TextInput:</RNTesterText>
+      <ExampleTextInput
+        multiline={multiline}
+        style={[style, {width: fullWidth ? '100%' : '50%'}]}
+        onChangeText={setText}
+        onContentSizeChange={({nativeEvent}) => {
+          setContentSize({
+            width: nativeEvent.contentSize.width,
+            height: nativeEvent.contentSize.height,
+          });
+        }}
+        {...props}
+      />
+      <RNTesterText>Plain text value representation:</RNTesterText>
+      <RNTesterText>{text}</RNTesterText>
+      <RNTesterText>Content Size: {JSON.stringify(contentSize)}</RNTesterText>
+    </View>
+  );
+}
 
 class PressInOutEvents extends React.Component<
   $FlowFixMeProps,
