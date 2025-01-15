@@ -202,8 +202,8 @@ AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(cons
   auto fragment = AttributedString::Fragment{};
   fragment.string = getConcreteProps().placeholder;
 
-  if (attributedString.isEmpty()) {
-    attributedString = getPlaceholderAttributedString();
+  if (fragment.string.empty()) {
+    fragment.string = BaseTextShadowNode::getEmptyPlaceholder();
   }
 
   auto textAttributes = TextAttributes::defaultTextAttributes();
@@ -216,16 +216,17 @@ AttributedString WindowsTextInputShadowNode::getPlaceholderAttributedString(cons
   fragment.parentShadowView = ShadowView(*this);
   textAttributedString.appendFragment(std::move(fragment));
 
-  TextLayoutContext textLayoutContext;
-  textLayoutContext.pointScaleFactor = layoutContext.pointScaleFactor;
-  auto textSize = textLayoutManager_
-                      ->measure(
-                          AttributedStringBox{attributedString},
-                          getConcreteProps().paragraphAttributes,
-                          textLayoutContext,
-                          textConstraints)
-                      .size;
-  return layoutConstraints.clamp(textSize);
+  return textAttributedString;
+  // TextLayoutContext textLayoutContext;
+  // textLayoutContext.pointScaleFactor = layoutContext.pointScaleFactor;
+  // auto textSize = textLayoutManager_
+  //                     ->measure(
+  //                         AttributedStringBox{attributedString},
+  //                         getConcreteProps().paragraphAttributes,
+  //                         textLayoutContext,
+  //                         textConstraints)
+  //                     .size;
+  // return layoutConstraints.clamp(textSize);
 }
 
 #pragma mark - LayoutableShadowNode
