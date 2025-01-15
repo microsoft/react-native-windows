@@ -18,10 +18,9 @@ import type {KeyboardType} from 'react-native/Libraries/Components/TextInput/Tex
 
 import RNTesterText from '../../components/RNTesterText';
 import ExampleTextInput from './ExampleTextInput';
-
-const TextInputSharedExamples = require('./TextInputSharedExamples.js');
-const React = require('react');
-const {
+import TextInputSharedExamples from './TextInputSharedExamples';
+import React from 'react';
+import {
   Alert,
   Button,
   InputAccessoryView,
@@ -30,7 +29,7 @@ const {
   Text,
   TextInput,
   View,
-} = require('react-native');
+} from 'react-native';
 
 class WithLabel extends React.Component<$FlowFixMeProps> {
   render(): React.Node {
@@ -210,67 +209,6 @@ class SecureEntryExample extends React.Component<$FlowFixMeProps, any> {
   }
 }
 
-class AutogrowingTextInputExample extends React.Component<
-  $FlowFixMeProps,
-  $FlowFixMeState,
-> {
-  constructor(props: any | void) {
-    super(props);
-
-    this.state = {
-      multiline: true,
-      fullWidth: true,
-      text: '',
-      contentSize: {
-        width: 0,
-        height: 0,
-      },
-    };
-  }
-
-  UNSAFE_componentWillReceiveProps(props: any) {
-    this.setState({
-      multiline: props.multiline,
-    });
-  }
-
-  render(): React.Node {
-    const {style, multiline, ...props} = this.props;
-    return (
-      <View>
-        <RNTesterText>Full width:</RNTesterText>
-        <Switch
-          value={this.state.fullWidth}
-          onValueChange={value => this.setState({fullWidth: value})}
-        />
-
-        <RNTesterText>Multiline:</RNTesterText>
-        <Switch
-          value={this.state.multiline}
-          onValueChange={value => this.setState({multiline: value})}
-        />
-
-        <RNTesterText>TextInput:</RNTesterText>
-        <ExampleTextInput
-          value="prop"
-          multiline={this.state.multiline}
-          style={[style, {width: this.state.fullWidth ? '100%' : '50%'}]}
-          onChangeText={value => this.setState({text: value})}
-          onContentSizeChange={event =>
-            this.setState({contentSize: event.nativeEvent.contentSize})
-          }
-          {...props}
-        />
-        <RNTesterText>Plain text value representation:</RNTesterText>
-        <RNTesterText>{this.state.text}</RNTesterText>
-        <RNTesterText>
-          Content Size: {JSON.stringify(this.state.contentSize)}
-        </RNTesterText>
-      </View>
-    );
-  }
-}
-
 const TextInputWithFocusButton = () => {
   const inputToFocusRef = React.useRef<React.ElementRef<
     typeof TextInput,
@@ -295,6 +233,73 @@ const TextInputWithFocusButton = () => {
     </View>
   );
 };
+
+function KeyboardShortcutsExample() {
+  return (
+    <View>
+      <Text
+        style={{
+          marginBottom: 4,
+        }}>
+        Single line:
+      </Text>
+
+      <ExampleTextInput
+        style={{
+          marginBottom: 4,
+        }}
+        placeholder="Default"
+      />
+
+      <ExampleTextInput
+        style={{
+          marginBottom: 4,
+        }}
+        placeholder="Disable keyboard shortcuts"
+        disableKeyboardShortcuts
+      />
+
+      <ExampleTextInput
+        style={{
+          marginBottom: 4,
+        }}
+        placeholder="Hidden keyboard with suggestions"
+        showSoftInputOnFocus={false}
+      />
+
+      <ExampleTextInput
+        style={{
+          marginBottom: 4,
+        }}
+        placeholder="Hidden keyboard without suggestions"
+        disableKeyboardShortcuts
+        autoCorrect={false}
+        spellCheck={false}
+        showSoftInputOnFocus={false}
+      />
+
+      <Text
+        style={{
+          marginBottom: 4,
+        }}>
+        Multiline:
+      </Text>
+
+      <ExampleTextInput
+        style={styles.multiline}
+        multiline
+        placeholder="default"
+      />
+
+      <ExampleTextInput
+        style={styles.multiline}
+        multiline
+        placeholder="Disable keyboard shortcuts"
+        disableKeyboardShortcuts
+      />
+    </View>
+  );
+}
 
 const styles = StyleSheet.create({
   multiline: {
@@ -743,37 +748,6 @@ const textInputExamples: Array<RNTesterModuleExample> = [
     },
   },
   {
-    title: 'Auto-expanding',
-    render: function (): React.Node {
-      return (
-        <View>
-          <AutogrowingTextInputExample
-            enablesReturnKeyAutomatically={true}
-            returnKeyType="done"
-            multiline={true}
-            style={{
-              maxHeight: 400,
-              minHeight: 20,
-              paddingTop: 0,
-              backgroundColor: '#eeeeee',
-              color: 'blue',
-            }}>
-            <Text style={{fontSize: 30, color: 'green'}}>huge</Text>
-            generic generic generic
-            <Text style={{fontSize: 6, color: 'red'}}>
-              small small small small small small
-            </Text>
-            <Text>regular regular</Text>
-            <Text style={{fontSize: 30, color: 'green'}}>
-              huge huge huge huge huge
-            </Text>
-            generic generic generic
-          </AutogrowingTextInputExample>
-        </View>
-      );
-    },
-  },
-  {
     title: 'TextInput maxLength',
     render: function (): React.Node {
       return (
@@ -936,6 +910,12 @@ const textInputExamples: Array<RNTesterModuleExample> = [
     title: 'Auto scroll cursor into view when focusing',
     render: function (): React.Node {
       return <TextInputWithFocusButton />;
+    },
+  },
+  {
+    title: 'Keyboard shortcuts',
+    render: function (): React.Node {
+      return <KeyboardShortcutsExample />;
     },
   },
   {

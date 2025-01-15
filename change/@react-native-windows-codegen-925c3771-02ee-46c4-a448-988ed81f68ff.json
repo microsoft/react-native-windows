@@ -1,0 +1,7 @@
+{
+  "type": "prerelease",
+  "comment": "Initial integrate",
+  "packageName": "@react-native-windows/codegen",
+  "email": "yajurgrover24@gmail.com",
+  "dependentChangeType": "patch"
+}
