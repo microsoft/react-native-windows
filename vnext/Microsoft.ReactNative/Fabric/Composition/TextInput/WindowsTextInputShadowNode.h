@@ -45,11 +45,9 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
    */
   void setTextLayoutManager(std::shared_ptr<const TextLayoutManager> textLayoutManager);
 
- #pragma mark - LayoutableShadowNode
+#pragma mark - LayoutableShadowNode
  protected:
-  Size measureContent(
-      const LayoutContext& layoutContext,
-      const LayoutConstraints& layoutConstraints) const override;
+  Size measureContent(const LayoutContext &layoutContext, const LayoutConstraints &layoutConstraints) const override;
 
   void layout(LayoutContext layoutContext) override;
 
@@ -60,8 +58,7 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
   /*
    * Determines the constraints to use while measure the underlying text
    */
-  LayoutConstraints getTextConstraints(
-      const LayoutConstraints& layoutConstraints) const;
+  LayoutConstraints getTextConstraints(const LayoutConstraints &layoutConstraints) const;
 
  private:
   /*

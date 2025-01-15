@@ -22,53 +22,53 @@ void WindowsTextInputShadowNode::setTextLayoutManager(std::shared_ptr<const Text
 }
 
 Size WindowsTextInputShadowNode::measureContent(
-  const LayoutContext &layoutContext,
-  const LayoutConstraints &layoutConstraints) const {
-if (getStateData().cachedAttributedStringId != 0) {
+    const LayoutContext &layoutContext,
+    const LayoutConstraints &layoutConstraints) const {
+  if (getStateData().cachedAttributedStringId != 0) {
+    return textLayoutManager_
+        ->measureCachedSpannableById(
+            getStateData().cachedAttributedStringId,
+            {}, // TODO getConcreteProps().paragraphAttributes
+            layoutConstraints)
+        .size;
+  }
+
+  // Layout is called right after measure.
+  // Measure is marked as `const`, and `layout` is not; so State can be updated
+  // during layout, but not during `measure`. If State is out-of-date in layout,
+  // it's too late: measure will have already operated on old State. Thus, we
+  // use the same value here that we *will* use in layout to update the state.
+  AttributedString attributedString = getMostRecentAttributedString(layoutContext);
+
+  if (attributedString.isEmpty()) {
+    attributedString = getPlaceholderAttributedString(layoutContext);
+  }
+
+  // BaseTextShadowNode only gets children. We must detect and prepend text
+  // value attributes manually.
+  if (!getConcreteProps().text.empty()) {
+    auto textAttributes = TextAttributes::defaultTextAttributes();
+    textAttributes.apply(getConcreteProps().textAttributes);
+    auto fragment = AttributedString::Fragment{};
+    fragment.string = getConcreteProps().text;
+    fragment.textAttributes = textAttributes;
+    // If the TextInput opacity is 0 < n < 1, the opacity of the TextInput and
+    // text value's background will stack. This is a hack/workaround to prevent
+    // that effect.
+    fragment.textAttributes.backgroundColor = clearColor();
+    fragment.parentShadowView = ShadowView(*this);
+    attributedString.prependFragment(std::move(fragment));
+  }
+
+  TextLayoutContext textLayoutContext;
+  textLayoutContext.pointScaleFactor = layoutContext.pointScaleFactor;
   return textLayoutManager_
-      ->measureCachedSpannableById(
-          getStateData().cachedAttributedStringId,
-          {}, // TODO getConcreteProps().paragraphAttributes
+      ->measure(
+          AttributedStringBox{attributedString},
+          {}, // TODO getConcreteProps().paragraphAttributes,
+          textLayoutContext,
           layoutConstraints)
       .size;
-}
-
-// Layout is called right after measure.
-// Measure is marked as `const`, and `layout` is not; so State can be updated
-// during layout, but not during `measure`. If State is out-of-date in layout,
-// it's too late: measure will have already operated on old State. Thus, we
-// use the same value here that we *will* use in layout to update the state.
-AttributedString attributedString = getMostRecentAttributedString(layoutContext);
-
-if (attributedString.isEmpty()) {
-  attributedString = getPlaceholderAttributedString(layoutContext);
-}
-
-// BaseTextShadowNode only gets children. We must detect and prepend text
-// value attributes manually.
-if (!getConcreteProps().text.empty()) {
-  auto textAttributes = TextAttributes::defaultTextAttributes();
-  textAttributes.apply(getConcreteProps().textAttributes);
-  auto fragment = AttributedString::Fragment{};
-  fragment.string = getConcreteProps().text;
-  fragment.textAttributes = textAttributes;
-  // If the TextInput opacity is 0 < n < 1, the opacity of the TextInput and
-  // text value's background will stack. This is a hack/workaround to prevent
-  // that effect.
-  fragment.textAttributes.backgroundColor = clearColor();
-  fragment.parentShadowView = ShadowView(*this);
-  attributedString.prependFragment(std::move(fragment));
-}
-
-TextLayoutContext textLayoutContext;
-textLayoutContext.pointScaleFactor = layoutContext.pointScaleFactor;
-return textLayoutManager_
-    ->measure(
-        AttributedStringBox{attributedString},
-        {}, // TODO getConcreteProps().paragraphAttributes,
-        textLayoutContext,
-        layoutConstraints)
-    .size;
 }
 
 void WindowsTextInputShadowNode::layout(LayoutContext layoutContext) {
@@ -76,8 +76,7 @@ void WindowsTextInputShadowNode::layout(LayoutContext layoutContext) {
   ConcreteViewShadowNode::layout(layoutContext);
 }
 
-LayoutConstraints WindowsTextInputShadowNode::getTextConstraints(
-  const LayoutConstraints& layoutConstraints) const {
+LayoutConstraints WindowsTextInputShadowNode::getTextConstraints(const LayoutConstraints &layoutConstraints) const {
   if (getConcreteProps().multiline) {
     return layoutConstraints;
   } else {

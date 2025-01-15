@@ -25,7 +25,7 @@ const ToggleDefaultPaddingExample = (): React.Node => {
 
   return (
     <View>
-      <ExampleTextInput 
+      <ExampleTextInput
         style={hasPadding ? {padding: 0} : null}
         testID="textinput-padding"
       />

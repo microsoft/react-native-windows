@@ -55,11 +55,12 @@ const BlobImage = ({url}: BlobImageProps): React.Node => {
   }, [url]);
 
   return objectURL !== null ? (
-    <Image 
-      source={{uri: objectURL}} 
+    <Image
+      source={{uri: objectURL}}
       style={styles.base}
       testID="image-blob"
-      accessible />
+      accessible
+    />
   ) : (
     <Text>Object URL not created yet</Text>
   );

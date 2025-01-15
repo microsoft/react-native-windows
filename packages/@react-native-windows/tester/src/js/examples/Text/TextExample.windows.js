@@ -364,7 +364,7 @@ function IncludeFontPaddingExample(props: {}): React.Node {
 
 function FontVariantsExample(props: {}): React.Node {
   return (
-  <View testID={'font-variants'}>
+    <View testID={'font-variants'}>
       <RNTesterText style={{fontVariant: ['small-caps']}}>
         Small Caps{'\n'}
       </RNTesterText>
@@ -428,7 +428,7 @@ function FontFamilyExample(props: {}): React.Node {
   return (
     <>
       <RNTesterText style={{fontFamily: 'sans-serif'}}>Sans-Serif</RNTesterText>
-      <RNTesterText 
+      <RNTesterText
         style={{fontFamily: 'sans-serif', fontWeight: 'bold'}}
         testID={'text-font-family'}>
         Sans-Serif Bold
@@ -494,7 +494,10 @@ function AllowFontScalingExample(props: {}): React.Node {
 function NumberOfLinesExample(props: {}): React.Node {
   return (
     <>
-      <RNTesterText numberOfLines={1} style={styles.wrappedText} testID={'text-one-line'}>
+      <RNTesterText
+        numberOfLines={1}
+        style={styles.wrappedText}
+        testID={'text-one-line'}>
         Maximum of one line no matter now much I write here. If I keep writing
         it{"'"}ll just truncate after one line
       </RNTesterText>
@@ -1480,7 +1483,9 @@ const examples = [
     render(): React.Node {
       return (
         <>
-          <RNTesterText style={{fontSize: 23}} testID={'text-size'}>Size 23</RNTesterText>
+          <RNTesterText style={{fontSize: 23}} testID={'text-size'}>
+            Size 23
+          </RNTesterText>
           <RNTesterText style={{fontSize: 8}}>Size 8</RNTesterText>
         </>
       );
@@ -1646,7 +1651,10 @@ const examples = [
     name: 'selectionColor',
     render(): React.Node {
       return (
-        <RNTesterText selectable selectionColor="orange" testID={'text-selection-color'}>
+        <RNTesterText
+          selectable
+          selectionColor="orange"
+          testID={'text-selection-color'}>
           This text will have a orange highlight on selection.
         </RNTesterText>
       );
