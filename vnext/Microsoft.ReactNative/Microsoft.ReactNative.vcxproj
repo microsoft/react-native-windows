@@ -188,16 +188,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ABICxxModule.h" />
-    <ClInclude Include="ABIViewManager.h" />
     <ClInclude Include="Base\CxxReactIncludes.h" />
     <ClInclude Include="Base\FollyIncludes.h" />
     <ClInclude Include="ReactHost\JSCallInvokerScheduler.h" />
     <ClInclude Include="Utils\ShadowNodeTypeUtils.h" />
     <ClInclude Include="Utils\BatchingEventEmitter.h" />
-    <ClInclude Include="DevMenuControl.h">
-      <DependentUpon>DevMenuControl.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
     <ClInclude Include="DocString.h" />
     <ClInclude Include="DynamicReader.h">
       <DependentUpon>IJSValueReader.idl</DependentUpon>
@@ -208,7 +203,6 @@
     <ClInclude Include="JSDispatcherWriter.h">
       <DependentUpon>IJSValueWriter.idl</DependentUpon>
     </ClInclude>
-    <ClInclude Include="GlyphViewManager.h" />
     <ClInclude Include="HResult.h" />
     <ClInclude Include="IReactDispatcher.h">
       <DependentUpon>IReactDispatcher.idl</DependentUpon>
@@ -265,20 +259,14 @@
     <ClInclude Include="Modules\ImageViewManagerModule.h" />
     <ClInclude Include="Modules\LinkingManagerModule.h" />
     <ClInclude Include="Modules\LogBoxModule.h" />
-    <ClInclude Include="Modules\NativeUIManager.h" />
     <ClInclude Include="Modules\ReactRootViewTagGenerator.h" />
     <ClInclude Include="Modules\TimingModule.h" />
-    <ClInclude Include="Modules\PaperUIManagerModule.h" />
     <ClInclude Include="NativeModulesProvider.h" />
     <ClInclude Include="ReactHost\IReactInstance.h" />
-    <ClInclude Include="ReactHost\ViewManagerProvider.h" />
     <ClInclude Include="RedBoxErrorInfo.h" />
     <ClInclude Include="RedBoxErrorFrameInfo.h" />
     <ClInclude Include="TurboModulesProvider.h" />
     <ClInclude Include="Pch\pch.h" />
-    <ClInclude Include="ReactApplication.h">
-      <DependentUpon>ReactApplication.idl</DependentUpon>
-    </ClInclude>
     <ClInclude Include="IReactContext.h">
       <DependentUpon>IReactContext.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -317,7 +305,6 @@
       <DependentUpon>Timer.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
-    <ClInclude Include="Utils\AccessibilityUtils.h" />
     <ClInclude Include="Utils\Helpers.h" />
     <ClInclude Include="Utils\KeyboardUtils.h" />
     <ClInclude Include="Utils\LocalBundleReader.h" />
@@ -331,9 +318,57 @@
     <ClInclude Include="Utils\UwpScriptStore.h" />
     <ClInclude Include="Utils\ValueUtils.h" />
     <ClInclude Include="Utils\XamlIslandUtils.h" />
+    <ClInclude Include="Utils\XamlUtils.h" />
+    <ClInclude Include="Views\DevMenu.h" />
+    <ClInclude Include="ReactPackageBuilder.h">
+      <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="IReactPropertyBag.h">
+      <DependentUpon>IReactPropertyBag.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="RedBox.h" />
+    <ClInclude Include="ReactSupport.h" />
+    <ClInclude Include="TestHook.h" />
+    <ClInclude Include="QuirkSettings.h">
+      <DependentUpon>QuirkSettings.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="ReactPointerEventArgs.h">
+      <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="XamlUIService.h">
+      <DependentUpon>XamlUIService.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+  </ItemGroup>
+  <!-- Paper-only ClInclude -->
+  <ItemGroup Condition="'$(UseFabric)' != 'true'">
+    <ClInclude Include="ABIViewManager.h" />
+    <ClInclude Include="DevMenuControl.h">
+      <DependentUpon>DevMenuControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="GlyphViewManager.h" />
+    <ClInclude Include="LayoutService.h">
+      <DependentUpon>LayoutService.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="Modules\NativeUIManager.h" />
+    <ClInclude Include="Modules\PaperUIManagerModule.h" />
+    <ClInclude Include="ReactApplication.h">
+      <DependentUpon>ReactApplication.idl</DependentUpon>
+    </ClInclude>
+    <ClInclude Include="ReactHost\ViewManagerProvider.h" />
+    <ClInclude Include="ReactRootView.h">
+      <DependentUpon>ReactRootView.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClInclude>
+    <ClInclude Include="Utils\AccessibilityUtils.h" />
+    <ClInclude Include="ViewManagersProvider.h" />
     <ClInclude Include="Views\ActivityIndicatorViewManager.h" />
     <ClInclude Include="Views\ControlViewManager.h" />
-    <ClInclude Include="Views\DevMenu.h" />
     <ClInclude Include="Views\DynamicAutomationPeer.h" />
     <ClInclude Include="Views\DynamicAutomationProperties.h" />
     <ClInclude Include="Views\DynamicValueProvider.h" />
@@ -384,55 +419,17 @@
     <ClInclude Include="Views\ViewViewManager.h" />
     <ClInclude Include="Views\VirtualTextViewManager.h" />
     <ClInclude Include="Views\XamlFeatures.h" />
-    <ClInclude Include="XamlLoadState.h" />
-    <ClInclude Include="LayoutService.h">
-      <DependentUpon>LayoutService.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="XamlUIService.h">
-      <DependentUpon>XamlUIService.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="ReactPackageBuilder.h">
-      <DependentUpon>IReactPackageBuilder.idl</DependentUpon>
-    </ClInclude>
-    <ClInclude Include="IReactPropertyBag.h">
-      <DependentUpon>IReactPropertyBag.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="ReactRootView.h">
-      <DependentUpon>ReactRootView.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="RedBox.h" />
-    <ClInclude Include="ReactSupport.h" />
-    <ClInclude Include="TestHook.h" />
-    <ClInclude Include="QuirkSettings.h">
-      <DependentUpon>QuirkSettings.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
-    <ClInclude Include="ViewManagersProvider.h" />
     <ClInclude Include="XamlHelper.h">
       <DependentUpon>XamlHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClInclude>
+    <ClInclude Include="XamlLoadState.h" />
     <ClInclude Include="XamlView.h" />
-    <ClInclude Include="ReactPointerEventArgs.h">
-      <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ABICxxModule.cpp" />
-    <ClCompile Include="ABIViewManager.cpp" />
-    <ClCompile Include="Base\CoreUIManagers.cpp" />
     <ClCompile Include="Utils\BatchingEventEmitter.cpp" />
     <ClCompile Include="CxxReactUWP\JSBigString.cpp" />
-    <ClCompile Include="DevMenuControl.cpp">
-      <DependentUpon>DevMenuControl.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="GlyphViewManager.cpp" />
     <ClCompile Include="Modules\AccessibilityInfoModule.cpp" />
     <ClCompile Include="Modules\AlertModule.cpp" />
     <ClCompile Include="Modules\Animated\AdditionAnimatedNode.cpp" />
@@ -467,8 +464,6 @@
     <ClCompile Include="Modules\ImageViewManagerModule.cpp" />
     <ClCompile Include="Modules\LinkingManagerModule.cpp" />
     <ClCompile Include="Modules\LogBoxModule.cpp" />
-    <ClCompile Include="Modules\NativeUIManager.cpp" />
-    <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
     <ClCompile Include="ReactPointerEventArgs.cpp">
       <DependentUpon>ReactPointerEventArgs.idl</DependentUpon>
       <SubType>Code</SubType>
@@ -476,11 +471,7 @@
     <ClCompile Include="Pch\pch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="ReactApplication.cpp">
-      <DependentUpon>ReactApplication.idl</DependentUpon>
-    </ClCompile>
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
-    <ClCompile Include="Utils\AccessibilityUtils.cpp" />
     <ClCompile Include="Utils\KeyboardUtils.cpp" />
     <ClCompile Include="Utils\LocalBundleReader.cpp" />
     <ClCompile Include="Utils\ResourceBrushUtils.cpp" />
@@ -488,6 +479,37 @@
     <ClCompile Include="Utils\UwpScriptStore.cpp" />
     <ClCompile Include="Utils\ValueUtils.cpp" />
     <ClCompile Include="Utils\XamlIslandUtils.cpp" />
+    <ClCompile Include="ReactSupport.cpp" />
+    <ClCompile Include="TestHook.cpp" />
+    <ClCompile Include="XamlUIService.cpp">
+      <DependentUpon>XamlUIService.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+  </ItemGroup>
+  <!-- Paper-only ClCompile -->
+  <ItemGroup Condition="'$(UseFabric)' != 'true'">
+    <ClCompile Include="ABIViewManager.cpp" />
+    <ClCompile Include="Base\CoreUIManagers.cpp" />
+    <ClCompile Include="DevMenuControl.cpp">
+      <DependentUpon>DevMenuControl.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="GlyphViewManager.cpp" />
+    <ClCompile Include="LayoutService.cpp">
+      <DependentUpon>LayoutService.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="Modules\NativeUIManager.cpp" />
+    <ClCompile Include="Modules\PaperUIManagerModule.cpp" />
+    <ClCompile Include="ReactApplication.cpp">
+      <DependentUpon>ReactApplication.idl</DependentUpon>
+    </ClCompile>
+    <ClCompile Include="ReactRootView.cpp">
+      <DependentUpon>ReactRootView.idl</DependentUpon>
+      <SubType>Code</SubType>
+    </ClCompile>
+    <ClCompile Include="Utils\AccessibilityUtils.cpp" />
+    <ClCompile Include="ViewManagersProvider.cpp" />
     <ClCompile Include="Views\ActivityIndicatorViewManager.cpp" />
     <ClCompile Include="Views\ConfigureBundlerDlg.cpp" />
     <ClCompile Include="Views\ControlViewManager.cpp" />
@@ -536,53 +558,41 @@
     <ClCompile Include="Views\ViewViewManager.cpp" />
     <ClCompile Include="Views\VirtualTextViewManager.cpp" />
     <ClCompile Include="Views\XamlFeatures.cpp" />
-    <ClCompile Include="XamlLoadState.cpp" />
-    <ClCompile Include="XamlView.cpp" />
-    <ClCompile Include="LayoutService.cpp">
-      <DependentUpon>LayoutService.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="XamlUIService.cpp">
-      <DependentUpon>XamlUIService.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ReactRootView.cpp">
-      <DependentUpon>ReactRootView.idl</DependentUpon>
-      <SubType>Code</SubType>
-    </ClCompile>
-    <ClCompile Include="ReactSupport.cpp" />
-    <ClCompile Include="TestHook.cpp" />
-    <ClCompile Include="ViewManagersProvider.cpp" />
     <ClCompile Include="XamlHelper.cpp">
       <DependentUpon>XamlHelper.idl</DependentUpon>
       <SubType>Code</SubType>
     </ClCompile>
+    <ClCompile Include="XamlLoadState.cpp" />
+    <ClCompile Include="XamlView.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Midl Include="DesktopWindowMessage.idl" />
+    <Midl Include="DocString.idl" />
+    <Midl Include="ReactPointerEventArgs.idl" />
+    <Midl Include="XamlUIService.idl">
+      <SubType>Designer</SubType>
+    </Midl>
+  </ItemGroup>
+  <!-- Paper-only Midl -->
+  <ItemGroup Condition="'$(UseFabric)' != 'true'">
     <Midl Include="DevMenuControl.idl">
       <DependentUpon>DevMenuControl.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Midl>
-    <Midl Include="DocString.idl" />
     <Midl Include="IViewManager.idl" />
     <Midl Include="IViewManagerCore.idl" />
+    <Midl Include="LayoutService.idl">
+      <SubType>Designer</SubType>
+    </Midl>
     <Midl Include="ReactApplication.idl" />
+    <Midl Include="ReactRootView.idl">
+      <SubType>Designer</SubType>
+    </Midl>
     <Midl Include="Views\cppwinrt\AccessibilityAction.idl" />
     <Midl Include="Views\cppwinrt\Effects.idl" />
     <Midl Include="Views\cppwinrt\DynamicAutomationPeer.idl" />
     <Midl Include="Views\cppwinrt\ViewPanel.idl" />
-    <Midl Include="LayoutService.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="XamlUIService.idl">
-      <SubType>Designer</SubType>
-    </Midl>
-    <Midl Include="ReactRootView.idl">
-      <SubType>Designer</SubType>
-    </Midl>
     <Midl Include="XamlHelper.idl" />
-    <Midl Include="ReactPointerEventArgs.idl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="microsoft.reactnative.def" />
@@ -621,7 +631,7 @@
       <Project>{a9d95a91-4db7-4f72-beb6-fe8a5c89bfbd}</Project>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(UseFabric)' != 'true'">
     <Page Include="DevMenuControl.xaml">
       <SubType>Designer</SubType>
     </Page>
