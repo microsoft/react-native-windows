@@ -7,7 +7,7 @@ jobs:
       - template: ../variables/shared.yml
       - name: BUILDSECMON_OPT_IN
         value: true
-    pool: {vmImage: macOS-12}
+    pool: {vmImage: macOS-latest}
     steps:
       - template: ../templates/checkout-shallow.yml
 
