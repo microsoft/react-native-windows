@@ -2,6 +2,39 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 15 Jan 2025 01:23:17 GMT",
+      "version": "0.74.31",
+      "tag": "react-native-windows_v0.74.31",
+      "comments": {
+        "patch": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ab27bdc176d1976cdc3e9182f83863a89417cf4f",
+            "comment": "Implement ISelectionProvider and ISelectionItemProvider"
+          },
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ab27bdc176d1976cdc3e9182f83863a89417cf4f",
+            "comment": "IRangeValue Provider"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ab27bdc176d1976cdc3e9182f83863a89417cf4f",
+            "comment": "Fix crash running on server 2016"
+          },
+          {
+            "author": "30809111+acoates-ms@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "ab27bdc176d1976cdc3e9182f83863a89417cf4f",
+            "comment": "Rework modal implementation to use public APIs"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 14 Jan 2025 23:37:20 GMT",
       "version": "0.74.30",
       "tag": "react-native-windows_v0.74.30",
