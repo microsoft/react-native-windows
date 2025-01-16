@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Thu, 16 Jan 2025 06:21:27 GMT",
+      "version": "0.0.0-canary.910",
+      "tag": "react-native-windows_v0.0.0-canary.910",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "50150435+JesseCol@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "6eb1e4736bdfeaad371c672fdc62e381ec9c5a4a",
+            "comment": "Enable basic XamlIsland in rntester within playground app when UseExperimentalWinUI3 is true"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Jan 2025 18:43:00 GMT",
       "version": "0.0.0-canary.909",
       "tag": "react-native-windows_v0.0.0-canary.909",

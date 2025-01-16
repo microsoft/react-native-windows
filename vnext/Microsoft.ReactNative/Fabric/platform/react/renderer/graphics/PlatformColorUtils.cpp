@@ -16,7 +16,7 @@ winrt::Windows::UI::Color ResolvePlatformColor(const std::vector<std::string> &s
     for (auto platformColor : semanticItems) {
 #ifndef CORE_ABI
       // If XAML is loaded, look in application resources
-      if (xaml::TryGetCurrentApplication()) {
+      if (xaml::TryGetCurrentUwpXamlApplication()) {
         xaml::Media::Brush brush{Microsoft::ReactNative::BrushFromColorObject(platformColor)};
         if (auto scb{brush.try_as<xaml::Media::SolidColorBrush>()}) {
           return scb.Color();
