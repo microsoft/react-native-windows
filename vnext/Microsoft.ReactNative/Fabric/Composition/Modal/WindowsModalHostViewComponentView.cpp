@@ -203,10 +203,15 @@ struct ModalHostView : public winrt::implements<ModalHostView, winrt::Windows::F
 
   // creates a new modal window
   void EnsureModalCreated(const winrt::Microsoft::ReactNative::ComponentView &view) {
-    if (m_window || m_popUp) {
+    if (m_window) {
       return;
     }
 
+#ifdef USE_EXPERIMENTAL_WINUI3
+    if (m_popUp) {
+      return;
+    }
+#endif
     // get the root hwnd
     m_prevWindowID =
         winrt::Microsoft::ReactNative::ReactCoreInjection::GetTopLevelWindowId(view.ReactContext().Properties());
