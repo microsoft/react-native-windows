@@ -18,7 +18,8 @@ import type {
 import ExampleTextInput from './ExampleTextInput';
 import TextInputSharedExamples from './TextInputSharedExamples';
 import React from 'react';
-import {RNTesterText, StyleSheet, Switch, Text, View} from 'react-native';
+import {StyleSheet, Switch, Text, View} from 'react-native';
+import RNTesterText from '../../components/RNTesterText';
 
 const ToggleDefaultPaddingExample = (): React.Node => {
   const [hasPadding, setHasPadding] = React.useState(false);
