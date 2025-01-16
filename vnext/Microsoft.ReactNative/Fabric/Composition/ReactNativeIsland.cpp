@@ -913,21 +913,23 @@ winrt::Microsoft::UI::Content::ContentIsland ReactNativeIsland::Island() {
           }
         });
 #ifdef USE_EXPERIMENTAL_WINUI3
-    m_islandConnectedToken = m_island.Connected(
-        [weakThis = get_weak()](
-            winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
-          if (auto pThis = weakThis.get()) {
-            pThis->OnMounted();
-          }
-        });
+    if (!m_isFragment) {
+      m_islandConnectedToken = m_island.Connected(
+          [weakThis = get_weak()](
+              winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
+            if (auto pThis = weakThis.get()) {
+              pThis->OnMounted();
+            }
+          });
 
-    m_islandDisconnectedToken = m_island.Disconnected(
-        [weakThis = get_weak()](
-            winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
-          if (auto pThis = weakThis.get()) {
-            pThis->OnUnmounted();
-          }
-        });
+      m_islandDisconnectedToken = m_island.Disconnected(
+          [weakThis = get_weak()](
+              winrt::IInspectable const &, winrt::Microsoft::UI::Content::ContentIsland const &island) {
+            if (auto pThis = weakThis.get()) {
+              pThis->OnUnmounted();
+            }
+          });
+    }
 #endif
   }
   return m_island;
