@@ -64,6 +64,7 @@ function AutogrowingTextInputExample({
           });
         }}
         {...props}
+        testID={"textinput-autogrow"}
       />
       <RNTesterText>Plain text value representation:</RNTesterText>
       <RNTesterText>{text}</RNTesterText>
@@ -495,7 +496,6 @@ const examples: Array<RNTesterModuleExample> = [
       return (
         <View style={styles.wrappedText}>
           <AutogrowingTextInputExample
-            testID="textinput-autogrow"
             enablesReturnKeyAutomatically={true}
             returnKeyType="done"
             multiline={true}

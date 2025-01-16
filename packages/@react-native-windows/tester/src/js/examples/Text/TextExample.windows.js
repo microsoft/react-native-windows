@@ -139,7 +139,7 @@ class AdjustingFontSize extends React.Component<
       return <View />;
     }
     return (
-      <View>
+      <View testID={'text-ellipsize'}>
         <RNTesterText
           ellipsizeMode="tail"
           numberOfLines={1}
@@ -632,7 +632,7 @@ function ContainerBackgroundColorExample(props: {}): React.Node {
 function TextDecorationExample(props: {}): React.Node {
   return (
     <>
-      <RNTesterText style={{textDecorationLine: 'underline'}}>
+      <RNTesterText style={{textDecorationLine: 'underline'}} testID={'text-decoration-underline'}>
         Solid underline
       </RNTesterText>
       <RNTesterText style={{textDecorationLine: 'none'}}>
@@ -667,7 +667,7 @@ function TextDecorationExample(props: {}): React.Node {
 function NestedExample(props: {}): React.Node {
   return (
     <>
-      <RNTesterText onPress={() => console.log('1st')}>
+      <RNTesterText onPress={() => console.log('1st')} testID={'text-outer-color'}>
         (Normal text,
         <Text style={{color: 'red', fontWeight: 'bold'}}>
           (R)red
