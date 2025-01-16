@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 13 Jan 2025 18:43:00 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 16 Jan 2025 06:21:27 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.910
+
+Thu, 16 Jan 2025 06:21:27 GMT
+
+### Changes
+
+- Enable basic XamlIsland in rntester within playground app when UseExperimentalWinUI3 is true (50150435+JesseCol@users.noreply.github.com)
 
 ## 0.0.0-canary.909
 

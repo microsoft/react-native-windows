@@ -7,6 +7,7 @@
 #include "ReactPackageProvider.g.cpp"
 #endif
 
+#include "CalendarView.h"
 #include "DrawingIsland.h"
 #include "MovingLight.h"
 
@@ -21,6 +22,10 @@ void ReactPackageProvider::CreatePackage(IReactPackageBuilder const &packageBuil
   RegisterDrawingIslandComponentView(packageBuilder);
   RegisterMovingLightNativeComponent(packageBuilder);
 #endif // #ifdef RNW_NEW_ARCH
+
+#if defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)
+  RegisterCalendarViewComponentView(packageBuilder);
+#endif // #if defined(RNW_NEW_ARCH) && defined(USE_EXPERIMENTAL_WINUI3)
 }
 
 } // namespace winrt::SampleCustomComponent::implementation

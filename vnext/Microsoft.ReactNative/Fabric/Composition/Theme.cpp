@@ -124,7 +124,7 @@ bool Theme::TryGetPlatformColor(const std::string &platformColor, winrt::Windows
 
 #ifndef CORE_ABI
   // If XAML is loaded, look in application resources
-  if (xaml::TryGetCurrentApplication()) {
+  if (xaml::TryGetCurrentUwpXamlApplication()) {
     const auto appResources{xaml::Application::Current().Resources()};
     const auto boxedResourceName{winrt::box_value(winrt::to_hstring(platformColor))};
     if (appResources.HasKey(boxedResourceName)) {
