@@ -17,7 +17,7 @@ import type {
 
 import ExampleTextInput from './ExampleTextInput';
 import TextInputSharedExamples from './TextInputSharedExamples';
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, Switch, Text, View} from 'react-native';
 import RNTesterText from '../../components/RNTesterText';
 
