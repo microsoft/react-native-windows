@@ -19,7 +19,6 @@ import ExampleTextInput from './ExampleTextInput';
 import TextInputSharedExamples from './TextInputSharedExamples';
 import React, {useState} from 'react';
 import {StyleSheet, Switch, Text, View} from 'react-native';
-import RNTesterText from '../../components/RNTesterText';
 
 const ToggleDefaultPaddingExample = (): React.Node => {
   const [hasPadding, setHasPadding] = React.useState(false);
@@ -46,13 +45,13 @@ function AutogrowingTextInputExample({
 
   return (
     <View>
-      <RNTesterText>Full width:</RNTesterText>
+      <Text>Full width:</Text>
       <Switch value={fullWidth} onValueChange={setFullWidth} />
 
-      <RNTesterText>Multiline:</RNTesterText>
+      <Text>Multiline:</Text>
       <Switch value={multiline} onValueChange={setMultiline} />
 
-      <RNTesterText>TextInput:</RNTesterText>
+      <Text>TextInput:</Text>
       <ExampleTextInput
         multiline={multiline}
         style={[style, {width: fullWidth ? '100%' : '50%'}]}
@@ -66,9 +65,9 @@ function AutogrowingTextInputExample({
         {...props}
         testID={'textinput-autogrow'}
       />
-      <RNTesterText>Plain text value representation:</RNTesterText>
-      <RNTesterText>{text}</RNTesterText>
-      <RNTesterText>Content Size: {JSON.stringify(contentSize)}</RNTesterText>
+      <Text>Plain text value representation:</Text>
+      <Text>{text}</Text>
+      <Text>Content Size: {JSON.stringify(contentSize)}</Text>
     </View>
   );
 }
@@ -500,7 +499,6 @@ const examples: Array<RNTesterModuleExample> = [
             returnKeyType="done"
             multiline={true}
             style={{maxHeight: 400, minHeight: 20, backgroundColor: '#eeeeee'}}>
-            {/*generic generic generic [Windows]*/}
             <Text style={{fontSize: 6, color: 'red'}}>
               small small small small small small
             </Text>
@@ -508,7 +506,6 @@ const examples: Array<RNTesterModuleExample> = [
             <Text style={{fontSize: 30, color: 'green'}}>
               huge huge huge huge huge
             </Text>
-            {/*generic generic generic [Windows]*/}
           </AutogrowingTextInputExample>
         </View>
       );
