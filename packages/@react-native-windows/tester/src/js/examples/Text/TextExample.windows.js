@@ -632,7 +632,9 @@ function ContainerBackgroundColorExample(props: {}): React.Node {
 function TextDecorationExample(props: {}): React.Node {
   return (
     <>
-      <RNTesterText style={{textDecorationLine: 'underline'}} testID={'text-decoration-underline'}>
+      <RNTesterText
+        style={{textDecorationLine: 'underline'}}
+        testID={'text-decoration-underline'}>
         Solid underline
       </RNTesterText>
       <RNTesterText style={{textDecorationLine: 'none'}}>
@@ -667,7 +669,9 @@ function TextDecorationExample(props: {}): React.Node {
 function NestedExample(props: {}): React.Node {
   return (
     <>
-      <RNTesterText onPress={() => console.log('1st')} testID={'text-outer-color'}>
+      <RNTesterText
+        onPress={() => console.log('1st')}
+        testID={'text-outer-color'}>
         (Normal text,
         <Text style={{color: 'red', fontWeight: 'bold'}}>
           (R)red

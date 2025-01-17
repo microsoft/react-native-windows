@@ -64,7 +64,7 @@ function AutogrowingTextInputExample({
           });
         }}
         {...props}
-        testID={"textinput-autogrow"}
+        testID={'textinput-autogrow'}
       />
       <RNTesterText>Plain text value representation:</RNTesterText>
       <RNTesterText>{text}</RNTesterText>
