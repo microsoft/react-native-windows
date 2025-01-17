@@ -71,11 +71,11 @@
       "file": "src-win/Libraries/Components/Button/ButtonWin32.tsx"
     },
     {
-      "type": "copy",
+      "type": "patch",
       "file": "src-win/Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.js",
       "baseFile": "packages/react-native/Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.js",
       "baseHash": "7664e2616540fd4ecc398009216314675f6e3f86",
-      "issue": 4378
+      "issue": 14290
     },
     {
       "type": "platform",

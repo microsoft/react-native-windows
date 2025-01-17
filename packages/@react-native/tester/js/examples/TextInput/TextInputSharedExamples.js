@@ -900,13 +900,13 @@ function AutogrowingTextInputExample({
 
   return (
     <View>
-      <RNTesterText>Full width:</RNTesterText>
+      <Text>Full width:</Text>
       <Switch value={fullWidth} onValueChange={setFullWidth} />
 
-      <RNTesterText>Multiline:</RNTesterText>
+      <Text>Multiline:</Text>
       <Switch value={multiline} onValueChange={setMultiline} />
 
-      <RNTesterText>TextInput:</RNTesterText>
+      <Text>TextInput:</Text>
       <ExampleTextInput
         multiline={multiline}
         style={[style, {width: fullWidth ? '100%' : '50%'}]}
@@ -919,9 +919,9 @@ function AutogrowingTextInputExample({
         }}
         {...props}
       />
-      <RNTesterText>Plain text value representation:</RNTesterText>
-      <RNTesterText>{text}</RNTesterText>
-      <RNTesterText>Content Size: {JSON.stringify(contentSize)}</RNTesterText>
+      <Text>Plain text value representation:</Text>
+      <Text>{text}</Text>
+      <Text>Content Size: {JSON.stringify(contentSize)}</Text>
     </View>
   );
 }
