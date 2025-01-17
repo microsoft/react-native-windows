@@ -900,13 +900,13 @@ function AutogrowingTextInputExample({
 
   return (
     <View>
-      <Text>Full width:</Text>
+      <RNTesterText>Full width:</RNTesterText>
       <Switch value={fullWidth} onValueChange={setFullWidth} />
 
-      <Text>Multiline:</Text>
+      <RNTesterText>Multiline:</RNTesterText>
       <Switch value={multiline} onValueChange={setMultiline} />
 
-      <Text>TextInput:</Text>
+      <RNTesterText>TextInput:</RNTesterText>
       <ExampleTextInput
         multiline={multiline}
         style={[style, {width: fullWidth ? '100%' : '50%'}]}
@@ -919,9 +919,9 @@ function AutogrowingTextInputExample({
         }}
         {...props}
       />
-      <Text>Plain text value representation:</Text>
-      <Text>{text}</Text>
-      <Text>Content Size: {JSON.stringify(contentSize)}</Text>
+      <RNTesterText>Plain text value representation:</RNTesterText>
+      <RNTesterText>{text}</RNTesterText>
+      <RNTesterText>Content Size: {JSON.stringify(contentSize)}</RNTesterText>
     </View>
   );
 }
@@ -1245,7 +1245,6 @@ module.exports = ([
             enablesReturnKeyAutomatically={true}
             returnKeyType="done"
             style={{maxHeight: 400, minHeight: 20, backgroundColor: '#eeeeee'}}>
-            generic generic generic
             <Text style={{fontSize: 6, color: 'red'}}>
               small small small small small small
             </Text>
@@ -1253,7 +1252,6 @@ module.exports = ([
             <Text style={{fontSize: 30, color: 'green'}}>
               huge huge huge huge huge
             </Text>
-            generic generic generic
           </AutogrowingTextInputExample>
         </View>
       );
