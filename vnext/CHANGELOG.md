@@ -1,8 +1,16 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 13 Jan 2025 16:31:20 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 20 Jan 2025 16:30:32 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.77.0-preview.4
+
+Mon, 20 Jan 2025 16:30:32 GMT
+
+### Changes
+
+- Update ControlType values to match corresponding `accessibilityRole` values (#14215) (yajurgrover24@gmail.com)
 
 ## 0.77.0-preview.3
 
