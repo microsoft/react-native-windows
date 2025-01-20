@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "Update ControlType values to match corresponding `accessibilityRole` values (#14215)",
-  "packageName": "react-native-windows",
-  "email": "yajurgrover24@gmail.com",
-  "dependentChangeType": "patch"
-}
