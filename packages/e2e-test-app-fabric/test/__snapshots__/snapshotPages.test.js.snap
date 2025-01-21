@@ -77695,7 +77695,6 @@ exports[`snapshotAllPages TextInput 21`] = `
         ]
       }
     >
-      generic generic generic
       <Text
         style={
           {
@@ -77719,7 +77718,6 @@ exports[`snapshotAllPages TextInput 21`] = `
       >
         huge huge huge huge huge
       </Text>
-      generic generic generic
     </TextInput>
     <Text
       style={
