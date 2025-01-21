@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Mon, 20 Jan 2025 16:30:32 GMT",
+      "version": "0.77.0-preview.4",
+      "tag": "react-native-windows_v0.77.0-preview.4",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "yajurgrover24@gmail.com",
+            "package": "react-native-windows",
+            "commit": "d443628909cc7973410fa18a457710512bac78d7",
+            "comment": "Update ControlType values to match corresponding `accessibilityRole` values (#14215)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Jan 2025 16:31:20 GMT",
       "version": "0.77.0-preview.3",
       "tag": "react-native-windows_v0.77.0-preview.3",
