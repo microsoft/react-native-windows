@@ -99,6 +99,7 @@
   </ItemDefinitionGroup>
   <PropertyGroup Label="UserMacros" />
   <ItemGroup>
+    <ClInclude Include="CalendarView.h" />
     <ClInclude Include="DrawingIsland.h">
       <DependentUpon>DrawingIsland.idl</DependentUpon>
     </ClInclude>
@@ -121,6 +122,7 @@
     <ClCompile Include="ReactPackageProvider.cpp">
       <DependentUpon>ReactPackageProvider.idl</DependentUpon>
     </ClCompile>
+    <ClCompile Include="CalendarView.cpp" />
     <ClCompile Include="$(GeneratedFilesDir)module.g.cpp" />
   </ItemGroup>
   <ItemGroup>
