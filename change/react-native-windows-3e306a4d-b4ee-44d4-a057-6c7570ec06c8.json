@@ -1,5 +1,5 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "comment": "integrate 0.77.0",
   "packageName": "react-native-windows",
   "email": "tatianakapos@microsoft.com",
