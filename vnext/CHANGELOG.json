@@ -2,6 +2,21 @@
   "name": "react-native-windows",
   "entries": [
     {
+      "date": "Wed, 22 Jan 2025 06:28:02 GMT",
+      "version": "0.0.0-canary.911",
+      "tag": "react-native-windows_v0.0.0-canary.911",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "34109996+chiaramooney@users.noreply.github.com",
+            "package": "react-native-windows",
+            "commit": "953372ac95154d9e9a3f071096c6df856ddc32e2",
+            "comment": "Remove Fork of Layoutable Shadow Node"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 16 Jan 2025 06:21:27 GMT",
       "version": "0.0.0-canary.910",
       "tag": "react-native-windows_v0.0.0-canary.910",
