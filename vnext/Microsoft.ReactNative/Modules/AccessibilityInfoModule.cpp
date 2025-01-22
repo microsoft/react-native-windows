@@ -3,9 +3,11 @@
 
 #include "pch.h"
 #include "AccessibilityInfoModule.h"
+#ifndef USE_FABRIC
 #include <UI.Xaml.Automation.Peers.h>
 #include <UI.Xaml.Controls.h>
 #include <XamlUtils.h>
+#endif
 #include <uiautomationcore.h>
 #include <uiautomationcoreapi.h>
 #include <winrt/Windows.ApplicationModel.DataTransfer.h>
@@ -50,6 +52,7 @@ void AccessibilityInfo::setAccessibilityFocus(double /*reactTag*/) noexcept {
 
 void AccessibilityInfo::announceForAccessibility(std::wstring announcement) noexcept {
   m_context.UIDispatcher().Post([context = m_context, announcement = std::move(announcement)] {
+#ifndef USE_FABRIC
     // Windows requires a specific element to announce from. Unfortunately the react-native API does not provide a tag
     // So we need to find something to raise the notification event from.
     xaml::UIElement element{nullptr};
@@ -77,6 +80,7 @@ void AccessibilityInfo::announceForAccessibility(std::wstring announcement) noex
         xaml::Automation::Peers::AutomationNotificationProcessing::ImportantMostRecent,
         hstr,
         hstr);
+#endif
   });
 }
 

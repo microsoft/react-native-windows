@@ -10,7 +10,7 @@
 #include "IReactDispatcher.h"
 #include "Modules/DevSettingsModule.h"
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
 #include <XamlUtils.h>
 #include "DevMenuControl.h"
 #include "UI.Xaml.Controls.Primitives.h"
@@ -37,7 +37,7 @@ struct IDevMenu {
   virtual void Show() noexcept = 0;
 };
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
 bool IsCtrlShiftD(winrt::Windows::System::VirtualKey key) noexcept {
   return (
       key == winrt::Windows::System::VirtualKey::D &&
@@ -116,7 +116,7 @@ const wchar_t *HermesProfilerLabel(Mso::CntPtr<Mso::React::IReactContext> const 
                                                                       : L"Stop and copy trace path to clipboard";
 }
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
 struct InAppXamlDevMenu : public IDevMenu, public std::enable_shared_from_this<InAppXamlDevMenu> {
   InAppXamlDevMenu(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) : m_context(reactContext) {}
 
@@ -348,7 +348,7 @@ struct WindowsPopupMenuDevMenu : public IDevMenu, public std::enable_shared_from
 DevMenuManager::DevMenuManager(Mso::CntPtr<Mso::React::IReactContext> const &reactContext) : m_context(reactContext) {}
 
 void DevMenuManager::Init() noexcept {
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
   auto uiDispatcher = React::implementation::ReactDispatcher::GetUIDispatcher(m_context->Properties());
   uiDispatcher.Post([weakThis = weak_from_this()]() {
     if (auto strongThis = weakThis.lock()) {
@@ -396,7 +396,7 @@ std::shared_ptr<IDevMenu> GetOrCreateDevMenu(Mso::CntPtr<Mso::React::IReactConte
       .GetOrCreate(
           DevMenuImplProperty(),
           [reactContext]() -> std::shared_ptr<IDevMenu> {
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
             if (xaml::TryGetCurrentUwpXamlApplication()) {
               auto devMenu = std::make_shared<InAppXamlDevMenu>(reactContext);
               return devMenu;
