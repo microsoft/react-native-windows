@@ -46,7 +46,7 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
-        "resolved": "1.0.2651.64",
+        "resolved": "1.0.2792.45",
         "contentHash": "f5sc/vcAoTCTEW7Nqzp4galAuTRguZViw8ksn+Nx2uskEBPm0/ubzy6gVjvXS/P96jLS89C8T9I0hPc417xpNg=="
       },
       "Microsoft.Windows.SDK.BuildTools": {
@@ -98,7 +98,7 @@
           "FollyWin32": "[1.0.0, )",
           "Microsoft.JavaScript.Hermes": "[0.1.23, )",
           "Microsoft.SourceLink.GitHub": "[1.1.1, )",
-          "Microsoft.Web.WebView2": "[1.0.2651.64, )",
+          "Microsoft.Web.WebView2": "[1.0.2792.45, )",
           "Microsoft.WindowsAppSDK": "[1.7.250109001-experimental2, )",
           "ReactCommon": "[1.0.0, )",
           "ReactNative.V8Jsi.Windows": "[0.71.8, )",
