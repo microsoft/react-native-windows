@@ -39,8 +39,14 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetRuntimeId(SAFEARRAY **pR
   auto rgiRuntimeId = static_cast<int *>((*pRetVal)->pvData);
 
   rgiRuntimeId[0] = UiaAppendRuntimeId;
-  rgiRuntimeId[1] = LODWORD(id);
-  rgiRuntimeId[2] = HIDWORD(id);
+  rgiRuntimeId[1] = 0;
+  rgiRuntimeId[2] = 0;
+
+  if (auto rootView = m_wkRootView.get()) {
+    auto tag = rootView->RootTag();
+    rgiRuntimeId[1] = LODWORD(tag);
+    rgiRuntimeId[2] = HIDWORD(tag);
+  }
 
   return S_OK;
 }
