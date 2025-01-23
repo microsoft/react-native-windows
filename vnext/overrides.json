@@ -8,13 +8,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.78.0-nightly-20241231-a3c8e2137",
+  "baseVersion": "0.78.0-nightly-20250113-d4407d6f7",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "5b40175690b07272a61410d4fc6437a82248e8cc"
+      "baseHash": "efd6eb0780d7f3b6717feac846e0e7fe8dae1ee9"
     },
     {
       "type": "derived",
@@ -26,13 +26,13 @@
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.cpp",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.cpp",
-      "baseHash": "8adc9debb133e409acb26b07bf70b68c4052055a"
+      "baseHash": "cc7413f0c2de067fe457c707357ddc2a8891ab56"
     },
     {
       "type": "derived",
       "file": "Microsoft.ReactNative/Fabric/Composition/TextInput/WindowsTextInputShadowNode.h",
       "baseFile": "packages/react-native/ReactCommon/react/renderer/components/textinput/platform/android/react/renderer/components/androidtextinput/AndroidTextInputShadowNode.h",
-      "baseHash": "218f99fbe2bf737e0c967d3335e3373173b4c1a8"
+      "baseHash": "199608e05b08edbf7fecf1792997786a46cf4741"
     },
     {
       "type": "derived",
@@ -142,6 +142,13 @@
       "baseFile": "packages/react-native/ReactCommon/react/renderer/runtimescheduler/SchedulerPriorityUtils.h",
       "baseHash": "0ccd2735e3cb04ce640fbd6af86b20ffcc5d9ab5",
       "issue": 14131
+    },
+    {
+      "type": "patch",
+      "file": "ReactCommon/TEMP_UntilReactCommonUpdate/react/renderer/uimanager/primitives.h",
+      "baseFile": "packages/react-native/ReactCommon/react/renderer/uimanager/primitives.h",
+      "baseHash": "edec5c260fb9cac0f6654106cbafb1d176d26dbf",
+      "issue": 14281
     },
     {
       "type": "patch",
@@ -333,7 +340,7 @@
       "type": "patch",
       "file": "src-win/Libraries/Components/TextInput/TextInput.windows.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "1f9adcb7ca64fa536372ed28b7af5e03b05458ac"
+      "baseHash": "437a56337e8b6fabd440538af48167c2bbc59704"
     },
     {
       "type": "patch",
@@ -436,7 +443,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Image/AssetSourceResolver.windows.js",
       "baseFile": "packages/react-native/Libraries/Image/AssetSourceResolver.js",
-      "baseHash": "2c318e9f701806ff8ac9373ab7f39dd6f2e0255a"
+      "baseHash": "9960a76041cdbbeff2259f2e5c4415f73b45eee1"
     },
     {
       "type": "patch",

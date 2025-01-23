@@ -8340,6 +8340,44 @@ exports[`snapshotAllPages Border 23`] = `
       }
     />
   </View>
+  <View
+    style={
+      [
+        {
+          "height": 50,
+          "width": 50,
+        },
+        {
+          "backgroundColor": "red",
+          "borderColor": "rgba(0, 0, 0, 0.5)",
+          "borderTopLeftRadius": 20,
+          "borderWidth": 10,
+        },
+        {
+          "borderStyle": "dashed",
+          "overflow": "hidden",
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        [
+          {
+            "backgroundColor": "blue",
+            "height": 20,
+            "left": -10,
+            "top": -10,
+            "width": 20,
+          },
+          {
+            "left": -15,
+            "top": 0,
+          },
+        ]
+      }
+    />
+  </View>
 </View>
 `;
 
@@ -66687,67 +66725,92 @@ exports[`snapshotAllPages Text 1`] = `
 >
   <Text
     style={
-      {
-        "backgroundColor": "#F000F0",
-        "padding": 10,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#F000F0",
+          "padding": 10,
+        },
+      ]
     }
   >
     Text with background color only
   </Text>
   <Text
     style={
-      {
-        "backgroundColor": "#F000F0",
-        "borderRadius": 10,
-        "marginTop": 10,
-        "padding": 10,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#F000F0",
+          "borderRadius": 10,
+          "marginTop": 10,
+          "padding": 10,
+        },
+      ]
     }
   >
     Text with background color and uniform borderRadii
   </Text>
   <Text
     style={
-      {
-        "backgroundColor": "#F000F0",
-        "borderBottomLeftRadius": 10,
-        "borderBottomRightRadius": 20,
-        "borderTopLeftRadius": 20,
-        "borderTopRightRadius": 10,
-        "marginTop": 10,
-        "padding": 10,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#F000F0",
+          "borderBottomLeftRadius": 10,
+          "borderBottomRightRadius": 20,
+          "borderTopLeftRadius": 20,
+          "borderTopRightRadius": 10,
+          "marginTop": 10,
+          "padding": 10,
+        },
+      ]
     }
   >
     Text with background color and non-uniform borders
   </Text>
   <Text
     style={
-      {
-        "borderBottomLeftRadius": 10,
-        "borderBottomRightRadius": 20,
-        "borderColor": "red",
-        "borderTopLeftRadius": 20,
-        "borderTopRightRadius": 10,
-        "borderWidth": 1,
-        "marginTop": 10,
-        "padding": 10,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "borderBottomLeftRadius": 10,
+          "borderBottomRightRadius": 20,
+          "borderColor": "red",
+          "borderTopLeftRadius": 20,
+          "borderTopRightRadius": 10,
+          "borderWidth": 1,
+          "marginTop": 10,
+          "padding": 10,
+        },
+      ]
     }
   >
     Text with borderWidth
   </Text>
   <Text
     style={
-      {
-        "backgroundColor": "#00AA00",
-        "borderColor": "blue",
-        "borderRadius": 10,
-        "borderWidth": 2,
-        "marginTop": 10,
-        "padding": 10,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#00AA00",
+          "borderColor": "blue",
+          "borderRadius": 10,
+          "borderWidth": 2,
+          "marginTop": 10,
+          "padding": 10,
+        },
+      ]
     }
   >
     Text with background AND borderWidth
@@ -66763,10 +66826,15 @@ exports[`snapshotAllPages Text 2`] = `
     ellipsizeMode="tail"
     numberOfLines={1}
     style={
-      {
-        "fontSize": 36,
-        "marginVertical": 6,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 36,
+          "marginVertical": 6,
+        },
+      ]
     }
   >
     Truncated text is baaaaad.
@@ -66775,10 +66843,15 @@ exports[`snapshotAllPages Text 2`] = `
     adjustsFontSizeToFit={true}
     numberOfLines={1}
     style={
-      {
-        "fontSize": 40,
-        "marginVertical": 6,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 40,
+          "marginVertical": 6,
+        },
+      ]
     }
   >
     Shrinking to fit available space is much better!
@@ -66787,10 +66860,15 @@ exports[`snapshotAllPages Text 2`] = `
     adjustsFontSizeToFit={true}
     numberOfLines={1}
     style={
-      {
-        "fontSize": 30,
-        "marginVertical": 6,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 30,
+          "marginVertical": 6,
+        },
+      ]
     }
   >
     Add text to me to watch me shrink! 
@@ -66800,10 +66878,15 @@ exports[`snapshotAllPages Text 2`] = `
     android_hyphenationFrequency="normal"
     numberOfLines={4}
     style={
-      {
-        "fontSize": 20,
-        "marginVertical": 6,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 20,
+          "marginVertical": 6,
+        },
+      ]
     }
   >
     Multiline text component shrinking is supported, watch as this reeeeaaaally loooooong teeeeeeext grooooows and then shriiiinks as you add text to me! ioahsdia soady auydoa aoisyd aosdy  
@@ -66811,11 +66894,16 @@ exports[`snapshotAllPages Text 2`] = `
   <Text
     adjustsFontSizeToFit={true}
     style={
-      {
-        "fontSize": 20,
-        "marginVertical": 6,
-        "maxHeight": 50,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 20,
+          "marginVertical": 6,
+          "maxHeight": 50,
+        },
+      ]
     }
   >
     Text limited by height, watch as this reeeeaaaally loooooong teeeeeeext grooooows and then shriiiinks as you add text to me! ioahsdia soady auydoa aoisyd aosdy  
@@ -66824,25 +66912,40 @@ exports[`snapshotAllPages Text 2`] = `
     adjustsFontSizeToFit={true}
     numberOfLines={1}
     style={
-      {
-        "marginVertical": 6,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "marginVertical": 6,
+        },
+      ]
     }
   >
     <Text
       style={
-        {
-          "fontSize": 14,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 14,
+          },
+        ]
       }
     >
       Differently sized nested elements will shrink together. 
     </Text>
     <Text
       style={
-        {
-          "fontSize": 20,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 20,
+          },
+        ]
       }
     >
       LARGE TEXT! 
@@ -66861,9 +66964,14 @@ exports[`snapshotAllPages Text 2`] = `
     <Text
       onPress={[Function]}
       style={
-        {
-          "backgroundColor": "#ffaaaa",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#ffaaaa",
+          },
+        ]
       }
     >
       Reset
@@ -66871,9 +66979,14 @@ exports[`snapshotAllPages Text 2`] = `
     <Text
       onPress={[Function]}
       style={
-        {
-          "backgroundColor": "#aaaaff",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#aaaaff",
+          },
+        ]
       }
     >
       Remove Text
@@ -66881,9 +66994,14 @@ exports[`snapshotAllPages Text 2`] = `
     <Text
       onPress={[Function]}
       style={
-        {
-          "backgroundColor": "#aaffaa",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#aaffaa",
+          },
+        ]
       }
     >
       Add Text
@@ -67207,9 +67325,14 @@ exports[`snapshotAllPages Text 3`] = `
 exports[`snapshotAllPages Text 4`] = `
 <Text
   style={
-    {
-      "maxWidth": 300,
-    }
+    [
+      {
+        "color": "#000000ff",
+      },
+      {
+        "maxWidth": 300,
+      },
+    ]
   }
   testID="text-wrap"
 >
@@ -67222,16 +67345,26 @@ exports[`snapshotAllPages Text 5`] = `
   <Text
     android_hyphenationFrequency="normal"
     style={
-      {
-        "maxWidth": 300,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "maxWidth": 300,
+        },
+      ]
     }
   >
     <Text
       style={
-        {
-          "color": "red",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "red",
+          },
+        ]
       }
     >
       Normal: 
@@ -67241,16 +67374,26 @@ exports[`snapshotAllPages Text 5`] = `
   <Text
     android_hyphenationFrequency="none"
     style={
-      {
-        "maxWidth": 300,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "maxWidth": 300,
+        },
+      ]
     }
   >
     <Text
       style={
-        {
-          "color": "red",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "red",
+          },
+        ]
       }
     >
       None: 
@@ -67260,16 +67403,26 @@ exports[`snapshotAllPages Text 5`] = `
   <Text
     android_hyphenationFrequency="full"
     style={
-      {
-        "maxWidth": 300,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "maxWidth": 300,
+        },
+      ]
     }
   >
     <Text
       style={
-        {
-          "color": "red",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "color": "red",
+          },
+        ]
       }
     >
       Full: 
@@ -67282,9 +67435,14 @@ exports[`snapshotAllPages Text 5`] = `
 exports[`snapshotAllPages Text 6`] = `
 <Text
   style={
-    {
-      "padding": 10,
-    }
+    [
+      {
+        "color": "#000000ff",
+      },
+      {
+        "padding": 10,
+      },
+    ]
   }
   testID="text-padding"
 >
@@ -67296,11 +67454,27 @@ exports[`snapshotAllPages Text 7`] = `
 <View>
   <Text
     onPress={[Function]}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
   >
     Increase size
   </Text>
   <Text
     onPress={[Function]}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
   >
     Decrease size
   </Text>
@@ -67315,9 +67489,14 @@ exports[`snapshotAllPages Text 7`] = `
   >
     <Text
       style={
-        {
-          "fontWeight": "bold",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontWeight": "bold",
+          },
+        ]
       }
     >
       Language
@@ -68637,10 +68816,15 @@ exports[`snapshotAllPages Text 7`] = `
     <Text
       onTextLayout={[Function]}
       style={
-        {
-          "fontSize": 50,
-          "textAlign": "left",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 50,
+            "textAlign": "left",
+          },
+        ]
       }
     >
       The quick brown fox jumps over the lazy dog.
@@ -68656,7 +68840,16 @@ exports[`snapshotAllPages Text 7`] = `
       }
     }
   >
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Alignment:
     </Text>
     <View
@@ -68886,19 +69079,29 @@ exports[`snapshotAllPages Text 8`] = `
 [
   <Text
     style={
-      {
-        "fontFamily": "sans-serif",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontFamily": "sans-serif",
+        },
+      ]
     }
   >
     Sans-Serif
   </Text>,
   <Text
     style={
-      {
-        "fontFamily": "sans-serif",
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontFamily": "sans-serif",
+          "fontWeight": "bold",
+        },
+      ]
     }
     testID="text-font-family"
   >
@@ -68906,47 +69109,72 @@ exports[`snapshotAllPages Text 8`] = `
   </Text>,
   <Text
     style={
-      {
-        "fontFamily": "serif",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontFamily": "serif",
+        },
+      ]
     }
   >
     Serif
   </Text>,
   <Text
     style={
-      {
-        "fontFamily": "serif",
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontFamily": "serif",
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Serif Bold
   </Text>,
   <Text
     style={
-      {
-        "fontFamily": "monospace",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontFamily": "monospace",
+        },
+      ]
     }
   >
     Monospace
   </Text>,
   <Text
     style={
-      {
-        "fontFamily": "monospace",
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontFamily": "monospace",
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Monospace Bold (After 5.0)
   </Text>,
   <Text
     style={
-      {
-        "fontFamily": "Unknown Font Family",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontFamily": "Unknown Font Family",
+        },
+      ]
     }
   >
     Unknown Font Family
@@ -68972,137 +69200,207 @@ exports[`snapshotAllPages Text 9`] = `
   >
     <Text
       style={
-        {
-          "fontFamily": "sans-serif",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "sans-serif",
+          },
+        ]
       }
     >
       Roboto Regular
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "sans-serif",
-          "fontStyle": "italic",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "sans-serif",
+            "fontStyle": "italic",
+          },
+        ]
       }
     >
       Roboto Italic
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "sans-serif",
-          "fontWeight": "bold",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "sans-serif",
+            "fontWeight": "bold",
+          },
+        ]
       }
     >
       Roboto Bold
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "sans-serif",
-          "fontStyle": "italic",
-          "fontWeight": "bold",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "sans-serif",
+            "fontStyle": "italic",
+            "fontWeight": "bold",
+          },
+        ]
       }
     >
       Roboto Bold Italic
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "sans-serif-light",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "sans-serif-light",
+          },
+        ]
       }
     >
       Roboto Light
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "sans-serif-light",
-          "fontStyle": "italic",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "sans-serif-light",
+            "fontStyle": "italic",
+          },
+        ]
       }
     >
       Roboto Light Italic
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "sans-serif-thin",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "sans-serif-thin",
+          },
+        ]
       }
     >
       Roboto Thin (After 4.2)
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "sans-serif-thin",
-          "fontStyle": "italic",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "sans-serif-thin",
+            "fontStyle": "italic",
+          },
+        ]
       }
     >
       Roboto Thin Italic (After 4.2)
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "sans-serif-condensed",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "sans-serif-condensed",
+          },
+        ]
       }
     >
       Roboto Condensed
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "sans-serif-condensed",
-          "fontStyle": "italic",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "sans-serif-condensed",
+            "fontStyle": "italic",
+          },
+        ]
       }
     >
       Roboto Condensed Italic
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "sans-serif-condensed",
-          "fontWeight": "bold",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "sans-serif-condensed",
+            "fontWeight": "bold",
+          },
+        ]
       }
     >
       Roboto Condensed Bold
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "sans-serif-condensed",
-          "fontStyle": "italic",
-          "fontWeight": "bold",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "sans-serif-condensed",
+            "fontStyle": "italic",
+            "fontWeight": "bold",
+          },
+        ]
       }
     >
       Roboto Condensed Bold Italic
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "sans-serif-medium",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "sans-serif-medium",
+          },
+        ]
       }
     >
       Roboto Medium (After 5.0)
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "sans-serif-medium",
-          "fontStyle": "italic",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "sans-serif-medium",
+            "fontStyle": "italic",
+          },
+        ]
       }
     >
       Roboto Medium Italic (After 5.0)
@@ -69129,81 +69427,121 @@ exports[`snapshotAllPages Text 10`] = `
   >
     <Text
       style={
-        {
-          "fontFamily": "notoserif",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "notoserif",
+          },
+        ]
       }
     >
       NotoSerif Regular
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "notoserif",
-          "fontStyle": "italic",
-          "fontWeight": "bold",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "notoserif",
+            "fontStyle": "italic",
+            "fontWeight": "bold",
+          },
+        ]
       }
     >
       NotoSerif Bold Italic
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "notoserif",
-          "fontStyle": "italic",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "notoserif",
+            "fontStyle": "italic",
+          },
+        ]
       }
     >
       NotoSerif Italic (Missing Font file)
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "Rubik",
-          "fontWeight": "normal",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "Rubik",
+            "fontWeight": "normal",
+          },
+        ]
       }
     >
       Rubik Regular
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "Rubik",
-          "fontWeight": "300",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "Rubik",
+            "fontWeight": "300",
+          },
+        ]
       }
     >
       Rubik Light
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "Rubik",
-          "fontWeight": "700",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "Rubik",
+            "fontWeight": "700",
+          },
+        ]
       }
     >
       Rubik Bold
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "Rubik",
-          "fontWeight": "500",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "Rubik",
+            "fontWeight": "500",
+          },
+        ]
       }
     >
       Rubik Medium
     </Text>
     <Text
       style={
-        {
-          "fontFamily": "Rubik",
-          "fontStyle": "italic",
-          "fontWeight": "500",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontFamily": "Rubik",
+            "fontStyle": "italic",
+            "fontWeight": "500",
+          },
+        ]
       }
     >
       Rubik Medium Italic
@@ -69216,9 +69554,14 @@ exports[`snapshotAllPages Text 11`] = `
 [
   <Text
     style={
-      {
-        "fontSize": 23,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 23,
+        },
+      ]
     }
     testID="text-size"
   >
@@ -69226,9 +69569,14 @@ exports[`snapshotAllPages Text 11`] = `
   </Text>,
   <Text
     style={
-      {
-        "fontSize": 8,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 8,
+        },
+      ]
     }
   >
     Size 8
@@ -69264,180 +69612,280 @@ exports[`snapshotAllPages Text 13`] = `
 [
   <Text
     style={
-      {
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Move fast and be bold
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": "normal",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "normal",
+        },
+      ]
     }
   >
     Move fast and be normal
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": "900",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "900",
+        },
+      ]
     }
   >
     FONT WEIGHT 900
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": "800",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "800",
+        },
+      ]
     }
   >
     FONT WEIGHT 800
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": "700",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "700",
+        },
+      ]
     }
   >
     FONT WEIGHT 700
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": "600",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "600",
+        },
+      ]
     }
   >
     FONT WEIGHT 600
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": "500",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "500",
+        },
+      ]
     }
   >
     FONT WEIGHT 500
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": "400",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "400",
+        },
+      ]
     }
   >
     FONT WEIGHT 400
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": "300",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "300",
+        },
+      ]
     }
   >
     FONT WEIGHT 300
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": "200",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "200",
+        },
+      ]
     }
   >
     FONT WEIGHT 200
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": "100",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": "100",
+        },
+      ]
     }
   >
     FONT WEIGHT 100
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": 900,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": 900,
+        },
+      ]
     }
   >
     FONT WEIGHT 900
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": 800,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": 800,
+        },
+      ]
     }
   >
     FONT WEIGHT 800
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": 700,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": 700,
+        },
+      ]
     }
   >
     FONT WEIGHT 700
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": 600,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": 600,
+        },
+      ]
     }
   >
     FONT WEIGHT 600
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": 500,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": 500,
+        },
+      ]
     }
   >
     FONT WEIGHT 500
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": 400,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": 400,
+        },
+      ]
     }
   >
     FONT WEIGHT 400
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": 300,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": 300,
+        },
+      ]
     }
   >
     FONT WEIGHT 300
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": 200,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": 200,
+        },
+      ]
     }
   >
     FONT WEIGHT 200
   </Text>,
   <Text
     style={
-      {
-        "fontWeight": 100,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontWeight": 100,
+        },
+      ]
     }
   >
     FONT WEIGHT 100
@@ -69449,18 +69897,28 @@ exports[`snapshotAllPages Text 14`] = `
 [
   <Text
     style={
-      {
-        "fontStyle": "italic",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontStyle": "italic",
+        },
+      ]
     }
   >
     Move fast and be italic
   </Text>,
   <Text
     style={
-      {
-        "fontStyle": "normal",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontStyle": "normal",
+        },
+      ]
     }
   >
     Move fast and be normal
@@ -69471,10 +69929,15 @@ exports[`snapshotAllPages Text 14`] = `
 exports[`snapshotAllPages Text 15`] = `
 <Text
   style={
-    {
-      "fontStyle": "italic",
-      "fontWeight": "bold",
-    }
+    [
+      {
+        "color": "#000000ff",
+      },
+      {
+        "fontStyle": "italic",
+        "fontWeight": "bold",
+      },
+    ]
   }
 >
   Move fast and be both bold and italic
@@ -69485,9 +69948,14 @@ exports[`snapshotAllPages Text 16`] = `
 [
   <Text
     style={
-      {
-        "textDecorationLine": "underline",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textDecorationLine": "underline",
+        },
+      ]
     }
     testID="text-decoration-underline"
   >
@@ -69495,19 +69963,29 @@ exports[`snapshotAllPages Text 16`] = `
   </Text>,
   <Text
     style={
-      {
-        "textDecorationLine": "none",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textDecorationLine": "none",
+        },
+      ]
     }
   >
     None textDecoration
   </Text>,
   <Text
     style={
-      {
-        "textDecorationLine": "line-through",
-        "textDecorationStyle": "solid",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textDecorationLine": "line-through",
+          "textDecorationStyle": "solid",
+        },
+      ]
     }
     testID="text-decoration-solid-linethru"
   >
@@ -69515,32 +69993,57 @@ exports[`snapshotAllPages Text 16`] = `
   </Text>,
   <Text
     style={
-      {
-        "textDecorationLine": "underline line-through",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textDecorationLine": "underline line-through",
+        },
+      ]
     }
   >
     Both underline and line-through
   </Text>,
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     Mixed text with
      
     <Text
       style={
-        {
-          "textDecorationLine": "underline",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "textDecorationLine": "underline",
+          },
+        ]
       }
     >
       underline
     </Text>
-     and
+     
+    and
      
     <Text
       style={
-        {
-          "textDecorationLine": "line-through",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "textDecorationLine": "line-through",
+          },
+        ]
       }
     >
       line-through
@@ -69555,6 +70058,14 @@ exports[`snapshotAllPages Text 17`] = `
 [
   <Text
     onPress={[Function]}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
     testID="text-outer-color"
   >
     (Normal text,
@@ -69668,49 +70179,74 @@ exports[`snapshotAllPages Text 17`] = `
   <Text
     onPress={[Function]}
     style={
-      {
-        "fontFamily": "serif",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontFamily": "serif",
+        },
+      ]
     }
   >
     (Serif
     <Text
       onPress={[Function]}
       style={
-        {
-          "fontStyle": "italic",
-          "fontWeight": "bold",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontStyle": "italic",
+            "fontWeight": "bold",
+          },
+        ]
       }
     >
       (Serif Bold Italic
       <Text
         onPress={[Function]}
         style={
-          {
-            "fontFamily": "monospace",
-            "fontStyle": "normal",
-            "fontWeight": "normal",
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontFamily": "monospace",
+              "fontStyle": "normal",
+              "fontWeight": "normal",
+            },
+          ]
         }
       >
         (Monospace Normal
         <Text
           onPress={[Function]}
           style={
-            {
-              "fontFamily": "sans-serif",
-              "fontWeight": "bold",
-            }
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "fontFamily": "sans-serif",
+                "fontWeight": "bold",
+              },
+            ]
           }
         >
           (Sans-Serif Bold
           <Text
             onPress={[Function]}
             style={
-              {
-                "fontWeight": "normal",
-              }
+              [
+                {
+                  "color": "#000000ff",
+                },
+                {
+                  "fontWeight": "normal",
+                },
+              ]
             }
           >
             (and Sans-Serif Normal)
@@ -69725,9 +70261,14 @@ exports[`snapshotAllPages Text 17`] = `
   </Text>,
   <Text
     style={
-      {
-        "fontSize": 12,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 12,
+        },
+      ]
     }
   >
     <Text
@@ -69743,17 +70284,28 @@ exports[`snapshotAllPages Text 17`] = `
   </Text>,
   <Text
     style={
-      {
-        "fontSize": 8,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 8,
+        },
+      ]
     }
   >
-    Nested text with size 8, 
+    Nested text with size 8,
+     
     <Text
       style={
-        {
-          "fontSize": 23,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 23,
+          },
+        ]
       }
     >
       size 23, 
@@ -69782,28 +70334,52 @@ exports[`snapshotAllPages Text 17`] = `
   </Text>,
   <Text
     style={
-      {
-        "opacity": 0.7,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "opacity": 0.7,
+        },
+      ]
     }
   >
     (opacity
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       (is inherited
       <Text
         style={
-          {
-            "opacity": 0.7,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "opacity": 0.7,
+            },
+          ]
         }
       >
         (and accumulated
         <Text
           style={
-            {
-              "backgroundColor": "#ffaaaa",
-              "opacity": 0.5,
-            }
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "backgroundColor": "#ffaaaa",
+                "opacity": 0.5,
+              },
+            ]
           }
         >
           (and also applies to the background)
@@ -69821,44 +70397,82 @@ exports[`snapshotAllPages Text 18`] = `
 <View
   testID="text-align"
 >
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     auto (default) - english LTR
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     أحب اللغة العربية auto (default) - arabic RTL
   </Text>
   <Text
     style={
-      {
-        "textAlign": "left",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textAlign": "left",
+        },
+      ]
     }
   >
     left left left left left left left left left left left left left left left
   </Text>
   <Text
     style={
-      {
-        "textAlign": "center",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textAlign": "center",
+        },
+      ]
     }
   >
     center center center center center center center center center center center
   </Text>
   <Text
     style={
-      {
-        "textAlign": "right",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textAlign": "right",
+        },
+      ]
     }
   >
     right right right right right right right right right right right right right
   </Text>
   <Text
     style={
-      {
-        "textAlign": "justify",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textAlign": "justify",
+        },
+      ]
     }
   >
     justify (works when api level &gt;= 26 otherwise fallbacks to "left"): this text component
@@ -69881,9 +70495,14 @@ exports[`snapshotAllPages Text 19`] = `
   >
     <Text
       style={
-        {
-          "backgroundColor": "red",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "red",
+          },
+        ]
       }
     >
       星际争霸是世界上最好的游戏。
@@ -69892,9 +70511,14 @@ exports[`snapshotAllPages Text 19`] = `
   <View>
     <Text
       style={
-        {
-          "backgroundColor": "red",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "red",
+          },
+        ]
       }
     >
       星际争霸是世界上最好的游戏。
@@ -69909,9 +70533,14 @@ exports[`snapshotAllPages Text 19`] = `
   >
     <Text
       style={
-        {
-          "backgroundColor": "red",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "red",
+          },
+        ]
       }
     >
       星际争霸是世界上最好的游戏。
@@ -69920,9 +70549,14 @@ exports[`snapshotAllPages Text 19`] = `
   <View>
     <Text
       style={
-        {
-          "backgroundColor": "red",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "red",
+          },
+        ]
       }
     >
       星际争霸是世界上最好的游戏。星际争霸是世界上最好的游戏。星际争霸是世界上最好的游戏。星际争霸是世界上最好的游戏。
@@ -69932,7 +70566,16 @@ exports[`snapshotAllPages Text 19`] = `
 `;
 
 exports[`snapshotAllPages Text 20`] = `
-<Text>
+<Text
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
+>
   A 
   generated
    
@@ -69947,15 +70590,20 @@ exports[`snapshotAllPages Text 21`] = `
     style={
       [
         {
-          "borderColor": "black",
-          "borderWidth": 1,
-          "fontSize": 16,
-          "lineHeight": 35,
-          "marginBottom": 5,
+          "color": "#000000ff",
         },
-        {
-          "maxWidth": 300,
-        },
+        [
+          {
+            "borderColor": "black",
+            "borderWidth": 1,
+            "fontSize": 16,
+            "lineHeight": 35,
+            "marginBottom": 5,
+          },
+          {
+            "maxWidth": 300,
+          },
+        ],
       ]
     }
     testID="line-height-greater-than-font-size"
@@ -69964,9 +70612,14 @@ exports[`snapshotAllPages Text 21`] = `
      
     <Text
       style={
-        {
-          "fontSize": 20,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 20,
+          },
+        ]
       }
     >
       Continually
@@ -69977,15 +70630,20 @@ exports[`snapshotAllPages Text 21`] = `
     style={
       [
         {
-          "borderColor": "black",
-          "borderWidth": 1,
-          "fontSize": 16,
-          "lineHeight": 8,
-          "marginBottom": 5,
+          "color": "#000000ff",
         },
-        {
-          "maxWidth": 300,
-        },
+        [
+          {
+            "borderColor": "black",
+            "borderWidth": 1,
+            "fontSize": 16,
+            "lineHeight": 8,
+            "marginBottom": 5,
+          },
+          {
+            "maxWidth": 300,
+          },
+        ],
       ]
     }
     testID="line-height-less-than-font-size"
@@ -69994,9 +70652,14 @@ exports[`snapshotAllPages Text 21`] = `
      
     <Text
       style={
-        {
-          "fontSize": 20,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 20,
+          },
+        ]
       }
     >
       Continually
@@ -70007,14 +70670,19 @@ exports[`snapshotAllPages Text 21`] = `
     style={
       [
         {
-          "borderColor": "black",
-          "borderWidth": 1,
-          "fontSize": 24,
-          "lineHeight": 8,
+          "color": "#000000ff",
         },
-        {
-          "maxWidth": 300,
-        },
+        [
+          {
+            "borderColor": "black",
+            "borderWidth": 1,
+            "fontSize": 24,
+            "lineHeight": 8,
+          },
+          {
+            "maxWidth": 300,
+          },
+        ],
       ]
     }
     testID="line-height-single-line-less-than-font-size"
@@ -70025,14 +70693,19 @@ exports[`snapshotAllPages Text 21`] = `
     style={
       [
         {
-          "borderColor": "black",
-          "borderWidth": 1,
-          "fontSize": 16,
-          "lineHeight": 20,
+          "color": "#000000ff",
         },
-        {
-          "maxWidth": 300,
-        },
+        [
+          {
+            "borderColor": "black",
+            "borderWidth": 1,
+            "fontSize": 16,
+            "lineHeight": 20,
+          },
+          {
+            "maxWidth": 300,
+          },
+        ],
       ]
     }
     testID="line-height-single-line-greater-than-font-size"
@@ -70048,29 +70721,44 @@ exports[`snapshotAllPages Text 22`] = `
 >
   <Text
     style={
-      {
-        "letterSpacing": 0,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "letterSpacing": 0,
+        },
+      ]
     }
   >
     letterSpacing = 0
   </Text>
   <Text
     style={
-      {
-        "letterSpacing": 2,
-        "marginTop": 5,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "letterSpacing": 2,
+          "marginTop": 5,
+        },
+      ]
     }
   >
     letterSpacing = 2
   </Text>
   <Text
     style={
-      {
-        "letterSpacing": 9,
-        "marginTop": 5,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "letterSpacing": 9,
+          "marginTop": 5,
+        },
+      ]
     }
   >
     letterSpacing = 9
@@ -70084,12 +70772,17 @@ exports[`snapshotAllPages Text 22`] = `
   >
     <Text
       style={
-        {
-          "backgroundColor": "fuchsia",
-          "fontSize": 12,
-          "letterSpacing": 2,
-          "marginTop": 5,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "fuchsia",
+            "fontSize": 12,
+            "letterSpacing": 2,
+            "marginTop": 5,
+          },
+        ]
       }
     >
       With size and background color
@@ -70097,40 +70790,60 @@ exports[`snapshotAllPages Text 22`] = `
   </View>
   <Text
     style={
-      {
-        "letterSpacing": -1,
-        "marginTop": 5,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "letterSpacing": -1,
+          "marginTop": 5,
+        },
+      ]
     }
   >
     letterSpacing = -1
   </Text>
   <Text
     style={
-      {
-        "backgroundColor": "#dddddd",
-        "letterSpacing": 3,
-        "marginTop": 5,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#dddddd",
+          "letterSpacing": 3,
+          "marginTop": 5,
+        },
+      ]
     }
   >
     [letterSpacing = 3]
     <Text
       style={
-        {
-          "backgroundColor": "#bbbbbb",
-          "letterSpacing": 0,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#bbbbbb",
+            "letterSpacing": 0,
+          },
+        ]
       }
     >
       [Nested letterSpacing = 0]
     </Text>
     <Text
       style={
-        {
-          "backgroundColor": "#eeeeee",
-          "letterSpacing": 6,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eeeeee",
+            "letterSpacing": 6,
+          },
+        ]
       }
     >
       [Nested letterSpacing = 6]
@@ -70145,33 +70858,78 @@ exports[`snapshotAllPages Text 24`] = `
 <View>
   <Text
     style={
-      {
-        "fontSize": 15,
-        "fontWeight": "bold",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 15,
+          "fontWeight": "bold",
+        },
+      ]
     }
   >
     Tap the controls below to change attributes.
   </Text>
-  <Text>
-    <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       See how it will even work on
        
       <Text
         style={
-          {
-            "fontSize": 15,
-            "fontWeight": "bold",
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "fontSize": 15,
+              "fontWeight": "bold",
+            },
+          ]
         }
       >
-        this nested text
+        this nested RNTesterText
       </Text>
     </Text>
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     <Text
       onPress={[Function]}
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
     >
       Toggle Weight
     </Text>
@@ -70179,6 +70937,14 @@ exports[`snapshotAllPages Text 24`] = `
   </Text>
   <Text
     onPress={[Function]}
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
     suppressHighlighting={true}
   >
     Increase Size (suppressHighlighting true)
@@ -70192,29 +70958,53 @@ exports[`snapshotAllPages Text 25`] = `
 >
   <Text
     style={
-      {
-        "backgroundColor": "#ffaaaa",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "#ffaaaa",
+        },
+      ]
     }
   >
     Red background,
     <Text
       style={
-        {
-          "backgroundColor": "#aaaaff",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#aaaaff",
+          },
+        ]
       }
     >
        
       blue background,
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
          
         inherited blue background,
         <Text
           style={
-            {
-              "backgroundColor": "#aaffaa",
-            }
+            [
+              {
+                "color": "#000000ff",
+              },
+              {
+                "backgroundColor": "#aaffaa",
+              },
+            ]
           }
         >
            
@@ -70225,19 +71015,38 @@ exports[`snapshotAllPages Text 25`] = `
   </Text>
   <Text
     style={
-      {
-        "backgroundColor": "rgba(100, 100, 100, 0.3)",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "backgroundColor": "rgba(100, 100, 100, 0.3)",
+        },
+      ]
     }
   >
     Same alpha as background,
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       Inherited alpha from background,
       <Text
         style={
-          {
-            "backgroundColor": "rgba(100, 100, 100, 0.3)",
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "backgroundColor": "rgba(100, 100, 100, 0.3)",
+            },
+          ]
         }
       >
         Reapply alpha
@@ -70278,12 +71087,17 @@ exports[`snapshotAllPages Text 26`] = `
     style={
       [
         {
-          "backgroundColor": "rgba(100, 100, 100, 0.3)",
-          "left": 5,
+          "color": "#000000ff",
         },
-        {
-          "top": -80,
-        },
+        [
+          {
+            "backgroundColor": "rgba(100, 100, 100, 0.3)",
+            "left": 5,
+          },
+          {
+            "top": -80,
+          },
+        ],
       ]
     }
   >
@@ -70293,13 +71107,18 @@ exports[`snapshotAllPages Text 26`] = `
     style={
       [
         {
-          "backgroundColor": "rgba(100, 100, 100, 0.3)",
-          "left": 5,
+          "color": "#000000ff",
         },
-        {
-          "backgroundColor": "transparent",
-          "top": -70,
-        },
+        [
+          {
+            "backgroundColor": "rgba(100, 100, 100, 0.3)",
+            "left": 5,
+          },
+          {
+            "backgroundColor": "transparent",
+            "top": -70,
+          },
+        ],
       ]
     }
   >
@@ -70313,9 +71132,14 @@ exports[`snapshotAllPages Text 27`] = `
   <Text
     numberOfLines={1}
     style={
-      {
-        "maxWidth": 300,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "maxWidth": 300,
+        },
+      ]
     }
     testID="text-one-line"
   >
@@ -70328,11 +71152,16 @@ exports[`snapshotAllPages Text 27`] = `
     style={
       [
         {
-          "fontSize": 31,
+          "color": "#000000ff",
         },
-        {
-          "maxWidth": 300,
-        },
+        [
+          {
+            "fontSize": 31,
+          },
+          {
+            "maxWidth": 300,
+          },
+        ],
       ]
     }
   >
@@ -70345,15 +71174,20 @@ exports[`snapshotAllPages Text 27`] = `
     style={
       [
         {
-          "marginTop": 20,
+          "color": "#000000ff",
         },
-        {
-          "maxWidth": 300,
-        },
+        [
+          {
+            "marginTop": 20,
+          },
+          {
+            "maxWidth": 300,
+          },
+        ],
       ]
     }
   >
-    Maximum of two lines no matter now much I write here. If I keep writing it
+    RNTesterText of two lines no matter now much I write here. If I keep writing it
     '
     ll just truncate after two lines
   </Text>,
@@ -70361,11 +71195,16 @@ exports[`snapshotAllPages Text 27`] = `
     style={
       [
         {
-          "marginTop": 20,
+          "color": "#000000ff",
         },
-        {
-          "maxWidth": 300,
-        },
+        [
+          {
+            "marginTop": 20,
+          },
+          {
+            "maxWidth": 300,
+          },
+        ],
       ]
     }
   >
@@ -70378,14 +71217,28 @@ exports[`snapshotAllPages Text 27`] = `
 
 exports[`snapshotAllPages Text 28`] = `
 [
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     By default, text will respect Text Size accessibility setting on Android. It means that all font sizes will be increased or decreased depending on the value of the Text Size setting in the OS's Settings app.
   </Text>,
   <Text
     style={
-      {
-        "marginTop": 10,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "marginTop": 10,
+        },
+      ]
     }
   >
     You can disable scaling for your Text component by passing 
@@ -70399,19 +71252,29 @@ exports[`snapshotAllPages Text 28`] = `
   <Text
     allowFontScaling={false}
     style={
-      {
-        "fontSize": 15,
-        "marginTop": 20,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 15,
+          "marginTop": 20,
+        },
+      ]
     }
   >
     This text will not scale.
      
     <Text
       style={
-        {
-          "fontSize": 15,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "fontSize": 15,
+          },
+        ]
       }
     >
       This text also won't scale because it inherits "allowFontScaling" from its parent.
@@ -70423,6 +71286,14 @@ exports[`snapshotAllPages Text 28`] = `
 exports[`snapshotAllPages Text 29`] = `
 <Text
   selectable={true}
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
   testID="text-selectable"
 >
   This text is selectable if you click-and-hold, and will offer the native Android selection menus.
@@ -70433,6 +71304,14 @@ exports[`snapshotAllPages Text 30`] = `
 <Text
   selectable={true}
   selectionColor="orange"
+  style={
+    [
+      {
+        "color": "#000000ff",
+      },
+      undefined,
+    ]
+  }
   testID="text-selection-color"
 >
   This text will have a orange highlight on selection.
@@ -70442,15 +71321,20 @@ exports[`snapshotAllPages Text 30`] = `
 exports[`snapshotAllPages Text 31`] = `
 <Text
   style={
-    {
-      "fontSize": 20,
-      "textShadowColor": "#00cccc",
-      "textShadowOffset": {
-        "height": 2,
-        "width": 2,
+    [
+      {
+        "color": "#000000ff",
       },
-      "textShadowRadius": 1,
-    }
+      {
+        "fontSize": 20,
+        "textShadowColor": "#00cccc",
+        "textShadowOffset": {
+          "height": 2,
+          "width": 2,
+        },
+        "textShadowRadius": 1,
+      },
+    ]
   }
   testID="text-shadow"
 >
@@ -70463,9 +71347,14 @@ exports[`snapshotAllPages Text 32`] = `
   <Text
     numberOfLines={1}
     style={
-      {
-        "maxWidth": 300,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "maxWidth": 300,
+        },
+      ]
     }
   >
     This very long text should be truncated with dots in the end.
@@ -70474,20 +71363,30 @@ exports[`snapshotAllPages Text 32`] = `
     ellipsizeMode="middle"
     numberOfLines={1}
     style={
-      {
-        "maxWidth": 300,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "maxWidth": 300,
+        },
+      ]
     }
   >
-    This very long text should be truncated with dots in the middle.
+    RNTesterText very long text should be truncated with dots in the middle.
   </Text>,
   <Text
     ellipsizeMode="head"
     numberOfLines={1}
     style={
-      {
-        "maxWidth": 300,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "maxWidth": 300,
+        },
+      ]
     }
   >
     This very long text should be truncated with dots in the beginning.
@@ -70496,9 +71395,14 @@ exports[`snapshotAllPages Text 32`] = `
     ellipsizeMode="clip"
     numberOfLines={1}
     style={
-      {
-        "maxWidth": 300,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "maxWidth": 300,
+        },
+      ]
     }
   >
     This very long text should be clipped and this will not be visible.
@@ -70512,11 +71416,16 @@ exports[`snapshotAllPages Text 33`] = `
 >
   <Text
     style={
-      {
-        "fontVariant": [
-          "small-caps",
-        ],
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontVariant": [
+            "small-caps",
+          ],
+        },
+      ]
     }
   >
     Small Caps
@@ -70525,12 +71434,17 @@ exports[`snapshotAllPages Text 33`] = `
   </Text>
   <Text
     style={
-      {
-        "fontFamily": "Roboto",
-        "fontVariant": [
-          "oldstyle-nums",
-        ],
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontFamily": "Roboto",
+          "fontVariant": [
+            "oldstyle-nums",
+          ],
+        },
+      ]
     }
   >
     Old Style nums 0123456789
@@ -70539,12 +71453,17 @@ exports[`snapshotAllPages Text 33`] = `
   </Text>
   <Text
     style={
-      {
-        "fontFamily": "Roboto",
-        "fontVariant": [
-          "lining-nums",
-        ],
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontFamily": "Roboto",
+          "fontVariant": [
+            "lining-nums",
+          ],
+        },
+      ]
     }
   >
     Lining nums 0123456789
@@ -70553,11 +71472,16 @@ exports[`snapshotAllPages Text 33`] = `
   </Text>
   <Text
     style={
-      {
-        "fontVariant": [
-          "tabular-nums",
-        ],
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontVariant": [
+            "tabular-nums",
+          ],
+        },
+      ]
     }
   >
     Tabular nums
@@ -70572,11 +71496,16 @@ exports[`snapshotAllPages Text 33`] = `
   </Text>
   <Text
     style={
-      {
-        "fontVariant": [
-          "proportional-nums",
-        ],
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontVariant": [
+            "proportional-nums",
+          ],
+        },
+      ]
     }
   >
     Proportional nums
@@ -70613,19 +71542,33 @@ exports[`snapshotAllPages Text 34`] = `
     >
       <Text
         style={
-          {
-            "alignSelf": "center",
-            "backgroundColor": "#EEEEEE",
-            "color": "#000000",
-            "fontFamily": "sans-serif",
-            "fontSize": 120,
-            "textAlignVertical": "center",
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "alignSelf": "center",
+              "backgroundColor": "#EEEEEE",
+              "color": "#000000",
+              "fontFamily": "sans-serif",
+              "fontSize": 120,
+              "textAlignVertical": "center",
+            },
+          ]
         }
       >
         Ey
       </Text>
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         Default
       </Text>
     </View>
@@ -70640,28 +71583,51 @@ exports[`snapshotAllPages Text 34`] = `
         style={
           [
             {
-              "alignSelf": "center",
-              "backgroundColor": "#EEEEEE",
-              "color": "#000000",
-              "fontFamily": "sans-serif",
-              "fontSize": 120,
-              "textAlignVertical": "center",
+              "color": "#000000ff",
             },
-            {
-              "includeFontPadding": false,
-              "marginLeft": 10,
-            },
+            [
+              {
+                "alignSelf": "center",
+                "backgroundColor": "#EEEEEE",
+                "color": "#000000",
+                "fontFamily": "sans-serif",
+                "fontSize": 120,
+                "textAlignVertical": "center",
+              },
+              {
+                "includeFontPadding": false,
+                "marginLeft": 10,
+              },
+            ],
           ]
         }
       >
         Ey
       </Text>
-      <Text>
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
+        }
+      >
         includeFontPadding: false
       </Text>
     </View>
   </View>,
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     By default Android will put extra space above text to allow for upper-case accents or other ascenders. With some fonts, this can make text look slightly misaligned when centered vertically.
   </Text>,
 ]
@@ -70673,50 +71639,93 @@ exports[`snapshotAllPages Text 35`] = `
 >
   <Text
     style={
-      {
-        "textTransform": "uppercase",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textTransform": "uppercase",
+        },
+      ]
     }
   >
     This text should be uppercased.
   </Text>
   <Text
     style={
-      {
-        "textTransform": "lowercase",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textTransform": "lowercase",
+        },
+      ]
     }
   >
     This TEXT SHOULD be lowercased.
   </Text>
   <Text
     style={
-      {
-        "textTransform": "capitalize",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "textTransform": "capitalize",
+        },
+      ]
     }
   >
     This text should be CAPITALIZED.
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     Capitalize a date:
     <Text
       style={
-        {
-          "textTransform": "capitalize",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "textTransform": "capitalize",
+          },
+        ]
       }
     >
       the 9th of november, 1998
     </Text>
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     Capitalize a 2 digit date:
     <Text
       style={
-        {
-          "textTransform": "capitalize",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "textTransform": "capitalize",
+          },
+        ]
       }
     >
       the 25th of december
@@ -70724,71 +71733,95 @@ exports[`snapshotAllPages Text 35`] = `
   </Text>
   <Text
     style={
-      {
-        "textTransform": "capitalize",
-      }
-    }
-  >
-    Mixed: 
-    <Text
-      style={
+      [
         {
-          "textTransform": "uppercase",
-        }
-      }
-    >
-      uppercase 
-    </Text>
-    <Text
-      style={
-        {
-          "textTransform": "lowercase",
-        }
-      }
-    >
-      LoWeRcAsE 
-    </Text>
-    <Text
-      style={
+          "color": "#000000ff",
+        },
         {
           "textTransform": "capitalize",
-        }
+        },
+      ]
+    }
+  >
+    Mixed:
+     
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "textTransform": "uppercase",
+          },
+        ]
+      }
+    >
+      uppercase
+       
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "textTransform": "lowercase",
+          },
+        ]
+      }
+    >
+      LoWeRcAsE
+       
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "textTransform": "capitalize",
+          },
+        ]
       }
     >
       capitalize each word
     </Text>
   </Text>
-  <Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
     Should be "ABC":
     <Text
       style={
-        {
-          "textTransform": "uppercase",
-        }
-      }
-    >
-      a
-      <Text>
-        b
-      </Text>
-      c
-    </Text>
-  </Text>
-  <Text>
-    Should be "AbC":
-    <Text
-      style={
-        {
-          "textTransform": "uppercase",
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "textTransform": "uppercase",
+          },
+        ]
       }
     >
       a
       <Text
         style={
-          {
-            "textTransform": "none",
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            undefined,
+          ]
         }
       >
         b
@@ -70798,15 +71831,61 @@ exports[`snapshotAllPages Text 35`] = `
   </Text>
   <Text
     style={
-      {
-        "alignSelf": "flex-start",
-        "backgroundColor": "blue",
-        "color": "turquoise",
-        "fontSize": 16,
-        "letterSpacing": 2,
-        "lineHeight": 32,
-        "textTransform": "uppercase",
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
+  >
+    Should be "AbC":
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "textTransform": "uppercase",
+          },
+        ]
       }
+    >
+      a
+      <Text
+        style={
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "textTransform": "none",
+            },
+          ]
+        }
+      >
+        b
+      </Text>
+      c
+    </Text>
+  </Text>
+  <Text
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "alignSelf": "flex-start",
+          "backgroundColor": "blue",
+          "color": "turquoise",
+          "fontSize": 16,
+          "letterSpacing": 2,
+          "lineHeight": 32,
+          "textTransform": "uppercase",
+        },
+      ]
     }
   >
     Works with other text styles
@@ -70818,26 +71897,66 @@ exports[`snapshotAllPages Text 36`] = `
 [
   <Text
     dataDetectorType="phoneNumber"
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
   >
     Phone number: 123-123-1234
   </Text>,
   <Text
     dataDetectorType="link"
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
   >
     Link: https://www.facebook.com
   </Text>,
   <Text
     dataDetectorType="email"
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
   >
     Email: employee@facebook.com
   </Text>,
   <Text
     dataDetectorType="none"
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
   >
     Phone number: 123-123-1234 Link: https://www.facebook.com Email: employee@facebook.com
   </Text>,
   <Text
     dataDetectorType="all"
+    style={
+      [
+        {
+          "color": "#000000ff",
+        },
+        undefined,
+      ]
+    }
   >
     Phone number: 123-123-1234 Link: https://www.facebook.com Email: employee@facebook.com
   </Text>,
@@ -70848,11 +71967,16 @@ exports[`snapshotAllPages Text 37`] = `
 <View>
   <Text
     style={
-      {
-        "fontSize": 16,
-        "fontWeight": "bold",
-        "marginTop": 8,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 16,
+          "fontWeight": "bold",
+          "marginTop": 8,
+        },
+      ]
     }
   >
     Nested &lt;Text/&gt;s:
@@ -70874,113 +71998,172 @@ exports[`snapshotAllPages Text 37`] = `
         }
       }
     />
-    <Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
       <Text
         style={
-          {
-            "backgroundColor": "#eee",
-            "fontSize": 53,
-            "maxWidth": 20,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "backgroundColor": "#eee",
+              "fontSize": 53,
+              "maxWidth": 20,
+            },
+          ]
         }
       >
         9
       </Text>
       <Text
         style={
-          {
-            "backgroundColor": "#eee",
-            "fontSize": 48,
-            "maxWidth": 20,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "backgroundColor": "#eee",
+              "fontSize": 48,
+              "maxWidth": 20,
+            },
+          ]
         }
       >
         8
       </Text>
       <Text
         style={
-          {
-            "backgroundColor": "#eee",
-            "fontSize": 43,
-            "maxWidth": 20,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "backgroundColor": "#eee",
+              "fontSize": 43,
+              "maxWidth": 20,
+            },
+          ]
         }
       >
         7
       </Text>
       <Text
         style={
-          {
-            "backgroundColor": "#eee",
-            "fontSize": 38,
-            "maxWidth": 20,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "backgroundColor": "#eee",
+              "fontSize": 38,
+              "maxWidth": 20,
+            },
+          ]
         }
       >
         6
       </Text>
       <Text
         style={
-          {
-            "backgroundColor": "#eee",
-            "fontSize": 33,
-            "maxWidth": 20,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "backgroundColor": "#eee",
+              "fontSize": 33,
+              "maxWidth": 20,
+            },
+          ]
         }
       >
         5
       </Text>
       <Text
         style={
-          {
-            "backgroundColor": "#eee",
-            "fontSize": 28,
-            "maxWidth": 20,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "backgroundColor": "#eee",
+              "fontSize": 28,
+              "maxWidth": 20,
+            },
+          ]
         }
       >
         4
       </Text>
       <Text
         style={
-          {
-            "backgroundColor": "#eee",
-            "fontSize": 23,
-            "maxWidth": 20,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "backgroundColor": "#eee",
+              "fontSize": 23,
+              "maxWidth": 20,
+            },
+          ]
         }
       >
         3
       </Text>
       <Text
         style={
-          {
-            "backgroundColor": "#eee",
-            "fontSize": 18,
-            "maxWidth": 20,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "backgroundColor": "#eee",
+              "fontSize": 18,
+              "maxWidth": 20,
+            },
+          ]
         }
       >
         2
       </Text>
       <Text
         style={
-          {
-            "backgroundColor": "#eee",
-            "fontSize": 13,
-            "maxWidth": 20,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "backgroundColor": "#eee",
+              "fontSize": 13,
+              "maxWidth": 20,
+            },
+          ]
         }
       >
         1
       </Text>
       <Text
         style={
-          {
-            "backgroundColor": "#eee",
-            "fontSize": 8,
-            "maxWidth": 20,
-          }
+          [
+            {
+              "color": "#000000ff",
+            },
+            {
+              "backgroundColor": "#eee",
+              "fontSize": 8,
+              "maxWidth": 20,
+            },
+          ]
         }
       >
         0
@@ -70998,11 +72181,16 @@ exports[`snapshotAllPages Text 37`] = `
   </View>
   <Text
     style={
-      {
-        "fontSize": 16,
-        "fontWeight": "bold",
-        "marginTop": 8,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "fontSize": 16,
+          "fontWeight": "bold",
+          "marginTop": 8,
+        },
+      ]
     }
   >
     Array of &lt;Text/&gt;s in &lt;View&gt;:
@@ -71026,110 +72214,160 @@ exports[`snapshotAllPages Text 37`] = `
     />
     <Text
       style={
-        {
-          "backgroundColor": "#eee",
-          "fontSize": 53,
-          "maxWidth": 20,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 53,
+            "maxWidth": 20,
+          },
+        ]
       }
     >
       9
     </Text>
     <Text
       style={
-        {
-          "backgroundColor": "#eee",
-          "fontSize": 48,
-          "maxWidth": 20,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 48,
+            "maxWidth": 20,
+          },
+        ]
       }
     >
       8
     </Text>
     <Text
       style={
-        {
-          "backgroundColor": "#eee",
-          "fontSize": 43,
-          "maxWidth": 20,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 43,
+            "maxWidth": 20,
+          },
+        ]
       }
     >
       7
     </Text>
     <Text
       style={
-        {
-          "backgroundColor": "#eee",
-          "fontSize": 38,
-          "maxWidth": 20,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 38,
+            "maxWidth": 20,
+          },
+        ]
       }
     >
       6
     </Text>
     <Text
       style={
-        {
-          "backgroundColor": "#eee",
-          "fontSize": 33,
-          "maxWidth": 20,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 33,
+            "maxWidth": 20,
+          },
+        ]
       }
     >
       5
     </Text>
     <Text
       style={
-        {
-          "backgroundColor": "#eee",
-          "fontSize": 28,
-          "maxWidth": 20,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 28,
+            "maxWidth": 20,
+          },
+        ]
       }
     >
       4
     </Text>
     <Text
       style={
-        {
-          "backgroundColor": "#eee",
-          "fontSize": 23,
-          "maxWidth": 20,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 23,
+            "maxWidth": 20,
+          },
+        ]
       }
     >
       3
     </Text>
     <Text
       style={
-        {
-          "backgroundColor": "#eee",
-          "fontSize": 18,
-          "maxWidth": 20,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 18,
+            "maxWidth": 20,
+          },
+        ]
       }
     >
       2
     </Text>
     <Text
       style={
-        {
-          "backgroundColor": "#eee",
-          "fontSize": 13,
-          "maxWidth": 20,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 13,
+            "maxWidth": 20,
+          },
+        ]
       }
     >
       1
     </Text>
     <Text
       style={
-        {
-          "backgroundColor": "#eee",
-          "fontSize": 8,
-          "maxWidth": 20,
-        }
+        [
+          {
+            "color": "#000000ff",
+          },
+          {
+            "backgroundColor": "#eee",
+            "fontSize": 8,
+            "maxWidth": 20,
+          },
+        ]
       }
     >
       0
@@ -71151,9 +72389,14 @@ exports[`snapshotAllPages Text 38`] = `
 <View>
   <Text
     style={
-      {
-        "userSelect": "auto",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "userSelect": "auto",
+        },
+      ]
     }
   >
     Text element is selectable
@@ -71165,44 +72408,64 @@ exports[`snapshotAllPages Text 39`] = `
 <View>
   <Text
     style={
-      {
-        "borderWidth": 1,
-        "height": 75,
-        "textAlignVertical": "top",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "height": 75,
+          "textAlignVertical": "top",
+        },
+      ]
     }
   >
     Text element aligned to the top via textAlignVertical
   </Text>
   <Text
     style={
-      {
-        "borderWidth": 1,
-        "height": 75,
-        "verticalAlign": "top",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "height": 75,
+          "verticalAlign": "top",
+        },
+      ]
     }
   >
     Text element aligned to the top via verticalAlign
   </Text>
   <Text
     style={
-      {
-        "borderWidth": 1,
-        "height": 75,
-        "textAlignVertical": "center",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "height": 75,
+          "textAlignVertical": "center",
+        },
+      ]
     }
   >
     Text element aligned to the middle via textAlignVertical
   </Text>
   <Text
     style={
-      {
-        "borderWidth": 1,
-        "height": 75,
-        "verticalAlign": "middle",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "borderWidth": 1,
+          "height": 75,
+          "verticalAlign": "middle",
+        },
+      ]
     }
   >
     Text element aligned to the middle via verticalAlign
@@ -71214,14 +72477,19 @@ exports[`snapshotAllPages Text 40`] = `
 <View>
   <Text
     style={
-      {
-        "borderColor": "red",
-        "borderRadius": 50,
-        "borderWidth": 5,
-        "fontSize": 16,
-        "overflow": "hidden",
-        "padding": 0,
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "borderColor": "red",
+          "borderRadius": 50,
+          "borderWidth": 5,
+          "fontSize": 16,
+          "overflow": "hidden",
+          "padding": 0,
+        },
+      ]
     }
     testID="text-clipping"
   >
@@ -71234,10 +72502,15 @@ exports[`snapshotAllPages Text 41`] = `
 <View>
   <Text
     style={
-      {
-        "borderRadius": 10,
-        "boxShadow": "0 0 10px red",
-      }
+      [
+        {
+          "color": "#000000ff",
+        },
+        {
+          "borderRadius": 10,
+          "boxShadow": "0 0 10px red",
+        },
+      ]
     }
     testID="text-box-shadow"
   >
@@ -76315,6 +77588,177 @@ exports[`snapshotAllPages TextInput 20`] = `
 `;
 
 exports[`snapshotAllPages TextInput 21`] = `
+<View
+  style={
+    {
+      "maxWidth": 300,
+    }
+  }
+>
+  <View>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      Full width:
+    </Text>
+    <RCTSwitch
+      accessibilityRole="switch"
+      accessible={true}
+      focusable={true}
+      onChange={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "height": 31,
+          "width": 51,
+        }
+      }
+      value={true}
+    />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      Multiline:
+    </Text>
+    <RCTSwitch
+      accessibilityRole="switch"
+      accessible={true}
+      focusable={true}
+      onChange={[Function]}
+      onResponderTerminationRequest={[Function]}
+      onStartShouldSetResponder={[Function]}
+      style={
+        {
+          "height": 31,
+          "width": 51,
+        }
+      }
+      value={true}
+    />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      TextInput:
+    </Text>
+    <TextInput
+      enablesReturnKeyAutomatically={true}
+      multiline={true}
+      onChangeText={[Function]}
+      onContentSizeChange={[Function]}
+      returnKeyType="done"
+      style={
+        [
+          {
+            "backgroundColor": "#ffffffff",
+            "borderColor": "#3c3c432d",
+            "color": "#000000ff",
+          },
+          {
+            "borderWidth": 1,
+            "flexGrow": 1,
+            "flexShrink": 1,
+            "fontSize": 13,
+            "padding": 4,
+          },
+          [
+            {
+              "backgroundColor": "#eeeeee",
+              "maxHeight": 400,
+              "minHeight": 20,
+            },
+            {
+              "width": "100%",
+            },
+          ],
+        ]
+      }
+    >
+      <Text
+        style={
+          {
+            "color": "red",
+            "fontSize": 6,
+          }
+        }
+      >
+        small small small small small small
+      </Text>
+      <Text>
+        regular regular
+      </Text>
+      <Text
+        style={
+          {
+            "color": "green",
+            "fontSize": 30,
+          }
+        }
+      >
+        huge huge huge huge huge
+      </Text>
+    </TextInput>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      Plain text value representation:
+    </Text>
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    />
+    <Text
+      style={
+        [
+          {
+            "color": "#000000ff",
+          },
+          undefined,
+        ]
+      }
+    >
+      Content Size: 
+      {"width":0,"height":0}
+    </Text>
+  </View>
+</View>
+`;
+
+exports[`snapshotAllPages TextInput 22`] = `
 <View>
   <Text>
     Do not clear text on focus:
@@ -76370,7 +77814,7 @@ exports[`snapshotAllPages TextInput 21`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 22`] = `
+exports[`snapshotAllPages TextInput 23`] = `
 <View>
   <TextInput
     defaultValue="Default color text"
@@ -76630,7 +78074,7 @@ exports[`snapshotAllPages TextInput 22`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 23`] = `
+exports[`snapshotAllPages TextInput 24`] = `
 <View>
   <TextInput
     defaultValue="Font Weight (default)"
@@ -76968,7 +78412,7 @@ exports[`snapshotAllPages TextInput 23`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 24`] = `
+exports[`snapshotAllPages TextInput 25`] = `
 <TextInput
   placeholder="If you set height, beware of padding set from themes"
   style={
@@ -76996,7 +78440,7 @@ exports[`snapshotAllPages TextInput 24`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 25`] = `
+exports[`snapshotAllPages TextInput 26`] = `
 <View>
   <TextInput
     placeholder="letterSpacing = 0"
@@ -77113,7 +78557,7 @@ exports[`snapshotAllPages TextInput 25`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 26`] = `
+exports[`snapshotAllPages TextInput 27`] = `
 <View>
   <TextInput
     defaultValue="iloveturtles"
@@ -77172,7 +78616,7 @@ exports[`snapshotAllPages TextInput 26`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 27`] = `
+exports[`snapshotAllPages TextInput 28`] = `
 <TextInput
   defaultValue="Can't touch this! (>'-')> ^(' - ')^ <('-'<) (>'-')> ^(' - ')^"
   editable={false}
@@ -77199,7 +78643,7 @@ exports[`snapshotAllPages TextInput 27`] = `
 />
 `;
 
-exports[`snapshotAllPages TextInput 28`] = `
+exports[`snapshotAllPages TextInput 29`] = `
 <View>
   <TextInput
     autoCorrect={true}
@@ -77315,7 +78759,7 @@ exports[`snapshotAllPages TextInput 28`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 29`] = `
+exports[`snapshotAllPages TextInput 30`] = `
 <View>
   <TextInput
     editable={true}
@@ -77408,7 +78852,7 @@ exports[`snapshotAllPages TextInput 29`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 30`] = `
+exports[`snapshotAllPages TextInput 31`] = `
 <View
   style={
     {
@@ -77507,7 +78951,7 @@ exports[`snapshotAllPages TextInput 30`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 31`] = `
+exports[`snapshotAllPages TextInput 32`] = `
 <View
   style={
     {
@@ -77625,7 +79069,7 @@ exports[`snapshotAllPages TextInput 31`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 32`] = `
+exports[`snapshotAllPages TextInput 33`] = `
 <View>
   <TextInput
     autoComplete="country"
@@ -77739,7 +79183,7 @@ exports[`snapshotAllPages TextInput 32`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 33`] = `
+exports[`snapshotAllPages TextInput 34`] = `
 <View>
   <TextInput
     placeholder="returnKeyType: none"
@@ -77960,7 +79404,7 @@ exports[`snapshotAllPages TextInput 33`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 34`] = `
+exports[`snapshotAllPages TextInput 35`] = `
 <View>
   <TextInput
     inlineImageLeft="ic_menu_black_24dp"
@@ -78037,7 +79481,7 @@ exports[`snapshotAllPages TextInput 34`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 35`] = `
+exports[`snapshotAllPages TextInput 36`] = `
 <View>
   <TextInput
     style={
@@ -78067,7 +79511,7 @@ exports[`snapshotAllPages TextInput 35`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 36`] = `
+exports[`snapshotAllPages TextInput 37`] = `
 <View>
   <Text>
     PressIn/PressOut message
@@ -78102,7 +79546,7 @@ exports[`snapshotAllPages TextInput 36`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 37`] = `
+exports[`snapshotAllPages TextInput 38`] = `
 <View>
   <Text>
     Default submit key (Enter):
@@ -78238,7 +79682,7 @@ exports[`snapshotAllPages TextInput 37`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 38`] = `
+exports[`snapshotAllPages TextInput 39`] = `
 [
   <View
     focusable={true}
@@ -78304,7 +79748,7 @@ exports[`snapshotAllPages TextInput 38`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 39`] = `
+exports[`snapshotAllPages TextInput 40`] = `
 [
   <Text>
     Spell Check Enabled:
@@ -78353,7 +79797,7 @@ exports[`snapshotAllPages TextInput 39`] = `
 ]
 `;
 
-exports[`snapshotAllPages TextInput 40`] = `
+exports[`snapshotAllPages TextInput 41`] = `
 <View>
   <Text>
     CaretHidden
@@ -78385,7 +79829,7 @@ exports[`snapshotAllPages TextInput 40`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 41`] = `
+exports[`snapshotAllPages TextInput 42`] = `
 <View>
   <Text>
     Cursorcolor
@@ -78417,7 +79861,7 @@ exports[`snapshotAllPages TextInput 41`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 42`] = `
+exports[`snapshotAllPages TextInput 43`] = `
 <View>
   <Text>
     Shadow
@@ -78455,7 +79899,7 @@ exports[`snapshotAllPages TextInput 42`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 43`] = `
+exports[`snapshotAllPages TextInput 44`] = `
 <View
   accessible={true}
   testID="textinput-set"
@@ -78538,7 +79982,7 @@ exports[`snapshotAllPages TextInput 43`] = `
 </View>
 `;
 
-exports[`snapshotAllPages TextInput 44`] = `
+exports[`snapshotAllPages TextInput 45`] = `
 <View
   accessible={true}
   testID="textinput-searchbox"
