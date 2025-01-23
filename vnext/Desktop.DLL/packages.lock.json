@@ -42,7 +42,7 @@
       },
       "Microsoft.Web.WebView2": {
         "type": "Transitive",
-        "resolved": "1.0.2651.64",
+        "resolved": "1.0.2792.45",
         "contentHash": "f5sc/vcAoTCTEW7Nqzp4galAuTRguZViw8ksn+Nx2uskEBPm0/ubzy6gVjvXS/P96jLS89C8T9I0hPc417xpNg=="
       },
       "Microsoft.Windows.SDK.BuildTools": {

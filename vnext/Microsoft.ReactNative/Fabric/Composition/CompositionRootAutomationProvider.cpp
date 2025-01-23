@@ -43,7 +43,7 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetRuntimeId(SAFEARRAY **pR
   rgiRuntimeId[2] = 0;
 
   if (auto rootView = m_wkRootView.get()) {
-    auto tag = rootView->RootTag();
+    auto tag = rootView.RootTag();
     rgiRuntimeId[1] = LODWORD(tag);
     rgiRuntimeId[2] = HIDWORD(tag);
   }
