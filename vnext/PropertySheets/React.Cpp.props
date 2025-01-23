@@ -73,6 +73,9 @@
       -->
       <PreprocessorDefinitions>_DISABLE_CONSTEXPR_MUTEX_CONSTRUCTOR;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <Midl>
+      <PreprocessorDefinitions Condition="'$(UseFabric)' == 'true'">USE_FABRIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
   </ItemDefinitionGroup>
 
   <PropertyGroup>

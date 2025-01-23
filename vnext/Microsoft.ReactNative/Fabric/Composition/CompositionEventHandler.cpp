@@ -9,7 +9,6 @@
 #include <IReactContext.h>
 #include <React.h>
 #include <Views/DevMenu.h>
-#include <Views/ShadowNodeBase.h>
 #include <windows.h>
 #include <windowsx.h>
 #include <winrt/Windows.UI.Core.h>

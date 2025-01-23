@@ -39,12 +39,6 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
   }
 
   /*
-   * Returns a `AttributedString` which represents text content of the node.
-   */
-  AttributedString getAttributedString(const LayoutContext &layoutContext) const;
-  AttributedString getPlaceholderAttributedString(const LayoutContext &layoutContext) const;
-
-  /*
    * Associates a shared TextLayoutManager with the node.
    * `TextInputShadowNode` uses the manager to measure text content
    * and construct `TextInputState` objects.
@@ -52,23 +46,38 @@ class WindowsTextInputShadowNode final : public ConcreteViewShadowNode<
   void setTextLayoutManager(std::shared_ptr<const TextLayoutManager> textLayoutManager);
 
 #pragma mark - LayoutableShadowNode
-
+ protected:
   Size measureContent(const LayoutContext &layoutContext, const LayoutConstraints &layoutConstraints) const override;
+
   void layout(LayoutContext layoutContext) override;
 
- private:
-  /**
-   * Get the most up-to-date attributed string for measurement and State.
-   */
-  AttributedString getMostRecentAttributedString(const LayoutContext &layoutContext) const;
+  // Float baseline(const LayoutContext& layoutContext, Size size) const override;
 
+  std::shared_ptr<const TextLayoutManager> textLayoutManager_;
+
+  /*
+   * Determines the constraints to use while measure the underlying text
+   */
+  LayoutConstraints getTextConstraints(const LayoutConstraints &layoutConstraints) const;
+
+ private:
   /*
    * Creates a `State` object (with `AttributedText` and
    * `TextLayoutManager`) if needed.
    */
   void updateStateIfNeeded(const LayoutContext &layoutContext);
 
-  std::shared_ptr<const TextLayoutManager> textLayoutManager_;
+  /*
+   * Returns a `AttributedString` which represents text content of the node.
+   */
+  AttributedString getAttributedString(const LayoutContext &layoutContext) const;
+
+  /**
+   * Get the most up-to-date attributed string for measurement and State.
+   */
+  AttributedString getMostRecentAttributedString(const LayoutContext &layoutContext) const;
+
+  AttributedString getPlaceholderAttributedString(const LayoutContext &layoutContext) const;
 };
 
 } // namespace facebook::react

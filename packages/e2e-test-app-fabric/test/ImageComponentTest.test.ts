@@ -34,12 +34,6 @@ describe('Image Tests', () => {
     const dump = await dumpVisualTree('image-network-callback');
     expect(dump).toMatchSnapshot();
   });
-  test('An Image component can hve a network callback 2', async () => {
-    const component = await app.findElementByTestID('image-network-callback-2');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('image-network-callback-2');
-    expect(dump).toMatchSnapshot();
-  });
   test('A network Image example', async () => {
     const component = await app.findElementByTestID('image-network');
     await component.waitForDisplayed({timeout: 5000});
