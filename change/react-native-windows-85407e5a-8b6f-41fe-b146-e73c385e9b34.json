@@ -1,6 +1,6 @@
 {
   "type": "prerelease",
-  "comment": "Fix crash running on server 2016",
+  "comment": "RNIsland UIA fragment root should report parents fragment root",
   "packageName": "react-native-windows",
   "email": "30809111+acoates-ms@users.noreply.github.com",
   "dependentChangeType": "patch"
