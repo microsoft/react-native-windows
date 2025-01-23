@@ -1,8 +1,19 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Wed, 22 Jan 2025 06:28:02 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 23 Jan 2025 06:24:57 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.0.0-canary.912
+
+Thu, 23 Jan 2025 06:24:57 GMT
+
+### Changes
+
+- Remove Paper-only code from Fabric builds of Microsoft.ReactNative (jthysell@microsoft.com)
+- Initial integrate (yajurgrover24@gmail.com)
+- Bump @react-native-windows/cli to v0.0.0-canary.256
+- Bump @react-native-windows/codegen to v0.0.0-canary.117
 
 ## 0.0.0-canary.911
 
