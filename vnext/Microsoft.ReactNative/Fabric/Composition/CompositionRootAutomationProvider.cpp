@@ -36,7 +36,7 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetRuntimeId(SAFEARRAY **pR
   if (*pRetVal == nullptr)
     return E_OUTOFMEMORY;
 
-  auto rgiRuntimeId = static_cast<int*>((*pRetVal)->pvData);
+  auto rgiRuntimeId = static_cast<int *>((*pRetVal)->pvData);
 
   rgiRuntimeId[0] = UiaAppendRuntimeId;
   rgiRuntimeId[1] = LODWORD(id);
@@ -170,16 +170,16 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_FragmentRoot(IRawElemen
 
   *pRetVal = nullptr;
 
-  if (m_island)
-  {
+#ifdef USE_EXPERIMENTAL_WINUI3
+  if (m_island) {
     auto parentRoot = m_island.FragmentRootAutomationProvider();
     auto spFragment = parentRoot.try_as<IRawElementProviderFragmentRoot>();
-    if (spFragment)
-    {
+    if (spFragment) {
       *pRetVal = spFragment.detach();
       return S_OK;
     }
   }
+#endif
 
   return S_OK;
 }
@@ -286,6 +286,7 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
       }
     }
   } else if (direction == NavigateDirection_Parent) {
+#ifdef USE_EXPERIMENTAL_WINUI3
     if (m_island) {
       auto parent = m_island.ParentAutomationProvider();
       auto spFragment = parent.try_as<IRawElementProviderFragment>();
@@ -294,6 +295,7 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
         return S_OK;
       }
     }
+#endif
   }
 
   *pRetVal = nullptr;

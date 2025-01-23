@@ -5,7 +5,7 @@ steps:
       $nsm.AddNamespace('ns', $experimentalFeatures.DocumentElement.NamespaceURI)
 
       $xmlNode = $experimentalFeatures.CreateElement("PropertyGroup");
-      $xmlNode.InnerXml = "<UseFabric>true</UseFabric><UseWinUI3>true</UseWinUI3><UseExperimentalWinUI3>true</UseExperimentalWinUI3>"
+      $xmlNode.InnerXml = "<UseFabric>true</UseFabric><UseWinUI3>true</UseWinUI3>"
 
       $experimentalFeatures.DocumentElement.AppendChild($xmlNode);
 
