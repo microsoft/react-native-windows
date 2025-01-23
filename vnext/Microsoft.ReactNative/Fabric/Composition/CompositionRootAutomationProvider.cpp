@@ -27,6 +27,21 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetRuntimeId(SAFEARRAY **pR
 
   *pRetVal = nullptr;
 
+  if (!m_island)
+    return E_FAIL;
+
+  auto id = reinterpret_cast<INT_PTR>(winrt::get_unknown(m_island));
+
+  *pRetVal = SafeArrayCreateVector(VT_I4, 0, 3);
+  if (*pRetVal == nullptr)
+    return E_OUTOFMEMORY;
+
+  auto rgiRuntimeId = static_cast<int*>((*pRetVal)->pvData);
+
+  rgiRuntimeId[0] = UiaAppendRuntimeId;
+  rgiRuntimeId[1] = LODWORD(id);
+  rgiRuntimeId[2] = HIDWORD(id);
+
   return S_OK;
 }
 
@@ -153,8 +168,18 @@ HRESULT __stdcall CompositionRootAutomationProvider::get_FragmentRoot(IRawElemen
   if (pRetVal == nullptr)
     return E_POINTER;
 
-  AddRef();
-  *pRetVal = this;
+  *pRetVal = nullptr;
+
+  if (m_island)
+  {
+    auto parentRoot = m_island.FragmentRootAutomationProvider();
+    auto spFragment = parentRoot.try_as<IRawElementProviderFragmentRoot>();
+    if (spFragment)
+    {
+      *pRetVal = spFragment.detach();
+      return S_OK;
+    }
+  }
 
   return S_OK;
 }
@@ -249,12 +274,19 @@ HRESULT __stdcall CompositionRootAutomationProvider::Navigate(
   if (pRetVal == nullptr)
     return E_POINTER;
 
-  // Fragment roots do not enable navigation to a parent or siblings; navigation among fragment roots is handled by the
-  // default window providers. Elements in fragments must navigate only to other elements within that fragment.
   if (direction == NavigateDirection_FirstChild || direction == NavigateDirection_LastChild) {
     if (auto rootView = rootComponentView()) {
       auto uiaProvider = rootView->EnsureUiaProvider();
       auto spFragment = uiaProvider.try_as<IRawElementProviderFragment>();
+      if (spFragment) {
+        *pRetVal = spFragment.detach();
+        return S_OK;
+      }
+    }
+  } else if (direction == NavigateDirection_Parent) {
+    if (m_island) {
+      auto parent = m_island.ParentAutomationProvider();
+      auto spFragment = parent.try_as<IRawElementProviderFragment>();
       if (spFragment) {
         *pRetVal = spFragment.detach();
         return S_OK;
