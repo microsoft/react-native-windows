@@ -30,8 +30,6 @@ HRESULT __stdcall CompositionRootAutomationProvider::GetRuntimeId(SAFEARRAY **pR
   if (!m_island)
     return E_FAIL;
 
-  auto id = reinterpret_cast<INT_PTR>(winrt::get_unknown(m_island));
-
   *pRetVal = SafeArrayCreateVector(VT_I4, 0, 3);
   if (*pRetVal == nullptr)
     return E_OUTOFMEMORY;
