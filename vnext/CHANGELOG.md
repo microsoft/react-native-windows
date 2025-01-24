@@ -1,8 +1,17 @@
 # Change Log - react-native-windows
 
-This log was last generated on Wed, 15 Jan 2025 01:23:17 GMT and should not be manually modified.
+This log was last generated on Fri, 24 Jan 2025 03:29:02 GMT and should not be manually modified.
 
 <!-- Start content -->
+
+## 0.74.32
+
+Fri, 24 Jan 2025 03:29:02 GMT
+
+### Patches
+
+- RNIsland UIA fragment root should report parents fragment root. (acoates@microsoft.com)
+- Update WinUI3ExperimentalVersion from 1.6.240701003-experimental2 to 1.7.250109001-experimental2 (50150435+JesseCol@users.noreply.github.com)
 
 ## 0.74.31
 

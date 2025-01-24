@@ -1,7 +1,0 @@
-{
-  "type": "patch",
-  "comment": "RNIsland UIA fragment root should report parents fragment root.",
-  "packageName": "react-native-windows",
-  "email": "acoates@microsoft.com",
-  "dependentChangeType": "patch"
-}
