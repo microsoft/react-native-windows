@@ -1,8 +1,18 @@
 # Change Log - react-native-windows
 
-<!-- This log was last generated on Mon, 20 Jan 2025 16:28:20 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 24 Jan 2025 19:55:47 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## 0.76.6
+
+Fri, 24 Jan 2025 19:55:47 GMT
+
+### Patches
+
+- Promote 0.76 to legacy (tatianakapos@microsoft.com)
+- Bump @react-native-windows/cli to v0.76.3
+- Bump @react-native-windows/codegen to v0.76.2
 
 ## 0.76.5
 
