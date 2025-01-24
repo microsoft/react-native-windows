@@ -1,6 +1,6 @@
 {
   "type": "patch",
-  "comment": "integrate 0.77.0",
+  "comment": "Promote 0.76 to latest",
   "packageName": "react-native-windows",
   "email": "tatianakapos@microsoft.com",
   "dependentChangeType": "patch"
