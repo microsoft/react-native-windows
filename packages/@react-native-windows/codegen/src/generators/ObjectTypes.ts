@@ -13,7 +13,7 @@ import type {
   NativeModuleStringTypeAnnotation,
   NativeModuleFunctionTypeAnnotation,
   NativeModuleStringLiteralTypeAnnotation,
-  NativeModuleStringLiteralUnionTypeAnnotation,
+  StringLiteralUnionTypeAnnotation,
   UnsafeAnyTypeAnnotation,
   Nullable,
 } from '@react-native/codegen/lib/CodegenSchema';
@@ -56,7 +56,7 @@ export function translateFieldOrReturnType(
         | NativeModuleStringTypeAnnotation
         | NativeModuleFunctionTypeAnnotation
         | NativeModuleStringLiteralTypeAnnotation
-        | NativeModuleStringLiteralUnionTypeAnnotation
+        | StringLiteralUnionTypeAnnotation
       >
     | UnsafeAnyTypeAnnotation,
   aliases: AliasMap,

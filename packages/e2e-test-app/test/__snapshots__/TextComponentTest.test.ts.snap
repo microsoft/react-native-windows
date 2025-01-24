@@ -153,7 +153,7 @@ exports[`TextTest Text background color 1`] = `
       "TextHighlighters": [
         {
           "Background": "#FFFFAAAA",
-          "Foreground": null,
+          "Foreground": "#FF000000",
           "Ranges": [
             {
               "Length": 84,
@@ -163,7 +163,7 @@ exports[`TextTest Text background color 1`] = `
         },
         {
           "Background": "#FFAAAAFF",
-          "Foreground": null,
+          "Foreground": "#FF000000",
           "Ranges": [
             {
               "Length": 69,
@@ -172,8 +172,18 @@ exports[`TextTest Text background color 1`] = `
           ],
         },
         {
+          "Background": "#FFAAAAFF",
+          "Foreground": "#FF000000",
+          "Ranges": [
+            {
+              "Length": 52,
+              "StartIndex": 32,
+            },
+          ],
+        },
+        {
           "Background": "#FFAAFFAA",
-          "Foreground": null,
+          "Foreground": "#FF000000",
           "Ranges": [
             {
               "Length": 25,
@@ -201,7 +211,7 @@ exports[`TextTest Text background color 1`] = `
       "TextHighlighters": [
         {
           "Background": "#4D646464",
-          "Foreground": null,
+          "Foreground": "#FF000000",
           "Ranges": [
             {
               "Length": 70,
@@ -211,7 +221,17 @@ exports[`TextTest Text background color 1`] = `
         },
         {
           "Background": "#4D646464",
-          "Foreground": null,
+          "Foreground": "#FF000000",
+          "Ranges": [
+            {
+              "Length": 45,
+              "StartIndex": 25,
+            },
+          ],
+        },
+        {
+          "Background": "#4D646464",
+          "Foreground": "#FF000000",
           "Ranges": [
             {
               "Length": 13,

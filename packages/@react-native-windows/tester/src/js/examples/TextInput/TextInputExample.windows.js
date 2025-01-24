@@ -16,127 +16,60 @@ import type {
 } from '../../types/RNTesterTypes';
 
 import ExampleTextInput from './ExampleTextInput';
+import TextInputSharedExamples from './TextInputSharedExamples';
+import React, {useState} from 'react';
+import {StyleSheet, Switch, Text, View} from 'react-native';
 
-const TextInputSharedExamples = require('./TextInputSharedExamples.js');
-const React = require('react');
-const {StyleSheet, Switch, Text, View} = require('react-native');
-const {useState} = React;
+const ToggleDefaultPaddingExample = (): React.Node => {
+  const [hasPadding, setHasPadding] = React.useState(false);
 
-class ToggleDefaultPaddingExample extends React.Component<
-  $FlowFixMeProps,
-  $FlowFixMeState,
-> {
-  /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
-   * LTI update could not be added via codemod */
-  constructor(props) {
-    super(props);
-    this.state = {hasPadding: false};
-  }
-  render(): React.Node {
-    return (
-      <View>
-        <ExampleTextInput
-          style={this.state.hasPadding ? {padding: 0} : null}
-          testID="textinput-padding"
-        />
-        <Text
-          onPress={() => this.setState({hasPadding: !this.state.hasPadding})}>
-          Toggle padding
-        </Text>
-      </View>
-    );
-  }
-}
+  return (
+    <View>
+      <ExampleTextInput
+        style={hasPadding ? {padding: 0} : null}
+        testID="textinput-padding"
+      />
+      <Text onPress={() => setHasPadding(!hasPadding)}>Toggle padding</Text>
+    </View>
+  );
+};
 
-class AutogrowingTextInputExample extends React.Component<{...}> {
-  /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
-   * LTI update could not be added via codemod */
-  constructor(props) {
-    super(props);
+function AutogrowingTextInputExample({
+  style,
+  ...props
+}: React.ElementConfig<typeof TextInput>) {
+  const [multiline, setMultiline] = React.useState(true);
+  const [fullWidth, setFullWidth] = React.useState(true);
+  const [text, setText] = React.useState('');
+  const [contentSize, setContentSize] = React.useState({width: 0, height: 0});
 
-    /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was found
-     * when making Flow check .android.js files. */
-    this.state = {
-      multiline: true,
-      fullWidth: true,
-      text: '',
-      contentSize: {
-        width: 0,
-        height: 0,
-      },
-    };
-  }
+  return (
+    <View>
+      <Text>Full width:</Text>
+      <Switch value={fullWidth} onValueChange={setFullWidth} />
 
-  /* $FlowFixMe[missing-local-annot] The type annotation(s) required by Flow's
-   * LTI update could not be added via codemod */
-  UNSAFE_componentWillReceiveProps(props) {
-    /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was found
-     * when making Flow check .android.js files. */
-    this.setState({
-      /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was found
-       * when making Flow check .android.js files. */
-      multiline: props.multiline,
-    });
-  }
+      <Text>Multiline:</Text>
+      <Switch value={multiline} onValueChange={setMultiline} />
 
-  render(): React.Node {
-    /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was found
-     * when making Flow check .android.js files. */
-    const {style, multiline, ...props} = this.props;
-    return (
-      <View>
-        <Text>Full width:</Text>
-        <Switch
-          /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
-           * found when making Flow check .android.js files. */
-          value={this.state.fullWidth}
-          /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
-           * found when making Flow check .android.js files. */
-          onValueChange={value => this.setState({fullWidth: value})}
-        />
-
-        <Text>Multiline:</Text>
-        <Switch
-          /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
-           * found when making Flow check .android.js files. */
-          value={this.state.multiline}
-          /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
-           * found when making Flow check .android.js files. */
-          onValueChange={value => this.setState({multiline: value})}
-        />
-
-        <Text>TextInput:</Text>
-        {/* $FlowFixMe(>=0.122.0 site=react_native_android_fb) This comment
-         * suppresses an error found when Flow v0.122.0 was deployed. To see
-         * the error, delete this comment and run Flow. */}
-        <ExampleTextInput
-          /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
-           * found when making Flow check .android.js files. */
-          multiline={this.state.multiline}
-          /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
-           * found when making Flow check .android.js files. */
-          style={[style, {width: this.state.fullWidth ? '100%' : '50%'}]}
-          /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
-           * found when making Flow check .android.js files. */
-          onChangeText={value => this.setState({text: value})}
-          onContentSizeChange={event =>
-            /* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
-             * found when making Flow check .android.js files. */
-            this.setState({contentSize: event.nativeEvent.contentSize})
-          }
-          {...props}
-          testID="textinput-autogrow"
-        />
-        <Text>Plain text value representation:</Text>
-        {/* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
-         * found when making Flow check .android.js files. */}
-        <Text>{this.state.text}</Text>
-        {/* $FlowFixMe(>=0.78.0 site=react_native_android_fb) This issue was
-         * found when making Flow check .android.js files. */}
-        <Text>Content Size: {JSON.stringify(this.state.contentSize)}</Text>
-      </View>
-    );
-  }
+      <Text>TextInput:</Text>
+      <ExampleTextInput
+        multiline={multiline}
+        style={[style, {width: fullWidth ? '100%' : '50%'}]}
+        onChangeText={setText}
+        onContentSizeChange={({nativeEvent}) => {
+          setContentSize({
+            width: nativeEvent.contentSize.width,
+            height: nativeEvent.contentSize.height,
+          });
+        }}
+        {...props}
+        testID={'textinput-autogrow'}
+      />
+      <Text>Plain text value representation:</Text>
+      <Text>{text}</Text>
+      <Text>Content Size: {JSON.stringify(contentSize)}</Text>
+    </View>
+  );
 }
 
 class PressInOutEvents extends React.Component<
@@ -566,7 +499,6 @@ const examples: Array<RNTesterModuleExample> = [
             returnKeyType="done"
             multiline={true}
             style={{maxHeight: 400, minHeight: 20, backgroundColor: '#eeeeee'}}>
-            {/*generic generic generic [Windows]*/}
             <Text style={{fontSize: 6, color: 'red'}}>
               small small small small small small
             </Text>
@@ -574,7 +506,6 @@ const examples: Array<RNTesterModuleExample> = [
             <Text style={{fontSize: 30, color: 'green'}}>
               huge huge huge huge huge
             </Text>
-            {/*generic generic generic [Windows]*/}
           </AutogrowingTextInputExample>
         </View>
       );

@@ -7,13 +7,13 @@
     "**/__snapshots__/**",
     "src-win/rntypes/**"
   ],
-  "baseVersion": "0.78.0-nightly-20241231-a3c8e2137",
+  "baseVersion": "0.78.0-nightly-20250113-d4407d6f7",
   "overrides": [
     {
       "type": "derived",
       "file": ".flowconfig",
       "baseFile": ".flowconfig",
-      "baseHash": "5b40175690b07272a61410d4fc6437a82248e8cc"
+      "baseHash": "efd6eb0780d7f3b6717feac846e0e7fe8dae1ee9"
     },
     {
       "type": "derived",
@@ -71,11 +71,11 @@
       "file": "src-win/Libraries/Components/Button/ButtonWin32.tsx"
     },
     {
-      "type": "copy",
+      "type": "patch",
       "file": "src-win/Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.js",
       "baseFile": "packages/react-native/Libraries/Components/DrawerAndroid/DrawerLayoutAndroid.js",
-      "baseHash": "b9a6866d03ca389af38734ffed24199505b05402",
-      "issue": 4378
+      "baseHash": "7664e2616540fd4ecc398009216314675f6e3f86",
+      "issue": 14290
     },
     {
       "type": "platform",
@@ -109,7 +109,7 @@
       "type": "derived",
       "file": "src-win/Libraries/Components/TextInput/TextInput.win32.js",
       "baseFile": "packages/react-native/Libraries/Components/TextInput/TextInput.js",
-      "baseHash": "1f9adcb7ca64fa536372ed28b7af5e03b05458ac"
+      "baseHash": "437a56337e8b6fabd440538af48167c2bbc59704"
     },
     {
       "type": "patch",

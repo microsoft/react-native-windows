@@ -16,7 +16,7 @@ namespace winrt::Microsoft::ReactNative {
 
 ReactPackageBuilder::ReactPackageBuilder(
     std::shared_ptr<NativeModulesProvider> const &modulesProvider,
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
     std::shared_ptr<ViewManagersProvider> const &viewManagersProvider,
 #endif
     std::shared_ptr<TurboModulesProvider> const &turboModulesProvider,
@@ -26,7 +26,7 @@ ReactPackageBuilder::ReactPackageBuilder(
 #endif
     bool isWebDebugging) noexcept
     : m_modulesProvider{modulesProvider},
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
       m_viewManagersProvider{viewManagersProvider},
 #endif
       m_turboModulesProvider{turboModulesProvider},
@@ -42,7 +42,7 @@ void ReactPackageBuilder::AddModule(hstring const &moduleName, ReactModuleProvid
   m_modulesProvider->AddModuleProvider(moduleName, moduleProvider);
 }
 
-#ifndef CORE_ABI
+#if !defined(CORE_ABI) && !defined(USE_FABRIC)
 void ReactPackageBuilder::AddViewManager(
     hstring const &viewManagerName,
     ReactViewManagerProvider const &viewManagerProvider) noexcept {
