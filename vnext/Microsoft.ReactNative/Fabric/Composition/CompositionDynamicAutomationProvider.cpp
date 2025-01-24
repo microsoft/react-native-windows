@@ -4,6 +4,7 @@
 #include <Fabric/Composition/SwitchComponentView.h>
 #include <Fabric/Composition/TextInput/WindowsTextInputComponentView.h>
 #include <Unicode.h>
+#include <winrt/Microsoft.UI.Content.h>
 #include "RootComponentView.h"
 #include "UiaHelpers.h"
 
@@ -27,11 +28,68 @@ CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
   }
 }
 
+#ifdef USE_EXPERIMENTAL_WINUI3
+CompositionDynamicAutomationProvider::CompositionDynamicAutomationProvider(
+    const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
+    const winrt::Microsoft::UI::Content::ChildSiteLink &childSiteLink) noexcept
+    : m_view{componentView}, m_childSiteLink{childSiteLink} {
+  // These events are raised in response to the child ContentIsland asking for providers.
+  // For example, the ContentIsland.FragmentRootAutomationProvider property will return
+  // the provider we provide here in FragmentRootAutomationProviderRequested.
+
+  m_fragmentRootAutomationProviderRequestedRevoker = m_childSiteLink.FragmentRootAutomationProviderRequested(
+      [this](
+          const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
+          const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
+        // The child island's fragment tree doesn't have its own root.
+        // Here's how we can provide the correct root to the child's UIA logic.
+        winrt::com_ptr<IRawElementProviderFragmentRoot> fragmentRoot = nullptr;
+        HRESULT hr = this->get_FragmentRoot(fragmentRoot.put());
+        args.AutomationProvider(fragmentRoot.as<IInspectable>());
+        args.Handled(true);
+      });
+
+  m_parentAutomationProviderRequestedRevoker = m_childSiteLink.ParentAutomationProviderRequested(
+      [this](
+          const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
+          const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
+        args.AutomationProvider(*this);
+        args.Handled(true);
+      });
+
+  m_nextSiblingAutomationProviderRequestedRevoker = m_childSiteLink.NextSiblingAutomationProviderRequested(
+      [](const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
+         const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
+        // The ContentIsland will always be the one and only child of this node, so it won't have siblings.
+        args.AutomationProvider(nullptr);
+        args.Handled(true);
+      });
+
+  m_previousSiblingAutomationProviderRequestedRevoker = m_childSiteLink.PreviousSiblingAutomationProviderRequested(
+      [](const winrt::Microsoft::UI::Content::IContentSiteAutomation &,
+         const winrt::Microsoft::UI::Content::ContentSiteAutomationProviderRequestedEventArgs &args) {
+        // The ContentIsland will always be the one and only child of this node, so it won't have siblings.
+        args.AutomationProvider(nullptr);
+        args.Handled(true);
+      });
+}
+#endif // USE_EXPERIMENTAL_WINUI3
+
 HRESULT __stdcall CompositionDynamicAutomationProvider::Navigate(
     NavigateDirection direction,
     IRawElementProviderFragment **pRetVal) {
   if (pRetVal == nullptr)
     return E_POINTER;
+
+#ifdef USE_EXPERIMENTAL_WINUI3
+  if (m_childSiteLink) {
+    if (direction == NavigateDirection_FirstChild || direction == NavigateDirection_LastChild) {
+      auto fragment = m_childSiteLink.AutomationProvider().try_as<IRawElementProviderFragment>();
+      *pRetVal = fragment.detach();
+      return S_OK;
+    }
+  }
+#endif // USE_EXPERIMENTAL_WINUI3
 
   return UiaNavigateHelper(m_view.view(), direction, *pRetVal);
 }

@@ -25,6 +25,12 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
   CompositionDynamicAutomationProvider(
       const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView) noexcept;
 
+#ifdef USE_EXPERIMENTAL_WINUI3
+  CompositionDynamicAutomationProvider(
+      const winrt::Microsoft::ReactNative::Composition::ComponentView &componentView,
+      const winrt::Microsoft::UI::Content::ChildSiteLink &childContentLink) noexcept;
+#endif // USE_EXPERIMENTAL_WINUI3
+
   // inherited via IRawElementProviderFragment
   virtual HRESULT __stdcall Navigate(NavigateDirection direction, IRawElementProviderFragment **pRetVal) override;
   virtual HRESULT __stdcall GetRuntimeId(SAFEARRAY **pRetVal) override;
@@ -86,6 +92,18 @@ class CompositionDynamicAutomationProvider : public winrt::implements<
  private:
   ::Microsoft::ReactNative::ReactTaggedView m_view;
   std::vector<winrt::com_ptr<IRawElementProviderSimple>> m_selectionItems;
+#ifdef USE_EXPERIMENTAL_WINUI3
+  // Non-null when this UIA node is the peer of a ContentIslandComponentView.
+  winrt::Microsoft::UI::Content::ChildSiteLink m_childSiteLink{nullptr};
+  winrt::Microsoft::UI::Content::ChildSiteLink::FragmentRootAutomationProviderRequested_revoker
+      m_fragmentRootAutomationProviderRequestedRevoker;
+  winrt::Microsoft::UI::Content::ChildSiteLink::ParentAutomationProviderRequested_revoker
+      m_parentAutomationProviderRequestedRevoker;
+  winrt::Microsoft::UI::Content::ChildSiteLink::NextSiblingAutomationProviderRequested_revoker
+      m_nextSiblingAutomationProviderRequestedRevoker;
+  winrt::Microsoft::UI::Content::ChildSiteLink::PreviousSiblingAutomationProviderRequested_revoker
+      m_previousSiblingAutomationProviderRequestedRevoker;
+#endif
 };
 
 } // namespace winrt::Microsoft::ReactNative::implementation
