@@ -22,14 +22,27 @@ const Platform: PlatformType = {
     return this.constants.osVersion;
   },
   // $FlowFixMe[unsafe-getters-setters]
-  get constants(): {|
+  get constants(): {
     isTesting: boolean,
     isDisableAnimations?: boolean,
-    reactNativeVersion: {|
+    reactNativeVersion: {
       major: number,
       minor: number,
       patch: number,
       prerelease: ?string,
+<<<<<<< Upstream
+    },
+    Version: number,
+    Release: string,
+    Serial: string,
+    Fingerprint: string,
+    Model: string,
+    ServerHost?: string,
+    uiMode: string,
+    Brand: string,
+    Manufacturer: string,
+  } {
+=======
     |},
     reactNativeWindowsVersion: {|
       // [Windows]
@@ -39,6 +52,7 @@ const Platform: PlatformType = {
     |},
     osVersion: number,
   |} {
+>>>>>>> Override
     // $FlowFixMe[object-this-reference]
     if (this.__constants == null) {
       // $FlowFixMe[object-this-reference]

@@ -31,7 +31,7 @@ import * as React from 'react';
 import {useMemo} from 'react';
 import Animated from '../../Animated/Animated'; // Windows
 
-type Props = $ReadOnly<{|
+type Props = $ReadOnly<{
   accessibilityActions?: ?$ReadOnlyArray<AccessibilityActionInfo>,
   accessibilityElementsHidden?: ?boolean,
   accessibilityHint?: ?Stringish,
@@ -87,6 +87,9 @@ type Props = $ReadOnly<{|
   rejectResponderTermination?: ?boolean,
   testID?: ?string,
   touchSoundDisabled?: ?boolean,
+<<<<<<< Upstream
+}>;
+=======
   accessibilityPosInSet?: ?number, // [Windows]
   accessibilitySetSize?: ?number, // [Windows]
   onAccessibilityTap?: ?() => void, // [Windows]
@@ -96,6 +99,7 @@ type Props = $ReadOnly<{|
   tooltip?: ?Stringish, // [Windows]
   hostRef?: React.RefSetter<React.ElementRef<typeof Animated.View>>, // [Windows]
 |}>;
+>>>>>>> Override
 
 const PASSTHROUGH_PROPS = [
   'accessibilityActions',

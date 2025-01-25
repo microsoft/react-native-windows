@@ -31,7 +31,7 @@ import View from './View/View';
 import invariant from 'invariant';
 import * as React from 'react';
 
-type ButtonProps = $ReadOnly<{|
+type ButtonProps = $ReadOnly<{
   /**
     Text to display inside the button. On Android the given title will be
     converted to the uppercased form.
@@ -174,6 +174,9 @@ type ButtonProps = $ReadOnly<{|
   importantForAccessibility?: ?('auto' | 'yes' | 'no' | 'no-hide-descendants'),
   accessibilityHint?: ?string,
   accessibilityLanguage?: ?Stringish,
+<<<<<<< Upstream
+}>;
+=======
   // [Windows
   /**
     Set the order in which elements receive focus when the user navigates through them by pressing Tab.
@@ -181,6 +184,7 @@ type ButtonProps = $ReadOnly<{|
   tabIndex?: ?number,
   // Windows]
 |}>;
+>>>>>>> Override
 
 /**
   A basic button component that should render nicely on any platform. Supports a

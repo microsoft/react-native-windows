@@ -20,8 +20,13 @@ type DialogAction = string;
   buttonNegative = -2,
   buttonNeutral = -3
 */
+<<<<<<< Upstream
+type DialogButtonKey = number;
+export type DialogOptions = {
+=======
 type DialogButtonKey = Int32;
 export type DialogOptions = {|
+>>>>>>> Override
   title?: string,
   message?: string,
   buttonPositive?: string,
@@ -29,18 +34,22 @@ export type DialogOptions = {|
   buttonNeutral?: string,
   items?: Array<string>,
   cancelable?: boolean,
+<<<<<<< Upstream
+};
+=======
   defaultButton?: Int32,
   rootTag?: Int32,
 |};
+>>>>>>> Override
 
 export interface Spec extends TurboModule {
-  +getConstants: () => {|
+  +getConstants: () => {
     +buttonClicked: DialogAction,
     +dismissed: DialogAction,
     +buttonPositive: DialogButtonKey,
     +buttonNegative: DialogButtonKey,
     +buttonNeutral: DialogButtonKey,
-  |};
+  };
   +showAlert: (
     config: DialogOptions,
     onError: (error: string) => void,

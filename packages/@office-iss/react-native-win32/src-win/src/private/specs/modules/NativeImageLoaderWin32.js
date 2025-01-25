@@ -14,6 +14,13 @@ import type {TurboModule} from '../../../../Libraries/TurboModule/RCTExport';
 import * as TurboModuleRegistry from '../../../../Libraries/TurboModule/TurboModuleRegistry';
 
 export interface Spec extends TurboModule {
+<<<<<<< Upstream
+  +abortRequest: (requestId: number) => void;
+  +getConstants: () => {};
+  +getSize: (uri: string) => Promise<ImageSize>;
+  +getSizeWithHeaders: (uri: string, headers: Object) => Promise<ImageSize>;
+  +prefetchImage: (uri: string, requestId: number) => Promise<boolean>;
+=======
   +getConstants: () => {||};
   // [Win32 uses callback instead of promise
   +getSize: (
@@ -38,6 +45,7 @@ export interface Spec extends TurboModule {
     queryRootName: string,
     rootTag: RootTag,
   ) => Promise<boolean>;
+>>>>>>> Override
   +queryCache: (uris: Array<string>) => Promise<Object>;
   // Win32]
 }

@@ -23,7 +23,6 @@ public:
   virtual bool commonTestFlag(jsi::Runtime &rt) = 0;
   virtual bool commonTestFlagWithoutNativeImplementation(jsi::Runtime &rt) = 0;
   virtual bool completeReactInstanceCreationOnBgThreadOnAndroid(jsi::Runtime &rt) = 0;
-  virtual bool disableEventLoopOnBridgeless(jsi::Runtime &rt) = 0;
   virtual bool disableMountItemReorderingAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableAccumulatedUpdatesInRawPropsAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableBridgelessArchitecture(jsi::Runtime &rt) = 0;
@@ -37,6 +36,7 @@ public:
   virtual bool enableGranularShadowTreeStateReconciliation(jsi::Runtime &rt) = 0;
   virtual bool enableIOSViewClipToPaddingBox(jsi::Runtime &rt) = 0;
   virtual bool enableImagePrefetchingAndroid(jsi::Runtime &rt) = 0;
+  virtual bool enableJSRuntimeGCOnMemoryPressureOnIOS(jsi::Runtime &rt) = 0;
   virtual bool enableLayoutAnimationsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool enableLayoutAnimationsOnIOS(jsi::Runtime &rt) = 0;
   virtual bool enableLongTaskAPI(jsi::Runtime &rt) = 0;
@@ -57,6 +57,7 @@ public:
   virtual bool loadVectorDrawablesOnImages(jsi::Runtime &rt) = 0;
   virtual bool traceTurboModulePromiseRejectionsOnAndroid(jsi::Runtime &rt) = 0;
   virtual bool useAlwaysAvailableJSErrorHandling(jsi::Runtime &rt) = 0;
+  virtual bool useEditTextStockAndroidFocusBehavior(jsi::Runtime &rt) = 0;
   virtual bool useFabricInterop(jsi::Runtime &rt) = 0;
   virtual bool useImmediateExecutorInAndroidBridgeless(jsi::Runtime &rt) = 0;
   virtual bool useNativeViewConfigsInBridgelessMode(jsi::Runtime &rt) = 0;
@@ -119,14 +120,6 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::completeReactInstanceCreationOnBgThreadOnAndroid, jsInvoker_, instance_);
-    }
-    bool disableEventLoopOnBridgeless(jsi::Runtime &rt) override {
-      static_assert(
-          bridging::getParameterCount(&T::disableEventLoopOnBridgeless) == 1,
-          "Expected disableEventLoopOnBridgeless(...) to have 1 parameters");
-
-      return bridging::callFromJs<bool>(
-          rt, &T::disableEventLoopOnBridgeless, jsInvoker_, instance_);
     }
     bool disableMountItemReorderingAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -231,6 +224,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::enableImagePrefetchingAndroid, jsInvoker_, instance_);
+    }
+    bool enableJSRuntimeGCOnMemoryPressureOnIOS(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::enableJSRuntimeGCOnMemoryPressureOnIOS) == 1,
+          "Expected enableJSRuntimeGCOnMemoryPressureOnIOS(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::enableJSRuntimeGCOnMemoryPressureOnIOS, jsInvoker_, instance_);
     }
     bool enableLayoutAnimationsOnAndroid(jsi::Runtime &rt) override {
       static_assert(
@@ -391,6 +392,14 @@ private:
 
       return bridging::callFromJs<bool>(
           rt, &T::useAlwaysAvailableJSErrorHandling, jsInvoker_, instance_);
+    }
+    bool useEditTextStockAndroidFocusBehavior(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::useEditTextStockAndroidFocusBehavior) == 1,
+          "Expected useEditTextStockAndroidFocusBehavior(...) to have 1 parameters");
+
+      return bridging::callFromJs<bool>(
+          rt, &T::useEditTextStockAndroidFocusBehavior, jsInvoker_, instance_);
     }
     bool useFabricInterop(jsi::Runtime &rt) override {
       static_assert(
@@ -3973,8 +3982,10 @@ protected:
 public:
   virtual void startSurface(jsi::Runtime &rt, double surfaceId, double viewportWidth, double viewportHeight, double devicePixelRatio) = 0;
   virtual void stopSurface(jsi::Runtime &rt, double surfaceId) = 0;
+  virtual void dispatchNativeEvent(jsi::Runtime &rt, jsi::Value shadowNode, jsi::String type, std::optional<jsi::Value> payload) = 0;
   virtual jsi::Array getMountingManagerLogs(jsi::Runtime &rt, double surfaceId) = 0;
   virtual void flushMessageQueue(jsi::Runtime &rt) = 0;
+  virtual void flushEventQueue(jsi::Runtime &rt) = 0;
   virtual jsi::String getRenderedOutput(jsi::Runtime &rt, double surfaceId, jsi::Object config) = 0;
   virtual void reportTestSuiteResultsJSON(jsi::Runtime &rt, jsi::String results) = 0;
 
@@ -4023,6 +4034,14 @@ private:
       return bridging::callFromJs<void>(
           rt, &T::stopSurface, jsInvoker_, instance_, std::move(surfaceId));
     }
+    void dispatchNativeEvent(jsi::Runtime &rt, jsi::Value shadowNode, jsi::String type, std::optional<jsi::Value> payload) override {
+      static_assert(
+          bridging::getParameterCount(&T::dispatchNativeEvent) == 4,
+          "Expected dispatchNativeEvent(...) to have 4 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::dispatchNativeEvent, jsInvoker_, instance_, std::move(shadowNode), std::move(type), std::move(payload));
+    }
     jsi::Array getMountingManagerLogs(jsi::Runtime &rt, double surfaceId) override {
       static_assert(
           bridging::getParameterCount(&T::getMountingManagerLogs) == 2,
@@ -4038,6 +4057,14 @@ private:
 
       return bridging::callFromJs<void>(
           rt, &T::flushMessageQueue, jsInvoker_, instance_);
+    }
+    void flushEventQueue(jsi::Runtime &rt) override {
+      static_assert(
+          bridging::getParameterCount(&T::flushEventQueue) == 1,
+          "Expected flushEventQueue(...) to have 1 parameters");
+
+      return bridging::callFromJs<void>(
+          rt, &T::flushEventQueue, jsInvoker_, instance_);
     }
     jsi::String getRenderedOutput(jsi::Runtime &rt, double surfaceId, jsi::Object config) override {
       static_assert(
