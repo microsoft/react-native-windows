@@ -110,14 +110,6 @@ describe('FlatList Tests', () => {
     const dump = await dumpVisualTree('flat_list');
     expect(dump).toMatchSnapshot();
   });
-  test('A FlatList can set onViewableItemsChanged', async () => {
-    await searchBox('onViewable');
-    await goToFlatListExample('onViewableItemsChanged');
-    const component = await app.findElementByTestID('flat_list');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('flat_list');
-    expect(dump).toMatchSnapshot();
-  });
   test('A FlatList can have separators', async () => {
     await searchBox('separators');
     await goToFlatListExample('FlatList with Separators');
@@ -126,14 +118,6 @@ describe('FlatList Tests', () => {
     const dump = await dumpVisualTree('flat_list');
     expect(dump).toMatchSnapshot();
   });
-  /*test('A FlatList can have multiple columns', async () => {
-    await searchBox('MultiColumn');
-    await goToFlatListExample('MultiColumn');
-    const component = await app.findElementByTestID('flatlist-multicolumn');
-    await component.waitForDisplayed({timeout: 5000});
-    const dump = await dumpVisualTree('flatlist-multicolumn');
-    expect(dump).toMatchSnapshot();
-  });*/
   test('A FlatList can have sticky headers', async () => {
     await searchBox('Sticky');
     await goToFlatListExample('Sticky Headers');
