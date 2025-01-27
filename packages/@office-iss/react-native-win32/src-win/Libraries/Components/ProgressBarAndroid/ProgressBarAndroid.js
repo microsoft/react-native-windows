@@ -9,15 +9,4 @@
 
 'use strict';
 
-<<<<<<< Upstream
-import typeof UnimplementedViewType from '../UnimplementedViews/UnimplementedView';
-import typeof ProgressBarAndroidNativeComponentType from './ProgressBarAndroidNativeComponent';
-
-export type {ProgressBarAndroidProps} from './ProgressBarAndroid.android';
-
-export default (require('../UnimplementedViews/UnimplementedView'):
-  | UnimplementedViewType
-  | ProgressBarAndroidNativeComponentType);
-=======
-module.exports = require('../UnimplementedViews/UnimplementedView');
->>>>>>> Override
+export default (require('../UnimplementedViews/UnimplementedView'));
