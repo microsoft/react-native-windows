@@ -1,6 +1,8 @@
 parameters:
   - name: artifactName
     type: string
+  - name: artifactName2
+    type: string
   - name: slices
     type: object
 
@@ -14,7 +16,7 @@ parameters:
     # Note: NuGet pack expects platform-specific file separators ('\' on Windows).
   - name: nugetroot
     type: string
-    default: $(System.DefaultWorkingDirectory)\ReactWindows
+    default: $(System.DefaultWorkingDirectory)\NugetRoot
 
   - name: packDesktop
     type: boolean
@@ -62,7 +64,13 @@ steps:
       displayName: 'Download ${{ parameters.artifactName }}.${{ slice.platform }}.${{ slice.configuration }}'
       inputs:
         artifact: ${{ parameters.artifactName }}.${{ slice.platform }}.${{ slice.configuration }}
-        path: ${{parameters.nugetroot}}/${{ slice.platform }}/${{ slice.configuration }}
+        path: ${{parameters.nugetroot}}/${{ parameters.artifactName }}/${{ slice.platform }}/${{ slice.configuration }}
+    - ${{ if ne(parameters.artifactName2, '') }}:
+      - task: DownloadPipelineArtifact@2
+        displayName: 'Download ${{ parameters.artifactName2 }}.${{ slice.platform }}.${{ slice.configuration }}'
+        inputs:
+          artifact: ${{ parameters.artifactName2 }}.${{ slice.platform }}.${{ slice.configuration }}
+          path: ${{parameters.nugetroot}}/${{ parameters.artifactName2 }}/${{ slice.platform }}/${{ slice.configuration }}
 
   - task: PowerShell@2
     displayName: Copy MSRN Resources to NuGet layout
